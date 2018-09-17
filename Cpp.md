@@ -34,13 +34,26 @@ Consumable UTF-32 code points:
 # DECL (Declaration)
 A type parser function has a parameter for declarator configurations.
 
-## QUALIFIERS
-- {`constexpr` | `const` | `volatile` | `&` | `&&`}+
-
-## Specifiers
+## SPECIFIERS
 Specifiers can be put before any declaration, it will be ignored by the tool
 - attributes: e.g. `[[noreturn]]`
 - `__declspec( ... )`
+
+## QUALIFIERS
+- {`constexpr` | `const` | `volatile` | `&` | `&&`}+
+
+## CALL
+- `__cdecl`
+- `__clrcall`
+- `__stdcall`
+- `__fastcall`
+- `__thiscall`
+- `__vectorcall`
+
+## EXCEPTION-SPEC
+- `noexcept`
+- `nothrow`
+- `throw` `(` {TYPE `,` ...} `)`
 
 ## INITIALIZER
 - `=` EXPR
@@ -50,11 +63,15 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ## DECLARATOR
 Declarator starts as early as it can
-- [TYPE `::`] IDENTIFIER
-- [CALL] TYPE `::` `*` {`alignas` `(` EXPR `)` | CALL | QUALIFIERS} IDENTIFIER
+- IDENTIFIER
+- SPECIFIERS DECLARATOR
+- CALL DECLARATOR
+- QUALIFIERS DECLARATOR
+- `alignas` `(` EXPR `)` DECLARATOR
+- TYPE `::` [`*`] DECLARATOR
   - The qualifiers here decorate the identifier, not the this pointer.
 - `(` DECLARATOR `)`
-- (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) [QUALIFIERS] DECLARATOR
+- (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
 - DECLARATOR `[` [EXPR] `]`
 - DECLARATOR `(` {TYPE [DECLARATOR] [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` `decltype` `(` (EXPR) `)` | `override` | `=` `0`}
 
@@ -76,13 +93,13 @@ Declarator starts as early as it can
 - [`static` | `virtual`] TYPE-SINGLE-DECLARATOR (`;` | STAT)
 
 ## Struct / Class
-- [TEMPLATE-SPEC] (`class` | `struct`) [IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
+- [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
 
 ## Enum
-- `enum` [`class` | `struct`] [IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
+- `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
 
 ## Union
-- [TEMPLATE-SPEC] `union` [IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
+- [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
 
 # TYPE (Type)
 - `auto`
