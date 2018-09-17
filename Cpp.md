@@ -51,12 +51,12 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 ## DECLARATOR
 Declarator starts as early as it can
 - [TYPE `::`] IDENTIFIER
-- [CALL] TYPE `::` `*` [`alignas` `(` EXPR `)`] [CALL] [QUALIFIERS] [CALL] IDENTIFIER
+- [CALL] TYPE `::` `*` {`alignas` `(` EXPR `)` | CALL | QUALIFIERS} IDENTIFIER
   - The qualifiers here decorate the identifier, not the this pointer.
 - `(` DECLARATOR `)`
 - (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) [QUALIFIERS] DECLARATOR
 - DECLARATOR `[` [EXPR] `]`
-- DECLARATOR `(` {TYPE [DECLARATOR] [INITIALIZER] `,` ...} `)` [QUALIFIERS] [EXCEPTION-SPEC] [`->` `decltype` `(` (EXPR) `)`]
+- DECLARATOR `(` {TYPE [DECLARATOR] [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` `decltype` `(` (EXPR) `)` | `override` | `=` `0`}
 
 ## Simple Declarations
 - **Friend**: `friend` DECL `;`
@@ -66,10 +66,23 @@ Declarator starts as early as it can
 - **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
 - **Variable**: {`register` | `static` | `thread_local`} TYPE {DECLARATOR [INITIALIZER] `,` ...}+ `;`
 - **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
+- **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
+
+## TEMPLATE-SPEC
+
+## SPECIALIZATION-SPEC
 
 ## Function
+- [`static` | `virtual`] TYPE-SINGLE-DECLARATOR (`;` | STAT)
 
 ## Struct / Class
+- [TEMPLATE-SPEC] (`class` | `struct`) [IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
+
+## Enum
+- `enum` [`class` | `struct`] [IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
+
+## Union
+- [TEMPLATE-SPEC] `union` [IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
 
 # TYPE (Type)
 - `auto`
@@ -84,12 +97,34 @@ Declarator starts as early as it can
 - TYPE `...`
 
 # STAT (Statement)
-- {EXPR `,` ...}+
+- IDENTIFIER `:` STAT
+- `default` `:` STAT
+- `case` EXPR `:` STAT
+- `;`
+- `{` {STAT ...} `}`
+- {EXPR `,` ...}+ `;`
+- DECL
+- `break` `;`
+- `continue` `;`
+- `while` `(` EXPR `)` STAT
+- `do` STAT `while` `(` EXPR `)` `;`
+- `for` ([TYPE {[DECLARATOR] [INITIALIZER] `,` ...}] `;` [EXPR] `;` [EXPR]) STAT
+- `for` (TYPE-SINGLE-DECLARATOR `:` EXPR) STAT
+- `if` [`constexpr`] `(` [TYPE IDENTIFIER `=`] EXPR `)` STAT [`else` STAT]
+- `switch` `(` {STAT} EXPR `)` `{` STAT `}`
+- `try` STAT `catch` `(` TYPE-OPTIONAL-DECLARATOR `)` STAT
+- `return` EXPR `;`
+- `goto` IDENTIFIER `;`
+- `__try` STAT `__except` `(` EXPR `)` STAT
+- `__try` STAT `__finally` STAT
+- `__leave` `;`
+- (`__if_exists` | `__if_not_exists`) `(` EXPR `)` STAT
 
 # EXPR (Expression)
 - LITERAL
 - `this`
-- [TYPE `::`] IDENTIFIER
+- `nullptr`
+- [TYPE `::`] [`~`] IDENTIFIER
 - `(` EXPR `)`
 - EXPR (`.` | `->` | `.*` | `->*`) IDENTIFIER
 - EXPR `(` {EXPR `,` ...} `)`
@@ -104,6 +139,7 @@ Declarator starts as early as it can
 - [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
 - [`::`] `delete` [`[` `]`] EXPR
 - `throw` EXPR
+- Lambda Expression (edit)
 
 ## Operators:
 [Built-in Operators, Precedence and Associativity](https://docs.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=vs-2017)
