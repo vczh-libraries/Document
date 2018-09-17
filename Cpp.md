@@ -79,11 +79,31 @@ Declarator starts as early as it can
 - `void` | `bool`
 - `char` | `wchar_t` | `char16_t` | `char32_t`
 - [`signed` | `unsigned`] (`__int8` | `__int16` | `__int32` | `__int64` | `__m64` | `__m128` | `__m128d` | `__m128i`)
+- [TYPE `::`] IDENTIFIER
 - TYPE `<` {(TYPE | EXPR) `,` ...}+ `>`
+- TYPE `...`
 
 # STAT (Statement)
+- {EXPR `,` ...}+
 
 # EXPR (Expression)
+- LITERAL
+- `this`
+- [TYPE `::`] IDENTIFIER
+- `(` EXPR `)`
+- EXPR (`.` | `->` | `.*` | `->*`) IDENTIFIER
+- EXPR `(` {EXPR `,` ...} `)`
+- EXPR `[` EXPR `]`
+- EXPR `...`
+- Prefix / Postfix unary operator expressions
+- Binary operator expressions
+- EXPR `?` EXPR `:` EXPR
+- (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
+- (`typeid` | `sizeof`) `(` (EXPR | TYPE) `)`
+- `(` TYPE `)` EXPR
+- [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
+- [`::`] `delete` [`[` `]`] EXPR
+- `throw` EXPR
 
 ## Operators:
 [Built-in Operators, Precedence and Associativity](https://docs.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=vs-2017)
