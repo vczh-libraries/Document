@@ -61,6 +61,9 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - `(` {EXPR `,` ...} `)`
   -  When this initializer is ambiguous a function declaration, the initializer wins.
 
+## FUNCTION-TAIL
+- `(` {TYPE [DECLARATOR] [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override` | `=` `0` | `constexpr` | `mutable`}
+
 ## DECLARATOR
 Declarator starts as early as it can
 - IDENTIFIER
@@ -73,7 +76,7 @@ Declarator starts as early as it can
 - `(` DECLARATOR `)`
 - (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
 - DECLARATOR `[` [EXPR] `]`
-- DECLARATOR `(` {TYPE [DECLARATOR] [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` `decltype` `(` (EXPR) `)` | `override` | `=` `0`}
+- DECLARATOR FUNCTION-TAIL
 
 ## Simple Declarations
 - **Friend**: `friend` DECL `;`
@@ -81,7 +84,7 @@ Declarator starts as early as it can
 - **Type definition**: `typedef` TYPE {DECLARATOR `,` ...}+ `;`
 - **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
 - **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
-- **Variable**: {`register` | `static` | `thread_local`} TYPE {DECLARATOR [INITIALIZER] `,` ...}+ `;`
+- **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE {DECLARATOR [INITIALIZER] `,` ...}+ `;`
 - **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
 - **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
 
@@ -103,6 +106,7 @@ Declarator starts as early as it can
 
 # TYPE (Type)
 - `auto`
+- `decltype` `(` (EXPR) `)`
 - (`constexpr` | `const` | `volatile`) TYPE <declarators-here>
 - TYPE (`constexpr` | `const` | `volatile`) <declarators-here>
 - TYPE (`*` | `&` | `&&`) <declarators-here>
@@ -156,7 +160,7 @@ Declarator starts as early as it can
 - [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
 - [`::`] `delete` [`[` `]`] EXPR
 - `throw` EXPR
-- Lambda Expression (edit)
+- `[` {`&` | `=` | [IDENTIFIER `=`] EXPR | } `]` FUNCTION-TAIL STAT
 
 ## Operators:
 [Built-in Operators, Precedence and Associativity](https://docs.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=vs-2017)
