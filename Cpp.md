@@ -52,7 +52,6 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ## EXCEPTION-SPEC
 - `noexcept`
-- `nothrow`
 - `throw` `(` {TYPE `,` ...} `)`
 
 ## INITIALIZER
@@ -66,7 +65,8 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ## DECLARATOR
 Declarator starts as early as it can
-- IDENTIFIER
+- `operator` OPERATOR
+- IDENTIFIER [SPECIALIZATION-SPEC]
 - SPECIFIERS DECLARATOR
 - CALL DECLARATOR
 - QUALIFIERS DECLARATOR
@@ -89,11 +89,18 @@ Declarator starts as early as it can
 - **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
 
 ## TEMPLATE-SPEC
+- `template` `<` {TEMPLATE-SPEC-ITEM `,` ...} `>`
+
+## TEMPLATE-SPEC-ITEM
+- TYPE-OPTIONAL-DECORATOR [INITIALIZER]
+- (`template`|`class`) [`...`] [IDENTIFIER] [`=` TYPE]
+- TEMPLATE-SPEC `class` [IDENTIFIER] [`=` TYPE]
 
 ## SPECIALIZATION-SPEC
+- `<` {TYPE | EXPR} `>`
 
 ## Function
-- [`static` | `virtual`] TYPE-SINGLE-DECLARATOR (`;` | STAT)
+- {`static` | `virtual` | `explicit` | `implicit` | `inline` | `__forceinline`} TYPE-SINGLE-DECLARATOR (`;` | STAT)
 
 ## Struct / Class
 - [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
@@ -113,7 +120,7 @@ Declarator starts as early as it can
 - `void` | `bool`
 - `char` | `wchar_t` | `char16_t` | `char32_t`
 - [`signed` | `unsigned`] (`__int8` | `__int16` | `__int32` | `__int64` | `__m64` | `__m128` | `__m128d` | `__m128i`)
-- [TYPE `::`] IDENTIFIER
+- [TYPE `::` [`typename`]] IDENTIFIER
 - TYPE `<` {(TYPE | EXPR) `,` ...}+ `>`
 - TYPE `...`
 
