@@ -31,7 +31,7 @@ Consumable UTF-32 code points:
 - `X | Y`: alternation
 
 
-# DECL (Declaration)
+# Declarations
 A type parser function has a parameter for declarator configurations.
 
 ## SPECIFIERS
@@ -78,16 +78,6 @@ Declarator starts as early as it can
 - DECLARATOR `[` [EXPR] `]`
 - DECLARATOR FUNCTION-TAIL
 
-## Simple Declarations
-- **Friend**: `friend` DECL `;`
-- **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
-- **Type definition**: `typedef` TYPE {DECLARATOR `,` ...}+ `;`
-- **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
-- **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
-- **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE {DECLARATOR [INITIALIZER] `,` ...}+ `;`
-- **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
-- **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
-
 ## TEMPLATE-SPEC
 - `template` `<` {TEMPLATE-SPEC-ITEM `,` ...} `>`
 
@@ -99,17 +89,29 @@ Declarator starts as early as it can
 ## SPECIALIZATION-SPEC
 - `<` {TYPE | EXPR} `>`
 
-## Function
-- {`static` | `virtual` | `explicit` | `implicit` | `inline` | `__forceinline`} TYPE-SINGLE-DECLARATOR (`;` | STAT)
+## FUNCTION
+- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `implicit` | `inline` | `__forceinline`} TYPE-SINGLE-DECLARATOR (`;` | STAT)
 
-## Struct / Class
-- [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
+## CLASS_STRUCT
+- [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
 
-## Enum
-- `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
+## ENUM
+- `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}`
 
-## Union
-- [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}` {DECLARATOR [INITIALIZER] `,` ...}] `;`
+## UNION
+- [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}`
+
+## DECL
+- **Friend**: `friend` DECL `;`
+- **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
+- **Type definition**: `typedef` (TYPE | CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;`
+  - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
+- **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
+- **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
+- **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE {DECLARATOR [INITIALIZER] `,` ...}+ `;`
+- **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
+- **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
+- FUNCTION
 
 # TYPE (Type)
 - `auto`
