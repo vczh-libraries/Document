@@ -33,16 +33,17 @@ Ptr<RegexLexer> CreateCppLexer()
 	DEFINE_TOKEN(SHARP, L"#");
 
 	DEFINE_TOKEN(INT, L"(/d+('/d+)*)[uU]?[lL]?");
-	DEFINE_TOKEN(HEX, L"0[xX][0-9a-fA-F][uU]?[lL]?");
+	DEFINE_TOKEN(HEX, L"0[xX][0-9a-fA-F]+[uU]?[lL]?");
 	DEFINE_TOKEN(BIN, L"0[bB][01]+[uU]?[lL]?");
 	DEFINE_TOKEN(FLOAT, L"(/d+.|./d+|/d+./d+)([eE][+/-]?/d+)?[fFlL]?");
 	DEFINE_TOKEN(STRING, L"([uUL]|u8)?\"([^/\\\"]|/\\/.)*\"");
 	DEFINE_TOKEN(CHAR, L"([uUL]|u8)?'([^/\\']|/\\/.)*'");
+	DEFINE_TOKEN(ID, L"[a-zA-Z_][a-zA-Z0-9_]*");
 
 	DEFINE_TOKEN(SPACE, L"/s+");
 	DEFINE_TOKEN(DOCUMENT, L"//////[^\r\n]*");
 	DEFINE_TOKEN(COMMENT1, L"////[^\r\n]*");
-	DEFINE_TOKEN(COMMENT2, L"///*([^*]|/*+[^*//])*/*//");
+	DEFINE_TOKEN(COMMENT2, L"///*([^*]|/*+[^*//])*/*+//");
 
 #undef DEFINE_TOKEN
 

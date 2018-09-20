@@ -93,8 +93,10 @@ vint CheckTokens(List<RegexToken>& tokens)
 				}
 				else if (length > 1)
 				{
-					TEST_ASSERT(reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L');
-					length -= 1;
+					if (reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
+					{
+						length -= 1;
+					}
 				}
 
 				for (vint i = 0; i < length; i++)
@@ -119,8 +121,10 @@ vint CheckTokens(List<RegexToken>& tokens)
 				}
 				else if (length > 1)
 				{
-					TEST_ASSERT(reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L');
-					length -= 1;
+					if (reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
+					{
+						length -= 1;
+					}
 				}
 
 				for (vint i = 0; i < length; i++)
@@ -145,8 +149,10 @@ vint CheckTokens(List<RegexToken>& tokens)
 				}
 				else if (length > 1)
 				{
-					TEST_ASSERT(reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L');
-					length -= 1;
+					if (reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
+					{
+						length -= 1;
+					}
 				}
 
 				for (vint i = 0; i < length; i++)
@@ -159,17 +165,30 @@ vint CheckTokens(List<RegexToken>& tokens)
 			{
 				vint _1 = 0, _2 = 0;
 				auto reading = token.reading;
-				while (L'0' <= *reading && *reading >= L'9')_1++;
-				auto dot = reading;
-				TEST_ASSERT(*dot == L'.');
-				while (L'0' <= *reading && *reading >= L'9')_2++;
+				auto length = token.length;
+				if (reading[length - 1] == L'f' || reading[length - 1] == L'F' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
+				{
+					length--;
+				}
+
+				while (L'0' <= *reading && *reading <= L'9')
+				{
+					reading++;
+					_1++;
+				}
+				TEST_ASSERT(*reading++ == L'.');
+				while (L'0' <= *reading && *reading <= L'9')
+				{
+					reading++;
+					_2++;
+				}
 				TEST_ASSERT(_1 > 0 || _2 > 0);
 
 				if (*reading == L'e' || *reading == L'E')
 				{
 					reading++;
-					if (*reading == L'+' || *reading == L'-')reading++;
-					while (reading < token.reading + token.length)
+					if (*reading == L'+' || *reading == L'-') reading++;
+					while (reading < token.reading + length)
 					{
 						TEST_ASSERT(L'0' <= *reading && *reading <= L'9');
 						reading++;
@@ -177,22 +196,33 @@ vint CheckTokens(List<RegexToken>& tokens)
 				}
 				else
 				{
-					TEST_ASSERT(token.length == _1 + _2 + 1);
+					TEST_ASSERT(length == _1 + _2 + 1);
+				}
+			}
+			break;
+		case CppTokens::ID:
+			{
+				auto reading = token.reading;
+				TEST_ASSERT((L'a' <= reading[0] && reading[0] <= L'z') || (L'A' <= reading[0] && reading[0] <= L'Z') || reading[0] == L'_');
+				for (vint i = 1; i < token.length; i++)
+				{
+					TEST_ASSERT((L'0' <= reading[i] && reading[i] <= L'9') || (L'a' <= reading[i] && reading[i] <= L'z') || (L'A' <= reading[i] && reading[i] <= L'Z') || reading[0] == L'_');
 				}
 			}
 			break;
 		case CppTokens::STRING:
 			{
 				auto reading = token.reading;
-				if (wcsncmp(reading, L"L'", 2) == 0) reading += 2;
-				else if (wcsncmp(reading, L"u'", 2) == 0) reading += 2;
-				else if (wcsncmp(reading, L"U'", 2) == 0) reading += 2;
-				else if (wcsncmp(reading, L"u8'", 2) == 0) reading += 3;
-				else if (wcsncmp(reading, L"'", 2) == 0) reading += 1;
+				if (wcsncmp(reading, L"L\"", 2) == 0) reading += 2;
+				else if (wcsncmp(reading, L"u\"", 2) == 0) reading += 2;
+				else if (wcsncmp(reading, L"U\"", 2) == 0) reading += 2;
+				else if (wcsncmp(reading, L"u8\"", 3) == 0) reading += 3;
+				else if (wcsncmp(reading, L"\"", 1) == 0) reading += 1;
 				else TEST_ASSERT(false);
 
 				while (*reading != L'\"')
 				{
+					TEST_ASSERT(*reading != 0);
 					reading += (*reading == L'\\' ? 2 : 1);
 				}
 				TEST_ASSERT(token.length == (vint)(reading - token.reading + 1));
@@ -204,8 +234,8 @@ vint CheckTokens(List<RegexToken>& tokens)
 				if (wcsncmp(reading, L"L'", 2) == 0) reading += 2;
 				else if (wcsncmp(reading, L"u'", 2) == 0) reading += 2;
 				else if (wcsncmp(reading, L"U'", 2) == 0) reading += 2;
-				else if (wcsncmp(reading, L"u8'", 2) == 0) reading += 3;
-				else if (wcsncmp(reading, L"'", 2) == 0) reading += 1;
+				else if (wcsncmp(reading, L"u8'", 3) == 0) reading += 3;
+				else if (wcsncmp(reading, L"'", 1) == 0) reading += 1;
 				else TEST_ASSERT(false);
 
 				if (reading[0] == L'\\')
@@ -252,8 +282,8 @@ vint CheckTokens(List<RegexToken>& tokens)
 				TEST_ASSERT(token.length >= 4);
 				TEST_ASSERT(token.reading[0] == L'/');
 				TEST_ASSERT(token.reading[1] == L'*');
-				TEST_ASSERT(token.reading[token.length - 2] != L'*');
-				TEST_ASSERT(token.reading[token.length - 1] != L'/');
+				TEST_ASSERT(token.reading[token.length - 2] == L'*');
+				TEST_ASSERT(token.reading[token.length - 1] == L'/');
 				TEST_ASSERT(wcsstr(token.reading, L"*/") == token.reading + token.length - 2);
 			}
 			break;
@@ -266,7 +296,7 @@ vint CheckTokens(List<RegexToken>& tokens)
 
 TEST_CASE(TestLexer_Punctuators)
 {
-	auto input = LR"({}[]()<>=!%:;.?,*+-/^&|~#)";
+	WString input = LR"({}[]()<>=!%:;.?,*+-/^&|~#)";
 	List<RegexToken> tokens;
 	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
 	TEST_ASSERT(CheckTokens(tokens) == 25);
@@ -274,7 +304,7 @@ TEST_CASE(TestLexer_Punctuators)
 
 TEST_CASE(TestLexer_Numbers)
 {
-	auto input = LR"(
+	WString input = LR"(
 123
 123'123'123u
 123l
@@ -301,7 +331,7 @@ TEST_CASE(TestLexer_Numbers)
 
 TEST_CASE(TestLexer_Strings)
 {
-	auto input = LR"(
+	WString input = LR"(
 "abc"
 L"\"\"xxxx\"\""
 u"xxxx\"\"xxxx"
@@ -320,7 +350,7 @@ u8'\''
 
 TEST_CASE(TestLexer_Comments)
 {
-	auto input = LR"(
+	WString input = LR"(
 //
 //xxxxx
 ///
@@ -337,9 +367,24 @@ TEST_CASE(TestLexer_Comments)
 	TEST_ASSERT(CheckTokens(tokens) == 21);
 }
 
+TEST_CASE(TestLexer_HelloWorld)
+{
+	WString input = LR"(
+using namespace std;
+
+int main()
+{
+	cout << "Hello, world!" << endl;
+}
+)";
+	List<RegexToken> tokens;
+	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
+	TEST_ASSERT(CheckTokens(tokens) == 31);
+}
+
 TEST_CASE(TestLexer_GacUI_Input)
 {
-	auto input = LR"()";
+	WString input = LR"()";
 	List<RegexToken> tokens;
 	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
 	TEST_ASSERT(CheckTokens(tokens) == 0);
