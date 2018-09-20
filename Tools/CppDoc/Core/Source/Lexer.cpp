@@ -39,8 +39,8 @@ Ptr<RegexLexer> CreateCppLexer()
 	DEFINE_TOKEN(CHAR, L"([uUL]|u8)?'([^/\\']|/\\/.)*'");
 
 	DEFINE_TOKEN(SPACE, L"/s+");
-	DEFINE_TOKEN(DOCUMENT, L"//////[^\n]*");
-	DEFINE_TOKEN(COMMENT1, L"////[^\n]*");
+	DEFINE_TOKEN(DOCUMENT, L"//////[^\r\n]*");
+	DEFINE_TOKEN(COMMENT1, L"////[^\r\n]*");
 	DEFINE_TOKEN(COMMENT2, L"///*([^*]|/*+[^*//])*/*//");
 
 #undef DEFINE_TOKEN
