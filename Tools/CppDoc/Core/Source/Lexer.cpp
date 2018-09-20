@@ -30,6 +30,7 @@ Ptr<RegexLexer> CreateCppLexer()
 	DEFINE_TOKEN(AND, L"&");
 	DEFINE_TOKEN(OR, L"/|");
 	DEFINE_TOKEN(REVERT, L"~");
+	DEFINE_TOKEN(SHARP, L"#");
 
 	DEFINE_TOKEN(INT, L"(/d+('/d+)*)[uU]?[lL]?");
 	DEFINE_TOKEN(HEX, L"0[xX][0-9a-fA-F][uU]?[lL]?");
