@@ -78,6 +78,9 @@ vint CheckTokens(List<RegexToken>& tokens)
 		case CppTokens::REVERT:
 			TEST_ASSERT(token.length == 1 && *token.reading == L'~');
 			break;
+		case CppTokens::SHARP:
+			TEST_ASSERT(token.length == 1 && *token.reading == L'#');
+			break;
 		case CppTokens::INT:
 			{
 				auto reading = token.reading;
@@ -263,34 +266,75 @@ vint CheckTokens(List<RegexToken>& tokens)
 
 TEST_CASE(TestLexer_Punctuators)
 {
-	auto input = LR"()";
+	auto input = LR"({}[]()<>=!%:;.?,*+-/^&|~#)";
 	List<RegexToken> tokens;
 	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
-	TEST_ASSERT(CheckTokens(tokens) == 0);
+	TEST_ASSERT(CheckTokens(tokens) == 25);
 }
 
 TEST_CASE(TestLexer_Numbers)
 {
-	auto input = LR"()";
+	auto input = LR"(
+123
+123'123'123u
+123l
+123'123'123UL
+0x12345678
+0xDEADBEEFu
+0X12345678l
+0XDEADBEEFUL
+0b00001111
+0b11110000u
+0B00001111l
+0B11110000UL
+123.456
+123.f
+.456l
+123.456e10
+123.e+10F
+.456e-10L
+)";
 	List<RegexToken> tokens;
 	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
-	TEST_ASSERT(CheckTokens(tokens) == 0);
+	TEST_ASSERT(CheckTokens(tokens) == 37);
 }
 
 TEST_CASE(TestLexer_Strings)
 {
-	auto input = LR"()";
+	auto input = LR"(
+"abc"
+L"\"\"xxxx\"\""
+u"xxxx\"\"xxxx"
+U"\"\"xxxx\"\""
+u8"xxxx\"\"xxxx"
+'a'
+L'\''
+u'\''
+U'\''
+u8'\''
+)";
 	List<RegexToken> tokens;
 	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
-	TEST_ASSERT(CheckTokens(tokens) == 0);
+	TEST_ASSERT(CheckTokens(tokens) == 21);
 }
 
 TEST_CASE(TestLexer_Comments)
 {
-	auto input = LR"()";
+	auto input = LR"(
+//
+//xxxxx
+///
+///xxxxx
+/**/
+/********/
+/* xxxxx */
+/* xx*xx */
+/* xx**x */
+/* x***x */
+)";
 	List<RegexToken> tokens;
 	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
-	TEST_ASSERT(CheckTokens(tokens) == 0);
+	TEST_ASSERT(CheckTokens(tokens) == 21);
 }
 
 TEST_CASE(TestLexer_GacUI_Input)
