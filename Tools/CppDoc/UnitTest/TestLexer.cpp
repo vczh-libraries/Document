@@ -206,7 +206,7 @@ vint CheckTokens(List<RegexToken>& tokens)
 				TEST_ASSERT((L'a' <= reading[0] && reading[0] <= L'z') || (L'A' <= reading[0] && reading[0] <= L'Z') || reading[0] == L'_');
 				for (vint i = 1; i < token.length; i++)
 				{
-					TEST_ASSERT((L'0' <= reading[i] && reading[i] <= L'9') || (L'a' <= reading[i] && reading[i] <= L'z') || (L'A' <= reading[i] && reading[i] <= L'Z') || reading[0] == L'_');
+					TEST_ASSERT((L'0' <= reading[i] && reading[i] <= L'9') || (L'a' <= reading[i] && reading[i] <= L'z') || (L'A' <= reading[i] && reading[i] <= L'Z') || reading[i] == L'_');
 				}
 			}
 			break;
@@ -238,16 +238,12 @@ vint CheckTokens(List<RegexToken>& tokens)
 				else if (wcsncmp(reading, L"'", 1) == 0) reading += 1;
 				else TEST_ASSERT(false);
 
-				if (reading[0] == L'\\')
+				while (*reading != L'\'')
 				{
-					TEST_ASSERT(reading[2] == L'\'');
-					TEST_ASSERT(token.length == (vint)(reading - token.reading + 3));
+					TEST_ASSERT(*reading != 0);
+					reading += (*reading == L'\\' ? 2 : 1);
 				}
-				else
-				{
-					TEST_ASSERT(reading[1] == L'\'');
-					TEST_ASSERT(token.length == (vint)(reading - token.reading + 2));
-				}
+				TEST_ASSERT(token.length == (vint)(reading - token.reading + 1));
 			}
 			break;
 		case CppTokens::SPACE:
@@ -255,7 +251,7 @@ vint CheckTokens(List<RegexToken>& tokens)
 				for (vint i = 0; i < token.length; i++)
 				{
 					auto c = token.reading[i];
-					TEST_ASSERT(c == L' ' || c == L'\t' || c == L'\r' || c == L'\n');
+					TEST_ASSERT(c == L' ' || c == L'\t' || c == L'\r' || c == L'\n' || c == L'\v' || c == L'\f');
 				}
 			}
 			break;
@@ -384,8 +380,13 @@ int main()
 
 TEST_CASE(TestLexer_GacUI_Input)
 {
-	WString input = LR"()";
+	FilePath inputPath = L"../../../.Output/Import/Preprocessed.txt";
+	TEST_ASSERT(inputPath.IsFile());
+
+	WString input;
+	TEST_ASSERT(File(inputPath).ReadAllTextByBom(input));
+
 	List<RegexToken> tokens;
 	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
-	TEST_ASSERT(CheckTokens(tokens) == 0);
+	CheckTokens(tokens);
 }

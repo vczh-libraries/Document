@@ -40,7 +40,7 @@ Ptr<RegexLexer> CreateCppLexer()
 	DEFINE_TOKEN(CHAR, L"([uUL]|u8)?'([^/\\']|/\\/.)*'");
 	DEFINE_TOKEN(ID, L"[a-zA-Z_][a-zA-Z0-9_]*");
 
-	DEFINE_TOKEN(SPACE, L"/s+");
+	DEFINE_TOKEN(SPACE, L"[ \t\r\n\v\f]+");
 	DEFINE_TOKEN(DOCUMENT, L"//////[^\r\n]*");
 	DEFINE_TOKEN(COMMENT1, L"////[^\r\n]*");
 	DEFINE_TOKEN(COMMENT2, L"///*([^*]|/*+[^*//])*/*+//");

@@ -6,6 +6,8 @@
 using namespace vl;
 using namespace vl::collections;
 using namespace vl::regex;
+using namespace vl::stream;
+using namespace vl::filesystem;
 
 enum class CppTokens
 {
