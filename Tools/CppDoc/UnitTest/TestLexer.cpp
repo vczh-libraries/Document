@@ -409,10 +409,41 @@ int main()
 		L"/// <returns>This value is not used.</returns>",
 		L"int", L"main", L"(", L")",
 		L"{",
-		L"cout", L"<", L"<", L"\"Hello, world!\"", L"<", L"<", L"end", L";",
+		L"cout", L"<", L"<", L"\"Hello, world!\"", L"<", L"<", L"endl", L";",
 		L"}",
 	};
 
-
 	CppTokenReader reader(input);
+	const vint CursorCount = 3;
+	const vint TokenCount = sizeof(output) / sizeof(*output);
+
+	vint counts[CursorCount] = { 0 };
+	Ptr<CppTokenCursor> cursors[CursorCount];
+	for (vint i = 0; i < CursorCount; i++)
+	{
+		cursors[i] = reader.GetFirstToken();
+	}
+
+	for (vint i = 0; i < TokenCount; i++)
+	{
+		for (vint j = 0; j < CursorCount; j++)
+		{
+			auto& count = counts[j];
+			auto& cursor = cursors[j];
+
+			for (vint k = 0; k <= j; k++)
+			{
+				if (cursor)
+				{
+					auto token = cursor->token;
+					TEST_ASSERT(WString(token.reading, token.length) == output[count++]);
+					cursor = cursor->Next();
+				}
+				else
+				{
+					TEST_ASSERT(count == TokenCount);
+				}
+			}
+		}
+	}
 }
