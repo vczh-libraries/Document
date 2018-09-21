@@ -390,3 +390,29 @@ TEST_CASE(TestLexer_GacUI_Input)
 	CheckTokens(tokens);
 	delete[] buffer;
 }
+
+TEST_CASE(TestLexer_Reader)
+{
+	WString input = LR"(
+using namespace std;
+
+/// <summary>The main function.</summary>
+/// <returns>This value is not used.</returns>
+int main()
+{
+	cout << "Hello, world!" << endl;
+}
+)";
+	const wchar_t* output[] = {
+		L"using", L"namespace", L"std", L";",
+		L"/// <summary>The main function.</summary>",
+		L"/// <returns>This value is not used.</returns>",
+		L"int", L"main", L"(", L")",
+		L"{",
+		L"cout", L"<", L"<", L"\"Hello, world!\"", L"<", L"<", L"end", L";",
+		L"}",
+	};
+
+
+	CppTokenReader reader(input);
+}

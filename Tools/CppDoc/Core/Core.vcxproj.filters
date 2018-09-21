@@ -30,6 +30,9 @@
     <ClInclude Include="Source\Utility.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Parser.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Lexer.cpp">
@@ -39,6 +42,12 @@
       <Filter>Import</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Expr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Decl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

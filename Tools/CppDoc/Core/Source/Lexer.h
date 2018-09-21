@@ -9,6 +9,10 @@ using namespace vl::regex;
 using namespace vl::stream;
 using namespace vl::filesystem;
 
+/***********************************************************************
+Definition
+***********************************************************************/
+
 enum class CppTokens
 {
 	LBRACE, RBRACE,
@@ -24,5 +28,44 @@ enum class CppTokens
 };
 
 extern Ptr<RegexLexer> CreateCppLexer();
+
+/***********************************************************************
+Reader
+***********************************************************************/
+
+class CppTokenCursor;
+class CppTokenReader;
+
+class CppTokenCursor
+{
+	friend class CppTokenReader;
+private:
+	CppTokenReader*				reader;
+	Ptr<CppTokenCursor>			next;
+
+	CppTokenCursor(CppTokenReader* _reader, RegexToken _token);
+public:
+	RegexToken					token;
+
+	Ptr<CppTokenCursor>			Next();
+};
+
+class CppTokenReader : public Object
+{
+	friend class CppTokenCursor;
+protected:
+	Ptr<RegexLexer>				lexer;
+	Ptr<RegexTokens>			tokens;
+	IEnumerator<RegexToken>*	tokenEnumerator;
+
+	Ptr<CppTokenCursor>			firstToken;
+
+	Ptr<CppTokenCursor>			CreateNextToken();
+public:
+	CppTokenReader(const WString& input);
+	~CppTokenReader();
+
+	Ptr<CppTokenCursor>			GetFirstToken();
+};
 
 #endif
