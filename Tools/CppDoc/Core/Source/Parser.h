@@ -42,6 +42,11 @@ public:
 	CppName					name;
 };
 
+class Expr : public Object
+{
+public:
+};
+
 /***********************************************************************
 Types
 ***********************************************************************/
@@ -140,6 +145,12 @@ public:
 	Ptr<Type>				parent;
 	CppName					name;
 	Symbol*					resolvedSymbol = nullptr;
+};
+
+struct GenericParameter
+{
+	Ptr<Type>				type;
+	Ptr<Expr>				expr;
 };
 
 class GenericType : public Type
