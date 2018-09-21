@@ -150,6 +150,7 @@
     <ClInclude Include="..\..\..\Import\Vlpp.h" />
     <ClInclude Include="Source\IncludeAll.h" />
     <ClInclude Include="Source\Lexer.h" />
+    <ClInclude Include="Source\Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Import\Vlpp.cpp">
@@ -159,6 +160,7 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="Source\Lexer.cpp" />
+    <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

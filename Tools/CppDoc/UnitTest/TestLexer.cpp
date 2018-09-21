@@ -383,10 +383,10 @@ TEST_CASE(TestLexer_GacUI_Input)
 	FilePath inputPath = L"../../../.Output/Import/Preprocessed.txt";
 	TEST_ASSERT(inputPath.IsFile());
 
-	WString input;
-	TEST_ASSERT(File(inputPath).ReadAllTextByBom(input));
+	wchar_t* buffer = ReadBigFile(inputPath);
 
 	List<RegexToken> tokens;
-	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
+	CreateCppLexer()->Parse(WString(buffer, false)).ReadToEnd(tokens);
 	CheckTokens(tokens);
+	delete[] buffer;
 }
