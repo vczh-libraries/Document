@@ -32,7 +32,11 @@ Consumable UTF-32 code points:
 
 
 # Declarations
-A type parser function has a parameter for declarator configurations.
+- Type parser function: parse a type, with zero, optional or more declarator.
+  - zero declarator: still need a declarator, but it cannot have an identity name. e.g. type in generic type
+  - optional declarator: the declarator has optional identity name. e.g. function parameter
+  - else: each declarator should have an identity name. e.g. variable declaration
+- Declarator parser function: parse a type, with (maybe) optional identity name.
 
 ## SPECIFIERS
 Specifiers can be put before any declaration, it will be ignored by the tool
@@ -61,36 +65,34 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   -  When this initializer is ambiguous a function declaration, the initializer wins.
 
 ## FUNCTION-TAIL
-- `(` {TYPE [DECLARATOR] [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override` | `=` `0` | `constexpr` | `mutable`}
+- `(` {TYPE-OPTIONAL [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override` | `=` `0` | `constexpr` | `mutable`}
 
 ## DECLARATOR
-Declarator starts as early as it can
 - `operator` OPERATOR
 - IDENTIFIER [SPECIALIZATION-SPEC]
 - SPECIFIERS DECLARATOR
 - CALL DECLARATOR
-- QUALIFIERS DECLARATOR
 - `alignas` `(` EXPR `)` DECLARATOR
-- TYPE `::` [`*`] DECLARATOR
+- TYPE `::` DECLARATOR
   - The qualifiers here decorate the identifier, not the this pointer.
 - `(` DECLARATOR `)`
 - (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
+- (`constexpr` | `const` | `volatile`) DECLARATOR
 - DECLARATOR `[` [EXPR] `]`
 - DECLARATOR FUNCTION-TAIL
 
 ## TEMPLATE-SPEC
 - `template` `<` {TEMPLATE-SPEC-ITEM `,` ...} `>`
-
-## TEMPLATE-SPEC-ITEM
-- TYPE-OPTIONAL-DECORATOR [INITIALIZER]
-- (`template`|`class`) [`...`] [IDENTIFIER] [`=` TYPE]
-- TEMPLATE-SPEC `class` [IDENTIFIER] [`=` TYPE]
+- **TEMPLATE-SPEC-ITEM**:
+  - TYPE-OPTIONAL-INITIALIZER
+  - (`template`|`class`) [`...`] [IDENTIFIER] [`=` TYPE]
+  - TEMPLATE-SPEC `class` [IDENTIFIER] [`=` TYPE]
 
 ## SPECIALIZATION-SPEC
 - `<` {TYPE | EXPR} `>`
 
 ## FUNCTION
-- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `implicit` | `inline` | `__forceinline`} TYPE-SINGLE-DECLARATOR (`;` | STAT)
+- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `implicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT)
 
 ## CLASS_STRUCT
 - [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
@@ -104,11 +106,15 @@ Declarator starts as early as it can
 ## DECL
 - **Friend**: `friend` DECL `;`
 - **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
-- **Type definition**: `typedef` (TYPE | CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;`
+- **Type definition**: (CLASS_STRUCT | ENUM | UNION) {DECLARATOR [INITIALIZER] `,` ...}+ `;`
   - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
+- **Type alias**:
+  - `typedef` (CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;`
+  - `typedef` TYPE-MULTIPLE-INITIALIZER `;`
+  - [TEMPLATE-SPEC] `using` NAME = TYPE-ZERO `;`
 - **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
 - **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
-- **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE {DECLARATOR [INITIALIZER] `,` ...}+ `;`
+- **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`
 - **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
 - **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
 - FUNCTION
@@ -118,7 +124,7 @@ Declarator starts as early as it can
 - `decltype` `(` (EXPR) `)`
 - (`constexpr` | `const` | `volatile`) TYPE <declarators-here>
 - TYPE (`constexpr` | `const` | `volatile`) <declarators-here>
-- TYPE (`*` | `&` | `&&`) <declarators-here>
+- TYPE <declarators-here>
 - `void` | `bool`
 - `char` | `wchar_t` | `char16_t` | `char32_t`
 - [`signed` | `unsigned`] (`__int8` | `__int16` | `__int32` | `__int64` | `__m64` | `__m128` | `__m128d` | `__m128i`)
