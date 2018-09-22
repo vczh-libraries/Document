@@ -99,7 +99,7 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	throw StopParsingException(cursor);
 }
 
-Ptr<Declarator> ParseDeclarator(ParsingArguments& pa, DecoratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor)
+Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	Ptr<Type> typeResult = ParseShortType(pa, cursor);
 
@@ -155,6 +155,13 @@ Ptr<Declarator> ParseDeclarator(ParsingArguments& pa, DecoratorRestriction dr, I
 			break;
 		}
 	}
+
+	return typeResult;
+}
+
+Ptr<Declarator> ParseDeclarator(ParsingArguments& pa, DecoratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor)
+{
+	Ptr<Type> typeResult = ParseLongType(pa, cursor);
 
 	auto declarator = MakePtr<Declarator>();
 	declarator->type = typeResult;
