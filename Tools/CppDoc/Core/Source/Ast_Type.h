@@ -44,7 +44,7 @@ public:
 	ITypeVisitor_ACCEPT;
 
 	CppName					name;
-	List<Symbol*>			resolvedSymbols;
+	Ptr<Resolving>			resolving;
 };
 
 enum class CppPrimitiveType
@@ -156,7 +156,7 @@ public:
 
 	Ptr<Type>				parent;
 	CppName					name;
-	List<Symbol*>			resolvedSymbols;
+	Ptr<Resolving>			resolving;
 };
 
 struct GenericArgument

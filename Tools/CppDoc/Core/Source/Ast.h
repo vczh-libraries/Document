@@ -4,7 +4,7 @@
 #include "Lexer.h"
 
 /***********************************************************************
-Basic Concept
+Symbol
 ***********************************************************************/
 
 class Symbol;
@@ -16,6 +16,16 @@ struct CppName
 	WString					name;
 	RegexToken				nameTokens[4];
 };
+
+class Resolving : public Object
+{
+public:
+	List<Symbol*>			resolvedSymbols;
+};
+
+/***********************************************************************
+AST
+***********************************************************************/
 
 class IDeclarationVisitor;
 class Declaration : public Object
@@ -48,6 +58,10 @@ public:
 	virtual void			Accept(IStatVisitor* visitor) = 0;
 };
 
+/***********************************************************************
+Declarator
+***********************************************************************/
+
 enum class InitializerType
 {
 	Equal,
@@ -57,6 +71,7 @@ enum class InitializerType
 
 class Initializer : public Object
 {
+public:
 	InitializerType			initializerType;
 	List<Ptr<Expr>>			arguments;
 };

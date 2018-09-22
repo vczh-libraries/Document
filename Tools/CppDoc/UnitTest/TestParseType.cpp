@@ -10,13 +10,16 @@ void AssertType(const WString& type, const WString& log)
 	auto cursor = reader.GetFirstToken();
 
 	ParsingArguments pa;
-	auto decorator = ParseDeclarator(pa, DecoratorRestriction::Zero, InitializerRestriction::Zero, cursor);
+	List<Ptr<Declarator>> declarators;
+	ParseDeclarator(pa, DecoratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
 	TEST_ASSERT(!cursor);
-
+	TEST_ASSERT(declarators.Count() == 1);
+	TEST_ASSERT(declarators[0]->name.nameTokens == 0);
+	TEST_ASSERT(declarators[0]->initializer == nullptr);
 
 	auto output = GenerateToStream([&](StreamWriter& writer)
 	{
-		Log(decorator->type, writer);
+		Log(declarators[0]->type, writer);
 	});
 	TEST_ASSERT(output == log);
 }

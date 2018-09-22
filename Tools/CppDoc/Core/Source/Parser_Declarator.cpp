@@ -132,9 +132,14 @@ Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			type->type = typeResult;
 			while (!TestToken(cursor, CppTokens::GT))
 			{
-				GenericArgument argument;
-				argument.type = ParseDeclarator(pa, DecoratorRestriction::Zero, InitializerRestriction::Zero, cursor)->type;
-				type->arguments.Add(argument);
+				{
+					GenericArgument argument;
+					List<Ptr<Declarator>> declarators;
+					ParseDeclarator(pa, DecoratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
+					argument.type = declarators[0]->type;
+					type->arguments.Add(argument);
+				}
+
 				if (TestToken(cursor, CppTokens::GT))
 				{
 					break;
@@ -161,11 +166,77 @@ Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	return typeResult;
 }
 
-Ptr<Declarator> ParseDeclarator(ParsingArguments& pa, DecoratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor)
+Ptr<Declarator> ParseDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, DecoratorRestriction dr, Ptr<CppTokenCursor>& cursor)
+{
+}
+
+Ptr<Initializer> ParseInitializer(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	auto initializer = MakePtr<Initializer>();
+
+	if (TestToken(cursor, CppTokens::EQ))
+	{
+		initializer->initializerType = InitializerType::Equal;
+	}
+	else if (TestToken(cursor, CppTokens::LBRACE))
+	{
+		initializer->initializerType = InitializerType::Universal;
+	}
+	else if (TestToken(cursor, CppTokens::LPARENTHESIS))
+	{
+		initializer->initializerType = InitializerType::Constructor;
+	}
+
+	while (true)
+	{
+		initializer->arguments.Add(ParseExpr(pa, cursor));
+
+		if (initializer->initializerType == InitializerType::Equal)
+		{
+			break;
+		}
+		else if (!TestToken(cursor, CppTokens::COMMA))
+		{
+			switch (initializer->initializerType)
+			{
+			case InitializerType::Universal:
+				RequireToken(cursor, CppTokens::RBRACE);
+				break;
+			case InitializerType::Constructor:
+				RequireToken(cursor, CppTokens::RPARENTHESIS);
+				break;
+			}
+			break;
+		}
+	}
+
+	return initializer;
+}
+
+void ParseDeclarator(ParsingArguments& pa, DecoratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
 	Ptr<Type> typeResult = ParseLongType(pa, cursor);
 
-	auto declarator = MakePtr<Declarator>();
-	declarator->type = typeResult;
-	return declarator;
+	auto itemDr = dr == DecoratorRestriction::Many ? DecoratorRestriction::One : dr;
+	while(true)
+	{
+		auto declarator = ParseDeclarator(pa, typeResult, itemDr, cursor);
+		if (ir == InitializerRestriction::Optional)
+		{
+			if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LBRACE, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))
+			{
+				declarator->initializer = ParseInitializer(pa, cursor);
+			}
+		}
+		declarators.Add(declarator);
+
+		if (dr != DecoratorRestriction::Many)
+		{
+			break;
+		}
+		else if (!TestToken(cursor, CppTokens::COMMA))
+		{
+			break;
+		}
+	}
 }
