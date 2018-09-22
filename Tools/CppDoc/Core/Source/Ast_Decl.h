@@ -4,6 +4,34 @@
 #include "Ast.h"
 
 /***********************************************************************
+Visitor
+***********************************************************************/
+
+#define CPPDOC_DECL_LIST(F)\
+	F(ForwardClassDeclaration)\
+	F(ForwardEnumDeclaration)\
+	F(VariableDeclaration)\
+	F(FunctionDeclaration)\
+	F(TypeAliasDeclaration)\
+	F(ClassDeclaration)\
+	F(UsingDeclaration)\
+	F(NamespaceDeclaration)\
+
+#define CPPDOC_FORWARD(NAME) class NAME;
+CPPDOC_DECL_LIST(CPPDOC_FORWARD)
+#undef CPPDOC_FORWARD
+
+class IDeclarationVisitor abstract : public virtual Interface
+{
+public:
+#define CPPDOC_VISIT(NAME) virtual void Visit(NAME* self) = 0;
+	CPPDOC_DECL_LIST(CPPDOC_VISIT)
+#undef CPPDOC_VISIT
+};
+
+#define IDeclarationVisitor_ACCEPT void Accept(IDeclarationVisitor* visitor)override
+
+/***********************************************************************
 Declarations
 ***********************************************************************/
 
@@ -24,7 +52,7 @@ enum class ClassType
 	Union,
 };
 
-class SpecializableDeclaration : public Object
+class SpecializableDeclaration : public Declaration
 {
 public:
 	Ptr<TemplateSpec>		templateSpec;
@@ -34,17 +62,22 @@ public:
 class ForwardClassDeclaration : public SpecializableDeclaration
 {
 public:
+	IDeclarationVisitor_ACCEPT;
+
 	ClassType				classType;
 };
 
 class ForwardEnumDeclaration : public Declaration
 {
 public:
+	IDeclarationVisitor_ACCEPT;
 };
 
 class VariableDeclaration : public Declaration
 {
 public:
+	IDeclarationVisitor_ACCEPT;
+
 	Ptr<Type>				type;
 	bool					externVariable = false;
 	Ptr<Expr>				initializer;
@@ -60,6 +93,8 @@ enum class MethodType
 class FunctionDeclaration : public SpecializableDeclaration
 {
 public:
+	IDeclarationVisitor_ACCEPT;
+
 	Ptr<Type>				type;
 	MethodType				methodType;
 	bool					externFunction = false;
@@ -69,6 +104,8 @@ public:
 class TypeAliasDeclaration : public Declaration
 {
 public:
+	IDeclarationVisitor_ACCEPT;
+
 	Ptr<TemplateSpec>		templateSpec;
 	Ptr<Type>				type;
 };
@@ -83,6 +120,8 @@ enum class ClassAccessor
 class ClassDeclaration : public SpecializableDeclaration
 {
 public:
+	IDeclarationVisitor_ACCEPT;
+
 	ClassType										classType;
 	List<Tuple<ClassAccessor ,Ptr<Type>>>			baseTypes;
 	List<Tuple<ClassAccessor ,Ptr<Declaration>>>	decls;
@@ -93,12 +132,16 @@ public:
 class UsingDeclaration : public Declaration
 {
 public:
+	IDeclarationVisitor_ACCEPT;
+
 	Ptr<Type>				type;
 };
 
 class NamespaceDeclaration : public Declaration
 {
 public:
+	IDeclarationVisitor_ACCEPT;
+
 	List<Ptr<Declaration>>	decls;
 };
 
