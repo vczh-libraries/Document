@@ -1,6 +1,8 @@
 #include <Lexer.h>
 #include <Utility.h>
 
+extern Ptr<RegexLexer> GlobalCppLexer();
+
 vint CheckTokens(List<RegexToken>& tokens)
 {
 	FOREACH(RegexToken, token, tokens)
@@ -295,7 +297,7 @@ TEST_CASE(TestLexer_Punctuators)
 {
 	WString input = LR"({}[]()<>=!%:;.?,*+-/^&|~#)";
 	List<RegexToken> tokens;
-	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
+	GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
 	TEST_ASSERT(CheckTokens(tokens) == 25);
 }
 
@@ -322,7 +324,7 @@ TEST_CASE(TestLexer_Numbers)
 .456e-10L
 )";
 	List<RegexToken> tokens;
-	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
+	GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
 	TEST_ASSERT(CheckTokens(tokens) == 37);
 }
 
@@ -341,7 +343,7 @@ U'\''
 u8'\''
 )";
 	List<RegexToken> tokens;
-	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
+	GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
 	TEST_ASSERT(CheckTokens(tokens) == 21);
 }
 
@@ -360,7 +362,7 @@ TEST_CASE(TestLexer_Comments)
 /* x***x */
 )";
 	List<RegexToken> tokens;
-	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
+	GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
 	TEST_ASSERT(CheckTokens(tokens) == 21);
 }
 
@@ -375,7 +377,7 @@ int main()
 }
 )";
 	List<RegexToken> tokens;
-	CreateCppLexer()->Parse(input).ReadToEnd(tokens);
+	GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
 	TEST_ASSERT(CheckTokens(tokens) == 31);
 }
 
@@ -387,7 +389,7 @@ TEST_CASE(TestLexer_GacUI_Input)
 	wchar_t* buffer = ReadBigFile(inputPath);
 
 	List<RegexToken> tokens;
-	CreateCppLexer()->Parse(WString(buffer, false)).ReadToEnd(tokens);
+	GlobalCppLexer()->Parse(WString(buffer, false)).ReadToEnd(tokens);
 	CheckTokens(tokens);
 	delete[] buffer;
 }

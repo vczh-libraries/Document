@@ -22,7 +22,7 @@ class IdType : public Type
 {
 public:
 	CppName					name;
-	Symbol*					resolvedSymbol = nullptr;
+	List<Symbol*>			resolvedSymbols;
 };
 
 class PrimitiveType : public Type
@@ -90,12 +90,13 @@ public:
 	bool					isVolatile = false;
 };
 
+// if parent is null, then it is from the root
 class ChildType : public Type
 {
 public:
 	Ptr<Type>				parent;
 	CppName					name;
-	Symbol*					resolvedSymbol = nullptr;
+	List<Symbol*>			resolvedSymbols;
 };
 
 struct GenericParameter

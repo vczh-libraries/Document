@@ -23,7 +23,15 @@ public:
 Parsers
 ***********************************************************************/
 
-extern Ptr<Declaration> ParseDecl(Ptr<Symbol> root, Ptr<Symbol> context, Ptr<CppTokenCursor>& cursor);
+enum class DecoratorRestriction
+{
+	Zero,
+	Optional,
+	One,
+	Many,
+};
+
+extern Ptr<Declaration> ParseDecl(Ptr<Symbol> root, Ptr<Symbol> context, DecoratorRestriction dr, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Expr> ParseExpr(Ptr<Symbol> root, Ptr<Symbol> context, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Stat> ParseStat(Ptr<Symbol> root, Ptr<Symbol> context, Ptr<CppTokenCursor>& cursor);
 
