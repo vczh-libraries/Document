@@ -17,16 +17,21 @@ struct CppName
 	RegexToken				nameTokens[4];
 };
 
+class IDeclarationVisitor;
 class Declaration : public Object
 {
 public:
 	CppName					name;
 	Symbol*					symbol = nullptr;
+
+	virtual void			Accept(IDeclarationVisitor* visitor) = 0;
 };
 
+class ITypeVisitor;
 class Type : public Object
 {
 public:
+	virtual void			Accept(ITypeVisitor* visitor) = 0;
 };
 
 class Declarator : public Object

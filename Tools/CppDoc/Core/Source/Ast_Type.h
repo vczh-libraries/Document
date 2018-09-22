@@ -4,8 +4,48 @@
 #include "Ast.h"
 
 /***********************************************************************
+Visitor
+***********************************************************************/
+
+#define CPPDOC_TYPE_LIST(F)\
+	F(IdType)\
+	F(PrimitiveType)\
+	F(ReferenceType)\
+	F(ArrayType)\
+	F(FunctionType)\
+	F(MemberType)\
+	F(DeclType)\
+	F(DecorateType)\
+	F(ChildType)\
+	F(GenericType)\
+	F(VariadicTemplateArgumentType)\
+
+#define CPPDOC_FORWARD(NAME) class NAME;
+CPPDOC_TYPE_LIST(CPPDOC_FORWARD)
+#undef CPPDOC_FORWARD
+
+class ITypeVisitor abstract : public virtual Interface
+{
+public:
+#define CPPDOC_VISIT(NAME) virtual void Visit(NAME* self) = 0;
+	CPPDOC_TYPE_LIST(CPPDOC_VISIT)
+#undef CPPDOC_VISIT
+};
+
+#define ITypeVisitor_ACCEPT void Accept(ITypeVisitor* visitor)override
+
+/***********************************************************************
 Types
 ***********************************************************************/
+
+class IdType : public Type
+{
+public:
+	ITypeVisitor_ACCEPT;
+
+	CppName					name;
+	List<Symbol*>			resolvedSymbols;
+};
 
 enum class CppPrimitiveType
 {
@@ -18,16 +58,11 @@ enum class CppPrimitiveType
 	_float, _double, _long_double,
 };
 
-class IdType : public Type
-{
-public:
-	CppName					name;
-	List<Symbol*>			resolvedSymbols;
-};
-
 class PrimitiveType : public Type
 {
 public:
+	ITypeVisitor_ACCEPT;
+
 	CppPrimitiveType		primitive;
 };
 
@@ -41,6 +76,8 @@ enum class CppReferenceType
 class ReferenceType : public Type
 {
 public:
+	ITypeVisitor_ACCEPT;
+
 	CppReferenceType		reference;
 	Ptr<Type>				type;
 };
@@ -48,6 +85,8 @@ public:
 class ArrayType : public Type
 {
 public:
+	ITypeVisitor_ACCEPT;
+
 	Ptr<Type>				type;
 };
 
@@ -64,6 +103,8 @@ enum class CppCallingConvention
 class FunctionType : public Type
 {
 public:
+	ITypeVisitor_ACCEPT;
+
 	CppCallingConvention	callingConvention;
 	Ptr<Type>				returnType;
 	List<Ptr<Declarator>>	parameters;
@@ -72,6 +113,8 @@ public:
 class MemberType : public Type
 {
 public:
+	ITypeVisitor_ACCEPT;
+
 	Ptr<Type>				classType;
 	Ptr<Type>				type;
 };
@@ -79,11 +122,14 @@ public:
 class DeclType : public Type
 {
 public:
+	ITypeVisitor_ACCEPT;
 };
 
 class DecorateType : public Type
 {
 public:
+	ITypeVisitor_ACCEPT;
+
 	Ptr<Type>				type;
 	bool					isConstExpr = false;
 	bool					isConst = false;
@@ -94,6 +140,8 @@ public:
 class ChildType : public Type
 {
 public:
+	ITypeVisitor_ACCEPT;
+
 	Ptr<Type>				parent;
 	CppName					name;
 	List<Symbol*>			resolvedSymbols;
@@ -108,6 +156,8 @@ struct GenericParameter
 class GenericType : public Type
 {
 public:
+	ITypeVisitor_ACCEPT;
+
 	Ptr<Type>				parent;
 	List<Ptr<Type>>			arguments;
 };
@@ -115,6 +165,8 @@ public:
 class VariadicTemplateArgumentType : public Type
 {
 public:
+	ITypeVisitor_ACCEPT;
+
 	Ptr<Type>				type;
 };
 

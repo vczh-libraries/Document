@@ -83,5 +83,8 @@
     <ClCompile Include="Source\Parser_Declaration.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Ast.cpp">
+      <Filter>Source Files\Ast</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
