@@ -23,6 +23,11 @@ public:
 Parsers
 ***********************************************************************/
 
+class IndexRecorder : public Object
+{
+public:
+};
+
 enum class DecoratorRestriction
 {
 	Zero,
@@ -31,8 +36,20 @@ enum class DecoratorRestriction
 	Many,
 };
 
-extern Ptr<Declaration> ParseDecl(Ptr<Symbol> root, Ptr<Symbol> context, DecoratorRestriction dr, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Expr> ParseExpr(Ptr<Symbol> root, Ptr<Symbol> context, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Stat> ParseStat(Ptr<Symbol> root, Ptr<Symbol> context, Ptr<CppTokenCursor>& cursor);
+struct ParsingArguments
+{
+	Ptr<Symbol> root;
+	Ptr<Symbol> context;
+	Ptr<IndexRecorder> recorder;
+
+	ParsingArguments();
+	ParsingArguments(Ptr<Symbol> _root, Ptr<IndexRecorder> _recorder);
+	ParsingArguments(ParsingArguments& pa, Ptr<Symbol> _context);
+};
+
+extern Ptr<Declarator> ParseDeclarator(ParsingArguments& pa, DecoratorRestriction dr, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Declaration> ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Expr> ParseExpr(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Stat> ParseStat(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 #endif

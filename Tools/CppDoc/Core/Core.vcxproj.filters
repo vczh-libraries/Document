@@ -68,9 +68,6 @@
     <ClCompile Include="Source\Lexer.cpp">
       <Filter>Source Files\Lexer</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Parser_Decl.cpp">
-      <Filter>Source Files\Parser</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Parser_Expr.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
@@ -78,6 +75,12 @@
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
     <ClCompile Include="Source\Parser.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declarator.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
   </ItemGroup>
