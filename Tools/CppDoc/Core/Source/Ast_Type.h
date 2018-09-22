@@ -53,9 +53,15 @@ enum class CppPrimitiveType
 	_void,
 	_bool,
 	_char, _wchar_t, _char16_t, _char32_t,
-	_signed_short, _signed_int, _signed___int8, _signed___int16, _signed___int32, _signed___int64, _signed_long, _signed_long_long,
-	_unsigned_short, _unsigned_int, _unsigned___int8, _unsigned___int16, _unsigned___int32, _unsigned___int64, _unsigned_long, _unsigned_long_long,
+	_short, _int, ___int8, ___int16, ___int32, ___int64, _long, _long_long,
 	_float, _double, _long_double,
+};
+
+enum class CppPrimitivePrefix
+{
+	_none,
+	_signed,
+	_unsigned,
 };
 
 class PrimitiveType : public Type
@@ -63,7 +69,11 @@ class PrimitiveType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
+	CppPrimitivePrefix		prefix;
 	CppPrimitiveType		primitive;
+
+	PrimitiveType() {}
+	PrimitiveType(CppPrimitivePrefix _prefix, CppPrimitiveType _primitive) :prefix(_prefix), primitive(_primitive) {}
 };
 
 enum class CppReferenceType
@@ -123,6 +133,8 @@ class DeclType : public Type
 {
 public:
 	ITypeVisitor_ACCEPT;
+
+	Ptr<Expr>				expr;
 };
 
 class DecorateType : public Type

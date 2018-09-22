@@ -36,6 +36,12 @@ enum class DecoratorRestriction
 	Many,
 };
 
+enum class InitializerRestriction
+{
+	Zero,
+	Optional,
+};
+
 struct ParsingArguments
 {
 	Ptr<Symbol>				root;
@@ -55,9 +61,116 @@ struct StopParsingException
 	StopParsingException(Ptr<CppTokenCursor> _position) :position(_position) {}
 };
 
-extern Ptr<Declarator> ParseDeclarator(ParsingArguments& pa, DecoratorRestriction dr, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Declarator> ParseDeclarator(ParsingArguments& pa, DecoratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Declaration> ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Expr> ParseExpr(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Stat> ParseStat(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+
+/***********************************************************************
+Helpers
+***********************************************************************/
+
+__forceinline bool TestToken(Ptr<CppTokenCursor> cursor, const wchar_t* content, bool autoSkip = true)
+{
+	vint length = (vint)wcslen(content);
+	if (cursor && cursor->token.length == length && wcsncmp(cursor->token.reading, content, length) == 0)
+	{
+		if (autoSkip) cursor = cursor->Next();
+		return true;
+	}
+	return false;
+}
+
+__forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, bool autoSkip = true)
+{
+	if (cursor && (CppTokens)cursor->token.token == token1)
+	{
+		if (autoSkip) cursor = cursor->Next();
+		return true;
+	}
+	return false;
+}
+
+#define TEST_AND_SKIP(TOKEN)\
+	if (TestToken(current, TOKEN, false) && current->token.start == start)\
+	{\
+		start += current->token.length;\
+		current = current->Next();\
+	}\
+	else\
+	{\
+		return false;\
+	}\
+
+__forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, CppTokens token2, bool autoSkip = true)
+{
+	if (auto current = cursor)
+	{
+		vint start = current->token.start;
+		TEST_AND_SKIP(token1);
+		TEST_AND_SKIP(token2);
+		if (autoSkip) cursor = current;
+		return true;
+	}
+	return false;
+}
+
+__forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, CppTokens token2, CppTokens token3, bool autoSkip = true)
+{
+	if (auto current = cursor)
+	{
+		vint start = current->token.start;
+		TEST_AND_SKIP(token1);
+		TEST_AND_SKIP(token2);
+		TEST_AND_SKIP(token3);
+		if (autoSkip) cursor = current;
+		return true;
+	}
+	return false;
+}
+
+__forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, const wchar_t* content)
+{
+	if (!TestToken(cursor, content))
+	{
+		throw StopParsingException(cursor);
+	}
+}
+
+__forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, CppTokens token1)
+{
+	if (!TestToken(cursor, token1))
+	{
+		throw StopParsingException(cursor);
+	}
+}
+
+__forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, CppTokens token2)
+{
+	if (!TestToken(cursor, token1, token2))
+	{
+		throw StopParsingException(cursor);
+	}
+}
+
+__forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, CppTokens token2, CppTokens token3)
+{
+	if (!TestToken(cursor, token1, token2, token3))
+	{
+		throw StopParsingException(cursor);
+	}
+}
+
+__forceinline void SkipToken(Ptr<CppTokenCursor>& cursor)
+{
+	if (cursor)
+	{
+		cursor = cursor->Next();
+	}
+	else
+	{
+		throw StopParsingException(cursor);
+	}
+}
 
 #endif

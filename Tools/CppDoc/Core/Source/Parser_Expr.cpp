@@ -15,7 +15,7 @@ Ptr<Expr> ParseExpr(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			{
 				auto literal = MakePtr<LiteralExpr>();
 				literal->tokens.Add(cursor->token);
-				cursor = cursor->Next();
+				SkipToken(cursor);
 				return literal;
 			}
 		case CppTokens::STRING:
@@ -24,7 +24,7 @@ Ptr<Expr> ParseExpr(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				while (cursor && (CppTokens)cursor->token.token == CppTokens::STRING)
 				{
 					literal->tokens.Add(cursor->token);
-					cursor = cursor->Next();
+					SkipToken(cursor);
 				}
 				return literal;
 			}
