@@ -159,7 +159,7 @@ public:
 	List<Symbol*>			resolvedSymbols;
 };
 
-struct GenericParameter
+struct GenericArgument
 {
 	Ptr<Type>				type;
 	Ptr<Expr>				expr;
@@ -170,8 +170,8 @@ class GenericType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<Type>				parent;
-	List<Ptr<Type>>			arguments;
+	Ptr<Type>				type;
+	List<GenericArgument>	arguments;
 };
 
 class VariadicTemplateArgumentType : public Type

@@ -129,10 +129,12 @@ Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		else if (TestToken(cursor, CppTokens::LT))
 		{
 			auto type = MakePtr<GenericType>();
-			type->parent = typeResult;
+			type->type = typeResult;
 			while (!TestToken(cursor, CppTokens::GT))
 			{
-				type->arguments.Add(ParseDeclarator(pa, DecoratorRestriction::Zero, InitializerRestriction::Zero, cursor)->type);
+				GenericArgument argument;
+				argument.type = ParseDeclarator(pa, DecoratorRestriction::Zero, InitializerRestriction::Zero, cursor)->type;
+				type->arguments.Add(argument);
 				if (TestToken(cursor, CppTokens::GT))
 				{
 					break;

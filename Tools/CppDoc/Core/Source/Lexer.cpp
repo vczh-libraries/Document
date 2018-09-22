@@ -95,9 +95,9 @@ Ptr<CppTokenCursor> CppTokenReader::CreateNextToken()
 	return nullptr;
 }
 
-CppTokenReader::CppTokenReader(const WString& input)
+CppTokenReader::CppTokenReader(Ptr<RegexLexer> _lexer, const WString& input)
+	:lexer(_lexer)
 {
-	lexer = CreateCppLexer();
 	tokens = new RegexTokens(lexer->Parse(input));
 	tokenEnumerator = tokens->CreateEnumerator();
 

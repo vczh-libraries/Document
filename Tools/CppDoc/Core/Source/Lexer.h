@@ -62,7 +62,7 @@ protected:
 
 	Ptr<CppTokenCursor>			CreateNextToken();
 public:
-	CppTokenReader(const WString& input);
+	CppTokenReader(Ptr<RegexLexer> _lexer, const WString& input);
 	~CppTokenReader();
 
 	Ptr<CppTokenCursor>			GetFirstToken();
