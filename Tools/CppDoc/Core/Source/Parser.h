@@ -38,13 +38,21 @@ enum class DecoratorRestriction
 
 struct ParsingArguments
 {
-	Ptr<Symbol> root;
-	Ptr<Symbol> context;
-	Ptr<IndexRecorder> recorder;
+	Ptr<Symbol>				root;
+	Ptr<Symbol>				context;
+	Ptr<IndexRecorder>		recorder;
 
 	ParsingArguments();
 	ParsingArguments(Ptr<Symbol> _root, Ptr<IndexRecorder> _recorder);
 	ParsingArguments(ParsingArguments& pa, Ptr<Symbol> _context);
+};
+
+struct StopParsingException
+{
+	Ptr<CppTokenCursor>		position;
+
+	StopParsingException() {}
+	StopParsingException(Ptr<CppTokenCursor> _position) :position(_position) {}
 };
 
 extern Ptr<Declarator> ParseDeclarator(ParsingArguments& pa, DecoratorRestriction dr, Ptr<CppTokenCursor>& cursor);

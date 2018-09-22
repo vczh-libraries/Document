@@ -12,7 +12,7 @@ class Symbol;
 struct CppName
 {
 	bool					operatorName = false;
-	vint					tokenCount = 1;
+	vint					tokenCount = 0;
 	WString					name;
 	RegexToken				nameTokens[4];
 };
@@ -34,22 +34,40 @@ public:
 	virtual void			Accept(ITypeVisitor* visitor) = 0;
 };
 
+class IExprVisitor;
+class Expr : public Object
+{
+public:
+	virtual void			Accept(IExprVisitor* visitor) = 0;
+};
+
+class IStatVisitor;
+class Stat : public Object
+{
+public:
+	virtual void			Accept(IStatVisitor* visitor) = 0;
+};
+
+enum class InitializerType
+{
+	Equal,
+	Constructor,
+	Universal,
+};
+
+class Initializer : public Object
+{
+	InitializerType			initializerType;
+	List<Ptr<Expr>>			arguments;
+};
+
 class Declarator : public Object
 {
 public:
 	Ptr<Type>				type;
 	CppName					name;
-	Symbol*					symbol = nullptr;
-};
-
-class Expr : public Object
-{
-public:
-};
-
-class Stat : public Object
-{
-public:
+	Symbol*					createdSymbol = nullptr;
+	Ptr<Initializer>		initializer;
 };
 
 #endif

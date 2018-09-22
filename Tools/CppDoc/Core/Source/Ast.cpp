@@ -11,3 +11,11 @@ CPPDOC_TYPE_LIST(CPPDOC_ACCEPT)
 #define CPPDOC_ACCEPT(NAME) void NAME::Accept(IDeclarationVisitor* visitor) { visitor->Visit(this); }
 CPPDOC_DECL_LIST(CPPDOC_ACCEPT)
 #undef CPPDOC_ACCEPT
+
+#define CPPDOC_ACCEPT(NAME) void NAME::Accept(IExprVisitor* visitor) { visitor->Visit(this); }
+CPPDOC_EXPR_LIST(CPPDOC_ACCEPT)
+#undef CPPDOC_ACCEPT
+
+#define CPPDOC_ACCEPT(NAME) void NAME::Accept(IStatVisitor* visitor) { visitor->Visit(this); }
+CPPDOC_STAT_LIST(CPPDOC_ACCEPT)
+#undef CPPDOC_ACCEPT

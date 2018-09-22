@@ -65,6 +65,7 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	ClassType				classType;
+	bool					friendClass = false;
 };
 
 class ForwardEnumDeclaration : public Declaration
@@ -98,6 +99,7 @@ public:
 	Ptr<Type>				type;
 	MethodType				methodType;
 	bool					externFunction = false;
+	bool					friendFunction = false;
 	Ptr<Stat>				statement;
 };
 
