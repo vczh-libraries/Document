@@ -68,18 +68,18 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - `(` {TYPE-OPTIONAL [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override` | `=` `0` | `constexpr` | `mutable`}
 
 ## DECLARATOR
-- `operator` OPERATOR
-- IDENTIFIER [SPECIALIZATION-SPEC]
-- SPECIFIERS DECLARATOR
-- CALL DECLARATOR
-- `alignas` `(` EXPR `)` DECLARATOR
-- TYPE `::` DECLARATOR
+- [ ] `operator` OPERATOR
+- [ ] IDENTIFIER [SPECIALIZATION-SPEC]
+- [ ] SPECIFIERS DECLARATOR
+- [ ] CALL DECLARATOR
+- [ ] `alignas` `(` EXPR `)` DECLARATOR
+- [ ] TYPE `::` DECLARATOR
   - The qualifiers here decorate the identifier, not the this pointer.
-- `(` DECLARATOR `)`
-- (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
-- (`constexpr` | `const` | `volatile`) DECLARATOR
-- DECLARATOR `[` [EXPR] `]`
-- DECLARATOR FUNCTION-TAIL
+- [ ] `(` DECLARATOR `)`
+- [ ] (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
+- [ ] (`constexpr` | `const` | `volatile`) DECLARATOR
+- [ ] DECLARATOR `[` [EXPR] `]`
+- [ ] DECLARATOR FUNCTION-TAIL
 
 ## TEMPLATE-SPEC
 - `template` `<` {TEMPLATE-SPEC-ITEM `,` ...} `>`
@@ -92,90 +92,89 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - `<` {TYPE | EXPR} `>`
 
 ## FUNCTION
-- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `implicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT)
+- [ ] [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `implicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT)
 
 ## CLASS_STRUCT
-- [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
+- [ ] [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
 
 ## ENUM
-- `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}`
+- [ ] `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}`
 
 ## UNION
-- [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}`
+- [ ] [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}`
 
 ## DECL
-- **Friend**: `friend` DECL `;`
-- **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
-- **Type definition**: (CLASS_STRUCT | ENUM | UNION) {DECLARATOR [INITIALIZER] `,` ...}+ `;`
-  - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
-- **Type alias**:
-  - `typedef` (CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;`
-  - `typedef` TYPE-MULTIPLE-INITIALIZER `;`
-  - [TEMPLATE-SPEC] `using` NAME = TYPE-ZERO `;`
-- **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
-- **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
-- **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`
-- **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
-- **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
-- FUNCTION
+- [ ] **Friend**: `friend` DECL `;`
+- [ ] **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
+- [ ] **Type definition**: (CLASS_STRUCT | ENUM | UNION) {DECLARATOR [INITIALIZER] `,` ...}+ `;`
+  [ ] - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
+- [ ] **Type alias**:
+  - [ ] `typedef` (CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;`
+  - [ ] `typedef` TYPE-MULTIPLE-INITIALIZER `;`
+  - [ ] [TEMPLATE-SPEC] `using` NAME = TYPE-ZERO `;`
+- [ ] **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
+- [ ] **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
+- [ ] **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`
+- [ ] **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
+- [ ] **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
+- [ ] FUNCTION
 
 # TYPE (Type)
-- `auto`
-- `decltype` `(` (EXPR) `)`
-- (`constexpr` | `const` | `volatile`) TYPE <declarators-here>
-- TYPE (`constexpr` | `const` | `volatile`) <declarators-here>
-- TYPE <declarators-here>
-- `void` | `bool`
-- `char` | `wchar_t` | `char16_t` | `char32_t`
-- [`signed` | `unsigned`] (`__int8` | `__int16` | `__int32` | `__int64` | `__m64` | `__m128` | `__m128d` | `__m128i`)
-- [TYPE `::` [`typename`]] IDENTIFIER
-- TYPE `<` {(TYPE | EXPR) `,` ...}+ `>`
-- TYPE `...`
+- [x] `auto`
+- [x] `decltype` `(` (EXPR) `)`
+- [x] (`constexpr` | `const` | `volatile`) TYPE
+- [x] TYPE (`constexpr` | `const` | `volatile`)
+- [x] `void` | `bool`
+- [x] `char` | `wchar_t` | `char16_t` | `char32_t`
+- [x] [`signed` | `unsigned`] (`__int8` | `__int16` | `__int32` | `__int64` | `__m64` | `__m128` | `__m128d` | `__m128i`)
+- [ ] [TYPE `::` [`typename`]] IDENTIFIER
+- [x] TYPE `<` {(TYPE | EXPR) `,` ...}+ `>`
+- [x] TYPE `...`
 
 # STAT (Statement)
-- IDENTIFIER `:` STAT
-- `default` `:` STAT
-- `case` EXPR `:` STAT
-- `;`
-- `{` {STAT ...} `}`
-- {EXPR `,` ...}+ `;`
-- DECL
-- `break` `;`
-- `continue` `;`
-- `while` `(` EXPR `)` STAT
-- `do` STAT `while` `(` EXPR `)` `;`
-- `for` ([TYPE {[DECLARATOR] [INITIALIZER] `,` ...}] `;` [EXPR] `;` [EXPR]) STAT
-- `for` (TYPE-SINGLE-DECLARATOR `:` EXPR) STAT
-- `if` [`constexpr`] `(` [TYPE IDENTIFIER `=`] EXPR `)` STAT [`else` STAT]
-- `switch` `(` {STAT} EXPR `)` `{` STAT `}`
-- `try` STAT `catch` `(` TYPE-OPTIONAL-DECLARATOR `)` STAT
-- `return` EXPR `;`
-- `goto` IDENTIFIER `;`
-- `__try` STAT `__except` `(` EXPR `)` STAT
-- `__try` STAT `__finally` STAT
-- `__leave` `;`
-- (`__if_exists` | `__if_not_exists`) `(` EXPR `)` STAT
+- [ ] IDENTIFIER `:` STAT
+- [ ] `default` `:` STAT
+- [ ] `case` EXPR `:` STAT
+- [ ] `;`
+- [ ] `{` {STAT ...} `}`
+- [ ] {EXPR `,` ...}+ `;`
+- [ ] DECL
+- [ ] `break` `;`
+- [ ] `continue` `;`
+- [ ] `while` `(` EXPR `)` STAT
+- [ ] `do` STAT `while` `(` EXPR `)` `;`
+- [ ] `for` ([TYPE {[DECLARATOR] [INITIALIZER] `,` ...}] `;` [EXPR] `;` [EXPR]) STAT
+- [ ] `for` (TYPE-SINGLE-DECLARATOR `:` EXPR) STAT
+- [ ] `if` [`constexpr`] `(` [TYPE IDENTIFIER `=`] EXPR `)` STAT [`else` STAT]
+- [ ] `switch` `(` {STAT} EXPR `)` `{` STAT `}`
+- [ ] `try` STAT `catch` `(` TYPE-OPTIONAL-DECLARATOR `)` STAT
+- [ ] `return` EXPR `;`
+- [ ] `goto` IDENTIFIER `;`
+- [ ] `__try` STAT `__except` `(` EXPR `)` STAT
+- [ ] `__try` STAT `__finally` STAT
+- [ ] `__leave` `;`
+- [ ] (`__if_exists` | `__if_not_exists`) `(` EXPR `)` STAT
 
 # EXPR (Expression)
-- LITERAL
-- `this`
-- `nullptr`
-- [TYPE `::`] [`~`] IDENTIFIER
-- `(` EXPR `)`
-- EXPR (`.` | `->` | `.*` | `->*`) IDENTIFIER
-- EXPR `(` {EXPR `,` ...} `)`
-- EXPR `[` EXPR `]`
-- EXPR `...`
-- Prefix / Postfix unary operator expressions
-- Binary operator expressions
-- EXPR `?` EXPR `:` EXPR
-- (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
-- (`typeid` | `sizeof`) `(` (EXPR | TYPE) `)`
-- `(` TYPE `)` EXPR
-- [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
-- [`::`] `delete` [`[` `]`] EXPR
-- `throw` EXPR
-- `[` {`&` | `=` | [IDENTIFIER `=`] EXPR | } `]` FUNCTION-TAIL STAT
+- [ ] LITERAL
+- [ ] `this`
+- [ ] `nullptr`
+- [ ] [TYPE `::`] [`~`] IDENTIFIER
+- [ ] `(` EXPR `)`
+- [ ] EXPR (`.` | `->` | `.*` | `->*`) IDENTIFIER
+- [ ] EXPR `(` {EXPR `,` ...} `)`
+- [ ] EXPR `[` EXPR `]`
+- [ ] EXPR `...`
+- [ ] Prefix / Postfix unary operator expressions
+- [ ] Binary operator expressions
+- [ ] EXPR `?` EXPR `:` EXPR
+- [ ] (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
+- [ ] (`typeid` | `sizeof`) `(` (EXPR | TYPE) `)`
+- [ ] `(` TYPE `)` EXPR
+- [ ] [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
+- [ ] [`::`] `delete` [`[` `]`] EXPR
+- [ ] `throw` EXPR
+- [ ] `[` {`&` | `=` | [IDENTIFIER `=`] EXPR | } `]` FUNCTION-TAIL STAT
 
 ## Operators:
 [Built-in Operators, Precedence and Associativity](https://docs.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=vs-2017)
