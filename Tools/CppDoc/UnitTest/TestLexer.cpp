@@ -416,7 +416,7 @@ int main()
 		L"}",
 	};
 
-	CppTokenReader reader(input);
+	CppTokenReader reader(GlobalCppLexer(), input);
 	const vint CursorCount = 3;
 	const vint TokenCount = sizeof(output) / sizeof(*output);
 

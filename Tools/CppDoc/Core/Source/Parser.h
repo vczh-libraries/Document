@@ -70,7 +70,7 @@ extern Ptr<Stat> ParseStat(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 Helpers
 ***********************************************************************/
 
-__forceinline bool TestToken(Ptr<CppTokenCursor> cursor, const wchar_t* content, bool autoSkip = true)
+__forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, const wchar_t* content, bool autoSkip = true)
 {
 	vint length = (vint)wcslen(content);
 	if (cursor && cursor->token.length == length && wcsncmp(cursor->token.reading, content, length) == 0)
