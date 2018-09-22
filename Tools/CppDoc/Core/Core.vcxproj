@@ -148,6 +148,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Import\Vlpp.h" />
+    <ClInclude Include="Source\Ast.h" />
+    <ClInclude Include="Source\Ast_Decl.h" />
+    <ClInclude Include="Source\Ast_Expr.h" />
+    <ClInclude Include="Source\Ast_Stat.h" />
+    <ClInclude Include="Source\Ast_Type.h" />
     <ClInclude Include="Source\IncludeAll.h" />
     <ClInclude Include="Source\Lexer.h" />
     <ClInclude Include="Source\Parser.h" />
@@ -164,6 +169,7 @@
     <ClCompile Include="Source\Parser.cpp" />
     <ClCompile Include="Source\Parser_Decl.cpp" />
     <ClCompile Include="Source\Parser_Expr.cpp" />
+    <ClCompile Include="Source\Parser_Stat.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

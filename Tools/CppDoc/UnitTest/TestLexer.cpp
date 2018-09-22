@@ -1,4 +1,5 @@
-#include "IncludeAll.h"
+#include <Lexer.h>
+#include <Utility.h>
 
 vint CheckTokens(List<RegexToken>& tokens)
 {

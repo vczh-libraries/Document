@@ -16,12 +16,18 @@
     <Filter Include="Import">
       <UniqueIdentifier>{f199f803-792d-48cd-a606-10853a4cf223}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Lexer">
+      <UniqueIdentifier>{8b961f18-af44-4e95-9f45-91a4e2435760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Ast">
+      <UniqueIdentifier>{3b806664-6543-4d2d-9e5f-388c2be9e682}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parser">
+      <UniqueIdentifier>{6398acdd-44c1-4303-bb34-ffac39750259}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\IncludeAll.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Lexer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Import\Vlpp.h">
@@ -30,28 +36,49 @@
     <ClInclude Include="Source\Utility.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Lexer.h">
+      <Filter>Source Files\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Ast.h">
+      <Filter>Source Files\Ast</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Ast_Decl.h">
+      <Filter>Source Files\Ast</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Ast_Type.h">
+      <Filter>Source Files\Ast</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Ast_Expr.h">
+      <Filter>Source Files\Ast</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Ast_Stat.h">
+      <Filter>Source Files\Ast</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Parser.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Parser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Lexer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Import\Vlpp.cpp">
       <Filter>Import</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Parser_Expr.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\Lexer.cpp">
+      <Filter>Source Files\Lexer</Filter>
     </ClCompile>
     <ClCompile Include="Source\Parser_Decl.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Expr.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Stat.cpp">
+      <Filter>Source Files\Parser</Filter>
     </ClCompile>
     <ClCompile Include="Source\Parser.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Parser</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
