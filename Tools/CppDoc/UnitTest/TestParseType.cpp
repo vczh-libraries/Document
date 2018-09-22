@@ -52,8 +52,17 @@ TEST_CASE(TestParseType_Primitive)
 
 TEST_CASE(TestParseType_Short)
 {
+	AssertType(L"decltype(0)", L"decltype(0)");
+	AssertType(L"constexpr int", L"int constexpr");
+	AssertType(L"const int", L"int const");
+	AssertType(L"volatile int", L"int volatile");
 }
 
 TEST_CASE(TestParseType_Long)
 {
+	AssertType(L"int constexpr", L"int constexpr");
+	AssertType(L"int const", L"int const");
+	AssertType(L"int volatile", L"int volatile");
+	AssertType(L"int ...", L"int...");
+	AssertType(L"int<long, short<float, double>>", L"int<long, short<float, double>>");
 }
