@@ -178,9 +178,61 @@ Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	return typeResult;
 }
 
+bool SkipSpecifiers(Ptr<CppTokenCursor>& cursor)
+{
+	if (TestToken(cursor, CppTokens::LBRACKET, CppTokens::LBRACKET))
+	{
+		int counter = 0;
+		while (cursor)
+		{
+			if (counter == 0)
+			{
+				if (TestToken(cursor, CppTokens::RBRACKET, CppTokens::RBRACKET))
+				{
+					return true;
+				}
+			}
+
+			if (TestToken(cursor, CppTokens::LBRACKET))
+			{
+				counter++;
+			}
+			else if (TestToken(cursor, CppTokens::RBRACKET))
+			{
+				counter--;
+			}
+		}
+		throw StopParsingException(cursor);
+	}
+	else if (TestToken(cursor, L"__declspec"))
+	{
+		RequireToken(cursor, CppTokens::LPARENTHESIS);
+		int counter = 1;
+
+		while (cursor)
+		{
+			if (TestToken(cursor, CppTokens::LPARENTHESIS))
+			{
+				counter++;
+			}
+			else if (TestToken(cursor, CppTokens::RPARENTHESIS))
+			{
+				counter--;
+
+				if (counter == 0)
+				{
+					return true;
+				}
+			}
+		}
+		throw StopParsingException(cursor);
+	}
+	return false;
+}
+
 bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor)
 {
-	if (TestToken(cursor, L"operator", false))
+	if (TestToken(cursor, CppTokens::OPERATOR, false))
 	{
 		auto& token = cursor->token;
 		name.operatorName = true;
@@ -220,6 +272,11 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor)
 			name.name += WString(name.nameTokens[1].reading, name.nameTokens[1].length + name.nameTokens[2].length + name.nameTokens[3].length);\
 		}\
 		else\
+
+		OPERATOR_NAME_3(NEW, LPARENTHESIS, RPARENTHESIS)
+		OPERATOR_NAME_1(NEW)
+		OPERATOR_NAME_3(DELETE, LPARENTHESIS, RPARENTHESIS)
+		OPERATOR_NAME_1(DELETE)
 
 		OPERATOR_NAME_1(COMMA)
 		OPERATOR_NAME_2(LPARENTHESIS, RPARENTHESIS)
@@ -293,6 +350,8 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor)
 
 Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
+	while (SkipSpecifiers(cursor));
+
 	if (TestToken(cursor, L"alignas"))
 	{
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
@@ -361,6 +420,30 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 		type->isVolatile = true;
 		return ParseShortDeclarator(pa, type, dr, cursor);
 	}
+
+#define CALLING_CONVENTION_KEYWORD(KEYWORD, NAME)\
+	else if (TestToken(cursor, L#KEYWORD))\
+	{\
+		if (auto type = typeResult.Cast<FunctionType>())\
+		{\
+			type->callingConvention = CppCallingConvention::NAME;\
+			return ParseShortDeclarator(pa, type, dr, cursor);\
+		}\
+		else\
+		{\
+			throw StopParsingException(cursor);\
+		}\
+	}\
+
+	CALLING_CONVENTION_KEYWORD(__cdecl, CDecl)
+	CALLING_CONVENTION_KEYWORD(__clrcall, ClrCall)
+	CALLING_CONVENTION_KEYWORD(__stdcall, StdCall)
+	CALLING_CONVENTION_KEYWORD(__fastcall, FastCall)
+	CALLING_CONVENTION_KEYWORD(__thiscall, ThisCall)
+	CALLING_CONVENTION_KEYWORD(__vectorcall, VectorCall)
+
+#undef CALLING_CONVENTION_KEYWORD
+
 	else
 	{
 		auto declarator = MakePtr<Declarator>();

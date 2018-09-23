@@ -203,6 +203,15 @@ vint CheckTokens(List<RegexToken>& tokens)
 				}
 			}
 			break;
+		case CppTokens::OPERATOR:
+			TEST_ASSERT(token.length == 8 && wcsncmp(token.reading, L"operator", 8) == 0);
+			break;
+		case CppTokens::NEW:
+			TEST_ASSERT(token.length == 3 && wcsncmp(token.reading, L"new", 3) == 0);
+			break;
+		case CppTokens::DELETE:
+			TEST_ASSERT(token.length == 6 && wcsncmp(token.reading, L"delete", 6) == 0);
+			break;
 		case CppTokens::ID:
 			{
 				auto reading = token.reading;

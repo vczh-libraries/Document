@@ -42,6 +42,10 @@ Ptr<RegexLexer> CreateCppLexer()
 	DEFINE_TOKEN(FLOAT, L"(/d+.|./d+|/d+./d+)([eE][+/-]?/d+)?[fFlL]?");
 	DEFINE_TOKEN(STRING, L"([uUL]|u8)?\"([^/\\\"]|/\\/.)*\"");
 	DEFINE_TOKEN(CHAR, L"([uUL]|u8)?'([^/\\']|/\\/.)*'");
+
+	DEFINE_TOKEN(OPERATOR, L"operator");
+	DEFINE_TOKEN(NEW, L"new");
+	DEFINE_TOKEN(DELETE, L"delete");
 	DEFINE_TOKEN(ID, L"[a-zA-Z_][a-zA-Z0-9_]*");
 
 	DEFINE_TOKEN(SPACE, L"[ \t\r\n\v\f]+");

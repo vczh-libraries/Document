@@ -102,6 +102,7 @@ public:
 
 enum class CppCallingConvention
 {
+	None,
 	CDecl,
 	ClrCall,
 	StdCall,
@@ -115,7 +116,7 @@ class FunctionType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	CppCallingConvention	callingConvention;
+	CppCallingConvention	callingConvention = CppCallingConvention::None;
 	Ptr<Type>				returnType;
 	List<Ptr<Declarator>>	parameters;
 };

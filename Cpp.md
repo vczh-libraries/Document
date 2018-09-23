@@ -70,8 +70,8 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 ## DECLARATOR
 - [x] `operator` OPERATOR
 - [ ] IDENTIFIER [SPECIALIZATION-SPEC]
-- [ ] SPECIFIERS DECLARATOR
-- [ ] CALL DECLARATOR
+- [x] SPECIFIERS DECLARATOR
+- [x] CALL DECLARATOR
 - [x] `alignas` `(` EXPR `)` DECLARATOR
 - [ ] TYPE `::` DECLARATOR
   - The qualifiers here decorate the identifier, not the this pointer.
