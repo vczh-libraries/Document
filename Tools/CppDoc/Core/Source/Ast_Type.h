@@ -38,14 +38,6 @@ public:
 Types
 ***********************************************************************/
 
-class IdenticalType : public Type
-{
-public:
-	ITypeVisitor_ACCEPT;
-
-	Ptr<Type>				type;
-};
-
 class IdType : public Type
 {
 public:

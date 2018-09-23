@@ -2,6 +2,78 @@
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
 
+template<typename T>
+class ReplaceOutOfDeclaratorTypeVisitor : public Object, public virtual ITypeVisitor
+{
+public:
+	Ptr<T>						createdType;
+	Ptr<Type>					typeToReplace;
+	Func<Ptr<T>(Ptr<Type>)>		typeCreator;
+
+	void Execute(Ptr<Type>& targetType)
+	{
+		if (targetType == typeToReplace)
+		{
+			createdType = typeCreator(targetType);
+			targetType = createdType;
+		}
+		else
+		{
+			targetType->Accept(this);
+		}
+	}
+
+	void Visit(IdType* self)override
+	{
+	}
+
+	void Visit(PrimitiveType* self)override
+	{
+	}
+
+	void Visit(ReferenceType* self)override
+	{
+		Execute(self->type);
+	}
+
+	void Visit(ArrayType* self)override
+	{
+		Execute(self->type);
+	}
+
+	void Visit(FunctionType* self)override
+	{
+		Execute(self->returnType);
+	}
+
+	void Visit(MemberType* self)override
+	{
+	}
+
+	void Visit(DeclType* self)override
+	{
+	}
+
+	void Visit(DecorateType* self)override
+	{
+		Execute(self->type);
+	}
+
+	void Visit(ChildType* self)override
+	{
+	}
+
+	void Visit(GenericType* self)override
+	{
+	}
+
+	void Visit(VariadicTemplateArgumentType* self)override
+	{
+	}
+};
+
+
+
 extern Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
@@ -134,7 +206,8 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 Ptr<Declarator> ParseLongDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
 	auto declarator = ParseShortDeclarator(pa, typeResult, dr, cursor);
-	Ptr<IdenticalType> identicalType;
+	auto targetType = declarator->type;
+
 	{
 		auto oldCursor = cursor;
 		if (!declarator->name)
@@ -147,17 +220,13 @@ Ptr<Declarator> ParseLongDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, 
 
 			if (TestToken(cursor, CppTokens::LPARENTHESIS))
 			{
-				identicalType = MakePtr<IdenticalType>();
-				identicalType->type = declarator->type;
-
 				try
 				{
-					declarator = ParseLongDeclarator(pa, identicalType, dr, cursor);
+					declarator = ParseLongDeclarator(pa, targetType, dr, cursor);
 				}
 				catch (const StopParsingException&)
 				{
 					cursor = oldCursor;
-					declarator->type = identicalType->type;
 					goto GIVE_UP;
 				}
 
@@ -173,15 +242,23 @@ GIVE_UP:
 		{
 			if (TestToken(cursor, CppTokens::LBRACKET))
 			{
-				Ptr<Type>& typeToUpdate = identicalType ? identicalType->type : declarator->type;
+				ReplaceOutOfDeclaratorTypeVisitor<ArrayType> replacer;
+				{
+					replacer.typeToReplace = targetType;
+					replacer.typeCreator = [](Ptr<Type> typeToReplace)
+					{
+						auto type = MakePtr<ArrayType>();
+						type->type = typeToReplace;
+						return type;
+					};
 
-				auto type = MakePtr<ArrayType>();
-				type->type = typeToUpdate;
-				typeToUpdate = type;
+					replacer.Execute(declarator->type);
+					targetType = replacer.createdType;
+				}
 
 				if (!TestToken(cursor, CppTokens::RBRACKET))
 				{
-					type->expr = ParseExpr(pa, cursor);
+					replacer.createdType->expr = ParseExpr(pa, cursor);
 					RequireToken(cursor, CppTokens::RBRACKET);
 				}
 			}
@@ -193,24 +270,29 @@ GIVE_UP:
 	}
 	else if (TestToken(cursor, CppTokens::LPARENTHESIS))
 	{
-		Ptr<Type>& typeToUpdate = identicalType ? identicalType->type : declarator->type;
-
-		auto type = typeToUpdate.Cast<FunctionType>();
-
-		if (type)
+		ReplaceOutOfDeclaratorTypeVisitor<FunctionType> replacer;
 		{
-			if (type->waitingForParameters)
+			replacer.typeToReplace = targetType;
+			replacer.typeCreator = [](Ptr<Type> typeToReplace)
 			{
-				type->waitingForParameters = false;
-				goto PARSE_PARAMETERS;
-			}
+				if (auto type = typeToReplace.Cast<FunctionType>())
+				{
+					if (type->waitingForParameters)
+					{
+						type->waitingForParameters = false;
+						return type;
+					}
+				}
+
+				auto type = MakePtr<FunctionType>();
+				type->returnType = typeToReplace;
+				return type;
+			};
+
+			replacer.Execute(declarator->type);
 		}
+		auto type = replacer.createdType;
 
-		type = MakePtr<FunctionType>();
-		type->returnType = typeToUpdate;
-		typeToUpdate = type;
-
-	PARSE_PARAMETERS:
 		while (!TestToken(cursor, CppTokens::RPARENTHESIS))
 		{
 			{
