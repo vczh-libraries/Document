@@ -4,8 +4,55 @@
 #include <Ast_Expr.h>
 #include <Ast_Stat.h>
 
+extern void Log(Ptr<Declarator> declarator, StreamWriter& writer);
 extern void Log(Ptr<Expr> expr, StreamWriter& writer);
 extern void Log(Ptr<Type> type, StreamWriter& writer);
+
+void Log(Ptr<Declarator> declarator, StreamWriter& writer)
+{
+	Log(declarator->type, writer);
+
+	if (declarator->name)
+	{
+		writer.WriteChar(L' ');
+		writer.WriteString(declarator->name.name);
+	}
+
+	if (declarator->initializer)
+	{
+		switch (declarator->initializer->initializerType)
+		{
+		case InitializerType::Equal:
+			writer.WriteString(L" = ");
+			break;
+		case InitializerType::Constructor:
+			writer.WriteChar(L'(');
+			break;
+		case InitializerType::Universal:
+			writer.WriteChar(L'{');
+			break;
+		}
+
+		for (vint i = 0; i < declarator->initializer->arguments.Count(); i++)
+		{
+			if (i != 0)
+			{
+				writer.WriteString(L", ");
+			}
+			Log(declarator->initializer->arguments[i], writer);
+		}
+
+		switch (declarator->initializer->initializerType)
+		{
+		case InitializerType::Constructor:
+			writer.WriteChar(L')');
+			break;
+		case InitializerType::Universal:
+			writer.WriteChar(L'}');
+			break;
+		}
+	}
+}
 
 /***********************************************************************
 LogExprVisitor
@@ -116,7 +163,73 @@ public:
 
 	void Visit(FunctionType* self)override
 	{
-		throw 0;
+		if (self->decoratorReturnType)
+		{
+			writer.WriteChar(L'(');
+			Log(self->returnType, writer);
+			writer.WriteString(L"->");
+			Log(self->decoratorReturnType, writer);
+			writer.WriteChar(L')');
+		}
+		else
+		{
+			Log(self->returnType, writer);
+		}
+
+		switch (self->callingConvention)
+		{
+		case CppCallingConvention::CDecl:
+			writer.WriteString(L" __cdecl");
+			break;
+		case CppCallingConvention::ClrCall:
+			writer.WriteString(L" __clrcall");
+			break;
+		case CppCallingConvention::StdCall:
+			writer.WriteString(L" __stdcall");
+			break;
+		case CppCallingConvention::FastCall:
+			writer.WriteString(L" __fastcall");
+			break;
+		case CppCallingConvention::ThisCall:
+			writer.WriteString(L" __thiscall");
+			break;
+		case CppCallingConvention::VectorCall:
+			writer.WriteString(L" __vectorcall");
+			break;
+		}
+
+		writer.WriteChar(L'(');
+		for (vint i = 0; i < self->parameters.Count(); i++)
+		{
+			if (i != 0)
+			{
+				writer.WriteString(L", ");
+			}
+			Log(self->parameters[i], writer);
+		}
+		writer.WriteChar(L')');
+
+		if (self->qualifierConstExpr) writer.WriteString(L" constexpr");
+		if (self->qualifierConst) writer.WriteString(L" const");
+		if (self->qualifierVolatile) writer.WriteString(L" volatile");
+		if (self->qualifierLRef) writer.WriteString(L" &");
+		if (self->qualifierRRef) writer.WriteString(L" &&");
+
+		if (self->decoratorOverride) writer.WriteString(L" override");
+		if (self->decoratorNoExcept) writer.WriteString(L" noexcept");
+		if (self->decoratorThrow)
+		{
+			writer.WriteString(L" throw(");
+			for (vint i = 0; i < self->exceptions.Count(); i++)
+			{
+				if (i != 0)
+				{
+					writer.WriteString(L", ");
+				}
+				Log(self->exceptions[i], writer);
+			}
+			writer.WriteChar(L')');
+		}
 	}
 
 	void Visit(MemberType* self)override

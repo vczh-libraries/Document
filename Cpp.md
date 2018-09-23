@@ -59,13 +59,13 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - `throw` `(` {TYPE `,` ...} `)`
 
 ## INITIALIZER
-- [ ] `=` EXPR
-- [ ] `{` {EXPR `,` ...} `}`
-- [ ] `(` {EXPR `,` ...} `)`
+- [x] `=` EXPR
+- [x] `{` {EXPR `,` ...} `}`
+- [x] `(` {EXPR `,` ...} `)`
   -  When this initializer is ambiguous a function declaration, the initializer wins.
 
 ## FUNCTION-TAIL
-- `(` {TYPE-OPTIONAL [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override`}
+- [x] `(` {TYPE-OPTIONAL [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override`}
   - `= 0` will be in the initializer
 
 ## DECLARATOR
@@ -80,7 +80,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
 - [x] (`constexpr` | `const` | `volatile`) DECLARATOR
 - [x] DECLARATOR `[` [EXPR] `]`
-- [ ] DECLARATOR FUNCTION-TAIL
+- [x] DECLARATOR FUNCTION-TAIL
 
 ## TEMPLATE-SPEC
 - `template` `<` {TEMPLATE-SPEC-ITEM `,` ...} `>`
