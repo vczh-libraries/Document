@@ -12,6 +12,7 @@ Visitor
 	F(PrimitiveType)\
 	F(ReferenceType)\
 	F(ArrayType)\
+	F(CallingConventionType)\
 	F(FunctionType)\
 	F(MemberType)\
 	F(DeclType)\
@@ -103,7 +104,6 @@ public:
 
 enum class CppCallingConvention
 {
-	None,
 	CDecl,
 	ClrCall,
 	StdCall,
@@ -112,13 +112,21 @@ enum class CppCallingConvention
 	VectorCall,
 };
 
+class CallingConventionType : public Type
+{
+public:
+	ITypeVisitor_ACCEPT;
+
+	CppCallingConvention	callingConvention;
+	Ptr<Type>				type;
+};
+
 class FunctionType : public Type
 {
 public:
 	ITypeVisitor_ACCEPT;
 
 	bool					waitingForParameters = false;
-	CppCallingConvention	callingConvention = CppCallingConvention::None;
 	Ptr<Type>				returnType;
 	List<Ptr<Declarator>>	parameters;
 

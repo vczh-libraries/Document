@@ -91,13 +91,13 @@ TEST_CASE(TestParseType_LongDeclarator)
 	AssertType(L"auto ()->int constexpr const volatile & && override noexcept throw()", L"(auto->int constexpr const volatile & &&) () override noexcept throw()");
 	AssertType(L"auto ()constexpr const volatile & && ->int override noexcept throw()", L"(auto->int) () constexpr const volatile & && override noexcept throw()");
 
-	AssertType(L"int __cdecl(int)", L"int __cdecl (int)");
-	AssertType(L"int __clrcall(int)", L"int __clrcall (int)");
-	AssertType(L"int __stdcall(int)", L"int __stdcall (int)");
-	AssertType(L"int __fastcall(int)", L"int __fastcall (int)");
-	AssertType(L"int __thiscall(int)", L"int __thiscall (int)");
-	AssertType(L"int __vectorcall(int)", L"int __vectorcall (int)");
+	AssertType(L"int __cdecl(int)", L"int (int) __cdecl");
+	AssertType(L"int __clrcall(int)", L"int (int) __clrcall");
+	AssertType(L"int __stdcall(int)", L"int (int) __stdcall");
+	AssertType(L"int __fastcall(int)", L"int (int) __fastcall");
+	AssertType(L"int __thiscall(int)", L"int (int) __thiscall");
+	AssertType(L"int __vectorcall(int)", L"int (int) __vectorcall");
 
 	AssertType(L"int(*)(int)", L"int (int) *");
-	AssertType(L"int(__cdecl*)(int)", L"int __cdecl (int) *");
+	AssertType(L"int(__cdecl*)(int)", L"int (int) __cdecl *");
 }

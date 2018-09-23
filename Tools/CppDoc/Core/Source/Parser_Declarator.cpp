@@ -41,6 +41,11 @@ public:
 		Execute(self->type);
 	}
 
+	void Visit(CallingConventionType* self)override
+	{
+		Execute(self->type);
+	}
+
 	void Visit(FunctionType* self)override
 	{
 		Execute(self->returnType);
@@ -147,14 +152,9 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 #define CALLING_CONVENTION_KEYWORD(KEYWORD, NAME)\
 	else if (TestToken(cursor, L#KEYWORD))\
 	{\
-		auto type = typeResult.Cast<FunctionType>();\
-		if (!type)\
-		{\
-			type = MakePtr<FunctionType>();\
-			type->waitingForParameters = true;\
-			type->returnType = typeResult;\
-		}\
+		auto type = MakePtr<CallingConventionType>();\
 		type->callingConvention = CppCallingConvention::NAME;\
+		type->type = typeResult;\
 		return ParseShortDeclarator(pa, type, dr, cursor);\
 	}\
 

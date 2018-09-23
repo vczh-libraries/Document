@@ -161,20 +161,9 @@ public:
 		writer.WriteString(L"]");
 	}
 
-	void Visit(FunctionType* self)override
+	void Visit(CallingConventionType* self)override
 	{
-		if (self->decoratorReturnType)
-		{
-			writer.WriteChar(L'(');
-			Log(self->returnType, writer);
-			writer.WriteString(L"->");
-			Log(self->decoratorReturnType, writer);
-			writer.WriteChar(L')');
-		}
-		else
-		{
-			Log(self->returnType, writer);
-		}
+		Log(self->type, writer);
 
 		switch (self->callingConvention)
 		{
@@ -196,6 +185,22 @@ public:
 		case CppCallingConvention::VectorCall:
 			writer.WriteString(L" __vectorcall");
 			break;
+		}
+	}
+
+	void Visit(FunctionType* self)override
+	{
+		if (self->decoratorReturnType)
+		{
+			writer.WriteChar(L'(');
+			Log(self->returnType, writer);
+			writer.WriteString(L"->");
+			Log(self->decoratorReturnType, writer);
+			writer.WriteChar(L')');
+		}
+		else
+		{
+			Log(self->returnType, writer);
 		}
 
 		writer.WriteString(L" (");
