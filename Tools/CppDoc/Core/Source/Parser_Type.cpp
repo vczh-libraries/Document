@@ -3,32 +3,32 @@
 
 Ptr<Type> ParsePrimitiveType(Ptr<CppTokenCursor>& cursor, CppPrimitivePrefix prefix)
 {
-#define TEST_SINGLE_KEYWORD(KEYWORD)\
-	if (TestToken(cursor, L#KEYWORD)) return MakePtr<PrimitiveType>(prefix, CppPrimitiveType::_##KEYWORD)
+#define TEST_SINGLE_KEYWORD(TOKEN, KEYWORD)\
+	if (TestToken(cursor, CppTokens::TOKEN)) return MakePtr<PrimitiveType>(prefix, CppPrimitiveType::_##KEYWORD)
 
-#define TEST_LONG_KEYWORD(KEYWORD)\
-	if (TestToken(cursor, L#KEYWORD)) return MakePtr<PrimitiveType>(prefix, CppPrimitiveType::_long_##KEYWORD)
+#define TEST_LONG_KEYWORD(TOKEN, KEYWORD)\
+	if (TestToken(cursor, CppTokens::TOKEN)) return MakePtr<PrimitiveType>(prefix, CppPrimitiveType::_long_##KEYWORD)
 
-	TEST_SINGLE_KEYWORD(auto);
-	TEST_SINGLE_KEYWORD(void);
-	TEST_SINGLE_KEYWORD(bool);
-	TEST_SINGLE_KEYWORD(char);
-	TEST_SINGLE_KEYWORD(wchar_t);
-	TEST_SINGLE_KEYWORD(char16_t);
-	TEST_SINGLE_KEYWORD(char32_t);
-	TEST_SINGLE_KEYWORD(short);
-	TEST_SINGLE_KEYWORD(int);
-	TEST_SINGLE_KEYWORD(__int8);
-	TEST_SINGLE_KEYWORD(__int16);
-	TEST_SINGLE_KEYWORD(__int32);
-	TEST_SINGLE_KEYWORD(__int64);
-	TEST_SINGLE_KEYWORD(float);
-	TEST_SINGLE_KEYWORD(double);
+	TEST_SINGLE_KEYWORD(TYPE_AUTO, auto);
+	TEST_SINGLE_KEYWORD(TYPE_VOID, void);
+	TEST_SINGLE_KEYWORD(TYPE_BOOL, bool);
+	TEST_SINGLE_KEYWORD(TYPE_CHAR, char);
+	TEST_SINGLE_KEYWORD(TYPE_WCHAR_T, wchar_t);
+	TEST_SINGLE_KEYWORD(TYPE_CHAR16_T, char16_t);
+	TEST_SINGLE_KEYWORD(TYPE_CHAR32_T, char32_t);
+	TEST_SINGLE_KEYWORD(TYPE_SHORT, short);
+	TEST_SINGLE_KEYWORD(TYPE_INT, int);
+	TEST_SINGLE_KEYWORD(TYPE___INT8, __int8);
+	TEST_SINGLE_KEYWORD(TYPE___INT16, __int16);
+	TEST_SINGLE_KEYWORD(TYPE___INT32, __int32);
+	TEST_SINGLE_KEYWORD(TYPE___INT64, __int64);
+	TEST_SINGLE_KEYWORD(TYPE_FLOAT, float);
+	TEST_SINGLE_KEYWORD(TYPE_DOUBLE, double);
 
-	if (TestToken(cursor, L"long"))
+	if (TestToken(cursor, CppTokens::TYPE_LONG))
 	{
-		TEST_LONG_KEYWORD(long);
-		TEST_LONG_KEYWORD(double);
+		TEST_LONG_KEYWORD(TYPE_LONG, long);
+		TEST_LONG_KEYWORD(TYPE_DOUBLE, double);
 		return MakePtr<PrimitiveType>(prefix, CppPrimitiveType::_long);
 	}
 
@@ -46,11 +46,11 @@ Ptr<Type> ParsePrimitiveType(Ptr<CppTokenCursor>& cursor, CppPrimitivePrefix pre
 
 Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	if (TestToken(cursor, L"signed"))
+	if (TestToken(cursor, CppTokens::SIGNED))
 	{
 		return ParsePrimitiveType(cursor, CppPrimitivePrefix::_signed);
 	}
-	else if (TestToken(cursor, L"unsigned"))
+	else if (TestToken(cursor, CppTokens::UNSIGNED))
 	{
 		return ParsePrimitiveType(cursor, CppPrimitivePrefix::_unsigned);
 	}

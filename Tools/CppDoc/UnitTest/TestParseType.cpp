@@ -97,7 +97,9 @@ TEST_CASE(TestParseType_LongDeclarator)
 	AssertType(L"int __fastcall(int)", L"int (int) __fastcall");
 	AssertType(L"int __thiscall(int)", L"int (int) __thiscall");
 	AssertType(L"int __vectorcall(int)", L"int (int) __vectorcall");
-
 	AssertType(L"int(*)(int)", L"int (int) *");
 	AssertType(L"int(__cdecl*)(int)", L"int (int) __cdecl *");
+
+	AssertType(L"int(*[5])(int, int a, int b=0)", L"int (int, int a, int b = 0) * [5]");
+	AssertType(L"int(&(*[5])(void))[10]", L"int [10] & () * [5]");
 }
