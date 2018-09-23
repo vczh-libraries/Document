@@ -171,7 +171,9 @@
     <ClCompile Include="Source\Parser_Declaration.cpp" />
     <ClCompile Include="Source\Parser_Declarator.cpp" />
     <ClCompile Include="Source\Parser_Expr.cpp" />
+    <ClCompile Include="Source\Parser_Misc.cpp" />
     <ClCompile Include="Source\Parser_Stat.cpp" />
+    <ClCompile Include="Source\Parser_Type.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

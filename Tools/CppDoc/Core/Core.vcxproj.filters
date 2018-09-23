@@ -86,5 +86,11 @@
     <ClCompile Include="Source\Ast.cpp">
       <Filter>Source Files\Ast</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Parser_Misc.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Type.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
