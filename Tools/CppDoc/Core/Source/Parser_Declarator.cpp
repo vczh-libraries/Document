@@ -264,25 +264,67 @@ GIVE_UP:
 			}
 			else
 			{
-				break;
+				return declarator;
 			}
 		}
 	}
-	else if (TestToken(cursor, CppTokens::LPARENTHESIS))
-	{
-		ReplaceOutOfDeclaratorTypeVisitor<FunctionType> replacer;
-		{
-			replacer.typeToReplace = targetType;
-			replacer.typeCreator = [](Ptr<Type> typeToReplace)
-			{
-				auto type = MakePtr<FunctionType>();
-				type->returnType = typeToReplace;
-				return type;
-			};
 
-			replacer.Execute(declarator->type);
+	bool hasCallingConvention = false;
+	CppCallingConvention callingConvention;
+
+#define CALLING_CONVENTION_KEYWORD(TOKEN, NAME)\
+	if (TestToken(cursor, CppTokens::TOKEN, CppTokens::LPARENTHESIS, false))\
+	{\
+		hasCallingConvention = true;\
+		callingConvention = CppCallingConvention::NAME;\
+		cursor = cursor->Next();\
+	}\
+	else\
+
+	CALLING_CONVENTION_KEYWORD(__CDECL, CDecl)
+	CALLING_CONVENTION_KEYWORD(__CLRCALL, ClrCall)
+	CALLING_CONVENTION_KEYWORD(__STDCALL, StdCall)
+	CALLING_CONVENTION_KEYWORD(__FASTCALL, FastCall)
+	CALLING_CONVENTION_KEYWORD(__THISCALL, ThisCall)
+	CALLING_CONVENTION_KEYWORD(__VECTORCALL, VectorCall)
+
+#undef CALLING_CONVENTION_KEYWORD
+	;
+
+	if (TestToken(cursor, CppTokens::LPARENTHESIS))
+	{
+		Ptr<FunctionType> type;
+		if (hasCallingConvention)
+		{
+			if (declarator->type != targetType)
+			{
+				throw StopParsingException(cursor);
+			}
+
+			type = MakePtr<FunctionType>();
+			type->returnType = declarator->type;
+
+			auto ccType = MakePtr<CallingConventionType>();
+			ccType->callingConvention = callingConvention;
+			ccType->type = type;
+			declarator->type = ccType;
 		}
-		auto type = replacer.createdType;
+		else
+		{
+			ReplaceOutOfDeclaratorTypeVisitor<FunctionType> replacer;
+			{
+				replacer.typeToReplace = targetType;
+				replacer.typeCreator = [](Ptr<Type> typeToReplace)
+				{
+					auto type = MakePtr<FunctionType>();
+					type->returnType = typeToReplace;
+					return type;
+				};
+
+				replacer.Execute(declarator->type);
+			}
+			type = replacer.createdType;
+		}
 
 		while (!TestToken(cursor, CppTokens::RPARENTHESIS))
 		{
@@ -383,7 +425,7 @@ GIVE_UP:
 			}
 			else
 			{
-				break;
+				return declarator;
 			}
 		}
 	}
