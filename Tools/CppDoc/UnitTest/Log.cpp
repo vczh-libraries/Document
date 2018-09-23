@@ -92,7 +92,15 @@ public:
 
 	void Visit(ReferenceType* self)override
 	{
-		throw 0;
+		Log(self->type, writer);
+		switch (self->reference)
+		{
+		case CppReferenceType::Ptr:				writer.WriteString(L" *");	break;
+		case CppReferenceType::LRef:			writer.WriteString(L" &");	break;
+		case CppReferenceType::RRef:			writer.WriteString(L" &&");	break;
+		default:
+			throw 0;
+		}
 	}
 
 	void Visit(ArrayType* self)override

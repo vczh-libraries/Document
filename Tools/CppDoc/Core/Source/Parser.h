@@ -28,7 +28,7 @@ class IndexRecorder : public Object
 public:
 };
 
-enum class DecoratorRestriction
+enum class DeclaratorRestriction
 {
 	Zero,
 	Optional,
@@ -61,7 +61,8 @@ struct StopParsingException
 	StopParsingException(Ptr<CppTokenCursor> _position) :position(_position) {}
 };
 
-extern void					ParseDeclarator(ParsingArguments& pa, DecoratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern bool					ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor);
+extern void					ParseDeclarator(ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern Ptr<Declaration>		ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Expr>			ParseExpr(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Stat>			ParseStat(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);

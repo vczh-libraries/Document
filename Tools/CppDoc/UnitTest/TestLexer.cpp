@@ -18,7 +18,7 @@ vint CheckTokens(List<RegexToken>& tokens)
 		case CppTokens::LBRACKET:
 			TEST_ASSERT(token.length == 1 && *token.reading == L'[');
 			break;
-		case CppTokens::RRACKET:
+		case CppTokens::RBRACKET:
 			TEST_ASSERT(token.length == 1 && *token.reading == L']');
 			break;
 		case CppTokens::LPARENTHESIS:

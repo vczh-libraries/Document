@@ -11,10 +11,10 @@ void AssertType(const WString& type, const WString& log)
 
 	ParsingArguments pa;
 	List<Ptr<Declarator>> declarators;
-	ParseDeclarator(pa, DecoratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
+	ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
 	TEST_ASSERT(!cursor);
 	TEST_ASSERT(declarators.Count() == 1);
-	TEST_ASSERT(declarators[0]->name.nameTokens == 0);
+	TEST_ASSERT(declarators[0]->name.tokenCount == 0);
 	TEST_ASSERT(declarators[0]->initializer == nullptr);
 
 	auto output = GenerateToStream([&](StreamWriter& writer)
@@ -68,4 +68,14 @@ TEST_CASE(TestParseType_Long)
 	AssertType(L"int volatile", L"int volatile");
 	AssertType(L"int ...", L"int...");
 	AssertType(L"int<long, short<float, double>>", L"int<long, short<float, double>>");
+}
+
+TEST_CASE(TestParseType_ShortDeclarator)
+{
+	AssertType(L"int* __ptr32", L"int *");
+	AssertType(L"int* __ptr64", L"int *");
+	AssertType(L"int*", L"int *");
+	AssertType(L"int &", L"int &");
+	AssertType(L"int &&", L"int &&");
+	AssertType(L"int & &&", L"int & &&");
 }

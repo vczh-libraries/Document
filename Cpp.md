@@ -68,16 +68,16 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - `(` {TYPE-OPTIONAL [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override` | `=` `0` | `constexpr` | `mutable`}
 
 ## DECLARATOR
-- [ ] `operator` OPERATOR
+- [x] `operator` OPERATOR
 - [ ] IDENTIFIER [SPECIALIZATION-SPEC]
 - [ ] SPECIFIERS DECLARATOR
 - [ ] CALL DECLARATOR
-- [ ] `alignas` `(` EXPR `)` DECLARATOR
+- [x] `alignas` `(` EXPR `)` DECLARATOR
 - [ ] TYPE `::` DECLARATOR
   - The qualifiers here decorate the identifier, not the this pointer.
-- [ ] `(` DECLARATOR `)`
-- [ ] (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
-- [ ] (`constexpr` | `const` | `volatile`) DECLARATOR
+- [x] `(` DECLARATOR `)`
+- [x] (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
+- [x] (`constexpr` | `const` | `volatile`) DECLARATOR
 - [ ] DECLARATOR `[` [EXPR] `]`
 - [ ] DECLARATOR FUNCTION-TAIL
 
@@ -93,6 +93,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ## FUNCTION
 - [ ] [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `implicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT)
+- [ ] [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `implicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT)
 
 ## CLASS_STRUCT
 - [ ] [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
