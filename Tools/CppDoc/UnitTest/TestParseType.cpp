@@ -106,4 +106,8 @@ TEST_CASE(TestParseType_LongDeclarator)
 
 TEST_CASE(TestParseType_SuperComplexType)
 {
+	AssertType(
+		L"int(__fastcall*const&((*)(int))[10])(int(&a)[], int(__stdcall*b)()noexcept, int(*c[5])(void)=0)",
+		L"int (int [] & a, int () noexcept __stdcall * b, int () * [5] c = 0) __fastcall * const & [10] (int) *"
+		);
 }
