@@ -539,13 +539,21 @@ GIVE_UP:
 		Ptr<Type>& typeToUpdate = identicalType ? identicalType->type : declarator->type;
 
 		auto type = typeToUpdate.Cast<FunctionType>();
-		if (!type || !type->waitingForParameters)
+
+		if (type)
 		{
-			type = MakePtr<FunctionType>();
-			type->returnType = typeToUpdate;
-			typeToUpdate = type;
+			if (type->waitingForParameters)
+			{
+				type->waitingForParameters = false;
+				goto PARSE_PARAMETERS;
+			}
 		}
 
+		type = MakePtr<FunctionType>();
+		type->returnType = typeToUpdate;
+		typeToUpdate = type;
+
+	PARSE_PARAMETERS:
 		while (!TestToken(cursor, CppTokens::RPARENTHESIS))
 		{
 			{

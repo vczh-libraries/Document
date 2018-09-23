@@ -199,6 +199,10 @@ public:
 		}
 
 		writer.WriteString(L" (");
+		if (self->waitingForParameters)
+		{
+			writer.WriteChar(L'?');
+		}
 		for (vint i = 0; i < self->parameters.Count(); i++)
 		{
 			if (i != 0)
