@@ -198,7 +198,7 @@ public:
 			break;
 		}
 
-		writer.WriteChar(L'(');
+		writer.WriteString(L" (");
 		for (vint i = 0; i < self->parameters.Count(); i++)
 		{
 			if (i != 0)

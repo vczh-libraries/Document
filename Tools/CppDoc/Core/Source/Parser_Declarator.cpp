@@ -440,23 +440,41 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 
 	else
 	{
-		auto declarator = MakePtr<Declarator>();
-		declarator->type = typeResult;
-		if (ParseCppName(declarator->name, cursor))
 		{
-			if (dr == DeclaratorRestriction::Zero)
+			auto oldCursor = cursor;
+			try
 			{
-				throw StopParsingException(cursor);
+				auto type = ParseShortType(pa, cursor);
+				cursor = oldCursor;
 			}
+			catch (const StopParsingException&)
+			{
+				goto CHECK_CPP_NAME;
+			}
+
+			cursor = oldCursor;
+			throw StopParsingException(cursor);
 		}
-		else
+	CHECK_CPP_NAME:
 		{
-			if (dr == DeclaratorRestriction::One)
+			auto declarator = MakePtr<Declarator>();
+			declarator->type = typeResult;
+			if (ParseCppName(declarator->name, cursor))
 			{
-				throw StopParsingException(cursor);
+				if (dr == DeclaratorRestriction::Zero)
+				{
+					throw StopParsingException(cursor);
+				}
 			}
+			else
+			{
+				if (dr == DeclaratorRestriction::One)
+				{
+					throw StopParsingException(cursor);
+				}
+			}
+			return declarator;
 		}
-		return declarator;
 	}
 }
 
@@ -466,23 +484,32 @@ Ptr<Declarator> ParseLongDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, 
 	Ptr<IdenticalType> identicalType;
 	{
 		auto oldCursor = cursor;
-		if (!declarator->name && TestToken(cursor, CppTokens::LPARENTHESIS))
+		if (!declarator->name)
 		{
-			identicalType = MakePtr<IdenticalType>();
-			identicalType->type = declarator->type;
-
-			try
-			{
-				declarator = ParseLongDeclarator(pa, identicalType, dr, cursor);
-			}
-			catch (const StopParsingException&)
+			if (TestToken(cursor, CppTokens::LPARENTHESIS, CppTokens::RPARENTHESIS))
 			{
 				cursor = oldCursor;
-				declarator->type = identicalType->type;
 				goto GIVE_UP;
 			}
 
-			RequireToken(cursor, CppTokens::RPARENTHESIS);
+			if (TestToken(cursor, CppTokens::LPARENTHESIS))
+			{
+				identicalType = MakePtr<IdenticalType>();
+				identicalType->type = declarator->type;
+
+				try
+				{
+					declarator = ParseLongDeclarator(pa, identicalType, dr, cursor);
+				}
+				catch (const StopParsingException&)
+				{
+					cursor = oldCursor;
+					declarator->type = identicalType->type;
+					goto GIVE_UP;
+				}
+
+				RequireToken(cursor, CppTokens::RPARENTHESIS);
+			}
 		}
 	}
 GIVE_UP:
