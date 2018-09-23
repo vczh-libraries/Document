@@ -212,12 +212,20 @@ Ptr<Declarator> ParseLongDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, 
 		auto oldCursor = cursor;
 		if (!declarator->name)
 		{
-			if (TestToken(cursor, CppTokens::LPARENTHESIS, CppTokens::RPARENTHESIS))
+			if (TestToken(cursor, CppTokens::LPARENTHESIS) && TestToken(cursor, CppTokens::RPARENTHESIS))
 			{
 				cursor = oldCursor;
 				goto GIVE_UP;
 			}
 
+			cursor = oldCursor;
+			if (TestToken(cursor, CppTokens::LPARENTHESIS) && TestToken(cursor, CppTokens::TYPE_VOID) && TestToken(cursor, CppTokens::RPARENTHESIS))
+			{
+				cursor = oldCursor;
+				goto GIVE_UP;
+			}
+
+			cursor = oldCursor;
 			if (TestToken(cursor, CppTokens::LPARENTHESIS))
 			{
 				try
@@ -326,6 +334,18 @@ GIVE_UP:
 			type = replacer.createdType;
 		}
 
+		{
+			auto oldCursor = cursor;
+			if (TestToken(cursor, CppTokens::TYPE_VOID) && TestToken(cursor, CppTokens::RPARENTHESIS))
+			{
+				goto FINISH_PARAMETER_LIST;
+			}
+			else
+			{
+				cursor = oldCursor;
+			}
+		}
+
 		while (!TestToken(cursor, CppTokens::RPARENTHESIS))
 		{
 			{
@@ -347,6 +367,7 @@ GIVE_UP:
 				RequireToken(cursor, CppTokens::COMMA);
 			}
 		}
+	FINISH_PARAMETER_LIST:
 
 		while (true)
 		{
