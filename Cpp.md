@@ -65,7 +65,8 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   -  When this initializer is ambiguous a function declaration, the initializer wins.
 
 ## FUNCTION-TAIL
-- `(` {TYPE-OPTIONAL [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override` | `=` `0` | `constexpr`}
+- `(` {TYPE-OPTIONAL [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override`}
+  - `= 0` will be in the initializer
 
 ## DECLARATOR
 - [x] `operator` OPERATOR

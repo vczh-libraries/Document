@@ -125,10 +125,22 @@ class FunctionType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	CppCallingConvention	callingConvention = CppCallingConvention::None;
 	bool					waitingForParameters = false;
+	CppCallingConvention	callingConvention = CppCallingConvention::None;
 	Ptr<Type>				returnType;
 	List<Ptr<Declarator>>	parameters;
+
+	bool					qualifierConstExpr = false;
+	bool					qualifierConst = false;
+	bool					qualifierVolatile = false;
+	bool					qualifierLRef = false;
+	bool					qualifierRRef = false;
+
+	bool					decoratorOverride = false;
+	bool					decoratorNoExcept = false;
+	bool					decoratorThrow = false;
+	List<Ptr<Type>>			exceptions;
+	Ptr<Type>				decoratorReturnType;
 };
 
 class MemberType : public Type

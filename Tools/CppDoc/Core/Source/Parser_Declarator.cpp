@@ -493,17 +493,11 @@ GIVE_UP:
 		{
 			if (TestToken(cursor, CppTokens::LBRACKET))
 			{
+				Ptr<Type>& typeToUpdate = identicalType ? identicalType->type : declarator->type;
+
 				auto type = MakePtr<ArrayType>();
-				if (identicalType)
-				{
-					type->type = identicalType->type;
-					identicalType->type = type;
-				}
-				else
-				{
-					type->type = declarator->type;
-					declarator->type = type;
-				}
+				type->type = typeToUpdate;
+				typeToUpdate = type;
 
 				if (!TestToken(cursor, CppTokens::RBRACKET))
 				{
@@ -519,7 +513,118 @@ GIVE_UP:
 	}
 	else if (TestToken(cursor, CppTokens::LPARENTHESIS))
 	{
-		throw 0;
+		Ptr<Type>& typeToUpdate = identicalType ? identicalType->type : declarator->type;
+
+		auto type = typeToUpdate.Cast<FunctionType>();
+		if (!type || !type->waitingForParameters)
+		{
+			type = MakePtr<FunctionType>();
+			type->returnType = typeToUpdate;
+			typeToUpdate = type;
+		}
+
+		while (!TestToken(cursor, CppTokens::RPARENTHESIS))
+		{
+			{
+				List<Ptr<Declarator>> declarators;
+				ParseDeclarator(pa, DeclaratorRestriction::Optional, InitializerRestriction::Optional, cursor, declarators);
+				if (declarators.Count() != 1)
+				{
+					throw StopParsingException(cursor);
+				}
+				type->parameters.Add(declarators[0]);
+			}
+
+			if (TestToken(cursor, CppTokens::RPARENTHESIS))
+			{
+				break;
+			}
+			else
+			{
+				RequireToken(cursor, CppTokens::COMMA);
+			}
+		}
+
+		while (true)
+		{
+			if (TestToken(cursor, L"constexpr"))
+			{
+				type->qualifierConstExpr = true;
+			}
+			else if (TestToken(cursor, L"const"))
+			{
+				type->qualifierConst = true;
+			}
+			else if (TestToken(cursor, L"volatile"))
+			{
+				type->qualifierVolatile = true;
+			}
+			else if (TestToken(cursor, CppTokens::AND, CppTokens::AND))
+			{
+				type->qualifierRRef = true;
+			}
+			else if (TestToken(cursor, CppTokens::AND))
+			{
+				type->qualifierLRef = true;
+			}
+			else if (TestToken(cursor, L"override"))
+			{
+				type->decoratorOverride = true;
+			}
+			else if (TestToken(cursor, CppTokens::SUB, CppTokens::GT))
+			{
+				if (auto primitiveType = type->returnType.Cast<PrimitiveType>())
+				{
+					if (primitiveType->primitive == CppPrimitiveType::_auto)
+					{
+						goto CONTINUE_RETURN_TYPE;
+					}
+				}
+				throw StopParsingException(cursor);
+			CONTINUE_RETURN_TYPE:
+
+				List<Ptr<Declarator>> declarators;
+				ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
+				if (declarators.Count() != 1)
+				{
+					throw StopParsingException(cursor);
+				}
+				type->decoratorReturnType = declarators[0]->type;
+			}
+			else if (TestToken(cursor, L"noexcept"))
+			{
+				type->decoratorNoExcept = true;
+			}
+			else if (TestToken(cursor, L"throw"))
+			{
+				type->decoratorThrow = true;
+
+				RequireToken(cursor, CppTokens::LPARENTHESIS);
+				while (!TestToken(cursor, CppTokens::RPARENTHESIS))
+				{
+					List<Ptr<Declarator>> declarators;
+					ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
+					if (declarators.Count() != 1)
+					{
+						throw StopParsingException(cursor);
+					}
+					type->exceptions.Add(declarators[0]->type);
+
+					if (TestToken(cursor, CppTokens::RPARENTHESIS))
+					{
+						break;
+					}
+					else
+					{
+						RequireToken(cursor, CppTokens::COMMA);
+					}
+				}
+			}
+			else
+			{
+				break;
+			}
+		}
 	}
 
 	return declarator;
