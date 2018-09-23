@@ -47,21 +47,21 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - {`constexpr` | `const` | `volatile` | `&` | `&&`}+
 
 ## CALL
-- `__cdecl`
-- `__clrcall`
-- `__stdcall`
-- `__fastcall`
-- `__thiscall`
-- `__vectorcall`
+- [x] `__cdecl`
+- [x] `__clrcall`
+- [x] `__stdcall`
+- [x] `__fastcall`
+- [x] `__thiscall`
+- [x] `__vectorcall`
 
 ## EXCEPTION-SPEC
 - `noexcept`
 - `throw` `(` {TYPE `,` ...} `)`
 
 ## INITIALIZER
-- `=` EXPR
-- `{` {EXPR `,` ...} `}`
-- `(` {EXPR `,` ...} `)`
+- [ ] `=` EXPR
+- [ ] `{` {EXPR `,` ...} `}`
+- [ ] `(` {EXPR `,` ...} `)`
   -  When this initializer is ambiguous a function declaration, the initializer wins.
 
 ## FUNCTION-TAIL
