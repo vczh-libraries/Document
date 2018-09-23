@@ -38,6 +38,14 @@ public:
 Types
 ***********************************************************************/
 
+class IdenticalType : public Type
+{
+public:
+	ITypeVisitor_ACCEPT;
+
+	Ptr<Type>				type;
+};
+
 class IdType : public Type
 {
 public:
@@ -118,6 +126,7 @@ public:
 	ITypeVisitor_ACCEPT;
 
 	CppCallingConvention	callingConvention = CppCallingConvention::None;
+	bool					waitingForParameters = false;
 	Ptr<Type>				returnType;
 	List<Ptr<Declarator>>	parameters;
 };

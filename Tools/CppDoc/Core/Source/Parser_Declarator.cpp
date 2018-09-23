@@ -381,12 +381,6 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 		type->type = typeResult;
 		return ParseShortDeclarator(pa, type, dr, cursor);
 	}
-	else if (TestToken(cursor, CppTokens::LPARENTHESIS))
-	{
-		auto declarator = ParseShortDeclarator(pa, typeResult, dr, cursor);
-		RequireToken(cursor, CppTokens::RPARENTHESIS);
-		return declarator;
-	}
 	else if (TestToken(cursor, L"constexpr"))
 	{
 		auto type = typeResult.Cast<DecorateType>();
@@ -424,15 +418,15 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 #define CALLING_CONVENTION_KEYWORD(KEYWORD, NAME)\
 	else if (TestToken(cursor, L#KEYWORD))\
 	{\
-		if (auto type = typeResult.Cast<FunctionType>())\
+		auto type = typeResult.Cast<FunctionType>();\
+		if (!type)\
 		{\
-			type->callingConvention = CppCallingConvention::NAME;\
-			return ParseShortDeclarator(pa, type, dr, cursor);\
+			type = MakePtr<FunctionType>();\
+			type->waitingForParameters = true;\
+			type->returnType = typeResult;\
 		}\
-		else\
-		{\
-			throw StopParsingException(cursor);\
-		}\
+		type->callingConvention = CppCallingConvention::NAME;\
+		return ParseShortDeclarator(pa, type, dr, cursor);\
 	}\
 
 	CALLING_CONVENTION_KEYWORD(__cdecl, CDecl)
@@ -466,28 +460,66 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 	}
 }
 
-Ptr<Declarator> ParseDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
+Ptr<Declarator> ParseLongDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
 	auto declarator = ParseShortDeclarator(pa, typeResult, dr, cursor);
-
-	while (true)
+	Ptr<IdenticalType> identicalType;
 	{
-		if (TestToken(cursor, CppTokens::LBRACKET))
+		auto oldCursor = cursor;
+		if (!declarator->name && TestToken(cursor, CppTokens::LPARENTHESIS))
 		{
-			auto type = MakePtr<ArrayType>();
-			type->type = declarator->type;
-			declarator->type = type;
+			identicalType = MakePtr<IdenticalType>();
+			identicalType->type = declarator->type;
 
-			if (!TestToken(cursor, CppTokens::RBRACKET))
+			try
 			{
-				type->expr = ParseExpr(pa, cursor);
-				RequireToken(cursor, CppTokens::RBRACKET);
+				declarator = ParseLongDeclarator(pa, identicalType, dr, cursor);
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+				declarator->type = identicalType->type;
+				goto GIVE_UP;
+			}
+
+			RequireToken(cursor, CppTokens::RPARENTHESIS);
+		}
+	}
+GIVE_UP:
+
+	if (TestToken(cursor, CppTokens::LBRACKET, false))
+	{
+		while (true)
+		{
+			if (TestToken(cursor, CppTokens::LBRACKET))
+			{
+				auto type = MakePtr<ArrayType>();
+				if (identicalType)
+				{
+					type->type = identicalType->type;
+					identicalType->type = type;
+				}
+				else
+				{
+					type->type = declarator->type;
+					declarator->type = type;
+				}
+
+				if (!TestToken(cursor, CppTokens::RBRACKET))
+				{
+					type->expr = ParseExpr(pa, cursor);
+					RequireToken(cursor, CppTokens::RBRACKET);
+				}
+			}
+			else
+			{
+				break;
 			}
 		}
-		else
-		{
-			break;
-		}
+	}
+	else if (TestToken(cursor, CppTokens::LPARENTHESIS))
+	{
+		throw 0;
 	}
 
 	return declarator;
@@ -543,7 +575,7 @@ void ParseDeclarator(ParsingArguments& pa, DeclaratorRestriction dr, Initializer
 	auto itemDr = dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : dr;
 	while(true)
 	{
-		auto declarator = ParseDeclarator(pa, typeResult, itemDr, cursor);
+		auto declarator = ParseLongDeclarator(pa, typeResult, itemDr, cursor);
 		if (ir == InitializerRestriction::Optional)
 		{
 			if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LBRACE, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))

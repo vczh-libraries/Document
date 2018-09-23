@@ -14,7 +14,7 @@ void AssertType(const WString& type, const WString& log)
 	ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
 	TEST_ASSERT(!cursor);
 	TEST_ASSERT(declarators.Count() == 1);
-	TEST_ASSERT(declarators[0]->name.tokenCount == 0);
+	TEST_ASSERT(!declarators[0]->name);
 	TEST_ASSERT(declarators[0]->initializer == nullptr);
 
 	auto output = GenerateToStream([&](StreamWriter& writer)
@@ -85,4 +85,5 @@ TEST_CASE(TestParseType_LongDeclarator)
 	AssertType(L"int[]", L"int []");
 	AssertType(L"int[][]", L"int [] []");
 	AssertType(L"int[1][2][3]", L"int [1] [2] [3]");
+	AssertType(L"int(*&)[][]", L"int [] [] * &");
 }

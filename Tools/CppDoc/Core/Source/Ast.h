@@ -15,6 +15,8 @@ struct CppName
 	vint					tokenCount = 0;
 	WString					name;
 	RegexToken				nameTokens[4];
+
+	operator bool()const { return tokenCount != 0; }
 };
 
 class Resolving : public Object

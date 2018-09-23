@@ -4,6 +4,11 @@
 #include "Ast_Expr.h"
 #include "Ast_Stat.h"
 
+void IdenticalType::Accept(ITypeVisitor* visitor)
+{
+	type->Accept(visitor);
+}
+
 #define CPPDOC_ACCEPT(NAME) void NAME::Accept(ITypeVisitor* visitor) { visitor->Visit(this); }
 CPPDOC_TYPE_LIST(CPPDOC_ACCEPT)
 #undef CPPDOC_ACCEPT
