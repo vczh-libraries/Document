@@ -62,7 +62,7 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			if (result) return result;
 		}
 
-		if (TestToken(cursor, L"decltype"))
+		if (TestToken(cursor, CppTokens::DECLTYPE))
 		{
 			RequireToken(cursor, CppTokens::LPARENTHESIS);
 			auto type = MakePtr<DeclType>();
@@ -71,7 +71,7 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			return type;
 		}
 
-		if (TestToken(cursor, L"constexpr"))
+		if (TestToken(cursor, CppTokens::CONSTEXPR))
 		{
 			auto type = MakePtr<DecorateType>();
 			type->isConstExpr = true;
@@ -79,7 +79,7 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			return type;
 		}
 
-		if (TestToken(cursor, L"const"))
+		if (TestToken(cursor, CppTokens::CONST))
 		{
 			auto type = MakePtr<DecorateType>();
 			type->isConst = true;
@@ -87,7 +87,7 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			return type;
 		}
 
-		if (TestToken(cursor, L"volatile"))
+		if (TestToken(cursor, CppTokens::VOLATILE))
 		{
 			auto type = MakePtr<DecorateType>();
 			type->isVolatile = true;
@@ -105,7 +105,7 @@ Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 
 	while (true)
 	{
-		if (TestToken(cursor, L"constexpr"))
+		if (TestToken(cursor, CppTokens::CONSTEXPR))
 		{
 			auto type = typeResult.Cast<DecorateType>();
 			if (!type)
@@ -116,7 +116,7 @@ Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			type->isConstExpr = true;
 			typeResult = type;
 		}
-		else if (TestToken(cursor, L"const"))
+		else if (TestToken(cursor, CppTokens::CONST))
 		{
 			auto type = typeResult.Cast<DecorateType>();
 			if (!type)
@@ -127,7 +127,7 @@ Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			type->isConst = true;
 			typeResult = type;
 		}
-		else if (TestToken(cursor, L"volatile"))
+		else if (TestToken(cursor, CppTokens::VOLATILE))
 		{
 			auto type = typeResult.Cast<DecorateType>();
 			if (!type)
@@ -381,7 +381,7 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 		type->type = typeResult;
 		return ParseShortDeclarator(pa, type, dr, cursor);
 	}
-	else if (TestToken(cursor, L"constexpr"))
+	else if (TestToken(cursor, CppTokens::CONSTEXPR))
 	{
 		auto type = typeResult.Cast<DecorateType>();
 		if (!type)
@@ -392,7 +392,7 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 		type->isConstExpr = true;
 		return ParseShortDeclarator(pa, type, dr, cursor);
 	}
-	else if (TestToken(cursor, L"const"))
+	else if (TestToken(cursor, CppTokens::CONST))
 	{
 		auto type = typeResult.Cast<DecorateType>();
 		if (!type)
@@ -403,7 +403,7 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 		type->isConst = true;
 		return ParseShortDeclarator(pa, type, dr, cursor);
 	}
-	else if (TestToken(cursor, L"volatile"))
+	else if (TestToken(cursor, CppTokens::VOLATILE))
 	{
 		auto type = typeResult.Cast<DecorateType>();
 		if (!type)
@@ -459,18 +459,14 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 		{
 			auto declarator = MakePtr<Declarator>();
 			declarator->type = typeResult;
-			if (ParseCppName(declarator->name, cursor))
+			if (dr != DeclaratorRestriction::Zero)
 			{
-				if (dr == DeclaratorRestriction::Zero)
+				if (!ParseCppName(declarator->name, cursor))
 				{
-					throw StopParsingException(cursor);
-				}
-			}
-			else
-			{
-				if (dr == DeclaratorRestriction::One)
-				{
-					throw StopParsingException(cursor);
+					if (dr == DeclaratorRestriction::One)
+					{
+						throw StopParsingException(cursor);
+					}
 				}
 			}
 			return declarator;
@@ -574,15 +570,15 @@ GIVE_UP:
 
 		while (true)
 		{
-			if (TestToken(cursor, L"constexpr"))
+			if (TestToken(cursor, CppTokens::CONSTEXPR))
 			{
 				type->qualifierConstExpr = true;
 			}
-			else if (TestToken(cursor, L"const"))
+			else if (TestToken(cursor, CppTokens::CONST))
 			{
 				type->qualifierConst = true;
 			}
-			else if (TestToken(cursor, L"volatile"))
+			else if (TestToken(cursor, CppTokens::VOLATILE))
 			{
 				type->qualifierVolatile = true;
 			}
@@ -594,7 +590,7 @@ GIVE_UP:
 			{
 				type->qualifierLRef = true;
 			}
-			else if (TestToken(cursor, L"override"))
+			else if (TestToken(cursor, CppTokens::OVERRIDE))
 			{
 				type->decoratorOverride = true;
 			}
@@ -618,11 +614,11 @@ GIVE_UP:
 				}
 				type->decoratorReturnType = declarators[0]->type;
 			}
-			else if (TestToken(cursor, L"noexcept"))
+			else if (TestToken(cursor, CppTokens::NOEXCEPT))
 			{
 				type->decoratorNoExcept = true;
 			}
-			else if (TestToken(cursor, L"throw"))
+			else if (TestToken(cursor, CppTokens::THROW))
 			{
 				type->decoratorThrow = true;
 

@@ -88,4 +88,6 @@ TEST_CASE(TestParseType_LongDeclarator)
 	AssertType(L"int(*&)[][]", L"int [] [] * &");
 
 	AssertType(L"int()", L"int ()");
+	AssertType(L"auto ()->int constexpr const volatile & && override noexcept throw()", L"(auto->int constexpr const volatile & &&) () override noexcept throw()");
+	AssertType(L"auto ()constexpr const volatile & && ->int override noexcept throw()", L"(auto->int) () constexpr const volatile & && override noexcept throw()");
 }

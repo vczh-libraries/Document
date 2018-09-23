@@ -212,6 +212,27 @@ vint CheckTokens(List<RegexToken>& tokens)
 		case CppTokens::DELETE:
 			TEST_ASSERT(token.length == 6 && wcsncmp(token.reading, L"delete", 6) == 0);
 			break;
+		case CppTokens::CONSTEXPR:
+			TEST_ASSERT(token.length == 9 && wcsncmp(token.reading, L"constexpr", 9) == 0);
+			break;
+		case CppTokens::CONST:
+			TEST_ASSERT(token.length == 5 && wcsncmp(token.reading, L"const", 5) == 0);
+			break;
+		case CppTokens::VOLATILE:
+			TEST_ASSERT(token.length == 8 && wcsncmp(token.reading, L"volatile", 8) == 0);
+			break;
+		case CppTokens::OVERRIDE:
+			TEST_ASSERT(token.length == 8 && wcsncmp(token.reading, L"override", 8) == 0);
+			break;
+		case CppTokens::NOEXCEPT:
+			TEST_ASSERT(token.length == 8 && wcsncmp(token.reading, L"noexcept", 8) == 0);
+			break;
+		case CppTokens::THROW:
+			TEST_ASSERT(token.length == 5 && wcsncmp(token.reading, L"throw", 5) == 0);
+			break;
+		case CppTokens::DECLTYPE:
+			TEST_ASSERT(token.length == 8 && wcsncmp(token.reading, L"decltype", 8) == 0);
+			break;
 		case CppTokens::ID:
 			{
 				auto reading = token.reading;
