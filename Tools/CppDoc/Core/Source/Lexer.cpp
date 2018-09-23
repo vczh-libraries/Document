@@ -53,6 +53,12 @@ Ptr<RegexLexer> CreateCppLexer()
 	DEFINE_TOKEN(NOEXCEPT, L"noexcept");
 	DEFINE_TOKEN(THROW, L"throw");
 	DEFINE_TOKEN(DECLTYPE, L"decltype");
+	DEFINE_TOKEN(__CDECL, L"__cdecl");
+	DEFINE_TOKEN(__CLRCALL, L"__clrcall");
+	DEFINE_TOKEN(__STDCALL, L"__stdcall");
+	DEFINE_TOKEN(__FASTCALL, L"__fastcall");
+	DEFINE_TOKEN(__THISCALL, L"__thiscall");
+	DEFINE_TOKEN(__VECTORCALL, L"__vectorcall");
 	DEFINE_TOKEN(ID, L"[a-zA-Z_][a-zA-Z0-9_]*");
 
 	DEFINE_TOKEN(SPACE, L"[ \t\r\n\v\f]+");

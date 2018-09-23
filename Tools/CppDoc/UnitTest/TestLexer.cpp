@@ -203,36 +203,30 @@ vint CheckTokens(List<RegexToken>& tokens)
 				}
 			}
 			break;
-		case CppTokens::OPERATOR:
-			TEST_ASSERT(token.length == 8 && wcsncmp(token.reading, L"operator", 8) == 0);
-			break;
-		case CppTokens::NEW:
-			TEST_ASSERT(token.length == 3 && wcsncmp(token.reading, L"new", 3) == 0);
-			break;
-		case CppTokens::DELETE:
-			TEST_ASSERT(token.length == 6 && wcsncmp(token.reading, L"delete", 6) == 0);
-			break;
-		case CppTokens::CONSTEXPR:
-			TEST_ASSERT(token.length == 9 && wcsncmp(token.reading, L"constexpr", 9) == 0);
-			break;
-		case CppTokens::CONST:
-			TEST_ASSERT(token.length == 5 && wcsncmp(token.reading, L"const", 5) == 0);
-			break;
-		case CppTokens::VOLATILE:
-			TEST_ASSERT(token.length == 8 && wcsncmp(token.reading, L"volatile", 8) == 0);
-			break;
-		case CppTokens::OVERRIDE:
-			TEST_ASSERT(token.length == 8 && wcsncmp(token.reading, L"override", 8) == 0);
-			break;
-		case CppTokens::NOEXCEPT:
-			TEST_ASSERT(token.length == 8 && wcsncmp(token.reading, L"noexcept", 8) == 0);
-			break;
-		case CppTokens::THROW:
-			TEST_ASSERT(token.length == 5 && wcsncmp(token.reading, L"throw", 5) == 0);
-			break;
-		case CppTokens::DECLTYPE:
-			TEST_ASSERT(token.length == 8 && wcsncmp(token.reading, L"decltype", 8) == 0);
-			break;
+
+#define ASSERT_KEYWORD(NAME, KEYWORD)\
+		case CppTokens::NAME:\
+			TEST_ASSERT(token.length == wcslen(L#KEYWORD) && wcsncmp(token.reading, L#KEYWORD, wcslen(L#KEYWORD)) == 0);\
+			break\
+
+			ASSERT_KEYWORD(OPERATOR, operator);
+			ASSERT_KEYWORD(NEW, new);
+			ASSERT_KEYWORD(DELETE, delete);
+			ASSERT_KEYWORD(CONSTEXPR, constexpr);
+			ASSERT_KEYWORD(CONST, const);
+			ASSERT_KEYWORD(VOLATILE, volatile);
+			ASSERT_KEYWORD(OVERRIDE, override);
+			ASSERT_KEYWORD(NOEXCEPT, noexcept);
+			ASSERT_KEYWORD(THROW, throw);
+			ASSERT_KEYWORD(DECLTYPE, decltype);
+			ASSERT_KEYWORD(__CDECL, __cdecl);
+			ASSERT_KEYWORD(__CLRCALL, __clrcall);
+			ASSERT_KEYWORD(__STDCALL, __stdcall);
+			ASSERT_KEYWORD(__FASTCALL, __fastcall);
+			ASSERT_KEYWORD(__THISCALL, __thiscall);
+			ASSERT_KEYWORD(__VECTORCALL, __vectorcall);
+
+#undef ASSERT_KEYWORD
 		case CppTokens::ID:
 			{
 				auto reading = token.reading;

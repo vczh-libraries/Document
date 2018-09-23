@@ -126,7 +126,6 @@ class FunctionType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	bool					waitingForParameters = false;
 	Ptr<Type>				returnType;
 	List<Ptr<Declarator>>	parameters;
 

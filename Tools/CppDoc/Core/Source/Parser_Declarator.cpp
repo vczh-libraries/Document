@@ -149,8 +149,8 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 		return ParseShortDeclarator(pa, type, dr, cursor);
 	}
 
-#define CALLING_CONVENTION_KEYWORD(KEYWORD, NAME)\
-	else if (TestToken(cursor, L#KEYWORD))\
+#define CALLING_CONVENTION_KEYWORD(TOKEN, NAME)\
+	else if (!TestToken(cursor, CppTokens::TOKEN, CppTokens::LPARENTHESIS, false) && TestToken(cursor, CppTokens::TOKEN))\
 	{\
 		auto type = MakePtr<CallingConventionType>();\
 		type->callingConvention = CppCallingConvention::NAME;\
@@ -158,12 +158,12 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 		return ParseShortDeclarator(pa, type, dr, cursor);\
 	}\
 
-	CALLING_CONVENTION_KEYWORD(__cdecl, CDecl)
-	CALLING_CONVENTION_KEYWORD(__clrcall, ClrCall)
-	CALLING_CONVENTION_KEYWORD(__stdcall, StdCall)
-	CALLING_CONVENTION_KEYWORD(__fastcall, FastCall)
-	CALLING_CONVENTION_KEYWORD(__thiscall, ThisCall)
-	CALLING_CONVENTION_KEYWORD(__vectorcall, VectorCall)
+	CALLING_CONVENTION_KEYWORD(__CDECL, CDecl)
+	CALLING_CONVENTION_KEYWORD(__CLRCALL, ClrCall)
+	CALLING_CONVENTION_KEYWORD(__STDCALL, StdCall)
+	CALLING_CONVENTION_KEYWORD(__FASTCALL, FastCall)
+	CALLING_CONVENTION_KEYWORD(__THISCALL, ThisCall)
+	CALLING_CONVENTION_KEYWORD(__VECTORCALL, VectorCall)
 
 #undef CALLING_CONVENTION_KEYWORD
 
@@ -275,15 +275,6 @@ GIVE_UP:
 			replacer.typeToReplace = targetType;
 			replacer.typeCreator = [](Ptr<Type> typeToReplace)
 			{
-				if (auto type = typeToReplace.Cast<FunctionType>())
-				{
-					if (type->waitingForParameters)
-					{
-						type->waitingForParameters = false;
-						return type;
-					}
-				}
-
 				auto type = MakePtr<FunctionType>();
 				type->returnType = typeToReplace;
 				return type;
