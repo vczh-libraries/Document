@@ -78,7 +78,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] `(` DECLARATOR `)`
 - [x] (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
 - [x] (`constexpr` | `const` | `volatile`) DECLARATOR
-- [ ] DECLARATOR `[` [EXPR] `]`
+- [x] DECLARATOR `[` [EXPR] `]`
 - [ ] DECLARATOR FUNCTION-TAIL
 
 ## TEMPLATE-SPEC

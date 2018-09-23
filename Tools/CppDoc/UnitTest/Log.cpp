@@ -105,7 +105,13 @@ public:
 
 	void Visit(ArrayType* self)override
 	{
-		throw 0;
+		Log(self->type, writer);
+		writer.WriteString(L" [");
+		if (self->expr)
+		{
+			Log(self->expr, writer);
+		}
+		writer.WriteString(L"]");
 	}
 
 	void Visit(FunctionType* self)override

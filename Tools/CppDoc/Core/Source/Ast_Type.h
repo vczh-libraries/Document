@@ -98,6 +98,7 @@ public:
 	ITypeVisitor_ACCEPT;
 
 	Ptr<Type>				type;
+	Ptr<Expr>				expr;
 };
 
 enum class CppCallingConvention

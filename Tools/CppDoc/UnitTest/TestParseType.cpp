@@ -79,3 +79,10 @@ TEST_CASE(TestParseType_ShortDeclarator)
 	AssertType(L"int &&", L"int &&");
 	AssertType(L"int & &&", L"int & &&");
 }
+
+TEST_CASE(TestParseType_LongDeclarator)
+{
+	AssertType(L"int[]", L"int []");
+	AssertType(L"int[][]", L"int [] []");
+	AssertType(L"int[1][2][3]", L"int [1] [2] [3]");
+}

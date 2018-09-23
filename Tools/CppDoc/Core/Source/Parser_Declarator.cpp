@@ -468,7 +468,29 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 
 Ptr<Declarator> ParseDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
-	return ParseShortDeclarator(pa, typeResult, dr, cursor);
+	auto declarator = ParseShortDeclarator(pa, typeResult, dr, cursor);
+
+	while (true)
+	{
+		if (TestToken(cursor, CppTokens::LBRACKET))
+		{
+			auto type = MakePtr<ArrayType>();
+			type->type = declarator->type;
+			declarator->type = type;
+
+			if (!TestToken(cursor, CppTokens::RBRACKET))
+			{
+				type->expr = ParseExpr(pa, cursor);
+				RequireToken(cursor, CppTokens::RBRACKET);
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	return declarator;
 }
 
 Ptr<Initializer> ParseInitializer(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
