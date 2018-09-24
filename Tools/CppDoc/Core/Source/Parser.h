@@ -12,9 +12,11 @@ class Symbol : public Object
 	using SymbolGroup = Group<WString, Ptr<Symbol>>;
 public:
 	Symbol*					parent = nullptr;
+	WString					name;
 	Ptr<Declaration>		decl;
-	CppName					name;
+	List<Ptr<Declaration>>	forwardDeclarations;
 	SymbolGroup				children;
+	SymbolGroup				specializations;
 
 	void					Add(Ptr<Symbol> child);
 };
