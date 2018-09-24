@@ -8,6 +8,7 @@ Visitor
 ***********************************************************************/
 
 #define CPPDOC_STAT_LIST(F)\
+	F(BlockStat)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
 CPPDOC_STAT_LIST(CPPDOC_FORWARD)
@@ -26,5 +27,11 @@ public:
 /***********************************************************************
 Statements
 ***********************************************************************/
+
+class BlockStat : public Stat
+{
+public:
+	IStatVisitor_ACCEPT;
+};
 
 #endif

@@ -82,6 +82,11 @@ public:
 	Ptr<Type>				type;
 	bool					externVariable = false;
 	Ptr<Expr>				initializer;
+
+	bool					decoratorStatic = false;
+	bool					decoratorMutable = false;
+	bool					decoratorThreadLocal = false;
+	bool					decoratorRegister = false;
 };
 
 enum class MethodType
@@ -101,6 +106,12 @@ public:
 	bool					externFunction = false;
 	bool					friendFunction = false;
 	Ptr<Stat>				statement;
+
+	bool					decoratorStatic = false;
+	bool					decoratorVirtual = false;
+	bool					decoratorExplicit = false;
+	bool					decoratorImplicit = false;
+	bool					decoratorInline = false;
 };
 
 class TypeAliasDeclaration : public Declaration

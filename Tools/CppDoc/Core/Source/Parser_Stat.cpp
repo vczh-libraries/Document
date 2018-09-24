@@ -3,5 +3,10 @@
 
 Ptr<Stat> ParseStat(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	throw 0;
+	if (TestToken(cursor, CppTokens::LBRACE))
+	{
+		RequireToken(cursor, CppTokens::RBRACE);
+		return MakePtr<BlockStat>();
+	}
+	throw StopParsingException(cursor);
 }

@@ -207,42 +207,9 @@ vint CheckTokens(List<RegexToken>& tokens)
 #define ASSERT_KEYWORD(NAME, KEYWORD)\
 		case CppTokens::NAME:\
 			TEST_ASSERT(token.length == wcslen(L#KEYWORD) && wcsncmp(token.reading, L#KEYWORD, wcslen(L#KEYWORD)) == 0);\
-			break\
+			break;\
 
-			ASSERT_KEYWORD(OPERATOR, operator);
-			ASSERT_KEYWORD(NEW, new);
-			ASSERT_KEYWORD(DELETE, delete);
-			ASSERT_KEYWORD(CONSTEXPR, constexpr);
-			ASSERT_KEYWORD(CONST, const);
-			ASSERT_KEYWORD(VOLATILE, volatile);
-			ASSERT_KEYWORD(OVERRIDE, override);
-			ASSERT_KEYWORD(NOEXCEPT, noexcept);
-			ASSERT_KEYWORD(THROW, throw);
-			ASSERT_KEYWORD(DECLTYPE, decltype);
-			ASSERT_KEYWORD(__CDECL, __cdecl);
-			ASSERT_KEYWORD(__CLRCALL, __clrcall);
-			ASSERT_KEYWORD(__STDCALL, __stdcall);
-			ASSERT_KEYWORD(__FASTCALL, __fastcall);
-			ASSERT_KEYWORD(__THISCALL, __thiscall);
-			ASSERT_KEYWORD(__VECTORCALL, __vectorcall);
-			ASSERT_KEYWORD(TYPE_AUTO, auto);
-			ASSERT_KEYWORD(TYPE_VOID, void);
-			ASSERT_KEYWORD(TYPE_BOOL, bool);
-			ASSERT_KEYWORD(TYPE_CHAR, char);
-			ASSERT_KEYWORD(TYPE_WCHAR_T, wchar_t);
-			ASSERT_KEYWORD(TYPE_CHAR16_T, char16_t);
-			ASSERT_KEYWORD(TYPE_CHAR32_T, char32_t);
-			ASSERT_KEYWORD(TYPE_SHORT, short);
-			ASSERT_KEYWORD(TYPE_INT, int);
-			ASSERT_KEYWORD(TYPE___INT8, __int8);
-			ASSERT_KEYWORD(TYPE___INT16, __int16);
-			ASSERT_KEYWORD(TYPE___INT32, __int32);
-			ASSERT_KEYWORD(TYPE___INT64, __int64);
-			ASSERT_KEYWORD(TYPE_LONG, long);
-			ASSERT_KEYWORD(TYPE_FLOAT, float);
-			ASSERT_KEYWORD(TYPE_DOUBLE, double);
-			ASSERT_KEYWORD(SIGNED, signed);
-			ASSERT_KEYWORD(UNSIGNED, unsigned);
+		CPP_KEYWORD_TOKENS(ASSERT_KEYWORD)
 
 #undef ASSERT_KEYWORD
 		case CppTokens::ID:

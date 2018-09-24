@@ -13,6 +13,42 @@ using namespace vl::filesystem;
 Definition
 ***********************************************************************/
 
+#define CPP_KEYWORD_TOKENS(F)\
+	F(OPERATOR,			operator)\
+	F(NEW,				new)\
+	F(DELETE,			delete)\
+	F(CONSTEXPR,		constexpr)\
+	F(CONST,			const)\
+	F(VOLATILE,			volatile)\
+	F(OVERRIDE,			override)\
+	F(NOEXCEPT,			noexcept)\
+	F(THROW,			throw)\
+	F(DECLTYPE,			decltype)\
+	F(__CDECL,			__cdecl)\
+	F(__CLRCALL,		__clrcall)\
+	F(__STDCALL,		__stdcall)\
+	F(__FASTCALL,		__fastcall)\
+	F(__THISCALL,		__thiscall)\
+	F(__VECTORCALL,		__vectorcall)\
+	F(TYPE_AUTO,		auto)\
+	F(TYPE_VOID,		void)\
+	F(TYPE_BOOL,		bool)\
+	F(TYPE_CHAR,		char)\
+	F(TYPE_WCHAR_T,		wchar_t)\
+	F(TYPE_CHAR16_T,	char16_t)\
+	F(TYPE_CHAR32_T,	char32_t)\
+	F(TYPE_SHORT,		short)\
+	F(TYPE_INT,			int)\
+	F(TYPE___INT8,		__int8)\
+	F(TYPE___INT16,		__int16)\
+	F(TYPE___INT32,		__int32)\
+	F(TYPE___INT64,		__int64)\
+	F(TYPE_LONG,		long)\
+	F(TYPE_FLOAT,		float)\
+	F(TYPE_DOUBLE,		double)\
+	F(SIGNED,			signed)\
+	F(UNSIGNED,			unsigned)\
+
 enum class CppTokens
 {
 	LBRACE, RBRACE,
@@ -23,11 +59,9 @@ enum class CppTokens
 	MUL, ADD, SUB, DIV, XOR, AND, OR, REVERT, SHARP,
 	INT, HEX, BIN, FLOAT,
 	STRING, CHAR,
-	OPERATOR, NEW, DELETE, CONSTEXPR, CONST, VOLATILE, OVERRIDE, NOEXCEPT, THROW, DECLTYPE,
-	__CDECL, __CLRCALL, __STDCALL, __FASTCALL, __THISCALL, __VECTORCALL,
-	TYPE_AUTO, TYPE_VOID, TYPE_BOOL, TYPE_CHAR, TYPE_WCHAR_T, TYPE_CHAR16_T, TYPE_CHAR32_T,
-	TYPE_SHORT, TYPE_INT, TYPE___INT8, TYPE___INT16, TYPE___INT32, TYPE___INT64, TYPE_LONG, TYPE_FLOAT, TYPE_DOUBLE,
-	SIGNED, UNSIGNED,
+#define DEFINE_KEYWORD_TOKEN(NAME, KEYWORD) NAME,
+	CPP_KEYWORD_TOKENS(DEFINE_KEYWORD_TOKEN)
+#undef DEFINE_KEYWORD_TOKEN
 	ID,
 	SPACE, DOCUMENT, COMMENT1, COMMENT2,
 };
