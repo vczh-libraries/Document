@@ -139,10 +139,10 @@ public:
 	bool											decoratorInline = false;
 };
 
-class EnumItemDeclaration : public Declaration
+struct EnumItem
 {
-public:
-	Ptr<Expr>				value;
+	CppName											name;
+	Ptr<Expr>										value;
 };
 
 class EnumDeclaration : public ForwardEnumDeclaration
@@ -150,7 +150,7 @@ class EnumDeclaration : public ForwardEnumDeclaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	List<Ptr<EnumItemDeclaration>>					items;
+	List<EnumItem>									items;
 };
 
 enum class ClassAccessor
