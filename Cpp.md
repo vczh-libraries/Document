@@ -93,8 +93,8 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - `<` {TYPE | EXPR} `>`
 
 ## FUNCTION
-- [ ] [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `implicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT)
-- [ ] [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `implicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT)
+- [ ] [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT)
+- [ ] [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT)
 
 ## CLASS_STRUCT
 - [ ] [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`

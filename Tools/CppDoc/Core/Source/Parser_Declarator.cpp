@@ -86,7 +86,7 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 {
 	while (SkipSpecifiers(cursor));
 
-	if (TestToken(cursor, L"alignas"))
+	if (TestToken(cursor, CppTokens::ALIGNAS))
 	{
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		ParseExpr(pa, cursor);
@@ -95,7 +95,7 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 	}
 	else if (TestToken(cursor, CppTokens::MUL))
 	{
-		TestToken(cursor, L"__ptr32") || TestToken(cursor, L"__ptr64");
+		TestToken(cursor, CppTokens::__PTR32) || TestToken(cursor, CppTokens::__PTR64);
 		auto type = MakePtr<ReferenceType>();
 		type->reference = CppReferenceType::Ptr;
 		type->type = typeResult;
