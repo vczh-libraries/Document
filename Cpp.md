@@ -3,6 +3,29 @@
 - The tool consumes a single preprocessed C++ source file, the following syntax is collected for this purpose.
 - The syntax has less restrictions than the real C++ language specification, because the tool assumes the input is correct.
 
+# Steps
+- [x] Parse non-resolving types
+- [ ] Namespaces, Enums, Functions and Variables
+- [ ] Parse qualified types and member pointer types (`::`)
+- [ ] Assert resolvings
+- [ ] Classes, Structs, Unions
+- [ ] Assert resolvings in scopes
+- [ ] Forward declarations
+- [ ] Assert resolvings in scopes
+- [ ] Parse function body and statements
+- [ ] Using namespaces and symbols
+- [ ] Assert resolvings in scopes
+- [ ] Parse full expressions
+- [ ] Template and typedef
+- [ ] Parse ambiguious expressions and types with generic
+- [ ] Preprocess `Preprocessed.txt` to get rid of `#line`s and save line informations to another structure
+- [ ] Parse `Preprocessed.txt`
+- [ ] Attach document content to declarations
+- [ ] Parse `Preprocessed.txt`
+- [ ] Save index and document result to another file
+- [ ] Write markdown parse to understand comments
+- [ ] Markdown to book compiler
+
 # Lexical Conventions
 Consumable UTF-32 code points:
 - Punctuators: `_ { } [ ] # ( ) < > % : ; . ? * + - / ^ & | ~ ! = , \ " '`
