@@ -90,6 +90,9 @@ class ForwardEnumDeclaration : public Declaration
 {
 public:
 	IDeclarationVisitor_ACCEPT;
+
+	bool											enumClass = false;
+	Ptr<Type>										baseType;
 };
 
 enum class ClassType
