@@ -7,23 +7,27 @@
 - [x] Parse non-resolving types
 - [ ] Namespaces, Enums, Functions and Variables
 - [ ] Parse qualified types and member pointer types (`::`)
-- [ ] Assert resolvings
+  - [ ] Assert resolvings
 - [ ] Classes, Structs, Unions
-- [ ] Assert resolvings in scopes
+  - [ ] Assert resolvings in scopes
 - [ ] Forward declarations
-- [ ] Assert resolvings in scopes
+  - [ ] Assert resolvings in scopes
 - [ ] Parse function body and statements
 - [ ] Using namespaces and symbols
-- [ ] Assert resolvings in scopes
+  - [ ] Assert resolvings in scopes
 - [ ] Parse full expressions
+  - [ ] Assert resolvings in scopes
 - [ ] Template and typedef
 - [ ] Parse ambiguious expressions and types with generic
+  - [ ] Assert resolvings in scopes
 - [ ] Preprocess `Preprocessed.txt` to get rid of `#line`s and save line informations to another structure
 - [ ] Parse `Preprocessed.txt`
+  - [ ] Skip any other structures like `#pragma`
 - [ ] Attach document content to declarations
 - [ ] Parse `Preprocessed.txt`
 - [ ] Save index and document result to another file
 - [ ] Write markdown parse to understand comments
+- [ ] Resolve symbols in markdown in comment
 - [ ] Markdown to book compiler
 
 # Lexical Conventions
