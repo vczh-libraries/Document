@@ -8,12 +8,15 @@ Visitor
 ***********************************************************************/
 
 #define CPPDOC_DECL_LIST(F)\
-	F(ForwardClassDeclaration)\
+	F(ForwardVariableDeclaration)\
+	F(ForwardFunctionDeclaration)\
 	F(ForwardEnumDeclaration)\
+	F(ForwardClassDeclaration)\
 	F(VariableDeclaration)\
 	F(FunctionDeclaration)\
-	F(TypeAliasDeclaration)\
+	F(EnumDeclaration)\
 	F(ClassDeclaration)\
+	F(TypeAliasDeclaration)\
 	F(UsingDeclaration)\
 	F(NamespaceDeclaration)\
 
@@ -32,7 +35,7 @@ public:
 #define IDeclarationVisitor_ACCEPT void Accept(IDeclarationVisitor* visitor)override
 
 /***********************************************************************
-Declarations
+Types
 ***********************************************************************/
 
 class TemplateSpec : public Object
@@ -45,48 +48,24 @@ class SpecializationSpec : public Object
 public:
 };
 
-enum class ClassType
-{
-	Class,
-	Struct,
-	Union,
-};
-
 class SpecializableDeclaration : public Declaration
 {
 public:
-	Ptr<TemplateSpec>		templateSpec;
-	Ptr<SpecializationSpec>	speclizationSpec;
+	Ptr<TemplateSpec>								templateSpec;
+	Ptr<SpecializationSpec>							speclizationSpec;
 };
 
-class ForwardClassDeclaration : public SpecializableDeclaration
+/***********************************************************************
+Forward Declarations
+***********************************************************************/
+
+class ForwardVariableDeclaration : public Declaration
 {
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	ClassType				classType;
-	bool					friendClass = false;
-};
-
-class ForwardEnumDeclaration : public Declaration
-{
-public:
-	IDeclarationVisitor_ACCEPT;
-};
-
-class VariableDeclaration : public Declaration
-{
-public:
-	IDeclarationVisitor_ACCEPT;
-
-	Ptr<Type>				type;
-	bool					externVariable = false;
-	Ptr<Expr>				initializer;
-
-	bool					decoratorStatic = false;
-	bool					decoratorMutable = false;
-	bool					decoratorThreadLocal = false;
-	bool					decoratorRegister = false;
+	Ptr<Type>										type;
+	bool											externVariable = false;
 };
 
 enum class MethodType
@@ -96,31 +75,82 @@ enum class MethodType
 	Destructor,
 };
 
-class FunctionDeclaration : public SpecializableDeclaration
+class ForwardFunctionDeclaration : public SpecializableDeclaration
 {
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	Ptr<Type>				type;
-	MethodType				methodType;
-	bool					externFunction = false;
-	bool					friendFunction = false;
-	Ptr<Stat>				statement;
-
-	bool					decoratorStatic = false;
-	bool					decoratorVirtual = false;
-	bool					decoratorExplicit = false;
-	bool					decoratorImplicit = false;
-	bool					decoratorInline = false;
+	Ptr<Type>										type;
+	MethodType										methodType;
+	bool											externFunction = false;
+	bool											friendFunction = false;
 };
 
-class TypeAliasDeclaration : public Declaration
+class ForwardEnumDeclaration : public Declaration
+{
+public:
+	IDeclarationVisitor_ACCEPT;
+};
+
+enum class ClassType
+{
+	Class,
+	Struct,
+	Union,
+};
+
+class ForwardClassDeclaration : public SpecializableDeclaration
 {
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	Ptr<TemplateSpec>		templateSpec;
-	Ptr<Type>				type;
+	ClassType										classType;
+	bool											friendClass = false;
+};
+
+/***********************************************************************
+Forwardable Declarations
+***********************************************************************/
+
+class VariableDeclaration : public ForwardVariableDeclaration
+{
+public:
+	IDeclarationVisitor_ACCEPT;
+
+	Ptr<Expr>										initializer;
+
+	bool											decoratorStatic = false;
+	bool											decoratorMutable = false;
+	bool											decoratorThreadLocal = false;
+	bool											decoratorRegister = false;
+};
+
+class FunctionDeclaration : public ForwardFunctionDeclaration
+{
+public:
+	IDeclarationVisitor_ACCEPT;
+
+	Ptr<Stat>										statement;
+
+	bool											decoratorStatic = false;
+	bool											decoratorVirtual = false;
+	bool											decoratorExplicit = false;
+	bool											decoratorImplicit = false;
+	bool											decoratorInline = false;
+};
+
+class EnumItemDeclaration : public Declaration
+{
+public:
+	Ptr<Expr>				value;
+};
+
+class EnumDeclaration : public ForwardEnumDeclaration
+{
+public:
+	IDeclarationVisitor_ACCEPT;
+
+	List<Ptr<EnumItemDeclaration>>					items;
 };
 
 enum class ClassAccessor
@@ -130,14 +160,26 @@ enum class ClassAccessor
 	Public,
 };
 
-class ClassDeclaration : public SpecializableDeclaration
+class ClassDeclaration : public ForwardClassDeclaration
 {
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	ClassType										classType;
-	List<Tuple<ClassAccessor ,Ptr<Type>>>			baseTypes;
-	List<Tuple<ClassAccessor ,Ptr<Declaration>>>	decls;
+	List<Tuple<ClassAccessor, Ptr<Type>>>			baseTypes;
+	List<Tuple<ClassAccessor, Ptr<Declaration>>>	decls;
+};
+
+/***********************************************************************
+Othere Declarations
+***********************************************************************/
+
+class TypeAliasDeclaration : public Declaration
+{
+public:
+	IDeclarationVisitor_ACCEPT;
+
+	Ptr<TemplateSpec>								templateSpec;
+	Ptr<Type>										type;
 };
 
 // if using declaration has a name, then it is using a class member
@@ -147,7 +189,7 @@ class UsingDeclaration : public Declaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	Ptr<Type>				type;
+	Ptr<Type>										type;
 };
 
 class NamespaceDeclaration : public Declaration
@@ -155,7 +197,7 @@ class NamespaceDeclaration : public Declaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	List<Ptr<Declaration>>	decls;
+	List<Ptr<Declaration>>							decls;
 };
 
 #endif
