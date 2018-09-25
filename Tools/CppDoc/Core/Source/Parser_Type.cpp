@@ -54,6 +54,10 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		return ParsePrimitiveType(cursor, CppPrimitivePrefix::_unsigned);
 	}
+	else if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false))
+	{
+		return MakePtr<RootType>();
+	}
 	else
 	{
 		{

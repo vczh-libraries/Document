@@ -8,7 +8,6 @@ Visitor
 ***********************************************************************/
 
 #define CPPDOC_TYPE_LIST(F)\
-	F(IdType)\
 	F(PrimitiveType)\
 	F(ReferenceType)\
 	F(ArrayType)\
@@ -17,6 +16,8 @@ Visitor
 	F(MemberType)\
 	F(DeclType)\
 	F(DecorateType)\
+	F(RootType)\
+	F(IdType)\
 	F(ChildType)\
 	F(GenericType)\
 	F(VariadicTemplateArgumentType)\
@@ -38,15 +39,6 @@ public:
 /***********************************************************************
 Types
 ***********************************************************************/
-
-class IdType : public Type
-{
-public:
-	ITypeVisitor_ACCEPT;
-
-	CppName					name;
-	Ptr<Resolving>			resolving;
-};
 
 enum class CppPrimitiveType
 {
@@ -170,13 +162,27 @@ public:
 	bool					isVolatile = false;
 };
 
-// if parent is null, then it is from the root
+class RootType : public Type
+{
+public:
+	ITypeVisitor_ACCEPT;
+};
+
+class IdType : public Type
+{
+public:
+	ITypeVisitor_ACCEPT;
+
+	CppName					name;
+	Ptr<Resolving>			resolving;
+};
+
 class ChildType : public Type
 {
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<Type>				parent;
+	Ptr<Type>				classType;
 	bool					typenameType = false;
 	CppName					name;
 	Ptr<Resolving>			resolving;

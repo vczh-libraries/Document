@@ -102,11 +102,6 @@ public:
 	{
 	}
 
-	void Visit(IdType* self)override
-	{
-		throw 0;
-	}
-
 	void Visit(PrimitiveType* self)override
 	{
 		switch (self->prefix)
@@ -246,7 +241,10 @@ public:
 
 	void Visit(MemberType* self)override
 	{
-		throw 0;
+		Log(self->type, writer);
+		writer.WriteString(L" (");
+		Log(self->classType, writer);
+		writer.WriteString(L" ::)");
 	}
 
 	void Visit(DeclType* self)override
@@ -264,9 +262,21 @@ public:
 		if (self->isVolatile)	writer.WriteString(L" volatile");
 	}
 
+	void Visit(RootType* self)override
+	{
+		writer.WriteString(L"__root");
+	}
+
+	void Visit(IdType* self)override
+	{
+		writer.WriteString(self->name.name);
+	}
+
 	void Visit(ChildType* self)override
 	{
-		throw 0;
+		Log(self->classType, writer);
+		writer.WriteString(L" :: ");
+		writer.WriteString(self->name.name);
 	}
 
 	void Visit(GenericType* self)override

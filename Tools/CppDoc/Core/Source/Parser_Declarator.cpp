@@ -22,10 +22,6 @@ public:
 		}
 	}
 
-	void Visit(IdType* self)override
-	{
-	}
-
 	void Visit(PrimitiveType* self)override
 	{
 	}
@@ -52,6 +48,7 @@ public:
 
 	void Visit(MemberType* self)override
 	{
+		Execute(self->classType);
 	}
 
 	void Visit(DeclType* self)override
@@ -63,16 +60,27 @@ public:
 		Execute(self->type);
 	}
 
+	void Visit(RootType* self)override
+	{
+	}
+
+	void Visit(IdType* self)override
+	{
+	}
+
 	void Visit(ChildType* self)override
 	{
+		Execute(self->classType);
 	}
 
 	void Visit(GenericType* self)override
 	{
+		Execute(self->type);
 	}
 
 	void Visit(VariadicTemplateArgumentType* self)override
 	{
+		Execute(self->type);
 	}
 };
 

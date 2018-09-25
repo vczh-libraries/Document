@@ -98,6 +98,6 @@ namespace a::b
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	AssertType(L"a::b::X", L"a :: b :: X");
-	AssertType(L"::a::b::X :: typename Y :: typename Z", L":: a :: b :: X :: typename Y :: typename Z");
+	AssertType(L"::a::b::X :: typename Y :: typename Z", L"__root :: a :: b :: X :: typename Y :: typename Z");
 	AssertType(L"a::b::X(__cdecl a::typename b::*)()", L"a :: b :: x () __cdecl (a :: typename b ::) *");
 }
