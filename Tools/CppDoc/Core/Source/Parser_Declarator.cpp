@@ -77,8 +77,6 @@ public:
 	}
 };
 
-
-
 extern Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
@@ -192,7 +190,7 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 			{
 				if (!ParseCppName(declarator->name, cursor))
 				{
-					if (dr == DeclaratorRestriction::One)
+					if (!TestToken(cursor, CppTokens::LPARENTHESIS, false) && dr == DeclaratorRestriction::One)
 					{
 						throw StopParsingException(cursor);
 					}
@@ -240,6 +238,11 @@ Ptr<Declarator> ParseLongDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, 
 
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 			}
+		}
+
+		if (!declarator->name && dr == DeclaratorRestriction::One)
+		{
+			throw StopParsingException(cursor);
 		}
 	}
 GIVE_UP:
