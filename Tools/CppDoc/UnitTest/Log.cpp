@@ -288,6 +288,101 @@ public:
 };
 
 /***********************************************************************
+LogStatVisitor
+***********************************************************************/
+
+class LogStatVisitor : public Object, public virtual IStatVisitor
+{
+public:
+	StreamWriter&			writer;
+
+	LogStatVisitor(StreamWriter& _writer)
+		:writer(_writer)
+	{
+	}
+
+	void Visit(BlockStat* self)override
+	{
+		throw 0;
+	}
+};
+
+/***********************************************************************
+LogDeclVisitor
+***********************************************************************/
+
+class LogDeclVisitor : public Object, public virtual IDeclarationVisitor
+{
+public:
+	StreamWriter&			writer;
+
+	LogDeclVisitor(StreamWriter& _writer)
+		:writer(_writer)
+	{
+	}
+
+	void Visit(ForwardVariableDeclaration* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(ForwardFunctionDeclaration* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(ForwardEnumDeclaration* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(ForwardClassDeclaration* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(VariableDeclaration* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(FunctionDeclaration* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(EnumItemDeclaration* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(EnumDeclaration* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(ClassDeclaration* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(TypeAliasDeclaration* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(UsingDeclaration* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(NamespaceDeclaration* self)override
+	{
+		throw 0;
+	}
+};
+
+/***********************************************************************
 Log
 ***********************************************************************/
 
@@ -301,4 +396,16 @@ void Log(Ptr<Type> type, StreamWriter& writer)
 {
 	LogTypeVisitor visitor(writer);
 	type->Accept(&visitor);
+}
+
+void Log(Ptr<Stat> stat, StreamWriter& writer)
+{
+	LogStatVisitor visitor(writer);
+	stat->Accept(&visitor);
+}
+
+void Log(Ptr<Declaration> decl, StreamWriter& writer)
+{
+	LogDeclVisitor visitor(writer);
+	decl->Accept(&visitor);
 }
