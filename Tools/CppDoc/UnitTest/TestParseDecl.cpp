@@ -63,7 +63,7 @@ enum e1;
 enum e2 : int;
 enum class e3;
 enum class e4 : int;
-enum class e5
+enum e5
 {
 	x,
 	y = 1
@@ -80,7 +80,7 @@ __forward enum e1;
 __forward enum e2 : int;
 __forward enum class e3;
 __forward enum class e4 : int;
-enum class e5
+enum e5
 {
 	x,
 	y = 1,

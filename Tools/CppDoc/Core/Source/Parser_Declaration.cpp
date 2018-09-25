@@ -49,7 +49,7 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 				throw StopParsingException(cursor);
 			}
 
-			if (TestToken(cursor, CppTokens::RBRACE))
+			if (TestToken(cursor, CppTokens::LBRACE))
 			{
 				break;
 			}
@@ -108,7 +108,7 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 				if (!TestToken(cursor, CppTokens::COMMA))
 				{
 					RequireToken(cursor, CppTokens::RBRACE);
-					return;
+					break;
 				}
 			}
 
@@ -117,7 +117,13 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 		else
 		{
 			RequireToken(cursor, CppTokens::SEMICOLON);
-			throw StopParsingException(cursor);
+			auto decl = MakePtr<ForwardEnumDeclaration>();
+			decl->enumClass = enumClass;
+			decl->name = cppName;
+			decl->baseType = baseType;
+			auto forwardSymbol = pa.context->CreateSymbol(decl);
+			forwardSymbol->isForwardDeclaration = true;
+			output.Add(decl);
 		}
 	}
 	else

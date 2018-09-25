@@ -365,7 +365,7 @@ private:
 		writer.WriteString(self->name.name);
 		if (self->baseType)
 		{
-			writer.WriteString(L": ");
+			writer.WriteString(L" : ");
 			Log(self->baseType, writer);
 		}
 	}
@@ -431,7 +431,6 @@ public:
 
 	void Visit(EnumDeclaration* self)override
 	{
-		writer.WriteString(L"__forward ");
 		WriteHeader(self);
 		writer.WriteLine(L"");
 
@@ -447,7 +446,7 @@ public:
 		indentation--;
 
 		WriteIndentation();
-		writer.WriteLine(L"{");
+		writer.WriteLine(L"}");
 	}
 
 	void Visit(ClassDeclaration* self)override
@@ -482,7 +481,7 @@ public:
 		indentation--;
 
 		WriteIndentation();
-		writer.WriteLine(L"{");
+		writer.WriteLine(L"}");
 	}
 };
 
