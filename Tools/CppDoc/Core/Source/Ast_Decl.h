@@ -130,7 +130,7 @@ class VariableDeclaration : public ForwardVariableDeclaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	Ptr<Expr>										initializer;
+	Ptr<Initializer>								initializer;
 };
 
 class FunctionDeclaration : public ForwardFunctionDeclaration

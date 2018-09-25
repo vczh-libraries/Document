@@ -100,7 +100,7 @@ TEST_CASE(TestParseType_LongDeclarator)
 	AssertType(L"int(*)(int)",						L"int (int) *");
 	AssertType(L"int(__cdecl*)(int)",				L"int (int) __cdecl *");
 
-	AssertType(L"int(*[5])(int, int a, int b=0)",	L"int (int, int a, int b = 0) * [5]");
+	AssertType(L"int(*[5])(int, int a, int b=0)",	L"int (int, a: int, b: int = 0) * [5]");
 	AssertType(L"int(&(*[5])(void))[10]",			L"int [10] & () * [5]");
 }
 
@@ -108,6 +108,6 @@ TEST_CASE(TestParseType_SuperComplexType)
 {
 	AssertType(
 		L"int(__fastcall*const&((*)(int))[10])(int(&a)[], int(__stdcall*b)()noexcept, int(*c[5])(void)=0)",
-		L"int (int [] & a, int () noexcept __stdcall * b, int () * [5] c = 0) __fastcall * const & [10] (int) *"
+		L"int (a: int [] &, b: int () noexcept __stdcall *, c: int () * [5] = 0) __fastcall * const & [10] (int) *"
 		);
 }

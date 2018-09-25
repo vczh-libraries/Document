@@ -10,13 +10,13 @@ extern void Log(Ptr<Type> type, StreamWriter& writer);
 
 void Log(Ptr<Declarator> declarator, StreamWriter& writer)
 {
-	Log(declarator->type, writer);
-
 	if (declarator->name)
 	{
-		writer.WriteChar(L' ');
 		writer.WriteString(declarator->name.name);
+		writer.WriteString(L": ");
 	}
+
+	Log(declarator->type, writer);
 
 	if (declarator->initializer)
 	{
@@ -26,10 +26,10 @@ void Log(Ptr<Declarator> declarator, StreamWriter& writer)
 			writer.WriteString(L" = ");
 			break;
 		case InitializerType::Constructor:
-			writer.WriteChar(L'(');
+			writer.WriteString(L" (");
 			break;
 		case InitializerType::Universal:
-			writer.WriteChar(L'{');
+			writer.WriteString(L" {");
 			break;
 		}
 

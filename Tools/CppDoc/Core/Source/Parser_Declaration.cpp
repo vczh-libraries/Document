@@ -214,6 +214,7 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 				{
 					auto decl = MakePtr<VariableDeclaration>();
 					FILL_VARIABLE(decl);
+					decl->initializer = declarator->initializer;
 					pa.context->CreateSymbol(decl);
 					output.Add(decl);
 				}
