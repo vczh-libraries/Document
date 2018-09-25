@@ -1,9 +1,113 @@
 #include "Parser.h"
 #include "Ast_Type.h"
+#include "Ast_Decl.h"
 
 /***********************************************************************
-FindResolvingTypeVisitor
+IsPotentialTypeDeclVisitor
 ***********************************************************************/
+
+class IsPotentialTypeDeclVisitor : public Object, public virtual IDeclarationVisitor
+{
+public:
+	bool					isPotentialType = true;
+
+	void Visit(ForwardVariableDeclaration* self)override
+	{
+		isPotentialType = false;
+	}
+
+	void Visit(ForwardFunctionDeclaration* self)override
+	{
+		isPotentialType = false;
+	}
+
+	void Visit(ForwardEnumDeclaration* self)override
+	{
+	}
+
+	void Visit(ForwardClassDeclaration* self)override
+	{
+	}
+
+	void Visit(VariableDeclaration* self)override
+	{
+		isPotentialType = false;
+	}
+
+	void Visit(FunctionDeclaration* self)override
+	{
+		isPotentialType = false;
+	}
+
+	void Visit(EnumItemDeclaration* self)override
+	{
+	}
+
+	void Visit(EnumDeclaration* self)override
+	{
+		isPotentialType = false;
+	}
+
+	void Visit(ClassDeclaration* self)override
+	{
+		isPotentialType = false;
+	}
+
+	void Visit(TypeAliasDeclaration* self)override
+	{
+		isPotentialType = false;
+	}
+
+	void Visit(UsingDeclaration* self)override
+	{
+	}
+
+	void Visit(NamespaceDeclaration* self)override
+	{
+		isPotentialType = false;
+	}
+};
+
+/***********************************************************************
+ResolveTypeSymbol
+***********************************************************************/
+
+Ptr<Resolving> ResolveTypeSymbol(Symbol* scope, const WString& name, Ptr<Resolving> resolving)
+{
+	vint index = scope->children.Keys().IndexOf(name);
+	if (index == -1) return resolving;
+
+	const auto& symbols = scope->children.GetByIndex(index);
+	for (vint i = 0; i < symbols.Count(); i++)
+	{
+		auto symbol = symbols[i].Obj();
+		if (symbol->forwardDeclarationRoot)
+		{
+			symbol = symbol->forwardDeclarationRoot;
+		}
+
+		for (vint i = 0; i < symbol->decls.Count(); i++)
+		{
+			IsPotentialTypeDeclVisitor visitor;
+			symbol->decls[i]->Accept(&visitor);
+			if (visitor.isPotentialType)
+			{
+				if (!resolving)
+				{
+					resolving = new Resolving;
+				}
+
+				if (!resolving->resolvedSymbols.Contains(symbol))
+				{
+					resolving->resolvedSymbols.Add(symbol);
+				}
+				break;
+			}
+		}
+	}
+
+	return resolving;
+}
 
 class ResolveChildSymbolTypeVisitor : public Object, public virtual ITypeVisitor
 {
@@ -181,6 +285,7 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			return type;
 		}
 
+		if (pa.context)
 		{
 			CppName cppName;
 			if (ParseCppName(cppName, cursor))
