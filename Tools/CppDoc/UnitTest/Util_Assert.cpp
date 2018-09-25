@@ -2,10 +2,15 @@
 
 void AssertType(const WString& type, const WString& log)
 {
+	ParsingArguments pa;
+	AssertType(type, log, pa);
+}
+
+void AssertType(const WString& type, const WString& log, ParsingArguments& pa)
+{
 	CppTokenReader reader(GlobalCppLexer(), type);
 	auto cursor = reader.GetFirstToken();
 
-	ParsingArguments pa;
 	List<Ptr<Declarator>> declarators;
 	ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
 	TEST_ASSERT(!cursor);

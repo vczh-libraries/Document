@@ -11,8 +11,8 @@
   - [x] Decorators of variables and functions: `friend`, `extern`, `static`, `mutable`, `thread_local`, `register`, `virtual`, `explicit`, `inline`, `__forceinline`.
   - [x] Assert ASTs
   - [x] Connect forward declaractions with their root
-- [ ] Parse qualified types and member pointer types (`::`)
-  - [ ] Assert ASTs
+- [x] Parse qualified types and member pointer types (`::`)
+  - [x] Assert ASTs
   - [ ] Assert resolvings
 - [ ] `Forward Declaration`s of `Class`es, `Struct`s, `Union`s
   - [ ] Assert ASTs
@@ -138,7 +138,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] SPECIFIERS DECLARATOR
 - [x] CALL DECLARATOR
 - [x] `alignas` `(` EXPR `)` DECLARATOR
-- [ ] TYPE `::` DECLARATOR
+- [x] TYPE `::` DECLARATOR
 - [x] `(` DECLARATOR `)`
 - [x] (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
 - [x] (`constexpr` | `const` | `volatile`) DECLARATOR
@@ -200,7 +200,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] `void` | `bool`
 - [x] `char` | `wchar_t` | `char16_t` | `char32_t`
 - [x] [`signed` | `unsigned`] (`__int8` | `__int16` | `__int32` | `__int64` | `__m64` | `__m128` | `__m128d` | `__m128i`)
-- [ ] [TYPE `::` [`typename`]] IDENTIFIER
+- [x] [TYPE `::` [`typename`]] IDENTIFIER
 - [x] TYPE `<` {(TYPE | EXPR) `,` ...}+ `>`
 - [x] TYPE `...`
 

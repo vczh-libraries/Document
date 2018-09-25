@@ -11,6 +11,7 @@ extern void					Log(Ptr<Declaration> decl, StreamWriter& writer);
 extern void					Log(Ptr<Program> program, StreamWriter& writer);
 
 extern void					AssertType(const WString& type, const WString& log);
+extern void					AssertType(const WString& type, const WString& log, ParsingArguments& pa);
 extern void					AssertProgram(const WString& input, const WString& log);
 
 #define COMPILE_PROGRAM(PROGRAM, PA,INPUT)\
