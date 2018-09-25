@@ -5,14 +5,16 @@ extern Ptr<RegexLexer>		GlobalCppLexer();
 extern void					Log(Ptr<Declaration> decl, StreamWriter& writer);
 extern void					Log(Ptr<Program> program, StreamWriter& writer);
 
-void AssertProgram(const WString& type, const WString& log)
-{
-	CppTokenReader reader(GlobalCppLexer(), type);
-	auto cursor = reader.GetFirstToken();
+#define COMPILE_PROGRAM(PROGRAM, PA,INPUT)\
+	CppTokenReader reader(GlobalCppLexer(), INPUT);\
+	auto cursor = reader.GetFirstToken();\
+	ParsingArguments PA(new Symbol, nullptr);\
+	auto PROGRAM = ParseProgram(PA, cursor);\
+	TEST_ASSERT(!cursor)\
 
-	ParsingArguments pa(new Symbol, nullptr);
-	auto program = ParseProgram(pa, cursor);
-	TEST_ASSERT(!cursor);
+void AssertProgram(const WString& input, const WString& log)
+{
+	COMPILE_PROGRAM(program, pa, input);
 
 	auto output = GenerateToStream([&](StreamWriter& writer)
 	{
@@ -95,6 +97,52 @@ enum class e6
 	AssertProgram(input, output);
 }
 
+TEST_CASE(TestParseDecl_EnumsConnectForward)
+{
+	auto input = LR"(
+namespace a::b
+{
+	enum class A;
+	enum class A;
+}
+namespace a::b
+{
+	enum class A {};
+}
+namespace a::b
+{
+	enum class A;
+	enum class A;
+}
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
+	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
+	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"A"].Count() == 5);
+	const auto& symbols = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"A"];
+
+	for (vint i = 0; i < 5; i++)
+	{
+		auto& symbol = symbols[i];
+		if (i == 2)
+		{
+			TEST_ASSERT(symbol->isForwardDeclaration == false);
+			TEST_ASSERT(symbol->forwardDeclarationRoot == nullptr);
+			TEST_ASSERT(symbol->forwardDeclarations.Count() == 4);
+			TEST_ASSERT(symbol->forwardDeclarations[0] == symbols[0].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations[1] == symbols[1].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations[2] == symbols[3].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations[3] == symbols[4].Obj());
+		}
+		else
+		{
+			TEST_ASSERT(symbol->isForwardDeclaration == true);
+			TEST_ASSERT(symbol->forwardDeclarationRoot == symbols[2].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations.Count() == 0);
+		}
+	}
+}
+
 TEST_CASE(TestParseDecl_Variables)
 {
 	auto input = LR"(
@@ -113,6 +161,52 @@ __forward extern mutable register static thread_local v1: int () *;
 	AssertProgram(input, output);
 }
 
+TEST_CASE(TestParseDecl_VariablesConnectForward)
+{
+	auto input = LR"(
+namespace a::b
+{
+	extern int x;
+	extern int x;
+}
+namespace a::b
+{
+	int x = 0;
+}
+namespace a::b
+{
+	extern int x;
+	extern int x;
+}
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
+	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
+	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"x"].Count() == 5);
+	const auto& symbols = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"x"];
+
+	for (vint i = 0; i < 5; i++)
+	{
+		auto& symbol = symbols[i];
+		if (i == 2)
+		{
+			TEST_ASSERT(symbol->isForwardDeclaration == false);
+			TEST_ASSERT(symbol->forwardDeclarationRoot == nullptr);
+			TEST_ASSERT(symbol->forwardDeclarations.Count() == 4);
+			TEST_ASSERT(symbol->forwardDeclarations[0] == symbols[0].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations[1] == symbols[1].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations[2] == symbols[3].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations[3] == symbols[4].Obj());
+		}
+		else
+		{
+			TEST_ASSERT(symbol->isForwardDeclaration == true);
+			TEST_ASSERT(symbol->forwardDeclarationRoot == symbols[2].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations.Count() == 0);
+		}
+	}
+}
+
 TEST_CASE(TestParseDecl_Functions)
 {
 	auto input = LR"(
@@ -124,4 +218,9 @@ __forward Add: int (a: int, b: int);
 __forward explicit extern friend inline __forceinline static virtual Sub: int (int, int) __stdcall;
 )";
 	AssertProgram(input, output);
+}
+
+TEST_CASE(TestParseDecl_FunctionsConnectForward)
+{
+
 }

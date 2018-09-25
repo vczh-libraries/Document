@@ -1,14 +1,16 @@
-# Goal
+# Draft
+
 - This is a code index tool, which means it doesn't narrow candidates using type inference, it shows every possible candidates instead.
 - The tool consumes a single preprocessed C++ source file, the following syntax is collected for this purpose.
 - The syntax has less restrictions than the real C++ language specification, because the tool assumes the input is correct.
 
-# Steps
+## Steps
+
 - [x] Parse non-resolving types
 - [x] `Namespace`s, `Enum`s, `Variable`s `Forward Variable`s and `Forward Function`s
   - [x] Decorators of variables and functions: `friend`, `extern`, `static`, `mutable`, `thread_local`, `register`, `virtual`, `explicit`, `inline`, `__forceinline`.
   - [x] Assert ASTs
-  - [ ] Connect forward declaractions with their root
+  - [x] Connect forward declaractions with their root
 - [ ] Parse qualified types and member pointer types (`::`)
   - [ ] Assert ASTs
   - [ ] Assert resolvings
@@ -21,9 +23,10 @@
   - [ ] Connect forward declaractions with their root
   - [ ] Assert resolvings in scopes
 - [ ] Parse function body and Statements
+  - [ ] Assert ASTs
+  - [ ] Connect forward declaractions with their root
   - [ ] Class member methods defined out of classes
   - [ ] Abstract function decorator
-  - [ ] Assert ASTs
 - [ ] `Using` namespaces and symbols
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
@@ -31,13 +34,13 @@
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [ ] `Template`, `Typedef` and anonymous declaration
+  - [ ] Assert ASTs
   - [ ] Connect generic forward declarations with their root
   - [ ] Methods of generic classes defined out of classes
   - [ ] Generic methods of classes defined out of classes
   - [ ] Generic methods of generic classes defined out of classes
   - [ ] Define variables right after classes
   - [ ] Define types right after typedef classes
-  - [ ] Assert ASTs
 - [ ] Parse ambiguious expressions and types with generic
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
@@ -53,8 +56,10 @@
 - [ ] Resolve symbols in markdown in comment
 - [ ] Markdown to book compiler
 
-# Lexical Conventions
+## Lexical Conventions
+
 Consumable UTF-32 code points:
+
 - Punctuators: `_ { } [ ] # ( ) < > % : ; . ? * + - / ^ & | ~ ! = , \ " '`
 - Legal characters in identifiers: `00A8, 00AA, 00AD, 00AF, 00B2-00B5, 00B7-00BA, 00BC-00BE, 00C0-00D6, 00D8-00F6, 00F8-00FF, 0100-02FF, 0370-167F, 1681-180D, 180F-1DBF, 1E00-1FFF, 200B-200D, 202A-202E, 203F-2040, 2054, 2060-206F, 2070-20CF, 2100-218F, 2460-24FF, 2776-2793, 2C00-2DFF, 2E80-2FFF, 3004-3007, 3021-302F, 3031-303F, 3040-D7FF, F900-FD3D, FD40-FDCF, FDF0-FE1F, FE30-FE44, FE47-FFFD, 10000-1FFFD, 20000-2FFFD, 30000-3FFFD, 40000-4FFFD, 50000-5FFFD, 60000-6FFFD, 70000-7FFFD, 80000-8FFFD, 90000-9FFFD, A0000-AFFFD, B0000-BFFFD, C0000-CFFFD, D0000-DFFFD, E0000-EFFFD`
 - Legal characters in identifiers except the first: `0300-036F, 1DC0-1DFF, 20D0-20FF, FE20-FE2F`
@@ -71,7 +76,8 @@ Consumable UTF-32 code points:
   - `/\*([^*]|\*+[^*/])*\*/`
   - `///[^\r\n]*\r?\n`: It can be put before any declaration for documentation
 
-# EBNF
+## EBNF
+
 - `[ X ]`: optional
 - `{ X }`: repeating 0+ times
   - `{ X }+`: `X {X}`
@@ -80,23 +86,27 @@ Consumable UTF-32 code points:
 - `( X )`: priority
 - `X | Y`: alternation
 
+## Declarations
 
-# Declarations
 - Type parser function: parse a type, with zero, optional or more declarator.
   - zero declarator: still need a declarator, but it cannot have an identity name. e.g. type in generic type
   - optional declarator: the declarator has optional identity name. e.g. function parameter
   - else: each declarator should have an identity name. e.g. variable declaration
 - Declarator parser function: parse a type, with (maybe) optional identity name.
 
-## SPECIFIERS
+### SPECIFIERS
+
 Specifiers can be put before any declaration, it will be ignored by the tool
+
 - attributes: e.g. `[[noreturn]]`
 - `__declspec( ... )`
 
-## QUALIFIERS
+### QUALIFIERS
+
 - {`constexpr` | `const` | `volatile` | `&` | `&&`}+
 
-## CALL
+### CALL
+
 - [x] `__cdecl`
 - [x] `__clrcall`
 - [x] `__stdcall`
@@ -104,21 +114,25 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] `__thiscall`
 - [x] `__vectorcall`
 
-## EXCEPTION-SPEC
+### EXCEPTION-SPEC
+
 - `noexcept`
 - `throw` `(` {TYPE `,` ...} `)`
 
-## INITIALIZER
+### INITIALIZER
+
 - [x] `=` EXPR
 - [x] `{` {EXPR `,` ...} `}`
 - [x] `(` {EXPR `,` ...} `)`
-  -  When this initializer is ambiguous a function declaration, the initializer wins.
+  - When this initializer is ambiguous a function declaration, the initializer wins.
 
-## FUNCTION-TAIL
+### FUNCTION-TAIL
+
 - [x] `(` {TYPE-OPTIONAL [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override`}
   - `= 0` will be in the initializer
 
-## DECLARATOR
+### DECLARATOR
+
 - [x] `operator` OPERATOR
 - [ ] IDENTIFIER [SPECIALIZATION-SPEC]
 - [x] SPECIFIERS DECLARATOR
@@ -131,30 +145,37 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] DECLARATOR `[` [EXPR] `]`
 - [x] DECLARATOR FUNCTION-TAIL
 
-## TEMPLATE-SPEC
+### TEMPLATE-SPEC
+
 - `template` `<` {TEMPLATE-SPEC-ITEM `,` ...} `>`
 - **TEMPLATE-SPEC-ITEM**:
   - TYPE-OPTIONAL-INITIALIZER
   - (`template`|`class`) [`...`] [IDENTIFIER] [`=` TYPE]
   - TEMPLATE-SPEC `class` [IDENTIFIER] [`=` TYPE]
 
-## SPECIALIZATION-SPEC
+### SPECIALIZATION-SPEC
+
 - `<` {TYPE | EXPR} `>`
 
-## FUNCTION
+### FUNCTION
+
 - [ ] [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT)
 - [ ] [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT)
 
-## CLASS_STRUCT
+### CLASS_STRUCT
+
 - [ ] [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
 
-## ENUM
+### ENUM
+
 - [x] `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}`
 
-## UNION
+### UNION
+
 - [ ] [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}`
 
-## DECL
+### DECL
+
 - [ ] **Friend**: `friend` DECL `;`
 - [ ] **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
 - [ ] **Type definition**: (CLASS_STRUCT | ENUM | UNION) {DECLARATOR [INITIALIZER] `,` ...}+ `;`
@@ -170,7 +191,8 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [ ] **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
 - [ ] FUNCTION
 
-# TYPE (Type)
+## TYPE (Type)
+
 - [x] `auto`
 - [x] `decltype` `(` (EXPR) `)`
 - [x] (`constexpr` | `const` | `volatile`) TYPE
@@ -182,7 +204,8 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] TYPE `<` {(TYPE | EXPR) `,` ...}+ `>`
 - [x] TYPE `...`
 
-# STAT (Statement)
+## STAT (Statement)
+
 - [ ] IDENTIFIER `:` STAT
 - [ ] `default` `:` STAT
 - [ ] `case` EXPR `:` STAT
@@ -206,7 +229,8 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [ ] `__leave` `;`
 - [ ] (`__if_exists` | `__if_not_exists`) `(` EXPR `)` STAT
 
-# EXPR (Expression)
+## EXPR (Expression)
+
 - [x] LITERAL
 - [ ] `this`
 - [ ] `nullptr`
@@ -227,5 +251,6 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [ ] `throw` EXPR
 - [ ] `[` {`&` | `=` | [IDENTIFIER `=`] EXPR | } `]` FUNCTION-TAIL STAT
 
-## Operators:
+### Operators:
+
 [Built-in Operators, Precedence and Associativity](https://docs.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=vs-2017)

@@ -43,6 +43,14 @@ public:
 		}
 		return symbol;
 	}
+
+	bool SetForwardDeclarationRoot(Symbol* root)
+	{
+		if (forwardDeclarationRoot) return false;
+		forwardDeclarationRoot = root;
+		root->forwardDeclarations.Add(this);
+		return true;
+	}
 };
 
 /***********************************************************************

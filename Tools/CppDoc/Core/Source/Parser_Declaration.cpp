@@ -111,9 +111,24 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 					break;
 				}
 			}
-			RequireToken(cursor, CppTokens::SEMICOLON);
 
+			RequireToken(cursor, CppTokens::SEMICOLON);
 			output.Add(decl);
+
+			{
+				const auto& siblings = pa.context->children[contextSymbol->name];
+				for (vint i = 0; i < siblings.Count(); i++)
+				{
+					auto& sibling = siblings[i];
+					if (sibling->decls[0].Cast<ForwardEnumDeclaration>() && sibling->isForwardDeclaration)
+					{
+						if (!sibling->SetForwardDeclarationRoot(contextSymbol.Obj()))
+						{
+							throw StopParsingException(cursor);
+						}
+					}
+				}
+			}
 		}
 		else
 		{
@@ -125,6 +140,21 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 			auto forwardSymbol = pa.context->CreateSymbol(decl);
 			forwardSymbol->isForwardDeclaration = true;
 			output.Add(decl);
+
+			{
+				const auto& siblings = pa.context->children[forwardSymbol->name];
+				for (vint i = 0; i < siblings.Count(); i++)
+				{
+					auto& sibling = siblings[i];
+					if (sibling->decls[0].Cast<EnumDeclaration>())
+					{
+						if (!forwardSymbol->SetForwardDeclarationRoot(sibling.Obj()))
+						{
+							throw StopParsingException(cursor);
+						}
+					}
+				}
+			}
 		}
 	}
 	else
@@ -216,14 +246,44 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 					auto forwardSymbol = pa.context->CreateSymbol(decl);
 					forwardSymbol->isForwardDeclaration = true;
 					output.Add(decl);
+
+					{
+						const auto& siblings = pa.context->children[forwardSymbol->name];
+						for (vint i = 0; i < siblings.Count(); i++)
+						{
+							auto& sibling = siblings[i];
+							if (sibling->decls[0].Cast<VariableDeclaration>())
+							{
+								if (!forwardSymbol->SetForwardDeclarationRoot(sibling.Obj()))
+								{
+									throw StopParsingException(cursor);
+								}
+							}
+						}
+					}
 				}
 				else
 				{
 					auto decl = MakePtr<VariableDeclaration>();
 					FILL_VARIABLE(decl);
 					decl->initializer = declarator->initializer;
-					pa.context->CreateSymbol(decl);
+					auto contextSymbol = pa.context->CreateSymbol(decl);
 					output.Add(decl);
+
+					{
+						const auto& siblings = pa.context->children[contextSymbol->name];
+						for (vint i = 0; i < siblings.Count(); i++)
+						{
+							auto& sibling = siblings[i];
+							if (sibling->decls[0].Cast<ForwardVariableDeclaration>() && sibling->isForwardDeclaration)
+							{
+								if (!sibling->SetForwardDeclarationRoot(contextSymbol.Obj()))
+								{
+									throw StopParsingException(cursor);
+								}
+							}
+						}
+					}
 				}
 #undef FILL_VARIABLE
 			}
