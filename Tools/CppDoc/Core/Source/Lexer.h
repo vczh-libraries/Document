@@ -98,6 +98,7 @@ Definition
 	F(CONST_CAST,				const_cast)\
 	F(REINTERPRET_CAST,			reinterpret_cast)\
 	F(SAFE_CAST,				safe_cast)\
+	F(TYPENAME,					typename)\
 
 enum class CppTokens
 {

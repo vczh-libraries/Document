@@ -1,6 +1,85 @@
 #include "Parser.h"
 #include "Ast_Type.h"
 
+/***********************************************************************
+FindResolvingTypeVisitor
+***********************************************************************/
+
+class ResolveChildSymbolTypeVisitor : public Object, public virtual ITypeVisitor
+{
+public:
+	List<Symbol*>&			resolving;
+	WString					name;
+
+	ResolveChildSymbolTypeVisitor(List<Symbol*>& _resolving, const WString& _name)
+		:resolving(_resolving)
+		, name(_name)
+	{
+	}
+
+	void Visit(PrimitiveType* self)override
+	{
+	}
+
+	void Visit(ReferenceType* self)override
+	{
+	}
+
+	void Visit(ArrayType* self)override
+	{
+	}
+
+	void Visit(CallingConventionType* self)override
+	{
+		self->type->Accept(this);
+	}
+
+	void Visit(FunctionType* self)override
+	{
+	}
+
+	void Visit(MemberType* self)override
+	{
+	}
+
+	void Visit(DeclType* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(DecorateType* self)override
+	{
+		self->type->Accept(this);
+	}
+
+	void Visit(RootType* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(IdType* self)override
+	{
+	}
+
+	void Visit(ChildType* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(GenericType* self)override
+	{
+		self->type->Accept(this);
+	}
+
+	void Visit(VariadicTemplateArgumentType* self)override
+	{
+	}
+};
+
+/***********************************************************************
+ParsePrimitiveType
+***********************************************************************/
+
 Ptr<Type> ParsePrimitiveType(Ptr<CppTokenCursor>& cursor, CppPrimitivePrefix prefix)
 {
 #define TEST_SINGLE_KEYWORD(TOKEN, KEYWORD)\
@@ -43,6 +122,10 @@ Ptr<Type> ParsePrimitiveType(Ptr<CppTokenCursor>& cursor, CppPrimitivePrefix pre
 #undef TEST_SINGLE_KEYWORD
 #undef TEST_LONG_KEYWORD
 }
+
+/***********************************************************************
+ParseShortType
+***********************************************************************/
 
 Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
@@ -97,10 +180,24 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			type->type = ParseShortType(pa, cursor);
 			return type;
 		}
+
+		{
+			CppName cppName;
+			if (ParseCppName(cppName, cursor))
+			{
+				auto type = MakePtr<IdType>();
+				type->name = cppName;
+				return type;
+			}
+		}
 	}
 
 	throw StopParsingException(cursor);
 }
+
+/***********************************************************************
+ParseLongType
+***********************************************************************/
 
 Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
@@ -174,6 +271,30 @@ Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		}
 		else
 		{
+			auto oldCursor = cursor;
+			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
+			{
+				bool typenameType = TestToken(cursor, CppTokens::TYPENAME);
+				CppName cppName;
+				if (ParseCppName(cppName, cursor))
+				{
+					auto type = MakePtr<ChildType>();
+					type->classType = typeResult;
+					type->name = cppName;
+					type->typenameType = typenameType;
+					typeResult = type;
+					continue;
+				}
+				else
+				{
+					if (typenameType)
+					{
+						throw StopParsingException(cursor);
+					}
+					cursor = oldCursor;
+				}
+			}
+
 			break;
 		}
 	}

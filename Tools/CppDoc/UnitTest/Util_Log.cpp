@@ -276,6 +276,7 @@ public:
 	{
 		Log(self->classType, writer);
 		writer.WriteString(L" :: ");
+		if (self->typenameType) writer.WriteString(L" :: ");
 		writer.WriteString(self->name.name);
 	}
 

@@ -2,6 +2,10 @@
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
 
+/***********************************************************************
+ReplaceOutOfDeclaratorTypeVisitor
+***********************************************************************/
+
 class ReplaceOutOfDeclaratorTypeVisitor : public Object, public virtual ITypeVisitor
 {
 public:
@@ -86,6 +90,10 @@ public:
 
 extern Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+
+/***********************************************************************
+ParseShortDeclarator
+***********************************************************************/
 
 Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
@@ -214,6 +222,10 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 		}
 	}
 }
+
+/***********************************************************************
+ParseLongDeclarator
+***********************************************************************/
 
 Ptr<Declarator> ParseLongDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
@@ -501,6 +513,10 @@ GIVE_UP:
 	return declarator;
 }
 
+/***********************************************************************
+ParseInitializer
+***********************************************************************/
+
 Ptr<Initializer> ParseInitializer(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	auto initializer = MakePtr<Initializer>();
@@ -543,6 +559,10 @@ Ptr<Initializer> ParseInitializer(ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 
 	return initializer;
 }
+
+/***********************************************************************
+ParseDeclarator
+***********************************************************************/
 
 void ParseDeclarator(ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
