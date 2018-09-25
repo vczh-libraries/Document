@@ -1,28 +1,5 @@
-#include <Parser.h>
 #include <Ast_Type.h>
-
-extern Ptr<RegexLexer>		GlobalCppLexer();
-extern void					Log(Ptr<Type> type, StreamWriter& writer);
-
-void AssertType(const WString& type, const WString& log)
-{
-	CppTokenReader reader(GlobalCppLexer(), type);
-	auto cursor = reader.GetFirstToken();
-
-	ParsingArguments pa;
-	List<Ptr<Declarator>> declarators;
-	ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-	TEST_ASSERT(!cursor);
-	TEST_ASSERT(declarators.Count() == 1);
-	TEST_ASSERT(!declarators[0]->name);
-	TEST_ASSERT(declarators[0]->initializer == nullptr);
-
-	auto output = GenerateToStream([&](StreamWriter& writer)
-	{
-		Log(declarators[0]->type, writer);
-	});
-	TEST_ASSERT(output == log);
-}
+#include "Util.h"
 
 TEST_CASE(TestParseType_Primitive)
 {

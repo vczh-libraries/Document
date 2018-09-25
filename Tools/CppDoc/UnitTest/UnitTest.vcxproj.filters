@@ -24,9 +24,6 @@
     <ClCompile Include="TestParseType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TestParseExpr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,5 +33,16 @@
     <ClCompile Include="TestParseDecl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Util_Assert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util_Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Util.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

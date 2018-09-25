@@ -147,18 +147,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Util_Log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="TestLexer.cpp" />
     <ClCompile Include="TestParseDecl.cpp" />
     <ClCompile Include="TestParseExpr.cpp" />
     <ClCompile Include="TestParseStat.cpp" />
     <ClCompile Include="TestParseType.cpp" />
+    <ClCompile Include="Util_Assert.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">
       <Project>{c322672b-5185-4c54-acfb-c06e6b33f9ec}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

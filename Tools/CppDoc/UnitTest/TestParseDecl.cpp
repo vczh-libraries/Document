@@ -1,39 +1,5 @@
-#include <Parser.h>
 #include <Ast_Decl.h>
-
-extern Ptr<RegexLexer>		GlobalCppLexer();
-extern void					Log(Ptr<Declaration> decl, StreamWriter& writer);
-extern void					Log(Ptr<Program> program, StreamWriter& writer);
-
-#define COMPILE_PROGRAM(PROGRAM, PA,INPUT)\
-	CppTokenReader reader(GlobalCppLexer(), INPUT);\
-	auto cursor = reader.GetFirstToken();\
-	ParsingArguments PA(new Symbol, nullptr);\
-	auto PROGRAM = ParseProgram(PA, cursor);\
-	TEST_ASSERT(!cursor)\
-
-void AssertProgram(const WString& input, const WString& log)
-{
-	COMPILE_PROGRAM(program, pa, input);
-
-	auto output = GenerateToStream([&](StreamWriter& writer)
-	{
-		Log(program, writer);
-	});
-
-	StringReader srExpect(log);
-	StringReader srActual(L"\r\n" + output);
-
-	while (true)
-	{
-		TEST_ASSERT(srExpect.IsEnd() == srActual.IsEnd());
-		if (srExpect.IsEnd()) break;
-		
-		auto expect = srExpect.ReadLine();
-		auto actual = srActual.ReadLine();
-		TEST_ASSERT(expect == actual);
-	}
-}
+#include "Util.h"
 
 TEST_CASE(TestParseDecl_Namespaces)
 {
