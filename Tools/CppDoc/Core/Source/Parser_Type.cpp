@@ -290,9 +290,13 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			CppName cppName;
 			if (ParseCppName(cppName, cursor))
 			{
-				auto type = MakePtr<IdType>();
-				type->name = cppName;
-				return type;
+				if (auto resolving = ResolveTypeSymbol(pa.context.Obj(), cppName.name, nullptr))
+				{
+					auto type = MakePtr<IdType>();
+					type->name = cppName;
+					type->resolving = resolving;
+					return type;
+				}
 			}
 		}
 	}

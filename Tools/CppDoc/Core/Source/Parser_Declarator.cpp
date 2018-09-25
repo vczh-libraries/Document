@@ -188,10 +188,10 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 			try
 			{
 				classType = ParseShortType(pa, cursor);
-				cursor = oldCursor;
 			}
 			catch (const StopParsingException&)
 			{
+				cursor = oldCursor;
 			}
 		}
 
