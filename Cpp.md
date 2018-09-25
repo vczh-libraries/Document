@@ -5,20 +5,30 @@
 
 # Steps
 - [x] Parse non-resolving types
-- [ ] `Namespace`s, `Enum`s, `Variable`s and `Forward Function`s
+- [x] `Namespace`s, `Enum`s, `Variable`s `Forward Variable`s and `Forward Function`s
+  - [x] Decorators of variables and functions: `friend`, `extern`, `static`, `mutable`, `thread_local`, `register`, `virtual`, `explicit`, `inline`, `__forceinline`.
+  - [ ] Assert ASTs
 - [ ] Parse qualified types and member pointer types (`::`)
+  - [ ] Assert ASTs
   - [ ] Assert resolvings
 - [ ] `Class`es, `Struct`s, `Union`s
+  - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [ ] `Forward Declaration`s
+  - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [ ] Parse function body and Statements
-- [ ] Using namespaces and symbols
+  - [ ] Assert ASTs
+- [ ] `Using` namespaces and symbols
+  - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [ ] Parse full expressions
+  - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
-- [ ] Template and typedef
+- [ ] `Template` and `Typedef`
+  - [ ] Assert ASTs
 - [ ] Parse ambiguious expressions and types with generic
+  - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [ ] Preprocess `Preprocessed.txt` to get rid of `#line`s and save line informations to another structure
 - [ ] Parse `Preprocessed.txt`

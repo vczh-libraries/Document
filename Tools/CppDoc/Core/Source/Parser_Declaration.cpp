@@ -25,8 +25,24 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 
 			if (ParseCppName(decl->name, cursor))
 			{
-				auto declSymbol = contextSymbol->CreateSymbol(decl);
-				contextSymbol = declSymbol;
+				vint index = contextSymbol->children.Keys().IndexOf(decl->name.name);
+				if (index == -1)
+				{
+					contextSymbol = contextSymbol->CreateSymbol(decl);
+				}
+				else
+				{
+					auto& symbols = contextSymbol->children.GetByIndex(index);
+					if (symbols.Count() == 1 && symbols[0]->decls[0].Cast<NamespaceDeclaration>())
+					{
+						contextSymbol = symbols[0];
+						contextSymbol->decls.Add(decl);
+					}
+					else
+					{
+						throw StopParsingException(cursor);
+					}
+				}
 			}
 			else
 			{
