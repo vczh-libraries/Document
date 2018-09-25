@@ -2,4 +2,4 @@
 #include <Ast_Stat.h>
 
 extern Ptr<RegexLexer>		GlobalCppLexer();
-extern void					Log(Ptr<Stat> type, StreamWriter& writer);
+extern void					Log(Ptr<Stat> stat, StreamWriter& writer);

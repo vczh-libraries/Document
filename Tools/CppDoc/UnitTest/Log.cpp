@@ -513,3 +513,11 @@ void Log(Ptr<Declaration> decl, StreamWriter& writer)
 	LogDeclVisitor visitor(writer);
 	decl->Accept(&visitor);
 }
+
+void Log(Ptr<Program> program, StreamWriter& writer)
+{
+	for (vint i = 0; i < program->decls.Count(); i++)
+	{
+		Log(program->decls[i], writer);
+	}
+}
