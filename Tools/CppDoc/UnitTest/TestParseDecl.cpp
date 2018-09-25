@@ -100,7 +100,7 @@ TEST_CASE(TestParseDecl_Variables)
 	auto input = LR"(
 int x = 0;
 int a, b = 0, c(0), d{0};
-extern static mutable thread_local register int v1;
+extern static mutable thread_local register int (*v1)();
 )";
 	auto output = LR"(
 x: int = 0;
@@ -108,7 +108,7 @@ a: int;
 b: int = 0;
 c: int (0);
 d: int {0};
-__forward extern mutable register static thread_local v1: int;
+__forward extern mutable register static thread_local v1: int () *;
 )";
 	AssertProgram(input, output);
 }

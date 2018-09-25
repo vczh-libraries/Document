@@ -299,8 +299,20 @@ GIVE_UP:
 #undef CALLING_CONVENTION_KEYWORD
 	;
 
+	auto oldCursor = cursor;
 	if (TestToken(cursor, CppTokens::LPARENTHESIS))
 	{
+		try
+		{
+			ParseExpr(pa, cursor);
+			cursor = oldCursor;
+			return declarator;
+		}
+		catch (const StopParsingException&)
+		{
+			cursor = oldCursor->Next();
+		}
+
 		Ptr<FunctionType> type;
 		if (hasCallingConvention)
 		{
