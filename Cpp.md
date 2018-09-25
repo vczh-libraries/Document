@@ -5,14 +5,14 @@
 
 # Steps
 - [x] Parse non-resolving types
-- [ ] Namespaces, Enums, Functions and Variables
+- [ ] `Namespace`s, `Enum`s, `Variable`s and `Forward Function`s
 - [ ] Parse qualified types and member pointer types (`::`)
   - [ ] Assert resolvings
-- [ ] Classes, Structs, Unions
+- [ ] `Class`es, `Struct`s, `Union`s
   - [ ] Assert resolvings in scopes
-- [ ] Forward declarations
+- [ ] `Forward Declaration`s
   - [ ] Assert resolvings in scopes
-- [ ] Parse function body and statements
+- [ ] Parse function body and Statements
 - [ ] Using namespaces and symbols
   - [ ] Assert resolvings in scopes
 - [ ] Parse full expressions

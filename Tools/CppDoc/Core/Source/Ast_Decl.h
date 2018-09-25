@@ -14,6 +14,7 @@ Visitor
 	F(ForwardClassDeclaration)\
 	F(VariableDeclaration)\
 	F(FunctionDeclaration)\
+	F(EnumItemDeclaration)\
 	F(EnumDeclaration)\
 	F(ClassDeclaration)\
 	F(TypeAliasDeclaration)\
@@ -81,7 +82,7 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Type>										type;
-	MethodType										methodType;
+	MethodType										methodType = MethodType::Function;
 	bool											externFunction = false;
 	bool											friendFunction = false;
 };
@@ -138,13 +139,15 @@ public:
 	bool											decoratorStatic = false;
 	bool											decoratorVirtual = false;
 	bool											decoratorExplicit = false;
-	bool											decoratorImplicit = false;
 	bool											decoratorInline = false;
+	bool											decoratorForceInline = false;
 };
 
-struct EnumItem
+class EnumItemDeclaration : public Declaration
 {
-	CppName											name;
+public:
+	IDeclarationVisitor_ACCEPT;
+
 	Ptr<Expr>										value;
 };
 
@@ -153,7 +156,7 @@ class EnumDeclaration : public ForwardEnumDeclaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	List<EnumItem>									items;
+	List<Ptr<EnumItemDeclaration>>					items;
 };
 
 enum class ClassAccessor

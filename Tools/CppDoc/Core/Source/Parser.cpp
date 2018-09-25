@@ -4,7 +4,7 @@
 Symbol
 ***********************************************************************/
 
-void Symbol::Add(Ptr< Symbol> child)
+void Symbol::Add(Ptr<Symbol> child)
 {
 	child->parent = this;
 	children.Add(child->name, child);
@@ -30,4 +30,16 @@ ParsingArguments::ParsingArguments(ParsingArguments& pa, Ptr<Symbol> _context)
 	, context(_context)
 	, recorder(pa.recorder)
 {
+}
+
+/***********************************************************************
+ParsingArguments
+***********************************************************************/
+
+void ParseFile(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	while (cursor)
+	{
+		ParseDeclaration(pa, cursor);
+	}
 }
