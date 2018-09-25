@@ -329,7 +329,7 @@ private:
 	{
 		for (vint i = 0; i < indentation; i++)
 		{
-			writer.WriteString(L"    ");
+			writer.WriteString(L"\t");
 		}
 	}
 
