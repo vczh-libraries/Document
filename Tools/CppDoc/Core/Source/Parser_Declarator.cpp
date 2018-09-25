@@ -52,7 +52,7 @@ public:
 
 	void Visit(MemberType* self)override
 	{
-		Execute(self->classType);
+		Execute(self->type);
 	}
 
 	void Visit(DeclType* self)override
