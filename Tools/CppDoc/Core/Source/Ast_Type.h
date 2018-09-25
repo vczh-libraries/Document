@@ -177,6 +177,7 @@ public:
 	ITypeVisitor_ACCEPT;
 
 	Ptr<Type>				parent;
+	bool					typenameType = false;
 	CppName					name;
 	Ptr<Resolving>			resolving;
 };

@@ -166,22 +166,29 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 
 	else
 	{
+		Ptr<Type> classType;
 		{
 			auto oldCursor = cursor;
 			try
 			{
-				auto type = ParseShortType(pa, cursor);
+				classType = ParseShortType(pa, cursor);
 				cursor = oldCursor;
 			}
 			catch (const StopParsingException&)
 			{
-				goto CHECK_CPP_NAME;
 			}
-
-			cursor = oldCursor;
-			throw StopParsingException(cursor);
 		}
-	CHECK_CPP_NAME:
+
+		if (classType)
+		{
+			RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
+
+			auto type = MakePtr<MemberType>();
+			type->classType = classType;
+			type->type = typeResult;
+			return ParseShortDeclarator(pa, type, dr, cursor);
+		}
+		else
 		{
 			auto declarator = MakePtr<Declarator>();
 			declarator->type = typeResult;
