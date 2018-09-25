@@ -14,9 +14,12 @@ class Symbol : public Object
 public:
 	Symbol*					parent = nullptr;
 	WString					name;
-	Ptr<Declaration>		decl;
-	List<Ptr<Declaration>>	forwardDeclarations;
+	List<Ptr<Declaration>>	decls; // only namespaces share symbols
 	SymbolGroup				children;
+
+	bool					isForwardDeclaration = false;
+	Symbol*					forwardDeclarationRoot = nullptr;
+	SymbolPtrList			forwardDeclarations;
 
 	Symbol*					specializationRoot = nullptr;
 	SymbolPtrList			specializations;
@@ -28,10 +31,10 @@ public:
 	{
 		auto symbol = MakePtr<Symbol>();
 		symbol->name = _decl->name.name;
-		symbol->decl = _decl;
+		symbol->decls.Add(_decl);
 		Add(symbol);
 
-		decl->symbol = symbol.Obj();
+		_decl->symbol = symbol.Obj();
 
 		if (_specializationRoot)
 		{
@@ -91,7 +94,7 @@ extern void					ParseDeclarator(ParsingArguments& pa, DeclaratorRestriction dr, 
 extern void					ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
 extern Ptr<Expr>			ParseExpr(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Stat>			ParseStat(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern void					ParseFile(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Program>			ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 /***********************************************************************
 Helpers

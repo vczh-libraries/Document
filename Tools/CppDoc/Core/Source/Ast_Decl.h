@@ -66,7 +66,11 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Type>										type;
-	bool											externVariable = false;
+	bool											decoratorExtern = false;
+	bool											decoratorStatic = false;
+	bool											decoratorMutable = false;
+	bool											decoratorThreadLocal = false;
+	bool											decoratorRegister = false;
 };
 
 enum class MethodType
@@ -83,8 +87,13 @@ public:
 
 	Ptr<Type>										type;
 	MethodType										methodType = MethodType::Function;
-	bool											externFunction = false;
-	bool											friendFunction = false;
+	bool											decoratorExtern = false;
+	bool											decoratorFriend = false;
+	bool											decoratorStatic = false;
+	bool											decoratorVirtual = false;
+	bool											decoratorExplicit = false;
+	bool											decoratorInline = false;
+	bool											decoratorForceInline = false;
 };
 
 class ForwardEnumDeclaration : public Declaration
@@ -122,11 +131,6 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Expr>										initializer;
-
-	bool											decoratorStatic = false;
-	bool											decoratorMutable = false;
-	bool											decoratorThreadLocal = false;
-	bool											decoratorRegister = false;
 };
 
 class FunctionDeclaration : public ForwardFunctionDeclaration
@@ -135,12 +139,6 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Stat>										statement;
-
-	bool											decoratorStatic = false;
-	bool											decoratorVirtual = false;
-	bool											decoratorExplicit = false;
-	bool											decoratorInline = false;
-	bool											decoratorForceInline = false;
 };
 
 class EnumItemDeclaration : public Declaration

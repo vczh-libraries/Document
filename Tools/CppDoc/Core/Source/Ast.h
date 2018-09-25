@@ -60,6 +60,12 @@ public:
 	virtual void			Accept(IStatVisitor* visitor) = 0;
 };
 
+class Program : public Object
+{
+public:
+	List<Ptr<Declaration>>	decls;
+};
+
 /***********************************************************************
 Declarator
 ***********************************************************************/

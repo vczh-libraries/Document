@@ -107,6 +107,8 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 	else
 	{
 #define FUNCVAR_DECORATORS(F)\
+		F(DECL_EXTERN, Extern)\
+		F(DECL_FRIEND, Friend)\
 		F(STATIC, Static)\
 		F(MUTABLE, Mutable)\
 		F(THREAD_LOCAL, ThreadLocal)\
@@ -153,28 +155,53 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 
 			if (isFunction)
 			{
-				auto decl = MakePtr<FunctionDeclaration>();
-				decl->name = declarator->name;
-				decl->type = declarator->type;
-				decl->decoratorStatic = decoratorStatic;
-				decl->decoratorVirtual = decoratorVirtual;
-				decl->decoratorExplicit = decoratorExplicit;
-				decl->decoratorInline = decoratorInline;
-				decl->decoratorForceInline = decoratorForceInline;
-				pa.context->CreateSymbol(decl);
-				output.Add(decl);
+#define FILL_FUNCTION(NAME)\
+				NAME->name = declarator->name;\
+				NAME->type = declarator->type;\
+				NAME->decoratorExtern = decoratorExtern;\
+				NAME->decoratorFriend = decoratorFriend;\
+				NAME->decoratorStatic = decoratorStatic;\
+				NAME->decoratorVirtual = decoratorVirtual;\
+				NAME->decoratorExplicit = decoratorExplicit;\
+				NAME->decoratorInline = decoratorInline;\
+				NAME->decoratorForceInline = decoratorForceInline\
+
+				{
+					auto decl = MakePtr<ForwardFunctionDeclaration>();
+					FILL_FUNCTION(decl);
+					auto forwardSymbol = pa.context->CreateSymbol(decl);
+					forwardSymbol->isForwardDeclaration = true;
+					output.Add(decl);
+				}
+#undef FILL_FUNCTION
 			}
 			else
 			{
-				auto decl = MakePtr<VariableDeclaration>();
-				decl->name = declarator->name;
-				decl->type = declarator->type;
-				decl->decoratorStatic = decoratorStatic;
-				decl->decoratorMutable = decoratorMutable;
-				decl->decoratorThreadLocal = decoratorThreadLocal;
-				decl->decoratorRegister = decoratorRegister;
-				pa.context->CreateSymbol(decl);
-				output.Add(decl);
+#define FILL_VARIABLE(NAME)\
+				NAME->name = declarator->name;\
+				NAME->type = declarator->type;\
+				NAME->decoratorExtern = decoratorExtern;\
+				NAME->decoratorStatic = decoratorStatic;\
+				NAME->decoratorMutable = decoratorMutable;\
+				NAME->decoratorThreadLocal = decoratorThreadLocal;\
+				NAME->decoratorRegister = decoratorRegister\
+
+				if (decoratorExtern)
+				{
+					auto decl = MakePtr<ForwardVariableDeclaration>();
+					FILL_VARIABLE(decl);
+					auto forwardSymbol = pa.context->CreateSymbol(decl);
+					forwardSymbol->isForwardDeclaration = true;
+					output.Add(decl);
+				}
+				else
+				{
+					auto decl = MakePtr<VariableDeclaration>();
+					FILL_VARIABLE(decl);
+					pa.context->CreateSymbol(decl);
+					output.Add(decl);
+				}
+#undef FILL_VARIABLE
 			}
 		}
 	}

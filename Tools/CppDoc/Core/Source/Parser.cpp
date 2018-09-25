@@ -36,10 +36,12 @@ ParsingArguments::ParsingArguments(ParsingArguments& pa, Ptr<Symbol> _context)
 ParsingArguments
 ***********************************************************************/
 
-void ParseFile(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Program> ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
+	auto program = MakePtr<Program>();
 	while (cursor)
 	{
-		ParseDeclaration(pa, cursor);
+		ParseDeclaration(pa, cursor, program->decls);
 	}
+	return program;
 }
