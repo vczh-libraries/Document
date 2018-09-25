@@ -2,13 +2,12 @@
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
 
-template<typename T>
 class ReplaceOutOfDeclaratorTypeVisitor : public Object, public virtual ITypeVisitor
 {
 public:
-	Ptr<T>						createdType;
-	Ptr<Type>					typeToReplace;
-	Func<Ptr<T>(Ptr<Type>)>		typeCreator;
+	Ptr<Type>						createdType;
+	Ptr<Type>						typeToReplace;
+	Func<Ptr<Type>(Ptr<Type>)>		typeCreator;
 
 	void Execute(Ptr<Type>& targetType)
 	{
@@ -253,7 +252,7 @@ GIVE_UP:
 		{
 			if (TestToken(cursor, CppTokens::LBRACKET))
 			{
-				ReplaceOutOfDeclaratorTypeVisitor<ArrayType> replacer;
+				ReplaceOutOfDeclaratorTypeVisitor replacer;
 				{
 					replacer.typeToReplace = targetType;
 					replacer.typeCreator = [](Ptr<Type> typeToReplace)
@@ -269,7 +268,7 @@ GIVE_UP:
 
 				if (!TestToken(cursor, CppTokens::RBRACKET))
 				{
-					replacer.createdType->expr = ParseExpr(pa, cursor);
+					replacer.createdType.Cast<ArrayType>()->expr = ParseExpr(pa, cursor);
 					RequireToken(cursor, CppTokens::RBRACKET);
 				}
 			}
@@ -334,19 +333,37 @@ GIVE_UP:
 		}
 		else
 		{
-			ReplaceOutOfDeclaratorTypeVisitor<FunctionType> replacer;
+			ReplaceOutOfDeclaratorTypeVisitor replacer;
 			{
 				replacer.typeToReplace = targetType;
-				replacer.typeCreator = [](Ptr<Type> typeToReplace)
+				replacer.typeCreator = [](Ptr<Type> typeToReplace)->Ptr<Type>
 				{
-					auto type = MakePtr<FunctionType>();
-					type->returnType = typeToReplace;
-					return type;
+					if (auto ccType = typeToReplace.Cast<CallingConventionType>())
+					{
+						auto type = MakePtr<FunctionType>();
+						type->returnType = ccType->type;
+						ccType->type = type;
+						return ccType;
+					}
+					else
+					{
+						auto type = MakePtr<FunctionType>();
+						type->returnType = typeToReplace;
+						return type;
+					}
 				};
 
 				replacer.Execute(declarator->type);
 			}
-			type = replacer.createdType;
+
+			if (auto ccType = replacer.createdType.Cast<CallingConventionType>())
+			{
+				type = ccType->type.Cast<FunctionType>();
+			}
+			else
+			{
+				type = replacer.createdType.Cast<FunctionType>();
+			}
 		}
 
 		{

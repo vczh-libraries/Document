@@ -7,7 +7,7 @@
 - [x] Parse non-resolving types
 - [x] `Namespace`s, `Enum`s, `Variable`s `Forward Variable`s and `Forward Function`s
   - [x] Decorators of variables and functions: `friend`, `extern`, `static`, `mutable`, `thread_local`, `register`, `virtual`, `explicit`, `inline`, `__forceinline`.
-  - [ ] Assert ASTs
+  - [x] Assert ASTs
 - [ ] Parse qualified types and member pointer types (`::`)
   - [ ] Assert ASTs
   - [ ] Assert resolvings
