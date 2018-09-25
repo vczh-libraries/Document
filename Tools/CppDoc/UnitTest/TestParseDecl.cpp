@@ -67,13 +67,13 @@ enum e5
 {
 	x,
 	y = 1
-}
+};
 enum class e6
 {
 	x,
 	y,
 	z,
-}
+};
 )";
 	auto output = LR"(
 __forward enum e1;
@@ -84,13 +84,13 @@ enum e5
 {
 	x,
 	y = 1,
-}
+};
 enum class e6
 {
 	x,
 	y,
 	z,
-}
+};
 )";
 	AssertProgram(input, output);
 }

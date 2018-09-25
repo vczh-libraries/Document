@@ -16,10 +16,13 @@
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [ ] `Class`es, `Struct`s, `Union`s
+  - [ ] Constructors / Destructors
   - [ ] Assert ASTs
   - [ ] Connect forward declaractions with their root
   - [ ] Assert resolvings in scopes
 - [ ] Parse function body and Statements
+  - [ ] Class member methods defined out of classes
+  - [ ] Abstract function decorator
   - [ ] Assert ASTs
 - [ ] `Using` namespaces and symbols
   - [ ] Assert ASTs
@@ -28,13 +31,21 @@
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [ ] `Template`, `Typedef` and anonymous declaration
+  - [ ] Connect generic forward declarations with their root
+  - [ ] Methods of generic classes defined out of classes
+  - [ ] Generic methods of classes defined out of classes
+  - [ ] Generic methods of generic classes defined out of classes
+  - [ ] Define variables right after classes
+  - [ ] Define types right after typedef classes
   - [ ] Assert ASTs
 - [ ] Parse ambiguious expressions and types with generic
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [ ] Preprocess `Preprocessed.txt` to get rid of `#line`s and save line informations to another structure
 - [ ] Parse `Preprocessed.txt`
+  - [ ] Parse other syntax structures
   - [ ] Skip any other structures like `#pragma`
+  - [ ] Skip specifiers
 - [ ] Attach document content to declarations
 - [ ] Parse `Preprocessed.txt`
 - [ ] Save index and document result to another file
@@ -114,7 +125,6 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] CALL DECLARATOR
 - [x] `alignas` `(` EXPR `)` DECLARATOR
 - [ ] TYPE `::` DECLARATOR
-  - The qualifiers here decorate the identifier, not the this pointer.
 - [x] `(` DECLARATOR `)`
 - [x] (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
 - [x] (`constexpr` | `const` | `volatile`) DECLARATOR
@@ -139,7 +149,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [ ] [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
 
 ## ENUM
-- [ ] `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}`
+- [x] `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}`
 
 ## UNION
 - [ ] [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}`
@@ -155,8 +165,8 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - [ ] [TEMPLATE-SPEC] `using` NAME = TYPE-ZERO `;`
 - [ ] **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
 - [ ] **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
-- [ ] **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`
-- [ ] **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
+- [x] **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`
+- [x] **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
 - [ ] **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
 - [ ] FUNCTION
 
@@ -197,7 +207,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [ ] (`__if_exists` | `__if_not_exists`) `(` EXPR `)` STAT
 
 # EXPR (Expression)
-- [ ] LITERAL
+- [x] LITERAL
 - [ ] `this`
 - [ ] `nullptr`
 - [ ] [TYPE `::`] [`~`] IDENTIFIER

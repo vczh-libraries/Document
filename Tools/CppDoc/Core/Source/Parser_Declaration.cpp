@@ -111,6 +111,7 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 					break;
 				}
 			}
+			RequireToken(cursor, CppTokens::SEMICOLON);
 
 			output.Add(decl);
 		}

@@ -446,7 +446,7 @@ public:
 		indentation--;
 
 		WriteIndentation();
-		writer.WriteLine(L"}");
+		writer.WriteLine(L"};");
 	}
 
 	void Visit(ClassDeclaration* self)override
