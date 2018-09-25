@@ -8,14 +8,16 @@
 - [x] `Namespace`s, `Enum`s, `Variable`s `Forward Variable`s and `Forward Function`s
   - [x] Decorators of variables and functions: `friend`, `extern`, `static`, `mutable`, `thread_local`, `register`, `virtual`, `explicit`, `inline`, `__forceinline`.
   - [x] Assert ASTs
+  - [ ] Connect forward declaractions with their root
 - [ ] Parse qualified types and member pointer types (`::`)
   - [ ] Assert ASTs
   - [ ] Assert resolvings
-- [ ] `Class`es, `Struct`s, `Union`s
+- [ ] `Forward Declaration`s of `Class`es, `Struct`s, `Union`s
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
-- [ ] `Forward Declaration`s
+- [ ] `Class`es, `Struct`s, `Union`s
   - [ ] Assert ASTs
+  - [ ] Connect forward declaractions with their root
   - [ ] Assert resolvings in scopes
 - [ ] Parse function body and Statements
   - [ ] Assert ASTs
