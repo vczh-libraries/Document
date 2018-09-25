@@ -41,30 +41,28 @@ public:
 
 	void Visit(EnumItemDeclaration* self)override
 	{
+		isPotentialType = false;
 	}
 
 	void Visit(EnumDeclaration* self)override
 	{
-		isPotentialType = false;
 	}
 
 	void Visit(ClassDeclaration* self)override
 	{
-		isPotentialType = false;
 	}
 
 	void Visit(TypeAliasDeclaration* self)override
 	{
-		isPotentialType = false;
 	}
 
 	void Visit(UsingDeclaration* self)override
 	{
+		isPotentialType = false;
 	}
 
 	void Visit(NamespaceDeclaration* self)override
 	{
-		isPotentialType = false;
 	}
 };
 
