@@ -25,7 +25,7 @@
 - [ ] Parse full expressions
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
-- [ ] `Template` and `Typedef`
+- [ ] `Template`, `Typedef` and anonymous declaration
   - [ ] Assert ASTs
 - [ ] Parse ambiguious expressions and types with generic
   - [ ] Assert ASTs

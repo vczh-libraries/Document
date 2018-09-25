@@ -8,6 +8,41 @@ extern void Log(Ptr<Declarator> declarator, StreamWriter& writer);
 extern void Log(Ptr<Expr> expr, StreamWriter& writer);
 extern void Log(Ptr<Type> type, StreamWriter& writer);
 
+void Log(Ptr<Initializer> initializer, StreamWriter& writer)
+{
+	switch (initializer->initializerType)
+	{
+	case InitializerType::Equal:
+		writer.WriteString(L" = ");
+		break;
+	case InitializerType::Constructor:
+		writer.WriteString(L" (");
+		break;
+	case InitializerType::Universal:
+		writer.WriteString(L" {");
+		break;
+	}
+
+	for (vint i = 0; i < initializer->arguments.Count(); i++)
+	{
+		if (i != 0)
+		{
+			writer.WriteString(L", ");
+		}
+		Log(initializer->arguments[i], writer);
+	}
+
+	switch (initializer->initializerType)
+	{
+	case InitializerType::Constructor:
+		writer.WriteChar(L')');
+		break;
+	case InitializerType::Universal:
+		writer.WriteChar(L'}');
+		break;
+	}
+}
+
 void Log(Ptr<Declarator> declarator, StreamWriter& writer)
 {
 	if (declarator->name)
@@ -20,37 +55,7 @@ void Log(Ptr<Declarator> declarator, StreamWriter& writer)
 
 	if (declarator->initializer)
 	{
-		switch (declarator->initializer->initializerType)
-		{
-		case InitializerType::Equal:
-			writer.WriteString(L" = ");
-			break;
-		case InitializerType::Constructor:
-			writer.WriteString(L" (");
-			break;
-		case InitializerType::Universal:
-			writer.WriteString(L" {");
-			break;
-		}
-
-		for (vint i = 0; i < declarator->initializer->arguments.Count(); i++)
-		{
-			if (i != 0)
-			{
-				writer.WriteString(L", ");
-			}
-			Log(declarator->initializer->arguments[i], writer);
-		}
-
-		switch (declarator->initializer->initializerType)
-		{
-		case InitializerType::Constructor:
-			writer.WriteChar(L')');
-			break;
-		case InitializerType::Universal:
-			writer.WriteChar(L'}');
-			break;
-		}
+		Log(declarator->initializer, writer);
 	}
 }
 
@@ -60,9 +65,10 @@ LogExprVisitor
 
 class LogExprVisitor : public Object, public virtual IExprVisitor
 {
-public:
+private:
 	StreamWriter&			writer;
 
+public:
 	LogExprVisitor(StreamWriter& _writer)
 		:writer(_writer)
 	{
@@ -87,9 +93,10 @@ LogTypeVisitor
 
 class LogTypeVisitor : public Object, public virtual ITypeVisitor
 {
-public:
+private:
 	StreamWriter&			writer;
 
+public:
 	LogTypeVisitor(StreamWriter& _writer)
 		:writer(_writer)
 	{
@@ -293,9 +300,10 @@ LogStatVisitor
 
 class LogStatVisitor : public Object, public virtual IStatVisitor
 {
-public:
+private:
 	StreamWriter&			writer;
 
+public:
 	LogStatVisitor(StreamWriter& _writer)
 		:writer(_writer)
 	{
@@ -313,8 +321,56 @@ LogDeclVisitor
 
 class LogDeclVisitor : public Object, public virtual IDeclarationVisitor
 {
-public:
+private:
 	StreamWriter&			writer;
+	vint					indentation = 0;
+
+	void WriteIndentation()
+	{
+		for (vint i = 0; i < indentation; i++)
+		{
+			writer.WriteString(L"    ");
+		}
+	}
+
+	void WriteHeader(ForwardVariableDeclaration* self)
+	{
+		if (self->decoratorExtern) writer.WriteString(L"extern ");
+		if (self->decoratorMutable) writer.WriteString(L"mutable ");
+		if (self->decoratorRegister) writer.WriteString(L"register ");
+		if (self->decoratorStatic) writer.WriteString(L"static ");
+		if (self->decoratorThreadLocal) writer.WriteString(L"thread_local ");
+		writer.WriteString(self->name.name);
+		writer.WriteString(L": ");
+		Log(self->type, writer);
+	}
+
+	void WriteHeader(ForwardFunctionDeclaration* self)
+	{
+		if (self->decoratorExplicit) writer.WriteString(L"explicit ");
+		if (self->decoratorExtern) writer.WriteString(L"extern ");
+		if (self->decoratorFriend) writer.WriteString(L"friend ");
+		if (self->decoratorInline) writer.WriteString(L"inline ");
+		if (self->decoratorForceInline) writer.WriteString(L"__forceinline ");
+		if (self->decoratorStatic) writer.WriteString(L"static ");
+		if (self->decoratorVirtual) writer.WriteString(L"virtual ");
+		writer.WriteString(self->name.name);
+		writer.WriteString(L": ");
+		Log(self->type, writer);
+	}
+
+	void WriteHeader(ForwardEnumDeclaration* self)
+	{
+		writer.WriteString(self->enumClass ? L"enum class " : L"enum ");
+		writer.WriteString(self->name.name);
+		if (self->baseType)
+		{
+			writer.WriteString(L": ");
+			Log(self->baseType, writer);
+		}
+	}
+
+public:
 
 	LogDeclVisitor(StreamWriter& _writer)
 		:writer(_writer)
@@ -323,17 +379,23 @@ public:
 
 	void Visit(ForwardVariableDeclaration* self)override
 	{
-		throw 0;
+		writer.WriteString(L"__forward ");
+		WriteHeader(self);
+		writer.WriteLine(L";");
 	}
 
 	void Visit(ForwardFunctionDeclaration* self)override
 	{
-		throw 0;
+		writer.WriteString(L"__forward ");
+		WriteHeader(self);
+		writer.WriteLine(L";");
 	}
 
 	void Visit(ForwardEnumDeclaration* self)override
 	{
-		throw 0;
+		writer.WriteString(L"__forward ");
+		WriteHeader(self);
+		writer.WriteLine(L";");
 	}
 
 	void Visit(ForwardClassDeclaration* self)override
@@ -343,7 +405,12 @@ public:
 
 	void Visit(VariableDeclaration* self)override
 	{
-		throw 0;
+		WriteHeader(self);
+		if (self->initializer)
+		{
+			Log(self->initializer, writer);
+		}
+		writer.WriteLine(L";");
 	}
 
 	void Visit(FunctionDeclaration* self)override
@@ -353,12 +420,34 @@ public:
 
 	void Visit(EnumItemDeclaration* self)override
 	{
-		throw 0;
+		writer.WriteString(self->name.name);
+		if (self->value)
+		{
+			writer.WriteString(L" = ");
+			Log(self->value, writer);
+		}
+		writer.WriteLine(L",");
 	}
 
 	void Visit(EnumDeclaration* self)override
 	{
-		throw 0;
+		writer.WriteString(L"__forward ");
+		WriteHeader(self);
+		writer.WriteLine(L"");
+
+		WriteIndentation();
+		writer.WriteLine(L"{");
+
+		indentation++;
+		for (vint i = 0; i < self->items.Count(); i++)
+		{
+			WriteIndentation();
+			self->items[i]->Accept(this);
+		}
+		indentation--;
+
+		WriteIndentation();
+		writer.WriteLine(L"{");
 	}
 
 	void Visit(ClassDeclaration* self)override
@@ -378,7 +467,22 @@ public:
 
 	void Visit(NamespaceDeclaration* self)override
 	{
-		throw 0;
+		writer.WriteString(L"namespace ");
+		writer.WriteLine(self->name.name);
+
+		WriteIndentation();
+		writer.WriteLine(L"{");
+
+		indentation++;
+		for (vint i = 0; i < self->decls.Count(); i++)
+		{
+			WriteIndentation();
+			self->decls[i]->Accept(this);
+		}
+		indentation--;
+
+		WriteIndentation();
+		writer.WriteLine(L"{");
 	}
 };
 
