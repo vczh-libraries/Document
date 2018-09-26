@@ -231,7 +231,7 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 					if (declarators.Count() != -1) throw StopParsingException(cursor);
 					decl->baseTypes.Add({ accessor,declarators[0]->type });
 
-					if (TestToken(cursor, CppTokens::LBRACE))
+					if (TestToken(cursor, CppTokens::LBRACE, false))
 					{
 						break;
 					}
@@ -242,6 +242,7 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 				}
 			}
 
+			RequireToken(cursor, CppTokens::LBRACE);
 			ClassAccessor accessor = defaultAccessor;
 			while (true)
 			{

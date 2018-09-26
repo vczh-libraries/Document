@@ -190,3 +190,96 @@ TEST_CASE(TestParseDecl_FunctionsConnectForward)
 {
 
 }
+
+TEST_CASE(TestParseDecl_Classes)
+{
+	auto input = LR"(
+)";
+	auto output = LR"(
+)";
+	AssertProgram(input, output);
+}
+
+TEST_CASE(TestParseDecl_ClassesConnectForward)
+{
+	const wchar_t* inputs[] = {
+LR"(
+namespace a::b
+{
+	class X;
+	class X;
+}
+namespace a::b
+{
+	class X{};
+}
+namespace a::b
+{
+	class X;
+	class X;
+}
+)",
+LR"(
+namespace a::b
+{
+	struct X;
+	struct X;
+}
+namespace a::b
+{
+	struct X{};
+}
+namespace a::b
+{
+	struct X;
+	struct X;
+}
+)",
+LR"(
+namespace a::b
+{
+	union X;
+	union X;
+}
+namespace a::b
+{
+	union X{};
+}
+namespace a::b
+{
+	union X;
+	union X;
+}
+)"
+	};
+
+	for (vint i = 0; i < 3; i++)
+	{
+		COMPILE_PROGRAM(program, pa, inputs[i]);
+		TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
+		TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
+		TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"X"].Count() == 5);
+		const auto& symbols = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"X"];
+
+		for (vint i = 0; i < 5; i++)
+		{
+			auto& symbol = symbols[i];
+			if (i == 2)
+			{
+				TEST_ASSERT(symbol->isForwardDeclaration == false);
+				TEST_ASSERT(symbol->forwardDeclarationRoot == nullptr);
+				TEST_ASSERT(symbol->forwardDeclarations.Count() == 4);
+				TEST_ASSERT(symbol->forwardDeclarations[0] == symbols[0].Obj());
+				TEST_ASSERT(symbol->forwardDeclarations[1] == symbols[1].Obj());
+				TEST_ASSERT(symbol->forwardDeclarations[2] == symbols[3].Obj());
+				TEST_ASSERT(symbol->forwardDeclarations[3] == symbols[4].Obj());
+			}
+			else
+			{
+				TEST_ASSERT(symbol->isForwardDeclaration == true);
+				TEST_ASSERT(symbol->forwardDeclarationRoot == symbols[2].Obj());
+				TEST_ASSERT(symbol->forwardDeclarations.Count() == 0);
+			}
+		}
+	}
+}
