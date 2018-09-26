@@ -381,6 +381,23 @@ private:
 		}
 	}
 
+	void WriteHeader(ForwardClassDeclaration* self)
+	{
+		switch (self->classType)
+		{
+		case ClassType::Class:
+			writer.WriteString(L"class ");
+			break;
+		case ClassType::Struct:
+			writer.WriteString(L"struct ");
+			break;
+		case ClassType::Union:
+			writer.WriteString(L"union ");
+			break;
+		}
+		writer.WriteString(self->name.name);
+	}
+
 public:
 
 	LogDeclVisitor(StreamWriter& _writer)
@@ -411,7 +428,9 @@ public:
 
 	void Visit(ForwardClassDeclaration* self)override
 	{
-		throw 0;
+		writer.WriteString(L"__forward ");
+		WriteHeader(self);
+		writer.WriteLine(L";");
 	}
 
 	void Visit(VariableDeclaration* self)override
@@ -462,7 +481,60 @@ public:
 
 	void Visit(ClassDeclaration* self)override
 	{
-		throw 0;
+		WriteHeader(self);
+		for (vint i = 0; i < self->baseTypes.Count(); i++)
+		{
+			if (i == 0)
+			{
+				writer.WriteString(L" : ");
+			}
+			else
+			{
+				writer.WriteString(L", ");
+			}
+
+			auto pair = self->baseTypes[i];
+			switch (pair.f0)
+			{
+			case ClassAccessor::Public:
+				writer.WriteString(L"public ");
+				break;
+			case ClassAccessor::Protected:
+				writer.WriteString(L"protected ");
+				break;
+			case ClassAccessor::Private:
+				writer.WriteString(L"private ");
+				break;
+			}
+			Log(pair.f1, writer);
+		}
+
+		WriteIndentation();
+		writer.WriteLine(L"{");
+
+		indentation++;
+		for (vint i = 0; i < self->decls.Count(); i++)
+		{
+			WriteIndentation();
+			auto pair = self->decls[i];
+			switch (pair.f0)
+			{
+			case ClassAccessor::Public:
+				writer.WriteString(L"public: ");
+				break;
+			case ClassAccessor::Protected:
+				writer.WriteString(L"protected: ");
+				break;
+			case ClassAccessor::Private:
+				writer.WriteString(L"private: ");
+				break;
+			}
+			pair.f1->Accept(this);
+		}
+		indentation--;
+
+		WriteIndentation();
+		writer.WriteLine(L"};");
 	}
 
 	void Visit(TypeAliasDeclaration* self)override
