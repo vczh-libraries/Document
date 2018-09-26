@@ -508,6 +508,7 @@ public:
 			}
 			Log(pair.f1, writer);
 		}
+		writer.WriteLine(L"");
 
 		WriteIndentation();
 		writer.WriteLine(L"{");
@@ -520,13 +521,13 @@ public:
 			switch (pair.f0)
 			{
 			case ClassAccessor::Public:
-				writer.WriteString(L"public: ");
+				writer.WriteString(L"public ");
 				break;
 			case ClassAccessor::Protected:
-				writer.WriteString(L"protected: ");
+				writer.WriteString(L"protected ");
 				break;
 			case ClassAccessor::Private:
-				writer.WriteString(L"private: ");
+				writer.WriteString(L"private ");
 				break;
 			}
 			pair.f1->Accept(this);

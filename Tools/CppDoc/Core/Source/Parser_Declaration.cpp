@@ -204,13 +204,15 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 			auto decl = MakePtr<ClassDeclaration>();
 			decl->classType = classType;
 			decl->name = cppName;
-			auto forwardSymbol = pa.context->CreateSymbol(decl);
+			auto contextSymbol = pa.context->CreateSymbol(decl);
 			output.Add(decl);
-			FindForwardDeclarations<ClassDeclaration, ForwardClassDeclaration>(pa.context, forwardSymbol, cursor);
+			FindForwardDeclarations<ClassDeclaration, ForwardClassDeclaration>(pa.context, contextSymbol, cursor);
+
+			ParsingArguments declPa(pa, contextSymbol);
 
 			if (TestToken(cursor, CppTokens::COLON))
 			{
-				while (true)
+				while (!TestToken(cursor, CppTokens::LBRACE, false))
 				{
 					ClassAccessor accessor = defaultAccessor;
 					if (TestToken(cursor, CppTokens::PUBLIC))
@@ -227,8 +229,8 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 					}
 
 					List<Ptr<Declarator>> declarators;
-					ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-					if (declarators.Count() != -1) throw StopParsingException(cursor);
+					ParseDeclarator(declPa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
+					if (declarators.Count() != 1) throw StopParsingException(cursor);
 					decl->baseTypes.Add({ accessor,declarators[0]->type });
 
 					if (TestToken(cursor, CppTokens::LBRACE, false))
@@ -268,7 +270,7 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 				else
 				{
 					List<Ptr<Declaration>> declarations;
-					ParseDeclaration(pa, cursor, declarations);
+					ParseDeclaration(declPa, cursor, declarations);
 					for (vint i = 0; i < declarations.Count(); i++)
 					{
 						decl->decls.Add({ accessor,declarations[i] });

@@ -194,8 +194,41 @@ TEST_CASE(TestParseDecl_FunctionsConnectForward)
 TEST_CASE(TestParseDecl_Classes)
 {
 	auto input = LR"(
+class C1;
+struct S1;
+union U1;
+
+class C2: C1, public C1, protected C1, private C1 { int x; public: int a,b; protected: int c,d; private: int e,f; };
+struct S2: S1, public S1, protected S1, private S1 { int x; public: int a,b; protected: int c,d; private: int e,f; };
+union U2: U1, public U1, protected U1, private U1 {};
 )";
 	auto output = LR"(
+__forward class C1;
+__forward struct S1;
+__forward union U1;
+class C2 : private C1, public C1, protected C1, private C1
+{
+	private x: int;
+	public a: int;
+	public b: int;
+	protected c: int;
+	protected d: int;
+	private e: int;
+	private f: int;
+};
+struct S2 : public S1, public S1, protected S1, private S1
+{
+	public x: int;
+	public a: int;
+	public b: int;
+	protected c: int;
+	protected d: int;
+	private e: int;
+	private f: int;
+};
+union U2 : public U1, public U1, protected U1, private U1
+{
+};
 )";
 	AssertProgram(input, output);
 }
