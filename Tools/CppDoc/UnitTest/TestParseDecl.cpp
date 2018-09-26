@@ -177,7 +177,7 @@ TEST_CASE(TestParseDecl_Functions)
 {
 	auto input = LR"(
 int Add(int a, int b);
-extern friend static virtual explicit inline __forceinline int __stdcall Sub(int, int);
+friend extern static virtual explicit inline __forceinline int __stdcall Sub(int, int);
 )";
 	auto output = LR"(
 __forward Add: int (a: int, b: int);

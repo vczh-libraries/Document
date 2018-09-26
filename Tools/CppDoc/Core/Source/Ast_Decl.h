@@ -118,7 +118,7 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	ClassType										classType;
-	bool											friendClass = false;
+	bool											decoratorFriend = false;
 };
 
 /***********************************************************************

@@ -39,6 +39,8 @@ void FindForwardDeclarations(Ptr<Symbol> scope, Ptr<Symbol> contextSymbol, Ptr<C
 
 void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
+	bool decoratorFriend = TestToken(cursor, CppTokens::DECL_FRIEND);
+
 	if (TestToken(cursor, CppTokens::DECL_NAMESPACE))
 	{
 		auto contextSymbol = pa.context;
@@ -164,11 +166,122 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 			FindForwardDeclarationRoot<EnumDeclaration, ForwardEnumDeclaration>(pa.context, forwardSymbol, cursor);
 		}
 	}
+	else if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
+	{
+		ClassType classType = ClassType::Union;
+		ClassAccessor defaultAccessor = ClassAccessor::Public;
+
+		switch ((CppTokens)cursor->token.token)
+		{
+		case CppTokens::DECL_CLASS:
+			classType = ClassType::Class;
+			defaultAccessor = ClassAccessor::Private;
+			break;
+		case CppTokens::DECL_STRUCT:
+			classType = ClassType::Struct;
+			break;
+		}
+		cursor = cursor->Next();
+
+		CppName cppName;
+		if (!ParseCppName(cppName, cursor))
+		{
+			throw StopParsingException(cursor);
+		}
+
+		if (TestToken(cursor, CppTokens::SEMICOLON))
+		{
+			auto decl = MakePtr<ForwardClassDeclaration>();
+			decl->classType = classType;
+			decl->name = cppName;
+			auto forwardSymbol = pa.context->CreateSymbol(decl);
+			forwardSymbol->isForwardDeclaration = true;
+			output.Add(decl);
+			FindForwardDeclarationRoot<ClassDeclaration, ForwardClassDeclaration>(pa.context, forwardSymbol, cursor);
+		}
+		else
+		{
+			auto decl = MakePtr<ClassDeclaration>();
+			decl->classType = classType;
+			decl->name = cppName;
+			auto forwardSymbol = pa.context->CreateSymbol(decl);
+			output.Add(decl);
+			FindForwardDeclarations<ClassDeclaration, ForwardClassDeclaration>(pa.context, forwardSymbol, cursor);
+
+			if (TestToken(cursor, CppTokens::COLON))
+			{
+				while (true)
+				{
+					ClassAccessor accessor = defaultAccessor;
+					if (TestToken(cursor, CppTokens::PUBLIC))
+					{
+						accessor = ClassAccessor::Public;
+					}
+					else if (TestToken(cursor, CppTokens::PROTECTED))
+					{
+						accessor = ClassAccessor::Protected;
+					}
+					else if (TestToken(cursor, CppTokens::PRIVATE))
+					{
+						accessor = ClassAccessor::Private;
+					}
+
+					List<Ptr<Declarator>> declarators;
+					ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
+					if (declarators.Count() != -1) throw StopParsingException(cursor);
+					decl->baseTypes.Add({ accessor,declarators[0]->type });
+
+					if (TestToken(cursor, CppTokens::LBRACE))
+					{
+						break;
+					}
+					else
+					{
+						RequireToken(cursor, CppTokens::COMMA);
+					}
+				}
+			}
+
+			ClassAccessor accessor = defaultAccessor;
+			while (true)
+			{
+				if (TestToken(cursor, CppTokens::PUBLIC))
+				{
+					accessor = ClassAccessor::Public;
+					RequireToken(cursor, CppTokens::COLON);
+				}
+				else if (TestToken(cursor, CppTokens::PROTECTED))
+				{
+					accessor = ClassAccessor::Protected;
+					RequireToken(cursor, CppTokens::COLON);
+				}
+				else if (TestToken(cursor, CppTokens::PRIVATE))
+				{
+					accessor = ClassAccessor::Private;
+					RequireToken(cursor, CppTokens::COLON);
+				}
+				else if(TestToken(cursor,CppTokens::RBRACE))
+				{
+					break;
+				}
+				else
+				{
+					List<Ptr<Declaration>> declarations;
+					ParseDeclaration(pa, cursor, declarations);
+					for (vint i = 0; i < declarations.Count(); i++)
+					{
+						decl->decls.Add({ accessor,declarations[i] });
+					}
+				}
+			}
+
+			RequireToken(cursor, CppTokens::SEMICOLON);
+		}
+	}
 	else
 	{
 #define FUNCVAR_DECORATORS(F)\
 		F(DECL_EXTERN, Extern)\
-		F(DECL_FRIEND, Friend)\
 		F(STATIC, Static)\
 		F(MUTABLE, Mutable)\
 		F(THREAD_LOCAL, ThreadLocal)\

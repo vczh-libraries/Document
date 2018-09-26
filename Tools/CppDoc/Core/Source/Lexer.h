@@ -99,6 +99,9 @@ Definition
 	F(REINTERPRET_CAST,			reinterpret_cast)\
 	F(SAFE_CAST,				safe_cast)\
 	F(TYPENAME,					typename)\
+	F(PUBLIC,					public)\
+	F(PROTECTED,				protected)\
+	F(PRIVATE,					private)\
 
 enum class CppTokens
 {

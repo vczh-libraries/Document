@@ -14,13 +14,13 @@
 - [x] Parse qualified types and member pointer types (`::`)
   - [x] Assert ASTs
   - [ ] Assert resolvings
-- [ ] `Forward Declaration`s of `Class`es, `Struct`s, `Union`s
+- [x] `Forward Declaration`s of `Class`es, `Struct`s, `Union`s
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
-- [ ] `Class`es, `Struct`s, `Union`s
+- [x] `Class`es, `Struct`s, `Union`s
   - [ ] Constructors / Destructors
   - [ ] Assert ASTs
-  - [ ] Connect forward declaractions with their root
+  - [x] Connect forward declaractions with their root
   - [ ] Assert resolvings in scopes
 - [ ] Parse function body and Statements
   - [ ] Assert ASTs
