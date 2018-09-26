@@ -201,6 +201,8 @@ union U1;
 class C2: C1, public C1, protected C1, private C1 { int x; public: int a,b; protected: int c,d; private: int e,f; };
 struct S2: S1, public S1, protected S1, private S1 { int x; public: int a,b; protected: int c,d; private: int e,f; };
 union U2: U1, public U1, protected U1, private U1 {};
+
+struct Point { int x; int y; };
 )";
 	auto output = LR"(
 __forward class C1;
@@ -228,6 +230,11 @@ struct S2 : public S1, public S1, protected S1, private S1
 };
 union U2 : public U1, public U1, protected U1, private U1
 {
+};
+struct Point
+{
+	public x: int;
+	public y: int;
 };
 )";
 	AssertProgram(input, output);

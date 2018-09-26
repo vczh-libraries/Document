@@ -70,38 +70,47 @@ public:
 ResolveTypeSymbol
 ***********************************************************************/
 
-Ptr<Resolving> ResolveTypeSymbol(Symbol* scope, const WString& name, Ptr<Resolving> resolving)
+Ptr<Resolving> ResolveTypeSymbol(Symbol* scope, const WString& name, Ptr<Resolving> resolving, bool searchInParentScope)
 {
-	vint index = scope->children.Keys().IndexOf(name);
-	if (index == -1) return resolving;
-
-	const auto& symbols = scope->children.GetByIndex(index);
-	for (vint i = 0; i < symbols.Count(); i++)
+	bool found = false;
+	while (!found && scope)
 	{
-		auto symbol = symbols[i].Obj();
-		if (symbol->forwardDeclarationRoot)
+		vint index = scope->children.Keys().IndexOf(name);
+		if (index != -1)
 		{
-			symbol = symbol->forwardDeclarationRoot;
-		}
-
-		for (vint i = 0; i < symbol->decls.Count(); i++)
-		{
-			IsPotentialTypeDeclVisitor visitor;
-			symbol->decls[i]->Accept(&visitor);
-			if (visitor.isPotentialType)
+			const auto& symbols = scope->children.GetByIndex(index);
+			for (vint i = 0; i < symbols.Count(); i++)
 			{
-				if (!resolving)
+				auto symbol = symbols[i].Obj();
+				if (symbol->forwardDeclarationRoot)
 				{
-					resolving = new Resolving;
+					symbol = symbol->forwardDeclarationRoot;
 				}
 
-				if (!resolving->resolvedSymbols.Contains(symbol))
+				for (vint i = 0; i < symbol->decls.Count(); i++)
 				{
-					resolving->resolvedSymbols.Add(symbol);
+					IsPotentialTypeDeclVisitor visitor;
+					symbol->decls[i]->Accept(&visitor);
+					if (visitor.isPotentialType)
+					{
+						found = true;
+						if (!resolving)
+						{
+							resolving = new Resolving;
+						}
+
+						if (!resolving->resolvedSymbols.Contains(symbol))
+						{
+							resolving->resolvedSymbols.Add(symbol);
+						}
+						break;
+					}
 				}
-				break;
 			}
 		}
+
+		if (!searchInParentScope) break;
+		scope = scope->parent;
 	}
 
 	return resolving;
@@ -288,7 +297,7 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			CppName cppName;
 			if (ParseCppName(cppName, cursor))
 			{
-				if (auto resolving = ResolveTypeSymbol(pa.context.Obj(), cppName.name, nullptr))
+				if (auto resolving = ResolveTypeSymbol(pa.context.Obj(), cppName.name, nullptr, true))
 				{
 					auto type = MakePtr<IdType>();
 					type->name = cppName;
