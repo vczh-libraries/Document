@@ -70,12 +70,12 @@ public:
 ResolveTypeSymbol
 ***********************************************************************/
 
-Ptr<Resolving> ResolveTypeSymbol(Symbol* scope, const WString& name, Ptr<Resolving> resolving, bool searchInParentScope)
+Ptr<Resolving> ResolveTypeSymbol(Symbol* scope, CppName& name, Ptr<Resolving> resolving, bool searchInParentScope)
 {
 	bool found = false;
 	while (!found && scope)
 	{
-		vint index = scope->children.Keys().IndexOf(name);
+		vint index = scope->children.Keys().IndexOf(name.name);
 		if (index != -1)
 		{
 			const auto& symbols = scope->children.GetByIndex(index);
@@ -116,16 +116,33 @@ Ptr<Resolving> ResolveTypeSymbol(Symbol* scope, const WString& name, Ptr<Resolvi
 	return resolving;
 }
 
+/***********************************************************************
+ResolveChildTypeSymbol
+***********************************************************************/
+
 class ResolveChildSymbolTypeVisitor : public Object, public virtual ITypeVisitor
 {
 public:
-	List<Symbol*>&			resolving;
-	WString					name;
+	ParsingArguments&		pa;
+	CppName&				name;
+	Ptr<Resolving>			resolving;
 
-	ResolveChildSymbolTypeVisitor(List<Symbol*>& _resolving, const WString& _name)
-		:resolving(_resolving)
+	ResolveChildSymbolTypeVisitor(ParsingArguments& _pa, CppName& _name)
+		:pa(_pa)
 		, name(_name)
 	{
+	}
+
+	void ResolveChildTypeOfResolving(Ptr<Resolving> parentResolving)
+	{
+		if (parentResolving)
+		{
+			auto& symbols = parentResolving->resolvedSymbols;
+			for (vint i = 0; i < symbols.Count(); i++)
+			{
+				resolving = ResolveTypeSymbol(symbols[i], name, resolving, false);
+			}
+		}
 	}
 
 	void Visit(PrimitiveType* self)override
@@ -155,7 +172,6 @@ public:
 
 	void Visit(DeclType* self)override
 	{
-		throw 0;
 	}
 
 	void Visit(DecorateType* self)override
@@ -165,16 +181,17 @@ public:
 
 	void Visit(RootType* self)override
 	{
-		throw 0;
+		resolving = ResolveTypeSymbol(pa.root.Obj(), name, resolving, false);
 	}
 
 	void Visit(IdType* self)override
 	{
+		ResolveChildTypeOfResolving(self->resolving);
 	}
 
 	void Visit(ChildType* self)override
 	{
-		throw 0;
+		ResolveChildTypeOfResolving(self->resolving);
 	}
 
 	void Visit(GenericType* self)override
@@ -186,6 +203,13 @@ public:
 	{
 	}
 };
+
+Ptr<Resolving> ResolveChildTypeSymbol(ParsingArguments& pa, Ptr<Type> classType, CppName& name)
+{
+	ResolveChildSymbolTypeVisitor visitor(pa, name);
+	classType->Accept(&visitor);
+	return visitor.resolving;
+}
 
 /***********************************************************************
 ParsePrimitiveType
@@ -297,7 +321,7 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			CppName cppName;
 			if (ParseCppName(cppName, cursor))
 			{
-				if (auto resolving = ResolveTypeSymbol(pa.context.Obj(), cppName.name, nullptr, true))
+				if (auto resolving = ResolveTypeSymbol(pa.context.Obj(), cppName, nullptr, true))
 				{
 					auto type = MakePtr<IdType>();
 					type->name = cppName;
@@ -394,12 +418,17 @@ Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				CppName cppName;
 				if (ParseCppName(cppName, cursor))
 				{
-					auto type = MakePtr<ChildType>();
-					type->classType = typeResult;
-					type->name = cppName;
-					type->typenameType = typenameType;
-					typeResult = type;
-					continue;
+					auto resolving = ResolveChildTypeSymbol(pa, typeResult, cppName);
+					if (resolving || typenameType)
+					{
+						auto type = MakePtr<ChildType>();
+						type->classType = typeResult;
+						type->typenameType = typenameType;
+						type->name = cppName;
+						type->resolving = resolving;
+						typeResult = type;
+						continue;
+					}
 				}
 				else
 				{
@@ -407,10 +436,10 @@ Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 					{
 						throw StopParsingException(cursor);
 					}
-					cursor = oldCursor;
 				}
 			}
 
+			cursor = oldCursor;
 			break;
 		}
 	}
