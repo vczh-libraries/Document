@@ -366,6 +366,10 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 					auto type = MakePtr<IdType>();
 					type->name = cppName;
 					type->resolving = resolving;
+					if (pa.recorder)
+					{
+						pa.recorder->Index(type->name, type->resolving);
+					}
 					return type;
 				}
 			}
@@ -466,6 +470,11 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 						type->typenameType = typenameType;
 						type->name = cppName;
 						type->resolving = resolving;
+						if (pa.recorder)
+						{
+							pa.recorder->Index(type->name, type->resolving);
+						}
+
 						typeResult = type;
 						continue;
 					}

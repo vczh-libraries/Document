@@ -98,9 +98,33 @@ namespace a::b
 }
 )";
 	COMPILE_PROGRAM(program, pa, input);
-	AssertType(L"a::b::X", L"a :: b :: X", pa);
-	AssertType(L"::a::b::X :: typename Y :: typename Z", L"__root :: a :: b :: X :: typename Y :: typename Z", pa);
-	AssertType(L"a::b::X(__cdecl a::typename b::*)()", L"a :: b :: X () __cdecl (a :: typename b ::) *", pa);
+	{
+		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+		{
+		});
+		AssertType(
+			L"a::b::X",
+			L"a :: b :: X",
+			pa);
+	}
+	{
+		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+		{
+		});
+		AssertType(
+			L"::a::b::X :: typename Y :: typename Z",
+			L"__root :: a :: b :: X :: typename Y :: typename Z",
+			pa);
+	}
+	{
+		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+		{
+		});
+		AssertType(
+			L"a::b::X(__cdecl a::typename b::*)()",
+			L"a :: b :: X () __cdecl (a :: typename b ::) *",
+			pa);
+	}
 }
 
 TEST_CASE(TestParseType_MemberType2)
@@ -124,5 +148,13 @@ namespace c::d
 }
 )";
 	COMPILE_PROGRAM(program, pa, input);
-	AssertType(L"c::d::Y::Z::Y", L"c :: d :: Y :: Z :: Y", pa);
+	{
+		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+		{
+		});
+		AssertType(
+			L"c::d::Y::Z::Y",
+			L"c :: d :: Y :: Z :: Y",
+			pa);
+	}
 }

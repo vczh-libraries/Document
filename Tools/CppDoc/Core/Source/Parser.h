@@ -57,9 +57,10 @@ public:
 Parsers
 ***********************************************************************/
 
-class IndexRecorder : public Object
+class IIndexRecorder : public virtual Interface
 {
 public:
+	virtual void			Index(CppName& name, Ptr<Resolving> resolving) = 0;
 };
 
 enum class DeclaratorRestriction
@@ -80,10 +81,10 @@ struct ParsingArguments
 {
 	Ptr<Symbol>				root;
 	Symbol*					context = nullptr;
-	Ptr<IndexRecorder>		recorder;
+	Ptr<IIndexRecorder>		recorder;
 
 	ParsingArguments();
-	ParsingArguments(Ptr<Symbol> _root, Ptr<IndexRecorder> _recorder);
+	ParsingArguments(Ptr<Symbol> _root, Ptr<IIndexRecorder> _recorder);
 	ParsingArguments(const ParsingArguments& pa, Symbol* _context);
 };
 

@@ -18,7 +18,7 @@ ParsingArguments::ParsingArguments()
 {
 }
 
-ParsingArguments::ParsingArguments(Ptr<Symbol> _root, Ptr<IndexRecorder> _recorder)
+ParsingArguments::ParsingArguments(Ptr<Symbol> _root, Ptr<IIndexRecorder> _recorder)
 	:root(_root)
 	, context(_root.Obj())
 	, recorder(_recorder)

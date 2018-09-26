@@ -21,4 +21,28 @@ extern void					AssertProgram(const WString& input, const WString& log);
 	auto PROGRAM = ParseProgram(PA, cursor);\
 	TEST_ASSERT(!cursor)\
 
+template<typename T>
+class TestIndexRecorder : public Object, public IIndexRecorder
+{
+protected:
+	T						callback;
+
+public:
+	TestIndexRecorder(T&& _callback)
+		:callback(ForwardValue<T&&>(_callback))
+	{
+	}
+
+	void Index(CppName& name, Ptr<Resolving> resolving)
+	{
+		callback(name, resolving);
+	}
+};
+
+template<typename T>
+Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
+{
+	return new TestIndexRecorder<T>(ForwardValue<T&&>(callback));
+}
+
 #endif
