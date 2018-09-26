@@ -88,6 +88,7 @@ TEST_CASE(TestParseType_SuperComplexType)
 		L"int (a: int [] &, b: int () noexcept __stdcall *, c: int () * [5] = 0) __fastcall * const & [10] (int) *"
 		);
 }
+
 TEST_CASE(TestParseType_MemberType)
 {
 	auto input = LR"(
@@ -100,4 +101,28 @@ namespace a::b
 	AssertType(L"a::b::X", L"a :: b :: X", pa);
 	AssertType(L"::a::b::X :: typename Y :: typename Z", L"__root :: a :: b :: X :: typename Y :: typename Z", pa);
 	AssertType(L"a::b::X(__cdecl a::typename b::*)()", L"a :: b :: X () __cdecl (a :: typename b ::) *", pa);
+}
+
+TEST_CASE(TestParseType_MemberType2)
+{
+	auto input = LR"(
+namespace a::b
+{
+	struct X
+	{
+		enum Y;
+	};
+}
+namespace c::d
+{
+	struct Y
+	{
+		struct Z : a::b::X
+		{
+		};
+	};
+}
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	AssertType(L"c::d::Y::Z::Y", L"c :: d :: Y :: Z :: Y", pa);
 }
