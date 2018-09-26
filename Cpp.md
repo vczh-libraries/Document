@@ -15,13 +15,14 @@
   - [x] Assert ASTs
   - [ ] Assert resolvings
 - [x] `Forward Declaration`s of `Class`es, `Struct`s, `Union`s
-  - [ ] Assert ASTs
+  - [x] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [x] `Class`es, `Struct`s, `Union`s
   - [ ] Constructors / Destructors
-  - [ ] Assert ASTs
+  - [x] Assert ASTs
   - [x] Connect forward declaractions with their root
   - [ ] Assert resolvings in scopes
+  - [ ] Assert resolvings in scopes of base types
 - [ ] Parse function body and Statements
   - [ ] Assert ASTs
   - [ ] Connect forward declaractions with their root
