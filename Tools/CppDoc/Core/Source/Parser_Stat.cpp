@@ -1,7 +1,7 @@
 #include "Parser.h"
 #include "Ast_Stat.h"
 
-Ptr<Stat> ParseStat(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	if (TestToken(cursor, CppTokens::LBRACE))
 	{

@@ -88,14 +88,14 @@ public:
 	}
 };
 
-extern Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 /***********************************************************************
 ParseShortDeclarator
 ***********************************************************************/
 
-Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
+Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
 	while (SkipSpecifiers(cursor));
 
@@ -227,7 +227,7 @@ Ptr<Declarator> ParseShortDeclarator(ParsingArguments& pa, Ptr<Type> typeResult,
 ParseLongDeclarator
 ***********************************************************************/
 
-Ptr<Declarator> ParseLongDeclarator(ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
+Ptr<Declarator> ParseLongDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
 	auto declarator = ParseShortDeclarator(pa, typeResult, dr, cursor);
 	auto targetType = declarator->type;
@@ -517,7 +517,7 @@ GIVE_UP:
 ParseInitializer
 ***********************************************************************/
 
-Ptr<Initializer> ParseInitializer(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	auto initializer = MakePtr<Initializer>();
 
@@ -564,7 +564,7 @@ Ptr<Initializer> ParseInitializer(ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 ParseDeclarator
 ***********************************************************************/
 
-void ParseDeclarator(ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+void ParseDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
 	Ptr<Type> typeResult = ParseLongType(pa, cursor);
 

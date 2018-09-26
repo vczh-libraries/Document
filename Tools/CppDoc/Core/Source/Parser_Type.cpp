@@ -70,8 +70,23 @@ public:
 ResolveTypeSymbol
 ***********************************************************************/
 
-Ptr<Resolving> ResolveTypeSymbol(Symbol* scope, CppName& name, Ptr<Resolving> resolving, bool searchInParentScope)
+Ptr<Resolving> ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, Ptr<Resolving> resolving, bool searchInParentScope, SortedList<Symbol*>& searchedScopes);
+Ptr<Resolving> ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, Ptr<Resolving> resolving, bool searchInParentScope);
+Ptr<Resolving> ResolveChildTypeSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, SortedList<Symbol*>& searchedScopes);
+Ptr<Resolving> ResolveChildTypeSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name);
+
+Ptr<Resolving> ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, Ptr<Resolving> resolving, bool searchInParentScope, SortedList<Symbol*>& searchedScopes)
 {
+	auto scope = pa.context;
+	if (searchedScopes.Contains(scope))
+	{
+		return resolving;
+	}
+	else
+	{
+		searchedScopes.Add(scope);
+	}
+
 	bool found = false;
 	while (!found && scope)
 	{
@@ -109,11 +124,28 @@ Ptr<Resolving> ResolveTypeSymbol(Symbol* scope, CppName& name, Ptr<Resolving> re
 			}
 		}
 
+		if (!found && scope->decls.Count() > 0)
+		{
+			if (auto decl = scope->decls[0].Cast<ClassDeclaration>())
+			{
+				for (vint i = 0; i < decl->baseTypes.Count(); i++)
+				{
+					resolving = ResolveChildTypeSymbol(pa, decl->baseTypes[i].f1, name, searchedScopes);
+				}
+			}
+		}
+
 		if (!searchInParentScope) break;
 		scope = scope->parent;
 	}
 
 	return resolving;
+}
+
+Ptr<Resolving> ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, Ptr<Resolving> resolving, bool searchInParentScope)
+{
+	SortedList<Symbol*> searchedScopes;
+	return ResolveTypeSymbol(pa, name, resolving, searchInParentScope, searchedScopes);
 }
 
 /***********************************************************************
@@ -123,13 +155,15 @@ ResolveChildTypeSymbol
 class ResolveChildSymbolTypeVisitor : public Object, public virtual ITypeVisitor
 {
 public:
-	ParsingArguments&		pa;
+	const ParsingArguments&	pa;
 	CppName&				name;
+	SortedList<Symbol*>&	searchedScopes;
 	Ptr<Resolving>			resolving;
 
-	ResolveChildSymbolTypeVisitor(ParsingArguments& _pa, CppName& _name)
+	ResolveChildSymbolTypeVisitor(const ParsingArguments& _pa, CppName& _name, SortedList<Symbol*>& _searchedScopes)
 		:pa(_pa)
 		, name(_name)
+		, searchedScopes(_searchedScopes)
 	{
 	}
 
@@ -140,7 +174,7 @@ public:
 			auto& symbols = parentResolving->resolvedSymbols;
 			for (vint i = 0; i < symbols.Count(); i++)
 			{
-				resolving = ResolveTypeSymbol(symbols[i], name, resolving, false);
+				resolving = ResolveTypeSymbol({ pa,symbols[i] }, name, resolving, false, searchedScopes);
 			}
 		}
 	}
@@ -181,7 +215,7 @@ public:
 
 	void Visit(RootType* self)override
 	{
-		resolving = ResolveTypeSymbol(pa.root.Obj(), name, resolving, false);
+		resolving = ResolveTypeSymbol({ pa,pa.root.Obj() }, name, resolving, false, searchedScopes);
 	}
 
 	void Visit(IdType* self)override
@@ -204,11 +238,17 @@ public:
 	}
 };
 
-Ptr<Resolving> ResolveChildTypeSymbol(ParsingArguments& pa, Ptr<Type> classType, CppName& name)
+Ptr<Resolving> ResolveChildTypeSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, SortedList<Symbol*>& searchedScopes)
 {
-	ResolveChildSymbolTypeVisitor visitor(pa, name);
+	ResolveChildSymbolTypeVisitor visitor(pa, name, searchedScopes);
 	classType->Accept(&visitor);
 	return visitor.resolving;
+}
+
+Ptr<Resolving> ResolveChildTypeSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name)
+{
+	SortedList<Symbol*> searchedScopes;
+	return ResolveChildTypeSymbol(pa, classType, name, searchedScopes);
 }
 
 /***********************************************************************
@@ -262,7 +302,7 @@ Ptr<Type> ParsePrimitiveType(Ptr<CppTokenCursor>& cursor, CppPrimitivePrefix pre
 ParseShortType
 ***********************************************************************/
 
-Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	if (TestToken(cursor, CppTokens::SIGNED))
 	{
@@ -321,7 +361,7 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			CppName cppName;
 			if (ParseCppName(cppName, cursor))
 			{
-				if (auto resolving = ResolveTypeSymbol(pa.context.Obj(), cppName, nullptr, true))
+				if (auto resolving = ResolveTypeSymbol(pa, cppName, nullptr, true))
 				{
 					auto type = MakePtr<IdType>();
 					type->name = cppName;
@@ -339,7 +379,7 @@ Ptr<Type> ParseShortType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 ParseLongType
 ***********************************************************************/
 
-Ptr<Type> ParseLongType(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	Ptr<Type> typeResult = ParseShortType(pa, cursor);
 

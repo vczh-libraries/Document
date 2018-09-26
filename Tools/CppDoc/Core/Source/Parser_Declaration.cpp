@@ -4,7 +4,7 @@
 
 
 template<typename TRoot, typename TForward>
-void FindForwardDeclarationRoot(Ptr<Symbol> scope, Ptr<Symbol> forwardSymbol, Ptr<CppTokenCursor> cursor)
+void FindForwardDeclarationRoot(Symbol* scope, Symbol* forwardSymbol, Ptr<CppTokenCursor> cursor)
 {
 	const auto& siblings = scope->children[forwardSymbol->name];
 	for (vint i = 0; i < siblings.Count(); i++)
@@ -21,7 +21,7 @@ void FindForwardDeclarationRoot(Ptr<Symbol> scope, Ptr<Symbol> forwardSymbol, Pt
 }
 
 template<typename TRoot, typename TForward>
-void FindForwardDeclarations(Ptr<Symbol> scope, Ptr<Symbol> contextSymbol, Ptr<CppTokenCursor> cursor)
+void FindForwardDeclarations(Symbol* scope, Symbol* contextSymbol, Ptr<CppTokenCursor> cursor)
 {
 	const auto& siblings = scope->children[contextSymbol->name];
 	for (vint i = 0; i < siblings.Count(); i++)
@@ -29,7 +29,7 @@ void FindForwardDeclarations(Ptr<Symbol> scope, Ptr<Symbol> contextSymbol, Ptr<C
 		auto& sibling = siblings[i];
 		if (sibling->decls[0].Cast<TForward>() && sibling->isForwardDeclaration)
 		{
-			if (!sibling->SetForwardDeclarationRoot(contextSymbol.Obj()))
+			if (!sibling->SetForwardDeclarationRoot(contextSymbol))
 			{
 				throw StopParsingException(cursor);
 			}
@@ -37,7 +37,7 @@ void FindForwardDeclarations(Ptr<Symbol> scope, Ptr<Symbol> contextSymbol, Ptr<C
 	}
 }
 
-void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	bool decoratorFriend = TestToken(cursor, CppTokens::DECL_FRIEND);
 
@@ -72,7 +72,7 @@ void ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Pt
 					auto& symbols = contextSymbol->children.GetByIndex(index);
 					if (symbols.Count() == 1 && symbols[0]->decls[0].Cast<NamespaceDeclaration>())
 					{
-						contextSymbol = symbols[0];
+						contextSymbol = symbols[0].Obj();
 						contextSymbol->decls.Add(decl);
 					}
 					else

@@ -1,7 +1,7 @@
 #include "Parser.h"
 #include "Ast_Expr.h"
 
-Ptr<Expr> ParseExpr(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Expr> ParseExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	if (cursor)
 	{

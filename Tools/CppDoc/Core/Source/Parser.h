@@ -27,7 +27,7 @@ public:
 	void					Add(Ptr<Symbol> child);
 
 	template<typename T>
-	Ptr<Symbol> CreateSymbol(Ptr<T> _decl, Symbol* _specializationRoot = nullptr)
+	Symbol* CreateSymbol(Ptr<T> _decl, Symbol* _specializationRoot = nullptr)
 	{
 		auto symbol = MakePtr<Symbol>();
 		symbol->name = _decl->name.name;
@@ -41,7 +41,7 @@ public:
 			_specializationRoot->specializations.Add(symbol.Obj());
 			symbol->specializationRoot = _specializationRoot;
 		}
-		return symbol;
+		return symbol.Obj();
 	}
 
 	bool SetForwardDeclarationRoot(Symbol* root)
@@ -79,12 +79,12 @@ enum class InitializerRestriction
 struct ParsingArguments
 {
 	Ptr<Symbol>				root;
-	Ptr<Symbol>				context;
+	Symbol*					context = nullptr;
 	Ptr<IndexRecorder>		recorder;
 
 	ParsingArguments();
 	ParsingArguments(Ptr<Symbol> _root, Ptr<IndexRecorder> _recorder);
-	ParsingArguments(ParsingArguments& pa, Ptr<Symbol> _context);
+	ParsingArguments(const ParsingArguments& pa, Symbol* _context);
 };
 
 struct StopParsingException
@@ -98,11 +98,11 @@ struct StopParsingException
 extern bool					SkipSpecifiers(Ptr<CppTokenCursor>& cursor);
 extern bool					ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor);
 
-extern void					ParseDeclarator(ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
-extern void					ParseDeclaration(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
-extern Ptr<Expr>			ParseExpr(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Stat>			ParseStat(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Program>			ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern void					ParseDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern void					ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
+extern Ptr<Expr>			ParseExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Stat>			ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Program>			ParseProgram(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 /***********************************************************************
 Helpers
