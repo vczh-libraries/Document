@@ -73,11 +73,12 @@ public:
 	bool											decoratorRegister = false;
 };
 
-enum class MethodType
+enum class CppMethodType
 {
 	Function,
 	Constructor,
 	Destructor,
+	TypeConversion,
 };
 
 class ForwardFunctionDeclaration : public SpecializableDeclaration
@@ -86,7 +87,7 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Type>										type;
-	MethodType										methodType = MethodType::Function;
+	CppMethodType									methodType = CppMethodType::Function;
 	bool											decoratorExtern = false;
 	bool											decoratorFriend = false;
 	bool											decoratorStatic = false;
@@ -105,7 +106,7 @@ public:
 	Ptr<Type>										baseType;
 };
 
-enum class ClassType
+enum class CppClassType
 {
 	Class,
 	Struct,
@@ -117,7 +118,7 @@ class ForwardClassDeclaration : public SpecializableDeclaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	ClassType										classType;
+	CppClassType									classType;
 	bool											decoratorFriend = false;
 };
 
@@ -157,7 +158,7 @@ public:
 	List<Ptr<EnumItemDeclaration>>					items;
 };
 
-enum class ClassAccessor
+enum class CppClassAccessor
 {
 	Private,
 	Protected,
@@ -169,8 +170,8 @@ class ClassDeclaration : public ForwardClassDeclaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	List<Tuple<ClassAccessor, Ptr<Type>>>			baseTypes;
-	List<Tuple<ClassAccessor, Ptr<Declaration>>>	decls;
+	List<Tuple<CppClassAccessor, Ptr<Type>>>		baseTypes;
+	List<Tuple<CppClassAccessor, Ptr<Declaration>>>	decls;
 };
 
 /***********************************************************************

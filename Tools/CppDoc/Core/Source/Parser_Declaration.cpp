@@ -168,17 +168,17 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
 	{
-		ClassType classType = ClassType::Union;
-		ClassAccessor defaultAccessor = ClassAccessor::Public;
+		auto classType = CppClassType::Union;
+		auto defaultAccessor = CppClassAccessor::Public;
 
 		switch ((CppTokens)cursor->token.token)
 		{
 		case CppTokens::DECL_CLASS:
-			classType = ClassType::Class;
-			defaultAccessor = ClassAccessor::Private;
+			classType = CppClassType::Class;
+			defaultAccessor = CppClassAccessor::Private;
 			break;
 		case CppTokens::DECL_STRUCT:
-			classType = ClassType::Struct;
+			classType = CppClassType::Struct;
 			break;
 		}
 		cursor = cursor->Next();
@@ -214,18 +214,18 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			{
 				while (!TestToken(cursor, CppTokens::LBRACE, false))
 				{
-					ClassAccessor accessor = defaultAccessor;
+					auto accessor = defaultAccessor;
 					if (TestToken(cursor, CppTokens::PUBLIC))
 					{
-						accessor = ClassAccessor::Public;
+						accessor = CppClassAccessor::Public;
 					}
 					else if (TestToken(cursor, CppTokens::PROTECTED))
 					{
-						accessor = ClassAccessor::Protected;
+						accessor = CppClassAccessor::Protected;
 					}
 					else if (TestToken(cursor, CppTokens::PRIVATE))
 					{
-						accessor = ClassAccessor::Private;
+						accessor = CppClassAccessor::Private;
 					}
 
 					List<Ptr<Declarator>> declarators;
@@ -245,22 +245,22 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			}
 
 			RequireToken(cursor, CppTokens::LBRACE);
-			ClassAccessor accessor = defaultAccessor;
+			auto accessor = defaultAccessor;
 			while (true)
 			{
 				if (TestToken(cursor, CppTokens::PUBLIC))
 				{
-					accessor = ClassAccessor::Public;
+					accessor = CppClassAccessor::Public;
 					RequireToken(cursor, CppTokens::COLON);
 				}
 				else if (TestToken(cursor, CppTokens::PROTECTED))
 				{
-					accessor = ClassAccessor::Protected;
+					accessor = CppClassAccessor::Protected;
 					RequireToken(cursor, CppTokens::COLON);
 				}
 				else if (TestToken(cursor, CppTokens::PRIVATE))
 				{
-					accessor = ClassAccessor::Private;
+					accessor = CppClassAccessor::Private;
 					RequireToken(cursor, CppTokens::COLON);
 				}
 				else if(TestToken(cursor,CppTokens::RBRACE))

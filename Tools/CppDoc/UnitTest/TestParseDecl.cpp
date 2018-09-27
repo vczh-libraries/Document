@@ -323,3 +323,44 @@ namespace a::b
 		}
 	}
 }
+
+TEST_CASE(TestParseDecl_Methods)
+{
+	auto input = LR"(
+struct Vector
+{
+	double x = 0;
+	double y = 0;
+
+	__stdcall Vector();
+	Vector(double _x, double _y);
+	Vector(const Vector& v);
+	Vector(Vector&& v);
+	~Vector();
+
+	operator bool()const;
+	explicit operator double()const;
+	Vector operator*(double z)const;
+};
+static Vector operator+(Vector v1, Vector v2);
+static Vector operator-(Vector v1, Vector v2);
+)";
+	auto output = LR"(
+struct Vector
+{
+	public x: double = 0;
+	public y: double = 0;
+	public __ctor $__ctor: void () __stdcall;
+	public __ctor $__ctor: void (_x: double, _y: double);
+	public __ctor $__ctor: void (v: Vector const &);
+	public __ctor $__ctor: void (v: Vector &&);
+	public __dtor ~Vector: void();
+	public __type $__type: bool() const;
+	public explicit __type $__type: double() const;
+	public operator*: Vector (z: double) const;
+};
+static operator+: Vector (v1: Vector, v2: Vector);
+static operator-: Vector (v1: Vector, v2: Vector);
+)";
+	AssertProgram(input, output);
+}

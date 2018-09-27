@@ -365,6 +365,18 @@ private:
 		if (self->decoratorForceInline) writer.WriteString(L"__forceinline ");
 		if (self->decoratorStatic) writer.WriteString(L"static ");
 		if (self->decoratorVirtual) writer.WriteString(L"virtual ");
+		switch (self->methodType)
+		{
+		case CppMethodType::Constructor:
+			writer.WriteString(L"__ctor ");
+			break;
+		case CppMethodType::Destructor:
+			writer.WriteString(L"__dtor ");
+			break;
+		case CppMethodType::TypeConversion:
+			writer.WriteString(L"__type ");
+			break;
+		}
 		writer.WriteString(self->name.name);
 		writer.WriteString(L": ");
 		Log(self->type, writer);
@@ -385,13 +397,13 @@ private:
 	{
 		switch (self->classType)
 		{
-		case ClassType::Class:
+		case CppClassType::Class:
 			writer.WriteString(L"class ");
 			break;
-		case ClassType::Struct:
+		case CppClassType::Struct:
 			writer.WriteString(L"struct ");
 			break;
-		case ClassType::Union:
+		case CppClassType::Union:
 			writer.WriteString(L"union ");
 			break;
 		}
@@ -496,13 +508,13 @@ public:
 			auto pair = self->baseTypes[i];
 			switch (pair.f0)
 			{
-			case ClassAccessor::Public:
+			case CppClassAccessor::Public:
 				writer.WriteString(L"public ");
 				break;
-			case ClassAccessor::Protected:
+			case CppClassAccessor::Protected:
 				writer.WriteString(L"protected ");
 				break;
-			case ClassAccessor::Private:
+			case CppClassAccessor::Private:
 				writer.WriteString(L"private ");
 				break;
 			}
@@ -520,13 +532,13 @@ public:
 			auto pair = self->decls[i];
 			switch (pair.f0)
 			{
-			case ClassAccessor::Public:
+			case CppClassAccessor::Public:
 				writer.WriteString(L"public ");
 				break;
-			case ClassAccessor::Protected:
+			case CppClassAccessor::Protected:
 				writer.WriteString(L"protected ");
 				break;
-			case ClassAccessor::Private:
+			case CppClassAccessor::Private:
 				writer.WriteString(L"private ");
 				break;
 			}
