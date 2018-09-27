@@ -470,7 +470,7 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 						type->typenameType = typenameType;
 						type->name = cppName;
 						type->resolving = resolving;
-						if (pa.recorder)
+						if (pa.recorder && type->resolving)
 						{
 							pa.recorder->Index(type->name, type->resolving);
 						}
