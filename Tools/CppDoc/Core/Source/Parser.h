@@ -96,8 +96,12 @@ struct StopParsingException
 	StopParsingException(Ptr<CppTokenCursor> _position) :position(_position) {}
 };
 
+class FunctionType;
+
 extern bool					SkipSpecifiers(Ptr<CppTokenCursor>& cursor);
 extern bool					ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Type>			GetTypeWithoutMemberAndCC(Ptr<Type> type);
+extern Ptr<Type>			AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType);
 
 extern void					ParseDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void					ParseDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);

@@ -365,32 +365,14 @@ GIVE_UP:
 				replacer.typeToReplace = targetType;
 				replacer.typeCreator = [](Ptr<Type> typeToReplace)->Ptr<Type>
 				{
-					if (auto ccType = typeToReplace.Cast<CallingConventionType>())
-					{
-						auto type = MakePtr<FunctionType>();
-						type->returnType = ccType->type;
-						ccType->type = type;
-						return ccType;
-					}
-					else
-					{
-						auto type = MakePtr<FunctionType>();
-						type->returnType = typeToReplace;
-						return type;
-					}
+					auto type = MakePtr<FunctionType>();
+					type->returnType = typeToReplace;
+					return AdjustReturnTypeWithMemberAndCC(type);
 				};
 
 				replacer.Execute(declarator->type);
 			}
-
-			if (auto ccType = replacer.createdType.Cast<CallingConventionType>())
-			{
-				type = ccType->type.Cast<FunctionType>();
-			}
-			else
-			{
-				type = replacer.createdType.Cast<FunctionType>();
-			}
+			type = GetTypeWithoutMemberAndCC(replacer.createdType).Cast<FunctionType>();
 		}
 
 		{

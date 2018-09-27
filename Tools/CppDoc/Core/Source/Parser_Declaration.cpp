@@ -2,6 +2,9 @@
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
 
+/***********************************************************************
+FindForward
+***********************************************************************/
 
 template<typename TRoot, typename TForward>
 void FindForwardDeclarationRoot(Symbol* scope, Symbol* forwardSymbol, Ptr<CppTokenCursor> cursor)
@@ -36,6 +39,10 @@ void FindForwardDeclarations(Symbol* scope, Symbol* contextSymbol, Ptr<CppTokenC
 		}
 	}
 }
+
+/***********************************************************************
+ParseDeclaration
+***********************************************************************/
 
 void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
@@ -316,20 +323,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		{
 			auto declarator = declarators[i];
 
-			bool isFunction = false;
-			if (declarator->type.Cast<FunctionType>())
-			{
-				isFunction = true;
-			}
-			else if (auto ccType = declarator->type.Cast<CallingConventionType>())
-			{
-				if (ccType->type.Cast<FunctionType>())
-				{
-					isFunction = true;
-				}
-			}
-
-			if (isFunction)
+			if (GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
 			{
 #define FILL_FUNCTION(NAME)\
 				NAME->name = declarator->name;\

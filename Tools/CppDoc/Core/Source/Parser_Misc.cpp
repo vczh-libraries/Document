@@ -1,4 +1,9 @@
 #include "Parser.h"
+#include "Ast_Type.h"
+
+/***********************************************************************
+SkipSpecifiers
+***********************************************************************/
 
 bool SkipSpecifiers(Ptr<CppTokenCursor>& cursor)
 {
@@ -51,6 +56,10 @@ bool SkipSpecifiers(Ptr<CppTokenCursor>& cursor)
 	}
 	return false;
 }
+
+/***********************************************************************
+ParseCppName
+***********************************************************************/
 
 bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor)
 {
@@ -177,4 +186,48 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor)
 		return true;
 	}
 	return false;
+}
+
+/***********************************************************************
+GetTypeWithoutMemberAndCC
+***********************************************************************/
+
+Ptr<Type> GetTypeWithoutMemberAndCC(Ptr<Type> type)
+{
+	if (auto memberType = type.Cast<MemberType>())
+	{
+		type = memberType->type;
+	}
+	if (auto ccType = type.Cast<CallingConventionType>())
+	{
+		type = ccType->type;
+	}
+	return type;
+}
+
+/***********************************************************************
+GetTypeWithoutMemberAndCC
+***********************************************************************/
+
+Ptr<Type> AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType)
+{
+	Ptr<Type> adjustedType = functionType;
+	Ptr<Type>* insertTarget = &adjustedType;
+
+	if (auto memberType = functionType->returnType.Cast<MemberType>())
+	{
+		*insertTarget = memberType;
+		functionType->returnType = memberType->type;
+		insertTarget = &memberType->type;
+		*insertTarget = functionType;
+	}
+	if (auto ccType = functionType->returnType.Cast<CallingConventionType>())
+	{
+		*insertTarget = ccType;
+		functionType->returnType = ccType->type;
+		insertTarget = &ccType->type;
+		*insertTarget = functionType;
+	}
+
+	return adjustedType;
 }
