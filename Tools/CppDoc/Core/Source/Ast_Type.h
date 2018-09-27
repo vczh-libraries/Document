@@ -62,8 +62,8 @@ class PrimitiveType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	CppPrimitivePrefix		prefix;
-	CppPrimitiveType		primitive;
+	CppPrimitivePrefix		prefix = CppPrimitivePrefix::_none;
+	CppPrimitiveType		primitive = CppPrimitiveType::_auto;
 
 	PrimitiveType() {}
 	PrimitiveType(CppPrimitivePrefix _prefix, CppPrimitiveType _primitive) :prefix(_prefix), primitive(_primitive) {}
@@ -81,7 +81,7 @@ class ReferenceType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	CppReferenceType		reference;
+	CppReferenceType		reference = CppReferenceType::Ptr;
 	Ptr<Type>				type;
 };
 
@@ -109,7 +109,7 @@ class CallingConventionType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	CppCallingConvention	callingConvention;
+	CppCallingConvention	callingConvention = CppCallingConvention::CDecl;
 	Ptr<Type>				type;
 };
 
