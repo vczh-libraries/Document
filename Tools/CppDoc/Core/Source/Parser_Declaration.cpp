@@ -316,7 +316,68 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 #undef FUNCVAR_DECORATORS
 
 		List<Ptr<Declarator>> declarators;
+
+		bool trySpecialMethod = false;
+		if (pa.context && pa.context->decls.Count() > 0 && pa.context->decls[0].Cast<ClassDeclaration>())
+		{
+#define TRY_TOKEN(TOKEN) if (TestToken(cursor, CppTokens::TOKEN, false)) trySpecialMethod = true; else
+
+			TRY_TOKEN(LPARENTHESIS)
+			TRY_TOKEN(OPERATOR)
+			TRY_TOKEN(REVERT)
+			TRY_TOKEN(__CDECL)
+			TRY_TOKEN(__CLRCALL)
+			TRY_TOKEN(__STDCALL)
+			TRY_TOKEN(__FASTCALL)
+			TRY_TOKEN(__THISCALL)
+			TRY_TOKEN(__VECTORCALL)
+			;
+#undef TRY_TOKEN
+		}
+
+		if (trySpecialMethod)
+		{
+			auto oldCursor = cursor;
+			try
+			{
+				auto voidType = MakePtr<PrimitiveType>();
+				voidType->primitive = CppPrimitiveType::_void;
+				ParseDeclarator(pa, voidType, DeclaratorRestriction::One, InitializerRestriction::Optional, cursor, declarators);
+
+				if (declarators.Count() != 1)
+				{
+					throw StopParsingException(cursor);
+				}
+				else
+				{
+					auto classDecl = pa.context->decls[0].Cast<ClassDeclaration>();
+					auto& cppName = declarators[0]->name;
+					switch (cppName.type)
+					{
+					case CppNameType::Normal:
+						if (cppName.name != classDecl->name.name)
+						{
+							throw StopParsingException(oldCursor);
+						}
+						break;
+					case CppNameType::Destructor:
+						if (cppName.name != L"~" + classDecl->name.name)
+						{
+							throw StopParsingException(oldCursor);
+						}
+						break;
+					}
+				}
+
+				goto SUCCEEDED_IN_SPECIAL_METHOD;
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+			}
+		}
 		ParseDeclarator(pa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
+	SUCCEEDED_IN_SPECIAL_METHOD:
 		RequireToken(cursor, CppTokens::SEMICOLON);
 
 		for (vint i = 0; i < declarators.Count(); i++)

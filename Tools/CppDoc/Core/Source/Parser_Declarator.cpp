@@ -161,27 +161,27 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 		type->isVolatile = true;
 		return ParseShortDeclarator(pa, type, dr, cursor);
 	}
-
-#define CALLING_CONVENTION_KEYWORD(TOKEN, NAME)\
-	else if (!TestToken(cursor, CppTokens::TOKEN, CppTokens::LPARENTHESIS, false) && TestToken(cursor, CppTokens::TOKEN))\
-	{\
-		auto type = MakePtr<CallingConventionType>();\
-		type->callingConvention = CppCallingConvention::NAME;\
-		type->type = typeResult;\
-		return ParseShortDeclarator(pa, type, dr, cursor);\
-	}\
-
-	CALLING_CONVENTION_KEYWORD(__CDECL, CDecl)
-	CALLING_CONVENTION_KEYWORD(__CLRCALL, ClrCall)
-	CALLING_CONVENTION_KEYWORD(__STDCALL, StdCall)
-	CALLING_CONVENTION_KEYWORD(__FASTCALL, FastCall)
-	CALLING_CONVENTION_KEYWORD(__THISCALL, ThisCall)
-	CALLING_CONVENTION_KEYWORD(__VECTORCALL, VectorCall)
-
-#undef CALLING_CONVENTION_KEYWORD
-
 	else
 	{
+		{
+			auto oldCursor = cursor;
+			CppCallingConvention callingConvention;
+			if (ParseCallingConvention(callingConvention, cursor))
+			{
+				if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
+				{
+					cursor = oldCursor;
+				}
+				else
+				{
+					auto type = MakePtr<CallingConventionType>();
+					type->callingConvention = callingConvention;
+					type->type = typeResult;
+					return ParseShortDeclarator(pa, type, dr, cursor);
+				}
+			}
+		}
+
 		Ptr<Type> classType;
 		{
 			auto oldCursor = cursor;
@@ -308,25 +308,17 @@ GIVE_UP:
 
 	bool hasCallingConvention = false;
 	CppCallingConvention callingConvention;
-
-#define CALLING_CONVENTION_KEYWORD(TOKEN, NAME)\
-	if (TestToken(cursor, CppTokens::TOKEN, CppTokens::LPARENTHESIS, false))\
-	{\
-		hasCallingConvention = true;\
-		callingConvention = CppCallingConvention::NAME;\
-		cursor = cursor->Next();\
-	}\
-	else\
-
-	CALLING_CONVENTION_KEYWORD(__CDECL, CDecl)
-	CALLING_CONVENTION_KEYWORD(__CLRCALL, ClrCall)
-	CALLING_CONVENTION_KEYWORD(__STDCALL, StdCall)
-	CALLING_CONVENTION_KEYWORD(__FASTCALL, FastCall)
-	CALLING_CONVENTION_KEYWORD(__THISCALL, ThisCall)
-	CALLING_CONVENTION_KEYWORD(__VECTORCALL, VectorCall)
-
-#undef CALLING_CONVENTION_KEYWORD
-	;
+	{
+		auto oldCursor = cursor;
+		if ((hasCallingConvention = ParseCallingConvention(callingConvention, cursor)))
+		{
+			if (!TestToken(cursor, CppTokens::LPARENTHESIS, false))
+			{
+				hasCallingConvention = false;
+				cursor = oldCursor;
+			}
+		}
+	}
 
 	auto oldCursor = cursor;
 	if (TestToken(cursor, CppTokens::LPARENTHESIS))

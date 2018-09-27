@@ -231,3 +231,28 @@ Ptr<Type> AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType)
 
 	return adjustedType;
 }
+
+/***********************************************************************
+ParseCallingConvention
+***********************************************************************/
+
+bool ParseCallingConvention(CppCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor)
+{
+#define CALLING_CONVENTION_KEYWORD(TOKEN, NAME)\
+	if (TestToken(cursor, CppTokens::TOKEN))\
+	{\
+		callingConvention = CppCallingConvention::NAME;\
+		return true;\
+	}\
+	else\
+
+	CALLING_CONVENTION_KEYWORD(__CDECL, CDecl)
+	CALLING_CONVENTION_KEYWORD(__CLRCALL, ClrCall)
+	CALLING_CONVENTION_KEYWORD(__STDCALL, StdCall)
+	CALLING_CONVENTION_KEYWORD(__FASTCALL, FastCall)
+	CALLING_CONVENTION_KEYWORD(__THISCALL, ThisCall)
+	CALLING_CONVENTION_KEYWORD(__VECTORCALL, VectorCall)
+
+#undef CALLING_CONVENTION_KEYWORD
+	return false;
+}
