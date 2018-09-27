@@ -57,7 +57,7 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor)
 	if (TestToken(cursor, CppTokens::OPERATOR, false))
 	{
 		auto& token = cursor->token;
-		name.operatorName = true;
+		name.type = CppNameType::Operator;
 		name.tokenCount = 1;
 		name.name = L"operator ";
 		name.nameTokens[0] = token;
@@ -157,13 +157,22 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor)
 #undef OPERATOR_NAME_2
 #undef OPERATOR_NAME_3
 	}
+	else if (TestToken(cursor, CppTokens::REVERT, CppTokens::ID, false))
+	{
+		name.type = CppNameType::Destructor;
+		name.tokenCount = 2;
+		name.nameTokens[0] = cursor->token;
+		name.nameTokens[1] = cursor->Next()->token;
+		name.name = WString(cursor->token.reading, cursor->token.length + cursor->Next()->token.length);
+		cursor = cursor->Next()->Next();
+		return true;
+	}
 	else if (TestToken(cursor, CppTokens::ID, false))
 	{
-		auto& token = cursor->token;
-		name.operatorName = false;
+		name.type = CppNameType::Normal;
 		name.tokenCount = 1;
-		name.name = WString(token.reading, token.length);
-		name.nameTokens[0] = token;
+		name.nameTokens[0] = cursor->token;
+		name.name = WString(cursor->token.reading, cursor->token.length);
 		cursor = cursor->Next();
 		return true;
 	}

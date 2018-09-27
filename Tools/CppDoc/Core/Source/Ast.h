@@ -9,9 +9,16 @@ Symbol
 
 class Symbol;
 
+enum class CppNameType
+{
+	Normal,
+	Operator,
+	Destructor,
+};
+
 struct CppName
 {
-	bool					operatorName = false;
+	CppNameType				type = CppNameType::Normal;
 	vint					tokenCount = 0;
 	WString					name;
 	RegexToken				nameTokens[4];

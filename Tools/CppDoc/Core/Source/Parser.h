@@ -99,6 +99,7 @@ struct StopParsingException
 extern bool					SkipSpecifiers(Ptr<CppTokenCursor>& cursor);
 extern bool					ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor);
 
+extern void					ParseDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void					ParseDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void					ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
 extern Ptr<Expr>			ParseExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);

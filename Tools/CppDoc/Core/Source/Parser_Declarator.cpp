@@ -564,12 +564,10 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 ParseDeclarator
 ***********************************************************************/
 
-void ParseDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+void ParseDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
-	Ptr<Type> typeResult = ParseLongType(pa, cursor);
-
 	auto itemDr = dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : dr;
-	while(true)
+	while (true)
 	{
 		auto declarator = ParseLongDeclarator(pa, typeResult, itemDr, cursor);
 		if (ir == InitializerRestriction::Optional)
@@ -590,4 +588,10 @@ void ParseDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, Initi
 			break;
 		}
 	}
+}
+
+void ParseDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+{
+	Ptr<Type> typeResult = ParseLongType(pa, cursor);
+	return ParseDeclarator(pa, typeResult, dr, ir, cursor, declarators);
 }
