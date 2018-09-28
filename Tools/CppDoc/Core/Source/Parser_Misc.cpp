@@ -61,7 +61,7 @@ bool SkipSpecifiers(Ptr<CppTokenCursor>& cursor)
 ParseCppName
 ***********************************************************************/
 
-bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor)
+bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, ClassDeclaration* specialMethodParent)
 {
 	if (TestToken(cursor, CppTokens::OPERATOR, false))
 	{
@@ -155,6 +155,8 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor)
 		OPERATOR_NAME_2(GT, GT)
 		OPERATOR_NAME_2(GT, EQ)
 		OPERATOR_NAME_1(GT)
+
+		if (!specialMethodParent)
 		{
 			throw StopParsingException(cursor);
 		}
@@ -168,6 +170,11 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor)
 	}
 	else if (TestToken(cursor, CppTokens::REVERT, CppTokens::ID, false))
 	{
+		if (!specialMethodParent)
+		{
+			throw StopParsingException(cursor);
+		}
+
 		name.type = CppNameType::Destructor;
 		name.tokenCount = 2;
 		name.nameTokens[0] = cursor->token;
@@ -203,6 +210,27 @@ Ptr<Type> GetTypeWithoutMemberAndCC(Ptr<Type> type)
 		type = ccType->type;
 	}
 	return type;
+}
+
+/***********************************************************************
+ReplaceTypeInMemberAndCC
+***********************************************************************/
+
+Ptr<Type> ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToReplace)
+{
+	auto target = &type;
+	if (auto memberType = target->Cast<MemberType>())
+	{
+		target = &memberType->type;
+	}
+	if (auto ccType = target->Cast<CallingConventionType>())
+	{
+		target = &ccType->type;
+	}
+
+	auto originalType = *target;
+	*target = typeToReplace;
+	return originalType;
 }
 
 /***********************************************************************

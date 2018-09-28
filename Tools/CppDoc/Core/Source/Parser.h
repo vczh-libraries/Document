@@ -101,8 +101,9 @@ class ClassDeclaration;
 enum class CppCallingConvention;
 
 extern bool					SkipSpecifiers(Ptr<CppTokenCursor>& cursor);
-extern bool					ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor);
+extern bool					ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, ClassDeclaration* specialMethodParent = nullptr);
 extern Ptr<Type>			GetTypeWithoutMemberAndCC(Ptr<Type> type);
+extern Ptr<Type>			ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToReplace);
 extern Ptr<Type>			AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType);
 extern bool					ParseCallingConvention(CppCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
 

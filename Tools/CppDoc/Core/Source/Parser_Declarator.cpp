@@ -210,7 +210,61 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 			declarator->type = typeResult;
 			if (dr != DeclaratorRestriction::Zero)
 			{
-				if (!ParseCppName(declarator->name, cursor))
+				if (ParseCppName(declarator->name, cursor, specialMethodParent))
+				{
+					if (specialMethodParent)
+					{
+						switch (declarator->name.type)
+						{
+						case CppNameType::Normal:
+							if (declarator->name.name == specialMethodParent->name.name)
+							{
+								declarator->name.name = L"$__ctor";
+							}
+							else
+							{
+								throw StopParsingException(cursor);
+							}
+							break;
+						case CppNameType::Operator:
+							if (declarator->name.tokenCount == 1)
+							{
+								declarator->name.name = L"$__type";
+								auto type = ParseLongType(pa, cursor);
+								if (ReplaceTypeInMemberAndCC(declarator->type, type))
+								{
+									throw StopParsingException(cursor);
+								}
+							}
+							else
+							{
+								throw StopParsingException(cursor);
+							}
+							break;
+						case CppNameType::Destructor:
+							if (declarator->name.name != L"~" + specialMethodParent->name.name)
+							{
+								throw StopParsingException(cursor);
+							}
+							break;
+						}
+					}
+					else
+					{
+						switch (declarator->name.type)
+						{
+						case CppNameType::Operator:
+							if (declarator->name.tokenCount == 1)
+							{
+								throw StopParsingException(cursor);
+							}
+							break;
+						case CppNameType::Destructor:
+							throw StopParsingException(cursor);
+						}
+					}
+				}
+				else
 				{
 					if (!TestToken(cursor, CppTokens::LPARENTHESIS, false) && dr == DeclaratorRestriction::One)
 					{
