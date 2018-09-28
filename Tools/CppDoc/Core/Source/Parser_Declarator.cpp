@@ -102,7 +102,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 	if (TestToken(cursor, CppTokens::ALIGNAS))
 	{
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
-		ParseExpr(pa, cursor);
+		ParseExpr(pa, false, cursor);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		return ParseShortDeclarator(pa, typeResult, specialMethodParent, dr, cursor);
 	}
@@ -349,7 +349,7 @@ GIVE_UP:
 
 				if (!TestToken(cursor, CppTokens::RBRACKET))
 				{
-					replacer.createdType.Cast<ArrayType>()->expr = ParseExpr(pa, cursor);
+					replacer.createdType.Cast<ArrayType>()->expr = ParseExpr(pa, true, cursor);
 					RequireToken(cursor, CppTokens::RBRACKET);
 				}
 			}
@@ -379,7 +379,7 @@ GIVE_UP:
 	{
 		try
 		{
-			ParseExpr(pa, cursor);
+			ParseExpr(pa, false, cursor);
 			cursor = oldCursor;
 			return declarator;
 		}
@@ -564,7 +564,7 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 
 	while (true)
 	{
-		initializer->arguments.Add(ParseExpr(pa, cursor));
+		initializer->arguments.Add(ParseExpr(pa, false, cursor));
 
 		if (initializer->initializerType == InitializerType::Equal)
 		{

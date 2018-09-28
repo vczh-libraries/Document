@@ -146,7 +146,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 				if (TestToken(cursor, CppTokens::EQ))
 				{
-					enumItem->value = ParseExpr(newPa, cursor);
+					enumItem->value = ParseExpr(newPa, false, cursor);
 				}
 
 				if (!TestToken(cursor, CppTokens::COMMA))

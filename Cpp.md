@@ -208,32 +208,33 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ## STAT (Statement)
 
-- [ ] IDENTIFIER `:` STAT
-- [ ] `default` `:` STAT
-- [ ] `case` EXPR `:` STAT
-- [ ] `;`
-- [ ] `{` {STAT ...} `}`
-- [ ] {EXPR `,` ...}+ `;`
-- [ ] DECL
-- [ ] `break` `;`
-- [ ] `continue` `;`
-- [ ] `while` `(` EXPR `)` STAT
-- [ ] `do` STAT `while` `(` EXPR `)` `;`
-- [ ] `for` ([TYPE {[DECLARATOR] [INITIALIZER] `,` ...}] `;` [EXPR] `;` [EXPR]) STAT
-- [ ] `for` (TYPE-SINGLE-DECLARATOR `:` EXPR) STAT
-- [ ] `if` [`constexpr`] `(` [TYPE IDENTIFIER `=`] EXPR `)` STAT [`else` STAT]
-- [ ] `switch` `(` {STAT} EXPR `)` `{` STAT `}`
-- [ ] `try` STAT `catch` `(` TYPE-OPTIONAL-DECLARATOR `)` STAT
-- [ ] `return` EXPR `;`
-- [ ] `goto` IDENTIFIER `;`
-- [ ] `__try` STAT `__except` `(` EXPR `)` STAT
-- [ ] `__try` STAT `__finally` STAT
-- [ ] `__leave` `;`
-- [ ] (`__if_exists` | `__if_not_exists`) `(` EXPR `)` STAT
+- [x] IDENTIFIER `:` STAT
+- [x] `default` `:` STAT
+- [x] `case` EXPR `:` STAT
+- [x] `;`
+- [x] `{` {STAT ...} `}`
+- [x] {EXPR `,` ...}+ `;`
+- [x] DECL
+- [x] `break` `;`
+- [x] `continue` `;`
+- [x] `while` `(` EXPR `)` STAT
+- [x] `do` STAT `while` `(` EXPR `)` `;`
+- [x] `for` ([TYPE {[DECLARATOR] [INITIALIZER] `,` ...}] `;` [EXPR] `;` [EXPR]) STAT
+- [x] `for` (TYPE-SINGLE-DECLARATOR `:` EXPR) STAT
+- [x] `if` [`constexpr`] `(` [TYPE IDENTIFIER `=`] EXPR `)` STAT [`else` STAT]
+- [x] `switch` `(` {STAT} EXPR `)` `{` STAT `}`
+- [x] `try` STAT `catch` `(` TYPE-OPTIONAL-DECLARATOR `)` STAT
+- [x] `return` EXPR `;`
+- [x] `goto` IDENTIFIER `;`
+- [x] `__try` STAT `__except` `(` EXPR `)` STAT
+- [x] `__try` STAT `__finally` STAT
+- [x] `__leave` `;`
+- [x] (`__if_exists` | `__if_not_exists`) `(` EXPR `)` STAT
 
 ## EXPR (Expression)
 
 - [x] LITERAL
+- [ ] `{` ... `}`
 - [ ] `this`
 - [ ] `nullptr`
 - [ ] [TYPE `::`] [`~`] IDENTIFIER
