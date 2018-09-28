@@ -561,6 +561,10 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 	{
 		initializer->initializerType = InitializerType::Constructor;
 	}
+	else
+	{
+		throw StopParsingException(cursor);
+	}
 
 	while (true)
 	{

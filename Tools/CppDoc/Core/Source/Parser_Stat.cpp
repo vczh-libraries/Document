@@ -150,8 +150,12 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			List<Ptr<Declarator>> declarators;
 			try
 			{
-				ParseDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Zero, cursor, declarators);
+				ParseDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Optional, cursor, declarators);
 				if (declarators.Count() != 1)
+				{
+					throw StopParsingException(cursor);
+				}
+				if (!declarators[0]->initializer)
 				{
 					throw StopParsingException(cursor);
 				}
@@ -166,6 +170,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				auto varDecl = MakePtr<VariableDeclaration>();
 				varDecl->name = declarators[0]->name;
 				varDecl->type = declarators[0]->type;
+				varDecl->initializer = declarators[0]->initializer;
 				stat->varDecl = varDecl;
 			}
 			else
