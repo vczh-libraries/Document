@@ -23,8 +23,8 @@
   - [x] Connect forward declaractions with their root
   - [x] Assert resolvings in scopes
   - [x] Assert resolvings in scopes of base types
-- [ ] Parse function body and Statements
-  - [ ] Assert ASTs
+- [x] Parse function body and Statements
+  - [x] Assert ASTs
   - [ ] Connect forward declaractions with their root
   - [ ] Class static variables defined out of classes
   - [ ] Class member methods defined out of classes

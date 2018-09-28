@@ -376,7 +376,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		}
 		ParseDeclarator(pa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
 	SUCCEEDED_IN_SPECIAL_METHOD:
-		RequireToken(cursor, CppTokens::SEMICOLON);
 
 		for (vint i = 0; i < declarators.Count(); i++)
 		{
@@ -384,6 +383,11 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 			if (GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
 			{
+				if (i != 0)
+				{
+					throw StopParsingException(cursor);
+				}
+
 #define FILL_FUNCTION(NAME)\
 				NAME->name = declarator->name;\
 				NAME->type = declarator->type;\
@@ -396,12 +400,30 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				NAME->decoratorInline = decoratorInline;\
 				NAME->decoratorForceInline = decoratorForceInline\
 
+				Ptr<Stat> stat;
+				if (TestToken(cursor, CppTokens::LBRACE, false))
+				{
+					stat = ParseStat(pa, cursor);
+				}
+
+				if (stat)
+				{
+					auto decl = MakePtr<FunctionDeclaration>();
+					FILL_FUNCTION(decl);
+					decl->statement = stat;
+					auto contextSymbol = pa.context->CreateSymbol(decl);
+					output.Add(decl);
+					return;
+				}
+				else
 				{
 					auto decl = MakePtr<ForwardFunctionDeclaration>();
 					FILL_FUNCTION(decl);
 					auto forwardSymbol = pa.context->CreateSymbol(decl);
 					forwardSymbol->isForwardDeclaration = true;
 					output.Add(decl);
+					RequireToken(cursor, CppTokens::SEMICOLON);
+					return;
 				}
 #undef FILL_FUNCTION
 			}
@@ -437,5 +459,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 #undef FILL_VARIABLE
 			}
 		}
+		RequireToken(cursor, CppTokens::SEMICOLON);
 	}
 }

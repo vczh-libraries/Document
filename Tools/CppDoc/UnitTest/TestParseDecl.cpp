@@ -177,11 +177,14 @@ TEST_CASE(TestParseDecl_Functions)
 {
 	auto input = LR"(
 int Add(int a, int b);
-friend extern static virtual explicit inline __forceinline int __stdcall Sub(int, int);
+friend extern static virtual explicit inline __forceinline int __stdcall Sub(int, int) { return 0; }
 )";
 	auto output = LR"(
 __forward Add: int (a: int, b: int);
-__forward explicit extern friend inline __forceinline static virtual Sub: int (int, int) __stdcall;
+explicit extern friend inline __forceinline static virtual Sub: int (int, int) __stdcall
+{
+	return 0;
+}
 )";
 	AssertProgram(input, output);
 }

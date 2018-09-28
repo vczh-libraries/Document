@@ -79,72 +79,6 @@ public:
 			writer.WriteString(L"\t");
 		}
 	}
-
-	void WriteHeader(ForwardVariableDeclaration* self)
-	{
-		if (self->decoratorExtern) writer.WriteString(L"extern ");
-		if (self->decoratorMutable) writer.WriteString(L"mutable ");
-		if (self->decoratorRegister) writer.WriteString(L"register ");
-		if (self->decoratorStatic) writer.WriteString(L"static ");
-		if (self->decoratorThreadLocal) writer.WriteString(L"thread_local ");
-		writer.WriteString(self->name.name);
-		writer.WriteString(L": ");
-		Log(self->type, writer);
-	}
-
-	void WriteHeader(ForwardFunctionDeclaration* self)
-	{
-		if (self->decoratorExplicit) writer.WriteString(L"explicit ");
-		if (self->decoratorExtern) writer.WriteString(L"extern ");
-		if (self->decoratorFriend) writer.WriteString(L"friend ");
-		if (self->decoratorInline) writer.WriteString(L"inline ");
-		if (self->decoratorForceInline) writer.WriteString(L"__forceinline ");
-		if (self->decoratorStatic) writer.WriteString(L"static ");
-		if (self->decoratorVirtual) writer.WriteString(L"virtual ");
-		switch (self->methodType)
-		{
-		case CppMethodType::Constructor:
-			writer.WriteString(L"__ctor ");
-			break;
-		case CppMethodType::Destructor:
-			writer.WriteString(L"__dtor ");
-			break;
-		case CppMethodType::TypeConversion:
-			writer.WriteString(L"__type ");
-			break;
-		}
-		writer.WriteString(self->name.name);
-		writer.WriteString(L": ");
-		Log(self->type, writer);
-	}
-
-	void WriteHeader(ForwardEnumDeclaration* self)
-	{
-		writer.WriteString(self->enumClass ? L"enum class " : L"enum ");
-		writer.WriteString(self->name.name);
-		if (self->baseType)
-		{
-			writer.WriteString(L" : ");
-			Log(self->baseType, writer);
-		}
-	}
-
-	void WriteHeader(ForwardClassDeclaration* self)
-	{
-		switch (self->classType)
-		{
-		case CppClassType::Class:
-			writer.WriteString(L"class ");
-			break;
-		case CppClassType::Struct:
-			writer.WriteString(L"struct ");
-			break;
-		case CppClassType::Union:
-			writer.WriteString(L"union ");
-			break;
-		}
-		writer.WriteString(self->name.name);
-	}
 };
 
 /***********************************************************************
@@ -682,6 +616,73 @@ class LogDeclVisitor : public Object, public virtual IDeclarationVisitor, privat
 private:
 	bool					semicolon;
 
+
+	void WriteHeader(ForwardVariableDeclaration* self)
+	{
+		if (self->decoratorExtern) writer.WriteString(L"extern ");
+		if (self->decoratorMutable) writer.WriteString(L"mutable ");
+		if (self->decoratorRegister) writer.WriteString(L"register ");
+		if (self->decoratorStatic) writer.WriteString(L"static ");
+		if (self->decoratorThreadLocal) writer.WriteString(L"thread_local ");
+		writer.WriteString(self->name.name);
+		writer.WriteString(L": ");
+		Log(self->type, writer);
+	}
+
+	void WriteHeader(ForwardFunctionDeclaration* self)
+	{
+		if (self->decoratorExplicit) writer.WriteString(L"explicit ");
+		if (self->decoratorExtern) writer.WriteString(L"extern ");
+		if (self->decoratorFriend) writer.WriteString(L"friend ");
+		if (self->decoratorInline) writer.WriteString(L"inline ");
+		if (self->decoratorForceInline) writer.WriteString(L"__forceinline ");
+		if (self->decoratorStatic) writer.WriteString(L"static ");
+		if (self->decoratorVirtual) writer.WriteString(L"virtual ");
+		switch (self->methodType)
+		{
+		case CppMethodType::Constructor:
+			writer.WriteString(L"__ctor ");
+			break;
+		case CppMethodType::Destructor:
+			writer.WriteString(L"__dtor ");
+			break;
+		case CppMethodType::TypeConversion:
+			writer.WriteString(L"__type ");
+			break;
+		}
+		writer.WriteString(self->name.name);
+		writer.WriteString(L": ");
+		Log(self->type, writer);
+	}
+
+	void WriteHeader(ForwardEnumDeclaration* self)
+	{
+		writer.WriteString(self->enumClass ? L"enum class " : L"enum ");
+		writer.WriteString(self->name.name);
+		if (self->baseType)
+		{
+			writer.WriteString(L" : ");
+			Log(self->baseType, writer);
+		}
+	}
+
+	void WriteHeader(ForwardClassDeclaration* self)
+	{
+		switch (self->classType)
+		{
+		case CppClassType::Class:
+			writer.WriteString(L"class ");
+			break;
+		case CppClassType::Struct:
+			writer.WriteString(L"struct ");
+			break;
+		case CppClassType::Union:
+			writer.WriteString(L"union ");
+			break;
+		}
+		writer.WriteString(self->name.name);
+	}
+
 public:
 	LogDeclVisitor(StreamWriter& _writer, vint _indentation, bool _semicolon)
 		:LogIndentation(_writer, _indentation)
@@ -729,7 +730,9 @@ public:
 
 	void Visit(FunctionDeclaration* self)override
 	{
-		throw 0;
+		WriteHeader(self);
+		writer.WriteLine(L"");
+		Log(self->statement, writer, indentation + 1);
 	}
 
 	void Visit(EnumItemDeclaration* self)override
