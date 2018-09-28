@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Ast_Stat.h"
+#include "Ast_Decl.h"
 
 Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
@@ -70,6 +71,64 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		RequireToken(cursor, CppTokens::SEMICOLON);
 		return stat;
+	}
+	else if (TestToken(cursor, CppTokens::STAT_FOR))
+	{
+		RequireToken(cursor, CppTokens::LPARENTHESIS);
+
+		{
+			auto oldCursor = cursor;
+			List<Ptr<Declarator>> declarators;
+			try
+			{
+				ParseDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Zero, cursor, declarators);
+				RequireToken(cursor, CppTokens::COLON);
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+				goto FOR_EACH_FAILED;
+			}
+
+			if (declarators.Count() != 1)
+			{
+				throw StopParsingException(cursor);
+			}
+
+			auto stat = MakePtr<ForEachStat>();
+			{
+				auto varDecl = MakePtr<VariableDeclaration>();
+				varDecl->name = declarators[0]->name;
+				varDecl->type = declarators[0]->type;
+				stat->varDecl = varDecl;
+			}
+
+			stat->expr = ParseExpr(pa, true, cursor);
+			RequireToken(cursor, CppTokens::RPARENTHESIS);
+			stat->stat = ParseStat(pa, cursor);
+			return stat;
+		}
+	FOR_EACH_FAILED:
+		{
+			auto stat = MakePtr<ForStat>();
+			stat->init = ParseStat(pa, cursor);
+			if (!TestToken(cursor, CppTokens::SEMICOLON))
+			{
+				stat->expr = ParseExpr(pa, true, cursor);
+				RequireToken(cursor, CppTokens::SEMICOLON);
+			}
+			if (!TestToken(cursor, CppTokens::RPARENTHESIS))
+			{
+				stat->effect = ParseExpr(pa, true, cursor);
+				RequireToken(cursor, CppTokens::RPARENTHESIS);
+			}
+			stat->stat = ParseStat(pa, cursor);
+			return stat;
+		}
+	}
+	else if (TestToken(cursor, CppTokens::STAT_IF))
+	{
+		throw StopParsingException(cursor);
 	}
 	else if (TestToken(cursor, CppTokens::STAT_SWITCH))
 	{
@@ -167,7 +226,10 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			if (isLabel)
 			{
 				auto stat = MakePtr<LabelStat>();
-				ParseCppName(stat->name, cursor);
+				if (!ParseCppName(stat->name, cursor))
+				{
+					throw StopParsingException(cursor);
+				}
 				RequireToken(cursor, CppTokens::COLON);
 				stat->stat = ParseStat(pa, cursor);
 				return stat;

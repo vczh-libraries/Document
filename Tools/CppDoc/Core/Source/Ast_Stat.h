@@ -144,12 +144,14 @@ public:
 	Ptr<Stat>					stat;
 };
 
+class VariableDeclaration;
+
 class ForEachStat : public Stat
 {
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Declaration>			varDecl;
+	Ptr<VariableDeclaration>	varDecl;
 	Ptr<Expr>					expr;
 	Ptr<Stat>					stat;
 };
