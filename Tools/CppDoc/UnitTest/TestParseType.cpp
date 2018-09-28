@@ -134,14 +134,14 @@ namespace a::b
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
 			TEST_ASSERT(name.tokenCount > 0);
-			ASSERT_SYMBOL(0, L"a", 0, 2, NamespaceDeclaration, 1, 10)
-			ASSERT_SYMBOL(1, L"b", 0, 5, NamespaceDeclaration, 1, 13)
-			ASSERT_SYMBOL(2, L"X", 0, 8, ForwardEnumDeclaration, 3, 6)
+			ASSERT_SYMBOL(0, L"a", 0, 11, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(1, L"b", 0, 14, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(2, L"X", 0, 17, ForwardEnumDeclaration, 3, 6)
 			TEST_ASSERT(false);
 		});
 		AssertType(
-			L"::a::b::X :: typename Y :: typename Z",
-			L"__root :: a :: b :: X :: typename Y :: typename Z",
+			L"typename ::a::b::X::Y::Z",
+			L"__root :: typename a :: typename b :: typename X :: typename Y :: typename Z",
 			pa);
 		TEST_ASSERT(accessed.Count() == 3);
 	}
@@ -153,12 +153,12 @@ namespace a::b
 			ASSERT_SYMBOL(0, L"a", 0, 0, NamespaceDeclaration, 1, 10)
 			ASSERT_SYMBOL(1, L"b", 0, 3, NamespaceDeclaration, 1, 13)
 			ASSERT_SYMBOL(2, L"X", 0, 6, ForwardEnumDeclaration, 3, 6)
-			ASSERT_SYMBOL(3, L"a", 0, 16, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(3, L"a", 0, 25, NamespaceDeclaration, 1, 10)
 			ASSERT_SYMBOL(4, L"b", 0, 28, NamespaceDeclaration, 1, 13)
 			TEST_ASSERT(false);
 		});
 		AssertType(
-			L"a::b::X(__cdecl a::typename b::*)()",
+			L"a::b::X(__cdecl typename a::b::*)()",
 			L"a :: b :: X () __cdecl (a :: typename b ::) *",
 			pa);
 		TEST_ASSERT(accessed.Count() == 5);

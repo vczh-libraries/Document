@@ -88,9 +88,6 @@ public:
 	}
 };
 
-extern Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-
 /***********************************************************************
 ParseShortDeclarator
 ***********************************************************************/

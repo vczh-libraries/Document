@@ -118,6 +118,7 @@ extern Ptr<Type>			ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToRep
 extern Ptr<Type>			AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType);
 extern bool					ParseCallingConvention(CppCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
 
+extern Ptr<Type>			ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Initializer>		ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern void					ParseDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDeclaration* specialMethodParent, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void					ParseDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
