@@ -318,9 +318,10 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		List<Ptr<Declarator>> declarators;
 
 		bool trySpecialMethod = false;
+		Ptr<ClassDeclaration> specialMethodParent;
 		if (pa.context && pa.context->decls.Count() > 0)
 		{
-			if (auto classDecl = pa.context->decls[0].Cast<ClassDeclaration>())
+			if (specialMethodParent = pa.context->decls[0].Cast<ClassDeclaration>())
 			{
 #define TRY_TOKEN(TOKEN) if (TestToken(cursor, CppTokens::TOKEN, false)) trySpecialMethod = true; else
 
@@ -333,7 +334,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				TRY_TOKEN(__FASTCALL)
 				TRY_TOKEN(__THISCALL)
 				TRY_TOKEN(__VECTORCALL)
-				if (TestToken(cursor, classDecl->name.name.Buffer(), false))
+				if (TestToken(cursor, specialMethodParent->name.name.Buffer(), false))
 				{
 					trySpecialMethod = true;
 				}
@@ -346,35 +347,11 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			auto oldCursor = cursor;
 			try
 			{
-				auto voidType = MakePtr<PrimitiveType>();
-				voidType->primitive = CppPrimitiveType::_void;
-				ParseDeclarator(pa, voidType, DeclaratorRestriction::One, InitializerRestriction::Optional, cursor, declarators);
-
+				ParseDeclarator(pa, nullptr, specialMethodParent.Obj(), DeclaratorRestriction::One, InitializerRestriction::Optional, cursor, declarators);
 				if (declarators.Count() != 1)
 				{
 					throw StopParsingException(cursor);
 				}
-				else
-				{
-					auto classDecl = pa.context->decls[0].Cast<ClassDeclaration>();
-					auto& cppName = declarators[0]->name;
-					switch (cppName.type)
-					{
-					case CppNameType::Normal:
-						if (cppName.name != classDecl->name.name)
-						{
-							throw StopParsingException(oldCursor);
-						}
-						break;
-					case CppNameType::Destructor:
-						if (cppName.name != L"~" + classDecl->name.name)
-						{
-							throw StopParsingException(oldCursor);
-						}
-						break;
-					}
-				}
-
 				goto SUCCEEDED_IN_SPECIAL_METHOD;
 			}
 			catch (const StopParsingException&)
