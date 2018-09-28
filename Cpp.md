@@ -43,6 +43,7 @@
       - [ ] `for`
       - [ ] `catch`
 - [ ] `Template`, `Typedef` and anonymous declaration
+  - [ ] Fix wrong `template` rule created above, `typename A::B` not `A::typename B`
   - [ ] Assert ASTs
   - [ ] Connect generic forward declarations with their root
   - [ ] Methods of generic classes defined out of classes
