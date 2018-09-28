@@ -26,15 +26,15 @@ TEST_CASE(TestParseStat_Everything)
 )", pa);
 
 	AssertStat(
-		L"while(true){do{;}while(false);}",
+		L"while(1){do{;}while(0);}",
 		LR"(
-while (true)
+while (1)
 {
 	do
 	{
 		;
 	}
-	while (false);
+	while (0);
 }
 )", pa);
 

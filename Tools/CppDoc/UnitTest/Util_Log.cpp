@@ -412,7 +412,8 @@ public:
 
 	void Visit(BlockStat* self)override
 	{
-		indentation--;
+		bool hasIdentation = indentation > 0;
+		if (hasIdentation) indentation--;
 		writer.WriteLine(L"{");
 		indentation++;
 		for (vint i = 0; i < self->stats.Count(); i++)
@@ -423,7 +424,7 @@ public:
 		indentation--;
 		WriteIndentation();
 		writer.WriteLine(L"}");
-		indentation++;
+		if (hasIdentation) indentation++;
 	}
 
 	void Visit(DeclStat* self)override
@@ -503,7 +504,7 @@ public:
 		WriteIndentation();
 		writer.WriteString(L"while (");
 		Log(self->expr, writer);
-		writer.WriteLine(L")");
+		writer.WriteLine(L");");
 	}
 
 	void Visit(ForEachStat* self)override

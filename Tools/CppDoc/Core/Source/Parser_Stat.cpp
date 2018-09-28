@@ -38,6 +38,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		{
 			throw StopParsingException(cursor);
 		}
+		RequireToken(cursor, CppTokens::SEMICOLON);
 		return stat;
 	}
 	else if (TestToken(cursor, CppTokens::STAT_BREAK))
@@ -97,6 +98,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		}
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		stat->catchStat = ParseStat(pa, cursor);
+		return stat;
 	}
 	else if (TestToken(cursor, CppTokens::STAT_RETURN))
 	{
@@ -116,6 +118,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			auto stat = MakePtr<__Try__FinallyStat>();
 			stat->tryStat = tryStat;
 			stat->finallyStat = ParseStat(pa, cursor);
+			return stat;
 		}
 		else if (TestToken(cursor, CppTokens::STAT___EXCEPT))
 		{
@@ -125,6 +128,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			stat->expr = ParseExpr(pa, true, cursor);
 			RequireToken(cursor, CppTokens::RPARENTHESIS);
 			stat->exceptStat = ParseStat(pa, cursor);
+			return stat;
 		}
 		else
 		{
@@ -156,6 +160,38 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	}
 	else
 	{
-		throw StopParsingException(cursor);
+		{
+			auto oldCursor = cursor;
+			bool isLabel = TestToken(cursor, CppTokens::ID) && TestToken(cursor, CppTokens::COLON);
+			cursor = oldCursor;
+			if (isLabel)
+			{
+				auto stat = MakePtr<LabelStat>();
+				ParseCppName(stat->name, cursor);
+				RequireToken(cursor, CppTokens::COLON);
+				stat->stat = ParseStat(pa, cursor);
+				return stat;
+			}
+		}
+		{
+			auto oldCursor = cursor;
+			try
+			{
+				auto expr = ParseExpr(pa, true, cursor);
+				RequireToken(cursor, CppTokens::SEMICOLON);
+				auto stat = MakePtr<ExprStat>();
+				stat->expr = expr;
+				return stat;
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+			}
+		}
+		{
+			auto stat = MakePtr<DeclStat>();
+			ParseDeclaration(pa, cursor, stat->decls);
+			return stat;
+		}
 	}
 }

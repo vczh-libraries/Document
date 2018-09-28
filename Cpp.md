@@ -209,13 +209,13 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ## STAT (Statement)
 
-- [ ] IDENTIFIER `:` STAT
+- [x] IDENTIFIER `:` STAT
 - [x] `default` `:` STAT
 - [x] `case` EXPR `:` STAT
 - [x] `;`
 - [x] `{` {STAT ...} `}`
-- [ ] {EXPR `,` ...}+ `;`
-- [ ] DECL
+- [x] {EXPR `,` ...}+ `;`
+- [x] DECL
 - [x] `break` `;`
 - [x] `continue` `;`
 - [x] `while` `(` EXPR `)` STAT
