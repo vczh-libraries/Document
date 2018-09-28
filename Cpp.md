@@ -35,6 +35,7 @@
 - [ ] Parse full expressions
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
+  - [ ] Resolve symbols created by statements
 - [ ] `Template`, `Typedef` and anonymous declaration
   - [ ] Assert ASTs
   - [ ] Connect generic forward declarations with their root
@@ -208,20 +209,20 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ## STAT (Statement)
 
-- [x] IDENTIFIER `:` STAT
+- [ ] IDENTIFIER `:` STAT
 - [x] `default` `:` STAT
 - [x] `case` EXPR `:` STAT
 - [x] `;`
 - [x] `{` {STAT ...} `}`
-- [x] {EXPR `,` ...}+ `;`
-- [x] DECL
+- [ ] {EXPR `,` ...}+ `;`
+- [ ] DECL
 - [x] `break` `;`
 - [x] `continue` `;`
 - [x] `while` `(` EXPR `)` STAT
 - [x] `do` STAT `while` `(` EXPR `)` `;`
-- [x] `for` ([TYPE {[DECLARATOR] [INITIALIZER] `,` ...}] `;` [EXPR] `;` [EXPR]) STAT
-- [x] `for` (TYPE-SINGLE-DECLARATOR `:` EXPR) STAT
-- [x] `if` [`constexpr`] `(` [TYPE IDENTIFIER `=`] EXPR `)` STAT [`else` STAT]
+- [ ] `for` ([TYPE {[DECLARATOR] [INITIALIZER] `,` ...}] `;` [EXPR] `;` [EXPR]) STAT
+- [ ] `for` (TYPE-SINGLE-DECLARATOR `:` EXPR) STAT
+- [ ] `if` [`constexpr`] `(` [TYPE IDENTIFIER `=`] EXPR `)` STAT [`else` STAT]
 - [x] `switch` `(` {STAT} EXPR `)` `{` STAT `}`
 - [x] `try` STAT `catch` `(` TYPE-OPTIONAL-DECLARATOR `)` STAT
 - [x] `return` EXPR `;`

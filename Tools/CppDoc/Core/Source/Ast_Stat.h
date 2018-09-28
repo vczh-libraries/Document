@@ -28,7 +28,7 @@ Visitor
 	F(ReturnStat)\
 	F(__Try__ExceptStat)\
 	F(__Try__FinallyStat)\
-	F(__Leave)\
+	F(__LeaveStat)\
 	F(__IfExistsStat)\
 	F(__IfNotExistsStat)\
 
@@ -222,7 +222,7 @@ public:
 	Ptr<Stat>					finallyStat;
 };
 
-class __Leave : public Stat
+class __LeaveStat : public Stat
 {
 public:
 	IStatVisitor_ACCEPT;

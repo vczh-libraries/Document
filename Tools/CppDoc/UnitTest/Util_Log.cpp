@@ -666,7 +666,7 @@ public:
 		indentation--;
 	}
 
-	void Visit(__Leave* self)override
+	void Visit(__LeaveStat* self)override
 	{
 		writer.WriteLine(L"__leave;");
 	}
