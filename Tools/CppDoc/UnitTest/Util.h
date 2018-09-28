@@ -7,11 +7,12 @@ extern Ptr<RegexLexer>		GlobalCppLexer();
 extern void					Log(Ptr<Type> type, StreamWriter& writer);
 extern void					Log(Ptr<Expr> expr, StreamWriter& writer);
 extern void					Log(Ptr<Stat> stat, StreamWriter& writer, vint indentation);
-extern void					Log(Ptr<Declaration> decl, StreamWriter& writer);
+extern void					Log(Ptr<Declaration> decl, StreamWriter& writer, vint indentation, bool semicolon);
 extern void					Log(Ptr<Program> program, StreamWriter& writer);
 
-extern void					AssertType(const WString& type, const WString& log);
-extern void					AssertType(const WString& type, const WString& log, ParsingArguments& pa);
+extern void					AssertType(const WString& input, const WString& log);
+extern void					AssertType(const WString& input, const WString& log, ParsingArguments& pa);
+extern void					AssertStat(const WString& input, const WString& log, ParsingArguments& pa);
 extern void					AssertProgram(const WString& input, const WString& log);
 
 #define COMPILE_PROGRAM(PROGRAM, PA,INPUT)\

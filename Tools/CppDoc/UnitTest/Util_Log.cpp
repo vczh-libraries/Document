@@ -3,10 +3,7 @@
 #include <Ast_Decl.h>
 #include <Ast_Expr.h>
 #include <Ast_Stat.h>
-
-extern void Log(Ptr<Declarator> declarator, StreamWriter& writer);
-extern void Log(Ptr<Expr> expr, StreamWriter& writer);
-extern void Log(Ptr<Type> type, StreamWriter& writer);
+#include "Util.h"
 
 void Log(Ptr<Initializer> initializer, StreamWriter& writer)
 {
@@ -410,67 +407,117 @@ public:
 
 	void Visit(EmptyStat* self)override
 	{
-		throw 0;
+		writer.WriteLine(L";");
 	}
 
 	void Visit(BlockStat* self)override
 	{
-		throw 0;
+		indentation--;
+		writer.WriteLine(L"{");
+		indentation++;
+		for (vint i = 0; i < self->stats.Count(); i++)
+		{
+			WriteIndentation();
+			self->stats[i]->Accept(this);
+		}
+		indentation--;
+		WriteIndentation();
+		writer.WriteLine(L"}");
+		indentation++;
 	}
 
 	void Visit(DeclStat* self)override
 	{
-		throw 0;
+		for (vint i = 0; i < self->decls.Count(); i++)
+		{
+			WriteIndentation();
+			Log(self->decls[i], writer, indentation, true);
+		}
 	}
 
 	void Visit(ExprStat* self)override
 	{
-		throw 0;
+		Log(self->expr, writer);
+		writer.WriteLine(L";");
 	}
 
 	void Visit(LabelStat* self)override
 	{
-		throw 0;
+		writer.WriteString(self->name.name);
+		writer.WriteString(L": ");
+		self->stat->Accept(this);
 	}
 
 	void Visit(DefaultStat* self)override
 	{
-		throw 0;
+		writer.WriteString(L"default: ");
+		self->stat->Accept(this);
 	}
 
 	void Visit(CaseStat* self)override
 	{
-		throw 0;
+		writer.WriteString(L"case ");
+		Log(self->expr, writer);
+		writer.WriteString(L": ");
+		self->stat->Accept(this);
 	}
 
 	void Visit(GotoStat* self)override
 	{
-		throw 0;
+		writer.WriteString(L"goto ");
+		writer.WriteString(self->name.name);
+		writer.WriteLine(L";");
 	}
 
 	void Visit(BreakStat* self)override
 	{
-		throw 0;
+		writer.WriteLine(L"break;");
 	}
 
 	void Visit(ContinueStat* self)override
 	{
-		throw 0;
+		writer.WriteLine(L"continue;");
 	}
 
 	void Visit(WhileStat* self)override
 	{
-		throw 0;
+		writer.WriteString(L"while (");
+		Log(self->expr, writer);
+		writer.WriteLine(L")");
+
+		WriteIndentation();
+		indentation++;
+		self->stat->Accept(this);
+		indentation--;
 	}
 
 	void Visit(DoWhileStat* self)override
 	{
-		throw 0;
+		writer.WriteLine(L"do");
+
+		WriteIndentation();
+		indentation++;
+		self->stat->Accept(this);
+		indentation--;
+
+		WriteIndentation();
+		writer.WriteString(L"while (");
+		Log(self->expr, writer);
+		writer.WriteLine(L")");
 	}
 
 	void Visit(ForEachStat* self)override
 	{
-		throw 0;
+		writer.WriteString(L"for (");
+		Log(self->varDecl, writer, 0, false);
+		writer.WriteString(L" : ");
+		Log(self->expr, writer);
+		writer.WriteLine(L")");
+
+		WriteIndentation();
+		indentation++;
+		self->stat->Accept(this);
+		indentation--;
 	}
 
 	void Visit(ForStat* self)override
@@ -478,44 +525,121 @@ public:
 		throw 0;
 	}
 
-	void Visit(SwitchStat* self)override
+	void Visit(IfElseStat* self)override
 	{
 		throw 0;
+	}
+
+	void Visit(SwitchStat* self)override
+	{
+		writer.WriteString(L"switch (");
+		Log(self->expr, writer);
+		writer.WriteLine(L")");
+
+		WriteIndentation();
+		indentation++;
+		self->stat->Accept(this);
+		indentation--;
 	}
 
 	void Visit(TryCatchStat* self)override
 	{
-		throw 0;
+		writer.WriteLine(L"try");
+		WriteIndentation();
+		indentation++;
+		self->tryStat->Accept(this);
+		indentation--;
+
+		WriteIndentation();
+		writer.WriteString(L"catch (");
+		if (self->exception)
+		{
+			Log(self->exception, writer);
+		}
+		else
+		{
+			writer.WriteString(L"...");
+		}
+		writer.WriteLine(L")");
+		WriteIndentation();
+		indentation++;
+		self->catchStat->Accept(this);
+		indentation--;
 	}
 
 	void Visit(ReturnStat* self)override
 	{
-		throw 0;
+		if (self->expr)
+		{
+			writer.WriteString(L"return ");
+			Log(self->expr, writer);
+			writer.WriteLine(L";");
+		}
+		else
+		{
+			writer.WriteLine(L"return;");
+		}
 	}
 
 	void Visit(__Try__ExceptStat* self)override
 	{
-		throw 0;
+		writer.WriteLine(L"__try");
+		WriteIndentation();
+		indentation++;
+		self->tryStat->Accept(this);
+		indentation--;
+
+		WriteIndentation();
+		writer.WriteString(L"__except");
+		Log(self->expr, writer);
+		writer.WriteLine(L")");
+		WriteIndentation();
+		indentation++;
+		self->exceptStat->Accept(this);
+		indentation--;
 	}
 
 	void Visit(__Try__FinallyStat* self)override
 	{
-		throw 0;
+		writer.WriteLine(L"__try");
+		WriteIndentation();
+		indentation++;
+		self->tryStat->Accept(this);
+		indentation--;
+
+		WriteIndentation();
+		writer.WriteLine(L"__finally");
+		WriteIndentation();
+		indentation++;
+		self->finallyStat->Accept(this);
+		indentation--;
 	}
 
 	void Visit(__Leave* self)override
 	{
-		throw 0;
+		writer.WriteLine(L"__leave;");
 	}
 
 	void Visit(__IfExistsStat* self)override
 	{
-		throw 0;
+		writer.WriteString(L"__if_exists (");
+		Log(self->expr, writer);
+		writer.WriteLine(L")");
+		WriteIndentation();
+		indentation++;
+		self->stat->Accept(this);
+		indentation--;
 	}
 
 	void Visit(__IfNotExistsStat* self)override
 	{
-		throw 0;
+		writer.WriteString(L"__if_not_exists (");
+		Log(self->expr, writer);
+		writer.WriteLine(L")");
+		WriteIndentation();
+		indentation++;
+		self->stat->Accept(this);
+		indentation--;
 	}
 
 };
@@ -526,9 +650,13 @@ LogDeclVisitor
 
 class LogDeclVisitor : public Object, public virtual IDeclarationVisitor, private LogIndentation
 {
+private:
+	bool					semicolon;
+
 public:
-	LogDeclVisitor(StreamWriter& _writer)
-		:LogIndentation(_writer, 0)
+	LogDeclVisitor(StreamWriter& _writer, vint _indentation, bool _semicolon)
+		:LogIndentation(_writer, _indentation)
+		, semicolon(_semicolon)
 	{
 	}
 
@@ -536,28 +664,28 @@ public:
 	{
 		writer.WriteString(L"__forward ");
 		WriteHeader(self);
-		writer.WriteLine(L";");
+		if (semicolon) writer.WriteLine(L";");
 	}
 
 	void Visit(ForwardFunctionDeclaration* self)override
 	{
 		writer.WriteString(L"__forward ");
 		WriteHeader(self);
-		writer.WriteLine(L";");
+		if (semicolon) writer.WriteLine(L";");
 	}
 
 	void Visit(ForwardEnumDeclaration* self)override
 	{
 		writer.WriteString(L"__forward ");
 		WriteHeader(self);
-		writer.WriteLine(L";");
+		if (semicolon) writer.WriteLine(L";");
 	}
 
 	void Visit(ForwardClassDeclaration* self)override
 	{
 		writer.WriteString(L"__forward ");
 		WriteHeader(self);
-		writer.WriteLine(L";");
+		if (semicolon) writer.WriteLine(L";");
 	}
 
 	void Visit(VariableDeclaration* self)override
@@ -567,7 +695,7 @@ public:
 		{
 			Log(self->initializer, writer);
 		}
-		writer.WriteLine(L";");
+		if (semicolon) writer.WriteLine(L";");
 	}
 
 	void Visit(FunctionDeclaration* self)override
@@ -603,7 +731,8 @@ public:
 		indentation--;
 
 		WriteIndentation();
-		writer.WriteLine(L"};");
+		writer.WriteString(L"}");
+		if (semicolon) writer.WriteLine(L";");
 	}
 
 	void Visit(ClassDeclaration* self)override
@@ -662,7 +791,8 @@ public:
 		indentation--;
 
 		WriteIndentation();
-		writer.WriteLine(L"};");
+		writer.WriteString(L"}");
+		if (semicolon) writer.WriteLine(L";");
 	}
 
 	void Visit(TypeAliasDeclaration* self)override
@@ -725,9 +855,9 @@ void Log(Ptr<Stat> stat, StreamWriter& writer, vint indentation)
 	stat->Accept(&visitor);
 }
 
-void Log(Ptr<Declaration> decl, StreamWriter& writer)
+void Log(Ptr<Declaration> decl, StreamWriter& writer, vint indentation, bool semicolon)
 {
-	LogDeclVisitor visitor(writer);
+	LogDeclVisitor visitor(writer, indentation, semicolon);
 	decl->Accept(&visitor);
 }
 
@@ -735,6 +865,6 @@ void Log(Ptr<Program> program, StreamWriter& writer)
 {
 	for (vint i = 0; i < program->decls.Count(); i++)
 	{
-		Log(program->decls[i], writer);
+		Log(program->decls[i], writer, 0, true);
 	}
 }

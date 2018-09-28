@@ -1,14 +1,14 @@
 #include "Util.h"
 
-void AssertType(const WString& type, const WString& log)
+void AssertType(const WString& input, const WString& log)
 {
 	ParsingArguments pa;
-	AssertType(type, log, pa);
+	AssertType(input, log, pa);
 }
 
-void AssertType(const WString& type, const WString& log, ParsingArguments& pa)
+void AssertType(const WString& input, const WString& log, ParsingArguments& pa)
 {
-	CppTokenReader reader(GlobalCppLexer(), type);
+	CppTokenReader reader(GlobalCppLexer(), input);
 	auto cursor = reader.GetFirstToken();
 
 	List<Ptr<Declarator>> declarators;
@@ -21,6 +21,21 @@ void AssertType(const WString& type, const WString& log, ParsingArguments& pa)
 	auto output = GenerateToStream([&](StreamWriter& writer)
 	{
 		Log(declarators[0]->type, writer);
+	});
+	TEST_ASSERT(output == log);
+}
+
+void AssertStat(const WString& input, const WString& log, ParsingArguments& pa)
+{
+	CppTokenReader reader(GlobalCppLexer(), input);
+	auto cursor = reader.GetFirstToken();
+
+	auto stat = ParseStat(pa, cursor);
+	TEST_ASSERT(!cursor);
+
+	auto output = GenerateToStream([&](StreamWriter& writer)
+	{
+		Log(stat, writer, 0);
 	});
 	TEST_ASSERT(output == log);
 }

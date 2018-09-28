@@ -22,6 +22,7 @@ Visitor
 	F(DoWhileStat)\
 	F(ForEachStat)\
 	F(ForStat)\
+	F(IfElseStat)\
 	F(SwitchStat)\
 	F(TryCatchStat)\
 	F(ReturnStat)\
@@ -59,6 +60,8 @@ class BlockStat : public Stat
 {
 public:
 	IStatVisitor_ACCEPT;
+
+	List<Ptr<Stat>>				stats;
 };
 
 class DeclStat : public Stat
@@ -160,6 +163,17 @@ public:
 	Ptr<Expr>					expr;
 	Ptr<Expr>					effect;
 	Ptr<Stat>					stat;
+};
+
+class IfElseStat : public Stat
+{
+public:
+	IStatVisitor_ACCEPT;
+
+	Ptr<Declaration>			decl;
+	Ptr<Expr>					expr;
+	Ptr<Stat>					trueStat;
+	Ptr<Stat>					falseStat;
 };
 
 class SwitchStat : public Stat
