@@ -18,7 +18,7 @@
   - [x] Assert ASTs
   - [x] Assert resolvings in scopes
 - [x] `Class`es, `Struct`s, `Union`s
-  - [ ] Constructors / Destructors / operator TYPE
+  - [x] Constructors / Destructors / operator TYPE
   - [x] Assert ASTs
   - [x] Connect forward declaractions with their root
   - [x] Assert resolvings in scopes

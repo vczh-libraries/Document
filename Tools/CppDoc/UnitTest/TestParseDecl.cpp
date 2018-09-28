@@ -350,17 +350,17 @@ struct Vector
 {
 	public x: double = 0;
 	public y: double = 0;
-	public __ctor $__ctor: void () __stdcall;
-	public __ctor $__ctor: void (_x: double, _y: double);
-	public __ctor $__ctor: void (v: Vector const &);
-	public __ctor $__ctor: void (v: Vector &&);
-	public __dtor ~Vector: void();
-	public __type $__type: bool() const;
-	public explicit __type $__type: double() const;
-	public operator*: Vector (z: double) const;
+	public __forward __ctor $__ctor: __null () __stdcall;
+	public __forward __ctor $__ctor: __null (_x: double, _y: double);
+	public __forward __ctor $__ctor: __null (v: Vector const &);
+	public __forward __ctor $__ctor: __null (v: Vector &&);
+	public __forward __dtor ~Vector: __null ();
+	public __forward __type $__type: bool () const;
+	public __forward explicit __type $__type: double () const;
+	public __forward operator *: Vector (z: double) const;
 };
-static operator+: Vector (v1: Vector, v2: Vector);
-static operator-: Vector (v1: Vector, v2: Vector);
+__forward static operator +: Vector (v1: Vector, v2: Vector);
+__forward static operator -: Vector (v1: Vector, v2: Vector);
 )";
 	AssertProgram(input, output);
 }

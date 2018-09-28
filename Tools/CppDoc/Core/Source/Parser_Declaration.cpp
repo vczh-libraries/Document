@@ -342,6 +342,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			}
 		}
 
+		auto methodType = CppMethodType::Function;
 		if (trySpecialMethod)
 		{
 			auto oldCursor = cursor;
@@ -351,6 +352,20 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				if (declarators.Count() != 1)
 				{
 					throw StopParsingException(cursor);
+				}
+
+				auto& cppName = declarators[0]->name;
+				switch (cppName.type)
+				{
+				case CppNameType::Normal:
+					methodType = CppMethodType::Constructor;
+					break;
+				case CppNameType::Operator:
+					methodType = CppMethodType::TypeConversion;
+					break;
+				case CppNameType::Destructor:
+					methodType = CppMethodType::Destructor;
+					break;
 				}
 				goto SUCCEEDED_IN_SPECIAL_METHOD;
 			}
@@ -372,6 +387,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 #define FILL_FUNCTION(NAME)\
 				NAME->name = declarator->name;\
 				NAME->type = declarator->type;\
+				NAME->methodType = methodType;\
 				NAME->decoratorExtern = decoratorExtern;\
 				NAME->decoratorFriend = decoratorFriend;\
 				NAME->decoratorStatic = decoratorStatic;\

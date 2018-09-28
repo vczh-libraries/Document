@@ -598,6 +598,15 @@ void ParseDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDecl
 	while (true)
 	{
 		auto declarator = ParseLongDeclarator(pa, typeResult, specialMethodParent, itemDr, cursor);
+
+		if (specialMethodParent)
+		{
+			if (!GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
+			{
+				throw StopParsingException(cursor);
+			}
+		}
+
 		if (ir == InitializerRestriction::Optional)
 		{
 			if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LBRACE, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))

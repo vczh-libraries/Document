@@ -593,8 +593,15 @@ void Log(Ptr<Expr> expr, StreamWriter& writer)
 
 void Log(Ptr<Type> type, StreamWriter& writer)
 {
-	LogTypeVisitor visitor(writer);
-	type->Accept(&visitor);
+	if (type)
+	{
+		LogTypeVisitor visitor(writer);
+		type->Accept(&visitor);
+	}
+	else
+	{
+		writer.WriteString(L"__null");
+	}
 }
 
 void Log(Ptr<Stat> stat, StreamWriter& writer)
