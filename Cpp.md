@@ -254,7 +254,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [ ] Binary operator expressions
 - [ ] EXPR `?` EXPR `:` EXPR
 - [ ] (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
-- [ ] (`typeid` | `sizeof`) `(` (EXPR | TYPE) `)`
+- [ ] (`typeid` | `sizeof` [`...`]) `(` (EXPR | TYPE) `)`
 - [ ] `(` TYPE `)` EXPR
 - [ ] [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
 - [ ] [`::`] `delete` [`[` `]`] EXPR
