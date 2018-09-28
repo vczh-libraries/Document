@@ -479,13 +479,6 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 						continue;
 					}
 				}
-				else
-				{
-					if (typenameType)
-					{
-						throw StopParsingException(cursor);
-					}
-				}
 			}
 
 			cursor = oldCursor;
