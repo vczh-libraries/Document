@@ -8,7 +8,28 @@ Visitor
 ***********************************************************************/
 
 #define CPPDOC_STAT_LIST(F)\
+	F(EmptyStat)\
 	F(BlockStat)\
+	F(DeclStat)\
+	F(ExprStat)\
+	F(LabelStat)\
+	F(DefaultStat)\
+	F(CaseStat)\
+	F(GotoStat)\
+	F(BreakStat)\
+	F(ContinueStat)\
+	F(WhileStat)\
+	F(DoWhileStat)\
+	F(ForEachStat)\
+	F(ForStat)\
+	F(SwitchStat)\
+	F(TryCatchStat)\
+	F(ReturnStat)\
+	F(__Try__ExceptStat)\
+	F(__Try__FinallyStat)\
+	F(__Leave)\
+	F(__IfExistsStat)\
+	F(__IfNotExistsStat)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
 CPPDOC_STAT_LIST(CPPDOC_FORWARD)
