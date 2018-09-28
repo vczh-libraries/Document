@@ -599,16 +599,19 @@ public:
 		indentation--;
 
 		WriteIndentation();
-		writer.WriteString(L"catch (");
 		if (self->exception)
 		{
+			writer.WriteLine(L"catch");
+			indentation++;
+			WriteIndentation();
 			Log(self->exception, writer);
+			writer.WriteLine(L";");
+			indentation--;
 		}
 		else
 		{
-			writer.WriteString(L"...");
+			writer.WriteLine(L"catch (...)");
 		}
-		writer.WriteLine(L")");
 		WriteIndentation();
 		indentation++;
 		self->catchStat->Accept(this);
