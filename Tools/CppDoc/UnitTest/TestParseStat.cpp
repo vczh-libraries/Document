@@ -57,13 +57,15 @@ foreach (x: int : 0)
 )");
 
 	AssertStat(
-		L"if (int i=0) if (0) 1; else if (1) 2; else 3;",
+		L"if (int i=0) if (0) 1; else if (int i=0,j=0;1) 2; else 3;",
 		LR"(
-if
-	int i = 0;
+if (i: int = 0)
 	if (0)
 		1;
-	else if (1)
+	else if (
+		i: int = 0;
+		j: int = 0;
+		1)
 		2;
 	else
 		3;

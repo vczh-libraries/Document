@@ -172,7 +172,8 @@ class IfElseStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Declaration>			decl;
+	Ptr<Stat>					init;
+	Ptr<VariableDeclaration>	varDecl;
 	Ptr<Expr>					expr;
 	Ptr<Stat>					trueStat;
 	Ptr<Stat>					falseStat;

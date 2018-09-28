@@ -132,7 +132,55 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	}
 	else if (TestToken(cursor, CppTokens::STAT_IF))
 	{
-		throw StopParsingException(cursor);
+		auto stat = MakePtr<IfElseStat>();
+		RequireToken(cursor, CppTokens::LPARENTHESIS);
+		{
+			auto oldCursor = cursor;
+			try
+			{
+				stat->init = ParseStat(pa, cursor);
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+			}
+		}
+		{
+			auto oldCursor = cursor;
+			List<Ptr<Declarator>> declarators;
+			try
+			{
+				ParseDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Zero, cursor, declarators);
+				if (declarators.Count() != 1)
+				{
+					throw StopParsingException(cursor);
+				}
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+			}
+
+			if (declarators.Count() == 1)
+			{
+				auto varDecl = MakePtr<VariableDeclaration>();
+				varDecl->name = declarators[0]->name;
+				varDecl->type = declarators[0]->type;
+				stat->varDecl = varDecl;
+			}
+			else
+			{
+				stat->expr = ParseExpr(pa, true, cursor);
+			}
+		}
+		RequireToken(cursor, CppTokens::RPARENTHESIS);
+		stat->trueStat = ParseStat(pa, cursor);
+
+		if (TestToken(cursor, CppTokens::STAT_ELSE))
+		{
+			stat->falseStat = ParseStat(pa, cursor);
+		}
+		return stat;
 	}
 	else if (TestToken(cursor, CppTokens::STAT_SWITCH))
 	{

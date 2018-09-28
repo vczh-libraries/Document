@@ -547,16 +547,28 @@ public:
 
 	void Visit(IfElseStat* self)override
 	{
-		if (self->decl)
+		writer.WriteString(L"if (");
+		if (self->init)
 		{
-			writer.WriteString(L"if ");
-			Log(self->decl, writer, indentation, true);
+			writer.WriteLine(L"");
+			WriteSubStat(self->init);
+			indentation++;
+			WriteIndentation();
+		}
+
+		if (self->varDecl)
+		{
+			Log(self->varDecl, writer, indentation, false);
 		}
 		else
 		{
-			writer.WriteString(L"if (");
 			Log(self->expr, writer);
-			writer.WriteLine(L")");
+		}
+		writer.WriteLine(L")");
+
+		if (self->init)
+		{
+			indentation--;
 		}
 		WriteSubStat(self->trueStat);
 
