@@ -318,21 +318,27 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		List<Ptr<Declarator>> declarators;
 
 		bool trySpecialMethod = false;
-		if (pa.context && pa.context->decls.Count() > 0 && pa.context->decls[0].Cast<ClassDeclaration>())
+		if (pa.context && pa.context->decls.Count() > 0)
 		{
+			if (auto classDecl = pa.context->decls[0].Cast<ClassDeclaration>())
+			{
 #define TRY_TOKEN(TOKEN) if (TestToken(cursor, CppTokens::TOKEN, false)) trySpecialMethod = true; else
 
-			TRY_TOKEN(LPARENTHESIS)
-			TRY_TOKEN(OPERATOR)
-			TRY_TOKEN(REVERT)
-			TRY_TOKEN(__CDECL)
-			TRY_TOKEN(__CLRCALL)
-			TRY_TOKEN(__STDCALL)
-			TRY_TOKEN(__FASTCALL)
-			TRY_TOKEN(__THISCALL)
-			TRY_TOKEN(__VECTORCALL)
-			;
+				TRY_TOKEN(LPARENTHESIS)
+				TRY_TOKEN(OPERATOR)
+				TRY_TOKEN(REVERT)
+				TRY_TOKEN(__CDECL)
+				TRY_TOKEN(__CLRCALL)
+				TRY_TOKEN(__STDCALL)
+				TRY_TOKEN(__FASTCALL)
+				TRY_TOKEN(__THISCALL)
+				TRY_TOKEN(__VECTORCALL)
+				if (TestToken(cursor, classDecl->name.name.Buffer(), false))
+				{
+					trySpecialMethod = true;
+				}
 #undef TRY_TOKEN
+			}
 		}
 
 		if (trySpecialMethod)

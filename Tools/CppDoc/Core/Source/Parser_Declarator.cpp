@@ -188,17 +188,17 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 			try
 			{
 				classType = ParseLongType(pa, cursor);
+				RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
 			}
 			catch (const StopParsingException&)
 			{
 				cursor = oldCursor;
+				classType = nullptr;
 			}
 		}
 
 		if (classType)
 		{
-			RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
-
 			auto type = MakePtr<MemberType>();
 			type->classType = classType;
 			type->type = typeResult;
