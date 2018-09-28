@@ -7,7 +7,8 @@ TEST_CASE(TestParseStat_Everything)
 
 	AssertStat(
 		L"{;break;continue;return;return 0; X:; X:0; default:; default:0; case 1:; case 1:0; goto X; __leave;}",
-		LR"({
+		LR"(
+{
 	;
 	break;
 	continue;
@@ -21,22 +22,26 @@ TEST_CASE(TestParseStat_Everything)
 	case 1: 0;
 	goto X;
 	__leave;
-})", pa);
+}
+)", pa);
 
 	AssertStat(
 		L"while(true){do{;}while(false);}",
-		LR"(while (true)
+		LR"(
+while (true)
 {
 	do
 	{
 		;
 	}
 	while (false);
-})", pa);
+}
+)", pa);
 
 	AssertStat(
 		L"for(int x:0) for(;;) for(0;1;2) for(int i=0,j=0;1;2) ;",
-		LR"(for
+		LR"(
+for
 	int x;
 	0
 	for
@@ -53,7 +58,8 @@ TEST_CASE(TestParseStat_Everything)
 
 	AssertStat(
 		L"if (int i=0) if (0) 1; else if (1) 2; else 3;",
-		LR"(if
+		LR"(
+if
 	int i = 0;
 	if (0)
 		1;
@@ -65,7 +71,8 @@ TEST_CASE(TestParseStat_Everything)
 
 	AssertStat(
 		L"switch(0){case 1:1; break; case 2:2; default:0;}",
-		LR"(switch (0)
+		LR"(
+switch (0)
 {
 	case 1: 1;
 	break;
@@ -76,7 +83,8 @@ TEST_CASE(TestParseStat_Everything)
 
 	AssertStat(
 		L"try try{1;2;3;}catch(...); catch(int) try; catch(int x);",
-		LR"(try
+		LR"(
+try
 	try
 	{
 		1;
@@ -96,7 +104,8 @@ catch
 
 	AssertStat(
 		L"__try; __except(0) __try; __finally;",
-		LR"(__try
+		LR"(
+__try
 	;
 	__except (0)
 		__try

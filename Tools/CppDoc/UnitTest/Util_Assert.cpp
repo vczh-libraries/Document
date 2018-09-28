@@ -1,5 +1,21 @@
 #include "Util.h"
 
+void AssertMultilines(const WString& output, const WString& log)
+{
+	StringReader srExpect(log);
+	StringReader srActual(L"\r\n" + output);
+
+	while (true)
+	{
+		TEST_ASSERT(srExpect.IsEnd() == srActual.IsEnd());
+		if (srExpect.IsEnd()) break;
+
+		auto expect = srExpect.ReadLine();
+		auto actual = srActual.ReadLine();
+		TEST_ASSERT(expect == actual);
+	}
+}
+
 void AssertType(const WString& input, const WString& log)
 {
 	ParsingArguments pa;
@@ -37,7 +53,8 @@ void AssertStat(const WString& input, const WString& log, ParsingArguments& pa)
 	{
 		Log(stat, writer, 0);
 	});
-	TEST_ASSERT(output == log);
+
+	AssertMultilines(output, log);
 }
 
 void AssertProgram(const WString& input, const WString& log)
@@ -49,16 +66,5 @@ void AssertProgram(const WString& input, const WString& log)
 		Log(program, writer);
 	});
 
-	StringReader srExpect(log);
-	StringReader srActual(L"\r\n" + output);
-
-	while (true)
-	{
-		TEST_ASSERT(srExpect.IsEnd() == srActual.IsEnd());
-		if (srExpect.IsEnd()) break;
-		
-		auto expect = srExpect.ReadLine();
-		auto actual = srActual.ReadLine();
-		TEST_ASSERT(expect == actual);
-	}
+	AssertMultilines(output, log);
 }
