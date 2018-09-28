@@ -184,7 +184,8 @@ class SwitchStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Expr>						expr;
+	Ptr<VariableDeclaration>		varExpr;	// exclusive-1
+	Ptr<Expr>						expr;		// exclusive-1
 	Ptr<Stat>						stat;
 };
 

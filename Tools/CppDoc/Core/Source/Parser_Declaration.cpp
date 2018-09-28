@@ -376,7 +376,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		{
 			auto declarator = declarators[i];
 
-			if (GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
+			if (auto type = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
 			{
 				if (i != 0)
 				{
@@ -392,7 +392,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					auto expr = declarator->initializer->arguments[0].Cast<LiteralExpr>();
 					if (!expr) throw StopParsingException(cursor);
 					if (expr->tokens.Count() != 1) throw StopParsingException(cursor);
-					if (expr->tokens[0].length!=1) throw StopParsingException(cursor);
+					if (expr->tokens[0].length != 1) throw StopParsingException(cursor);
 					if (*expr->tokens[0].reading != L'0') throw StopParsingException(cursor);
 					decoratorAbstract = true;
 				}
@@ -421,7 +421,8 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					auto decl = MakePtr<FunctionDeclaration>();
 					FILL_FUNCTION(decl);
 					decl->statement = stat;
-					auto contextSymbol = pa.context->CreateDeclSymbol(decl);
+					ParsingArguments newPa(pa, pa.context->CreateDeclSymbol(decl));
+					BuildSymbols(newPa, type->parameters);
 					output.Add(decl);
 					return;
 				}

@@ -59,14 +59,15 @@ if (i: int = 0)
 )");
 
 	AssertStat(
-		L"switch(0){case 1:1; break; case 2:2; default:0;}",
+		L"switch(0){case 1:1; break; case 2:2; default: switch(int i=0);}",
 		LR"(
 switch (0)
 {
 	case 1: 1;
 	break;
 	case 2: 2;
-	default: 0;
+	default: switch (i: int = 0)
+		;
 }
 )");
 
