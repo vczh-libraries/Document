@@ -124,7 +124,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		{
 			List<Ptr<Declarator>> declarators;
 			ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-			if (declarators.Count() != 1) throw StopParsingException(cursor);
 			baseType = declarators[0]->type;
 		}
 
@@ -238,7 +237,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 					List<Ptr<Declarator>> declarators;
 					ParseDeclarator(declPa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-					if (declarators.Count() != 1) throw StopParsingException(cursor);
 					decl->baseTypes.Add({ accessor,declarators[0]->type });
 
 					if (TestToken(cursor, CppTokens::LBRACE, false))
@@ -350,10 +348,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			try
 			{
 				ParseDeclarator(pa, nullptr, specialMethodParent.Obj(), DeclaratorRestriction::One, InitializerRestriction::Optional, cursor, declarators);
-				if (declarators.Count() != 1)
-				{
-					throw StopParsingException(cursor);
-				}
 
 				auto& cppName = declarators[0]->name;
 				switch (cppName.type)
@@ -476,5 +470,44 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			}
 		}
 		RequireToken(cursor, CppTokens::SEMICOLON);
+	}
+}
+
+/***********************************************************************
+BuildVariablesAndSymbols
+***********************************************************************/
+
+void BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls)
+{
+	for (vint i = 0; i < varDecls.Count(); i++)
+	{
+		auto varDecl = varDecls[i];
+		if (varDecl->name)
+		{
+			pa.context->CreateSymbol(varDecl);
+		}
+	}
+}
+
+/***********************************************************************
+BuildVariablesAndSymbols
+***********************************************************************/
+
+void BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls, bool createSymbols)
+{
+	for (vint i = 0; i < declarators.Count(); i++)
+	{
+		auto declarator = declarators[i];
+
+		auto varDecl = MakePtr<VariableDeclaration>();
+		varDecl->type = declarator->type;
+		varDecl->name = declarator->name;
+		varDecl->initializer = declarator->initializer;
+		varDecls.Add(varDecl);
+	}
+
+	if (createSymbols)
+	{
+		BuildSymbols(pa, varDecls);
 	}
 }

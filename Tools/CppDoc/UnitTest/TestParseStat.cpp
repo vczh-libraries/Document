@@ -40,19 +40,9 @@ while (1)
 		L"for(int x:0) for(;;) for(0;1;2) for(int i=0,j=0;1;2) ;",
 		LR"(
 foreach (x: int : 0)
-	for (
-		;
-		;
-		)
-		for (
-			0;
-			1;
-			2)
-			for (
-				i: int = 0;
-				j: int = 0;
-				1;
-				2)
+	for (; ; )
+		for (0; 1; 2)
+			for (i: int = 0, j: int = 0; 1; 2)
 				;
 )");
 
@@ -62,10 +52,7 @@ foreach (x: int : 0)
 if (i: int = 0)
 	if (0)
 		1;
-	else if (
-		i: int = 0;
-		j: int = 0;
-		1)
+	else if (i: int = 0, j: int = 0; 1)
 		2;
 	else
 		3;

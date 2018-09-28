@@ -234,7 +234,7 @@ public:
 			{
 				writer.WriteString(L", ");
 			}
-			Log(self->parameters[i], writer);
+			Log(self->parameters[i], writer, 0, false);;
 		}
 		writer.WriteChar(L')');
 
@@ -466,44 +466,57 @@ public:
 
 	void Visit(ForStat* self)override
 	{
-		writer.WriteLine(L"for (");
-		WriteSubStat(self->init);
-		indentation++;
-		WriteIndentation();
+		writer.WriteString(L"for (");
+		if (self->init)
+		{
+			Log(self->init, writer);
+		}
+		else
+		{
+			for (vint i = 0; i < self->varDecls.Count(); i++)
+			{
+				if (i > 0)
+				{
+					writer.WriteString(L", ");
+				}
+				Log(self->varDecls[i], writer, 0, false);
+			}
+		}
+		writer.WriteString(L"; ");
+
 		if (self->expr) Log(self->expr, writer);
-		writer.WriteLine(L";");
-		WriteIndentation();
+		writer.WriteString(L"; ");
+
 		if (self->effect) Log(self->effect, writer);
 		writer.WriteLine(L")");
-		indentation--;
 		WriteSubStat(self->stat);
 	}
 
 	void Visit(IfElseStat* self)override
 	{
 		writer.WriteString(L"if (");
-		if (self->init)
+		for (vint i = 0; i < self->varDecls.Count(); i++)
 		{
-			writer.WriteLine(L"");
-			WriteSubStat(self->init);
-			indentation++;
-			WriteIndentation();
+			Log(self->varDecls[i], writer, 0, false);
+			if (i == self->varDecls.Count() - 1)
+			{
+				writer.WriteString(L"; ");
+			}
+			else
+			{
+				writer.WriteString(L", ");
+			}
 		}
 
-		if (self->varDecl)
+		if (self->varExpr)
 		{
-			Log(self->varDecl, writer, indentation, false);
+			Log(self->varExpr, writer, indentation, false);
 		}
 		else
 		{
 			Log(self->expr, writer);
 		}
 		writer.WriteLine(L")");
-
-		if (self->init)
-		{
-			indentation--;
-		}
 		WriteSubStat(self->trueStat);
 
 		if (self->falseStat)
@@ -539,7 +552,7 @@ public:
 		if (self->exception)
 		{
 			writer.WriteString(L"catch (");
-			Log(self->exception, writer);
+			Log(self->exception, writer, 0, false);
 			writer.WriteLine(L")");
 		}
 		else
@@ -624,8 +637,11 @@ private:
 		if (self->decoratorRegister) writer.WriteString(L"register ");
 		if (self->decoratorStatic) writer.WriteString(L"static ");
 		if (self->decoratorThreadLocal) writer.WriteString(L"thread_local ");
-		writer.WriteString(self->name.name);
-		writer.WriteString(L": ");
+		if (self->name)
+		{
+			writer.WriteString(self->name.name);
+			writer.WriteString(L": ");
+		}
 		Log(self->type, writer);
 	}
 

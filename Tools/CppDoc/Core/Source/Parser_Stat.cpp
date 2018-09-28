@@ -90,17 +90,11 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				goto FOR_EACH_FAILED;
 			}
 
-			if (declarators.Count() != 1)
-			{
-				throw StopParsingException(cursor);
-			}
-
 			auto stat = MakePtr<ForEachStat>();
 			{
-				auto varDecl = MakePtr<VariableDeclaration>();
-				varDecl->name = declarators[0]->name;
-				varDecl->type = declarators[0]->type;
-				stat->varDecl = varDecl;
+				List<Ptr<VariableDeclaration>> varDecls;
+				BuildVariablesAndSymbols(pa, declarators, varDecls, true);
+				stat->varDecl = varDecls[0];
 			}
 
 			stat->expr = ParseExpr(pa, true, cursor);
@@ -111,10 +105,28 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	FOR_EACH_FAILED:
 		{
 			auto stat = MakePtr<ForStat>();
-			stat->init = ParseStat(pa, cursor);
-			if (!stat->init.Cast<EmptyStat>() && !stat->init.Cast<ExprStat>() && !stat->init.Cast<DeclStat>())
+			if (!TestToken(cursor, CppTokens::SEMICOLON))
 			{
-				throw StopParsingException(cursor);
+				auto oldCursor = cursor;
+				List<Ptr<Declarator>> declarators;
+				try
+				{
+					ParseDeclarator(pa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
+				}
+				catch (const StopParsingException&)
+				{
+					cursor = oldCursor;
+				}
+
+				if (declarators.Count() > 0)
+				{
+					BuildVariablesAndSymbols(pa, declarators, stat->varDecls, true);
+				}
+				else
+				{
+					stat->init = ParseExpr(pa, true, cursor);
+				}
+				RequireToken(cursor, CppTokens::SEMICOLON);
 			}
 			if (!TestToken(cursor, CppTokens::SEMICOLON))
 			{
@@ -136,9 +148,12 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		{
 			auto oldCursor = cursor;
+			List<Ptr<Declarator>> declarators;
 			try
 			{
-				stat->init = ParseStat(pa, cursor);
+				ParseDeclarator(pa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
+				RequireToken(cursor, CppTokens::SEMICOLON);
+				BuildVariablesAndSymbols(pa, declarators, stat->varDecls, true);
 			}
 			catch (const StopParsingException&)
 			{
@@ -151,10 +166,6 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			try
 			{
 				ParseDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Optional, cursor, declarators);
-				if (declarators.Count() != 1)
-				{
-					throw StopParsingException(cursor);
-				}
 				if (!declarators[0]->initializer)
 				{
 					throw StopParsingException(cursor);
@@ -167,11 +178,9 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 
 			if (declarators.Count() == 1)
 			{
-				auto varDecl = MakePtr<VariableDeclaration>();
-				varDecl->name = declarators[0]->name;
-				varDecl->type = declarators[0]->type;
-				varDecl->initializer = declarators[0]->initializer;
-				stat->varDecl = varDecl;
+				List<Ptr<VariableDeclaration>> varDecls;
+				BuildVariablesAndSymbols(pa, declarators, varDecls, true);
+				stat->varExpr = varDecls[0];
 			}
 			else
 			{
@@ -206,11 +215,9 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		{
 			List<Ptr<Declarator>> declarators;
 			ParseDeclarator(pa, DeclaratorRestriction::Optional, InitializerRestriction::Zero, cursor, declarators);
-			if (declarators.Count() != 1)
-			{
-				throw StopParsingException(cursor);
-			}
-			stat->exception = declarators[0];
+			List<Ptr<VariableDeclaration>> varDecls;
+			BuildVariablesAndSymbols(pa, declarators, varDecls, true);
+			stat->exception = varDecls[0];
 		}
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		stat->catchStat = ParseStat(pa, cursor);

@@ -438,11 +438,9 @@ GIVE_UP:
 			{
 				List<Ptr<Declarator>> declarators;
 				ParseDeclarator(pa, DeclaratorRestriction::Optional, InitializerRestriction::Optional, cursor, declarators);
-				if (declarators.Count() != 1)
-				{
-					throw StopParsingException(cursor);
-				}
-				type->parameters.Add(declarators[0]);
+				List<Ptr<VariableDeclaration>> varDecls;
+				BuildVariablesAndSymbols(pa, declarators, varDecls, false);
+				type->parameters.Add(varDecls[0]);
 			}
 
 			if (TestToken(cursor, CppTokens::RPARENTHESIS))
@@ -496,10 +494,6 @@ GIVE_UP:
 
 				List<Ptr<Declarator>> declarators;
 				ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-				if (declarators.Count() != 1)
-				{
-					throw StopParsingException(cursor);
-				}
 				type->decoratorReturnType = declarators[0]->type;
 			}
 			else if (TestToken(cursor, CppTokens::NOEXCEPT))
@@ -515,10 +509,6 @@ GIVE_UP:
 				{
 					List<Ptr<Declarator>> declarators;
 					ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-					if (declarators.Count() != 1)
-					{
-						throw StopParsingException(cursor);
-					}
 					type->exceptions.Add(declarators[0]->type);
 
 					if (TestToken(cursor, CppTokens::RPARENTHESIS))
