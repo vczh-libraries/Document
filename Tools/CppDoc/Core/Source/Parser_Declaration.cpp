@@ -73,7 +73,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				vint index = contextSymbol->children.Keys().IndexOf(decl->name.name);
 				if (index == -1)
 				{
-					contextSymbol = contextSymbol->CreateSymbol(decl);
+					contextSymbol = contextSymbol->CreateDeclSymbol(decl);
 				}
 				else
 				{
@@ -134,14 +134,14 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			decl->name = cppName;
 			decl->baseType = baseType;
 
-			auto contextSymbol = pa.context->CreateSymbol(decl);
+			auto contextSymbol = pa.context->CreateDeclSymbol(decl);
 			ParsingArguments newPa(pa, contextSymbol);
 
 			while (!TestToken(cursor, CppTokens::RBRACE))
 			{
 				auto enumItem = MakePtr<EnumItemDeclaration>();
 				if (!ParseCppName(enumItem->name, cursor)) throw StopParsingException(cursor);
-				contextSymbol->CreateSymbol(enumItem);
+				contextSymbol->CreateDeclSymbol(enumItem);
 				decl->items.Add(enumItem);
 
 				if (TestToken(cursor, CppTokens::EQ))
@@ -167,7 +167,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			decl->enumClass = enumClass;
 			decl->name = cppName;
 			decl->baseType = baseType;
-			auto forwardSymbol = pa.context->CreateSymbol(decl);
+			auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
 			forwardSymbol->isForwardDeclaration = true;
 			output.Add(decl);
 			FindForwardDeclarationRoot<EnumDeclaration, ForwardEnumDeclaration>(pa.context, forwardSymbol, cursor);
@@ -201,7 +201,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			auto decl = MakePtr<ForwardClassDeclaration>();
 			decl->classType = classType;
 			decl->name = cppName;
-			auto forwardSymbol = pa.context->CreateSymbol(decl);
+			auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
 			forwardSymbol->isForwardDeclaration = true;
 			output.Add(decl);
 			FindForwardDeclarationRoot<ClassDeclaration, ForwardClassDeclaration>(pa.context, forwardSymbol, cursor);
@@ -211,7 +211,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			auto decl = MakePtr<ClassDeclaration>();
 			decl->classType = classType;
 			decl->name = cppName;
-			auto contextSymbol = pa.context->CreateSymbol(decl);
+			auto contextSymbol = pa.context->CreateDeclSymbol(decl);
 			output.Add(decl);
 			FindForwardDeclarations<ClassDeclaration, ForwardClassDeclaration>(pa.context, contextSymbol, cursor);
 
@@ -421,7 +421,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					auto decl = MakePtr<FunctionDeclaration>();
 					FILL_FUNCTION(decl);
 					decl->statement = stat;
-					auto contextSymbol = pa.context->CreateSymbol(decl);
+					auto contextSymbol = pa.context->CreateDeclSymbol(decl);
 					output.Add(decl);
 					return;
 				}
@@ -429,7 +429,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				{
 					auto decl = MakePtr<ForwardFunctionDeclaration>();
 					FILL_FUNCTION(decl);
-					auto forwardSymbol = pa.context->CreateSymbol(decl);
+					auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
 					forwardSymbol->isForwardDeclaration = true;
 					output.Add(decl);
 					RequireToken(cursor, CppTokens::SEMICOLON);
@@ -452,7 +452,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				{
 					auto decl = MakePtr<ForwardVariableDeclaration>();
 					FILL_VARIABLE(decl);
-					auto forwardSymbol = pa.context->CreateSymbol(decl);
+					auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
 					forwardSymbol->isForwardDeclaration = true;
 					output.Add(decl);
 					FindForwardDeclarationRoot<VariableDeclaration, ForwardVariableDeclaration>(pa.context, forwardSymbol, cursor);
@@ -462,7 +462,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					auto decl = MakePtr<VariableDeclaration>();
 					FILL_VARIABLE(decl);
 					decl->initializer = declarator->initializer;
-					auto contextSymbol = pa.context->CreateSymbol(decl);
+					auto contextSymbol = pa.context->CreateDeclSymbol(decl);
 					output.Add(decl);
 					FindForwardDeclarations<VariableDeclaration, ForwardVariableDeclaration>(pa.context, contextSymbol, cursor);
 				}
@@ -484,7 +484,7 @@ void BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& va
 		auto varDecl = varDecls[i];
 		if (varDecl->name)
 		{
-			pa.context->CreateSymbol(varDecl);
+			pa.context->CreateDeclSymbol(varDecl);
 		}
 	}
 }

@@ -14,7 +14,8 @@ class Symbol : public Object
 public:
 	Symbol*					parent = nullptr;
 	WString					name;
-	List<Ptr<Declaration>>	decls; // only namespaces share symbols
+	List<Ptr<Declaration>>	decls;	// only namespaces share symbols
+	Ptr<Stat>				stat;	// if this scope is created by a statement
 	SymbolGroup				children;
 
 	bool					isForwardDeclaration = false;
@@ -26,8 +27,7 @@ public:
 
 	void					Add(Ptr<Symbol> child);
 
-	template<typename T>
-	Symbol* CreateSymbol(Ptr<T> _decl, Symbol* _specializationRoot = nullptr)
+	Symbol* CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* _specializationRoot = nullptr)
 	{
 		auto symbol = MakePtr<Symbol>();
 		symbol->name = _decl->name.name;
@@ -35,12 +35,22 @@ public:
 		Add(symbol);
 
 		_decl->symbol = symbol.Obj();
-
 		if (_specializationRoot)
 		{
 			_specializationRoot->specializations.Add(symbol.Obj());
 			symbol->specializationRoot = _specializationRoot;
 		}
+		return symbol.Obj();
+	}
+
+	Symbol* CreateStatSymbol(Ptr<Stat> _stat)
+	{
+		auto symbol = MakePtr<Symbol>();
+		symbol->name = L"$";
+		symbol->stat = _stat;
+		Add(symbol);
+
+		_stat->symbol = symbol.Obj();
 		return symbol.Obj();
 	}
 

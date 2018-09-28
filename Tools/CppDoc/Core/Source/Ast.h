@@ -64,6 +64,8 @@ class IStatVisitor;
 class Stat : public Object
 {
 public:
+	Symbol*					symbol = nullptr;
+
 	virtual void			Accept(IStatVisitor* visitor) = 0;
 };
 

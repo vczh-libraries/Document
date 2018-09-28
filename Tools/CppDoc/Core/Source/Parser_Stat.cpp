@@ -13,7 +13,8 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		auto stat = MakePtr<BlockStat>();
 		while (!TestToken(cursor, CppTokens::RBRACE))
 		{
-			stat->stats.Add(ParseStat(pa, cursor));
+			ParsingArguments newPa(pa, pa.context->CreateStatSymbol(stat));
+			stat->stats.Add(ParseStat(newPa, cursor));
 		}
 		return stat;
 	}
@@ -91,27 +92,29 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			}
 
 			auto stat = MakePtr<ForEachStat>();
+			ParsingArguments newPa(pa, pa.context->CreateStatSymbol(stat));
 			{
 				List<Ptr<VariableDeclaration>> varDecls;
-				BuildVariablesAndSymbols(pa, declarators, varDecls, true);
+				BuildVariablesAndSymbols(newPa, declarators, varDecls, true);
 				stat->varDecl = varDecls[0];
 			}
 
-			stat->expr = ParseExpr(pa, true, cursor);
+			stat->expr = ParseExpr(newPa, true, cursor);
 			RequireToken(cursor, CppTokens::RPARENTHESIS);
-			stat->stat = ParseStat(pa, cursor);
+			stat->stat = ParseStat(newPa, cursor);
 			return stat;
 		}
 	FOR_EACH_FAILED:
 		{
 			auto stat = MakePtr<ForStat>();
+			ParsingArguments newPa(pa, pa.context->CreateStatSymbol(stat));
 			if (!TestToken(cursor, CppTokens::SEMICOLON))
 			{
 				auto oldCursor = cursor;
 				List<Ptr<Declarator>> declarators;
 				try
 				{
-					ParseDeclarator(pa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
+					ParseDeclarator(newPa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
 				}
 				catch (const StopParsingException&)
 				{
@@ -120,40 +123,41 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 
 				if (declarators.Count() > 0)
 				{
-					BuildVariablesAndSymbols(pa, declarators, stat->varDecls, true);
+					BuildVariablesAndSymbols(newPa, declarators, stat->varDecls, true);
 				}
 				else
 				{
-					stat->init = ParseExpr(pa, true, cursor);
+					stat->init = ParseExpr(newPa, true, cursor);
 				}
 				RequireToken(cursor, CppTokens::SEMICOLON);
 			}
 			if (!TestToken(cursor, CppTokens::SEMICOLON))
 			{
-				stat->expr = ParseExpr(pa, true, cursor);
+				stat->expr = ParseExpr(newPa, true, cursor);
 				RequireToken(cursor, CppTokens::SEMICOLON);
 			}
 			if (!TestToken(cursor, CppTokens::RPARENTHESIS))
 			{
-				stat->effect = ParseExpr(pa, true, cursor);
+				stat->effect = ParseExpr(newPa, true, cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 			}
-			stat->stat = ParseStat(pa, cursor);
+			stat->stat = ParseStat(newPa, cursor);
 			return stat;
 		}
 	}
 	else if (TestToken(cursor, CppTokens::STAT_IF))
 	{
 		auto stat = MakePtr<IfElseStat>();
+		ParsingArguments newPa(pa, pa.context->CreateStatSymbol(stat));
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		{
 			auto oldCursor = cursor;
 			List<Ptr<Declarator>> declarators;
 			try
 			{
-				ParseDeclarator(pa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
+				ParseDeclarator(newPa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
 				RequireToken(cursor, CppTokens::SEMICOLON);
-				BuildVariablesAndSymbols(pa, declarators, stat->varDecls, true);
+				BuildVariablesAndSymbols(newPa, declarators, stat->varDecls, true);
 			}
 			catch (const StopParsingException&)
 			{
@@ -165,7 +169,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			List<Ptr<Declarator>> declarators;
 			try
 			{
-				ParseDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Optional, cursor, declarators);
+				ParseDeclarator(newPa, DeclaratorRestriction::One, InitializerRestriction::Optional, cursor, declarators);
 				if (!declarators[0]->initializer)
 				{
 					throw StopParsingException(cursor);
@@ -179,20 +183,20 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			if (declarators.Count() == 1)
 			{
 				List<Ptr<VariableDeclaration>> varDecls;
-				BuildVariablesAndSymbols(pa, declarators, varDecls, true);
+				BuildVariablesAndSymbols(newPa, declarators, varDecls, true);
 				stat->varExpr = varDecls[0];
 			}
 			else
 			{
-				stat->expr = ParseExpr(pa, true, cursor);
+				stat->expr = ParseExpr(newPa, true, cursor);
 			}
 		}
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
-		stat->trueStat = ParseStat(pa, cursor);
+		stat->trueStat = ParseStat(newPa, cursor);
 
 		if (TestToken(cursor, CppTokens::STAT_ELSE))
 		{
-			stat->falseStat = ParseStat(pa, cursor);
+			stat->falseStat = ParseStat(newPa, cursor);
 		}
 		return stat;
 	}
