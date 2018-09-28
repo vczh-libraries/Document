@@ -604,7 +604,7 @@ public:
 		WriteIndentation();
 		if (self->exception)
 		{
-			writer.WriteLine(L"catch (");
+			writer.WriteString(L"catch (");
 			Log(self->exception, writer);
 			writer.WriteLine(L")");
 		}
@@ -635,7 +635,7 @@ public:
 		WriteSubStat(self->tryStat);
 
 		WriteIndentation();
-		writer.WriteString(L"__except");
+		writer.WriteString(L"__except (");
 		Log(self->expr, writer);
 		writer.WriteLine(L")");
 		WriteSubStat(self->exceptStat);

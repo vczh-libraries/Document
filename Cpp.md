@@ -226,9 +226,9 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] `continue` `;`
 - [x] `while` `(` EXPR `)` STAT
 - [x] `do` STAT `while` `(` EXPR `)` `;`
-- [ ] `for` ([TYPE {[DECLARATOR] [INITIALIZER] `,` ...}] `;` [EXPR] `;` [EXPR]) STAT
-- [ ] `for` (TYPE-SINGLE-DECLARATOR `:` EXPR) STAT
-- [ ] `if` [`constexpr`] `(` [TYPE IDENTIFIER `=`] EXPR `)` STAT [`else` STAT]
+- [x] `for` ([TYPE {[DECLARATOR] [INITIALIZER] `,` ...}] `;` [EXPR] `;` [EXPR]) STAT
+- [x] `for` (TYPE-SINGLE-DECLARATOR `:` EXPR) STAT
+- [x] `if` [`constexpr`] `(`[STAT `;`] [TYPE IDENTIFIER `=`] EXPR `)` STAT [`else` STAT]
 - [x] `switch` `(` {STAT} EXPR `)` `{` STAT `}`
 - [x] `try` STAT `catch` `(` TYPE-OPTIONAL-DECLARATOR `)` STAT
 - [x] `return` EXPR `;`

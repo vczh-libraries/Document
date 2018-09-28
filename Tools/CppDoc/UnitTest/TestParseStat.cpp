@@ -95,12 +95,10 @@ try
 	}
 	catch (...)
 		;
-catch
-	int;
+catch (int)
 	try
 		;
-	catch
-		int x;
+	catch (x: int)
 		;
 )");
 
@@ -109,10 +107,10 @@ catch
 		LR"(
 __try
 	;
-	__except (0)
-		__try
-			;
-		__finally
-			;
+__except (0)
+	__try
+		;
+	__finally
+		;
 )");
 }
