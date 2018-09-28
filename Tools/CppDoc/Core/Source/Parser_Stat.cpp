@@ -112,6 +112,10 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		{
 			auto stat = MakePtr<ForStat>();
 			stat->init = ParseStat(pa, cursor);
+			if (!stat->init.Cast<EmptyStat>() && !stat->init.Cast<ExprStat>() && !stat->init.Cast<DeclStat>())
+			{
+				throw StopParsingException(cursor);
+			}
 			if (!TestToken(cursor, CppTokens::SEMICOLON))
 			{
 				stat->expr = ParseExpr(pa, true, cursor);

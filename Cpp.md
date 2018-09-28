@@ -36,6 +36,7 @@
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
   - [ ] Resolve symbols created by statements
+    - [ ] Resolve same-name symbols in different nested scopes
 - [ ] `Template`, `Typedef` and anonymous declaration
   - [ ] Assert ASTs
   - [ ] Connect generic forward declarations with their root

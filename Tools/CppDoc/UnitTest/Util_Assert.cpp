@@ -41,6 +41,12 @@ void AssertType(const WString& input, const WString& log, ParsingArguments& pa)
 	TEST_ASSERT(output == log);
 }
 
+void AssertStat(const WString& input, const WString& log)
+{
+	ParsingArguments pa(new Symbol, nullptr);
+	AssertStat(input, log, pa);
+}
+
 void AssertStat(const WString& input, const WString& log, ParsingArguments& pa)
 {
 	CppTokenReader reader(GlobalCppLexer(), input);

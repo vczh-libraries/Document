@@ -12,6 +12,7 @@ extern void					Log(Ptr<Program> program, StreamWriter& writer);
 
 extern void					AssertType(const WString& input, const WString& log);
 extern void					AssertType(const WString& input, const WString& log, ParsingArguments& pa);
+extern void					AssertStat(const WString& input, const WString& log);
 extern void					AssertStat(const WString& input, const WString& log, ParsingArguments& pa);
 extern void					AssertProgram(const WString& input, const WString& log);
 
