@@ -6,7 +6,7 @@
 extern Ptr<RegexLexer>		GlobalCppLexer();
 extern void					Log(Ptr<Type> type, StreamWriter& writer);
 extern void					Log(Ptr<Expr> expr, StreamWriter& writer);
-extern void					Log(Ptr<Stat> stat, StreamWriter& writer);
+extern void					Log(Ptr<Stat> stat, StreamWriter& writer, vint indentation);
 extern void					Log(Ptr<Declaration> decl, StreamWriter& writer);
 extern void					Log(Ptr<Program> program, StreamWriter& writer);
 
