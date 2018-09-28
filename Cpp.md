@@ -185,20 +185,20 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ### DECL
 
-- [ ] **Friend**: `friend` DECL `;`
+- [x] **Friend**: `friend` DECL `;`
 - [ ] **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
-- [ ] **Type definition**: (CLASS_STRUCT | ENUM | UNION) {DECLARATOR [INITIALIZER] `,` ...}+ `;`
-  [ ] - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
+- [x] **Type definition**: (CLASS_STRUCT | ENUM | UNION) {DECLARATOR [INITIALIZER] `,` ...}+ `;`
 - [ ] **Type alias**:
   - [ ] `typedef` (CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;`
+    - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
   - [ ] `typedef` TYPE-MULTIPLE-INITIALIZER `;`
   - [ ] [TEMPLATE-SPEC] `using` NAME = TYPE-ZERO `;`
 - [ ] **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
 - [ ] **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
 - [x] **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`
 - [x] **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
-- [ ] **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
-- [ ] FUNCTION
+- [x] **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
+- [x] FUNCTION
 
 ## TYPE (Type)
 
