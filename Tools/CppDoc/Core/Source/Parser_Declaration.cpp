@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Ast_Type.h"
+#include "Ast_Expr.h"
 #include "Ast_Decl.h"
 
 /***********************************************************************
@@ -388,6 +389,20 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					throw StopParsingException(cursor);
 				}
 
+				bool decoratorAbstract = false;
+				if (declarator->initializer)
+				{
+					if (declarator->initializer->initializerType != InitializerType::Equal) throw StopParsingException(cursor);
+					if (declarator->initializer->arguments.Count() != 1) throw StopParsingException(cursor);
+
+					auto expr = declarator->initializer->arguments[0].Cast<LiteralExpr>();
+					if (!expr) throw StopParsingException(cursor);
+					if (expr->tokens.Count() != 1) throw StopParsingException(cursor);
+					if (expr->tokens[0].length!=1) throw StopParsingException(cursor);
+					if (*expr->tokens[0].reading != L'0') throw StopParsingException(cursor);
+					decoratorAbstract = true;
+				}
+
 #define FILL_FUNCTION(NAME)\
 				NAME->name = declarator->name;\
 				NAME->type = declarator->type;\
@@ -398,7 +413,8 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				NAME->decoratorVirtual = decoratorVirtual;\
 				NAME->decoratorExplicit = decoratorExplicit;\
 				NAME->decoratorInline = decoratorInline;\
-				NAME->decoratorForceInline = decoratorForceInline\
+				NAME->decoratorForceInline = decoratorForceInline;\
+				NAME->decoratorAbstract = decoratorAbstract\
 
 				Ptr<Stat> stat;
 				if (TestToken(cursor, CppTokens::LBRACE, false))

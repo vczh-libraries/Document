@@ -28,7 +28,7 @@
   - [ ] Connect forward declaractions with their root
   - [ ] Class static variables defined out of classes
   - [ ] Class member methods defined out of classes
-  - [ ] Abstract function decorator
+  - [x] Abstract function decorator
 - [ ] `Using` namespaces and symbols
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes

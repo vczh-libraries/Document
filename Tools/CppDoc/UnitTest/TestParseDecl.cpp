@@ -177,11 +177,18 @@ TEST_CASE(TestParseDecl_Functions)
 {
 	auto input = LR"(
 int Add(int a, int b);
+int Add(int a, int b) = 0;
 friend extern static virtual explicit inline __forceinline int __stdcall Sub(int, int) { return 0; }
+friend extern static virtual explicit inline __forceinline int __stdcall Sub(int, int) = 0 { return 0; }
 )";
 	auto output = LR"(
 __forward Add: int (a: int, b: int);
+__forward Add: int (a: int, b: int) = 0;
 explicit extern friend inline __forceinline static virtual Sub: int (int, int) __stdcall
+{
+	return 0;
+}
+explicit extern friend inline __forceinline static virtual Sub: int (int, int) __stdcall = 0
 {
 	return 0;
 }

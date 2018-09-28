@@ -653,6 +653,10 @@ private:
 		writer.WriteString(self->name.name);
 		writer.WriteString(L": ");
 		Log(self->type, writer);
+		if (self->decoratorAbstract)
+		{
+			writer.WriteString(L" = 0");
+		}
 	}
 
 	void WriteHeader(ForwardEnumDeclaration* self)
