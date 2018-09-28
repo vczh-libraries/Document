@@ -522,12 +522,60 @@ public:
 
 	void Visit(ForStat* self)override
 	{
-		throw 0;
+		writer.WriteLine(L"for");
+		
+		indentation++;
+		WriteIndentation();
+		self->init->Accept(this);
+		WriteIndentation();
+		if (self->expr) Log(self->expr, writer);
+		writer.WriteLine(L";");
+		if (self->effect) Log(self->effect, writer);
+		writer.WriteLine(L"");
+		indentation--;
+
+		WriteIndentation();
+		indentation++;
+		self->stat->Accept(this);
+		indentation--;
 	}
 
 	void Visit(IfElseStat* self)override
 	{
-		throw 0;
+		if (self->decl)
+		{
+			writer.WriteString(L"if ");
+			Log(self->decl, writer, indentation, true);
+		}
+		else
+		{
+			writer.WriteString(L"if (");
+			Log(self->expr, writer);
+			writer.WriteLine(L")");
+		}
+
+		WriteIndentation();
+		indentation++;
+		self->trueStat->Accept(this);
+		indentation--;
+
+		if (self->falseStat)
+		{
+			WriteIndentation();
+			if (self->falseStat.Cast<IfElseStat>())
+			{
+				writer.WriteString(L"else ");
+				self->falseStat->Accept(this);
+			}
+			else
+			{
+				writer.WriteLine(L"else");
+				WriteIndentation();
+				indentation++;
+				self->trueStat->Accept(this);
+				indentation--;
+			}
+		}
 	}
 
 	void Visit(SwitchStat* self)override
