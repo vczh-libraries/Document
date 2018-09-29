@@ -198,7 +198,48 @@ explicit extern friend inline __forceinline static virtual Sub: int (int, int) _
 
 TEST_CASE(TestParseDecl_FunctionsConnectForward)
 {
+	auto input = LR"(
+namespace a::b
+{
+	extern int Add(int x = 0, int y = 0);
+	int Add(int a, int b);
+}
+namespace a::b
+{
+	int Add(int, int) { return 0; }
+}
+namespace a::b
+{
+	extern int Add(int, int);
+	int Add(int = 0, int = 0);
+}
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
+	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
+	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Add"].Count() == 5);
+	const auto& symbols = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Add"];
 
+	for (vint i = 0; i < 5; i++)
+	{
+		auto& symbol = symbols[i];
+		if (i == 2)
+		{
+			TEST_ASSERT(symbol->isForwardDeclaration == false);
+			TEST_ASSERT(symbol->forwardDeclarationRoot == nullptr);
+			TEST_ASSERT(symbol->forwardDeclarations.Count() == 4);
+			TEST_ASSERT(symbol->forwardDeclarations[0] == symbols[0].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations[1] == symbols[1].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations[2] == symbols[3].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations[3] == symbols[4].Obj());
+		}
+		else
+		{
+			TEST_ASSERT(symbol->isForwardDeclaration == true);
+			TEST_ASSERT(symbol->forwardDeclarationRoot == symbols[2].Obj());
+			TEST_ASSERT(symbol->forwardDeclarations.Count() == 0);
+		}
+	}
 }
 
 TEST_CASE(TestParseDecl_Classes)

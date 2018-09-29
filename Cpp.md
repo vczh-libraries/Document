@@ -33,7 +33,7 @@
   - [ ] Connect forward declaractions with their root
   - [ ] For out-of-class declarations, an identifier match names inside classes before containing context
 - [ ] Check foward root matching
-  - [ ] Report errors when multiple roots are found for a forward declaration
+  - [x] Report errors when multiple roots are found for a forward declaration
   - [ ] Report errors when incompatible declarations have the same name
 - [ ] `Using` namespaces and symbols
   - [ ] Assert ASTs
