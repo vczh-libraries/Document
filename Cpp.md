@@ -25,10 +25,16 @@
   - [x] Assert resolvings in scopes of base types
 - [x] Parse function body and Statements
   - [x] Assert ASTs
-  - [ ] Connect forward declaractions with their root
-  - [ ] Class static variables defined out of classes
-  - [ ] Class member methods defined out of classes
   - [x] Abstract function decorator
+  - [ ] Class static variables defined out of classes
+    - [ ] Static variables without initializers are considered as forward declaration
+  - [ ] Class member methods defined out of classes
+    - [ ] Only compare function qualifiers, names and parameter types
+  - [ ] Connect forward declaractions with their root
+  - [ ] For out-of-class declarations, an identifier match names inside classes before containing context
+- [ ] Check foward root matching
+  - [ ] Report errors when multiple roots are found for a forward declaration
+  - [ ] Report errors when incompatible declarations have the same name
 - [ ] `Using` namespaces and symbols
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
