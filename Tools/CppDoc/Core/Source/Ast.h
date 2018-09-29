@@ -102,4 +102,10 @@ public:
 	Ptr<Initializer>		initializer;
 };
 
+/***********************************************************************
+Helpers
+***********************************************************************/
+
+extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
+
 #endif
