@@ -302,16 +302,17 @@ Ptr<Type> ParsePrimitiveType(Ptr<CppTokenCursor>& cursor, CppPrimitivePrefix pre
 ParseChildType
 ***********************************************************************/
 
-Ptr<ChildType> ParseChildType(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppTokenCursor>& cursor)
+Ptr<ChildType> ParseChildType(const ParsingArguments& pa, Ptr<Type> classType, bool typenameType, Ptr<CppTokenCursor>& cursor)
 {
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
 		auto resolving = ResolveChildTypeSymbol(pa, classType, cppName);
-		if (resolving)
+		if (resolving || typenameType)
 		{
 			auto type = MakePtr<ChildType>();
 			type->classType = classType;
+			type->typenameType = typenameType;
 			type->name = cppName;
 			type->resolving = resolving;
 			if (pa.recorder && type->resolving)
@@ -338,9 +339,9 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 	{
 		return ParsePrimitiveType(cursor, CppPrimitivePrefix::_unsigned);
 	}
-	else if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false))
+	else if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 	{
-		if (auto type = ParseChildType(pa, MakePtr<ChildType>(), cursor))
+		if (auto type = ParseChildType(pa, MakePtr<RootType>(), false, cursor))
 		{
 			return type;
 		}
@@ -492,7 +493,7 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			auto oldCursor = cursor;
 			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 			{
-				if (auto type = ParseChildType(pa, typeResult, cursor))
+				if (auto type = ParseChildType(pa, typeResult, typenameType, cursor))
 				{
 					typeResult = type;
 					continue;

@@ -141,7 +141,7 @@ namespace a::b
 		});
 		AssertType(
 			L"typename ::a::b::X::Y::Z",
-			L"__root :: typename a :: typename b :: typename X :: typename Y :: typename Z",
+			L"__root :: a :: typename b :: typename X :: typename Y :: typename Z",
 			pa);
 		TEST_ASSERT(accessed.Count() == 3);
 	}

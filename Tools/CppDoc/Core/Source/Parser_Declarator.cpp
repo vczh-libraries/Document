@@ -629,6 +629,36 @@ ParseDeclarator
 
 void ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingClass, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
+	auto oldCursor = cursor;
+	if (containingClass)
+	{
+		try
+		{
+			ParseArrayFunctionDeclarator(pa, nullptr, containingClass, dr, ir, cursor, declarators);
+		}
+		catch (const StopParsingException&)
+		{
+			goto TRY_NORMAL_DECLARATOR;
+		}
+
+		if (declarators.Count() == 0)
+		{
+			goto TRY_NORMAL_DECLARATOR;
+		}
+		for (vint i = 0; i < declarators.Count(); i++)
+		{
+			if (!declarators[i]->type)
+			{
+				declarators.Clear();
+				goto TRY_NORMAL_DECLARATOR;
+			}
+		}
+
+		return;
+	}
+
+TRY_NORMAL_DECLARATOR:
+	cursor = oldCursor;
 	Ptr<Type> typeResult = ParseLongType(pa, cursor);
-	return ParseArrayFunctionDeclarator(pa, typeResult, containingClass, dr, ir, cursor, declarators);
+	ParseArrayFunctionDeclarator(pa, typeResult, containingClass, dr, ir, cursor, declarators);
 }

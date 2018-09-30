@@ -395,7 +395,10 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					switch (cppName.type)
 					{
 					case CppNameType::Operator:
-						methodType = CppMethodType::TypeConversion;
+						if (cppName.tokenCount == 1)
+						{
+							methodType = CppMethodType::TypeConversion;
+						}
 						break;
 					case CppNameType::Constructor:
 						methodType = CppMethodType::Constructor;
