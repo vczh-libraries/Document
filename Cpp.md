@@ -26,11 +26,12 @@
 - [x] Parse function body and Statements
   - [x] Assert ASTs
   - [x] Abstract function decorator
-  - [ ] Class static variables defined out of classes
-    - [ ] Static variables without initializers are considered as forward declaration
-  - [ ] Class member methods defined out of classes
-    - [ ] Only compare function qualifiers, names and parameter types
+  - [x] Class static variables defined out of classes
+    - [x] Static variables without initializers are considered as forward declaration
+  - [x] Class member methods defined out of classes
+    - [x] Only compare function qualifiers, names and parameter types
   - [x] Connect forward declaractions with their root
+    - [ ] Connect class methods defined out of classes
   - [ ] For out-of-class declarations, an identifier match names inside classes before containing context
 - [ ] Check foward root matching
   - [x] Report errors when multiple roots are found for a forward declaration

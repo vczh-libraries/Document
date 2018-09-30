@@ -324,12 +324,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else
 	{
-		wchar_t input[] = L"~Vector();";
-		if (cursor && wcsncmp(cursor->token.reading, input, wcslen(input)) == 0)
-		{
-			int a = 0;
-		}
-
 #define FUNCVAR_DECORATORS(F)\
 		F(DECL_EXTERN, Extern)\
 		F(STATIC, Static)\

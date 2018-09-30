@@ -759,6 +759,7 @@ public:
 	{
 		WriteHeader(self);
 		writer.WriteLine(L"");
+		WriteIndentation();
 		Log(self->statement, writer, indentation + 1);
 	}
 
