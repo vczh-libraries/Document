@@ -56,6 +56,7 @@ public:
 
 	bool SetForwardDeclarationRoot(Symbol* root)
 	{
+		if (forwardDeclarationRoot == root) return true;
 		if (forwardDeclarationRoot) return false;
 		forwardDeclarationRoot = root;
 		root->forwardDeclarations.Add(this);

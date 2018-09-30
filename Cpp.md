@@ -30,7 +30,7 @@
     - [ ] Static variables without initializers are considered as forward declaration
   - [ ] Class member methods defined out of classes
     - [ ] Only compare function qualifiers, names and parameter types
-  - [ ] Connect forward declaractions with their root
+  - [x] Connect forward declaractions with their root
   - [ ] For out-of-class declarations, an identifier match names inside classes before containing context
 - [ ] Check foward root matching
   - [x] Report errors when multiple roots are found for a forward declaration
