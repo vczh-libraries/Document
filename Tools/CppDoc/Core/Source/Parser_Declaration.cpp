@@ -353,62 +353,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 #undef FUNCVAR_DECORATORS
 
 		List<Ptr<Declarator>> declarators;
-		/*
-		bool trySpecialMethod = false;
-		Ptr<ClassDeclaration> specialMethodParent;
-		if (pa.context && pa.context->decls.Count() > 0)
-		{
-			if (specialMethodParent = pa.context->decls[0].Cast<ClassDeclaration>())
-			{
-#define TRY_TOKEN(TOKEN) if (TestToken(cursor, CppTokens::TOKEN, false)) trySpecialMethod = true; else
-
-				TRY_TOKEN(LPARENTHESIS)
-				TRY_TOKEN(OPERATOR)
-				TRY_TOKEN(REVERT)
-				TRY_TOKEN(__CDECL)
-				TRY_TOKEN(__CLRCALL)
-				TRY_TOKEN(__STDCALL)
-				TRY_TOKEN(__FASTCALL)
-				TRY_TOKEN(__THISCALL)
-				TRY_TOKEN(__VECTORCALL)
-				if (TestToken(cursor, specialMethodParent->name.name.Buffer(), false))
-				{
-					trySpecialMethod = true;
-				}
-#undef TRY_TOKEN
-			}
-		}
-
-		auto methodType = CppMethodType::Function;
-		if (trySpecialMethod)
-		{
-			auto oldCursor = cursor;
-			try
-			{
-				ParseDeclarator(pa, nullptr, specialMethodParent.Obj(), DeclaratorRestriction::One, InitializerRestriction::Optional, cursor, declarators);
-
-				auto& cppName = declarators[0]->name;
-				switch (cppName.type)
-				{
-				case CppNameType::Normal:
-					methodType = CppMethodType::Constructor;
-					break;
-				case CppNameType::Operator:
-					methodType = CppMethodType::TypeConversion;
-					break;
-				case CppNameType::Destructor:
-					methodType = CppMethodType::Destructor;
-					break;
-				}
-				goto SUCCEEDED_IN_SPECIAL_METHOD;
-			}
-			catch (const StopParsingException&)
-			{
-				cursor = oldCursor;
-			}
-		}
-		*/
-
 		auto methodType = CppMethodType::Function;
 		{
 			ClassDeclaration* containingClass = nullptr;
