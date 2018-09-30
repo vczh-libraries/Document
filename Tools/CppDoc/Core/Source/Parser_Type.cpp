@@ -111,8 +111,11 @@ Ptr<Resolving> ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, Ptr<
 		searchedScopes.Add(scope);
 	}
 
-	bool found = false;
-	while (!found && scope)
+#define RESOLVED_SYMBOLS_COUNT (resolving ? resolving->resolvedSymbols.Count() : 0)
+#define FOUND (baseline < RESOLVED_SYMBOLS_COUNT)
+
+	vint baseline = RESOLVED_SYMBOLS_COUNT;
+	while (scope)
 	{
 		vint index = scope->children.Keys().IndexOf(name.name);
 		if (index != -1)
@@ -132,15 +135,15 @@ Ptr<Resolving> ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, Ptr<
 					symbol->decls[i]->Accept(&visitor);
 					if (visitor.isPotentialType)
 					{
-						found = true;
 						AddSymbolToResolve(resolving, symbol);
 						break;
 					}
 				}
 			}
 		}
+		if (FOUND) break;
 
-		if (!found && scope->decls.Count() > 0)
+		if (scope->decls.Count() > 0)
 		{
 			if (auto decl = scope->decls[0].Cast<ClassDeclaration>())
 			{
@@ -161,10 +164,14 @@ Ptr<Resolving> ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, Ptr<
 				}
 			}
 		}
+		if (FOUND) break;
 
 		if (policy != SearchPolicy::SymbolAccessableInScope) break;
 		scope = scope->parent;
 	}
+
+#undef FOUND
+#undef RESOLVED_SYMBOLS_COUNT
 
 	return resolving;
 }
