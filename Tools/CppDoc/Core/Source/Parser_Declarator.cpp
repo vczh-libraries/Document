@@ -487,7 +487,7 @@ GIVE_UP:
 		if (hasCallingConvention)
 		{
 			// __stdcall should appear before CLASS::
-			// so if we see __stdcall here, then there is no CLASS:: (maybe CLAS::* but we don't care)
+			// so if we see __stdcall ( here, then there is no CLASS:: (maybe CLASS::* but we don't care)
 			// we can simply decorate the function with __stdcall, no need to worry about adjusting the return type
 			if (declarator->type != targetType)
 			{
