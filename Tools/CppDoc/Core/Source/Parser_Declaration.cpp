@@ -492,7 +492,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				NAME->decoratorThreadLocal = decoratorThreadLocal;\
 				NAME->decoratorRegister = decoratorRegister\
 
-				if (decoratorExtern)
+				if (decoratorExtern || (decoratorStatic && !declarator->initializer))
 				{
 					auto decl = MakePtr<ForwardVariableDeclaration>();
 					FILL_VARIABLE(decl);

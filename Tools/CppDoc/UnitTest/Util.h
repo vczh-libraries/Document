@@ -16,6 +16,7 @@ extern void					AssertType(const WString& input, const WString& log, ParsingArgu
 extern void					AssertStat(const WString& input, const WString& log);
 extern void					AssertStat(const WString& input, const WString& log, ParsingArguments& pa);
 extern void					AssertProgram(const WString& input, const WString& log, Ptr<IIndexRecorder> recorder = nullptr);
+extern void					AssertProgram(Ptr<Program> program, const WString& log);
 
 #define COMPILE_PROGRAM_WITH_RECORDER(PROGRAM, PA, INPUT, RECORDER)\
 	CppTokenReader reader(GlobalCppLexer(), INPUT);\

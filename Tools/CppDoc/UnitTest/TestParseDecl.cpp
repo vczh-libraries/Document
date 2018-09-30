@@ -458,15 +458,71 @@ namespace a::b
 }
 )";
 
-	auto expect = LR"(
+	auto output = LR"(
+namespace a
+{
+	namespace b
+	{
+		class Something
+		{
+			public static a: int const = 0;
+			public __forward static b: int const;
+			public __forward __ctor $__ctor: __null ();
+			public __forward __ctor $__ctor: __null (Something const &);
+			public __forward __ctor $__ctor: __null (Something &&);
+			public __forward explicit __ctor $__ctor: __null (int);
+			public __forward __dtor ~Something: __null ();
+			public __forward Do: void ();
+			public __forward virtual Do: void (int) = 0;
+			public __forward explicit __type $__type: bool () const;
+			public __forward explicit __type $__type: bool ();
+			public __forward operator ++: Something ();
+			public __forward operator ++: Something (int);
+		};
+	}
+}
+namespace a
+{
+	namespace b
+	{
+		b: int const (Something ::) = 0;
+		__ctor $__ctor: __null () (Something ::)
+		{
+		}
+		__ctor $__ctor: __null (Something const &) (Something ::)
+		{
+		}
+		__ctor $__ctor: __null (Something &&) (Something ::)
+		{
+		}
+		__ctor $__ctor: __null (int) (Something ::)
+		{
+		}
+		__dtor ~Something: __null () (Something ::)
+		{
+		}
+		Do: void () (Something ::)
+		{
+		}
+		Do: void (int) (Something ::)
+		{
+		}
+		__type $__type: bool () const (Something ::)
+		{
+		}
+		__type $__type: bool () (Something ::)
+		{
+		}
+		operator ++: Something () (Something ::)
+		{
+		}
+		operator ++: Something (int) (Something ::)
+		{
+		}
+	}
+}
 )";
 
 	COMPILE_PROGRAM(program, pa, input);
-	{
-		auto actual = GenerateToStream([&](StreamWriter& writer)
-		{
-			Log(program, writer);
-		});
-		AssertMultilines(actual, expect);
-	}
+	AssertProgram(program, output);
 }
