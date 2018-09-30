@@ -475,23 +475,30 @@ GIVE_UP:
 			}
 		}
 
-		while (!TestToken(cursor, CppTokens::RPARENTHESIS))
 		{
+			ParsingArguments functionArgsPa = pa;
+			if (declarator->type.Cast<MemberType>() && declarator->containingClassSymbol)
 			{
-				List<Ptr<Declarator>> declarators;
-				ParseDeclarator(pa, nullptr, false, DeclaratorRestriction::Optional, InitializerRestriction::Optional, cursor, declarators);
-				List<Ptr<VariableDeclaration>> varDecls;
-				BuildVariablesAndSymbols(pa, declarators, varDecls, false);
-				type->parameters.Add(varDecls[0]);
+				functionArgsPa.context = declarator->containingClassSymbol;
 			}
+			while (!TestToken(cursor, CppTokens::RPARENTHESIS))
+			{
+				{
+					List<Ptr<Declarator>> declarators;
+					ParseDeclarator(functionArgsPa, nullptr, false, DeclaratorRestriction::Optional, InitializerRestriction::Optional, cursor, declarators);
+					List<Ptr<VariableDeclaration>> varDecls;
+					BuildVariables(declarators, varDecls);
+					type->parameters.Add(varDecls[0]);
+				}
 
-			if (TestToken(cursor, CppTokens::RPARENTHESIS))
-			{
-				break;
-			}
-			else
-			{
-				RequireToken(cursor, CppTokens::COMMA);
+				if (TestToken(cursor, CppTokens::RPARENTHESIS))
+				{
+					break;
+				}
+				else
+				{
+					RequireToken(cursor, CppTokens::COMMA);
+				}
 			}
 		}
 	FINISH_PARAMETER_LIST:

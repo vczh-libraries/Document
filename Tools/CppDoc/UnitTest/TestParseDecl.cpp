@@ -568,7 +568,7 @@ namespace b
 	struct X;
 	Z::Y Z::Do(a::X, X, a::X::Y, X::Y, Y, Z)
 	{
-		a::X x;
+		X x;
 		Y y;
 		Z z;
 	}
@@ -595,7 +595,7 @@ namespace a
 	__forward struct X;
 	Do: Z :: Y (a :: X, X, a :: X :: Y, X :: Y, Y, Z) (Z :: Do ::)
 	{
-		x: a :: X;
+		x: X;
 		y: Y;
 		z: Z;
 	}

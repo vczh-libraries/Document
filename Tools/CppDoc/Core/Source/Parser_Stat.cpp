@@ -95,7 +95,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			ParsingArguments newPa(pa, pa.context->CreateStatSymbol(stat));
 			{
 				List<Ptr<VariableDeclaration>> varDecls;
-				BuildVariablesAndSymbols(newPa, declarators, varDecls, true);
+				BuildVariablesAndSymbols(newPa, declarators, varDecls);
 				stat->varDecl = varDecls[0];
 			}
 
@@ -123,7 +123,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 
 				if (declarators.Count() > 0)
 				{
-					BuildVariablesAndSymbols(newPa, declarators, stat->varDecls, true);
+					BuildVariablesAndSymbols(newPa, declarators, stat->varDecls);
 				}
 				else
 				{
@@ -157,7 +157,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			{
 				ParseNonMemberDeclarator(newPa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
 				RequireToken(cursor, CppTokens::SEMICOLON);
-				BuildVariablesAndSymbols(newPa, declarators, stat->varDecls, true);
+				BuildVariablesAndSymbols(newPa, declarators, stat->varDecls);
 			}
 			catch (const StopParsingException&)
 			{
@@ -183,7 +183,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			if (declarators.Count() == 1)
 			{
 				List<Ptr<VariableDeclaration>> varDecls;
-				BuildVariablesAndSymbols(newPa, declarators, varDecls, true);
+				BuildVariablesAndSymbols(newPa, declarators, varDecls);
 				stat->varExpr = varDecls[0];
 			}
 			else
@@ -224,7 +224,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			if (declarators.Count() == 1)
 			{
 				List<Ptr<VariableDeclaration>> varDecls;
-				BuildVariablesAndSymbols(newPa, declarators, varDecls, true);
+				BuildVariablesAndSymbols(newPa, declarators, varDecls);
 				stat->varExpr = varDecls[0];
 			}
 			else
@@ -247,7 +247,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			List<Ptr<Declarator>> declarators;
 			ParseNonMemberDeclarator(pa, DeclaratorRestriction::Optional, InitializerRestriction::Zero, cursor, declarators);
 			List<Ptr<VariableDeclaration>> varDecls;
-			BuildVariablesAndSymbols(pa, declarators, varDecls, true);
+			BuildVariablesAndSymbols(pa, declarators, varDecls);
 			stat->exception = varDecls[0];
 		}
 		RequireToken(cursor, CppTokens::RPARENTHESIS);

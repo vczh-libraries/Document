@@ -126,8 +126,9 @@ extern void					ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorR
 extern Ptr<Type>			ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 extern void					ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
+extern void					BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls);
 extern void					BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls);
-extern void					BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls, bool createSymbols);
+extern void					BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls);
 extern Ptr<Expr>			ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Stat>			ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Program>			ParseProgram(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
