@@ -21,9 +21,25 @@ struct ForwardPolicy<FunctionDeclaration, ForwardFunctionDeclaration>
 {
 	static bool IsSameCategory(Symbol* symbol, Symbol* sibling)
 	{
+		bool inClass = symbol->parent->decls.Count() > 0 && symbol->parent->decls[0].Cast<ClassDeclaration>();
+
 		auto f1 = symbol->decls[0].Cast<ForwardFunctionDeclaration>();
-		auto f2 = symbol->decls[0].Cast<ForwardFunctionDeclaration>();
-		return IsSameResolvedType(f1->type, f2->type);
+		auto f2 = sibling->decls[0].Cast<ForwardFunctionDeclaration>();
+		auto t1 = f1->type;
+		auto t2 = f2->type;
+
+		if (inClass)
+		{
+			if (auto mt = t1.Cast<MemberType>())
+			{
+				t1 = mt->type;
+			}
+			if (auto mt = t2.Cast<MemberType>())
+			{
+				t2 = mt->type;
+			}
+		}
+		return IsSameResolvedType(t1, t2);
 	}
 };
 
