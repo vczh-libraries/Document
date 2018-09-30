@@ -544,3 +544,62 @@ namespace a
 		TEST_ASSERT(outClassSymbol->forwardDeclarations[0] == inClassSymbol);
 	}
 }
+
+TEST_CASE(TestParseDecl_ClassMemberScope)
+{
+	auto input = LR"(
+namespace a
+{
+	struct X
+	{
+		enum class Y;
+	};
+	struct Z;
+}
+namespace b
+{
+	struct Z : a::X
+	{
+		Y Do(a::X, X, a::X::Y, X::Y, Y, Z);
+	};
+}
+namespace b
+{
+	struct X;
+	Z::Y Z::Do(a::X, X, a::X::Y, X::Y, Y, Z)
+	{
+		a::X x;
+		Y y;
+		Z z;
+	}
+}
+)";
+	auto output = LR"(
+namespace a
+{
+	struct X
+	{
+		public __forward enum class Y;
+	};
+	__forward struct Z;
+}
+namespace b
+{
+	struct Z : public a::X
+	{
+		public __forward Do: Y (a :: X, Z, a :: X :: Y, X :: Y, Y, Z);
+	};
+}
+namespace a
+{
+	__forward struct X;
+	Do: Z :: Y (a :: X, Z, a :: X :: Y, X :: Y, Y, Z) (Z :: Do ::)
+	{
+		x: a :: X;
+		y: Y;
+		z: Z;
+	}
+}
+)";
+	AssertProgram(input, output);
+}

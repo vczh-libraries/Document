@@ -406,6 +406,10 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 					}
 					return type;
 				}
+				else
+				{
+					throw StopParsingException(cursor);
+				}
 			}
 		}
 	}
