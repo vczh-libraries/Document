@@ -357,6 +357,25 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			decl->type = ParseType(pa, cursor);
 			output.Add(decl);
 			RequireToken(cursor, CppTokens::SEMICOLON);
+
+			if (auto resolvableType = decl->type.Cast<ResolvableType>())
+			{
+				if (!resolvableType->resolving) throw StopParsingException(cursor);
+				if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
+				auto symbol = resolvableType->resolving->resolvedSymbols[0];
+
+				if (symbol->decls.Count() == 0) throw StopParsingException(cursor);
+				if (!symbol->decls[0].Cast<NamespaceDeclaration>()) throw StopParsingException(cursor);
+
+				if (pa.context && !(pa.context->usingNss.Contains(symbol)))
+				{
+					pa.context->usingNss.Add(symbol);
+				}
+			}
+			else
+			{
+				throw StopParsingException(cursor);
+			}
 		}
 		else
 		{

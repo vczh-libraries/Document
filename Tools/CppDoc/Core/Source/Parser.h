@@ -25,6 +25,8 @@ public:
 	Symbol*					specializationRoot = nullptr;
 	SymbolPtrList			specializations;
 
+	SymbolPtrList			usingNss;
+
 	void					Add(Ptr<Symbol> child);
 
 	Symbol* CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* _specializationRoot = nullptr)
