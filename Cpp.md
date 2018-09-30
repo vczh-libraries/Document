@@ -42,6 +42,7 @@
 - [ ] Parse full expressions
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
+  - [ ] Resolve symbols in initializers of fields
   - [ ] Resolve symbols created by statements
     - [ ] Resolve same-name symbols in different nested scopes
       - [ ] declaration statement
