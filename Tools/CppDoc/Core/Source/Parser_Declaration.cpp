@@ -161,7 +161,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		if (TestToken(cursor, CppTokens::COLON))
 		{
 			List<Ptr<Declarator>> declarators;
-			ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
+			ParseDeclarator(pa, nullptr, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
 			baseType = declarators[0]->type;
 		}
 
@@ -274,7 +274,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					}
 
 					List<Ptr<Declarator>> declarators;
-					ParseDeclarator(declPa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
+					ParseDeclarator(declPa, nullptr, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
 					decl->baseTypes.Add({ accessor,declarators[0]->type });
 
 					if (TestToken(cursor, CppTokens::LBRACE, false))
@@ -353,7 +353,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 #undef FUNCVAR_DECORATORS
 
 		List<Ptr<Declarator>> declarators;
-
+		/*
 		bool trySpecialMethod = false;
 		Ptr<ClassDeclaration> specialMethodParent;
 		if (pa.context && pa.context->decls.Count() > 0)
@@ -407,6 +407,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				cursor = oldCursor;
 			}
 		}
+		*/
 		ParseDeclarator(pa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
 	SUCCEEDED_IN_SPECIAL_METHOD:
 

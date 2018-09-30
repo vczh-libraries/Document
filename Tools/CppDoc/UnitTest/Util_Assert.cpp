@@ -28,7 +28,7 @@ void AssertType(const WString& input, const WString& log, ParsingArguments& pa)
 	auto cursor = reader.GetFirstToken();
 
 	List<Ptr<Declarator>> declarators;
-	ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
+	ParseDeclarator(pa, nullptr, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
 	TEST_ASSERT(!cursor);
 	TEST_ASSERT(declarators.Count() == 1);
 	TEST_ASSERT(!declarators[0]->name);
