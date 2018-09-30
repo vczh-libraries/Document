@@ -63,9 +63,9 @@ void AssertStat(const WString& input, const WString& log, ParsingArguments& pa)
 	AssertMultilines(output, log);
 }
 
-void AssertProgram(const WString& input, const WString& log)
+void AssertProgram(const WString& input, const WString& log, Ptr<IIndexRecorder> recorder)
 {
-	COMPILE_PROGRAM(program, pa, input);
+	COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
 
 	auto output = GenerateToStream([&](StreamWriter& writer)
 	{

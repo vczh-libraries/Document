@@ -415,3 +415,58 @@ __forward static operator -: Vector (v1: Vector, v2: Vector);
 )";
 	AssertProgram(input, output);
 }
+
+TEST_CASE(TestParseDecl_ClassMemberConnectForward)
+{
+	auto input = LR"(
+namespace a::b
+{
+	class Something
+	{
+	public:
+		static const int a = 0;
+		static const int b;
+
+		Something();
+		Something(const Something&);
+		Something(Something&&);
+		explicit Something(int);
+		~Something();
+
+		void Do();
+		virtual void Do(int) = 0;
+		explicit operator bool()const;
+		explicit operator bool();
+		Something operator++();
+		Something operator++(int);
+	};
+}
+namespace a::b
+{
+	const int Something::b = 0;
+	Something::Something(){}
+	Something::Something(const Something&){}
+	Something::Something(Something&&){}
+	Something::Something(int){}
+	Something::~Something(){}
+	void Something::Do(){}
+	void Something::Do(int) {}
+	Something::operator bool()const{}
+	Something::operator bool(){}
+	Something Something::operator++(){}
+	Something Something::operator++(int){}
+}
+)";
+
+	auto expect = LR"(
+)";
+
+	COMPILE_PROGRAM(program, pa, input);
+	{
+		auto actual = GenerateToStream([&](StreamWriter& writer)
+		{
+			Log(program, writer);
+		});
+		AssertMultilines(actual, expect);
+	}
+}
