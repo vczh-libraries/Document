@@ -486,7 +486,7 @@ GIVE_UP:
 		Ptr<FunctionType> type;
 		if (hasCallingConvention)
 		{
-			// __stdcall should appera before CLASS::
+			// __stdcall should appear before CLASS::
 			// so if we see __stdcall here, then there is no CLASS:: (maybe CLAS::* but we don't care)
 			// we can simply decorate the function with __stdcall, no need to worry about adjusting the return type
 			if (declarator->type != targetType)
