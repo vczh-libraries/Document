@@ -160,9 +160,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		Ptr<Type> baseType;
 		if (TestToken(cursor, CppTokens::COLON))
 		{
-			List<Ptr<Declarator>> declarators;
-			ParseDeclarator(pa, nullptr, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-			baseType = declarators[0]->type;
+			baseType = ParseType(pa, cursor);
 		}
 
 		if (TestToken(cursor, CppTokens::LBRACE))
@@ -273,9 +271,8 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 						accessor = CppClassAccessor::Private;
 					}
 
-					List<Ptr<Declarator>> declarators;
-					ParseDeclarator(declPa, nullptr, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-					decl->baseTypes.Add({ accessor,declarators[0]->type });
+					auto type = ParseType(declPa, cursor);
+					decl->baseTypes.Add({ accessor,type });
 
 					if (TestToken(cursor, CppTokens::LBRACE, false))
 					{
@@ -360,7 +357,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			{
 				containingClass = pa.context->decls[0].Cast<ClassDeclaration>().Obj();
 			}
-			ParseDeclarator(pa, containingClass, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
+			ParseDeclarator(pa, containingClass, true, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
 
 			if (declarators.Count() > 0)
 			{

@@ -465,9 +465,7 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			{
 				{
 					GenericArgument argument;
-					List<Ptr<Declarator>> declarators;
-					ParseDeclarator(pa, nullptr, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-					argument.type = declarators[0]->type;
+					argument.type = ParseType(pa, cursor);
 					type->arguments.Add(argument);
 				}
 

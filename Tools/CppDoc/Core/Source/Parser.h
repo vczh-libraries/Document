@@ -121,7 +121,10 @@ extern bool					ParseCallingConvention(CppCallingConvention& callingConvention, 
 
 extern Ptr<Type>			ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Initializer>		ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern void					ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingClass, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern void					ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingClass, bool trySpecialMember, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern void					ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern Ptr<Type>			ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+
 extern void					ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
 extern void					BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls);
 extern void					BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls, bool createSymbols);

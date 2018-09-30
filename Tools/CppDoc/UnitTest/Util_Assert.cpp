@@ -27,16 +27,12 @@ void AssertType(const WString& input, const WString& log, ParsingArguments& pa)
 	CppTokenReader reader(GlobalCppLexer(), input);
 	auto cursor = reader.GetFirstToken();
 
-	List<Ptr<Declarator>> declarators;
-	ParseDeclarator(pa, nullptr, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
+	auto type = ParseType(pa, cursor);
 	TEST_ASSERT(!cursor);
-	TEST_ASSERT(declarators.Count() == 1);
-	TEST_ASSERT(!declarators[0]->name);
-	TEST_ASSERT(declarators[0]->initializer == nullptr);
 
 	auto output = GenerateToStream([&](StreamWriter& writer)
 	{
-		Log(declarators[0]->type, writer);
+		Log(type, writer);
 	});
 	TEST_ASSERT(output == log);
 }
