@@ -13,6 +13,7 @@ enum class CppNameType
 {
 	Normal,
 	Operator,
+	Constructor,
 	Destructor,
 };
 

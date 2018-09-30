@@ -217,10 +217,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 							if (declarator->name.name == containingClass->name.name)
 							{
 								declarator->name.name = L"$__ctor";
-							}
-							else
-							{
-								throw StopParsingException(cursor);
+								declarator->name.type = CppNameType::Constructor;
 							}
 							break;
 						case CppNameType::Operator:
@@ -232,10 +229,6 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 								{
 									throw StopParsingException(cursor);
 								}
-							}
-							else
-							{
-								throw StopParsingException(cursor);
 							}
 							break;
 						case CppNameType::Destructor:
@@ -589,14 +582,6 @@ void ParseArrayFunctionDeclarator(const ParsingArguments& pa, Ptr<Type> typeResu
 	while (true)
 	{
 		auto declarator = ParseLongDeclarator(pa, typeResult, containingClass, itemDr, cursor);
-
-		if (containingClass)
-		{
-			if (!GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
-			{
-				throw StopParsingException(cursor);
-			}
-		}
 
 		if (ir == InitializerRestriction::Optional)
 		{

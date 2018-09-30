@@ -408,8 +408,61 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			}
 		}
 		*/
-		ParseDeclarator(pa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
-	SUCCEEDED_IN_SPECIAL_METHOD:
+
+		auto methodType = CppMethodType::Function;
+		{
+			ClassDeclaration* containingClass = nullptr;
+			if (pa.context->decls.Count() > 0)
+			{
+				containingClass = pa.context->decls[0].Cast<ClassDeclaration>().Obj();
+			}
+			ParseDeclarator(pa, containingClass, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
+
+			if (declarators.Count() > 0)
+			{
+				auto declarator = declarators[0];
+				if (GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
+				{
+					if (declarators.Count() != 1)
+					{
+						throw StopParsingException(cursor);
+					}
+				}
+
+				if (!containingClass)
+				{
+					if (auto memberType = declarator->type.Cast<MemberType>())
+					{
+						auto resolvableType = memberType->classType.Cast<ResolvableType>();
+						if (!resolvableType) throw StopParsingException(cursor);
+						if (!resolvableType->resolving) throw StopParsingException(cursor);
+						if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
+
+						auto symbol = resolvableType->resolving->resolvedSymbols[0];
+						if (!symbol->decls.Count() == 1) throw StopParsingException(cursor);
+						containingClass = symbol->decls[0].Cast<ClassDeclaration>().Obj();
+						if (!containingClass) throw StopParsingException(cursor);
+					}
+				}
+
+				if (containingClass)
+				{
+					auto& cppName = declarators[0]->name;
+					switch (cppName.type)
+					{
+					case CppNameType::Operator:
+						methodType = CppMethodType::TypeConversion;
+						break;
+					case CppNameType::Constructor:
+						methodType = CppMethodType::Constructor;
+						break;
+					case CppNameType::Destructor:
+						methodType = CppMethodType::Destructor;
+						break;
+					}
+				}
+			}
+		}
 
 		for (vint i = 0; i < declarators.Count(); i++)
 		{
@@ -417,11 +470,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 			if (auto type = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
 			{
-				if (i != 0)
-				{
-					throw StopParsingException(cursor);
-				}
-
 				bool decoratorAbstract = false;
 				if (declarator->initializer)
 				{
@@ -484,6 +532,11 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			}
 			else
 			{
+				if (declarator->name.type != CppNameType::Normal)
+				{
+					throw StopParsingException(cursor);
+				}
+
 #define FILL_VARIABLE(NAME)\
 				NAME->name = declarator->name;\
 				NAME->type = declarator->type;\
