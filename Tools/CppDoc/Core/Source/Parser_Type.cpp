@@ -314,7 +314,28 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 	}
 	else if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false))
 	{
-		return MakePtr<RootType>();
+		CppName cppName;
+		if (ParseCppName(cppName, cursor))
+		{
+			auto typeResult = MakePtr<RootType>();
+			auto resolving = ResolveChildTypeSymbol(pa, typeResult, cppName);
+			if (resolving)
+			{
+				auto type = MakePtr<ChildType>();
+				type->classType = typeResult;
+				type->name = cppName;
+				type->resolving = resolving;
+				if (pa.recorder && type->resolving)
+				{
+					pa.recorder->Index(type->name, type->resolving);
+				}
+				return type;
+			}
+			else
+			{
+				throw StopParsingException(cursor);
+			}
+		}
 	}
 	else
 	{
