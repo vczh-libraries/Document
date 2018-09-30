@@ -640,3 +640,75 @@ namespace b
 	AssertProgram(input, output, recorder);
 	TEST_ASSERT(accessed.Count() == 29);
 }
+
+TEST_CASE(TestParseDecl_UsingNamespace)
+{
+	auto input = LR"(
+namespace a::b
+{
+	struct X {};
+	enum class Y {};
+}
+namespace c
+{
+	using namespace a;
+	using namespace a::b;
+}
+namespace c
+{
+	struct Z : X
+	{
+		a::b::Y y1;
+		b::Y y2;
+		Y y3;
+	};
+}
+)";
+	auto output = LR"(
+namespace a
+{
+	namespace b
+	{
+		struct X
+		{
+		};
+		enum class Y
+		{
+		};
+	}
+}
+namespace c
+{
+	using namespace a;
+	using namespace a :: b;
+}
+namespace c
+{
+	struct Z : public X
+	{
+		public y1: a :: b :: Y;
+		public y2: b :: Y;
+		public y3: Y;
+	};
+}
+)";
+
+	SortedList<vint> accessed;
+	auto recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+	{
+		BEGIN_ASSERT_SYMBOL
+			ASSERT_SYMBOL(0, L"a", 8, 20, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(1, L"a", 9, 20, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(2, L"b", 9, 23, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(3, L"X", 13, 15, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(4, L"a", 15, 2, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(5, L"b", 15, 5, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(6, L"Y", 15, 8, EnumDeclaration, 4, 15)
+			ASSERT_SYMBOL(7, L"b", 16, 2, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(8, L"Y", 16, 5, EnumDeclaration, 4, 15)
+			ASSERT_SYMBOL(9, L"Y", 17, 2, EnumDeclaration, 4, 15)
+		END_ASSERT_SYMBOL
+	});
+	AssertProgram(input, output, recorder);
+	TEST_ASSERT(accessed.Count() == 10);
+}

@@ -348,6 +348,21 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			RequireToken(cursor, CppTokens::SEMICOLON);
 		}
 	}
+	else if (TestToken(cursor, CppTokens::DECL_USING))
+	{
+		if (TestToken(cursor, CppTokens::DECL_NAMESPACE))
+		{
+			// using namespace TYPE;
+			auto decl = MakePtr<UsingNamespaceDeclaration>();
+			decl->type = ParseType(pa, cursor);
+			output.Add(decl);
+			RequireToken(cursor, CppTokens::SEMICOLON);
+		}
+		else
+		{
+			throw StopParsingException(cursor);
+		}
+	}
 	else
 	{
 		// parse declarators for functions and variables

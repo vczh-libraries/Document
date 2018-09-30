@@ -36,8 +36,8 @@
 - [x] Check foward root matching
   - [x] Report errors when multiple roots are found for a forward declaration
   - [x] Report errors when incompatible declarations have the same name
-- [ ] `Using` namespaces
-  - [ ] Assert ASTs
+- [x] `Using` namespaces
+  - [x] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [ ] Parse full expressions
   - [ ] Assert ASTs

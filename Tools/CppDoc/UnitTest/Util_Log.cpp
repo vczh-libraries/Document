@@ -867,6 +867,13 @@ public:
 		throw 0;
 	}
 
+	void Visit(UsingNamespaceDeclaration* self)override
+	{
+		writer.WriteString(L"using namespace ");
+		Log(self->type, writer);
+		if (semicolon) writer.WriteLine(L";");
+	}
+
 	void Visit(UsingDeclaration* self)override
 	{
 		throw 0;

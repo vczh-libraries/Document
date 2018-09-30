@@ -18,6 +18,7 @@ Visitor
 	F(EnumDeclaration)\
 	F(ClassDeclaration)\
 	F(TypeAliasDeclaration)\
+	F(UsingNamespaceDeclaration)\
 	F(UsingDeclaration)\
 	F(NamespaceDeclaration)\
 
@@ -188,8 +189,14 @@ public:
 	Ptr<Type>										type;
 };
 
-// if using declaration has a name, then it is using a class member
-// if using declaration doesn't have a name, then it is using a namespace
+class UsingNamespaceDeclaration : public Declaration
+{
+public:
+	IDeclarationVisitor_ACCEPT;
+
+	Ptr<Type>										type;
+};
+
 class UsingDeclaration : public Declaration
 {
 public:

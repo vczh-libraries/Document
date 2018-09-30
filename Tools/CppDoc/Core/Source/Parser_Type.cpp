@@ -56,6 +56,11 @@ public:
 	{
 	}
 
+	void Visit(UsingNamespaceDeclaration* self)override
+	{
+		isPotentialType = false;
+	}
+
 	void Visit(UsingDeclaration* self)override
 	{
 		isPotentialType = false;
