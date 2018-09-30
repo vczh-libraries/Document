@@ -90,6 +90,9 @@ TEST_CASE(TestParseType_SuperComplexType)
 		);
 }
 
+#define BEGIN_ASSERT_SYMBOL TEST_ASSERT(name.tokenCount > 0);
+#define END_ASSERT_SYMBOL TEST_ASSERT(false);
+
 #define ASSERT_SYMBOL(INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)\
 	if (name.nameTokens[0].rowStart == TROW && name.nameTokens[0].columnStart == TCOL)\
 	{\
@@ -117,11 +120,11 @@ namespace a::b
 		SortedList<vint> accessed;
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
-			TEST_ASSERT(name.tokenCount > 0);
-			ASSERT_SYMBOL(0, L"a", 0, 0, NamespaceDeclaration, 1, 10)
-			ASSERT_SYMBOL(1, L"b", 0, 3, NamespaceDeclaration, 1, 13)
-			ASSERT_SYMBOL(2, L"X", 0, 6, ForwardEnumDeclaration, 3, 6)
-			TEST_ASSERT(false);
+			BEGIN_ASSERT_SYMBOL
+				ASSERT_SYMBOL(0, L"a", 0, 0, NamespaceDeclaration, 1, 10)
+				ASSERT_SYMBOL(1, L"b", 0, 3, NamespaceDeclaration, 1, 13)
+				ASSERT_SYMBOL(2, L"X", 0, 6, ForwardEnumDeclaration, 3, 6)
+			END_ASSERT_SYMBOL
 		});
 		AssertType(
 			L"a::b::X",
@@ -133,11 +136,11 @@ namespace a::b
 		SortedList<vint> accessed;
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
-			TEST_ASSERT(name.tokenCount > 0);
-			ASSERT_SYMBOL(0, L"a", 0, 11, NamespaceDeclaration, 1, 10)
-			ASSERT_SYMBOL(1, L"b", 0, 14, NamespaceDeclaration, 1, 13)
-			ASSERT_SYMBOL(2, L"X", 0, 17, ForwardEnumDeclaration, 3, 6)
-			TEST_ASSERT(false);
+			BEGIN_ASSERT_SYMBOL
+				ASSERT_SYMBOL(0, L"a", 0, 11, NamespaceDeclaration, 1, 10)
+				ASSERT_SYMBOL(1, L"b", 0, 14, NamespaceDeclaration, 1, 13)
+				ASSERT_SYMBOL(2, L"X", 0, 17, ForwardEnumDeclaration, 3, 6)
+			END_ASSERT_SYMBOL
 		});
 		AssertType(
 			L"typename ::a::b::X::Y::Z",
@@ -149,13 +152,13 @@ namespace a::b
 		SortedList<vint> accessed;
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
-			TEST_ASSERT(name.tokenCount > 0);
-			ASSERT_SYMBOL(0, L"a", 0, 0, NamespaceDeclaration, 1, 10)
-			ASSERT_SYMBOL(1, L"b", 0, 3, NamespaceDeclaration, 1, 13)
-			ASSERT_SYMBOL(2, L"X", 0, 6, ForwardEnumDeclaration, 3, 6)
-			ASSERT_SYMBOL(3, L"a", 0, 25, NamespaceDeclaration, 1, 10)
-			ASSERT_SYMBOL(4, L"b", 0, 28, NamespaceDeclaration, 1, 13)
-			TEST_ASSERT(false);
+			BEGIN_ASSERT_SYMBOL
+				ASSERT_SYMBOL(0, L"a", 0, 0, NamespaceDeclaration, 1, 10)
+				ASSERT_SYMBOL(1, L"b", 0, 3, NamespaceDeclaration, 1, 13)
+				ASSERT_SYMBOL(2, L"X", 0, 6, ForwardEnumDeclaration, 3, 6)
+				ASSERT_SYMBOL(3, L"a", 0, 25, NamespaceDeclaration, 1, 10)
+				ASSERT_SYMBOL(4, L"b", 0, 28, NamespaceDeclaration, 1, 13)
+			END_ASSERT_SYMBOL
 		});
 		AssertType(
 			L"a::b::X(__cdecl typename a::b::*)()",
@@ -190,13 +193,13 @@ namespace c::d
 		SortedList<vint> accessed;
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
-			TEST_ASSERT(name.tokenCount > 0);
-			ASSERT_SYMBOL(0, L"c", 0, 0, NamespaceDeclaration, 8, 10)
-			ASSERT_SYMBOL(1, L"d", 0, 3, NamespaceDeclaration, 8, 13)
-			ASSERT_SYMBOL(2, L"Y", 0, 6, ClassDeclaration, 10, 8)
-			ASSERT_SYMBOL(3, L"Z", 0, 9, ClassDeclaration, 12, 9)
-			ASSERT_SYMBOL(4, L"Y", 0, 12, ForwardEnumDeclaration, 5, 7)
-			TEST_ASSERT(false);
+			BEGIN_ASSERT_SYMBOL
+				ASSERT_SYMBOL(0, L"c", 0, 0, NamespaceDeclaration, 8, 10)
+				ASSERT_SYMBOL(1, L"d", 0, 3, NamespaceDeclaration, 8, 13)
+				ASSERT_SYMBOL(2, L"Y", 0, 6, ClassDeclaration, 10, 8)
+				ASSERT_SYMBOL(3, L"Z", 0, 9, ClassDeclaration, 12, 9)
+				ASSERT_SYMBOL(4, L"Y", 0, 12, ForwardEnumDeclaration, 5, 7)
+			END_ASSERT_SYMBOL
 		});
 		AssertType(
 			L"c::d::Y::Z::Y",
