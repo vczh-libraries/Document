@@ -38,7 +38,7 @@
   - [x] Report errors when incompatible declarations have the same name
 - [x] `Using` namespaces
   - [x] Assert ASTs
-  - [ ] Assert resolvings in scopes
+  - [x] Assert resolvings in scopes
 - [ ] Parse full expressions
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes

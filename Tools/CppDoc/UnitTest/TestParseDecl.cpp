@@ -703,10 +703,10 @@ namespace c
 			ASSERT_SYMBOL(3, L"X", 13, 12, ClassDeclaration, 3, 8)
 			ASSERT_SYMBOL(4, L"a", 15, 2, NamespaceDeclaration, 1, 10)
 			ASSERT_SYMBOL(5, L"b", 15, 5, NamespaceDeclaration, 1, 13)
-			ASSERT_SYMBOL(6, L"Y", 15, 8, EnumDeclaration, 4, 15)
+			ASSERT_SYMBOL(6, L"Y", 15, 8, EnumDeclaration, 4, 12)
 			ASSERT_SYMBOL(7, L"b", 16, 2, NamespaceDeclaration, 1, 13)
-			ASSERT_SYMBOL(8, L"Y", 16, 5, EnumDeclaration, 4, 15)
-			ASSERT_SYMBOL(9, L"Y", 17, 2, EnumDeclaration, 4, 15)
+			ASSERT_SYMBOL(8, L"Y", 16, 5, EnumDeclaration, 4, 12)
+			ASSERT_SYMBOL(9, L"Y", 17, 2, EnumDeclaration, 4, 12)
 		END_ASSERT_SYMBOL
 	});
 	AssertProgram(input, output, recorder);

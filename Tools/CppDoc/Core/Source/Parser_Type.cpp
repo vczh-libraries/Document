@@ -171,6 +171,17 @@ Ptr<Resolving> ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, Ptr<
 		}
 		if (FOUND) break;
 
+		if (scope->usingNss.Count() > 0)
+		{
+			for (vint i = 0; i < scope->usingNss.Count(); i++)
+			{
+				auto usingNs = scope->usingNss[i];
+				ParsingArguments newPa(pa, usingNs);
+				resolving = ResolveTypeSymbol(newPa, name, resolving, SearchPolicy::ChildSymbol);
+			}
+		}
+		if (FOUND) break;
+
 		if (policy != SearchPolicy::SymbolAccessableInScope) break;
 		scope = scope->parent;
 	}

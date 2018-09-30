@@ -364,8 +364,13 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
 				auto symbol = resolvableType->resolving->resolvedSymbols[0];
 
-				if (symbol->decls.Count() == 0) throw StopParsingException(cursor);
-				if (!symbol->decls[0].Cast<NamespaceDeclaration>()) throw StopParsingException(cursor);
+				if (symbol->decls.Count() != 0)
+				{
+					if (!symbol->decls[0].Cast<NamespaceDeclaration>())
+					{
+						throw StopParsingException(cursor);
+					}
+				}
 
 				if (pa.context && !(pa.context->usingNss.Contains(symbol)))
 				{
