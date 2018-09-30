@@ -49,16 +49,23 @@
       - [ ] `foreach`
       - [ ] `for`
       - [ ] `catch`
-- [ ] `Template`, `Typedef` and anonymous declaration
+  - [ ] Resolve expression types and resolve `decltype`
+- [ ] `Using` alias, `Typedef` and anonymous declaration
+  - [ ] Assert ASTs
+  - [ ] Define variables right after classes
+  - [ ] Define types right after typedef classes
+  - [ ] Resolve child symbols from type aliases
+- [ ] `Template`
   - [x] Fix wrong `template` rule created above, `typename A::B` not `A::typename B`
   - [ ] Assert ASTs
   - [ ] Connect generic forward declarations with their root
+    - [ ] Matching specializations
   - [ ] Methods of generic classes defined out of classes
   - [ ] Generic methods of classes defined out of classes
   - [ ] Generic methods of generic classes defined out of classes
-  - [ ] Define variables right after classes
-  - [ ] Define types right after typedef classes
+  - [ ] Fix child symbols from generic types with specializations
 - [ ] Parse ambiguious expressions and types with generic
+  - [ ] Differentiate `<` after generic types, generic expressions or normal expressions
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [ ] Preprocess `Preprocessed.txt` to get rid of `#line`s and save line informations to another structure
