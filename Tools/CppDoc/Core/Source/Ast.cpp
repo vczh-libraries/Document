@@ -25,6 +25,7 @@ CPPDOC_STAT_LIST(CPPDOC_ACCEPT)
 Resolving
 ***********************************************************************/
 
+// Change all forward declaration symbols to their real definition
 void Resolving::Calibrate()
 {
 	if (fullyCalibrated) return;
@@ -88,7 +89,7 @@ public:
 	{
 		if (auto type = peerType.Cast<PrimitiveType>())
 		{
-			result = self->prefix == type->prefix&&self->primitive == type->primitive;
+			result = self->prefix == type->prefix && self->primitive == type->primitive;
 		}
 	}
 
@@ -126,6 +127,7 @@ public:
 			if (self->qualifierLRef != type->qualifierLRef) return;
 			if (self->qualifierRRef != type->qualifierRRef) return;
 			if (!IsSameResolvedType(self->returnType, type->returnType)) return;
+			if (!IsSameResolvedType(self->decoratorReturnType, type->decoratorReturnType)) return;
 			if (self->parameters.Count() != type->parameters.Count()) return;
 
 			for (vint i = 0; i < self->parameters.Count(); i++)
@@ -216,6 +218,11 @@ public:
 	}
 };
 
+// Test if two types are actually the same one
+//   ArrayType length is ignored
+//   FunctionType declarators are ignored
+//   DeclType is not supported yet
+//   Expression arguments in GenericType are not supported yet
 bool IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2)
 {
 	if (t1 && t2)

@@ -438,7 +438,14 @@ public:
 	void Visit(WhileStat* self)override
 	{
 		writer.WriteString(L"while (");
-		Log(self->expr, writer);
+		if (self->varExpr)
+		{
+			Log(self->varExpr, writer, indentation, false);
+		}
+		else
+		{
+			Log(self->expr, writer);
+		}
 		writer.WriteLine(L")");
 		WriteSubStat(self->stat);
 	}

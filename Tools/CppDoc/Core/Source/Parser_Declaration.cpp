@@ -105,12 +105,14 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 	if (TestToken(cursor, CppTokens::DECL_NAMESPACE))
 	{
+		// namespace NAME { :: NAME ...} { DECLARATION ...}
 		auto contextSymbol = pa.context;
 		Ptr<NamespaceDeclaration> topDecl;
 		Ptr<NamespaceDeclaration> contextDecl;
 
 		while (cursor)
 		{
+			// create AST
 			auto decl = MakePtr<NamespaceDeclaration>();
 			if (!topDecl)
 			{
@@ -124,6 +126,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 			if (ParseCppName(decl->name, cursor))
 			{
+				// ensure all other overloadings are namespaces, and merge the scope with them
 				vint index = contextSymbol->children.Keys().IndexOf(decl->name.name);
 				if (index == -1)
 				{
@@ -168,6 +171,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else if (TestToken(cursor, CppTokens::DECL_ENUM))
 	{
+		// enum [CLASS] NAME [: TYPE] ...
 		bool enumClass = TestToken(cursor, CppTokens::DECL_CLASS);
 
 		CppName cppName;
@@ -181,6 +185,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 		if (TestToken(cursor, CppTokens::LBRACE))
 		{
+			// ... { { IDENTIFIER [= EXPRESSION] ,... } };
 			auto decl = MakePtr<EnumDeclaration>();
 			decl->enumClass = enumClass;
 			decl->name = cppName;
@@ -214,6 +219,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		}
 		else
 		{
+			// ... ;
 			RequireToken(cursor, CppTokens::SEMICOLON);
 			auto decl = MakePtr<ForwardEnumDeclaration>();
 			decl->enumClass = enumClass;
@@ -227,6 +233,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
 	{
+		// [union | class | struct] NAME ...
 		auto classType = CppClassType::Union;
 		auto defaultAccessor = CppClassAccessor::Public;
 
@@ -250,6 +257,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 		if (TestToken(cursor, CppTokens::SEMICOLON))
 		{
+			// ... ;
 			auto decl = MakePtr<ForwardClassDeclaration>();
 			decl->classType = classType;
 			decl->name = cppName;
@@ -260,6 +268,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		}
 		else
 		{
+			// ... [: { [public|protected|private] TYPE , ...} ]
 			auto decl = MakePtr<ClassDeclaration>();
 			decl->classType = classType;
 			decl->name = cppName;
@@ -301,6 +310,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				}
 			}
 
+			// ... { { (public: | protected: | private: | DECLARATION) } };
 			RequireToken(cursor, CppTokens::LBRACE);
 			auto accessor = defaultAccessor;
 			while (true)
@@ -340,6 +350,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else
 	{
+		// parse declarators for functions and variables
 #define FUNCVAR_DECORATORS(F)\
 		F(DECL_EXTERN, Extern)\
 		F(STATIC, Static)\
@@ -365,6 +376,9 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 #undef FUNCVAR_DECORATORS
 
+		// prepare data structures for class members defined out of classes
+		// non-null containingClass means this declaration is defined right inside a class
+		// non-null containingClassForMember means this declaration is a class member defined out of the class
 		List<Ptr<Declarator>> declarators;
 		auto methodType = CppMethodType::Function;
 		ClassDeclaration* containingClass = nullptr;
@@ -375,10 +389,12 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			{
 				containingClass = pa.context->decls[0].Cast<ClassDeclaration>().Obj();
 			}
+			// get all declarators
 			ParseDeclarator(pa, containingClass, true, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
 
 			if (declarators.Count() > 0)
 			{
+				// a function declaration can only have one declarator
 				auto declarator = declarators[0];
 				if (GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
 				{
@@ -388,6 +404,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					}
 				}
 
+				// see if it is a class member declarator defined out of the class
 				if (!containingClass)
 				{
 					if (declarator->containingClassSymbol)
@@ -404,6 +421,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					}
 				}
 
+				// adjust name type
 				if (containingClass || containingClassForMember)
 				{
 					auto& cppName = declarators[0]->name;
@@ -432,7 +450,10 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 			if (auto type = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
 			{
+				// for functions
 				bool decoratorAbstract = false;
+
+				// the only legal initializer is = 0
 				if (declarator->initializer)
 				{
 					if (declarator->initializer->initializerType != InitializerType::Equal) throw StopParsingException(cursor);
@@ -464,6 +485,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
 				if (hasStat)
 				{
+					// if there is a statement, then it is a function declaration
 					auto decl = MakePtr<FunctionDeclaration>();
 					FILL_FUNCTION(decl);
 					{
@@ -477,10 +499,13 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					}
 					output.Add(decl);
 					ConnectForwards<FunctionDeclaration, ForwardFunctionDeclaration>(context, contextSymbol, cursor);
+
+					// no ; after a function declaration
 					return;
 				}
 				else
 				{
+					// if there is ;, then it is a forward function declaration
 					if (containingClassForMember)
 					{
 						throw StopParsingException(cursor);
@@ -499,6 +524,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			}
 			else
 			{
+				// for variables, names should not be constructor names, destructor names, type conversion operator names, or other operator names
 				if (declarator->name.type != CppNameType::Normal)
 				{
 					throw StopParsingException(cursor);
@@ -516,6 +542,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
 				if (decoratorExtern || (decoratorStatic && !declarator->initializer))
 				{
+					// if there is extern, or static without an initializer, then it is a forward variable declaration
 					if (containingClassForMember)
 					{
 						throw StopParsingException(cursor);
@@ -530,6 +557,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				}
 				else
 				{
+					// it is a variable declaration
 					auto decl = MakePtr<VariableDeclaration>();
 					FILL_VARIABLE(decl);
 					decl->initializer = declarator->initializer;
@@ -541,6 +569,8 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 #undef FILL_VARIABLE
 			}
 		}
+
+		// ; is required after any forward function declaration, forward function declaration, or variable declaration
 		RequireToken(cursor, CppTokens::SEMICOLON);
 	}
 }

@@ -137,6 +137,7 @@ extern Ptr<Program>			ParseProgram(const ParsingArguments& pa, Ptr<CppTokenCurso
 Helpers
 ***********************************************************************/
 
+// Test if the next token's content matches the expected value
 __forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, const wchar_t* content, bool autoSkip = true)
 {
 	vint length = (vint)wcslen(content);
@@ -148,6 +149,7 @@ __forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, const wchar_t* content
 	return false;
 }
 
+// Test if the next token's type matches the expected value
 __forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, bool autoSkip = true)
 {
 	if (cursor && (CppTokens)cursor->token.token == token1)
@@ -169,6 +171,7 @@ __forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, bool
 		return false;\
 	}\
 
+// Test if next two tokens' types match expected value, and there should not be spaces between tokens
 __forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, CppTokens token2, bool autoSkip = true)
 {
 	if (auto current = cursor)
@@ -182,6 +185,7 @@ __forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, CppT
 	return false;
 }
 
+// Test if next three tokens' types match expected value, and there should not be spaces between tokens
 __forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, CppTokens token2, CppTokens token3, bool autoSkip = true)
 {
 	if (auto current = cursor)
@@ -196,6 +200,7 @@ __forceinline bool TestToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, CppT
 	return false;
 }
 
+// Throw exception if failed to test
 __forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, const wchar_t* content)
 {
 	if (!TestToken(cursor, content))
@@ -204,6 +209,7 @@ __forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, const wchar_t* cont
 	}
 }
 
+// Throw exception if failed to test
 __forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, CppTokens token1)
 {
 	if (!TestToken(cursor, token1))
@@ -212,6 +218,7 @@ __forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, CppTokens token1)
 	}
 }
 
+// Throw exception if failed to test
 __forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, CppTokens token2)
 {
 	if (!TestToken(cursor, token1, token2))
@@ -220,6 +227,7 @@ __forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, C
 	}
 }
 
+// Throw exception if failed to test
 __forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, CppTokens token2, CppTokens token3)
 {
 	if (!TestToken(cursor, token1, token2, token3))
@@ -228,6 +236,7 @@ __forceinline void RequireToken(Ptr<CppTokenCursor>& cursor, CppTokens token1, C
 	}
 }
 
+// Skip one token
 __forceinline void SkipToken(Ptr<CppTokenCursor>& cursor)
 {
 	if (cursor)

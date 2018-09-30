@@ -24,9 +24,9 @@ TEST_CASE(TestParseStat_Everything)
 )");
 
 	AssertStat(
-		L"while(1){do{;}while(0);}",
+		L"while(int x=1){do{;}while(0);}",
 		LR"(
-while (1)
+while (x: int = 1)
 {
 	do
 	{

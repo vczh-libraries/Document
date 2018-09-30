@@ -61,6 +61,10 @@ bool SkipSpecifiers(Ptr<CppTokenCursor>& cursor)
 ParseCppName
 ***********************************************************************/
 
+// operator PREDEFINED-OPERATOR
+// operator
+// ~IDENTIFIER
+// IDENTIFIER
 bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialMethod)
 {
 	if (TestToken(cursor, CppTokens::OPERATOR, false))
@@ -198,6 +202,10 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 GetTypeWithoutMemberAndCC
 ***********************************************************************/
 
+// Get TYPE in
+//   TYPE __stdcall
+//   TYPE CLASS::
+//   TYPE __stdcall CLASS::
 Ptr<Type> GetTypeWithoutMemberAndCC(Ptr<Type> type)
 {
 	if (auto memberType = type.Cast<MemberType>())
@@ -215,6 +223,10 @@ Ptr<Type> GetTypeWithoutMemberAndCC(Ptr<Type> type)
 ReplaceTypeInMemberAndCC
 ***********************************************************************/
 
+// Replace TYPE with a new type and return the old one in
+//   TYPE __stdcall
+//   TYPE CLASS::
+//   TYPE __stdcall CLASS::
 Ptr<Type> ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToReplace)
 {
 	auto target = &type;
@@ -236,6 +248,10 @@ Ptr<Type> ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToReplace)
 GetTypeWithoutMemberAndCC
 ***********************************************************************/
 
+// Change
+//   (TYPE __stdcall)         (PARAMETERS...) to TYPE (__stdcall)         (PARAMETERS...)
+//   (TYPE CLASS::)           (PARAMETERS...) to TYPE (CLASS::)           (PARAMETERS...)
+//   (TYPE __stdcall CLASS::) (PARAMETERS...) to TYPE (__stdcall CLASS::) (PARAMETERS...)
 Ptr<Type> AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType)
 {
 	Ptr<Type> adjustedType = functionType;

@@ -371,14 +371,17 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 {
 	if (TestToken(cursor, CppTokens::SIGNED))
 	{
+		// signed INTEGRAL-TYPE
 		return ParsePrimitiveType(cursor, CppPrimitivePrefix::_signed);
 	}
 	else if (TestToken(cursor, CppTokens::UNSIGNED))
 	{
+		// unsigned INTEGRAL-TYPE
 		return ParsePrimitiveType(cursor, CppPrimitivePrefix::_unsigned);
 	}
 	else if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 	{
+		// :: NAME
 		if (auto type = ParseChildType(pa, MakePtr<RootType>(), false, cursor))
 		{
 			return type;
@@ -391,12 +394,14 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 	else
 	{
 		{
+			// PRIMITIVE-TYPE
 			auto result = ParsePrimitiveType(cursor, CppPrimitivePrefix::_none);
 			if (result) return result;
 		}
 
 		if (TestToken(cursor, CppTokens::DECLTYPE))
 		{
+			// decltype(EXPRESSION)
 			RequireToken(cursor, CppTokens::LPARENTHESIS);
 			auto type = MakePtr<DeclType>();
 			type->expr = ParseExpr(pa, true, cursor);
@@ -406,6 +411,7 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 
 		if (TestToken(cursor, CppTokens::CONSTEXPR))
 		{
+			// constexpr TYPE
 			auto type = MakePtr<DecorateType>();
 			type->isConstExpr = true;
 			type->type = ParseShortType(pa, cursor);
@@ -414,6 +420,7 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 
 		if (TestToken(cursor, CppTokens::CONST))
 		{
+			// const TYPE
 			auto type = MakePtr<DecorateType>();
 			type->isConst = true;
 			type->type = ParseShortType(pa, cursor);
@@ -422,6 +429,7 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 
 		if (TestToken(cursor, CppTokens::VOLATILE))
 		{
+			// volatile TYPE
 			auto type = MakePtr<DecorateType>();
 			type->isVolatile = true;
 			type->type = ParseShortType(pa, cursor);
@@ -430,6 +438,7 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 
 		if (pa.context)
 		{
+			// NAME
 			CppName cppName;
 			if (ParseCppName(cppName, cursor))
 			{
@@ -468,6 +477,7 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		if (TestToken(cursor, CppTokens::CONSTEXPR))
 		{
+			// TYPE constexpr
 			auto type = typeResult.Cast<DecorateType>();
 			if (!type)
 			{
@@ -479,6 +489,7 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		}
 		else if (TestToken(cursor, CppTokens::CONST))
 		{
+			// TYPE const
 			auto type = typeResult.Cast<DecorateType>();
 			if (!type)
 			{
@@ -490,6 +501,7 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		}
 		else if (TestToken(cursor, CppTokens::VOLATILE))
 		{
+			// TYPE volatile
 			auto type = typeResult.Cast<DecorateType>();
 			if (!type)
 			{
@@ -501,6 +513,7 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		}
 		else if (TestToken(cursor, CppTokens::LT))
 		{
+			// TYPE< { TYPE ...} >
 			auto type = MakePtr<GenericType>();
 			type->type = typeResult;
 			while (!TestToken(cursor, CppTokens::GT))
@@ -524,12 +537,14 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		}
 		else if (TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
 		{
+			// TYPE ...
 			auto type = MakePtr<VariadicTemplateArgumentType>();
 			type->type = typeResult;
 			typeResult = type;
 		}
 		else
 		{
+			// TYPE::NAME
 			auto oldCursor = cursor;
 			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 			{
