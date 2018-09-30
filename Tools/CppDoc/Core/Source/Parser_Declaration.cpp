@@ -351,9 +351,10 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 		List<Ptr<Declarator>> declarators;
 		auto methodType = CppMethodType::Function;
+		ClassDeclaration* containingClass = nullptr;
+		ClassDeclaration* containingClassForMember = nullptr;
+
 		{
-			ClassDeclaration* containingClass = nullptr;
-			ClassDeclaration* containingClassForMember = nullptr;
 			if (pa.context->decls.Count() > 0)
 			{
 				containingClass = pa.context->decls[0].Cast<ClassDeclaration>().Obj();
@@ -459,11 +460,18 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 						BuildSymbols(newPa, type->parameters);
 					}
 					output.Add(decl);
-					ConnectForwards<FunctionDeclaration, ForwardFunctionDeclaration>(pa.context, contextSymbol, cursor);
+
+					auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
+					ConnectForwards<FunctionDeclaration, ForwardFunctionDeclaration>(context, contextSymbol, cursor);
 					return;
 				}
 				else
 				{
+					if (containingClassForMember)
+					{
+						throw StopParsingException(cursor);
+					}
+
 					auto decl = MakePtr<ForwardFunctionDeclaration>();
 					FILL_FUNCTION(decl);
 					auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
@@ -493,6 +501,11 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 				if (decoratorExtern || (decoratorStatic && !declarator->initializer))
 				{
+					if (containingClassForMember)
+					{
+						throw StopParsingException(cursor);
+					}
+
 					auto decl = MakePtr<ForwardVariableDeclaration>();
 					FILL_VARIABLE(decl);
 					auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
@@ -507,7 +520,9 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					decl->initializer = declarator->initializer;
 					auto contextSymbol = pa.context->CreateDeclSymbol(decl);
 					output.Add(decl);
-					ConnectForwards<VariableDeclaration, ForwardVariableDeclaration>(pa.context, contextSymbol, cursor);
+
+					auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
+					ConnectForwards<VariableDeclaration, ForwardVariableDeclaration>(context, contextSymbol, cursor);
 				}
 #undef FILL_VARIABLE
 			}
