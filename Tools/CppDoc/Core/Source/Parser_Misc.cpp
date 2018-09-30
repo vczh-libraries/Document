@@ -61,7 +61,7 @@ bool SkipSpecifiers(Ptr<CppTokenCursor>& cursor)
 ParseCppName
 ***********************************************************************/
 
-bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, ClassDeclaration* specialMethodParent)
+bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialMethod)
 {
 	if (TestToken(cursor, CppTokens::OPERATOR, false))
 	{
@@ -156,9 +156,9 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, ClassDeclaration* 
 		OPERATOR_NAME_2(GT, EQ)
 		OPERATOR_NAME_1(GT)
 
-		if (!specialMethodParent)
+		if (!forceSpecialMethod)
 		{
-			throw StopParsingException(cursor);
+			return false;
 		}
 		
 		cursor = nameCursor;
@@ -170,11 +170,10 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, ClassDeclaration* 
 	}
 	else if (TestToken(cursor, CppTokens::REVERT, CppTokens::ID, false))
 	{
-		if (!specialMethodParent)
+		if (!forceSpecialMethod)
 		{
-			throw StopParsingException(cursor);
+			return false;
 		}
-
 		name.type = CppNameType::Destructor;
 		name.tokenCount = 2;
 		name.nameTokens[0] = cursor->token;

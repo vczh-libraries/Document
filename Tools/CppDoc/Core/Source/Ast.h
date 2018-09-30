@@ -97,6 +97,7 @@ public:
 class Declarator : public Object
 {
 public:
+	Symbol*					containingClassSymbol = nullptr;
 	Ptr<Type>				type;
 	CppName					name;
 	Symbol*					createdSymbol = nullptr;

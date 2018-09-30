@@ -324,6 +324,12 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else
 	{
+		wchar_t input[] = L"~Vector();";
+		if (cursor && wcsncmp(cursor->token.reading, input, wcslen(input)) == 0)
+		{
+			int a = 0;
+		}
+
 #define FUNCVAR_DECORATORS(F)\
 		F(DECL_EXTERN, Extern)\
 		F(STATIC, Static)\
@@ -372,17 +378,9 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 				if (!containingClass)
 				{
-					if (auto memberType = declarator->type.Cast<MemberType>())
+					if (declarator->containingClassSymbol)
 					{
-						auto resolvableType = memberType->classType.Cast<ResolvableType>();
-						if (!resolvableType) throw StopParsingException(cursor);
-						if (!resolvableType->resolving) throw StopParsingException(cursor);
-						if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
-
-						auto symbol = resolvableType->resolving->resolvedSymbols[0];
-						if (!symbol->decls.Count() == 1) throw StopParsingException(cursor);
-						containingClass = symbol->decls[0].Cast<ClassDeclaration>().Obj();
-						if (!containingClass) throw StopParsingException(cursor);
+						containingClass = declarator->containingClassSymbol->decls[0].Cast<ClassDeclaration>().Obj();
 					}
 				}
 

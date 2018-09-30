@@ -92,7 +92,7 @@ public:
 ParseShortDeclarator
 ***********************************************************************/
 
-Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDeclaration* containingClass, bool trySpecialMember, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
+Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDeclaration* containingClass, bool forceSpecialMethod, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
 	while (SkipSpecifiers(cursor));
 
@@ -101,7 +101,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		ParseExpr(pa, false, cursor);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
-		return ParseShortDeclarator(pa, typeResult, containingClass, trySpecialMember, dr, cursor);
+		return ParseShortDeclarator(pa, typeResult, containingClass, forceSpecialMethod, dr, cursor);
 	}
 	else if (TestToken(cursor, CppTokens::MUL))
 	{
@@ -109,21 +109,21 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 		auto type = MakePtr<ReferenceType>();
 		type->reference = CppReferenceType::Ptr;
 		type->type = typeResult;
-		return ParseShortDeclarator(pa, type, containingClass, trySpecialMember, dr, cursor);
+		return ParseShortDeclarator(pa, type, containingClass, forceSpecialMethod, dr, cursor);
 	}
 	else if (TestToken(cursor, CppTokens::AND, CppTokens::AND))
 	{
 		auto type = MakePtr<ReferenceType>();
 		type->reference = CppReferenceType::RRef;
 		type->type = typeResult;
-		return ParseShortDeclarator(pa, type, containingClass, trySpecialMember, dr, cursor);
+		return ParseShortDeclarator(pa, type, containingClass, forceSpecialMethod, dr, cursor);
 	}
 	else if (TestToken(cursor, CppTokens::AND))
 	{
 		auto type = MakePtr<ReferenceType>();
 		type->reference = CppReferenceType::LRef;
 		type->type = typeResult;
-		return ParseShortDeclarator(pa, type, containingClass, trySpecialMember, dr, cursor);
+		return ParseShortDeclarator(pa, type, containingClass, forceSpecialMethod, dr, cursor);
 	}
 	else if (TestToken(cursor, CppTokens::CONSTEXPR))
 	{
@@ -134,7 +134,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 			type->type = typeResult;
 		}
 		type->isConstExpr = true;
-		return ParseShortDeclarator(pa, type, containingClass, trySpecialMember, dr, cursor);
+		return ParseShortDeclarator(pa, type, containingClass, forceSpecialMethod, dr, cursor);
 	}
 	else if (TestToken(cursor, CppTokens::CONST))
 	{
@@ -145,7 +145,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 			type->type = typeResult;
 		}
 		type->isConst = true;
-		return ParseShortDeclarator(pa, type, containingClass, trySpecialMember, dr, cursor);
+		return ParseShortDeclarator(pa, type, containingClass, forceSpecialMethod, dr, cursor);
 	}
 	else if (TestToken(cursor, CppTokens::VOLATILE))
 	{
@@ -156,7 +156,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 			type->type = typeResult;
 		}
 		type->isVolatile = true;
-		return ParseShortDeclarator(pa, type, containingClass, trySpecialMember, dr, cursor);
+		return ParseShortDeclarator(pa, type, containingClass, forceSpecialMethod, dr, cursor);
 	}
 	else
 	{
@@ -174,7 +174,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 					auto type = MakePtr<CallingConventionType>();
 					type->callingConvention = callingConvention;
 					type->type = typeResult;
-					return ParseShortDeclarator(pa, type, containingClass, trySpecialMember, dr, cursor);
+					return ParseShortDeclarator(pa, type, containingClass, forceSpecialMethod, dr, cursor);
 				}
 			}
 		}
@@ -199,18 +199,47 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 			auto type = MakePtr<MemberType>();
 			type->classType = classType;
 			type->type = typeResult;
-			return ParseShortDeclarator(pa, type, containingClass, trySpecialMember, dr, cursor);
+
+			if(forceSpecialMethod && !containingClass)
+			{
+				auto oldCursor = cursor;
+				CppName cppName;
+				if (ParseCppName(cppName, cursor, true))
+				{
+					auto resolvableType = classType.Cast<ResolvableType>();
+					if (!resolvableType) throw StopParsingException(cursor);
+					if (!resolvableType->resolving) throw StopParsingException(cursor);
+					if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
+
+					auto symbol = resolvableType->resolving->resolvedSymbols[0];
+					if (!symbol->decls.Count() == 1) throw StopParsingException(cursor);
+					containingClass = symbol->decls[0].Cast<ClassDeclaration>().Obj();
+					if (!containingClass) throw StopParsingException(cursor);
+				}
+				cursor = oldCursor;
+			}
+			return ParseShortDeclarator(pa, type, containingClass, forceSpecialMethod, dr, cursor);
 		}
 		else
 		{
 			auto declarator = MakePtr<Declarator>();
 			declarator->type = typeResult;
+			if (containingClass)
+			{
+				declarator->containingClassSymbol = containingClass->symbol;
+			}
+
 			if (dr != DeclaratorRestriction::Zero)
 			{
-				if (ParseCppName(declarator->name, cursor, containingClass))
+				if (ParseCppName(declarator->name, cursor, forceSpecialMethod))
 				{
-					if (containingClass)
+					if (forceSpecialMethod)
 					{
+						if (!containingClass)
+						{
+							throw StopParsingException(cursor);
+						}
+
 						switch (declarator->name.type)
 						{
 						case CppNameType::Normal:
@@ -218,6 +247,10 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 							{
 								declarator->name.name = L"$__ctor";
 								declarator->name.type = CppNameType::Constructor;
+							}
+							else
+							{
+								throw StopParsingException(cursor);
 							}
 							break;
 						case CppNameType::Operator:
@@ -229,6 +262,10 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 								{
 									throw StopParsingException(cursor);
 								}
+							}
+							else
+							{
+								throw StopParsingException(cursor);
 							}
 							break;
 						case CppNameType::Destructor:
@@ -249,6 +286,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 								throw StopParsingException(cursor);
 							}
 							break;
+						case CppNameType::Constructor:
 						case CppNameType::Destructor:
 							throw StopParsingException(cursor);
 						}
@@ -271,9 +309,9 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 ParseLongDeclarator
 ***********************************************************************/
 
-Ptr<Declarator> ParseLongDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDeclaration* containingClass, bool trySpecialMember, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
+Ptr<Declarator> ParseLongDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDeclaration* containingClass, bool forceSpecialMethod, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
-	auto declarator = ParseShortDeclarator(pa, typeResult, containingClass, trySpecialMember, dr, cursor);
+	auto declarator = ParseShortDeclarator(pa, typeResult, containingClass, forceSpecialMethod, dr, cursor);
 	auto targetType = declarator->type;
 
 	{
@@ -298,7 +336,7 @@ Ptr<Declarator> ParseLongDeclarator(const ParsingArguments& pa, Ptr<Type> typeRe
 			{
 				try
 				{
-					declarator = ParseLongDeclarator(pa, targetType, containingClass, trySpecialMember, dr, cursor);
+					declarator = ParseLongDeclarator(pa, targetType, containingClass, forceSpecialMethod, dr, cursor);
 					RequireToken(cursor, CppTokens::RPARENTHESIS);
 				}
 				catch (const StopParsingException&)
@@ -571,12 +609,12 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 ParseDeclaratorWithInitializer
 ***********************************************************************/
 
-void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDeclaration* containingClass, bool trySpecialMember, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDeclaration* containingClass, bool forceSpecialMethod, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
 	auto itemDr = dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : dr;
 	while (true)
 	{
-		auto declarator = ParseLongDeclarator(pa, typeResult, containingClass, trySpecialMember, itemDr, cursor);
+		auto declarator = ParseLongDeclarator(pa, typeResult, containingClass, forceSpecialMethod, itemDr, cursor);
 
 		if (ir == InitializerRestriction::Optional)
 		{
