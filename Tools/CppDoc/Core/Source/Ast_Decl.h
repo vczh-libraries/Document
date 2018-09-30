@@ -95,6 +95,7 @@ public:
 	bool											decoratorExplicit = false;
 	bool											decoratorInline = false;
 	bool											decoratorForceInline = false;
+	bool											decoratorAbstract = false;
 };
 
 class ForwardEnumDeclaration : public Declaration

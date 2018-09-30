@@ -88,9 +88,6 @@ public:
 	}
 };
 
-extern Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-
 /***********************************************************************
 ParseShortDeclarator
 ***********************************************************************/
@@ -438,11 +435,9 @@ GIVE_UP:
 			{
 				List<Ptr<Declarator>> declarators;
 				ParseDeclarator(pa, DeclaratorRestriction::Optional, InitializerRestriction::Optional, cursor, declarators);
-				if (declarators.Count() != 1)
-				{
-					throw StopParsingException(cursor);
-				}
-				type->parameters.Add(declarators[0]);
+				List<Ptr<VariableDeclaration>> varDecls;
+				BuildVariablesAndSymbols(pa, declarators, varDecls, false);
+				type->parameters.Add(varDecls[0]);
 			}
 
 			if (TestToken(cursor, CppTokens::RPARENTHESIS))
@@ -496,10 +491,6 @@ GIVE_UP:
 
 				List<Ptr<Declarator>> declarators;
 				ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-				if (declarators.Count() != 1)
-				{
-					throw StopParsingException(cursor);
-				}
 				type->decoratorReturnType = declarators[0]->type;
 			}
 			else if (TestToken(cursor, CppTokens::NOEXCEPT))
@@ -515,10 +506,6 @@ GIVE_UP:
 				{
 					List<Ptr<Declarator>> declarators;
 					ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-					if (declarators.Count() != 1)
-					{
-						throw StopParsingException(cursor);
-					}
 					type->exceptions.Add(declarators[0]->type);
 
 					if (TestToken(cursor, CppTokens::RPARENTHESIS))
@@ -560,6 +547,10 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 	else if (TestToken(cursor, CppTokens::LPARENTHESIS))
 	{
 		initializer->initializerType = InitializerType::Constructor;
+	}
+	else
+	{
+		throw StopParsingException(cursor);
 	}
 
 	while (true)
@@ -609,9 +600,29 @@ void ParseDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDecl
 
 		if (ir == InitializerRestriction::Optional)
 		{
-			if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LBRACE, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))
+			bool isFunction = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>();
+			if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))
 			{
 				declarator->initializer = ParseInitializer(pa, cursor);
+			}
+			else if (TestToken(cursor, CppTokens::LBRACE, false))
+			{
+				auto oldCursor = cursor;
+				try
+				{
+					declarator->initializer = ParseInitializer(pa, cursor);
+				}
+				catch (const StopParsingException&)
+				{
+					if (isFunction)
+					{
+						cursor = oldCursor;
+					}
+					else
+					{
+						throw;
+					}
+				}
 			}
 		}
 		declarators.Add(declarator);

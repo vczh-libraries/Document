@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Ast_Type.h"
+#include "Ast_Expr.h"
 #include "Ast_Decl.h"
 
 /***********************************************************************
@@ -7,35 +8,73 @@ FindForward
 ***********************************************************************/
 
 template<typename TRoot, typename TForward>
-void FindForwardDeclarationRoot(Symbol* scope, Symbol* forwardSymbol, Ptr<CppTokenCursor> cursor)
+struct ForwardPolicy
 {
-	const auto& siblings = scope->children[forwardSymbol->name];
+	static bool IsSameCategory(Symbol* symbol, Symbol* sibling)
+	{
+		return true;
+	}
+};
+
+template<>
+struct ForwardPolicy<FunctionDeclaration, ForwardFunctionDeclaration>
+{
+	static bool IsSameCategory(Symbol* symbol, Symbol* sibling)
+	{
+		auto f1 = symbol->decls[0].Cast<ForwardFunctionDeclaration>();
+		auto f2 = symbol->decls[0].Cast<ForwardFunctionDeclaration>();
+		return IsSameResolvedType(f1->type, f2->type);
+	}
+};
+
+template<typename TRoot, typename TForward>
+void SearchForwards(Symbol* scope, Symbol* symbol, Ptr<CppTokenCursor> cursor, Symbol*& root, List<Symbol*>& forwards)
+{
+	const auto& siblings = scope->children[symbol->name];
 	for (vint i = 0; i < siblings.Count(); i++)
 	{
 		auto& sibling = siblings[i];
+		bool sameCategory = ForwardPolicy<TRoot, TForward>::IsSameCategory(symbol, sibling.Obj());
 		if (sibling->decls[0].Cast<TRoot>())
 		{
-			if (!forwardSymbol->SetForwardDeclarationRoot(sibling.Obj()))
+			if (sameCategory)
 			{
-				throw StopParsingException(cursor);
+				if (root)
+				{
+					throw StopParsingException(cursor);
+				}
+				else
+				{
+					root = sibling.Obj();
+				}
 			}
+		}
+		else if (sibling->decls[0].Cast<TForward>())
+		{
+			if (sameCategory)
+			{
+				forwards.Add(sibling.Obj());
+			}
+		}
+		else
+		{
+			throw StopParsingException(cursor);
 		}
 	}
 }
 
 template<typename TRoot, typename TForward>
-void FindForwardDeclarations(Symbol* scope, Symbol* contextSymbol, Ptr<CppTokenCursor> cursor)
+void ConnectForwards(Symbol* scope, Symbol* symbol, Ptr<CppTokenCursor> cursor)
 {
-	const auto& siblings = scope->children[contextSymbol->name];
-	for (vint i = 0; i < siblings.Count(); i++)
+	Symbol* root = nullptr;
+	List<Symbol*> forwards;
+	SearchForwards<TRoot, TForward>(scope, symbol, cursor, root, forwards);
+
+	for (vint i = 0; i < forwards.Count(); i++)
 	{
-		auto& sibling = siblings[i];
-		if (sibling->decls[0].Cast<TForward>() && sibling->isForwardDeclaration)
+		if (!forwards[i]->SetForwardDeclarationRoot(root))
 		{
-			if (!sibling->SetForwardDeclarationRoot(contextSymbol))
-			{
-				throw StopParsingException(cursor);
-			}
+			throw StopParsingException(cursor);
 		}
 	}
 }
@@ -72,7 +111,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				vint index = contextSymbol->children.Keys().IndexOf(decl->name.name);
 				if (index == -1)
 				{
-					contextSymbol = contextSymbol->CreateSymbol(decl);
+					contextSymbol = contextSymbol->CreateDeclSymbol(decl);
 				}
 				else
 				{
@@ -123,7 +162,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		{
 			List<Ptr<Declarator>> declarators;
 			ParseDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-			if (declarators.Count() != 1) throw StopParsingException(cursor);
 			baseType = declarators[0]->type;
 		}
 
@@ -134,14 +172,14 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			decl->name = cppName;
 			decl->baseType = baseType;
 
-			auto contextSymbol = pa.context->CreateSymbol(decl);
+			auto contextSymbol = pa.context->CreateDeclSymbol(decl);
 			ParsingArguments newPa(pa, contextSymbol);
 
 			while (!TestToken(cursor, CppTokens::RBRACE))
 			{
 				auto enumItem = MakePtr<EnumItemDeclaration>();
 				if (!ParseCppName(enumItem->name, cursor)) throw StopParsingException(cursor);
-				contextSymbol->CreateSymbol(enumItem);
+				contextSymbol->CreateDeclSymbol(enumItem);
 				decl->items.Add(enumItem);
 
 				if (TestToken(cursor, CppTokens::EQ))
@@ -158,7 +196,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 			RequireToken(cursor, CppTokens::SEMICOLON);
 			output.Add(decl);
-			FindForwardDeclarations<EnumDeclaration, ForwardEnumDeclaration>(pa.context, contextSymbol, cursor);
+			ConnectForwards<EnumDeclaration, ForwardEnumDeclaration>(pa.context, contextSymbol, cursor);
 		}
 		else
 		{
@@ -167,10 +205,10 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			decl->enumClass = enumClass;
 			decl->name = cppName;
 			decl->baseType = baseType;
-			auto forwardSymbol = pa.context->CreateSymbol(decl);
+			auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
 			forwardSymbol->isForwardDeclaration = true;
 			output.Add(decl);
-			FindForwardDeclarationRoot<EnumDeclaration, ForwardEnumDeclaration>(pa.context, forwardSymbol, cursor);
+			ConnectForwards<EnumDeclaration, ForwardEnumDeclaration>(pa.context, forwardSymbol, cursor);
 		}
 	}
 	else if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
@@ -201,19 +239,19 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			auto decl = MakePtr<ForwardClassDeclaration>();
 			decl->classType = classType;
 			decl->name = cppName;
-			auto forwardSymbol = pa.context->CreateSymbol(decl);
+			auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
 			forwardSymbol->isForwardDeclaration = true;
 			output.Add(decl);
-			FindForwardDeclarationRoot<ClassDeclaration, ForwardClassDeclaration>(pa.context, forwardSymbol, cursor);
+			ConnectForwards<ClassDeclaration, ForwardClassDeclaration>(pa.context, forwardSymbol, cursor);
 		}
 		else
 		{
 			auto decl = MakePtr<ClassDeclaration>();
 			decl->classType = classType;
 			decl->name = cppName;
-			auto contextSymbol = pa.context->CreateSymbol(decl);
+			auto contextSymbol = pa.context->CreateDeclSymbol(decl);
 			output.Add(decl);
-			FindForwardDeclarations<ClassDeclaration, ForwardClassDeclaration>(pa.context, contextSymbol, cursor);
+			ConnectForwards<ClassDeclaration, ForwardClassDeclaration>(pa.context, contextSymbol, cursor);
 
 			ParsingArguments declPa(pa, contextSymbol);
 
@@ -237,7 +275,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 					List<Ptr<Declarator>> declarators;
 					ParseDeclarator(declPa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-					if (declarators.Count() != 1) throw StopParsingException(cursor);
 					decl->baseTypes.Add({ accessor,declarators[0]->type });
 
 					if (TestToken(cursor, CppTokens::LBRACE, false))
@@ -349,10 +386,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			try
 			{
 				ParseDeclarator(pa, nullptr, specialMethodParent.Obj(), DeclaratorRestriction::One, InitializerRestriction::Optional, cursor, declarators);
-				if (declarators.Count() != 1)
-				{
-					throw StopParsingException(cursor);
-				}
 
 				auto& cppName = declarators[0]->name;
 				switch (cppName.type)
@@ -376,14 +409,32 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		}
 		ParseDeclarator(pa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
 	SUCCEEDED_IN_SPECIAL_METHOD:
-		RequireToken(cursor, CppTokens::SEMICOLON);
 
 		for (vint i = 0; i < declarators.Count(); i++)
 		{
 			auto declarator = declarators[i];
 
-			if (GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
+			if (auto type = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
 			{
+				if (i != 0)
+				{
+					throw StopParsingException(cursor);
+				}
+
+				bool decoratorAbstract = false;
+				if (declarator->initializer)
+				{
+					if (declarator->initializer->initializerType != InitializerType::Equal) throw StopParsingException(cursor);
+					if (declarator->initializer->arguments.Count() != 1) throw StopParsingException(cursor);
+
+					auto expr = declarator->initializer->arguments[0].Cast<LiteralExpr>();
+					if (!expr) throw StopParsingException(cursor);
+					if (expr->tokens.Count() != 1) throw StopParsingException(cursor);
+					if (expr->tokens[0].length != 1) throw StopParsingException(cursor);
+					if (*expr->tokens[0].reading != L'0') throw StopParsingException(cursor);
+					decoratorAbstract = true;
+				}
+
 #define FILL_FUNCTION(NAME)\
 				NAME->name = declarator->name;\
 				NAME->type = declarator->type;\
@@ -394,14 +445,39 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				NAME->decoratorVirtual = decoratorVirtual;\
 				NAME->decoratorExplicit = decoratorExplicit;\
 				NAME->decoratorInline = decoratorInline;\
-				NAME->decoratorForceInline = decoratorForceInline\
+				NAME->decoratorForceInline = decoratorForceInline;\
+				NAME->decoratorAbstract = decoratorAbstract\
 
+				Ptr<Stat> stat;
+				if (TestToken(cursor, CppTokens::LBRACE, false))
+				{
+					stat = ParseStat(pa, cursor);
+				}
+
+				if (stat)
+				{
+					auto decl = MakePtr<FunctionDeclaration>();
+					FILL_FUNCTION(decl);
+					decl->statement = stat;
+					auto contextSymbol = pa.context->CreateDeclSymbol(decl);
+					{
+						ParsingArguments newPa(pa, contextSymbol);
+						BuildSymbols(newPa, type->parameters);
+					}
+					output.Add(decl);
+					ConnectForwards<FunctionDeclaration, ForwardFunctionDeclaration>(pa.context, contextSymbol, cursor);
+					return;
+				}
+				else
 				{
 					auto decl = MakePtr<ForwardFunctionDeclaration>();
 					FILL_FUNCTION(decl);
-					auto forwardSymbol = pa.context->CreateSymbol(decl);
+					auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
 					forwardSymbol->isForwardDeclaration = true;
 					output.Add(decl);
+					ConnectForwards<FunctionDeclaration, ForwardFunctionDeclaration>(pa.context, forwardSymbol, cursor);
+					RequireToken(cursor, CppTokens::SEMICOLON);
+					return;
 				}
 #undef FILL_FUNCTION
 			}
@@ -420,22 +496,62 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				{
 					auto decl = MakePtr<ForwardVariableDeclaration>();
 					FILL_VARIABLE(decl);
-					auto forwardSymbol = pa.context->CreateSymbol(decl);
+					auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
 					forwardSymbol->isForwardDeclaration = true;
 					output.Add(decl);
-					FindForwardDeclarationRoot<VariableDeclaration, ForwardVariableDeclaration>(pa.context, forwardSymbol, cursor);
+					ConnectForwards<VariableDeclaration, ForwardVariableDeclaration>(pa.context, forwardSymbol, cursor);
 				}
 				else
 				{
 					auto decl = MakePtr<VariableDeclaration>();
 					FILL_VARIABLE(decl);
 					decl->initializer = declarator->initializer;
-					auto contextSymbol = pa.context->CreateSymbol(decl);
+					auto contextSymbol = pa.context->CreateDeclSymbol(decl);
 					output.Add(decl);
-					FindForwardDeclarations<VariableDeclaration, ForwardVariableDeclaration>(pa.context, contextSymbol, cursor);
+					ConnectForwards<VariableDeclaration, ForwardVariableDeclaration>(pa.context, contextSymbol, cursor);
 				}
 #undef FILL_VARIABLE
 			}
 		}
+		RequireToken(cursor, CppTokens::SEMICOLON);
+	}
+}
+
+/***********************************************************************
+BuildVariablesAndSymbols
+***********************************************************************/
+
+void BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls)
+{
+	for (vint i = 0; i < varDecls.Count(); i++)
+	{
+		auto varDecl = varDecls[i];
+		if (varDecl->name)
+		{
+			pa.context->CreateDeclSymbol(varDecl);
+		}
+	}
+}
+
+/***********************************************************************
+BuildVariablesAndSymbols
+***********************************************************************/
+
+void BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls, bool createSymbols)
+{
+	for (vint i = 0; i < declarators.Count(); i++)
+	{
+		auto declarator = declarators[i];
+
+		auto varDecl = MakePtr<VariableDeclaration>();
+		varDecl->type = declarator->type;
+		varDecl->name = declarator->name;
+		varDecl->initializer = declarator->initializer;
+		varDecls.Add(varDecl);
+	}
+
+	if (createSymbols)
+	{
+		BuildSymbols(pa, varDecls);
 	}
 }

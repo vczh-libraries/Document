@@ -385,6 +385,7 @@ ParseLongType
 
 Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
+	bool typenameType = TestToken(cursor, CppTokens::TYPENAME);
 	Ptr<Type> typeResult = ParseShortType(pa, cursor);
 
 	while (true)
@@ -458,7 +459,6 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			auto oldCursor = cursor;
 			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 			{
-				bool typenameType = TestToken(cursor, CppTokens::TYPENAME);
 				CppName cppName;
 				if (ParseCppName(cppName, cursor))
 				{
@@ -477,13 +477,6 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 
 						typeResult = type;
 						continue;
-					}
-				}
-				else
-				{
-					if (typenameType)
-					{
-						throw StopParsingException(cursor);
 					}
 				}
 			}

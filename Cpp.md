@@ -23,19 +23,33 @@
   - [x] Connect forward declaractions with their root
   - [x] Assert resolvings in scopes
   - [x] Assert resolvings in scopes of base types
-- [ ] Parse function body and Statements
-  - [ ] Assert ASTs
-  - [ ] Connect forward declaractions with their root
+- [x] Parse function body and Statements
+  - [x] Assert ASTs
+  - [x] Abstract function decorator
   - [ ] Class static variables defined out of classes
+    - [ ] Static variables without initializers are considered as forward declaration
   - [ ] Class member methods defined out of classes
-  - [ ] Abstract function decorator
+    - [ ] Only compare function qualifiers, names and parameter types
+  - [x] Connect forward declaractions with their root
+  - [ ] For out-of-class declarations, an identifier match names inside classes before containing context
+- [ ] Check foward root matching
+  - [x] Report errors when multiple roots are found for a forward declaration
+  - [ ] Report errors when incompatible declarations have the same name
 - [ ] `Using` namespaces and symbols
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
 - [ ] Parse full expressions
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
+  - [ ] Resolve symbols created by statements
+    - [ ] Resolve same-name symbols in different nested scopes
+      - [ ] declaration statement
+      - [ ] `if`
+      - [ ] `foreach`
+      - [ ] `for`
+      - [ ] `catch`
 - [ ] `Template`, `Typedef` and anonymous declaration
+  - [x] Fix wrong `template` rule created above, `typename A::B` not `A::typename B`
   - [ ] Assert ASTs
   - [ ] Connect generic forward declarations with their root
   - [ ] Methods of generic classes defined out of classes
@@ -178,20 +192,20 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ### DECL
 
-- [ ] **Friend**: `friend` DECL `;`
+- [x] **Friend**: `friend` DECL `;`
 - [ ] **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
-- [ ] **Type definition**: (CLASS_STRUCT | ENUM | UNION) {DECLARATOR [INITIALIZER] `,` ...}+ `;`
-  [ ] - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
+- [x] **Type definition**: (CLASS_STRUCT | ENUM | UNION) {DECLARATOR [INITIALIZER] `,` ...}+ `;`
 - [ ] **Type alias**:
   - [ ] `typedef` (CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;`
+    - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
   - [ ] `typedef` TYPE-MULTIPLE-INITIALIZER `;`
   - [ ] [TEMPLATE-SPEC] `using` NAME = TYPE-ZERO `;`
 - [ ] **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
 - [ ] **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
 - [x] **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`
 - [x] **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
-- [ ] **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
-- [ ] FUNCTION
+- [x] **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
+- [x] FUNCTION
 
 ## TYPE (Type)
 
@@ -221,7 +235,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] `do` STAT `while` `(` EXPR `)` `;`
 - [x] `for` ([TYPE {[DECLARATOR] [INITIALIZER] `,` ...}] `;` [EXPR] `;` [EXPR]) STAT
 - [x] `for` (TYPE-SINGLE-DECLARATOR `:` EXPR) STAT
-- [x] `if` [`constexpr`] `(` [TYPE IDENTIFIER `=`] EXPR `)` STAT [`else` STAT]
+- [x] `if` [`constexpr`] `(`[STAT `;`] [TYPE IDENTIFIER `=`] EXPR `)` STAT [`else` STAT]
 - [x] `switch` `(` {STAT} EXPR `)` `{` STAT `}`
 - [x] `try` STAT `catch` `(` TYPE-OPTIONAL-DECLARATOR `)` STAT
 - [x] `return` EXPR `;`
@@ -247,7 +261,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [ ] Binary operator expressions
 - [ ] EXPR `?` EXPR `:` EXPR
 - [ ] (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
-- [ ] (`typeid` | `sizeof`) `(` (EXPR | TYPE) `)`
+- [ ] (`typeid` | `sizeof` [`...`]) `(` (EXPR | TYPE) `)`
 - [ ] `(` TYPE `)` EXPR
 - [ ] [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
 - [ ] [`::`] `delete` [`[` `]`] EXPR

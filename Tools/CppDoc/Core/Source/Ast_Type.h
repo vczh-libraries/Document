@@ -40,6 +40,8 @@ public:
 Types
 ***********************************************************************/
 
+class VariableDeclaration;
+
 enum class CppPrimitiveType
 {
 	_auto,
@@ -118,20 +120,20 @@ class FunctionType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<Type>				returnType;
-	List<Ptr<Declarator>>	parameters;
+	Ptr<Type>						returnType;
+	List<Ptr<VariableDeclaration>>	parameters;
 
-	bool					qualifierConstExpr = false;
-	bool					qualifierConst = false;
-	bool					qualifierVolatile = false;
-	bool					qualifierLRef = false;
-	bool					qualifierRRef = false;
+	bool							qualifierConstExpr = false;
+	bool							qualifierConst = false;
+	bool							qualifierVolatile = false;
+	bool							qualifierLRef = false;
+	bool							qualifierRRef = false;
 
-	bool					decoratorOverride = false;
-	bool					decoratorNoExcept = false;
-	bool					decoratorThrow = false;
-	List<Ptr<Type>>			exceptions;
-	Ptr<Type>				decoratorReturnType;
+	bool							decoratorOverride = false;
+	bool							decoratorNoExcept = false;
+	bool							decoratorThrow = false;
+	List<Ptr<Type>>					exceptions;
+	Ptr<Type>						decoratorReturnType;
 };
 
 class MemberType : public Type

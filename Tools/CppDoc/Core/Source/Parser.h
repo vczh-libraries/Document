@@ -14,7 +14,8 @@ class Symbol : public Object
 public:
 	Symbol*					parent = nullptr;
 	WString					name;
-	List<Ptr<Declaration>>	decls; // only namespaces share symbols
+	List<Ptr<Declaration>>	decls;	// only namespaces share symbols
+	Ptr<Stat>				stat;	// if this scope is created by a statement
 	SymbolGroup				children;
 
 	bool					isForwardDeclaration = false;
@@ -26,8 +27,7 @@ public:
 
 	void					Add(Ptr<Symbol> child);
 
-	template<typename T>
-	Symbol* CreateSymbol(Ptr<T> _decl, Symbol* _specializationRoot = nullptr)
+	Symbol* CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* _specializationRoot = nullptr)
 	{
 		auto symbol = MakePtr<Symbol>();
 		symbol->name = _decl->name.name;
@@ -35,7 +35,6 @@ public:
 		Add(symbol);
 
 		_decl->symbol = symbol.Obj();
-
 		if (_specializationRoot)
 		{
 			_specializationRoot->specializations.Add(symbol.Obj());
@@ -44,8 +43,20 @@ public:
 		return symbol.Obj();
 	}
 
+	Symbol* CreateStatSymbol(Ptr<Stat> _stat)
+	{
+		auto symbol = MakePtr<Symbol>();
+		symbol->name = L"$";
+		symbol->stat = _stat;
+		Add(symbol);
+
+		_stat->symbol = symbol.Obj();
+		return symbol.Obj();
+	}
+
 	bool SetForwardDeclarationRoot(Symbol* root)
 	{
+		if (forwardDeclarationRoot == root) return true;
 		if (forwardDeclarationRoot) return false;
 		forwardDeclarationRoot = root;
 		root->forwardDeclarations.Add(this);
@@ -98,6 +109,7 @@ struct StopParsingException
 
 class FunctionType;
 class ClassDeclaration;
+class VariableDeclaration;
 enum class CppCallingConvention;
 
 extern bool					SkipSpecifiers(Ptr<CppTokenCursor>& cursor);
@@ -107,9 +119,13 @@ extern Ptr<Type>			ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToRep
 extern Ptr<Type>			AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType);
 extern bool					ParseCallingConvention(CppCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
 
+extern Ptr<Type>			ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Initializer>		ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern void					ParseDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDeclaration* specialMethodParent, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void					ParseDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void					ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
+extern void					BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls);
+extern void					BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls, bool createSymbols);
 extern Ptr<Expr>			ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Stat>			ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Program>			ParseProgram(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);

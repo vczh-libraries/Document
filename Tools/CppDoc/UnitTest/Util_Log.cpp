@@ -79,72 +79,6 @@ public:
 			writer.WriteString(L"\t");
 		}
 	}
-
-	void WriteHeader(ForwardVariableDeclaration* self)
-	{
-		if (self->decoratorExtern) writer.WriteString(L"extern ");
-		if (self->decoratorMutable) writer.WriteString(L"mutable ");
-		if (self->decoratorRegister) writer.WriteString(L"register ");
-		if (self->decoratorStatic) writer.WriteString(L"static ");
-		if (self->decoratorThreadLocal) writer.WriteString(L"thread_local ");
-		writer.WriteString(self->name.name);
-		writer.WriteString(L": ");
-		Log(self->type, writer);
-	}
-
-	void WriteHeader(ForwardFunctionDeclaration* self)
-	{
-		if (self->decoratorExplicit) writer.WriteString(L"explicit ");
-		if (self->decoratorExtern) writer.WriteString(L"extern ");
-		if (self->decoratorFriend) writer.WriteString(L"friend ");
-		if (self->decoratorInline) writer.WriteString(L"inline ");
-		if (self->decoratorForceInline) writer.WriteString(L"__forceinline ");
-		if (self->decoratorStatic) writer.WriteString(L"static ");
-		if (self->decoratorVirtual) writer.WriteString(L"virtual ");
-		switch (self->methodType)
-		{
-		case CppMethodType::Constructor:
-			writer.WriteString(L"__ctor ");
-			break;
-		case CppMethodType::Destructor:
-			writer.WriteString(L"__dtor ");
-			break;
-		case CppMethodType::TypeConversion:
-			writer.WriteString(L"__type ");
-			break;
-		}
-		writer.WriteString(self->name.name);
-		writer.WriteString(L": ");
-		Log(self->type, writer);
-	}
-
-	void WriteHeader(ForwardEnumDeclaration* self)
-	{
-		writer.WriteString(self->enumClass ? L"enum class " : L"enum ");
-		writer.WriteString(self->name.name);
-		if (self->baseType)
-		{
-			writer.WriteString(L" : ");
-			Log(self->baseType, writer);
-		}
-	}
-
-	void WriteHeader(ForwardClassDeclaration* self)
-	{
-		switch (self->classType)
-		{
-		case CppClassType::Class:
-			writer.WriteString(L"class ");
-			break;
-		case CppClassType::Struct:
-			writer.WriteString(L"struct ");
-			break;
-		case CppClassType::Union:
-			writer.WriteString(L"union ");
-			break;
-		}
-		writer.WriteString(self->name.name);
-	}
 };
 
 /***********************************************************************
@@ -300,7 +234,7 @@ public:
 			{
 				writer.WriteString(L", ");
 			}
-			Log(self->parameters[i], writer);
+			Log(self->parameters[i], writer, 0, false);;
 		}
 		writer.WriteChar(L')');
 
@@ -405,6 +339,24 @@ public:
 	{
 	}
 
+	void WriteSubStat(Ptr<Stat> stat)
+	{
+		if (stat.Cast<BlockStat>())
+		{
+			WriteIndentation();
+			indentation++;
+			stat->Accept(this);
+			indentation--;
+		}
+		else
+		{
+			indentation++;
+			WriteIndentation();
+			stat->Accept(this);
+			indentation--;
+		}
+	}
+
 	void Visit(EmptyStat* self)override
 	{
 		writer.WriteLine(L";");
@@ -412,7 +364,8 @@ public:
 
 	void Visit(BlockStat* self)override
 	{
-		indentation--;
+		bool hasIdentation = indentation > 0;
+		if (hasIdentation) indentation--;
 		writer.WriteLine(L"{");
 		indentation++;
 		for (vint i = 0; i < self->stats.Count(); i++)
@@ -423,14 +376,17 @@ public:
 		indentation--;
 		WriteIndentation();
 		writer.WriteLine(L"}");
-		indentation++;
+		if (hasIdentation) indentation++;
 	}
 
 	void Visit(DeclStat* self)override
 	{
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
-			WriteIndentation();
+			if (i != 0)
+			{
+				WriteIndentation();
+			}
 			Log(self->decls[i], writer, indentation, true);
 		}
 	}
@@ -484,80 +440,84 @@ public:
 		writer.WriteString(L"while (");
 		Log(self->expr, writer);
 		writer.WriteLine(L")");
-
-		WriteIndentation();
-		indentation++;
-		self->stat->Accept(this);
-		indentation--;
+		WriteSubStat(self->stat);
 	}
 
 	void Visit(DoWhileStat* self)override
 	{
 		writer.WriteLine(L"do");
-
-		WriteIndentation();
-		indentation++;
-		self->stat->Accept(this);
-		indentation--;
+		WriteSubStat(self->stat);
 
 		WriteIndentation();
 		writer.WriteString(L"while (");
 		Log(self->expr, writer);
-		writer.WriteLine(L")");
+		writer.WriteLine(L");");
 	}
 
 	void Visit(ForEachStat* self)override
 	{
-		writer.WriteString(L"for (");
+		writer.WriteString(L"foreach (");
 		Log(self->varDecl, writer, 0, false);
 		writer.WriteString(L" : ");
 		Log(self->expr, writer);
 		writer.WriteLine(L")");
-
-		WriteIndentation();
-		indentation++;
-		self->stat->Accept(this);
-		indentation--;
+		WriteSubStat(self->stat);
 	}
 
 	void Visit(ForStat* self)override
 	{
-		writer.WriteLine(L"for");
-		
-		indentation++;
-		WriteIndentation();
-		self->init->Accept(this);
-		WriteIndentation();
-		if (self->expr) Log(self->expr, writer);
-		writer.WriteLine(L";");
-		if (self->effect) Log(self->effect, writer);
-		writer.WriteLine(L"");
-		indentation--;
+		writer.WriteString(L"for (");
+		if (self->init)
+		{
+			Log(self->init, writer);
+		}
+		else
+		{
+			for (vint i = 0; i < self->varDecls.Count(); i++)
+			{
+				if (i > 0)
+				{
+					writer.WriteString(L", ");
+				}
+				Log(self->varDecls[i], writer, 0, false);
+			}
+		}
+		writer.WriteString(L"; ");
 
-		WriteIndentation();
-		indentation++;
-		self->stat->Accept(this);
-		indentation--;
+		if (self->expr) Log(self->expr, writer);
+		writer.WriteString(L"; ");
+
+		if (self->effect) Log(self->effect, writer);
+		writer.WriteLine(L")");
+		WriteSubStat(self->stat);
 	}
 
 	void Visit(IfElseStat* self)override
 	{
-		if (self->decl)
+		writer.WriteString(L"if (");
+		for (vint i = 0; i < self->varDecls.Count(); i++)
 		{
-			writer.WriteString(L"if ");
-			Log(self->decl, writer, indentation, true);
+			Log(self->varDecls[i], writer, 0, false);
+			if (i == self->varDecls.Count() - 1)
+			{
+				writer.WriteString(L"; ");
+			}
+			else
+			{
+				writer.WriteString(L", ");
+			}
+		}
+
+		if (self->varExpr)
+		{
+			Log(self->varExpr, writer, indentation, false);
 		}
 		else
 		{
-			writer.WriteString(L"if (");
 			Log(self->expr, writer);
-			writer.WriteLine(L")");
 		}
-
-		WriteIndentation();
-		indentation++;
-		self->trueStat->Accept(this);
-		indentation--;
+		writer.WriteLine(L")");
+		WriteSubStat(self->trueStat);
 
 		if (self->falseStat)
 		{
@@ -570,10 +530,7 @@ public:
 			else
 			{
 				writer.WriteLine(L"else");
-				WriteIndentation();
-				indentation++;
-				self->trueStat->Accept(this);
-				indentation--;
+				WriteSubStat(self->falseStat);
 			}
 		}
 	}
@@ -581,41 +538,35 @@ public:
 	void Visit(SwitchStat* self)override
 	{
 		writer.WriteString(L"switch (");
-		Log(self->expr, writer);
+		if (self->varExpr)
+		{
+			Log(self->varExpr, writer, indentation, false);
+		}
+		else
+		{
+			Log(self->expr, writer);
+		}
 		writer.WriteLine(L")");
-
-		WriteIndentation();
-		indentation++;
-		self->stat->Accept(this);
-		indentation--;
+		WriteSubStat(self->stat);
 	}
 
 	void Visit(TryCatchStat* self)override
 	{
 		writer.WriteLine(L"try");
-		WriteIndentation();
-		indentation++;
-		self->tryStat->Accept(this);
-		indentation--;
+		WriteSubStat(self->tryStat);
 
 		WriteIndentation();
 		if (self->exception)
 		{
-			writer.WriteLine(L"catch");
-			indentation++;
-			WriteIndentation();
-			Log(self->exception, writer);
-			writer.WriteLine(L";");
-			indentation--;
+			writer.WriteString(L"catch (");
+			Log(self->exception, writer, 0, false);
+			writer.WriteLine(L")");
 		}
 		else
 		{
 			writer.WriteLine(L"catch (...)");
 		}
-		WriteIndentation();
-		indentation++;
-		self->catchStat->Accept(this);
-		indentation--;
+		WriteSubStat(self->catchStat);
 	}
 
 	void Visit(ReturnStat* self)override
@@ -635,38 +586,26 @@ public:
 	void Visit(__Try__ExceptStat* self)override
 	{
 		writer.WriteLine(L"__try");
-		WriteIndentation();
-		indentation++;
-		self->tryStat->Accept(this);
-		indentation--;
+		WriteSubStat(self->tryStat);
 
 		WriteIndentation();
-		writer.WriteString(L"__except");
+		writer.WriteString(L"__except (");
 		Log(self->expr, writer);
 		writer.WriteLine(L")");
-		WriteIndentation();
-		indentation++;
-		self->exceptStat->Accept(this);
-		indentation--;
+		WriteSubStat(self->exceptStat);
 	}
 
 	void Visit(__Try__FinallyStat* self)override
 	{
 		writer.WriteLine(L"__try");
-		WriteIndentation();
-		indentation++;
-		self->tryStat->Accept(this);
-		indentation--;
+		WriteSubStat(self->tryStat);
 
 		WriteIndentation();
 		writer.WriteLine(L"__finally");
-		WriteIndentation();
-		indentation++;
-		self->finallyStat->Accept(this);
-		indentation--;
+		WriteSubStat(self->finallyStat);
 	}
 
-	void Visit(__Leave* self)override
+	void Visit(__LeaveStat* self)override
 	{
 		writer.WriteLine(L"__leave;");
 	}
@@ -676,10 +615,7 @@ public:
 		writer.WriteString(L"__if_exists (");
 		Log(self->expr, writer);
 		writer.WriteLine(L")");
-		WriteIndentation();
-		indentation++;
-		self->stat->Accept(this);
-		indentation--;
+		WriteSubStat(self->stat);
 	}
 
 	void Visit(__IfNotExistsStat* self)override
@@ -687,12 +623,8 @@ public:
 		writer.WriteString(L"__if_not_exists (");
 		Log(self->expr, writer);
 		writer.WriteLine(L")");
-		WriteIndentation();
-		indentation++;
-		self->stat->Accept(this);
-		indentation--;
+		WriteSubStat(self->stat);
 	}
-
 };
 
 /***********************************************************************
@@ -703,6 +635,80 @@ class LogDeclVisitor : public Object, public virtual IDeclarationVisitor, privat
 {
 private:
 	bool					semicolon;
+
+
+	void WriteHeader(ForwardVariableDeclaration* self)
+	{
+		if (self->decoratorExtern) writer.WriteString(L"extern ");
+		if (self->decoratorMutable) writer.WriteString(L"mutable ");
+		if (self->decoratorRegister) writer.WriteString(L"register ");
+		if (self->decoratorStatic) writer.WriteString(L"static ");
+		if (self->decoratorThreadLocal) writer.WriteString(L"thread_local ");
+		if (self->name)
+		{
+			writer.WriteString(self->name.name);
+			writer.WriteString(L": ");
+		}
+		Log(self->type, writer);
+	}
+
+	void WriteHeader(ForwardFunctionDeclaration* self)
+	{
+		if (self->decoratorExplicit) writer.WriteString(L"explicit ");
+		if (self->decoratorExtern) writer.WriteString(L"extern ");
+		if (self->decoratorFriend) writer.WriteString(L"friend ");
+		if (self->decoratorInline) writer.WriteString(L"inline ");
+		if (self->decoratorForceInline) writer.WriteString(L"__forceinline ");
+		if (self->decoratorStatic) writer.WriteString(L"static ");
+		if (self->decoratorVirtual) writer.WriteString(L"virtual ");
+		switch (self->methodType)
+		{
+		case CppMethodType::Constructor:
+			writer.WriteString(L"__ctor ");
+			break;
+		case CppMethodType::Destructor:
+			writer.WriteString(L"__dtor ");
+			break;
+		case CppMethodType::TypeConversion:
+			writer.WriteString(L"__type ");
+			break;
+		}
+		writer.WriteString(self->name.name);
+		writer.WriteString(L": ");
+		Log(self->type, writer);
+		if (self->decoratorAbstract)
+		{
+			writer.WriteString(L" = 0");
+		}
+	}
+
+	void WriteHeader(ForwardEnumDeclaration* self)
+	{
+		writer.WriteString(self->enumClass ? L"enum class " : L"enum ");
+		writer.WriteString(self->name.name);
+		if (self->baseType)
+		{
+			writer.WriteString(L" : ");
+			Log(self->baseType, writer);
+		}
+	}
+
+	void WriteHeader(ForwardClassDeclaration* self)
+	{
+		switch (self->classType)
+		{
+		case CppClassType::Class:
+			writer.WriteString(L"class ");
+			break;
+		case CppClassType::Struct:
+			writer.WriteString(L"struct ");
+			break;
+		case CppClassType::Union:
+			writer.WriteString(L"union ");
+			break;
+		}
+		writer.WriteString(self->name.name);
+	}
 
 public:
 	LogDeclVisitor(StreamWriter& _writer, vint _indentation, bool _semicolon)
@@ -751,7 +757,9 @@ public:
 
 	void Visit(FunctionDeclaration* self)override
 	{
-		throw 0;
+		WriteHeader(self);
+		writer.WriteLine(L"");
+		Log(self->statement, writer, indentation + 1);
 	}
 
 	void Visit(EnumItemDeclaration* self)override

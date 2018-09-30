@@ -64,6 +64,8 @@ class IStatVisitor;
 class Stat : public Object
 {
 public:
+	Symbol*					symbol = nullptr;
+
 	virtual void			Accept(IStatVisitor* visitor) = 0;
 };
 
@@ -99,5 +101,11 @@ public:
 	Symbol*					createdSymbol = nullptr;
 	Ptr<Initializer>		initializer;
 };
+
+/***********************************************************************
+Helpers
+***********************************************************************/
+
+extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
 
 #endif

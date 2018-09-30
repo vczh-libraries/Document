@@ -28,7 +28,7 @@ Visitor
 	F(ReturnStat)\
 	F(__Try__ExceptStat)\
 	F(__Try__FinallyStat)\
-	F(__Leave)\
+	F(__LeaveStat)\
 	F(__IfExistsStat)\
 	F(__IfNotExistsStat)\
 
@@ -50,6 +50,8 @@ public:
 Statements
 ***********************************************************************/
 
+class VariableDeclaration;
+
 class EmptyStat : public Stat
 {
 public:
@@ -61,7 +63,7 @@ class BlockStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	List<Ptr<Stat>>				stats;
+	List<Ptr<Stat>>					stats;
 };
 
 class DeclStat : public Stat
@@ -69,7 +71,7 @@ class DeclStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	List<Ptr<Declaration>>		decls;
+	List<Ptr<Declaration>>			decls;
 };
 
 class ExprStat : public Stat
@@ -77,7 +79,7 @@ class ExprStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Expr>					expr;
+	Ptr<Expr>						expr;
 };
 
 class LabelStat : public Stat
@@ -85,8 +87,8 @@ class LabelStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	CppName						name;
-	Ptr<Stat>					stat;
+	CppName							name;
+	Ptr<Stat>						stat;
 };
 
 class DefaultStat : public Stat
@@ -94,7 +96,7 @@ class DefaultStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Stat>					stat;
+	Ptr<Stat>						stat;
 };
 
 class CaseStat : public Stat
@@ -102,8 +104,8 @@ class CaseStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Expr>					expr;
-	Ptr<Stat>					stat;
+	Ptr<Expr>						expr;
+	Ptr<Stat>						stat;
 };
 
 class GotoStat : public Stat
@@ -111,7 +113,7 @@ class GotoStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	CppName						name;
+	CppName							name;
 };
 
 class BreakStat : public Stat
@@ -131,8 +133,8 @@ class WhileStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Expr>					expr;
-	Ptr<Stat>					stat;
+	Ptr<Expr>						expr;
+	Ptr<Stat>						stat;
 };
 
 class DoWhileStat : public Stat
@@ -140,18 +142,17 @@ class DoWhileStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Expr>					expr;
-	Ptr<Stat>					stat;
+	Ptr<Expr>						expr;
+	Ptr<Stat>						stat;
 };
-
 class ForEachStat : public Stat
 {
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Declaration>			varDecl;
-	Ptr<Expr>					expr;
-	Ptr<Stat>					stat;
+	Ptr<VariableDeclaration>		varDecl;
+	Ptr<Expr>						expr;
+	Ptr<Stat>						stat;
 };
 
 class ForStat : public Stat
@@ -159,10 +160,11 @@ class ForStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Stat>					init;
-	Ptr<Expr>					expr;
-	Ptr<Expr>					effect;
-	Ptr<Stat>					stat;
+	List<Ptr<VariableDeclaration>>	varDecls;	// optional, exclusive-1
+	Ptr<Expr>						init;		// optional, exclusive-1
+	Ptr<Expr>						expr;		// optional
+	Ptr<Expr>						effect;		// optional
+	Ptr<Stat>						stat;
 };
 
 class IfElseStat : public Stat
@@ -170,10 +172,11 @@ class IfElseStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Declaration>			decl;
-	Ptr<Expr>					expr;
-	Ptr<Stat>					trueStat;
-	Ptr<Stat>					falseStat;
+	List<Ptr<VariableDeclaration>>	varDecls;	// optional
+	Ptr<VariableDeclaration>		varExpr;	// exclusive-1
+	Ptr<Expr>						expr;		// exclusive-1
+	Ptr<Stat>						trueStat;
+	Ptr<Stat>						falseStat;	// optional
 };
 
 class SwitchStat : public Stat
@@ -181,8 +184,9 @@ class SwitchStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Expr>					expr;
-	Ptr<Stat>					stat;
+	Ptr<VariableDeclaration>		varExpr;	// exclusive-1
+	Ptr<Expr>						expr;		// exclusive-1
+	Ptr<Stat>						stat;
 };
 
 class TryCatchStat : public Stat
@@ -190,9 +194,9 @@ class TryCatchStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Stat>					tryStat;
-	Ptr<Stat>					catchStat;
-	Ptr<Declarator>				exception;
+	Ptr<Stat>						tryStat;
+	Ptr<Stat>						catchStat;
+	Ptr<VariableDeclaration>		exception;	// could be anonymous
 };
 
 class ReturnStat : public Stat
@@ -200,7 +204,7 @@ class ReturnStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Expr>					expr;
+	Ptr<Expr>						expr;
 };
 
 class __Try__ExceptStat : public Stat
@@ -208,9 +212,9 @@ class __Try__ExceptStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Stat>					tryStat;
-	Ptr<Stat>					exceptStat;
-	Ptr<Expr>					expr;
+	Ptr<Stat>						tryStat;
+	Ptr<Stat>						exceptStat;
+	Ptr<Expr>						expr;
 };
 
 class __Try__FinallyStat : public Stat
@@ -218,11 +222,11 @@ class __Try__FinallyStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Stat>					tryStat;
-	Ptr<Stat>					finallyStat;
+	Ptr<Stat>						tryStat;
+	Ptr<Stat>						finallyStat;
 };
 
-class __Leave : public Stat
+class __LeaveStat : public Stat
 {
 public:
 	IStatVisitor_ACCEPT;
@@ -233,8 +237,8 @@ class __IfExistsStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Expr>					expr;
-	Ptr<Stat>					stat;
+	Ptr<Expr>						expr;
+	Ptr<Stat>						stat;
 };
 
 class __IfNotExistsStat : public Stat
@@ -242,8 +246,8 @@ class __IfNotExistsStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
-	Ptr<Expr>					expr;
-	Ptr<Stat>					stat;
+	Ptr<Expr>						expr;
+	Ptr<Stat>						stat;
 };
 
 #endif
