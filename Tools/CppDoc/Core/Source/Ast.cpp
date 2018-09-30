@@ -3,6 +3,7 @@
 #include "Ast_Type.h"
 #include "Ast_Expr.h"
 #include "Ast_Stat.h"
+#include "Parser.h"
 
 #define CPPDOC_ACCEPT(NAME) void NAME::Accept(ITypeVisitor* visitor) { visitor->Visit(this); }
 CPPDOC_TYPE_LIST(CPPDOC_ACCEPT)
@@ -21,6 +22,46 @@ CPPDOC_STAT_LIST(CPPDOC_ACCEPT)
 #undef CPPDOC_ACCEPT
 
 /***********************************************************************
+Resolving
+***********************************************************************/
+
+void Resolving::Calibrate()
+{
+	if (fullyCalibrated) return;
+	vint forwards = 0;
+
+	SortedList<Symbol*> used;
+	for (vint i = 0; i < resolvedSymbols.Count(); i++)
+	{
+		auto& symbol = resolvedSymbols[i];
+		if (symbol->isForwardDeclaration)
+		{
+			if (symbol->forwardDeclarationRoot)
+			{
+				if (used.Contains(symbol->forwardDeclarationRoot))
+				{
+					resolvedSymbols.RemoveAt(i);
+					i--;
+				}
+				else
+				{
+					symbol = symbol->forwardDeclarationRoot;
+				}
+			}
+			else
+			{
+				forwards++;
+			}
+		}
+	}
+
+	if (forwards == 0)
+	{
+		fullyCalibrated = true;
+	}
+}
+
+/***********************************************************************
 IsSameResolvedType
 ***********************************************************************/
 
@@ -32,7 +73,15 @@ public:
 
 	void TestResolving(Ptr<Resolving> resolving)
 	{
-
+		if (auto type = peerType.Cast<ResolvableType>())
+		{
+			if (type->resolving)
+			{
+				resolving->Calibrate();
+				type->resolving->Calibrate();
+				result = CompareEnumerable(resolving->resolvedSymbols, type->resolving->resolvedSymbols) == 0;
+			}
+		}
 	}
 
 	void Visit(PrimitiveType* self)override
@@ -118,12 +167,18 @@ public:
 
 	void Visit(IdType* self)override
 	{
-		TestResolving(self->resolving);
+		if (self->resolving)
+		{
+			TestResolving(self->resolving);
+		}
 	}
 
 	void Visit(ChildType* self)override
 	{
-		TestResolving(self->resolving);
+		if (self->resolving)
+		{
+			TestResolving(self->resolving);
+		}
 	}
 
 	void Visit(GenericType* self)override

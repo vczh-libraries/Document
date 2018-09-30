@@ -31,11 +31,11 @@
   - [x] Class member methods defined out of classes
     - [x] Only compare function qualifiers, names and parameter types
   - [x] Connect forward declaractions with their root
-    - [ ] Connect class methods defined out of classes
+    - [x] Connect class methods defined out of classes
   - [ ] For out-of-class declarations, an identifier match names inside classes before containing context
-- [ ] Check foward root matching
+- [x] Check foward root matching
   - [x] Report errors when multiple roots are found for a forward declaration
-  - [ ] Report errors when incompatible declarations have the same name
+  - [x] Report errors when incompatible declarations have the same name
 - [ ] `Using` namespaces and symbols
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
