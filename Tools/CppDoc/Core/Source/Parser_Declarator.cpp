@@ -117,6 +117,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 
 	if (TestToken(cursor, CppTokens::ALIGNAS))
 	{
+		// alignas (EXPRESSION) DECLARATOR
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		ParseExpr(pa, false, cursor);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
@@ -124,6 +125,9 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 	}
 	else if (TestToken(cursor, CppTokens::MUL))
 	{
+		// * DECLARATOR
+		// * __ptr32 DECLARATOR
+		// * __ptr64 DECLARATOR
 		TestToken(cursor, CppTokens::__PTR32) || TestToken(cursor, CppTokens::__PTR64);
 		auto type = MakePtr<ReferenceType>();
 		type->reference = CppReferenceType::Ptr;
@@ -132,6 +136,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 	}
 	else if (TestToken(cursor, CppTokens::AND, CppTokens::AND))
 	{
+		// && DECLARATOR
 		auto type = MakePtr<ReferenceType>();
 		type->reference = CppReferenceType::RRef;
 		type->type = typeResult;
@@ -139,6 +144,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 	}
 	else if (TestToken(cursor, CppTokens::AND))
 	{
+		// & DECLARATOR
 		auto type = MakePtr<ReferenceType>();
 		type->reference = CppReferenceType::LRef;
 		type->type = typeResult;
@@ -146,6 +152,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 	}
 	else if (TestToken(cursor, CppTokens::CONSTEXPR))
 	{
+		// constexpr DECLARATOR
 		auto type = typeResult.Cast<DecorateType>();
 		if (!type)
 		{
@@ -157,6 +164,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 	}
 	else if (TestToken(cursor, CppTokens::CONST))
 	{
+		// const DECLARATOR
 		auto type = typeResult.Cast<DecorateType>();
 		if (!type)
 		{
@@ -168,6 +176,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 	}
 	else if (TestToken(cursor, CppTokens::VOLATILE))
 	{
+		// volatile DECLARATOR
 		auto type = typeResult.Cast<DecorateType>();
 		if (!type)
 		{
@@ -186,10 +195,15 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 			{
 				if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
 				{
+					// for __stdcall (
+					// because there is no __stdcall (DECLARATOR), so it can only be __stdcall ( { PARAMETER ,...} )
+					// so this __stdcall will be consumed by ParseLongDeclarator, so quit here
+					// if any declarator name is required, an exception will be raised below
 					cursor = oldCursor;
 				}
 				else
 				{
+					// __stdcall DECLARATOR
 					auto type = MakePtr<CallingConventionType>();
 					type->callingConvention = callingConvention;
 					type->type = typeResult;
@@ -215,12 +229,16 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 
 		if (classType)
 		{
+			// CLASS:: DECLARATOR
 			auto type = MakePtr<MemberType>();
 			type->classType = classType;
 			type->type = typeResult;
 
 			if(forceSpecialMethod && !containingClass)
 			{
+				// for CLASS:: NAME
+				// ensure CLASS is resolved to a single type
+				// and a CLASS::NAME declaration cannot appear inside a class, so in this case we skip the test
 				auto oldCursor = cursor;
 				CppName cppName;
 				if (ParseCppName(cppName, cursor, true))
@@ -233,8 +251,11 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 		}
 		else
 		{
+			// NAME
 			auto declarator = MakePtr<Declarator>();
 			declarator->type = typeResult;
+
+			// recognize a class member declaration
 			if (containingClass)
 			{
 				declarator->containingClassSymbol = containingClass->symbol;
@@ -246,10 +267,18 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 
 			if (dr != DeclaratorRestriction::Zero)
 			{
+				// forceSpecialMethod means this function is expected to accept only
+				//   constructor declarators
+				//   destructor declarators
+				//   type conversion declarators
+				// the common thing among them is not having a return type before the declarator
 				if (ParseCppName(declarator->name, cursor, forceSpecialMethod))
 				{
 					if (forceSpecialMethod)
 					{
+						// special method can only appear
+						//   when a declaration is right inside a class
+						//   or it is a class member declaration out of a class
 						if (!containingClass)
 						{
 							throw StopParsingException(cursor);
@@ -258,6 +287,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 						switch (declarator->name.type)
 						{
 						case CppNameType::Normal:
+							// IDENTIFIER should be a constructor name for a special method
 							if (declarator->name.name == containingClass->name.name)
 							{
 								declarator->name.name = L"$__ctor";
@@ -269,6 +299,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 							}
 							break;
 						case CppNameType::Operator:
+							// operator TYPE is the only valid form of special method if the first token is operator
 							if (declarator->name.tokenCount == 1)
 							{
 								declarator->name.name = L"$__type";
@@ -284,6 +315,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 							}
 							break;
 						case CppNameType::Destructor:
+							// ~IDENTIFIER should be a destructor name for a special method
 							if (declarator->name.name != L"~" + containingClass->name.name)
 							{
 								throw StopParsingException(cursor);
@@ -296,6 +328,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 						switch (declarator->name.type)
 						{
 						case CppNameType::Operator:
+							// operator PREDEFINED-OPERATOR is the only valid form for normal method if the first token is operator
 							if (declarator->name.tokenCount == 1)
 							{
 								throw StopParsingException(cursor);
@@ -303,12 +336,17 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 							break;
 						case CppNameType::Constructor:
 						case CppNameType::Destructor:
+							// constructors or destructors are not normal methods
 							throw StopParsingException(cursor);
 						}
 					}
 				}
 				else
 				{
+					// we have already tested all possible form of declarators
+					// if a declarator name is required, there are only two possibilities left
+					//    1. the declarator name is placed after (
+					//    2. syntax error
 					if (!TestToken(cursor, CppTokens::LPARENTHESIS, false) && dr == DeclaratorRestriction::One)
 					{
 						throw StopParsingException(cursor);
@@ -326,6 +364,7 @@ ParseLongDeclarator
 
 Ptr<Declarator> ParseLongDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDeclaration* containingClass, bool forceSpecialMethod, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
+	// a long declarator begins with a short declarator
 	auto declarator = ParseShortDeclarator(pa, typeResult, containingClass, forceSpecialMethod, dr, cursor);
 	auto targetType = declarator->type;
 
@@ -333,12 +372,17 @@ Ptr<Declarator> ParseLongDeclarator(const ParsingArguments& pa, Ptr<Type> typeRe
 		auto oldCursor = cursor;
 		if (!declarator->name)
 		{
+			// if there is no declarator name, and the next token is (
+			// then a declarator is possible to be placed after (, and it is also possible that this declarator still doesn't have a name
+
+			// but this is not the case when we see ()
 			if (TestToken(cursor, CppTokens::LPARENTHESIS) && TestToken(cursor, CppTokens::RPARENTHESIS))
 			{
 				cursor = oldCursor;
 				goto GIVE_UP;
 			}
 
+			// but this is not the case when we see (void)
 			cursor = oldCursor;
 			if (TestToken(cursor, CppTokens::LPARENTHESIS) && TestToken(cursor, CppTokens::TYPE_VOID) && TestToken(cursor, CppTokens::RPARENTHESIS))
 			{
@@ -346,6 +390,7 @@ Ptr<Declarator> ParseLongDeclarator(const ParsingArguments& pa, Ptr<Type> typeRe
 				goto GIVE_UP;
 			}
 
+			// try to get a declarator name, if failed then we ignore and we assume there are parameters after (
 			cursor = oldCursor;
 			if (TestToken(cursor, CppTokens::LPARENTHESIS))
 			{
@@ -369,6 +414,8 @@ Ptr<Declarator> ParseLongDeclarator(const ParsingArguments& pa, Ptr<Type> typeRe
 	}
 GIVE_UP:
 
+	// if there is [, we see an array declarator
+	// an array could be multiple dimension
 	if (TestToken(cursor, CppTokens::LBRACKET, false))
 	{
 		while (true)
@@ -397,11 +444,16 @@ GIVE_UP:
 			}
 			else
 			{
+				// there is no something like []( { PARAMETERS, ...} ), so we can stop here
 				return declarator;
 			}
 		}
 	}
 
+	// if it is not an array declarator, then there are only two possibilities
+	//   1. it is a function declarator
+	//   2. it is a declarator but not array or function
+	// so we see if we can find __stdcall
 	bool hasCallingConvention = false;
 	CppCallingConvention callingConvention;
 	{
@@ -419,6 +471,7 @@ GIVE_UP:
 	auto oldCursor = cursor;
 	if (TestToken(cursor, CppTokens::LPARENTHESIS))
 	{
+		// if we see (EXPRESSION, then this is an initializer, we stop here
 		try
 		{
 			ParseExpr(pa, false, cursor);
@@ -433,6 +486,9 @@ GIVE_UP:
 		Ptr<FunctionType> type;
 		if (hasCallingConvention)
 		{
+			// __stdcall should appera before CLASS::
+			// so if we see __stdcall here, then there is no CLASS:: (maybe CLAS::* but we don't care)
+			// we can simply decorate the function with __stdcall, no need to worry about adjusting the return type
 			if (declarator->type != targetType)
 			{
 				throw StopParsingException(cursor);
@@ -448,6 +504,8 @@ GIVE_UP:
 		}
 		else
 		{
+			// otherwise, it is possible that the return type has already been decorated with __stdcall or CLASS::
+			// we should move them out of the return type, and decorate the function type with them
 			ReplaceOutOfDeclaratorTypeVisitor replacer;
 			{
 				replacer.typeToReplace = targetType;
@@ -462,8 +520,10 @@ GIVE_UP:
 			}
 			type = GetTypeWithoutMemberAndCC(replacer.createdType).Cast<FunctionType>();
 		}
+		// here type is the FunctionType we are going to add information to, it is possible that type is not declarator->type
 
 		{
+			// (void) is treated as no parameter
 			auto oldCursor = cursor;
 			if (TestToken(cursor, CppTokens::TYPE_VOID) && TestToken(cursor, CppTokens::RPARENTHESIS))
 			{
@@ -476,11 +536,14 @@ GIVE_UP:
 		}
 
 		{
+			// if there is CLASS::, then we should regonize parameter types under the scope of CLASS
 			ParsingArguments functionArgsPa = pa;
 			if (declarator->type.Cast<MemberType>() && declarator->containingClassSymbol)
 			{
 				functionArgsPa.context = declarator->containingClassSymbol;
 			}
+
+			// recognize parameters
 			while (!TestToken(cursor, CppTokens::RPARENTHESIS))
 			{
 				{
@@ -505,6 +568,12 @@ GIVE_UP:
 
 		while (true)
 		{
+			// we can put these things after a function declarator, they decorate *this, not any type inside the function
+			//   constexpr
+			//   const
+			//   volatile
+			//   &&
+			//   &
 			if (TestToken(cursor, CppTokens::CONSTEXPR))
 			{
 				type->qualifierConstExpr = true;
@@ -527,10 +596,12 @@ GIVE_UP:
 			}
 			else if (TestToken(cursor, CppTokens::OVERRIDE))
 			{
+				// override
 				type->decoratorOverride = true;
 			}
 			else if (TestToken(cursor, CppTokens::SUB, CppTokens::GT))
 			{
+				// auto SOMETHING -> TYPE
 				if (auto primitiveType = type->returnType.Cast<PrimitiveType>())
 				{
 					if (primitiveType->primitive == CppPrimitiveType::_auto)
@@ -545,10 +616,12 @@ GIVE_UP:
 			}
 			else if (TestToken(cursor, CppTokens::NOEXCEPT))
 			{
+				// noexcept
 				type->decoratorNoExcept = true;
 			}
 			else if (TestToken(cursor, CppTokens::THROW))
 			{
+				// throw ( { TYPE , ...} )
 				type->decoratorThrow = true;
 
 				RequireToken(cursor, CppTokens::LPARENTHESIS);
@@ -582,6 +655,9 @@ ParseInitializer
 
 Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
+	// = EXPRESSION
+	// { { EXPRESSION , ...} }
+	// ( { EXPRESSSION , ...} )
 	auto initializer = MakePtr<Initializer>();
 
 	if (TestToken(cursor, CppTokens::EQ))
@@ -633,6 +709,7 @@ ParseDeclaratorWithInitializer
 
 void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDeclaration* containingClass, bool forceSpecialMethod, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
+	// if we have already recognize a type, we can parse multiple declarators with initializers
 	auto itemDr = dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : dr;
 	while (true)
 	{
@@ -662,6 +739,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 				{
 					if (isFunction)
 					{
+						// { could be the beginning of a statement
 						cursor = oldCursor;
 					}
 					else
@@ -692,14 +770,17 @@ void ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingCla
 {
 	if (trySpecialMember && dr == DeclaratorRestriction::Many)
 	{
+		// if we don't see trySpecialMember or Many, then the declarator is not for a declaration, so there is no special method
 		auto oldCursor = cursor;
 		{
 			try
 			{
+				// try to parse a special method declarator
 				ParseDeclaratorWithInitializer(pa, nullptr, containingClass, true, DeclaratorRestriction::One, ir, cursor, declarators);
 			}
 			catch (const StopParsingException&)
 			{
+				// ignore it if we failed
 				goto TRY_NORMAL_DECLARATOR;
 			}
 
@@ -709,6 +790,8 @@ void ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingCla
 			}
 			for (vint i = 0; i < declarators.Count(); i++)
 			{
+				// the type of a special method should be a (maybe decorated) function, but its return type could be nullptr
+				// so if the type is nullptr, then we are definitely failed
 				if (!declarators[i]->type)
 				{
 					declarators.Clear();
