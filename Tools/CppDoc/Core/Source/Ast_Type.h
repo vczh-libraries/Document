@@ -40,6 +40,12 @@ public:
 Types
 ***********************************************************************/
 
+class ResolvableType : public Type
+{
+public:
+	Ptr<Resolving>			resolving;
+};
+
 class VariableDeclaration;
 
 enum class CppPrimitiveType
@@ -170,16 +176,15 @@ public:
 	ITypeVisitor_ACCEPT;
 };
 
-class IdType : public Type
+class IdType : public ResolvableType
 {
 public:
 	ITypeVisitor_ACCEPT;
 
 	CppName					name;
-	Ptr<Resolving>			resolving;
 };
 
-class ChildType : public Type
+class ChildType : public ResolvableType
 {
 public:
 	ITypeVisitor_ACCEPT;
@@ -187,7 +192,6 @@ public:
 	Ptr<Type>				classType;
 	bool					typenameType = false;
 	CppName					name;
-	Ptr<Resolving>			resolving;
 };
 
 struct GenericArgument

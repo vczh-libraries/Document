@@ -299,6 +299,32 @@ Ptr<Type> ParsePrimitiveType(Ptr<CppTokenCursor>& cursor, CppPrimitivePrefix pre
 }
 
 /***********************************************************************
+ParseChildType
+***********************************************************************/
+
+Ptr<ChildType> ParseChildType(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppTokenCursor>& cursor)
+{
+	CppName cppName;
+	if (ParseCppName(cppName, cursor))
+	{
+		auto resolving = ResolveChildTypeSymbol(pa, classType, cppName);
+		if (resolving)
+		{
+			auto type = MakePtr<ChildType>();
+			type->classType = classType;
+			type->name = cppName;
+			type->resolving = resolving;
+			if (pa.recorder && type->resolving)
+			{
+				pa.recorder->Index(type->name, type->resolving);
+			}
+			return type;
+		}
+	}
+	return nullptr;
+}
+
+/***********************************************************************
 ParseShortType
 ***********************************************************************/
 
@@ -314,27 +340,13 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 	}
 	else if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false))
 	{
-		CppName cppName;
-		if (ParseCppName(cppName, cursor))
+		if (auto type = ParseChildType(pa, MakePtr<ChildType>(), cursor))
 		{
-			auto typeResult = MakePtr<RootType>();
-			auto resolving = ResolveChildTypeSymbol(pa, typeResult, cppName);
-			if (resolving)
-			{
-				auto type = MakePtr<ChildType>();
-				type->classType = typeResult;
-				type->name = cppName;
-				type->resolving = resolving;
-				if (pa.recorder && type->resolving)
-				{
-					pa.recorder->Index(type->name, type->resolving);
-				}
-				return type;
-			}
-			else
-			{
-				throw StopParsingException(cursor);
-			}
+			return type;
+		}
+		else
+		{
+			throw StopParsingException(cursor);
 		}
 	}
 	else
@@ -480,25 +492,10 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			auto oldCursor = cursor;
 			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 			{
-				CppName cppName;
-				if (ParseCppName(cppName, cursor))
+				if (auto type = ParseChildType(pa, typeResult, cursor))
 				{
-					auto resolving = ResolveChildTypeSymbol(pa, typeResult, cppName);
-					if (resolving || typenameType)
-					{
-						auto type = MakePtr<ChildType>();
-						type->classType = typeResult;
-						type->typenameType = typenameType;
-						type->name = cppName;
-						type->resolving = resolving;
-						if (pa.recorder && type->resolving)
-						{
-							pa.recorder->Index(type->name, type->resolving);
-						}
-
-						typeResult = type;
-						continue;
-					}
+					typeResult = type;
+					continue;
 				}
 			}
 
