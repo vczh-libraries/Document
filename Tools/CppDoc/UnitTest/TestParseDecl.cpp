@@ -697,10 +697,10 @@ namespace c
 	auto recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 	{
 		BEGIN_ASSERT_SYMBOL
-			ASSERT_SYMBOL(0, L"a", 8, 20, NamespaceDeclaration, 1, 10)
-			ASSERT_SYMBOL(1, L"a", 9, 20, NamespaceDeclaration, 1, 10)
-			ASSERT_SYMBOL(2, L"b", 9, 23, NamespaceDeclaration, 1, 13)
-			ASSERT_SYMBOL(3, L"X", 13, 15, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(0, L"a", 8, 17, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(1, L"a", 9, 17, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(2, L"b", 9, 20, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(3, L"X", 13, 12, ClassDeclaration, 3, 8)
 			ASSERT_SYMBOL(4, L"a", 15, 2, NamespaceDeclaration, 1, 10)
 			ASSERT_SYMBOL(5, L"b", 15, 5, NamespaceDeclaration, 1, 13)
 			ASSERT_SYMBOL(6, L"Y", 15, 8, EnumDeclaration, 4, 15)
