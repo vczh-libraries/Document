@@ -90,23 +90,6 @@ TEST_CASE(TestParseType_SuperComplexType)
 		);
 }
 
-#define BEGIN_ASSERT_SYMBOL TEST_ASSERT(name.tokenCount > 0);
-#define END_ASSERT_SYMBOL TEST_ASSERT(false);
-
-#define ASSERT_SYMBOL(INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)\
-	if (name.nameTokens[0].rowStart == TROW && name.nameTokens[0].columnStart == TCOL)\
-	{\
-		TEST_ASSERT(name.name == NAME);\
-		TEST_ASSERT(resolving->resolvedSymbols.Count() == 1);\
-		auto decl = resolving->resolvedSymbols[0]->decls[0].Cast<TYPE>();\
-		TEST_ASSERT(decl);\
-		TEST_ASSERT(decl->name.name == NAME);\
-		TEST_ASSERT(decl->name.nameTokens[0].rowStart == PROW);\
-		TEST_ASSERT(decl->name.nameTokens[0].columnStart == PCOL);\
-		if (!accessed.Contains(INDEX)) accessed.Add(INDEX);\
-	} else \
-	
-
 TEST_CASE(TestParseType_MemberType)
 {
 	auto input = LR"(

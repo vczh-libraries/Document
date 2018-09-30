@@ -601,5 +601,42 @@ namespace b
 	}
 }
 )";
-	AssertProgram(input, output);
+
+	SortedList<vint> accessed;
+	auto recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+	{
+		BEGIN_ASSERT_SYMBOL
+			ASSERT_SYMBOL(0, L"a", 11, 12, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(1, L"X", 11, 15, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(2, L"Y", 13, 2, ForwardEnumDeclaration, 5, 13)
+			ASSERT_SYMBOL(3, L"a", 13, 7, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(4, L"X", 13, 10, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(5, L"X", 13, 13, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(6, L"a", 13, 16, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(7, L"X", 13, 19, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(8, L"Y", 13, 22, ForwardEnumDeclaration, 5, 13)
+			ASSERT_SYMBOL(9, L"X", 13, 25, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(10, L"Y", 13, 28, ForwardEnumDeclaration, 5, 13)
+			ASSERT_SYMBOL(11, L"Y", 13, 31, ForwardEnumDeclaration, 5, 13)
+			ASSERT_SYMBOL(12, L"Z", 13, 34, ClassDeclaration, 11, 8)
+			ASSERT_SYMBOL(13, L"Z", 19, 1, ClassDeclaration, 11, 8)
+			ASSERT_SYMBOL(14, L"Y", 19, 4, ForwardEnumDeclaration, 5, 13)
+			ASSERT_SYMBOL(15, L"Z", 19, 6, ClassDeclaration, 11, 8)
+			ASSERT_SYMBOL(16, L"a", 19, 12, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(17, L"X", 19, 15, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(18, L"X", 19, 18, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(19, L"a", 19, 21, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(20, L"X", 19, 24, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(21, L"Y", 19, 27, ForwardEnumDeclaration, 5, 13)
+			ASSERT_SYMBOL(22, L"X", 19, 30, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(23, L"Y", 19, 33, ForwardEnumDeclaration, 5, 13)
+			ASSERT_SYMBOL(24, L"Y", 19, 36, ForwardEnumDeclaration, 5, 13)
+			ASSERT_SYMBOL(25, L"Z", 19, 39, ClassDeclaration, 11, 8)
+			ASSERT_SYMBOL(26, L"X", 21, 2, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(27, L"Y", 22, 2, ForwardEnumDeclaration, 5, 13)
+			ASSERT_SYMBOL(28, L"Z", 23, 2, ClassDeclaration, 11, 8)
+		END_ASSERT_SYMBOL
+	});
+	AssertProgram(input, output, recorder);
+	TEST_ASSERT(accessed.Count() == 29);
 }
