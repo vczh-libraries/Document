@@ -32,7 +32,7 @@
     - [x] Only compare function qualifiers, names and parameter types
   - [x] Connect forward declaractions with their root
     - [x] Connect class methods defined out of classes
-  - [ ] For out-of-class declarations, an identifier match names inside classes before containing context
+  - [x] For out-of-class declarations, an identifier match names inside classes before containing context
 - [x] Check foward root matching
   - [x] Report errors when multiple roots are found for a forward declaration
   - [x] Report errors when incompatible declarations have the same name
@@ -51,6 +51,7 @@
       - [ ] `for`
       - [ ] `catch`
   - [ ] Resolve expression types and resolve `decltype`
+    - [ ] Take care of `decltype(a)` and `decltype((a))`
 - [ ] `Using` alias, `Typedef` and anonymous declaration
   - [ ] Assert ASTs
   - [ ] Define variables right after classes
