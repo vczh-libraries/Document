@@ -92,6 +92,24 @@ public:
 ParseShortDeclarator
 ***********************************************************************/
 
+ClassDeclaration* EnsureMemberTypeResolved(Ptr<MemberType> memberType, Ptr<CppTokenCursor>& cursor)
+{
+	auto resolvableType = memberType->classType.Cast<ResolvableType>();
+	if (!resolvableType) throw StopParsingException(cursor);
+	if (!resolvableType->resolving) throw StopParsingException(cursor);
+	if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
+
+	auto symbol = resolvableType->resolving->resolvedSymbols[0];
+	if (!symbol->decls.Count() == 1) throw StopParsingException(cursor);
+	auto containingClass = symbol->decls[0].Cast<ClassDeclaration>().Obj();
+	if (!containingClass) throw StopParsingException(cursor);
+	return containingClass;
+}
+
+/***********************************************************************
+ParseShortDeclarator
+***********************************************************************/
+
 Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, ClassDeclaration* containingClass, bool forceSpecialMethod, DeclaratorRestriction dr, Ptr<CppTokenCursor>& cursor)
 {
 	while (SkipSpecifiers(cursor));
@@ -206,15 +224,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 				CppName cppName;
 				if (ParseCppName(cppName, cursor, true))
 				{
-					auto resolvableType = classType.Cast<ResolvableType>();
-					if (!resolvableType) throw StopParsingException(cursor);
-					if (!resolvableType->resolving) throw StopParsingException(cursor);
-					if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
-
-					auto symbol = resolvableType->resolving->resolvedSymbols[0];
-					if (!symbol->decls.Count() == 1) throw StopParsingException(cursor);
-					containingClass = symbol->decls[0].Cast<ClassDeclaration>().Obj();
-					if (!containingClass) throw StopParsingException(cursor);
+					containingClass = EnsureMemberTypeResolved(type, cursor);
 				}
 				cursor = oldCursor;
 			}
@@ -227,6 +237,10 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 			if (containingClass)
 			{
 				declarator->containingClassSymbol = containingClass->symbol;
+			}
+			else if (auto memberType = typeResult.Cast<MemberType>())
+			{
+				declarator->containingClassSymbol = EnsureMemberTypeResolved(memberType, cursor)->symbol;
 			}
 
 			if (dr != DeclaratorRestriction::Zero)

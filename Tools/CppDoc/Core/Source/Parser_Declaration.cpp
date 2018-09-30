@@ -353,6 +353,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		auto methodType = CppMethodType::Function;
 		{
 			ClassDeclaration* containingClass = nullptr;
+			ClassDeclaration* containingClassForMember = nullptr;
 			if (pa.context->decls.Count() > 0)
 			{
 				containingClass = pa.context->decls[0].Cast<ClassDeclaration>().Obj();
@@ -374,11 +375,19 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				{
 					if (declarator->containingClassSymbol)
 					{
-						containingClass = declarator->containingClassSymbol->decls[0].Cast<ClassDeclaration>().Obj();
+						containingClassForMember = declarator->containingClassSymbol->decls[0].Cast<ClassDeclaration>().Obj();
 					}
 				}
 
-				if (containingClass)
+				if (declarator->type.Cast<MemberType>())
+				{
+					if (containingClass || !containingClassForMember)
+					{
+						throw StopParsingException(cursor);
+					}
+				}
+
+				if (containingClass || containingClassForMember)
 				{
 					auto& cppName = declarators[0]->name;
 					switch (cppName.type)
