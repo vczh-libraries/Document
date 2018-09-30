@@ -585,15 +585,15 @@ namespace a
 }
 namespace b
 {
-	struct Z : public a::X
+	struct Z : public a :: X
 	{
 		public __forward Do: Y (a :: X, X, a :: X :: Y, X :: Y, Y, Z);
 	};
 }
-namespace a
+namespace b
 {
 	__forward struct X;
-	Do: Z :: Y (a :: X, X, a :: X :: Y, X :: Y, Y, Z) (Z :: Do ::)
+	Do: Z :: Y (a :: X, X, a :: X :: Y, X :: Y, Y, Z) (Z ::)
 	{
 		x: X;
 		y: Y;

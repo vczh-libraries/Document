@@ -638,19 +638,25 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 	{
 		auto declarator = ParseLongDeclarator(pa, typeResult, containingClass, forceSpecialMethod, itemDr, cursor);
 
+		ParsingArguments initializerPa = pa;
+		if (declarator->type.Cast<MemberType>() && declarator->containingClassSymbol)
+		{
+			initializerPa.context = declarator->containingClassSymbol;
+		}
+
 		if (ir == InitializerRestriction::Optional)
 		{
 			bool isFunction = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>();
 			if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))
 			{
-				declarator->initializer = ParseInitializer(pa, cursor);
+				declarator->initializer = ParseInitializer(initializerPa, cursor);
 			}
 			else if (TestToken(cursor, CppTokens::LBRACE, false))
 			{
 				auto oldCursor = cursor;
 				try
 				{
-					declarator->initializer = ParseInitializer(pa, cursor);
+					declarator->initializer = ParseInitializer(initializerPa, cursor);
 				}
 				catch (const StopParsingException&)
 				{

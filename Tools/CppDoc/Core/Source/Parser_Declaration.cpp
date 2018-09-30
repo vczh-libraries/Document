@@ -459,18 +459,17 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				NAME->decoratorForceInline = decoratorForceInline;\
 				NAME->decoratorAbstract = decoratorAbstract\
 
-				Ptr<Stat> stat;
-				if (TestToken(cursor, CppTokens::LBRACE, false))
-				{
-					stat = ParseStat(pa, cursor);
-				}
+				bool hasStat = TestToken(cursor, CppTokens::LBRACE, false);
 
 				auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
-				if (stat)
+				if (hasStat)
 				{
 					auto decl = MakePtr<FunctionDeclaration>();
 					FILL_FUNCTION(decl);
-					decl->statement = stat;
+					{
+						ParsingArguments statPa(pa, context);
+						decl->statement = ParseStat(statPa, cursor);
+					}
 					auto contextSymbol = context->CreateDeclSymbol(decl);
 					{
 						ParsingArguments newPa(pa, contextSymbol);
