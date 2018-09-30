@@ -525,4 +525,22 @@ namespace a
 
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
+
+	auto& inClassMembers = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Something"][0]->decls[0].Cast<ClassDeclaration>()->decls;
+	TEST_ASSERT(inClassMembers.Count() == 13);
+
+	auto& outClassMembers = pa.root->children[L"a"][0]->children[L"b"][0]->decls[1].Cast<NamespaceDeclaration>()->decls;
+	TEST_ASSERT(outClassMembers.Count() == 12);
+
+	for (vint i = 0; i < 12; i++)
+	{
+		auto inClassSymbol = inClassMembers[i + 1].f1->symbol;
+		auto outClassSymbol = outClassMembers[i]->symbol;
+
+		TEST_ASSERT(inClassSymbol->isForwardDeclaration == true);
+		TEST_ASSERT(inClassSymbol->forwardDeclarationRoot == outClassSymbol);
+		TEST_ASSERT(outClassSymbol->isForwardDeclaration == false);
+		TEST_ASSERT(outClassSymbol->forwardDeclarations.Count() == 1);
+		TEST_ASSERT(outClassSymbol->forwardDeclarations[0] == inClassSymbol);
+	}
 }

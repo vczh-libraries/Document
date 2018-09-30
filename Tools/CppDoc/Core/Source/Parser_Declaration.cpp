@@ -449,19 +449,18 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					stat = ParseStat(pa, cursor);
 				}
 
+				auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
 				if (stat)
 				{
 					auto decl = MakePtr<FunctionDeclaration>();
 					FILL_FUNCTION(decl);
 					decl->statement = stat;
-					auto contextSymbol = pa.context->CreateDeclSymbol(decl);
+					auto contextSymbol = context->CreateDeclSymbol(decl);
 					{
 						ParsingArguments newPa(pa, contextSymbol);
 						BuildSymbols(newPa, type->parameters);
 					}
 					output.Add(decl);
-
-					auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
 					ConnectForwards<FunctionDeclaration, ForwardFunctionDeclaration>(context, contextSymbol, cursor);
 					return;
 				}
@@ -474,10 +473,10 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 					auto decl = MakePtr<ForwardFunctionDeclaration>();
 					FILL_FUNCTION(decl);
-					auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
+					auto forwardSymbol = context->CreateDeclSymbol(decl);
 					forwardSymbol->isForwardDeclaration = true;
 					output.Add(decl);
-					ConnectForwards<FunctionDeclaration, ForwardFunctionDeclaration>(pa.context, forwardSymbol, cursor);
+					ConnectForwards<FunctionDeclaration, ForwardFunctionDeclaration>(context, forwardSymbol, cursor);
 					RequireToken(cursor, CppTokens::SEMICOLON);
 					return;
 				}
@@ -499,6 +498,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				NAME->decoratorThreadLocal = decoratorThreadLocal;\
 				NAME->decoratorRegister = decoratorRegister\
 
+				auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
 				if (decoratorExtern || (decoratorStatic && !declarator->initializer))
 				{
 					if (containingClassForMember)
@@ -508,20 +508,19 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 					auto decl = MakePtr<ForwardVariableDeclaration>();
 					FILL_VARIABLE(decl);
-					auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
+					auto forwardSymbol = context->CreateDeclSymbol(decl);
 					forwardSymbol->isForwardDeclaration = true;
 					output.Add(decl);
-					ConnectForwards<VariableDeclaration, ForwardVariableDeclaration>(pa.context, forwardSymbol, cursor);
+					ConnectForwards<VariableDeclaration, ForwardVariableDeclaration>(context, forwardSymbol, cursor);
 				}
 				else
 				{
 					auto decl = MakePtr<VariableDeclaration>();
 					FILL_VARIABLE(decl);
 					decl->initializer = declarator->initializer;
-					auto contextSymbol = pa.context->CreateDeclSymbol(decl);
+					auto contextSymbol = context->CreateDeclSymbol(decl);
 					output.Add(decl);
 
-					auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
 					ConnectForwards<VariableDeclaration, ForwardVariableDeclaration>(context, contextSymbol, cursor);
 				}
 #undef FILL_VARIABLE
