@@ -2,6 +2,24 @@
 
 class TsysAlloc;
 
+class ITsys_Primitive;
+class ITsys_LRef;
+class ITsys_RRef;
+class ITsys_Ptr;
+class ITsys_Array;
+class ITsys_CV;
+class ITsys_Decl;
+class ITsys_GenericArg;
+class ITsys_Expr;
+
+
+template<TsysType Type>
+class ITsys_WithParams;
+
+using ITsys_Function = ITsys_WithParams<TsysType::Function>;
+using ITsys_Member = ITsys_WithParams<TsysType::Member>;
+using ITsys_Generic = ITsys_WithParams<TsysType::Generic>;
+
 /***********************************************************************
 TsysBase
 ***********************************************************************/
@@ -9,13 +27,13 @@ TsysBase
 class TsysBase : public ITsys
 {
 protected:
-	TsysAlloc*					tsys;
-	ITsys*						lrefOf = nullptr;
-	ITsys*						rrefOf = nullptr;
-	ITsys*						ptrOf = nullptr;
-	Dictionary<vint, ITsys*>	arrayOf;
-	Dictionary<ITsys*, ITsys*>	memberOf;
-	ITsys*						cvOf[8] = { 0 };
+	TsysAlloc*							tsys;
+	ITsys_LRef*							lrefOf = nullptr;
+	ITsys_RRef*							rrefOf = nullptr;
+	ITsys_Ptr*							ptrOf = nullptr;
+	Dictionary<vint, ITsys_Array*>		arrayOf;
+	Dictionary<ITsys*, ITsys_Member*>	memberOf;
+	ITsys_CV*							cvOf[8] = { 0 };
 
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
@@ -50,15 +68,15 @@ public:
 Concrete Tsys
 ***********************************************************************/
 
-#define ITSYS_DATA(TYPE, DATA, NAME)												\
-class ITsys_##TYPE : public TsysBase_<TsysType::TYPE>								\
-{																					\
-protected:																			\
-	DATA				data;														\
-public:																				\
-	ITsys_##TYPE(TsysAlloc* _tsys, DATA _data) :TsysBase_(_tsys), data(_data) {}	\
-	DATA Get##NAME()override { return data; }										\
-};																					\
+#define ITSYS_DATA(TYPE, DATA, NAME)															\
+class ITsys_##TYPE : public TsysBase_<TsysType::TYPE>											\
+{																								\
+protected:																						\
+	DATA				data;																	\
+public:																							\
+	ITsys_##TYPE(TsysAlloc* _tsys, DATA _data) :TsysBase_(_tsys), data(_data) {}				\
+	DATA Get##NAME()override { return data; }													\
+};																								\
 
 #define ISYS_REF(TYPE)																			\
 class ITsys_##TYPE : public TsysBase_<TsysType::TYPE>											\
@@ -70,8 +88,20 @@ public:																							\
 	ITsys* GetElement()override { return element; }												\
 };																								\
 
+#define ITSYS_DECORATE(TYPE, DATA, NAME)														\
+class ITsys_##TYPE : public TsysBase_<TsysType::TYPE>											\
+{																								\
+protected:																						\
+	ITsys*				element;																\
+	DATA				data;																	\
+public:																							\
+	ITsys_##TYPE(TsysAlloc* _tsys, ITsys* _element, DATA _data)									\
+		:TsysBase_(_tsys), element(_element), data(_data) {}									\
+	ITsys* GetElement()override { return element; }												\
+	DATA Get##NAME()override { return data; }													\
+};																								\
+
 ITSYS_DATA(Primitive, TsysPrimitive, Primitive)
-ITSYS_DATA(CV, TsysCV, CV)
 ITSYS_DATA(Decl, Ptr<Declaration>, Decl)
 ITSYS_DATA(GenericArg, Ptr<Declaration>, Decl)
 
@@ -79,29 +109,15 @@ ISYS_REF(LRef)
 ISYS_REF(RRef)
 ISYS_REF(Ptr)
 
+ITSYS_DECORATE(Array, vint, ParamCount)
+ITSYS_DECORATE(CV, TsysCV, CV)
+
 #undef ITSYS_DATA
 #undef ISYS_REF
-
-class ITsys_Array : public TsysBase_<TsysType::Array>
-{
-protected:
-	ITsys*				element;
-	vint				dim;
-
-public:
-	ITsys_Array(TsysAlloc* _tsys, ITsys* _element, vint _dim)
-		:TsysBase_(_tsys)
-		, element(_element)
-		, dim(_dim)
-	{
-	}
-
-	ITsys* GetElement()override { return element; }
-	vint GetParamCount()override { return dim; }
-};
+#undef ITSYS_DECORATE
 
 template<TsysType Type>
-class ITsys_WithParams : TsysBase_<Type>
+class ITsys_WithParams : public TsysBase_<Type>
 {
 protected:
 	ITsys*				element;
@@ -109,7 +125,7 @@ protected:
 
 public:
 	ITsys_WithParams(TsysAlloc* _tsys, ITsys* _element)
-		:TsysBase_(_tsys)
+		:TsysBase_<Type>(_tsys)
 		, element(_element)
 	{
 	}
@@ -123,10 +139,6 @@ public:
 	ITsys* GetParam(vint index)override { return params[index]; }
 	vint GetParamCount()override { return params.Count(); }
 };
-
-using ITsys_Function = ITsys_WithParams<TsysType::Function>;
-using ITsys_Member = ITsys_WithParams<TsysType::Member>;
-using ITsys_Generic = ITsys_WithParams<TsysType::Generic>;
 
 class ITsys_Expr : TsysBase_<TsysType::Expr>
 {
@@ -147,23 +159,39 @@ class ITsys_Allocator : public Object
 protected:
 	struct Node
 	{
-		T				items[BlockSize];
+		char				items[BlockSize * sizeof(T)] = { 0 };
+		vint				used = 0;
+
+		~Node()
+		{
+			auto itsys = (T*)items;
+			for (vint i = 0; i < used; i++)
+			{
+				itsys[i].~T();
+			}
+		}
 	};
 
 	List<Ptr<Node>>		nodes;
-	vint				lastNodeUsed = 0;
 public:
 
-	T* Alloc()
+	template<typename ...TArgs>
+	T* Alloc(TArgs ...args)
 	{
-		if (nodes.Count() == 0 || lastNodeUsed == BlockSize)
+		if (nodes.Count() == 0 || nodes[nodes.Count() - 1]->used == BlockSize)
 		{
 			nodes.Add(MakePtr<Node>());
-			lastNodeUsed = 0;
 		}
 
 		auto lastNode = nodes[nodes.Count() - 1].Obj();
-		return &lastNode->items[lastNodeUsed++];
+		auto itsys = &((T*)lastNode->items)[lastNode->used++];
+#ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
+#undef new
+#endif
+		return new(itsys)T(args...);
+#ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
+#define new VCZH_CHECK_MEMORY_LEAKS_NEW
+#endif
 	}
 };
 
@@ -174,37 +202,55 @@ ITsysAlloc
 class TsysAlloc : public Object, public ITsysAlloc
 {
 protected:
-	ITsys*									primitives[36];
-	Dictionary<Ptr<Declaration>, ITsys*>	decls;
-	Dictionary<Ptr<Declaration>, ITsys*>	genericArgs;
+	ITsys_Primitive*								primitives[(vint)TsysPrimitiveType::_COUNT * (vint)TsysBytes::_COUNT] = { 0 };
+	Dictionary<Ptr<Declaration>, ITsys_Decl*>		decls;
+	Dictionary<Ptr<Declaration>, ITsys_GenericArg*>	genericArgs;
 
 public:
-	ITsys_Allocator<ITsys_Primitive, 1024>	_primitive;
-	ITsys_Allocator<ITsys_LRef, 1024>		_lref;
-	ITsys_Allocator<ITsys_RRef, 1024>		_rref;
-	ITsys_Allocator<ITsys_Ptr, 1024>		_ptr;
-	ITsys_Allocator<ITsys_Array, 1024>		_array;
-	ITsys_Allocator<ITsys_Function, 1024>	_function;
-	ITsys_Allocator<ITsys_Member, 1024>		_member;
-	ITsys_Allocator<ITsys_CV, 1024>			_cv;
-	ITsys_Allocator<ITsys_Decl, 1024>		_decl;
-	ITsys_Allocator<ITsys_Generic, 1024>	_generic;
-	ITsys_Allocator<ITsys_GenericArg, 1024> _genericArg;
-	ITsys_Allocator<ITsys_Expr, 1024>		_expr;
+	ITsys_Allocator<ITsys_Primitive,	1024>		_primitive;
+	ITsys_Allocator<ITsys_LRef,			1024>		_lref;
+	ITsys_Allocator<ITsys_RRef,			1024>		_rref;
+	ITsys_Allocator<ITsys_Ptr,			1024>		_ptr;
+	ITsys_Allocator<ITsys_Array,		1024>		_array;
+	ITsys_Allocator<ITsys_Function,		1024>		_function;
+	ITsys_Allocator<ITsys_Member,		1024>		_member;
+	ITsys_Allocator<ITsys_CV,			1024>		_cv;
+	ITsys_Allocator<ITsys_Decl,			1024>		_decl;
+	ITsys_Allocator<ITsys_Generic,		1024>		_generic;
+	ITsys_Allocator<ITsys_GenericArg,	1024>		_genericArg;
+	ITsys_Allocator<ITsys_Expr,			1024>		_expr;
 
 	ITsys* PrimitiveOf(TsysPrimitive primitive)override
 	{
-		throw 0;
+		vint a = (vint)primitive.type;
+		vint b = (vint)primitive.bytes;
+		vint index = (vint)TsysPrimitiveType::_COUNT*a + b;
+		if (index > sizeof(primitives)) throw "Not Implemented!";
+
+		auto& itsys = primitives[index];
+		if (!itsys)
+		{
+			itsys = _primitive.Alloc(this, primitive);
+		}
+		return itsys;
 	}
 
 	ITsys* DeclOf(Ptr<Declaration> decl)override
 	{
-		throw 0;
+		vint index = decls.Keys().IndexOf(decl.Obj());
+		if (index != -1) return decls.Values()[index];
+		auto itsys = _decl.Alloc(this, decl);
+		decls.Add(decl, itsys);
+		return itsys;
 	}
 
 	ITsys* GenericArgOf(Ptr<Declaration> decl)override
 	{
-		throw 0;
+		vint index = genericArgs.Keys().IndexOf(decl.Obj());
+		if (index != -1) return genericArgs.Values()[index];
+		auto itsys = _genericArg.Alloc(this, decl);
+		genericArgs.Add(decl, itsys);
+		return itsys;
 	}
 };
 
@@ -219,22 +265,29 @@ TsysBase (Impl)
 
 ITsys* TsysBase::LRefOf()
 {
-	throw 0;
+	if (!lrefOf) lrefOf = tsys->_lref.Alloc(tsys, this);
+	return lrefOf;
 }
 
 ITsys* TsysBase::RRefOf()
 {
-	throw 0;
+	if (!rrefOf) rrefOf = tsys->_rref.Alloc(tsys, this);
+	return rrefOf;
 }
 
 ITsys* TsysBase::PtrOf()
 {
-	throw 0;
+	if (!ptrOf) ptrOf = tsys->_ptr.Alloc(tsys, this);
+	return ptrOf;
 }
 
 ITsys* TsysBase::ArrayOf(vint dimensions)
 {
-	throw 0;
+	vint index = arrayOf.Keys().IndexOf(dimensions);
+	if (index != -1) return arrayOf.Values()[index];
+	auto itsys = tsys->_array.Alloc(tsys, this, dimensions);
+	arrayOf.Add(dimensions, itsys);
+	return itsys;
 }
 
 ITsys* TsysBase::FunctionOf(IEnumerable<ITsys*>& params)
@@ -244,12 +297,20 @@ ITsys* TsysBase::FunctionOf(IEnumerable<ITsys*>& params)
 
 ITsys* TsysBase::MemberOf(ITsys* classType)
 {
-	throw 0;
+	vint index = memberOf.Keys().IndexOf(classType);
+	if (index != -1) return memberOf.Values()[index];
+	auto itsys = tsys->_member.Alloc(tsys, this);
+	itsys->GetParams().Add(classType);
+	memberOf.Add(classType, itsys);
+	return itsys;
 }
 
 ITsys* TsysBase::CVOf(TsysCV cv)
 {
-	throw 0;
+	vint index = ((cv.isConstExpr ? 1 : 0) << 2) + ((cv.isConst ? 1 : 0) << 1) + (cv.isVolatile ? 1 : 0);
+	auto& itsys = cvOf[index];
+	if (!itsys) itsys = tsys->_cv.Alloc(tsys, this, cv);
+	return itsys;
 }
 
 ITsys* TsysBase::GenericOf(IEnumerable<ITsys*>& params)

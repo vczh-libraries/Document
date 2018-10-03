@@ -20,6 +20,7 @@ enum class TsysPrimitiveType
 	Char,
 	Bool,
 	Void,
+	_COUNT,
 };
 
 enum class TsysBytes
@@ -30,6 +31,7 @@ enum class TsysBytes
 	_8,
 	_10,
 	_16,
+	_COUNT,
 };
 
 struct TsysPrimitive
