@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Parser">
       <UniqueIdentifier>{6398acdd-44c1-4303-bb34-ffac39750259}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TypeSystem">
+      <UniqueIdentifier>{c8dc61be-4403-4b74-8873-dbf049ff1002}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\IncludeAll.h">
@@ -56,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="Source\Parser.h">
       <Filter>Source Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TypeSystem.h">
+      <Filter>Source Files\TypeSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="Source\Parser_Type.cpp">
       <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TypeSystem.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

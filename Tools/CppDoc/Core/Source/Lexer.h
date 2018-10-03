@@ -1,7 +1,7 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_LEXER
 #define VCZH_DOCUMENT_CPPDOC_LEXER
 
-#include "Vlpp.h"
+#include <Vlpp.h>
 
 using namespace vl;
 using namespace vl::collections;

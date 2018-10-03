@@ -2,6 +2,7 @@
 #define VCZH_DOCUMENT_CPPDOC_PARSER
 
 #include "Ast.h"
+#include "TypeSystem.h"
 
 /***********************************************************************
 Symbol
@@ -94,6 +95,7 @@ struct ParsingArguments
 {
 	Ptr<Symbol>				root;
 	Symbol*					context = nullptr;
+	Ptr<TypeAlloc>			tsys;
 	Ptr<IIndexRecorder>		recorder;
 
 	ParsingArguments();

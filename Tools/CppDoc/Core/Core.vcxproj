@@ -156,6 +156,7 @@
     <ClInclude Include="Source\IncludeAll.h" />
     <ClInclude Include="Source\Lexer.h" />
     <ClInclude Include="Source\Parser.h" />
+    <ClInclude Include="Source\TypeSystem.h" />
     <ClInclude Include="Source\Utility.h" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +175,7 @@
     <ClCompile Include="Source\Parser_Misc.cpp" />
     <ClCompile Include="Source\Parser_Stat.cpp" />
     <ClCompile Include="Source\Parser_Type.cpp" />
+    <ClCompile Include="Source\TypeSystem.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
