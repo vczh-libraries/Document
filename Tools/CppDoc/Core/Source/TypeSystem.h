@@ -41,6 +41,10 @@ struct TsysCV
 	TsysCV(bool ce, bool c, bool v) :isConstExpr(ce), isConst(c), isVolatile(v) {}
 };
 
+const TsysCV		CV_CE	{ true,false,false };
+const TsysCV		CV_C	{ false,true,false };
+const TsysCV		CV_V	{ false,false,true };
+
 enum class TsysType
 {
 	Primitive,		// Primitive
