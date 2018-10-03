@@ -95,7 +95,7 @@ struct ParsingArguments
 {
 	Ptr<Symbol>				root;
 	Symbol*					context = nullptr;
-	Ptr<TypeAlloc>			tsys;
+	Ptr<ITsysAlloc>			tsys;
 	Ptr<IIndexRecorder>		recorder;
 
 	ParsingArguments();

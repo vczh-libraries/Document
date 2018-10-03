@@ -22,13 +22,23 @@ enum class TsysPrimitiveType
 	Void,
 };
 
+enum class TsysBytes
+{
+	_1,
+	_2,
+	_4,
+	_8,
+	_10,
+	_16,
+};
+
 struct TsysPrimitive
 {
 	TsysPrimitiveType			type = TsysPrimitiveType::Void;
-	vint						bytes = 0;
+	TsysBytes					bytes = TsysBytes::_1;
 
 	TsysPrimitive() = default;
-	TsysPrimitive(TsysPrimitiveType _type, vint _bytes) :type(_type), bytes(_bytes) {}
+	TsysPrimitive(TsysPrimitiveType _type, TsysBytes _bytes) :type(_type), bytes(_bytes) {}
 };
 
 struct TsysCV
@@ -83,19 +93,17 @@ public:
 };
 
 /***********************************************************************
-TypeAlloc
+ITsysAlloc
 ***********************************************************************/
 
-class TypeAlloc : public Object
+class ITsysAlloc abstract : public Interface
 {
-protected:
 public:
-	TypeAlloc();
-	~TypeAlloc();
+	virtual ITsys*				PrimitiveOf(TsysPrimitive primitive) = 0;
+	virtual ITsys*				DeclOf(Ptr<Declaration> decl) = 0;
+	virtual ITsys*				GenericArgOf(Ptr<Declaration> decl) = 0;
 
-	ITsys*						PrimitiveOf(TsysPrimitive primitive);
-	ITsys*						DeclOf(Ptr<Declaration> decl);
-	ITsys*						GenericArgOf(Ptr<Declaration> decl);
+	static Ptr<ITsysAlloc>		Create();
 };
 
 #endif
