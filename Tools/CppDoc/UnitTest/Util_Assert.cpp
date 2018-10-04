@@ -16,13 +16,13 @@ void AssertMultilines(const WString& output, const WString& log)
 	}
 }
 
-void AssertType(const WString& input, const WString& log)
+void AssertType(const WString& input, const WString& log, const WString& logTsys)
 {
 	ParsingArguments pa;
-	AssertType(input, log, pa);
+	AssertType(input, log, logTsys, pa);
 }
 
-void AssertType(const WString& input, const WString& log, ParsingArguments& pa)
+void AssertType(const WString& input, const WString& log, const WString& logTsys, ParsingArguments& pa)
 {
 	CppTokenReader reader(GlobalCppLexer(), input);
 	auto cursor = reader.GetFirstToken();
@@ -39,7 +39,7 @@ void AssertType(const WString& input, const WString& log, ParsingArguments& pa)
 
 void AssertStat(const WString& input, const WString& log)
 {
-	ParsingArguments pa(new Symbol, nullptr);
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
 	AssertStat(input, log, pa);
 }
 

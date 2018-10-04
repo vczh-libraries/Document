@@ -11,8 +11,8 @@ extern void					Log(Ptr<Declaration> decl, StreamWriter& writer, vint indentatio
 extern void					Log(Ptr<Program> program, StreamWriter& writer);
 
 extern void					AssertMultilines(const WString& output, const WString& log);
-extern void					AssertType(const WString& input, const WString& log);
-extern void					AssertType(const WString& input, const WString& log, ParsingArguments& pa);
+extern void					AssertType(const WString& input, const WString& log, const WString& logTsys);
+extern void					AssertType(const WString& input, const WString& log, const WString& logTsys, ParsingArguments& pa);
 extern void					AssertStat(const WString& input, const WString& log);
 extern void					AssertStat(const WString& input, const WString& log, ParsingArguments& pa);
 extern void					AssertProgram(const WString& input, const WString& log, Ptr<IIndexRecorder> recorder = nullptr);
@@ -21,7 +21,7 @@ extern void					AssertProgram(Ptr<Program> program, const WString& log);
 #define COMPILE_PROGRAM_WITH_RECORDER(PROGRAM, PA, INPUT, RECORDER)\
 	CppTokenReader reader(GlobalCppLexer(), INPUT);\
 	auto cursor = reader.GetFirstToken();\
-	ParsingArguments PA(new Symbol, RECORDER);\
+	ParsingArguments PA(new Symbol, ITsysAlloc::Create(), RECORDER);\
 	auto PROGRAM = ParseProgram(PA, cursor);\
 	TEST_ASSERT(!cursor)\
 

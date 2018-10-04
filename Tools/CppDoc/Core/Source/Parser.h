@@ -99,7 +99,7 @@ struct ParsingArguments
 	Ptr<IIndexRecorder>		recorder;
 
 	ParsingArguments();
-	ParsingArguments(Ptr<Symbol> _root, Ptr<IIndexRecorder> _recorder);
+	ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr<IIndexRecorder> _recorder);
 	ParsingArguments(const ParsingArguments& pa, Symbol* _context);
 };
 

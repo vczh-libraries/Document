@@ -18,9 +18,10 @@ ParsingArguments::ParsingArguments()
 {
 }
 
-ParsingArguments::ParsingArguments(Ptr<Symbol> _root, Ptr<IIndexRecorder> _recorder)
+ParsingArguments::ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr<IIndexRecorder> _recorder)
 	:root(_root)
 	, context(_root.Obj())
+	, tsys(_tsys)
 	, recorder(_recorder)
 {
 }

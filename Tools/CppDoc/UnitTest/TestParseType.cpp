@@ -4,90 +4,91 @@
 
 TEST_CASE(TestParseType_Primitive)
 {
-#define TEST_PRIMITIVE_TYPE(TYPE)\
-	AssertType(L#TYPE, L#TYPE);\
-	AssertType(L"signed " L#TYPE, L"signed " L#TYPE);\
-	AssertType(L"unsigned " L#TYPE, L"unsigned " L#TYPE);\
+#define TEST_PRIMITIVE_TYPE(TYPE, LOG, LOGS, LOGU)\
+	AssertType(L#TYPE, L#TYPE, LOG);\
+	AssertType(L"signed " L#TYPE, L"signed " L#TYPE, LOGS);\
+	AssertType(L"unsigned " L#TYPE, L"unsigned " L#TYPE, LOGU);\
 
-	TEST_PRIMITIVE_TYPE(auto);
-	TEST_PRIMITIVE_TYPE(void);
-	TEST_PRIMITIVE_TYPE(bool);
-	TEST_PRIMITIVE_TYPE(char);
-	TEST_PRIMITIVE_TYPE(wchar_t);
-	TEST_PRIMITIVE_TYPE(char16_t);
-	TEST_PRIMITIVE_TYPE(char32_t);
-	TEST_PRIMITIVE_TYPE(short);
-	TEST_PRIMITIVE_TYPE(int);
-	TEST_PRIMITIVE_TYPE(__int8);
-	TEST_PRIMITIVE_TYPE(__int16);
-	TEST_PRIMITIVE_TYPE(__int32);
-	TEST_PRIMITIVE_TYPE(__int64);
-	TEST_PRIMITIVE_TYPE(long);
-	TEST_PRIMITIVE_TYPE(long long);
-	TEST_PRIMITIVE_TYPE(float);
-	TEST_PRIMITIVE_TYPE(double);
-	TEST_PRIMITIVE_TYPE(long double);
+	TEST_PRIMITIVE_TYPE(auto,			L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(void,			L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(bool,			L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(char,			L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(wchar_t,		L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(char16_t,		L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(char32_t,		L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(short,			L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(int,			L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(__int8,			L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(__int16,		L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(__int32,		L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(__int64,		L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(long,			L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(long long,		L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(float,			L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(double,			L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(long double,	L"",	L"",	L"");
 
 #undef TEST_PRIMITIVE_TYPE
 }
 
 TEST_CASE(TestParseType_Short)
 {
-	AssertType(L"decltype(auto)",					L"decltype(auto)");
-	AssertType(L"decltype(0)",						L"decltype(0)");
-	AssertType(L"constexpr int",					L"int constexpr");
-	AssertType(L"const int",						L"int const");
-	AssertType(L"volatile int",						L"int volatile");
+	AssertType(L"decltype(auto)",					L"decltype(auto)",					L"");
+	AssertType(L"decltype(0)",						L"decltype(0)",						L"");
+	AssertType(L"constexpr int",					L"int constexpr",					L"");
+	AssertType(L"const int",						L"int const",						L"");
+	AssertType(L"volatile int",						L"int volatile",					L"");
 }
 
 TEST_CASE(TestParseType_Long)
 {
-	AssertType(L"int constexpr",					L"int constexpr");
-	AssertType(L"int const",						L"int const");
-	AssertType(L"int volatile",						L"int volatile");
-	AssertType(L"int ...",							L"int...");
-	AssertType(L"int<long, short<float, double>>",	L"int<long, short<float, double>>");
+	AssertType(L"int constexpr",					L"int constexpr",					L"");
+	AssertType(L"int const",						L"int const",						L"");
+	AssertType(L"int volatile",						L"int volatile",					L"");
+	AssertType(L"int ...",							L"int...",							L"");
+	AssertType(L"int<long, short<float, double>>",	L"int<long, short<float, double>>", L"");
 }
 
 TEST_CASE(TestParseType_ShortDeclarator)
 {
-	AssertType(L"int* __ptr32",						L"int *");
-	AssertType(L"int* __ptr64",						L"int *");
-	AssertType(L"int*",								L"int *");
-	AssertType(L"int &",							L"int &");
-	AssertType(L"int &&",							L"int &&");
-	AssertType(L"int & &&",							L"int & &&");
+	AssertType(L"int* __ptr32",						L"int *",							L"");
+	AssertType(L"int* __ptr64",						L"int *",							L"");
+	AssertType(L"int*",								L"int *",							L"");
+	AssertType(L"int &",							L"int &",							L"");
+	AssertType(L"int &&",							L"int &&",							L"");
+	AssertType(L"int & &&",							L"int & &&",						L"");
 }
 
 TEST_CASE(TestParseType_LongDeclarator)
 {
-	AssertType(L"int[]",							L"int []");
-	AssertType(L"int[][]",							L"int [] []");
-	AssertType(L"int[1][2][3]",						L"int [1] [2] [3]");
-	AssertType(L"int(*&)[][]",						L"int [] [] * &");
+	AssertType(L"int[]",							L"int []",							L"");
+	AssertType(L"int[][]",							L"int [] []",						L"");
+	AssertType(L"int[1][2][3]",						L"int [1] [2] [3]",					L"");
+	AssertType(L"int(*&)[][]",						L"int [] [] * &",					L"");
 
-	AssertType(L"int()",																	L"int ()");
-	AssertType(L"auto ()->int constexpr const volatile & && override noexcept throw()",		L"(auto->int constexpr const volatile & &&) () override noexcept throw()");
-	AssertType(L"auto ()constexpr const volatile & && ->int override noexcept throw()",		L"(auto->int) () constexpr const volatile & && override noexcept throw()");
+	AssertType(L"int()",																	L"int ()",																	L"");
+	AssertType(L"auto ()->int constexpr const volatile & && override noexcept throw()",		L"(auto->int constexpr const volatile & &&) () override noexcept throw()",	L"");
+	AssertType(L"auto ()constexpr const volatile & && ->int override noexcept throw()",		L"(auto->int) () constexpr const volatile & && override noexcept throw()",	L"");
 
-	AssertType(L"int __cdecl(int)",					L"int (int) __cdecl");
-	AssertType(L"int __clrcall(int)",				L"int (int) __clrcall");
-	AssertType(L"int __stdcall(int)",				L"int (int) __stdcall");
-	AssertType(L"int __fastcall(int)",				L"int (int) __fastcall");
-	AssertType(L"int __thiscall(int)",				L"int (int) __thiscall");
-	AssertType(L"int __vectorcall(int)",			L"int (int) __vectorcall");
-	AssertType(L"int(*)(int)",						L"int (int) *");
-	AssertType(L"int(__cdecl*)(int)",				L"int (int) __cdecl *");
+	AssertType(L"int __cdecl(int)",					L"int (int) __cdecl",					L"");
+	AssertType(L"int __clrcall(int)",				L"int (int) __clrcall",					L"");
+	AssertType(L"int __stdcall(int)",				L"int (int) __stdcall",					L"");
+	AssertType(L"int __fastcall(int)",				L"int (int) __fastcall",				L"");
+	AssertType(L"int __thiscall(int)",				L"int (int) __thiscall",				L"");
+	AssertType(L"int __vectorcall(int)",			L"int (int) __vectorcall",				L"");
+	AssertType(L"int(*)(int)",						L"int (int) *",							L"");
+	AssertType(L"int(__cdecl*)(int)",				L"int (int) __cdecl *",					L"");
 
-	AssertType(L"int(*[5])(int, int a, int b=0)",	L"int (int, a: int, b: int = 0) * [5]");
-	AssertType(L"int(&(*[5])(void))[10]",			L"int [10] & () * [5]");
+	AssertType(L"int(*[5])(int, int a, int b=0)",	L"int (int, a: int, b: int = 0) * [5]",	L"");
+	AssertType(L"int(&(*[5])(void))[10]",			L"int [10] & () * [5]",					L"");
 }
 
 TEST_CASE(TestParseType_SuperComplexType)
 {
 	AssertType(
 		L"int(__fastcall*const&((*)(int))[10])(int(&a)[], int(__stdcall*b)()noexcept, int(*c[5])(void)=0)",
-		L"int (a: int [] &, b: int () noexcept __stdcall *, c: int () * [5] = 0) __fastcall * const & [10] (int) *"
+		L"int (a: int [] &, b: int () noexcept __stdcall *, c: int () * [5] = 0) __fastcall * const & [10] (int) *",
+		L""
 		);
 }
 
@@ -113,6 +114,7 @@ namespace a::b
 		AssertType(
 			L"a::b::X",
 			L"a :: b :: X",
+			L"",
 			pa);
 		TEST_ASSERT(accessed.Count() == 3);
 	}
@@ -129,6 +131,7 @@ namespace a::b
 		AssertType(
 			L"typename ::a::b::X::Y::Z",
 			L"__root :: a :: typename b :: typename X :: typename Y :: typename Z",
+			L"",
 			pa);
 		TEST_ASSERT(accessed.Count() == 3);
 	}
@@ -147,6 +150,7 @@ namespace a::b
 		AssertType(
 			L"a::b::X(__cdecl typename a::b::*)()",
 			L"a :: b :: X () __cdecl (a :: typename b ::) *",
+			L"",
 			pa);
 		TEST_ASSERT(accessed.Count() == 5);
 	}
@@ -188,6 +192,7 @@ namespace c::d
 		AssertType(
 			L"c::d::Y::Z::Y",
 			L"c :: d :: Y :: Z :: Y",
+			L"",
 			pa);
 		TEST_ASSERT(accessed.Count() == 5);
 	}
