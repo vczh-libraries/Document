@@ -1041,7 +1041,17 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		writer.WriteString(L" *");
 		return;
 	case TsysType::Array:
-		break;
+		{
+			Log(tsys->GetElement(), writer);
+			writer.WriteString(L" [");
+			vint dim = tsys->GetParamCount();
+			for (vint i = 1; i < dim; i++)
+			{
+				writer.WriteChar(L',');
+			}
+			writer.WriteChar(L']');
+		}
+		return;
 	case TsysType::Function:
 		break;
 	case TsysType::Member:

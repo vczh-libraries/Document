@@ -71,10 +71,10 @@ TEST_CASE(TestParseType_ShortDeclarator)
 
 TEST_CASE(TestParseType_LongDeclarator)
 {
-	AssertType(L"int[]",							L"int []",							L"");
-	AssertType(L"int[][]",							L"int [] []",						L"");
-	AssertType(L"int[1][2][3]",						L"int [1] [2] [3]",					L"");
-	AssertType(L"int(*&)[][]",						L"int [] [] * &",					L"");
+	AssertType(L"int[]",							L"int []",							L"__int32 []");
+	AssertType(L"int[][]",							L"int [] []",						L"__int32 [,]");
+	AssertType(L"int[1][2][3]",						L"int [1] [2] [3]",					L"__int32 [,,]");
+	AssertType(L"int(*&)[][]",						L"int [] [] * &",					L"__int32 [,] * &");
 
 	AssertType(L"int()",																	L"int ()",																	L"");
 	AssertType(L"auto ()->int constexpr const volatile & && override noexcept throw()",		L"(auto->int constexpr const volatile & &&) () override noexcept throw()",	L"");

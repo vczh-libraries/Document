@@ -361,7 +361,20 @@ public:
 
 	void Visit(ArrayType* self)override
 	{
-		throw NotConvertableException();
+		self->type->Accept(this);
+		for (vint i = 0; i < result.Count(); i++)
+		{
+			auto tsys = result[i];
+			if (tsys->GetType() == TsysType::Array)
+			{
+				tsys = tsys->GetElement()->ArrayOf(tsys->GetParamCount() + 1);
+			}
+			else
+			{
+				tsys = tsys->ArrayOf(1);
+			}
+			result[i] = tsys;
+		}
 	}
 
 	void Visit(CallingConventionType* self)override
