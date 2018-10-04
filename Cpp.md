@@ -262,17 +262,27 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [ ] `{` ... `}`
 - [ ] `this`
 - [ ] `nullptr`
-- [ ] [TYPE `::`] [`~`] IDENTIFIER
-- [ ] `(` EXPR `)`
-- [ ] EXPR (`.` | `->` | `.*` | `->*`) IDENTIFIER
-- [ ] EXPR `(` {EXPR `,` ...} `)`
-- [ ] EXPR `[` EXPR `]`
+- [ ] IDENTIFIER
+- [ ] `::` IDENTIFIER
+- [ ] TYPE `::` IDENTIFIER
+- [ ] `(` EXPR-WITH-COMMA `)`
+- [ ] OPERATOR EXPR
+  - others
+- [ ] EXPR OPERATOR
+  - EXPR `(` {EXPR `,` ...} `)`
+  - EXPR `[` EXPR `]`
+  - EXPR `<` {TYPE `,` ...} `>`
+  - others
 - [ ] EXPR `...`
-- [ ] Prefix / Postfix unary operator expressions
-- [ ] Binary operator expressions
+- [ ] EXPR OPERATOR EXPR
+  - EXPR (`.` | `->`) IDENTIFIER
+  - EXPR (`.*` | `->*`) EXPR
+  - others
 - [ ] EXPR `?` EXPR `:` EXPR
 - [ ] (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
-- [ ] (`typeid` | `sizeof` [`...`]) `(` (EXPR | TYPE) `)`
+- [ ] `typeid` `(` (TYPE | EXPR) `)`
+- [ ] `sizeof` [`...`] EXPR
+- [ ] `sizeof` [`...`] `(` TYPE `)`
 - [ ] `(` TYPE `)` EXPR
 - [ ] [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
 - [ ] [`::`] `delete` [`[` `]`] EXPR
@@ -282,3 +292,42 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 ### Operators:
 
 [Built-in Operators, Precedence and Associativity](https://docs.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=vs-2017)
+
+Group 0 precedence
+  - primitive
+Group 1 precedence
+  - `::`
+Group 2 precedence
+  - `.` `->` `[]` `()` `x++` `x--`
+Group 3 precedence (<-)
+  - `sizeof` `++x` `--x` `~` `!` `-x` `+x` `&x` `*x` `(T)E`
+Group 4 precedence
+  - `.*` `->*`
+Group 5 precedence
+  - `*` `/` `%`
+Group 6 precedence
+  - `+` `-`
+Group 7 precedence
+  - `<<` `>>`
+Group 8 precedence
+  - `<` `>` `<=` `>=`
+Group 9 precedence
+  - `==` `!=`
+Group 10 precedence
+  - `&`
+Group 11 precedence
+  - `^`
+Group 12 precedence
+  - `|`
+Group 13 precedence
+  - `&&`
+Group 14 precedence
+  - `||`
+Group 15 precedence (<-)
+  - `a?b:c`
+Group 16 precedence (<-)
+  - `=` `*=` `/=` `%=` `+=` `-=` `<<=` `>>=` `&=` `|=` `^=`
+Group 17 precedence (<-)
+  - `throw`
+Group 18 precedence
+  - `,`
