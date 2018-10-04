@@ -20,6 +20,9 @@ class ITsys_WithParams;
 using ITsys_Function = ITsys_WithParams<TsysType::Function>;
 using ITsys_Generic = ITsys_WithParams<TsysType::Generic>;
 
+template<typename T, vint BlockSize>
+class ITsys_Allocator;
+
 /***********************************************************************
 TsysBase
 ***********************************************************************/
@@ -27,9 +30,13 @@ TsysBase
 template<typename T>
 struct WithParams
 {
-	T* itsys;
+	IEnumerable<ITsys*>*	params;
+	T*						itsys;
 
-	static vint Compare(WithParams<T> a, WithParams<T> b);
+	static vint Compare(WithParams<T> a, WithParams<T> b)
+	{
+		return CompareEnumerable(*a.params, *b.params);
+	}
 };
 #define OPERATOR_COMPARE(OP)\
 	template<typename T>\
@@ -57,6 +64,8 @@ namespace vl
 
 class TsysBase : public ITsys
 {
+	template<typename T>
+	using WithParamsList = SortedList<WithParams<T>>;
 protected:
 	TsysAlloc*										tsys;
 	ITsys_LRef*										lrefOf = nullptr;
@@ -65,9 +74,11 @@ protected:
 	Dictionary<vint, ITsys_Array*>					arrayOf;
 	Dictionary<ITsys*, ITsys_Member*>				memberOf;
 	ITsys_CV*										cvOf[8] = { 0 };
-	SortedList<WithParams<ITsys_Function>>			functionOf;
-	SortedList<WithParams<ITsys_Generic>>			genericOf;
+	WithParamsList<ITsys_Function>					functionOf;
+	WithParamsList<ITsys_Generic>					genericOf;
 
+	template<typename T, vint BlockSize>
+	ITsys* ParamsOf(IEnumerable<ITsys*>& params, WithParamsList<T>& paramsOf, ITsys_Allocator<T, BlockSize> TsysAlloc::* alloc);
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
 
@@ -159,10 +170,9 @@ protected:
 	List<ITsys*>		params;
 
 public:
-	ITsys_WithParams(TsysAlloc* _tsys, ITsys* _element, List<ITsys*>* _params)
+	ITsys_WithParams(TsysAlloc* _tsys, ITsys* _element)
 		:TsysBase_<Type>(_tsys)
 		, element(_element)
-		, params(_params)
 	{
 	}
 
@@ -175,12 +185,6 @@ public:
 	ITsys* GetParam(vint index)override { return params.Get(index); }
 	vint GetParamCount()override { return params.Count(); }
 };
-
-template<typename T>
-vint WithParams<T>::Compare(WithParams<T> a, WithParams<T> b)
-{
-	return CompareEnumerable(a.itsys->GetParams(), b.itsys->GetParams());
-}
 
 class ITsys_Expr : TsysBase_<TsysType::Expr>
 {
@@ -305,6 +309,23 @@ Ptr<ITsysAlloc> ITsysAlloc::Create()
 TsysBase (Impl)
 ***********************************************************************/
 
+template<typename T, vint BlockSize>
+ITsys* TsysBase::ParamsOf(IEnumerable<ITsys*>& params, WithParamsList<T>& paramsOf, ITsys_Allocator<T, BlockSize> TsysAlloc::* alloc)
+{
+	WithParams<T> key;
+	key.params = &params;
+	key.itsys = nullptr;
+	vint index = paramsOf.IndexOf(key);
+	if (index != -1) return paramsOf[index].itsys;
+
+	T* itsys = (tsys->*alloc).Alloc(tsys, this);
+	CopyFrom(itsys->GetParams(), params);
+	key.params = &itsys->GetParams();
+	key.itsys = itsys;
+	paramsOf.Add(key);
+	return itsys;
+}
+
 ITsys* TsysBase::LRefOf()
 {
 	if (!lrefOf) lrefOf = tsys->_lref.Alloc(tsys, this);
@@ -334,7 +355,7 @@ ITsys* TsysBase::ArrayOf(vint dimensions)
 
 ITsys* TsysBase::FunctionOf(IEnumerable<ITsys*>& params)
 {
-	throw 0;
+	return ParamsOf(params, functionOf, &TsysAlloc::_function);
 }
 
 ITsys* TsysBase::MemberOf(ITsys* classType)
@@ -356,5 +377,5 @@ ITsys* TsysBase::CVOf(TsysCV cv)
 
 ITsys* TsysBase::GenericOf(IEnumerable<ITsys*>& params)
 {
-	throw 0;
+	return ParamsOf(params, genericOf, &TsysAlloc::_generic);
 }
