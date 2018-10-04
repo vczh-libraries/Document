@@ -73,7 +73,8 @@ TEST_CASE(TestParseType_LongDeclarator)
 {
 	AssertType(L"int[]",							L"int []",								L"__int32 []"		);
 	AssertType(L"int[][]",							L"int [] []",							L"__int32 [,]"		);
-	AssertType(L"int[1][2][3]",						L"int [1] [2] [3]",						L"__int32 [,,]"		);
+	AssertType(L"int[1][2][3]",						L"int [3] [2] [1]",						L"__int32 [,,]"		);
+	AssertType(L"int([1])[2][3]",					L"int [3] [2] [1]",						L"__int32 [,,]"		);
 	AssertType(L"int(*&)[][]",						L"int [] [] * &",						L"__int32 [,] * &"	);
 
 	AssertType(L"int()",																	L"int ()",																	L"__int32 ()"							);

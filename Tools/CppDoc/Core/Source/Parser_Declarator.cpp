@@ -89,7 +89,7 @@ public:
 };
 
 /***********************************************************************
-ParseShortDeclarator
+EnsureMemberTypeResolved
 ***********************************************************************/
 
 ClassDeclaration* EnsureMemberTypeResolved(Ptr<MemberType> memberType, Ptr<CppTokenCursor>& cursor)
@@ -433,7 +433,6 @@ GIVE_UP:
 					};
 
 					replacer.Execute(declarator->type);
-					targetType = replacer.createdType;
 				}
 
 				if (!TestToken(cursor, CppTokens::RBRACKET))
