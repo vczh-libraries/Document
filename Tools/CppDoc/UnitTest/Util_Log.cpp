@@ -272,7 +272,14 @@ public:
 	void Visit(DeclType* self)override
 	{
 		writer.WriteString(L"decltype(");
-		Log(self->expr, writer);
+		if (self->expr)
+		{
+			Log(self->expr, writer);
+		}
+		else
+		{
+			writer.WriteString(L"auto");
+		}
 		writer.WriteString(L")");
 	}
 

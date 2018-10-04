@@ -33,6 +33,7 @@ TEST_CASE(TestParseType_Primitive)
 
 TEST_CASE(TestParseType_Short)
 {
+	AssertType(L"decltype(auto)",					L"decltype(auto)");
 	AssertType(L"decltype(0)",						L"decltype(0)");
 	AssertType(L"constexpr int",					L"int constexpr");
 	AssertType(L"const int",						L"int const");

@@ -420,7 +420,10 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 			// decltype(EXPRESSION)
 			RequireToken(cursor, CppTokens::LPARENTHESIS);
 			auto type = MakePtr<DeclType>();
-			type->expr = ParseExpr(pa, true, cursor);
+			if (!TestToken(cursor, CppTokens::TYPE_AUTO))
+			{
+				type->expr = ParseExpr(pa, true, cursor);
+			}
 			RequireToken(cursor, CppTokens::RPARENTHESIS);
 			return type;
 		}
