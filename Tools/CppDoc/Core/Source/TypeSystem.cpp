@@ -271,7 +271,7 @@ public:
 		vint a = (vint)primitive.type;
 		vint b = (vint)primitive.bytes;
 		vint index = (vint)TsysPrimitiveType::_COUNT*a + b;
-		if (index > sizeof(primitives)) throw "Not Implemented!";
+		if (index > sizeof(primitives) / sizeof(*primitives)) throw "Not Implemented!";
 
 		auto& itsys = primitives[index];
 		if (!itsys)
@@ -370,6 +370,7 @@ ITsys* TsysBase::MemberOf(ITsys* classType)
 ITsys* TsysBase::CVOf(TsysCV cv)
 {
 	vint index = ((cv.isConstExpr ? 1 : 0) << 2) + ((cv.isConst ? 1 : 0) << 1) + (cv.isVolatile ? 1 : 0);
+	if (index > sizeof(cvOf) / sizeof(*cvOf)) throw "Not Implemented!";
 	auto& itsys = cvOf[index];
 	if (!itsys) itsys = tsys->_cv.Alloc(tsys, this, cv);
 	return itsys;
