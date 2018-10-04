@@ -38,10 +38,12 @@ void AssertType(const WString& input, const WString& log, const WString& logTsys
 
 	try
 	{
-		auto tsys = TypeToTsys(pa, type);
+		List<ITsys*> tsys;
+		TypeToTsys(pa, type, tsys);
+		TEST_ASSERT(tsys.Count() == 1);
 		auto outputTsys = GenerateToStream([&](StreamWriter& writer)
 		{
-			Log(tsys, writer);
+			Log(tsys[0], writer);
 		});
 		TEST_ASSERT(outputTsys == logTsys);
 	}

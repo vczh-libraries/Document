@@ -125,6 +125,6 @@ struct NotConvertableException
 };
 
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
-extern ITsys*				TypeToTsys(ParsingArguments& pa, Ptr<Type> t);
+extern void					TypeToTsys(ParsingArguments& pa, Ptr<Type> t, List<ITsys*>& tsys);
 
 #endif

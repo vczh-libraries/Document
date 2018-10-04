@@ -245,11 +245,12 @@ TypeToTsys
 class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
 {
 public:
-	ITsys*					result = false;
+	List<ITsys*>&			result;
 	ParsingArguments&		pa;
 
-	TypeToTsysVisitor(ParsingArguments& _pa)
+	TypeToTsysVisitor(ParsingArguments& _pa, List<ITsys*>& _result)
 		:pa(_pa)
+		, result(_result)
 	{
 	}
 
@@ -320,10 +321,9 @@ public:
 };
 
 // Convert type AST to type system object
-ITsys* TypeToTsys(ParsingArguments& pa, Ptr<Type> t)
+void TypeToTsys(ParsingArguments& pa, Ptr<Type> t, List<ITsys*>& tsys)
 {
 	if (!t) throw NotConvertableException();
-	TypeToTsysVisitor visitor(pa);
+	TypeToTsysVisitor visitor(pa, tsys);
 	t->Accept(&visitor);
-	return visitor.result;
 }
