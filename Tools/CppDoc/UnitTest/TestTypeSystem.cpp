@@ -131,19 +131,48 @@ TEST_CASE(TestTypeSystem_Member)
 
 TEST_CASE(TestTypeSystem_Function)
 {
+	auto n = MakePtr<NamespaceDeclaration>();
 	auto tsys = ITsysAlloc::Create();
+	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	auto tdecl = tsys->DeclOf(n);
+	auto tgarg = tsys->GenericArgOf(n);
+
+	List<ITsys*> types1;
+	types1.Add(tdecl);
+	types1.Add(tgarg);
+
+	List<ITsys*> types2;
+	types2.Add(tgarg);
+	types2.Add(tdecl);
+
+	TEST_ASSERT(tvoid->FunctionOf(types1) == tvoid->FunctionOf(types1));
+	TEST_ASSERT(tvoid->FunctionOf(types1) != tvoid->FunctionOf(types2));
 }
 
 TEST_CASE(TestTypeSystem_Generic)
 {
+	auto n = MakePtr<NamespaceDeclaration>();
 	auto tsys = ITsysAlloc::Create();
+	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	auto tdecl = tsys->DeclOf(n);
+	auto tgarg = tsys->GenericArgOf(n);
+
+	List<ITsys*> types1;
+	types1.Add(tdecl);
+	types1.Add(tgarg);
+
+	List<ITsys*> types2;
+	types2.Add(tgarg);
+	types2.Add(tdecl);
+
+	TEST_ASSERT(tvoid->GenericOf(types1) == tvoid->GenericOf(types1));
+	TEST_ASSERT(tvoid->GenericOf(types1) != tvoid->GenericOf(types2));
 }
 
 TEST_CASE(TestTypeSystem_Type)
 {
-	auto tsys = ITsysAlloc::Create();
-
 	auto n = MakePtr<NamespaceDeclaration>();
+	auto tsys = ITsysAlloc::Create();
 	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
 	auto tdecl = tsys->DeclOf(n);
 	auto tgarg = tsys->GenericArgOf(n);
