@@ -353,7 +353,22 @@ public:
 
 	void Visit(DecorateType* self)override
 	{
-		throw NotConvertableException();
+		self->type->Accept(this);
+		for (vint i = 0; i < result.Count(); i++)
+		{
+			TsysCV cv;
+			auto element = result[i];
+			if (element->GetType() == TsysType::CV)
+			{
+				cv = element->GetCV();
+				element = element->GetElement();
+			}
+
+			cv.isConstExpr |= self->isConstExpr;
+			cv.isConst |= self->isConst;
+			cv.isVolatile |= self->isVolatile;
+			result[i] = element->CVOf(cv);
+		}
 	}
 
 	void Visit(RootType* self)override

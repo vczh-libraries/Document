@@ -1041,7 +1041,14 @@ void Log(ITsys* tsys, StreamWriter& writer)
 	case TsysType::Member:
 		break;
 	case TsysType::CV:
-		break;
+		{
+			auto cv = tsys->GetCV();
+			Log(tsys->GetElement(), writer);
+			if (cv.isConstExpr) writer.WriteString(L" constexpr");
+			if (cv.isConst) writer.WriteString(L" const");
+			if (cv.isVolatile) writer.WriteString(L" volatile");
+		}
+		return;
 	case TsysType::Decl:
 		break;
 	case TsysType::Generic:

@@ -432,28 +432,43 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 		if (TestToken(cursor, CppTokens::CONSTEXPR))
 		{
 			// constexpr TYPE
-			auto type = MakePtr<DecorateType>();
-			type->isConstExpr = true;
-			type->type = ParseShortType(pa, cursor);
-			return type;
+			auto type= ParseShortType(pa, cursor);
+			auto dt = type.Cast<DecorateType>();
+			if (!dt)
+			{
+				dt = MakePtr<DecorateType>();
+				dt->type = type;
+			}
+			dt->isConstExpr = true;
+			return dt;
 		}
 
 		if (TestToken(cursor, CppTokens::CONST))
 		{
 			// const TYPE
-			auto type = MakePtr<DecorateType>();
-			type->isConst = true;
-			type->type = ParseShortType(pa, cursor);
-			return type;
+			auto type = ParseShortType(pa, cursor);
+			auto dt = type.Cast<DecorateType>();
+			if (!dt)
+			{
+				dt = MakePtr<DecorateType>();
+				dt->type = type;
+			}
+			dt->isConst = true;
+			return dt;
 		}
 
 		if (TestToken(cursor, CppTokens::VOLATILE))
 		{
 			// volatile TYPE
-			auto type = MakePtr<DecorateType>();
-			type->isVolatile = true;
-			type->type = ParseShortType(pa, cursor);
-			return type;
+			auto type = ParseShortType(pa, cursor);
+			auto dt = type.Cast<DecorateType>();
+			if (!dt)
+			{
+				dt = MakePtr<DecorateType>();
+				dt->type = type;
+			}
+			dt->isVolatile = true;
+			return dt;
 		}
 
 		if (pa.context)
