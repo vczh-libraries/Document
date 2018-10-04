@@ -1053,7 +1053,15 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		}
 		return;
 	case TsysType::Function:
-		break;
+		Log(tsys->GetElement(), writer);
+		writer.WriteString(L" (");
+		for (vint i = 0; i < tsys->GetParamCount(); i++)
+		{
+			if (i > 0) writer.WriteString(L", ");
+			Log(tsys->GetParam(i), writer);
+		}
+		writer.WriteChar(L')');
+		return;
 	case TsysType::Member:
 		break;
 	case TsysType::CV:

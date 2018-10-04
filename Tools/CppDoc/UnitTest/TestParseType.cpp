@@ -34,63 +34,63 @@ TEST_CASE(TestParseType_Primitive)
 
 TEST_CASE(TestParseType_Short)
 {
-	AssertType(L"decltype(auto)",					L"decltype(auto)",					L""									);
-	AssertType(L"decltype(0)",						L"decltype(0)",						L""									);
-	AssertType(L"constexpr int",					L"int constexpr",					L"__int32 constexpr"				);
-	AssertType(L"const int",						L"int const",						L"__int32 const"					);
-	AssertType(L"volatile int",						L"int volatile",					L"__int32 volatile"					);
-	AssertType(L"constexpr const int",				L"int constexpr const",				L"__int32 constexpr const"			);
-	AssertType(L"const volatile int",				L"int const volatile",				L"__int32 const volatile"			);
-	AssertType(L"volatile constexpr int",			L"int constexpr volatile",			L"__int32 constexpr volatile"		);
-	AssertType(L"volatile const constexpr int",		L"int constexpr const volatile",	L"__int32 constexpr const volatile"	);
+	AssertType(L"decltype(auto)",					L"decltype(auto)",						L""									);
+	AssertType(L"decltype(0)",						L"decltype(0)",							L""									);
+	AssertType(L"constexpr int",					L"int constexpr",						L"__int32 constexpr"				);
+	AssertType(L"const int",						L"int const",							L"__int32 const"					);
+	AssertType(L"volatile int",						L"int volatile",						L"__int32 volatile"					);
+	AssertType(L"constexpr const int",				L"int constexpr const",					L"__int32 constexpr const"			);
+	AssertType(L"const volatile int",				L"int const volatile",					L"__int32 const volatile"			);
+	AssertType(L"volatile constexpr int",			L"int constexpr volatile",				L"__int32 constexpr volatile"		);
+	AssertType(L"volatile const constexpr int",		L"int constexpr const volatile",		L"__int32 constexpr const volatile"	);
 }
 
 TEST_CASE(TestParseType_Long)
 {
-	AssertType(L"int constexpr",					L"int constexpr",					L"__int32 constexpr"				);
-	AssertType(L"int const",						L"int const",						L"__int32 const"					);
-	AssertType(L"int volatile",						L"int volatile",					L"__int32 volatile"					);
-	AssertType(L"int constexpr const",				L"int constexpr const",				L"__int32 constexpr const"			);
-	AssertType(L"int const volatile",				L"int const volatile",				L"__int32 const volatile"			);
-	AssertType(L"int volatile constexpr",			L"int constexpr volatile",			L"__int32 constexpr volatile"		);
-	AssertType(L"int volatile const constexpr",		L"int constexpr const volatile",	L"__int32 constexpr const volatile"	);
-	AssertType(L"int ...",							L"int...",							L"");
-	AssertType(L"int<long, short<float, double>>",	L"int<long, short<float, double>>", L"");
+	AssertType(L"int constexpr",					L"int constexpr",						L"__int32 constexpr"				);
+	AssertType(L"int const",						L"int const",							L"__int32 const"					);
+	AssertType(L"int volatile",						L"int volatile",						L"__int32 volatile"					);
+	AssertType(L"int constexpr const",				L"int constexpr const",					L"__int32 constexpr const"			);
+	AssertType(L"int const volatile",				L"int const volatile",					L"__int32 const volatile"			);
+	AssertType(L"int volatile constexpr",			L"int constexpr volatile",				L"__int32 constexpr volatile"		);
+	AssertType(L"int volatile const constexpr",		L"int constexpr const volatile",		L"__int32 constexpr const volatile"	);
+	AssertType(L"int ...",							L"int...",								L"");
+	AssertType(L"int<long, short<float, double>>",	L"int<long, short<float, double>>",		L"");
 }
 
 TEST_CASE(TestParseType_ShortDeclarator)
 {
-	AssertType(L"int* __ptr32",						L"int *",							L"__int32 *");
-	AssertType(L"int* __ptr64",						L"int *",							L"__int32 *");
-	AssertType(L"int*",								L"int *",							L"__int32 *");
-	AssertType(L"int&",								L"int &",							L"__int32 &");
-	AssertType(L"int&&",							L"int &&",							L"__int32 &&");
-	AssertType(L"int& &&",							L"int & &&",						L"__int32 &");
-	AssertType(L"int&& &",							L"int && &",						L"__int32 &");
+	AssertType(L"int* __ptr32",						L"int *",								L"__int32 *"		);
+	AssertType(L"int* __ptr64",						L"int *",								L"__int32 *"		);
+	AssertType(L"int*",								L"int *",								L"__int32 *"		);
+	AssertType(L"int&",								L"int &",								L"__int32 &"		);
+	AssertType(L"int&&",							L"int &&",								L"__int32 &&"		);
+	AssertType(L"int& &&",							L"int & &&",							L"__int32 &"		);
+	AssertType(L"int&& &",							L"int && &",							L"__int32 &"		);
 }
 
 TEST_CASE(TestParseType_LongDeclarator)
 {
-	AssertType(L"int[]",							L"int []",							L"__int32 []");
-	AssertType(L"int[][]",							L"int [] []",						L"__int32 [,]");
-	AssertType(L"int[1][2][3]",						L"int [1] [2] [3]",					L"__int32 [,,]");
-	AssertType(L"int(*&)[][]",						L"int [] [] * &",					L"__int32 [,] * &");
+	AssertType(L"int[]",							L"int []",								L"__int32 []"		);
+	AssertType(L"int[][]",							L"int [] []",							L"__int32 [,]"		);
+	AssertType(L"int[1][2][3]",						L"int [1] [2] [3]",						L"__int32 [,,]"		);
+	AssertType(L"int(*&)[][]",						L"int [] [] * &",						L"__int32 [,] * &"	);
 
-	AssertType(L"int()",																	L"int ()",																	L"");
-	AssertType(L"auto ()->int constexpr const volatile & && override noexcept throw()",		L"(auto->int constexpr const volatile & &&) () override noexcept throw()",	L"");
-	AssertType(L"auto ()constexpr const volatile & && ->int override noexcept throw()",		L"(auto->int) () constexpr const volatile & && override noexcept throw()",	L"");
+	AssertType(L"int()",																	L"int ()",																	L"__int32 ()"							);
+	AssertType(L"auto ()->int constexpr const volatile & && override noexcept throw()",		L"(auto->int constexpr const volatile & &&) () override noexcept throw()",	L"__int32 constexpr const volatile & ()");
+	AssertType(L"auto ()constexpr const volatile & && ->int override noexcept throw()",		L"(auto->int) () constexpr const volatile & && override noexcept throw()",	L"__int32 ()"							);
 
-	AssertType(L"int __cdecl(int)",					L"int (int) __cdecl",					L"");
-	AssertType(L"int __clrcall(int)",				L"int (int) __clrcall",					L"");
-	AssertType(L"int __stdcall(int)",				L"int (int) __stdcall",					L"");
-	AssertType(L"int __fastcall(int)",				L"int (int) __fastcall",				L"");
-	AssertType(L"int __thiscall(int)",				L"int (int) __thiscall",				L"");
-	AssertType(L"int __vectorcall(int)",			L"int (int) __vectorcall",				L"");
-	AssertType(L"int(*)(int)",						L"int (int) *",							L"");
-	AssertType(L"int(__cdecl*)(int)",				L"int (int) __cdecl *",					L"");
+	AssertType(L"int __cdecl(int)",					L"int (int) __cdecl",					L"__int32 (__int32)"						);
+	AssertType(L"int __clrcall(int)",				L"int (int) __clrcall",					L"__int32 (__int32)"						);
+	AssertType(L"int __stdcall(int)",				L"int (int) __stdcall",					L"__int32 (__int32)"						);
+	AssertType(L"int __fastcall(int)",				L"int (int) __fastcall",				L"__int32 (__int32)"						);
+	AssertType(L"int __thiscall(int)",				L"int (int) __thiscall",				L"__int32 (__int32)"						);
+	AssertType(L"int __vectorcall(int)",			L"int (int) __vectorcall",				L"__int32 (__int32)"						);
+	AssertType(L"int(*)(int)",						L"int (int) *",							L"__int32 (__int32) *"						);
+	AssertType(L"int(__cdecl*)(int)",				L"int (int) __cdecl *",					L"__int32 (__int32) *"						);
 
-	AssertType(L"int(*[5])(int, int a, int b=0)",	L"int (int, a: int, b: int = 0) * [5]",	L"");
-	AssertType(L"int(&(*[5])(void))[10]",			L"int [10] & () * [5]",					L"");
+	AssertType(L"int(*[5])(int, int a, int b=0)",	L"int (int, a: int, b: int = 0) * [5]",	L"__int32 (__int32, __int32, __int32) * []"	);
+	AssertType(L"int(&(*[5])(void))[10]",			L"int [10] & () * [5]",					L"__int32 [] & () * []"						);
 }
 
 TEST_CASE(TestParseType_SuperComplexType)
@@ -98,7 +98,7 @@ TEST_CASE(TestParseType_SuperComplexType)
 	AssertType(
 		L"int(__fastcall*const&((*)(int))[10])(int(&a)[], int(__stdcall*b)()noexcept, int(*c[5])(void)=0)",
 		L"int (a: int [] &, b: int () noexcept __stdcall *, c: int () * [5] = 0) __fastcall * const & [10] (int) *",
-		L""
+		L"__int32 (__int32 [] &, __int32 () *, __int32 () * []) * const & [] (__int32) *"
 		);
 }
 

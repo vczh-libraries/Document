@@ -379,12 +379,70 @@ public:
 
 	void Visit(CallingConventionType* self)override
 	{
-		throw NotConvertableException();
+		self->type->Accept(this);
+	}
+
+	void CreateFunctionType(List<ITsys*>* tsyses, vint* tsysIndex, vint level, vint count)
+	{
+		if (level == count)
+		{
+			Array<ITsys*> params(count - 1);
+			for (vint i = 0; i < count - 1; i++)
+			{
+				params[i] = tsyses[i + 1][tsysIndex[i + 1]];
+			}
+			result.Add(tsyses[0][tsysIndex[0]]->FunctionOf(params));
+		}
+		else
+		{
+			vint levelCount = tsyses[level].Count();
+			for (vint i = 0; i < levelCount; i++)
+			{
+				tsysIndex[level] = i;
+				CreateFunctionType(tsyses, tsysIndex, level + 1, count);
+			}
+		}
 	}
 
 	void Visit(FunctionType* self)override
 	{
-		throw NotConvertableException();
+		List<ITsys*>* tsyses = nullptr;
+		vint* tsysIndex = nullptr;
+		try
+		{
+			vint count = self->parameters.Count() + 1;
+			tsyses = new List<ITsys*>[count];
+			if (self->decoratorReturnType)
+			{
+				TypeToTsys(pa, self->decoratorReturnType, tsyses[0]);
+			}
+			else if (self->returnType)
+			{
+				TypeToTsys(pa, self->returnType, tsyses[0]);
+			}
+			else
+			{
+				tsyses[0].Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }));
+			}
+
+			for (vint i = 0; i < self->parameters.Count(); i++)
+			{
+				TypeToTsys(pa, self->parameters[i]->type, tsyses[i + 1]);
+			}
+
+			tsysIndex = new vint[count];
+			memset(tsysIndex, 0, sizeof(vint) * count);
+			CreateFunctionType(tsyses, tsysIndex, 0, count);
+
+			delete[] tsyses;
+			delete[] tsysIndex;
+		}
+		catch (...)
+		{
+			delete[] tsyses;
+			delete[] tsysIndex;
+			throw;
+		}
 	}
 
 	void Visit(MemberType* self)override
