@@ -24,11 +24,20 @@ using ITsys_Generic = ITsys_WithParams<TsysType::Generic>;
 TsysBase
 ***********************************************************************/
 
-struct ParamsKey
+template<typename T>
+struct WithParams
 {
-	Ptr<List<ITsys*>>								params;
+	T* itsys;
+
+	static vint Compare(WithParams<T> a, WithParams<T> b);
 };
-#define OPERATOR_COMPARE(OP) bool operator OP(const ParamsKey& a, const ParamsKey& b) { return CompareEnumerable(*a.params.Obj(), *b.params.Obj()) OP 0; }
+#define OPERATOR_COMPARE(OP)\
+	template<typename T>\
+	bool operator OP(WithParams<T> a, WithParams<T> b)\
+	{\
+		return WithParams<T>::Compare(a, b) OP 0;\
+	}\
+
 OPERATOR_COMPARE(>)
 OPERATOR_COMPARE(>=)
 OPERATOR_COMPARE(<)
@@ -36,6 +45,15 @@ OPERATOR_COMPARE(<=)
 OPERATOR_COMPARE(==)
 OPERATOR_COMPARE(!=)
 #undef OPERATOR_COMPARE
+
+namespace vl
+{
+	template<typename T>
+	struct POD<WithParams<T>>
+	{
+		static const bool Result = true;
+	};
+}
 
 class TsysBase : public ITsys
 {
@@ -47,8 +65,8 @@ protected:
 	Dictionary<vint, ITsys_Array*>					arrayOf;
 	Dictionary<ITsys*, ITsys_Member*>				memberOf;
 	ITsys_CV*										cvOf[8] = { 0 };
-	Dictionary<ParamsKey, ITsys_Function*>			functionOf;
-	Dictionary<ParamsKey, ITsys_Generic*>			genericOf;
+	SortedList<WithParams<ITsys_Function>>			functionOf;
+	SortedList<WithParams<ITsys_Generic>>			genericOf;
 
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
@@ -138,7 +156,7 @@ class ITsys_WithParams : public TsysBase_<Type>
 {
 protected:
 	ITsys*				element;
-	List<ITsys*>*		params;
+	List<ITsys*>		params;
 
 public:
 	ITsys_WithParams(TsysAlloc* _tsys, ITsys* _element, List<ITsys*>* _params)
@@ -154,9 +172,15 @@ public:
 	}
 
 	ITsys* GetElement()override { return element; }
-	ITsys* GetParam(vint index)override { return params->Get(index); }
-	vint GetParamCount()override { return params->Count(); }
+	ITsys* GetParam(vint index)override { return params.Get(index); }
+	vint GetParamCount()override { return params.Count(); }
 };
+
+template<typename T>
+vint WithParams<T>::Compare(WithParams<T> a, WithParams<T> b)
+{
+	return CompareEnumerable(a.itsys->GetParams(), b.itsys->GetParams());
+}
 
 class ITsys_Expr : TsysBase_<TsysType::Expr>
 {
