@@ -65,7 +65,7 @@ enum class TsysType
 	Ptr,			// Element
 	Array,			// Element, ParamCount
 	Function,		// Element, ParamCount, Param
-	Member,			// Element, ParamCount=1, Param(0)
+	Member,			// Element, Class
 	CV,				// CV
 	Decl,			// Decl
 	Generic,		// Element, ParamCount, Param
@@ -80,6 +80,7 @@ public:
 	virtual TsysPrimitive		GetPrimitive() = 0;
 	virtual TsysCV				GetCV() = 0;
 	virtual ITsys*				GetElement() = 0;
+	virtual ITsys*				GetClass() = 0;
 	virtual ITsys*				GetParam(vint index) = 0;
 	virtual vint				GetParamCount() = 0;
 	virtual Ptr<Declaration>	GetDecl() = 0;

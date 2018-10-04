@@ -7,6 +7,7 @@ class ITsys_LRef;
 class ITsys_RRef;
 class ITsys_Ptr;
 class ITsys_Array;
+class ITsys_Member;
 class ITsys_CV;
 class ITsys_Decl;
 class ITsys_GenericArg;
@@ -17,33 +18,48 @@ template<TsysType Type>
 class ITsys_WithParams;
 
 using ITsys_Function = ITsys_WithParams<TsysType::Function>;
-using ITsys_Member = ITsys_WithParams<TsysType::Member>;
 using ITsys_Generic = ITsys_WithParams<TsysType::Generic>;
 
 /***********************************************************************
 TsysBase
 ***********************************************************************/
 
+struct ParamsKey
+{
+	Ptr<List<ITsys*>>								params;
+};
+#define OPERATOR_COMPARE(OP) bool operator OP(const ParamsKey& a, const ParamsKey& b) { return CompareEnumerable(*a.params.Obj(), *b.params.Obj()) OP 0; }
+OPERATOR_COMPARE(>)
+OPERATOR_COMPARE(>=)
+OPERATOR_COMPARE(<)
+OPERATOR_COMPARE(<=)
+OPERATOR_COMPARE(==)
+OPERATOR_COMPARE(!=)
+#undef OPERATOR_COMPARE
+
 class TsysBase : public ITsys
 {
 protected:
-	TsysAlloc*							tsys;
-	ITsys_LRef*							lrefOf = nullptr;
-	ITsys_RRef*							rrefOf = nullptr;
-	ITsys_Ptr*							ptrOf = nullptr;
-	Dictionary<vint, ITsys_Array*>		arrayOf;
-	Dictionary<ITsys*, ITsys_Member*>	memberOf;
-	ITsys_CV*							cvOf[8] = { 0 };
+	TsysAlloc*										tsys;
+	ITsys_LRef*										lrefOf = nullptr;
+	ITsys_RRef*										rrefOf = nullptr;
+	ITsys_Ptr*										ptrOf = nullptr;
+	Dictionary<vint, ITsys_Array*>					arrayOf;
+	Dictionary<ITsys*, ITsys_Member*>				memberOf;
+	ITsys_CV*										cvOf[8] = { 0 };
+	Dictionary<ParamsKey, ITsys_Function*>			functionOf;
+	Dictionary<ParamsKey, ITsys_Generic*>			genericOf;
 
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
 
-	TsysPrimitive		GetPrimitive()			{ throw "Not Implemented!"; }
-	TsysCV				GetCV()					{ throw "Not Implemented!"; }
-	ITsys*				GetElement()			{ throw "Not Implemented!"; }
-	ITsys*				GetParam(vint index)	{ throw "Not Implemented!"; }
-	vint				GetParamCount()			{ throw "Not Implemented!"; }
-	Ptr<Declaration>	GetDecl()				{ throw "Not Implemented!"; }
+	TsysPrimitive		GetPrimitive()				{ throw "Not Implemented!"; }
+	TsysCV				GetCV()						{ throw "Not Implemented!"; }
+	ITsys*				GetElement()				{ throw "Not Implemented!"; }
+	ITsys*				GetClass()					{ throw "Not Implemented!"; }
+	ITsys*				GetParam(vint index)		{ throw "Not Implemented!"; }
+	vint				GetParamCount()				{ throw "Not Implemented!"; }
+	Ptr<Declaration>	GetDecl()					{ throw "Not Implemented!"; }
 
 	ITsys* LRefOf()									override;
 	ITsys* RRefOf()									override;
@@ -111,6 +127,7 @@ ISYS_REF(Ptr)
 
 ITSYS_DECORATE(Array, vint, ParamCount)
 ITSYS_DECORATE(CV, TsysCV, CV)
+ITSYS_DECORATE(Member, ITsys*, Class)
 
 #undef ITSYS_DATA
 #undef ISYS_REF
@@ -121,12 +138,13 @@ class ITsys_WithParams : public TsysBase_<Type>
 {
 protected:
 	ITsys*				element;
-	List<ITsys*>		params;
+	List<ITsys*>*		params;
 
 public:
-	ITsys_WithParams(TsysAlloc* _tsys, ITsys* _element)
+	ITsys_WithParams(TsysAlloc* _tsys, ITsys* _element, List<ITsys*>* _params)
 		:TsysBase_<Type>(_tsys)
 		, element(_element)
+		, params(_params)
 	{
 	}
 
@@ -136,8 +154,8 @@ public:
 	}
 
 	ITsys* GetElement()override { return element; }
-	ITsys* GetParam(vint index)override { return params[index]; }
-	vint GetParamCount()override { return params.Count(); }
+	ITsys* GetParam(vint index)override { return params->Get(index); }
+	vint GetParamCount()override { return params->Count(); }
 };
 
 class ITsys_Expr : TsysBase_<TsysType::Expr>
@@ -299,8 +317,7 @@ ITsys* TsysBase::MemberOf(ITsys* classType)
 {
 	vint index = memberOf.Keys().IndexOf(classType);
 	if (index != -1) return memberOf.Values()[index];
-	auto itsys = tsys->_member.Alloc(tsys, this);
-	itsys->GetParams().Add(classType);
+	auto itsys = tsys->_member.Alloc(tsys, this, classType);
 	memberOf.Add(classType, itsys);
 	return itsys;
 }
