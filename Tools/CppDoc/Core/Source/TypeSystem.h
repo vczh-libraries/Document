@@ -29,8 +29,6 @@ enum class TsysBytes
 	_2,
 	_4,
 	_8,
-	_10,
-	_16,
 	_COUNT,
 };
 

@@ -270,7 +270,7 @@ public:
 	{
 		vint a = (vint)primitive.type;
 		vint b = (vint)primitive.bytes;
-		vint index = (vint)TsysPrimitiveType::_COUNT*a + b;
+		vint index = (vint)TsysBytes::_COUNT * a + b;
 		if (index > sizeof(primitives) / sizeof(*primitives)) throw "Not Implemented!";
 
 		auto& itsys = primitives[index];
