@@ -237,3 +237,93 @@ bool IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2)
 		return (t1 == nullptr) == (t2 == nullptr);
 	}
 }
+
+/***********************************************************************
+TypeToTsys
+***********************************************************************/
+
+class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
+{
+public:
+	ITsys*					result = false;
+	ParsingArguments&		pa;
+
+	TypeToTsysVisitor(ParsingArguments& _pa)
+		:pa(_pa)
+	{
+	}
+
+	void Visit(PrimitiveType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(ReferenceType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(ArrayType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(CallingConventionType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(FunctionType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(MemberType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(DeclType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(DecorateType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(RootType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(IdType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(ChildType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(GenericType* self)override
+	{
+		throw NotConvertableException();
+	}
+
+	void Visit(VariadicTemplateArgumentType* self)override
+	{
+		throw NotConvertableException();
+	}
+};
+
+// Convert type AST to type system object
+ITsys* TypeToTsys(ParsingArguments& pa, Ptr<Type> t)
+{
+	if (!t) throw NotConvertableException();
+	TypeToTsysVisitor visitor(pa);
+	t->Accept(&visitor);
+	return visitor.result;
+}

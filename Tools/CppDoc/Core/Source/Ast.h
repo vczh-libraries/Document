@@ -1,7 +1,14 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_AST
 #define VCZH_DOCUMENT_CPPDOC_AST
 
-#include "Lexer.h"
+#include <Vlpp.h>
+
+using namespace vl;
+using namespace vl::collections;
+using namespace vl::regex;
+
+struct ParsingArguments;
+class ITsys;
 
 /***********************************************************************
 Symbol
@@ -113,6 +120,11 @@ public:
 Helpers
 ***********************************************************************/
 
+struct NotConvertableException
+{
+};
+
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
+extern ITsys*				TypeToTsys(ParsingArguments& pa, Ptr<Type> t);
 
 #endif

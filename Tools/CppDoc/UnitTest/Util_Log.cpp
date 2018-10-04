@@ -950,3 +950,7 @@ void Log(Ptr<Program> program, StreamWriter& writer)
 		Log(program->decls[i], writer, 0, true);
 	}
 }
+
+void Log(ITsys* tsys, StreamWriter& writer)
+{
+}

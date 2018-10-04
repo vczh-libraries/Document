@@ -9,6 +9,7 @@ extern void					Log(Ptr<Expr> expr, StreamWriter& writer);
 extern void					Log(Ptr<Stat> stat, StreamWriter& writer, vint indentation);
 extern void					Log(Ptr<Declaration> decl, StreamWriter& writer, vint indentation, bool semicolon);
 extern void					Log(Ptr<Program> program, StreamWriter& writer);
+extern void					Log(ITsys* tsys, StreamWriter& writer);
 
 extern void					AssertMultilines(const WString& output, const WString& log);
 extern void					AssertType(const WString& input, const WString& log, const WString& logTsys);

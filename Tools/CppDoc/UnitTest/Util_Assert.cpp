@@ -35,6 +35,20 @@ void AssertType(const WString& input, const WString& log, const WString& logTsys
 		Log(type, writer);
 	});
 	TEST_ASSERT(output == log);
+
+	try
+	{
+		auto tsys = TypeToTsys(pa, type);
+		auto outputTsys = GenerateToStream([&](StreamWriter& writer)
+		{
+			Log(tsys, writer);
+		});
+		TEST_ASSERT(outputTsys == logTsys);
+	}
+	catch (const NotConvertableException&)
+	{
+		TEST_ASSERT(L"" == logTsys);
+	}
 }
 
 void AssertStat(const WString& input, const WString& log)
