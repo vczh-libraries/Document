@@ -323,7 +323,40 @@ public:
 
 	void Visit(ReferenceType* self)override
 	{
-		throw NotConvertableException();
+		self->type->Accept(this);
+		for (vint i = 0; i < result.Count(); i++)
+		{
+			auto tsys = result[i];
+			switch (self->reference)
+			{
+			case CppReferenceType::LRef:
+				switch (tsys->GetType())
+				{
+				case TsysType::LRef:
+					break;
+				case TsysType::RRef:
+					tsys = tsys->GetElement()->LRefOf();
+					break;
+				default:
+					tsys = tsys->LRefOf();
+				}
+				break;
+			case CppReferenceType::RRef:
+				switch (tsys->GetType())
+				{
+				case TsysType::LRef:
+				case TsysType::RRef:
+					break;
+				default:
+					tsys = tsys->RRefOf();
+				}
+				break;
+			case CppReferenceType::Ptr:
+				tsys = tsys->PtrOf();
+				break;
+			}
+			result[i] = tsys;
+		}
 	}
 
 	void Visit(ArrayType* self)override

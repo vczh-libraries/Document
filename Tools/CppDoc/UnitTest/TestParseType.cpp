@@ -60,12 +60,13 @@ TEST_CASE(TestParseType_Long)
 
 TEST_CASE(TestParseType_ShortDeclarator)
 {
-	AssertType(L"int* __ptr32",						L"int *",							L"");
-	AssertType(L"int* __ptr64",						L"int *",							L"");
-	AssertType(L"int*",								L"int *",							L"");
-	AssertType(L"int &",							L"int &",							L"");
-	AssertType(L"int &&",							L"int &&",							L"");
-	AssertType(L"int & &&",							L"int & &&",						L"");
+	AssertType(L"int* __ptr32",						L"int *",							L"__int32 *");
+	AssertType(L"int* __ptr64",						L"int *",							L"__int32 *");
+	AssertType(L"int*",								L"int *",							L"__int32 *");
+	AssertType(L"int&",								L"int &",							L"__int32 &");
+	AssertType(L"int&&",							L"int &&",							L"__int32 &&");
+	AssertType(L"int& &&",							L"int & &&",						L"__int32 &");
+	AssertType(L"int&& &",							L"int && &",						L"__int32 &");
 }
 
 TEST_CASE(TestParseType_LongDeclarator)

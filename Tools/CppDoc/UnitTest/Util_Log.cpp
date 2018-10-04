@@ -1029,11 +1029,17 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		}
 		break;
 	case TsysType::LRef:
-		break;
+		Log(tsys->GetElement(), writer);
+		writer.WriteString(L" &");
+		return;
 	case TsysType::RRef:
-		break;
+		Log(tsys->GetElement(), writer);
+		writer.WriteString(L" &&");
+		return;
 	case TsysType::Ptr:
-		break;
+		Log(tsys->GetElement(), writer);
+		writer.WriteString(L" *");
+		return;
 	case TsysType::Array:
 		break;
 	case TsysType::Function:
