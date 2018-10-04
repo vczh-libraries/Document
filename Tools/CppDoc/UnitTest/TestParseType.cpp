@@ -23,6 +23,7 @@ TEST_CASE(TestParseType_Primitive)
 	TEST_PRIMITIVE_TYPE(__int32,		L"",	L"",	L"");
 	TEST_PRIMITIVE_TYPE(__int64,		L"",	L"",	L"");
 	TEST_PRIMITIVE_TYPE(long,			L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(long int,		L"",	L"",	L"");
 	TEST_PRIMITIVE_TYPE(long long,		L"",	L"",	L"");
 	TEST_PRIMITIVE_TYPE(float,			L"",	L"",	L"");
 	TEST_PRIMITIVE_TYPE(double,			L"",	L"",	L"");

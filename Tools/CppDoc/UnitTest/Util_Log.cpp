@@ -152,6 +152,7 @@ public:
 		case CppPrimitiveType::___int32:		writer.WriteString(L"__int32");		break;
 		case CppPrimitiveType::___int64:		writer.WriteString(L"__int64");		break;
 		case CppPrimitiveType::_long:			writer.WriteString(L"long");		break;
+		case CppPrimitiveType::_long_int:		writer.WriteString(L"long int");	break;
 		case CppPrimitiveType::_long_long:		writer.WriteString(L"long long");	break;
 		case CppPrimitiveType::_float:			writer.WriteString(L"float");		break;
 		case CppPrimitiveType::_double:			writer.WriteString(L"double");		break;

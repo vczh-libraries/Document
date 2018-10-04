@@ -335,6 +335,7 @@ Ptr<Type> ParsePrimitiveType(Ptr<CppTokenCursor>& cursor, CppPrimitivePrefix pre
 
 	if (TestToken(cursor, CppTokens::TYPE_LONG))
 	{
+		TEST_LONG_KEYWORD(TYPE_INT, int);
 		TEST_LONG_KEYWORD(TYPE_LONG, long);
 		TEST_LONG_KEYWORD(TYPE_DOUBLE, double);
 		return MakePtr<PrimitiveType>(prefix, CppPrimitiveType::_long);

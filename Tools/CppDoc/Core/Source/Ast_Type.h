@@ -54,7 +54,7 @@ enum class CppPrimitiveType
 	_void,
 	_bool,
 	_char, _wchar_t, _char16_t, _char32_t,
-	_short, _int, ___int8, ___int16, ___int32, ___int64, _long, _long_long,
+	_short, _int, ___int8, ___int16, ___int32, ___int64, _long, _long_int, _long_long,
 	_float, _double, _long_double,
 };
 
