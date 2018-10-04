@@ -1,5 +1,4 @@
-#include <TypeSystem.h>
-#include <Ast_Decl.h>
+#include <Parser.h>
 
 TEST_CASE(TestTypeSystem_Primitive)
 {
@@ -51,20 +50,20 @@ TEST_CASE(TestTypeSystem_Primitive)
 
 TEST_CASE(TestTypeSystem_Decl)
 {
-	auto n1 = MakePtr<NamespaceDeclaration>();
-	auto n2 = MakePtr<NamespaceDeclaration>();
+	auto n1 = MakePtr<Symbol>();
+	auto n2 = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
-	TEST_ASSERT(tsys->DeclOf(n1) == tsys->DeclOf(n1));
-	TEST_ASSERT(tsys->DeclOf(n1) != tsys->DeclOf(n2));
+	TEST_ASSERT(tsys->DeclOf(n1.Obj()) == tsys->DeclOf(n1.Obj()));
+	TEST_ASSERT(tsys->DeclOf(n1.Obj()) != tsys->DeclOf(n2.Obj()));
 }
 
 TEST_CASE(TestTypeSystem_GenericArg)
 {
-	auto n1 = MakePtr<NamespaceDeclaration>();
-	auto n2 = MakePtr<NamespaceDeclaration>();
+	auto n1 = MakePtr<Symbol>();
+	auto n2 = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
-	TEST_ASSERT(tsys->GenericArgOf(n1) == tsys->GenericArgOf(n1));
-	TEST_ASSERT(tsys->GenericArgOf(n1) != tsys->GenericArgOf(n2));
+	TEST_ASSERT(tsys->GenericArgOf(n1.Obj()) == tsys->GenericArgOf(n1.Obj()));
+	TEST_ASSERT(tsys->GenericArgOf(n1.Obj()) != tsys->GenericArgOf(n2.Obj()));
 }
 
 TEST_CASE(TestTypeSystem_LRef)
@@ -129,11 +128,11 @@ TEST_CASE(TestTypeSystem_Member)
 
 TEST_CASE(TestTypeSystem_Function)
 {
-	auto n = MakePtr<NamespaceDeclaration>();
+	auto n = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
 	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
-	auto tdecl = tsys->DeclOf(n);
-	auto tgarg = tsys->GenericArgOf(n);
+	auto tdecl = tsys->DeclOf(n.Obj());
+	auto tgarg = tsys->GenericArgOf(n.Obj());
 
 	List<ITsys*> types1;
 	types1.Add(tdecl);
@@ -149,11 +148,11 @@ TEST_CASE(TestTypeSystem_Function)
 
 TEST_CASE(TestTypeSystem_Generic)
 {
-	auto n = MakePtr<NamespaceDeclaration>();
+	auto n = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
 	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
-	auto tdecl = tsys->DeclOf(n);
-	auto tgarg = tsys->GenericArgOf(n);
+	auto tdecl = tsys->DeclOf(n.Obj());
+	auto tgarg = tsys->GenericArgOf(n.Obj());
 
 	List<ITsys*> types1;
 	types1.Add(tdecl);
@@ -169,11 +168,11 @@ TEST_CASE(TestTypeSystem_Generic)
 
 TEST_CASE(TestTypeSystem_Type)
 {
-	auto n = MakePtr<NamespaceDeclaration>();
+	auto n = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
 	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
-	auto tdecl = tsys->DeclOf(n);
-	auto tgarg = tsys->GenericArgOf(n);
+	auto tdecl = tsys->DeclOf(n.Obj());
+	auto tgarg = tsys->GenericArgOf(n.Obj());
 
 	TEST_ASSERT(tvoid->GetType() == TsysType::Primitive);
 	TEST_ASSERT(tdecl->GetType() == TsysType::Decl);

@@ -88,7 +88,7 @@ public:
 	ITsys*				GetClass()					{ throw "Not Implemented!"; }
 	ITsys*				GetParam(vint index)		{ throw "Not Implemented!"; }
 	vint				GetParamCount()				{ throw "Not Implemented!"; }
-	Ptr<Declaration>	GetDecl()					{ throw "Not Implemented!"; }
+	Symbol*				GetDecl()					{ throw "Not Implemented!"; }
 
 	ITsys* LRefOf()									override;
 	ITsys* RRefOf()									override;
@@ -147,8 +147,8 @@ public:																							\
 };																								\
 
 ITSYS_DATA(Primitive, TsysPrimitive, Primitive)
-ITSYS_DATA(Decl, Ptr<Declaration>, Decl)
-ITSYS_DATA(GenericArg, Ptr<Declaration>, Decl)
+ITSYS_DATA(Decl, Symbol*, Decl)
+ITSYS_DATA(GenericArg, Symbol*, Decl)
 
 ISYS_REF(LRef)
 ISYS_REF(RRef)
@@ -249,8 +249,8 @@ class TsysAlloc : public Object, public ITsysAlloc
 {
 protected:
 	ITsys_Primitive*								primitives[(vint)TsysPrimitiveType::_COUNT * (vint)TsysBytes::_COUNT] = { 0 };
-	Dictionary<Ptr<Declaration>, ITsys_Decl*>		decls;
-	Dictionary<Ptr<Declaration>, ITsys_GenericArg*>	genericArgs;
+	Dictionary<Symbol*, ITsys_Decl*>				decls;
+	Dictionary<Symbol*, ITsys_GenericArg*>			genericArgs;
 
 public:
 	ITsys_Allocator<ITsys_Primitive,	1024>		_primitive;
@@ -281,18 +281,18 @@ public:
 		return itsys;
 	}
 
-	ITsys* DeclOf(Ptr<Declaration> decl)override
+	ITsys* DeclOf(Symbol* decl)override
 	{
-		vint index = decls.Keys().IndexOf(decl.Obj());
+		vint index = decls.Keys().IndexOf(decl);
 		if (index != -1) return decls.Values()[index];
 		auto itsys = _decl.Alloc(this, decl);
 		decls.Add(decl, itsys);
 		return itsys;
 	}
 
-	ITsys* GenericArgOf(Ptr<Declaration> decl)override
+	ITsys* GenericArgOf(Symbol* decl)override
 	{
-		vint index = genericArgs.Keys().IndexOf(decl.Obj());
+		vint index = genericArgs.Keys().IndexOf(decl);
 		if (index != -1) return genericArgs.Values()[index];
 		auto itsys = _genericArg.Alloc(this, decl);
 		genericArgs.Add(decl, itsys);

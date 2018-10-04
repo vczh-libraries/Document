@@ -124,7 +124,7 @@ namespace a::b
 		AssertType(
 			L"a::b::X",
 			L"a :: b :: X",
-			L"",
+			L"::a::b::X",
 			pa);
 		TEST_ASSERT(accessed.Count() == 3);
 	}
@@ -160,7 +160,7 @@ namespace a::b
 		AssertType(
 			L"a::b::X(__cdecl typename a::b::*)()",
 			L"a :: b :: X () __cdecl (a :: typename b ::) *",
-			L"",
+			L"::a::b::X () (::a::b ::) *",
 			pa);
 		TEST_ASSERT(accessed.Count() == 5);
 	}
@@ -202,7 +202,7 @@ namespace c::d
 		AssertType(
 			L"c::d::Y::Z::Y",
 			L"c :: d :: Y :: Z :: Y",
-			L"",
+			L"::a::b::X::Y",
 			pa);
 		TEST_ASSERT(accessed.Count() == 5);
 	}

@@ -447,7 +447,17 @@ public:
 
 	void Visit(MemberType* self)override
 	{
-		throw NotConvertableException();
+		List<ITsys*> types, classTypes;
+		TypeToTsys(pa, self->type, types);
+		TypeToTsys(pa, self->classType, classTypes);
+
+		for (vint i = 0; i < types.Count(); i++)
+		{
+			for (vint j = 0; j < classTypes.Count(); j++)
+			{
+				result.Add(types[i]->MemberOf(classTypes[j]));
+			}
+		}
 	}
 
 	void Visit(DeclType* self)override
@@ -480,14 +490,29 @@ public:
 		throw NotConvertableException();
 	}
 
+	void CreateDeclType(Ptr<Resolving> resolving)
+	{
+		if (!resolving || resolving->resolvedSymbols.Count() == 0)
+		{
+			throw NotConvertableException();
+		}
+		resolving->Calibrate();
+
+		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+		{
+			auto symbol = resolving->resolvedSymbols[i];
+			result.Add(pa.tsys->DeclOf(symbol));
+		}
+	}
+
 	void Visit(IdType* self)override
 	{
-		throw NotConvertableException();
+		CreateDeclType(self->resolving);
 	}
 
 	void Visit(ChildType* self)override
 	{
-		throw NotConvertableException();
+		CreateDeclType(self->resolving);
 	}
 
 	void Visit(GenericType* self)override

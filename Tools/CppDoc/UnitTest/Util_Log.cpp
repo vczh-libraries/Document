@@ -1063,7 +1063,11 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		writer.WriteChar(L')');
 		return;
 	case TsysType::Member:
-		break;
+		Log(tsys->GetElement(), writer);
+		writer.WriteString(L" (");
+		Log(tsys->GetClass(), writer);
+		writer.WriteString(L" ::)");
+		return;
 	case TsysType::CV:
 		{
 			auto cv = tsys->GetCV();
@@ -1074,7 +1078,17 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		}
 		return;
 	case TsysType::Decl:
-		break;
+		{
+			auto symbol = tsys->GetDecl();
+			WString name;
+			while (symbol && symbol->parent)
+			{
+				name = L"::" + symbol->name + name;
+				symbol = symbol->parent;
+			}
+			writer.WriteString(name);
+		}
+		return;
 	case TsysType::Generic:
 		break;
 	case TsysType::GenericArg:

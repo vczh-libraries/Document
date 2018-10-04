@@ -6,7 +6,7 @@
 using namespace vl;
 using namespace vl::collections;
 
-class Declaration;
+class Symbol;
 
 /***********************************************************************
 Interface
@@ -84,7 +84,7 @@ public:
 	virtual ITsys*				GetClass() = 0;
 	virtual ITsys*				GetParam(vint index) = 0;
 	virtual vint				GetParamCount() = 0;
-	virtual Ptr<Declaration>	GetDecl() = 0;
+	virtual Symbol*				GetDecl() = 0;
 
 	virtual ITsys*				LRefOf() = 0;
 	virtual ITsys*				RRefOf() = 0;
@@ -104,8 +104,8 @@ class ITsysAlloc abstract : public Interface
 {
 public:
 	virtual ITsys*				PrimitiveOf(TsysPrimitive primitive) = 0;
-	virtual ITsys*				DeclOf(Ptr<Declaration> decl) = 0;
-	virtual ITsys*				GenericArgOf(Ptr<Declaration> decl) = 0;
+	virtual ITsys*				DeclOf(Symbol* decl) = 0;
+	virtual ITsys*				GenericArgOf(Symbol* decl) = 0;
 
 	static Ptr<ITsysAlloc>		Create();
 };
