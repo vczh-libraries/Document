@@ -9,25 +9,25 @@ TEST_CASE(TestParseType_Primitive)
 	AssertType(L"signed " L#TYPE, L"signed " L#TYPE, LOGS);\
 	AssertType(L"unsigned " L#TYPE, L"unsigned " L#TYPE, LOGU);\
 
-	TEST_PRIMITIVE_TYPE(auto,			L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(void,			L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(bool,			L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(char,			L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(wchar_t,		L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(char16_t,		L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(char32_t,		L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(short,			L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(int,			L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(__int8,			L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(__int16,		L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(__int32,		L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(__int64,		L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(long,			L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(long int,		L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(long long,		L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(float,			L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(double,			L"",	L"",	L"");
-	TEST_PRIMITIVE_TYPE(long double,	L"",	L"",	L"");
+	TEST_PRIMITIVE_TYPE(auto,			L"",			L"",					L""					);
+	TEST_PRIMITIVE_TYPE(void,			L"void",		L"",					L""					);
+	TEST_PRIMITIVE_TYPE(bool,			L"bool",		L"",					L""					);
+	TEST_PRIMITIVE_TYPE(char,			L"char",		L"char",				L"unsigned char"	);
+	TEST_PRIMITIVE_TYPE(wchar_t,		L"wchar_t",		L"signed wchar_t",		L"wchar_t"			);
+	TEST_PRIMITIVE_TYPE(char16_t,		L"char16_t",	L"signed char16_t",		L"char16_t"			);
+	TEST_PRIMITIVE_TYPE(char32_t,		L"char32_t",	L"signed char32_t",		L"char32_t"			);
+	TEST_PRIMITIVE_TYPE(short,			L"__int16",		L"__int16",				L"unsigned __int16"	);
+	TEST_PRIMITIVE_TYPE(int,			L"__int32",		L"__int32",				L"unsigned __int32"	);
+	TEST_PRIMITIVE_TYPE(__int8,			L"__int8",		L"__int8",				L"unsigned __int8"	);
+	TEST_PRIMITIVE_TYPE(__int16,		L"__int16",		L"__int16",				L"unsigned __int16"	);
+	TEST_PRIMITIVE_TYPE(__int32,		L"__int32",		L"__int32",				L"unsigned __int32"	);
+	TEST_PRIMITIVE_TYPE(__int64,		L"__int64",		L"__int64",				L"unsigned __int64"	);
+	TEST_PRIMITIVE_TYPE(long,			L"__int32",		L"__int32",				L"unsigned __int32"	);
+	TEST_PRIMITIVE_TYPE(long int,		L"__int32",		L"__int32",				L"unsigned __int32"	);
+	TEST_PRIMITIVE_TYPE(long long,		L"__int64",		L"__int64",				L"unsigned __int64"	);
+	TEST_PRIMITIVE_TYPE(float,			L"float",		L"",					L""					);
+	TEST_PRIMITIVE_TYPE(double,			L"double",		L"",					L""					);
+	TEST_PRIMITIVE_TYPE(long double,	L"double",		L"",					L""					);
 
 #undef TEST_PRIMITIVE_TYPE
 }

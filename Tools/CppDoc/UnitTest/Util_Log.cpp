@@ -953,4 +953,103 @@ void Log(Ptr<Program> program, StreamWriter& writer)
 
 void Log(ITsys* tsys, StreamWriter& writer)
 {
+	switch (tsys->GetType())
+	{
+	case TsysType::Primitive:
+		{
+			auto primitive = tsys->GetPrimitive();
+			switch (primitive.type)
+			{
+			case TsysPrimitiveType::SInt:
+				switch (primitive.bytes)
+				{
+				case TsysBytes::_1:	writer.WriteString(L"__int8"); return;
+				case TsysBytes::_2:	writer.WriteString(L"__int16"); return;
+				case TsysBytes::_4:	writer.WriteString(L"__int32"); return;
+				case TsysBytes::_8:	writer.WriteString(L"__int64"); return;
+				}
+				break;
+			case TsysPrimitiveType::UInt:
+				switch (primitive.bytes)
+				{
+				case TsysBytes::_1:	writer.WriteString(L"unsigned __int8"); return;
+				case TsysBytes::_2:	writer.WriteString(L"unsigned __int16"); return;
+				case TsysBytes::_4:	writer.WriteString(L"unsigned __int32"); return;
+				case TsysBytes::_8:	writer.WriteString(L"unsigned __int64"); return;
+				}
+				break;
+			case TsysPrimitiveType::Float:
+				switch (primitive.bytes)
+				{
+				case TsysBytes::_4: writer.WriteString(L"float"); return;
+				case TsysBytes::_8: writer.WriteString(L"double"); return;
+				}
+				break;
+			case TsysPrimitiveType::SChar:
+				switch (primitive.bytes)
+				{
+				case TsysBytes::_1: writer.WriteString(L"char"); return;
+				case TsysBytes::_2: writer.WriteString(L"signed char16_t"); return;
+				case TsysBytes::_4: writer.WriteString(L"signed char32_t"); return;
+				}
+				break;
+			case TsysPrimitiveType::UChar:
+				switch (primitive.bytes)
+				{
+				case TsysBytes::_1: writer.WriteString(L"unsigned char"); return;
+				case TsysBytes::_2: writer.WriteString(L"char16_t"); return;
+				case TsysBytes::_4: writer.WriteString(L"char32_t"); return;
+				}
+				break;
+			case TsysPrimitiveType::SWChar:
+				switch (primitive.bytes)
+				{
+				case TsysBytes::_2: writer.WriteString(L"signed wchar_t"); return;
+				}
+				break;
+			case TsysPrimitiveType::UWChar:
+				switch (primitive.bytes)
+				{
+				case TsysBytes::_2: writer.WriteString(L"wchar_t"); return;
+				}
+				break;
+			case TsysPrimitiveType::Bool:
+				switch (primitive.bytes)
+				{
+				case TsysBytes::_1: writer.WriteString(L"bool"); return;
+				}
+				break;
+			case TsysPrimitiveType::Void:
+				switch (primitive.bytes)
+				{
+				case TsysBytes::_1: writer.WriteString(L"void"); return;
+				}
+				break;
+			}
+		}
+		break;
+	case TsysType::LRef:
+		break;
+	case TsysType::RRef:
+		break;
+	case TsysType::Ptr:
+		break;
+	case TsysType::Array:
+		break;
+	case TsysType::Function:
+		break;
+	case TsysType::Member:
+		break;
+	case TsysType::CV:
+		break;
+	case TsysType::Decl:
+		break;
+	case TsysType::Generic:
+		break;
+	case TsysType::GenericArg:
+		break;
+	case TsysType::Expr:
+		break;
+	}
+	throw L"Invalid!";
 }

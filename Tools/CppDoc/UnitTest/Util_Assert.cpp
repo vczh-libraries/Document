@@ -18,7 +18,7 @@ void AssertMultilines(const WString& output, const WString& log)
 
 void AssertType(const WString& input, const WString& log, const WString& logTsys)
 {
-	ParsingArguments pa;
+	ParsingArguments pa(nullptr, ITsysAlloc::Create(), nullptr);
 	AssertType(input, log, logTsys, pa);
 }
 

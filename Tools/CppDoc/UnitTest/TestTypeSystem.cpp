@@ -15,10 +15,11 @@ TEST_CASE(TestTypeSystem_Primitive)
 	TEST_PRIMITIVE_BYTES(TYPE, _4);\
 	TEST_PRIMITIVE_BYTES(TYPE, _8)\
 
-	TEST_PRIMITIVE(Signed);
-	TEST_PRIMITIVE(Unsigned);
+	TEST_PRIMITIVE(SInt);
+	TEST_PRIMITIVE(UInt);
 	TEST_PRIMITIVE(Float);
-	TEST_PRIMITIVE(Char);
+	TEST_PRIMITIVE(SChar);
+	TEST_PRIMITIVE(UChar);
 	TEST_PRIMITIVE(Bool);
 	TEST_PRIMITIVE(Void);
 
@@ -36,12 +37,13 @@ TEST_CASE(TestTypeSystem_Primitive)
 	TEST_PRIMITIVE_BYTES(TYPE1, _4, TYPE2, _8);\
 	TEST_PRIMITIVE_BYTES(TYPE1, _8, TYPE2, _1)\
 
-	TEST_PRIMITIVE(Signed, Unsigned);
-	TEST_PRIMITIVE(Unsigned, Float);
-	TEST_PRIMITIVE(Float, Char);
-	TEST_PRIMITIVE(Char, Bool);
+	TEST_PRIMITIVE(SInt, UInt);
+	TEST_PRIMITIVE(UInt, Float);
+	TEST_PRIMITIVE(Float, SChar);
+	TEST_PRIMITIVE(SChar, UChar);
+	TEST_PRIMITIVE(UChar, Bool);
 	TEST_PRIMITIVE(Bool, Void);
-	TEST_PRIMITIVE(Void, Signed);
+	TEST_PRIMITIVE(Void, SInt);
 
 #undef TEST_PRIMITIVE
 #undef TEST_PRIMITIVE_BYTES
@@ -120,7 +122,7 @@ TEST_CASE(TestTypeSystem_Member)
 	auto tsys = ITsysAlloc::Create();
 	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
 	auto tbool = tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 });
-	auto tchar = tsys->PrimitiveOf({ TsysPrimitiveType::Char,TsysBytes::_1 });
+	auto tchar = tsys->PrimitiveOf({ TsysPrimitiveType::SChar,TsysBytes::_1 });
 	TEST_ASSERT(tvoid->MemberOf(tbool) == tvoid->MemberOf(tbool));
 	TEST_ASSERT(tvoid->MemberOf(tbool) != tvoid->MemberOf(tchar));
 }

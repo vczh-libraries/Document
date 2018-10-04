@@ -14,10 +14,13 @@ Interface
 
 enum class TsysPrimitiveType
 {
-	Signed,
-	Unsigned,
+	SInt,
+	UInt,
 	Float,
-	Char,
+	SChar,
+	UChar,
+	SWChar,
+	UWChar,
 	Bool,
 	Void,
 	_COUNT,
