@@ -89,15 +89,15 @@ Definition
 	F(STAT___LEAVE,				__leave)\
 	F(STAT___IF_EXISTS,			__if_exists)\
 	F(STAT___IF_NOT_EXISTS,		__if_not_exists)\
-	F(THIS,						this)\
-	F(NULLPTR,					nullptr)\
-	F(TYPEID,					typeid)\
-	F(SIZEOF,					sizeof)\
-	F(DYNAMIC_CAST,				dynamic_cast)\
-	F(STATIC_CAST,				static_cast)\
-	F(CONST_CAST,				const_cast)\
-	F(REINTERPRET_CAST,			reinterpret_cast)\
-	F(SAFE_CAST,				safe_cast)\
+	F(EXPR_THIS,				this)\
+	F(EXPR_NULLPTR,				nullptr)\
+	F(EXPR_TYPEID,				typeid)\
+	F(EXPR_SIZEOF,				sizeof)\
+	F(EXPR_DYNAMIC_CAST,		dynamic_cast)\
+	F(EXPR_STATIC_CAST,			static_cast)\
+	F(EXPR_CONST_CAST,			const_cast)\
+	F(EXPR_REINTERPRET_CAST,	reinterpret_cast)\
+	F(EXPR_SAFE_CAST,			safe_cast)\
 	F(TYPENAME,					typename)\
 	F(PUBLIC,					public)\
 	F(PROTECTED,				protected)\

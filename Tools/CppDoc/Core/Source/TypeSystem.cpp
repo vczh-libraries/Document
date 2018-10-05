@@ -248,6 +248,7 @@ ITsysAlloc
 class TsysAlloc : public Object, public ITsysAlloc
 {
 protected:
+	TsysBase_<TsysType::Nullptr>					tsysNullptr;
 	ITsys_Primitive*								primitives[(vint)TsysPrimitiveType::_COUNT * (vint)TsysBytes::_COUNT] = { 0 };
 	Dictionary<Symbol*, ITsys_Decl*>				decls;
 	Dictionary<Symbol*, ITsys_GenericArg*>			genericArgs;
@@ -265,6 +266,16 @@ public:
 	ITsys_Allocator<ITsys_Generic,		1024>		_generic;
 	ITsys_Allocator<ITsys_GenericArg,	1024>		_genericArg;
 	ITsys_Allocator<ITsys_Expr,			1024>		_expr;
+
+	TsysAlloc()
+		:tsysNullptr(this)
+	{
+	}
+
+	ITsys* Nullptr()override
+	{
+		return &tsysNullptr;
+	}
 
 	ITsys* PrimitiveOf(TsysPrimitive primitive)override
 	{

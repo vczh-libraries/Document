@@ -167,6 +167,9 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="Source\Ast.cpp" />
+    <ClCompile Include="Source\Ast_Expr_ExprToTsys.cpp" />
+    <ClCompile Include="Source\Ast_Type_IsSameResolvedType.cpp" />
+    <ClCompile Include="Source\Ast_Type_TypeToTsys.cpp" />
     <ClCompile Include="Source\Lexer.cpp" />
     <ClCompile Include="Source\Parser.cpp" />
     <ClCompile Include="Source\Parser_Declaration.cpp" />

@@ -9,6 +9,11 @@ Visitor
 
 #define CPPDOC_EXPR_LIST(F)\
 	F(LiteralExpr)\
+	F(ThisExpr)\
+	F(NullptrExpr)\
+	F(ParenthesisExpr)\
+	F(CastExpr)\
+	F(TypeidExpr)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
 CPPDOC_EXPR_LIST(CPPDOC_FORWARD)
@@ -34,6 +39,55 @@ public:
 	IExprVisitor_ACCEPT;
 
 	List<RegexToken>			tokens;
+};
+
+class ThisExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+};
+
+class NullptrExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+};
+
+class ParenthesisExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	Ptr<Expr>					expr;
+};
+
+enum class CppCastType
+{
+	CCast,
+	DynamicCast,
+	StaticCast,
+	ConstCast,
+	ReinterpretCast,
+	SafeCast,
+};
+
+class CastExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	CppCastType					castType;
+	Ptr<Type>					type;
+	Ptr<Expr>					expr;
+};
+
+class TypeidExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	Ptr<Type>					type;
+	Ptr<Expr>					expr;
 };
 
 #endif

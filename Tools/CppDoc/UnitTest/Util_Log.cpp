@@ -107,6 +107,31 @@ public:
 			writer.WriteString(self->tokens[i].reading, self->tokens[i].length);
 		}
 	}
+
+	void Visit(ThisExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(NullptrExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(ParenthesisExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(CastExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(TypeidExpr* self)override
+	{
+		throw 0;
+	}
 };
 
 /***********************************************************************
@@ -955,6 +980,9 @@ void Log(ITsys* tsys, StreamWriter& writer)
 {
 	switch (tsys->GetType())
 	{
+	case TsysType::Nullptr:
+		writer.WriteString(L"nullptr_t");
+		return;
 	case TsysType::Primitive:
 		{
 			auto primitive = tsys->GetPrimitive();

@@ -60,6 +60,7 @@ const TsysCV		CV_V	{ false,false,true };
 
 enum class TsysType
 {
+	Nullptr,
 	Primitive,		// Primitive
 	LRef,			// Element
 	RRef,			// Element
@@ -103,6 +104,7 @@ ITsysAlloc
 class ITsysAlloc abstract : public Interface
 {
 public:
+	virtual ITsys*				Nullptr() = 0;
 	virtual ITsys*				PrimitiveOf(TsysPrimitive primitive) = 0;
 	virtual ITsys*				DeclOf(Symbol* decl) = 0;
 	virtual ITsys*				GenericArgOf(Symbol* decl) = 0;

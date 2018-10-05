@@ -120,11 +120,11 @@ public:
 Helpers
 ***********************************************************************/
 
-struct NotConvertableException
-{
-};
+struct NotConvertableException {};
+struct IllegalExprException {};
 
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
 extern void					TypeToTsys(ParsingArguments& pa, Ptr<Type> t, List<ITsys*>& tsys);
+extern void					ExprToTsys(ParsingArguments& pa, Ptr<Expr> e, List<ITsys*>& tsys);
 
 #endif
