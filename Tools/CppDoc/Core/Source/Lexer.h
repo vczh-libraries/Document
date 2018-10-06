@@ -89,6 +89,8 @@ Definition
 	F(STAT___LEAVE,				__leave)\
 	F(STAT___IF_EXISTS,			__if_exists)\
 	F(STAT___IF_NOT_EXISTS,		__if_not_exists)\
+	F(EXPR_TRUE,				true)\
+	F(EXPR_FALSE,				false)\
 	F(EXPR_THIS,				this)\
 	F(EXPR_NULLPTR,				nullptr)\
 	F(EXPR_TYPEID,				typeid)\

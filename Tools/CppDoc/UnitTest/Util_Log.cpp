@@ -115,7 +115,7 @@ public:
 
 	void Visit(NullptrExpr* self)override
 	{
-		throw 0;
+		writer.WriteString(L"nullptr");
 	}
 
 	void Visit(ParenthesisExpr* self)override

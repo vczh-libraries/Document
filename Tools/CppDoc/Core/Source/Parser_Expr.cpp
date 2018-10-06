@@ -7,6 +7,8 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 	{
 		switch ((CppTokens)cursor->token.token)
 		{
+		case CppTokens::EXPR_TRUE:
+		case CppTokens::EXPR_FALSE:
 		case CppTokens::INT:
 		case CppTokens::HEX:
 		case CppTokens::BIN:
@@ -29,11 +31,18 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				return literal;
 			}
 		case CppTokens::EXPR_THIS:
-			return MakePtr<ThisExpr>();
+			{
+				SkipToken(cursor);
+				return MakePtr<ThisExpr>();
+			}
 		case CppTokens::EXPR_NULLPTR:
-			return MakePtr<NullptrExpr>();
+			{
+				SkipToken(cursor);
+				return MakePtr<NullptrExpr>();
+			}
 		case CppTokens::LPARENTHESIS:
 			{
+				SkipToken(cursor);
 				auto expr = MakePtr<ParenthesisExpr>();
 				expr->expr = ParseExpr(pa, true, cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
@@ -45,6 +54,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 		case CppTokens::EXPR_REINTERPRET_CAST:
 		case CppTokens::EXPR_SAFE_CAST:
 			{
+				SkipToken(cursor);
 				auto expr = MakePtr<CastExpr>();
 				expr->castType = CppCastType::SafeCast;
 				switch ((CppTokens)cursor->token.token)
@@ -65,6 +75,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			}
 		case CppTokens::EXPR_TYPEID:
 			{
+				SkipToken(cursor);
 				auto expr = MakePtr<TypeidExpr>();
 				RequireToken(cursor, CppTokens::LPARENTHESIS);
 				{

@@ -36,9 +36,9 @@ Ptr<RegexLexer> CreateCppLexer()
 	DEFINE_TOKEN(REVERT, L"~");
 	DEFINE_TOKEN(SHARP, L"#");
 
-	DEFINE_TOKEN(INT, L"(/d+('/d+)*)[uU]?[lL]?");
-	DEFINE_TOKEN(HEX, L"0[xX][0-9a-fA-F]+[uU]?[lL]?");
-	DEFINE_TOKEN(BIN, L"0[bB][01]+[uU]?[lL]?");
+	DEFINE_TOKEN(INT, L"(/d+('/d+)*)([uU]|[lL]|[uU][lL]|[lL][uU])?");
+	DEFINE_TOKEN(HEX, L"0[xX][0-9a-fA-F]+([uU]|[lL]|[uU][lL]|[lL][uU])?");
+	DEFINE_TOKEN(BIN, L"0[bB][01]+([uU]|[lL]|[uU][lL]|[lL][uU])?");
 	DEFINE_TOKEN(FLOAT, L"(/d+.|./d+|/d+./d+)([eE][+/-]?/d+)?[fFlL]?");
 	DEFINE_TOKEN(STRING, L"([uUL]|u8)?\"([^/\\\"]|/\\/.)*\"");
 	DEFINE_TOKEN(CHAR, L"([uUL]|u8)?'([^/\\']|/\\/.)*'");

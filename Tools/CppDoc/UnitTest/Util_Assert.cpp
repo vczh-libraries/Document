@@ -1,5 +1,9 @@
 #include "Util.h"
 
+/***********************************************************************
+AssertMultilines
+***********************************************************************/
+
 void AssertMultilines(const WString& output, const WString& log)
 {
 	StringReader srExpect(log);
@@ -15,6 +19,10 @@ void AssertMultilines(const WString& output, const WString& log)
 		TEST_ASSERT(expect == actual);
 	}
 }
+
+/***********************************************************************
+AssertType
+***********************************************************************/
 
 void AssertType(const WString& input, const WString& log, const WString& logTsys)
 {
@@ -53,6 +61,51 @@ void AssertType(const WString& input, const WString& log, const WString& logTsys
 	}
 }
 
+/***********************************************************************
+AssertExpr
+***********************************************************************/
+
+void AssertExpr(const WString& input, const WString& log, const WString& logTsys)
+{
+	ParsingArguments pa(nullptr, ITsysAlloc::Create(), nullptr);
+	AssertExpr(input, log, logTsys, pa);
+}
+
+void AssertExpr(const WString& input, const WString& log, const WString& logTsys, ParsingArguments& pa)
+{
+	CppTokenReader reader(GlobalCppLexer(), input);
+	auto cursor = reader.GetFirstToken();
+
+	auto expr = ParseExpr(pa, true, cursor);
+	TEST_ASSERT(!cursor);
+
+	auto output = GenerateToStream([&](StreamWriter& writer)
+	{
+		Log(expr, writer);
+	});
+	TEST_ASSERT(output == log);
+
+	try
+	{
+		List<ITsys*> tsys;
+		ExprToTsys(pa, expr, tsys);
+		TEST_ASSERT(tsys.Count() == 1);
+		auto outputTsys = GenerateToStream([&](StreamWriter& writer)
+		{
+			Log(tsys[0], writer);
+		});
+		TEST_ASSERT(outputTsys == logTsys);
+	}
+	catch (const IllegalExprException&)
+	{
+		TEST_ASSERT(L"" == logTsys);
+	}
+}
+
+/***********************************************************************
+AssertStat
+***********************************************************************/
+
 void AssertStat(const WString& input, const WString& log)
 {
 	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
@@ -74,6 +127,10 @@ void AssertStat(const WString& input, const WString& log, ParsingArguments& pa)
 
 	AssertMultilines(output, log);
 }
+
+/***********************************************************************
+AssertProgram
+***********************************************************************/
 
 void AssertProgram(const WString& input, const WString& log, Ptr<IIndexRecorder> recorder)
 {

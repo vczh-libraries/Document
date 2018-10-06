@@ -14,6 +14,8 @@ extern void					Log(ITsys* tsys, StreamWriter& writer);
 extern void					AssertMultilines(const WString& output, const WString& log);
 extern void					AssertType(const WString& input, const WString& log, const WString& logTsys);
 extern void					AssertType(const WString& input, const WString& log, const WString& logTsys, ParsingArguments& pa);
+extern void					AssertExpr(const WString& input, const WString& log, const WString& logTsys);
+extern void					AssertExpr(const WString& input, const WString& log, const WString& logTsys, ParsingArguments& pa);
 extern void					AssertStat(const WString& input, const WString& log);
 extern void					AssertStat(const WString& input, const WString& log, ParsingArguments& pa);
 extern void					AssertProgram(const WString& input, const WString& log, Ptr<IIndexRecorder> recorder = nullptr);
