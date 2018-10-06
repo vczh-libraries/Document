@@ -40,6 +40,7 @@
   - [x] Assert ASTs
   - [x] Assert resolvings in scopes
 - [ ] Parse full expressions
+  - [ ] Add a policy description struct to `Parse*Type` and `Parse*Declarator` so that sometimes when a name fail to resolve it could also be considered part of a type
   - [ ] Assert ASTs
   - [ ] Assert resolvings in scopes
   - [ ] Resolve symbols in initializers of fields
