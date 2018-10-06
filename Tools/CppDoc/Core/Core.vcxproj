@@ -155,6 +155,7 @@
     <ClInclude Include="Source\Ast_Type.h" />
     <ClInclude Include="Source\IncludeAll.h" />
     <ClInclude Include="Source\Lexer.h" />
+    <ClInclude Include="Source\LexerTokenDef.h" />
     <ClInclude Include="Source\Parser.h" />
     <ClInclude Include="Source\TypeSystem.h" />
     <ClInclude Include="Source\Utility.h" />
