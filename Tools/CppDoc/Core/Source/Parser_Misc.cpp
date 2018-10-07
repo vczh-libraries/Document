@@ -76,6 +76,11 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		name.nameTokens[0] = token;
 		cursor = cursor->Next();
 
+		if (forceSpecialMethod)
+		{
+			return true;
+		}
+
 		auto nameCursor = cursor;
 
 #define OPERATOR_NAME_1(TOKEN1)\
@@ -157,8 +162,6 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		OPERATOR_NAME_2(GT, GT)
 		OPERATOR_NAME_2(GT, EQ)
 		OPERATOR_NAME_1(GT)
-
-		if (!forceSpecialMethod)
 		{
 			return false;
 		}
