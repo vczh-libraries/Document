@@ -657,3 +657,18 @@ void BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>&
 	BuildVariables(declarators, varDecls);
 	BuildSymbols(pa, varDecls);
 }
+
+/***********************************************************************
+BuildVariableAndSymbol
+***********************************************************************/
+
+Ptr<VariableDeclaration> BuildVariableAndSymbol(const ParsingArguments& pa, Ptr<Declarator> declarator)
+{
+	List<Ptr<Declarator>> declarators;
+	declarators.Add(declarator);
+
+	List<Ptr<VariableDeclaration>> varDecls;
+	BuildVariablesAndSymbols(pa, declarators, varDecls);
+	BuildSymbols(pa, varDecls);
+	return varDecls[0];
+}

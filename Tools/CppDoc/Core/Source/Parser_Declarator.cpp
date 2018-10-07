@@ -2,6 +2,8 @@
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
 
+extern Ptr<Type>			ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+
 /***********************************************************************
 ReplaceOutOfDeclaratorTypeVisitor
 ***********************************************************************/
@@ -810,7 +812,7 @@ void ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingCla
 }
 
 /***********************************************************************
-ParseDeclarator
+ParseDeclarator (Helpers)
 ***********************************************************************/
 
 void ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
@@ -818,13 +820,15 @@ void ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction 
 	ParseDeclarator(pa, nullptr, false, dr, ir, cursor, declarators);
 }
 
-/***********************************************************************
-ParseDeclarator
-***********************************************************************/
+Ptr<Declarator> ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor)
+{
+	List<Ptr<Declarator>> declarators;
+	ParseNonMemberDeclarator(pa, dr, ir, cursor, declarators);
+	if (declarators.Count() != 1) throw StopParsingException(cursor);
+	return declarators[0];
+}
 
 Ptr<Type> ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	List<Ptr<Declarator>> declarators;
-	ParseNonMemberDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor, declarators);
-	return declarators[0]->type;
+	return ParseNonMemberDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor)->type;
 }

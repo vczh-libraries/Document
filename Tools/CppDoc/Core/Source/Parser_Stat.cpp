@@ -6,11 +6,11 @@ template<typename T>
 void ParseVariableOrExpression(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<T> stat)
 {
 	auto oldCursor = cursor;
-	List<Ptr<Declarator>> declarators;
+	Ptr<Declarator> declarator;
 	try
 	{
-		ParseNonMemberDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Optional, cursor, declarators);
-		if (!declarators[0]->initializer)
+		declarator = ParseNonMemberDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Optional, cursor);
+		if (!declarator->initializer)
 		{
 			throw StopParsingException(cursor);
 		}
@@ -20,11 +20,9 @@ void ParseVariableOrExpression(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 		cursor = oldCursor;
 	}
 
-	if (declarators.Count() == 1)
+	if (declarator)
 	{
-		List<Ptr<VariableDeclaration>> varDecls;
-		BuildVariablesAndSymbols(pa, declarators, varDecls);
-		stat->varExpr = varDecls[0];
+		stat->varExpr = BuildVariableAndSymbol(pa, declarator);
 	}
 	else
 	{
@@ -121,10 +119,10 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		{
 			// for (VARIABLE-DECLARATION : EXPRESSION) STATEMENT
 			auto oldCursor = cursor;
-			List<Ptr<Declarator>> declarators;
+			Ptr<Declarator> declarator;
 			try
 			{
-				ParseNonMemberDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Zero, cursor, declarators);
+				declarator = ParseNonMemberDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Zero, cursor);
 				RequireToken(cursor, CppTokens::COLON);
 			}
 			catch (const StopParsingException&)
@@ -136,9 +134,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			auto stat = MakePtr<ForEachStat>();
 			ParsingArguments newPa(pa, pa.context->CreateStatSymbol(stat));
 			{
-				List<Ptr<VariableDeclaration>> varDecls;
-				BuildVariablesAndSymbols(newPa, declarators, varDecls);
-				stat->varDecl = varDecls[0];
+				stat->varDecl = BuildVariableAndSymbol(newPa, declarator);
 			}
 
 			stat->expr = ParseExpr(newPa, true, cursor);
@@ -242,11 +238,8 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		if (!TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
 		{
-			List<Ptr<Declarator>> declarators;
-			ParseNonMemberDeclarator(pa, DeclaratorRestriction::Optional, InitializerRestriction::Zero, cursor, declarators);
-			List<Ptr<VariableDeclaration>> varDecls;
-			BuildVariablesAndSymbols(pa, declarators, varDecls);
-			stat->exception = varDecls[0];
+			auto declarator = ParseNonMemberDeclarator(pa, DeclaratorRestriction::Optional, InitializerRestriction::Zero, cursor);
+			stat->exception = BuildVariableAndSymbol(pa, declarator);
 		}
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		stat->catchStat = ParseStat(pa, cursor);

@@ -117,26 +117,30 @@ class ClassDeclaration;
 class VariableDeclaration;
 enum class CppCallingConvention;
 
-extern bool					SkipSpecifiers(Ptr<CppTokenCursor>& cursor);
-extern bool					ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialMethod = false);
-extern Ptr<Type>			GetTypeWithoutMemberAndCC(Ptr<Type> type);
-extern Ptr<Type>			ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToReplace);
-extern Ptr<Type>			AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType);
-extern bool					ParseCallingConvention(CppCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
+// Parser_Misc.cpp
+extern bool							SkipSpecifiers(Ptr<CppTokenCursor>& cursor);
+extern bool							ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialMethod = false);
+extern Ptr<Type>					GetTypeWithoutMemberAndCC(Ptr<Type> type);
+extern Ptr<Type>					ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToReplace);
+extern Ptr<Type>					AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType);
+extern bool							ParseCallingConvention(CppCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
 
-extern Ptr<Type>			ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Initializer>		ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern void					ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingClass, bool trySpecialMember, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
-extern void					ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
-extern Ptr<Type>			ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+// Parser_Declarator.cpp
+extern void							ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingClass, bool trySpecialMember, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern void							ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern Ptr<Declarator>				ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Type>					ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
-extern void					ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
-extern void					BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls);
-extern void					BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls);
-extern void					BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls);
-extern Ptr<Expr>			ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Stat>			ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Program>			ParseProgram(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+// Parser_Declaration.cpp
+extern void							ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
+extern void							BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls);
+extern void							BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls);
+extern void							BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls);
+extern Ptr<VariableDeclaration>		BuildVariableAndSymbol(const ParsingArguments& pa, Ptr<Declarator> declarator);
+
+extern Ptr<Expr>					ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Stat>					ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Program>					ParseProgram(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 /***********************************************************************
 Helpers
