@@ -117,6 +117,16 @@ class ClassDeclaration;
 class VariableDeclaration;
 enum class CppCallingConvention;
 
+// Parser_ResolveSymbol.cpp
+enum class SearchPolicy
+{
+	SymbolAccessableInScope,
+	ChildSymbol,
+	ChildSymbolRequestedFromSubClass,
+};
+extern Ptr<Resolving>				ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, Ptr<Resolving> resolving, SearchPolicy policy);
+extern Ptr<Resolving>				ResolveChildTypeSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, Ptr<Resolving> resolving);
+
 // Parser_Misc.cpp
 extern bool							SkipSpecifiers(Ptr<CppTokenCursor>& cursor);
 extern bool							ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialMethod = false);
