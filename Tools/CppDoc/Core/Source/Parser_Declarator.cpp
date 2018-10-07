@@ -110,7 +110,7 @@ ClassDeclaration* EnsureMemberTypeResolved(Ptr<MemberType> memberType, Ptr<CppTo
 }
 
 /***********************************************************************
-ParseShortDeclarator
+ParseDeclaratorName
 ***********************************************************************/
 
 struct ParseDeclaratorContext
@@ -120,10 +120,101 @@ struct ParseDeclaratorContext
 	DeclaratorRestriction	dr;
 };
 
+void ParseDeclaratorName(const ParsingArguments& pa, Ptr<Declarator> declarator, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
+{
+	// forceSpecialMethod means this function is expected to accept only
+	//   constructor declarators
+	//   destructor declarators
+	//   type conversion declarators
+	// the common thing among them is not having a return type before the declarator
+	if (ParseCppName(declarator->name, cursor, pdc.forceSpecialMethod))
+	{
+		if (pdc.forceSpecialMethod)
+		{
+			// special method can only appear
+			//   when a declaration is right inside a class
+			//   or it is a class member declaration out of a class
+			if (!pdc.containingClass)
+			{
+				throw StopParsingException(cursor);
+			}
+
+			switch (declarator->name.type)
+			{
+			case CppNameType::Normal:
+				// IDENTIFIER should be a constructor name for a special method
+				if (declarator->name.name == pdc.containingClass->name.name)
+				{
+					declarator->name.name = L"$__ctor";
+					declarator->name.type = CppNameType::Constructor;
+				}
+				else
+				{
+					throw StopParsingException(cursor);
+				}
+				break;
+			case CppNameType::Operator:
+				// operator TYPE is the only valid form of special method if the first token is operator
+				if (declarator->name.tokenCount == 1)
+				{
+					declarator->name.name = L"$__type";
+					auto type = ParseLongType(pa, cursor);
+					if (ReplaceTypeInMemberAndCC(declarator->type, type))
+					{
+						throw StopParsingException(cursor);
+					}
+				}
+				else
+				{
+					throw StopParsingException(cursor);
+				}
+				break;
+			case CppNameType::Destructor:
+				// ~IDENTIFIER should be a destructor name for a special method
+				if (declarator->name.name != L"~" + pdc.containingClass->name.name)
+				{
+					throw StopParsingException(cursor);
+				}
+				break;
+			}
+		}
+		else
+		{
+			switch (declarator->name.type)
+			{
+			case CppNameType::Operator:
+				// operator PREDEFINED-OPERATOR is the only valid form for normal method if the first token is operator
+				if (declarator->name.tokenCount == 1)
+				{
+					throw StopParsingException(cursor);
+				}
+				break;
+			case CppNameType::Constructor:
+			case CppNameType::Destructor:
+				// constructors or destructors are not normal methods
+				throw StopParsingException(cursor);
+			}
+		}
+	}
+	else
+	{
+		// we have already tested all possible form of declarators
+		// if a declarator name is required, there are only two possibilities left
+		//    1. the declarator name is placed after (
+		//    2. syntax error
+		if (!TestToken(cursor, CppTokens::LPARENTHESIS, false) && pdc.dr == DeclaratorRestriction::One)
+		{
+			throw StopParsingException(cursor);
+		}
+	}
+}
+
+/***********************************************************************
+ParseShortDeclarator
+***********************************************************************/
+
 Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeResult, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
 {
-	while (SkipSpecifiers(cursor));
-
 	if (TestToken(cursor, CppTokens::ALIGNAS))
 	{
 		// alignas (EXPRESSION) DECLARATOR
@@ -277,91 +368,7 @@ Ptr<Declarator> ParseShortDeclarator(const ParsingArguments& pa, Ptr<Type> typeR
 
 			if (pdc.dr != DeclaratorRestriction::Zero)
 			{
-				// forceSpecialMethod means this function is expected to accept only
-				//   constructor declarators
-				//   destructor declarators
-				//   type conversion declarators
-				// the common thing among them is not having a return type before the declarator
-				if (ParseCppName(declarator->name, cursor, pdc.forceSpecialMethod))
-				{
-					if (pdc.forceSpecialMethod)
-					{
-						// special method can only appear
-						//   when a declaration is right inside a class
-						//   or it is a class member declaration out of a class
-						if (!pdc.containingClass)
-						{
-							throw StopParsingException(cursor);
-						}
-
-						switch (declarator->name.type)
-						{
-						case CppNameType::Normal:
-							// IDENTIFIER should be a constructor name for a special method
-							if (declarator->name.name == pdc.containingClass->name.name)
-							{
-								declarator->name.name = L"$__ctor";
-								declarator->name.type = CppNameType::Constructor;
-							}
-							else
-							{
-								throw StopParsingException(cursor);
-							}
-							break;
-						case CppNameType::Operator:
-							// operator TYPE is the only valid form of special method if the first token is operator
-							if (declarator->name.tokenCount == 1)
-							{
-								declarator->name.name = L"$__type";
-								auto type = ParseLongType(pa, cursor);
-								if (ReplaceTypeInMemberAndCC(declarator->type, type))
-								{
-									throw StopParsingException(cursor);
-								}
-							}
-							else
-							{
-								throw StopParsingException(cursor);
-							}
-							break;
-						case CppNameType::Destructor:
-							// ~IDENTIFIER should be a destructor name for a special method
-							if (declarator->name.name != L"~" + pdc.containingClass->name.name)
-							{
-								throw StopParsingException(cursor);
-							}
-							break;
-						}
-					}
-					else
-					{
-						switch (declarator->name.type)
-						{
-						case CppNameType::Operator:
-							// operator PREDEFINED-OPERATOR is the only valid form for normal method if the first token is operator
-							if (declarator->name.tokenCount == 1)
-							{
-								throw StopParsingException(cursor);
-							}
-							break;
-						case CppNameType::Constructor:
-						case CppNameType::Destructor:
-							// constructors or destructors are not normal methods
-							throw StopParsingException(cursor);
-						}
-					}
-				}
-				else
-				{
-					// we have already tested all possible form of declarators
-					// if a declarator name is required, there are only two possibilities left
-					//    1. the declarator name is placed after (
-					//    2. syntax error
-					if (!TestToken(cursor, CppTokens::LPARENTHESIS, false) && pdc.dr == DeclaratorRestriction::One)
-					{
-						throw StopParsingException(cursor);
-					}
-				}
+				ParseDeclaratorName(pa, declarator, pdc, cursor);
 			}
 			return declarator;
 		}

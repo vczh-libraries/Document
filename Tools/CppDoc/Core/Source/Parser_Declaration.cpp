@@ -101,6 +101,8 @@ ParseDeclaration
 
 void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
+	while (SkipSpecifiers(cursor));
+
 	bool decoratorFriend = TestToken(cursor, CppTokens::DECL_FRIEND);
 
 	if (TestToken(cursor, CppTokens::DECL_NAMESPACE))
