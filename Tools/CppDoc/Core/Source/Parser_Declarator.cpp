@@ -346,10 +346,10 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 }
 
 /***********************************************************************
-ParseLongDeclarator
+ParseSingleDeclarator
 ***********************************************************************/
 
-Ptr<Declarator> ParseLongDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
+Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
 {
 	// a long declarator begins with more type decorations
 	auto targetType = ParseTypeBeforeDeclarator(pa, baselineType, pdc, cursor);
@@ -394,7 +394,7 @@ Ptr<Declarator> ParseLongDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 		{
 			try
 			{
-				declarator = ParseLongDeclarator(pa, targetType, pdc, cursor);
+				declarator = ParseSingleDeclarator(pa, targetType, pdc, cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 			}
 			catch (const StopParsingException&)
@@ -724,7 +724,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 
 	while (true)
 	{
-		auto declarator = ParseLongDeclarator(pa, typeResult, pdc, cursor);
+		auto declarator = ParseSingleDeclarator(pa, typeResult, pdc, cursor);
 
 		ParsingArguments initializerPa = pa;
 		if (declarator->type.Cast<MemberType>() && declarator->containingClassSymbol)
