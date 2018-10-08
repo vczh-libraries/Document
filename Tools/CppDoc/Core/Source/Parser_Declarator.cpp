@@ -120,14 +120,14 @@ struct ParseDeclaratorContext
 	DeclaratorRestriction	dr;
 };
 
-bool ParseDeclaratorName(const ParsingArguments& pa, Ptr<Declarator> declarator, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
+bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>& targetType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
 {
 	// forceSpecialMethod means this function is expected to accept only
 	//   constructor declarators
 	//   destructor declarators
 	//   type conversion declarators
 	// the common thing among them is not having a return type before the declarator
-	if (ParseCppName(declarator->name, cursor, pdc.forceSpecialMethod))
+	if (ParseCppName(cppName, cursor, pdc.forceSpecialMethod))
 	{
 		if (pdc.forceSpecialMethod)
 		{
@@ -138,7 +138,7 @@ bool ParseDeclaratorName(const ParsingArguments& pa, Ptr<Declarator> declarator,
 			auto containingClass = pdc.containingClass;
 			if (!containingClass)
 			{
-				if (auto memberType = declarator->type.Cast<MemberType>())
+				if (auto memberType = targetType.Cast<MemberType>())
 				{
 					containingClass = EnsureMemberTypeResolved(memberType, cursor);
 				}
@@ -148,14 +148,14 @@ bool ParseDeclaratorName(const ParsingArguments& pa, Ptr<Declarator> declarator,
 				throw StopParsingException(cursor);
 			}
 
-			switch (declarator->name.type)
+			switch (cppName.type)
 			{
 			case CppNameType::Normal:
 				// IDENTIFIER should be a constructor name for a special method
-				if (declarator->name.name == containingClass->name.name)
+				if (cppName.name == containingClass->name.name)
 				{
-					declarator->name.name = L"$__ctor";
-					declarator->name.type = CppNameType::Constructor;
+					cppName.name = L"$__ctor";
+					cppName.type = CppNameType::Constructor;
 				}
 				else
 				{
@@ -164,11 +164,11 @@ bool ParseDeclaratorName(const ParsingArguments& pa, Ptr<Declarator> declarator,
 				break;
 			case CppNameType::Operator:
 				// operator TYPE is the only valid form of special method if the first token is operator
-				if (declarator->name.tokenCount == 1)
+				if (cppName.tokenCount == 1)
 				{
-					declarator->name.name = L"$__type";
+					cppName.name = L"$__type";
 					auto type = ParseLongType(pa, cursor);
-					if (ReplaceTypeInMemberAndCC(declarator->type, type))
+					if (ReplaceTypeInMemberAndCC(targetType, type))
 					{
 						throw StopParsingException(cursor);
 					}
@@ -180,7 +180,7 @@ bool ParseDeclaratorName(const ParsingArguments& pa, Ptr<Declarator> declarator,
 				break;
 			case CppNameType::Destructor:
 				// ~IDENTIFIER should be a destructor name for a special method
-				if (declarator->name.name != L"~" + containingClass->name.name)
+				if (cppName.name != L"~" + containingClass->name.name)
 				{
 					throw StopParsingException(cursor);
 				}
@@ -189,11 +189,11 @@ bool ParseDeclaratorName(const ParsingArguments& pa, Ptr<Declarator> declarator,
 		}
 		else
 		{
-			switch (declarator->name.type)
+			switch (cppName.type)
 			{
 			case CppNameType::Operator:
 				// operator PREDEFINED-OPERATOR is the only valid form for normal method if the first token is operator
-				if (declarator->name.tokenCount == 1)
+				if (cppName.tokenCount == 1)
 				{
 					throw StopParsingException(cursor);
 				}
@@ -593,23 +593,24 @@ ParseSingleDeclarator
 
 Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
 {
+	Ptr<Declarator> declarator;
+
 	// a long declarator begins with more type decorations
 	auto targetType = ParseTypeBeforeDeclarator(pa, baselineType, pdc, cursor);
-
-	auto declarator = MakePtr<Declarator>();
-	declarator->type = targetType;
 
 	if (pdc.dr != DeclaratorRestriction::Zero)
 	{
 		// there may be a declarator name
-		if (ParseDeclaratorName(pa, declarator, pdc, cursor))
+		CppName cppName;
+		if (ParseDeclaratorName(pa, cppName, targetType, pdc, cursor))
 		{
-			// the type could be changed if it is a custom type conversion function
-			targetType = declarator->type;
-			goto READY_FOR_ARRAY_OR_FUNCTION;
+			declarator = new Declarator;
+			declarator->type = targetType;
+			declarator->name = cppName;
 		}
 	}
 
+	if (!declarator)
 	{
 		auto oldCursor = cursor;
 		// if there is no declarator name, and the next token is (
@@ -648,6 +649,12 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 	}
 
 READY_FOR_ARRAY_OR_FUNCTION:
+	if (!declarator)
+	{
+		declarator = new Declarator;
+		declarator->type = targetType;
+	}
+
 	// check if we have already done with the declarator name
 	if (!declarator->name && pdc.dr == DeclaratorRestriction::One)
 	{
