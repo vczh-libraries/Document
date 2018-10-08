@@ -150,12 +150,12 @@ struct ParsingDeclaratorArguments
 	}
 };
 
-inline ParsingDeclaratorArguments	pda_Type()		{	return{ nullptr,	DeclaratorRestriction::Zero,		InitializerRestriction::Zero		}; } // Type
-inline ParsingDeclaratorArguments	pda_VarType()	{	return{ nullptr,	DeclaratorRestriction::Optional,	InitializerRestriction::Zero		}; } // Type or Variable without Initializer
-inline ParsingDeclaratorArguments	pda_VarInit()	{	return{ nullptr,	DeclaratorRestriction::One,			InitializerRestriction::Optional	}; } // Variable with Initializer
-inline ParsingDeclaratorArguments	pda_VarNoInit()	{	return{ nullptr,	DeclaratorRestriction::One,			InitializerRestriction::Zero		}; } // Variable without Initializer
-inline ParsingDeclaratorArguments	pda_Param()		{	return{ nullptr,	DeclaratorRestriction::Optional,	InitializerRestriction::Optional	}; } // Parameter
-inline ParsingDeclaratorArguments	pda_Decls()		{	return{ nullptr,	DeclaratorRestriction::Many,		InitializerRestriction::Optional	}; } // Declarations
+inline ParsingDeclaratorArguments	pda_Type()		{	return { nullptr,	DeclaratorRestriction::Zero,		InitializerRestriction::Zero		}; } // Type
+inline ParsingDeclaratorArguments	pda_VarType()	{	return { nullptr,	DeclaratorRestriction::Optional,	InitializerRestriction::Zero		}; } // Type or Variable without Initializer
+inline ParsingDeclaratorArguments	pda_VarInit()	{	return { nullptr,	DeclaratorRestriction::One,			InitializerRestriction::Optional	}; } // Variable with Initializer
+inline ParsingDeclaratorArguments	pda_VarNoInit()	{	return { nullptr,	DeclaratorRestriction::One,			InitializerRestriction::Zero		}; } // Variable without Initializer
+inline ParsingDeclaratorArguments	pda_Param()		{	return { nullptr,	DeclaratorRestriction::Optional,	InitializerRestriction::Optional	}; } // Parameter
+inline ParsingDeclaratorArguments	pda_Decls()		{	return { nullptr,	DeclaratorRestriction::Many,		InitializerRestriction::Optional	}; } // Declarations
 
 extern void							ParseMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void							ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
