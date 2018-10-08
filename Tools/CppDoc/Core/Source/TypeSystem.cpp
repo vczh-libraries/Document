@@ -7,18 +7,13 @@ class ITsys_LRef;
 class ITsys_RRef;
 class ITsys_Ptr;
 class ITsys_Array;
+class ITsys_Function;
 class ITsys_Member;
 class ITsys_CV;
 class ITsys_Decl;
+class ITsys_Generic;
 class ITsys_GenericArg;
 class ITsys_Expr;
-
-
-template<TsysType Type>
-class ITsys_WithParams;
-
-using ITsys_Function = ITsys_WithParams<TsysType::Function>;
-using ITsys_Generic = ITsys_WithParams<TsysType::Generic>;
 
 template<typename T, vint BlockSize>
 class ITsys_Allocator;
@@ -146,6 +141,21 @@ public:																							\
 	DATA Get##NAME()override { return data; }													\
 };																								\
 
+#define ITSYS_WITHPARAMS(TYPE)																	\
+class ITsys_##TYPE : public TsysBase_<TsysType::TYPE>											\
+{																								\
+protected:																						\
+	ITsys*				element;																\
+	List<ITsys*>		params;																	\
+public:																							\
+	ITsys_##TYPE(TsysAlloc* _tsys, ITsys* _element)												\
+		:TsysBase_(_tsys), element(_element) {}													\
+	List<ITsys*>& GetParams() { return params; }												\
+	ITsys* GetElement()override { return element; }												\
+	ITsys* GetParam(vint index)override { return params.Get(index); }							\
+	vint GetParamCount()override { return params.Count(); }										\
+};																								\
+
 ITSYS_DATA(Primitive, TsysPrimitive, Primitive)
 ITSYS_DATA(Decl, Symbol*, Decl)
 ITSYS_DATA(GenericArg, Symbol*, Decl)
@@ -158,33 +168,13 @@ ITSYS_DECORATE(Array, vint, ParamCount)
 ITSYS_DECORATE(CV, TsysCV, CV)
 ITSYS_DECORATE(Member, ITsys*, Class)
 
+ITSYS_WITHPARAMS(Function)
+ITSYS_WITHPARAMS(Generic)
+
 #undef ITSYS_DATA
 #undef ISYS_REF
 #undef ITSYS_DECORATE
-
-template<TsysType Type>
-class ITsys_WithParams : public TsysBase_<Type>
-{
-protected:
-	ITsys*				element;
-	List<ITsys*>		params;
-
-public:
-	ITsys_WithParams(TsysAlloc* _tsys, ITsys* _element)
-		:TsysBase_<Type>(_tsys)
-		, element(_element)
-	{
-	}
-
-	List<ITsys*>& GetParams()
-	{
-		return params;
-	}
-
-	ITsys* GetElement()override { return element; }
-	ITsys* GetParam(vint index)override { return params.Get(index); }
-	vint GetParamCount()override { return params.Count(); }
-};
+#undef ITSYS_WITHPARAMS
 
 class ITsys_Expr : TsysBase_<TsysType::Expr>
 {
