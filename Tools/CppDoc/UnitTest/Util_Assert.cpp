@@ -26,7 +26,7 @@ AssertType
 
 void AssertType(const WString& input, const WString& log, const WString& logTsys)
 {
-	ParsingArguments pa(nullptr, ITsysAlloc::Create(), nullptr);
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
 	AssertType(input, log, logTsys, pa);
 }
 
@@ -67,7 +67,7 @@ AssertExpr
 
 void AssertExpr(const WString& input, const WString& log, const WString& logTsys)
 {
-	ParsingArguments pa(nullptr, ITsysAlloc::Create(), nullptr);
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
 	AssertExpr(input, log, logTsys, pa);
 }
 

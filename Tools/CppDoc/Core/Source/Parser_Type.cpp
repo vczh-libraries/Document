@@ -51,6 +51,30 @@ Ptr<Type> ParsePrimitiveType(Ptr<CppTokenCursor>& cursor, CppPrimitivePrefix pre
 }
 
 /***********************************************************************
+ParseIdType
+***********************************************************************/
+
+Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	CppName cppName;
+	if (ParseCppName(cppName, cursor))
+	{
+		if (auto resolving = ResolveTypeSymbol(pa, cppName, nullptr, SearchPolicy::SymbolAccessableInScope))
+		{
+			auto type = MakePtr<IdType>();
+			type->name = cppName;
+			type->resolving = resolving;
+			if (pa.recorder)
+			{
+				pa.recorder->Index(type->name, type->resolving);
+			}
+			return type;
+		}
+	}
+	throw StopParsingException(cursor);
+}
+
+/***********************************************************************
 ParseChildType
 ***********************************************************************/
 
@@ -168,32 +192,9 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 			return dt;
 		}
 
-		if (pa.context)
-		{
-			// NAME
-			CppName cppName;
-			if (ParseCppName(cppName, cursor))
-			{
-				if (auto resolving = ResolveTypeSymbol(pa, cppName, nullptr, SearchPolicy::SymbolAccessableInScope))
-				{
-					auto type = MakePtr<IdType>();
-					type->name = cppName;
-					type->resolving = resolving;
-					if (pa.recorder)
-					{
-						pa.recorder->Index(type->name, type->resolving);
-					}
-					return type;
-				}
-				else
-				{
-					throw StopParsingException(cursor);
-				}
-			}
-		}
+		// NAME
+		return ParseIdType(pa, cursor);
 	}
-
-	throw StopParsingException(cursor);
 }
 
 /***********************************************************************
