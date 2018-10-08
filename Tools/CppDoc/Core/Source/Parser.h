@@ -136,7 +136,7 @@ extern Ptr<Type>					AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionT
 extern bool							ParseCallingConvention(CppCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
 
 // Parser_Declarator.cpp
-extern void							ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingClass, bool trySpecialMember, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern void							ParseMemberDeclarator(const ParsingArguments& pa, ClassDeclaration* containingClass, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void							ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern Ptr<Declarator>				ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Type>					ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);

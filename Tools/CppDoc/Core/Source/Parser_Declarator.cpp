@@ -485,7 +485,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 			{
 				{
 					List<Ptr<Declarator>> declarators;
-					ParseDeclarator(functionArgsPa, nullptr, false, DeclaratorRestriction::Optional, InitializerRestriction::Optional, cursor, declarators);
+					ParseNonMemberDeclarator(functionArgsPa, DeclaratorRestriction::Optional, InitializerRestriction::Optional, cursor, declarators);
 					List<Ptr<VariableDeclaration>> varDecls;
 					BuildVariables(declarators, varDecls);
 					type->parameters.Add(varDecls[0]);
@@ -858,6 +858,11 @@ void ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingCla
 /***********************************************************************
 ParseDeclarator (Helpers)
 ***********************************************************************/
+
+void ParseMemberDeclarator(const ParsingArguments& pa, ClassDeclaration* containingClass, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+{
+	ParseDeclarator(pa, containingClass, true, dr, ir, cursor, declarators);
+}
 
 void ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {

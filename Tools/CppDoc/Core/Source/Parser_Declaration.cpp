@@ -431,7 +431,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				containingClass = pa.context->decls[0].Cast<ClassDeclaration>().Obj();
 			}
 			// get all declarators
-			ParseDeclarator(pa, containingClass, true, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
+			ParseMemberDeclarator(pa, containingClass, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
 
 			if (declarators.Count() > 0)
 			{
