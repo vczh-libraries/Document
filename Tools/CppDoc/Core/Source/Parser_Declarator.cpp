@@ -346,117 +346,46 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 }
 
 /***********************************************************************
-ParseSingleDeclarator
+ParseSingleDeclarator_Array
 ***********************************************************************/
 
-Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
+bool ParseSingleDeclarator_Array(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<Type> targetType, Ptr<CppTokenCursor>& cursor)
 {
-	// a long declarator begins with more type decorations
-	auto targetType = ParseTypeBeforeDeclarator(pa, baselineType, pdc, cursor);
-
-	auto declarator = MakePtr<Declarator>();
-	declarator->type = targetType;
-
-	if (pdc.dr != DeclaratorRestriction::Zero)
+	if (TestToken(cursor, CppTokens::LBRACKET))
 	{
-		// there may be a declarator name
-		if (ParseDeclaratorName(pa, declarator, pdc, cursor))
+		ReplaceOutOfDeclaratorTypeVisitor replacer;
 		{
-			// the type could be changed if it is a custom type conversion function
-			targetType = declarator->type;
-			goto READY_FOR_ARRAY_OR_FUNCTION;
-		}
-	}
-
-	{
-		auto oldCursor = cursor;
-		// if there is no declarator name, and the next token is (
-		// then a declarator is possible to be placed after (, and it is also possible that this declarator still doesn't have a name
-
-		// but this is not the case when we see ()
-		if (TestToken(cursor, CppTokens::LPARENTHESIS) && TestToken(cursor, CppTokens::RPARENTHESIS))
-		{
-			cursor = oldCursor;
-			goto READY_FOR_ARRAY_OR_FUNCTION;
-		}
-
-		// but this is not the case when we see (void)
-		cursor = oldCursor;
-		if (TestToken(cursor, CppTokens::LPARENTHESIS) && TestToken(cursor, CppTokens::TYPE_VOID) && TestToken(cursor, CppTokens::RPARENTHESIS))
-		{
-			cursor = oldCursor;
-			goto READY_FOR_ARRAY_OR_FUNCTION;
-		}
-
-		// try to get a declarator name, if failed then we ignore and we assume there are parameters after (
-		cursor = oldCursor;
-		if (TestToken(cursor, CppTokens::LPARENTHESIS))
-		{
-			try
+			replacer.typeToReplace = targetType;
+			replacer.typeCreator = [](Ptr<Type> typeToReplace)
 			{
-				declarator = ParseSingleDeclarator(pa, targetType, pdc, cursor);
-				RequireToken(cursor, CppTokens::RPARENTHESIS);
-			}
-			catch (const StopParsingException&)
-			{
-				cursor = oldCursor;
-				goto READY_FOR_ARRAY_OR_FUNCTION;
-			}
+				auto type = MakePtr<ArrayType>();
+				type->type = typeToReplace;
+				return type;
+			};
+
+			replacer.Execute(declarator->type);
 		}
-	}
 
-READY_FOR_ARRAY_OR_FUNCTION:
-	// check if we have already done with the declarator name
-	if (!declarator->name && pdc.dr == DeclaratorRestriction::One)
-	{
-		throw StopParsingException(cursor);
-	}
-
-	// recognize a class member declaration
-	if (pdc.containingClass)
-	{
-		declarator->containingClassSymbol = pdc.containingClass->symbol;
-	}
-	else if (auto memberType = declarator->type.Cast<MemberType>())
-	{
-		declarator->containingClassSymbol = EnsureMemberTypeResolved(memberType, cursor)->symbol;
-	}
-
-	// if there is [, we see an array declarator
-	// an array could be multiple dimension
-	if (TestToken(cursor, CppTokens::LBRACKET, false))
-	{
-		while (true)
+		if (!TestToken(cursor, CppTokens::RBRACKET))
 		{
-			if (TestToken(cursor, CppTokens::LBRACKET))
-			{
-				ReplaceOutOfDeclaratorTypeVisitor replacer;
-				{
-					replacer.typeToReplace = targetType;
-					replacer.typeCreator = [](Ptr<Type> typeToReplace)
-					{
-						auto type = MakePtr<ArrayType>();
-						type->type = typeToReplace;
-						return type;
-					};
-
-					replacer.Execute(declarator->type);
-				}
-
-				if (!TestToken(cursor, CppTokens::RBRACKET))
-				{
-					replacer.createdType.Cast<ArrayType>()->expr = ParseExpr(pa, true, cursor);
-					RequireToken(cursor, CppTokens::RBRACKET);
-				}
-			}
-			else
-			{
-				// there is no something like []( { PARAMETERS, ...} ), so we can stop here
-				return declarator;
-			}
+			replacer.createdType.Cast<ArrayType>()->expr = ParseExpr(pa, true, cursor);
+			RequireToken(cursor, CppTokens::RBRACKET);
 		}
+		return true;
 	}
+	else
+	{
+		// there is no something like []( { PARAMETERS, ...} ), so we can stop here
+		return false;
+	}
+}
 
+/***********************************************************************
+ParseSingleDeclarator_Function
+***********************************************************************/
+
+bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<Type> targetType, Ptr<CppTokenCursor>& cursor)
+{
 	// if it is not an array declarator, then there are only two possibilities
 	//   1. it is a function declarator
 	//   2. it is a declarator but not array or function
@@ -483,7 +412,7 @@ READY_FOR_ARRAY_OR_FUNCTION:
 		{
 			ParseExpr(pa, false, cursor);
 			cursor = oldCursor;
-			return declarator;
+			return true;
 		}
 		catch (const StopParsingException&)
 		{
@@ -648,11 +577,103 @@ READY_FOR_ARRAY_OR_FUNCTION:
 			}
 			else
 			{
-				return declarator;
+				return true;
+			}
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+
+/***********************************************************************
+ParseSingleDeclarator
+***********************************************************************/
+
+Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
+{
+	// a long declarator begins with more type decorations
+	auto targetType = ParseTypeBeforeDeclarator(pa, baselineType, pdc, cursor);
+
+	auto declarator = MakePtr<Declarator>();
+	declarator->type = targetType;
+
+	if (pdc.dr != DeclaratorRestriction::Zero)
+	{
+		// there may be a declarator name
+		if (ParseDeclaratorName(pa, declarator, pdc, cursor))
+		{
+			// the type could be changed if it is a custom type conversion function
+			targetType = declarator->type;
+			goto READY_FOR_ARRAY_OR_FUNCTION;
+		}
+	}
+
+	{
+		auto oldCursor = cursor;
+		// if there is no declarator name, and the next token is (
+		// then a declarator is possible to be placed after (, and it is also possible that this declarator still doesn't have a name
+
+		// but this is not the case when we see ()
+		if (TestToken(cursor, CppTokens::LPARENTHESIS) && TestToken(cursor, CppTokens::RPARENTHESIS))
+		{
+			cursor = oldCursor;
+			goto READY_FOR_ARRAY_OR_FUNCTION;
+		}
+
+		// but this is not the case when we see (void)
+		cursor = oldCursor;
+		if (TestToken(cursor, CppTokens::LPARENTHESIS) && TestToken(cursor, CppTokens::TYPE_VOID) && TestToken(cursor, CppTokens::RPARENTHESIS))
+		{
+			cursor = oldCursor;
+			goto READY_FOR_ARRAY_OR_FUNCTION;
+		}
+
+		// try to get a declarator name, if failed then we ignore and we assume there are parameters after (
+		cursor = oldCursor;
+		if (TestToken(cursor, CppTokens::LPARENTHESIS))
+		{
+			try
+			{
+				declarator = ParseSingleDeclarator(pa, targetType, pdc, cursor);
+				RequireToken(cursor, CppTokens::RPARENTHESIS);
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+				goto READY_FOR_ARRAY_OR_FUNCTION;
 			}
 		}
 	}
 
+READY_FOR_ARRAY_OR_FUNCTION:
+	// check if we have already done with the declarator name
+	if (!declarator->name && pdc.dr == DeclaratorRestriction::One)
+	{
+		throw StopParsingException(cursor);
+	}
+
+	// recognize a class member declaration
+	if (pdc.containingClass)
+	{
+		declarator->containingClassSymbol = pdc.containingClass->symbol;
+	}
+	else if (auto memberType = declarator->type.Cast<MemberType>())
+	{
+		declarator->containingClassSymbol = EnsureMemberTypeResolved(memberType, cursor)->symbol;
+	}
+
+	// if there is [, we see an array declarator
+	// an array could be multiple dimension
+	if (TestToken(cursor, CppTokens::LBRACKET, false))
+	{
+		while (ParseSingleDeclarator_Array(pa, declarator, targetType, cursor));
+	}
+	else
+	{
+		ParseSingleDeclarator_Function(pa, declarator, targetType, cursor);
+	}
 	return declarator;
 }
 
