@@ -136,9 +136,30 @@ extern Ptr<Type>					AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionT
 extern bool							ParseCallingConvention(CppCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
 
 // Parser_Declarator.cpp
-extern void							ParseMemberDeclarator(const ParsingArguments& pa, ClassDeclaration* containingClass, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
-extern void							ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
-extern Ptr<Declarator>				ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor);
+struct ParsingDeclaratorArguments
+{
+	ClassDeclaration*				containingClass;
+	DeclaratorRestriction			dr;
+	InitializerRestriction			ir;
+
+	ParsingDeclaratorArguments(ClassDeclaration* _containingClass, DeclaratorRestriction _dr, InitializerRestriction _ir)
+		:containingClass(_containingClass)
+		, dr(_dr)
+		, ir(_ir)
+	{
+	}
+};
+
+inline ParsingDeclaratorArguments	pda_Type()		{	return{ nullptr,	DeclaratorRestriction::Zero,		InitializerRestriction::Zero		}; } // Type
+inline ParsingDeclaratorArguments	pda_VarType()	{	return{ nullptr,	DeclaratorRestriction::Optional,	InitializerRestriction::Zero		}; } // Type or Variable without Initializer
+inline ParsingDeclaratorArguments	pda_VarInit()	{	return{ nullptr,	DeclaratorRestriction::One,			InitializerRestriction::Optional	}; } // Variable with Initializer
+inline ParsingDeclaratorArguments	pda_VarNoInit()	{	return{ nullptr,	DeclaratorRestriction::One,			InitializerRestriction::Zero		}; } // Variable without Initializer
+inline ParsingDeclaratorArguments	pda_Param()		{	return{ nullptr,	DeclaratorRestriction::Optional,	InitializerRestriction::Optional	}; } // Parameter
+inline ParsingDeclaratorArguments	pda_Decls()		{	return{ nullptr,	DeclaratorRestriction::Many,		InitializerRestriction::Optional	}; } // Declarations
+
+extern void							ParseMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern void							ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern Ptr<Declarator>				ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Type>					ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 // Parser_Declaration.cpp

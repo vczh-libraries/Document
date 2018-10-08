@@ -110,7 +110,7 @@ ClassDeclaration* EnsureMemberTypeResolved(Ptr<MemberType> memberType, Ptr<CppTo
 }
 
 /***********************************************************************
-ParseDeclaratorName
+ParseDeclaratorContext
 ***********************************************************************/
 
 struct ParseDeclaratorContext
@@ -119,7 +119,19 @@ struct ParseDeclaratorContext
 	bool					forceSpecialMethod;
 	DeclaratorRestriction	dr;
 	InitializerRestriction	ir;
+
+	ParseDeclaratorContext(const ParsingDeclaratorArguments& pda, bool _forceSpecialMethod)
+		:containingClass(pda.containingClass)
+		, dr(pda.dr)
+		, ir(pda.ir)
+		, forceSpecialMethod(_forceSpecialMethod)
+	{
+	}
 };
+
+/***********************************************************************
+ParseDeclaratorName
+***********************************************************************/
 
 bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>& targetType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
 {
@@ -485,7 +497,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 			{
 				{
 					List<Ptr<Declarator>> declarators;
-					ParseNonMemberDeclarator(functionArgsPa, DeclaratorRestriction::Optional, InitializerRestriction::Optional, cursor, declarators);
+					ParseNonMemberDeclarator(functionArgsPa, pda_Param(), cursor, declarators);
 					List<Ptr<VariableDeclaration>> varDecls;
 					BuildVariables(declarators, varDecls);
 					type->parameters.Add(varDecls[0]);
@@ -804,14 +816,9 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 ParseDeclarator
 ***********************************************************************/
 
-void ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingClass, bool trySpecialMember, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+void ParseDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, bool trySpecialMember, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
-	ParseDeclaratorContext pdc;
-	pdc.containingClass = containingClass;
-	pdc.dr = dr;
-	pdc.ir = ir;
-
-	if (trySpecialMember && dr == DeclaratorRestriction::Many)
+	if (trySpecialMember && pda.dr == DeclaratorRestriction::Many)
 	{
 		// if we don't see trySpecialMember or Many, then the declarator is not for a declaration, so there is no special method
 		auto oldCursor = cursor;
@@ -819,8 +826,7 @@ void ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingCla
 			try
 			{
 				// try to parse a special method declarator
-				pdc.forceSpecialMethod = true;
-				ParseDeclaratorWithInitializer(pa, nullptr, pdc, cursor, declarators);
+				ParseDeclaratorWithInitializer(pa, nullptr, { pda,true }, cursor, declarators);
 			}
 			catch (const StopParsingException&)
 			{
@@ -851,33 +857,32 @@ void ParseDeclarator(const ParsingArguments& pa, ClassDeclaration* containingCla
 	}
 
 	auto typeResult = ParseLongType(pa, cursor);
-	pdc.forceSpecialMethod = false;
-	ParseDeclaratorWithInitializer(pa, typeResult, pdc, cursor, declarators);
+	ParseDeclaratorWithInitializer(pa, typeResult, { pda,false }, cursor, declarators);
 }
 
 /***********************************************************************
 ParseDeclarator (Helpers)
 ***********************************************************************/
 
-void ParseMemberDeclarator(const ParsingArguments& pa, ClassDeclaration* containingClass, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+void ParseMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
-	ParseDeclarator(pa, containingClass, true, dr, ir, cursor, declarators);
+	ParseDeclarator(pa, pda, true, cursor, declarators);
 }
 
-void ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+void ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
-	ParseDeclarator(pa, nullptr, false, dr, ir, cursor, declarators);
+	ParseDeclarator(pa, pda, false, cursor, declarators);
 }
 
-Ptr<Declarator> ParseNonMemberDeclarator(const ParsingArguments& pa, DeclaratorRestriction dr, InitializerRestriction ir, Ptr<CppTokenCursor>& cursor)
+Ptr<Declarator> ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor)
 {
 	List<Ptr<Declarator>> declarators;
-	ParseNonMemberDeclarator(pa, dr, ir, cursor, declarators);
+	ParseNonMemberDeclarator(pa, pda, cursor, declarators);
 	if (declarators.Count() != 1) throw StopParsingException(cursor);
 	return declarators[0];
 }
 
 Ptr<Type> ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	return ParseNonMemberDeclarator(pa, DeclaratorRestriction::Zero, InitializerRestriction::Zero, cursor)->type;
+	return ParseNonMemberDeclarator(pa, pda_Type(), cursor)->type;
 }

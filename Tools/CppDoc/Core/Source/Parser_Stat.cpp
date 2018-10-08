@@ -9,7 +9,7 @@ void ParseVariableOrExpression(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	Ptr<Declarator> declarator;
 	try
 	{
-		declarator = ParseNonMemberDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Optional, cursor);
+		declarator = ParseNonMemberDeclarator(pa, pda_VarInit(), cursor);
 		if (!declarator->initializer)
 		{
 			throw StopParsingException(cursor);
@@ -122,7 +122,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			Ptr<Declarator> declarator;
 			try
 			{
-				declarator = ParseNonMemberDeclarator(pa, DeclaratorRestriction::One, InitializerRestriction::Zero, cursor);
+				declarator = ParseNonMemberDeclarator(pa, pda_VarNoInit(), cursor);
 				RequireToken(cursor, CppTokens::COLON);
 			}
 			catch (const StopParsingException&)
@@ -154,7 +154,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				List<Ptr<Declarator>> declarators;
 				try
 				{
-					ParseNonMemberDeclarator(newPa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
+					ParseNonMemberDeclarator(newPa, pda_Decls(), cursor, declarators);
 				}
 				catch (const StopParsingException&)
 				{
@@ -197,7 +197,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			List<Ptr<Declarator>> declarators;
 			try
 			{
-				ParseNonMemberDeclarator(newPa, DeclaratorRestriction::Many, InitializerRestriction::Optional, cursor, declarators);
+				ParseNonMemberDeclarator(newPa, pda_Decls(), cursor, declarators);
 				RequireToken(cursor, CppTokens::SEMICOLON);
 				BuildVariablesAndSymbols(newPa, declarators, stat->varDecls);
 			}
@@ -238,7 +238,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		if (!TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
 		{
-			auto declarator = ParseNonMemberDeclarator(pa, DeclaratorRestriction::Optional, InitializerRestriction::Zero, cursor);
+			auto declarator = ParseNonMemberDeclarator(pa, pda_VarType(), cursor);
 			stat->exception = BuildVariableAndSymbol(pa, declarator);
 		}
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
