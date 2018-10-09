@@ -195,8 +195,9 @@ class ITsys_Allocator : public Object
 protected:
 	struct Node
 	{
-		char				items[BlockSize * sizeof(T)] = { 0 };
+		char				items[BlockSize * sizeof(T)];
 		vint				used = 0;
+		Node*				next = nullptr;
 
 		~Node()
 		{
@@ -208,18 +209,35 @@ protected:
 		}
 	};
 
-	List<Ptr<Node>>		nodes;
+	Node*					firstNode = nullptr;
+	Node*					lastNode = nullptr;
 public:
+
+	~ITsys_Allocator()
+	{
+		auto current = firstNode;
+		while (current)
+		{
+			auto next = current->next;
+			delete current;
+			current = next;
+		}
+	}
 
 	template<typename ...TArgs>
 	T* Alloc(TArgs ...args)
 	{
-		if (nodes.Count() == 0 || nodes[nodes.Count() - 1]->used == BlockSize)
+		if (!firstNode)
 		{
-			nodes.Add(MakePtr<Node>());
+			firstNode = lastNode = new Node;
 		}
 
-		auto lastNode = nodes[nodes.Count() - 1].Obj();
+		if (lastNode->used == BlockSize)
+		{
+			lastNode->next = new Node;
+			lastNode = lastNode->next;
+		}
+
 		auto itsys = &((T*)lastNode->items)[lastNode->used++];
 #ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
 #undef new
