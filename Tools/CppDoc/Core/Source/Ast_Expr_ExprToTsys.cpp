@@ -1,5 +1,6 @@
 #include "Ast.h"
 #include "Ast_Expr.h"
+#include "Ast_Decl.h"
 #include "Parser.h"
 
 /***********************************************************************
@@ -16,6 +17,99 @@ public:
 		:pa(_pa)
 		, result(_result)
 	{
+	}
+
+	template<typename TDecl, typename TForward>
+	bool IsStaticSymbol(Symbol* symbol, Ptr<TForward> decl)
+	{
+		if (auto rootDecl = decl.Cast<TDecl>())
+		{
+			if (rootDecl->decoratorStatic)
+			{
+				return true;
+			}
+			else
+			{
+				for (vint i = 0; i < symbol->forwardDeclarations.Count(); i++)
+				{
+					auto forwardSymbol = symbol->forwardDeclarations[i];
+					for (vint j = 0; j < forwardSymbol->decls.Count(); j++)
+					{
+						if (IsStaticSymbol(forwardSymbol, forwardSymbol->decls[j].Cast<TForward>()))
+						{
+							return true;
+						}
+					}
+				}
+				return false;
+			}
+		}
+		else
+		{
+			return decl->decoratorStatic;
+		}
+	}
+
+	void VisitResolvable(ResolvableExpr* self, bool afterScope)
+	{
+		if (self->resolving)
+		{
+			for (vint i = 0; i < self->resolving->resolvedSymbols.Count(); i++)
+			{
+				auto symbol = self->resolving->resolvedSymbols[i];
+				if (!symbol->forwardDeclarationRoot)
+				{
+					for (vint j = 0; j < symbol->decls.Count(); j++)
+					{
+						auto decl = symbol->decls[j];
+						if (auto varDecl = decl.Cast<ForwardVariableDeclaration>())
+						{
+							bool isStaticSymbol = IsStaticSymbol<VariableDeclaration, ForwardVariableDeclaration>(symbol, varDecl);
+
+							List<ITsys*> candidates;
+							TypeToTsys(pa, varDecl->type, candidates);
+							for (vint k = 0; k < candidates.Count(); k++)
+							{
+								auto tsys = candidates[k];
+								if (tsys->GetType() == TsysType::Member)
+								{
+									tsys = tsys->GetElement();
+								}
+								tsys = tsys->LRefOf();
+								if (!result.Contains(tsys))
+								{
+									result.Add(tsys);
+								}
+							}
+						}
+						else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
+						{
+							bool isStaticSymbol = IsStaticSymbol<FunctionDeclaration, ForwardFunctionDeclaration>(symbol, varDecl);
+
+							List<ITsys*> candidates;
+							TypeToTsys(pa, varDecl->type, candidates);
+							for (vint k = 0; k < candidates.Count(); k++)
+							{
+								auto tsys = candidates[k];
+								if (tsys->GetType() == TsysType::Member)
+								{
+									tsys = tsys->GetElement();
+								}
+								tsys = tsys->PtrOf();
+								if (!result.Contains(tsys))
+								{
+									result.Add(tsys);
+								}
+							}
+						}
+						else
+						{
+							throw IllegalExprException();
+						}
+					}
+				}
+			}
+		}
 	}
 
 	void Visit(LiteralExpr* self)override
@@ -127,12 +221,12 @@ public:
 
 	void Visit(IdExpr* self)override
 	{
-		throw 0;
+		VisitResolvable(self, false);
 	}
 
 	void Visit(ChildExpr* self)override
 	{
-		throw 0;
+		VisitResolvable(self, true);
 	}
 };
 

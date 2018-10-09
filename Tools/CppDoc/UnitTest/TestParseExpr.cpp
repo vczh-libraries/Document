@@ -68,7 +68,10 @@ namespace a
 		{
 		};
 
-		static Y y;
+		static Y u1;
+		Y u2;
+		static int v1(Y&);
+		int v2(Y&);
 	};
 }
 namespace b
@@ -86,7 +89,8 @@ namespace c
 
 using namespace c;
 
-Z z;
+Z z1;
+int Z2(Z);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	{
@@ -94,18 +98,22 @@ Z z;
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
 			BEGIN_ASSERT_SYMBOL
-				ASSERT_SYMBOL(0, L"z", 0, 0, VariableDeclaration, 27, 2)
-				ASSERT_SYMBOL(1, L"z", 0, 3, VariableDeclaration, 27, 2)
-				ASSERT_SYMBOL(0, L"Z", 0, 0, ClassDeclaration, 20, 8)
-				ASSERT_SYMBOL(1, L"Z", 0, 3, ClassDeclaration, 20, 8)
-				ASSERT_SYMBOL(2, L"y", 0, 6, VariableDeclaration, 8, 4)
-				ASSERT_SYMBOL(3, L"y", 0, 9, VariableDeclaration, 8, 4)
+				ASSERT_SYMBOL(0, L"z1", 0, 0, VariableDeclaration, 30, 2)
+				ASSERT_SYMBOL(1, L"z2", 0, 3, VariableDeclaration, 31, 4)
+				ASSERT_SYMBOL(0, L"Z", 0, 0, ClassDeclaration, 23, 8)
+				ASSERT_SYMBOL(1, L"Z", 0, 3, ClassDeclaration, 23, 8)
+				ASSERT_SYMBOL(2, L"u", 0, 6, VariableDeclaration, 8, 11)
+				ASSERT_SYMBOL(3, L"u", 0, 9, VariableDeclaration, 9, 4)
+				ASSERT_SYMBOL(4, L"v", 0, 6, FunctionDeclaration, 10, 13)
+				ASSERT_SYMBOL(5, L"w", 0, 9, FunctionDeclaration, 11, 6)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"z",			L"z",			L"::c::Z",				pa);
-		AssertExpr(L"::z",			L"::z",			L"::c::Z",				pa);
-		AssertExpr(L"Z::y",			L"z :: y",		L"::a::X::Y",			pa);
-		AssertExpr(L"::Z::y",		L":: z :: y",	L"::a::X::Y",			pa);
+		AssertExpr(L"z1",			L"z1",			L"::c::Z",								pa);
+		AssertExpr(L"::z2",			L"::z2",		L"int (::c::Z) *",						pa);
+		AssertExpr(L"Z::u1",		L"z :: u1",		L"::a::X::Y",							pa);
+		AssertExpr(L"::Z::u2",		L":: z :: u2",	L"::a::X::Y (::a::X ::)",				pa);
+		AssertExpr(L"Z::v1",		L"z :: v1",		L"int (::a::X::Y &) *",					pa);
+		AssertExpr(L"::Z::v2",		L":: z :: v2",	L"int (::a::X::Y &) (::a::X ::) *",		pa);
 		TEST_ASSERT(accessed.Count() == 4);
 	}
 }
