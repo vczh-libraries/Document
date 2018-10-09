@@ -19,10 +19,10 @@ public:
 	{
 	}
 
-	template<typename TDecl, typename TForward>
+	template<typename TForward>
 	bool IsStaticSymbol(Symbol* symbol, Ptr<TForward> decl)
 	{
-		if (auto rootDecl = decl.Cast<TDecl>())
+		if (auto rootDecl = decl.Cast<typename TForward::ForwardRootType>())
 		{
 			if (rootDecl->decoratorStatic)
 			{
@@ -35,7 +35,7 @@ public:
 					auto forwardSymbol = symbol->forwardDeclarations[i];
 					for (vint j = 0; j < forwardSymbol->decls.Count(); j++)
 					{
-						if (IsStaticSymbol(forwardSymbol, forwardSymbol->decls[j].Cast<TForward>()))
+						if (IsStaticSymbol<TForward>(forwardSymbol, forwardSymbol->decls[j].Cast<TForward>()))
 						{
 							return true;
 						}
@@ -64,7 +64,7 @@ public:
 						auto decl = symbol->decls[j];
 						if (auto varDecl = decl.Cast<ForwardVariableDeclaration>())
 						{
-							bool isStaticSymbol = IsStaticSymbol<VariableDeclaration, ForwardVariableDeclaration>(symbol, varDecl);
+							bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol, varDecl);
 
 							List<ITsys*> candidates;
 							TypeToTsys(pa, varDecl->type, candidates);
@@ -75,7 +75,6 @@ public:
 								{
 									tsys = tsys->GetElement();
 								}
-								tsys = tsys->LRefOf();
 								if (!result.Contains(tsys))
 								{
 									result.Add(tsys);
@@ -84,7 +83,7 @@ public:
 						}
 						else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
 						{
-							bool isStaticSymbol = IsStaticSymbol<FunctionDeclaration, ForwardFunctionDeclaration>(symbol, varDecl);
+							bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
 
 							List<ITsys*> candidates;
 							TypeToTsys(pa, varDecl->type, candidates);

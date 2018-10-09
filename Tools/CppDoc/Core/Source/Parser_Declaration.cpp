@@ -7,7 +7,7 @@
 FindForward
 ***********************************************************************/
 
-template<typename TRoot, typename TForward>
+template<typename TForward>
 struct ForwardPolicy
 {
 	static bool IsSameCategory(Symbol* symbol, Symbol* sibling)
@@ -17,7 +17,7 @@ struct ForwardPolicy
 };
 
 template<>
-struct ForwardPolicy<FunctionDeclaration, ForwardFunctionDeclaration>
+struct ForwardPolicy<ForwardFunctionDeclaration>
 {
 	static bool IsSameCategory(Symbol* symbol, Symbol* sibling)
 	{
@@ -43,15 +43,15 @@ struct ForwardPolicy<FunctionDeclaration, ForwardFunctionDeclaration>
 	}
 };
 
-template<typename TRoot, typename TForward>
+template<typename TForward>
 void SearchForwards(Symbol* scope, Symbol* symbol, Ptr<CppTokenCursor> cursor, Symbol*& root, List<Symbol*>& forwards)
 {
 	const auto& siblings = scope->children[symbol->name];
 	for (vint i = 0; i < siblings.Count(); i++)
 	{
 		auto& sibling = siblings[i];
-		bool sameCategory = ForwardPolicy<TRoot, TForward>::IsSameCategory(symbol, sibling.Obj());
-		if (sibling->decls[0].Cast<TRoot>())
+		bool sameCategory = ForwardPolicy<TForward>::IsSameCategory(symbol, sibling.Obj());
+		if (sibling->decls[0].Cast<typename TForward::ForwardRootType>())
 		{
 			if (sameCategory)
 			{
@@ -79,12 +79,12 @@ void SearchForwards(Symbol* scope, Symbol* symbol, Ptr<CppTokenCursor> cursor, S
 	}
 }
 
-template<typename TRoot, typename TForward>
+template<typename TForward>
 void ConnectForwards(Symbol* scope, Symbol* symbol, Ptr<CppTokenCursor> cursor)
 {
 	Symbol* root = nullptr;
 	List<Symbol*> forwards;
-	SearchForwards<TRoot, TForward>(scope, symbol, cursor, root, forwards);
+	SearchForwards<TForward>(scope, symbol, cursor, root, forwards);
 
 	for (vint i = 0; i < forwards.Count(); i++)
 	{
@@ -217,7 +217,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 			RequireToken(cursor, CppTokens::SEMICOLON);
 			output.Add(decl);
-			ConnectForwards<EnumDeclaration, ForwardEnumDeclaration>(pa.context, contextSymbol, cursor);
+			ConnectForwards<ForwardEnumDeclaration>(pa.context, contextSymbol, cursor);
 		}
 		else
 		{
@@ -230,7 +230,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
 			forwardSymbol->isForwardDeclaration = true;
 			output.Add(decl);
-			ConnectForwards<EnumDeclaration, ForwardEnumDeclaration>(pa.context, forwardSymbol, cursor);
+			ConnectForwards<ForwardEnumDeclaration>(pa.context, forwardSymbol, cursor);
 		}
 	}
 	else if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
@@ -266,7 +266,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
 			forwardSymbol->isForwardDeclaration = true;
 			output.Add(decl);
-			ConnectForwards<ClassDeclaration, ForwardClassDeclaration>(pa.context, forwardSymbol, cursor);
+			ConnectForwards<ForwardClassDeclaration>(pa.context, forwardSymbol, cursor);
 		}
 		else
 		{
@@ -276,7 +276,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			decl->name = cppName;
 			auto contextSymbol = pa.context->CreateDeclSymbol(decl);
 			output.Add(decl);
-			ConnectForwards<ClassDeclaration, ForwardClassDeclaration>(pa.context, contextSymbol, cursor);
+			ConnectForwards<ForwardClassDeclaration>(pa.context, contextSymbol, cursor);
 
 			ParsingArguments declPa(pa, contextSymbol);
 
@@ -543,7 +543,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 						BuildSymbols(newPa, type->parameters);
 					}
 					output.Add(decl);
-					ConnectForwards<FunctionDeclaration, ForwardFunctionDeclaration>(context, contextSymbol, cursor);
+					ConnectForwards<ForwardFunctionDeclaration>(context, contextSymbol, cursor);
 
 					// no ; after a function declaration
 					return;
@@ -561,7 +561,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					auto forwardSymbol = context->CreateDeclSymbol(decl);
 					forwardSymbol->isForwardDeclaration = true;
 					output.Add(decl);
-					ConnectForwards<FunctionDeclaration, ForwardFunctionDeclaration>(context, forwardSymbol, cursor);
+					ConnectForwards<ForwardFunctionDeclaration>(context, forwardSymbol, cursor);
 					RequireToken(cursor, CppTokens::SEMICOLON);
 					return;
 				}
@@ -598,7 +598,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					auto forwardSymbol = context->CreateDeclSymbol(decl);
 					forwardSymbol->isForwardDeclaration = true;
 					output.Add(decl);
-					ConnectForwards<VariableDeclaration, ForwardVariableDeclaration>(context, forwardSymbol, cursor);
+					ConnectForwards<ForwardVariableDeclaration>(context, forwardSymbol, cursor);
 				}
 				else
 				{
@@ -609,7 +609,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					auto contextSymbol = context->CreateDeclSymbol(decl);
 					output.Add(decl);
 
-					ConnectForwards<VariableDeclaration, ForwardVariableDeclaration>(context, contextSymbol, cursor);
+					ConnectForwards<ForwardVariableDeclaration>(context, contextSymbol, cursor);
 				}
 #undef FILL_VARIABLE
 			}

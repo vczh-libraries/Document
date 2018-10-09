@@ -64,6 +64,8 @@ Forward Declarations
 class ForwardVariableDeclaration : public Declaration
 {
 public:
+	using ForwardRootType = VariableDeclaration;
+
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Type>										type;
@@ -85,6 +87,8 @@ enum class CppMethodType
 class ForwardFunctionDeclaration : public SpecializableDeclaration
 {
 public:
+	using ForwardRootType = FunctionDeclaration;
+
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Type>										type;
@@ -102,6 +106,8 @@ public:
 class ForwardEnumDeclaration : public Declaration
 {
 public:
+	using ForwardRootType = EnumDeclaration;
+
 	IDeclarationVisitor_ACCEPT;
 
 	bool											enumClass = false;
@@ -118,6 +124,8 @@ enum class CppClassType
 class ForwardClassDeclaration : public SpecializableDeclaration
 {
 public:
+	using ForwardRootType = ClassDeclaration;
+
 	IDeclarationVisitor_ACCEPT;
 
 	CppClassType									classType;

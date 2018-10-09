@@ -110,7 +110,7 @@ int Z2(Z);
 		});
 		AssertExpr(L"z1",			L"z1",			L"::c::Z",								pa);
 		AssertExpr(L"::z2",			L"::z2",		L"int (::c::Z) *",						pa);
-		AssertExpr(L"Z::u1",		L"z :: u1",		L"::a::X::Y",							pa);
+		AssertExpr(L"Z::u1",		L"z :: u1",		L"::a::X::Y &",							pa);
 		AssertExpr(L"::Z::u2",		L":: z :: u2",	L"::a::X::Y (::a::X ::)",				pa);
 		AssertExpr(L"Z::v1",		L"z :: v1",		L"int (::a::X::Y &) *",					pa);
 		AssertExpr(L"::Z::v2",		L":: z :: v2",	L"int (::a::X::Y &) (::a::X ::) *",		pa);
