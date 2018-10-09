@@ -274,14 +274,14 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [ ] OPERATOR EXPR
   - others
 - [ ] EXPR OPERATOR
-  - EXPR `(` {EXPR `,` ...} `)`
-  - EXPR `[` EXPR `]`
-  - EXPR `<` {TYPE `,` ...} `>`
+  - [x] EXPR `(` {EXPR `,` ...} `)`
+  - [x] EXPR `[` EXPR `]`
+  - [ ] EXPR `<` {TYPE `,` ...} `>`
   - others
 - [ ] EXPR `...`
 - [ ] EXPR OPERATOR EXPR
-  - EXPR (`.` | `->`) IDENTIFIER
-  - EXPR (`.*` | `->*`) EXPR
+  - [x] EXPR (`.` | `->`) IDENTIFIER
+  - [ ] EXPR (`.*` | `->*`) EXPR
   - others
 - [ ] EXPR `?` EXPR `:` EXPR
 - [x] (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`

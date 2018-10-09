@@ -255,6 +255,21 @@ public:
 	{
 		VisitResolvable(self, true);
 	}
+
+	void Visit(FieldAccessExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(ArrayAccessExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(FuncAccessExpr* self)override
+	{
+		throw 0;
+	}
 };
 
 // Resolve expressions to types

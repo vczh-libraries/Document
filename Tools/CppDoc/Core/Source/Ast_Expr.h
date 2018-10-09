@@ -16,6 +16,9 @@ Visitor
 	F(TypeidExpr)\
 	F(IdExpr)\
 	F(ChildExpr)\
+	F(FieldAccessExpr)\
+	F(ArrayAccessExpr)\
+	F(FuncAccessExpr)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
 CPPDOC_EXPR_LIST(CPPDOC_FORWARD)
@@ -117,6 +120,40 @@ public:
 
 	Ptr<Type>				classType;
 	CppName					name;
+};
+
+enum class CppFieldAccessType
+{
+	Dot,			// .
+	Arrow,			// ->
+};
+
+class FieldAccessExpr : public ResolvableExpr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	CppFieldAccessType		type;
+	Ptr<Expr>				expr;
+	CppName					name;
+};
+
+class ArrayAccessExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	Ptr<Expr>				expr;
+	Ptr<Expr>				index;
+};
+
+class FuncAccessExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	Ptr<Expr>				expr;
+	List<Ptr<Expr>>			arguments;
 };
 
 #endif

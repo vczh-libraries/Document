@@ -144,6 +144,37 @@ public:
 		writer.WriteString(L" :: ");
 		writer.WriteString(self->name.name);
 	}
+
+	void Visit(FieldAccessExpr* self)override
+	{
+		Log(self->expr, writer);
+		switch (self->type)
+		{
+		case CppFieldAccessType::Dot: writer.WriteString(L"."); break;
+		case CppFieldAccessType::Arrow: writer.WriteString(L"->"); break;
+		}
+		writer.WriteString(self->name.name);
+	}
+
+	void Visit(ArrayAccessExpr* self)override
+	{
+		Log(self->expr, writer);
+		writer.WriteChar(L'[');
+		Log(self->index, writer);
+		writer.WriteChar(L']');
+	}
+
+	void Visit(FuncAccessExpr* self)override
+	{
+		Log(self->expr, writer);
+		writer.WriteChar(L'(');
+		for (vint i = 0; i < self->arguments.Count(); i++)
+		{
+			if (i > 0) writer.WriteString(L", ");
+			Log(self->arguments[i], writer);
+		}
+		writer.WriteChar(L')');
+	}
 };
 
 /***********************************************************************
