@@ -124,6 +124,16 @@ public:
 	{
 		throw 0;
 	}
+
+	void Visit(IdExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(ChildExpr* self)override
+	{
+		throw 0;
+	}
 };
 
 // Resolve expressions to types

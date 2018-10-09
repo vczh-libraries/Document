@@ -14,6 +14,8 @@ Visitor
 	F(ParenthesisExpr)\
 	F(CastExpr)\
 	F(TypeidExpr)\
+	F(IdExpr)\
+	F(ChildExpr)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
 CPPDOC_EXPR_LIST(CPPDOC_FORWARD)
@@ -28,6 +30,16 @@ public:
 };
 
 #define IExprVisitor_ACCEPT void Accept(IExprVisitor* visitor)override
+
+/***********************************************************************
+Preparation
+***********************************************************************/
+
+class ResolvableExpr : public Expr
+{
+public:
+	Ptr<Resolving>			resolving;
+};
 
 /***********************************************************************
 Expressions
@@ -88,6 +100,23 @@ public:
 
 	Ptr<Type>					type;
 	Ptr<Expr>					expr;
+};
+
+class IdExpr : public ResolvableExpr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	CppName					name;
+};
+
+class ChildExpr : public ResolvableExpr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	Ptr<Type>				classType;
+	CppName					name;
 };
 
 #endif

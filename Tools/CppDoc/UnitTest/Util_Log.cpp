@@ -132,6 +132,18 @@ public:
 	{
 		throw 0;
 	}
+
+	void Visit(IdExpr* self)override
+	{
+		writer.WriteString(self->name.name);
+	}
+
+	void Visit(ChildExpr* self)override
+	{
+		Log(self->classType, writer);
+		writer.WriteString(L" :: ");
+		writer.WriteString(self->name.name);
+	}
 };
 
 /***********************************************************************

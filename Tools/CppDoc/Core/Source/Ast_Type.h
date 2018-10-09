@@ -37,7 +37,7 @@ public:
 #define ITypeVisitor_ACCEPT void Accept(ITypeVisitor* visitor)override
 
 /***********************************************************************
-Types
+Preparation
 ***********************************************************************/
 
 class ResolvableType : public Type
@@ -47,6 +47,10 @@ public:
 };
 
 class VariableDeclaration;
+
+/***********************************************************************
+Types
+***********************************************************************/
 
 enum class CppPrimitiveType
 {

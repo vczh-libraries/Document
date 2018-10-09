@@ -156,9 +156,9 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Sear
 
 				for (vint i = 0; i < symbol->decls.Count(); i++)
 				{
-					if (IsPotentialTypeDecl(symbol->decls[i].Obj()))
+					rsa.found = true;
+					if (IsPotentialTypeDecl(symbol->decls[i].Obj()) == (category == SearchCategory::Type))
 					{
-						rsa.found = true;
 						AddSymbolToResolve(rsa.resolving, symbol);
 						break;
 					}
@@ -171,7 +171,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Sear
 		{
 			if (auto decl = scope->decls[0].Cast<ClassDeclaration>())
 			{
-				if (decl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbol)
+				if (decl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbol && category == SearchCategory::Type)
 				{
 					rsa.found = true;
 					AddSymbolToResolve(rsa.resolving, decl->symbol);
