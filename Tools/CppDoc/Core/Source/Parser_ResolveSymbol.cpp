@@ -2,22 +2,16 @@
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
 
-enum class SearchCategory
-{
-	Type,
-	Value,
-};
-
 struct ResolveSymbolArguments
 {
 	CppName&					name;
-	Ptr<Resolving>&				resolving;
+	ResolveSymbolResult&		result;
 	bool&						found;
 	SortedList<Symbol*>&		searchedScopes;
 
-	ResolveSymbolArguments(CppName& _name, Ptr<Resolving>& _resolving, bool& _found, SortedList<Symbol*>& _searchedScopes)
+	ResolveSymbolArguments(CppName& _name, ResolveSymbolResult& _result, bool& _found, SortedList<Symbol*>& _searchedScopes)
 		:name(_name)
-		, resolving(_resolving)
+		, result(_result)
 		, found(_found)
 		, searchedScopes(_searchedScopes)
 	{
@@ -25,12 +19,12 @@ struct ResolveSymbolArguments
 };
 
 #define PREPARE_RSA														\
-	Ptr<Resolving> resolving;											\
+	ResolveSymbolResult result;											\
 	bool found = false;													\
 	SortedList<Symbol*> searchedScopes;									\
-	ResolveSymbolArguments rsa(name, resolving, found, searchedScopes)	\
+	ResolveSymbolArguments rsa(name, result, found, searchedScopes)		\
 
-void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType, SearchPolicy policy, SearchCategory category, ResolveSymbolArguments& rsa);
+void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType, SearchPolicy policy, ResolveSymbolArguments& rsa);
 
 /***********************************************************************
 IsPotentialTypeDeclVisitor
@@ -129,7 +123,7 @@ void AddSymbolToResolve(Ptr<Resolving>& resolving, Symbol* symbol)
 ResolveChildSymbolInternal
 ***********************************************************************/
 
-void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, SearchCategory category, ResolveSymbolArguments& rsa)
+void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, ResolveSymbolArguments& rsa)
 {
 	auto scope = pa.context;
 	if (rsa.searchedScopes.Contains(scope))
@@ -158,11 +152,15 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Sear
 				for (vint i = 0; i < symbol->decls.Count(); i++)
 				{
 					rsa.found = true;
-					if (IsPotentialTypeDecl(symbol->decls[i].Obj()) == (category == SearchCategory::Type))
+					if (IsPotentialTypeDecl(symbol->decls[i].Obj()))
 					{
-						AddSymbolToResolve(rsa.resolving, symbol);
-						break;
+						AddSymbolToResolve(rsa.result.types, symbol);
 					}
+					else
+					{
+						AddSymbolToResolve(rsa.result.values, symbol);
+					}
+					break;
 				}
 			}
 		}
@@ -172,10 +170,10 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Sear
 		{
 			if (auto decl = scope->decls[0].Cast<ClassDeclaration>())
 			{
-				if (decl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbol && category == SearchCategory::Type)
+				if (decl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbol)
 				{
 					rsa.found = true;
-					AddSymbolToResolve(rsa.resolving, decl->symbol);
+					AddSymbolToResolve(rsa.result.types, decl->symbol);
 				}
 				else
 				{
@@ -185,7 +183,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Sear
 							policy == SearchPolicy::ChildSymbol
 							? SearchPolicy::ChildSymbol
 							: SearchPolicy::ChildSymbolRequestedFromSubClass;
-						ResolveChildSymbolInternal(pa, decl->baseTypes[i].f1, childPolicy, category, rsa);
+						ResolveChildSymbolInternal(pa, decl->baseTypes[i].f1, childPolicy, rsa);
 					}
 				}
 			}
@@ -198,7 +196,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Sear
 			{
 				auto usingNs = scope->usingNss[i];
 				ParsingArguments newPa(pa, usingNs);
-				ResolveSymbolInternal(newPa, SearchPolicy::ChildSymbol, category, rsa);
+				ResolveSymbolInternal(newPa, SearchPolicy::ChildSymbol, rsa);
 			}
 		}
 		if (rsa.found) break;
@@ -212,21 +210,14 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Sear
 }
 
 /***********************************************************************
-ResolveTypeSymbol / ResolveValueSymbol
+ResolveSymbol
 ***********************************************************************/
 
-Ptr<Resolving> ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy)
+ResolveSymbolResult ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy)
 {
 	PREPARE_RSA;
-	ResolveSymbolInternal(pa, policy, SearchCategory::Type, rsa);
-	return resolving;
-}
-
-Ptr<Resolving> ResolveValueSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy)
-{
-	PREPARE_RSA;
-	ResolveSymbolInternal(pa, policy, SearchCategory::Value, rsa);
-	return resolving;
+	ResolveSymbolInternal(pa, policy, rsa);
+	return result;
 }
 
 /***********************************************************************
@@ -238,13 +229,11 @@ class ResolveChildSymbolTypeVisitor : public Object, public virtual ITypeVisitor
 public:
 	const ParsingArguments&		pa;
 	SearchPolicy				policy;
-	SearchCategory				category;
 	ResolveSymbolArguments&		rsa;
 
-	ResolveChildSymbolTypeVisitor(const ParsingArguments& _pa, SearchPolicy _policy, SearchCategory _category, ResolveSymbolArguments& _rsa)
+	ResolveChildSymbolTypeVisitor(const ParsingArguments& _pa, SearchPolicy _policy, ResolveSymbolArguments& _rsa)
 		:pa(_pa)
 		, policy(_policy)
-		, category(_category)
 		, rsa(_rsa)
 	{
 	}
@@ -257,7 +246,7 @@ public:
 			auto& symbols = parentResolving->resolvedSymbols;
 			for (vint i = 0; i < symbols.Count(); i++)
 			{
-				ResolveSymbolInternal({ pa,symbols[i] }, policy, category, rsa);
+				ResolveSymbolInternal({ pa,symbols[i] }, policy, rsa);
 			}
 		}
 	}
@@ -298,7 +287,7 @@ public:
 
 	void Visit(RootType* self)override
 	{
-		ResolveSymbolInternal({ pa,pa.root.Obj() }, SearchPolicy::ChildSymbol, category, rsa);
+		ResolveSymbolInternal({ pa,pa.root.Obj() }, SearchPolicy::ChildSymbol, rsa);
 	}
 
 	void Visit(IdType* self)override
@@ -321,26 +310,19 @@ public:
 	}
 };
 
-void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType, SearchPolicy policy, SearchCategory category, ResolveSymbolArguments& rsa)
+void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType, SearchPolicy policy, ResolveSymbolArguments& rsa)
 {
-	ResolveChildSymbolTypeVisitor visitor(pa, policy, category, rsa);
+	ResolveChildSymbolTypeVisitor visitor(pa, policy, rsa);
 	classType->Accept(&visitor);
 }
 
 /***********************************************************************
-ResolveTypeSymbol / ResolveValueSymbol
+ResolveChildSymbol
 ***********************************************************************/
 
-Ptr<Resolving> ResolveChildTypeSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name)
+ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name)
 {
 	PREPARE_RSA;
-	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ChildSymbol, SearchCategory::Type, rsa);
-	return resolving;
-}
-
-Ptr<Resolving> ResolveChildValueSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name)
-{
-	PREPARE_RSA;
-	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ChildSymbol, SearchCategory::Value, rsa);
-	return resolving;
+	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ChildSymbol, rsa);
+	return result;
 }

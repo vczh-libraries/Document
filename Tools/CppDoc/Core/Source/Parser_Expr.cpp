@@ -11,11 +11,12 @@ Ptr<IdExpr> ParseIdExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
-		if (auto resolving = ResolveValueSymbol(pa, cppName, SearchPolicy::SymbolAccessableInScope))
+		auto rsr = ResolveSymbol(pa, cppName, SearchPolicy::SymbolAccessableInScope);
+		if (!rsr.types)
 		{
 			auto type = MakePtr<IdExpr>();
 			type->name = cppName;
-			type->resolving = resolving;
+			type->resolving = rsr.values;
 			if (pa.recorder)
 			{
 				pa.recorder->Index(type->name, type->resolving);
@@ -27,26 +28,30 @@ Ptr<IdExpr> ParseIdExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 }
 
 /***********************************************************************
-ParseChildExpr
+TryParseChildExpr
 ***********************************************************************/
 
-Ptr<ChildExpr> ParseChildExpr(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppTokenCursor>& cursor)
+Ptr<ChildExpr> TryParseChildExpr(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppTokenCursor>& cursor)
 {
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
-		auto resolving = ResolveChildValueSymbol(pa, classType, cppName);
-		if (resolving)
+		auto rsr = ResolveChildSymbol(pa, classType, cppName);
+		if (!rsr.types)
 		{
 			auto type = MakePtr<ChildExpr>();
 			type->classType = classType;
 			type->name = cppName;
-			type->resolving = resolving;
+			type->resolving = rsr.values;
 			if (pa.recorder && type->resolving)
 			{
 				pa.recorder->Index(type->name, type->resolving);
 			}
 			return type;
+		}
+		else
+		{
+			throw StopParsingException(cursor);
 		}
 	}
 	return nullptr;
@@ -160,7 +165,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				auto type = ParseType(pa, cursor);
 				RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
 
-				if (auto expr = ParseChildExpr(pa, type, cursor))
+				if (auto expr = TryParseChildExpr(pa, type, cursor))
 				{
 					return expr;
 				}
@@ -179,7 +184,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 
 		if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 		{
-			if (auto expr = ParseChildExpr(pa, MakePtr<RootType>(), cursor))
+			if (auto expr = TryParseChildExpr(pa, MakePtr<RootType>(), cursor))
 			{
 				return expr;
 			}

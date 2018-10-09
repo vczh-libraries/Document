@@ -59,7 +59,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
-		if (auto resolving = ResolveTypeSymbol(pa, cppName, SearchPolicy::SymbolAccessableInScope))
+		if (auto resolving = ResolveSymbol(pa, cppName, SearchPolicy::SymbolAccessableInScope).types)
 		{
 			auto type = MakePtr<IdType>();
 			type->name = cppName;
@@ -75,15 +75,15 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 }
 
 /***********************************************************************
-ParseChildType
+TryParseChildType
 ***********************************************************************/
 
-Ptr<ChildType> ParseChildType(const ParsingArguments& pa, Ptr<Type> classType, bool typenameType, Ptr<CppTokenCursor>& cursor)
+Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Type> classType, bool typenameType, Ptr<CppTokenCursor>& cursor)
 {
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
-		auto resolving = ResolveChildTypeSymbol(pa, classType, cppName);
+		auto resolving = ResolveChildSymbol(pa, classType, cppName).types;
 		if (resolving || typenameType)
 		{
 			auto type = MakePtr<ChildType>();
@@ -120,7 +120,7 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 	else if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 	{
 		// :: NAME
-		if (auto type = ParseChildType(pa, MakePtr<RootType>(), false, cursor))
+		if (auto type = TryParseChildType(pa, MakePtr<RootType>(), false, cursor))
 		{
 			return type;
 		}
@@ -281,7 +281,7 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			auto oldCursor = cursor;
 			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 			{
-				if (auto type = ParseChildType(pa, typeResult, typenameType, cursor))
+				if (auto type = TryParseChildType(pa, typeResult, typenameType, cursor))
 				{
 					typeResult = type;
 					continue;
