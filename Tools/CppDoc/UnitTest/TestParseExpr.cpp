@@ -70,8 +70,8 @@ namespace a
 
 		static Y u1;
 		Y u2;
-		static int v1(Y&);
-		int v2(Y&);
+		static int v1(Y&) {}
+		int v2(Y&) {}
 	};
 }
 namespace b
@@ -121,10 +121,10 @@ int z2(Z);
 		{
 			BEGIN_ASSERT_SYMBOL
 				ASSERT_SYMBOL(0, L"Z", 0, 0, ClassDeclaration, 23, 8)
-				ASSERT_SYMBOL(1, L"u1", 0, 3, VariableDeclaration, 8, 11)
+				ASSERT_SYMBOL(1, L"u1", 0, 3, ForwardVariableDeclaration, 9, 11)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"Z::u1",		L"z :: u1",				L"::a::X::Y &",								pa);
+		AssertExpr(L"Z::u1",		L"Z :: u1",				L"::a::X::Y &",								pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -133,10 +133,10 @@ int z2(Z);
 		{
 			BEGIN_ASSERT_SYMBOL
 				ASSERT_SYMBOL(0, L"Z", 0, 2, ClassDeclaration, 23, 8)
-				ASSERT_SYMBOL(1, L"u2", 0, 5, VariableDeclaration, 9, 4)
+				ASSERT_SYMBOL(1, L"u2", 0, 5, VariableDeclaration, 10, 4)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"::Z::u2",		L"__root :: z :: u2",	L"::a::X::Y (::a::X ::)",					pa);
+		AssertExpr(L"::Z::u2",		L"__root :: Z :: u2",	L"::a::X::Y (::a::X ::)",					pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -145,10 +145,10 @@ int z2(Z);
 		{
 			BEGIN_ASSERT_SYMBOL
 				ASSERT_SYMBOL(0, L"Z", 0, 0, ClassDeclaration, 23, 8)
-				ASSERT_SYMBOL(1, L"v1", 0, 3, FunctionDeclaration, 10, 13)
+				ASSERT_SYMBOL(1, L"v1", 0, 3, FunctionDeclaration, 11, 13)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"Z::v1",		L"z :: v1",				L"__int32 (::a::X::Y &) *",					pa);
+		AssertExpr(L"Z::v1",		L"Z :: v1",				L"__int32 (::a::X::Y &) *",					pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -157,10 +157,10 @@ int z2(Z);
 		{
 			BEGIN_ASSERT_SYMBOL
 				ASSERT_SYMBOL(0, L"Z", 0, 2, ClassDeclaration, 23, 8)
-				ASSERT_SYMBOL(1, L"v2", 0, 5, FunctionDeclaration, 11, 6)
+				ASSERT_SYMBOL(1, L"v2", 0, 5, FunctionDeclaration, 12, 6)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"::Z::v2",		L"__root :: z :: v2",	L"__int32 (::a::X::Y &) (::a::X ::) *",		pa);
+		AssertExpr(L"::Z::v2",		L"__root :: Z :: v2",	L"__int32 (::a::X::Y &) (::a::X ::) *",		pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 }
