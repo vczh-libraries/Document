@@ -79,6 +79,13 @@ public:
 	}
 };
 
+bool IsPotentialTypeDecl(Declaration* decl)
+{
+	IsPotentialTypeDeclVisitor visitor;
+	decl->Accept(&visitor);
+	return visitor.isPotentialType;
+}
+
 /***********************************************************************
 AddSymbolToResolve
 ***********************************************************************/
@@ -132,9 +139,7 @@ Ptr<Resolving> ResolveSymbolInternal(const ParsingArguments& pa, CppName& name, 
 
 				for (vint i = 0; i < symbol->decls.Count(); i++)
 				{
-					IsPotentialTypeDeclVisitor visitor;
-					symbol->decls[i]->Accept(&visitor);
-					if (visitor.isPotentialType)
+					if (IsPotentialTypeDecl(symbol->decls[i].Obj()))
 					{
 						AddSymbolToResolve(resolving, symbol);
 						break;
