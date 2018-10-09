@@ -57,6 +57,15 @@ public:
 			for (vint i = 0; i < self->resolving->resolvedSymbols.Count(); i++)
 			{
 				auto symbol = self->resolving->resolvedSymbols[i];
+				ITsys* classScope = nullptr;
+				if (symbol->parent && symbol->parent->decls.Count() > 0)
+				{
+					if (auto decl = symbol->parent->decls[0].Cast<ClassDeclaration>())
+					{
+						classScope = pa.tsys->DeclOf(symbol->parent);
+					}
+				}
+
 				if (!symbol->forwardDeclarationRoot)
 				{
 					for (vint j = 0; j < symbol->decls.Count(); j++)
@@ -71,10 +80,20 @@ public:
 							for (vint k = 0; k < candidates.Count(); k++)
 							{
 								auto tsys = candidates[k];
-								if (tsys->GetType() == TsysType::Member)
+								if (tsys->GetType() == TsysType::Member && tsys->GetClass() == classScope)
 								{
 									tsys = tsys->GetElement();
 								}
+
+								if (classScope && !isStaticSymbol && afterScope)
+								{
+									tsys = tsys->MemberOf(classScope);
+								}
+								else
+								{
+									tsys = tsys->LRefOf();
+								}
+
 								if (!result.Contains(tsys))
 								{
 									result.Add(tsys);
@@ -90,11 +109,20 @@ public:
 							for (vint k = 0; k < candidates.Count(); k++)
 							{
 								auto tsys = candidates[k];
-								if (tsys->GetType() == TsysType::Member)
+								if (tsys->GetType() == TsysType::Member && tsys->GetClass() == classScope)
 								{
 									tsys = tsys->GetElement();
 								}
-								tsys = tsys->PtrOf();
+
+								if (classScope && !isStaticSymbol && afterScope)
+								{
+									tsys = tsys->MemberOf(classScope)->PtrOf();
+								}
+								else
+								{
+									tsys = tsys->PtrOf();
+								}
+
 								if (!result.Contains(tsys))
 								{
 									result.Add(tsys);
