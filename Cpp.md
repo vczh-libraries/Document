@@ -266,10 +266,14 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [ ] `{` ... `}`
 - [x] `this`
 - [x] `nullptr`
-- [ ] IDENTIFIER
-- [ ] `::` IDENTIFIER
-- [ ] TYPE `::` IDENTIFIER
+- [x] IDENTIFIER
+  - [ ] Test
+- [x] `::` IDENTIFIER
+  - [ ] Test
+- [x] TYPE `::` IDENTIFIER
+  - [ ] Test
 - [x] `(` EXPR-WITH-COMMA `)`
+  - [ ] Test
 - [ ] OPERATOR EXPR
   - others
 - [ ] EXPR OPERATOR
@@ -284,7 +288,9 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - others
 - [ ] EXPR `?` EXPR `:` EXPR
 - [x] (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
+  - [ ] Test
 - [x] `typeid` `(` (TYPE | EXPR) `)`
+  - [ ] Test
 - [ ] `sizeof` [`...`] EXPR
 - [ ] `sizeof` [`...`] `(` TYPE `)`
 - [ ] `(` TYPE `)` EXPR
