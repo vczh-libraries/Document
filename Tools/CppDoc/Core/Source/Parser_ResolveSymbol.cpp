@@ -25,6 +25,7 @@ struct ResolveSymbolArguments
 };
 
 #define PREPARE_RSA														\
+	Ptr<Resolving> resolving;											\
 	bool found = false;													\
 	SortedList<Symbol*> searchedScopes;									\
 	ResolveSymbolArguments rsa(name, resolving, found, searchedScopes)	\
@@ -214,14 +215,14 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Sear
 ResolveTypeSymbol / ResolveValueSymbol
 ***********************************************************************/
 
-Ptr<Resolving> ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, Ptr<Resolving> resolving, SearchPolicy policy)
+Ptr<Resolving> ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy)
 {
 	PREPARE_RSA;
 	ResolveSymbolInternal(pa, policy, SearchCategory::Type, rsa);
 	return resolving;
 }
 
-Ptr<Resolving> ResolveValueSymbol(const ParsingArguments& pa, CppName& name, Ptr<Resolving> resolving, SearchPolicy policy)
+Ptr<Resolving> ResolveValueSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy)
 {
 	PREPARE_RSA;
 	ResolveSymbolInternal(pa, policy, SearchCategory::Value, rsa);
@@ -330,14 +331,14 @@ void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType,
 ResolveTypeSymbol / ResolveValueSymbol
 ***********************************************************************/
 
-Ptr<Resolving> ResolveChildTypeSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, Ptr<Resolving> resolving)
+Ptr<Resolving> ResolveChildTypeSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name)
 {
 	PREPARE_RSA;
 	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ChildSymbol, SearchCategory::Type, rsa);
 	return resolving;
 }
 
-Ptr<Resolving> ResolveChildValueSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, Ptr<Resolving> resolving)
+Ptr<Resolving> ResolveChildValueSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name)
 {
 	PREPARE_RSA;
 	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ChildSymbol, SearchCategory::Value, rsa);

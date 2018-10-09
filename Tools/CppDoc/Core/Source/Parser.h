@@ -124,10 +124,10 @@ enum class SearchPolicy
 	ChildSymbol,
 	ChildSymbolRequestedFromSubClass,
 };
-extern Ptr<Resolving>				ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, Ptr<Resolving> resolving, SearchPolicy policy);
-extern Ptr<Resolving>				ResolveValueSymbol(const ParsingArguments& pa, CppName& name, Ptr<Resolving> resolving, SearchPolicy policy);
-extern Ptr<Resolving>				ResolveChildTypeSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, Ptr<Resolving> resolving);
-extern Ptr<Resolving>				ResolveChildValueSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, Ptr<Resolving> resolving);
+extern Ptr<Resolving>				ResolveTypeSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy);
+extern Ptr<Resolving>				ResolveValueSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy);
+extern Ptr<Resolving>				ResolveChildTypeSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name);
+extern Ptr<Resolving>				ResolveChildValueSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name);
 
 // Parser_Misc.cpp
 extern bool							SkipSpecifiers(Ptr<CppTokenCursor>& cursor);

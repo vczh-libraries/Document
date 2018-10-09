@@ -59,7 +59,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
-		if (auto resolving = ResolveTypeSymbol(pa, cppName, nullptr, SearchPolicy::SymbolAccessableInScope))
+		if (auto resolving = ResolveTypeSymbol(pa, cppName, SearchPolicy::SymbolAccessableInScope))
 		{
 			auto type = MakePtr<IdType>();
 			type->name = cppName;
@@ -83,7 +83,7 @@ Ptr<ChildType> ParseChildType(const ParsingArguments& pa, Ptr<Type> classType, b
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
-		auto resolving = ResolveChildTypeSymbol(pa, classType, cppName, nullptr);
+		auto resolving = ResolveChildTypeSymbol(pa, classType, cppName);
 		if (resolving || typenameType)
 		{
 			auto type = MakePtr<ChildType>();

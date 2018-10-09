@@ -11,7 +11,7 @@ Ptr<IdExpr> ParseIdExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
-		if (auto resolving = ResolveValueSymbol(pa, cppName, nullptr, SearchPolicy::SymbolAccessableInScope))
+		if (auto resolving = ResolveValueSymbol(pa, cppName, SearchPolicy::SymbolAccessableInScope))
 		{
 			auto type = MakePtr<IdExpr>();
 			type->name = cppName;
@@ -35,7 +35,7 @@ Ptr<ChildExpr> ParseChildExpr(const ParsingArguments& pa, Ptr<Type> classType, P
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
-		auto resolving = ResolveChildValueSymbol(pa, classType, cppName, nullptr);
+		auto resolving = ResolveChildValueSymbol(pa, classType, cppName);
 		if (resolving)
 		{
 			auto type = MakePtr<ChildExpr>();
