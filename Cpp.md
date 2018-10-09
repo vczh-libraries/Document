@@ -56,7 +56,7 @@
       - [ ] `catch`
   - [ ] `Using` class members
   - [ ] Resolve expression types and resolve `decltype`
-    - [ ] Take care of `decltype(a)` and `decltype((a))`
+    - [ ] Take care of `decltype(a)` (defined type) and `decltype((a))` (reference type)
 - [ ] `Using` alias, `Typedef` and anonymous declaration
   - [ ] Assert ASTs
   - [ ] Define variables right after classes
