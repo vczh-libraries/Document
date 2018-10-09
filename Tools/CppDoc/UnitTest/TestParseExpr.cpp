@@ -99,21 +99,68 @@ int z2(Z);
 		{
 			BEGIN_ASSERT_SYMBOL
 				ASSERT_SYMBOL(0, L"z1", 0, 0, VariableDeclaration, 30, 2)
-				ASSERT_SYMBOL(1, L"z2", 0, 2, ForwardFunctionDeclaration, 31, 4)
-				ASSERT_SYMBOL(2, L"Z", 0, 0, ClassDeclaration, 23, 8)
-				ASSERT_SYMBOL(3, L"Z", 0, 2, ClassDeclaration, 23, 8)
-				ASSERT_SYMBOL(4, L"u1", 0, 3, VariableDeclaration, 8, 11)
-				ASSERT_SYMBOL(5, L"u2", 0, 5, VariableDeclaration, 9, 4)
-				ASSERT_SYMBOL(6, L"v1", 0, 3, FunctionDeclaration, 10, 13)
-				ASSERT_SYMBOL(7, L"w2", 0, 5, FunctionDeclaration, 11, 6)
 			END_ASSERT_SYMBOL
 		});
 		AssertExpr(L"z1",			L"z1",					L"::c::Z &",								pa);
+		TEST_ASSERT(accessed.Count() == 1);
+	}
+	{
+		SortedList<vint> accessed;
+		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+		{
+			BEGIN_ASSERT_SYMBOL
+				ASSERT_SYMBOL(0, L"z2", 0, 2, ForwardFunctionDeclaration, 31, 4)
+			END_ASSERT_SYMBOL
+		});
 		AssertExpr(L"::z2",			L"__root :: z2",		L"__int32 (::c::Z) *",						pa);
+		TEST_ASSERT(accessed.Count() == 1);
+	}
+	{
+		SortedList<vint> accessed;
+		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+		{
+			BEGIN_ASSERT_SYMBOL
+				ASSERT_SYMBOL(0, L"Z", 0, 0, ClassDeclaration, 23, 8)
+				ASSERT_SYMBOL(1, L"u1", 0, 3, VariableDeclaration, 8, 11)
+			END_ASSERT_SYMBOL
+		});
 		AssertExpr(L"Z::u1",		L"z :: u1",				L"::a::X::Y &",								pa);
+		TEST_ASSERT(accessed.Count() == 2);
+	}
+	{
+		SortedList<vint> accessed;
+		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+		{
+			BEGIN_ASSERT_SYMBOL
+				ASSERT_SYMBOL(0, L"Z", 0, 2, ClassDeclaration, 23, 8)
+				ASSERT_SYMBOL(1, L"u2", 0, 5, VariableDeclaration, 9, 4)
+			END_ASSERT_SYMBOL
+		});
 		AssertExpr(L"::Z::u2",		L"__root :: z :: u2",	L"::a::X::Y (::a::X ::)",					pa);
+		TEST_ASSERT(accessed.Count() == 2);
+	}
+	{
+		SortedList<vint> accessed;
+		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+		{
+			BEGIN_ASSERT_SYMBOL
+				ASSERT_SYMBOL(0, L"Z", 0, 0, ClassDeclaration, 23, 8)
+				ASSERT_SYMBOL(1, L"v1", 0, 3, FunctionDeclaration, 10, 13)
+			END_ASSERT_SYMBOL
+		});
 		AssertExpr(L"Z::v1",		L"z :: v1",				L"__int32 (::a::X::Y &) *",					pa);
+		TEST_ASSERT(accessed.Count() == 2);
+	}
+	{
+		SortedList<vint> accessed;
+		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+		{
+			BEGIN_ASSERT_SYMBOL
+				ASSERT_SYMBOL(0, L"Z", 0, 2, ClassDeclaration, 23, 8)
+				ASSERT_SYMBOL(1, L"v2", 0, 5, FunctionDeclaration, 11, 6)
+			END_ASSERT_SYMBOL
+		});
 		AssertExpr(L"::Z::v2",		L"__root :: z :: v2",	L"__int32 (::a::X::Y &) (::a::X ::) *",		pa);
-		TEST_ASSERT(accessed.Count() == 8);
+		TEST_ASSERT(accessed.Count() == 2);
 	}
 }
