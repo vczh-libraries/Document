@@ -105,7 +105,7 @@ public:
 							bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
 
 							List<ITsys*> candidates;
-							TypeToTsys(pa, varDecl->type, candidates);
+							TypeToTsys(pa, funcDecl->type, candidates);
 							for (vint k = 0; k < candidates.Count(); k++)
 							{
 								auto tsys = candidates[k];
