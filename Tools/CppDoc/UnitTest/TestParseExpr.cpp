@@ -1,4 +1,5 @@
 #include <Ast_Expr.h>
+#include <Ast_Decl.h>
 #include "Util.h"
 
 TEST_CASE(TestParseExpr_Literal)
@@ -54,4 +55,57 @@ TEST_CASE(TestParseExpr_Literal)
 	AssertExpr(L"u\"x\"",		L"u\"x\"",		L"char16_t const []"	);
 	AssertExpr(L"U\"x\"",		L"U\"x\"",		L"char32_t const []"	);
 	AssertExpr(L"u8\"x\"",		L"u8\"x\"",		L"char const []"		);
+}
+
+TEST_CASE(TestParseExpr_Name)
+{
+	auto input = LR"(
+namespace a
+{
+	struct X
+	{
+		struct Y
+		{
+		};
+
+		static Y y;
+	};
+}
+namespace b
+{
+	using namespace a;
+}
+namespace c
+{
+	using namespace b;
+
+	struct Z : X
+	{
+	};
+}
+
+using namespace c;
+
+Z z;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	{
+		SortedList<vint> accessed;
+		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+		{
+			BEGIN_ASSERT_SYMBOL
+				ASSERT_SYMBOL(0, L"z", 0, 0, VariableDeclaration, 27, 2)
+				ASSERT_SYMBOL(1, L"z", 0, 3, VariableDeclaration, 27, 2)
+				ASSERT_SYMBOL(0, L"Z", 0, 0, ClassDeclaration, 20, 8)
+				ASSERT_SYMBOL(1, L"Z", 0, 3, ClassDeclaration, 20, 8)
+				ASSERT_SYMBOL(2, L"y", 0, 6, VariableDeclaration, 8, 4)
+				ASSERT_SYMBOL(3, L"y", 0, 9, VariableDeclaration, 8, 4)
+			END_ASSERT_SYMBOL
+		});
+		AssertExpr(L"z",			L"z",			L"::c::Z",				pa);
+		AssertExpr(L"::z",			L"::z",			L"::c::Z",				pa);
+		AssertExpr(L"Z::y",			L"z :: y",		L"::a::X::Y",			pa);
+		AssertExpr(L"::Z::y",		L":: z :: y",	L"::a::X::Y",			pa);
+		TEST_ASSERT(accessed.Count() == 4);
+	}
 }
