@@ -296,7 +296,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [ ] `throw` EXPR
 - [ ] `[` {`&` | `=` | [IDENTIFIER `=`] EXPR | } `]` FUNCTION-TAIL STAT
 
-### Operators:
+### Operators
 
 [Built-in Operators, Precedence and Associativity](https://docs.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=vs-2017)
 
