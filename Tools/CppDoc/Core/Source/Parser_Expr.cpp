@@ -200,7 +200,76 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 	throw StopParsingException(cursor);
 }
 
+/***********************************************************************
+ParsePostUnaryExpr
+***********************************************************************/
+
+Ptr<Expr> ParsePostUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	auto expr = ParsePrimitiveExpr(pa, cursor);
+	while (true)
+	{
+		if (!TestToken(cursor, CppTokens::DOT, CppTokens::MUL, false) && TestToken(cursor, CppTokens::DOT))
+		{
+			auto newExpr = MakePtr<FieldAccessExpr>();
+			newExpr->type = CppFieldAccessType::Dot;
+			newExpr->expr = expr;
+			if (!ParseCppName(newExpr->name, cursor, false) && !ParseCppName(newExpr->name, cursor, true))
+			{
+				throw StopParsingException(cursor);
+			}
+			expr = newExpr;
+		}
+		else if (!TestToken(cursor, CppTokens::SUB, CppTokens::GT, CppTokens::MUL, false) && TestToken(cursor, CppTokens::SUB, CppTokens::GT))
+		{
+			auto newExpr = MakePtr<FieldAccessExpr>();
+			newExpr->type = CppFieldAccessType::Arrow;
+			newExpr->expr = expr;
+			if (!ParseCppName(newExpr->name, cursor, false) && !ParseCppName(newExpr->name, cursor, true))
+			{
+				throw StopParsingException(cursor);
+			}
+			expr = newExpr;
+		}
+		else if (TestToken(cursor, CppTokens::LBRACKET))
+		{
+			auto newExpr = MakePtr<ArrayAccessExpr>();
+			newExpr->expr = expr;
+			newExpr->index = ParseExpr(pa, true, cursor);
+			RequireToken(cursor, CppTokens::RBRACKET);
+			expr = newExpr;
+		}
+		else if (TestToken(cursor, CppTokens::LPARENTHESIS))
+		{
+			auto newExpr = MakePtr<FuncAccessExpr>();
+			newExpr->expr = expr;
+			while (!TestToken(cursor, CppTokens::RPARENTHESIS))
+			{
+				newExpr->arguments.Add(ParseExpr(pa, false, cursor));
+				if (TestToken(cursor, CppTokens::RPARENTHESIS))
+				{
+					break;
+				}
+				else
+				{
+					RequireToken(cursor, CppTokens::COMMA);
+				}
+			}
+			expr = newExpr;
+		}
+		else
+		{
+			break;
+		}
+	}
+	return expr;
+}
+
+/***********************************************************************
+ParseExpr
+***********************************************************************/
+
 Ptr<Expr> ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor)
 {
-	return ParsePrimitiveExpr(pa, cursor);
+	return ParsePostUnaryExpr(pa, cursor);
 }

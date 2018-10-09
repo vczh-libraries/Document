@@ -302,7 +302,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 - [ ] Group 0 precedence
   - primitive
-- [ ] Group 1 precedence
+- [x] Group 1 precedence
   - `::`
 - [ ] Group 2 precedence
   - `.` `->` `[]` `()` `x++` `x--`

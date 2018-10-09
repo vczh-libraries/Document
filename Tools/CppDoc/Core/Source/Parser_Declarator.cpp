@@ -397,7 +397,7 @@ bool ParseSingleDeclarator_Array(const ParsingArguments& pa, Ptr<Declarator> dec
 ParseSingleDeclarator_Function
 ***********************************************************************/
 
-bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<Type> targetType, Ptr<CppTokenCursor>& cursor)
+bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<Type> targetType, bool forceSpecialMethod, Ptr<CppTokenCursor>& cursor)
 {
 	// if it is not an array declarator, then there are only two possibilities
 	//   1. it is a function declarator
@@ -417,21 +417,28 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 		}
 	}
 
-	auto oldCursor = cursor;
-	if (TestToken(cursor, CppTokens::LPARENTHESIS))
+	if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
 	{
-		// if we see (EXPRESSION, then this is an initializer, we stop here
-		try
+		if (!forceSpecialMethod || hasCallingConvention)
 		{
-			ParseExpr(pa, false, cursor);
-			cursor = oldCursor;
-			return true;
-		}
-		catch (const StopParsingException&)
-		{
-			cursor = oldCursor->Next();
+			// if we see (EXPRESSION, then this is an initializer, we stop here.
+			// for special method, it should be a function, so we don't need to test for an initializer.
+			// and there is also not possible to have an expression right after __stdcall.
+			auto oldCursor = cursor;
+			try
+			{
+				SkipToken(cursor);
+				ParseExpr(pa, false, cursor);
+				cursor = oldCursor;
+				return true;
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+			}
 		}
 
+		SkipToken(cursor);
 		Ptr<FunctionType> type;
 		if (hasCallingConvention)
 		{
@@ -692,7 +699,7 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	}
 	else
 	{
-		ParseSingleDeclarator_Function(pa, declarator, targetType, cursor);
+		ParseSingleDeclarator_Function(pa, declarator, targetType, pdc.forceSpecialMethod, cursor);
 	}
 	return declarator;
 }
