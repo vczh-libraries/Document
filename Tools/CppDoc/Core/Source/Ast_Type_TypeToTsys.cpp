@@ -95,26 +95,10 @@ public:
 			switch (self->reference)
 			{
 			case CppReferenceType::LRef:
-				switch (tsys->GetType())
-				{
-				case TsysType::LRef:
-					break;
-				case TsysType::RRef:
-					tsys = tsys->GetElement()->LRefOf();
-					break;
-				default:
-					tsys = tsys->LRefOf();
-				}
+				tsys = tsys->LRefOf();
 				break;
 			case CppReferenceType::RRef:
-				switch (tsys->GetType())
-				{
-				case TsysType::LRef:
-				case TsysType::RRef:
-					break;
-				default:
-					tsys = tsys->RRefOf();
-				}
+				tsys = tsys->RRefOf();
 				break;
 			case CppReferenceType::Ptr:
 				tsys = tsys->PtrOf();
@@ -235,18 +219,7 @@ public:
 		self->type->Accept(this);
 		for (vint i = 0; i < result.Count(); i++)
 		{
-			TsysCV cv;
-			auto element = result[i];
-			if (element->GetType() == TsysType::CV)
-			{
-				cv = element->GetCV();
-				element = element->GetElement();
-			}
-
-			cv.isConstExpr |= self->isConstExpr;
-			cv.isConst |= self->isConst;
-			cv.isVolatile |= self->isVolatile;
-			result[i] = element->CVOf(cv);
+			result[i] = result[i]->CVOf({ self->isConstExpr, self->isConst, self->isVolatile });
 		}
 	}
 

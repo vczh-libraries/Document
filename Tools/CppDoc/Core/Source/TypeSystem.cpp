@@ -180,6 +180,21 @@ class ITSYS_CLASS(GenericArg)
 class ITSYS_CLASS(LRef)
 {
 	ITSYS_MEMBERS_REF(LRef)
+
+	ITsys* LRefOf()override
+	{
+		return this;
+	}
+
+	ITsys* RRefOf()override
+	{
+		return this;
+	}
+
+	ITsys* CVOf(TsysCV cv)override
+	{
+		return this;
+	}
 protected:
 	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
@@ -191,6 +206,21 @@ protected:
 class ITSYS_CLASS(RRef)
 {
 	ITSYS_MEMBERS_REF(RRef)
+
+	ITsys* LRefOf()override
+	{
+		return element->LRefOf();
+	}
+
+	ITsys* RRefOf()override
+	{
+		return this;
+	}
+
+	ITsys* CVOf(TsysCV cv)override
+	{
+		return this;
+	}
 protected:
 	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
@@ -212,6 +242,14 @@ class ITSYS_CLASS(Array)
 class ITSYS_CLASS(CV)
 {
 	ITSYS_MEMBERS_DECORATE(CV, TsysCV, CV)
+
+	ITsys* CVOf(TsysCV cv)override
+	{
+		cv.isConstExpr |= data.isConstExpr;
+		cv.isConst |= data.isConst;
+		cv.isVolatile |= data.isVolatile;
+		return element->CVOf(cv);
+	}
 protected:
 	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
