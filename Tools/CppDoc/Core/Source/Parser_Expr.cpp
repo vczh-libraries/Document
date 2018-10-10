@@ -162,7 +162,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			auto oldCursor = cursor;
 			try
 			{
-				auto type = ParseType(pa, cursor);
+				auto type = ParseLongType(pa, cursor);
 
 				if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 				{

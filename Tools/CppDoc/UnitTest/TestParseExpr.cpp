@@ -230,8 +230,8 @@ Z* pz = nullptr;
 	
 	AssertExpr(L"pz->x",					L"pz->x",						L"int &",				pa);
 	AssertExpr(L"pz->y",					L"pz->y",						L"int &",				pa);
-	AssertExpr(L"pz(0)",					L"pz()(0)",						L"X",					pa);
-	AssertExpr(L"pz(nullptr)",				L"pz()(nullptr)",				L"Y",					pa);
+	AssertExpr(L"pz(0)",					L"pz(0)",						L"X",					pa);
+	AssertExpr(L"pz(nullptr)",				L"pz(nullptr)",					L"Y",					pa);
 	AssertExpr(L"pz[\"a\"]",				L"pz[\"a\"]",					L"X",					pa);
 	AssertExpr(L"pz[Z()]",					L"pz[Z()]",						L"Y",					pa);
 }

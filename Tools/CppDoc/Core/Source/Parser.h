@@ -141,6 +141,9 @@ extern Ptr<Type>					ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToR
 extern Ptr<Type>					AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType);
 extern bool							ParseCallingConvention(CppCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
 
+// Parser_Type.cpp
+extern Ptr<Type>					ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+
 // Parser_Declarator.cpp
 struct ParsingDeclaratorArguments
 {

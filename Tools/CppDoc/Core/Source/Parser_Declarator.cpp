@@ -2,8 +2,6 @@
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
 
-extern Ptr<Type>			ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-
 /***********************************************************************
 ReplaceOutOfDeclaratorTypeVisitor
 ***********************************************************************/
