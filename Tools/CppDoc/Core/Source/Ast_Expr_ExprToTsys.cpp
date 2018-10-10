@@ -152,6 +152,34 @@ public:
 		case CppTokens::BIN:
 			{
 				auto& token = self->tokens[0];
+				{
+					auto reading = token.reading;
+					auto end = token.reading + token.length;
+					if (reading[0] == L'0')
+					{
+						switch (reading[1])
+						{
+						case L'x':
+						case L'X':
+						case L'b':
+						case L'B':
+							reading += 2;
+						}
+					}
+
+					while (reading < end)
+					{
+						if (L'1' <= *reading && *reading <= L'9')
+						{
+							goto NOT_ZERO;
+						}
+						reading++;
+					}
+
+					result.Add(pa.tsys->Zero());
+					return;
+				}
+			NOT_ZERO:
 				wchar_t _1 = token.length > 1 ? token.reading[token.length - 2] : 0;
 				wchar_t _2 = token.reading[token.length - 1];
 				bool u = _1 == L'u' || _1 == L'U' || _2 == L'u' || _2 == L'U';

@@ -74,6 +74,11 @@ protected:
 	{
 		return this;
 	}
+
+	virtual TsysConv TestParameterInternal(ITsys* fromType, TsysCV cv, TsysRefType refType)
+	{
+		return this == fromType ? TsysConv::Direct : TsysConv::Illegal;
+	}
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
 
@@ -99,6 +104,14 @@ public:
 		cv = { false,false,false };
 		refType = TsysRefType::None;
 		return GetEntityInternal(cv, refType);
+	}
+
+	TsysConv TestParameter(ITsys* fromType)override
+	{
+		TsysCV cv;
+		TsysRefType refType;
+		fromType = fromType->GetEntity(cv, refType);
+		return TestParameterInternal(fromType, cv, refType);
 	}
 };
 
@@ -156,6 +169,11 @@ Concrete Tsys
 		ITsys* GetElement()override { return element; }												\
 		ITsys* GetParam(vint index)override { return params.Get(index); }							\
 		vint GetParamCount()override { return params.Count(); }										\
+
+class ITSYS_CLASS(Zero)
+{
+	ITSYS_MEMBERS_MINIMIZED(Zero)
+};
 
 class ITSYS_CLASS(Nullptr)
 {
@@ -360,6 +378,7 @@ ITsysAlloc
 class TsysAlloc : public Object, public ITsysAlloc
 {
 protected:
+	ITsys_Zero										tsysZero;
 	ITsys_Nullptr									tsysNullptr;
 	ITsys_Primitive*								primitives[(vint)TsysPrimitiveType::_COUNT * (vint)TsysBytes::_COUNT] = { 0 };
 	Dictionary<Symbol*, ITsys_Decl*>				decls;
@@ -380,8 +399,14 @@ public:
 	ITsys_Allocator<ITsys_Expr,			1024>		_expr;
 
 	TsysAlloc()
-		:tsysNullptr(this)
+		:tsysZero(this)
+		, tsysNullptr(this)
 	{
+	}
+
+	ITsys* Zero()override
+	{
+		return &tsysZero;
 	}
 
 	ITsys* Nullptr()override

@@ -59,6 +59,7 @@ const TsysCV		CV_C	{ false,true,false };
 const TsysCV		CV_V	{ false,false,true };
 
 #define TSYS_TYPE_LIST(F)									\
+	F(Zero)													\
 	F(Nullptr)												\
 	F(Primitive)		/* Primitive					*/	\
 	F(LRef)				/* Element						*/	\
@@ -87,6 +88,13 @@ enum class TsysRefType
 	RRef,
 };
 
+enum class TsysConv
+{
+	Illegal,
+	Direct,
+	NeedConvertion,
+};
+
 class ITsys abstract : public Interface
 {
 public:
@@ -109,6 +117,7 @@ public:
 	virtual ITsys*				GenericOf(IEnumerable<ITsys*>& params) = 0;
 
 	virtual ITsys*				GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
+	virtual TsysConv			TestParameter(ITsys* fromType) = 0;
 };
 
 /***********************************************************************
@@ -118,6 +127,7 @@ ITsysAlloc
 class ITsysAlloc abstract : public Interface
 {
 public:
+	virtual ITsys*				Zero() = 0;
 	virtual ITsys*				Nullptr() = 0;
 	virtual ITsys*				PrimitiveOf(TsysPrimitive primitive) = 0;
 	virtual ITsys*				DeclOf(Symbol* decl) = 0;

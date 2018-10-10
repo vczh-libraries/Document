@@ -8,6 +8,16 @@ TEST_CASE(TestParseExpr_Literal)
 	AssertExpr(L"false",		L"false",		L"bool"					);
 	AssertExpr(L"nullptr",		L"nullptr",		L"nullptr_t"			);
 
+	AssertExpr(L"0",			L"0",			L"0"					);
+	AssertExpr(L"0u",			L"0u",			L"0"					);
+	AssertExpr(L"0U",			L"0U",			L"0"					);
+	AssertExpr(L"0l",			L"0l",			L"0"					);
+	AssertExpr(L"0L",			L"0L",			L"0"					);
+	AssertExpr(L"0ul",			L"0ul",			L"0"					);
+	AssertExpr(L"0uL",			L"0uL",			L"0"					);
+	AssertExpr(L"0Ul",			L"0Ul",			L"0"					);
+	AssertExpr(L"0UL",			L"0UL",			L"0"					);
+
 	AssertExpr(L"1",			L"1",			L"__int32"				);
 	AssertExpr(L"1u",			L"1u",			L"unsigned __int32"		);
 	AssertExpr(L"1U",			L"1U",			L"unsigned __int32"		);

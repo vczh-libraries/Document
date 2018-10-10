@@ -1024,6 +1024,9 @@ void Log(ITsys* tsys, StreamWriter& writer)
 {
 	switch (tsys->GetType())
 	{
+	case TsysType::Zero:
+		writer.WriteString(L"0");
+		return;
 	case TsysType::Nullptr:
 		writer.WriteString(L"nullptr_t");
 		return;
