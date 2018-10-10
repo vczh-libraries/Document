@@ -163,16 +163,35 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			try
 			{
 				auto type = ParseType(pa, cursor);
-				RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
 
-				if (auto expr = TryParseChildExpr(pa, type, cursor))
+				if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 				{
+					if (auto expr = TryParseChildExpr(pa, type, cursor))
+					{
+						return expr;
+					}
+				}
+
+				if (TestToken(cursor, CppTokens::LPARENTHESIS))
+				{
+					auto expr = MakePtr<FuncAccessExpr>();
+					expr->type = type;
+					while (!TestToken(cursor, CppTokens::RPARENTHESIS))
+					{
+						expr->arguments.Add(ParseExpr(pa, false, cursor));
+						if (TestToken(cursor, CppTokens::RPARENTHESIS))
+						{
+							break;
+						}
+						else
+						{
+							RequireToken(cursor, CppTokens::COMMA);
+						}
+					}
 					return expr;
 				}
-				else
-				{
-					throw StopParsingException(cursor);
-				}
+
+				throw StopParsingException(cursor);
 			}
 			catch (const StopParsingException&)
 			{

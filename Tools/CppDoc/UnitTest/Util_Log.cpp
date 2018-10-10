@@ -166,7 +166,8 @@ public:
 
 	void Visit(FuncAccessExpr* self)override
 	{
-		Log(self->expr, writer);
+		if (self->type) Log(self->type, writer);
+		if (self->expr) Log(self->expr, writer);
 		writer.WriteChar(L'(');
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{

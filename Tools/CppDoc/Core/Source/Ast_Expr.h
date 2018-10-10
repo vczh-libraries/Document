@@ -152,6 +152,7 @@ class FuncAccessExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
+	Ptr<Type>				type;
 	Ptr<Expr>				expr;
 	List<Ptr<Expr>>			arguments;
 };
