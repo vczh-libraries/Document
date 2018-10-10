@@ -68,7 +68,7 @@ protected:
 	ITsys_Ptr*										ptrOf = nullptr;
 	Dictionary<vint, ITsys_Array*>					arrayOf;
 	Dictionary<ITsys*, ITsys_Member*>				memberOf;
-	ITsys_CV*										cvOf[8] = { 0 };
+	ITsys_CV*										cvOf[7] = { 0 };
 	WithParamsList<ITsys_Function>					functionOf;
 	WithParamsList<ITsys_Generic>					genericOf;
 
@@ -444,6 +444,16 @@ ITsys* TsysBase::MemberOf(ITsys* classType)
 ITsys* TsysBase::CVOf(TsysCV cv)
 {
 	vint index = ((cv.isConstExpr ? 1 : 0) << 2) + ((cv.isConst ? 1 : 0) << 1) + (cv.isVolatile ? 1 : 0);
+
+	if (index == 0)
+	{
+		return this;
+	}
+	else
+	{
+		index--;
+	}
+
 	if (index > sizeof(cvOf) / sizeof(*cvOf)) throw "Not Implemented!";
 	auto& itsys = cvOf[index];
 	if (!itsys) itsys = tsys->_cv.Alloc(tsys, this, cv);

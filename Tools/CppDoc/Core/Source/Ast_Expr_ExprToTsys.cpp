@@ -20,7 +20,7 @@ public:
 	}
 
 	template<typename TForward>
-	bool IsStaticSymbol(Symbol* symbol, Ptr<TForward> decl)
+	static bool IsStaticSymbol(Symbol* symbol, Ptr<TForward> decl)
 	{
 		if (auto rootDecl = decl.Cast<typename TForward::ForwardRootType>())
 		{
@@ -50,91 +50,95 @@ public:
 		}
 	}
 
+	static void VisitSymbol(ParsingArguments& pa, Symbol* symbol, bool afterScope, List<ITsys*>& result)
+	{
+		ITsys* classScope = nullptr;
+		if (symbol->parent && symbol->parent->decls.Count() > 0)
+		{
+			if (auto decl = symbol->parent->decls[0].Cast<ClassDeclaration>())
+			{
+				classScope = pa.tsys->DeclOf(symbol->parent);
+			}
+		}
+
+		if (!symbol->forwardDeclarationRoot)
+		{
+			for (vint j = 0; j < symbol->decls.Count(); j++)
+			{
+				auto decl = symbol->decls[j];
+				if (auto varDecl = decl.Cast<ForwardVariableDeclaration>())
+				{
+					bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol, varDecl);
+
+					List<ITsys*> candidates;
+					TypeToTsys(pa, varDecl->type, candidates);
+					for (vint k = 0; k < candidates.Count(); k++)
+					{
+						auto tsys = candidates[k];
+						if (tsys->GetType() == TsysType::Member && tsys->GetClass() == classScope)
+						{
+							tsys = tsys->GetElement();
+						}
+
+						if (classScope && !isStaticSymbol && afterScope)
+						{
+							tsys = tsys->MemberOf(classScope);
+						}
+						else
+						{
+							tsys = tsys->LRefOf();
+						}
+
+						if (!result.Contains(tsys))
+						{
+							result.Add(tsys);
+						}
+					}
+				}
+				else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
+				{
+					bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
+
+					List<ITsys*> candidates;
+					TypeToTsys(pa, funcDecl->type, candidates);
+					for (vint k = 0; k < candidates.Count(); k++)
+					{
+						auto tsys = candidates[k];
+						if (tsys->GetType() == TsysType::Member && tsys->GetClass() == classScope)
+						{
+							tsys = tsys->GetElement();
+						}
+
+						if (classScope && !isStaticSymbol && afterScope)
+						{
+							tsys = tsys->MemberOf(classScope)->PtrOf();
+						}
+						else
+						{
+							tsys = tsys->PtrOf();
+						}
+
+						if (!result.Contains(tsys))
+						{
+							result.Add(tsys);
+						}
+					}
+				}
+				else
+				{
+					throw IllegalExprException();
+				}
+			}
+		}
+	}
+
 	void VisitResolvable(ResolvableExpr* self, bool afterScope)
 	{
 		if (self->resolving)
 		{
 			for (vint i = 0; i < self->resolving->resolvedSymbols.Count(); i++)
 			{
-				auto symbol = self->resolving->resolvedSymbols[i];
-				ITsys* classScope = nullptr;
-				if (symbol->parent && symbol->parent->decls.Count() > 0)
-				{
-					if (auto decl = symbol->parent->decls[0].Cast<ClassDeclaration>())
-					{
-						classScope = pa.tsys->DeclOf(symbol->parent);
-					}
-				}
-
-				if (!symbol->forwardDeclarationRoot)
-				{
-					for (vint j = 0; j < symbol->decls.Count(); j++)
-					{
-						auto decl = symbol->decls[j];
-						if (auto varDecl = decl.Cast<ForwardVariableDeclaration>())
-						{
-							bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol, varDecl);
-
-							List<ITsys*> candidates;
-							TypeToTsys(pa, varDecl->type, candidates);
-							for (vint k = 0; k < candidates.Count(); k++)
-							{
-								auto tsys = candidates[k];
-								if (tsys->GetType() == TsysType::Member && tsys->GetClass() == classScope)
-								{
-									tsys = tsys->GetElement();
-								}
-
-								if (classScope && !isStaticSymbol && afterScope)
-								{
-									tsys = tsys->MemberOf(classScope);
-								}
-								else
-								{
-									tsys = tsys->LRefOf();
-								}
-
-								if (!result.Contains(tsys))
-								{
-									result.Add(tsys);
-								}
-							}
-						}
-						else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
-						{
-							bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
-
-							List<ITsys*> candidates;
-							TypeToTsys(pa, funcDecl->type, candidates);
-							for (vint k = 0; k < candidates.Count(); k++)
-							{
-								auto tsys = candidates[k];
-								if (tsys->GetType() == TsysType::Member && tsys->GetClass() == classScope)
-								{
-									tsys = tsys->GetElement();
-								}
-
-								if (classScope && !isStaticSymbol && afterScope)
-								{
-									tsys = tsys->MemberOf(classScope)->PtrOf();
-								}
-								else
-								{
-									tsys = tsys->PtrOf();
-								}
-
-								if (!result.Contains(tsys))
-								{
-									result.Add(tsys);
-								}
-							}
-						}
-						else
-						{
-							throw IllegalExprException();
-						}
-					}
-				}
+				VisitSymbol(pa, self->resolving->resolvedSymbols[i], afterScope, result);
 			}
 		}
 	}
@@ -258,7 +262,58 @@ public:
 
 	void Visit(FieldAccessExpr* self)override
 	{
-		throw 0;
+		List<ITsys*> parentTypes;
+		ExprToTsys(pa, self->expr, parentTypes);
+		if (self->type == CppFieldAccessType::Dot)
+		{
+			ResolveSymbolResult totalRar;
+			for (vint i = 0; i < parentTypes.Count(); i++)
+			{
+				TsysCV cv;
+				TsysRefType refType = TsysRefType::None;
+				auto entity = parentTypes[i]->GetEntity(cv, refType);
+
+				if (self->type == CppFieldAccessType::Dot)
+				{
+					if (entity->GetType() == TsysType::Decl)
+					{
+						auto symbol = entity->GetDecl();
+						ParsingArguments fieldPa(pa, symbol);
+						auto rar = ResolveSymbol(fieldPa, self->name, SearchPolicy::ChildSymbol);
+						totalRar.Merge(rar);
+
+						if (rar.values)
+						{
+							List<ITsys*> fieldTypes;
+							for (vint j = 0; j < rar.values->resolvedSymbols.Count(); j++)
+							{
+								auto symbol = rar.values->resolvedSymbols[j];
+								VisitSymbol(pa, symbol, false, fieldTypes);
+							}
+
+							for (vint j = 0; j < fieldTypes.Count(); j++)
+							{
+								auto tsys = fieldTypes[j]->CVOf(cv);
+								if (!result.Contains(tsys))
+								{
+									result.Add(tsys);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			self->resolving = totalRar.values;
+			if (totalRar.types && pa.recorder)
+			{
+				pa.recorder->ExpectValueButType(self->name, totalRar.types);
+			}
+		}
+		else
+		{
+
+		}
 	}
 
 	void Visit(ArrayAccessExpr* self)override

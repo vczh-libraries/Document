@@ -76,6 +76,7 @@ class IIndexRecorder : public virtual Interface
 {
 public:
 	virtual void			Index(CppName& name, Ptr<Resolving> resolving) = 0;
+	virtual void			ExpectValueButType(CppName& name, Ptr<Resolving> resolving) = 0;
 };
 
 enum class DeclaratorRestriction
@@ -129,9 +130,12 @@ struct ResolveSymbolResult
 {
 	Ptr<Resolving>					values;
 	Ptr<Resolving>					types;
+
+	void							Merge(Ptr<Resolving>& to, Ptr<Resolving> from);
+	void							Merge(const ResolveSymbolResult& rar);
 };
-extern ResolveSymbolResult			ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy);
-extern ResolveSymbolResult			ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name);
+extern ResolveSymbolResult			ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy, ResolveSymbolResult input = {});
+extern ResolveSymbolResult			ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, ResolveSymbolResult input = {});
 
 // Parser_Misc.cpp
 extern bool							SkipSpecifiers(Ptr<CppTokenCursor>& cursor);

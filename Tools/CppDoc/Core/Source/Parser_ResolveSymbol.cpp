@@ -2,6 +2,39 @@
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
 
+/***********************************************************************
+IsPotentialTypeDeclVisitor
+***********************************************************************/
+
+void ResolveSymbolResult::Merge(Ptr<Resolving>& to, Ptr<Resolving> from)
+{
+	if (!from) return;
+
+	if (!to)
+	{
+		to = MakePtr<Resolving>();
+	}
+
+	for (vint i = 0; i < from->resolvedSymbols.Count(); i++)
+	{
+		auto symbol = from->resolvedSymbols[i];
+		if (!to->resolvedSymbols.Contains(symbol))
+		{
+			to->resolvedSymbols.Add(symbol);
+		}
+	}
+}
+
+void ResolveSymbolResult::Merge(const ResolveSymbolResult& rar)
+{
+	Merge(types, rar.types);
+	Merge(values, rar.values);
+}
+
+/***********************************************************************
+ResolveSymbolArguments
+***********************************************************************/
+
 struct ResolveSymbolArguments
 {
 	CppName&					name;
@@ -19,10 +52,9 @@ struct ResolveSymbolArguments
 };
 
 #define PREPARE_RSA														\
-	ResolveSymbolResult result;											\
 	bool found = false;													\
 	SortedList<Symbol*> searchedScopes;									\
-	ResolveSymbolArguments rsa(name, result, found, searchedScopes)		\
+	ResolveSymbolArguments rsa(name, input, found, searchedScopes)		\
 
 void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType, SearchPolicy policy, ResolveSymbolArguments& rsa);
 
@@ -213,11 +245,11 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 ResolveSymbol
 ***********************************************************************/
 
-ResolveSymbolResult ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy)
+ResolveSymbolResult ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy, ResolveSymbolResult input)
 {
 	PREPARE_RSA;
 	ResolveSymbolInternal(pa, policy, rsa);
-	return result;
+	return rsa.result;
 }
 
 /***********************************************************************
@@ -320,9 +352,9 @@ void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType,
 ResolveChildSymbol
 ***********************************************************************/
 
-ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name)
+ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, ResolveSymbolResult input)
 {
 	PREPARE_RSA;
 	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ChildSymbol, rsa);
-	return result;
+	return rsa.result;
 }
