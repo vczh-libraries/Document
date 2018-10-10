@@ -235,3 +235,7 @@ Z* pz = nullptr;
 	AssertExpr(L"pz[\"a\"]",				L"pz[\"a\"]",					L"X",					pa);
 	AssertExpr(L"pz[Z()]",					L"pz[Z()]",						L"Y",					pa);
 }
+
+TEST_CASE(TestParseExpr_OverloadingAndTypeConversion)
+{
+}
