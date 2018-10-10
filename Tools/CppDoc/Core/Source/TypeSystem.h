@@ -58,21 +58,26 @@ const TsysCV		CV_CE	{ true,false,false };
 const TsysCV		CV_C	{ false,true,false };
 const TsysCV		CV_V	{ false,false,true };
 
+#define TSYS_TYPE_LIST(F)									\
+	F(Nullptr)												\
+	F(Primitive)		/* Primitive					*/	\
+	F(LRef)				/* Element						*/	\
+	F(RRef)				/* Element						*/	\
+	F(Ptr)				/* Element						*/	\
+	F(Array)			/* Element, ParamCount			*/	\
+	F(Function)			/* Element, ParamCount, Param	*/	\
+	F(Member)			/* Element, Class				*/	\
+	F(CV)				/* CV							*/	\
+	F(Decl)				/* Decl							*/	\
+	F(Generic)			/* Element, ParamCount, Param	*/	\
+	F(GenericArg)		/* Decl							*/	\
+	F(Expr)				/* ?							*/	\
+
 enum class TsysType
 {
-	Nullptr,
-	Primitive,		// Primitive
-	LRef,			// Element
-	RRef,			// Element
-	Ptr,			// Element
-	Array,			// Element, ParamCount
-	Function,		// Element, ParamCount, Param
-	Member,			// Element, Class
-	CV,				// CV
-	Decl,			// Decl
-	Generic,		// Element, ParamCount, Param
-	GenericArg,		// Decl
-	Expr,			// ?
+#define DEFINE_TSYS_TYPE(NAME) NAME,
+	TSYS_TYPE_LIST(DEFINE_TSYS_TYPE)
+#undef DEFINE_TSYS_TYPE
 };
 
 enum class TsysRefType

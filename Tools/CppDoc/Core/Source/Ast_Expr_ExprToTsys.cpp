@@ -262,15 +262,16 @@ public:
 
 	void Visit(FieldAccessExpr* self)override
 	{
+		ResolveSymbolResult totalRar;
 		List<ITsys*> parentTypes;
 		ExprToTsys(pa, self->expr, parentTypes);
+
 		if (self->type == CppFieldAccessType::Dot)
 		{
-			ResolveSymbolResult totalRar;
 			for (vint i = 0; i < parentTypes.Count(); i++)
 			{
 				TsysCV cv;
-				TsysRefType refType = TsysRefType::None;
+				TsysRefType refType;
 				auto entity = parentTypes[i]->GetEntity(cv, refType);
 
 				if (self->type == CppFieldAccessType::Dot)
@@ -303,16 +304,60 @@ public:
 					}
 				}
 			}
-
-			self->resolving = totalRar.values;
-			if (totalRar.types && pa.recorder)
-			{
-				pa.recorder->ExpectValueButType(self->name, totalRar.types);
-			}
 		}
 		else
 		{
+			for (vint i = 0; i < parentTypes.Count(); i++)
+			{
+				TsysCV cv;
+				TsysRefType refType;
+				auto entity = parentTypes[i]->GetEntity(cv, refType);
 
+				if (self->type == CppFieldAccessType::Arrow)
+				{
+					if (entity->GetType() == TsysType::Decl)
+					{
+						entity = entity->GetElement()->GetEntity(cv, refType);
+
+						if (entity->GetType() == TsysType::Decl)
+						{
+							auto symbol = entity->GetDecl();
+							ParsingArguments fieldPa(pa, symbol);
+							auto rar = ResolveSymbol(fieldPa, self->name, SearchPolicy::ChildSymbol);
+							totalRar.Merge(rar);
+
+							if (rar.values)
+							{
+								List<ITsys*> fieldTypes;
+								for (vint j = 0; j < rar.values->resolvedSymbols.Count(); j++)
+								{
+									auto symbol = rar.values->resolvedSymbols[j];
+									VisitSymbol(pa, symbol, false, fieldTypes);
+								}
+
+								for (vint j = 0; j < fieldTypes.Count(); j++)
+								{
+									auto tsys = fieldTypes[j]->CVOf(cv);
+									if (!result.Contains(tsys))
+									{
+										result.Add(tsys);
+									}
+								}
+							}
+						}
+					}
+					else if (entity->GetType() == TsysType::Decl)
+					{
+						throw 0;
+					}
+				}
+			}
+		}
+
+		self->resolving = totalRar.values;
+		if (totalRar.types && pa.recorder)
+		{
+			pa.recorder->ExpectValueButType(self->name, totalRar.types);
 		}
 	}
 

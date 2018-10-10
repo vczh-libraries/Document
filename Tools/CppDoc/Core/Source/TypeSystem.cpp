@@ -2,18 +2,9 @@
 
 class TsysAlloc;
 
-class ITsys_Primitive;
-class ITsys_LRef;
-class ITsys_RRef;
-class ITsys_Ptr;
-class ITsys_Array;
-class ITsys_Function;
-class ITsys_Member;
-class ITsys_CV;
-class ITsys_Decl;
-class ITsys_Generic;
-class ITsys_GenericArg;
-class ITsys_Expr;
+#define DEFINE_TSYS_TYPE(NAME) class ITsys_##NAME;
+TSYS_TYPE_LIST(DEFINE_TSYS_TYPE)
+#undef DEFINE_TSYS_TYPE
 
 template<typename T, vint BlockSize>
 class ITsys_Allocator;
@@ -61,6 +52,10 @@ class TsysBase : public ITsys
 {
 	template<typename T>
 	using WithParamsList = SortedList<WithParams<T>>;
+
+#define DEFINE_TSYS_TYPE(NAME) friend class ITsys_##NAME;
+	TSYS_TYPE_LIST(DEFINE_TSYS_TYPE)
+#undef DEFINE_TSYS_TYPE
 protected:
 	TsysAlloc*										tsys;
 	ITsys_LRef*										lrefOf = nullptr;
@@ -74,6 +69,11 @@ protected:
 
 	template<typename T, vint BlockSize>
 	ITsys* ParamsOf(IEnumerable<ITsys*>& params, WithParamsList<T>& paramsOf, ITsys_Allocator<T, BlockSize> TsysAlloc::* alloc);
+
+	virtual ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)
+	{
+		return this;
+	}
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
 
@@ -96,7 +96,9 @@ public:
 
 	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
 	{
-		return this;
+		cv = { false,false,false };
+		refType = TsysRefType::None;
+		return GetEntityInternal(cv, refType);
 	}
 };
 
@@ -115,41 +117,50 @@ Concrete Tsys
 
 #define ITSYS_CLASS(TYPE) ITsys_##TYPE : public TsysBase_<TsysType::TYPE>
 
-#define ITSYS_MEMBERS_DATA(TYPE, DATA, NAME)													\
-	protected:																					\
-		DATA				data;																\
-	public:																						\
-		ITsys_##TYPE(TsysAlloc* _tsys, DATA _data) :TsysBase_(_tsys), data(_data) {}			\
-		DATA Get##NAME()override { return data; }												\
+#define ITSYS_MEMBERS_MINIMIZED(TYPE)																\
+	public:																							\
+		ITsys_##TYPE(TsysAlloc* _tsys) :TsysBase_(_tsys) {}											\
 
-#define ITSYS_MEMBERS_REF(TYPE)																	\
-	protected:																					\
-		ITsys*				element;															\
-	public:																						\
-		ITsys_##TYPE(TsysAlloc* _tsys, ITsys* _element) :TsysBase_(_tsys), element(_element) {}	\
-		ITsys* GetElement()override { return element; }											\
+#define ITSYS_MEMBERS_DATA(TYPE, DATA, NAME)														\
+	protected:																						\
+		DATA				data;																	\
+	public:																							\
+		ITsys_##TYPE(TsysAlloc* _tsys, DATA _data) :TsysBase_(_tsys), data(_data) {}				\
+		DATA Get##NAME()override { return data; }													\
 
-#define ITSYS_MEMBERS_DECORATE(TYPE, DATA, NAME)												\
-	protected:																					\
-		ITsys*				element;															\
-		DATA				data;																\
-	public:																						\
-		ITsys_##TYPE(TsysAlloc* _tsys, ITsys* _element, DATA _data)								\
-			:TsysBase_(_tsys), element(_element), data(_data) {}								\
-		ITsys* GetElement()override { return element; }											\
-		DATA Get##NAME()override { return data; }												\
+#define ITSYS_MEMBERS_REF(TYPE)																		\
+	protected:																						\
+		TsysBase*			element;																\
+	public:																							\
+		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element) :TsysBase_(_tsys), element(_element) {}	\
+		ITsys* GetElement()override { return element; }												\
 
-#define ITSYS_MEMBERS_WITHPARAMS(TYPE)															\
-	protected:																					\
-		ITsys*				element;															\
-		List<ITsys*>		params;																\
-	public:																						\
-		ITsys_##TYPE(TsysAlloc* _tsys, ITsys* _element)											\
-			:TsysBase_(_tsys), element(_element) {}												\
-		List<ITsys*>& GetParams() { return params; }											\
-		ITsys* GetElement()override { return element; }											\
-		ITsys* GetParam(vint index)override { return params.Get(index); }						\
-		vint GetParamCount()override { return params.Count(); }									\
+#define ITSYS_MEMBERS_DECORATE(TYPE, DATA, NAME)													\
+	protected:																						\
+		TsysBase*				element;															\
+		DATA				data;																	\
+	public:																							\
+		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element, DATA _data)								\
+			:TsysBase_(_tsys), element(_element), data(_data) {}									\
+		ITsys* GetElement()override { return element; }												\
+		DATA Get##NAME()override { return data; }													\
+
+#define ITSYS_MEMBERS_WITHPARAMS(TYPE)																\
+	protected:																						\
+		TsysBase*				element;															\
+		List<ITsys*>		params;																	\
+	public:																							\
+		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element)											\
+			:TsysBase_(_tsys), element(_element) {}													\
+		List<ITsys*>& GetParams() { return params; }												\
+		ITsys* GetElement()override { return element; }												\
+		ITsys* GetParam(vint index)override { return params.Get(index); }							\
+		vint GetParamCount()override { return params.Count(); }										\
+
+class ITSYS_CLASS(Nullptr)
+{
+	ITSYS_MEMBERS_MINIMIZED(Nullptr)
+};
 
 class ITSYS_CLASS(Primitive)
 {
@@ -169,22 +180,22 @@ class ITSYS_CLASS(GenericArg)
 class ITSYS_CLASS(LRef)
 {
 	ITSYS_MEMBERS_REF(LRef)
-
-	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
+protected:
+	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
 		refType = TsysRefType::LRef;
-		return element->GetEntity(cv, refType);
+		return element->GetEntityInternal(cv, refType);
 	}
 };
 
 class ITSYS_CLASS(RRef)
 {
 	ITSYS_MEMBERS_REF(RRef)
-
-	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
+protected:
+	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
 		refType = TsysRefType::RRef;
-		return element->GetEntity(cv, refType);
+		return element->GetEntityInternal(cv, refType);
 	}
 };
 
@@ -201,11 +212,11 @@ class ITSYS_CLASS(Array)
 class ITSYS_CLASS(CV)
 {
 	ITSYS_MEMBERS_DECORATE(CV, TsysCV, CV)
-
-	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
+protected:
+	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
 		cv = data;
-		return element->GetEntity(cv, refType);
+		return element->GetEntityInternal(cv, refType);
 	}
 };
 
@@ -311,7 +322,7 @@ ITsysAlloc
 class TsysAlloc : public Object, public ITsysAlloc
 {
 protected:
-	TsysBase_<TsysType::Nullptr>					tsysNullptr;
+	ITsys_Nullptr									tsysNullptr;
 	ITsys_Primitive*								primitives[(vint)TsysPrimitiveType::_COUNT * (vint)TsysBytes::_COUNT] = { 0 };
 	Dictionary<Symbol*, ITsys_Decl*>				decls;
 	Dictionary<Symbol*, ITsys_GenericArg*>			genericArgs;

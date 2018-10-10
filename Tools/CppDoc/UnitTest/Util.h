@@ -46,6 +46,11 @@ public:
 	{
 		callback(name, resolving);
 	}
+
+	void ExpectValueButType(CppName& name, Ptr<Resolving> resolving)
+	{
+		TEST_ASSERT(false);
+	}
 };
 
 template<typename T>
