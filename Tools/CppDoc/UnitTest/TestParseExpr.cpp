@@ -207,10 +207,10 @@ Z* pz = nullptr;
 	AssertExpr(L"pz->operator->",			L"pz->operator ->",				L"Y * () *",			pa);
 	
 	AssertExpr(L"pz->operator->()",			L"pz->operator ->()",			L"Y *",					pa);
-	AssertExpr(L"pz->operator()(0)",		L"pz->operator ->()(0)",		L"X",					pa);
-	AssertExpr(L"pz->operator()(nullptr)",	L"pz->operator ->()(nullptr)",	L"Y",					pa);
-	AssertExpr(L"pz->operator[](\"a\")",	L"pz->operator ->[](\"a\")",	L"X",					pa);
-	AssertExpr(L"pz->operator[](Z())",		L"pz->operator ->[](Z())",		L"Y",					pa);
+	AssertExpr(L"pz->operator()(0)",		L"pz->operator ()(0)",			L"X",					pa);
+	AssertExpr(L"pz->operator()(nullptr)",	L"pz->operator ()(nullptr)",	L"Y",					pa);
+	AssertExpr(L"pz->operator[](\"a\")",	L"pz->operator [](\"a\")",		L"X",					pa);
+	AssertExpr(L"pz->operator[](Z())",		L"pz->operator [](Z())",		L"Y",					pa);
 	AssertExpr(L"pz->F(0)",					L"pz->F(0)",					L"int",					pa);
 	AssertExpr(L"pz->G(0)",					L"pz->G(0)",					L"int",					pa);
 
@@ -221,10 +221,10 @@ Z* pz = nullptr;
 	AssertExpr(L"pz.operator->",			L"pz.operator ->",				L"Y * () *",			pa);
 	
 	AssertExpr(L"pz.operator->()",			L"pz.operator ->()",			L"Y *",					pa);
-	AssertExpr(L"pz.operator()(0)",			L"pz.operator ->()(0)",			L"X",					pa);
-	AssertExpr(L"pz.operator()(nullptr)",	L"pz.operator ->()(nullptr)",	L"Y",					pa);
-	AssertExpr(L"pz.operator[](\"a\")",		L"pz.operator ->[](\"a\")",		L"X",					pa);
-	AssertExpr(L"pz.operator[](Z())",		L"pz.operator ->[](Z())",		L"Y",					pa);
+	AssertExpr(L"pz.operator()(0)",			L"pz.operator ()(0)",			L"X",					pa);
+	AssertExpr(L"pz.operator()(nullptr)",	L"pz.operator ()(nullptr)",		L"Y",					pa);
+	AssertExpr(L"pz.operator[](\"a\")",		L"pz.operator [](\"a\")",		L"X",					pa);
+	AssertExpr(L"pz.operator[](Z())",		L"pz.operator [](Z())",			L"Y",					pa);
 	AssertExpr(L"pz.F(0)",					L"pz.F(0)",						L"int",					pa);
 	AssertExpr(L"pz.G(0)",					L"pz.G(0)",						L"int",					pa);
 	
@@ -233,5 +233,5 @@ Z* pz = nullptr;
 	AssertExpr(L"pz(0)",					L"pz()(0)",						L"X",					pa);
 	AssertExpr(L"pz(nullptr)",				L"pz()(nullptr)",				L"Y",					pa);
 	AssertExpr(L"pz[\"a\"]",				L"pz[\"a\"]",					L"X",					pa);
-	AssertExpr(L"pz(Z()]",					L"pz[Z()]",						L"Y",					pa);
+	AssertExpr(L"pz[Z()]",					L"pz[Z()]",						L"Y",					pa);
 }
