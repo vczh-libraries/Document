@@ -214,26 +214,30 @@ Z* pz = nullptr;
 	AssertExpr(L"pz->F(0)",					L"pz->F(0)",					L"int",					pa);
 	AssertExpr(L"pz->G(0)",					L"pz->G(0)",					L"int",					pa);
 
-	AssertExpr(L"pz.x",						L"pz.x",						L"bool &",				pa);
-	AssertExpr(L"pz.y",						L"pz.y",						L"bool &",				pa);
-	AssertExpr(L"pz.F",						L"pz.F",						L"int () *",			pa);
-	AssertExpr(L"pz.G",						L"pz.G",						L"int () *",			pa);
-	AssertExpr(L"pz.operator->",			L"pz.operator ->",				L"Y * () *",			pa);
+	AssertExpr(L"z.x",						L"z.x",							L"bool &",				pa);
+	AssertExpr(L"z.y",						L"z.y",							L"bool &",				pa);
+	AssertExpr(L"z.F",						L"z.F",							L"int () *",			pa);
+	AssertExpr(L"z.G",						L"z.G",							L"int () *",			pa);
+	AssertExpr(L"z.operator->",				L"z.operator ->",				L"Y * () *",			pa);
 	
-	AssertExpr(L"pz.operator->()",			L"pz.operator ->()",			L"Y *",					pa);
-	AssertExpr(L"pz.operator()(0)",			L"pz.operator ()(0)",			L"X",					pa);
-	AssertExpr(L"pz.operator()(nullptr)",	L"pz.operator ()(nullptr)",		L"Y",					pa);
-	AssertExpr(L"pz.operator[](\"a\")",		L"pz.operator [](\"a\")",		L"X",					pa);
-	AssertExpr(L"pz.operator[](Z())",		L"pz.operator [](Z())",			L"Y",					pa);
-	AssertExpr(L"pz.F(0)",					L"pz.F(0)",						L"int",					pa);
-	AssertExpr(L"pz.G(0)",					L"pz.G(0)",						L"int",					pa);
+	AssertExpr(L"z.operator->()",			L"z.operator ->()",				L"Y *",					pa);
+	AssertExpr(L"z.operator()(0)",			L"z.operator ()(0)",			L"X",					pa);
+	AssertExpr(L"z.operator()(nullptr)",	L"z.operator ()(nullptr)",		L"Y",					pa);
+	AssertExpr(L"z.operator[](\"a\")",		L"z.operator [](\"a\")",		L"X",					pa);
+	AssertExpr(L"z.operator[](Z())",		L"z.operator [](Z())",			L"Y",					pa);
+	AssertExpr(L"z.F(0)",					L"z.F(0)",						L"int",					pa);
+	AssertExpr(L"z.G(0)",					L"z.G(0)",						L"int",					pa);
 	
-	AssertExpr(L"pz->x",					L"pz->x",						L"int &",				pa);
-	AssertExpr(L"pz->y",					L"pz->y",						L"int &",				pa);
-	AssertExpr(L"pz(0)",					L"pz(0)",						L"X",					pa);
-	AssertExpr(L"pz(nullptr)",				L"pz(nullptr)",					L"Y",					pa);
-	AssertExpr(L"pz[\"a\"]",				L"pz[\"a\"]",					L"X",					pa);
-	AssertExpr(L"pz[Z()]",					L"pz[Z()]",						L"Y",					pa);
+	AssertExpr(L"z->x",						L"z->x",						L"int &",				pa);
+	AssertExpr(L"z->y",						L"z->y",						L"int &",				pa);
+	AssertExpr(L"z(0)",						L"z(0)",						L"X",					pa);
+	AssertExpr(L"z(nullptr)",				L"z(nullptr)",					L"Y",					pa);
+	AssertExpr(L"z[\"a\"]",					L"z[\"a\"]",					L"X",					pa);
+	AssertExpr(L"z[Z()]",					L"z[Z()]",						L"Y",					pa);
+}
+
+TEST_CASE(TestParseExpr_ArrayAndPointerAccess)
+{
 }
 
 TEST_CASE(TestParseExpr_OverloadingAndTypeConversion)
