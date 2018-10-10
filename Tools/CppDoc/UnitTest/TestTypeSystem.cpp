@@ -182,7 +182,8 @@ TEST_CASE(TestTypeSystem_Type)
 	TEST_ASSERT(tvoid->RRefOf()->GetType() == TsysType::RRef);
 	TEST_ASSERT(tvoid->PtrOf()->GetType() == TsysType::Ptr);
 	TEST_ASSERT(tvoid->ArrayOf(1)->GetType() == TsysType::Array);
-	TEST_ASSERT(tvoid->CVOf({ false,false,false })->GetType() == TsysType::CV);
+	TEST_ASSERT(tvoid->CVOf({ false,false,false }) == tvoid);
+	TEST_ASSERT(tvoid->CVOf({ true,true,true })->GetType() == TsysType::CV);
 	TEST_ASSERT(tvoid->MemberOf(tdecl)->GetType() == TsysType::Member);
 
 	List<ITsys*> types;

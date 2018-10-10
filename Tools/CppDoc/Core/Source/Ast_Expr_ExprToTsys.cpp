@@ -260,6 +260,36 @@ public:
 		VisitResolvable(self, true);
 	}
 
+	void VisitNormalField(CppName& name, ResolveSymbolResult& totalRar, TsysCV cv, TsysRefType refType, ITsys* entity)
+	{
+		if (entity->GetType() == TsysType::Decl)
+		{
+			auto symbol = entity->GetDecl();
+			ParsingArguments fieldPa(pa, symbol);
+			auto rar = ResolveSymbol(fieldPa, name, SearchPolicy::ChildSymbol);
+			totalRar.Merge(rar);
+
+			if (rar.values)
+			{
+				List<ITsys*> fieldTypes;
+				for (vint j = 0; j < rar.values->resolvedSymbols.Count(); j++)
+				{
+					auto symbol = rar.values->resolvedSymbols[j];
+					VisitSymbol(pa, symbol, false, fieldTypes);
+				}
+
+				for (vint j = 0; j < fieldTypes.Count(); j++)
+				{
+					auto tsys = fieldTypes[j]->CVOf(cv);
+					if (!result.Contains(tsys))
+					{
+						result.Add(tsys);
+					}
+				}
+			}
+		}
+	}
+
 	void Visit(FieldAccessExpr* self)override
 	{
 		ResolveSymbolResult totalRar;
@@ -276,32 +306,7 @@ public:
 
 				if (self->type == CppFieldAccessType::Dot)
 				{
-					if (entity->GetType() == TsysType::Decl)
-					{
-						auto symbol = entity->GetDecl();
-						ParsingArguments fieldPa(pa, symbol);
-						auto rar = ResolveSymbol(fieldPa, self->name, SearchPolicy::ChildSymbol);
-						totalRar.Merge(rar);
-
-						if (rar.values)
-						{
-							List<ITsys*> fieldTypes;
-							for (vint j = 0; j < rar.values->resolvedSymbols.Count(); j++)
-							{
-								auto symbol = rar.values->resolvedSymbols[j];
-								VisitSymbol(pa, symbol, false, fieldTypes);
-							}
-
-							for (vint j = 0; j < fieldTypes.Count(); j++)
-							{
-								auto tsys = fieldTypes[j]->CVOf(cv);
-								if (!result.Contains(tsys))
-								{
-									result.Add(tsys);
-								}
-							}
-						}
-					}
+					VisitNormalField(self->name, totalRar, cv, refType, entity);
 				}
 			}
 		}
@@ -315,36 +320,10 @@ public:
 
 				if (self->type == CppFieldAccessType::Arrow)
 				{
-					if (entity->GetType() == TsysType::Decl)
+					if (entity->GetType() == TsysType::Ptr)
 					{
 						entity = entity->GetElement()->GetEntity(cv, refType);
-
-						if (entity->GetType() == TsysType::Decl)
-						{
-							auto symbol = entity->GetDecl();
-							ParsingArguments fieldPa(pa, symbol);
-							auto rar = ResolveSymbol(fieldPa, self->name, SearchPolicy::ChildSymbol);
-							totalRar.Merge(rar);
-
-							if (rar.values)
-							{
-								List<ITsys*> fieldTypes;
-								for (vint j = 0; j < rar.values->resolvedSymbols.Count(); j++)
-								{
-									auto symbol = rar.values->resolvedSymbols[j];
-									VisitSymbol(pa, symbol, false, fieldTypes);
-								}
-
-								for (vint j = 0; j < fieldTypes.Count(); j++)
-								{
-									auto tsys = fieldTypes[j]->CVOf(cv);
-									if (!result.Contains(tsys))
-									{
-										result.Add(tsys);
-									}
-								}
-							}
-						}
+						VisitNormalField(self->name, totalRar, cv, refType, entity);
 					}
 					else if (entity->GetType() == TsysType::Decl)
 					{
