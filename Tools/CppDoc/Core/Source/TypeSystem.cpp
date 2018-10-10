@@ -93,6 +93,11 @@ public:
 	ITsys* MemberOf(ITsys* classType)				override;
 	ITsys* CVOf(TsysCV cv)							override;
 	ITsys* GenericOf(IEnumerable<ITsys*>& params)	override;
+
+	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
+	{
+		return this;
+	}
 };
 
 template<TsysType Type>
@@ -108,73 +113,123 @@ public:
 Concrete Tsys
 ***********************************************************************/
 
-#define ITSYS_DATA(TYPE, DATA, NAME)															\
-class ITsys_##TYPE : public TsysBase_<TsysType::TYPE>											\
-{																								\
-protected:																						\
-	DATA				data;																	\
-public:																							\
-	ITsys_##TYPE(TsysAlloc* _tsys, DATA _data) :TsysBase_(_tsys), data(_data) {}				\
-	DATA Get##NAME()override { return data; }													\
-};																								\
+#define ITSYS_CLASS(TYPE) ITsys_##TYPE : public TsysBase_<TsysType::TYPE>
 
-#define ISYS_REF(TYPE)																			\
-class ITsys_##TYPE : public TsysBase_<TsysType::TYPE>											\
-{																								\
-protected:																						\
-	ITsys*				element;																\
-public:																							\
-	ITsys_##TYPE(TsysAlloc* _tsys, ITsys* _element) :TsysBase_(_tsys), element(_element) {}		\
-	ITsys* GetElement()override { return element; }												\
-};																								\
+#define ITSYS_MEMBERS_DATA(TYPE, DATA, NAME)													\
+	protected:																					\
+		DATA				data;																\
+	public:																						\
+		ITsys_##TYPE(TsysAlloc* _tsys, DATA _data) :TsysBase_(_tsys), data(_data) {}			\
+		DATA Get##NAME()override { return data; }												\
 
-#define ITSYS_DECORATE(TYPE, DATA, NAME)														\
-class ITsys_##TYPE : public TsysBase_<TsysType::TYPE>											\
-{																								\
-protected:																						\
-	ITsys*				element;																\
-	DATA				data;																	\
-public:																							\
-	ITsys_##TYPE(TsysAlloc* _tsys, ITsys* _element, DATA _data)									\
-		:TsysBase_(_tsys), element(_element), data(_data) {}									\
-	ITsys* GetElement()override { return element; }												\
-	DATA Get##NAME()override { return data; }													\
-};																								\
+#define ITSYS_MEMBERS_REF(TYPE)																	\
+	protected:																					\
+		ITsys*				element;															\
+	public:																						\
+		ITsys_##TYPE(TsysAlloc* _tsys, ITsys* _element) :TsysBase_(_tsys), element(_element) {}	\
+		ITsys* GetElement()override { return element; }											\
 
-#define ITSYS_WITHPARAMS(TYPE)																	\
-class ITsys_##TYPE : public TsysBase_<TsysType::TYPE>											\
-{																								\
-protected:																						\
-	ITsys*				element;																\
-	List<ITsys*>		params;																	\
-public:																							\
-	ITsys_##TYPE(TsysAlloc* _tsys, ITsys* _element)												\
-		:TsysBase_(_tsys), element(_element) {}													\
-	List<ITsys*>& GetParams() { return params; }												\
-	ITsys* GetElement()override { return element; }												\
-	ITsys* GetParam(vint index)override { return params.Get(index); }							\
-	vint GetParamCount()override { return params.Count(); }										\
-};																								\
+#define ITSYS_MEMBERS_DECORATE(TYPE, DATA, NAME)												\
+	protected:																					\
+		ITsys*				element;															\
+		DATA				data;																\
+	public:																						\
+		ITsys_##TYPE(TsysAlloc* _tsys, ITsys* _element, DATA _data)								\
+			:TsysBase_(_tsys), element(_element), data(_data) {}								\
+		ITsys* GetElement()override { return element; }											\
+		DATA Get##NAME()override { return data; }												\
 
-ITSYS_DATA(Primitive, TsysPrimitive, Primitive)
-ITSYS_DATA(Decl, Symbol*, Decl)
-ITSYS_DATA(GenericArg, Symbol*, Decl)
+#define ITSYS_MEMBERS_WITHPARAMS(TYPE)															\
+	protected:																					\
+		ITsys*				element;															\
+		List<ITsys*>		params;																\
+	public:																						\
+		ITsys_##TYPE(TsysAlloc* _tsys, ITsys* _element)											\
+			:TsysBase_(_tsys), element(_element) {}												\
+		List<ITsys*>& GetParams() { return params; }											\
+		ITsys* GetElement()override { return element; }											\
+		ITsys* GetParam(vint index)override { return params.Get(index); }						\
+		vint GetParamCount()override { return params.Count(); }									\
 
-ISYS_REF(LRef)
-ISYS_REF(RRef)
-ISYS_REF(Ptr)
+class ITSYS_CLASS(Primitive)
+{
+	ITSYS_MEMBERS_DATA(Primitive, TsysPrimitive, Primitive)
+};
 
-ITSYS_DECORATE(Array, vint, ParamCount)
-ITSYS_DECORATE(CV, TsysCV, CV)
-ITSYS_DECORATE(Member, ITsys*, Class)
+class ITSYS_CLASS(Decl)
+{
+	ITSYS_MEMBERS_DATA(Decl, Symbol*, Decl)
+};
 
-ITSYS_WITHPARAMS(Function)
-ITSYS_WITHPARAMS(Generic)
+class ITSYS_CLASS(GenericArg)
+{
+	ITSYS_MEMBERS_DATA(GenericArg, Symbol*, Decl)
+};
 
-#undef ITSYS_DATA
-#undef ISYS_REF
-#undef ITSYS_DECORATE
-#undef ITSYS_WITHPARAMS
+class ITSYS_CLASS(LRef)
+{
+	ITSYS_MEMBERS_REF(LRef)
+
+	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
+	{
+		refType = TsysRefType::LRef;
+		return element->GetEntity(cv, refType);
+	}
+};
+
+class ITSYS_CLASS(RRef)
+{
+	ITSYS_MEMBERS_REF(RRef)
+
+	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
+	{
+		refType = TsysRefType::RRef;
+		return element->GetEntity(cv, refType);
+	}
+};
+
+class ITSYS_CLASS(Ptr)
+{
+	ITSYS_MEMBERS_REF(Ptr)
+};
+
+class ITSYS_CLASS(Array)
+{
+	ITSYS_MEMBERS_DECORATE(Array, vint, ParamCount)
+};
+
+class ITSYS_CLASS(CV)
+{
+	ITSYS_MEMBERS_DECORATE(CV, TsysCV, CV)
+
+	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
+	{
+		cv = data;
+		return element->GetEntity(cv, refType);
+	}
+};
+
+class ITSYS_CLASS(Member)
+{
+	ITSYS_MEMBERS_DECORATE(Member, ITsys*, Class)
+};
+
+class ITSYS_CLASS(Function)
+{
+	ITSYS_MEMBERS_WITHPARAMS(Function)
+};
+
+class ITSYS_CLASS(Generic)
+{
+	ITSYS_MEMBERS_WITHPARAMS(Generic)
+};
+
+
+#undef ITSYS_MEMBERS_DATA
+#undef ITSYS_MEMBERS_REF
+#undef ITSYS_MEMBERS_DECORATE
+#undef ITSYS_MEMBERS_WITHPARAMS
+#undef ITSYS_CLASS
 
 class ITsys_Expr : TsysBase_<TsysType::Expr>
 {

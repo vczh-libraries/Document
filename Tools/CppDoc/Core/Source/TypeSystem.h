@@ -75,6 +75,13 @@ enum class TsysType
 	Expr,			// ?
 };
 
+enum class TsysRefType
+{
+	None,
+	LRef,
+	RRef,
+};
+
 class ITsys abstract : public Interface
 {
 public:
@@ -95,6 +102,8 @@ public:
 	virtual ITsys*				MemberOf(ITsys* classType) = 0;
 	virtual ITsys*				CVOf(TsysCV cv) = 0;
 	virtual ITsys*				GenericOf(IEnumerable<ITsys*>& params) = 0;
+
+	virtual ITsys*				GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
 };
 
 /***********************************************************************

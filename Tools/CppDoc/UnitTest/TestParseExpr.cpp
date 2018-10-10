@@ -243,3 +243,7 @@ TEST_CASE(TestParseExpr_ArrayAndPointerAccess)
 TEST_CASE(TestParseExpr_OverloadingAndTypeConversion)
 {
 }
+
+TEST_CASE(TestParseExpr_OverloadingAndQualifier)
+{
+}
