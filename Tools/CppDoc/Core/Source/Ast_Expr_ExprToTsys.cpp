@@ -204,7 +204,7 @@ public:
 		case CppTokens::STRING:
 		case CppTokens::CHAR:
 			{
-				ITsys* tsysChar = 0;
+				ITsys* tsysChar = nullptr;
 				auto reading = self->tokens[0].reading;
 				if (reading[0] == L'\"' || reading[0]==L'\'')
 				{
@@ -288,14 +288,14 @@ public:
 		VisitResolvable(self, true);
 	}
 
-	void VisitNormalField(CppName& name, ResolveSymbolResult& totalRar, TsysCV cv, TsysRefType refType, ITsys* entity)
+	static void VisitNormalField(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, TsysCV cv, ITsys* entity, List<ITsys*>& result)
 	{
 		if (entity->GetType() == TsysType::Decl)
 		{
 			auto symbol = entity->GetDecl();
 			ParsingArguments fieldPa(pa, symbol);
 			auto rar = ResolveSymbol(fieldPa, name, SearchPolicy::ChildSymbol);
-			totalRar.Merge(rar);
+			if (totalRar) totalRar->Merge(rar);
 
 			if (rar.values)
 			{
@@ -334,37 +334,62 @@ public:
 
 				if (self->type == CppFieldAccessType::Dot)
 				{
-					VisitNormalField(self->name, totalRar, cv, refType, entity);
+					VisitNormalField(pa, self->name, &totalRar, cv, entity, result);
 				}
 			}
 		}
 		else
 		{
+			SortedList<ITsys*> visitedDecls;
 			for (vint i = 0; i < parentTypes.Count(); i++)
 			{
 				TsysCV cv;
 				TsysRefType refType;
 				auto entity = parentTypes[i]->GetEntity(cv, refType);
 
-				if (self->type == CppFieldAccessType::Arrow)
+				if (entity->GetType() == TsysType::Ptr)
 				{
-					if (entity->GetType() == TsysType::Ptr)
+					entity = entity->GetElement()->GetEntity(cv, refType);
+					VisitNormalField(pa, self->name, &totalRar, cv, entity, result);
+				}
+				else if (entity->GetType() == TsysType::Decl)
+				{
+					if (!visitedDecls.Contains(entity))
 					{
-						entity = entity->GetElement()->GetEntity(cv, refType);
-						VisitNormalField(self->name, totalRar, cv, refType, entity);
-					}
-					else if (entity->GetType() == TsysType::Decl)
-					{
-						throw 0;
+						visitedDecls.Add(entity);
+
+						CppName opName;
+						opName.name = L"operator ->";
+						List<ITsys*> opResult;
+						VisitNormalField(pa, opName, nullptr, cv, entity, opResult);
+						for (vint j = 0; j < opResult.Count(); j++)
+						{
+							auto opType = opResult[j];
+							if (opType->GetType() == TsysType::Ptr)
+							{
+								opType = opType->GetElement();
+								if (opType->GetType() == TsysType::Function)
+								{
+									parentTypes.Add(opType->GetElement());
+								}
+							}
+						}
 					}
 				}
 			}
 		}
 
 		self->resolving = totalRar.values;
-		if (totalRar.types && pa.recorder)
+		if (pa.recorder)
 		{
-			pa.recorder->ExpectValueButType(self->name, totalRar.types);
+			if (totalRar.values)
+			{
+				pa.recorder->Index(self->name, totalRar.values);
+			}
+			if (totalRar.types)
+			{
+				pa.recorder->ExpectValueButType(self->name, totalRar.types);
+			}
 		}
 	}
 

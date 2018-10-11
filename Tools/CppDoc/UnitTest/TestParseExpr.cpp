@@ -246,15 +246,11 @@ Z* pz = nullptr;
 	AssertExpr(L"z[Z()]",					L"z[Z()]",						L"::Y",					pa);
 }
 
+TEST_CASE(TestParseExpr_FFA_Qualifier)
+{
+}
+
 TEST_CASE(TestParseExpr_ArrayAndPointerAccess)
-{
-}
-
-TEST_CASE(TestParseExpr_FieldAccess_Qualifier)
-{
-}
-
-TEST_CASE(TestParseExpr_Overloading_Qualifier)
 {
 }
 
