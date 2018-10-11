@@ -127,7 +127,7 @@ protected:
 		return false;
 	}
 
-	static TsysConv TestExactOrTrival(ITsys* toType, ITsys* fromType)
+	static TsysConv TestExactOrTrival_RRefIllegal(ITsys* toType, ITsys* fromType)
 	{
 		if (toType == fromType)
 		{
@@ -161,6 +161,33 @@ protected:
 		{
 		case TsysType::LRef:
 		case TsysType::RRef:
+			if (toType->GetType() == fromType->GetType())
+			{
+				if (IsCVMatch(toType->GetElement(), fromType->GetElement()))
+				{
+					return TsysConv::TrivalConversion;
+				}
+			}
+			break;
+		}
+
+		return TsysConv::Illegal;
+	}
+
+	static TsysConv TestExactOrTrival_RRefLegal(ITsys* toType, ITsys* fromType)
+	{
+		if (fromType->GetType() == TsysType::RRef)
+		{
+			fromType = fromType->GetElement();
+		}
+
+		if (toType == fromType)
+		{
+			return TsysConv::Exact;
+		}
+
+		switch (toType->GetType())
+		{
 		case TsysType::Ptr:
 			if (toType->GetType() == fromType->GetType())
 			{
@@ -240,13 +267,23 @@ public:
 				}
 			}
 		}
+
 		if (fromType->GetType() == TsysType::Nullptr)
 		{
 			if (this->GetType() == TsysType::Ptr) return TsysConv::Exact;
 		}
 		{
-			auto conv = TestExactOrTrival(this, fromType);
+			auto conv = TestExactOrTrival_RRefIllegal(this, fromType);
 			if (conv != TsysConv::Illegal) return conv;
+		}
+		{
+			auto conv = TestExactOrTrival_RRefLegal(this, fromType);
+			if (conv != TsysConv::Illegal) return conv;
+		}
+
+		if (fromType->GetType() == TsysType::RRef)
+		{
+			fromType = fromType->GetElement();
 		}
 
 		if (IsCVMatch(this, fromType, &IsNumericPromotion)) return TsysConv::IntegralPromotion;
@@ -337,11 +374,41 @@ Concrete Tsys
 class ITSYS_CLASS(Zero)
 {
 	ITSYS_MEMBERS_MINIMIZED(Zero)
+
+	ITsys* LRefOf()override
+	{
+		return this;
+	}
+
+	ITsys* RRefOf()override
+	{
+		return this;
+	}
+
+	ITsys* CVOf(TsysCV cv)override
+	{
+		return this;
+	}
 };
 
 class ITSYS_CLASS(Nullptr)
 {
 	ITSYS_MEMBERS_MINIMIZED(Nullptr)
+
+	ITsys* LRefOf()override
+	{
+		return this;
+	}
+
+	ITsys* RRefOf()override
+	{
+		return this;
+	}
+
+	ITsys* CVOf(TsysCV cv)override
+	{
+		return this;
+	}
 };
 
 class ITSYS_CLASS(Primitive)
