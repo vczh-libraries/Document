@@ -114,7 +114,6 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 		case CppTokens::EXPR_REINTERPRET_CAST:
 		case CppTokens::EXPR_SAFE_CAST:
 			{
-				SkipToken(cursor);
 				auto expr = MakePtr<CastExpr>();
 				expr->castType = CppCastType::SafeCast;
 				switch ((CppTokens)cursor->token.token)
@@ -124,6 +123,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				case CppTokens::EXPR_CONST_CAST:		expr->castType = CppCastType::ConstCast;		 break;
 				case CppTokens::EXPR_REINTERPRET_CAST:	expr->castType = CppCastType::ReinterpretCast;	 break;
 				}
+				SkipToken(cursor);
 
 				RequireToken(cursor, CppTokens::LT);
 				expr->type = ParseType(pa, cursor);

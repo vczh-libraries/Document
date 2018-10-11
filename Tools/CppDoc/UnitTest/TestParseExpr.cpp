@@ -380,11 +380,26 @@ TEST_CASE(TestParseExpr_ArrayAndPointerAccess)
 {
 }
 
-TEST_CASE(TestParseExpr_Overloading_FromArrayRef)
+TEST_CASE(TestParseExpr_Overloading_Ref)
 {
+	{
+		auto input = LR"(
+	struct X{};
+	double F(const X&);
+	bool F(X&);
+	char F(X&&);
+	X x;
+	)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(L"F(static_cast<const X&>(x))",		L"F(static_cast<X const &>(x))",		L"double",			pa);
+		AssertExpr(L"F(static_cast<X&>(x))",			L"F(static_cast<X &>(x))",				L"bool",			pa);
+		AssertExpr(L"F(static_cast<X&&>(x))",			L"F(static_cast<X &&>(x))",				L"char",			pa);
+		AssertExpr(L"F(x)",								L"F(x)",								L"bool",			pa);
+	}
 }
 
-TEST_CASE(TestParseExpr_Overloading_ToArrayRef)
+TEST_CASE(TestParseExpr_Overloading_Array)
 {
 }
 

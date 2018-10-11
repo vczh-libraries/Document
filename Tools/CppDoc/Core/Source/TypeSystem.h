@@ -90,8 +90,11 @@ enum class TsysRefType
 
 enum class TsysConv
 {
-	Direct,
-	NeedConvertion,
+	Exact,
+	TrivalConversion,
+	IntegralPromotion,
+	StandardConversion,
+	UserDefinedConversion,
 	Illegal,
 };
 

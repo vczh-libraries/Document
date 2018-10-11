@@ -125,7 +125,32 @@ public:
 
 	void Visit(CastExpr* self)override
 	{
-		throw 0;
+		switch (self->castType)
+		{
+		case CppCastType::CCast:
+			writer.WriteString(L"c_cast<");
+			break;
+		case CppCastType::DynamicCast:
+			writer.WriteString(L"dynamic_cast<");
+			break;
+		case CppCastType::StaticCast:
+			writer.WriteString(L"static_cast<");
+			break;
+		case CppCastType::ConstCast:
+			writer.WriteString(L"const_cast<");
+			break;
+		case CppCastType::ReinterpretCast:
+			writer.WriteString(L"reinterpret_cast<");
+			break;
+		case CppCastType::SafeCast:
+			writer.WriteString(L"safe_cast<");
+			break;
+		}
+
+		Log(self->type, writer);
+		writer.WriteString(L">(");
+		Log(self->expr, writer);
+		writer.WriteString(L")");
 	}
 
 	void Visit(TypeidExpr* self)override

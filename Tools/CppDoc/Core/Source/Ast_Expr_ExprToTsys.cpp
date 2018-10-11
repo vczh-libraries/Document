@@ -44,6 +44,14 @@ public:
 		}
 	}
 
+	static void Add(ExprTsysList& toList, TypeTsysList& fromList)
+	{
+		for (vint i = 0; i < fromList.Count(); i++)
+		{
+			Add(toList, fromList[i]);
+		}
+	}
+
 	/***********************************************************************
 	IsStaticSymbol: Test if a symbol is a static class member
 	***********************************************************************/
@@ -542,7 +550,15 @@ public:
 
 	void Visit(CastExpr* self)override
 	{
-		throw 0;
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+		}
+		{
+			TypeTsysList types;
+			TypeToTsys(pa, self->type, types);
+			Add(result, types);
+		}
 	}
 
 	void Visit(TypeidExpr* self)override
@@ -678,10 +694,7 @@ public:
 		{
 			TypeTsysList types;
 			TypeToTsys(pa, self->type, types);
-			for (vint i = 0; i < types.Count(); i++)
-			{
-				Add(result, types[i]);
-			}
+			Add(result, types);
 		}
 		else if (self->expr)
 		{
