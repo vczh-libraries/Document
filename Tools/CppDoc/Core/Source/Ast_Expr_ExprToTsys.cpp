@@ -393,9 +393,130 @@ public:
 		}
 	}
 
+	static void RemoveIllegalFunctions(ParsingArguments& pa, List<ITsys*>& funcTypes, bool lookForOp)
+	{
+		for (vint i = 0; i < funcTypes.Count(); i++)
+		{
+			auto funcType = funcTypes[i];
+
+			TsysCV cv;
+			TsysRefType refType;
+			auto entityType = funcType->GetEntity(cv, refType);
+
+			if (entityType->GetType() == TsysType::Decl && lookForOp)
+			{
+				CppName opName;
+				opName.name = L"operator ()";
+				VisitNormalField(pa, opName, nullptr, cv, entityType, funcTypes);
+			}
+			else if (entityType->GetType() == TsysType::Ptr)
+			{
+				entityType = entityType->GetElement();
+				if (entityType->GetType() == TsysType::Function)
+				{
+					funcTypes[i] = entityType;
+					continue;
+				}
+			}
+
+			funcTypes.RemoveAt(i--);
+		}
+	}
+
+	static void VisitOverloadedFunction(List<ITsys*>& funcTypes, List<Ptr<List<ITsys*>>>& argTypesList, List<ITsys*>& result)
+	{
+		Array<TsysConv> funcChoices(funcTypes.Count());
+		vint counters[2] = { 0,0 };
+
+		for (vint i = 0; i < funcTypes.Count(); i++)
+		{
+			auto funcType = funcTypes[i];
+			if (funcType->GetParamCount() == argTypesList.Count())
+			{
+				auto worstChoice = TsysConv::Direct;
+
+				for (vint j = 0; j < argTypesList.Count(); j++)
+				{
+					auto paramType = funcType->GetParam(j);
+					auto& argTypes = *argTypesList[j].Obj();
+					auto bestChoice = TsysConv::Illegal;
+
+					for (vint k = 0; k < argTypes.Count(); k++)
+					{
+						auto choice = paramType->TestParameter(argTypes[k]);
+						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
+					}
+
+					if ((vint)worstChoice < (vint)bestChoice) worstChoice = bestChoice;
+				}
+
+				funcChoices[i] = worstChoice;
+			}
+			else
+			{
+				funcChoices[i] = TsysConv::Illegal;
+			}
+
+			if (funcChoices[i] != TsysConv::Illegal)
+			{
+				counters[(vint)funcChoices[i]]++;
+			}
+		}
+
+		for (vint i = 0; i < sizeof(counters) / sizeof(*counters); i++)
+		{
+			if (counters[i] > 0)
+			{
+				for (vint j = 0; j < funcTypes.Count(); j++)
+				{
+					if ((vint)funcChoices[j] == i)
+					{
+						result.Add(funcTypes[j]->GetElement());
+					}
+				}
+				return;
+			}
+		}
+	}
+
 	void Visit(ArrayAccessExpr* self)override
 	{
-		throw 0;
+		List<Ptr<List<ITsys*>>> argTypesList;
+		{
+			auto argTypes = MakePtr<List<ITsys*>>();
+			ExprToTsys(pa, self->index, *argTypes.Obj());
+			argTypesList.Add(argTypes);
+		}
+
+		List<ITsys*> arrayTypes, funcTypes;
+		ExprToTsys(pa, self->expr, arrayTypes);
+
+		for (vint i = 0; i < arrayTypes.Count(); i++)
+		{
+			auto arrayType = arrayTypes[i];
+
+			TsysCV cv;
+			TsysRefType refType;
+			auto entityType = arrayType->GetEntity(cv, refType);
+
+			if (entityType->GetType() == TsysType::Decl)
+			{
+				CppName opName;
+				opName.name = L"operator []";
+				VisitNormalField(pa, opName, nullptr, cv, entityType, funcTypes);
+			}
+			else if (entityType->GetType() == TsysType::Array)
+			{
+				result.Add(entityType->GetElement());
+			}
+			else if (entityType->GetType() == TsysType::Ptr)
+			{
+				result.Add(entityType->GetElement());
+			}
+		}
+
+		RemoveIllegalFunctions(pa, funcTypes, false);
+		VisitOverloadedFunction(funcTypes, argTypesList, result);
 	}
 
 	void Visit(FuncAccessExpr* self)override
@@ -417,85 +538,8 @@ public:
 			List<ITsys*> funcTypes;
 			ExprToTsys(pa, self->expr, funcTypes);
 
-			for (vint i = 0; i < funcTypes.Count(); i++)
-			{
-				auto funcType = funcTypes[i];
-
-				TsysCV cv;
-				TsysRefType refType;
-				auto entityType = funcType->GetEntity(cv, refType);
-
-				if (entityType->GetType() == TsysType::Decl)
-				{
-					CppName opName;
-					opName.name = L"operator ()";
-					VisitNormalField(pa, opName, nullptr, cv, entityType, funcTypes);
-				}
-				else if (entityType->GetType() == TsysType::Ptr)
-				{
-					entityType = entityType->GetElement();
-					if (entityType->GetType() == TsysType::Function)
-					{
-						funcTypes[i] = entityType;
-						continue;
-					}
-				}
-
-				funcTypes.RemoveAt(i--);
-			}
-
-			Array<TsysConv> funcChoices(funcTypes.Count());
-			vint counters[2] = { 0,0 };
-
-			for (vint i = 0; i < funcTypes.Count(); i++)
-			{
-				auto funcType = funcTypes[i];
-				if (funcType->GetParamCount() == argTypesList.Count())
-				{
-					auto worstChoice = TsysConv::Direct;
-
-					for (vint j = 0; j < argTypesList.Count(); j++)
-					{
-						auto paramType = funcType->GetParam(j);
-						auto& argTypes = *argTypesList[j].Obj();
-						auto bestChoice = TsysConv::Illegal;
-
-						for (vint k = 0; k < argTypes.Count(); k++)
-						{
-							auto choice = paramType->TestParameter(argTypes[k]);
-							if ((vint)bestChoice > (vint)choice) bestChoice = choice;
-						}
-
-						if ((vint)worstChoice < (vint)bestChoice) worstChoice = bestChoice;
-					}
-
-					funcChoices[i] = worstChoice;
-				}
-				else
-				{
-					funcChoices[i] = TsysConv::Illegal;
-				}
-
-				if (funcChoices[i] != TsysConv::Illegal)
-				{
-					counters[(vint)funcChoices[i]]++;
-				}
-			}
-
-			for (vint i = 0; i < sizeof(counters) / sizeof(*counters); i++)
-			{
-				if (counters[i] > 0)
-				{
-					for (vint j = 0; j < funcTypes.Count(); j++)
-					{
-						if ((vint)funcChoices[j] == i)
-						{
-							result.Add(funcTypes[j]->GetElement());
-						}
-					}
-					return;
-				}
-			}
+			RemoveIllegalFunctions(pa, funcTypes, true);
+			VisitOverloadedFunction(funcTypes, argTypesList, result);
 		}
 	}
 };
