@@ -267,10 +267,22 @@ protected:
 
 	TsysConv TestParameterInternal(ITsys* fromType, TsysCV fromCV, TsysRefType fromRefType)override
 	{
-		if (fromRefType != TsysRefType::LRef) return TsysConv::Illegal;
 		TsysCV toCV;
 		TsysRefType toRefType;
 		auto toType = element->GetEntity(toCV, toRefType);
+
+		switch (fromRefType)
+		{
+		case TsysRefType::None:
+			if (!toCV.isConst && !toCV.isConstExpr) return TsysConv::Illegal;
+			fromCV.isConst = true;
+			fromCV.isConstExpr = true;
+			break;
+		case TsysRefType::LRef:
+			break;
+		case TsysRefType::RRef:
+			return TsysConv::Illegal;
+		}
 		return TestParameterRefPtrElement(toType, toCV, fromType, fromCV);
 	}
 };
@@ -302,10 +314,22 @@ protected:
 
 	TsysConv TestParameterInternal(ITsys* fromType, TsysCV fromCV, TsysRefType fromRefType)override
 	{
-		if (fromRefType != TsysRefType::RRef) return TsysConv::Illegal;
 		TsysCV toCV;
 		TsysRefType toRefType;
 		auto toType = element->GetEntity(toCV, toRefType);
+
+		switch (fromRefType)
+		{
+		case TsysRefType::None:
+			if (!toCV.isConst && !toCV.isConstExpr) return TsysConv::Illegal;
+			fromCV.isConst = true;
+			fromCV.isConstExpr = true;
+			break;
+		case TsysRefType::LRef:
+			return TsysConv::Illegal;
+		case TsysRefType::RRef:
+			break;
+		}
 		return TestParameterRefPtrElement(toType, toCV, fromType, fromCV);
 	}
 };

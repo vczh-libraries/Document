@@ -375,7 +375,69 @@ public:
 
 	void Visit(FuncAccessExpr* self)override
 	{
-		throw 0;
+		List<ITsys*> funcTypes;
+		ExprToTsys(pa, self->expr, funcTypes);
+
+		List<Ptr<List<ITsys*>>> argTypesList;
+		for (vint i = 0; i < self->arguments.Count(); i++)
+		{
+			auto argTypes = MakePtr<List<ITsys*>>();
+			ExprToTsys(pa, self->arguments[i], *argTypes.Obj());
+			argTypesList.Add(argTypes);
+		}
+
+		Array<TsysConv> funcChoices(funcTypes.Count());
+		vint counters[2] = { 0,0 };
+
+		for (vint i = 0; i < funcTypes.Count(); i++)
+		{
+			auto funcType = funcTypes[i];
+			if (funcType->GetParamCount() == argTypesList.Count())
+			{
+				auto worstChoice = TsysConv::Direct;
+
+				for (vint j = 0; j < argTypesList.Count(); j++)
+				{
+					auto paramType = funcType->GetParam(j);
+					auto& argTypes = *argTypesList[j].Obj();
+					auto bestChoice = TsysConv::Illegal;
+
+					for (vint k = 0; k < argTypes.Count(); k++)
+					{
+						auto choice = paramType->TestParameter(argTypes[k]);
+						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
+					}
+
+					if ((vint)worstChoice < (vint)bestChoice) worstChoice = bestChoice;
+				}
+
+				funcChoices[i] = worstChoice;
+			}
+			else
+			{
+				funcChoices[i] = TsysConv::Illegal;
+			}
+
+			if (funcChoices[i] != TsysConv::Illegal)
+			{
+				counters[(vint)funcChoices[i]]++;
+			}
+		}
+
+		for (vint i = 0; i < sizeof(counters) / sizeof(*counters); i++)
+		{
+			if (counters[i] > 0)
+			{
+				for (vint j = 0; j < funcTypes.Count(); j++)
+				{
+					if ((vint)funcChoices[j] == i)
+					{
+						result.Add(funcTypes[j]->GetElement());
+					}
+				}
+				return;
+			}
+		}
 	}
 };
 

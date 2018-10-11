@@ -90,9 +90,9 @@ enum class TsysRefType
 
 enum class TsysConv
 {
-	Illegal,
 	Direct,
 	NeedConvertion,
+	Illegal,
 };
 
 class ITsys abstract : public Interface
