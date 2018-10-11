@@ -83,7 +83,7 @@ public:
 	VisitSymbol: Fill a symbol to ExprTsysList
 	***********************************************************************/
 
-	static void VisitSymbol(ParsingArguments& pa, Symbol* symbol, bool afterScope, ExprTsysList& result)
+	static void VisitSymbol(ParsingArguments& pa, Symbol* symbol, bool afterScope, TsysCV addedCV, ExprTsysList& result)
 	{
 		ITsys* classScope = nullptr;
 		if (symbol->parent && symbol->parent->decls.Count() > 0)
@@ -119,7 +119,7 @@ public:
 						}
 						else
 						{
-							tsys = tsys->LRefOf();
+							tsys = tsys->CVOf(addedCV)->LRefOf();
 						}
 
 						Add(result, { symbol, tsys });
@@ -169,7 +169,7 @@ public:
 		{
 			for (vint i = 0; i < self->resolving->resolvedSymbols.Count(); i++)
 			{
-				VisitSymbol(pa, self->resolving->resolvedSymbols[i], afterScope, result);
+				VisitSymbol(pa, self->resolving->resolvedSymbols[i], afterScope, {}, result);
 			}
 		}
 	}
@@ -189,18 +189,10 @@ public:
 
 			if (rar.values)
 			{
-				ExprTsysList fieldTypes;
 				for (vint j = 0; j < rar.values->resolvedSymbols.Count(); j++)
 				{
 					auto symbol = rar.values->resolvedSymbols[j];
-					VisitSymbol(pa, symbol, false, fieldTypes);
-				}
-
-				for (vint j = 0; j < fieldTypes.Count(); j++)
-				{
-					auto item = fieldTypes[j];
-					item.tsys = item.tsys->CVOf(cv);
-					Add(result, item);
+					VisitSymbol(pa, symbol, false, cv, result);
 				}
 			}
 		}
