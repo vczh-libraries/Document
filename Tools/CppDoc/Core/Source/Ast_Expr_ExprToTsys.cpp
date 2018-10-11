@@ -375,32 +375,6 @@ public:
 
 	void Visit(FuncAccessExpr* self)override
 	{
-		List<ITsys*> funcTypes;
-		ExprToTsys(pa, self->expr, funcTypes);
-
-		for (vint i = funcTypes.Count() - 1; i >= 0; i--)
-		{
-			auto funcType = funcTypes[i];
-
-			TsysCV cv;
-			TsysRefType refType;
-			auto entityType = funcType->GetEntity(cv, refType);
-
-			if (entityType->GetType() == TsysType::Ptr)
-			{
-				entityType = entityType->GetElement();
-			}
-
-			if (entityType->GetType() == TsysType::Function)
-			{
-				funcTypes[i] = entityType;
-			}
-			else
-			{
-				funcTypes.RemoveAt(i);
-			}
-		}
-
 		List<Ptr<List<ITsys*>>> argTypesList;
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
@@ -409,56 +383,91 @@ public:
 			argTypesList.Add(argTypes);
 		}
 
-		Array<TsysConv> funcChoices(funcTypes.Count());
-		vint counters[2] = { 0,0 };
-
-		for (vint i = 0; i < funcTypes.Count(); i++)
+		if (self->type)
 		{
-			auto funcType = funcTypes[i];
-			if (funcType->GetParamCount() == argTypesList.Count())
-			{
-				auto worstChoice = TsysConv::Direct;
-
-				for (vint j = 0; j < argTypesList.Count(); j++)
-				{
-					auto paramType = funcType->GetParam(j);
-					auto& argTypes = *argTypesList[j].Obj();
-					auto bestChoice = TsysConv::Illegal;
-
-					for (vint k = 0; k < argTypes.Count(); k++)
-					{
-						auto choice = paramType->TestParameter(argTypes[k]);
-						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
-					}
-
-					if ((vint)worstChoice < (vint)bestChoice) worstChoice = bestChoice;
-				}
-
-				funcChoices[i] = worstChoice;
-			}
-			else
-			{
-				funcChoices[i] = TsysConv::Illegal;
-			}
-
-			if (funcChoices[i] != TsysConv::Illegal)
-			{
-				counters[(vint)funcChoices[i]]++;
-			}
+			TypeToTsys(pa, self->type, result);
 		}
-
-		for (vint i = 0; i < sizeof(counters) / sizeof(*counters); i++)
+		else if (self->expr)
 		{
-			if (counters[i] > 0)
+			List<ITsys*> funcTypes;
+			ExprToTsys(pa, self->expr, funcTypes);
+
+			for (vint i = funcTypes.Count() - 1; i >= 0; i--)
 			{
-				for (vint j = 0; j < funcTypes.Count(); j++)
+				auto funcType = funcTypes[i];
+
+				TsysCV cv;
+				TsysRefType refType;
+				auto entityType = funcType->GetEntity(cv, refType);
+
+				if (entityType->GetType() == TsysType::Decl)
 				{
-					if ((vint)funcChoices[j] == i)
+					throw 0;
+				}
+				else if (entityType->GetType() == TsysType::Ptr)
+				{
+					entityType = entityType->GetElement();
+					if (entityType->GetType() == TsysType::Function)
 					{
-						result.Add(funcTypes[j]->GetElement());
+						funcTypes[i] = entityType;
+						continue;
 					}
 				}
-				return;
+
+				funcTypes.RemoveAt(i);
+			}
+
+			Array<TsysConv> funcChoices(funcTypes.Count());
+			vint counters[2] = { 0,0 };
+
+			for (vint i = 0; i < funcTypes.Count(); i++)
+			{
+				auto funcType = funcTypes[i];
+				if (funcType->GetParamCount() == argTypesList.Count())
+				{
+					auto worstChoice = TsysConv::Direct;
+
+					for (vint j = 0; j < argTypesList.Count(); j++)
+					{
+						auto paramType = funcType->GetParam(j);
+						auto& argTypes = *argTypesList[j].Obj();
+						auto bestChoice = TsysConv::Illegal;
+
+						for (vint k = 0; k < argTypes.Count(); k++)
+						{
+							auto choice = paramType->TestParameter(argTypes[k]);
+							if ((vint)bestChoice > (vint)choice) bestChoice = choice;
+						}
+
+						if ((vint)worstChoice < (vint)bestChoice) worstChoice = bestChoice;
+					}
+
+					funcChoices[i] = worstChoice;
+				}
+				else
+				{
+					funcChoices[i] = TsysConv::Illegal;
+				}
+
+				if (funcChoices[i] != TsysConv::Illegal)
+				{
+					counters[(vint)funcChoices[i]]++;
+				}
+			}
+
+			for (vint i = 0; i < sizeof(counters) / sizeof(*counters); i++)
+			{
+				if (counters[i] > 0)
+				{
+					for (vint j = 0; j < funcTypes.Count(); j++)
+					{
+						if ((vint)funcChoices[j] == i)
+						{
+							result.Add(funcTypes[j]->GetElement());
+						}
+					}
+					return;
+				}
 			}
 		}
 	}

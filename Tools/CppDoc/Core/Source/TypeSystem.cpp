@@ -275,15 +275,13 @@ protected:
 		{
 		case TsysRefType::None:
 			if (!toCV.isConst && !toCV.isConstExpr) return TsysConv::Illegal;
-			fromCV.isConst = true;
-			fromCV.isConstExpr = true;
 			break;
 		case TsysRefType::LRef:
 			break;
 		case TsysRefType::RRef:
 			return TsysConv::Illegal;
 		}
-		return TestParameterRefPtrElement(toType, toCV, fromType, fromCV);
+		return TestParameterRefPtrElement(toType, {}, fromType, {});
 	}
 };
 
@@ -321,7 +319,6 @@ protected:
 		switch (fromRefType)
 		{
 		case TsysRefType::None:
-			if (!toCV.isConst && !toCV.isConstExpr) return TsysConv::Illegal;
 			fromCV.isConst = true;
 			fromCV.isConstExpr = true;
 			break;
@@ -342,11 +339,14 @@ protected:
 	{
 		if (fromType->GetType() == TsysType::Zero) return TsysConv::NeedConvertion;
 		if (fromType->GetType() == TsysType::Nullptr) return TsysConv::Direct;
+		if (fromType->GetType() != TsysType::Array && fromType->GetType() != TsysType::Ptr) return TsysConv::Illegal;
+
+		auto elementType = fromType->GetElement()->GetEntity(fromCV, fromRefType);
 
 		TsysCV toCV;
 		TsysRefType toRefType;
 		auto toType = element->GetEntity(toCV, toRefType);
-		return TestParameterRefPtrElement(toType, toCV, fromType, fromCV);
+		return TestParameterRefPtrElement(toType, toCV, elementType, fromCV);
 	}
 };
 
