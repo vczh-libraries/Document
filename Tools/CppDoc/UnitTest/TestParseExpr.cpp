@@ -201,8 +201,8 @@ struct Z
 	X operator[](const char*);
 	Y operator[](Z&&);
 
-	static int F();
-	int G();
+	static int F(double);
+	int G(void*);
 };
 
 Z z;
@@ -212,14 +212,14 @@ Z* pz = nullptr;
 
 	AssertExpr(L"pz->x",					L"pz->x",						L"bool &",				pa);
 	AssertExpr(L"pz->y",					L"pz->y",						L"bool &",				pa);
-	AssertExpr(L"pz->F",					L"pz->F",						L"__int32 () *",		pa);
-	AssertExpr(L"pz->G",					L"pz->G",						L"__int32 () *",		pa);
+	AssertExpr(L"pz->F",					L"pz->F",						L"__int32 (double) *",	pa);
+	AssertExpr(L"pz->G",					L"pz->G",						L"__int32 (void *) *",	pa);
 	AssertExpr(L"pz->operator->",			L"pz->operator ->",				L"::Y () *",			pa);
 
 	AssertExpr(L"z.x",						L"z.x",							L"bool &",				pa);
 	AssertExpr(L"z.y",						L"z.y",							L"bool &",				pa);
-	AssertExpr(L"z.F",						L"z.F",							L"__int32 () *",		pa);
-	AssertExpr(L"z.G",						L"z.G",							L"__int32 () *",		pa);
+	AssertExpr(L"z.F",						L"z.F",							L"__int32 (double) *",	pa);
+	AssertExpr(L"z.G",						L"z.G",							L"__int32 (void *) *",	pa);
 	AssertExpr(L"z.operator->",				L"z.operator ->",				L"::Y () *",			pa);
 	
 	AssertExpr(L"pz->operator->()",			L"pz->operator ->()",			L"::Y",					pa);
