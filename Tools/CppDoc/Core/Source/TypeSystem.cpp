@@ -75,7 +75,7 @@ protected:
 		return this;
 	}
 
-	virtual TsysConv TestParameterInternal(ITsys* fromType, TsysCV cv, TsysRefType refType)
+	virtual TsysConv TestParameterInternal(ITsys* fromType, TsysCV fromCV, TsysRefType fromRefType)
 	{
 		return this == fromType ? TsysConv::Direct : TsysConv::Illegal;
 	}
@@ -123,6 +123,22 @@ public:
 
 	TsysType GetType()override { return Type; }
 };
+
+/***********************************************************************
+Helpers
+***********************************************************************/
+
+TsysConv TestParameterRefPtrElement(ITsys* toType, TsysCV toCV, ITsys* fromType, TsysCV fromCV)
+{
+	if (toType != fromType) return TsysConv::Illegal;
+	if (toCV.isConstExpr && !fromCV.isConstExpr) return TsysConv::Illegal;
+	if (toCV.isConst && !fromCV.isConst) return TsysConv::Illegal;
+	if (toCV.isVolatile && !fromCV.isVolatile) return TsysConv::Illegal;
+
+	return (toCV.isConstExpr == fromCV.isConstExpr && toCV.isConst == fromCV.isConst && toCV.isVolatile == fromCV.isVolatile)
+		? TsysConv::Direct
+		: TsysConv::NeedConvertion;
+}
 
 /***********************************************************************
 Concrete Tsys
@@ -184,7 +200,7 @@ class ITSYS_CLASS(Primitive)
 {
 	ITSYS_MEMBERS_DATA(Primitive, TsysPrimitive, Primitive)
 protected:
-	TsysConv TestParameterInternal(ITsys* fromType, TsysCV cv, TsysRefType refType)override
+	TsysConv TestParameterInternal(ITsys* fromType, TsysCV fromCV, TsysRefType fromRefType)override
 	{
 		if (fromType->GetType() == TsysType::Zero)
 		{
@@ -242,16 +258,20 @@ class ITSYS_CLASS(LRef)
 	{
 		return this;
 	}
-
-	TsysConv TestParameter(ITsys* from)override
-	{
-		throw 0;
-	}
 protected:
 	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
 		refType = TsysRefType::LRef;
 		return element->GetEntityInternal(cv, refType);
+	}
+
+	TsysConv TestParameterInternal(ITsys* fromType, TsysCV fromCV, TsysRefType fromRefType)override
+	{
+		if (fromRefType != TsysRefType::LRef) return TsysConv::Illegal;
+		TsysCV toCV;
+		TsysRefType toRefType;
+		auto toType = element->GetEntity(toCV, toRefType);
+		return TestParameterRefPtrElement(toType, toCV, fromType, fromCV);
 	}
 };
 
@@ -273,16 +293,20 @@ class ITSYS_CLASS(RRef)
 	{
 		return this;
 	}
-
-	TsysConv TestParameter(ITsys* from)override
-	{
-		throw 0;
-	}
 protected:
 	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
 		refType = TsysRefType::RRef;
 		return element->GetEntityInternal(cv, refType);
+	}
+
+	TsysConv TestParameterInternal(ITsys* fromType, TsysCV fromCV, TsysRefType fromRefType)override
+	{
+		if (fromRefType != TsysRefType::RRef) return TsysConv::Illegal;
+		TsysCV toCV;
+		TsysRefType toRefType;
+		auto toType = element->GetEntity(toCV, toRefType);
+		return TestParameterRefPtrElement(toType, toCV, fromType, fromCV);
 	}
 };
 
@@ -290,23 +314,15 @@ class ITSYS_CLASS(Ptr)
 {
 	ITSYS_MEMBERS_REF(Ptr)
 protected:
-	TsysConv TestParameterInternal(ITsys* fromType, TsysCV cv, TsysRefType refType)override
+	TsysConv TestParameterInternal(ITsys* fromType, TsysCV fromCV, TsysRefType fromRefType)override
 	{
 		if (fromType->GetType() == TsysType::Zero) return TsysConv::Direct;
 		if (fromType->GetType() == TsysType::Nullptr) return TsysConv::Direct;
 
-		TsysCV myCV;
-		TsysRefType myRefType;
-		auto toType = element->GetEntity(myCV, myRefType);
-
-		if (toType != fromType) return TsysConv::Illegal;
-		if (myCV.isConstExpr && !cv.isConstExpr) return TsysConv::Illegal;
-		if (myCV.isConst && !cv.isConst) return TsysConv::Illegal;
-		if (myCV.isVolatile && !cv.isVolatile) return TsysConv::Illegal;
-		
-		return (myCV.isConstExpr == cv.isConstExpr && myCV.isConst == cv.isConst && myCV.isVolatile == cv.isVolatile)
-			? TsysConv::Direct
-			: TsysConv::NeedConvertion;
+		TsysCV toCV;
+		TsysRefType toRefType;
+		auto toType = element->GetEntity(toCV, toRefType);
+		return TestParameterRefPtrElement(toType, toCV, fromType, fromCV);
 	}
 };
 

@@ -265,3 +265,7 @@ TEST_CASE(TestParseExpr_OverloadingAndTypeConversion)
 TEST_CASE(TestParseExpr_OverloadingAndInheritance)
 {
 }
+
+TEST_CASE(TestParseExpr_OverloadingAndArrayOrRRefParameter)
+{
+}
