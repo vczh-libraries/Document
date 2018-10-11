@@ -355,12 +355,12 @@ public:
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
 			auto funcType = funcTypes[i];
-			if (IsQualifiedFunction(thisCV, thisRef, funcType))
-			{
-				TsysCV cv;
-				TsysRefType refType;
-				auto entityType = funcType.tsys->GetEntity(cv, refType);
+			TsysCV cv;
+			TsysRefType refType;
+			auto entityType = funcType.tsys->GetEntity(cv, refType);
 
+			if (entityType->GetType() == TsysType::Function || IsQualifiedFunction(thisCV, thisRef, funcType))
+			{
 				if (entityType->GetType() == TsysType::Decl && lookForOp)
 				{
 					CppName opName;
@@ -369,6 +369,10 @@ public:
 					VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
 					RemoveIllegalFunctions(pa, cv, refType, opResult, false);
 					Add(funcTypes, opResult);
+				}
+				else if (entityType->GetType() == TsysType::Function)
+				{
+					continue;
 				}
 				else if (entityType->GetType() == TsysType::Ptr)
 				{
