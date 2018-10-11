@@ -569,7 +569,7 @@ public:
 			ExprTsysList funcTypes;
 			ExprToTsys(pa, self->expr, funcTypes);
 
-			RemoveIllegalFunctions(pa, funcTypes, true);
+			RemoveIllegalFunctions(pa, {}, TsysRefType::None, funcTypes, true);
 			VisitOverloadedFunction(funcTypes, argTypesList, result);
 		}
 	}
