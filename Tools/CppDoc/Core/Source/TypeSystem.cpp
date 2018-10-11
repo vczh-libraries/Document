@@ -183,6 +183,35 @@ class ITSYS_CLASS(Nullptr)
 class ITSYS_CLASS(Primitive)
 {
 	ITSYS_MEMBERS_DATA(Primitive, TsysPrimitive, Primitive)
+protected:
+	TsysConv TestParameterInternal(ITsys* fromType, TsysCV cv, TsysRefType refType)override
+	{
+		if (fromType->GetType() == TsysType::Zero)
+		{
+			switch (data.type)
+			{
+			case TsysPrimitiveType::Float:
+				return TsysConv::NeedConvertion;
+			default:
+				return TsysConv::Direct;
+			}
+		}
+
+		if (fromType->GetType() != TsysType::Primitive)
+		{
+			return TsysConv::Illegal;
+		}
+
+		auto primitive = fromType->GetPrimitive();
+		if (data.type == primitive.type && data.bytes == primitive.bytes)
+		{
+			return TsysConv::Direct;
+		}
+		else
+		{
+			return TsysConv::NeedConvertion;
+		}
+	}
 };
 
 class ITSYS_CLASS(Decl)
@@ -213,6 +242,11 @@ class ITSYS_CLASS(LRef)
 	{
 		return this;
 	}
+
+	TsysConv TestParameter(ITsys* from)override
+	{
+		throw 0;
+	}
 protected:
 	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
@@ -239,6 +273,11 @@ class ITSYS_CLASS(RRef)
 	{
 		return this;
 	}
+
+	TsysConv TestParameter(ITsys* from)override
+	{
+		throw 0;
+	}
 protected:
 	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
@@ -250,11 +289,35 @@ protected:
 class ITSYS_CLASS(Ptr)
 {
 	ITSYS_MEMBERS_REF(Ptr)
+protected:
+	TsysConv TestParameterInternal(ITsys* fromType, TsysCV cv, TsysRefType refType)override
+	{
+		if (fromType->GetType() == TsysType::Zero) return TsysConv::Direct;
+		if (fromType->GetType() == TsysType::Nullptr) return TsysConv::Direct;
+
+		TsysCV myCV;
+		TsysRefType myRefType;
+		auto toType = element->GetEntity(myCV, myRefType);
+
+		if (toType != fromType) return TsysConv::Illegal;
+		if (myCV.isConstExpr && !cv.isConstExpr) return TsysConv::Illegal;
+		if (myCV.isConst && !cv.isConst) return TsysConv::Illegal;
+		if (myCV.isVolatile && !cv.isVolatile) return TsysConv::Illegal;
+		
+		return (myCV.isConstExpr == cv.isConstExpr && myCV.isConst == cv.isConst && myCV.isVolatile == cv.isVolatile)
+			? TsysConv::Direct
+			: TsysConv::NeedConvertion;
+	}
 };
 
 class ITSYS_CLASS(Array)
 {
 	ITSYS_MEMBERS_DECORATE(Array, vint, ParamCount)
+
+	TsysConv TestParameter(ITsys* from)override
+	{
+		return element->PtrOf()->TestParameter(from);
+	}
 };
 
 class ITSYS_CLASS(CV)
