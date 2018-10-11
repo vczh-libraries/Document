@@ -127,7 +127,11 @@ public:
 						}
 						else
 						{
-							tsys = tsys->CVOf(addedCV)->LRefOf();
+							if (tsys->GetType() == TsysType::RRef)
+							{
+								tsys = tsys->GetElement();
+							}
+							tsys = tsys->CVOf(addedCV);
 						}
 
 						Add(result, { symbol, tsys });

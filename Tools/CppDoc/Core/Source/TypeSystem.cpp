@@ -79,6 +79,94 @@ protected:
 	{
 		return this == fromType ? TsysConv::Direct : TsysConv::Illegal;
 	}
+
+	static bool IsCVMatch(ITsys* toType, ITsys* fromType)
+	{
+		if (toType->GetType() == TsysType::CV)
+		{
+			TsysCV toCV = toType->GetCV();
+			toType = toType->GetElement();
+
+			TsysCV fromCV;
+			if (fromType->GetType() == TsysType::CV)
+			{
+				fromCV = fromType->GetCV();
+				fromType = fromType->GetElement();
+			}
+
+			if (toType == fromType)
+			{
+				if (!(toCV.isConstExpr || toCV.isConst) && (fromCV.isConstExpr || fromCV.isConst)) return false;
+				if (!toCV.isVolatile && fromCV.isVolatile) return false;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	static TsysConv TestExactOrTrival(ITsys* toType, ITsys* fromType)
+	{
+		if (toType == fromType)
+		{
+			return TsysConv::Exact;
+		}
+
+		if (toType->GetType() == TsysType::LRef && fromType->GetType() != TsysType::LRef)
+		{
+			if (toType->GetElement() == fromType)
+			{
+				return TsysConv::Exact;
+			}
+			if (IsCVMatch(toType->GetElement(), fromType))
+			{
+				return TsysConv::TrivalConversion;
+			}
+		}
+		if (toType->GetType() != TsysType::LRef && fromType->GetType() == TsysType::LRef)
+		{
+			if (toType == fromType->GetElement())
+			{
+				return TsysConv::Exact;
+			}
+			if (IsCVMatch(toType, fromType->GetElement()))
+			{
+				return TsysConv::TrivalConversion;
+			}
+		}
+
+		switch (toType->GetType())
+		{
+		case TsysType::LRef:
+		case TsysType::RRef:
+		case TsysType::Ptr:
+			if (toType->GetType() == fromType->GetType())
+			{
+				if (IsCVMatch(toType->GetElement(), fromType->GetElement()))
+				{
+					return TsysConv::TrivalConversion;
+				}
+			}
+			break;
+		}
+
+		if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Array)
+		{
+			if (toType->GetElement() == fromType->GetElement())
+			{
+				return TsysConv::Exact;
+			}
+			if (IsCVMatch(toType->GetElement(), fromType->GetElement()))
+			{
+				return TsysConv::TrivalConversion;
+			}
+		}
+
+		if (IsCVMatch(toType, fromType))
+		{
+			return TsysConv::TrivalConversion;
+		}
+		return TsysConv::Illegal;
+	}
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
 
@@ -108,6 +196,15 @@ public:
 
 	TsysConv TestParameter(ITsys* fromType)override
 	{
+		{
+			auto conv = TestExactOrTrival(this, fromType);
+			if (conv != TsysConv::Illegal) return conv;
+		}
+		auto toType = this;
+		if (toType == fromType) return TsysConv::Exact;
+		if (toType->GetType() == TsysType::LRef && toType->GetElement() == fromType) return TsysConv::Exact;
+		if (fromType->GetType() == TsysType::LRef && fromType->GetElement() == toType)return TsysConv::Exact;
+
 		TsysCV cv;
 		TsysRefType refType;
 		fromType = fromType->GetEntity(cv, refType);
