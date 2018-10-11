@@ -332,7 +332,7 @@ public:
 		}
 	}
 
-	static bool IsQualifiedFunction(TsysCV thisCV, TsysRefType thisRef, const ExprTsysItem& funcType)
+	static TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, const ExprTsysItem& funcType)
 	{
 		if (funcType.symbol && funcType.symbol->decls.Count() > 0)
 		{
@@ -340,14 +340,62 @@ public:
 			{
 				if (auto declType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 				{
-					if ((thisCV.isConstExpr || thisCV.isConst) && !declType->qualifierConstExpr && !declType->qualifierConst) return false;
-					if (thisCV.isVolatile && !declType->qualifierVolatile) return false;
-					if (thisRef == TsysRefType::LRef && declType->qualifierRRef) return false;
-					if (thisRef == TsysRefType::RRef && declType->qualifierLRef) return false;
+					bool tC = thisCV.isConstExpr || thisCV.isConst;
+					bool dC = declType->qualifierConstExpr || declType->qualifierConst;
+					bool tV = thisCV.isVolatile;
+					bool dV = thisCV.isVolatile;
+					bool tL = thisRef == TsysRefType::LRef;
+					bool dL = declType->qualifierLRef;
+					bool tR = thisRef == TsysRefType::RRef;
+					bool dR = declType->qualifierRRef;
+
+					if (tC && !dC || tV && !dV || tL && dR || tR || dL) return TsysConv::Illegal;
+					if (tC == dC && tV == dV && tL == dL && tR == dR) return TsysConv::Direct;
+					return TsysConv::NeedConvertion;
 				}
 			}
 		}
-		return true;
+		return TsysConv::Direct;
+	}
+
+	static void FilterFunctionByQualifier(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes)
+	{
+		Array<TsysConv> funcChoices(funcTypes.Count());
+		vint counters[2] = { 0,0 };
+
+		for (vint i = 0; i < funcTypes.Count(); i++)
+		{
+			funcChoices[i] = TestFunctionQualifier(thisCV, thisRef, funcTypes[i]);
+
+			if (funcChoices[i] != TsysConv::Illegal)
+			{
+				counters[(vint)funcChoices[i]]++;
+			}
+		}
+
+		auto target = TsysConv::Illegal;
+
+		if (counters[0] > 0)
+		{
+			target = TsysConv::Direct;
+		}
+		else if (counters[1] > 0)
+		{
+			target = TsysConv::NeedConvertion;
+		}
+		else
+		{
+			funcTypes.Clear();
+			return;
+		}
+
+		for (vint i = funcTypes.Count() - 1; i >= 0; i--)
+		{
+			if (funcChoices[i] != target)
+			{
+				funcTypes.RemoveAt(i);
+			}
+		}
 	}
 
 	static void RemoveIllegalFunctions(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
@@ -397,14 +445,8 @@ public:
 
 		ExprTsysList fieldResult;
 		VisitNormalField(pa, name, &totalRar, cv, entity, fieldResult);
-		for (vint j = 0; j < fieldResult.Count(); j++)
-		{
-			const auto& fieldItem = fieldResult[j];
-			if (IsQualifiedFunction(cv, refType, fieldItem))
-			{
-				Add(result, fieldItem);
-			}
-		}
+		FilterFunctionByQualifier(cv, refType, fieldResult);
+		Add(result, fieldResult);
 	}
 
 	void Visit(FieldAccessExpr* self)override
