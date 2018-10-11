@@ -20,6 +20,10 @@ public:
 	{
 	}
 
+	/***********************************************************************
+	Add
+	***********************************************************************/
+
 	static void Add(ExprTsysList& list, const ExprTsysItem& item)
 	{
 		if (!list.Contains(item))
@@ -40,6 +44,10 @@ public:
 			Add(toList, fromList[i]);
 		}
 	}
+
+	/***********************************************************************
+	IsStaticSymbol
+	***********************************************************************/
 
 	template<typename TForward>
 	static bool IsStaticSymbol(Symbol* symbol, Ptr<TForward> decl)
@@ -71,6 +79,10 @@ public:
 			return decl->decoratorStatic;
 		}
 	}
+
+	/***********************************************************************
+	VisitSymbol
+	***********************************************************************/
 
 	static void VisitSymbol(ParsingArguments& pa, Symbol* symbol, bool afterScope, ExprTsysList& result)
 	{
@@ -148,6 +160,10 @@ public:
 		}
 	}
 
+	/***********************************************************************
+	VisitResolvable
+	***********************************************************************/
+
 	void VisitResolvable(ResolvableExpr* self, bool afterScope)
 	{
 		if (self->resolving)
@@ -158,6 +174,180 @@ public:
 			}
 		}
 	}
+
+	/***********************************************************************
+	VisitNormalField
+	***********************************************************************/
+
+	static void VisitNormalField(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, TsysCV cv, ITsys* entity, ExprTsysList& result)
+	{
+		if (entity->GetType() == TsysType::Decl)
+		{
+			auto symbol = entity->GetDecl();
+			ParsingArguments fieldPa(pa, symbol);
+			auto rar = ResolveSymbol(fieldPa, name, SearchPolicy::ChildSymbol);
+			if (totalRar) totalRar->Merge(rar);
+
+			if (rar.values)
+			{
+				ExprTsysList fieldTypes;
+				for (vint j = 0; j < rar.values->resolvedSymbols.Count(); j++)
+				{
+					auto symbol = rar.values->resolvedSymbols[j];
+					VisitSymbol(pa, symbol, false, fieldTypes);
+				}
+
+				for (vint j = 0; j < fieldTypes.Count(); j++)
+				{
+					auto item = fieldTypes[j];
+					item.tsys = item.tsys->CVOf(cv);
+					Add(result, item);
+				}
+			}
+		}
+	}
+
+	/***********************************************************************
+	TestFunctionQualifier
+	***********************************************************************/
+
+	static TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, const ExprTsysItem& funcType)
+	{
+		if (funcType.symbol && funcType.symbol->decls.Count() > 0)
+		{
+			if (auto decl = funcType.symbol->decls[0].Cast<ForwardFunctionDeclaration>())
+			{
+				if (auto declType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
+				{
+					bool tC = thisCV.isConstExpr || thisCV.isConst;
+					bool dC = declType->qualifierConstExpr || declType->qualifierConst;
+					bool tV = thisCV.isVolatile;
+					bool dV = thisCV.isVolatile;
+					bool tL = thisRef == TsysRefType::LRef;
+					bool dL = declType->qualifierLRef;
+					bool tR = thisRef == TsysRefType::RRef;
+					bool dR = declType->qualifierRRef;
+
+					if (tC && !dC || tV && !dV || tL && dR || tR || dL) return TsysConv::Illegal;
+					if (tC == dC && tV == dV && tL == dL && tR == dR) return TsysConv::Direct;
+					return TsysConv::NeedConvertion;
+				}
+			}
+		}
+		return TsysConv::Direct;
+	}
+
+	/***********************************************************************
+	FilterFunctionByQualifier
+	***********************************************************************/
+
+	static void FilterFunctionByQualifier(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices, vint (&counters)[2])
+	{
+		auto target = TsysConv::Illegal;
+
+		if (counters[0] > 0)
+		{
+			target = TsysConv::Direct;
+		}
+		else if (counters[1] > 0)
+		{
+			target = TsysConv::NeedConvertion;
+		}
+		else
+		{
+			funcTypes.Clear();
+			return;
+		}
+
+		for (vint i = funcTypes.Count() - 1; i >= 0; i--)
+		{
+			if (funcChoices[i] != target)
+			{
+				funcTypes.RemoveAt(i);
+			}
+		}
+	}
+
+	static void FilterFunctionByQualifier(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes)
+	{
+		Array<TsysConv> funcChoices(funcTypes.Count());
+		vint counters[2] = { 0,0 };
+
+		for (vint i = 0; i < funcTypes.Count(); i++)
+		{
+			funcChoices[i] = TestFunctionQualifier(thisCV, thisRef, funcTypes[i]);
+
+			if (funcChoices[i] != TsysConv::Illegal)
+			{
+				counters[(vint)funcChoices[i]]++;
+			}
+		}
+
+		FilterFunctionByQualifier(funcTypes, funcChoices, counters);
+	}
+
+	/***********************************************************************
+	RemoveIllegalFunctions
+	***********************************************************************/
+
+	static void RemoveIllegalFunctions(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
+	{
+		for (vint i = 0; i < funcTypes.Count(); i++)
+		{
+			auto funcType = funcTypes[i];
+			TsysCV cv;
+			TsysRefType refType;
+			auto entityType = funcType.tsys->GetEntity(cv, refType);
+
+			if (entityType->GetType() == TsysType::Function || IsQualifiedFunction(thisCV, thisRef, funcType))
+			{
+				if (entityType->GetType() == TsysType::Decl && lookForOp)
+				{
+					CppName opName;
+					opName.name = L"operator ()";
+					ExprTsysList opResult;
+					VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
+					RemoveIllegalFunctions(pa, cv, refType, opResult, false);
+					Add(funcTypes, opResult);
+				}
+				else if (entityType->GetType() == TsysType::Function)
+				{
+					continue;
+				}
+				else if (entityType->GetType() == TsysType::Ptr)
+				{
+					entityType = entityType->GetElement();
+					if (entityType->GetType() == TsysType::Function)
+					{
+						funcTypes[i].tsys = entityType;
+						continue;
+					}
+				}
+			}
+
+			funcTypes.RemoveAt(i--);
+		}
+	}
+
+	/***********************************************************************
+	VisitDirectField
+	***********************************************************************/
+
+	static void VisitDirectField(ParsingArguments& pa, ResolveSymbolResult& totalRar, ITsys* parentType, CppName& name, ExprTsysList& result)
+	{
+		TsysCV cv;
+		TsysRefType refType;
+		auto entity = parentType->GetEntity(cv, refType);
+
+		ExprTsysList fieldResult;
+		VisitNormalField(pa, name, &totalRar, cv, entity, fieldResult);
+		FilterFunctionByQualifier(cv, refType, fieldResult);
+		Add(result, fieldResult);
+	}
+
+	/***********************************************************************
+	Expressions
+	***********************************************************************/
 
 	void Visit(LiteralExpr* self)override
 	{
@@ -302,151 +492,6 @@ public:
 	void Visit(ChildExpr* self)override
 	{
 		VisitResolvable(self, true);
-	}
-
-	static void VisitNormalField(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, TsysCV cv, ITsys* entity, ExprTsysList& result)
-	{
-		if (entity->GetType() == TsysType::Decl)
-		{
-			auto symbol = entity->GetDecl();
-			ParsingArguments fieldPa(pa, symbol);
-			auto rar = ResolveSymbol(fieldPa, name, SearchPolicy::ChildSymbol);
-			if (totalRar) totalRar->Merge(rar);
-
-			if (rar.values)
-			{
-				ExprTsysList fieldTypes;
-				for (vint j = 0; j < rar.values->resolvedSymbols.Count(); j++)
-				{
-					auto symbol = rar.values->resolvedSymbols[j];
-					VisitSymbol(pa, symbol, false, fieldTypes);
-				}
-
-				for (vint j = 0; j < fieldTypes.Count(); j++)
-				{
-					auto item = fieldTypes[j];
-					item.tsys = item.tsys->CVOf(cv);
-					Add(result, item);
-				}
-			}
-		}
-	}
-
-	static TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, const ExprTsysItem& funcType)
-	{
-		if (funcType.symbol && funcType.symbol->decls.Count() > 0)
-		{
-			if (auto decl = funcType.symbol->decls[0].Cast<ForwardFunctionDeclaration>())
-			{
-				if (auto declType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
-				{
-					bool tC = thisCV.isConstExpr || thisCV.isConst;
-					bool dC = declType->qualifierConstExpr || declType->qualifierConst;
-					bool tV = thisCV.isVolatile;
-					bool dV = thisCV.isVolatile;
-					bool tL = thisRef == TsysRefType::LRef;
-					bool dL = declType->qualifierLRef;
-					bool tR = thisRef == TsysRefType::RRef;
-					bool dR = declType->qualifierRRef;
-
-					if (tC && !dC || tV && !dV || tL && dR || tR || dL) return TsysConv::Illegal;
-					if (tC == dC && tV == dV && tL == dL && tR == dR) return TsysConv::Direct;
-					return TsysConv::NeedConvertion;
-				}
-			}
-		}
-		return TsysConv::Direct;
-	}
-
-	static void FilterFunctionByQualifier(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes)
-	{
-		Array<TsysConv> funcChoices(funcTypes.Count());
-		vint counters[2] = { 0,0 };
-
-		for (vint i = 0; i < funcTypes.Count(); i++)
-		{
-			funcChoices[i] = TestFunctionQualifier(thisCV, thisRef, funcTypes[i]);
-
-			if (funcChoices[i] != TsysConv::Illegal)
-			{
-				counters[(vint)funcChoices[i]]++;
-			}
-		}
-
-		auto target = TsysConv::Illegal;
-
-		if (counters[0] > 0)
-		{
-			target = TsysConv::Direct;
-		}
-		else if (counters[1] > 0)
-		{
-			target = TsysConv::NeedConvertion;
-		}
-		else
-		{
-			funcTypes.Clear();
-			return;
-		}
-
-		for (vint i = funcTypes.Count() - 1; i >= 0; i--)
-		{
-			if (funcChoices[i] != target)
-			{
-				funcTypes.RemoveAt(i);
-			}
-		}
-	}
-
-	static void RemoveIllegalFunctions(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
-	{
-		for (vint i = 0; i < funcTypes.Count(); i++)
-		{
-			auto funcType = funcTypes[i];
-			TsysCV cv;
-			TsysRefType refType;
-			auto entityType = funcType.tsys->GetEntity(cv, refType);
-
-			if (entityType->GetType() == TsysType::Function || IsQualifiedFunction(thisCV, thisRef, funcType))
-			{
-				if (entityType->GetType() == TsysType::Decl && lookForOp)
-				{
-					CppName opName;
-					opName.name = L"operator ()";
-					ExprTsysList opResult;
-					VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
-					RemoveIllegalFunctions(pa, cv, refType, opResult, false);
-					Add(funcTypes, opResult);
-				}
-				else if (entityType->GetType() == TsysType::Function)
-				{
-					continue;
-				}
-				else if (entityType->GetType() == TsysType::Ptr)
-				{
-					entityType = entityType->GetElement();
-					if (entityType->GetType() == TsysType::Function)
-					{
-						funcTypes[i].tsys = entityType;
-						continue;
-					}
-				}
-			}
-
-			funcTypes.RemoveAt(i--);
-		}
-	}
-
-	static void VisitDirectField(ParsingArguments& pa, ResolveSymbolResult& totalRar, ITsys* parentType, CppName& name, ExprTsysList& result)
-	{
-		TsysCV cv;
-		TsysRefType refType;
-		auto entity = parentType->GetEntity(cv, refType);
-
-		ExprTsysList fieldResult;
-		VisitNormalField(pa, name, &totalRar, cv, entity, fieldResult);
-		FilterFunctionByQualifier(cv, refType, fieldResult);
-		Add(result, fieldResult);
 	}
 
 	void Visit(FieldAccessExpr* self)override
