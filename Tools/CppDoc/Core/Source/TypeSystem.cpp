@@ -307,10 +307,6 @@ public:
 				return TsysConv::StandardConversion;
 			}
 		}
-		auto toType = this;
-		if (toType == fromType) return TsysConv::Exact;
-		if (toType->GetType() == TsysType::LRef && toType->GetElement() == fromType) return TsysConv::Exact;
-		if (fromType->GetType() == TsysType::LRef && fromType->GetElement() == toType)return TsysConv::Exact;
 
 		return TsysConv::Illegal;
 	}
