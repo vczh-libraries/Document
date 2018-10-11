@@ -240,19 +240,20 @@ public:
 	FilterFunctionByQualifier: Filter functions by their qualifiers
 	***********************************************************************/
 
-	static void FilterFunctionByQualifier(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices, vint (&counters)[2])
+	static void FilterFunctionByQualifier(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices)
 	{
 		auto target = TsysConv::Illegal;
 
-		if (counters[0] > 0)
+		for (vint i = 0; i < funcChoices.Count(); i++)
 		{
-			target = TsysConv::Direct;
+			auto candidate = funcChoices[i];
+			if (target > candidate)
+			{
+				target = candidate;
+			}
 		}
-		else if (counters[1] > 0)
-		{
-			target = TsysConv::NeedConvertion;
-		}
-		else
+
+		if (target == TsysConv::Illegal)
 		{
 			funcTypes.Clear();
 			return;
@@ -270,19 +271,13 @@ public:
 	static void FilterFunctionByQualifier(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes)
 	{
 		Array<TsysConv> funcChoices(funcTypes.Count());
-		vint counters[2] = { 0,0 };
 
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
 			funcChoices[i] = TestFunctionQualifier(thisCV, thisRef, funcTypes[i]);
-
-			if (funcChoices[i] != TsysConv::Illegal)
-			{
-				counters[(vint)funcChoices[i]]++;
-			}
 		}
 
-		FilterFunctionByQualifier(funcTypes, funcChoices, counters);
+		FilterFunctionByQualifier(funcTypes, funcChoices);
 	}
 
 	/***********************************************************************
@@ -293,7 +288,6 @@ public:
 	{
 		ExprTsysList expandedFuncTypes;
 		List<TsysConv> funcChoices;
-		vint counters[2] = { 0,0 };
 
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
@@ -322,7 +316,6 @@ public:
 					{
 						funcChoices.Add(TsysConv::Direct);
 					}
-					counters[0] += (newCount - oldCount);
 				}
 				else if (entityType->GetType() == TsysType::Ptr)
 				{
@@ -332,14 +325,13 @@ public:
 						if (Add(expandedFuncTypes, { funcType.symbol,entityType }))
 						{
 							funcChoices.Add(choice);
-							counters[(vint)choice]++;
 						}
 					}
 				}
 			}
 		}
 
-		FilterFunctionByQualifier(expandedFuncTypes, funcChoices, counters);
+		FilterFunctionByQualifier(expandedFuncTypes, funcChoices);
 		CopyFrom(funcTypes, expandedFuncTypes);
 	}
 
@@ -350,14 +342,13 @@ public:
 	static void VisitOverloadedFunction(ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result)
 	{
 		Array<TsysConv> funcChoices(funcTypes.Count());
-		vint counters[2] = { 0,0 };
 
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
 			auto funcType = funcTypes[i];
 			if (funcType.tsys->GetParamCount() == argTypesList.Count())
 			{
-				auto worstChoice = TsysConv::Direct;
+				auto worstChoice = TsysConv::Exact;
 
 				for (vint j = 0; j < argTypesList.Count(); j++)
 				{
@@ -371,7 +362,7 @@ public:
 						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
 					}
 
-					if ((vint)worstChoice < (vint)bestChoice) worstChoice = bestChoice;
+					if (worstChoice < bestChoice) worstChoice = bestChoice;
 				}
 
 				funcChoices[i] = worstChoice;
@@ -380,26 +371,12 @@ public:
 			{
 				funcChoices[i] = TsysConv::Illegal;
 			}
-
-			if (funcChoices[i] != TsysConv::Illegal)
-			{
-				counters[(vint)funcChoices[i]]++;
-			}
 		}
 
-		for (vint i = 0; i < sizeof(counters) / sizeof(*counters); i++)
+		FilterFunctionByQualifier(funcTypes, funcChoices);
+		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
-			if (counters[i] > 0)
-			{
-				for (vint j = 0; j < funcTypes.Count(); j++)
-				{
-					if ((vint)funcChoices[j] == i)
-					{
-						Add(result, funcTypes[j].tsys->GetElement());
-					}
-				}
-				return;
-			}
+			Add(result, funcTypes[i].tsys->GetElement());
 		}
 	}
 
