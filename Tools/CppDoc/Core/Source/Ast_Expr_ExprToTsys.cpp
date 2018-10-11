@@ -332,25 +332,30 @@ public:
 		}
 	}
 
+	static bool IsQualifiedFunction(TsysCV thisCV, TsysRefType thisRef, const ExprTsysItem& funcType)
+	{
+		if (funcType.symbol && funcType.symbol->decls.Count() > 0)
+		{
+			if (auto decl = funcType.symbol->decls[0].Cast<ForwardFunctionDeclaration>())
+			{
+				if (auto declType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
+				{
+					if ((thisCV.isConstExpr || thisCV.isConst) && !declType->qualifierConstExpr && !declType->qualifierConst) return false;
+					if (thisCV.isVolatile && !declType->qualifierVolatile) return false;
+					if (thisRef == TsysRefType::LRef && declType->qualifierRRef) return false;
+					if (thisRef == TsysRefType::RRef && declType->qualifierLRef) return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	static void RemoveIllegalFunctions(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
 	{
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
 			auto funcType = funcTypes[i];
-			if (funcType.symbol && funcType.symbol->decls.Count() > 0)
-			{
-				if (auto decl = funcType.symbol->decls[0].Cast<ForwardFunctionDeclaration>())
-				{
-					if (auto declType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
-					{
-						if ((thisCV.isConstExpr || thisCV.isConst) && !declType->qualifierConstExpr && !declType->qualifierConst) goto GIVE_UP;
-						if (thisCV.isVolatile && !declType->qualifierVolatile) goto GIVE_UP;
-						if (thisRef == TsysRefType::LRef && declType->qualifierRRef) goto GIVE_UP;
-						if (thisRef == TsysRefType::RRef && declType->qualifierLRef) goto GIVE_UP;
-					}
-				}
-			}
-
+			if (IsQualifiedFunction(thisCV, thisRef, funcType))
 			{
 				TsysCV cv;
 				TsysRefType refType;
@@ -360,7 +365,10 @@ public:
 				{
 					CppName opName;
 					opName.name = L"operator ()";
-					VisitNormalField(pa, opName, nullptr, cv, entityType, funcTypes);
+					ExprTsysList opResult;
+					VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
+					RemoveIllegalFunctions(pa, cv, refType, opResult, false);
+					Add(funcTypes, opResult);
 				}
 				else if (entityType->GetType() == TsysType::Ptr)
 				{
@@ -372,8 +380,26 @@ public:
 					}
 				}
 			}
-		GIVE_UP:
+
 			funcTypes.RemoveAt(i--);
+		}
+	}
+
+	static void VisitDirectField(ParsingArguments& pa, ResolveSymbolResult& totalRar, ITsys* parentType, CppName& name, ExprTsysList& result)
+	{
+		TsysCV cv;
+		TsysRefType refType;
+		auto entity = parentType->GetEntity(cv, refType);
+
+		ExprTsysList fieldResult;
+		VisitNormalField(pa, name, &totalRar, cv, entity, fieldResult);
+		for (vint j = 0; j < fieldResult.Count(); j++)
+		{
+			const auto& fieldItem = fieldResult[j];
+			if (IsQualifiedFunction(cv, refType, fieldItem))
+			{
+				Add(result, fieldItem);
+			}
 		}
 	}
 
@@ -387,14 +413,7 @@ public:
 		{
 			for (vint i = 0; i < parentTypes.Count(); i++)
 			{
-				TsysCV cv;
-				TsysRefType refType;
-				auto entity = parentTypes[i].tsys->GetEntity(cv, refType);
-
-				if (self->type == CppFieldAccessType::Dot)
-				{
-					VisitNormalField(pa, self->name, &totalRar, cv, entity, result);
-				}
+				VisitDirectField(pa, totalRar, parentTypes[i].tsys, self->name, result);
 			}
 		}
 		else
@@ -408,8 +427,7 @@ public:
 
 				if (entityType->GetType() == TsysType::Ptr)
 				{
-					entityType = entityType->GetElement()->GetEntity(cv, refType);
-					VisitNormalField(pa, self->name, &totalRar, cv, entityType, result);
+					VisitDirectField(pa, totalRar, entityType->GetElement(), self->name, result);
 				}
 				else if (entityType->GetType() == TsysType::Decl)
 				{
