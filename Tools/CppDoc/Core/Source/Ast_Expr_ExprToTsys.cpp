@@ -1,6 +1,7 @@
 #include "Ast.h"
 #include "Ast_Expr.h"
 #include "Ast_Decl.h"
+#include "Ast_Type.h"
 #include "Parser.h"
 
 /***********************************************************************
@@ -30,6 +31,14 @@ public:
 	static void Add(ExprTsysList& list, ITsys* tsys)
 	{
 		Add(list, { nullptr,tsys });
+	}
+
+	static void Add(ExprTsysList& toList, ExprTsysList& fromList)
+	{
+		for (vint i = 0; i < fromList.Count(); i++)
+		{
+			Add(toList, fromList[i]);
+		}
 	}
 
 	template<typename TForward>
@@ -323,32 +332,47 @@ public:
 		}
 	}
 
-	static void RemoveIllegalFunctions(ParsingArguments& pa, ExprTsysList& funcTypes, bool lookForOp)
+	static void RemoveIllegalFunctions(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
 	{
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
 			auto funcType = funcTypes[i];
-
-			TsysCV cv;
-			TsysRefType refType;
-			auto entityType = funcType.tsys->GetEntity(cv, refType);
-
-			if (entityType->GetType() == TsysType::Decl && lookForOp)
+			if (funcType.symbol && funcType.symbol->decls.Count() > 0)
 			{
-				CppName opName;
-				opName.name = L"operator ()";
-				VisitNormalField(pa, opName, nullptr, cv, entityType, funcTypes);
-			}
-			else if (entityType->GetType() == TsysType::Ptr)
-			{
-				entityType = entityType->GetElement();
-				if (entityType->GetType() == TsysType::Function)
+				if (auto decl = funcType.symbol->decls[0].Cast<ForwardFunctionDeclaration>())
 				{
-					funcTypes[i].tsys = entityType;
-					continue;
+					if (auto declType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
+					{
+						if ((thisCV.isConstExpr || thisCV.isConst) && !declType->qualifierConstExpr && !declType->qualifierConst) goto GIVE_UP;
+						if (thisCV.isVolatile && !declType->qualifierVolatile) goto GIVE_UP;
+						if (thisRef == TsysRefType::LRef && declType->qualifierRRef) goto GIVE_UP;
+						if (thisRef == TsysRefType::RRef && declType->qualifierLRef) goto GIVE_UP;
+					}
 				}
 			}
 
+			{
+				TsysCV cv;
+				TsysRefType refType;
+				auto entityType = funcType.tsys->GetEntity(cv, refType);
+
+				if (entityType->GetType() == TsysType::Decl && lookForOp)
+				{
+					CppName opName;
+					opName.name = L"operator ()";
+					VisitNormalField(pa, opName, nullptr, cv, entityType, funcTypes);
+				}
+				else if (entityType->GetType() == TsysType::Ptr)
+				{
+					entityType = entityType->GetElement();
+					if (entityType->GetType() == TsysType::Function)
+					{
+						funcTypes[i].tsys = entityType;
+						continue;
+					}
+				}
+			}
+		GIVE_UP:
 			funcTypes.RemoveAt(i--);
 		}
 	}
@@ -397,7 +421,7 @@ public:
 						opName.name = L"operator ->";
 						ExprTsysList opResult;
 						VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
-						RemoveIllegalFunctions(pa, opResult, false);
+						RemoveIllegalFunctions(pa, cv, refType, opResult, false);
 						for (vint j = 0; j < opResult.Count(); j++)
 						{
 							auto item = opResult[j];
@@ -503,7 +527,10 @@ public:
 			{
 				CppName opName;
 				opName.name = L"operator []";
-				VisitNormalField(pa, opName, nullptr, cv, entityType, funcTypes);
+				ExprTsysList opResult;
+				VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
+				RemoveIllegalFunctions(pa, cv, refType, opResult, false);
+				Add(funcTypes, opResult);
 			}
 			else if (entityType->GetType() == TsysType::Array)
 			{
@@ -515,7 +542,6 @@ public:
 			}
 		}
 
-		RemoveIllegalFunctions(pa, funcTypes, false);
 		VisitOverloadedFunction(funcTypes, argTypesList, result);
 	}
 
