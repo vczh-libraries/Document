@@ -378,6 +378,29 @@ public:
 		List<ITsys*> funcTypes;
 		ExprToTsys(pa, self->expr, funcTypes);
 
+		for (vint i = funcTypes.Count() - 1; i >= 0; i--)
+		{
+			auto funcType = funcTypes[i];
+
+			TsysCV cv;
+			TsysRefType refType;
+			auto entityType = funcType->GetEntity(cv, refType);
+
+			if (entityType->GetType() == TsysType::Ptr)
+			{
+				entityType = entityType->GetElement();
+			}
+
+			if (entityType->GetType() == TsysType::Function)
+			{
+				funcTypes[i] = entityType;
+			}
+			else
+			{
+				funcTypes.RemoveAt(i);
+			}
+		}
+
 		List<Ptr<List<ITsys*>>> argTypesList;
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{

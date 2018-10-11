@@ -195,7 +195,7 @@ struct Z
 	bool x;
 	bool y;
 
-	Y* operator->();
+	Y operator->();
 	X operator()(int);
 	Y operator()(void*);
 	X operator[](const char*);
@@ -214,15 +214,15 @@ Z* pz = nullptr;
 	AssertExpr(L"pz->y",					L"pz->y",						L"bool &",				pa);
 	AssertExpr(L"pz->F",					L"pz->F",						L"__int32 () *",		pa);
 	AssertExpr(L"pz->G",					L"pz->G",						L"__int32 () *",		pa);
-	AssertExpr(L"pz->operator->",			L"pz->operator ->",				L"::Y * () *",			pa);
+	AssertExpr(L"pz->operator->",			L"pz->operator ->",				L"::Y () *",			pa);
 
 	AssertExpr(L"z.x",						L"z.x",							L"bool &",				pa);
 	AssertExpr(L"z.y",						L"z.y",							L"bool &",				pa);
 	AssertExpr(L"z.F",						L"z.F",							L"__int32 () *",		pa);
 	AssertExpr(L"z.G",						L"z.G",							L"__int32 () *",		pa);
-	AssertExpr(L"z.operator->",				L"z.operator ->",				L"::Y * () *",			pa);
+	AssertExpr(L"z.operator->",				L"z.operator ->",				L"::Y () *",			pa);
 	
-	AssertExpr(L"pz->operator->()",			L"pz->operator ->()",			L"::Y *",				pa);
+	AssertExpr(L"pz->operator->()",			L"pz->operator ->()",			L"::Y",					pa);
 	AssertExpr(L"pz->operator()(0)",		L"pz->operator ()(0)",			L"::X",					pa);
 	AssertExpr(L"pz->operator()(nullptr)",	L"pz->operator ()(nullptr)",	L"::Y",					pa);
 	AssertExpr(L"pz->operator[](\"a\")",	L"pz->operator [](\"a\")",		L"::X",					pa);
@@ -230,7 +230,7 @@ Z* pz = nullptr;
 	AssertExpr(L"pz->F(0)",					L"pz->F(0)",					L"__int32",				pa);
 	AssertExpr(L"pz->G(0)",					L"pz->G(0)",					L"__int32",				pa);
 	
-	AssertExpr(L"z.operator->()",			L"z.operator ->()",				L"::Y *",				pa);
+	AssertExpr(L"z.operator->()",			L"z.operator ->()",				L"::Y",					pa);
 	AssertExpr(L"z.operator()(0)",			L"z.operator ()(0)",			L"::X",					pa);
 	AssertExpr(L"z.operator()(nullptr)",	L"z.operator ()(nullptr)",		L"::Y",					pa);
 	AssertExpr(L"z.operator[](\"a\")",		L"z.operator [](\"a\")",		L"::X",					pa);

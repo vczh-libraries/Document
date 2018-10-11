@@ -340,7 +340,7 @@ class ITSYS_CLASS(Ptr)
 protected:
 	TsysConv TestParameterInternal(ITsys* fromType, TsysCV fromCV, TsysRefType fromRefType)override
 	{
-		if (fromType->GetType() == TsysType::Zero) return TsysConv::Direct;
+		if (fromType->GetType() == TsysType::Zero) return TsysConv::NeedConvertion;
 		if (fromType->GetType() == TsysType::Nullptr) return TsysConv::Direct;
 
 		TsysCV toCV;
