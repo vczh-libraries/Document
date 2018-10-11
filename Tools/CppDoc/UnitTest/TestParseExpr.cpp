@@ -248,6 +248,55 @@ Z* pz = nullptr;
 
 TEST_CASE(TestParseExpr_FFA_Qualifier)
 {
+	auto input = LR"(
+struct X
+{
+	int x;
+	int y;
+};
+struct Y
+{
+	double x;
+	double y;
+};
+struct Z
+{
+	X* operator->()const;
+	const Y* operator->();
+	X operator()(int)const;
+	Y operator()(int);
+	X operator[](int)const;
+	Y operator[](int);
+};
+
+Z z;
+const Z cz;
+Z* pz;
+const Z* pcz;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"z.operator->()",			L"z.operator ->()",				L"::Y const *",			pa);
+	AssertExpr(L"z.operator()(0)",			L"z.operator ()(0)",			L"::Y",					pa);
+	AssertExpr(L"z.operator[](0)",			L"z.operator [](0)",			L"::Y",					pa);
+	AssertExpr(L"z->x",						L"z->x",						L"double const &",		pa);
+	AssertExpr(L"z(0)",						L"z(0)",						L"::Y",					pa);
+	AssertExpr(L"z[0",						L"z[0]",						L"::Y",					pa);
+
+	AssertExpr(L"cz.operator->()",			L"cz.operator ->()",			L"::X *",				pa);
+	AssertExpr(L"cz.operator()(0)",			L"cz.operator ()(0)",			L"::X",					pa);
+	AssertExpr(L"cz.operator[](0)",			L"cz.operator [](0)",			L"::X",					pa);
+	AssertExpr(L"cz->x",					L"cz->x",						L"__int32 &",			pa);
+	AssertExpr(L"cz(0)",					L"cz(0)",						L"::X",					pa);
+	AssertExpr(L"cz[0",						L"cz[0]",						L"::X",					pa);
+
+	AssertExpr(L"pz->operator->()",			L"pz->operator ->()",			L"::Y const *",			pa);
+	AssertExpr(L"pz->operator()(0)",		L"pz->operator ()(0)",			L"::Y",					pa);
+	AssertExpr(L"pz->operator[](0)",		L"pz->operator [](0)",			L"::Y",					pa);
+
+	AssertExpr(L"pcz->operator->()",		L"pcz->operator ->()",			L"::X *",				pa);
+	AssertExpr(L"pcz->operator()(0)",		L"pcz->operator ()(0)",			L"::X",					pa);
+	AssertExpr(L"pcz->operator[](0)",		L"pcz->operator [](0)",			L"::X",					pa);
 }
 
 TEST_CASE(TestParseExpr_ArrayAndPointerAccess)
