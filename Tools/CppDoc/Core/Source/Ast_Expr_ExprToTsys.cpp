@@ -331,6 +331,7 @@ public:
 					{
 						if (Add(expandedFuncTypes, { funcType.symbol,entityType }))
 						{
+							funcChoices.Add(choice);
 							counters[(vint)choice]++;
 						}
 					}
