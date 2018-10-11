@@ -364,7 +364,7 @@ public:
 
 					for (vint k = 0; k < argTypes.Count(); k++)
 					{
-						auto choice = paramType->TestParameter(argTypes[k].tsys);
+						auto choice = TestConvert(paramType, argTypes[k].tsys);
 						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
 					}
 

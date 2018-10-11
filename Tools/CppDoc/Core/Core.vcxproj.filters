@@ -122,5 +122,8 @@
     <ClCompile Include="Source\Parser_ResolveSymbol.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TypeSystem_TestParameter.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

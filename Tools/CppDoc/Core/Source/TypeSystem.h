@@ -120,7 +120,6 @@ public:
 	virtual ITsys*				GenericOf(IEnumerable<ITsys*>& params) = 0;
 
 	virtual ITsys*				GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
-	virtual TsysConv			TestParameter(ITsys* fromType) = 0;
 };
 
 /***********************************************************************
@@ -138,5 +137,11 @@ public:
 
 	static Ptr<ITsysAlloc>		Create();
 };
+
+/***********************************************************************
+Helpers
+***********************************************************************/
+
+extern TsysConv					TestConvert(ITsys* toType, ITsys* fromType);
 
 #endif
