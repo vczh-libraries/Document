@@ -246,6 +246,48 @@ Z* pz = nullptr;
 	AssertExpr(L"z[Z()]",					L"z[Z()]",						L"::Y",					pa);
 }
 
+TEST_CASE(TestParseExpr_Field_Qualifier)
+{
+	auto input = LR"(
+struct X
+{
+	int x;
+	int y;
+};
+
+X x;
+X& lx;
+X&& rx;
+
+const X cx;
+const X& clx;
+const X&& crx;
+
+X* px;
+const X* cpx;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"x",						L"x",							L"::X &",				pa);
+	AssertExpr(L"lx",						L"lx",							L"::X &",				pa);
+	AssertExpr(L"rx",						L"rx",							L"::X &",				pa);
+	AssertExpr(L"cx",						L"cx",							L"::X const &",			pa);
+	AssertExpr(L"clx",						L"clx",							L"::X const &",			pa);
+	AssertExpr(L"crx",						L"crx",							L"::X const &",			pa);
+
+	AssertExpr(L"x.x",						L"x.x",							L"__int32 &",			pa);
+	AssertExpr(L"lx.x",						L"lx.x",						L"__int32 &",			pa);
+	AssertExpr(L"rx.x",						L"rx.x",						L"__int32 &",			pa);
+	AssertExpr(L"cx.x",						L"cx.x",						L"__int32 const &",		pa);
+	AssertExpr(L"clx.x",					L"clx.x",						L"__int32 const &",		pa);
+	AssertExpr(L"crx.x",					L"crx.x",						L"__int32 const &",		pa);
+	
+	AssertExpr(L"px",						L"px",							L"::X * &",				pa);
+	AssertExpr(L"cpx",						L"cpx",							L"::X const * &",		pa);
+	AssertExpr(L"px->x",					L"px->x",						L"__int32 &",			pa);
+	AssertExpr(L"cpx->x",					L"cpx->x",						L"__int32 const &",		pa);
+}
+
 TEST_CASE(TestParseExpr_FFA_Qualifier)
 {
 	auto input = LR"(
