@@ -24,12 +24,11 @@ public:
 	Add: Add something to ExprTsysList
 	***********************************************************************/
 
-	static void Add(ExprTsysList& list, const ExprTsysItem& item)
+	static bool Add(ExprTsysList& list, const ExprTsysItem& item)
 	{
-		if (!list.Contains(item))
-		{
-			list.Add(item);
-		}
+		if (list.Contains(item)) return false;
+		list.Add(item);
+		return true;
 	}
 
 	static void Add(ExprTsysList& list, ITsys* tsys)
@@ -287,46 +286,60 @@ public:
 	}
 
 	/***********************************************************************
-	RemoveIllegalFunctions: Remove everything that are not qualified functions
+	FindQualifiedFunctions: Remove everything that are not qualified functions
 	***********************************************************************/
 
-	static void RemoveIllegalFunctions(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
+	static void FindQualifiedFunctions(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
 	{
+		ExprTsysList expandedFuncTypes;
+		List<TsysConv> funcChoices;
+		vint counters[2] = { 0,0 };
+
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
 			auto funcType = funcTypes[i];
-			TsysCV cv;
-			TsysRefType refType;
-			auto entityType = funcType.tsys->GetEntity(cv, refType);
+			auto choice = TestFunctionQualifier(thisCV, thisRef, funcType);
 
-			if (entityType->GetType() == TsysType::Function || IsQualifiedFunction(thisCV, thisRef, funcType))
+			if (choice != TsysConv::Illegal)
 			{
+				TsysCV cv;
+				TsysRefType refType;
+				auto entityType = funcType.tsys->GetEntity(cv, refType);
+
 				if (entityType->GetType() == TsysType::Decl && lookForOp)
 				{
 					CppName opName;
 					opName.name = L"operator ()";
 					ExprTsysList opResult;
 					VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
-					RemoveIllegalFunctions(pa, cv, refType, opResult, false);
-					Add(funcTypes, opResult);
-				}
-				else if (entityType->GetType() == TsysType::Function)
-				{
-					continue;
+					FindQualifiedFunctions(pa, cv, refType, opResult, false);
+
+					vint oldCount = expandedFuncTypes.Count();
+					Add(expandedFuncTypes, opResult);
+					vint newCount = expandedFuncTypes.Count();
+
+					for (vint i = 0; i < (newCount - oldCount); i++)
+					{
+						funcChoices.Add(TsysConv::Direct);
+					}
+					counters[0] += (newCount - oldCount);
 				}
 				else if (entityType->GetType() == TsysType::Ptr)
 				{
 					entityType = entityType->GetElement();
 					if (entityType->GetType() == TsysType::Function)
 					{
-						funcTypes[i].tsys = entityType;
-						continue;
+						if (Add(expandedFuncTypes, { funcType.symbol,entityType }))
+						{
+							counters[(vint)choice]++;
+						}
 					}
 				}
 			}
-
-			funcTypes.RemoveAt(i--);
 		}
+
+		FilterFunctionByQualifier(expandedFuncTypes, funcChoices, counters);
+		CopyFrom(funcTypes, expandedFuncTypes);
 	}
 
 	/***********************************************************************
@@ -590,7 +603,7 @@ public:
 						opName.name = L"operator ->";
 						ExprTsysList opResult;
 						VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
-						RemoveIllegalFunctions(pa, cv, refType, opResult, false);
+						FindQualifiedFunctions(pa, cv, refType, opResult, false);
 						for (vint j = 0; j < opResult.Count(); j++)
 						{
 							auto item = opResult[j];
@@ -642,7 +655,7 @@ public:
 				opName.name = L"operator []";
 				ExprTsysList opResult;
 				VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
-				RemoveIllegalFunctions(pa, cv, refType, opResult, false);
+				FindQualifiedFunctions(pa, cv, refType, opResult, false);
 				Add(funcTypes, opResult);
 			}
 			else if (entityType->GetType() == TsysType::Array)
@@ -682,7 +695,7 @@ public:
 			ExprTsysList funcTypes;
 			ExprToTsys(pa, self->expr, funcTypes);
 
-			RemoveIllegalFunctions(pa, {}, TsysRefType::None, funcTypes, true);
+			FindQualifiedFunctions(pa, {}, TsysRefType::None, funcTypes, true);
 			VisitOverloadedFunction(funcTypes, argTypesList, result);
 		}
 	}
