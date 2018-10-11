@@ -345,23 +345,23 @@ public:
 			{
 				TsysCV cv;
 				TsysRefType refType;
-				auto entity = parentTypes[i]->GetEntity(cv, refType);
+				auto entityType = parentTypes[i]->GetEntity(cv, refType);
 
-				if (entity->GetType() == TsysType::Ptr)
+				if (entityType->GetType() == TsysType::Ptr)
 				{
-					entity = entity->GetElement()->GetEntity(cv, refType);
-					VisitNormalField(pa, self->name, &totalRar, cv, entity, result);
+					entityType = entityType->GetElement()->GetEntity(cv, refType);
+					VisitNormalField(pa, self->name, &totalRar, cv, entityType, result);
 				}
-				else if (entity->GetType() == TsysType::Decl)
+				else if (entityType->GetType() == TsysType::Decl)
 				{
-					if (!visitedDecls.Contains(entity))
+					if (!visitedDecls.Contains(entityType))
 					{
-						visitedDecls.Add(entity);
+						visitedDecls.Add(entityType);
 
 						CppName opName;
 						opName.name = L"operator ->";
 						List<ITsys*> opResult;
-						VisitNormalField(pa, opName, nullptr, cv, entity, opResult);
+						VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
 						for (vint j = 0; j < opResult.Count(); j++)
 						{
 							auto opType = opResult[j];
@@ -417,7 +417,7 @@ public:
 			List<ITsys*> funcTypes;
 			ExprToTsys(pa, self->expr, funcTypes);
 
-			for (vint i = funcTypes.Count() - 1; i >= 0; i--)
+			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
 				auto funcType = funcTypes[i];
 
@@ -427,7 +427,9 @@ public:
 
 				if (entityType->GetType() == TsysType::Decl)
 				{
-					throw 0;
+					CppName opName;
+					opName.name = L"operator ()";
+					VisitNormalField(pa, opName, nullptr, cv, entityType, funcTypes);
 				}
 				else if (entityType->GetType() == TsysType::Ptr)
 				{
@@ -439,7 +441,7 @@ public:
 					}
 				}
 
-				funcTypes.RemoveAt(i);
+				funcTypes.RemoveAt(i--);
 			}
 
 			Array<TsysConv> funcChoices(funcTypes.Count());
