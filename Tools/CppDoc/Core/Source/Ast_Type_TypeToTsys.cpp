@@ -10,10 +10,10 @@ TypeToTsys
 class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
 {
 public:
-	List<ITsys*>&			result;
+	TypeTsysList&			result;
 	ParsingArguments&		pa;
 
-	TypeToTsysVisitor(ParsingArguments& _pa, List<ITsys*>& _result)
+	TypeToTsysVisitor(ParsingArguments& _pa, TypeTsysList& _result)
 		:pa(_pa)
 		, result(_result)
 	{
@@ -131,7 +131,7 @@ public:
 		self->type->Accept(this);
 	}
 
-	void CreateFunctionType(List<ITsys*>* tsyses, vint* tsysIndex, vint level, vint count)
+	void CreateFunctionType(TypeTsysList* tsyses, vint* tsysIndex, vint level, vint count)
 	{
 		if (level == count)
 		{
@@ -155,12 +155,12 @@ public:
 
 	void Visit(FunctionType* self)override
 	{
-		List<ITsys*>* tsyses = nullptr;
+		TypeTsysList* tsyses = nullptr;
 		vint* tsysIndex = nullptr;
 		try
 		{
 			vint count = self->parameters.Count() + 1;
-			tsyses = new List<ITsys*>[count];
+			tsyses = new TypeTsysList[count];
 			if (self->decoratorReturnType)
 			{
 				TypeToTsys(pa, self->decoratorReturnType, tsyses[0]);
@@ -196,7 +196,7 @@ public:
 
 	void Visit(MemberType* self)override
 	{
-		List<ITsys*> types, classTypes;
+		TypeTsysList types, classTypes;
 		TypeToTsys(pa, self->type, types);
 		TypeToTsys(pa, self->classType, classTypes);
 
@@ -265,7 +265,7 @@ public:
 };
 
 // Convert type AST to type system object
-void TypeToTsys(ParsingArguments& pa, Ptr<Type> t, List<ITsys*>& tsys)
+void TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys)
 {
 	if (!t) throw NotConvertableException();
 	TypeToTsysVisitor visitor(pa, tsys);

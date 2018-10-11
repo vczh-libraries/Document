@@ -46,7 +46,7 @@ void AssertType(const WString& input, const WString& log, const WString& logTsys
 
 	try
 	{
-		List<ITsys*> tsys;
+		TypeTsysList tsys;
 		TypeToTsys(pa, type, tsys);
 		TEST_ASSERT(tsys.Count() == 1);
 		auto outputTsys = GenerateToStream([&](StreamWriter& writer)
@@ -87,12 +87,12 @@ void AssertExpr(const WString& input, const WString& log, const WString& logTsys
 
 	try
 	{
-		List<ITsys*> tsys;
+		ExprTsysList tsys;
 		ExprToTsys(pa, expr, tsys);
 		TEST_ASSERT(tsys.Count() == 1);
 		auto outputTsys = GenerateToStream([&](StreamWriter& writer)
 		{
-			Log(tsys[0], writer);
+			Log(tsys[0].tsys, writer);
 		});
 		TEST_ASSERT(outputTsys == logTsys);
 	}

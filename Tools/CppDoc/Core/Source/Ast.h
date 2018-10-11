@@ -123,8 +123,45 @@ Helpers
 struct NotConvertableException {};
 struct IllegalExprException {};
 
+struct ExprTsysItem
+{
+	Symbol*					symbol = nullptr;
+	ITsys*					tsys = nullptr;
+
+	ExprTsysItem() = default;
+	ExprTsysItem(const ExprTsysItem&) = default;
+	ExprTsysItem(ExprTsysItem&&) = default;
+
+	ExprTsysItem(Symbol* _symbol, ITsys* _tsys)
+		:symbol(_symbol), tsys(_tsys)
+	{
+	}
+
+	ExprTsysItem& operator=(const ExprTsysItem&) = default;
+	ExprTsysItem& operator=(ExprTsysItem&&) = default;
+
+	static vint Compare(const ExprTsysItem& a, const ExprTsysItem& b)
+	{
+		if (a.symbol < b.symbol) return -1;
+		if (a.symbol > b.symbol) return 1;
+		if (a.tsys < b.tsys) return -1;
+		if (a.tsys > b.tsys) return 1;
+		return 0;
+	}
+
+	bool operator==	(const ExprTsysItem& item)const { return Compare(*this, item) ==	0; }
+	bool operator!=	(const ExprTsysItem& item)const { return Compare(*this, item) !=	0; }
+	bool operator<	(const ExprTsysItem& item)const { return Compare(*this, item) <		0; }
+	bool operator<=	(const ExprTsysItem& item)const { return Compare(*this, item) <=	0; }
+	bool operator>	(const ExprTsysItem& item)const { return Compare(*this, item) >		0; }
+	bool operator>=	(const ExprTsysItem& item)const { return Compare(*this, item) >=	0; }
+};
+
+using TypeTsysList = List<ITsys*>;
+using ExprTsysList = List<ExprTsysItem>;
+
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
-extern void					TypeToTsys(ParsingArguments& pa, Ptr<Type> t, List<ITsys*>& tsys);
-extern void					ExprToTsys(ParsingArguments& pa, Ptr<Expr> e, List<ITsys*>& tsys);
+extern void					TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys);
+extern void					ExprToTsys(ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys);
 
 #endif

@@ -10,13 +10,26 @@ ExprToTsys
 class ExprToTsysVisitor : public Object, public virtual IExprVisitor
 {
 public:
-	List<ITsys*>&			result;
+	ExprTsysList&			result;
 	ParsingArguments&		pa;
 
-	ExprToTsysVisitor(ParsingArguments& _pa, List<ITsys*>& _result)
+	ExprToTsysVisitor(ParsingArguments& _pa, ExprTsysList& _result)
 		:pa(_pa)
 		, result(_result)
 	{
+	}
+
+	static void Add(ExprTsysList& list, const ExprTsysItem& item)
+	{
+		if (!list.Contains(item))
+		{
+			list.Add(item);
+		}
+	}
+
+	static void Add(ExprTsysList& list, ITsys* tsys)
+	{
+		Add(list, { nullptr,tsys });
 	}
 
 	template<typename TForward>
@@ -50,7 +63,7 @@ public:
 		}
 	}
 
-	static void VisitSymbol(ParsingArguments& pa, Symbol* symbol, bool afterScope, List<ITsys*>& result)
+	static void VisitSymbol(ParsingArguments& pa, Symbol* symbol, bool afterScope, ExprTsysList& result)
 	{
 		ITsys* classScope = nullptr;
 		if (symbol->parent && symbol->parent->decls.Count() > 0)
@@ -70,7 +83,7 @@ public:
 				{
 					bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol, varDecl);
 
-					List<ITsys*> candidates;
+					TypeTsysList candidates;
 					TypeToTsys(pa, varDecl->type, candidates);
 					for (vint k = 0; k < candidates.Count(); k++)
 					{
@@ -89,17 +102,14 @@ public:
 							tsys = tsys->LRefOf();
 						}
 
-						if (!result.Contains(tsys))
-						{
-							result.Add(tsys);
-						}
+						Add(result, { symbol, tsys });
 					}
 				}
 				else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
 				{
 					bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
 
-					List<ITsys*> candidates;
+					TypeTsysList candidates;
 					TypeToTsys(pa, funcDecl->type, candidates);
 					for (vint k = 0; k < candidates.Count(); k++)
 					{
@@ -118,10 +128,7 @@ public:
 							tsys = tsys->PtrOf();
 						}
 
-						if (!result.Contains(tsys))
-						{
-							result.Add(tsys);
-						}
+						Add(result, { symbol, tsys });
 					}
 				}
 				else
@@ -176,7 +183,7 @@ public:
 						reading++;
 					}
 
-					result.Add(pa.tsys->Zero());
+					Add(result, pa.tsys->Zero());
 					return;
 				}
 			NOT_ZERO:
@@ -184,7 +191,7 @@ public:
 				wchar_t _2 = token.reading[token.length - 1];
 				bool u = _1 == L'u' || _1 == L'U' || _2 == L'u' || _2 == L'U';
 				bool l = _1 == L'l' || _1 == L'L' || _2 == L'l' || _2 == L'L';
-				result.Add(pa.tsys->PrimitiveOf({ (u ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{l ? TsysBytes::_8 : TsysBytes::_4} }));
+				Add(result, pa.tsys->PrimitiveOf({ (u ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{l ? TsysBytes::_8 : TsysBytes::_4} }));
 			}
 			return;
 		case CppTokens::FLOAT:
@@ -193,11 +200,11 @@ public:
 				wchar_t _1 = token.reading[token.length - 1];
 				if (_1 == L'f' || _1 == L'F')
 				{
-					result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_4 }));
+					Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_4 }));
 				}
 				else
 				{
-					result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_8 }));
+					Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_8 }));
 				}
 			}
 			return;
@@ -237,17 +244,17 @@ public:
 
 				if ((CppTokens)self->tokens[0].token == CppTokens::CHAR)
 				{
-					result.Add(tsysChar);
+					Add(result, tsysChar);
 				}
 				else
 				{
-					result.Add(tsysChar->CVOf({ false,true,false })->ArrayOf(1));
+					Add(result, tsysChar->CVOf({ false,true,false })->ArrayOf(1));
 				}
 			}
 			return;
 		case CppTokens::EXPR_TRUE:
 		case CppTokens::EXPR_FALSE:
-			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }));
+			Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }));
 			return;
 		}
 		throw IllegalExprException();
@@ -260,7 +267,7 @@ public:
 
 	void Visit(NullptrExpr* self)override
 	{
-		result.Add(pa.tsys->Nullptr());
+		Add(result, pa.tsys->Nullptr());
 	}
 
 	void Visit(ParenthesisExpr* self)override
@@ -288,7 +295,7 @@ public:
 		VisitResolvable(self, true);
 	}
 
-	static void VisitNormalField(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, TsysCV cv, ITsys* entity, List<ITsys*>& result)
+	static void VisitNormalField(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, TsysCV cv, ITsys* entity, ExprTsysList& result)
 	{
 		if (entity->GetType() == TsysType::Decl)
 		{
@@ -299,7 +306,7 @@ public:
 
 			if (rar.values)
 			{
-				List<ITsys*> fieldTypes;
+				ExprTsysList fieldTypes;
 				for (vint j = 0; j < rar.values->resolvedSymbols.Count(); j++)
 				{
 					auto symbol = rar.values->resolvedSymbols[j];
@@ -308,20 +315,48 @@ public:
 
 				for (vint j = 0; j < fieldTypes.Count(); j++)
 				{
-					auto tsys = fieldTypes[j]->CVOf(cv);
-					if (!result.Contains(tsys))
-					{
-						result.Add(tsys);
-					}
+					auto item = fieldTypes[j];
+					item.tsys = item.tsys->CVOf(cv);
+					Add(result, item);
 				}
 			}
+		}
+	}
+
+	static void RemoveIllegalFunctions(ParsingArguments& pa, ExprTsysList& funcTypes, bool lookForOp)
+	{
+		for (vint i = 0; i < funcTypes.Count(); i++)
+		{
+			auto funcType = funcTypes[i];
+
+			TsysCV cv;
+			TsysRefType refType;
+			auto entityType = funcType.tsys->GetEntity(cv, refType);
+
+			if (entityType->GetType() == TsysType::Decl && lookForOp)
+			{
+				CppName opName;
+				opName.name = L"operator ()";
+				VisitNormalField(pa, opName, nullptr, cv, entityType, funcTypes);
+			}
+			else if (entityType->GetType() == TsysType::Ptr)
+			{
+				entityType = entityType->GetElement();
+				if (entityType->GetType() == TsysType::Function)
+				{
+					funcTypes[i].tsys = entityType;
+					continue;
+				}
+			}
+
+			funcTypes.RemoveAt(i--);
 		}
 	}
 
 	void Visit(FieldAccessExpr* self)override
 	{
 		ResolveSymbolResult totalRar;
-		List<ITsys*> parentTypes;
+		ExprTsysList parentTypes;
 		ExprToTsys(pa, self->expr, parentTypes);
 
 		if (self->type == CppFieldAccessType::Dot)
@@ -330,7 +365,7 @@ public:
 			{
 				TsysCV cv;
 				TsysRefType refType;
-				auto entity = parentTypes[i]->GetEntity(cv, refType);
+				auto entity = parentTypes[i].tsys->GetEntity(cv, refType);
 
 				if (self->type == CppFieldAccessType::Dot)
 				{
@@ -345,7 +380,7 @@ public:
 			{
 				TsysCV cv;
 				TsysRefType refType;
-				auto entityType = parentTypes[i]->GetEntity(cv, refType);
+				auto entityType = parentTypes[i].tsys->GetEntity(cv, refType);
 
 				if (entityType->GetType() == TsysType::Ptr)
 				{
@@ -360,19 +395,14 @@ public:
 
 						CppName opName;
 						opName.name = L"operator ->";
-						List<ITsys*> opResult;
+						ExprTsysList opResult;
 						VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
+						RemoveIllegalFunctions(pa, opResult, false);
 						for (vint j = 0; j < opResult.Count(); j++)
 						{
-							auto opType = opResult[j];
-							if (opType->GetType() == TsysType::Ptr)
-							{
-								opType = opType->GetElement();
-								if (opType->GetType() == TsysType::Function)
-								{
-									parentTypes.Add(opType->GetElement());
-								}
-							}
+							auto item = opResult[j];
+							item.tsys = item.tsys->GetElement();
+							Add(parentTypes, item);
 						}
 					}
 				}
@@ -393,37 +423,7 @@ public:
 		}
 	}
 
-	static void RemoveIllegalFunctions(ParsingArguments& pa, List<ITsys*>& funcTypes, bool lookForOp)
-	{
-		for (vint i = 0; i < funcTypes.Count(); i++)
-		{
-			auto funcType = funcTypes[i];
-
-			TsysCV cv;
-			TsysRefType refType;
-			auto entityType = funcType->GetEntity(cv, refType);
-
-			if (entityType->GetType() == TsysType::Decl && lookForOp)
-			{
-				CppName opName;
-				opName.name = L"operator ()";
-				VisitNormalField(pa, opName, nullptr, cv, entityType, funcTypes);
-			}
-			else if (entityType->GetType() == TsysType::Ptr)
-			{
-				entityType = entityType->GetElement();
-				if (entityType->GetType() == TsysType::Function)
-				{
-					funcTypes[i] = entityType;
-					continue;
-				}
-			}
-
-			funcTypes.RemoveAt(i--);
-		}
-	}
-
-	static void VisitOverloadedFunction(List<ITsys*>& funcTypes, List<Ptr<List<ITsys*>>>& argTypesList, List<ITsys*>& result)
+	static void VisitOverloadedFunction(ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result)
 	{
 		Array<TsysConv> funcChoices(funcTypes.Count());
 		vint counters[2] = { 0,0 };
@@ -431,19 +431,19 @@ public:
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
 			auto funcType = funcTypes[i];
-			if (funcType->GetParamCount() == argTypesList.Count())
+			if (funcType.tsys->GetParamCount() == argTypesList.Count())
 			{
 				auto worstChoice = TsysConv::Direct;
 
 				for (vint j = 0; j < argTypesList.Count(); j++)
 				{
-					auto paramType = funcType->GetParam(j);
+					auto paramType = funcType.tsys->GetParam(j);
 					auto& argTypes = *argTypesList[j].Obj();
 					auto bestChoice = TsysConv::Illegal;
 
 					for (vint k = 0; k < argTypes.Count(); k++)
 					{
-						auto choice = paramType->TestParameter(argTypes[k]);
+						auto choice = paramType->TestParameter(argTypes[k].tsys);
 						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
 					}
 
@@ -471,7 +471,7 @@ public:
 				{
 					if ((vint)funcChoices[j] == i)
 					{
-						result.Add(funcTypes[j]->GetElement());
+						Add(result, funcTypes[j].tsys->GetElement());
 					}
 				}
 				return;
@@ -481,14 +481,14 @@ public:
 
 	void Visit(ArrayAccessExpr* self)override
 	{
-		List<Ptr<List<ITsys*>>> argTypesList;
+		List<Ptr<ExprTsysList>> argTypesList;
 		{
-			auto argTypes = MakePtr<List<ITsys*>>();
+			auto argTypes = MakePtr<ExprTsysList>();
 			ExprToTsys(pa, self->index, *argTypes.Obj());
 			argTypesList.Add(argTypes);
 		}
 
-		List<ITsys*> arrayTypes, funcTypes;
+		ExprTsysList arrayTypes, funcTypes;
 		ExprToTsys(pa, self->expr, arrayTypes);
 
 		for (vint i = 0; i < arrayTypes.Count(); i++)
@@ -497,7 +497,7 @@ public:
 
 			TsysCV cv;
 			TsysRefType refType;
-			auto entityType = arrayType->GetEntity(cv, refType);
+			auto entityType = arrayType.tsys->GetEntity(cv, refType);
 
 			if (entityType->GetType() == TsysType::Decl)
 			{
@@ -507,11 +507,11 @@ public:
 			}
 			else if (entityType->GetType() == TsysType::Array)
 			{
-				result.Add(entityType->GetElement());
+				Add(result, entityType->GetElement());
 			}
 			else if (entityType->GetType() == TsysType::Ptr)
 			{
-				result.Add(entityType->GetElement());
+				Add(result, entityType->GetElement());
 			}
 		}
 
@@ -521,21 +521,26 @@ public:
 
 	void Visit(FuncAccessExpr* self)override
 	{
-		List<Ptr<List<ITsys*>>> argTypesList;
+		List<Ptr<ExprTsysList>> argTypesList;
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
-			auto argTypes = MakePtr<List<ITsys*>>();
+			auto argTypes = MakePtr<ExprTsysList>();
 			ExprToTsys(pa, self->arguments[i], *argTypes.Obj());
 			argTypesList.Add(argTypes);
 		}
 
 		if (self->type)
 		{
-			TypeToTsys(pa, self->type, result);
+			TypeTsysList types;
+			TypeToTsys(pa, self->type, types);
+			for (vint i = 0; i < types.Count(); i++)
+			{
+				Add(result, types[i]);
+			}
 		}
 		else if (self->expr)
 		{
-			List<ITsys*> funcTypes;
+			ExprTsysList funcTypes;
 			ExprToTsys(pa, self->expr, funcTypes);
 
 			RemoveIllegalFunctions(pa, funcTypes, true);
@@ -545,7 +550,7 @@ public:
 };
 
 // Resolve expressions to types
-void ExprToTsys(ParsingArguments& pa, Ptr<Expr> e, List<ITsys*>& tsys)
+void ExprToTsys(ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys)
 {
 	if (!e) throw IllegalExprException();
 	ExprToTsysVisitor visitor(pa, tsys);
