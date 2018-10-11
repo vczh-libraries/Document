@@ -31,8 +31,9 @@ public:
 		return true;
 	}
 
-	static void Add(ExprTsysList& list, ITsys* tsys)
+	static void Add(ExprTsysList& list, ITsys* tsys, bool addRRef)
 	{
+		if (addRRef) tsys = tsys->RRefOf();
 		Add(list, { nullptr,tsys });
 	}
 
@@ -44,11 +45,11 @@ public:
 		}
 	}
 
-	static void Add(ExprTsysList& toList, TypeTsysList& fromList)
+	static void Add(ExprTsysList& toList, TypeTsysList& fromList, bool addRRef)
 	{
 		for (vint i = 0; i < fromList.Count(); i++)
 		{
-			Add(toList, fromList[i]);
+			Add(toList, fromList[i], addRRef);
 		}
 	}
 
@@ -381,7 +382,7 @@ public:
 		FilterFunctionByQualifier(funcTypes, funcChoices);
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
-			Add(result, funcTypes[i].tsys->GetElement());
+			Add(result, funcTypes[i].tsys->GetElement(), true);
 		}
 	}
 
@@ -438,7 +439,7 @@ public:
 						reading++;
 					}
 
-					Add(result, pa.tsys->Zero());
+					Add(result, pa.tsys->Zero(), false);
 					return;
 				}
 			NOT_ZERO:
@@ -446,7 +447,7 @@ public:
 				wchar_t _2 = token.reading[token.length - 1];
 				bool u = _1 == L'u' || _1 == L'U' || _2 == L'u' || _2 == L'U';
 				bool l = _1 == L'l' || _1 == L'L' || _2 == L'l' || _2 == L'L';
-				Add(result, pa.tsys->PrimitiveOf({ (u ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{l ? TsysBytes::_8 : TsysBytes::_4} }));
+				Add(result, pa.tsys->PrimitiveOf({ (u ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{l ? TsysBytes::_8 : TsysBytes::_4} }), true);
 			}
 			return;
 		case CppTokens::FLOAT:
@@ -455,11 +456,11 @@ public:
 				wchar_t _1 = token.reading[token.length - 1];
 				if (_1 == L'f' || _1 == L'F')
 				{
-					Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_4 }));
+					Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_4 }), true);
 				}
 				else
 				{
-					Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_8 }));
+					Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_8 }), true);
 				}
 			}
 			return;
@@ -499,17 +500,17 @@ public:
 
 				if ((CppTokens)self->tokens[0].token == CppTokens::CHAR)
 				{
-					Add(result, tsysChar);
+					Add(result, tsysChar, true);
 				}
 				else
 				{
-					Add(result, tsysChar->CVOf({ false,true,false })->ArrayOf(1));
+					Add(result, tsysChar->CVOf({ false,true,false })->ArrayOf(1), true);
 				}
 			}
 			return;
 		case CppTokens::EXPR_TRUE:
 		case CppTokens::EXPR_FALSE:
-			Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }));
+			Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }), true);
 			return;
 		}
 		throw IllegalExprException();
@@ -522,7 +523,7 @@ public:
 
 	void Visit(NullptrExpr* self)override
 	{
-		Add(result, pa.tsys->Nullptr());
+		Add(result, pa.tsys->Nullptr(), false);
 	}
 
 	void Visit(ParenthesisExpr* self)override
@@ -539,7 +540,7 @@ public:
 		{
 			TypeTsysList types;
 			TypeToTsys(pa, self->type, types);
-			Add(result, types);
+			Add(result, types, true);
 		}
 	}
 
@@ -598,7 +599,7 @@ public:
 						for (vint j = 0; j < opResult.Count(); j++)
 						{
 							auto item = opResult[j];
-							item.tsys = item.tsys->GetElement();
+							item.tsys = item.tsys->GetElement()->RRefOf();
 							Add(parentTypes, item);
 						}
 					}
@@ -651,11 +652,11 @@ public:
 			}
 			else if (entityType->GetType() == TsysType::Array)
 			{
-				Add(result, entityType->GetElement());
+				Add(result, entityType->GetElement(), false);
 			}
 			else if (entityType->GetType() == TsysType::Ptr)
 			{
-				Add(result, entityType->GetElement());
+				Add(result, entityType->GetElement(), false);
 			}
 		}
 
@@ -676,7 +677,7 @@ public:
 		{
 			TypeTsysList types;
 			TypeToTsys(pa, self->type, types);
-			Add(result, types);
+			Add(result, types, true);
 		}
 		else if (self->expr)
 		{
