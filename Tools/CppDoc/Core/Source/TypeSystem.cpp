@@ -222,7 +222,7 @@ public:
 		if (fromType->GetType() == TsysType::Zero)
 		{
 			ITsys* toType = this;
-			if (toType->GetType() == TsysType::Ptr) return TsysConv::Exact;
+			if (toType->GetType() == TsysType::Ptr) return TsysConv::TrivalConversion;
 			if (toType->GetType() == TsysType::CV)
 			{
 				toType = toType->GetElement();
