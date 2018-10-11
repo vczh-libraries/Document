@@ -228,7 +228,7 @@ public:
 					bool dR = declType->qualifierRRef;
 
 					if (tC && !dC || tV && !dV || tL && dR || tR || dL) return TsysConv::Illegal;
-					if (tC == dC && tV == dV && tL == dL && tR == dR) return TsysConv::Direct;
+					if (tC == dC && tV == dV && ((tL == dL && tR == dR) || (!dL && !dR))) return TsysConv::Direct;
 					return TsysConv::NeedConvertion;
 				}
 			}
