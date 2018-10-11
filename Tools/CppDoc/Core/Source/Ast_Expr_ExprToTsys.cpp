@@ -21,7 +21,7 @@ public:
 	}
 
 	/***********************************************************************
-	Add
+	Add: Add something to ExprTsysList
 	***********************************************************************/
 
 	static void Add(ExprTsysList& list, const ExprTsysItem& item)
@@ -46,7 +46,7 @@ public:
 	}
 
 	/***********************************************************************
-	IsStaticSymbol
+	IsStaticSymbol: Test if a symbol is a static class member
 	***********************************************************************/
 
 	template<typename TForward>
@@ -81,7 +81,7 @@ public:
 	}
 
 	/***********************************************************************
-	VisitSymbol
+	VisitSymbol: Fill a symbol to ExprTsysList
 	***********************************************************************/
 
 	static void VisitSymbol(ParsingArguments& pa, Symbol* symbol, bool afterScope, ExprTsysList& result)
@@ -161,7 +161,7 @@ public:
 	}
 
 	/***********************************************************************
-	VisitResolvable
+	VisitResolvable: Resolve ResolvableExpr
 	***********************************************************************/
 
 	void VisitResolvable(ResolvableExpr* self, bool afterScope)
@@ -176,7 +176,7 @@ public:
 	}
 
 	/***********************************************************************
-	VisitNormalField
+	VisitNormalField: Fill all members of a name to ExprTsysList
 	***********************************************************************/
 
 	static void VisitNormalField(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, TsysCV cv, ITsys* entity, ExprTsysList& result)
@@ -208,7 +208,7 @@ public:
 	}
 
 	/***********************************************************************
-	TestFunctionQualifier
+	TestFunctionQualifier: Match this pointer's and functions' qualifiers
 	***********************************************************************/
 
 	static TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, const ExprTsysItem& funcType)
@@ -238,7 +238,7 @@ public:
 	}
 
 	/***********************************************************************
-	FilterFunctionByQualifier
+	FilterFunctionByQualifier: Filter functions by their qualifiers
 	***********************************************************************/
 
 	static void FilterFunctionByQualifier(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices, vint (&counters)[2])
@@ -287,7 +287,7 @@ public:
 	}
 
 	/***********************************************************************
-	RemoveIllegalFunctions
+	RemoveIllegalFunctions: Remove everything that are not qualified functions
 	***********************************************************************/
 
 	static void RemoveIllegalFunctions(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
@@ -330,7 +330,67 @@ public:
 	}
 
 	/***********************************************************************
-	VisitDirectField
+	VisitOverloadedFunction: Select good candidates from overloaded functions
+	***********************************************************************/
+
+	static void VisitOverloadedFunction(ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result)
+	{
+		Array<TsysConv> funcChoices(funcTypes.Count());
+		vint counters[2] = { 0,0 };
+
+		for (vint i = 0; i < funcTypes.Count(); i++)
+		{
+			auto funcType = funcTypes[i];
+			if (funcType.tsys->GetParamCount() == argTypesList.Count())
+			{
+				auto worstChoice = TsysConv::Direct;
+
+				for (vint j = 0; j < argTypesList.Count(); j++)
+				{
+					auto paramType = funcType.tsys->GetParam(j);
+					auto& argTypes = *argTypesList[j].Obj();
+					auto bestChoice = TsysConv::Illegal;
+
+					for (vint k = 0; k < argTypes.Count(); k++)
+					{
+						auto choice = paramType->TestParameter(argTypes[k].tsys);
+						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
+					}
+
+					if ((vint)worstChoice < (vint)bestChoice) worstChoice = bestChoice;
+				}
+
+				funcChoices[i] = worstChoice;
+			}
+			else
+			{
+				funcChoices[i] = TsysConv::Illegal;
+			}
+
+			if (funcChoices[i] != TsysConv::Illegal)
+			{
+				counters[(vint)funcChoices[i]]++;
+			}
+		}
+
+		for (vint i = 0; i < sizeof(counters) / sizeof(*counters); i++)
+		{
+			if (counters[i] > 0)
+			{
+				for (vint j = 0; j < funcTypes.Count(); j++)
+				{
+					if ((vint)funcChoices[j] == i)
+					{
+						Add(result, funcTypes[j].tsys->GetElement());
+					}
+				}
+				return;
+			}
+		}
+	}
+
+	/***********************************************************************
+	VisitDirectField: Find variables or qualified functions
 	***********************************************************************/
 
 	static void VisitDirectField(ParsingArguments& pa, ResolveSymbolResult& totalRar, ITsys* parentType, CppName& name, ExprTsysList& result)
@@ -552,62 +612,6 @@ public:
 			if (totalRar.types)
 			{
 				pa.recorder->ExpectValueButType(self->name, totalRar.types);
-			}
-		}
-	}
-
-	static void VisitOverloadedFunction(ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result)
-	{
-		Array<TsysConv> funcChoices(funcTypes.Count());
-		vint counters[2] = { 0,0 };
-
-		for (vint i = 0; i < funcTypes.Count(); i++)
-		{
-			auto funcType = funcTypes[i];
-			if (funcType.tsys->GetParamCount() == argTypesList.Count())
-			{
-				auto worstChoice = TsysConv::Direct;
-
-				for (vint j = 0; j < argTypesList.Count(); j++)
-				{
-					auto paramType = funcType.tsys->GetParam(j);
-					auto& argTypes = *argTypesList[j].Obj();
-					auto bestChoice = TsysConv::Illegal;
-
-					for (vint k = 0; k < argTypes.Count(); k++)
-					{
-						auto choice = paramType->TestParameter(argTypes[k].tsys);
-						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
-					}
-
-					if ((vint)worstChoice < (vint)bestChoice) worstChoice = bestChoice;
-				}
-
-				funcChoices[i] = worstChoice;
-			}
-			else
-			{
-				funcChoices[i] = TsysConv::Illegal;
-			}
-
-			if (funcChoices[i] != TsysConv::Illegal)
-			{
-				counters[(vint)funcChoices[i]]++;
-			}
-		}
-
-		for (vint i = 0; i < sizeof(counters) / sizeof(*counters); i++)
-		{
-			if (counters[i] > 0)
-			{
-				for (vint j = 0; j < funcTypes.Count(); j++)
-				{
-					if ((vint)funcChoices[j] == i)
-					{
-						Add(result, funcTypes[j].tsys->GetElement());
-					}
-				}
-				return;
 			}
 		}
 	}
