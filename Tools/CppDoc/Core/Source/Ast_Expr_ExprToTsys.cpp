@@ -212,6 +212,7 @@ public:
 
 	/***********************************************************************
 	TestFunctionQualifier: Match this pointer's and functions' qualifiers
+		Returns: Exact, TrivalConversion, Illegal
 	***********************************************************************/
 
 	static TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, const ExprTsysItem& funcType)
@@ -232,12 +233,12 @@ public:
 					bool dR = declType->qualifierRRef;
 
 					if (tC && !dC || tV && !dV || tL && dR || tR || dL) return TsysConv::Illegal;
-					if (tC == dC && tV == dV && ((tL == dL && tR == dR) || (!dL && !dR))) return TsysConv::Direct;
-					return TsysConv::NeedConvertion;
+					if (tC == dC && tV == dV && ((tL == dL && tR == dR) || (!dL && !dR))) return TsysConv::Exact;
+					return TsysConv::TrivalConversion;
 				}
 			}
 		}
-		return TsysConv::Direct;
+		return TsysConv::Exact;
 	}
 
 	/***********************************************************************
@@ -318,7 +319,7 @@ public:
 
 					for (vint i = 0; i < (newCount - oldCount); i++)
 					{
-						funcChoices.Add(TsysConv::Direct);
+						funcChoices.Add(TsysConv::Exact);
 					}
 				}
 				else if (entityType->GetType() == TsysType::Ptr)

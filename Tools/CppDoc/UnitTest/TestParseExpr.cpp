@@ -111,7 +111,7 @@ int z2(Z);
 				ASSERT_SYMBOL(0, L"z1", 0, 0, VariableDeclaration, 30, 2)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"z1",			L"z1",					L"::c::Z &",								pa);
+		AssertExpr(L"z1",			L"z1",					L"::c::Z",									pa);
 		TEST_ASSERT(accessed.Count() == 1);
 	}
 	{
@@ -134,7 +134,7 @@ int z2(Z);
 				ASSERT_SYMBOL(1, L"u1", 0, 3, ForwardVariableDeclaration, 9, 11)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"Z::u1",		L"Z :: u1",				L"::a::X::Y &",								pa);
+		AssertExpr(L"Z::u1",		L"Z :: u1",				L"::a::X::Y",								pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -210,14 +210,14 @@ Z* pz = nullptr;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(L"pz->x",					L"pz->x",						L"bool &",				pa);
-	AssertExpr(L"pz->y",					L"pz->y",						L"bool &",				pa);
+	AssertExpr(L"pz->x",					L"pz->x",						L"bool",				pa);
+	AssertExpr(L"pz->y",					L"pz->y",						L"bool",				pa);
 	AssertExpr(L"pz->F",					L"pz->F",						L"__int32 (double) *",	pa);
 	AssertExpr(L"pz->G",					L"pz->G",						L"__int32 (void *) *",	pa);
 	AssertExpr(L"pz->operator->",			L"pz->operator ->",				L"::Y () *",			pa);
 
-	AssertExpr(L"z.x",						L"z.x",							L"bool &",				pa);
-	AssertExpr(L"z.y",						L"z.y",							L"bool &",				pa);
+	AssertExpr(L"z.x",						L"z.x",							L"bool",				pa);
+	AssertExpr(L"z.y",						L"z.y",							L"bool",				pa);
 	AssertExpr(L"z.F",						L"z.F",							L"__int32 (double) *",	pa);
 	AssertExpr(L"z.G",						L"z.G",							L"__int32 (void *) *",	pa);
 	AssertExpr(L"z.operator->",				L"z.operator ->",				L"::Y () *",			pa);
@@ -238,8 +238,8 @@ Z* pz = nullptr;
 	AssertExpr(L"z.F(0)",					L"z.F(0)",						L"__int32",				pa);
 	AssertExpr(L"z.G(0)",					L"z.G(0)",						L"__int32",				pa);
 	
-	AssertExpr(L"z->x",						L"z->x",						L"__int32 &",			pa);
-	AssertExpr(L"z->y",						L"z->y",						L"__int32 &",			pa);
+	AssertExpr(L"z->x",						L"z->x",						L"__int32",				pa);
+	AssertExpr(L"z->y",						L"z->y",						L"__int32",				pa);
 	AssertExpr(L"z(0)",						L"z(0)",						L"::X",					pa);
 	AssertExpr(L"z(nullptr)",				L"z(nullptr)",					L"::Y",					pa);
 	AssertExpr(L"z[\"a\"]",					L"z[\"a\"]",					L"::X",					pa);
@@ -268,24 +268,24 @@ const X* cpx;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(L"x",						L"x",							L"::X &",				pa);
-	AssertExpr(L"lx",						L"lx",							L"::X &",				pa);
-	AssertExpr(L"rx",						L"rx",							L"::X &",				pa);
-	AssertExpr(L"cx",						L"cx",							L"::X const &",			pa);
-	AssertExpr(L"clx",						L"clx",							L"::X const &",			pa);
-	AssertExpr(L"crx",						L"crx",							L"::X const &",			pa);
+	AssertExpr(L"x",						L"x",							L"::X",					pa);
+	AssertExpr(L"lx",						L"lx",							L"::X",					pa);
+	AssertExpr(L"rx",						L"rx",							L"::X",					pa);
+	AssertExpr(L"cx",						L"cx",							L"::X const",			pa);
+	AssertExpr(L"clx",						L"clx",							L"::X const",			pa);
+	AssertExpr(L"crx",						L"crx",							L"::X const",			pa);
 
-	AssertExpr(L"x.x",						L"x.x",							L"__int32 &",			pa);
-	AssertExpr(L"lx.x",						L"lx.x",						L"__int32 &",			pa);
-	AssertExpr(L"rx.x",						L"rx.x",						L"__int32 &",			pa);
-	AssertExpr(L"cx.x",						L"cx.x",						L"__int32 const &",		pa);
-	AssertExpr(L"clx.x",					L"clx.x",						L"__int32 const &",		pa);
-	AssertExpr(L"crx.x",					L"crx.x",						L"__int32 const &",		pa);
+	AssertExpr(L"x.x",						L"x.x",							L"__int32",				pa);
+	AssertExpr(L"lx.x",						L"lx.x",						L"__int32",				pa);
+	AssertExpr(L"rx.x",						L"rx.x",						L"__int32",				pa);
+	AssertExpr(L"cx.x",						L"cx.x",						L"__int32 const",		pa);
+	AssertExpr(L"clx.x",					L"clx.x",						L"__int32 const",		pa);
+	AssertExpr(L"crx.x",					L"crx.x",						L"__int32 const",		pa);
 	
-	AssertExpr(L"px",						L"px",							L"::X * &",				pa);
-	AssertExpr(L"cpx",						L"cpx",							L"::X const * &",		pa);
-	AssertExpr(L"px->x",					L"px->x",						L"__int32 &",			pa);
-	AssertExpr(L"cpx->x",					L"cpx->x",						L"__int32 const &",		pa);
+	AssertExpr(L"px",						L"px",							L"::X *",				pa);
+	AssertExpr(L"cpx",						L"cpx",							L"::X const *",			pa);
+	AssertExpr(L"px->x",					L"px->x",						L"__int32",				pa);
+	AssertExpr(L"cpx->x",					L"cpx->x",						L"__int32 const",		pa);
 }
 
 TEST_CASE(TestParseExpr_FFA_Qualifier)
@@ -328,42 +328,42 @@ const Z* const pcz;
 	AssertExpr(L"z.operator->()",			L"z.operator ->()",				L"::Y const *",			pa);
 	AssertExpr(L"z.operator()(0)",			L"z.operator ()(0)",			L"::Y",					pa);
 	AssertExpr(L"z.operator[](0)",			L"z.operator [](0)",			L"::Y",					pa);
-	AssertExpr(L"z->x",						L"z->x",						L"double const &",		pa);
+	AssertExpr(L"z->x",						L"z->x",						L"double const",		pa);
 	AssertExpr(L"z(0)",						L"z(0)",						L"::Y",					pa);
 	AssertExpr(L"z[0]",						L"z[0]",						L"::Y",					pa);
 
 	AssertExpr(L"cz.operator->()",			L"cz.operator ->()",			L"::X *",				pa);
 	AssertExpr(L"cz.operator()(0)",			L"cz.operator ()(0)",			L"::X",					pa);
 	AssertExpr(L"cz.operator[](0)",			L"cz.operator [](0)",			L"::X",					pa);
-	AssertExpr(L"cz->x",					L"cz->x",						L"__int32 &",			pa);
+	AssertExpr(L"cz->x",					L"cz->x",						L"__int32",				pa);
 	AssertExpr(L"cz(0)",					L"cz(0)",						L"::X",					pa);
 	AssertExpr(L"cz[0]",					L"cz[0]",						L"::X",					pa);
 
 	AssertExpr(L"lz.operator->()",			L"lz.operator ->()",			L"::Y const *",			pa);
 	AssertExpr(L"lz.operator()(0)",			L"lz.operator ()(0)",			L"::Y",					pa);
 	AssertExpr(L"lz.operator[](0)",			L"lz.operator [](0)",			L"::Y",					pa);
-	AssertExpr(L"lz->x",					L"lz->x",						L"double const &",		pa);
+	AssertExpr(L"lz->x",					L"lz->x",						L"double const",		pa);
 	AssertExpr(L"lz(0)",					L"lz(0)",						L"::Y",					pa);
 	AssertExpr(L"lz[0]",					L"lz[0]",						L"::Y",					pa);
 
 	AssertExpr(L"lcz.operator->()",			L"lcz.operator ->()",			L"::X *",				pa);
 	AssertExpr(L"lcz.operator()(0)",		L"lcz.operator ()(0)",			L"::X",					pa);
 	AssertExpr(L"lcz.operator[](0)",		L"lcz.operator [](0)",			L"::X",					pa);
-	AssertExpr(L"lcz->x",					L"lcz->x",						L"__int32 &",			pa);
+	AssertExpr(L"lcz->x",					L"lcz->x",						L"__int32",				pa);
 	AssertExpr(L"lcz(0)",					L"lcz(0)",						L"::X",					pa);
 	AssertExpr(L"lcz[0]",					L"lcz[0]",						L"::X",					pa);
 
 	AssertExpr(L"rz.operator->()",			L"rz.operator ->()",			L"::Y const *",			pa);
 	AssertExpr(L"rz.operator()(0)",			L"rz.operator ()(0)",			L"::Y",					pa);
 	AssertExpr(L"rz.operator[](0)",			L"rz.operator [](0)",			L"::Y",					pa);
-	AssertExpr(L"rz->x",					L"rz->x",						L"double const &",		pa);
+	AssertExpr(L"rz->x",					L"rz->x",						L"double const",		pa);
 	AssertExpr(L"rz(0)",					L"rz(0)",						L"::Y",					pa);
 	AssertExpr(L"rz[0]",					L"rz[0]",						L"::Y",					pa);
 
 	AssertExpr(L"rcz.operator->()",			L"rcz.operator ->()",			L"::X *",				pa);
 	AssertExpr(L"rcz.operator()(0)",		L"rcz.operator ()(0)",			L"::X",					pa);
 	AssertExpr(L"rcz.operator[](0)",		L"rcz.operator [](0)",			L"::X",					pa);
-	AssertExpr(L"rcz->x",					L"rcz->x",						L"__int32 &",			pa);
+	AssertExpr(L"rcz->x",					L"rcz->x",						L"__int32",				pa);
 	AssertExpr(L"rcz(0)",					L"rcz(0)",						L"::X",					pa);
 	AssertExpr(L"rcz[0]",					L"rcz[0]",						L"::X",					pa);
 
