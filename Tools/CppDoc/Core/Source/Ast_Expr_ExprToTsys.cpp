@@ -130,7 +130,7 @@ public:
 						{
 							if (tsys->GetType() == TsysType::RRef)
 							{
-								tsys = tsys->GetElement();
+								tsys = tsys->GetElement()->LRefOf();
 							}
 							tsys = tsys->CVOf(addedCV);
 						}
@@ -233,7 +233,7 @@ public:
 					bool tR = thisRef == TsysRefType::RRef;
 					bool dR = declType->qualifierRRef;
 
-					if (tC && !dC || tV && !dV || tL && dR || tR || dL) return TsysConv::Illegal;
+					if (tC && !dC || tV && !dV || tL && dR || tR && dL) return TsysConv::Illegal;
 					if (tC == dC && tV == dV && ((tL == dL && tR == dR) || (!dL && !dR))) return TsysConv::Exact;
 					return TsysConv::TrivalConversion;
 				}
