@@ -151,6 +151,11 @@ TEST_CASE(TestTypeConvert_StandardConversion)
 	TEST_CONV(char, double);
 	TEST_CONV(double, char);
 
+	TEST_CONV(int, double&&);
+	TEST_CONV(double, int&&);
+	TEST_CONV(char, double&&);
+	TEST_CONV(double, char&&);
+
 	TEST_CONV(int(*)(), void*);
 	TEST_CONV(int*, void*);
 	TEST_CONV(const int*, const void*);
@@ -181,6 +186,11 @@ TEST_CASE(TestTypeConvert_Illegal)
 	TEST_CONV_(int*, int[]);
 	TEST_CONV(short&, int&);
 	TEST_CONV(short*, int*);
+
+	TEST_CONV(const int&, double&&);
+	TEST_CONV(const double&, int&&);
+	TEST_CONV(const char&, double&&);
+	TEST_CONV(const double&, char&&);
 #undef TEST_CONV
 #undef TEST_CONV_
 }
