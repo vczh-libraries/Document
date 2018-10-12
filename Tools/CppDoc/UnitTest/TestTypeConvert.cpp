@@ -33,29 +33,51 @@ void AssertTypeConvert(const WString fromCppType, const WString& toCppType, Tsys
 	AssertTypeConvert(pa, fromCppType, toCppType, conv);
 }
 
+#pragma warning (push)
+#pragma warning (disable: 4076)
+#pragma warning (disable: 4244)
+
+template<typename TFrom, typename TTo>
+struct RunTypeConvert
+{
+	using TFromEntity = typename RemoveReference<TFrom>::Type;
+
+	static void Test(...);
+	static int Test(TTo);
+	static TFromEntity entity;
+	static const decltype(Test(static_cast<TFrom>(entity))) test = 0;
+};
+
+template<typename TFrom, typename TTo>
+struct RunTypeConvertFail
+{
+	using TFromEntity = typename RemoveReference<TFrom>::Type;
+
+	static int Test(...);
+	static void Test(TTo);
+	static TFromEntity entity;
+	static const decltype(Test(static_cast<TFrom>(entity))) test = 0;
+};
+
 TEST_CASE(TestTypeConvert_Exact)
 {
-#define TEST_CONV(FROM, TO) AssertTypeConvert(L#FROM, L#TO, TsysConv::Exact)
+#define TEST_CONV(FROM, TO) RunTypeConvert<FROM, TO>::test, AssertTypeConvert(L#FROM, L#TO, TsysConv::Exact)
 	TEST_CONV(int, int);
-	TEST_CONV(int, constexpr int);
 	TEST_CONV(int, const int);
 	TEST_CONV(int, volatile int);
-	TEST_CONV(int, constexpr const volatile int);
+	TEST_CONV(int, const volatile int);
 
 	TEST_CONV(int&, int);
-	TEST_CONV(int&, constexpr int);
 	TEST_CONV(int&, const int);
 	TEST_CONV(int&, volatile int);
-	TEST_CONV(int&, constexpr const volatile int);
+	TEST_CONV(int&, const volatile int);
 
 	TEST_CONV(const int&&, int);
-	TEST_CONV(const int&&, constexpr int);
 	TEST_CONV(const int&&, const int);
 	TEST_CONV(const int&&, volatile int);
-	TEST_CONV(const int&&, constexpr const volatile int);
+	TEST_CONV(const int&&, const volatile int);
 
 	TEST_CONV(int[10], int*);
-	TEST_CONV(int[10], int*constexpr);
 	TEST_CONV(int[10], int*const);
 	TEST_CONV(int[10], int*volatile);
 
@@ -66,26 +88,21 @@ TEST_CASE(TestTypeConvert_Exact)
 
 TEST_CASE(TestTypeConvert_TrivalConversion)
 {
-#define TEST_CONV(FROM, TO) AssertTypeConvert(L#FROM, L#TO, TsysConv::TrivalConversion)
-	TEST_CONV(int*, constexpr int*);
+#define TEST_CONV(FROM, TO) RunTypeConvert<FROM, TO>::test, AssertTypeConvert(L#FROM, L#TO, TsysConv::TrivalConversion)
 	TEST_CONV(int*, const int*);
 	TEST_CONV(int*, volatile int*);
-	TEST_CONV(int*, constexpr const volatile int*);
-	TEST_CONV(int*, constexpr const volatile int* constexpr const volatile);
+	TEST_CONV(int*, const volatile int*);
+	TEST_CONV(int*, const volatile int* const volatile);
 
-	TEST_CONV(int&, constexpr int&);
 	TEST_CONV(int&, const int&);
 	TEST_CONV(int&, volatile int&);
-	TEST_CONV(int&, constexpr const volatile int&);
+	TEST_CONV(int&, const volatile int&);
 
-	TEST_CONV(int&&, constexpr int&&);
 	TEST_CONV(int&&, const int&&);
 	TEST_CONV(int&&, volatile int&&);
-	TEST_CONV(int&&, constexpr const volatile int&&);
+	TEST_CONV(int&&, const volatile int&&);
 
-	TEST_CONV(int&&, constexpr int&);
 	TEST_CONV(int&&, const int&);
-	TEST_CONV(int&&, constexpr const volatile int&);
 
 	TEST_CONV(char[10], const char*volatile);
 	TEST_CONV(char(&)[10], const char(&)[10]);
@@ -94,7 +111,7 @@ TEST_CASE(TestTypeConvert_TrivalConversion)
 
 TEST_CASE(TestTypeConvert_IntegralPromotion)
 {
-#define TEST_CONV(FROM, TO) AssertTypeConvert(L#FROM, L#TO, TsysConv::IntegralPromotion)
+#define TEST_CONV(FROM, TO) RunTypeConvert<FROM, TO>::test, AssertTypeConvert(L#FROM, L#TO, TsysConv::IntegralPromotion)
 	TEST_CONV(short, int);
 	TEST_CONV(short, unsigned int);
 	TEST_CONV(unsigned short, int);
@@ -123,7 +140,7 @@ TEST_CASE(TestTypeConvert_IntegralPromotion)
 
 TEST_CASE(TestTypeConvert_StandardConversion)
 {
-#define TEST_CONV(FROM, TO) AssertTypeConvert(L#FROM, L#TO, TsysConv::StandardConversion)
+#define TEST_CONV(FROM, TO) RunTypeConvert<FROM, TO>::test, AssertTypeConvert(L#FROM, L#TO, TsysConv::StandardConversion)
 	TEST_CONV(signed int, unsigned int);
 	TEST_CONV(unsigned int, signed int);
 	TEST_CONV(signed char, unsigned char);
@@ -149,13 +166,14 @@ TEST_CASE(TestTypeConvert_StandardConversion)
 
 TEST_CASE(TestTypeConvert_UserDefinedConversion)
 {
-#define TEST_CONV(FROM, TO) AssertTypeConvert(L#FROM, L#TO, TsysConv::UserDefinedConversion)
+#define TEST_CONV(FROM, TO) RunTypeConvert<FROM, TO>::test, AssertTypeConvert(L#FROM, L#TO, TsysConv::UserDefinedConversion)
 #undef TEST_CONV
 }
 
 TEST_CASE(TestTypeConvert_Illegal)
 {
-#define TEST_CONV(FROM, TO) AssertTypeConvert(L#FROM, L#TO, TsysConv::Illegal)
+#define TEST_CONV_(FROM, TO) AssertTypeConvert(L#FROM, L#TO, TsysConv::Illegal)
+#define TEST_CONV(FROM, TO) RunTypeConvertFail<FROM, TO>::test, TEST_CONV_(FROM, TO)
 	TEST_CONV(const int&, int&);
 	TEST_CONV(volatile int&, int&);
 	TEST_CONV(const int&, volatile int&);
@@ -166,8 +184,11 @@ TEST_CASE(TestTypeConvert_Illegal)
 	TEST_CONV(void*, int*);
 	TEST_CONV(const void*, int*);
 	TEST_CONV(const int*, void*);
-	TEST_CONV(int*, int[]);
+	TEST_CONV_(int*, int[]);
 	TEST_CONV(short&, int&);
 	TEST_CONV(short*, int*);
 #undef TEST_CONV
+#undef TEST_CONV_
 }
+
+#pragma warning (push)
