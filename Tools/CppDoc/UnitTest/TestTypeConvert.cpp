@@ -27,12 +27,6 @@ void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WS
 	TEST_ASSERT(output == conv);
 }
 
-void AssertTypeConvert(const WString fromCppType, const WString& toCppType, TsysConv conv)
-{
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
-	AssertTypeConvert(pa, fromCppType, toCppType, conv);
-}
-
 #pragma warning (push)
 #pragma warning (disable: 4076)
 #pragma warning (disable: 4244)
@@ -59,9 +53,15 @@ struct RunTypeConvertFail
 	static const decltype(Test(static_cast<TFrom>(entity))) test = 0;
 };
 
+#define TEST_DECL(SOMETHING) SOMETHING auto input = L#SOMETHING
+#define TEST_CONV_TYPE_(FROM, TO, CONV) AssertTypeConvert(pa, L#FROM, L#TO, TsysConv::CONV)
+#define TEST_CONV_TYPE(FROM, TO, CONV) RunTypeConvert<FROM, TO>::test, TEST_CONV_TYPE_(FROM, TO, CONV)
+#define TEST_CONV_TYPE_FAIL(FROM, TO, CONV) RunTypeConvertFail<FROM, TO>::test, TEST_CONV_TYPE_(FROM, TO, CONV)
+
 TEST_CASE(TestTypeConvert_Exact)
 {
-#define TEST_CONV(FROM, TO) RunTypeConvert<FROM, TO>::test, AssertTypeConvert(L#FROM, L#TO, TsysConv::Exact)
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, Exact)
 	TEST_CONV(int, int);
 	TEST_CONV(int, const int);
 	TEST_CONV(int, volatile int);
@@ -88,7 +88,8 @@ TEST_CASE(TestTypeConvert_Exact)
 
 TEST_CASE(TestTypeConvert_TrivalConversion)
 {
-#define TEST_CONV(FROM, TO) RunTypeConvert<FROM, TO>::test, AssertTypeConvert(L#FROM, L#TO, TsysConv::TrivalConversion)
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, TrivalConversion)
 	TEST_CONV(int*, const int*);
 	TEST_CONV(int*, volatile int*);
 	TEST_CONV(int*, const volatile int*);
@@ -111,7 +112,8 @@ TEST_CASE(TestTypeConvert_TrivalConversion)
 
 TEST_CASE(TestTypeConvert_IntegralPromotion)
 {
-#define TEST_CONV(FROM, TO) RunTypeConvert<FROM, TO>::test, AssertTypeConvert(L#FROM, L#TO, TsysConv::IntegralPromotion)
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, IntegralPromotion)
 	TEST_CONV(short, int);
 	TEST_CONV(short, unsigned int);
 	TEST_CONV(unsigned short, int);
@@ -140,7 +142,8 @@ TEST_CASE(TestTypeConvert_IntegralPromotion)
 
 TEST_CASE(TestTypeConvert_StandardConversion)
 {
-#define TEST_CONV(FROM, TO) RunTypeConvert<FROM, TO>::test, AssertTypeConvert(L#FROM, L#TO, TsysConv::StandardConversion)
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, StandardConversion)
 	TEST_CONV(signed int, unsigned int);
 	TEST_CONV(unsigned int, signed int);
 	TEST_CONV(signed char, unsigned char);
@@ -165,14 +168,15 @@ TEST_CASE(TestTypeConvert_StandardConversion)
 
 TEST_CASE(TestTypeConvert_UserDefinedConversion)
 {
-#define TEST_CONV(FROM, TO) RunTypeConvert<FROM, TO>::test, AssertTypeConvert(L#FROM, L#TO, TsysConv::UserDefinedConversion)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, UserDefinedConversion)
 #undef TEST_CONV
 }
 
 TEST_CASE(TestTypeConvert_Illegal)
 {
-#define TEST_CONV_(FROM, TO) AssertTypeConvert(L#FROM, L#TO, TsysConv::Illegal)
-#define TEST_CONV(FROM, TO) RunTypeConvertFail<FROM, TO>::test, TEST_CONV_(FROM, TO)
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+#define TEST_CONV_(FROM, TO) TEST_CONV_TYPE_(FROM, TO, Illegal)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
 	TEST_CONV(const int&, int&);
 	TEST_CONV(volatile int&, int&);
 	TEST_CONV(const int&, volatile int&);
@@ -194,5 +198,58 @@ TEST_CASE(TestTypeConvert_Illegal)
 #undef TEST_CONV
 #undef TEST_CONV_
 }
+
+TEST_CASE(TestTypeConvert_Inheritance)
+{
+	TEST_DECL(
+		class Base {};
+		class Derived : public Base {};
+	);
+	COMPILE_PROGRAM(program, pa, input);
+
+	{
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, StandardConversion)
+		//TEST_CONV(Derived*, Base*);
+		//TEST_CONV(Derived&, Base&);
+		//TEST_CONV(Derived&&, Base&&);
+
+		//TEST_CONV(const Derived*, const Base*);
+		//TEST_CONV(const Derived&, const Base&);
+		//TEST_CONV(const Derived&&, const Base&&);
+
+		//TEST_CONV(Derived*, const Base*);
+		//TEST_CONV(Derived&, const Base&);
+		//TEST_CONV(Derived&&, const Base&&);
+#undef TEST_CONV
+	}
+
+	{
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+		TEST_CONV(Base*, Derived*);
+		TEST_CONV(Base&, Derived&);
+		TEST_CONV(Base&&, Derived&&);
+
+		TEST_CONV(const Base*, const Derived*);
+		TEST_CONV(const Base&, const Derived&);
+		TEST_CONV(const Base&&, const Derived&&);
+
+		TEST_CONV(const Base*, Derived*);
+		TEST_CONV(const Base&, Derived&);
+		TEST_CONV(const Base&&, Derived&&);
+
+		TEST_CONV(const Derived*, Base*);
+		TEST_CONV(const Derived&, Base&);
+		TEST_CONV(const Derived&&, Base&&);
+
+		TEST_CONV(Base*, const Derived*);
+		TEST_CONV(Base&, const Derived&);
+		TEST_CONV(Base&&, const Derived&&);
+#undef TEST_CONV
+	}
+}
+
+#undef TEST_DECL
+#undef TEST_CONV_TYPE_
+#undef TEST_CONV_TYPE
 
 #pragma warning (push)
