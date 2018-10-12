@@ -54,7 +54,11 @@ namespace TestConvert_Helpers
 		auto toEntity = toType->GetEntity(toCV, toRef);
 		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
-		switch (toRef)
+		if (toRef == TsysRefType::LRef && (toCV.isConstExpr || toCV.isConst))
+		{
+			fromLRP = true;
+		}
+		else switch (toRef)
 		{
 		case TsysRefType::LRef:
 			switch (fromRef)
@@ -126,6 +130,14 @@ namespace TestConvert_Helpers
 		TsysRefType toRef, fromRef;
 		auto toEntity = toType->GetEntity(toCV, toRef);
 		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
+
+		if (toRef == TsysRefType::LRef)
+		{
+			if (toCV.isConstExpr || toCV.isConst)
+			{
+				return true;
+			}
+		}
 
 		if (toRef == TsysRefType::LRef || fromRef == TsysRefType::LRef)
 		{

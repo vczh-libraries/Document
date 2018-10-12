@@ -83,6 +83,10 @@ TEST_CASE(TestTypeConvert_TrivalConversion)
 	TEST_CONV(int&&, volatile int&&);
 	TEST_CONV(int&&, constexpr const volatile int&&);
 
+	TEST_CONV(int&&, constexpr int&);
+	TEST_CONV(int&&, const int&);
+	TEST_CONV(int&&, constexpr const volatile int&);
+
 	TEST_CONV(char[10], const char*volatile);
 	TEST_CONV(char(&)[10], const char(&)[10]);
 #undef TEST_CONV
@@ -152,5 +156,18 @@ TEST_CASE(TestTypeConvert_UserDefinedConversion)
 TEST_CASE(TestTypeConvert_Illegal)
 {
 #define TEST_CONV(FROM, TO) AssertTypeConvert(L#FROM, L#TO, TsysConv::Illegal)
+	TEST_CONV(const int&, int&);
+	TEST_CONV(volatile int&, int&);
+	TEST_CONV(const int&, volatile int&);
+	TEST_CONV(const int*, int*);
+	TEST_CONV(volatile int*, int*);
+	TEST_CONV(const int*, volatile int*);
+
+	TEST_CONV(void*, int*);
+	TEST_CONV(const void*, int*);
+	TEST_CONV(const int*, void*);
+	TEST_CONV(int*, int[]);
+	TEST_CONV(short&, int&);
+	TEST_CONV(short*, int*);
 #undef TEST_CONV
 }
