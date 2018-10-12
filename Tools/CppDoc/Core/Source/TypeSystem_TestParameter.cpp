@@ -9,13 +9,14 @@ namespace TestConvert_Helpers
 
 		auto toP = toType->GetPrimitive();
 		auto fromP = fromType->GetPrimitive();
-		if (toP.type == fromP.type ||
-			(toP.type == TsysPrimitiveType::SInt && fromP.type == TsysPrimitiveType::UInt) ||
-			(toP.type == TsysPrimitiveType::UInt && fromP.type == TsysPrimitiveType::SInt))
-		{
-			return toP.bytes > fromP.bytes;
-		}
-		return false;
+
+		if (toP.type == TsysPrimitiveType::Void) return false;
+		if (fromP.type == TsysPrimitiveType::Void) return false;
+
+		bool toF = toP.type == TsysPrimitiveType::Float;
+		bool fromF = fromP.type == TsysPrimitiveType::Float;
+		if (toF != fromF) return false;
+		return toP.bytes > fromP.bytes;
 	}
 
 	bool IsNumericConversion(ITsys* toType, ITsys* fromType)
@@ -111,6 +112,23 @@ namespace TestConvert_Helpers
 
 		return false;
 	}
+
+	bool IsEntityConversionAllowed(ITsys*& toType, ITsys*& fromType)
+	{
+		TsysCV toCV, fromCV;
+		TsysRefType toRef, fromRef;
+		auto toEntity = toType->GetEntity(toCV, toRef);
+		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
+
+		if (toRef == TsysRefType::LRef || fromRef == TsysRefType::LRef)
+		{
+			return false;
+		}
+
+		toType = toEntity;
+		fromType = fromEntity;
+		return true;
+	}
 }
 using namespace TestConvert_Helpers;
 
@@ -154,27 +172,12 @@ TsysConv TestConvert(ITsys* toType, ITsys* fromType)
 		fromType = fromType->GetElement();
 	}
 
-	//if (IsCVMatch(toType, fromType, &IsNumericPromotion)) return TsysConv::IntegralPromotion;
-	//if (IsCVMatch(toType, fromType, &IsNumericConversion)) return TsysConv::StandardConversion;
+	if (!IsEntityConversionAllowed(toType, fromType))
+	{
+		return TsysConv::Illegal;
+	}
 
-	//if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Ptr)
-	//{
-	//	if (IsCVMatch(toType->GetElement(), fromType->GetElement(), [](ITsys* toType, ITsys* fromType)
-	//	{
-	//		if (toType->GetType() == TsysType::Primitive && toType->GetPrimitive().type == TsysPrimitiveType::Void)
-	//		{
-	//			if (fromType->GetType() == TsysType::Member)
-	//			{
-	//				return false;
-	//			}
-	//			return true;
-	//		}
-	//		return false;
-	//	}))
-	//	{
-	//		return TsysConv::StandardConversion;
-	//	}
-	//}
-
+	if (IsNumericPromotion(toType, fromType)) return TsysConv::IntegralPromotion;
+	if (IsNumericConversion(toType, fromType)) return TsysConv::StandardConversion;
 	return TsysConv::Illegal;
 }

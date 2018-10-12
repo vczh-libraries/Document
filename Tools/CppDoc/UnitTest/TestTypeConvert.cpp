@@ -98,6 +98,22 @@ TEST_CASE(TestTypeConvert_IntegralPromotion)
 	TEST_CONV(char, char16_t);
 	TEST_CONV(char16_t, unsigned char32_t);
 	TEST_CONV(float, double);
+
+	TEST_CONV(const short&&, int);
+	TEST_CONV(const short&&, unsigned int);
+	TEST_CONV(const unsigned short&&, int);
+	TEST_CONV(const char, wchar_t);
+	TEST_CONV(const char, char16_t);
+	TEST_CONV(const char16_t, unsigned char32_t);
+	TEST_CONV(const float, double);
+
+	TEST_CONV(short, const int&&);
+	TEST_CONV(short, const unsigned int&&);
+	TEST_CONV(unsigned short, const int&&);
+	TEST_CONV(char, const wchar_t);
+	TEST_CONV(char, const char16_t);
+	TEST_CONV(char16_t, const unsigned char32_t);
+	TEST_CONV(float&&, const double&&);
 #undef TEST_CONV
 }
 
