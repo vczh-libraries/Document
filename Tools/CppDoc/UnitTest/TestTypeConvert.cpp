@@ -166,12 +166,6 @@ TEST_CASE(TestTypeConvert_StandardConversion)
 #undef TEST_CONV
 }
 
-TEST_CASE(TestTypeConvert_UserDefinedConversion)
-{
-#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, UserDefinedConversion)
-#undef TEST_CONV
-}
-
 TEST_CASE(TestTypeConvert_Illegal)
 {
 	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
@@ -209,17 +203,17 @@ TEST_CASE(TestTypeConvert_Inheritance)
 
 	{
 #define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, StandardConversion)
-		//TEST_CONV(Derived*, Base*);
-		//TEST_CONV(Derived&, Base&);
-		//TEST_CONV(Derived&&, Base&&);
+		TEST_CONV(Derived*, Base*);
+		TEST_CONV(Derived&, Base&);
+		TEST_CONV(Derived&&, Base&&);
 
-		//TEST_CONV(const Derived*, const Base*);
-		//TEST_CONV(const Derived&, const Base&);
-		//TEST_CONV(const Derived&&, const Base&&);
+		TEST_CONV(const Derived*, const Base*);
+		TEST_CONV(const Derived&, const Base&);
+		TEST_CONV(const Derived&&, const Base&&);
 
-		//TEST_CONV(Derived*, const Base*);
-		//TEST_CONV(Derived&, const Base&);
-		//TEST_CONV(Derived&&, const Base&&);
+		TEST_CONV(Derived*, const Base*);
+		TEST_CONV(Derived&, const Base&);
+		TEST_CONV(Derived&&, const Base&&);
 #undef TEST_CONV
 	}
 
@@ -246,6 +240,12 @@ TEST_CASE(TestTypeConvert_Inheritance)
 		TEST_CONV(Base&&, const Derived&&);
 #undef TEST_CONV
 	}
+}
+
+TEST_CASE(TestTypeConvert_UserDefinedConversion)
+{
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, UserDefinedConversion)
+#undef TEST_CONV
 }
 
 #undef TEST_DECL
