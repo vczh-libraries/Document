@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="TestTypeConvert.cpp" />
     <ClCompile Include="TestTypeSystem.cpp" />
     <ClCompile Include="Util_Log.cpp" />
     <ClCompile Include="Main.cpp" />
