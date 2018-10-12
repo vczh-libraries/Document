@@ -61,7 +61,7 @@ namespace TestConvert_Helpers
 			{
 			case TsysRefType::LRef: fromLRP = true; break;
 			case TsysRefType::RRef: return false;
-			case TsysRefType::None: break;
+			case TsysRefType::None: fromLRP = true; break;
 			}
 			break;
 		case TsysRefType::RRef:
@@ -69,7 +69,7 @@ namespace TestConvert_Helpers
 			{
 			case TsysRefType::LRef: return false;
 			case TsysRefType::RRef: fromLRP = true; break;
-			case TsysRefType::None: break;
+			case TsysRefType::None: return false;
 			}
 			break;
 		case TsysRefType::None:
