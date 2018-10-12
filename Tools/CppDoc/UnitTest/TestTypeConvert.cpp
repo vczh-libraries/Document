@@ -136,8 +136,10 @@ TEST_CASE(TestTypeConvert_StandardConversion)
 	TEST_CONV(char, double);
 	TEST_CONV(double, char);
 
-	TEST_CONV(int*, void*);
 	TEST_CONV(int(*)(), void*);
+	TEST_CONV(int*, void*);
+	TEST_CONV(const int*, const void*);
+	TEST_CONV(const int*, const void*);
 #undef TEST_CONV
 }
 

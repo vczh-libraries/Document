@@ -23,7 +23,14 @@ namespace TestConvert_Helpers
 	{
 		if (toType->GetType() != TsysType::Primitive) return false;
 		if (fromType->GetType() != TsysType::Primitive) return false;
-		return false;
+
+		auto toP = toType->GetPrimitive();
+		auto fromP = fromType->GetPrimitive();
+
+		if (toP.type == TsysPrimitiveType::Void) return false;
+		if (fromP.type == TsysPrimitiveType::Void) return false;
+
+		return true;
 	}
 
 	bool IsCVSame(TsysCV toCV, TsysCV fromCV)
@@ -147,8 +154,9 @@ TsysConv TestConvert(ITsys* toType, ITsys* fromType)
 			switch (toType->GetPrimitive().type)
 			{
 			case TsysPrimitiveType::Float:
-			case TsysPrimitiveType::Void:
 				return TsysConv::StandardConversion;
+			case TsysPrimitiveType::Void:
+				return TsysConv::Illegal;
 			default:
 				return TsysConv::Exact;
 			}
@@ -159,17 +167,13 @@ TsysConv TestConvert(ITsys* toType, ITsys* fromType)
 	{
 		if (toType->GetType() == TsysType::Ptr) return TsysConv::Exact;
 	}
+
 	{
 		bool performedLRPTrivalConversion = false;
 		if (IsExactOrTrivalConvert(toType, fromType, false, performedLRPTrivalConversion))
 		{
 			return performedLRPTrivalConversion ? TsysConv::TrivalConversion : TsysConv::Exact;
 		}
-	}
-
-	if (fromType->GetType() == TsysType::RRef)
-	{
-		fromType = fromType->GetElement();
 	}
 
 	if (!IsEntityConversionAllowed(toType, fromType))
@@ -179,5 +183,23 @@ TsysConv TestConvert(ITsys* toType, ITsys* fromType)
 
 	if (IsNumericPromotion(toType, fromType)) return TsysConv::IntegralPromotion;
 	if (IsNumericConversion(toType, fromType)) return TsysConv::StandardConversion;
+
+	if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Ptr)
+	{
+		TsysCV toCV, fromCV;
+		TsysRefType toRef, fromRef;
+		auto toEntity = toType->GetElement()->GetEntity(toCV, toRef);
+		auto fromEntity = fromType->GetElement()->GetEntity(fromCV, fromRef);
+
+		if (toEntity->GetType() == TsysType::Primitive && toEntity->GetPrimitive().type == TsysPrimitiveType::Void)
+		{
+			switch (fromEntity->GetType())
+			{
+			case TsysType::Function: return TsysConv::StandardConversion;
+			case TsysType::Member: return TsysConv::Illegal;
+			}
+			if (IsCVMatch(toCV, fromCV)) return TsysConv::StandardConversion;
+		}
+	}
 	return TsysConv::Illegal;
 }
