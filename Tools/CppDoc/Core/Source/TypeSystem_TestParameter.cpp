@@ -34,8 +34,8 @@ namespace TestConvert_Helpers
 
 	bool IsCVMatch(TsysCV toCV, TsysCV fromCV)
 	{
-		if ((toCV.isConstExpr || toCV.isConst) && !(fromCV.isConstExpr || fromCV.isConst)) return false;
-		if (toCV.isVolatile && !fromCV.isVolatile) return false;
+		if (!(toCV.isConstExpr || toCV.isConst) && (fromCV.isConstExpr || fromCV.isConst)) return false;
+		if (!toCV.isVolatile && fromCV.isVolatile) return false;
 		return true;
 	}
 
@@ -100,6 +100,11 @@ namespace TestConvert_Helpers
 		}
 
 		if (toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Array)
+		{
+			return IsExactOrTrivalConvert(toEntity->GetElement(), fromEntity->GetElement(), true, performedLRPTrivalConversion);
+		}
+
+		if (toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array)
 		{
 			return IsExactOrTrivalConvert(toEntity->GetElement(), fromEntity->GetElement(), true, performedLRPTrivalConversion);
 		}
