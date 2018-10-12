@@ -39,24 +39,19 @@ TEST_CASE(TestTypeConvert_Exact)
 	TEST_CONV(int, int);
 	TEST_CONV(int, int&);
 	TEST_CONV(int&, int);
-	TEST_CONV(int[10], int*);
+
 	TEST_CONV(int, constexpr int);
 	TEST_CONV(int, const int);
 	TEST_CONV(int, volatile int);
+	TEST_CONV(int, constexpr const volatile int);
 
-	TEST_CONV(int, const int);
-	TEST_CONV(int, const int&);
-	TEST_CONV(int&, const int);
-	TEST_CONV(int[10], const int*);
+	TEST_CONV(int[10], int*);
+	TEST_CONV(int[10], int*constexpr);
+	TEST_CONV(int[10], int*const);
+	TEST_CONV(int[10], int*volatile);
 
-	TEST_CONV(int, volatile int);
-	TEST_CONV(int, volatile int&);
-	TEST_CONV(int&, volatile int);
-	TEST_CONV(int[10], volatile int*);
-
-	TEST_CONV(const int[10], const volatile int* const volatile);
-	TEST_CONV(volatile int[10], const volatile int* const volatile);
-	TEST_CONV(int, const volatile int);
+	TEST_CONV(const int[10], const int* const);
+	TEST_CONV(volatile int[10], volatile int* volatile);
 #undef TEST_CONV
 }
 
@@ -79,7 +74,7 @@ TEST_CASE(TestTypeConvert_TrivalConversion)
 	TEST_CONV(int&&, volatile int&&);
 	TEST_CONV(int&&, constexpr const volatile int&&);
 
-	TEST_CONV(char[10], const char*);
+	TEST_CONV(char[10], const char*volatile);
 	TEST_CONV(char(&)[10], const char(&)[10]);
 #undef TEST_CONV
 }
