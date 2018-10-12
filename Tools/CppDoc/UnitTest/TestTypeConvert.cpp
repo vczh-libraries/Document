@@ -117,7 +117,7 @@ TEST_CASE(TestTypeConvert_IntegralPromotion)
 	TEST_CONV(unsigned short, int);
 	TEST_CONV(char, wchar_t);
 	TEST_CONV(char, char16_t);
-	TEST_CONV(char16_t, unsigned char32_t);
+	TEST_CONV(char16_t, char32_t);
 	TEST_CONV(float, double);
 
 	TEST_CONV(const short&&, int);
@@ -125,7 +125,7 @@ TEST_CASE(TestTypeConvert_IntegralPromotion)
 	TEST_CONV(const unsigned short&&, int);
 	TEST_CONV(const char, wchar_t);
 	TEST_CONV(const char, char16_t);
-	TEST_CONV(const char16_t, unsigned char32_t);
+	TEST_CONV(const char16_t, char32_t);
 	TEST_CONV(const float, double);
 
 	TEST_CONV(short, const int&&);
@@ -133,7 +133,7 @@ TEST_CASE(TestTypeConvert_IntegralPromotion)
 	TEST_CONV(unsigned short, const int&&);
 	TEST_CONV(char, const wchar_t);
 	TEST_CONV(char, const char16_t);
-	TEST_CONV(char16_t, const unsigned char32_t);
+	TEST_CONV(char16_t, const char32_t);
 	TEST_CONV(float&&, const double&&);
 #undef TEST_CONV
 }
@@ -145,12 +145,6 @@ TEST_CASE(TestTypeConvert_StandardConversion)
 	TEST_CONV(unsigned int, signed int);
 	TEST_CONV(signed char, unsigned char);
 	TEST_CONV(unsigned char, signed char);
-	TEST_CONV(signed wchar_t, unsigned wchar_t);
-	TEST_CONV(unsigned wchar_t, signed wchar_t);
-	TEST_CONV(signed char16_t, unsigned char16_t);
-	TEST_CONV(unsigned char16_t, signed char16_t);
-	TEST_CONV(signed char32_t, unsigned char32_t);
-	TEST_CONV(unsigned char32_t, signed char32_t);
 
 	TEST_CONV(int, double);
 	TEST_CONV(double, int);
