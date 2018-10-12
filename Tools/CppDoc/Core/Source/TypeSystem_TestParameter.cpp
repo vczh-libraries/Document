@@ -2,11 +2,6 @@
 
 namespace TestConvert_Helpers
 {
-	bool IsExactSameType(ITsys* toType, ITsys* fromType)
-	{
-		return toType == fromType;
-	}
-
 	bool IsNumericPromotion(ITsys* toType, ITsys* fromType)
 	{
 		if (toType->GetType() != TsysType::Primitive) return false;
@@ -30,120 +25,86 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
-	bool IsCVMatch(ITsys* toType, ITsys* fromType, bool(*matcher)(ITsys*, ITsys*) = &IsExactSameType)
+	bool IsCVSame(TsysCV toCV, TsysCV fromCV)
 	{
-		if (toType->GetType() == TsysType::CV)
+		if ((toCV.isConstExpr || toCV.isConst) != (fromCV.isConstExpr || fromCV.isConst)) return false;
+		if (toCV.isVolatile != fromCV.isVolatile) return false;
+		return true;
+	}
+
+	bool IsCVMatch(TsysCV toCV, TsysCV fromCV)
+	{
+		if ((toCV.isConstExpr || toCV.isConst) && !(fromCV.isConstExpr || fromCV.isConst)) return false;
+		if (toCV.isVolatile && !fromCV.isVolatile) return false;
+		return true;
+	}
+
+	bool IsExactOrTrivalConvert(ITsys* toType, ITsys* fromType, bool fromLRP, bool& performedLRPTrivalConversion)
+	{
+		TsysCV toCV, fromCV;
+		TsysRefType toRef, fromRef;
+		auto toEntity = toType->GetEntity(toCV, toRef);
+		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
+
+		switch (toRef)
 		{
-			TsysCV toCV = toType->GetCV();
-			toType = toType->GetElement();
-
-			TsysCV fromCV;
-			if (fromType->GetType() == TsysType::CV)
+		case TsysRefType::LRef:
+			switch (fromRef)
 			{
-				fromCV = fromType->GetCV();
-				fromType = fromType->GetElement();
+			case TsysRefType::LRef: fromLRP = true; break;
+			case TsysRefType::RRef: return false;
+			case TsysRefType::None: break;
 			}
-
-			if (matcher(toType, fromType))
+			break;
+		case TsysRefType::RRef:
+			switch (fromRef)
 			{
-				if (!(toCV.isConstExpr || toCV.isConst) && (fromCV.isConstExpr || fromCV.isConst)) return false;
-				if (!toCV.isVolatile && fromCV.isVolatile) return false;
-				return true;
+			case TsysRefType::LRef: return false;
+			case TsysRefType::RRef: fromLRP = true; break;
+			case TsysRefType::None: break;
+			}
+			break;
+		case TsysRefType::None:
+			switch (fromRef)
+			{
+			case TsysRefType::LRef: break;
+			case TsysRefType::RRef: break;
+			case TsysRefType::None: break;
+			}
+			break;
+		}
+
+		if (fromLRP)
+		{
+			if (!IsCVSame(toCV, fromCV))
+			{
+				if (IsCVMatch(toCV, fromCV))
+				{
+					performedLRPTrivalConversion = true;
+				}
+				else
+				{
+					return false;
+				}
 			}
 		}
+
+		if (toEntity == fromEntity)
+		{
+			return true;
+		}
+
+		if (toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Ptr)
+		{
+			return IsExactOrTrivalConvert(toEntity->GetElement(), fromEntity->GetElement(), true, performedLRPTrivalConversion);
+		}
+
+		if (toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Array)
+		{
+			return IsExactOrTrivalConvert(toEntity->GetElement(), fromEntity->GetElement(), true, performedLRPTrivalConversion);
+		}
+
 		return false;
-	}
-
-	TsysConv TestExactOrTrival_RRefIllegal(ITsys* toType, ITsys* fromType)
-	{
-		if (toType == fromType)
-		{
-			return TsysConv::Exact;
-		}
-
-		if (toType->GetType() == TsysType::LRef && fromType->GetType() != TsysType::LRef)
-		{
-			if (toType->GetElement() == fromType)
-			{
-				return TsysConv::Exact;
-			}
-			if (IsCVMatch(toType->GetElement(), fromType))
-			{
-				return TsysConv::TrivalConversion;
-			}
-		}
-		if (toType->GetType() != TsysType::LRef && fromType->GetType() == TsysType::LRef)
-		{
-			if (toType == fromType->GetElement())
-			{
-				return TsysConv::Exact;
-			}
-			if (IsCVMatch(toType, fromType->GetElement()))
-			{
-				return TsysConv::TrivalConversion;
-			}
-		}
-
-		switch (toType->GetType())
-		{
-		case TsysType::LRef:
-		case TsysType::RRef:
-		case TsysType::Ptr:
-			if (toType->GetType() == fromType->GetType())
-			{
-				if (IsCVMatch(toType->GetElement(), fromType->GetElement()))
-				{
-					return TsysConv::TrivalConversion;
-				}
-			}
-			break;
-		}
-
-		return TsysConv::Illegal;
-	}
-
-	TsysConv TestExactOrTrival_RRefLegal(ITsys* toType, ITsys* fromType)
-	{
-		if (fromType->GetType() == TsysType::RRef)
-		{
-			fromType = fromType->GetElement();
-		}
-
-		if (toType == fromType)
-		{
-			return TsysConv::Exact;
-		}
-
-		switch (toType->GetType())
-		{
-		case TsysType::Ptr:
-			if (toType->GetType() == fromType->GetType())
-			{
-				if (IsCVMatch(toType->GetElement(), fromType->GetElement()))
-				{
-					return TsysConv::TrivalConversion;
-				}
-			}
-			break;
-		}
-
-		if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Array)
-		{
-			if (toType->GetElement() == fromType->GetElement())
-			{
-				return TsysConv::Exact;
-			}
-			if (IsCVMatch(toType->GetElement(), fromType->GetElement()))
-			{
-				return TsysConv::TrivalConversion;
-			}
-		}
-
-		if (IsCVMatch(toType, fromType))
-		{
-			return TsysConv::TrivalConversion;
-		}
-		return TsysConv::Illegal;
 	}
 }
 using namespace TestConvert_Helpers;
@@ -176,12 +137,11 @@ TsysConv TestConvert(ITsys* toType, ITsys* fromType)
 		if (toType->GetType() == TsysType::Ptr) return TsysConv::Exact;
 	}
 	{
-		auto conv = TestExactOrTrival_RRefIllegal(toType, fromType);
-		if (conv != TsysConv::Illegal) return conv;
-	}
-	{
-		auto conv = TestExactOrTrival_RRefLegal(toType, fromType);
-		if (conv != TsysConv::Illegal) return conv;
+		bool performedLRPTrivalConversion = false;
+		if (IsExactOrTrivalConvert(toType, fromType, false, performedLRPTrivalConversion))
+		{
+			return performedLRPTrivalConversion ? TsysConv::TrivalConversion : TsysConv::Exact;
+		}
 	}
 
 	if (fromType->GetType() == TsysType::RRef)
@@ -189,27 +149,27 @@ TsysConv TestConvert(ITsys* toType, ITsys* fromType)
 		fromType = fromType->GetElement();
 	}
 
-	if (IsCVMatch(toType, fromType, &IsNumericPromotion)) return TsysConv::IntegralPromotion;
-	if (IsCVMatch(toType, fromType, &IsNumericConversion)) return TsysConv::StandardConversion;
+	//if (IsCVMatch(toType, fromType, &IsNumericPromotion)) return TsysConv::IntegralPromotion;
+	//if (IsCVMatch(toType, fromType, &IsNumericConversion)) return TsysConv::StandardConversion;
 
-	if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Ptr)
-	{
-		if (IsCVMatch(toType->GetElement(), fromType->GetElement(), [](ITsys* toType, ITsys* fromType)
-		{
-			if (toType->GetType() == TsysType::Primitive && toType->GetPrimitive().type == TsysPrimitiveType::Void)
-			{
-				if (fromType->GetType() == TsysType::Member)
-				{
-					return false;
-				}
-				return true;
-			}
-			return false;
-		}))
-		{
-			return TsysConv::StandardConversion;
-		}
-	}
+	//if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Ptr)
+	//{
+	//	if (IsCVMatch(toType->GetElement(), fromType->GetElement(), [](ITsys* toType, ITsys* fromType)
+	//	{
+	//		if (toType->GetType() == TsysType::Primitive && toType->GetPrimitive().type == TsysPrimitiveType::Void)
+	//		{
+	//			if (fromType->GetType() == TsysType::Member)
+	//			{
+	//				return false;
+	//			}
+	//			return true;
+	//		}
+	//		return false;
+	//	}))
+	//	{
+	//		return TsysConv::StandardConversion;
+	//	}
+	//}
 
 	return TsysConv::Illegal;
 }

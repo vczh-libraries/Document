@@ -37,13 +37,22 @@ TEST_CASE(TestTypeConvert_Exact)
 {
 #define TEST_CONV(FROM, TO) AssertTypeConvert(L#FROM, L#TO, TsysConv::Exact)
 	TEST_CONV(int, int);
-	TEST_CONV(int, int&);
-	TEST_CONV(int&, int);
-
 	TEST_CONV(int, constexpr int);
 	TEST_CONV(int, const int);
 	TEST_CONV(int, volatile int);
 	TEST_CONV(int, constexpr const volatile int);
+
+	TEST_CONV(int&, int);
+	TEST_CONV(int&, constexpr int);
+	TEST_CONV(int&, const int);
+	TEST_CONV(int&, volatile int);
+	TEST_CONV(int&, constexpr const volatile int);
+
+	TEST_CONV(const int&&, int);
+	TEST_CONV(const int&&, constexpr int);
+	TEST_CONV(const int&&, const int);
+	TEST_CONV(const int&&, volatile int);
+	TEST_CONV(const int&&, constexpr const volatile int);
 
 	TEST_CONV(int[10], int*);
 	TEST_CONV(int[10], int*constexpr);
