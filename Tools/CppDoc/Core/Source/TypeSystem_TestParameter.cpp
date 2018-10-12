@@ -88,6 +88,7 @@ namespace TestConvert_Helpers
 		{
 		case TsysType::LRef:
 		case TsysType::RRef:
+		case TsysType::Ptr:
 			if (toType->GetType() == fromType->GetType())
 			{
 				if (IsCVMatch(toType->GetElement(), fromType->GetElement()))
