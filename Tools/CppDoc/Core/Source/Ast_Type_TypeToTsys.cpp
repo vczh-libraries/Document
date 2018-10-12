@@ -118,13 +118,9 @@ public:
 			{
 				tsys = tsys->GetElement()->ArrayOf(tsys->GetParamCount() + 1);
 			}
-			else if (self->expr)
-			{
-				tsys = tsys->ArrayOf(1);
-			}
 			else
 			{
-				tsys = tsys->PtrOf();
+				tsys = tsys->ArrayOf(1);
 			}
 			result[i] = tsys;
 		}

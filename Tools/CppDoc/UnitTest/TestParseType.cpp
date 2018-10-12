@@ -98,8 +98,8 @@ TEST_CASE(TestParseType_SuperComplexType)
 {
 	AssertType(
 		L"int(__fastcall*const&((*)(int))[10])(int(&a)[], int(__stdcall*b)()noexcept, int(*c[5])(void)=0)",
-		L"int (a: int [] &, b: int () noexcept __stdcall *, c: int () * [5] = 0) __fastcall * const & [10] (int) *",
-		L"__int32 (__int32 [] &, __int32 () *, __int32 () * []) * const & [] (__int32) *"
+		L"int (a: int * &, b: int () noexcept __stdcall *, c: int () * [5] = 0) __fastcall * const & [10] (int) *",
+		L"__int32 (__int32 * &, __int32 () *, __int32 () * []) * const & [] (__int32) *"
 		);
 }
 

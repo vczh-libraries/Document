@@ -152,23 +152,31 @@ extern Ptr<Type>					ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCurso
 struct ParsingDeclaratorArguments
 {
 	ClassDeclaration*				containingClass;
+	bool							forParameter;
 	DeclaratorRestriction			dr;
 	InitializerRestriction			ir;
 
-	ParsingDeclaratorArguments(ClassDeclaration* _containingClass, DeclaratorRestriction _dr, InitializerRestriction _ir)
+	ParsingDeclaratorArguments(ClassDeclaration* _containingClass, bool _forParameter, DeclaratorRestriction _dr, InitializerRestriction _ir)
 		:containingClass(_containingClass)
+		, forParameter(_forParameter)
 		, dr(_dr)
 		, ir(_ir)
 	{
 	}
 };
 
-inline ParsingDeclaratorArguments	pda_Type()		{	return { nullptr,	DeclaratorRestriction::Zero,		InitializerRestriction::Zero		}; } // Type
-inline ParsingDeclaratorArguments	pda_VarType()	{	return { nullptr,	DeclaratorRestriction::Optional,	InitializerRestriction::Zero		}; } // Type or Variable without Initializer
-inline ParsingDeclaratorArguments	pda_VarInit()	{	return { nullptr,	DeclaratorRestriction::One,			InitializerRestriction::Optional	}; } // Variable with Initializer
-inline ParsingDeclaratorArguments	pda_VarNoInit()	{	return { nullptr,	DeclaratorRestriction::One,			InitializerRestriction::Zero		}; } // Variable without Initializer
-inline ParsingDeclaratorArguments	pda_Param()		{	return { nullptr,	DeclaratorRestriction::Optional,	InitializerRestriction::Optional	}; } // Parameter
-inline ParsingDeclaratorArguments	pda_Decls()		{	return { nullptr,	DeclaratorRestriction::Many,		InitializerRestriction::Optional	}; } // Declarations
+inline ParsingDeclaratorArguments	pda_Type()
+	{	return { nullptr,	false,			DeclaratorRestriction::Zero,		InitializerRestriction::Zero		}; } // Type
+inline ParsingDeclaratorArguments	pda_VarType()
+	{	return { nullptr,	false,			DeclaratorRestriction::Optional,	InitializerRestriction::Zero		}; } // Type or Variable without Initializer
+inline ParsingDeclaratorArguments	pda_VarInit()
+	{	return { nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Optional	}; } // Variable with Initializer
+inline ParsingDeclaratorArguments	pda_VarNoInit()
+	{	return { nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Zero		}; } // Variable without Initializer
+inline ParsingDeclaratorArguments	pda_Param(bool forParameter)
+	{	return { nullptr,	forParameter,	DeclaratorRestriction::Optional,	InitializerRestriction::Optional	}; } // Parameter
+inline ParsingDeclaratorArguments	pda_Decls()	
+	{	return { nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Optional	}; } // Declarations
 
 extern void							ParseMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void							ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);

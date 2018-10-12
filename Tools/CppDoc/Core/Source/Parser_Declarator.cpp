@@ -114,12 +114,14 @@ ParseDeclaratorContext
 struct ParseDeclaratorContext
 {
 	ClassDeclaration*		containingClass;
-	bool					forceSpecialMethod;
+	bool					forParameter;
 	DeclaratorRestriction	dr;
 	InitializerRestriction	ir;
+	bool					forceSpecialMethod;
 
 	ParseDeclaratorContext(const ParsingDeclaratorArguments& pda, bool _forceSpecialMethod)
 		:containingClass(pda.containingClass)
+		, forParameter(pda.forParameter)
 		, dr(pda.dr)
 		, ir(pda.ir)
 		, forceSpecialMethod(_forceSpecialMethod)
@@ -360,28 +362,41 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 ParseSingleDeclarator_Array
 ***********************************************************************/
 
-bool ParseSingleDeclarator_Array(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<Type> targetType, Ptr<CppTokenCursor>& cursor)
+bool ParseSingleDeclarator_Array(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<Type> targetType, bool forParameter, Ptr<CppTokenCursor>& cursor)
 {
 	if (TestToken(cursor, CppTokens::LBRACKET))
 	{
+		Ptr<Expr> index;
+		if (!TestToken(cursor, CppTokens::RBRACKET, false))
+		{
+			index = ParseExpr(pa, true, cursor);
+		}
+
 		ReplaceOutOfDeclaratorTypeVisitor replacer;
 		{
 			replacer.typeToReplace = targetType;
-			replacer.typeCreator = [](Ptr<Type> typeToReplace)
+			replacer.typeCreator = [=](Ptr<Type> typeToReplace)->Ptr<Type>
 			{
-				auto type = MakePtr<ArrayType>();
-				type->type = typeToReplace;
-				return type;
+				if (index || !forParameter)
+				{
+					auto type = MakePtr<ArrayType>();
+					type->type = typeToReplace;
+					type->expr = index;
+					return type;
+				}
+				else
+				{
+					auto type = MakePtr<ReferenceType>();
+					type->reference = CppReferenceType::Ptr;
+					type->type = typeToReplace;
+					return type;
+				}
 			};
 
 			replacer.Execute(declarator->type);
 		}
 
-		if (!TestToken(cursor, CppTokens::RBRACKET))
-		{
-			replacer.createdType.Cast<ArrayType>()->expr = ParseExpr(pa, true, cursor);
-			RequireToken(cursor, CppTokens::RBRACKET);
-		}
+		RequireToken(cursor, CppTokens::RBRACKET);
 		return true;
 	}
 	else
@@ -502,7 +517,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 			{
 				{
 					List<Ptr<Declarator>> declarators;
-					ParseNonMemberDeclarator(functionArgsPa, pda_Param(), cursor, declarators);
+					ParseNonMemberDeclarator(functionArgsPa, pda_Param(true), cursor, declarators);
 					List<Ptr<VariableDeclaration>> varDecls;
 					BuildVariables(declarators, varDecls);
 					type->parameters.Add(varDecls[0]);
@@ -693,7 +708,7 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	// an array could be multiple dimension
 	if (TestToken(cursor, CppTokens::LBRACKET, false))
 	{
-		while (ParseSingleDeclarator_Array(pa, declarator, targetType, cursor));
+		while (ParseSingleDeclarator_Array(pa, declarator, targetType, pdc.forParameter, cursor));
 	}
 	else
 	{
