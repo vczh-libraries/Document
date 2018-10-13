@@ -2,37 +2,6 @@
 
 namespace TestConvert_Helpers
 {
-	bool IsNumericPromotion(ITsys* toType, ITsys* fromType)
-	{
-		if (toType->GetType() != TsysType::Primitive) return false;
-		if (fromType->GetType() != TsysType::Primitive) return false;
-
-		auto toP = toType->GetPrimitive();
-		auto fromP = fromType->GetPrimitive();
-
-		if (toP.type == TsysPrimitiveType::Void) return false;
-		if (fromP.type == TsysPrimitiveType::Void) return false;
-
-		bool toF = toP.type == TsysPrimitiveType::Float;
-		bool fromF = fromP.type == TsysPrimitiveType::Float;
-		if (toF != fromF) return false;
-		return toP.bytes > fromP.bytes;
-	}
-
-	bool IsNumericConversion(ITsys* toType, ITsys* fromType)
-	{
-		if (toType->GetType() != TsysType::Primitive) return false;
-		if (fromType->GetType() != TsysType::Primitive) return false;
-
-		auto toP = toType->GetPrimitive();
-		auto fromP = fromType->GetPrimitive();
-
-		if (toP.type == TsysPrimitiveType::Void) return false;
-		if (fromP.type == TsysPrimitiveType::Void) return false;
-
-		return true;
-	}
-
 	bool IsCVSame(TsysCV toCV, TsysCV fromCV)
 	{
 		if (toCV.isGeneralConst != fromCV.isGeneralConst) return false;
@@ -169,6 +138,74 @@ namespace TestConvert_Helpers
 		fromType = fromEntity;
 		return true;
 	}
+
+	bool IsNumericPromotion(ITsys* toType, ITsys* fromType)
+	{
+		if (toType->GetType() != TsysType::Primitive) return false;
+		if (fromType->GetType() != TsysType::Primitive) return false;
+
+		auto toP = toType->GetPrimitive();
+		auto fromP = fromType->GetPrimitive();
+
+		if (toP.type == TsysPrimitiveType::Void) return false;
+		if (fromP.type == TsysPrimitiveType::Void) return false;
+
+		bool toF = toP.type == TsysPrimitiveType::Float;
+		bool fromF = fromP.type == TsysPrimitiveType::Float;
+		if (toF != fromF) return false;
+		return toP.bytes > fromP.bytes;
+	}
+
+	bool IsNumericConversion(ITsys* toType, ITsys* fromType)
+	{
+		if (toType->GetType() != TsysType::Primitive) return false;
+		if (fromType->GetType() != TsysType::Primitive) return false;
+
+		auto toP = toType->GetPrimitive();
+		auto fromP = fromType->GetPrimitive();
+
+		if (toP.type == TsysPrimitiveType::Void) return false;
+		if (fromP.type == TsysPrimitiveType::Void) return false;
+
+		return true;
+	}
+
+	bool IsPointerConversion(ITsys* toType, ITsys* fromType)
+	{
+		if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Ptr)
+		{
+			TsysCV toCV, fromCV;
+			TsysRefType toRef, fromRef;
+			auto toEntity = toType->GetElement()->GetEntity(toCV, toRef);
+			auto fromEntity = fromType->GetElement()->GetEntity(fromCV, fromRef);
+
+			if (toEntity->GetType() == TsysType::Primitive && toEntity->GetPrimitive().type == TsysPrimitiveType::Void)
+			{
+				switch (fromEntity->GetType())
+				{
+				case TsysType::Function: return true;
+				case TsysType::Member: return false;
+				default: return IsCVMatch(toCV, fromCV);
+				}
+			}
+		}
+		return false;
+	}
+
+	bool IsToBaseClassConversion(ITsys* toType, ITsys* fromType)
+	{
+		return false;
+	}
+
+	bool IsCustomOperatorConversion(ITsys* toType, ITsys* fromType)
+	{
+		return false;
+	}
+
+	bool IsCustomContructorConversion(ITsys* toType, ITsys* fromType)
+	{
+		return false;
+	}
 }
 using namespace TestConvert_Helpers;
 
@@ -209,30 +246,19 @@ TsysConv TestConvert(ITsys* toType, ITsys* fromType)
 		}
 	}
 
-	if (!IsEntityConversionAllowed(toType, fromType))
+	auto toEntity = toType;
+	auto fromEntity = fromType;
+	if (!IsEntityConversionAllowed(toEntity, fromEntity))
 	{
 		return TsysConv::Illegal;
 	}
 
-	if (IsNumericPromotion(toType, fromType)) return TsysConv::IntegralPromotion;
-	if (IsNumericConversion(toType, fromType)) return TsysConv::StandardConversion;
+	if (IsNumericPromotion(toEntity, fromEntity)) return TsysConv::IntegralPromotion;
+	if (IsNumericConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
+	if (IsPointerConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
+	if (IsToBaseClassConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
+	if (IsCustomOperatorConversion(toType, fromType)) return TsysConv::StandardConversion;
+	if (IsCustomContructorConversion(toType, fromType)) return TsysConv::StandardConversion;
 
-	if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Ptr)
-	{
-		TsysCV toCV, fromCV;
-		TsysRefType toRef, fromRef;
-		auto toEntity = toType->GetElement()->GetEntity(toCV, toRef);
-		auto fromEntity = fromType->GetElement()->GetEntity(fromCV, fromRef);
-
-		if (toEntity->GetType() == TsysType::Primitive && toEntity->GetPrimitive().type == TsysPrimitiveType::Void)
-		{
-			switch (fromEntity->GetType())
-			{
-			case TsysType::Function: return TsysConv::StandardConversion;
-			case TsysType::Member: return TsysConv::Illegal;
-			}
-			if (IsCVMatch(toCV, fromCV)) return TsysConv::StandardConversion;
-		}
-	}
 	return TsysConv::Illegal;
 }

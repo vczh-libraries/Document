@@ -216,17 +216,17 @@ TEST_CASE(TestTypeConvert_Inheritance)
 
 	{
 #define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, StandardConversion)
-		//TEST_CONV(Derived*, Base*);
-		//TEST_CONV(Derived&, Base&);
-		//TEST_CONV(Derived&&, Base&&);
+		TEST_CONV(Derived*, Base*);
+		TEST_CONV(Derived&, Base&);
+		TEST_CONV(Derived&&, Base&&);
 
-		//TEST_CONV(const Derived*, const Base*);
-		//TEST_CONV(const Derived&, const Base&);
-		//TEST_CONV(const Derived&&, const Base&&);
+		TEST_CONV(const Derived*, const Base*);
+		TEST_CONV(const Derived&, const Base&);
+		TEST_CONV(const Derived&&, const Base&&);
 
-		//TEST_CONV(Derived*, const Base*);
-		//TEST_CONV(Derived&, const Base&);
-		//TEST_CONV(Derived&&, const Base&&);
+		TEST_CONV(Derived*, const Base*);
+		TEST_CONV(Derived&, const Base&);
+		TEST_CONV(Derived&&, const Base&&);
 #undef TEST_CONV
 	}
 
