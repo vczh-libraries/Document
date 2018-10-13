@@ -7,6 +7,7 @@ using namespace vl;
 using namespace vl::collections;
 
 class Symbol;
+struct ParsingArguments;
 
 /***********************************************************************
 Interface
@@ -137,6 +138,6 @@ public:
 Helpers
 ***********************************************************************/
 
-extern TsysConv					TestConvert(ITsys* toType, ITsys* fromType);
+extern TsysConv					TestConvert(ParsingArguments& pa, ITsys* toType, ITsys* fromType);
 
 #endif

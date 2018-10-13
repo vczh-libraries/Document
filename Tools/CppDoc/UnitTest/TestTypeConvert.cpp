@@ -23,7 +23,7 @@ void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WS
 	TEST_ASSERT(fromTypes.Count() == 1);
 	TEST_ASSERT(toTypes.Count() == 1);
 
-	auto output = TestConvert(toTypes[0], fromTypes[0]);
+	auto output = TestConvert(pa, toTypes[0], fromTypes[0]);
 	TEST_ASSERT(output == conv);
 }
 

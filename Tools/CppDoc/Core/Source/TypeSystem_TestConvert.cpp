@@ -1,4 +1,7 @@
 #include "TypeSystem.h"
+#include "Parser.h"
+#include "Ast_Decl.h"
+#include "Ast_Type.h"
 
 namespace TestConvert_Helpers
 {
@@ -192,24 +195,72 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
-	bool IsToBaseClassConversion(ITsys* toType, ITsys* fromType)
+	Ptr<ClassDeclaration> TryGetClassFromType(ITsys* type)
+	{
+		if (type->GetType() != TsysType::Decl) return false;
+		auto symbol = type->GetDecl();
+		if (symbol->decls.Count() != 1) return false;
+		return symbol->decls[0].Cast<ClassDeclaration>();
+	}
+
+	bool IsToBaseClassConversion(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+	{
+		if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Ptr)
+		{
+			TsysCV toCV, fromCV;
+			TsysRefType toRef, fromRef;
+			auto toEntity = toType->GetElement()->GetEntity(toCV, toRef);
+			auto fromEntity = fromType->GetElement()->GetEntity(fromCV, fromRef);
+
+			if (toRef != TsysRefType::None) return false;
+			if (fromRef != TsysRefType::None) return false;
+			if (!IsCVMatch(toCV, fromCV)) return false;
+
+			toType = toEntity;
+			fromType = fromEntity;
+		}
+
+		if (!TryGetClassFromType(toType)) return false;
+
+		List<ITsys*> searched;
+		searched.Add(fromType);
+		for (vint i = 0; i < searched.Count(); i++)
+		{
+			auto currentType = searched[i];
+			if (currentType == toType) return true;
+			if (auto currentClass = TryGetClassFromType(currentType))
+			{
+				ParsingArguments newPa(pa, currentClass->symbol);
+				for (vint j = 0; j < currentClass->baseTypes.Count(); j++)
+				{
+					TypeTsysList baseTypes;
+					TypeToTsys(newPa, currentClass->baseTypes[j].f1, baseTypes);
+					for (vint k = 0; k < baseTypes.Count(); k++)
+					{
+						if (searched.Contains(baseTypes[k]))
+						{
+							searched.Add(baseTypes[k]);
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	bool IsCustomOperatorConversion(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
 		return false;
 	}
 
-	bool IsCustomOperatorConversion(ITsys* toType, ITsys* fromType)
-	{
-		return false;
-	}
-
-	bool IsCustomContructorConversion(ITsys* toType, ITsys* fromType)
+	bool IsCustomContructorConversion(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
 		return false;
 	}
 }
 using namespace TestConvert_Helpers;
 
-TsysConv TestConvert(ITsys* toType, ITsys* fromType)
+TsysConv TestConvert(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 {
 	if (fromType->GetType() == TsysType::Zero)
 	{
@@ -256,9 +307,9 @@ TsysConv TestConvert(ITsys* toType, ITsys* fromType)
 	if (IsNumericPromotion(toEntity, fromEntity)) return TsysConv::IntegralPromotion;
 	if (IsNumericConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
 	if (IsPointerConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
-	if (IsToBaseClassConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
-	if (IsCustomOperatorConversion(toType, fromType)) return TsysConv::StandardConversion;
-	if (IsCustomContructorConversion(toType, fromType)) return TsysConv::StandardConversion;
+	if (IsToBaseClassConversion(pa, toEntity, fromEntity)) return TsysConv::StandardConversion;
+	if (IsCustomOperatorConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
+	if (IsCustomContructorConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
 
 	return TsysConv::Illegal;
 }

@@ -345,7 +345,7 @@ public:
 	VisitOverloadedFunction: Select good candidates from overloaded functions
 	***********************************************************************/
 
-	static void VisitOverloadedFunction(ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result)
+	static void VisitOverloadedFunction(ParsingArguments& pa, ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result)
 	{
 		Array<TsysConv> funcChoices(funcTypes.Count());
 
@@ -364,7 +364,7 @@ public:
 
 					for (vint k = 0; k < argTypes.Count(); k++)
 					{
-						auto choice = TestConvert(paramType, argTypes[k].tsys);
+						auto choice = TestConvert(pa, paramType, argTypes[k].tsys);
 						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
 					}
 
@@ -660,7 +660,7 @@ public:
 			}
 		}
 
-		VisitOverloadedFunction(funcTypes, argTypesList, result);
+		VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
 	}
 
 	void Visit(FuncAccessExpr* self)override
@@ -685,7 +685,7 @@ public:
 			ExprToTsys(pa, self->expr, funcTypes);
 
 			FindQualifiedFunctions(pa, {}, TsysRefType::None, funcTypes, true);
-			VisitOverloadedFunction(funcTypes, argTypesList, result);
+			VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
 		}
 	}
 };
