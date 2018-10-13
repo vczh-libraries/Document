@@ -224,7 +224,7 @@ public:
 			{
 				if (auto declType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 				{
-					bool tC = thisCV.isConstExpr || thisCV.isConst;
+					bool tC = thisCV.isGeneralConst;
 					bool dC = declType->qualifierConstExpr || declType->qualifierConst;
 					bool tV = thisCV.isVolatile;
 					bool dV = thisCV.isVolatile;
@@ -504,7 +504,7 @@ public:
 				}
 				else
 				{
-					Add(result, tsysChar->CVOf({ false,true,false })->ArrayOf(1), true);
+					Add(result, tsysChar->CVOf({ true,false })->ArrayOf(1), true);
 				}
 			}
 			return;

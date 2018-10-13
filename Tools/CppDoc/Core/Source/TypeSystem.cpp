@@ -63,7 +63,7 @@ protected:
 	ITsys_Ptr*										ptrOf = nullptr;
 	Dictionary<vint, ITsys_Array*>					arrayOf;
 	Dictionary<ITsys*, ITsys_Member*>				memberOf;
-	ITsys_CV*										cvOf[7] = { 0 };
+	ITsys_CV*										cvOf[3] = { 0 };
 	WithParamsList<ITsys_Function>					functionOf;
 	WithParamsList<ITsys_Generic>					genericOf;
 
@@ -96,7 +96,7 @@ public:
 
 	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
 	{
-		cv = { false,false,false };
+		cv = { false,false };
 		refType = TsysRefType::None;
 		return GetEntityInternal(cv, refType);
 	}
@@ -280,8 +280,7 @@ class ITSYS_CLASS(CV)
 
 	ITsys* CVOf(TsysCV cv)override
 	{
-		cv.isConstExpr |= data.isConstExpr;
-		cv.isConst |= data.isConst;
+		cv.isGeneralConst |= data.isGeneralConst;
 		cv.isVolatile |= data.isVolatile;
 		return element->CVOf(cv);
 	}
@@ -534,7 +533,7 @@ ITsys* TsysBase::MemberOf(ITsys* classType)
 
 ITsys* TsysBase::CVOf(TsysCV cv)
 {
-	vint index = ((cv.isConstExpr ? 1 : 0) << 2) + ((cv.isConst ? 1 : 0) << 1) + (cv.isVolatile ? 1 : 0);
+	vint index = ((cv.isGeneralConst ? 1 : 0) << 1) + (cv.isVolatile ? 1 : 0);
 
 	if (index == 0)
 	{

@@ -101,11 +101,11 @@ TEST_CASE(TestTypeSystem_CV)
 	auto tsys = ITsysAlloc::Create();
 	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
 
-#define CV(INDEX) {((INDEX)>>2)%2==1, ((INDEX)>>1)%2==1, ((INDEX)>>0)%2==1}
-	for (vint i = 0; i < 8; i++)
+#define CV(INDEX) {((INDEX)>>1)%2==1, ((INDEX)>>0)%2==1}
+	for (vint i = 0; i < 4; i++)
 	{
 		TEST_ASSERT(tvoid->CVOf(CV(i)) == tvoid->CVOf(CV(i)));
-		for (vint j = 0; j < 8; j++)
+		for (vint j = 0; j < 4; j++)
 		{
 			if (i != j)
 			{
@@ -182,8 +182,8 @@ TEST_CASE(TestTypeSystem_Type)
 	TEST_ASSERT(tvoid->RRefOf()->GetType() == TsysType::RRef);
 	TEST_ASSERT(tvoid->PtrOf()->GetType() == TsysType::Ptr);
 	TEST_ASSERT(tvoid->ArrayOf(1)->GetType() == TsysType::Array);
-	TEST_ASSERT(tvoid->CVOf({ false,false,false }) == tvoid);
-	TEST_ASSERT(tvoid->CVOf({ true,true,true })->GetType() == TsysType::CV);
+	TEST_ASSERT(tvoid->CVOf({ false,false }) == tvoid);
+	TEST_ASSERT(tvoid->CVOf({ true,true })->GetType() == TsysType::CV);
 	TEST_ASSERT(tvoid->MemberOf(tdecl)->GetType() == TsysType::Member);
 
 	List<ITsys*> types;

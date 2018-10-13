@@ -46,17 +46,12 @@ struct TsysPrimitive
 
 struct TsysCV
 {
-	bool						isConstExpr = false;
-	bool						isConst = false;
+	bool						isGeneralConst = false;
 	bool						isVolatile = false;
 
 	TsysCV() = default;
-	TsysCV(bool ce, bool c, bool v) :isConstExpr(ce), isConst(c), isVolatile(v) {}
+	TsysCV(bool c, bool v) :isGeneralConst(c), isVolatile(v) {}
 };
-
-const TsysCV		CV_CE	{ true,false,false };
-const TsysCV		CV_C	{ false,true,false };
-const TsysCV		CV_V	{ false,false,true };
 
 #define TSYS_TYPE_LIST(F)									\
 	F(Zero)													\

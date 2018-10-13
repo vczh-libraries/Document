@@ -35,14 +35,14 @@ namespace TestConvert_Helpers
 
 	bool IsCVSame(TsysCV toCV, TsysCV fromCV)
 	{
-		if ((toCV.isConstExpr || toCV.isConst) != (fromCV.isConstExpr || fromCV.isConst)) return false;
+		if (toCV.isGeneralConst != fromCV.isGeneralConst) return false;
 		if (toCV.isVolatile != fromCV.isVolatile) return false;
 		return true;
 	}
 
 	bool IsCVMatch(TsysCV toCV, TsysCV fromCV)
 	{
-		if (!(toCV.isConstExpr || toCV.isConst) && (fromCV.isConstExpr || fromCV.isConst)) return false;
+		if (!toCV.isGeneralConst && fromCV.isGeneralConst) return false;
 		if (!toCV.isVolatile && fromCV.isVolatile) return false;
 		return true;
 	}
@@ -54,7 +54,7 @@ namespace TestConvert_Helpers
 		auto toEntity = toType->GetEntity(toCV, toRef);
 		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
-		if (toRef == TsysRefType::LRef && (toCV.isConstExpr || toCV.isConst))
+		if (toRef == TsysRefType::LRef && toCV.isGeneralConst)
 		{
 			fromLRP = true;
 		}
@@ -133,7 +133,7 @@ namespace TestConvert_Helpers
 
 		if (toRef == TsysRefType::LRef)
 		{
-			if (toCV.isConstExpr || toCV.isConst)
+			if (toCV.isGeneralConst)
 			{
 				return true;
 			}

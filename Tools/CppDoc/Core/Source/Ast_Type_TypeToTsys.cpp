@@ -219,7 +219,7 @@ public:
 		self->type->Accept(this);
 		for (vint i = 0; i < result.Count(); i++)
 		{
-			result[i] = result[i]->CVOf({ self->isConstExpr, self->isConst, self->isVolatile });
+			result[i] = result[i]->CVOf({ (self->isConstExpr || self->isConst), self->isVolatile });
 		}
 	}
 

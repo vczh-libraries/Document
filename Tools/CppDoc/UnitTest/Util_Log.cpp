@@ -1172,8 +1172,7 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		{
 			auto cv = tsys->GetCV();
 			Log(tsys->GetElement(), writer);
-			if (cv.isConstExpr) writer.WriteString(L" constexpr");
-			if (cv.isConst) writer.WriteString(L" const");
+			if (cv.isGeneralConst) writer.WriteString(L" const");
 			if (cv.isVolatile) writer.WriteString(L" volatile");
 		}
 		return;
