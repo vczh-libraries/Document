@@ -47,6 +47,32 @@ namespace TestConvert_Helpers
 		return true;
 	}
 
+	bool IsCVMatch(ITsys* toType, ITsys* fromType, bool& performedLRPTrivalConversion)
+	{
+		TsysCV toCV, fromCV;
+		if (toType->GetType() == TsysType::CV)
+		{
+			toCV = toType->GetCV();
+			toType = toType->GetElement();
+		}
+		if (fromType->GetType() == TsysType::CV)
+		{
+			fromCV = fromType->GetCV();
+			fromType = fromType->GetElement();
+		}
+
+		if (toType == fromType)
+		{
+			if (IsCVSame(toCV, fromCV)) return true;
+			if (IsCVMatch(toCV, fromCV))
+			{
+				performedLRPTrivalConversion = true;
+				return true;
+			}
+		}
+		return false;
+	}
+
 	bool IsExactOrTrivalConvert(ITsys* toType, ITsys* fromType, bool fromLRP, bool& performedLRPTrivalConversion)
 	{
 		TsysCV toCV, fromCV;
@@ -106,19 +132,14 @@ namespace TestConvert_Helpers
 			return true;
 		}
 
-		if (toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Ptr)
+		if ((toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Ptr) ||
+			(toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Array) ||
+			(toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array))
 		{
-			return IsExactOrTrivalConvert(toEntity->GetElement(), fromEntity->GetElement(), true, performedLRPTrivalConversion);
-		}
-
-		if (toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Array)
-		{
-			return IsExactOrTrivalConvert(toEntity->GetElement(), fromEntity->GetElement(), true, performedLRPTrivalConversion);
-		}
-
-		if (toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array)
-		{
-			return IsExactOrTrivalConvert(toEntity->GetElement(), fromEntity->GetElement(), true, performedLRPTrivalConversion);
+			if (IsCVMatch(toEntity->GetElement(), fromEntity->GetElement(), performedLRPTrivalConversion))
+			{
+				return true;
+			}
 		}
 
 		return false;

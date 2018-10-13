@@ -122,7 +122,7 @@
     <ClCompile Include="Source\Parser_ResolveSymbol.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TypeSystem_TestParameter.cpp">
+    <ClCompile Include="Source\TypeSystem_TestConvert.cpp">
       <Filter>Source Files\TypeSystem</Filter>
     </ClCompile>
   </ItemGroup>
