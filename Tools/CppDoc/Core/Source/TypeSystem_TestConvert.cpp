@@ -276,6 +276,40 @@ namespace TestConvert_Helpers
 
 	bool IsCustomOperatorConversion(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
+		TsysCV fromCV;
+		TsysRefType fromRef;
+		auto fromEntity = toType->GetEntity(fromCV, fromRef);
+
+		auto fromClass = TryGetClassFromType(fromEntity);
+		if (!fromClass) return false;
+
+		auto fromSymbol = fromClass->symbol;
+		vint index = fromSymbol->children.Keys().IndexOf(L"$__type");
+		if (index == -1) return false;
+		const auto& typeOps = fromSymbol->children.GetByIndex(index);
+
+		ParsingArguments newPa(pa, fromSymbol);
+		for (vint i = 0; i < typeOps.Count(); i++)
+		{
+			auto typeOpSymbol = typeOps[i];
+			if (typeOpSymbol->decls.Count() != 1) continue;
+			auto typeOpDecl = typeOpSymbol->decls[0].Cast<ForwardFunctionDeclaration>();
+			if (typeOpDecl->decoratorExplicit) return false;
+			auto typeOpType = GetTypeWithoutMemberAndCC(typeOpDecl->type).Cast<FunctionType>();
+			if (!typeOpType) continue;
+			if (typeOpType->parameters.Count() != 0) continue;
+
+			TypeTsysList targetTypes;
+			TypeToTsys(newPa, typeOpType->returnType, targetTypes);
+			for (vint j = 0; j < targetTypes.Count(); j++)
+			{
+				if (TestConvert(newPa, toType, targetTypes[j]->RRefOf()) != TsysConv::Illegal)
+				{
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 
