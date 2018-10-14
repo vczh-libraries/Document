@@ -380,6 +380,38 @@ TEST_CASE(TestParseExpr_ArrayAndPointerAccess)
 {
 }
 
+TEST_CASE(TestParseExpr_EnumAndEnumItem)
+{
+}
+
+TEST_CASE(TestParseExpr_PredefinedOperatorTypes)
+{
+}
+
+TEST_CASE(TestParseExpr_Ternary_Comma)
+{
+}
+
+TEST_CASE(TestParseExpr_Sizeof_Typeid)
+{
+}
+
+TEST_CASE(TestParseExpr_Throw)
+{
+}
+
+TEST_CASE(TestParseExpr_New_Delete_And_Placement)
+{
+}
+
+TEST_CASE(TestParseExpr_Universal_Initialization)
+{
+}
+
+TEST_CASE(TestParseExpr_Lambda)
+{
+}
+
 TEST_CASE(TestParseExpr_Overloading_Ref)
 {
 	{
@@ -404,6 +436,10 @@ TEST_CASE(TestParseExpr_Overloading_Array)
 }
 
 TEST_CASE(TestParseExpr_Overloading_DefaultParameter)
+{
+}
+
+TEST_CASE(TestParseExpr_Overloading_VariantArguments)
 {
 }
 
@@ -474,4 +510,32 @@ TEST_CASE(TestParseExpr_Overloading_TypeConversion)
 		AssertExpr(L"F(z)", L"F(z)", L"double &&", pa);
 		AssertExpr(L"G(z)", L"G(z)", L"char &&", pa);
 	}
+}
+
+TEST_CASE(TestParseExpr_Overloading_TypeConversion_DP_VA)
+{
+}
+
+TEST_CASE(TestParseExpr_Overloading_PostfixUnary)
+{
+}
+
+TEST_CASE(TestParseExpr_Overloading_PrefixUnary)
+{
+}
+
+TEST_CASE(TestParseExpr_Overloading_Binary)
+{
+}
+
+TEST_CASE(TestParseExpr_Overloading_Binary_Assignment)
+{
+}
+
+TEST_CASE(TestParseExpr_Overloading_Universal_Initialization)
+{
+}
+
+TEST_CASE(TestParseExpr_Overloading_Lambda)
+{
 }
