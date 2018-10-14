@@ -31,7 +31,7 @@ void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WS
 #pragma warning (disable: 4076)
 #pragma warning (disable: 4244)
 
-template<typename TFrom, typename TTo>
+template<typename TFrom, typename TTo, TsysConv Conv>
 struct RunTypeConvert
 {
 	using TFromEntity = typename RemoveReference<TFrom>::Type;
@@ -43,7 +43,7 @@ struct RunTypeConvert
 };
 
 template<typename TFrom, typename TTo>
-struct RunTypeConvertFail
+struct RunTypeConvert<TFrom, TTo, TsysConv::Illegal>
 {
 	using TFromEntity = typename RemoveReference<TFrom>::Type;
 
@@ -55,8 +55,7 @@ struct RunTypeConvertFail
 
 #define TEST_DECL(SOMETHING) SOMETHING auto input = L#SOMETHING
 #define TEST_CONV_TYPE_(FROM, TO, CONV) AssertTypeConvert(pa, L#FROM, L#TO, TsysConv::CONV)
-#define TEST_CONV_TYPE(FROM, TO, CONV) RunTypeConvert<FROM, TO>::test, TEST_CONV_TYPE_(FROM, TO, CONV)
-#define TEST_CONV_TYPE_FAIL(FROM, TO, CONV) RunTypeConvertFail<FROM, TO>::test, TEST_CONV_TYPE_(FROM, TO, CONV)
+#define TEST_CONV_TYPE(FROM, TO, CONV) RunTypeConvert<FROM, TO, TsysConv::CONV>::test, TEST_CONV_TYPE_(FROM, TO, CONV)
 
 TEST_CASE(TestTypeConvert_Exact)
 {
@@ -170,7 +169,7 @@ TEST_CASE(TestTypeConvert_Illegal)
 {
 	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
 #define TEST_CONV_(FROM, TO) TEST_CONV_TYPE_(FROM, TO, Illegal)
-#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, Illegal)
 	TEST_CONV(const int&, int&);
 	TEST_CONV(volatile int&, int&);
 	TEST_CONV(const int&, volatile int&);
@@ -231,7 +230,7 @@ TEST_CASE(TestTypeConvert_Inheritance)
 	}
 
 	{
-#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, Illegal)
 		TEST_CONV(Base*, Derived*);
 		TEST_CONV(Base&, Derived&);
 		TEST_CONV(Base&&, Derived&&);
@@ -317,7 +316,7 @@ TEST_CASE(TestTypeConvert_CtorConversion)
 	}
 
 	{
-#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, Illegal)
 		TEST_CONV(const Source*, const Target*);
 
 		TEST_CONV(const Source*, Target*);
@@ -349,7 +348,7 @@ TEST_CASE(TestTypeConvert_CtorConversion_FailExplicit)
 	COMPILE_PROGRAM(program, pa, input);
 
 	{
-#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, Illegal)
 		TEST_CONV(const Source*, const Target*);
 		TEST_CONV(const Source&, const Target&);
 		TEST_CONV(const Source&, const Target&&);
@@ -377,7 +376,7 @@ TEST_CASE(TestTypeConvert_CtorConversion_FailExplicit)
 	}
 
 	{
-#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, Illegal)
 		TEST_CONV(const Source, Target);
 		TEST_CONV(const Source&, Target);
 		TEST_CONV(const Source&&, Target);
@@ -453,7 +452,7 @@ TEST_CASE(TestTypeConvert_OperatorConversion)
 	}
 
 	{
-#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, Illegal)
 		TEST_CONV(const Source*, const TargetA*);
 
 		TEST_CONV(const Source*, TargetA*);
@@ -493,7 +492,7 @@ TEST_CASE(TestTypeConvert_OperatorConversion)
 	}
 
 	{
-#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, Illegal)
 		TEST_CONV(const Source*, const TargetB*);
 		TEST_CONV(const Source&, const TargetB&);
 		TEST_CONV(const Source&, const TargetB&&);
@@ -515,7 +514,7 @@ TEST_CASE(TestTypeConvert_OperatorConversion)
 	}
 
 	{
-#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, Illegal)
 		TEST_CONV(const Source, TargetB);
 		TEST_CONV(const Source&, TargetB);
 		TEST_CONV(const Source&&, TargetB);
@@ -547,7 +546,7 @@ TEST_CASE(TestTypeConvert_OperatorConversion_FailExplicit)
 	COMPILE_PROGRAM(program, pa, input);
 
 	{
-#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, Illegal)
 		TEST_CONV(const Source*, const TargetA*);
 		TEST_CONV(const Source&, const TargetA&);
 		TEST_CONV(const Source&, const TargetA&&);
@@ -575,7 +574,7 @@ TEST_CASE(TestTypeConvert_OperatorConversion_FailExplicit)
 	}
 
 	{
-#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, Illegal)
 		TEST_CONV(const Source*, const TargetB*);
 		TEST_CONV(const Source&, const TargetB&);
 		TEST_CONV(const Source&, const TargetB&&);
