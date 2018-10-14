@@ -215,7 +215,7 @@ namespace TestConvert_Helpers
 			auto toEntity = toType->GetEntity(toCV, toRef);
 			auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
-			if (toRef != fromRef) return false;
+			if (toRef != fromRef && (toRef != TsysRefType::LRef || fromRef != TsysRefType::None)) return false;
 			if (toRef != TsysRefType::None)
 			{
 				if (!IsCVMatch(toCV, fromCV)) return false;

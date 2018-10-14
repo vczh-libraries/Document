@@ -409,6 +409,26 @@ TEST_CASE(TestParseExpr_Overloading_DefaultParameter)
 
 TEST_CASE(TestParseExpr_Overloading_Inheritance)
 {
+	{
+		auto input = LR"(
+	struct X{};
+	struct Y{};
+	struct Z:X{};
+
+	double F(X&);
+	bool F(Y&);
+
+	double G(X&);
+	bool G(Y&);
+	char G(const Z&);
+
+	Z z;
+	)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(L"F(z)", L"F(z)", L"double &&", pa);
+		AssertExpr(L"G(z)", L"G(z)", L"char &&", pa);
+	}
 }
 
 TEST_CASE(TestParseExpr_Overloading_TypeConversion)
