@@ -8,6 +8,7 @@ using namespace vl::collections;
 
 class Symbol;
 struct ParsingArguments;
+class FunctionType;
 
 /***********************************************************************
 Interface
@@ -138,6 +139,7 @@ public:
 Helpers
 ***********************************************************************/
 
+extern TsysConv					TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType);
 extern TsysConv					TestConvert(ParsingArguments& pa, ITsys* toType, ITsys* fromType);
 
 #endif

@@ -3,6 +3,22 @@
 #include "Ast_Decl.h"
 #include "Ast_Type.h"
 
+TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType)
+{
+	bool tC = thisCV.isGeneralConst;
+	bool dC = funcType->qualifierConstExpr || funcType->qualifierConst;
+	bool tV = thisCV.isVolatile;
+	bool dV = thisCV.isVolatile;
+	bool tL = thisRef == TsysRefType::LRef;
+	bool dL = funcType->qualifierLRef;
+	bool tR = thisRef == TsysRefType::RRef;
+	bool dR = funcType->qualifierRRef;
+
+	if (tC && !dC || tV && !dV || tL && dR || tR && dL) return TsysConv::Illegal;
+	if (tC == dC && tV == dV && ((tL == dL && tR == dR) || (!dL && !dR))) return TsysConv::Exact;
+	return TsysConv::TrivalConversion;
+}
+
 namespace TestConvert_Helpers
 {
 	bool IsCVSame(TsysCV toCV, TsysCV fromCV)
@@ -278,7 +294,7 @@ namespace TestConvert_Helpers
 	{
 		TsysCV fromCV;
 		TsysRefType fromRef;
-		auto fromEntity = toType->GetEntity(fromCV, fromRef);
+		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
 		auto fromClass = TryGetClassFromType(fromEntity);
 		if (!fromClass) return false;
@@ -298,6 +314,7 @@ namespace TestConvert_Helpers
 			auto typeOpType = GetTypeWithoutMemberAndCC(typeOpDecl->type).Cast<FunctionType>();
 			if (!typeOpType) continue;
 			if (typeOpType->parameters.Count() != 0) continue;
+			if (TestFunctionQualifier(fromCV, fromRef, typeOpType) == TsysConv::Illegal) continue;
 
 			TypeTsysList targetTypes;
 			TypeToTsys(newPa, typeOpType->returnType, targetTypes);

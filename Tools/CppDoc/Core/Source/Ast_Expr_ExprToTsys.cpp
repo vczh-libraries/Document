@@ -224,18 +224,7 @@ public:
 			{
 				if (auto declType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 				{
-					bool tC = thisCV.isGeneralConst;
-					bool dC = declType->qualifierConstExpr || declType->qualifierConst;
-					bool tV = thisCV.isVolatile;
-					bool dV = thisCV.isVolatile;
-					bool tL = thisRef == TsysRefType::LRef;
-					bool dL = declType->qualifierLRef;
-					bool tR = thisRef == TsysRefType::RRef;
-					bool dR = declType->qualifierRRef;
-
-					if (tC && !dC || tV && !dV || tL && dR || tR && dL) return TsysConv::Illegal;
-					if (tC == dC && tV == dV && ((tL == dL && tR == dR) || (!dL && !dR))) return TsysConv::Exact;
-					return TsysConv::TrivalConversion;
+					return ::TestFunctionQualifier(thisCV, thisRef, declType);
 				}
 			}
 		}
