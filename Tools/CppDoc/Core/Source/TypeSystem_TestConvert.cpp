@@ -284,6 +284,9 @@ namespace TestConvert_Helpers
 		TsysCV toCV;
 		TsysRefType toRef;
 		auto toEntity = toType->GetEntity(toCV, toRef);
+		if (toCV.isVolatile) return false;
+		if (toRef == TsysRefType::LRef && !toCV.isGeneralConst) return false;
+
 		auto toClass = TryGetClassFromType(toEntity);
 		if (!toClass) return false;
 
@@ -367,8 +370,8 @@ TsysConv TestConvert(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	if (IsNumericConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
 	if (IsPointerConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
 	if (IsToBaseClassConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
-	if (IsCustomOperatorConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
-	if (IsCustomContructorConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
+	if (IsCustomOperatorConversion(pa, toType, fromType)) return TsysConv::UserDefinedConversion;
+	if (IsCustomContructorConversion(pa, toType, fromType)) return TsysConv::UserDefinedConversion;
 
 	return TsysConv::Illegal;
 }
