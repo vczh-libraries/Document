@@ -299,6 +299,24 @@ TEST_CASE(TestTypeConvert_CtorConversion)
 	}
 
 	{
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, UserDefinedConversion)
+		TEST_CONV(const Source, Target);
+		TEST_CONV(const Source&, Target);
+		TEST_CONV(const Source&&, Target);
+		TEST_CONV(Source, Target);
+		TEST_CONV(Source&, Target);
+		TEST_CONV(Source&&, Target);
+
+		TEST_CONV(const Source, const Target);
+		TEST_CONV(const Source&, const Target);
+		TEST_CONV(const Source&&, const Target);
+		TEST_CONV(Source, const Target);
+		TEST_CONV(Source&, const Target);
+		TEST_CONV(Source&&, const Target);
+#undef TEST_CONV
+	}
+
+	{
 #define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
 		TEST_CONV(const Source*, const Target*);
 
@@ -357,6 +375,24 @@ TEST_CASE(TestTypeConvert_CtorConversion_FailExplicit)
 		TEST_CONV(Source&&, Target&&);
 #undef TEST_CONV
 	}
+
+	{
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+		TEST_CONV(const Source, Target);
+		TEST_CONV(const Source&, Target);
+		TEST_CONV(const Source&&, Target);
+		TEST_CONV(Source, Target);
+		TEST_CONV(Source&, Target);
+		TEST_CONV(Source&&, Target);
+
+		TEST_CONV(const Source, const Target);
+		TEST_CONV(const Source&, const Target);
+		TEST_CONV(const Source&&, const Target);
+		TEST_CONV(Source, const Target);
+		TEST_CONV(Source&, const Target);
+		TEST_CONV(Source&&, const Target);
+#undef TEST_CONV
+	}
 }
 
 TEST_CASE(TestTypeConvert_OperatorConversion)
@@ -399,6 +435,24 @@ TEST_CASE(TestTypeConvert_OperatorConversion)
 	}
 
 	{
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, UserDefinedConversion)
+		TEST_CONV(const Source, TargetA);
+		TEST_CONV(const Source&, TargetA);
+		TEST_CONV(const Source&&, TargetA);
+		TEST_CONV(Source, TargetA);
+		TEST_CONV(Source&, TargetA);
+		TEST_CONV(Source&&, TargetA);
+
+		TEST_CONV(const Source, const TargetA);
+		TEST_CONV(const Source&, const TargetA);
+		TEST_CONV(const Source&&, const TargetA);
+		TEST_CONV(Source, const TargetA);
+		TEST_CONV(Source&, const TargetA);
+		TEST_CONV(Source&&, const TargetA);
+#undef TEST_CONV
+	}
+
+	{
 #define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
 		TEST_CONV(const Source*, const TargetA*);
 
@@ -427,6 +481,18 @@ TEST_CASE(TestTypeConvert_OperatorConversion)
 	}
 
 	{
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, UserDefinedConversion)
+		TEST_CONV(Source, TargetB);
+		TEST_CONV(Source&, TargetB);
+		TEST_CONV(Source&&, TargetB);
+
+		TEST_CONV(Source, const TargetB);
+		TEST_CONV(Source&, const TargetB);
+		TEST_CONV(Source&&, const TargetB);
+#undef TEST_CONV
+	}
+
+	{
 #define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
 		TEST_CONV(const Source*, const TargetB*);
 		TEST_CONV(const Source&, const TargetB&);
@@ -445,6 +511,18 @@ TEST_CASE(TestTypeConvert_OperatorConversion)
 		TEST_CONV(Source*, TargetB*);
 		TEST_CONV(Source&, TargetB&);
 		TEST_CONV(Source&&, TargetB&);
+#undef TEST_CONV
+	}
+
+	{
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+		TEST_CONV(const Source, TargetB);
+		TEST_CONV(const Source&, TargetB);
+		TEST_CONV(const Source&&, TargetB);
+
+		TEST_CONV(const Source, const TargetB);
+		TEST_CONV(const Source&, const TargetB);
+		TEST_CONV(const Source&&, const TargetB);
 #undef TEST_CONV
 	}
 }
