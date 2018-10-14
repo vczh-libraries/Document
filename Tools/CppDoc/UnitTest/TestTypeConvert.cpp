@@ -315,7 +315,7 @@ TEST_CASE(TestTypeConvert_CtorConversion)
 	}
 }
 
-TEST_CASE(TestTypeConvert_CtorConversion_Fail)
+TEST_CASE(TestTypeConvert_CtorConversion_FailExplicit)
 {
 	TEST_DECL(
 	struct Source
@@ -449,7 +449,7 @@ TEST_CASE(TestTypeConvert_OperatorConversion)
 	}
 }
 
-TEST_CASE(TestTypeConvert_OperatorConversion_Fail)
+TEST_CASE(TestTypeConvert_OperatorConversion_FailExplicit)
 {
 	TEST_DECL(
 	struct TargetA

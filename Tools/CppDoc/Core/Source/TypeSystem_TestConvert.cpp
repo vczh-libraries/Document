@@ -281,6 +281,39 @@ namespace TestConvert_Helpers
 
 	bool IsCustomContructorConversion(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
+		TsysCV toCV;
+		TsysRefType toRef;
+		auto toEntity = toType->GetEntity(toCV, toRef);
+		auto toClass = TryGetClassFromType(toEntity);
+		if (!toClass) return false;
+
+		auto toSymbol = toClass->symbol;
+		vint index = toSymbol->children.Keys().IndexOf(L"$__ctor");
+		if (index == -1) return false;
+		const auto& ctors = toSymbol->children.GetByIndex(index);
+
+		ParsingArguments newPa(pa, toSymbol);
+		for (vint i = 0; i < ctors.Count(); i++)
+		{
+			auto ctorSymbol = ctors[i];
+			if (ctorSymbol->decls.Count() != 1) continue;
+			auto ctorDecl = ctorSymbol->decls[0].Cast<ForwardFunctionDeclaration>();
+			if (ctorDecl->decoratorExplicit) return false;
+			auto ctorType = GetTypeWithoutMemberAndCC(ctorDecl->type).Cast<FunctionType>();
+			if (!ctorType) continue;
+			if (ctorType->parameters.Count() != 1) continue;
+
+			TypeTsysList sourceTypes;
+			TypeToTsys(newPa, ctorType->parameters[0]->type, sourceTypes);
+			for (vint j = 0; j < sourceTypes.Count(); j++)
+			{
+				if (TestConvert(newPa, sourceTypes[j], fromType) != TsysConv::Illegal)
+				{
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 }
