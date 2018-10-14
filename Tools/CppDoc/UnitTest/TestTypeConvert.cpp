@@ -263,7 +263,59 @@ TEST_CASE(TestTypeConvert_Inheritance)
 	}
 }
 
-TEST_CASE(TestTypeConvert_UserDefinedConversion)
+TEST_CASE(TestTypeConvert_CtorConversion)
+{
+	TEST_DECL(
+	struct Source
+	{
+	};
+
+	struct Target
+	{
+		Target(Source&&);
+		Target(const Source&);
+	};
+	);
+	COMPILE_PROGRAM(program, pa, input);
+
+	{
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, UserDefinedConversion)
+		TEST_CONV(const Source&, const Target&);
+		TEST_CONV(const Source&, const Target&&);
+		TEST_CONV(const Source&&, const Target&);
+		TEST_CONV(const Source&&, const Target&&);
+
+		TEST_CONV(const Source&, Target&&);
+		TEST_CONV(const Source&&, Target&&);
+
+		TEST_CONV(Source&, const Target&);
+		TEST_CONV(Source&, const Target&&);
+		TEST_CONV(Source&&, const Target&);
+		TEST_CONV(Source&&, const Target&&);
+
+		TEST_CONV(Source&, Target&&);
+		TEST_CONV(Source&&, Target&&);
+#undef TEST_CONV
+	}
+
+	{
+#define TEST_CONV(FROM, TO) TEST_CONV_TYPE_FAIL(FROM, TO, Illegal)
+		TEST_CONV(const Source*, const Target*);
+
+		TEST_CONV(const Source*, Target*);
+		TEST_CONV(const Source&, Target&);
+
+		TEST_CONV(Source*, const Target*);
+		TEST_CONV(const Source&&, Target&);
+
+		TEST_CONV(Source*, Target*);
+		TEST_CONV(Source&, Target&);
+		TEST_CONV(Source&&, Target&);
+#undef TEST_CONV
+	}
+}
+
+TEST_CASE(TestTypeConvert_OperatorConversion)
 {
 #define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, UserDefinedConversion)
 #undef TEST_CONV
