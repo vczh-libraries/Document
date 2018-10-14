@@ -421,27 +421,27 @@ TEST_CASE(TestTypeConvert_OperatorConversion)
 		TEST_CONV(const Source&&, const TargetA&);
 		TEST_CONV(const Source&&, const TargetA&&);
 
-		TEST_CONV(const Source&, TargetA&&);
-		TEST_CONV(const Source&&, TargetA&&);
+		TEST_CONV(const Source&, volatile TargetA&&);
+		TEST_CONV(const Source&&, volatile TargetA&&);
 
 		TEST_CONV(Source&, const TargetA&);
 		TEST_CONV(Source&, const TargetA&&);
 		TEST_CONV(Source&&, const TargetA&);
 		TEST_CONV(Source&&, const TargetA&&);
 
-		TEST_CONV(Source&, TargetA&&);
-		TEST_CONV(Source&&, TargetA&&);
+		TEST_CONV(Source&, volatile TargetA&&);
+		TEST_CONV(Source&&, volatile TargetA&&);
 #undef TEST_CONV
 	}
 
 	{
 #define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, UserDefinedConversion)
-		TEST_CONV(const Source, TargetA);
-		TEST_CONV(const Source&, TargetA);
-		TEST_CONV(const Source&&, TargetA);
-		TEST_CONV(Source, TargetA);
-		TEST_CONV(Source&, TargetA);
-		TEST_CONV(Source&&, TargetA);
+		TEST_CONV(const Source, volatile TargetA);
+		TEST_CONV(const Source&, volatile TargetA);
+		TEST_CONV(const Source&&, volatile TargetA);
+		TEST_CONV(Source, volatile TargetA);
+		TEST_CONV(Source&, volatile TargetA);
+		TEST_CONV(Source&&, volatile TargetA);
 
 		TEST_CONV(const Source, const TargetA);
 		TEST_CONV(const Source&, const TargetA);
@@ -475,16 +475,16 @@ TEST_CASE(TestTypeConvert_OperatorConversion)
 		TEST_CONV(Source&&, const TargetB&);
 		TEST_CONV(Source&&, const TargetB&&);
 
-		TEST_CONV(Source&, TargetB&&);
-		TEST_CONV(Source&&, TargetB&&);
+		TEST_CONV(Source&, volatile TargetB&&);
+		TEST_CONV(Source&&, volatile TargetB&&);
 #undef TEST_CONV
 	}
 
 	{
 #define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, UserDefinedConversion)
-		TEST_CONV(Source, TargetB);
-		TEST_CONV(Source&, TargetB);
-		TEST_CONV(Source&&, TargetB);
+		TEST_CONV(Source, volatile TargetB);
+		TEST_CONV(Source&, volatile TargetB);
+		TEST_CONV(Source&&, volatile TargetB);
 
 		TEST_CONV(Source, const TargetB);
 		TEST_CONV(Source&, const TargetB);
