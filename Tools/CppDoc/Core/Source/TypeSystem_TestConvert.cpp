@@ -284,13 +284,14 @@ namespace TestConvert_Helpers
 		TsysCV toCV;
 		TsysRefType toRef;
 		auto toEntity = toType->GetEntity(toCV, toRef);
-		if (toCV.isVolatile) return false;
 		if (toRef == TsysRefType::LRef && !toCV.isGeneralConst) return false;
 
 		auto toClass = TryGetClassFromType(toEntity);
 		if (!toClass) return false;
 
 		auto toSymbol = toClass->symbol;
+		if (TestConvert(pa, toType, pa.tsys->DeclOf(toSymbol)->RRefOf()) == TsysConv::Illegal) return false;
+
 		vint index = toSymbol->children.Keys().IndexOf(L"$__ctor");
 		if (index == -1) return false;
 		const auto& ctors = toSymbol->children.GetByIndex(index);

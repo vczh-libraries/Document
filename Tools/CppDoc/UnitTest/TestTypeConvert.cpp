@@ -285,27 +285,27 @@ TEST_CASE(TestTypeConvert_CtorConversion)
 		TEST_CONV(const Source&&, const Target&);
 		TEST_CONV(const Source&&, const Target&&);
 
-		TEST_CONV(const Source&, Target&&);
-		TEST_CONV(const Source&&, Target&&);
+		TEST_CONV(const Source&, volatile Target&&);
+		TEST_CONV(const Source&&, volatile Target&&);
 
 		TEST_CONV(Source&, const Target&);
 		TEST_CONV(Source&, const Target&&);
 		TEST_CONV(Source&&, const Target&);
 		TEST_CONV(Source&&, const Target&&);
 
-		TEST_CONV(Source&, Target&&);
-		TEST_CONV(Source&&, Target&&);
+		TEST_CONV(Source&, volatile Target&&);
+		TEST_CONV(Source&&, volatile Target&&);
 #undef TEST_CONV
 	}
 
 	{
 #define TEST_CONV(FROM, TO) TEST_CONV_TYPE(FROM, TO, UserDefinedConversion)
-		TEST_CONV(const Source, Target);
-		TEST_CONV(const Source&, Target);
-		TEST_CONV(const Source&&, Target);
-		TEST_CONV(Source, Target);
-		TEST_CONV(Source&, Target);
-		TEST_CONV(Source&&, Target);
+		TEST_CONV(const Source, volatile Target);
+		TEST_CONV(const Source&, volatile Target);
+		TEST_CONV(const Source&&, volatile Target);
+		TEST_CONV(Source, volatile Target);
+		TEST_CONV(Source&, volatile Target);
+		TEST_CONV(Source&&, volatile Target);
 
 		TEST_CONV(const Source, const Target);
 		TEST_CONV(const Source&, const Target);
