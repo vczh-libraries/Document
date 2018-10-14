@@ -238,18 +238,26 @@ TEST_CASE(TestTypeConvert_Inheritance)
 
 		TEST_CONV(const Base*, const Derived*);
 		TEST_CONV(const Base&, const Derived&);
+		TEST_CONV(const Base&, const Derived&&);
+		TEST_CONV(const Base&&, const Derived&);
 		TEST_CONV(const Base&&, const Derived&&);
 
 		TEST_CONV(const Base*, Derived*);
 		TEST_CONV(const Base&, Derived&);
+		TEST_CONV(const Base&, Derived&&);
+		TEST_CONV(const Base&&, Derived&);
 		TEST_CONV(const Base&&, Derived&&);
 
 		TEST_CONV(const Derived*, Base*);
 		TEST_CONV(const Derived&, Base&);
+		TEST_CONV(const Derived&, Base&&);
+		TEST_CONV(const Derived&&, Base&);
 		TEST_CONV(const Derived&&, Base&&);
 
 		TEST_CONV(Base*, const Derived*);
 		TEST_CONV(Base&, const Derived&);
+		TEST_CONV(Base&, const Derived&&);
+		TEST_CONV(Base&&, const Derived&);
 		TEST_CONV(Base&&, const Derived&&);
 #undef TEST_CONV
 	}

@@ -117,6 +117,14 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
+	Ptr<ClassDeclaration> TryGetClassFromType(ITsys* type)
+	{
+		if (type->GetType() != TsysType::Decl) return false;
+		auto symbol = type->GetDecl();
+		if (symbol->decls.Count() != 1) return false;
+		return symbol->decls[0].Cast<ClassDeclaration>();
+	}
+
 	bool IsEntityConversionAllowed(ITsys*& toType, ITsys*& fromType)
 	{
 		TsysCV toCV, fromCV;
@@ -128,15 +136,19 @@ namespace TestConvert_Helpers
 		{
 			if (toCV.isGeneralConst)
 			{
-				return true;
+				goto ALLOW;
 			}
 		}
 
 		if (toRef == TsysRefType::LRef || fromRef == TsysRefType::LRef)
 		{
-			return false;
+			if (!TryGetClassFromType(toEntity) || !TryGetClassFromType(fromEntity))
+			{
+				return false;
+			}
 		}
 
+	ALLOW:
 		toType = toEntity;
 		fromType = fromEntity;
 		return true;
@@ -195,16 +207,25 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
-	Ptr<ClassDeclaration> TryGetClassFromType(ITsys* type)
-	{
-		if (type->GetType() != TsysType::Decl) return false;
-		auto symbol = type->GetDecl();
-		if (symbol->decls.Count() != 1) return false;
-		return symbol->decls[0].Cast<ClassDeclaration>();
-	}
-
 	bool IsToBaseClassConversion(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
+		{
+			TsysCV toCV, fromCV;
+			TsysRefType toRef, fromRef;
+			auto toEntity = toType->GetEntity(toCV, toRef);
+			auto fromEntity = fromType->GetEntity(fromCV, fromRef);
+
+			if (toRef != fromRef) return false;
+			if (toRef != TsysRefType::None)
+			{
+				if (!IsCVMatch(toCV, fromCV)) return false;
+
+				toType = toEntity;
+				fromType = fromEntity;
+				goto BEGIN_SEARCHING_FOR_BASE_CLASSES;
+			}
+		}
+
 		if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Ptr)
 		{
 			TsysCV toCV, fromCV;
@@ -219,7 +240,12 @@ namespace TestConvert_Helpers
 			toType = toEntity;
 			fromType = fromEntity;
 		}
+		else
+		{
+			return false;
+		}
 
+	BEGIN_SEARCHING_FOR_BASE_CLASSES:
 		if (!TryGetClassFromType(toType)) return false;
 
 		List<ITsys*> searched;
@@ -237,7 +263,7 @@ namespace TestConvert_Helpers
 					TypeToTsys(newPa, currentClass->baseTypes[j].f1, baseTypes);
 					for (vint k = 0; k < baseTypes.Count(); k++)
 					{
-						if (searched.Contains(baseTypes[k]))
+						if (!searched.Contains(baseTypes[k]))
 						{
 							searched.Add(baseTypes[k]);
 						}
@@ -307,7 +333,7 @@ TsysConv TestConvert(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	if (IsNumericPromotion(toEntity, fromEntity)) return TsysConv::IntegralPromotion;
 	if (IsNumericConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
 	if (IsPointerConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
-	if (IsToBaseClassConversion(pa, toEntity, fromEntity)) return TsysConv::StandardConversion;
+	if (IsToBaseClassConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
 	if (IsCustomOperatorConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
 	if (IsCustomContructorConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
 
