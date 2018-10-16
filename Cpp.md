@@ -271,29 +271,44 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] TYPE `::` IDENTIFIER
 - [x] `(` EXPR-WITH-COMMA `)`
   - [ ] Test
-- [ ] OPERATOR EXPR
-  - others
+- [x] OPERATOR EXPR
+  - [x] predefined operators
+  - [ ] Test
 - [ ] EXPR OPERATOR
   - [x] EXPR `(` {EXPR `,` ...} `)`
   - [x] EXPR `[` EXPR `]`
   - [ ] EXPR `<` {TYPE `,` ...} `>`
-  - others
+  - [x] predefined operators
+  - [ ] Test
 - [ ] EXPR `...`
 - [ ] EXPR OPERATOR EXPR
   - [x] EXPR (`.` | `->`) IDENTIFIER
-  - [ ] EXPR (`.*` | `->*`) EXPR
-  - others
-- [ ] EXPR `?` EXPR `:` EXPR
+  - [x] EXPR (`.*` | `->*`) EXPR
+  - [x] predefined operators
+  - [ ] Test
+- [x] EXPR `?` EXPR `:` EXPR
+  - [ ] Test
 - [x] (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
   - [ ] Test
 - [x] `typeid` `(` (TYPE | EXPR) `)`
   - [ ] Test
-- [ ] `sizeof` [`...`] EXPR
-- [ ] `sizeof` [`...`] `(` TYPE `)`
-- [ ] `(` TYPE `)` EXPR
-- [ ] [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
-- [ ] [`::`] `delete` [`[` `]`] EXPR
-- [ ] `throw` EXPR
+- [x] `sizeof` [`...`] EXPR
+  - [ ] `...`
+  - [ ] Test
+- [x] `sizeof` [`...`] `(` TYPE `)`
+  - [ ] `...`
+  - [ ] Test
+- [x] `(` TYPE `)` EXPR
+  - [ ] Test
+- [x] [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
+  - [ ] `::`
+  - [ ] `{}`
+  - [ ] Test
+- [x] [`::`] `delete` [`[` `]`] EXPR
+  - [ ] `::`
+  - [ ] Test
+- [x] `throw` EXPR
+  - [ ] Test
 - [ ] `[` {`&` | `=` | [IDENTIFIER `=`] EXPR | } `]` FUNCTION-TAIL STAT
 
 ### Operators
@@ -308,27 +323,27 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - `.` `->` `[]` `()` `x++` `x--`
 - [x] Group 3 precedence (<-)
   - `sizeof` `new` `delete` `++x` `--x` `~` `!` `-x` `+x` `&x` `*x` `(T)E`
-- [ ] Group 4 precedence
+- [x] Group 4 precedence
   - `.*` `->*`
-- [ ] Group 5 precedence
+- [x] Group 5 precedence
   - `*` `/` `%`
-- [ ] Group 6 precedence
+- [x] Group 6 precedence
   - `+` `-`
-- [ ] Group 7 precedence
+- [x] Group 7 precedence
   - `<<` `>>`
-- [ ] Group 8 precedence
+- [x] Group 8 precedence
   - `<` `>` `<=` `>=`
-- [ ] Group 9 precedence
+- [x] Group 9 precedence
   - `==` `!=`
-- [ ] Group 10 precedence
+- [x] Group 10 precedence
   - `&`
-- [ ] Group 11 precedence
+- [x] Group 11 precedence
   - `^`
-- [ ] Group 12 precedence
+- [x] Group 12 precedence
   - `|`
-- [ ] Group 13 precedence
+- [x] Group 13 precedence
   - `&&`
-- [ ] Group 14 precedence
+- [x] Group 14 precedence
   - `||`
 - [x] Group 15 precedence (<-)
   - `a?b:c`
