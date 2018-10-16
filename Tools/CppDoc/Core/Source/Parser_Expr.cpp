@@ -443,10 +443,74 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 }
 
 /***********************************************************************
+ParseBinaryExpr
+***********************************************************************/
+
+Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	return ParsePrefixUnaryExpr(pa, cursor);
+}
+
+/***********************************************************************
+ParseIfExpr
+***********************************************************************/
+
+Ptr<Expr> ParseIfExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	return ParseBinaryExpr(pa, cursor);
+}
+
+/***********************************************************************
+ParseAssignExpr
+***********************************************************************/
+
+Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	return ParseIfExpr(pa, cursor);
+}
+
+/***********************************************************************
+ParseThrowExpr
+***********************************************************************/
+
+Ptr<Expr> ParseThrowExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	if (TestToken(cursor, CppTokens::THROW))
+	{
+		auto newExpr = MakePtr<ThrowExpr>();
+		if (!TestToken(cursor, CppTokens::SEMICOLON, false))
+		{
+			newExpr->expr = ParseAssignExpr(pa, cursor);
+		}
+		return newExpr;
+	}
+	else
+	{
+		return ParseAssignExpr(pa, cursor);
+	}
+}
+
+/***********************************************************************
 ParseExpr
 ***********************************************************************/
 
 Ptr<Expr> ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor)
 {
-	return ParsePrefixUnaryExpr(pa, cursor);
+	auto expr = ParseThrowExpr(pa, cursor);
+	while (allowComma)
+	{
+		if (TestToken(cursor, CppTokens::COMMA, false))
+		{
+			auto newExpr = MakePtr<BinaryExpr>();
+			FillOperatorAndSkip(newExpr->opName, cursor, 1);
+			newExpr->left = expr;
+			newExpr->right = ParseThrowExpr(pa, cursor);
+			expr = newExpr;
+		}
+		else
+		{
+			break;
+		}
+	}
+	return expr;
 }
