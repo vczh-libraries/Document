@@ -120,7 +120,9 @@ public:
 
 	void Visit(ParenthesisExpr* self)override
 	{
-		throw 0;
+		writer.WriteChar(L'(');
+		self->expr->Accept(this);
+		writer.WriteChar(L')');
 	}
 
 	void Visit(CastExpr* self)override
@@ -155,27 +157,56 @@ public:
 
 	void Visit(TypeidExpr* self)override
 	{
-		throw 0;
+		writer.WriteString(L"typeid(");
+		if (self->type) Log(self->type, writer);
+		if (self->expr) Log(self->expr, writer);
+		writer.WriteString(L")");
 	}
 
 	void Visit(SizeofExpr* self)override
 	{
-		throw 0;
+		writer.WriteString(L"sizeof(");
+		if (self->type) Log(self->type, writer);
+		if (self->expr) Log(self->expr, writer);
+		writer.WriteString(L")");
 	}
 
 	void Visit(ThrowExpr* self)override
 	{
-		throw 0;
+		writer.WriteString(L"throw(");
+		if (self->expr) Log(self->expr, writer);
+		writer.WriteString(L")");
 	}
 
 	void Visit(NewExpr* self)override
 	{
-		throw 0;
+		writer.WriteString(L"new ");
+		if (self->placementArguments.Count() > 0)
+		{
+			writer.WriteString(L"(");
+			for (vint i = 0; i < self->placementArguments.Count(); i++)
+			{
+				if (i > 0) writer.WriteString(L", ");
+				Log(self->placementArguments[i], writer);
+			}
+			writer.WriteString(L") ");
+		}
+
+		Log(self->type, writer);
+		writer.WriteString(self->arrayNew ? L"[" : L"(");
+		for (vint i = 0; i < self->arguments.Count(); i++)
+		{
+			if (i > 0) writer.WriteString(L", ");
+			Log(self->arguments[i], writer);
+		}
+		writer.WriteString(self->arrayNew ? L"]" : L")");
 	}
 
 	void Visit(DeleteExpr* self)override
 	{
-		throw 0;
+		writer.WriteString(self->arrayDelete ? L"delete[] (" : L"delete (");
+		self->expr->Accept(this);
+		writer.WriteString(L")");
 	}
 
 	void Visit(IdExpr* self)override

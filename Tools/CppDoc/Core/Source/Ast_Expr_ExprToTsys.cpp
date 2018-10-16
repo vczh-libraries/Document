@@ -535,27 +535,97 @@ public:
 
 	void Visit(TypeidExpr* self)override
 	{
-		throw 0;
+		if (self->type)
+		{
+			TypeTsysList types;
+			TypeToTsys(pa, self->type, types);
+		}
+		if (self->expr)
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+		}
+
+		auto global = pa.root.Obj();
+		vint index = global->children.Keys().IndexOf(L"std");
+		if (index == -1) return;
+		auto& stds = global->children.GetByIndex(index);
+		if (stds.Count() != 1) return;
+		index = stds[0]->children.Keys().IndexOf(L"type_info");
+		if (index == -1) return;
+		auto& tis = stds[0]->children.GetByIndex(index);
+
+		for (vint i = 0; i < tis.Count(); i++)
+		{
+			auto ti = tis[i];
+			if (ti->decls.Count() > 0)
+			{
+				if (ti->decls[0].Cast<ClassDeclaration>())
+				{
+					Add(result, { ti.Obj(),pa.tsys->DeclOf(ti.Obj()) });
+					return;
+				}
+			}
+		}
 	}
 
 	void Visit(SizeofExpr* self)override
 	{
-		throw 0;
+		if (self->type)
+		{
+			TypeTsysList types;
+			TypeToTsys(pa, self->type, types);
+		}
+		if (self->expr)
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+		}
+
+		// TODO: Platform Specific
+		Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,TsysBytes::_4 }), false);
 	}
 
 	void Visit(ThrowExpr* self)override
 	{
-		throw 0;
+		if (self->expr)
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+		}
+
+		Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }), false);
 	}
 
 	void Visit(NewExpr* self)override
 	{
-		throw 0;
+		for (vint i = 0; i < self->placementArguments.Count(); i++)
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->placementArguments[i], types);
+		}
+		for (vint i = 0; i < self->arguments.Count(); i++)
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->arguments[i], types);
+		}
+
+		TypeTsysList types;
+		TypeToTsys(pa, self->type, types);
+		for (vint i = 0; i < types.Count(); i++)
+		{
+			Add(result, types[i]->PtrOf(), true);
+		}
 	}
 
 	void Visit(DeleteExpr* self)override
 	{
-		throw 0;
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+		}
+
+		Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }), false);
 	}
 
 	void Visit(IdExpr* self)override
@@ -715,7 +785,12 @@ public:
 
 	void Visit(IfExpr* self)override
 	{
-		throw 0;
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->condition, types);
+		}
+		ExprToTsys(pa, self->left, result);
+		ExprToTsys(pa, self->right, result);
 	}
 };
 
