@@ -3,6 +3,27 @@
 #include "Ast_Type.h"
 
 /***********************************************************************
+FillOperatorAndSkip
+***********************************************************************/
+
+void FillOperatorAndSkip(CppName& name, Ptr<CppTokenCursor>& cursor, vint count)
+{
+	auto reading = cursor->token.reading;
+	vint length = 0;
+
+	name.type = CppNameType::Normal;
+	name.tokenCount = count;
+	for (vint i = 0; i < count; i++)
+	{
+		name.nameTokens[i] = cursor->token;
+		length += cursor->token.length;
+		SkipToken(cursor);
+	}
+
+	name.name = WString(reading, length);
+}
+
+/***********************************************************************
 ParseIdExpr
 ***********************************************************************/
 
@@ -220,10 +241,10 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 }
 
 /***********************************************************************
-ParsePostUnaryExpr
+ParsePostfixUnaryExpr
 ***********************************************************************/
 
-Ptr<Expr> ParsePostUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	auto expr = ParsePrimitiveExpr(pa, cursor);
 	while (true)
@@ -276,6 +297,13 @@ Ptr<Expr> ParsePostUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			}
 			expr = newExpr;
 		}
+		else if (TestToken(cursor, CppTokens::ADD, CppTokens::ADD, false) || TestToken(cursor, CppTokens::SUB, CppTokens::SUB, false))
+		{
+			auto newExpr = MakePtr<PostfixUnaryExpr>();
+			FillOperatorAndSkip(newExpr->opName, cursor, 2);
+			newExpr->operand = expr;
+			expr = newExpr;
+		}
 		else
 		{
 			break;
@@ -285,10 +313,84 @@ Ptr<Expr> ParsePostUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 }
 
 /***********************************************************************
+ParsePrefixUnaryExpr
+***********************************************************************/
+
+Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	if (TestToken(cursor, CppTokens::EXPR_SIZEOF))
+	{
+		auto newExpr = MakePtr<SizeofExpr>();
+		auto oldCursor = cursor;
+		try
+		{
+			RequireToken(cursor, CppTokens::LPARENTHESIS);
+			newExpr->type = ParseType(pa, cursor);
+			RequireToken(cursor, CppTokens::RPARENTHESIS);
+			return newExpr;
+		}
+		catch (const StopParsingException&)
+		{
+			cursor = oldCursor;
+		}
+		newExpr->expr = ParsePrefixUnaryExpr(pa, cursor);
+		return newExpr;
+	}
+	else if (TestToken(cursor, CppTokens::ADD, CppTokens::ADD, false) || TestToken(cursor, CppTokens::SUB, CppTokens::SUB, false))
+	{
+		auto newExpr = MakePtr<PrefixUnaryExpr>();
+		FillOperatorAndSkip(newExpr->opName, cursor, 2);
+		newExpr->operand = ParsePrefixUnaryExpr(pa, cursor);
+		return newExpr;
+	}
+	else if (
+		TestToken(cursor, CppTokens::REVERT, false) ||
+		TestToken(cursor, CppTokens::NOT, false) ||
+		TestToken(cursor, CppTokens::ADD, false) ||
+		TestToken(cursor, CppTokens::SUB, false) ||
+		TestToken(cursor, CppTokens::AND, false) ||
+		TestToken(cursor, CppTokens::MUL, false))
+	{
+		auto newExpr = MakePtr<PrefixUnaryExpr>();
+		FillOperatorAndSkip(newExpr->opName, cursor, 1);
+		newExpr->operand = ParsePrefixUnaryExpr(pa, cursor);
+		return newExpr;
+	}
+	else
+	{
+		Ptr<Type> type;
+		auto oldCursor = cursor;
+		try
+		{
+			RequireToken(cursor, CppTokens::LPARENTHESIS);
+			type = ParseType(pa, cursor);
+			RequireToken(cursor, CppTokens::RPARENTHESIS);
+		}
+		catch (const StopParsingException&)
+		{
+			cursor = oldCursor;
+		}
+
+		if (type)
+		{
+			auto newExpr = MakePtr<CastExpr>();
+			newExpr->castType = CppCastType::CCast;
+			newExpr->type = type;
+			newExpr->expr = ParsePrefixUnaryExpr(pa, cursor);
+			return newExpr;
+		}
+		else
+		{
+			return ParsePostfixUnaryExpr(pa, cursor);
+		}
+	}
+}
+
+/***********************************************************************
 ParseExpr
 ***********************************************************************/
 
 Ptr<Expr> ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor)
 {
-	return ParsePostUnaryExpr(pa, cursor);
+	return ParsePrefixUnaryExpr(pa, cursor);
 }

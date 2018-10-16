@@ -304,9 +304,9 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - primitive
 - [x] Group 1 precedence
   - `::`
-- [ ] Group 2 precedence
+- [x] Group 2 precedence
   - `.` `->` `[]` `()` `x++` `x--`
-- [ ] Group 3 precedence (<-)
+- [x] Group 3 precedence (<-)
   - `sizeof` `++x` `--x` `~` `!` `-x` `+x` `&x` `*x` `(T)E`
 - [ ] Group 4 precedence
   - `.*` `->*`
