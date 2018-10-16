@@ -330,11 +330,11 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - `&&`
 - [ ] Group 14 precedence
   - `||`
-- [ ] Group 15 precedence (<-)
+- [x] Group 15 precedence (<-)
   - `a?b:c`
-- [ ] Group 16 precedence (<-)
+- [x] Group 16 precedence (<-)
   - `=` `*=` `/=` `%=` `+=` `-=` `<<=` `>>=` `&=` `|=` `^=`
-- [ ] Group 17 precedence (<-)
+- [x] Group 17 precedence (<-)
   - `throw`
-- [ ] Group 18 precedence
+- [x] Group 18 precedence
   - `,`

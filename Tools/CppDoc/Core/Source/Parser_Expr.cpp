@@ -457,7 +457,20 @@ ParseIfExpr
 
 Ptr<Expr> ParseIfExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	return ParseBinaryExpr(pa, cursor);
+	auto expr = ParseBinaryExpr(pa, cursor);
+	if (TestToken(cursor, CppTokens::QUESTIONMARK))
+	{
+		auto newExpr = MakePtr<IfExpr>();
+		newExpr->condition = expr;
+		newExpr->left = ParseIfExpr(pa, cursor);
+		RequireToken(cursor, CppTokens::COLON);
+		newExpr->right = ParseIfExpr(pa, cursor);
+		return newExpr;
+	}
+	else
+	{
+		return expr;
+	}
 }
 
 /***********************************************************************
@@ -466,7 +479,48 @@ ParseAssignExpr
 
 Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	return ParseIfExpr(pa, cursor);
+	auto expr = ParseIfExpr(pa, cursor);
+	if (TestToken(cursor, CppTokens::EQ, false))
+	{
+		auto newExpr = MakePtr<BinaryExpr>();
+		FillOperatorAndSkip(newExpr->opName, cursor, 1);
+		newExpr->precedence = 16;
+		newExpr->left = expr;
+		newExpr->right = ParseAssignExpr(pa, cursor);
+		return newExpr;
+	}
+	else if (
+		TestToken(cursor, CppTokens::MUL, CppTokens::EQ) ||
+		TestToken(cursor, CppTokens::DIV, CppTokens::EQ) ||
+		TestToken(cursor, CppTokens::PERCENT, CppTokens::EQ) ||
+		TestToken(cursor, CppTokens::ADD, CppTokens::EQ) ||
+		TestToken(cursor, CppTokens::SUB, CppTokens::EQ) ||
+		TestToken(cursor, CppTokens::AND, CppTokens::EQ) ||
+		TestToken(cursor, CppTokens::OR, CppTokens::EQ) ||
+		TestToken(cursor, CppTokens::XOR, CppTokens::EQ))
+	{
+		auto newExpr = MakePtr<BinaryExpr>();
+		FillOperatorAndSkip(newExpr->opName, cursor, 2);
+		newExpr->precedence = 16;
+		newExpr->left = expr;
+		newExpr->right = ParseAssignExpr(pa, cursor);
+		return newExpr;
+	}
+	else if (
+		TestToken(cursor, CppTokens::LT, CppTokens::LT, CppTokens::EQ) ||
+		TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ))
+	{
+		auto newExpr = MakePtr<BinaryExpr>();
+		FillOperatorAndSkip(newExpr->opName, cursor, 3);
+		newExpr->precedence = 16;
+		newExpr->left = expr;
+		newExpr->right = ParseAssignExpr(pa, cursor);
+		return newExpr;
+	}
+	else
+	{
+		return expr;
+	}
 }
 
 /***********************************************************************
@@ -503,6 +557,7 @@ Ptr<Expr> ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCur
 		{
 			auto newExpr = MakePtr<BinaryExpr>();
 			FillOperatorAndSkip(newExpr->opName, cursor, 1);
+			newExpr->precedence = 18;
 			newExpr->left = expr;
 			newExpr->right = ParseThrowExpr(pa, cursor);
 			expr = newExpr;

@@ -225,6 +225,7 @@ class BinaryExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
+	vint					precedence = -1;
 	CppName					opName;
 	Ptr<Expr>				left;
 	Ptr<Expr>				right;
