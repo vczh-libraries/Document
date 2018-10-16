@@ -197,16 +197,19 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				{
 					auto expr = MakePtr<FuncAccessExpr>();
 					expr->type = type;
-					while (!TestToken(cursor, CppTokens::RPARENTHESIS))
+					if (!TestToken(cursor, CppTokens::RPARENTHESIS))
 					{
-						expr->arguments.Add(ParseExpr(pa, false, cursor));
-						if (TestToken(cursor, CppTokens::RPARENTHESIS))
+						while (true)
 						{
-							break;
-						}
-						else
-						{
-							RequireToken(cursor, CppTokens::COMMA);
+							expr->arguments.Add(ParseExpr(pa, false, cursor));
+							if (TestToken(cursor, CppTokens::RPARENTHESIS))
+							{
+								break;
+							}
+							else
+							{
+								RequireToken(cursor, CppTokens::COMMA);
+							}
 						}
 					}
 					return expr;
@@ -283,16 +286,19 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		{
 			auto newExpr = MakePtr<FuncAccessExpr>();
 			newExpr->expr = expr;
-			while (!TestToken(cursor, CppTokens::RPARENTHESIS))
+			if (!TestToken(cursor, CppTokens::RPARENTHESIS))
 			{
-				newExpr->arguments.Add(ParseExpr(pa, false, cursor));
-				if (TestToken(cursor, CppTokens::RPARENTHESIS))
+				while (true)
 				{
-					break;
-				}
-				else
-				{
-					RequireToken(cursor, CppTokens::COMMA);
+					newExpr->arguments.Add(ParseExpr(pa, false, cursor));
+					if (TestToken(cursor, CppTokens::RPARENTHESIS))
+					{
+						break;
+					}
+					else
+					{
+						RequireToken(cursor, CppTokens::COMMA);
+					}
 				}
 			}
 			expr = newExpr;
@@ -354,6 +360,56 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 		auto newExpr = MakePtr<PrefixUnaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 1);
 		newExpr->operand = ParsePrefixUnaryExpr(pa, cursor);
+		return newExpr;
+	}
+	else if (TestToken(cursor, CppTokens::NEW))
+	{
+		auto newExpr = MakePtr<NewExpr>();
+		if (TestToken(cursor, CppTokens::LPARENTHESIS))
+		{
+			while (true)
+			{
+				newExpr->placementArguments.Add(ParseExpr(pa, false, cursor));
+				if (TestToken(cursor, CppTokens::RPARENTHESIS))
+				{
+					break;
+				}
+				else
+				{
+					RequireToken(cursor, CppTokens::COMMA);
+				}
+			}
+		}
+
+		newExpr->type = ParseLongType(pa, cursor);
+		if (TestToken(cursor, CppTokens::LPARENTHESIS))
+		{
+			if (!TestToken(cursor, CppTokens::RPARENTHESIS))
+			{
+				while (true)
+				{
+					newExpr->arguments.Add(ParseExpr(pa, false, cursor));
+					if (TestToken(cursor, CppTokens::RPARENTHESIS))
+					{
+						break;
+					}
+					else if (!TestToken(cursor, CppTokens::COMMA))
+					{
+						throw StopParsingException(cursor);
+					}
+				}
+			}
+		}
+		return newExpr;
+	}
+	else if (TestToken(cursor, CppTokens::DELETE))
+	{
+		auto newExpr = MakePtr<DeleteExpr>();
+		if ((newExpr->arrayDelete = TestToken(cursor, CppTokens::LBRACKET)))
+		{
+			RequireToken(cursor, CppTokens::RBRACKET);
+		}
+		newExpr->expr = ParsePrefixUnaryExpr(pa, cursor);
 		return newExpr;
 	}
 	else

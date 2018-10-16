@@ -513,23 +513,26 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 			}
 
 			// recognize parameters
-			while (!TestToken(cursor, CppTokens::RPARENTHESIS))
+			if (!TestToken(cursor, CppTokens::RPARENTHESIS))
 			{
+				while (true)
 				{
-					List<Ptr<Declarator>> declarators;
-					ParseNonMemberDeclarator(functionArgsPa, pda_Param(true), cursor, declarators);
-					List<Ptr<VariableDeclaration>> varDecls;
-					BuildVariables(declarators, varDecls);
-					type->parameters.Add(varDecls[0]);
-				}
+					{
+						List<Ptr<Declarator>> declarators;
+						ParseNonMemberDeclarator(functionArgsPa, pda_Param(true), cursor, declarators);
+						List<Ptr<VariableDeclaration>> varDecls;
+						BuildVariables(declarators, varDecls);
+						type->parameters.Add(varDecls[0]);
+					}
 
-				if (TestToken(cursor, CppTokens::RPARENTHESIS))
-				{
-					break;
-				}
-				else
-				{
-					RequireToken(cursor, CppTokens::COMMA);
+					if (TestToken(cursor, CppTokens::RPARENTHESIS))
+					{
+						break;
+					}
+					else
+					{
+						RequireToken(cursor, CppTokens::COMMA);
+					}
 				}
 			}
 		}
@@ -594,17 +597,20 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 				type->decoratorThrow = true;
 
 				RequireToken(cursor, CppTokens::LPARENTHESIS);
-				while (!TestToken(cursor, CppTokens::RPARENTHESIS))
+				if (!TestToken(cursor, CppTokens::RPARENTHESIS))
 				{
-					type->exceptions.Add(ParseType(pa, cursor));
+					while (true)
+					{
+						type->exceptions.Add(ParseType(pa, cursor));
 
-					if (TestToken(cursor, CppTokens::RPARENTHESIS))
-					{
-						break;
-					}
-					else
-					{
-						RequireToken(cursor, CppTokens::COMMA);
+						if (TestToken(cursor, CppTokens::RPARENTHESIS))
+						{
+							break;
+						}
+						else
+						{
+							RequireToken(cursor, CppTokens::COMMA);
+						}
 					}
 				}
 			}

@@ -300,14 +300,14 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 [Built-in Operators, Precedence and Associativity](https://docs.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=vs-2017)
 
-- [ ] Group 0 precedence
+- [x] Group 0 precedence
   - primitive
 - [x] Group 1 precedence
   - `::`
 - [x] Group 2 precedence
   - `.` `->` `[]` `()` `x++` `x--`
 - [x] Group 3 precedence (<-)
-  - `sizeof` `++x` `--x` `~` `!` `-x` `+x` `&x` `*x` `(T)E`
+  - `sizeof` `new` `delete` `++x` `--x` `~` `!` `-x` `+x` `&x` `*x` `(T)E`
 - [ ] Group 4 precedence
   - `.*` `->*`
 - [ ] Group 5 precedence
