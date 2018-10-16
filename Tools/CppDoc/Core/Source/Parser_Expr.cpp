@@ -448,7 +448,110 @@ ParseBinaryExpr
 
 Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	return ParsePrefixUnaryExpr(pa, cursor);
+	List<Ptr<BinaryExpr>> binaryStack;
+	auto popped = ParsePrefixUnaryExpr(pa, cursor);
+	while (true)
+	{
+		CppName opName;
+		vint precedence = -1;
+
+		if (TestToken(cursor, CppTokens::DOT, CppTokens::MUL, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 2);
+			precedence = 4;
+		}
+		else if (TestToken(cursor, CppTokens::DOT, CppTokens::SUB, CppTokens::MUL, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 3);
+			precedence = 4;
+		}
+		else if (TestToken(cursor, CppTokens::MUL, false) || TestToken(cursor, CppTokens::DIV, false) || TestToken(cursor, CppTokens::PERCENT, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 1);
+			precedence = 5;
+		}
+		else if (TestToken(cursor, CppTokens::ADD, false) || TestToken(cursor, CppTokens::SUB, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 1);
+			precedence = 6;
+		}
+		else if (TestToken(cursor, CppTokens::LT, CppTokens::LT, false) || TestToken(cursor, CppTokens::GT, CppTokens::GT, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 2);
+			precedence = 7;
+		}
+		else if (TestToken(cursor, CppTokens::LT, false) || TestToken(cursor, CppTokens::GT, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 1);
+			precedence = 8;
+		}
+		else if (TestToken(cursor, CppTokens::LT, CppTokens::EQ, false) || TestToken(cursor, CppTokens::GT, CppTokens::EQ, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 2);
+			precedence = 8;
+		}
+		else if (TestToken(cursor, CppTokens::EQ, CppTokens::EQ, false) || TestToken(cursor, CppTokens::NOT, CppTokens::EQ, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 2);
+			precedence = 9;
+		}
+		else if (TestToken(cursor, CppTokens::OR, CppTokens::OR, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 2);
+			precedence = 14;
+		}
+		else if (TestToken(cursor, CppTokens::OR, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 1);
+			precedence = 12;
+		}
+		else if (TestToken(cursor, CppTokens::ADD, CppTokens::ADD, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 2);
+			precedence = 13;
+		}
+		else if (TestToken(cursor, CppTokens::ADD, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 1);
+			precedence = 10;
+		}
+		else if (TestToken(cursor, CppTokens::XOR, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 1);
+			precedence = 11;
+		}
+		else
+		{
+			break;
+		}
+
+		while (binaryStack.Count() > 0)
+		{
+			auto last = binaryStack[binaryStack.Count() - 1];
+			if (last->precedence < precedence)
+			{
+				popped = last;
+				binaryStack.RemoveAt(binaryStack.Count() - 1);
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		auto newExpr = MakePtr<BinaryExpr>();
+		newExpr->opName = opName;
+		newExpr->precedence = precedence;
+		newExpr->left = popped;
+		newExpr->right = ParsePrefixUnaryExpr(pa, cursor);
+
+		if (binaryStack.Count() > 0)
+		{
+			binaryStack[binaryStack.Count() - 1]->right = newExpr;
+		}
+		binaryStack.Add(newExpr);
+	}
+	return binaryStack.Count() > 0 ? Ptr<Expr>(binaryStack[0]) : popped;
 }
 
 /***********************************************************************
