@@ -23,6 +23,37 @@ void FillOperatorAndSkip(CppName& name, Ptr<CppTokenCursor>& cursor, vint count)
 	name.name = WString(reading, length);
 }
 
+void FillOperator(CppName& name, CppPostfixUnaryOp& op)
+{
+	if (name.name == L"++")		{	op = CppPostfixUnaryOp::Increase;		return;	}
+	if (name.name == L"--")		{	op = CppPostfixUnaryOp::Decrease;		return;	}
+	throw L"Invalid!";
+}
+
+void FillOperator(CppName& name, CppPrefixUnaryOp& op)
+{
+	if (name.name == L"++")		{	op = CppPrefixUnaryOp::Increase;		return;	}
+	if (name.name == L"--")		{	op = CppPrefixUnaryOp::Decrease;		return;	}
+	if (name.name == L"~")		{	op = CppPrefixUnaryOp::Revert;			return;	}
+	if (name.name == L"!")		{	op = CppPrefixUnaryOp::Not;				return;	}
+	if (name.name == L"-")		{	op = CppPrefixUnaryOp::Negative;		return;	}
+	if (name.name == L"+")		{	op = CppPrefixUnaryOp::Positive;		return;	}
+	if (name.name == L"&")		{	op = CppPrefixUnaryOp::AddressOf;		return;	}
+	if (name.name == L"*")		{	op = CppPrefixUnaryOp::Dereference;		return;	}
+	throw L"Invalid!";
+}
+
+void FillOperator(CppName& name, CppBinaryOp& op)
+{
+	if (name.name == L".*")		{	op = CppBinaryOp::ValueFieldDeref;		return;	}	if (name.name == L"->*")	{	op = CppBinaryOp::PtrFieldDeref;		return;	}
+	if (name.name == L"*")		{	op = CppBinaryOp::Mul;					return;	}	if (name.name == L"/")		{	op = CppBinaryOp::Div;					return;	}	if (name.name == L"%")		{	op = CppBinaryOp::Mod;					return;	}	if (name.name == L"+")		{	op = CppBinaryOp::Add;					return;	}	if (name.name == L"-")		{	op = CppBinaryOp::Sub;					return;	}	if (name.name == L"<<")		{	op = CppBinaryOp::Shl;					return;	}	if (name.name == L">>")		{	op = CppBinaryOp::Shr;					return;	}
+	if (name.name == L"<")		{	op = CppBinaryOp::LT;					return;	}	if (name.name == L">")		{	op = CppBinaryOp::GT;					return;	}	if (name.name == L"<=")		{	op = CppBinaryOp::LE;					return;	}	if (name.name == L">=")		{	op = CppBinaryOp::GE;					return;	}	if (name.name == L"==")		{	op = CppBinaryOp::EQ;					return;	}	if (name.name == L"!=")		{	op = CppBinaryOp::NE;					return;	}
+	if (name.name == L"&")		{	op = CppBinaryOp::BitAnd;				return;	}	if (name.name == L"|")		{	op = CppBinaryOp::BitOr;				return;	}	if (name.name == L"&&")		{	op = CppBinaryOp::And;					return;	}	if (name.name == L"||")		{	op = CppBinaryOp::Or;					return;	}	if (name.name == L"^")		{	op = CppBinaryOp::Xor;					return;	}
+	if (name.name == L"=")		{	op = CppBinaryOp::Assign;				return;	}	if (name.name == L"*=")		{	op = CppBinaryOp::MulAssign;			return;	}	if (name.name == L"/=")		{	op = CppBinaryOp::DivAssign;			return;	}	if (name.name == L"%=")		{	op = CppBinaryOp::ModAssign;			return;	}	if (name.name == L"+=")		{	op = CppBinaryOp::AddAssign;			return;	}	if (name.name == L"-=")		{	op = CppBinaryOp::SubAddisn;			return;	}	if (name.name == L"<<=")	{	op = CppBinaryOp::ShlAssign;			return;	}	if (name.name == L">>=")	{	op = CppBinaryOp::ShrAssign;			return;	}	if (name.name == L"&=")		{	op = CppBinaryOp::AndAssign;			return;	}	if (name.name == L"|=")		{	op = CppBinaryOp::OrAssign;				return;	}	if (name.name == L"^=")		{	op = CppBinaryOp::XorAssign;			return;	}
+	if (name.name == L",")		{	op = CppBinaryOp::Comma;				return;	}
+	throw L"Invalid!";
+}
+
 /***********************************************************************
 ParseIdExpr
 ***********************************************************************/
@@ -307,6 +338,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		{
 			auto newExpr = MakePtr<PostfixUnaryExpr>();
 			FillOperatorAndSkip(newExpr->opName, cursor, 2);
+			FillOperator(newExpr->opName, newExpr->op);
 			newExpr->operand = expr;
 			expr = newExpr;
 		}
@@ -346,6 +378,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	{
 		auto newExpr = MakePtr<PrefixUnaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 2);
+		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->operand = ParsePrefixUnaryExpr(pa, cursor);
 		return newExpr;
 	}
@@ -359,6 +392,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	{
 		auto newExpr = MakePtr<PrefixUnaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 1);
+		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->operand = ParsePrefixUnaryExpr(pa, cursor);
 		return newExpr;
 	}
@@ -547,6 +581,7 @@ Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 
 		auto newExpr = MakePtr<BinaryExpr>();
 		newExpr->opName = opName;
+		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = precedence;
 		newExpr->left = popped;
 		newExpr->right = ParsePrefixUnaryExpr(pa, cursor);
@@ -593,6 +628,7 @@ Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 	{
 		auto newExpr = MakePtr<BinaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 1);
+		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
 		newExpr->left = expr;
 		newExpr->right = ParseAssignExpr(pa, cursor);
@@ -610,6 +646,7 @@ Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 	{
 		auto newExpr = MakePtr<BinaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 2);
+		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
 		newExpr->left = expr;
 		newExpr->right = ParseAssignExpr(pa, cursor);
@@ -621,6 +658,7 @@ Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 	{
 		auto newExpr = MakePtr<BinaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 3);
+		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
 		newExpr->left = expr;
 		newExpr->right = ParseAssignExpr(pa, cursor);
@@ -666,6 +704,7 @@ Ptr<Expr> ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCur
 		{
 			auto newExpr = MakePtr<BinaryExpr>();
 			FillOperatorAndSkip(newExpr->opName, cursor, 1);
+			FillOperator(newExpr->opName, newExpr->op);
 			newExpr->precedence = 18;
 			newExpr->left = expr;
 			newExpr->right = ParseThrowExpr(pa, cursor);

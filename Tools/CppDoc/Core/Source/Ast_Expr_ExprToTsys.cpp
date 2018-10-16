@@ -780,14 +780,18 @@ public:
 
 	void Visit(BinaryExpr* self)override
 	{
-		if (self->opName.name == L",")
+		switch (self->op)
 		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->left, types);
-			ExprToTsys(pa, self->right, result);
-			return;
+		case CppBinaryOp::Comma:
+			{
+				ExprTsysList types;
+				ExprToTsys(pa, self->left, types);
+				ExprToTsys(pa, self->right, result);
+			}
+			break;
+		default:
+			throw 0;
 		}
-		throw 0;
 	}
 
 	void Visit(IfExpr* self)override

@@ -202,22 +202,52 @@ public:
 	List<Ptr<Expr>>			arguments;
 };
 
+enum class CppPostfixUnaryOp
+{
+	Increase,
+	Decrease,
+};
+
 class PostfixUnaryExpr : public Expr
 {
 public:
 	IExprVisitor_ACCEPT;
 
+	CppPostfixUnaryOp			op;
 	CppName					opName;
 	Ptr<Expr>				operand;
+};
+
+enum class CppPrefixUnaryOp
+{
+	Increase,
+	Decrease,
+	Revert,
+	Not,
+	Negative,
+	Positive,
+	AddressOf,
+	Dereference,
 };
 
 class PrefixUnaryExpr : public Expr
 {
 public:
 	IExprVisitor_ACCEPT;
-
+	
+	CppPrefixUnaryOp		op;
 	CppName					opName;
 	Ptr<Expr>				operand;
+};
+
+enum class CppBinaryOp
+{
+	ValueFieldDeref, PtrFieldDeref,
+	Mul, Div, Mod, Add, Sub, Shl, Shr,
+	LT, GT, LE, GE, EQ, NE,
+	BitAnd, BitOr, And, Or, Xor,
+	Assign, MulAssign, DivAssign, ModAssign, AddAssign, SubAddisn, ShlAssign, ShrAssign, AndAssign, OrAssign, XorAssign,
+	Comma,
 };
 
 class BinaryExpr : public Expr
@@ -226,6 +256,7 @@ public:
 	IExprVisitor_ACCEPT;
 
 	vint					precedence = -1;
+	CppBinaryOp				op;
 	CppName					opName;
 	Ptr<Expr>				left;
 	Ptr<Expr>				right;
