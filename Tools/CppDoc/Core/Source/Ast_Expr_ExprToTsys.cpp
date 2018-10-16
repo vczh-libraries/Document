@@ -780,6 +780,13 @@ public:
 
 	void Visit(BinaryExpr* self)override
 	{
+		if (self->opName.name == L",")
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->left, types);
+			ExprToTsys(pa, self->right, result);
+			return;
+		}
 		throw 0;
 	}
 

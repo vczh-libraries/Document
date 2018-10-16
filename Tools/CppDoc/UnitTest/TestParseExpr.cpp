@@ -403,21 +403,22 @@ using namespace std;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(L"typeid(int)",					L"typeid(int)",						L"::std::type_info",			pa);
-	AssertExpr(L"typeid(0)",					L"typeid(0)",						L"::std::type_info",			pa);
-	AssertExpr(L"sizeof(int)",					L"sizeof(int)",						L"unsigned __int32",			pa);
-	AssertExpr(L"sizeof 0",						L"sizeof(0)",						L"unsigned __int32",			pa);
-	AssertExpr(L"throw 0",						L"throw(0)",						L"void",						pa);
-
-	AssertExpr(L"new type_info",				L"new type_info()",					L"::std::type_info * &&",		pa);
-	AssertExpr(L"new type_info(0)",				L"new type_info(0)",				L"::std::type_info * &&",		pa);
-	AssertExpr(L"new(0)type_info",				L"new (0) type_info()",				L"::std::type_info * &&",		pa);
-	AssertExpr(L"new(0,1)type_info(0,1)",		L"new (0, 1) type_info(0, 1)",		L"::std::type_info * &&",		pa);
-	AssertExpr(L"new type_info[10]",			L"new[] type_info[10]",				L"::std::type_info * &&",		pa);
-	AssertExpr(L"new (0)type_info[10]",			L"new[] (0) type_info[10]",			L"::std::type_info * &&",		pa);
-
-	AssertExpr(L"delete 0",						L"delete (0)",						L"void",						pa);
-	AssertExpr(L"delete [] 0",					L"delete[] (0)",					L"void",						pa);
+	AssertExpr(L"typeid(int)",					L"typeid(int)",							L"::std::type_info",			pa);
+	AssertExpr(L"typeid(0)",					L"typeid(0)",							L"::std::type_info",			pa);
+	AssertExpr(L"sizeof(int)",					L"sizeof(int)",							L"unsigned __int32",			pa);
+	AssertExpr(L"sizeof 0",						L"sizeof(0)",							L"unsigned __int32",			pa);
+	AssertExpr(L"throw 0",						L"throw(0)",							L"void",						pa);
+																						
+	AssertExpr(L"new type_info",				L"new type_info()",						L"::std::type_info * &&",		pa);
+	AssertExpr(L"new type_info(0)",				L"new type_info(0)",					L"::std::type_info * &&",		pa);
+	AssertExpr(L"new(0)type_info",				L"new (0) type_info()",					L"::std::type_info * &&",		pa);
+	AssertExpr(L"new(0,1)type_info(0,1)",		L"new (0, 1) type_info(0, 1)",			L"::std::type_info * &&",		pa);
+	AssertExpr(L"new type_info[10]",			L"new type_info[10]",					L"::std::type_info * &&",		pa);
+	AssertExpr(L"new (0)type_info[10]",			L"new (0) type_info[10]",				L"::std::type_info * &&",		pa);
+	AssertExpr(L"new (0,1)type_info[10,20]",	L"new (0, 1) type_info[(10 , 20)]",		L"::std::type_info * &&",		pa);
+																						
+	AssertExpr(L"delete 0",						L"delete (0)",							L"void",						pa);
+	AssertExpr(L"delete [] 0",					L"delete[] (0)",						L"void",						pa);
 }
 
 TEST_CASE(TestParseExpr_Universal_Initialization)

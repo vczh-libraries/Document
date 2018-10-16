@@ -400,6 +400,12 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 				}
 			}
 		}
+		else if (TestToken(cursor, CppTokens::LBRACKET))
+		{
+			newExpr->arrayNew = true;
+			newExpr->arguments.Add(ParseExpr(pa, true, cursor));
+			RequireToken(cursor, CppTokens::RBRACKET);
+		}
 		return newExpr;
 	}
 	else if (TestToken(cursor, CppTokens::DELETE))

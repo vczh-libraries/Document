@@ -255,17 +255,31 @@ public:
 
 	void Visit(PostfixUnaryExpr* self)override
 	{
-		throw 0;
+		writer.WriteString(L"(");
+		Log(self->operand, writer);
+		writer.WriteString(L" ");
+		writer.WriteString(self->opName.name);
+		writer.WriteString(L")");
 	}
 
 	void Visit(PrefixUnaryExpr* self)override
 	{
-		throw 0;
+		writer.WriteString(L"(");
+		writer.WriteString(self->opName.name);
+		writer.WriteString(L" ");
+		Log(self->operand, writer);
+		writer.WriteString(L")");
 	}
 
 	void Visit(BinaryExpr* self)override
 	{
-		throw 0;
+		writer.WriteString(L"(");
+		Log(self->left, writer);
+		writer.WriteString(L" ");
+		writer.WriteString(self->opName.name);
+		writer.WriteString(L" ");
+		Log(self->right, writer);
+		writer.WriteString(L")");
 	}
 
 	void Visit(IfExpr* self)override
