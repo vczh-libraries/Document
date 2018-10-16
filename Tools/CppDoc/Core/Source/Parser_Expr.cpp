@@ -45,11 +45,37 @@ void FillOperator(CppName& name, CppPrefixUnaryOp& op)
 
 void FillOperator(CppName& name, CppBinaryOp& op)
 {
-	if (name.name == L".*")		{	op = CppBinaryOp::ValueFieldDeref;		return;	}	if (name.name == L"->*")	{	op = CppBinaryOp::PtrFieldDeref;		return;	}
-	if (name.name == L"*")		{	op = CppBinaryOp::Mul;					return;	}	if (name.name == L"/")		{	op = CppBinaryOp::Div;					return;	}	if (name.name == L"%")		{	op = CppBinaryOp::Mod;					return;	}	if (name.name == L"+")		{	op = CppBinaryOp::Add;					return;	}	if (name.name == L"-")		{	op = CppBinaryOp::Sub;					return;	}	if (name.name == L"<<")		{	op = CppBinaryOp::Shl;					return;	}	if (name.name == L">>")		{	op = CppBinaryOp::Shr;					return;	}
-	if (name.name == L"<")		{	op = CppBinaryOp::LT;					return;	}	if (name.name == L">")		{	op = CppBinaryOp::GT;					return;	}	if (name.name == L"<=")		{	op = CppBinaryOp::LE;					return;	}	if (name.name == L">=")		{	op = CppBinaryOp::GE;					return;	}	if (name.name == L"==")		{	op = CppBinaryOp::EQ;					return;	}	if (name.name == L"!=")		{	op = CppBinaryOp::NE;					return;	}
-	if (name.name == L"&")		{	op = CppBinaryOp::BitAnd;				return;	}	if (name.name == L"|")		{	op = CppBinaryOp::BitOr;				return;	}	if (name.name == L"&&")		{	op = CppBinaryOp::And;					return;	}	if (name.name == L"||")		{	op = CppBinaryOp::Or;					return;	}	if (name.name == L"^")		{	op = CppBinaryOp::Xor;					return;	}
-	if (name.name == L"=")		{	op = CppBinaryOp::Assign;				return;	}	if (name.name == L"*=")		{	op = CppBinaryOp::MulAssign;			return;	}	if (name.name == L"/=")		{	op = CppBinaryOp::DivAssign;			return;	}	if (name.name == L"%=")		{	op = CppBinaryOp::ModAssign;			return;	}	if (name.name == L"+=")		{	op = CppBinaryOp::AddAssign;			return;	}	if (name.name == L"-=")		{	op = CppBinaryOp::SubAddisn;			return;	}	if (name.name == L"<<=")	{	op = CppBinaryOp::ShlAssign;			return;	}	if (name.name == L">>=")	{	op = CppBinaryOp::ShrAssign;			return;	}	if (name.name == L"&=")		{	op = CppBinaryOp::AndAssign;			return;	}	if (name.name == L"|=")		{	op = CppBinaryOp::OrAssign;				return;	}	if (name.name == L"^=")		{	op = CppBinaryOp::XorAssign;			return;	}
+	if (name.name == L".*")		{	op = CppBinaryOp::ValueFieldDeref;		return;	}
+	if (name.name == L"->*")	{	op = CppBinaryOp::PtrFieldDeref;		return;	}
+	if (name.name == L"*")		{	op = CppBinaryOp::Mul;					return;	}
+	if (name.name == L"/")		{	op = CppBinaryOp::Div;					return;	}
+	if (name.name == L"%")		{	op = CppBinaryOp::Mod;					return;	}
+	if (name.name == L"+")		{	op = CppBinaryOp::Add;					return;	}
+	if (name.name == L"-")		{	op = CppBinaryOp::Sub;					return;	}
+	if (name.name == L"<<")		{	op = CppBinaryOp::Shl;					return;	}
+	if (name.name == L">>")		{	op = CppBinaryOp::Shr;					return;	}
+	if (name.name == L"<")		{	op = CppBinaryOp::LT;					return;	}
+	if (name.name == L">")		{	op = CppBinaryOp::GT;					return;	}
+	if (name.name == L"<=")		{	op = CppBinaryOp::LE;					return;	}
+	if (name.name == L">=")		{	op = CppBinaryOp::GE;					return;	}
+	if (name.name == L"==")		{	op = CppBinaryOp::EQ;					return;	}
+	if (name.name == L"!=")		{	op = CppBinaryOp::NE;					return;	}
+	if (name.name == L"&")		{	op = CppBinaryOp::BitAnd;				return;	}
+	if (name.name == L"|")		{	op = CppBinaryOp::BitOr;				return;	}
+	if (name.name == L"&&")		{	op = CppBinaryOp::And;					return;	}
+	if (name.name == L"||")		{	op = CppBinaryOp::Or;					return;	}
+	if (name.name == L"^")		{	op = CppBinaryOp::Xor;					return;	}
+	if (name.name == L"=")		{	op = CppBinaryOp::Assign;				return;	}
+	if (name.name == L"*=")		{	op = CppBinaryOp::MulAssign;			return;	}
+	if (name.name == L"/=")		{	op = CppBinaryOp::DivAssign;			return;	}
+	if (name.name == L"%=")		{	op = CppBinaryOp::ModAssign;			return;	}
+	if (name.name == L"+=")		{	op = CppBinaryOp::AddAssign;			return;	}
+	if (name.name == L"-=")		{	op = CppBinaryOp::SubAddisn;			return;	}
+	if (name.name == L"<<=")	{	op = CppBinaryOp::ShlAssign;			return;	}
+	if (name.name == L">>=")	{	op = CppBinaryOp::ShrAssign;			return;	}
+	if (name.name == L"&=")		{	op = CppBinaryOp::AndAssign;			return;	}
+	if (name.name == L"|=")		{	op = CppBinaryOp::OrAssign;				return;	}
+	if (name.name == L"^=")		{	op = CppBinaryOp::XorAssign;			return;	}
 	if (name.name == L",")		{	op = CppBinaryOp::Comma;				return;	}
 	throw L"Invalid!";
 }
