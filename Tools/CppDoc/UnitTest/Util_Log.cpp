@@ -158,6 +158,26 @@ public:
 		throw 0;
 	}
 
+	void Visit(SizeofExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(ThrowExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(NewExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(DeleteExpr* self)override
+	{
+		throw 0;
+	}
+
 	void Visit(IdExpr* self)override
 	{
 		writer.WriteString(self->name.name);
@@ -200,6 +220,26 @@ public:
 			Log(self->arguments[i], writer);
 		}
 		writer.WriteChar(L')');
+	}
+
+	void Visit(PostfixUnaryExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(PrefixUnaryExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(BinaryExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(IfExpr* self)override
+	{
+		throw 0;
 	}
 };
 

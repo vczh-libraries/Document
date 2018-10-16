@@ -14,11 +14,19 @@ Visitor
 	F(ParenthesisExpr)\
 	F(CastExpr)\
 	F(TypeidExpr)\
+	F(SizeofExpr)\
+	F(ThrowExpr)\
+	F(NewExpr)\
+	F(DeleteExpr)\
 	F(IdExpr)\
 	F(ChildExpr)\
 	F(FieldAccessExpr)\
 	F(ArrayAccessExpr)\
 	F(FuncAccessExpr)\
+	F(PostfixUnaryExpr)\
+	F(PrefixUnaryExpr)\
+	F(BinaryExpr)\
+	F(IfExpr)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
 CPPDOC_EXPR_LIST(CPPDOC_FORWARD)
@@ -105,6 +113,43 @@ public:
 	Ptr<Expr>					expr;
 };
 
+class SizeofExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	Ptr<Type>					type;
+	Ptr<Expr>					expr;
+};
+
+class ThrowExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	Ptr<Expr>					expr;
+};
+
+class NewExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	bool						arrayNew = false;
+	Ptr<Type>					type;
+	List<Ptr<Expr>>				placementArguments;
+	List<Ptr<Expr>>				arguments;
+};
+
+class DeleteExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	bool						arrayDelete = false;
+	Ptr<Expr>					expr;
+};
+
 class IdExpr : public ResolvableExpr
 {
 public:
@@ -155,6 +200,44 @@ public:
 	Ptr<Type>				type;
 	Ptr<Expr>				expr;
 	List<Ptr<Expr>>			arguments;
+};
+
+class PostfixUnaryExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	CppName					opName;
+	Ptr<Expr>				operand;
+};
+
+class PrefixUnaryExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	CppName					opName;
+	Ptr<Expr>				operand;
+};
+
+class BinaryExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	CppName					opName;
+	Ptr<Expr>				left;
+	Ptr<Expr>				right;
+};
+
+class IfExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	Ptr<Expr>				condition;
+	Ptr<Expr>				left;
+	Ptr<Expr>				right;
 };
 
 #endif

@@ -517,7 +517,7 @@ public:
 
 	void Visit(ParenthesisExpr* self)override
 	{
-		throw 0;
+		self->expr->Accept(this);
 	}
 
 	void Visit(CastExpr* self)override
@@ -534,6 +534,26 @@ public:
 	}
 
 	void Visit(TypeidExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(SizeofExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(ThrowExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(NewExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(DeleteExpr* self)override
 	{
 		throw 0;
 	}
@@ -676,6 +696,26 @@ public:
 			FindQualifiedFunctions(pa, {}, TsysRefType::None, funcTypes, true);
 			VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
 		}
+	}
+
+	void Visit(PostfixUnaryExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(PrefixUnaryExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(BinaryExpr* self)override
+	{
+		throw 0;
+	}
+
+	void Visit(IfExpr* self)override
+	{
+		throw 0;
 	}
 };
 
