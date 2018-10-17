@@ -384,6 +384,10 @@ TEST_CASE(TestParseExpr_EnumAndEnumItem)
 {
 }
 
+TEST_CASE(TestParseExpr_FieldReference)
+{
+}
+
 TEST_CASE(TestParseExpr_Ternary_Comma)
 {
 }

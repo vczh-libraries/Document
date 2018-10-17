@@ -114,6 +114,7 @@ Macros
 #define TEST_EACH_VAR_NO_BOOL(F) TEST_EACH_VAR_INT(F) TEST_EACH_VAR_CHAR(F) TEST_EACH_VAR_FLOAT(F)
 #define TEST_EACH_VAR_NO_BOOL_UNSIGNED(F) TEST_EACH_VAR_SINT(F) TEST_EACH_VAR_FLOAT(F)
 #define TEST_EACH_VAR_NO_BOOL_FLOAT(F) TEST_EACH_VAR_INT(F) TEST_EACH_VAR_CHAR(F)
+#define TEST_EACH_VAR_NO_FLOAT(F) TEST_EACH_VAR_BOOL(F) TEST_EACH_VAR_INT(F) TEST_EACH_VAR_CHAR(F)
 
 /***********************************************************************
 Test Cases
@@ -137,11 +138,11 @@ TEST_CASE(TestIntegralPromotion_PostfixUnary)
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype(NAME++)>(pa, L#NAME, L"++");
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME++))>(pa, L#NAME, L"++");
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype(NAME--)>(pa, L#NAME, L"--");
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME--))>(pa, L#NAME, L"--");
 	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
 #undef TEST_VAR
 }
@@ -161,33 +162,43 @@ TEST_CASE(TestIntegralPromotion_PrefixUnary)
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype(++NAME)>(pa, L#NAME, L"++");
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((++NAME))>(pa, L#NAME, L"++");
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype(--NAME)>(pa, L#NAME, L"--");
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((--NAME))>(pa, L#NAME, L"--");
 	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype(~NAME)>(pa, L#NAME, L"~");
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((~NAME))>(pa, L#NAME, L"~");
 	TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype(!NAME)>(pa, L#NAME, L"!");
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((!NAME))>(pa, L#NAME, L"!");
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype(-NAME)>(pa, L#NAME, L"-");
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((-NAME))>(pa, L#NAME, L"-");
 	TEST_EACH_VAR_NO_BOOL_UNSIGNED(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype(+NAME)>(pa, L#NAME, L"+");
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((+NAME))>(pa, L#NAME, L"+");
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype(&NAME)>(pa, L#NAME, L"&");
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((&NAME))>(pa, L#NAME, L"&");
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
+}
+
+template<typename T>
+void AssertBinaryUnary(ParsingArguments& pa, const WString& name1, const WString& name2, const WString& op)
+{
+	auto input = name1 + op + name2;
+	auto log = L"(" + name1 + L" " + op + L" " + name2 + L")";
+	auto tsys = TsysInfo<T>::GetTsys(pa.tsys.Obj());
+	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
+	AssertExpr(input, log, logTsys);
 }
 
 TEST_CASE(TestIntegralPromotion_BinaryBool)
@@ -212,6 +223,50 @@ TEST_CASE(TestIntegralPromotion_Assignment)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
+
+#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME=NAME))>(pa, L#NAME, L#NAME, L"=");
+	TEST_EACH_VAR(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME*=NAME))>(pa, L#NAME, L#NAME, L"*=");
+	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME/=NAME))>(pa, L#NAME, L#NAME, L"/=");
+	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME%=NAME))>(pa, L#NAME, L#NAME, L"%=");
+	TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME+=NAME))>(pa, L#NAME, L#NAME, L"+=");
+	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME-=NAME))>(pa, L#NAME, L#NAME, L"-=");
+	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME<<=NAME))>(pa, L#NAME, L#NAME, L"<<=");
+	TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME>>=NAME))>(pa, L#NAME, L#NAME, L">>=");
+	TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME&=NAME))>(pa, L#NAME, L#NAME, L"&=");
+	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME|=NAME))>(pa, L#NAME, L#NAME, L"|=");
+	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME^=NAME))>(pa, L#NAME, L#NAME, L"^=");
+	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
 }
 
 #undef TEST_EACH_VAR_BOOL
@@ -223,6 +278,7 @@ TEST_CASE(TestIntegralPromotion_Assignment)
 #undef TEST_EACH_VAR_NO_BOOL
 #undef TEST_EACH_VAR_NO_BOOL_UNSIGNED
 #undef TEST_EACH_VAR_NO_BOOL_FLOAT
+#undef TEST_EACH_VAR_NO_FLOAT
 #undef TEST_EACH_VAR
 #undef TEST_DECL_VARS
 #undef TEST_DECL
