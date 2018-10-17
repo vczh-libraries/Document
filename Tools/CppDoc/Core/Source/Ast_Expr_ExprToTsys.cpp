@@ -830,6 +830,29 @@ public:
 		}
 	}
 
+	bool FullyContain(TsysPrimitive large, TsysPrimitive small)
+	{
+		if (large.bytes <= small.bytes)
+		{
+			return false;
+		}
+
+		if (large.type == TsysPrimitiveType::Float && small.type == TsysPrimitiveType::Float)
+		{
+			return true;
+		}
+
+		if (large.type == TsysPrimitiveType::Float || small.type == TsysPrimitiveType::Float)
+		{
+			return false;
+		}
+
+		bool sl = large.type == TsysPrimitiveType::SInt || large.type == TsysPrimitiveType::SChar;
+		bool ss = small.type == TsysPrimitiveType::SInt || small.type == TsysPrimitiveType::SChar;
+
+		return sl == ss || sl;
+	}
+
 	void Visit(PrefixUnaryExpr* self)override
 	{
 		ExprTsysList types;
@@ -964,6 +987,20 @@ public:
 								break;
 							}
 
+							if (FullyContain(leftP, rightP))
+							{
+								Promote(leftP);
+								Add(result, pa.tsys->PrimitiveOf(leftP), true);
+								break;
+							}
+
+							if (FullyContain(rightP, leftP))
+							{
+								Promote(rightP);
+								Add(result, pa.tsys->PrimitiveOf(rightP), true);
+								break;
+							}
+
 							Promote(leftP);
 							Promote(rightP);
 
@@ -974,21 +1011,26 @@ public:
 							{
 								primitive.type = TsysPrimitiveType::Float;
 							}
-							else if (leftP.type == TsysPrimitiveType::UInt || rightP.type == TsysPrimitiveType::UInt)
-							{
-								primitive.type = TsysPrimitiveType::UInt;
-							}
-							else if (leftP.type == rightP.type)
+							else if (leftP.bytes > rightP.bytes)
 							{
 								primitive.type = leftP.type;
 							}
-							else if (leftP.type == TsysPrimitiveType::UChar || rightP.type == TsysPrimitiveType::UChar)
+							else if (leftP.bytes < rightP.bytes)
 							{
-								primitive.type = TsysPrimitiveType::UInt;
+								primitive.type = rightP.type;
 							}
 							else
 							{
-								primitive.type = TsysPrimitiveType::SInt;
+								bool sl = leftP.type == TsysPrimitiveType::SInt || leftP.type == TsysPrimitiveType::SChar;
+								bool sr = rightP.type == TsysPrimitiveType::SInt || rightP.type == TsysPrimitiveType::SChar;
+								if (sl != sr)
+								{
+									primitive.type = TsysPrimitiveType::UInt;
+								}
+								else
+								{
+									primitive.type = leftP.type;
+								}
 							}
 
 							Add(result, pa.tsys->PrimitiveOf(primitive), true);
