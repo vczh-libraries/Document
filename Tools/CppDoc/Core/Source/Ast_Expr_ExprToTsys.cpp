@@ -933,6 +933,8 @@ public:
 					case CppBinaryOp::GE:
 					case CppBinaryOp::EQ:
 					case CppBinaryOp::NE:
+					case CppBinaryOp::And:
+					case CppBinaryOp::Or:
 						Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }), true);
 						break;
 					case CppBinaryOp::Assign:
