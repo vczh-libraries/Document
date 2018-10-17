@@ -954,7 +954,45 @@ public:
 						Add(result, rightTypes);
 						break;
 					default:
-						throw 0;
+						{
+							auto leftP = leftEntity->GetPrimitive();
+							auto rightP = rightEntity->GetPrimitive();
+
+							if (self->op == CppBinaryOp::Xor && leftP.type == TsysPrimitiveType::Bool && rightP.type == TsysPrimitiveType::Bool)
+							{
+								Add(result, leftEntity, true);
+								break;
+							}
+
+							Promote(leftP);
+							Promote(rightP);
+
+							TsysPrimitive primitive;
+							primitive.bytes = leftP.bytes > rightP.bytes ? leftP.bytes : rightP.bytes;
+
+							if (leftP.type == TsysPrimitiveType::Float || rightP.type == TsysPrimitiveType::Float)
+							{
+								primitive.type = TsysPrimitiveType::Float;
+							}
+							else if (leftP.type == TsysPrimitiveType::UInt || rightP.type == TsysPrimitiveType::UInt)
+							{
+								primitive.type = TsysPrimitiveType::UInt;
+							}
+							else if (leftP.type == rightP.type)
+							{
+								primitive.type = leftP.type;
+							}
+							else if (leftP.type == TsysPrimitiveType::UChar || rightP.type == TsysPrimitiveType::UChar)
+							{
+								primitive.type = TsysPrimitiveType::UInt;
+							}
+							else
+							{
+								primitive.type = TsysPrimitiveType::SInt;
+							}
+
+							Add(result, pa.tsys->PrimitiveOf(primitive), true);
+						}
 					}
 				}
 				else
