@@ -770,7 +770,32 @@ public:
 
 	void Visit(PostfixUnaryExpr* self)override
 	{
-		throw 0;
+		ExprTsysList types;
+		ExprToTsys(pa, self->operand, types);
+		for (vint i = 0; i < types.Count(); i++)
+		{
+			auto type = types[i].tsys;
+			TsysCV cv;
+			TsysRefType refType;
+			auto entity = type->GetEntity(cv, refType);
+
+			if (entity->GetType()==TsysType::Primitive)
+			{
+				auto primitive = entity->GetPrimitive();
+				switch (primitive.type)
+				{
+				case TsysPrimitiveType::Bool:
+					Add(result, types[i].tsys->LRefOf(), false);
+					break;
+				default:
+					Add(result, types[i].tsys, false);
+				}
+			}
+			else
+			{
+				throw 0;
+			}
+		}
 	}
 
 	void Visit(PrefixUnaryExpr* self)override

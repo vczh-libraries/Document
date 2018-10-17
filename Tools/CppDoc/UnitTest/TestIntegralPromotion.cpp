@@ -5,7 +5,7 @@
 Predefined Types
 ***********************************************************************/
 
-ITsys* GetTsysFromCppType(ITsysAlloc* tsys, const WString& cppType)
+ITsys* GetTsysFromCppType(Ptr<ITsysAlloc> tsys, const WString& cppType)
 {
 	ParsingArguments pa(nullptr, tsys, nullptr);
 	CppTokenReader reader(GlobalCppLexer(), cppType);
@@ -24,7 +24,7 @@ template<typename> struct TsysInfo;
 template<typename T>
 struct TsysInfo<T*>
 {
-	static ITsys* GetTsys(ITsysAlloc* tsys)
+	static ITsys* GetTsys(Ptr<ITsysAlloc> tsys)
 	{
 		return TsysInfo<T>::GetTsys(tsys)->PtrOf();
 	}
@@ -33,7 +33,7 @@ struct TsysInfo<T*>
 template<typename T>
 struct TsysInfo<T&>
 {
-	static ITsys* GetTsys(ITsysAlloc* tsys)
+	static ITsys* GetTsys(Ptr<ITsysAlloc> tsys)
 	{
 		return TsysInfo<T>::GetTsys(tsys)->LRefOf();
 	}
@@ -42,7 +42,7 @@ struct TsysInfo<T&>
 template<typename T>
 struct TsysInfo<T&&>
 {
-	static ITsys* GetTsys(ITsysAlloc* tsys)
+	static ITsys* GetTsys(Ptr<ITsysAlloc> tsys)
 	{
 		return TsysInfo<T>::GetTsys(tsys)->RRefOf();
 	}
@@ -51,10 +51,16 @@ struct TsysInfo<T&&>
 #define DEFINE_TSYS(TYPE)\
 template<> struct TsysInfo<TYPE>\
 {\
-	static ITsys* GetTsys(ITsysAlloc* tsys)\
+	static ITsys* GetTsys(Ptr<ITsysAlloc> tsys)\
 	{\
-		static auto cache = GetTsysFromCppType(tsys, L#TYPE);\
-		return cache;\
+		ITsysAlloc* cachedTsys = nullptr;\
+		ITsys* cachedType = nullptr;\
+		if (cachedTsys != tsys.Obj())\
+		{\
+			cachedTsys = tsys.Obj();\
+			cachedType = GetTsysFromCppType(tsys, L#TYPE);\
+		}\
+		return cachedType;\
 	}\
 }\
 
@@ -128,9 +134,9 @@ void AssertPostfixUnary(ParsingArguments& pa, const WString& name, const WString
 {
 	auto input = name + op;
 	auto log = L"(" + name + L" " + op + L")";
-	auto tsys = TsysInfo<T>::GetTsys(pa.tsys.Obj());
+	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
 	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
-	AssertExpr(input, log, logTsys);
+	AssertExpr(input, log, logTsys, pa);
 }
 
 TEST_CASE(TestIntegralPromotion_PostfixUnary)
@@ -152,9 +158,9 @@ void AssertPrefixUnary(ParsingArguments& pa, const WString& name, const WString&
 {
 	auto input = op + name;
 	auto log = L"(" + op + L" " + name + L")";
-	auto tsys = TsysInfo<T>::GetTsys(pa.tsys.Obj());
+	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
 	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
-	AssertExpr(input, log, logTsys);
+	AssertExpr(input, log, logTsys, pa);
 }
 
 TEST_CASE(TestIntegralPromotion_PrefixUnary)
@@ -162,31 +168,31 @@ TEST_CASE(TestIntegralPromotion_PrefixUnary)
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype((++NAME))>(pa, L#NAME, L"++");
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((++NAME))>(pa, L#NAME, L"++");
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype((--NAME))>(pa, L#NAME, L"--");
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((--NAME))>(pa, L#NAME, L"--");
 	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype((~NAME))>(pa, L#NAME, L"~");
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((~NAME))>(pa, L#NAME, L"~");
 	TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype((!NAME))>(pa, L#NAME, L"!");
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((!NAME))>(pa, L#NAME, L"!");
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype((-NAME))>(pa, L#NAME, L"-");
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((-NAME))>(pa, L#NAME, L"-");
 	TEST_EACH_VAR_NO_BOOL_UNSIGNED(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype((+NAME))>(pa, L#NAME, L"+");
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((+NAME))>(pa, L#NAME, L"+");
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertPostfixUnary<decltype((&NAME))>(pa, L#NAME, L"&");
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((&NAME))>(pa, L#NAME, L"&");
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
 }
@@ -196,24 +202,24 @@ void AssertBinaryUnary(ParsingArguments& pa, const WString& name1, const WString
 {
 	auto input = name1 + op + name2;
 	auto log = L"(" + name1 + L" " + op + L" " + name2 + L")";
-	auto tsys = TsysInfo<T>::GetTsys(pa.tsys.Obj());
+	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
 	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
-	AssertExpr(input, log, logTsys);
+	AssertExpr(input, log, logTsys, pa);
 }
 
-TEST_CASE(TestIntegralPromotion_BinaryBool)
+TEST_CASE(TestIntegralPromotion_BinaryBoolOp)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 }
 
-TEST_CASE(TestIntegralPromotion_BinaryInt)
+TEST_CASE(TestIntegralPromotion_BinaryBitOp)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 }
 
-TEST_CASE(TestIntegralPromotion_BinaryFloat)
+TEST_CASE(TestIntegralPromotion_BinaryNumeric)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
