@@ -802,6 +802,34 @@ public:
 		}
 	}
 
+	void Promote(TsysPrimitive& primitive)
+	{
+		switch (primitive.type)
+		{
+		case TsysPrimitiveType::Bool: primitive.type = TsysPrimitiveType::SInt; break;
+		case TsysPrimitiveType::SChar: primitive.type = TsysPrimitiveType::SInt; break;
+		case TsysPrimitiveType::UChar: if (primitive.bytes < TsysBytes::_4) primitive.type = TsysPrimitiveType::UInt; break;
+		case TsysPrimitiveType::UWChar: primitive.type = TsysPrimitiveType::UInt; break;
+		}
+
+		switch (primitive.type)
+		{
+		case TsysPrimitiveType::SInt:
+			if (primitive.bytes < TsysBytes::_4)
+			{
+				primitive.bytes = TsysBytes::_4;
+			}
+			break;
+		case TsysPrimitiveType::UInt:
+			if (primitive.bytes < TsysBytes::_4)
+			{
+				primitive.type = TsysPrimitiveType::SInt;
+				primitive.bytes = TsysBytes::_4;
+			}
+			break;
+		}
+	}
+
 	void Visit(PrefixUnaryExpr* self)override
 	{
 		ExprTsysList types;
@@ -826,30 +854,7 @@ public:
 				case CppPrefixUnaryOp::Negative:
 					{
 						auto primitive = entity->GetPrimitive();
-						switch (primitive.type)
-						{
-						case TsysPrimitiveType::Bool: primitive.type = TsysPrimitiveType::SInt; break;
-						case TsysPrimitiveType::SChar: primitive.type = TsysPrimitiveType::SInt; break;
-						case TsysPrimitiveType::UChar: if (primitive.bytes < TsysBytes::_4) primitive.type = TsysPrimitiveType::UInt; break;
-						case TsysPrimitiveType::UWChar: primitive.type = TsysPrimitiveType::UInt; break;
-						}
-
-						switch (primitive.type)
-						{
-						case TsysPrimitiveType::SInt:
-							if (primitive.bytes < TsysBytes::_4)
-							{
-								primitive.bytes = TsysBytes::_4;
-							}
-							break;
-						case TsysPrimitiveType::UInt:
-							if (primitive.bytes < TsysBytes::_4)
-							{
-								primitive.type = TsysPrimitiveType::SInt;
-								primitive.bytes = TsysBytes::_4;
-							}
-							break;
-						}
+						Promote(primitive);
 
 						auto promotedEntity = pa.tsys->PrimitiveOf(primitive);
 						if (promotedEntity == entity && primitive.type != TsysPrimitiveType::Float)
