@@ -78,10 +78,12 @@ DEFINE_TSYS(signed __int8);
 DEFINE_TSYS(signed __int16);
 DEFINE_TSYS(signed __int32);
 DEFINE_TSYS(signed __int64);
+DEFINE_TSYS(signed long);
 DEFINE_TSYS(unsigned __int8);
 DEFINE_TSYS(unsigned __int16);
 DEFINE_TSYS(unsigned __int32);
 DEFINE_TSYS(unsigned __int64);
+DEFINE_TSYS(unsigned long);
 DEFINE_TSYS(wchar_t);
 DEFINE_TSYS(char16_t);
 DEFINE_TSYS(char32_t);
@@ -161,12 +163,39 @@ Macros
 #define TEST_EACH_VAR_CONST_NO_BOOL_FLOAT(F) TEST_EACH_VAR_CONST_INT(F) TEST_EACH_VAR_CONST_CHAR(F)
 #define TEST_EACH_VAR_CONST_NO_FLOAT(F) TEST_EACH_VAR_CONST_BOOL(F) TEST_EACH_VAR_CONST_INT(F) TEST_EACH_VAR_CONST_CHAR(F)
 
+#define TEST_EACH_VAR2_NO_FLOAT_(F, NAME1)\
+	F(NAME1, cb)\
+	F(NAME1, csi8) F(NAME1, csi16) F(NAME1, csi32) F(NAME1, csi64)\
+	F(NAME1, cui8) F(NAME1, cui16) F(NAME1, cui32) F(NAME1, cui64)\
+	F(NAME1, csc) F(NAME1, cuc) F(NAME1, cwc) F(NAME1, cc16) F(NAME1, cc32)\
+
+#define TEST_EACH_VAR2_NO_FLOAT(F)\
+	TEST_EACH_VAR2_NO_FLOAT_(F, cb)\
+	TEST_EACH_VAR2_NO_FLOAT_(F, csi8) TEST_EACH_VAR2_NO_FLOAT_(F, csi16) TEST_EACH_VAR2_NO_FLOAT_(F, csi32) TEST_EACH_VAR2_NO_FLOAT_(F, csi64)\
+	TEST_EACH_VAR2_NO_FLOAT_(F, cui8) TEST_EACH_VAR2_NO_FLOAT_(F, cui16) TEST_EACH_VAR2_NO_FLOAT_(F, cui32) TEST_EACH_VAR2_NO_FLOAT_(F, cui64)\
+	TEST_EACH_VAR2_NO_FLOAT_(F, csc) TEST_EACH_VAR2_NO_FLOAT_(F, cuc) TEST_EACH_VAR2_NO_FLOAT_(F, cwc) TEST_EACH_VAR2_NO_FLOAT_(F, cc16) TEST_EACH_VAR2_NO_FLOAT_(F, cc32)\
+
+#define TEST_EACH_VAR2_(F, NAME1)\
+	F(NAME1, cb)\
+	F(NAME1, csi8) F(NAME1, csi16) F(NAME1, csi32) F(NAME1, csi64)\
+	F(NAME1, cui8) F(NAME1, cui16) F(NAME1, cui32) F(NAME1, cui64)\
+	F(NAME1, csc) F(NAME1, cuc) F(NAME1, cwc) F(NAME1, cc16) F(NAME1, cc32)\
+	F(NAME1, cf) F(NAME1, cd) F(NAME1, cld)\
+
+#define TEST_EACH_VAR2(F)\
+	TEST_EACH_VAR2_(F, cb)\
+	TEST_EACH_VAR2_(F, csi8) TEST_EACH_VAR2_(F, csi16) TEST_EACH_VAR2_(F, csi32) TEST_EACH_VAR2_(F, csi64)\
+	TEST_EACH_VAR2_(F, cui8) TEST_EACH_VAR2_(F, cui16) TEST_EACH_VAR2_(F, cui32) TEST_EACH_VAR2_(F, cui64)\
+	TEST_EACH_VAR2_(F, csc) TEST_EACH_VAR2_(F, cuc) TEST_EACH_VAR2_(F, cwc) TEST_EACH_VAR2_(F, cc16) TEST_EACH_VAR2_(F, cc32)\
+	TEST_EACH_VAR2_(F, f) TEST_EACH_VAR2_(F, d) TEST_EACH_VAR2_(F, ld)\
+
 /***********************************************************************
 Test Cases
 ***********************************************************************/
 
 #pragma warning (push)
 #pragma warning (disable: 4101)
+#pragma warning (disable: 4804)
 
 template<typename T>
 void AssertPostfixUnary(ParsingArguments& pa, const WString& name, const WString& op)
@@ -266,22 +295,64 @@ void AssertBinaryUnary(ParsingArguments& pa, const WString& name1, const WString
 	AssertExpr(input, log, logTsys, pa);
 }
 
-TEST_CASE(TestIntegralPromotion_BinaryBoolOp)
+TEST_CASE(TestIntegralPromotion_BinaryIntOp)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
-}
 
-TEST_CASE(TestIntegralPromotion_BinaryBitOp)
-{
-	TEST_DECL_VARS;
-	COMPILE_PROGRAM(program, pa, input);
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1&&NAME2))>(pa, L#NAME1, L#NAME2, L"&&");
+	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1||NAME2))>(pa, L#NAME1, L#NAME2, L"||");
+	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1&NAME2))>(pa, L#NAME1, L#NAME2, L"&");
+	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1|NAME2))>(pa, L#NAME1, L#NAME2, L"|");
+	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1^NAME2))>(pa, L#NAME1, L#NAME2, L"^");
+	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1<<NAME2))>(pa, L#NAME1, L#NAME2, L"<<");
+	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1>>NAME2))>(pa, L#NAME1, L#NAME2, L">>");
+	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1%NAME2))>(pa, L#NAME1, L#NAME2, L"%");
+	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
 }
 
 TEST_CASE(TestIntegralPromotion_BinaryNumeric)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
+
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");
+	TEST_EACH_VAR2(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");
+	TEST_EACH_VAR2(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1*NAME2))>(pa, L#NAME1, L#NAME2, L"*");
+	TEST_EACH_VAR2(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1/NAME2))>(pa, L#NAME1, L#NAME2, L"/");
+	TEST_EACH_VAR2(TEST_VAR)
+#undef TEST_VAR
 }
 
 TEST_CASE(TestIntegralPromotion_Comparison)
@@ -393,6 +464,11 @@ TEST_CASE(TestIntegralPromotion_Assignment)
 #undef TEST_EACH_VAR_CONST_NO_BOOL_FLOAT
 #undef TEST_EACH_VAR_CONST_NO_FLOAT
 #undef TEST_EACH_VAR_CONST
+
+#undef TEST_EACH_VAR2_NO_FLOAT_
+#undef TEST_EACH_VAR2_NO_FLOAT
+#undef TEST_EACH_VAR2_
+#undef TEST_EACH_VAR2
 
 #undef TEST_DECL_VARS
 #undef TEST_DECL
