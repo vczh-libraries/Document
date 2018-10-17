@@ -707,7 +707,7 @@ public:
 						{
 							auto item = opResult[j];
 							item.tsys = item.tsys->GetElement();
-							Add(parentTypes, item);
+							AddNonVar(parentTypes, item);
 						}
 					}
 				}
@@ -755,15 +755,22 @@ public:
 				ExprTsysList opResult;
 				VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
 				FindQualifiedFunctions(pa, cv, refType, opResult, false);
-				Add(funcTypes, opResult);
+				AddNonVar(funcTypes, opResult);
 			}
 			else if (entityType->GetType() == TsysType::Array)
 			{
-				Add(result, entityType->GetElement(), false);
+				if (refType == TsysRefType::RRef)
+				{
+					AddTemp(result, entityType->GetElement()->RRefOf());
+				}
+				else
+				{
+					AddTemp(result, entityType->GetElement()->LRefOf());
+				}
 			}
 			else if (entityType->GetType() == TsysType::Ptr)
 			{
-				Add(result, entityType->GetElement(), false);
+				AddTemp(result, entityType->GetElement()->LRefOf());
 			}
 		}
 
@@ -784,7 +791,7 @@ public:
 		{
 			TypeTsysList types;
 			TypeToTsys(pa, self->type, types);
-			Add(result, types, true);
+			AddTemp(result, types);
 		}
 		else if (self->expr)
 		{
