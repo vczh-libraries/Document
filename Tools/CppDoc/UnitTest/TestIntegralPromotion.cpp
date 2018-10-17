@@ -291,26 +291,32 @@ TEST_CASE(TestIntegralPromotion_Comparison)
 
 #define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME==NAME))>(pa, L#NAME, L#NAME, L"==");
 	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME!=NAME))>(pa, L#NAME, L#NAME, L"!=");
 	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME<NAME))>(pa, L#NAME, L#NAME, L"<");
 	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME<=NAME))>(pa, L#NAME, L#NAME, L"<=");
 	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME>NAME))>(pa, L#NAME, L#NAME, L">");
 	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME>=NAME))>(pa, L#NAME, L#NAME, L">=");
 	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 }
 
