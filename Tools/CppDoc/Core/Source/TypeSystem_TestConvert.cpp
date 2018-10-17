@@ -19,6 +19,8 @@ TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionT
 	return TsysConv::TrivalConversion;
 }
 
+TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromType);
+
 namespace TestConvert_Helpers
 {
 	bool IsCVSame(TsysCV toCV, TsysCV fromCV)
@@ -77,25 +79,23 @@ namespace TestConvert_Helpers
 		case TsysRefType::LRef:
 			switch (fromRef)
 			{
-			case TsysRefType::LRef: fromLRP = true; break;
-			case TsysRefType::RRef: return false;
-			case TsysRefType::None: fromLRP = true; break;
+			case TsysRefType::LRef:
+			case TsysRefType::None:
+				fromLRP = true;
+				break;
+			case TsysRefType::RRef:
+				return false;
 			}
 			break;
 		case TsysRefType::RRef:
 			switch (fromRef)
 			{
-			case TsysRefType::LRef: return false;
-			case TsysRefType::RRef: fromLRP = true; break;
-			case TsysRefType::None: return false;
-			}
-			break;
-		case TsysRefType::None:
-			switch (fromRef)
-			{
-			case TsysRefType::LRef: break;
-			case TsysRefType::RRef: break;
-			case TsysRefType::None: break;
+			case TsysRefType::LRef:
+			case TsysRefType::None:
+				return false;
+			case TsysRefType::RRef:
+				fromLRP = true;
+				break;
 			}
 			break;
 		}
@@ -320,7 +320,7 @@ namespace TestConvert_Helpers
 			TypeToTsys(newPa, typeOpType->returnType, targetTypes);
 			for (vint j = 0; j < targetTypes.Count(); j++)
 			{
-				if (TestConvert(newPa, toType, targetTypes[j]->RRefOf()) != TsysConv::Illegal)
+				if (TestConvertInternal(newPa, toType, targetTypes[j]->RRefOf()) != TsysConv::Illegal)
 				{
 					return true;
 				}
@@ -341,7 +341,7 @@ namespace TestConvert_Helpers
 		if (!toClass) return false;
 
 		auto toSymbol = toClass->symbol;
-		if (TestConvert(pa, toType, pa.tsys->DeclOf(toSymbol)->RRefOf()) == TsysConv::Illegal) return false;
+		if (TestConvertInternal(pa, toType, pa.tsys->DeclOf(toSymbol)->RRefOf()) == TsysConv::Illegal) return false;
 
 		vint index = toSymbol->children.Keys().IndexOf(L"$__ctor");
 		if (index == -1) return false;
@@ -362,7 +362,7 @@ namespace TestConvert_Helpers
 			TypeToTsys(newPa, ctorType->parameters[0]->type, sourceTypes);
 			for (vint j = 0; j < sourceTypes.Count(); j++)
 			{
-				if (TestConvert(newPa, sourceTypes[j], fromType) != TsysConv::Illegal)
+				if (TestConvertInternal(newPa, sourceTypes[j], fromType) != TsysConv::Illegal)
 				{
 					return true;
 				}
@@ -374,7 +374,7 @@ namespace TestConvert_Helpers
 }
 using namespace TestConvert_Helpers;
 
-TsysConv TestConvert(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 {
 	if (fromType->GetType() == TsysType::Zero)
 	{
@@ -430,5 +430,5 @@ TsysConv TestConvert(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 
 TsysConv TestConvert(ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem)
 {
-	return TestConvert(pa, toType, (fromItem.type == ExprTsysType::LValue ? fromItem.tsys->LRefOf() : fromItem.tsys->RRefOf()));
+	return TestConvertInternal(pa, toType, (fromItem.type == ExprTsysType::LValue ? fromItem.tsys->LRefOf() : fromItem.tsys->RRefOf()));
 }
