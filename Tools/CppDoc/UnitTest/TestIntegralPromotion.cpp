@@ -197,14 +197,32 @@ Test Cases
 #pragma warning (disable: 4101)
 #pragma warning (disable: 4804)
 
+WString TsysToString(ITsys* tsys)
+{
+	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
+
+	if (tsys->GetType() == TsysType::LRef)
+	{
+		logTsys += L" $L";
+	}
+	else if (tsys->GetType() == TsysType::RRef)
+	{
+		logTsys += L" $X";
+	}
+	else
+	{
+		logTsys += L" $PR";
+	}
+	return logTsys;
+}
+
 template<typename T>
 void AssertPostfixUnary(ParsingArguments& pa, const WString& name, const WString& op)
 {
 	auto input = name + op;
 	auto log = L"(" + name + L" " + op + L")";
 	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
-	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
-	AssertExpr(input, log, logTsys, pa);
+	AssertExpr(input, log, TsysToString(tsys), pa);
 }
 
 TEST_CASE(TestIntegralPromotion_PostfixUnary)
@@ -227,8 +245,7 @@ void AssertPrefixUnary(ParsingArguments& pa, const WString& name, const WString&
 	auto input = op + name;
 	auto log = L"(" + op + L" " + name + L")";
 	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
-	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
-	AssertExpr(input, log, logTsys, pa);
+	AssertExpr(input, log, TsysToString(tsys), pa);
 }
 
 template<typename T>
@@ -237,8 +254,7 @@ void AssertDereferenceUnary(ParsingArguments& pa, const WString& name)
 	auto input = L"*&" + name;
 	auto log = L"(* (& " + name + L"))";
 	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
-	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
-	AssertExpr(input, log, logTsys, pa);
+	AssertExpr(input, log, TsysToString(tsys), pa);
 }
 
 TEST_CASE(TestIntegralPromotion_PrefixUnary)
@@ -291,8 +307,7 @@ void AssertBinaryUnary(ParsingArguments& pa, const WString& name1, const WString
 	auto input = name1 + op + name2;
 	auto log = L"(" + name1 + L" " + op + L" " + name2 + L")";
 	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
-	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
-	AssertExpr(input, log, logTsys, pa);
+	AssertExpr(input, log, TsysToString(tsys), pa);
 }
 
 TEST_CASE(TestIntegralPromotion_BinaryIntOp)

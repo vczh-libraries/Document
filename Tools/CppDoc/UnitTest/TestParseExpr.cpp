@@ -4,9 +4,9 @@
 
 TEST_CASE(TestParseExpr_Literal)
 {
-	AssertExpr(L"true",			L"true",		L"bool $PR $PR"				);
-	AssertExpr(L"false",		L"false",		L"bool $PR $PR"				);
-	AssertExpr(L"nullptr",		L"nullptr",		L"nullptr_t $PR $PR"		);
+	AssertExpr(L"true",			L"true",		L"bool $PR"					);
+	AssertExpr(L"false",		L"false",		L"bool $PR"					);
+	AssertExpr(L"nullptr",		L"nullptr",		L"nullptr_t $PR"			);
 
 	AssertExpr(L"0",			L"0",			L"0 $PR"					);
 	AssertExpr(L"0u",			L"0u",			L"0 $PR"					);
@@ -60,11 +60,11 @@ TEST_CASE(TestParseExpr_Literal)
 	AssertExpr(L"U'x'",			L"U'x'",		L"char32_t $PR"				);
 	AssertExpr(L"u8'x'",		L"u8'x'",		L"char $PR"					);
 
-	AssertExpr(L"\"x\"",		L"\"x\"",		L"char const [] $PR"		);
-	AssertExpr(L"L\"x\"",		L"L\"x\"",		L"wchar_t const [] $PR"		);
-	AssertExpr(L"u\"x\"",		L"u\"x\"",		L"char16_t const [] $PR"	);
-	AssertExpr(L"U\"x\"",		L"U\"x\"",		L"char32_t const [] $PR"	);
-	AssertExpr(L"u8\"x\"",		L"u8\"x\"",		L"char const [] $PR"		);
+	AssertExpr(L"\"x\"",		L"\"x\"",		L"char const [] & $L"		);
+	AssertExpr(L"L\"x\"",		L"L\"x\"",		L"wchar_t const [] & $L"	);
+	AssertExpr(L"u\"x\"",		L"u\"x\"",		L"char16_t const [] & $L"	);
+	AssertExpr(L"U\"x\"",		L"U\"x\"",		L"char32_t const [] & $L"	);
+	AssertExpr(L"u8\"x\"",		L"u8\"x\"",		L"char const [] & $L"		);
 }
 
 TEST_CASE(TestParseExpr_Name)
@@ -217,7 +217,7 @@ Z* pz = nullptr;
 	AssertExpr(L"pz->operator->",			L"pz->operator ->",				L"::Y () * $PR",			pa);
 
 	AssertExpr(L"z.x",						L"z.x",							L"bool $L",					pa);
-	AssertExpr(L"z.y",						L"z.y",							L"boo $Ll",					pa);
+	AssertExpr(L"z.y",						L"z.y",							L"bool $L",					pa);
 	AssertExpr(L"z.F",						L"z.F",							L"__int32 (double) * $PR",	pa);
 	AssertExpr(L"z.G",						L"z.G",							L"__int32 (void *) * $PR",	pa);
 	AssertExpr(L"z.operator->",				L"z.operator ->",				L"::Y () * $PR",			pa);
@@ -238,8 +238,8 @@ Z* pz = nullptr;
 	AssertExpr(L"z.F(0)",					L"z.F(0)",						L"__int32 $PR",				pa);
 	AssertExpr(L"z.G(0)",					L"z.G(0)",						L"__int32 $PR",				pa);
 	
-	AssertExpr(L"z->x",						L"z->x",						L"__int32 $L",				pa);
-	AssertExpr(L"z->y",						L"z->y",						L"__int32 $L",				pa);
+	AssertExpr(L"z->x",						L"z->x",						L"__int32 $PR",				pa);
+	AssertExpr(L"z->y",						L"z->y",						L"__int32 $PR",				pa);
 	AssertExpr(L"z(0)",						L"z(0)",						L"::X $PR",					pa);
 	AssertExpr(L"z(nullptr)",				L"z(nullptr)",					L"::Y $PR",					pa);
 	AssertExpr(L"z[\"a\"]",					L"z[\"a\"]",					L"::X $PR",					pa);
