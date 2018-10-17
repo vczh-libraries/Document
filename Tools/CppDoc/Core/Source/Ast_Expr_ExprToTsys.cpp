@@ -880,13 +880,58 @@ public:
 		ExprToTsys(pa, self->left, leftTypes);
 		ExprToTsys(pa, self->right, rightTypes);
 
-		switch (self->op)
+
+		for (vint i = 0; i < leftTypes.Count(); i++)
 		{
-		case CppBinaryOp::Comma:
-			Add(result, rightTypes);
-			break;
-		default:
-			throw 0;
+			auto leftType = leftTypes[i].tsys;
+			TsysCV leftCV;
+			TsysRefType leftRefType;
+			auto leftEntity = leftType->GetEntity(leftCV, leftRefType);
+
+			for (vint j = 0; j < rightTypes.Count(); j++)
+			{
+				auto rightType = rightTypes[j].tsys;
+				TsysCV rightCV;
+				TsysRefType rightRefType;
+				auto rightEntity = rightType->GetEntity(rightCV, rightRefType);
+
+				if (leftEntity->GetType() == TsysType::Primitive && rightEntity->GetType() == TsysType::Primitive)
+				{
+					switch (self->op)
+					{
+					case CppBinaryOp::LT:
+					case CppBinaryOp::GT:
+					case CppBinaryOp::LE:
+					case CppBinaryOp::GE:
+					case CppBinaryOp::EQ:
+					case CppBinaryOp::NE:
+						Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }), true);
+						break;
+					case CppBinaryOp::Assign:
+					case CppBinaryOp::MulAssign:
+					case CppBinaryOp::DivAssign:
+					case CppBinaryOp::ModAssign:
+					case CppBinaryOp::AddAssign:
+					case CppBinaryOp::SubAddisn:
+					case CppBinaryOp::ShlAssign:
+					case CppBinaryOp::ShrAssign:
+					case CppBinaryOp::AndAssign:
+					case CppBinaryOp::OrAssign:
+					case CppBinaryOp::XorAssign:
+						Add(result, leftType->LRefOf(), false);
+						break;
+					case CppBinaryOp::Comma:
+						Add(result, rightTypes);
+						break;
+					default:
+						throw 0;
+					}
+				}
+				else
+				{
+					throw 0;
+				}
+			}
 		}
 	}
 

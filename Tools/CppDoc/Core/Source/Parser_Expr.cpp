@@ -531,29 +531,54 @@ Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 			FillOperatorAndSkip(opName, cursor, 3);
 			precedence = 4;
 		}
-		else if (TestToken(cursor, CppTokens::MUL, false) || TestToken(cursor, CppTokens::DIV, false) || TestToken(cursor, CppTokens::PERCENT, false))
+		else if (TestToken(cursor, CppTokens::MUL, false) && !TestToken(cursor, CppTokens::MUL, CppTokens::EQ, false))
 		{
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 5;
 		}
-		else if (TestToken(cursor, CppTokens::ADD, false) || TestToken(cursor, CppTokens::SUB, false))
+		else if (TestToken(cursor, CppTokens::DIV, false) && !TestToken(cursor, CppTokens::DIV, CppTokens::EQ, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 1);
+			precedence = 5;
+		}
+		else if (TestToken(cursor, CppTokens::PERCENT, false) && !TestToken(cursor, CppTokens::PERCENT, CppTokens::EQ, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 1);
+			precedence = 5;
+		}
+		else if (TestToken(cursor, CppTokens::ADD, false) && !TestToken(cursor, CppTokens::ADD, CppTokens::EQ, false))
 		{
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 6;
 		}
-		else if (TestToken(cursor, CppTokens::LT, CppTokens::LT, false) || TestToken(cursor, CppTokens::GT, CppTokens::GT, false))
+		else if (TestToken(cursor, CppTokens::SUB, false) && !TestToken(cursor, CppTokens::SUB, CppTokens::EQ, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 1);
+			precedence = 6;
+		}
+		else if (TestToken(cursor, CppTokens::LT, CppTokens::LT, false) && !TestToken(cursor, CppTokens::LT, CppTokens::LT, CppTokens::EQ, false))
 		{
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 7;
 		}
-		else if (TestToken(cursor, CppTokens::LT, false) || TestToken(cursor, CppTokens::GT, false))
+		else if (TestToken(cursor, CppTokens::GT, CppTokens::GT, false) && !TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ, false))
 		{
-			FillOperatorAndSkip(opName, cursor, 1);
-			precedence = 8;
+			FillOperatorAndSkip(opName, cursor, 2);
+			precedence = 7;
 		}
 		else if (TestToken(cursor, CppTokens::LT, CppTokens::EQ, false) || TestToken(cursor, CppTokens::GT, CppTokens::EQ, false))
 		{
 			FillOperatorAndSkip(opName, cursor, 2);
+			precedence = 8;
+		}
+		else if (TestToken(cursor, CppTokens::LT, false) && !TestToken(cursor, CppTokens::LT, CppTokens::LT, CppTokens::EQ, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 1);
+			precedence = 8;
+		}
+		else if (TestToken(cursor, CppTokens::GT, false) && !TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ, false))
+		{
+			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 8;
 		}
 		else if (TestToken(cursor, CppTokens::EQ, CppTokens::EQ, false) || TestToken(cursor, CppTokens::NOT, CppTokens::EQ, false))
@@ -566,22 +591,22 @@ Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 14;
 		}
-		else if (TestToken(cursor, CppTokens::OR, false))
+		else if (TestToken(cursor, CppTokens::OR, false) && !TestToken(cursor, CppTokens::OR, CppTokens::EQ, false))
 		{
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 12;
 		}
-		else if (TestToken(cursor, CppTokens::ADD, CppTokens::ADD, false))
+		else if (TestToken(cursor, CppTokens::AND, CppTokens::AND, false))
 		{
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 13;
 		}
-		else if (TestToken(cursor, CppTokens::ADD, false))
+		else if (TestToken(cursor, CppTokens::AND, false) && !TestToken(cursor, CppTokens::AND, CppTokens::EQ, false))
 		{
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 10;
 		}
-		else if (TestToken(cursor, CppTokens::XOR, false))
+		else if (TestToken(cursor, CppTokens::XOR, false) && !TestToken(cursor, CppTokens::XOR, CppTokens::EQ, false))
 		{
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 11;
@@ -661,14 +686,14 @@ Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 		return newExpr;
 	}
 	else if (
-		TestToken(cursor, CppTokens::MUL, CppTokens::EQ) ||
-		TestToken(cursor, CppTokens::DIV, CppTokens::EQ) ||
-		TestToken(cursor, CppTokens::PERCENT, CppTokens::EQ) ||
-		TestToken(cursor, CppTokens::ADD, CppTokens::EQ) ||
-		TestToken(cursor, CppTokens::SUB, CppTokens::EQ) ||
-		TestToken(cursor, CppTokens::AND, CppTokens::EQ) ||
-		TestToken(cursor, CppTokens::OR, CppTokens::EQ) ||
-		TestToken(cursor, CppTokens::XOR, CppTokens::EQ))
+		TestToken(cursor, CppTokens::MUL, CppTokens::EQ, false) ||
+		TestToken(cursor, CppTokens::DIV, CppTokens::EQ, false) ||
+		TestToken(cursor, CppTokens::PERCENT, CppTokens::EQ, false) ||
+		TestToken(cursor, CppTokens::ADD, CppTokens::EQ, false) ||
+		TestToken(cursor, CppTokens::SUB, CppTokens::EQ, false) ||
+		TestToken(cursor, CppTokens::AND, CppTokens::EQ, false) ||
+		TestToken(cursor, CppTokens::OR, CppTokens::EQ, false) ||
+		TestToken(cursor, CppTokens::XOR, CppTokens::EQ, false))
 	{
 		auto newExpr = MakePtr<BinaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 2);
@@ -679,8 +704,8 @@ Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 		return newExpr;
 	}
 	else if (
-		TestToken(cursor, CppTokens::LT, CppTokens::LT, CppTokens::EQ) ||
-		TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ))
+		TestToken(cursor, CppTokens::LT, CppTokens::LT, CppTokens::EQ, false) ||
+		TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ, false))
 	{
 		auto newExpr = MakePtr<BinaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 3);
