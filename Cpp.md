@@ -275,13 +275,13 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - [ ] Test
 - [x] OPERATOR EXPR
   - [x] predefined operators
-- [ ] EXPR OPERATOR
+- [x] EXPR OPERATOR
   - [x] EXPR `(` {EXPR `,` ...} `)`
   - [x] EXPR `[` EXPR `]`
   - [ ] EXPR `<` {TYPE `,` ...} `>`
   - [x] predefined operators
 - [ ] EXPR `...`
-- [ ] EXPR OPERATOR EXPR
+- [x] EXPR OPERATOR EXPR
   - [x] EXPR (`.` | `->`) IDENTIFIER
   - [x] EXPR (`.*` | `->*`) EXPR
   - [x] predefined operators
