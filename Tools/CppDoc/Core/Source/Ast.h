@@ -1,10 +1,8 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_AST
 #define VCZH_DOCUMENT_CPPDOC_AST
 
-#include <Vlpp.h>
+#include "TypeSystem.h"
 
-using namespace vl;
-using namespace vl::collections;
 using namespace vl::regex;
 
 struct ParsingArguments;
@@ -122,40 +120,6 @@ Helpers
 
 struct NotConvertableException {};
 struct IllegalExprException {};
-
-struct ExprTsysItem
-{
-	Symbol*					symbol = nullptr;
-	ITsys*					tsys = nullptr;
-
-	ExprTsysItem() = default;
-	ExprTsysItem(const ExprTsysItem&) = default;
-	ExprTsysItem(ExprTsysItem&&) = default;
-
-	ExprTsysItem(Symbol* _symbol, ITsys* _tsys)
-		:symbol(_symbol), tsys(_tsys)
-	{
-	}
-
-	ExprTsysItem& operator=(const ExprTsysItem&) = default;
-	ExprTsysItem& operator=(ExprTsysItem&&) = default;
-
-	static vint Compare(const ExprTsysItem& a, const ExprTsysItem& b)
-	{
-		if (a.symbol < b.symbol) return -1;
-		if (a.symbol > b.symbol) return 1;
-		if (a.tsys < b.tsys) return -1;
-		if (a.tsys > b.tsys) return 1;
-		return 0;
-	}
-
-	bool operator==	(const ExprTsysItem& item)const { return Compare(*this, item) ==	0; }
-	bool operator!=	(const ExprTsysItem& item)const { return Compare(*this, item) !=	0; }
-	bool operator<	(const ExprTsysItem& item)const { return Compare(*this, item) <		0; }
-	bool operator<=	(const ExprTsysItem& item)const { return Compare(*this, item) <=	0; }
-	bool operator>	(const ExprTsysItem& item)const { return Compare(*this, item) >		0; }
-	bool operator>=	(const ExprTsysItem& item)const { return Compare(*this, item) >=	0; }
-};
 
 using TypeTsysList = List<ITsys*>;
 using ExprTsysList = List<ExprTsysItem>;

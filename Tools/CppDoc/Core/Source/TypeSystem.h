@@ -138,7 +138,51 @@ public:
 Helpers
 ***********************************************************************/
 
+enum class ExprTsysType
+{
+	LValue,
+	XValue,
+	PRValue,
+};
+
+struct ExprTsysItem
+{
+	Symbol*					symbol = nullptr;
+	ExprTsysType			type = ExprTsysType::PRValue;
+	ITsys*					tsys = nullptr;
+
+	ExprTsysItem() = default;
+	ExprTsysItem(const ExprTsysItem&) = default;
+	ExprTsysItem(ExprTsysItem&&) = default;
+
+	ExprTsysItem(Symbol* _symbol, ExprTsysType _type, ITsys* _tsys)
+		:symbol(_symbol), type(_type), tsys(_tsys)
+	{
+	}
+
+	ExprTsysItem& operator=(const ExprTsysItem&) = default;
+	ExprTsysItem& operator=(ExprTsysItem&&) = default;
+
+	static vint Compare(const ExprTsysItem& a, const ExprTsysItem& b)
+	{
+		if (a.symbol < b.symbol) return -1;
+		if (a.symbol > b.symbol) return 1;
+		if (a.type < b.type) return -1;
+		if (a.type > b.type) return 1;
+		if (a.tsys < b.tsys) return -1;
+		if (a.tsys > b.tsys) return 1;
+		return 0;
+	}
+
+	bool operator==	(const ExprTsysItem& item)const { return Compare(*this, item) == 0; }
+	bool operator!=	(const ExprTsysItem& item)const { return Compare(*this, item) != 0; }
+	bool operator<	(const ExprTsysItem& item)const { return Compare(*this, item) < 0; }
+	bool operator<=	(const ExprTsysItem& item)const { return Compare(*this, item) <= 0; }
+	bool operator>	(const ExprTsysItem& item)const { return Compare(*this, item) > 0; }
+	bool operator>=	(const ExprTsysItem& item)const { return Compare(*this, item) >= 0; }
+};
+
 extern TsysConv					TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType);
-extern TsysConv					TestConvert(ParsingArguments& pa, ITsys* toType, ITsys* fromType);
+extern TsysConv					TestConvert(ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem);
 
 #endif

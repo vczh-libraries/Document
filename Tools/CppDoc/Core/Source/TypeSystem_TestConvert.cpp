@@ -427,3 +427,8 @@ TsysConv TestConvert(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 
 	return TsysConv::Illegal;
 }
+
+TsysConv TestConvert(ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem)
+{
+	return TestConvert(pa, toType, (fromItem.type == ExprTsysType::LValue ? fromItem.tsys->LRefOf() : fromItem.tsys->RRefOf()));
+}
