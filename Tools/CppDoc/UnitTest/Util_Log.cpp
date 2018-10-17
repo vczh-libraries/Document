@@ -1174,8 +1174,6 @@ void Log(ITsys* tsys, StreamWriter& writer)
 				switch (primitive.bytes)
 				{
 				case TsysBytes::_1: writer.WriteString(L"char"); return;
-				case TsysBytes::_2: writer.WriteString(L"signed char16_t"); return;
-				case TsysBytes::_4: writer.WriteString(L"signed char32_t"); return;
 				}
 				break;
 			case TsysPrimitiveType::UChar:
@@ -1184,12 +1182,6 @@ void Log(ITsys* tsys, StreamWriter& writer)
 				case TsysBytes::_1: writer.WriteString(L"unsigned char"); return;
 				case TsysBytes::_2: writer.WriteString(L"char16_t"); return;
 				case TsysBytes::_4: writer.WriteString(L"char32_t"); return;
-				}
-				break;
-			case TsysPrimitiveType::SWChar:
-				switch (primitive.bytes)
-				{
-				case TsysBytes::_2: writer.WriteString(L"signed wchar_t"); return;
 				}
 				break;
 			case TsysPrimitiveType::UWChar:

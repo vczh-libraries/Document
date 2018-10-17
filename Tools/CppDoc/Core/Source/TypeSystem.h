@@ -21,7 +21,6 @@ enum class TsysPrimitiveType
 	Float,
 	SChar,
 	UChar,
-	SWChar,
 	UWChar,
 	Bool,
 	Void,
