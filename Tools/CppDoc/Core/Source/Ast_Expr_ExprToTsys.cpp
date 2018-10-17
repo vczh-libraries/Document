@@ -788,7 +788,7 @@ public:
 					Add(result, type->LRefOf(), false);
 					break;
 				default:
-					Add(result, type, false);
+					Add(result, type->RRefOf() , false);
 				}
 			}
 			else
