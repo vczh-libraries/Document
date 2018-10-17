@@ -384,10 +384,6 @@ TEST_CASE(TestParseExpr_EnumAndEnumItem)
 {
 }
 
-TEST_CASE(TestParseExpr_PredefinedOperatorTypes)
-{
-}
-
 TEST_CASE(TestParseExpr_Ternary_Comma)
 {
 }
