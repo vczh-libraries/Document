@@ -93,6 +93,18 @@ void AssertExpr(const WString& input, const WString& log, const WString& logTsys
 		auto outputTsys = GenerateToStream([&](StreamWriter& writer)
 		{
 			Log(tsys[0].tsys, writer);
+			switch (tsys[0].type)
+			{
+			case ExprTsysType::LValue:
+				writer.WriteString(L" $L");
+				break;
+			case ExprTsysType::PRValue:
+				writer.WriteString(L" $PR");
+				break;
+			case ExprTsysType::XValue:
+				writer.WriteString(L" $X");
+				break;
+			}
 		});
 		TEST_ASSERT(outputTsys == logTsys);
 	}
