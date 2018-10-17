@@ -1,7 +1,7 @@
 #include <Parser.h>
 #include "Util.h"
 
-void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WString& toCppType, TsysConv conv)
+void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WString& toCppType, ExprTsysType type, TsysConv conv)
 {
 	TypeTsysList fromTypes, toTypes;
 	Ptr<Type> fromType, toType;
@@ -23,7 +23,7 @@ void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WS
 	TEST_ASSERT(fromTypes.Count() == 1);
 	TEST_ASSERT(toTypes.Count() == 1);
 
-	auto output = TestConvert(pa, toTypes[0], fromTypes[0]);
+	auto output = TestConvert(pa, toTypes[0], { nullptr,type,fromTypes[0] });
 	TEST_ASSERT(output == conv);
 }
 
@@ -54,7 +54,7 @@ struct RunTypeConvert<TFrom, TTo, TsysConv::Illegal>
 };
 
 #define TEST_DECL(SOMETHING) SOMETHING auto input = L#SOMETHING
-#define TEST_CONV_TYPE_(FROM, TO, CONV) AssertTypeConvert(pa, L#FROM, L#TO, TsysConv::CONV)
+#define TEST_CONV_TYPE_(FROM, TO, CONV) AssertTypeConvert(pa, L#FROM, L#TO, ExprTsysType::LValue, TsysConv::CONV)
 #define TEST_CONV_TYPE(FROM, TO, CONV) RunTypeConvert<FROM, TO, TsysConv::CONV>::test, TEST_CONV_TYPE_(FROM, TO, CONV)
 
 TEST_CASE(TestTypeConvert_Exact)

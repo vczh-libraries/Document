@@ -31,7 +31,7 @@ public:
 		return true;
 	}
 
-	static bool AddInternal(ExprTsysList& list, ExprTsysList& items)
+	static void AddInternal(ExprTsysList& list, ExprTsysList& items)
 	{
 		for (vint i = 0; i < items.Count(); i++)
 		{
@@ -41,15 +41,15 @@ public:
 
 	static bool AddVar(ExprTsysList& list, const ExprTsysItem& item)
 	{
-		AddInternal(list, { item.symbol,ExprTsysType::LValue,item.tsys });
+		return AddInternal(list, { item.symbol,ExprTsysType::LValue,item.tsys });
 	}
 
 	static bool AddNonVar(ExprTsysList& list, const ExprTsysItem& item)
 	{
-		AddInternal(list, { item.symbol,ExprTsysType::PRValue,item.tsys });
+		return AddInternal(list, { item.symbol,ExprTsysType::PRValue,item.tsys });
 	}
 
-	static bool AddNonVar(ExprTsysList& list, ExprTsysList& items)
+	static void AddNonVar(ExprTsysList& list, ExprTsysList& items)
 	{
 		for (vint i = 0; i < items.Count(); i++)
 		{
@@ -57,23 +57,23 @@ public:
 		}
 	}
 
-	static void AddTemp(ExprTsysList& list, ITsys* tsys)
+	static bool AddTemp(ExprTsysList& list, ITsys* tsys)
 	{
 		if (tsys->GetType() == TsysType::RRef)
 		{
-			AddInternal(list, { nullptr,ExprTsysType::XValue,tsys });
+			return AddInternal(list, { nullptr,ExprTsysType::XValue,tsys });
 		}
 		else if (tsys->GetType() == TsysType::LRef)
 		{
-			AddInternal(list, { nullptr,ExprTsysType::LValue,tsys });
+			return AddInternal(list, { nullptr,ExprTsysType::LValue,tsys });
 		}
 		else
 		{
-			AddInternal(list, { nullptr,ExprTsysType::PRValue,tsys });
+			return AddInternal(list, { nullptr,ExprTsysType::PRValue,tsys });
 		}
 	}
 
-	static bool AddTemp(ExprTsysList& list, TypeTsysList& items)
+	static void AddTemp(ExprTsysList& list, TypeTsysList& items)
 	{
 		for (vint i = 0; i < items.Count(); i++)
 		{
@@ -425,12 +425,12 @@ public:
 	{
 		TsysCV cv;
 		TsysRefType refType;
-		auto entity = parentType->GetEntity(cv, refType);
+		auto entity = parentItem.tsys->GetEntity(cv, refType);
 
 		ExprTsysList fieldResult;
-		VisitNormalField(pa, name, &totalRar, cv, entity, fieldResult);
+		VisitNormalField(pa, name, &totalRar, parentItem, fieldResult);
 		FilterFunctionByQualifier(cv, refType, fieldResult);
-		Add(result, fieldResult);
+		AddInternal(result, fieldResult);
 	}
 
 	/***********************************************************************
