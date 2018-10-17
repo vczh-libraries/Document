@@ -24,32 +24,36 @@ public:
 	Add: Add something to ExprTsysList
 	***********************************************************************/
 
-	static bool Add(ExprTsysList& list, const ExprTsysItem& item)
+	static bool AddInternal(ExprTsysList& list, const ExprTsysItem& item)
 	{
 		if (list.Contains(item)) return false;
 		list.Add(item);
 		return true;
 	}
 
-	static void Add(ExprTsysList& list, ITsys* tsys, bool addRRef)
+	static bool Add(ExprTsysList& list, const ExprTsysItem& item, ExprTsysType type)
 	{
-		if (addRRef) tsys = tsys->RRefOf();
-		Add(list, { nullptr,tsys });
+		AddInternal(list, { item.symbol,type,item.tsys });
 	}
 
-	static void Add(ExprTsysList& toList, ExprTsysList& fromList)
+	static void Add(ExprTsysList& list, ITsys* tsys, ExprTsysType type)
+	{
+		AddInternal(list, { nullptr,type,tsys });
+	}
+
+	static void Add(ExprTsysList& toList, ExprTsysList& fromList, ExprTsysType type)
 	{
 		for (vint i = 0; i < fromList.Count(); i++)
 		{
-			Add(toList, fromList[i]);
+			Add(toList, fromList[i], type);
 		}
 	}
 
-	static void Add(ExprTsysList& toList, TypeTsysList& fromList, bool addRRef)
+	static void Add(ExprTsysList& toList, TypeTsysList& fromList, ExprTsysType type)
 	{
 		for (vint i = 0; i < fromList.Count(); i++)
 		{
-			Add(toList, fromList[i], addRRef);
+			Add(toList, fromList[i], type);
 		}
 	}
 
@@ -678,7 +682,7 @@ public:
 						for (vint j = 0; j < opResult.Count(); j++)
 						{
 							auto item = opResult[j];
-							item.tsys = item.tsys->GetElement()->RRefOf();
+							item.tsys = item.tsys->GetElement();
 							Add(parentTypes, item);
 						}
 					}
@@ -788,12 +792,12 @@ public:
 					Add(result, type->LRefOf(), false);
 					break;
 				default:
-					Add(result, type->RRefOf() , false);
+					Add(result, type , false);
 				}
 			}
 			else if (entity->GetType() == TsysType::Ptr)
 			{
-				Add(result, type->RRefOf(), false);
+				Add(result, type, false);
 			}
 			else
 			{
@@ -916,7 +920,7 @@ public:
 				{
 				case CppPrefixUnaryOp::Increase:
 				case CppPrefixUnaryOp::Decrease:
-					Add(result, type->RRefOf(), false);
+					Add(result, type, false);
 					break;
 				case CppPrefixUnaryOp::Dereference:
 					Add(result, entity->GetElement()->LRefOf(), false);
