@@ -832,6 +832,16 @@ public:
 
 	bool FullyContain(TsysPrimitive large, TsysPrimitive small)
 	{
+		if (large.type == TsysPrimitiveType::Float && small.type != TsysPrimitiveType::Float)
+		{
+			return true;
+		}
+
+		if (large.type != TsysPrimitiveType::Float && small.type == TsysPrimitiveType::Float)
+		{
+			return false;
+		}
+
 		if (large.bytes <= small.bytes)
 		{
 			return false;
@@ -840,11 +850,6 @@ public:
 		if (large.type == TsysPrimitiveType::Float && small.type == TsysPrimitiveType::Float)
 		{
 			return true;
-		}
-
-		if (large.type == TsysPrimitiveType::Float || small.type == TsysPrimitiveType::Float)
-		{
-			return false;
 		}
 
 		bool sl = large.type == TsysPrimitiveType::SInt || large.type == TsysPrimitiveType::SChar;
