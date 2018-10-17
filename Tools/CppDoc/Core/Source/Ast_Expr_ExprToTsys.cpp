@@ -780,14 +780,14 @@ public:
 
 	void Visit(BinaryExpr* self)override
 	{
+		ExprTsysList leftTypes, rightTypes;
+		ExprToTsys(pa, self->left, leftTypes);
+		ExprToTsys(pa, self->right, rightTypes);
+
 		switch (self->op)
 		{
 		case CppBinaryOp::Comma:
-			{
-				ExprTsysList types;
-				ExprToTsys(pa, self->left, types);
-				ExprToTsys(pa, self->right, result);
-			}
+			Add(result, rightTypes);
 			break;
 		default:
 			throw 0;
