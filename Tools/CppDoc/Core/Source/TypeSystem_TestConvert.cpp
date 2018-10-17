@@ -80,10 +80,10 @@ namespace TestConvert_Helpers
 			switch (fromRef)
 			{
 			case TsysRefType::LRef:
-			case TsysRefType::None:
 				fromLRP = true;
 				break;
 			case TsysRefType::RRef:
+			case TsysRefType::None:
 				return false;
 			}
 			break;
@@ -91,9 +91,9 @@ namespace TestConvert_Helpers
 			switch (fromRef)
 			{
 			case TsysRefType::LRef:
-			case TsysRefType::None:
 				return false;
 			case TsysRefType::RRef:
+			case TsysRefType::None:
 				fromLRP = true;
 				break;
 			}
@@ -231,7 +231,7 @@ namespace TestConvert_Helpers
 			auto toEntity = toType->GetEntity(toCV, toRef);
 			auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
-			if (toRef != fromRef && (toRef != TsysRefType::LRef || fromRef != TsysRefType::None)) return false;
+			if ((toRef != TsysRefType::LRef) != (fromRef != TsysRefType::LRef)) return false;
 			if (toRef != TsysRefType::None)
 			{
 				if (!IsCVMatch(toCV, fromCV)) return false;
@@ -430,5 +430,5 @@ TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromTyp
 
 TsysConv TestConvert(ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem)
 {
-	return TestConvertInternal(pa, toType, (fromItem.type == ExprTsysType::LValue ? fromItem.tsys->LRefOf() : fromItem.tsys->RRefOf()));
+	return TestConvertInternal(pa, toType, (fromItem.type == ExprTsysType::LValue ? fromItem.tsys->LRefOf() : fromItem.tsys));
 }
