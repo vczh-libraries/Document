@@ -976,16 +976,22 @@ public:
 					case CppBinaryOp::Comma:
 						Add(result, rightTypes);
 						break;
+					case CppBinaryOp::Shl:
+					case CppBinaryOp::Shr:
+						{
+							auto primitive = leftEntity->GetPrimitive();
+							Promote(primitive);
+							if (primitive.type == TsysPrimitiveType::UChar)
+							{
+								primitive.type = TsysPrimitiveType::UInt;
+							}
+							Add(result, pa.tsys->PrimitiveOf(primitive), true);
+						}
+						break;
 					default:
 						{
 							auto leftP = leftEntity->GetPrimitive();
 							auto rightP = rightEntity->GetPrimitive();
-
-							if (self->op == CppBinaryOp::Xor && leftP.type == TsysPrimitiveType::Bool && rightP.type == TsysPrimitiveType::Bool)
-							{
-								Add(result, leftEntity, true);
-								break;
-							}
 
 							if (FullyContain(leftP, rightP))
 							{
@@ -1023,9 +1029,13 @@ public:
 							{
 								bool sl = leftP.type == TsysPrimitiveType::SInt || leftP.type == TsysPrimitiveType::SChar;
 								bool sr = rightP.type == TsysPrimitiveType::SInt || rightP.type == TsysPrimitiveType::SChar;
-								if (sl != sr)
+								if (sl && !sr)
 								{
-									primitive.type = TsysPrimitiveType::UInt;
+									primitive.type = rightP.type;
+								}
+								else if (!sl && sr)
+								{
+									primitive.type = leftP.type;
 								}
 								else
 								{
