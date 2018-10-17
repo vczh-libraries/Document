@@ -22,6 +22,15 @@ ITsys* GetTsysFromCppType(ITsysAlloc* tsys, const WString& cppType)
 template<typename> struct TsysInfo;
 
 template<typename T>
+struct TsysInfo<T*>
+{
+	static ITsys* GetTsys(ITsysAlloc* tsys)
+	{
+		return TsysInfo<T>::GetTsys(tsys)->PtrOf();
+	}
+};
+
+template<typename T>
 struct TsysInfo<T&>
 {
 	static ITsys* GetTsys(ITsysAlloc* tsys)
@@ -94,7 +103,17 @@ Macros
 		long double ld;			\
 	)
 
-#define TEST_EACH_VAR(F) F(b) F(si8) F(si16) F(si32) F(si64) F(ui8) F(ui16) F(ui32) F(ui64) F(sc) F(uc) F(wc) F(c16) F(c32) F(f) F(d) F(ld)
+#define TEST_EACH_VAR_BOOL(F) F(b)
+#define TEST_EACH_VAR_SINT(F) F(si8) F(si16) F(si32) F(si64)
+#define TEST_EACH_VAR_UINT(F) F(ui8) F(ui16) F(ui32) F(ui64)
+#define TEST_EACH_VAR_INT(F) TEST_EACH_VAR_SINT(F) TEST_EACH_VAR_UINT(F)
+#define TEST_EACH_VAR_CHAR(F) F(sc) F(uc) F(wc) F(c16) F(c32)
+#define TEST_EACH_VAR_FLOAT(F) F(f) F(d) F(ld)
+
+#define TEST_EACH_VAR(F) TEST_EACH_VAR_BOOL(F) TEST_EACH_VAR_INT(F) TEST_EACH_VAR_CHAR(F) TEST_EACH_VAR_FLOAT(F)
+#define TEST_EACH_VAR_NO_BOOL(F) TEST_EACH_VAR_INT(F) TEST_EACH_VAR_CHAR(F) TEST_EACH_VAR_FLOAT(F)
+#define TEST_EACH_VAR_NO_BOOL_UNSIGNED(F) TEST_EACH_VAR_SINT(F) TEST_EACH_VAR_FLOAT(F)
+#define TEST_EACH_VAR_NO_BOOL_FLOAT(F) TEST_EACH_VAR_INT(F) TEST_EACH_VAR_CHAR(F)
 
 /***********************************************************************
 Test Cases
@@ -103,27 +122,72 @@ Test Cases
 #pragma warning (push)
 #pragma warning (disable: 4101)
 
+template<typename T>
+void AssertPostfixUnary(ParsingArguments& pa, const WString& name, const WString& op)
+{
+	auto input = name + op;
+	auto log = L"(" + name + L" " + op + L")";
+	auto tsys = TsysInfo<T>::GetTsys(pa.tsys.Obj());
+	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
+	AssertExpr(input, log, logTsys);
+}
+
 TEST_CASE(TestIntegralPromotion_PostfixUnary)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 
-#define TEST_VAR(NAME)\
-	{\
-		auto input = L#NAME L"++";\
-		auto log = L"(" L#NAME L" ++)";\
-		auto tsys = TsysInfo<decltype(NAME ++)>::GetTsys(pa.tsys.Obj());\
-		auto logTsys = GenerateToStream([&](StreamWriter& writer){ Log(tsys, writer); });\
-		AssertExpr(input, log, logTsys);\
-	}
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype(NAME++)>(pa, L#NAME, L"++");
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype(NAME--)>(pa, L#NAME, L"--");
+	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
+}
+
+template<typename T>
+void AssertPrefixUnary(ParsingArguments& pa, const WString& name, const WString& op)
+{
+	auto input = op + name;
+	auto log = L"(" + op + L" " + name + L")";
+	auto tsys = TsysInfo<T>::GetTsys(pa.tsys.Obj());
+	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
+	AssertExpr(input, log, logTsys);
 }
 
 TEST_CASE(TestIntegralPromotion_PrefixUnary)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
+
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype(++NAME)>(pa, L#NAME, L"++");
+	TEST_EACH_VAR(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype(--NAME)>(pa, L#NAME, L"--");
+	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype(~NAME)>(pa, L#NAME, L"~");
+	TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype(!NAME)>(pa, L#NAME, L"!");
+	TEST_EACH_VAR(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype(-NAME)>(pa, L#NAME, L"-");
+	TEST_EACH_VAR_NO_BOOL_UNSIGNED(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype(+NAME)>(pa, L#NAME, L"+");
+	TEST_EACH_VAR(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype(&NAME)>(pa, L#NAME, L"&");
+	TEST_EACH_VAR(TEST_VAR)
+#undef TEST_VAR
 }
 
 TEST_CASE(TestIntegralPromotion_BinaryBool)
@@ -150,6 +214,15 @@ TEST_CASE(TestIntegralPromotion_Assignment)
 	COMPILE_PROGRAM(program, pa, input);
 }
 
+#undef TEST_EACH_VAR_BOOL
+#undef TEST_EACH_VAR_SINT
+#undef TEST_EACH_VAR_UINT
+#undef TEST_EACH_VAR_INT
+#undef TEST_EACH_VAR_CHAR
+#undef TEST_EACH_VAR_FLOAT
+#undef TEST_EACH_VAR_NO_BOOL
+#undef TEST_EACH_VAR_NO_BOOL_UNSIGNED
+#undef TEST_EACH_VAR_NO_BOOL_FLOAT
 #undef TEST_EACH_VAR
 #undef TEST_DECL_VARS
 #undef TEST_DECL
