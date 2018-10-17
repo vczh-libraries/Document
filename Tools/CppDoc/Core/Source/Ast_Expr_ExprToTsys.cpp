@@ -230,8 +230,11 @@ public:
 	VisitNormalField: Fill all members of a name to ExprTsysList
 	***********************************************************************/
 
-	static void VisitNormalField(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, TsysCV cv, ITsys* entity, ExprTsysList& result)
+	static void VisitNormalField(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, const ExprTsysItem& parentItem, ExprTsysList& result)
 	{
+		TsysCV cv;
+		TsysRefType refType;
+		auto entity = parentItem.tsys->GetEntity(cv, refType);
 		if (entity->GetType() == TsysType::Decl)
 		{
 			auto symbol = entity->GetDecl();
@@ -244,7 +247,7 @@ public:
 				for (vint j = 0; j < rar.values->resolvedSymbols.Count(); j++)
 				{
 					auto symbol = rar.values->resolvedSymbols[j];
-					VisitSymbol(pa, symbol, false, cv, result);
+					VisitSymbol(pa, &parentItem, symbol, false, result);
 				}
 			}
 		}
@@ -339,7 +342,7 @@ public:
 					CppName opName;
 					opName.name = L"operator ()";
 					ExprTsysList opResult;
-					VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
+					VisitNormalField(pa, opName, nullptr, funcType, opResult);
 					FindQualifiedFunctions(pa, cv, refType, opResult, false);
 
 					vint oldCount = expandedFuncTypes.Count();
@@ -418,7 +421,7 @@ public:
 	VisitDirectField: Find variables or qualified functions
 	***********************************************************************/
 
-	static void VisitDirectField(ParsingArguments& pa, ResolveSymbolResult& totalRar, ITsys* parentType, CppName& name, ExprTsysList& result)
+	static void VisitDirectField(ParsingArguments& pa, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, CppName& name, ExprTsysList& result)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -692,28 +695,29 @@ public:
 	void Visit(FieldAccessExpr* self)override
 	{
 		ResolveSymbolResult totalRar;
-		ExprTsysList parentTypes;
-		ExprToTsys(pa, self->expr, parentTypes);
+		ExprTsysList parentItems;
+		ExprToTsys(pa, self->expr, parentItems);
 
 		if (self->type == CppFieldAccessType::Dot)
 		{
-			for (vint i = 0; i < parentTypes.Count(); i++)
+			for (vint i = 0; i < parentItems.Count(); i++)
 			{
-				VisitDirectField(pa, totalRar, parentTypes[i].tsys, self->name, result);
+				VisitDirectField(pa, totalRar, parentItems[i], self->name, result);
 			}
 		}
 		else
 		{
 			SortedList<ITsys*> visitedDecls;
-			for (vint i = 0; i < parentTypes.Count(); i++)
+			for (vint i = 0; i < parentItems.Count(); i++)
 			{
 				TsysCV cv;
 				TsysRefType refType;
-				auto entityType = parentTypes[i].tsys->GetEntity(cv, refType);
+				auto entityType = parentItems[i].tsys->GetEntity(cv, refType);
 
 				if (entityType->GetType() == TsysType::Ptr)
 				{
-					VisitDirectField(pa, totalRar, entityType->GetElement(), self->name, result);
+					auto parentItem = parentItems[i];
+					VisitDirectField(pa, totalRar, { nullptr,parentItem.type,entityType->GetElement() }, self->name, result);
 				}
 				else if (entityType->GetType() == TsysType::Decl)
 				{
@@ -724,13 +728,13 @@ public:
 						CppName opName;
 						opName.name = L"operator ->";
 						ExprTsysList opResult;
-						VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
+						VisitNormalField(pa, opName, nullptr, parentItems[i], opResult);
 						FindQualifiedFunctions(pa, cv, refType, opResult, false);
 						for (vint j = 0; j < opResult.Count(); j++)
 						{
 							auto item = opResult[j];
 							item.tsys = item.tsys->GetElement();
-							AddNonVar(parentTypes, item);
+							AddNonVar(parentItems, item);
 						}
 					}
 				}
@@ -776,7 +780,7 @@ public:
 				CppName opName;
 				opName.name = L"operator []";
 				ExprTsysList opResult;
-				VisitNormalField(pa, opName, nullptr, cv, entityType, opResult);
+				VisitNormalField(pa, opName, nullptr, arrayType, opResult);
 				FindQualifiedFunctions(pa, cv, refType, opResult, false);
 				AddNonVar(funcTypes, opResult);
 			}
