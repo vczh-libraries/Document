@@ -785,10 +785,10 @@ public:
 				switch (primitive.type)
 				{
 				case TsysPrimitiveType::Bool:
-					Add(result, types[i].tsys->LRefOf(), false);
+					Add(result, type->LRefOf(), false);
 					break;
 				default:
-					Add(result, types[i].tsys, false);
+					Add(result, type, false);
 				}
 			}
 			else
@@ -800,7 +800,39 @@ public:
 
 	void Visit(PrefixUnaryExpr* self)override
 	{
-		throw 0;
+		ExprTsysList types;
+		ExprToTsys(pa, self->operand, types);
+		for (vint i = 0; i < types.Count(); i++)
+		{
+			auto type = types[i].tsys;
+			switch (self->op)
+			{
+			case CppPrefixUnaryOp::Increase:
+			case CppPrefixUnaryOp::Decrease:
+				Add(result, type->LRefOf(), false);
+				break;
+			case CppPrefixUnaryOp::Revert:
+			case CppPrefixUnaryOp::Positive:
+			case CppPrefixUnaryOp::Negative:
+				Add(result, type, true);
+				break;
+			case CppPrefixUnaryOp::Not:
+				Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool, TsysBytes::_1 }), true);
+				break;
+			case CppPrefixUnaryOp::AddressOf:
+				if (type->GetType() == TsysType::LRef)
+				{
+					Add(result, type->GetElement()->PtrOf(), true);
+				}
+				else
+				{
+					Add(result, type->PtrOf(), true);
+				}
+				break;
+			case CppPrefixUnaryOp::Dereference:
+				throw 0;
+			}
+		}
 	}
 
 	void Visit(BinaryExpr* self)override
