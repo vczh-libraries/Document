@@ -172,17 +172,20 @@ public:
 						{
 							if (thisItem)
 							{
-								if (thisItem->tsys->GetType() == TsysType::LRef)
+								TsysCV cv;
+								TsysRefType refType;
+								thisItem->tsys->GetEntity(cv, refType);
+								if (refType == TsysRefType::LRef)
 								{
-									AddInternal(result, { symbol,thisItem->type,tsys->LRefOf() });
+									AddInternal(result, { symbol,ExprTsysType::LValue,tsys->CVOf(cv) });
 								}
-								else if (thisItem->tsys->GetType() == TsysType::RRef)
+								else if (refType == TsysRefType::RRef)
 								{
-									AddInternal(result, { symbol,thisItem->type,tsys->RRefOf() });
+									AddInternal(result, { symbol,(thisItem->type == ExprTsysType::LValue ? ExprTsysType::LValue : ExprTsysType::XValue),tsys->CVOf(cv) });
 								}
 								else
 								{
-									AddInternal(result, { symbol,thisItem->type,tsys });
+									AddInternal(result, { symbol,thisItem->type,tsys->CVOf(cv) });
 								}
 							}
 							else

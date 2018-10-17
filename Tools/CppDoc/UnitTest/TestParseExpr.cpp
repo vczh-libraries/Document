@@ -376,6 +376,10 @@ const Z* const pcz;
 	AssertExpr(L"pcz->operator[](0)",		L"pcz->operator [](0)",			L"::X $PR",				pa);
 }
 
+TEST_CASE(TestParseExpr_FFA_Qualifier_OfExplicitOrImplicitThisExpr)
+{
+}
+
 TEST_CASE(TestParseExpr_ArrayPointerAlgorithm)
 {
 }
