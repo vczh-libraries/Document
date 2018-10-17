@@ -851,7 +851,15 @@ public:
 							break;
 						}
 
-						Add(result, pa.tsys->PrimitiveOf(primitive)->CVOf(cv), true);
+						auto promotedEntity = pa.tsys->PrimitiveOf(primitive);
+						if (promotedEntity == entity && primitive.type != TsysPrimitiveType::Float)
+						{
+							Add(result, pa.tsys->PrimitiveOf(primitive)->CVOf(cv), true);
+						}
+						else
+						{
+							Add(result, pa.tsys->PrimitiveOf(primitive), true);
+						}
 					}
 					break;
 				case CppPrefixUnaryOp::Not:

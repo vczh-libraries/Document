@@ -22,6 +22,15 @@ ITsys* GetTsysFromCppType(Ptr<ITsysAlloc> tsys, const WString& cppType)
 template<typename> struct TsysInfo;
 
 template<typename T>
+struct TsysInfo<T const>
+{
+	static ITsys* GetTsys(Ptr<ITsysAlloc> tsys)
+	{
+		return TsysInfo<T>::GetTsys(tsys)->CVOf({ true,false });
+	}
+};
+
+template<typename T>
 struct TsysInfo<T*>
 {
 	static ITsys* GetTsys(Ptr<ITsysAlloc> tsys)
@@ -139,6 +148,19 @@ Macros
 #define TEST_EACH_VAR_NO_BOOL_FLOAT(F) TEST_EACH_VAR_INT(F) TEST_EACH_VAR_CHAR(F)
 #define TEST_EACH_VAR_NO_FLOAT(F) TEST_EACH_VAR_BOOL(F) TEST_EACH_VAR_INT(F) TEST_EACH_VAR_CHAR(F)
 
+#define TEST_EACH_VAR_CONST_BOOL(F) F(cb)
+#define TEST_EACH_VAR_CONST_SINT(F) F(csi8) F(csi16) F(csi32) F(csi64)
+#define TEST_EACH_VAR_CONST_UINT(F) F(cui8) F(cui16) F(cui32) F(cui64)
+#define TEST_EACH_VAR_CONST_INT(F) TEST_EACH_VAR_CONST_SINT(F) TEST_EACH_VAR_CONST_UINT(F)
+#define TEST_EACH_VAR_CONST_CHAR(F) F(csc) F(cuc) F(cwc) F(cc16) F(cc32)
+#define TEST_EACH_VAR_CONST_FLOAT(F) F(cf) F(cd) F(cld)
+
+#define TEST_EACH_VAR_CONST(F) TEST_EACH_VAR_CONST_BOOL(F) TEST_EACH_VAR_CONST_INT(F) TEST_EACH_VAR_CONST_CHAR(F) TEST_EACH_VAR_CONST_FLOAT(F)
+#define TEST_EACH_VAR_CONST_NO_BOOL(F) TEST_EACH_VAR_CONST_INT(F) TEST_EACH_VAR_CONST_CHAR(F) TEST_EACH_VAR_CONST_FLOAT(F)
+#define TEST_EACH_VAR_CONST_NO_BOOL_UNSIGNED(F) TEST_EACH_VAR_CONST_SINT(F) TEST_EACH_VAR_CONST_FLOAT(F)
+#define TEST_EACH_VAR_CONST_NO_BOOL_FLOAT(F) TEST_EACH_VAR_CONST_INT(F) TEST_EACH_VAR_CONST_CHAR(F)
+#define TEST_EACH_VAR_CONST_NO_FLOAT(F) TEST_EACH_VAR_CONST_BOOL(F) TEST_EACH_VAR_CONST_INT(F) TEST_EACH_VAR_CONST_CHAR(F)
+
 /***********************************************************************
 Test Cases
 ***********************************************************************/
@@ -205,26 +227,32 @@ TEST_CASE(TestIntegralPromotion_PrefixUnary)
 
 #define TEST_VAR(NAME) AssertPrefixUnary<decltype((~NAME))>(pa, L#NAME, L"~");
 	TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
+	TEST_EACH_VAR_CONST_NO_BOOL_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertPrefixUnary<decltype((!NAME))>(pa, L#NAME, L"!");
 	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertPrefixUnary<decltype((-NAME))>(pa, L#NAME, L"-");
 	TEST_EACH_VAR_NO_BOOL_UNSIGNED(TEST_VAR)
+	TEST_EACH_VAR_CONST_NO_BOOL_UNSIGNED(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertPrefixUnary<decltype((+NAME))>(pa, L#NAME, L"+");
 	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertPrefixUnary<decltype((&NAME))>(pa, L#NAME, L"&");
 	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertDereferenceUnary<decltype((*&NAME))>(pa, L#NAME);
 	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 }
 
@@ -347,6 +375,19 @@ TEST_CASE(TestIntegralPromotion_Assignment)
 #undef TEST_EACH_VAR_NO_BOOL_FLOAT
 #undef TEST_EACH_VAR_NO_FLOAT
 #undef TEST_EACH_VAR
+
+#undef TEST_EACH_VAR_CONST_BOOL
+#undef TEST_EACH_VAR_CONST_SINT
+#undef TEST_EACH_VAR_CONST_UINT
+#undef TEST_EACH_VAR_CONST_INT
+#undef TEST_EACH_VAR_CONST_CHAR
+#undef TEST_EACH_VAR_CONST_FLOAT
+#undef TEST_EACH_VAR_CONST_NO_BOOL
+#undef TEST_EACH_VAR_CONST_NO_BOOL_UNSIGNED
+#undef TEST_EACH_VAR_CONST_NO_BOOL_FLOAT
+#undef TEST_EACH_VAR_CONST_NO_FLOAT
+#undef TEST_EACH_VAR_CONST
+
 #undef TEST_DECL_VARS
 #undef TEST_DECL
 
