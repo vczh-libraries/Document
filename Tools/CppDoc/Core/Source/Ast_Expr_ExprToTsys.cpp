@@ -118,9 +118,12 @@ public:
 
 	/***********************************************************************
 	VisitSymbol: Fill a symbol to ExprTsysList
+		thisItem: When afterScope==false
+			it represents typeof(x) in x.name or typeof(&x) in x->name
+			it could be null if it is initiated by IdExpr
 	***********************************************************************/
 
-	static void VisitSymbol(ParsingArguments& pa, Symbol* symbol, bool afterScope, TsysCV addedCV, ExprTsysList& result)
+	static void VisitSymbol(ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result)
 	{
 		ITsys* classScope = nullptr;
 		if (symbol->parent && symbol->parent->decls.Count() > 0)
@@ -150,20 +153,43 @@ public:
 							tsys = tsys->GetElement();
 						}
 
-						if (classScope && !isStaticSymbol && afterScope)
+						if (isStaticSymbol)
 						{
-							tsys = tsys->MemberOf(classScope);
+							AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
+						}
+						else if (afterScope)
+						{
+							if (classScope)
+							{
+								AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope) });
+							}
+							else
+							{
+								AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
+							}
 						}
 						else
 						{
-							if (tsys->GetType() == TsysType::RRef)
+							if (thisItem)
 							{
-								tsys = tsys->GetElement()->LRefOf();
+								if (thisItem->tsys->GetType() == TsysType::LRef)
+								{
+									AddInternal(result, { symbol,thisItem->type,tsys->LRefOf() });
+								}
+								else if (thisItem->tsys->GetType() == TsysType::RRef)
+								{
+									AddInternal(result, { symbol,thisItem->type,tsys->RRefOf() });
+								}
+								else
+								{
+									AddInternal(result, { symbol,thisItem->type,tsys });
+								}
 							}
-							tsys = tsys->CVOf(addedCV);
+							else
+							{
+								AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
+							}
 						}
-
-						Add(result, { symbol, tsys });
 					}
 				}
 				else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
@@ -189,28 +215,13 @@ public:
 							tsys = tsys->PtrOf();
 						}
 
-						Add(result, { symbol, tsys });
+						AddInternal(result, { symbol,ExprTsysType::PRValue,tsys });
 					}
 				}
 				else
 				{
 					throw IllegalExprException();
 				}
-			}
-		}
-	}
-
-	/***********************************************************************
-	VisitResolvable: Resolve ResolvableExpr
-	***********************************************************************/
-
-	void VisitResolvable(ResolvableExpr* self, bool afterScope)
-	{
-		if (self->resolving)
-		{
-			for (vint i = 0; i < self->resolving->resolvedSymbols.Count(); i++)
-			{
-				VisitSymbol(pa, self->resolving->resolvedSymbols[i], afterScope, {}, result);
 			}
 		}
 	}
@@ -658,12 +669,24 @@ public:
 
 	void Visit(IdExpr* self)override
 	{
-		VisitResolvable(self, false);
+		if (self->resolving)
+		{
+			for (vint i = 0; i < self->resolving->resolvedSymbols.Count(); i++)
+			{
+				VisitSymbol(pa, nullptr, self->resolving->resolvedSymbols[i], false, result);
+			}
+		}
 	}
 
 	void Visit(ChildExpr* self)override
 	{
-		VisitResolvable(self, true);
+		if (self->resolving)
+		{
+			for (vint i = 0; i < self->resolving->resolvedSymbols.Count(); i++)
+			{
+				VisitSymbol(pa, nullptr, self->resolving->resolvedSymbols[i], true, result);
+			}
+		}
 	}
 
 	void Visit(FieldAccessExpr* self)override

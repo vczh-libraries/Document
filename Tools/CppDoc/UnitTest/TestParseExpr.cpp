@@ -376,7 +376,11 @@ const Z* const pcz;
 	AssertExpr(L"pcz->operator[](0)",		L"pcz->operator [](0)",			L"::X &&",				pa);
 }
 
-TEST_CASE(TestParseExpr_ArrayAndPointerAccess)
+TEST_CASE(TestParseExpr_ArrayPointerAlgorithm)
+{
+}
+
+TEST_CASE(TestParseExpr_AddressOfArrayFunctionMemberPointer)
 {
 }
 
