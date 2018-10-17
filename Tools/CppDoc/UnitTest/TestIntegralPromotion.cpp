@@ -88,25 +88,42 @@ Macros
 
 #define TEST_DECL(SOMETHING) SOMETHING auto input = L#SOMETHING
 
-#define TEST_DECL_VARS			\
-	TEST_DECL(					\
-		bool b;					\
-		signed __int8 si8;		\
-		signed __int16 si16;	\
-		signed __int32 si32;	\
-		signed __int64 si64;	\
-		unsigned __int8 ui8;	\
-		unsigned __int16 ui16;	\
-		unsigned __int32 ui32;	\
-		unsigned __int64 ui64;	\
-		signed char sc;			\
-		unsigned char uc;		\
-		wchar_t wc;				\
-		char16_t c16;			\
-		char32_t c32;			\
-		float f;				\
-		double d;				\
-		long double ld;			\
+#define TEST_DECL_VARS								\
+	TEST_DECL(										\
+		bool						b		 = 0;	\
+		signed __int8				si8		 = 0;	\
+		signed __int16				si16	 = 0;	\
+		signed __int32				si32	 = 0;	\
+		signed __int64				si64	 = 0;	\
+		unsigned __int8				ui8		 = 0;	\
+		unsigned __int16			ui16	 = 0;	\
+		unsigned __int32			ui32	 = 0;	\
+		unsigned __int64			ui64	 = 0;	\
+		signed char					sc		 = 0;	\
+		unsigned char				uc		 = 0;	\
+		wchar_t						wc		 = 0;	\
+		char16_t					c16		 = 0;	\
+		char32_t					c32		 = 0;	\
+		float						f		 = 0;	\
+		double						d		 = 0;	\
+		long double					ld		 = 0;	\
+		bool				const	cb		 = 0;	\
+		signed __int8		const	csi8	 = 0;	\
+		signed __int16		const	csi16	 = 0;	\
+		signed __int32		const	csi32	 = 0;	\
+		signed __int64		const	csi64	 = 0;	\
+		unsigned __int8		const	cui8	 = 0;	\
+		unsigned __int16	const	cui16	 = 0;	\
+		unsigned __int32	const	cui32	 = 0;	\
+		unsigned __int64	const	cui64	 = 0;	\
+		signed char			const	csc		 = 0;	\
+		unsigned char		const	cuc		 = 0;	\
+		wchar_t				const	cwc		 = 0;	\
+		char16_t			const	cc16	 = 0;	\
+		char32_t			const	cc32	 = 0;	\
+		float				const	cf		 = 0;	\
+		double				const	cd		 = 0;	\
+		long double			const	cld		 = 0;	\
 	)
 
 #define TEST_EACH_VAR_BOOL(F) F(b)
