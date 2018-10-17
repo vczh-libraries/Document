@@ -202,7 +202,7 @@ void AssertPostfixUnary(ParsingArguments& pa, const WString& name, const WString
 {
 	auto input = name + op;
 	auto log = L"(" + name + L" " + op + L")";
-	auto tsys = TsysInfo<T&&>::GetTsys(pa.tsys);
+	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
 	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
 	AssertExpr(input, log, logTsys, pa);
 }
@@ -226,7 +226,7 @@ void AssertPrefixUnary(ParsingArguments& pa, const WString& name, const WString&
 {
 	auto input = op + name;
 	auto log = L"(" + op + L" " + name + L")";
-	auto tsys = TsysInfo<T&&>::GetTsys(pa.tsys);
+	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
 	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
 	AssertExpr(input, log, logTsys, pa);
 }
@@ -236,7 +236,7 @@ void AssertDereferenceUnary(ParsingArguments& pa, const WString& name)
 {
 	auto input = L"*&" + name;
 	auto log = L"(* (& " + name + L"))";
-	auto tsys = TsysInfo<T&&>::GetTsys(pa.tsys);
+	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
 	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
 	AssertExpr(input, log, logTsys, pa);
 }
@@ -290,7 +290,7 @@ void AssertBinaryUnary(ParsingArguments& pa, const WString& name1, const WString
 {
 	auto input = name1 + op + name2;
 	auto log = L"(" + name1 + L" " + op + L" " + name2 + L")";
-	auto tsys = TsysInfo<T&&>::GetTsys(pa.tsys);
+	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
 	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
 	AssertExpr(input, log, logTsys, pa);
 }

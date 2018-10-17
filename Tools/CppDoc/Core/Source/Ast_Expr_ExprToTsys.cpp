@@ -31,29 +31,53 @@ public:
 		return true;
 	}
 
-	static bool Add(ExprTsysList& list, const ExprTsysItem& item, ExprTsysType type)
+	static bool AddInternal(ExprTsysList& list, ExprTsysList& items)
 	{
-		AddInternal(list, { item.symbol,type,item.tsys });
-	}
-
-	static void Add(ExprTsysList& list, ITsys* tsys, ExprTsysType type)
-	{
-		AddInternal(list, { nullptr,type,tsys });
-	}
-
-	static void Add(ExprTsysList& toList, ExprTsysList& fromList, ExprTsysType type)
-	{
-		for (vint i = 0; i < fromList.Count(); i++)
+		for (vint i = 0; i < items.Count(); i++)
 		{
-			Add(toList, fromList[i], type);
+			AddInternal(list, items[i]);
 		}
 	}
 
-	static void Add(ExprTsysList& toList, TypeTsysList& fromList, ExprTsysType type)
+	static bool AddVar(ExprTsysList& list, const ExprTsysItem& item)
 	{
-		for (vint i = 0; i < fromList.Count(); i++)
+		AddInternal(list, { item.symbol,ExprTsysType::LValue,item.tsys });
+	}
+
+	static bool AddNonVar(ExprTsysList& list, const ExprTsysItem& item)
+	{
+		AddInternal(list, { item.symbol,ExprTsysType::PRValue,item.tsys });
+	}
+
+	static bool AddNonVar(ExprTsysList& list, ExprTsysList& items)
+	{
+		for (vint i = 0; i < items.Count(); i++)
 		{
-			Add(toList, fromList[i], type);
+			AddNonVar(list, items[i]);
+		}
+	}
+
+	static void AddTemp(ExprTsysList& list, ITsys* tsys)
+	{
+		if (tsys->GetType() == TsysType::RRef)
+		{
+			AddInternal(list, { nullptr,ExprTsysType::XValue,tsys });
+		}
+		else if (tsys->GetType() == TsysType::LRef)
+		{
+			AddInternal(list, { nullptr,ExprTsysType::LValue,tsys });
+		}
+		else
+		{
+			AddInternal(list, { nullptr,ExprTsysType::PRValue,tsys });
+		}
+	}
+
+	static bool AddTemp(ExprTsysList& list, TypeTsysList& items)
+	{
+		for (vint i = 0; i < items.Count(); i++)
+		{
+			AddTemp(list, items[i]);
 		}
 	}
 
@@ -308,7 +332,7 @@ public:
 					FindQualifiedFunctions(pa, cv, refType, opResult, false);
 
 					vint oldCount = expandedFuncTypes.Count();
-					Add(expandedFuncTypes, opResult);
+					AddNonVar(expandedFuncTypes, opResult);
 					vint newCount = expandedFuncTypes.Count();
 
 					for (vint i = 0; i < (newCount - oldCount); i++)
@@ -321,7 +345,7 @@ public:
 					entityType = entityType->GetElement();
 					if (entityType->GetType() == TsysType::Function)
 					{
-						if (Add(expandedFuncTypes, { funcType.symbol,entityType }))
+						if (AddInternal(expandedFuncTypes, { funcType.symbol,funcType.type, entityType }))
 						{
 							funcChoices.Add(choice);
 						}
@@ -357,7 +381,7 @@ public:
 
 					for (vint k = 0; k < argTypes.Count(); k++)
 					{
-						auto choice = TestConvert(pa, paramType, argTypes[k].tsys);
+						auto choice = TestConvert(pa, paramType, argTypes[k]);
 						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
 					}
 
@@ -375,7 +399,7 @@ public:
 		FilterFunctionByQualifier(funcTypes, funcChoices);
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
-			Add(result, funcTypes[i].tsys->GetElement(), true);
+			AddTemp(result, funcTypes[i].tsys->GetElement());
 		}
 	}
 
@@ -432,7 +456,7 @@ public:
 						reading++;
 					}
 
-					Add(result, pa.tsys->Zero(), false);
+					AddTemp(result, pa.tsys->Zero());
 					return;
 				}
 			NOT_ZERO:
@@ -440,7 +464,7 @@ public:
 				wchar_t _2 = token.reading[token.length - 1];
 				bool u = _1 == L'u' || _1 == L'U' || _2 == L'u' || _2 == L'U';
 				bool l = _1 == L'l' || _1 == L'L' || _2 == L'l' || _2 == L'L';
-				Add(result, pa.tsys->PrimitiveOf({ (u ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{l ? TsysBytes::_8 : TsysBytes::_4} }), true);
+				AddTemp(result, pa.tsys->PrimitiveOf({ (u ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{l ? TsysBytes::_8 : TsysBytes::_4} }));
 			}
 			return;
 		case CppTokens::FLOAT:
@@ -449,11 +473,11 @@ public:
 				wchar_t _1 = token.reading[token.length - 1];
 				if (_1 == L'f' || _1 == L'F')
 				{
-					Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_4 }), true);
+					AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_4 }));
 				}
 				else
 				{
-					Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_8 }), true);
+					AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_8 }));
 				}
 			}
 			return;
@@ -493,17 +517,17 @@ public:
 
 				if ((CppTokens)self->tokens[0].token == CppTokens::CHAR)
 				{
-					Add(result, tsysChar, true);
+					AddTemp(result, tsysChar);
 				}
 				else
 				{
-					Add(result, tsysChar->CVOf({ true,false })->ArrayOf(1), true);
+					AddTemp(result, tsysChar->CVOf({ true,false })->ArrayOf(1)->LRefOf());
 				}
 			}
 			return;
 		case CppTokens::EXPR_TRUE:
 		case CppTokens::EXPR_FALSE:
-			Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }), true);
+			AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }));
 			return;
 		}
 		throw IllegalExprException();
@@ -516,7 +540,7 @@ public:
 
 	void Visit(NullptrExpr* self)override
 	{
-		Add(result, pa.tsys->Nullptr(), false);
+		AddTemp(result, pa.tsys->Nullptr());
 	}
 
 	void Visit(ParenthesisExpr* self)override
@@ -533,7 +557,7 @@ public:
 		{
 			TypeTsysList types;
 			TypeToTsys(pa, self->type, types);
-			Add(result, types, true);
+			AddTemp(result, types);
 		}
 	}
 
@@ -566,7 +590,7 @@ public:
 			{
 				if (ti->decls[0].Cast<ClassDeclaration>())
 				{
-					Add(result, { ti.Obj(),pa.tsys->DeclOf(ti.Obj()) });
+					AddInternal(result, { nullptr,ExprTsysType::LValue,pa.tsys->DeclOf(ti.Obj()) });
 					return;
 				}
 			}
@@ -587,7 +611,7 @@ public:
 		}
 
 		// TODO: Platform Specific
-		Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,TsysBytes::_4 }), false);
+		AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,TsysBytes::_4 }));
 	}
 
 	void Visit(ThrowExpr* self)override
@@ -598,7 +622,7 @@ public:
 			ExprToTsys(pa, self->expr, types);
 		}
 
-		Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }), false);
+		AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }));
 	}
 
 	void Visit(NewExpr* self)override
@@ -618,7 +642,7 @@ public:
 		TypeToTsys(pa, self->type, types);
 		for (vint i = 0; i < types.Count(); i++)
 		{
-			Add(result, types[i]->PtrOf(), true);
+			AddTemp(result, types[i]->PtrOf());
 		}
 	}
 
@@ -629,7 +653,7 @@ public:
 			ExprToTsys(pa, self->expr, types);
 		}
 
-		Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }), false);
+		AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }));
 	}
 
 	void Visit(IdExpr* self)override
@@ -789,15 +813,15 @@ public:
 				switch (primitive.type)
 				{
 				case TsysPrimitiveType::Bool:
-					Add(result, type->LRefOf(), false);
+					AddTemp(result, type->LRefOf());
 					break;
 				default:
-					Add(result, type , false);
+					AddTemp(result, type);
 				}
 			}
 			else if (entity->GetType() == TsysType::Ptr)
 			{
-				Add(result, type, false);
+				AddTemp(result, type);
 			}
 			else
 			{
@@ -879,7 +903,7 @@ public:
 				{
 				case CppPrefixUnaryOp::Increase:
 				case CppPrefixUnaryOp::Decrease:
-					Add(result, type->LRefOf(), false);
+					AddTemp(result, type->LRefOf());
 					break;
 				case CppPrefixUnaryOp::Revert:
 				case CppPrefixUnaryOp::Positive:
@@ -891,25 +915,25 @@ public:
 						auto promotedEntity = pa.tsys->PrimitiveOf(primitive);
 						if (promotedEntity == entity && primitive.type != TsysPrimitiveType::Float)
 						{
-							Add(result, pa.tsys->PrimitiveOf(primitive)->CVOf(cv), true);
+							AddTemp(result, pa.tsys->PrimitiveOf(primitive)->CVOf(cv));
 						}
 						else
 						{
-							Add(result, pa.tsys->PrimitiveOf(primitive), true);
+							AddTemp(result, pa.tsys->PrimitiveOf(primitive));
 						}
 					}
 					break;
 				case CppPrefixUnaryOp::Not:
-					Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool, TsysBytes::_1 }), true);
+					AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool, TsysBytes::_1 }));
 					break;
 				case CppPrefixUnaryOp::AddressOf:
 					if (type->GetType() == TsysType::LRef)
 					{
-						Add(result, type->GetElement()->PtrOf(), true);
+						AddTemp(result, type->GetElement()->PtrOf());
 					}
 					else
 					{
-						Add(result, type->PtrOf(), true);
+						AddTemp(result, type->PtrOf());
 					}
 					break;
 				}
@@ -920,10 +944,10 @@ public:
 				{
 				case CppPrefixUnaryOp::Increase:
 				case CppPrefixUnaryOp::Decrease:
-					Add(result, type, false);
+					AddTemp(result, type);
 					break;
 				case CppPrefixUnaryOp::Dereference:
-					Add(result, entity->GetElement()->LRefOf(), false);
+					AddTemp(result, entity->GetElement()->LRefOf());
 					break;
 				}
 			}
@@ -967,7 +991,7 @@ public:
 					case CppBinaryOp::NE:
 					case CppBinaryOp::And:
 					case CppBinaryOp::Or:
-						Add(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }), true);
+						AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }));
 						break;
 					case CppBinaryOp::Assign:
 					case CppBinaryOp::MulAssign:
@@ -980,10 +1004,10 @@ public:
 					case CppBinaryOp::AndAssign:
 					case CppBinaryOp::OrAssign:
 					case CppBinaryOp::XorAssign:
-						Add(result, leftType->LRefOf(), false);
+						AddTemp(result, leftType->LRefOf());
 						break;
 					case CppBinaryOp::Comma:
-						Add(result, rightTypes);
+						AddInternal(result, rightTypes);
 						break;
 					case CppBinaryOp::Shl:
 					case CppBinaryOp::Shr:
@@ -994,7 +1018,7 @@ public:
 							{
 								primitive.type = TsysPrimitiveType::UInt;
 							}
-							Add(result, pa.tsys->PrimitiveOf(primitive), true);
+							AddTemp(result, pa.tsys->PrimitiveOf(primitive));
 						}
 						break;
 					default:
@@ -1005,14 +1029,14 @@ public:
 							if (FullyContain(leftP, rightP))
 							{
 								Promote(leftP);
-								Add(result, pa.tsys->PrimitiveOf(leftP), true);
+								AddTemp(result, pa.tsys->PrimitiveOf(leftP));
 								break;
 							}
 
 							if (FullyContain(rightP, leftP))
 							{
 								Promote(rightP);
-								Add(result, pa.tsys->PrimitiveOf(rightP), true);
+								AddTemp(result, pa.tsys->PrimitiveOf(rightP));
 								break;
 							}
 
@@ -1052,7 +1076,7 @@ public:
 								}
 							}
 
-							Add(result, pa.tsys->PrimitiveOf(primitive), true);
+							AddTemp(result, pa.tsys->PrimitiveOf(primitive));
 						}
 					}
 				}
