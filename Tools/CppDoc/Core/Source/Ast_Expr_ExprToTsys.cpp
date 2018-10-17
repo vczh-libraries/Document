@@ -791,6 +791,10 @@ public:
 					Add(result, type->RRefOf() , false);
 				}
 			}
+			else if (entity->GetType() == TsysType::Ptr)
+			{
+				Add(result, type->RRefOf(), false);
+			}
 			else
 			{
 				throw 0;
@@ -863,8 +867,19 @@ public:
 						Add(result, type->PtrOf(), true);
 					}
 					break;
+				}
+			}
+			else if (entity->GetType() == TsysType::Ptr)
+			{
+				switch (self->op)
+				{
+				case CppPrefixUnaryOp::Increase:
+				case CppPrefixUnaryOp::Decrease:
+					Add(result, type->RRefOf(), false);
+					break;
 				case CppPrefixUnaryOp::Dereference:
-					throw 0;
+					Add(result, entity->GetElement()->LRefOf(), false);
+					break;
 				}
 			}
 			else

@@ -163,6 +163,16 @@ void AssertPrefixUnary(ParsingArguments& pa, const WString& name, const WString&
 	AssertExpr(input, log, logTsys, pa);
 }
 
+template<typename T>
+void AssertDereferenceUnary(ParsingArguments& pa, const WString& name)
+{
+	auto input = L"*&" + name;
+	auto log = L"(* (& " + name + L"))";
+	auto tsys = TsysInfo<T&&>::GetTsys(pa.tsys);
+	auto logTsys = GenerateToStream([&](StreamWriter& writer) { Log(tsys, writer); });
+	AssertExpr(input, log, logTsys, pa);
+}
+
 TEST_CASE(TestIntegralPromotion_PrefixUnary)
 {
 	TEST_DECL_VARS;
@@ -193,6 +203,10 @@ TEST_CASE(TestIntegralPromotion_PrefixUnary)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertPrefixUnary<decltype((&NAME))>(pa, L#NAME, L"&");
+	TEST_EACH_VAR(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME) AssertDereferenceUnary<decltype((*&NAME))>(pa, L#NAME);
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
 }
