@@ -46,7 +46,13 @@
     - (switch `FAIL-UNRESOLVE`) failed if unable to resolve (during `ParseExpr`)
   - [x] Assert ASTs
   - [ ] Assert ASTs with precedence
-  - [ ] Add LValue and RValue concept to `ExprTsysItem`, remove all additional `->RRefOf` calls
+  - [ ] Add L/X/PR Value concept to `ExprTsysItem`, remove all additional `->RRefOf` calls
+    - LValue: variable, array element, expression returning T&
+    - PRValue: literal, temporary object, expression returning non-reference
+    - XValue: T(&&)[] element, T&& field, expression returning T&&
+      - any T&& IdExpr is not treated as T&& here
+    - Use L/X/PR value concept in `TestConvert`
+    - https://docs.microsoft.com/en-us/cpp/cpp/lvalues-and-rvalues-visual-cpp?view=vs-2017
   - [ ] Assert resolvings in scopes
   - [ ] Resolve symbols in initializers of fields
   - [ ] Resolve symbols created by statements
