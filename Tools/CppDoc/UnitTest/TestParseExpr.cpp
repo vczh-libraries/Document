@@ -238,8 +238,8 @@ Z* pz = nullptr;
 	AssertExpr(L"z.F(0)",					L"z.F(0)",						L"__int32 $PR",				pa);
 	AssertExpr(L"z.G(0)",					L"z.G(0)",						L"__int32 $PR",				pa);
 	
-	AssertExpr(L"z->x",						L"z->x",						L"__int32 $PR",				pa);
-	AssertExpr(L"z->y",						L"z->y",						L"__int32 $PR",				pa);
+	AssertExpr(L"z->x",						L"z->x",						L"__int32 $L",				pa);
+	AssertExpr(L"z->y",						L"z->y",						L"__int32 $L",				pa);
 	AssertExpr(L"z(0)",						L"z(0)",						L"::X $PR",					pa);
 	AssertExpr(L"z(nullptr)",				L"z(nullptr)",					L"::Y $PR",					pa);
 	AssertExpr(L"z[\"a\"]",					L"z[\"a\"]",					L"::X $PR",					pa);
@@ -415,7 +415,7 @@ using namespace std;
 	AssertExpr(L"typeid(0)",					L"typeid(0)",							L"::std::type_info $L",			pa);
 	AssertExpr(L"sizeof(int)",					L"sizeof(int)",							L"unsigned __int32 $PR",		pa);
 	AssertExpr(L"sizeof 0",						L"sizeof(0)",							L"unsigned __int32 $PR",		pa);
-	AssertExpr(L"throw 0",						L"throw(0)",							L"void",						pa);
+	AssertExpr(L"throw 0",						L"throw(0)",							L"void $PR",					pa);
 																						
 	AssertExpr(L"new type_info",				L"new type_info()",						L"::std::type_info * $PR",		pa);
 	AssertExpr(L"new type_info(0)",				L"new type_info(0)",					L"::std::type_info * $PR",		pa);

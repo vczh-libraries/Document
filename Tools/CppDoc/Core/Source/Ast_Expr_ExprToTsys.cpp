@@ -720,7 +720,7 @@ public:
 				if (entityType->GetType() == TsysType::Ptr)
 				{
 					auto parentItem = parentItems[i];
-					VisitDirectField(pa, totalRar, { nullptr,parentItem.type,entityType->GetElement() }, self->name, result);
+					VisitDirectField(pa, totalRar, { nullptr,ExprTsysType::LValue,entityType->GetElement() }, self->name, result);
 				}
 				else if (entityType->GetType() == TsysType::Decl)
 				{
