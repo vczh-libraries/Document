@@ -288,6 +288,32 @@ const X* cpx;
 	AssertExpr(L"cpx->x",					L"cpx->x",						L"__int32 const $L",	pa);
 }
 
+TEST_CASE(TestParseExpr_ArrayQualifier)
+{
+	auto input = LR"(
+int x[1];
+int (&lx)[1];
+int (&&rx)[1];
+
+const int cx[1];
+const int (&clx)[1];
+const int (&&crx)[1];
+
+int* px;
+const int* cpx;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"x[0]",						L"x[0]",						L"__int32 & $L",		pa);
+	AssertExpr(L"lx[0]",					L"lx[0]",						L"__int32 & $L",		pa);
+	AssertExpr(L"rx[0]",					L"rx[0]",						L"__int32 & $L",		pa);
+	AssertExpr(L"cx[0]",					L"cx[0]",						L"__int32 const & $L",	pa);
+	AssertExpr(L"clx[0]",					L"clx[0]",						L"__int32 const & $L",	pa);
+	AssertExpr(L"crx[0]",					L"crx[0]",						L"__int32 const & $L",	pa);
+	AssertExpr(L"px[0]",					L"px[0]",						L"__int32 & $L",		pa);
+	AssertExpr(L"cpx[0]",					L"cpx[0]",						L"__int32 const & $L",	pa);
+}
+
 TEST_CASE(TestParseExpr_FFA_Qualifier)
 {
 	auto input = LR"(
