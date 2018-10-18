@@ -433,7 +433,7 @@ TEST_CASE(TestParseExpr_FFA_Qualifier_OfExplicitOrImplicitThisExpr)
 {
 }
 
-TEST_CASE(TestParseExpr_ArrayPointerAlgorithm)
+TEST_CASE(TestParseExpr_ArrayPointerArithmetic)
 {
 }
 
