@@ -263,29 +263,44 @@ const X cx;
 const X& clx;
 const X&& crx;
 
+X F();
+X& lF();
+X&& rF();
+
+const X cF();
+const X& clF();
+const X&& crF();
+
 X* px;
 const X* cpx;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(L"x",						L"x",							L"::X $L",				pa);
-	AssertExpr(L"lx",						L"lx",							L"::X & $L",			pa);
-	AssertExpr(L"rx",						L"rx",							L"::X && $L",			pa);
-	AssertExpr(L"cx",						L"cx",							L"::X const $L",		pa);
-	AssertExpr(L"clx",						L"clx",							L"::X const & $L",		pa);
-	AssertExpr(L"crx",						L"crx",							L"::X const && $L",		pa);
+	AssertExpr(L"x",						L"x",							L"::X $L",					pa);
+	AssertExpr(L"lx",						L"lx",							L"::X & $L",				pa);
+	AssertExpr(L"rx",						L"rx",							L"::X && $L",				pa);
+	AssertExpr(L"cx",						L"cx",							L"::X const $L",			pa);
+	AssertExpr(L"clx",						L"clx",							L"::X const & $L",			pa);
+	AssertExpr(L"crx",						L"crx",							L"::X const && $L",			pa);
 
-	AssertExpr(L"x.x",						L"x.x",							L"__int32 $L",			pa);
-	AssertExpr(L"lx.x",						L"lx.x",						L"__int32 $L",			pa);
-	AssertExpr(L"rx.x",						L"rx.x",						L"__int32 $L",			pa);
-	AssertExpr(L"cx.x",						L"cx.x",						L"__int32 const $L",	pa);
-	AssertExpr(L"clx.x",					L"clx.x",						L"__int32 const $L",	pa);
-	AssertExpr(L"crx.x",					L"crx.x",						L"__int32 const $L",	pa);
+	AssertExpr(L"x.x",						L"x.x",							L"__int32 $L",				pa);
+	AssertExpr(L"lx.x",						L"lx.x",						L"__int32 $L",				pa);
+	AssertExpr(L"rx.x",						L"rx.x",						L"__int32 $L",				pa);
+	AssertExpr(L"cx.x",						L"cx.x",						L"__int32 const $L",		pa);
+	AssertExpr(L"clx.x",					L"clx.x",						L"__int32 const $L",		pa);
+	AssertExpr(L"crx.x",					L"crx.x",						L"__int32 const $L",		pa);
+
+	AssertExpr(L"F().x",					L"F().x",						L"__int32 $PR",				pa);
+	AssertExpr(L"lF().x",					L"lF().x",						L"__int32& $L",				pa);
+	AssertExpr(L"rF().x",					L"rF().x",						L"__int32&& $X",			pa);
+	AssertExpr(L"cF().x",					L"cF().x",						L"__int32 const $PR",		pa);
+	AssertExpr(L"clF().x",					L"clF().x",						L"__int32 const & $L",		pa);
+	AssertExpr(L"crF().x",					L"crF().x",						L"__int32 const && $X",		pa);
 	
-	AssertExpr(L"px",						L"px",							L"::X * $L",			pa);
-	AssertExpr(L"cpx",						L"cpx",							L"::X const * $L",		pa);
-	AssertExpr(L"px->x",					L"px->x",						L"__int32 $L",			pa);
-	AssertExpr(L"cpx->x",					L"cpx->x",						L"__int32 const $L",	pa);
+	AssertExpr(L"px",						L"px",							L"::X * $L",				pa);
+	AssertExpr(L"cpx",						L"cpx",							L"::X const * $L",			pa);
+	AssertExpr(L"px->x",					L"px->x",						L"__int32 $L",				pa);
+	AssertExpr(L"cpx->x",					L"cpx->x",						L"__int32 const $L",		pa);
 }
 
 TEST_CASE(TestParseExpr_ArrayQualifier)
@@ -299,19 +314,31 @@ const int cx[1];
 const int (&clx)[1];
 const int (&&crx)[1];
 
+int (&lF)()[1];
+int (&&rF)()[1];
+
+const int (&clF)()[1];
+const int (&&crF)()[1];
+
 int* px;
 const int* cpx;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(L"x[0]",						L"x[0]",						L"__int32 & $L",		pa);
-	AssertExpr(L"lx[0]",					L"lx[0]",						L"__int32 & $L",		pa);
-	AssertExpr(L"rx[0]",					L"rx[0]",						L"__int32 & $L",		pa);
-	AssertExpr(L"cx[0]",					L"cx[0]",						L"__int32 const & $L",	pa);
-	AssertExpr(L"clx[0]",					L"clx[0]",						L"__int32 const & $L",	pa);
-	AssertExpr(L"crx[0]",					L"crx[0]",						L"__int32 const & $L",	pa);
-	AssertExpr(L"px[0]",					L"px[0]",						L"__int32 & $L",		pa);
-	AssertExpr(L"cpx[0]",					L"cpx[0]",						L"__int32 const & $L",	pa);
+	AssertExpr(L"x[0]",						L"x[0]",						L"__int32 & $L",			pa);
+	AssertExpr(L"lx[0]",					L"lx[0]",						L"__int32 & $L",			pa);
+	AssertExpr(L"rx[0]",					L"rx[0]",						L"__int32 & $L",			pa);
+	AssertExpr(L"cx[0]",					L"cx[0]",						L"__int32 const & $L",		pa);
+	AssertExpr(L"clx[0]",					L"clx[0]",						L"__int32 const & $L",		pa);
+	AssertExpr(L"crx[0]",					L"crx[0]",						L"__int32 const & $L",		pa);
+
+	AssertExpr(L"lF()[0]",					L"lF()[0]",						L"__int32 & $L",			pa);
+	AssertExpr(L"rF()[0]",					L"rF()[0]",						L"__int32 && $X",			pa);
+	AssertExpr(L"clF()[0]",					L"clF()[0]",					L"__int32 const & $L",		pa);
+	AssertExpr(L"crF()[0]",					L"crF()[0]",					L"__int32 const && $X",		pa);
+
+	AssertExpr(L"px[0]",					L"px[0]",						L"__int32 & $L",			pa);
+	AssertExpr(L"cpx[0]",					L"cpx[0]",						L"__int32 const & $L",		pa);
 }
 
 TEST_CASE(TestParseExpr_FFA_Qualifier)
