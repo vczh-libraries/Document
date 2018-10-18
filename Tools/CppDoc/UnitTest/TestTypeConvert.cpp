@@ -44,30 +44,38 @@ void AssertTypeConvertFromTemp(ParsingArguments& pa, const WString fromCppType, 
 #pragma warning (disable: 4076)
 #pragma warning (disable: 4244)
 
-template<typename TFrom, typename TTo, TsysConv Conv>
-struct RunTypeConvert
+template<typename TTo, TsysConv Conv>
+struct RunTypeTester
 {
-	using TFromEntity = typename RemoveReference<TFrom>::Type;
-
 	static void Test(...);
 	static int Test(TTo);
-	static TFromEntity entity;
-	static const decltype(Test(static_cast<TFrom>(entity))) test = 0;
 };
 
-template<typename TFrom, typename TTo>
-struct RunTypeConvert<TFrom, TTo, TsysConv::Illegal>
+template<typename TTo>
+struct RunTypeTester<TTo, TsysConv::Illegal>
 {
-	using TFromEntity = typename RemoveReference<TFrom>::Type;
-
 	static int Test(...);
 	static void Test(TTo);
-	static TFromEntity entity;
-	static const decltype(Test(static_cast<TFrom>(entity))) test = 0;
+};
+
+template<typename TFrom, typename TTo, typename Tester>
+struct RunTypeConvertLValue
+{
+	static TFrom entity;
+	static const decltype(Tester::Test(entity)) test = 0;
+};
+
+template<typename TFrom, typename TTo, typename Tester>
+struct RunTypeConvertRValue
+{
+	static typename RemoveReference<TFrom>::Type entity;
+	static const decltype(Tester::Test(static_cast<TFrom>(entity))) test = 0;
 };
 
 #define TEST_DECL(SOMETHING) SOMETHING auto input = L#SOMETHING
-#define TEST_CONV_TYPE(FROM, TO, CONV) RunTypeConvert<FROM, TO, TsysConv::CONV>::test, AssertTypeConvertFromTemp(pa, L#FROM, L#TO, TsysConv::CONV)
+#define TEST_CONV_TYPE(FROM, TO, CONV)\
+	RunTypeConvertRValue<FROM, TO, RunTypeTester<TO, TsysConv::CONV>>::test,\
+	AssertTypeConvertFromTemp(pa, L#FROM, L#TO, TsysConv::CONV)\
 
 TEST_CASE(TestTypeConvert_Exact)
 {
