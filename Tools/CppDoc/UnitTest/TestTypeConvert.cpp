@@ -67,8 +67,7 @@ struct RunTypeConvert<TFrom, TTo, TsysConv::Illegal>
 };
 
 #define TEST_DECL(SOMETHING) SOMETHING auto input = L#SOMETHING
-#define TEST_CONV_TYPE_(FROM, TO, CONV) AssertTypeConvertFromTemp(pa, L#FROM, L#TO, TsysConv::CONV)
-#define TEST_CONV_TYPE(FROM, TO, CONV) RunTypeConvert<FROM, TO, TsysConv::CONV>::test, TEST_CONV_TYPE_(FROM, TO, CONV)
+#define TEST_CONV_TYPE(FROM, TO, CONV) RunTypeConvert<FROM, TO, TsysConv::CONV>::test, AssertTypeConvertFromTemp(pa, L#FROM, L#TO, TsysConv::CONV)
 
 TEST_CASE(TestTypeConvert_Exact)
 {
@@ -190,7 +189,7 @@ TEST_CASE(TestTypeConvert_Illegal)
 	TEST_CONV_TYPE(void*,					int*,						F);
 	TEST_CONV_TYPE(const void*,				int*,						F);
 	TEST_CONV_TYPE(const int*,				void*,						F);
-	TEST_CONV_TYPE_(int*,					int[],						F);
+	TEST_CONV_TYPE(int*,					int(&&)[],					F);
 	TEST_CONV_TYPE(short&,					int&,						F);
 	TEST_CONV_TYPE(short*,					int*,						F);
 
@@ -292,6 +291,8 @@ struct Target
 
 	TEST_CONV_TYPE(const Source&,		volatile Target&&,			S);
 	TEST_CONV_TYPE(const Source&&,		volatile Target&&,			S);
+	TEST_CONV_TYPE(const Source&,		Target&,					F);
+	TEST_CONV_TYPE(const Source&&,		Target&,					F);
 
 	TEST_CONV_TYPE(Source&,				const Target&,				S);
 	TEST_CONV_TYPE(Source&,				const Target&&,				S);
@@ -300,6 +301,8 @@ struct Target
 
 	TEST_CONV_TYPE(Source&,				volatile Target&&,			S);
 	TEST_CONV_TYPE(Source&&,			volatile Target&&,			S);
+	TEST_CONV_TYPE(Source&,				Target&,					F);
+	TEST_CONV_TYPE(Source&&,			Target&,					F);
 
 	TEST_CONV_TYPE(const Source,		volatile Target,			S);
 	TEST_CONV_TYPE(const Source&,		volatile Target,			S);
@@ -316,16 +319,9 @@ struct Target
 	TEST_CONV_TYPE(Source&&,			const Target,				S);
 
 	TEST_CONV_TYPE(const Source*,		const Target*,				F);
-
 	TEST_CONV_TYPE(const Source*,		Target*,					F);
-	TEST_CONV_TYPE(const Source&,		Target&,					F);
-	TEST_CONV_TYPE(const Source&&,		Target&,					F);
-
 	TEST_CONV_TYPE(Source*,				const Target*,				F);
-
 	TEST_CONV_TYPE(Source*,				Target*,					F);
-	TEST_CONV_TYPE(Source&,				Target&,					F);
-	TEST_CONV_TYPE(Source&&,			Target&,					F);
 #undef S
 #undef F
 }
@@ -414,6 +410,8 @@ struct Source
 
 	TEST_CONV_TYPE(const Source&,		volatile TargetA&&,			S);
 	TEST_CONV_TYPE(const Source&&,		volatile TargetA&&,			S);
+	TEST_CONV_TYPE(const Source&,		TargetA&,					F);
+	TEST_CONV_TYPE(const Source&&,		TargetA&,					F);
 
 	TEST_CONV_TYPE(Source&,				const TargetA&,				S);
 	TEST_CONV_TYPE(Source&,				const TargetA&&,			S);
@@ -422,6 +420,8 @@ struct Source
 
 	TEST_CONV_TYPE(Source&,				volatile TargetA&&,			S);
 	TEST_CONV_TYPE(Source&&,			volatile TargetA&&,			S);
+	TEST_CONV_TYPE(Source&,				TargetA&,					F);
+	TEST_CONV_TYPE(Source&&,			TargetA&,					F);
 
 	TEST_CONV_TYPE(const Source,		volatile TargetA,			S);
 	TEST_CONV_TYPE(const Source&,		volatile TargetA,			S);
@@ -438,17 +438,9 @@ struct Source
 	TEST_CONV_TYPE(Source&&,			const TargetA,				S);
 
 	TEST_CONV_TYPE(const Source*,		const TargetA*,				F);
-
 	TEST_CONV_TYPE(const Source*,		TargetA*,					F);
-	TEST_CONV_TYPE(const Source&,		TargetA&,					F);
-	TEST_CONV_TYPE(const Source&&,		TargetA&,					F);
-
 	TEST_CONV_TYPE(Source*,				const TargetA*,				F);
-
 	TEST_CONV_TYPE(Source*,				TargetA*,					F);
-	TEST_CONV_TYPE(Source&,				TargetA&,					F);
-	TEST_CONV_TYPE(Source&&,			TargetA&,					F);
-
 
 	TEST_CONV_TYPE(Source&,				const TargetB&,				S);
 	TEST_CONV_TYPE(Source&,				const TargetB&&,			S);
@@ -457,7 +449,8 @@ struct Source
 
 	TEST_CONV_TYPE(Source&,				volatile TargetB&&,			S);
 	TEST_CONV_TYPE(Source&&,			volatile TargetB&&,			S);
-
+	TEST_CONV_TYPE(Source&,				TargetB&,					F);
+	TEST_CONV_TYPE(Source&&,			TargetB&,					F);
 
 	TEST_CONV_TYPE(Source,				volatile TargetB,			S);
 	TEST_CONV_TYPE(Source&,				volatile TargetB,			S);
@@ -480,10 +473,7 @@ struct Source
 	TEST_CONV_TYPE(const Source&&,		TargetB&&,					F);
 
 	TEST_CONV_TYPE(Source*,				const TargetB*,				F);
-
 	TEST_CONV_TYPE(Source*,				TargetB*,					F);
-	TEST_CONV_TYPE(Source&,				TargetB&,					F);
-	TEST_CONV_TYPE(Source&&,			TargetB&,					F);
 
 	TEST_CONV_TYPE(const Source,		TargetB,					F);
 	TEST_CONV_TYPE(const Source&,		TargetB,					F);
@@ -567,7 +557,6 @@ struct Source
 }
 
 #undef TEST_DECL
-#undef TEST_CONV_TYPE_
 #undef TEST_CONV_TYPE
 
 #pragma warning (push)
