@@ -181,7 +181,14 @@ public:
 								}
 								else if (refType == TsysRefType::RRef)
 								{
-									AddInternal(result, { symbol,(thisItem->type == ExprTsysType::LValue ? ExprTsysType::LValue : ExprTsysType::XValue),tsys->CVOf(cv) });
+									if (thisItem->type == ExprTsysType::LValue)
+									{
+										AddInternal(result, { symbol,ExprTsysType::LValue,tsys->CVOf(cv) });
+									}
+									else
+									{
+										AddInternal(result, { symbol,ExprTsysType::XValue,tsys->CVOf(cv)->RRefOf() });
+									}
 								}
 								else
 								{

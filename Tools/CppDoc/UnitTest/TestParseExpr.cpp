@@ -291,10 +291,10 @@ const X* cpx;
 	AssertExpr(L"crx.x",					L"crx.x",						L"__int32 const $L",		pa);
 
 	AssertExpr(L"F().x",					L"F().x",						L"__int32 $PR",				pa);
-	AssertExpr(L"lF().x",					L"lF().x",						L"__int32& $L",				pa);
-	AssertExpr(L"rF().x",					L"rF().x",						L"__int32&& $X",			pa);
+	AssertExpr(L"lF().x",					L"lF().x",						L"__int32 $L",				pa);
+	AssertExpr(L"rF().x",					L"rF().x",						L"__int32 && $X",			pa);
 	AssertExpr(L"cF().x",					L"cF().x",						L"__int32 const $PR",		pa);
-	AssertExpr(L"clF().x",					L"clF().x",						L"__int32 const & $L",		pa);
+	AssertExpr(L"clF().x",					L"clF().x",						L"__int32 const $L",		pa);
 	AssertExpr(L"crF().x",					L"crF().x",						L"__int32 const && $X",		pa);
 	
 	AssertExpr(L"px",						L"px",							L"::X * $L",				pa);
@@ -314,11 +314,11 @@ const int cx[1];
 const int (&clx)[1];
 const int (&&crx)[1];
 
-int (&lF)()[1];
-int (&&rF)()[1];
+int (&lF())[1];
+int (&&rF())[1];
 
-const int (&clF)()[1];
-const int (&&crF)()[1];
+const int (&clF())[1];
+const int (&&crF())[1];
 
 int* px;
 const int* cpx;
