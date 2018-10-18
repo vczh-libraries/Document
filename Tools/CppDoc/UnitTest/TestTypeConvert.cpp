@@ -73,27 +73,27 @@ TEST_CASE(TestTypeConvert_Exact)
 {
 	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
 #define S Exact
-	TEST_CONV_TYPE(int,						int,							S);
-	TEST_CONV_TYPE(int,						const int,						S);
-	TEST_CONV_TYPE(int,						volatile int,					S);
-	TEST_CONV_TYPE(int,						const volatile int,				S);
+	TEST_CONV_TYPE(int,						int,						S);
+	TEST_CONV_TYPE(int,						const int,					S);
+	TEST_CONV_TYPE(int,						volatile int,				S);
+	TEST_CONV_TYPE(int,						const volatile int,			S);
 
-	TEST_CONV_TYPE(int&,					int,							S);
-	TEST_CONV_TYPE(int&,					const int,						S);
-	TEST_CONV_TYPE(int&,					volatile int,					S);
-	TEST_CONV_TYPE(int&,					const volatile int,				S);
+	TEST_CONV_TYPE(int&,					int,						S);
+	TEST_CONV_TYPE(int&,					const int,					S);
+	TEST_CONV_TYPE(int&,					volatile int,				S);
+	TEST_CONV_TYPE(int&,					const volatile int,			S);
 
-	TEST_CONV_TYPE(const int&&,				int,							S);
-	TEST_CONV_TYPE(const int&&,				const int,						S);
-	TEST_CONV_TYPE(const int&&,				volatile int,					S);
-	TEST_CONV_TYPE(const int&&,				const volatile int,				S);
+	TEST_CONV_TYPE(const int&&,				int,						S);
+	TEST_CONV_TYPE(const int&&,				const int,					S);
+	TEST_CONV_TYPE(const int&&,				volatile int,				S);
+	TEST_CONV_TYPE(const int&&,				const volatile int,			S);
 
-	TEST_CONV_TYPE(int[10],					int*,							S);
-	TEST_CONV_TYPE(int[10],					int*const,						S);
-	TEST_CONV_TYPE(int[10],					int*volatile,					S);
+	TEST_CONV_TYPE(int[10],					int*,						S);
+	TEST_CONV_TYPE(int[10],					int*const,					S);
+	TEST_CONV_TYPE(int[10],					int*volatile,				S);
 
-	TEST_CONV_TYPE(const int[10],			const int* const,				S);
-	TEST_CONV_TYPE(volatile int[10],		volatile int* volatile,			S);
+	TEST_CONV_TYPE(const int[10],			const int* const,			S);
+	TEST_CONV_TYPE(volatile int[10],		volatile int* volatile,		S);
 #undef S
 }
 
@@ -224,45 +224,45 @@ class Derived : public Base {};
 #define S StandardConversion
 #define F Illegal
 	
-	TEST_CONV_TYPE(Derived*,			Base*,						S);
-	TEST_CONV_TYPE(Derived&,			Base&,						S);
-	TEST_CONV_TYPE(Derived&&,			Base&&,						S);
+	TEST_CONV_TYPE(Derived*,			Base*,							S);
+	TEST_CONV_TYPE(Derived&,			Base&,							S);
+	TEST_CONV_TYPE(Derived&&,			Base&&,							S);
 
-	TEST_CONV_TYPE(const Derived*,		const Base*,				S);
-	TEST_CONV_TYPE(const Derived&,		const Base&,				S);
-	TEST_CONV_TYPE(const Derived&&,		const Base&&,				S);
+	TEST_CONV_TYPE(const Derived*,		const Base*,					S);
+	TEST_CONV_TYPE(const Derived&,		const Base&,					S);
+	TEST_CONV_TYPE(const Derived&&,		const Base&&,					S);
 
-	TEST_CONV_TYPE(Derived*,			const Base*,				S);
-	TEST_CONV_TYPE(Derived&,			const Base&,				S);
-	TEST_CONV_TYPE(Derived&&,			const Base&&,				S);
+	TEST_CONV_TYPE(Derived*,			const Base*,					S);
+	TEST_CONV_TYPE(Derived&,			const Base&,					S);
+	TEST_CONV_TYPE(Derived&&,			const Base&&,					S);
 
-	TEST_CONV_TYPE(Base*,				Derived*,					F);
-	TEST_CONV_TYPE(Base&,				Derived&,					F);
-	TEST_CONV_TYPE(Base&&,				Derived&&,					F);
+	TEST_CONV_TYPE(Base*,				Derived*,						F);
+	TEST_CONV_TYPE(Base&,				Derived&,						F);
+	TEST_CONV_TYPE(Base&&,				Derived&&,						F);
 
-	TEST_CONV_TYPE(const Base*,			const Derived*,				F);
-	TEST_CONV_TYPE(const Base&,			const Derived&,				F);
-	TEST_CONV_TYPE(const Base&,			const Derived&&,			F);
-	TEST_CONV_TYPE(const Base&&,		const Derived&,				F);
-	TEST_CONV_TYPE(const Base&&,		const Derived&&,			F);
+	TEST_CONV_TYPE(const Base*,			const Derived*,					F);
+	TEST_CONV_TYPE(const Base&,			const Derived&,					F);
+	TEST_CONV_TYPE(const Base&,			const Derived&&,				F);
+	TEST_CONV_TYPE(const Base&&,		const Derived&,					F);
+	TEST_CONV_TYPE(const Base&&,		const Derived&&,				F);
 
-	TEST_CONV_TYPE(const Base*,			Derived*,					F);
-	TEST_CONV_TYPE(const Base&,			Derived&,					F);
-	TEST_CONV_TYPE(const Base&,			Derived&&,					F);
-	TEST_CONV_TYPE(const Base&&,		Derived&,					F);
-	TEST_CONV_TYPE(const Base&&,		Derived&&,					F);
+	TEST_CONV_TYPE(const Base*,			Derived*,						F);
+	TEST_CONV_TYPE(const Base&,			Derived&,						F);
+	TEST_CONV_TYPE(const Base&,			Derived&&,						F);
+	TEST_CONV_TYPE(const Base&&,		Derived&,						F);
+	TEST_CONV_TYPE(const Base&&,		Derived&&,						F);
 
-	TEST_CONV_TYPE(const Derived*,		Base*,						F);
-	TEST_CONV_TYPE(const Derived&,		Base&,						F);
-	TEST_CONV_TYPE(const Derived&,		Base&&,						F);
-	TEST_CONV_TYPE(const Derived&&,		Base&,						F);
-	TEST_CONV_TYPE(const Derived&&,		Base&&,						F);
+	TEST_CONV_TYPE(const Derived*,		Base*,							F);
+	TEST_CONV_TYPE(const Derived&,		Base&,							F);
+	TEST_CONV_TYPE(const Derived&,		Base&&,							F);
+	TEST_CONV_TYPE(const Derived&&,		Base&,							F);
+	TEST_CONV_TYPE(const Derived&&,		Base&&,							F);
 
-	TEST_CONV_TYPE(Base*,				const Derived*,				F);
-	TEST_CONV_TYPE(Base&,				const Derived&,				F);
-	TEST_CONV_TYPE(Base&,				const Derived&&,			F);
-	TEST_CONV_TYPE(Base&&,				const Derived&,				F);
-	TEST_CONV_TYPE(Base&&,				const Derived&&,			F);
+	TEST_CONV_TYPE(Base*,				const Derived*,					F);
+	TEST_CONV_TYPE(Base&,				const Derived&,					F);
+	TEST_CONV_TYPE(Base&,				const Derived&&,				F);
+	TEST_CONV_TYPE(Base&&,				const Derived&,					F);
+	TEST_CONV_TYPE(Base&&,				const Derived&&,				F);
 #undef S
 #undef F
 }
@@ -284,44 +284,44 @@ struct Target
 
 #define S UserDefinedConversion
 #define F Illegal
-	TEST_CONV_TYPE(const Source&,		const Target&,				S);
-	TEST_CONV_TYPE(const Source&,		const Target&&,				S);
-	TEST_CONV_TYPE(const Source&&,		const Target&,				S);
-	TEST_CONV_TYPE(const Source&&,		const Target&&,				S);
+	TEST_CONV_TYPE(const Source&,		const Target&,					S);
+	TEST_CONV_TYPE(const Source&,		const Target&&,					S);
+	TEST_CONV_TYPE(const Source&&,		const Target&,					S);
+	TEST_CONV_TYPE(const Source&&,		const Target&&,					S);
 
-	TEST_CONV_TYPE(const Source&,		volatile Target&&,			S);
-	TEST_CONV_TYPE(const Source&&,		volatile Target&&,			S);
-	TEST_CONV_TYPE(const Source&,		Target&,					F);
-	TEST_CONV_TYPE(const Source&&,		Target&,					F);
+	TEST_CONV_TYPE(const Source&,		volatile Target&&,				S);
+	TEST_CONV_TYPE(const Source&&,		volatile Target&&,				S);
+	TEST_CONV_TYPE(const Source&,		Target&,						F);
+	TEST_CONV_TYPE(const Source&&,		Target&,						F);
 
-	TEST_CONV_TYPE(Source&,				const Target&,				S);
-	TEST_CONV_TYPE(Source&,				const Target&&,				S);
-	TEST_CONV_TYPE(Source&&,			const Target&,				S);
-	TEST_CONV_TYPE(Source&&,			const Target&&,				S);
+	TEST_CONV_TYPE(Source&,				const Target&,					S);
+	TEST_CONV_TYPE(Source&,				const Target&&,					S);
+	TEST_CONV_TYPE(Source&&,			const Target&,					S);
+	TEST_CONV_TYPE(Source&&,			const Target&&,					S);
 
-	TEST_CONV_TYPE(Source&,				volatile Target&&,			S);
-	TEST_CONV_TYPE(Source&&,			volatile Target&&,			S);
-	TEST_CONV_TYPE(Source&,				Target&,					F);
-	TEST_CONV_TYPE(Source&&,			Target&,					F);
+	TEST_CONV_TYPE(Source&,				volatile Target&&,				S);
+	TEST_CONV_TYPE(Source&&,			volatile Target&&,				S);
+	TEST_CONV_TYPE(Source&,				Target&,						F);
+	TEST_CONV_TYPE(Source&&,			Target&,						F);
 
-	TEST_CONV_TYPE(const Source,		volatile Target,			S);
-	TEST_CONV_TYPE(const Source&,		volatile Target,			S);
-	TEST_CONV_TYPE(const Source&&,		volatile Target,			S);
-	TEST_CONV_TYPE(Source,				volatile Target,			S);
-	TEST_CONV_TYPE(Source&,				volatile Target,			S);
-	TEST_CONV_TYPE(Source&&,			volatile Target,			S);
+	TEST_CONV_TYPE(const Source,		volatile Target,				S);
+	TEST_CONV_TYPE(const Source&,		volatile Target,				S);
+	TEST_CONV_TYPE(const Source&&,		volatile Target,				S);
+	TEST_CONV_TYPE(Source,				volatile Target,				S);
+	TEST_CONV_TYPE(Source&,				volatile Target,				S);
+	TEST_CONV_TYPE(Source&&,			volatile Target,				S);
 
-	TEST_CONV_TYPE(const Source,		const Target,				S);
-	TEST_CONV_TYPE(const Source&,		const Target,				S);
-	TEST_CONV_TYPE(const Source&&,		const Target,				S);
-	TEST_CONV_TYPE(Source,				const Target,				S);
-	TEST_CONV_TYPE(Source&,				const Target,				S);
-	TEST_CONV_TYPE(Source&&,			const Target,				S);
+	TEST_CONV_TYPE(const Source,		const Target,					S);
+	TEST_CONV_TYPE(const Source&,		const Target,					S);
+	TEST_CONV_TYPE(const Source&&,		const Target,					S);
+	TEST_CONV_TYPE(Source,				const Target,					S);
+	TEST_CONV_TYPE(Source&,				const Target,					S);
+	TEST_CONV_TYPE(Source&&,			const Target,					S);
 
-	TEST_CONV_TYPE(const Source*,		const Target*,				F);
-	TEST_CONV_TYPE(const Source*,		Target*,					F);
-	TEST_CONV_TYPE(Source*,				const Target*,				F);
-	TEST_CONV_TYPE(Source*,				Target*,					F);
+	TEST_CONV_TYPE(const Source*,		const Target*,					F);
+	TEST_CONV_TYPE(const Source*,		Target*,						F);
+	TEST_CONV_TYPE(Source*,				const Target*,					F);
+	TEST_CONV_TYPE(Source*,				Target*,						F);
 #undef S
 #undef F
 }
@@ -342,43 +342,43 @@ struct Target
 	COMPILE_PROGRAM(program, pa, input);
 
 #define F Illegal
-	TEST_CONV_TYPE(const Source*,		const Target*,				F);
-	TEST_CONV_TYPE(const Source&,		const Target&,				F);
-	TEST_CONV_TYPE(const Source&,		const Target&&,				F);
-	TEST_CONV_TYPE(const Source&&,		const Target&,				F);
-	TEST_CONV_TYPE(const Source&&,		const Target&&,				F);
+	TEST_CONV_TYPE(const Source*,		const Target*,					F);
+	TEST_CONV_TYPE(const Source&,		const Target&,					F);
+	TEST_CONV_TYPE(const Source&,		const Target&&,					F);
+	TEST_CONV_TYPE(const Source&&,		const Target&,					F);
+	TEST_CONV_TYPE(const Source&&,		const Target&&,					F);
 
-	TEST_CONV_TYPE(const Source*,		Target*,					F);
-	TEST_CONV_TYPE(const Source&,		Target&,					F);
-	TEST_CONV_TYPE(const Source&,		Target&&,					F);
-	TEST_CONV_TYPE(const Source&&,		Target&,					F);
-	TEST_CONV_TYPE(const Source&&,		Target&&,					F);
+	TEST_CONV_TYPE(const Source*,		Target*,						F);
+	TEST_CONV_TYPE(const Source&,		Target&,						F);
+	TEST_CONV_TYPE(const Source&,		Target&&,						F);
+	TEST_CONV_TYPE(const Source&&,		Target&,						F);
+	TEST_CONV_TYPE(const Source&&,		Target&&,						F);
 
-	TEST_CONV_TYPE(Source*,				const Target*,				F);
-	TEST_CONV_TYPE(Source&,				const Target&,				F);
-	TEST_CONV_TYPE(Source&,				const Target&&,				F);
-	TEST_CONV_TYPE(Source&&,			const Target&,				F);
-	TEST_CONV_TYPE(Source&&,			const Target&&,				F);
+	TEST_CONV_TYPE(Source*,				const Target*,					F);
+	TEST_CONV_TYPE(Source&,				const Target&,					F);
+	TEST_CONV_TYPE(Source&,				const Target&&,					F);
+	TEST_CONV_TYPE(Source&&,			const Target&,					F);
+	TEST_CONV_TYPE(Source&&,			const Target&&,					F);
 
-	TEST_CONV_TYPE(Source*,				Target*,					F);
-	TEST_CONV_TYPE(Source&,				Target&,					F);
-	TEST_CONV_TYPE(Source&,				Target&&,					F);
-	TEST_CONV_TYPE(Source&&,			Target&,					F);
-	TEST_CONV_TYPE(Source&&,			Target&&,					F);
+	TEST_CONV_TYPE(Source*,				Target*,						F);
+	TEST_CONV_TYPE(Source&,				Target&,						F);
+	TEST_CONV_TYPE(Source&,				Target&&,						F);
+	TEST_CONV_TYPE(Source&&,			Target&,						F);
+	TEST_CONV_TYPE(Source&&,			Target&&,						F);
 
-	TEST_CONV_TYPE(const Source,		Target,						F);
-	TEST_CONV_TYPE(const Source&,		Target,						F);
-	TEST_CONV_TYPE(const Source&&,		Target,						F);
-	TEST_CONV_TYPE(Source,				Target,						F);
-	TEST_CONV_TYPE(Source&,				Target,						F);
-	TEST_CONV_TYPE(Source&&,			Target,						F);
+	TEST_CONV_TYPE(const Source,		Target,							F);
+	TEST_CONV_TYPE(const Source&,		Target,							F);
+	TEST_CONV_TYPE(const Source&&,		Target,							F);
+	TEST_CONV_TYPE(Source,				Target,							F);
+	TEST_CONV_TYPE(Source&,				Target,							F);
+	TEST_CONV_TYPE(Source&&,			Target,							F);
 
-	TEST_CONV_TYPE(const Source,		const Target,				F);
-	TEST_CONV_TYPE(const Source&,		const Target,				F);
-	TEST_CONV_TYPE(const Source&&,		const Target,				F);
-	TEST_CONV_TYPE(Source,				const Target,				F);
-	TEST_CONV_TYPE(Source&,				const Target,				F);
-	TEST_CONV_TYPE(Source&&,			const Target,				F);
+	TEST_CONV_TYPE(const Source,		const Target,					F);
+	TEST_CONV_TYPE(const Source&,		const Target,					F);
+	TEST_CONV_TYPE(const Source&&,		const Target,					F);
+	TEST_CONV_TYPE(Source,				const Target,					F);
+	TEST_CONV_TYPE(Source&,				const Target,					F);
+	TEST_CONV_TYPE(Source&&,			const Target,					F);
 #undef F
 }
 
@@ -403,85 +403,85 @@ struct Source
 
 #define S UserDefinedConversion
 #define F Illegal
-	TEST_CONV_TYPE(const Source&,		const TargetA&,				S);
-	TEST_CONV_TYPE(const Source&,		const TargetA&&,			S);
-	TEST_CONV_TYPE(const Source&&,		const TargetA&,				S);
-	TEST_CONV_TYPE(const Source&&,		const TargetA&&,			S);
+	TEST_CONV_TYPE(const Source&,		const TargetA&,					S);
+	TEST_CONV_TYPE(const Source&,		const TargetA&&,				S);
+	TEST_CONV_TYPE(const Source&&,		const TargetA&,					S);
+	TEST_CONV_TYPE(const Source&&,		const TargetA&&,				S);
 
-	TEST_CONV_TYPE(const Source&,		volatile TargetA&&,			S);
-	TEST_CONV_TYPE(const Source&&,		volatile TargetA&&,			S);
-	TEST_CONV_TYPE(const Source&,		TargetA&,					F);
-	TEST_CONV_TYPE(const Source&&,		TargetA&,					F);
+	TEST_CONV_TYPE(const Source&,		volatile TargetA&&,				S);
+	TEST_CONV_TYPE(const Source&&,		volatile TargetA&&,				S);
+	TEST_CONV_TYPE(const Source&,		TargetA&,						F);
+	TEST_CONV_TYPE(const Source&&,		TargetA&,						F);
 
-	TEST_CONV_TYPE(Source&,				const TargetA&,				S);
-	TEST_CONV_TYPE(Source&,				const TargetA&&,			S);
-	TEST_CONV_TYPE(Source&&,			const TargetA&,				S);
-	TEST_CONV_TYPE(Source&&,			const TargetA&&,			S);
+	TEST_CONV_TYPE(Source&,				const TargetA&,					S);
+	TEST_CONV_TYPE(Source&,				const TargetA&&,				S);
+	TEST_CONV_TYPE(Source&&,			const TargetA&,					S);
+	TEST_CONV_TYPE(Source&&,			const TargetA&&,				S);
 
-	TEST_CONV_TYPE(Source&,				volatile TargetA&&,			S);
-	TEST_CONV_TYPE(Source&&,			volatile TargetA&&,			S);
-	TEST_CONV_TYPE(Source&,				TargetA&,					F);
-	TEST_CONV_TYPE(Source&&,			TargetA&,					F);
+	TEST_CONV_TYPE(Source&,				volatile TargetA&&,				S);
+	TEST_CONV_TYPE(Source&&,			volatile TargetA&&,				S);
+	TEST_CONV_TYPE(Source&,				TargetA&,						F);
+	TEST_CONV_TYPE(Source&&,			TargetA&,						F);
 
-	TEST_CONV_TYPE(const Source,		volatile TargetA,			S);
-	TEST_CONV_TYPE(const Source&,		volatile TargetA,			S);
-	TEST_CONV_TYPE(const Source&&,		volatile TargetA,			S);
-	TEST_CONV_TYPE(Source,				volatile TargetA,			S);
-	TEST_CONV_TYPE(Source&,				volatile TargetA,			S);
-	TEST_CONV_TYPE(Source&&,			volatile TargetA,			S);
+	TEST_CONV_TYPE(const Source,		volatile TargetA,				S);
+	TEST_CONV_TYPE(const Source&,		volatile TargetA,				S);
+	TEST_CONV_TYPE(const Source&&,		volatile TargetA,				S);
+	TEST_CONV_TYPE(Source,				volatile TargetA,				S);
+	TEST_CONV_TYPE(Source&,				volatile TargetA,				S);
+	TEST_CONV_TYPE(Source&&,			volatile TargetA,				S);
 
-	TEST_CONV_TYPE(const Source,		const TargetA,				S);
-	TEST_CONV_TYPE(const Source&,		const TargetA,				S);
-	TEST_CONV_TYPE(const Source&&,		const TargetA,				S);
-	TEST_CONV_TYPE(Source,				const TargetA,				S);
-	TEST_CONV_TYPE(Source&,				const TargetA,				S);
-	TEST_CONV_TYPE(Source&&,			const TargetA,				S);
+	TEST_CONV_TYPE(const Source,		const TargetA,					S);
+	TEST_CONV_TYPE(const Source&,		const TargetA,					S);
+	TEST_CONV_TYPE(const Source&&,		const TargetA,					S);
+	TEST_CONV_TYPE(Source,				const TargetA,					S);
+	TEST_CONV_TYPE(Source&,				const TargetA,					S);
+	TEST_CONV_TYPE(Source&&,			const TargetA,					S);
 
-	TEST_CONV_TYPE(const Source*,		const TargetA*,				F);
-	TEST_CONV_TYPE(const Source*,		TargetA*,					F);
-	TEST_CONV_TYPE(Source*,				const TargetA*,				F);
-	TEST_CONV_TYPE(Source*,				TargetA*,					F);
+	TEST_CONV_TYPE(const Source*,		const TargetA*,					F);
+	TEST_CONV_TYPE(const Source*,		TargetA*,						F);
+	TEST_CONV_TYPE(Source*,				const TargetA*,					F);
+	TEST_CONV_TYPE(Source*,				TargetA*,						F);
 
-	TEST_CONV_TYPE(Source&,				const TargetB&,				S);
-	TEST_CONV_TYPE(Source&,				const TargetB&&,			S);
-	TEST_CONV_TYPE(Source&&,			const TargetB&,				S);
-	TEST_CONV_TYPE(Source&&,			const TargetB&&,			S);
+	TEST_CONV_TYPE(Source&,				const TargetB&,					S);
+	TEST_CONV_TYPE(Source&,				const TargetB&&,				S);
+	TEST_CONV_TYPE(Source&&,			const TargetB&,					S);
+	TEST_CONV_TYPE(Source&&,			const TargetB&&,				S);
 
-	TEST_CONV_TYPE(Source&,				volatile TargetB&&,			S);
-	TEST_CONV_TYPE(Source&&,			volatile TargetB&&,			S);
-	TEST_CONV_TYPE(Source&,				TargetB&,					F);
-	TEST_CONV_TYPE(Source&&,			TargetB&,					F);
+	TEST_CONV_TYPE(Source&,				volatile TargetB&&,				S);
+	TEST_CONV_TYPE(Source&&,			volatile TargetB&&,				S);
+	TEST_CONV_TYPE(Source&,				TargetB&,						F);
+	TEST_CONV_TYPE(Source&&,			TargetB&,						F);
 
-	TEST_CONV_TYPE(Source,				volatile TargetB,			S);
-	TEST_CONV_TYPE(Source&,				volatile TargetB,			S);
-	TEST_CONV_TYPE(Source&&,			volatile TargetB,			S);
+	TEST_CONV_TYPE(Source,				volatile TargetB,				S);
+	TEST_CONV_TYPE(Source&,				volatile TargetB,				S);
+	TEST_CONV_TYPE(Source&&,			volatile TargetB,				S);
 
-	TEST_CONV_TYPE(Source,				const TargetB,				S);
-	TEST_CONV_TYPE(Source&,				const TargetB,				S);
-	TEST_CONV_TYPE(Source&&,			const TargetB,				S);
+	TEST_CONV_TYPE(Source,				const TargetB,					S);
+	TEST_CONV_TYPE(Source&,				const TargetB,					S);
+	TEST_CONV_TYPE(Source&&,			const TargetB,					S);
 
-	TEST_CONV_TYPE(const Source*,		const TargetB*,				F);
-	TEST_CONV_TYPE(const Source&,		const TargetB&,				F);
-	TEST_CONV_TYPE(const Source&,		const TargetB&&,			F);
-	TEST_CONV_TYPE(const Source&&,		const TargetB&,				F);
-	TEST_CONV_TYPE(const Source&&,		const TargetB&&,			F);
+	TEST_CONV_TYPE(const Source*,		const TargetB*,					F);
+	TEST_CONV_TYPE(const Source&,		const TargetB&,					F);
+	TEST_CONV_TYPE(const Source&,		const TargetB&&,				F);
+	TEST_CONV_TYPE(const Source&&,		const TargetB&,					F);
+	TEST_CONV_TYPE(const Source&&,		const TargetB&&,				F);
 
-	TEST_CONV_TYPE(const Source*,		TargetB*,					F);
-	TEST_CONV_TYPE(const Source&,		TargetB&,					F);
-	TEST_CONV_TYPE(const Source&,		TargetB&&,					F);
-	TEST_CONV_TYPE(const Source&&,		TargetB&,					F);
-	TEST_CONV_TYPE(const Source&&,		TargetB&&,					F);
+	TEST_CONV_TYPE(const Source*,		TargetB*,						F);
+	TEST_CONV_TYPE(const Source&,		TargetB&,						F);
+	TEST_CONV_TYPE(const Source&,		TargetB&&,						F);
+	TEST_CONV_TYPE(const Source&&,		TargetB&,						F);
+	TEST_CONV_TYPE(const Source&&,		TargetB&&,						F);
 
-	TEST_CONV_TYPE(Source*,				const TargetB*,				F);
-	TEST_CONV_TYPE(Source*,				TargetB*,					F);
+	TEST_CONV_TYPE(Source*,				const TargetB*,					F);
+	TEST_CONV_TYPE(Source*,				TargetB*,						F);
 
-	TEST_CONV_TYPE(const Source,		TargetB,					F);
-	TEST_CONV_TYPE(const Source&,		TargetB,					F);
-	TEST_CONV_TYPE(const Source&&,		TargetB,					F);
+	TEST_CONV_TYPE(const Source,		TargetB,						F);
+	TEST_CONV_TYPE(const Source&,		TargetB,						F);
+	TEST_CONV_TYPE(const Source&&,		TargetB,						F);
 
-	TEST_CONV_TYPE(const Source,		const TargetB,				F);
-	TEST_CONV_TYPE(const Source&,		const TargetB,				F);
-	TEST_CONV_TYPE(const Source&&,		const TargetB,				F);
+	TEST_CONV_TYPE(const Source,		const TargetB,					F);
+	TEST_CONV_TYPE(const Source&,		const TargetB,					F);
+	TEST_CONV_TYPE(const Source&&,		const TargetB,					F);
 #undef S
 #undef F
 }
@@ -506,53 +506,53 @@ struct Source
 	COMPILE_PROGRAM(program, pa, input);
 
 #define F Illegal
-	TEST_CONV_TYPE(const Source*,		const TargetA*,				F);
-	TEST_CONV_TYPE(const Source&,		const TargetA&,				F);
-	TEST_CONV_TYPE(const Source&,		const TargetA&&,			F);
-	TEST_CONV_TYPE(const Source&&,		const TargetA&,				F);
-	TEST_CONV_TYPE(const Source&&,		const TargetA&&,			F);
+	TEST_CONV_TYPE(const Source*,		const TargetA*,					F);
+	TEST_CONV_TYPE(const Source&,		const TargetA&,					F);
+	TEST_CONV_TYPE(const Source&,		const TargetA&&,				F);
+	TEST_CONV_TYPE(const Source&&,		const TargetA&,					F);
+	TEST_CONV_TYPE(const Source&&,		const TargetA&&,				F);
 
-	TEST_CONV_TYPE(const Source*,		TargetA*,					F);
-	TEST_CONV_TYPE(const Source&,		TargetA&,					F);
-	TEST_CONV_TYPE(const Source&,		TargetA&&,					F);
-	TEST_CONV_TYPE(const Source&&,		TargetA&,					F);
-	TEST_CONV_TYPE(const Source&&,		TargetA&&,					F);
+	TEST_CONV_TYPE(const Source*,		TargetA*,						F);
+	TEST_CONV_TYPE(const Source&,		TargetA&,						F);
+	TEST_CONV_TYPE(const Source&,		TargetA&&,						F);
+	TEST_CONV_TYPE(const Source&&,		TargetA&,						F);
+	TEST_CONV_TYPE(const Source&&,		TargetA&&,						F);
 
-	TEST_CONV_TYPE(Source*,				const TargetA*,				F);
-	TEST_CONV_TYPE(Source&,				const TargetA&,				F);
-	TEST_CONV_TYPE(Source&,				const TargetA&&,			F);
-	TEST_CONV_TYPE(Source&&,			const TargetA&,				F);
-	TEST_CONV_TYPE(Source&&,			const TargetA&&,			F);
+	TEST_CONV_TYPE(Source*,				const TargetA*,					F);
+	TEST_CONV_TYPE(Source&,				const TargetA&,					F);
+	TEST_CONV_TYPE(Source&,				const TargetA&&,				F);
+	TEST_CONV_TYPE(Source&&,			const TargetA&,					F);
+	TEST_CONV_TYPE(Source&&,			const TargetA&&,				F);
 
-	TEST_CONV_TYPE(Source*,				TargetA*,					F);
-	TEST_CONV_TYPE(Source&,				TargetA&,					F);
-	TEST_CONV_TYPE(Source&,				TargetA&&,					F);
-	TEST_CONV_TYPE(Source&&,			TargetA&,					F);
-	TEST_CONV_TYPE(Source&&,			TargetA&&,					F);
+	TEST_CONV_TYPE(Source*,				TargetA*,						F);
+	TEST_CONV_TYPE(Source&,				TargetA&,						F);
+	TEST_CONV_TYPE(Source&,				TargetA&&,						F);
+	TEST_CONV_TYPE(Source&&,			TargetA&,						F);
+	TEST_CONV_TYPE(Source&&,			TargetA&&,						F);
 
-	TEST_CONV_TYPE(const Source*,		const TargetB*,				F);
-	TEST_CONV_TYPE(const Source&,		const TargetB&,				F);
-	TEST_CONV_TYPE(const Source&,		const TargetB&&,			F);
-	TEST_CONV_TYPE(const Source&&,		const TargetB&,				F);
-	TEST_CONV_TYPE(const Source&&,		const TargetB&&,			F);
+	TEST_CONV_TYPE(const Source*,		const TargetB*,					F);
+	TEST_CONV_TYPE(const Source&,		const TargetB&,					F);
+	TEST_CONV_TYPE(const Source&,		const TargetB&&,				F);
+	TEST_CONV_TYPE(const Source&&,		const TargetB&,					F);
+	TEST_CONV_TYPE(const Source&&,		const TargetB&&,				F);
 
-	TEST_CONV_TYPE(const Source*,		TargetB*,					F);
-	TEST_CONV_TYPE(const Source&,		TargetB&,					F);
-	TEST_CONV_TYPE(const Source&,		TargetB&&,					F);
-	TEST_CONV_TYPE(const Source&&,		TargetB&,					F);
-	TEST_CONV_TYPE(const Source&&,		TargetB&&,					F);
+	TEST_CONV_TYPE(const Source*,		TargetB*,						F);
+	TEST_CONV_TYPE(const Source&,		TargetB&,						F);
+	TEST_CONV_TYPE(const Source&,		TargetB&&,						F);
+	TEST_CONV_TYPE(const Source&&,		TargetB&,						F);
+	TEST_CONV_TYPE(const Source&&,		TargetB&&,						F);
 
-	TEST_CONV_TYPE(Source*,				const TargetB*,				F);
-	TEST_CONV_TYPE(Source&,				const TargetB&,				F);
-	TEST_CONV_TYPE(Source&,				const TargetB&&,			F);
-	TEST_CONV_TYPE(Source&&,			const TargetB&,				F);
-	TEST_CONV_TYPE(Source&&,			const TargetB&&,			F);
+	TEST_CONV_TYPE(Source*,				const TargetB*,					F);
+	TEST_CONV_TYPE(Source&,				const TargetB&,					F);
+	TEST_CONV_TYPE(Source&,				const TargetB&&,				F);
+	TEST_CONV_TYPE(Source&&,			const TargetB&,					F);
+	TEST_CONV_TYPE(Source&&,			const TargetB&&,				F);
 
-	TEST_CONV_TYPE(Source*,				TargetB*,					F);
-	TEST_CONV_TYPE(Source&,				TargetB&,					F);
-	TEST_CONV_TYPE(Source&,				TargetB&&,					F);
-	TEST_CONV_TYPE(Source&&,			TargetB&,					F);
-	TEST_CONV_TYPE(Source&&,			TargetB&&,					F);
+	TEST_CONV_TYPE(Source*,				TargetB*,						F);
+	TEST_CONV_TYPE(Source&,				TargetB&,						F);
+	TEST_CONV_TYPE(Source&,				TargetB&&,						F);
+	TEST_CONV_TYPE(Source&&,			TargetB&,						F);
+	TEST_CONV_TYPE(Source&&,			TargetB&&,						F);
 #undef F
 }
 
