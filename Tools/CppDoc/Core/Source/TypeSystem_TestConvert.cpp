@@ -148,12 +148,14 @@ namespace TestConvert_Helpers
 		auto toEntity = toType->GetEntity(toCV, toRef);
 		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
-		if (toRef == TsysRefType::LRef)
+		if (toRef == TsysRefType::LRef && toCV.isGeneralConst)
 		{
-			if (toCV.isGeneralConst)
-			{
-				goto ALLOW;
-			}
+			goto ALLOW;
+		}
+
+		if (toRef == TsysRefType::None)
+		{
+			goto ALLOW;
 		}
 
 		if (toRef == TsysRefType::LRef || fromRef == TsysRefType::LRef)
@@ -231,13 +233,23 @@ namespace TestConvert_Helpers
 			auto toEntity = toType->GetEntity(toCV, toRef);
 			auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
-			if ((toRef != TsysRefType::LRef) != (fromRef != TsysRefType::LRef)) return false;
-			if (toRef != TsysRefType::None)
+			if (toRef != TsysRefType::None && fromRef != TsysRefType::None)
 			{
-				if (!IsCVMatch(toCV, fromCV)) return false;
+				if ((toRef != TsysRefType::LRef) != (fromRef != TsysRefType::LRef))
+				{
+					return false;
+				}
 
-				toType = toEntity;
-				fromType = fromEntity;
+				if (!IsCVMatch(toCV, fromCV))
+				{
+					return false;
+				}
+			}
+
+			toType = toEntity;
+			fromType = fromEntity;
+			if (toRef != TsysRefType::None && fromRef != TsysRefType::None)
+			{
 				goto BEGIN_SEARCHING_FOR_BASE_CLASSES;
 			}
 		}
