@@ -1,7 +1,7 @@
 #include <Parser.h>
 #include "Util.h"
 
-void AssertTypeConvertFromTemp(ParsingArguments& pa, const WString fromCppType, const WString& toCppType, TsysConv conv)
+void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WString& toCppType, TsysConv conv, bool fromTemp)
 {
 	TypeTsysList fromTypes, toTypes;
 	Ptr<Type> fromType, toType;
@@ -23,18 +23,21 @@ void AssertTypeConvertFromTemp(ParsingArguments& pa, const WString fromCppType, 
 	TEST_ASSERT(fromTypes.Count() == 1);
 	TEST_ASSERT(toTypes.Count() == 1);
 
-	ExprTsysType type;
-	if (fromTypes[0]->GetType() == TsysType::LRef)
+	ExprTsysType type = ExprTsysType::LValue;
+	if (fromTemp)
 	{
-		type = ExprTsysType::LValue;
-	}
-	else if (fromTypes[0]->GetType() == TsysType::RRef)
-	{
-		type = ExprTsysType::XValue;
-	}
-	else
-	{
-		type = ExprTsysType::PRValue;
+		if (fromTypes[0]->GetType() == TsysType::LRef)
+		{
+			type = ExprTsysType::LValue;
+		}
+		else if (fromTypes[0]->GetType() == TsysType::RRef)
+		{
+			type = ExprTsysType::XValue;
+		}
+		else
+		{
+			type = ExprTsysType::PRValue;
+		}
 	}
 	auto output = TestConvert(pa, toTypes[0], { nullptr,type,fromTypes[0] });
 	TEST_ASSERT(output == conv);
@@ -76,7 +79,8 @@ struct RunTypeConvertFromTemp
 #define TEST_CONV_TYPE(FROM, TO, CONV1, CONV2)\
 	RunTypeConvert<FROM, TO, RunTypeTester<TO, TsysConv::CONV1>>::test,\
 	RunTypeConvertFromTemp<FROM, TO, RunTypeTester<TO, TsysConv::CONV2>>::test,\
-	AssertTypeConvertFromTemp(pa, L#FROM, L#TO, TsysConv::CONV2)\
+	AssertTypeConvert(pa, L#FROM, L#TO, TsysConv::CONV1, false),\
+	AssertTypeConvert(pa, L#FROM, L#TO, TsysConv::CONV2, true)\
 
 TEST_CASE(TestTypeConvert_Exact)
 {
