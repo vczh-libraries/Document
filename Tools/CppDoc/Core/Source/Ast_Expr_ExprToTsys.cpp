@@ -796,13 +796,25 @@ public:
 			}
 			else if (entityType->GetType() == TsysType::Array)
 			{
-				if (refType == TsysRefType::RRef)
+				auto tsys = entityType->GetElement();
+				if (refType == TsysRefType::LRef)
 				{
-					AddTemp(result, entityType->GetElement()->RRefOf());
+					AddInternal(result, { nullptr,ExprTsysType::LValue,tsys->CVOf(cv)->LRefOf() });
+				}
+				else if (refType == TsysRefType::RRef)
+				{
+					if (arrayType.type == ExprTsysType::LValue)
+					{
+						AddInternal(result, { nullptr,ExprTsysType::LValue,tsys->CVOf(cv)->LRefOf() });
+					}
+					else
+					{
+						AddInternal(result, { nullptr,ExprTsysType::XValue,tsys->CVOf(cv)->RRefOf() });
+					}
 				}
 				else
 				{
-					AddTemp(result, entityType->GetElement()->LRefOf());
+					AddInternal(result, { nullptr,arrayType.type,tsys->CVOf(cv)->LRefOf() });
 				}
 			}
 			else if (entityType->GetType() == TsysType::Ptr)
