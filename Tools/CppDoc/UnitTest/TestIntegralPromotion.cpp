@@ -208,10 +208,12 @@ Macros
 #define TEST_EACH_VAR_PTR_(F, NAME)\
 	F(ps, NAME) F(pcs, NAME) F(cps, NAME) F(cpcs, NAME)\
 	F(rps, NAME) F(rpcs, NAME) F(rcps, NAME) F(rcpcs, NAME)\
+	F(ars, NAME) F(arcs, NAME) F(rars, NAME) F(rarcs, NAME)\
 
 #define TEST_EACH_VAR_PTR_INT(F)\
 	TEST_EACH_VAR2_NO_FLOAT_(F, ps) TEST_EACH_VAR2_NO_FLOAT_(F, pcs) TEST_EACH_VAR2_NO_FLOAT_(F, cps) TEST_EACH_VAR2_NO_FLOAT_(F, cpcs)\
 	TEST_EACH_VAR2_NO_FLOAT_(F, rps) TEST_EACH_VAR2_NO_FLOAT_(F, rpcs) TEST_EACH_VAR2_NO_FLOAT_(F, rcps) TEST_EACH_VAR2_NO_FLOAT_(F, rcpcs)\
+	TEST_EACH_VAR2_NO_FLOAT_(F, ars) TEST_EACH_VAR2_NO_FLOAT_(F, arcs) TEST_EACH_VAR2_NO_FLOAT_(F, rars) TEST_EACH_VAR2_NO_FLOAT_(F, rarcs)\
 
 #define TEST_EACH_VAR_INT_PTR(F)\
 	TEST_EACH_VAR_PTR_(F, cb)\
@@ -222,6 +224,7 @@ Macros
 #define TEST_EACH_VAR_PTR_PTR(F)\
 	TEST_EACH_VAR_PTR_(F, ps) TEST_EACH_VAR_PTR_(F, pcs) TEST_EACH_VAR_PTR_(F, cps) TEST_EACH_VAR_PTR_(F, cpcs)\
 	TEST_EACH_VAR_PTR_(F, rps) TEST_EACH_VAR_PTR_(F, rpcs) TEST_EACH_VAR_PTR_(F, rcps) TEST_EACH_VAR_PTR_(F, rcpcs)\
+	TEST_EACH_VAR_PTR_(F, ars) TEST_EACH_VAR_PTR_(F, arcs) TEST_EACH_VAR_PTR_(F, rars) TEST_EACH_VAR_PTR_(F, rarcs)\
 
 /***********************************************************************
 Test Cases
