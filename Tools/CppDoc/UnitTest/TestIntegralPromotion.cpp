@@ -198,11 +198,23 @@ Macros
 	TEST_EACH_VAR2_(F, csc) TEST_EACH_VAR2_(F, cuc) TEST_EACH_VAR2_(F, cwc) TEST_EACH_VAR2_(F, cc16) TEST_EACH_VAR2_(F, cc32)\
 	TEST_EACH_VAR2_(F, f) TEST_EACH_VAR2_(F, d) TEST_EACH_VAR2_(F, ld)\
 
+#define TEST_EACH_VAR_PTR_NO_CONST(F) F(ps) F(pcs) F(rps) F(rpcs)
+
 #define TEST_EACH_VAR_PTR_(F, NAME)\
 	F(ps, NAME) F(pcs, NAME) F(cps, NAME) F(cpcs, NAME)\
 	F(rps, NAME) F(rpcs, NAME) F(rcps, NAME) F(rcpcs, NAME)\
 
-#define TEST_EACH_VAR_PTR(F)\
+#define TEST_EACH_VAR_PTR_INT(F)\
+	TEST_EACH_VAR2_NO_FLOAT_(F, ps) TEST_EACH_VAR2_NO_FLOAT_(F, pcs) TEST_EACH_VAR2_NO_FLOAT_(F, cps) TEST_EACH_VAR2_NO_FLOAT_(F, cpcs)\
+	TEST_EACH_VAR2_NO_FLOAT_(F, rps) TEST_EACH_VAR2_NO_FLOAT_(F, rpcs) TEST_EACH_VAR2_NO_FLOAT_(F, rcps) TEST_EACH_VAR2_NO_FLOAT_(F, rcpcs)\
+
+#define TEST_EACH_VAR_INT_PTR(F)\
+	TEST_EACH_VAR_PTR_(F, cb)\
+	TEST_EACH_VAR_PTR_(F, csi8) TEST_EACH_VAR_PTR_(F, csi16) TEST_EACH_VAR_PTR_(F, csi32) TEST_EACH_VAR_PTR_(F, csi64)\
+	TEST_EACH_VAR_PTR_(F, cui8) TEST_EACH_VAR_PTR_(F, cui16) TEST_EACH_VAR_PTR_(F, cui32) TEST_EACH_VAR_PTR_(F, cui64)\
+	TEST_EACH_VAR_PTR_(F, csc) TEST_EACH_VAR_PTR_(F, cuc) TEST_EACH_VAR_PTR_(F, cwc) TEST_EACH_VAR_PTR_(F, cc16) TEST_EACH_VAR_PTR_(F, cc32)\
+
+#define TEST_EACH_VAR_PTR_PTR(F)\
 	TEST_EACH_VAR_PTR_(F, ps) TEST_EACH_VAR_PTR_(F, pcs) TEST_EACH_VAR_PTR_(F, cps) TEST_EACH_VAR_PTR_(F, cpcs)\
 	TEST_EACH_VAR_PTR_(F, rps) TEST_EACH_VAR_PTR_(F, rpcs) TEST_EACH_VAR_PTR_(F, rcps) TEST_EACH_VAR_PTR_(F, rcpcs)\
 
@@ -479,21 +491,15 @@ TEST_CASE(TestPointerArithmetic_Postfix)
 	COMPILE_PROGRAM(program, pa, input);
 
 #define TEST_VAR(NAME)\
-	AssertPostfixUnary<decltype((ps++))>(pa, L"ps", L"++");\
-	AssertPostfixUnary<decltype((pcs++))>(pa, L"pcs", L"++");\
-	AssertPostfixUnary<decltype((rps++))>(pa, L"rps", L"++");\
-	AssertPostfixUnary<decltype((rpcs++))>(pa, L"rpcs", L"++");\
+	AssertPostfixUnary<decltype((NAME++))>(pa, L#NAME, L"++");\
 
-	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+	TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME)\
-	AssertPostfixUnary<decltype((ps--))>(pa, L"ps", L"--");\
-	AssertPostfixUnary<decltype((pcs--))>(pa, L"pcs", L"--");\
-	AssertPostfixUnary<decltype((rps--))>(pa, L"rps", L"--");\
-	AssertPostfixUnary<decltype((rpcs--))>(pa, L"rpcs", L"--");\
+	AssertPostfixUnary<decltype((NAME--))>(pa, L#NAME, L"--");\
 
-	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+		TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
 #undef TEST_VAR
 }
 
@@ -503,21 +509,15 @@ TEST_CASE(TestPointerArithmetic_Prefix)
 	COMPILE_PROGRAM(program, pa, input);
 
 #define TEST_VAR(NAME)\
-	AssertPrefixUnary<decltype((++ps))>(pa, L"ps", L"++");\
-	AssertPrefixUnary<decltype((++pcs))>(pa, L"pcs", L"++");\
-	AssertPrefixUnary<decltype((++rps))>(pa, L"rps", L"++");\
-	AssertPrefixUnary<decltype((++rpcs))>(pa, L"rpcs", L"++");\
+	AssertPrefixUnary<decltype((++NAME))>(pa, L#NAME, L"++");\
 
-	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+	TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME)\
-	AssertPrefixUnary<decltype((--ps))>(pa, L"ps", L"--");\
-	AssertPrefixUnary<decltype((--pcs))>(pa, L"pcs", L"--");\
-	AssertPrefixUnary<decltype((--rps))>(pa, L"rps", L"--");\
-	AssertPrefixUnary<decltype((--rpcs))>(pa, L"rpcs", L"--");\
+	AssertPrefixUnary<decltype((--NAME))>(pa, L#NAME, L"--");\
 
-	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+	TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
 #undef TEST_VAR
 }
 
@@ -526,30 +526,16 @@ TEST_CASE(TestPointerArithmetic_PI)
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 
-#define TEST_VAR(NAME)\
-	AssertBinary<decltype((ps+NAME))>(pa, L"ps", L#NAME, L"+");\
-	AssertBinary<decltype((pcs+NAME))>(pa, L"pcs", L#NAME, L"+");\
-	AssertBinary<decltype((cps+NAME))>(pa, L"cps", L#NAME, L"+");\
-	AssertBinary<decltype((cpcs+NAME))>(pa, L"cpcs", L#NAME, L"+");\
-	AssertBinary<decltype((rps+NAME))>(pa, L"rps", L#NAME, L"+");\
-	AssertBinary<decltype((rpcs+NAME))>(pa, L"rpcs", L#NAME, L"+");\
-	AssertBinary<decltype((rcps+NAME))>(pa, L"rcps", L#NAME, L"+");\
-	AssertBinary<decltype((rcpcs+NAME))>(pa, L"rcpcs", L#NAME, L"+");\
+#define TEST_VAR(NAME1, NAME2)\
+	AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");\
 
-	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+	TEST_EACH_VAR_PTR_INT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME)\
-	AssertBinary<decltype((ps-NAME))>(pa, L"ps", L#NAME, L"-");\
-	AssertBinary<decltype((pcs-NAME))>(pa, L"pcs", L#NAME, L"-");\
-	AssertBinary<decltype((cps-NAME))>(pa, L"cps", L#NAME, L"-");\
-	AssertBinary<decltype((cpcs-NAME))>(pa, L"cpcs", L#NAME, L"-");\
-	AssertBinary<decltype((rps-NAME))>(pa, L"rps", L#NAME, L"-");\
-	AssertBinary<decltype((rpcs-NAME))>(pa, L"rpcs", L#NAME, L"-");\
-	AssertBinary<decltype((rcps-NAME))>(pa, L"rcps", L#NAME, L"-");\
-	AssertBinary<decltype((rcpcs-NAME))>(pa, L"rcpcs", L#NAME, L"-");\
+#define TEST_VAR(NAME1, NAME2)\
+	AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");\
 
-	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+	TEST_EACH_VAR_PTR_INT(TEST_VAR)
 #undef TEST_VAR
 }
 
@@ -558,17 +544,10 @@ TEST_CASE(TestPointerArithmetic_IP)
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 
-#define TEST_VAR(NAME)\
-	AssertBinary<decltype((NAME+ps))>(pa, L#NAME, L"ps", L"+");\
-	AssertBinary<decltype((NAME+pcs))>(pa, L#NAME, L"pcs", L"+");\
-	AssertBinary<decltype((NAME+cps))>(pa, L#NAME, L"cps", L"+");\
-	AssertBinary<decltype((NAME+cpcs))>(pa, L#NAME, L"cpcs", L"+");\
-	AssertBinary<decltype((NAME+rps))>(pa, L#NAME, L"rps", L"+");\
-	AssertBinary<decltype((NAME+rpcs))>(pa, L#NAME, L"rpcs", L"+");\
-	AssertBinary<decltype((NAME+rcps))>(pa, L#NAME, L"rcps", L"+");\
-	AssertBinary<decltype((NAME+rcpcs))>(pa, L#NAME, L"rcpcs", L"+");\
+#define TEST_VAR(NAME1, NAME2)\
+	AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");\
 
-	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+	TEST_EACH_VAR_INT_PTR(TEST_VAR)
 #undef TEST_VAR
 }
 
@@ -580,7 +559,7 @@ TEST_CASE(TestPointerArithmetic_PP)
 #define TEST_VAR(NAME1, NAME2)\
 	AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");\
 
-	TEST_EACH_VAR_PTR(TEST_VAR)
+	TEST_EACH_VAR_PTR_PTR(TEST_VAR)
 #undef TEST_VAR
 }
 
@@ -612,8 +591,12 @@ TEST_CASE(TestPointerArithmetic_PP)
 #undef TEST_EACH_VAR2_NO_FLOAT
 #undef TEST_EACH_VAR2_
 #undef TEST_EACH_VAR2
+
+#undef TEST_EACH_VAR_PTR_NO_CONST
 #undef TEST_EACH_VAR_PTR_
-#undef TEST_EACH_VAR_PTR
+#undef TEST_EACH_VAR_PTR_INT
+#undef TEST_EACH_VAR_INT_PTR
+#undef TEST_EACH_VAR_PTR_PTR
 
 #undef TEST_DECL_VARS
 #undef TEST_DECL
