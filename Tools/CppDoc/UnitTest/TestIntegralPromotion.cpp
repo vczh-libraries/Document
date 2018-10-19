@@ -473,7 +473,7 @@ TEST_CASE(TestIntegralPromotion_Assignment)
 #undef TEST_VAR
 }
 
-TEST_CASE(TestIntegralPromotion_PostfixPointerArithmetic)
+TEST_CASE(TestPointerArithmetic_Postfix)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
@@ -497,7 +497,7 @@ TEST_CASE(TestIntegralPromotion_PostfixPointerArithmetic)
 #undef TEST_VAR
 }
 
-TEST_CASE(TestIntegralPromotion_PrefixPointerArithmetic)
+TEST_CASE(TestPointerArithmetic_Prefix)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
@@ -521,7 +521,7 @@ TEST_CASE(TestIntegralPromotion_PrefixPointerArithmetic)
 #undef TEST_VAR
 }
 
-TEST_CASE(TestIntegralPromotion_PointerArithmetic_PI)
+TEST_CASE(TestPointerArithmetic_PI)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
@@ -553,7 +553,7 @@ TEST_CASE(TestIntegralPromotion_PointerArithmetic_PI)
 #undef TEST_VAR
 }
 
-TEST_CASE(TestIntegralPromotion_PointerArithmetic_IP)
+TEST_CASE(TestPointerArithmetic_IP)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
@@ -572,7 +572,7 @@ TEST_CASE(TestIntegralPromotion_PointerArithmetic_IP)
 #undef TEST_VAR
 }
 
-TEST_CASE(TestIntegralPromotion_PointerArithmetic_PP)
+TEST_CASE(TestPointerArithmetic_PP)
 {
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
