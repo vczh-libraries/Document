@@ -1044,7 +1044,12 @@ public:
 				TsysRefType rightRefType;
 				auto rightEntity = rightType->GetEntity(rightCV, rightRefType);
 
-				if (leftEntity->GetType() == TsysType::Primitive && rightEntity->GetType() == TsysType::Primitive)
+				auto leftPrim = leftEntity->GetType() == TsysType::Primitive;
+				auto rightPrim = rightEntity->GetType() == TsysType::Primitive;
+				auto leftPtrArr = leftEntity->GetType() == TsysType::Ptr || leftEntity->GetType() == TsysType::Array;
+				auto rightPtrArr = rightEntity->GetType() == TsysType::Ptr || rightEntity->GetType() == TsysType::Array;
+
+				if (leftPrim && rightPrim)
 				{
 					switch (self->op)
 					{
@@ -1144,6 +1149,19 @@ public:
 							AddTemp(result, pa.tsys->PrimitiveOf(primitive));
 						}
 					}
+				}
+				else if (leftPrim && rightPtrArr)
+				{
+					AddTemp(result, rightEntity->GetElement()->PtrOf());
+				}
+				else if (leftPtrArr && rightPrim)
+				{
+					AddTemp(result, leftEntity->GetElement()->PtrOf());
+				}
+				else if (leftPtrArr && rightPtrArr)
+				{
+					// TODO: Platform Specific
+					AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,TsysBytes::_4 }));
 				}
 				else
 				{
