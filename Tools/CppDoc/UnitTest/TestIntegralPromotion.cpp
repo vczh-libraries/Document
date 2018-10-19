@@ -84,6 +84,7 @@ DEFINE_TSYS(unsigned __int16);
 DEFINE_TSYS(unsigned __int32);
 DEFINE_TSYS(unsigned __int64);
 DEFINE_TSYS(unsigned long);
+DEFINE_TSYS(char);
 DEFINE_TSYS(wchar_t);
 DEFINE_TSYS(char16_t);
 DEFINE_TSYS(char32_t);
@@ -101,40 +102,48 @@ Macros
 
 #define TEST_DECL_VARS								\
 	TEST_DECL(										\
-		bool						b		 = 0;	\
-		signed __int8				si8		 = 0;	\
-		signed __int16				si16	 = 0;	\
-		signed __int32				si32	 = 0;	\
-		signed __int64				si64	 = 0;	\
-		unsigned __int8				ui8		 = 0;	\
-		unsigned __int16			ui16	 = 0;	\
-		unsigned __int32			ui32	 = 0;	\
-		unsigned __int64			ui64	 = 0;	\
-		signed char					sc		 = 0;	\
-		unsigned char				uc		 = 0;	\
-		wchar_t						wc		 = 0;	\
-		char16_t					c16		 = 0;	\
-		char32_t					c32		 = 0;	\
-		float						f		 = 0;	\
-		double						d		 = 0;	\
-		long double					ld		 = 0;	\
-		bool				const	cb		 = 0;	\
-		signed __int8		const	csi8	 = 0;	\
-		signed __int16		const	csi16	 = 0;	\
-		signed __int32		const	csi32	 = 0;	\
-		signed __int64		const	csi64	 = 0;	\
-		unsigned __int8		const	cui8	 = 0;	\
-		unsigned __int16	const	cui16	 = 0;	\
-		unsigned __int32	const	cui32	 = 0;	\
-		unsigned __int64	const	cui64	 = 0;	\
-		signed char			const	csc		 = 0;	\
-		unsigned char		const	cuc		 = 0;	\
-		wchar_t				const	cwc		 = 0;	\
-		char16_t			const	cc16	 = 0;	\
-		char32_t			const	cc32	 = 0;	\
-		float				const	cf		 = 0;	\
-		double				const	cd		 = 0;	\
-		long double			const	cld		 = 0;	\
+		bool						b		= 0;	\
+		signed __int8				si8		= 0;	\
+		signed __int16				si16	= 0;	\
+		signed __int32				si32	= 0;	\
+		signed __int64				si64	= 0;	\
+		unsigned __int8				ui8		= 0;	\
+		unsigned __int16			ui16	= 0;	\
+		unsigned __int32			ui32	= 0;	\
+		unsigned __int64			ui64	= 0;	\
+		signed char					sc		= 0;	\
+		unsigned char				uc		= 0;	\
+		wchar_t						wc		= 0;	\
+		char16_t					c16		= 0;	\
+		char32_t					c32		= 0;	\
+		float						f		= 0;	\
+		double						d		= 0;	\
+		long double					ld		= 0;	\
+		bool				const	cb		= 0;	\
+		signed __int8		const	csi8	= 0;	\
+		signed __int16		const	csi16	= 0;	\
+		signed __int32		const	csi32	= 0;	\
+		signed __int64		const	csi64	= 0;	\
+		unsigned __int8		const	cui8	= 0;	\
+		unsigned __int16	const	cui16	= 0;	\
+		unsigned __int32	const	cui32	= 0;	\
+		unsigned __int64	const	cui64	= 0;	\
+		signed char			const	csc		= 0;	\
+		unsigned char		const	cuc		= 0;	\
+		wchar_t				const	cwc		= 0;	\
+		char16_t			const	cc16	= 0;	\
+		char32_t			const	cc32	= 0;	\
+		float				const	cf		= 0;	\
+		double				const	cd		= 0;	\
+		long double			const	cld		= 0;	\
+		char*						ps		= 0;	\
+		char*				const	cps		= 0;	\
+		const char*					pcs		= 0;	\
+		const char*			const	cpcs	= 0;	\
+		char*						&rps	= ps;	\
+		char*				const	&rcps	= cps;	\
+		const char*					&rpcs	= pcs;	\
+		const char*			const	&rcpcs	= cpcs;	\
 	)
 
 #define TEST_EACH_VAR_BOOL(F) F(b)
@@ -188,6 +197,14 @@ Macros
 	TEST_EACH_VAR2_(F, cui8) TEST_EACH_VAR2_(F, cui16) TEST_EACH_VAR2_(F, cui32) TEST_EACH_VAR2_(F, cui64)\
 	TEST_EACH_VAR2_(F, csc) TEST_EACH_VAR2_(F, cuc) TEST_EACH_VAR2_(F, cwc) TEST_EACH_VAR2_(F, cc16) TEST_EACH_VAR2_(F, cc32)\
 	TEST_EACH_VAR2_(F, f) TEST_EACH_VAR2_(F, d) TEST_EACH_VAR2_(F, ld)\
+
+#define TEST_EACH_VAR_PTR_(F, NAME)\
+	F(ps, NAME) F(pcs, NAME) F(cps, NAME) F(cpcs, NAME)\
+	F(rps, NAME) F(rpcs, NAME) F(rcps, NAME) F(rcpcs, NAME)\
+
+#define TEST_EACH_VAR_PTR(F)\
+	TEST_EACH_VAR_PTR_(F, ps) TEST_EACH_VAR_PTR_(F, pcs) TEST_EACH_VAR_PTR_(F, cps) TEST_EACH_VAR_PTR_(F, cpcs)\
+	TEST_EACH_VAR_PTR_(F, rps) TEST_EACH_VAR_PTR_(F, rpcs) TEST_EACH_VAR_PTR_(F, rcps) TEST_EACH_VAR_PTR_(F, rcpcs)\
 
 /***********************************************************************
 Test Cases
@@ -302,7 +319,7 @@ TEST_CASE(TestIntegralPromotion_PrefixUnary)
 }
 
 template<typename T>
-void AssertBinaryUnary(ParsingArguments& pa, const WString& name1, const WString& name2, const WString& op)
+void AssertBinary(ParsingArguments& pa, const WString& name1, const WString& name2, const WString& op)
 {
 	auto input = name1 + op + name2;
 	auto log = L"(" + name1 + L" " + op + L" " + name2 + L")";
@@ -315,35 +332,35 @@ TEST_CASE(TestIntegralPromotion_BinaryIntOp)
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1&&NAME2))>(pa, L#NAME1, L#NAME2, L"&&");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1&&NAME2))>(pa, L#NAME1, L#NAME2, L"&&");
 	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1||NAME2))>(pa, L#NAME1, L#NAME2, L"||");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1||NAME2))>(pa, L#NAME1, L#NAME2, L"||");
 	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1&NAME2))>(pa, L#NAME1, L#NAME2, L"&");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1&NAME2))>(pa, L#NAME1, L#NAME2, L"&");
 	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1|NAME2))>(pa, L#NAME1, L#NAME2, L"|");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1|NAME2))>(pa, L#NAME1, L#NAME2, L"|");
 	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1^NAME2))>(pa, L#NAME1, L#NAME2, L"^");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1^NAME2))>(pa, L#NAME1, L#NAME2, L"^");
 	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1<<NAME2))>(pa, L#NAME1, L#NAME2, L"<<");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1<<NAME2))>(pa, L#NAME1, L#NAME2, L"<<");
 	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1>>NAME2))>(pa, L#NAME1, L#NAME2, L">>");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1>>NAME2))>(pa, L#NAME1, L#NAME2, L">>");
 	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1%NAME2))>(pa, L#NAME1, L#NAME2, L"%");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1%NAME2))>(pa, L#NAME1, L#NAME2, L"%");
 	TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
 #undef TEST_VAR
 }
@@ -353,19 +370,19 @@ TEST_CASE(TestIntegralPromotion_BinaryNumeric)
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");
 	TEST_EACH_VAR2(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");
 	TEST_EACH_VAR2(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1*NAME2))>(pa, L#NAME1, L#NAME2, L"*");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1*NAME2))>(pa, L#NAME1, L#NAME2, L"*");
 	TEST_EACH_VAR2(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME1, NAME2) AssertBinaryUnary<decltype((NAME1/NAME2))>(pa, L#NAME1, L#NAME2, L"/");
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1/NAME2))>(pa, L#NAME1, L#NAME2, L"/");
 	TEST_EACH_VAR2(TEST_VAR)
 #undef TEST_VAR
 }
@@ -375,32 +392,32 @@ TEST_CASE(TestIntegralPromotion_Comparison)
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME==NAME))>(pa, L#NAME, L#NAME, L"==");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME==NAME))>(pa, L#NAME, L#NAME, L"==");
 	TEST_EACH_VAR(TEST_VAR)
 	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME!=NAME))>(pa, L#NAME, L#NAME, L"!=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME!=NAME))>(pa, L#NAME, L#NAME, L"!=");
 	TEST_EACH_VAR(TEST_VAR)
 	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME<NAME))>(pa, L#NAME, L#NAME, L"<");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME<NAME))>(pa, L#NAME, L#NAME, L"<");
 	TEST_EACH_VAR(TEST_VAR)
 	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME<=NAME))>(pa, L#NAME, L#NAME, L"<=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME<=NAME))>(pa, L#NAME, L#NAME, L"<=");
 	TEST_EACH_VAR(TEST_VAR)
 	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME>NAME))>(pa, L#NAME, L#NAME, L">");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME>NAME))>(pa, L#NAME, L#NAME, L">");
 	TEST_EACH_VAR(TEST_VAR)
 	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME>=NAME))>(pa, L#NAME, L#NAME, L">=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME>=NAME))>(pa, L#NAME, L#NAME, L">=");
 	TEST_EACH_VAR(TEST_VAR)
 	TEST_EACH_VAR_CONST(TEST_VAR)
 #undef TEST_VAR
@@ -411,48 +428,159 @@ TEST_CASE(TestIntegralPromotion_Assignment)
 	TEST_DECL_VARS;
 	COMPILE_PROGRAM(program, pa, input);
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME=NAME))>(pa, L#NAME, L#NAME, L"=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME=NAME))>(pa, L#NAME, L#NAME, L"=");
 	TEST_EACH_VAR(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME*=NAME))>(pa, L#NAME, L#NAME, L"*=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME*=NAME))>(pa, L#NAME, L#NAME, L"*=");
 	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME/=NAME))>(pa, L#NAME, L#NAME, L"/=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME/=NAME))>(pa, L#NAME, L#NAME, L"/=");
 	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME%=NAME))>(pa, L#NAME, L#NAME, L"%=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME%=NAME))>(pa, L#NAME, L#NAME, L"%=");
 	TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME+=NAME))>(pa, L#NAME, L#NAME, L"+=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME+=NAME))>(pa, L#NAME, L#NAME, L"+=");
 	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME-=NAME))>(pa, L#NAME, L#NAME, L"-=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME-=NAME))>(pa, L#NAME, L#NAME, L"-=");
 	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME<<=NAME))>(pa, L#NAME, L#NAME, L"<<=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME<<=NAME))>(pa, L#NAME, L#NAME, L"<<=");
 	TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME>>=NAME))>(pa, L#NAME, L#NAME, L">>=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME>>=NAME))>(pa, L#NAME, L#NAME, L">>=");
 	TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME&=NAME))>(pa, L#NAME, L#NAME, L"&=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME&=NAME))>(pa, L#NAME, L#NAME, L"&=");
 	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME|=NAME))>(pa, L#NAME, L#NAME, L"|=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME|=NAME))>(pa, L#NAME, L#NAME, L"|=");
 	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
 #undef TEST_VAR
 
-#define TEST_VAR(NAME) AssertBinaryUnary<decltype((NAME^=NAME))>(pa, L#NAME, L#NAME, L"^=");
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME^=NAME))>(pa, L#NAME, L#NAME, L"^=");
 	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+}
+
+TEST_CASE(TestIntegralPromotion_PostfixPointerArithmetic)
+{
+	TEST_DECL_VARS;
+	COMPILE_PROGRAM(program, pa, input);
+
+#define TEST_VAR(NAME)\
+	AssertPostfixUnary<decltype((ps++))>(pa, L"ps", L"++");\
+	AssertPostfixUnary<decltype((pcs++))>(pa, L"pcs", L"++");\
+	AssertPostfixUnary<decltype((rps++))>(pa, L"rps", L"++");\
+	AssertPostfixUnary<decltype((rpcs++))>(pa, L"rpcs", L"++");\
+
+	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME)\
+	AssertPostfixUnary<decltype((ps--))>(pa, L"ps", L"--");\
+	AssertPostfixUnary<decltype((pcs--))>(pa, L"pcs", L"--");\
+	AssertPostfixUnary<decltype((rps--))>(pa, L"rps", L"--");\
+	AssertPostfixUnary<decltype((rpcs--))>(pa, L"rpcs", L"--");\
+
+	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+}
+
+TEST_CASE(TestIntegralPromotion_PrefixPointerArithmetic)
+{
+	TEST_DECL_VARS;
+	COMPILE_PROGRAM(program, pa, input);
+
+#define TEST_VAR(NAME)\
+	AssertPrefixUnary<decltype((++ps))>(pa, L"ps", L"++");\
+	AssertPrefixUnary<decltype((++pcs))>(pa, L"pcs", L"++");\
+	AssertPrefixUnary<decltype((++rps))>(pa, L"rps", L"++");\
+	AssertPrefixUnary<decltype((++rpcs))>(pa, L"rpcs", L"++");\
+
+	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME)\
+	AssertPrefixUnary<decltype((--ps))>(pa, L"ps", L"--");\
+	AssertPrefixUnary<decltype((--pcs))>(pa, L"pcs", L"--");\
+	AssertPrefixUnary<decltype((--rps))>(pa, L"rps", L"--");\
+	AssertPrefixUnary<decltype((--rpcs))>(pa, L"rpcs", L"--");\
+
+	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+}
+
+TEST_CASE(TestIntegralPromotion_PointerArithmetic_PI)
+{
+	TEST_DECL_VARS;
+	COMPILE_PROGRAM(program, pa, input);
+
+#define TEST_VAR(NAME)\
+	AssertBinary<decltype((ps+NAME))>(pa, L"ps", L#NAME, L"+");\
+	AssertBinary<decltype((pcs+NAME))>(pa, L"pcs", L#NAME, L"+");\
+	AssertBinary<decltype((cps+NAME))>(pa, L"cps", L#NAME, L"+");\
+	AssertBinary<decltype((cpcs+NAME))>(pa, L"cpcs", L#NAME, L"+");\
+	AssertBinary<decltype((rps+NAME))>(pa, L"rps", L#NAME, L"+");\
+	AssertBinary<decltype((rpcs+NAME))>(pa, L"rpcs", L#NAME, L"+");\
+	AssertBinary<decltype((rcps+NAME))>(pa, L"rcps", L#NAME, L"+");\
+	AssertBinary<decltype((rcpcs+NAME))>(pa, L"rcpcs", L#NAME, L"+");\
+
+	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME)\
+	AssertBinary<decltype((ps-NAME))>(pa, L"ps", L#NAME, L"-");\
+	AssertBinary<decltype((pcs-NAME))>(pa, L"pcs", L#NAME, L"-");\
+	AssertBinary<decltype((cps-NAME))>(pa, L"cps", L#NAME, L"-");\
+	AssertBinary<decltype((cpcs-NAME))>(pa, L"cpcs", L#NAME, L"-");\
+	AssertBinary<decltype((rps-NAME))>(pa, L"rps", L#NAME, L"-");\
+	AssertBinary<decltype((rpcs-NAME))>(pa, L"rpcs", L#NAME, L"-");\
+	AssertBinary<decltype((rcps-NAME))>(pa, L"rcps", L#NAME, L"-");\
+	AssertBinary<decltype((rcpcs-NAME))>(pa, L"rcpcs", L#NAME, L"-");\
+
+	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+}
+
+TEST_CASE(TestIntegralPromotion_PointerArithmetic_IP)
+{
+	TEST_DECL_VARS;
+	COMPILE_PROGRAM(program, pa, input);
+
+#define TEST_VAR(NAME)\
+	AssertBinary<decltype((NAME+ps))>(pa, L#NAME, L"ps", L"+");\
+	AssertBinary<decltype((NAME+pcs))>(pa, L#NAME, L"pcs", L"+");\
+	AssertBinary<decltype((NAME+cps))>(pa, L#NAME, L"cps", L"+");\
+	AssertBinary<decltype((NAME+cpcs))>(pa, L#NAME, L"cpcs", L"+");\
+	AssertBinary<decltype((NAME+rps))>(pa, L#NAME, L"rps", L"+");\
+	AssertBinary<decltype((NAME+rpcs))>(pa, L#NAME, L"rpcs", L"+");\
+	AssertBinary<decltype((NAME+rcps))>(pa, L#NAME, L"rcps", L"+");\
+	AssertBinary<decltype((NAME+rcpcs))>(pa, L#NAME, L"rcpcs", L"+");\
+
+	TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+}
+
+TEST_CASE(TestIntegralPromotion_PointerArithmetic_PP)
+{
+	TEST_DECL_VARS;
+	COMPILE_PROGRAM(program, pa, input);
+
+#define TEST_VAR(NAME1, NAME2)\
+	AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");\
+
+	TEST_EACH_VAR_PTR(TEST_VAR)
 #undef TEST_VAR
 }
 
@@ -484,6 +612,8 @@ TEST_CASE(TestIntegralPromotion_Assignment)
 #undef TEST_EACH_VAR2_NO_FLOAT
 #undef TEST_EACH_VAR2_
 #undef TEST_EACH_VAR2
+#undef TEST_EACH_VAR_PTR_
+#undef TEST_EACH_VAR_PTR
 
 #undef TEST_DECL_VARS
 #undef TEST_DECL
