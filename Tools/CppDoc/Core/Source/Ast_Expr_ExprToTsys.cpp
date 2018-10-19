@@ -1007,6 +1007,15 @@ public:
 					break;
 				}
 			}
+			else if (entity->GetType() == TsysType::Array)
+			{
+				switch (self->op)
+				{
+				case CppPrefixUnaryOp::Dereference:
+					AddTemp(result, entity->GetElement()->LRefOf());
+					break;
+				}
+			}
 			else
 			{
 				throw 0;

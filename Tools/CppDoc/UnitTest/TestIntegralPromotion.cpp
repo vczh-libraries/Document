@@ -100,50 +100,54 @@ Macros
 
 #define TEST_DECL(SOMETHING) SOMETHING auto input = L#SOMETHING
 
-#define TEST_DECL_VARS								\
-	TEST_DECL(										\
-		bool						b		= 0;	\
-		signed __int8				si8		= 0;	\
-		signed __int16				si16	= 0;	\
-		signed __int32				si32	= 0;	\
-		signed __int64				si64	= 0;	\
-		unsigned __int8				ui8		= 0;	\
-		unsigned __int16			ui16	= 0;	\
-		unsigned __int32			ui32	= 0;	\
-		unsigned __int64			ui64	= 0;	\
-		signed char					sc		= 0;	\
-		unsigned char				uc		= 0;	\
-		wchar_t						wc		= 0;	\
-		char16_t					c16		= 0;	\
-		char32_t					c32		= 0;	\
-		float						f		= 0;	\
-		double						d		= 0;	\
-		long double					ld		= 0;	\
-		bool				const	cb		= 0;	\
-		signed __int8		const	csi8	= 0;	\
-		signed __int16		const	csi16	= 0;	\
-		signed __int32		const	csi32	= 0;	\
-		signed __int64		const	csi64	= 0;	\
-		unsigned __int8		const	cui8	= 0;	\
-		unsigned __int16	const	cui16	= 0;	\
-		unsigned __int32	const	cui32	= 0;	\
-		unsigned __int64	const	cui64	= 0;	\
-		signed char			const	csc		= 0;	\
-		unsigned char		const	cuc		= 0;	\
-		wchar_t				const	cwc		= 0;	\
-		char16_t			const	cc16	= 0;	\
-		char32_t			const	cc32	= 0;	\
-		float				const	cf		= 0;	\
-		double				const	cd		= 0;	\
-		long double			const	cld		= 0;	\
-		char*						ps		= 0;	\
-		char*				const	cps		= 0;	\
-		const char*					pcs		= 0;	\
-		const char*			const	cpcs	= 0;	\
-		char*						&rps	= ps;	\
-		char*				const	&rcps	= cps;	\
-		const char*					&rpcs	= pcs;	\
-		const char*			const	&rcpcs	= cpcs;	\
+#define TEST_DECL_VARS									\
+	TEST_DECL(											\
+		bool						b			= 0;	\
+		signed __int8				si8			= 0;	\
+		signed __int16				si16		= 0;	\
+		signed __int32				si32		= 0;	\
+		signed __int64				si64		= 0;	\
+		unsigned __int8				ui8			= 0;	\
+		unsigned __int16			ui16		= 0;	\
+		unsigned __int32			ui32		= 0;	\
+		unsigned __int64			ui64		= 0;	\
+		signed char					sc			= 0;	\
+		unsigned char				uc			= 0;	\
+		wchar_t						wc			= 0;	\
+		char16_t					c16			= 0;	\
+		char32_t					c32			= 0;	\
+		float						f			= 0;	\
+		double						d			= 0;	\
+		long double					ld			= 0;	\
+		bool				const	cb			= 0;	\
+		signed __int8		const	csi8		= 0;	\
+		signed __int16		const	csi16		= 0;	\
+		signed __int32		const	csi32		= 0;	\
+		signed __int64		const	csi64		= 0;	\
+		unsigned __int8		const	cui8		= 0;	\
+		unsigned __int16	const	cui16		= 0;	\
+		unsigned __int32	const	cui32		= 0;	\
+		unsigned __int64	const	cui64		= 0;	\
+		signed char			const	csc			= 0;	\
+		unsigned char		const	cuc			= 0;	\
+		wchar_t				const	cwc			= 0;	\
+		char16_t			const	cc16		= 0;	\
+		char32_t			const	cc32		= 0;	\
+		float				const	cf			= 0;	\
+		double				const	cd			= 0;	\
+		long double			const	cld			= 0;	\
+		char*						ps			= 0;	\
+		char*				const	cps			= 0;	\
+		const char*					pcs			= 0;	\
+		const char*			const	cpcs		= 0;	\
+		char*						&rps		= ps;	\
+		char*				const	&rcps		= cps;	\
+		const char*					&rpcs		= pcs;	\
+		const char*			const	&rcpcs		= cpcs;	\
+		char						ars		[1]	{0};	\
+		const char					arcs	[1]	{0};	\
+		char						(&rars)	[1]	= ars;	\
+		const char					(&rarcs)[1]	= arcs;	\
 	)
 
 #define TEST_EACH_VAR_BOOL(F) F(b)
@@ -199,6 +203,7 @@ Macros
 	TEST_EACH_VAR2_(F, f) TEST_EACH_VAR2_(F, d) TEST_EACH_VAR2_(F, ld)\
 
 #define TEST_EACH_VAR_PTR_NO_CONST(F) F(ps) F(pcs) F(rps) F(rpcs)
+#define TEST_EACH_VAR_ARR(F) F(ars) F(arcs) F(rars) F(rarcs)
 
 #define TEST_EACH_VAR_PTR_(F, NAME)\
 	F(ps, NAME) F(pcs, NAME) F(cps, NAME) F(cpcs, NAME)\
@@ -525,6 +530,12 @@ TEST_CASE(TestPointerArithmetic_Prefix)
 
 	TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
 #undef TEST_VAR
+
+#define TEST_VAR(NAME)\
+	AssertPrefixUnary<decltype((*NAME))>(pa, L#NAME, L"*");\
+
+	TEST_EACH_VAR_ARR(TEST_VAR)
+#undef TEST_VAR
 }
 
 TEST_CASE(TestPointerArithmetic_PI)
@@ -599,6 +610,7 @@ TEST_CASE(TestPointerArithmetic_PP)
 #undef TEST_EACH_VAR2
 
 #undef TEST_EACH_VAR_PTR_NO_CONST
+#undef TEST_EACH_VAR_ARR
 #undef TEST_EACH_VAR_PTR_
 #undef TEST_EACH_VAR_PTR_INT
 #undef TEST_EACH_VAR_INT_PTR
