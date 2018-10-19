@@ -877,7 +877,7 @@ public:
 			}
 			else if (entity->GetType() == TsysType::Ptr)
 			{
-				AddTemp(result, type);
+				AddTemp(result, entity);
 			}
 			else
 			{
@@ -1000,7 +1000,7 @@ public:
 				{
 				case CppPrefixUnaryOp::Increase:
 				case CppPrefixUnaryOp::Decrease:
-					AddTemp(result, type);
+					AddTemp(result, type->LRefOf());
 					break;
 				case CppPrefixUnaryOp::Dereference:
 					AddTemp(result, entity->GetElement()->LRefOf());

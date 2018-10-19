@@ -499,7 +499,7 @@ TEST_CASE(TestPointerArithmetic_Postfix)
 #define TEST_VAR(NAME)\
 	AssertPostfixUnary<decltype((NAME--))>(pa, L#NAME, L"--");\
 
-		TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
+	TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
 #undef TEST_VAR
 }
 
@@ -516,6 +516,12 @@ TEST_CASE(TestPointerArithmetic_Prefix)
 
 #define TEST_VAR(NAME)\
 	AssertPrefixUnary<decltype((--NAME))>(pa, L#NAME, L"--");\
+
+	TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
+#undef TEST_VAR
+
+#define TEST_VAR(NAME)\
+	AssertPrefixUnary<decltype((*NAME))>(pa, L#NAME, L"*");\
 
 	TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
 #undef TEST_VAR
