@@ -435,6 +435,88 @@ TEST_CASE(TestParseExpr_FFA_Qualifier_OfExplicitOrImplicitThisExpr)
 
 TEST_CASE(TestParseExpr_AddressOfArrayFunctionMemberPointer)
 {
+	auto input = LR"(
+struct X
+{
+	static int A;
+	int B;
+	static void C();
+	void D();
+};
+
+struct Y : X
+{
+};
+
+void E();
+
+auto			_A1 = &Y::A;
+auto			_B1 = &Y::B;
+auto			_C1 = &Y::C;
+auto			_D1 = &Y::D;
+auto			_E1 = &E;
+
+decltype(auto)	_A2 = &Y::A;
+decltype(auto)	_B2 = &Y::B;
+decltype(auto)	_C2 = &Y::C;
+decltype(auto)	_D2 = &Y::D;
+decltype(auto)	_E2 = &E;
+
+decltype(&Y::A)	_A3[1] = &Y::A;
+decltype(&Y::B)	_B3[1] = &Y::B;
+decltype(&Y::C)	_C3[1] = &Y::C;
+decltype(&Y::D)	_D3[1] = &Y::D;
+decltype(&E)	_E3[1] = &E;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"Y::A",			L"Y :: A",				L"__int32 $L",						pa);
+	AssertExpr(L"Y::B",			L"Y :: B",				L"__int32 (::X ::) * $PR",			pa);
+	AssertExpr(L"Y::C",			L"Y :: C",				L"__int32 () * $PR",				pa);
+	AssertExpr(L"Y::D",			L"Y :: D",				L"__int32 () (::X ::) * $PR",		pa);
+	AssertExpr(L"E",			L"E",					L"__int32 () * $PR",				pa);
+
+	AssertExpr(L"&Y::A",		L"(& Y :: A)",			L"__int32 * $PR",					pa);
+	AssertExpr(L"&Y::B",		L"(& Y :: B)",			L"__int32 (::X ::) * $PR",			pa);
+	AssertExpr(L"&Y::C",		L"(& Y :: C)",			L"__int32 () * $PR",				pa);
+	AssertExpr(L"&Y::D",		L"(& Y :: D)",			L"__int32 () (::X ::) * $PR",		pa);
+	AssertExpr(L"&E",			L"(& E)",				L"__int32 () * $PR",				pa);
+
+	AssertExpr(L"_A1",			L"_A1",					L"__int32 * $L",					pa);
+	AssertExpr(L"_B1",			L"_B1",					L"__int32 (::X ::) * $PR",			pa);
+	AssertExpr(L"_C1",			L"_C1",					L"__int32 () * $L",					pa);
+	AssertExpr(L"_D1",			L"_D1",					L"__int32 () (::X ::) * $L",		pa);
+	AssertExpr(L"_E1",			L"_E1",					L"__int32 () * $L",					pa);
+
+	AssertExpr(L"&_A1",			L"(& _A1)",				L"__int32 * * $PR",					pa);
+	AssertExpr(L"&_B1",			L"(& _B1)",				L"__int32 (::X ::) * * $PR",		pa);
+	AssertExpr(L"&_C1",			L"(& _C1)",				L"__int32 () * * $PR",				pa);
+	AssertExpr(L"&_D1",			L"(& _D1)",				L"__int32 () (::X ::) * * $PR",		pa);
+	AssertExpr(L"&_E1",			L"(& _E1)",				L"__int32 () * * $PR",				pa);
+
+	AssertExpr(L"_A1",			L"_A1",					L"__int32 * $L",					pa);
+	AssertExpr(L"_B1",			L"_B1",					L"__int32 (::X ::) * $L",			pa);
+	AssertExpr(L"_C1",			L"_C1",					L"__int32 () * $L",					pa);
+	AssertExpr(L"_D1",			L"_D1",					L"__int32 () (::X ::) * $L",		pa);
+	AssertExpr(L"_E1",			L"_E1",					L"__int32 () * $L",					pa);
+
+	AssertExpr(L"&_A1",			L"(& _A2)",				L"__int32 * * $PR",					pa);
+	AssertExpr(L"&_B1",			L"(& _B2)",				L"__int32 (::X ::) * * $PR",		pa);
+	AssertExpr(L"&_C1",			L"(& _C2)",				L"__int32 () * * $PR",				pa);
+	AssertExpr(L"&_D1",			L"(& _D2)",				L"__int32 () (::X ::) * * $PR",		pa);
+	AssertExpr(L"&_E1",			L"(& _E2)",				L"__int32 () * * $PR",				pa);
+
+	AssertExpr(L"_A3",			L"_A3",					L"__int32 * [] $L",					pa);
+	AssertExpr(L"_B3",			L"_B3",					L"__int32 (::X ::) * [] $L",		pa);
+	AssertExpr(L"_C3",			L"_C3",					L"__int32 () * [] $L",				pa);
+	AssertExpr(L"_D3",			L"_D3",					L"__int32 () (::X ::) * [] $L",		pa);
+	AssertExpr(L"_E3",			L"_E3",					L"__int32 () * [] $L",				pa);
+
+	AssertExpr(L"&_A3",			L"(& _A3)",				L"__int32 * *$PR",					pa);
+	AssertExpr(L"&_B3",			L"(& _B3)",				L"__int32 (::X ::) * *$PR",			pa);
+	AssertExpr(L"&_C3",			L"(& _C3)",				L"__int32 () * *$PR",				pa);
+	AssertExpr(L"&_D3",			L"(& _D3)",				L"__int32 () (::X ::) * *$PR",		pa);
+	AssertExpr(L"&_E3",			L"(& _E3)",				L"__int32 () * *$PR",				pa);
 }
 
 TEST_CASE(TestParseExpr_EnumAndEnumItem)
