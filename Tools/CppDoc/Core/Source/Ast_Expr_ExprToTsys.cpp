@@ -161,7 +161,7 @@ public:
 						{
 							if (classScope)
 							{
-								AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope) });
+								AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope)->PtrOf() });
 							}
 							else
 							{

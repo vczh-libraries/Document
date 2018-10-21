@@ -146,7 +146,7 @@ int z2(Z);
 				ASSERT_SYMBOL(1, L"u2", 0, 5, VariableDeclaration, 10, 4)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"::Z::u2",		L"__root :: Z :: u2",	L"::a::X::Y (::a::X ::) $PR",				pa);
+		AssertExpr(L"::Z::u2",		L"__root :: Z :: u2",	L"::a::X::Y (::a::X ::) * $PR",				pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -440,15 +440,15 @@ struct X
 {
 	static int A;
 	int B;
-	static void C();
-	void D();
+	static int C();
+	int D();
 };
 
 struct Y : X
 {
 };
 
-void E();
+int E();
 
 auto			_A1 = &Y::A;
 auto			_B1 = &Y::B;
