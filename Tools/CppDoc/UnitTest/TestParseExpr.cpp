@@ -494,17 +494,17 @@ decltype(&E)	_E3[1] = &E;
 	AssertExpr(L"&_D1",			L"(& _D1)",				L"__int32 () (::X ::) * * $PR",		pa);
 	AssertExpr(L"&_E1",			L"(& _E1)",				L"__int32 () * * $PR",				pa);
 
-	AssertExpr(L"_A1",			L"_A1",					L"__int32 * $L",					pa);
-	AssertExpr(L"_B1",			L"_B1",					L"__int32 (::X ::) * $L",			pa);
-	AssertExpr(L"_C1",			L"_C1",					L"__int32 () * $L",					pa);
-	AssertExpr(L"_D1",			L"_D1",					L"__int32 () (::X ::) * $L",		pa);
-	AssertExpr(L"_E1",			L"_E1",					L"__int32 () * $L",					pa);
+	AssertExpr(L"_A2",			L"_A2",					L"__int32 * $L",					pa);
+	AssertExpr(L"_B2",			L"_B2",					L"__int32 (::X ::) * $L",			pa);
+	AssertExpr(L"_C2",			L"_C2",					L"__int32 () * $L",					pa);
+	AssertExpr(L"_D2",			L"_D2",					L"__int32 () (::X ::) * $L",		pa);
+	AssertExpr(L"_E2",			L"_E2",					L"__int32 () * $L",					pa);
 
-	AssertExpr(L"&_A1",			L"(& _A2)",				L"__int32 * * $PR",					pa);
-	AssertExpr(L"&_B1",			L"(& _B2)",				L"__int32 (::X ::) * * $PR",		pa);
-	AssertExpr(L"&_C1",			L"(& _C2)",				L"__int32 () * * $PR",				pa);
-	AssertExpr(L"&_D1",			L"(& _D2)",				L"__int32 () (::X ::) * * $PR",		pa);
-	AssertExpr(L"&_E1",			L"(& _E2)",				L"__int32 () * * $PR",				pa);
+	AssertExpr(L"&_A2",			L"(& _A2)",				L"__int32 * * $PR",					pa);
+	AssertExpr(L"&_B2",			L"(& _B2)",				L"__int32 (::X ::) * * $PR",		pa);
+	AssertExpr(L"&_C2",			L"(& _C2)",				L"__int32 () * * $PR",				pa);
+	AssertExpr(L"&_D2",			L"(& _D2)",				L"__int32 () (::X ::) * * $PR",		pa);
+	AssertExpr(L"&_E2",			L"(& _E2)",				L"__int32 () * * $PR",				pa);
 
 	AssertExpr(L"_A3",			L"_A3",					L"__int32 * [] $L",					pa);
 	AssertExpr(L"_B3",			L"_B3",					L"__int32 (::X ::) * [] $L",		pa);

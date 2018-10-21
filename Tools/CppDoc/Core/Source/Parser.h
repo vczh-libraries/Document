@@ -16,9 +16,11 @@ class Symbol : public Object
 public:
 	Symbol*					parent = nullptr;
 	WString					name;
-	List<Ptr<Declaration>>	decls;	// only namespaces share symbols
-	Ptr<Stat>				stat;	// if this scope is created by a statement
+	List<Ptr<Declaration>>	decls;			// only namespaces share symbols
+	Ptr<Stat>				stat;			// if this scope is created by a statement
 	SymbolGroup				children;
+
+	Ptr<TypeTsysList>		resolvedTypes;	// only for Forward(Variable|Function)Declaration of which has a pending type
 
 	bool					isForwardDeclaration = false;
 	Symbol*					forwardDeclarationRoot = nullptr;

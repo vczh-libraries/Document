@@ -615,7 +615,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				NAME->needResolveTypeFromInitializer = needResolveTypeFromInitializer\
 
 				bool needResolveTypeFromInitializer = IsPendingType(declarator->type);
-				if (needResolveTypeFromInitializer && !declarator->initializer)
+				if (needResolveTypeFromInitializer && (!declarator->initializer || declarator->initializer->initializerType != InitializerType::Equal))
 				{
 					throw StopParsingException(cursor);
 				}

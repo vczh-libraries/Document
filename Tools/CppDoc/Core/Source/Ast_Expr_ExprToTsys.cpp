@@ -146,7 +146,30 @@ public:
 					TypeTsysList candidates;
 					if (varDecl->needResolveTypeFromInitializer)
 					{
-						throw 0;
+						if (!symbol->resolvedTypes)
+						{
+							symbol->resolvedTypes = MakePtr<TypeTsysList>();
+							if (auto rootVarDecl = varDecl.Cast<VariableDeclaration>())
+							{
+								ExprTsysList types;
+								ParsingArguments newPa(pa, symbol->parent);
+								ExprToTsys(newPa, rootVarDecl->initializer->arguments[0], types);
+								for (vint k = 0; k < types.Count(); k++)
+								{
+									auto exprType = types[k];
+									auto exprTsys = exprType.tsys;
+									if (exprType.type == ExprTsysType::LValue && rootVarDecl->initializer->arguments[0].Cast<ParenthesisExpr>())
+									{
+										exprTsys = exprTsys->LRefOf();
+									}
+									if (!symbol->resolvedTypes->Contains(exprTsys))
+									{
+										symbol->resolvedTypes->Add(exprTsys);
+									}
+								}
+							}
+						}
+						CopyFrom(candidates, *symbol->resolvedTypes.Obj());
 					}
 					else
 					{
