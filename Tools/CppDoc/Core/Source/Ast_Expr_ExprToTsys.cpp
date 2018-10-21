@@ -153,8 +153,27 @@ public:
 							{
 								auto declType = MakePtr<DeclType>();
 								declType->expr = rootVarDecl->initializer->arguments[0];
+
+								TypeTsysList types;
 								ParsingArguments newPa(pa, symbol->parent);
-								TypeToTsys(newPa, declType, *symbol->resolvedTypes.Obj());
+								TypeToTsys(newPa, declType, types);
+
+								for (vint k = 0; k < types.Count(); k++)
+								{
+									auto type = types[k];
+
+									if (auto primitiveType = varDecl->type.Cast<PrimitiveType>())
+									{
+										TsysCV cv;
+										TsysRefType refType;
+										type = type->GetEntity(cv, refType);
+									}
+
+									if (!symbol->resolvedTypes->Contains(type))
+									{
+										symbol->resolvedTypes->Add(type);
+									}
+								}
 							}
 						}
 						CopyFrom(candidates, *symbol->resolvedTypes.Obj());

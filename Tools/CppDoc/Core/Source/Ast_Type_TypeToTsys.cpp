@@ -213,6 +213,10 @@ public:
 			for (vint i = 0; i < types.Count(); i++)
 			{
 				auto exprTsys = types[i].tsys;
+				if (exprTsys->GetType() == TsysType::Zero)
+				{
+					exprTsys = pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,TsysBytes::_4 });
+				}
 				if (!result.Contains(exprTsys))
 				{
 					result.Add(exprTsys);

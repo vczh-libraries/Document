@@ -522,7 +522,7 @@ decltype(&E)	_E3[1] = &E;
 TEST_CASE(TestParseExpr_DeclType_Var)
 {
 	auto input = LR"(
-conjst int		x;
+const int		x;
 auto			a1 = 0;
 decltype(auto)	b1 = 0;
 decltype(0)		c1 = 0;
@@ -538,12 +538,12 @@ decltype((x))	c3 = (x);
 	AssertExpr(L"a1",			L"a1",				L"__int32 $L",						pa);
 	AssertExpr(L"b1",			L"b1",				L"__int32 $L",						pa);
 	AssertExpr(L"c1",			L"c1",				L"__int32 $L",						pa);
-	AssertExpr(L"a1",			L"a1",				L"__int32 const $L",				pa);
-	AssertExpr(L"b1",			L"b1",				L"__int32 const $L",				pa);
-	AssertExpr(L"c1",			L"c1",				L"__int32 const $L",				pa);
-	AssertExpr(L"a1",			L"a1",				L"__int32 const $L",				pa);
-	AssertExpr(L"b1",			L"b1",				L"__int32 const & $L",				pa);
-	AssertExpr(L"c1",			L"c1",				L"__int32 const & $L",				pa);
+	AssertExpr(L"a2",			L"a2",				L"__int32 $L",						pa);
+	AssertExpr(L"b2",			L"b2",				L"__int32 const $L",				pa);
+	AssertExpr(L"c2",			L"c2",				L"__int32 const $L",				pa);
+	AssertExpr(L"a3",			L"a3",				L"__int32 $L",						pa);
+	AssertExpr(L"b3",			L"b3",				L"__int32 const & $L",				pa);
+	AssertExpr(L"c3",			L"c3",				L"__int32 const & $L",				pa);
 }
 
 TEST_CASE(TestParseExpr_DeclType_Func)
