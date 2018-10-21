@@ -863,6 +863,11 @@ public:
 			TsysRefType refType;
 			auto entity = type->GetEntity(cv, refType);
 
+			if (entity->GetType() == TsysType::Decl)
+			{
+				throw 0;
+			}
+
 			if (entity->GetType()==TsysType::Primitive)
 			{
 				auto primitive = entity->GetPrimitive();
@@ -878,10 +883,6 @@ public:
 			else if (entity->GetType() == TsysType::Ptr)
 			{
 				AddTemp(result, entity);
-			}
-			else
-			{
-				throw 0;
 			}
 		}
 	}
@@ -953,72 +954,58 @@ public:
 			TsysRefType refType;
 			auto entity = type->GetEntity(cv, refType);
 
-			if (entity->GetType() == TsysType::Primitive)
+			if (entity->GetType() == TsysType::Decl)
 			{
-				switch (self->op)
-				{
-				case CppPrefixUnaryOp::Increase:
-				case CppPrefixUnaryOp::Decrease:
-					AddTemp(result, type->LRefOf());
-					break;
-				case CppPrefixUnaryOp::Revert:
-				case CppPrefixUnaryOp::Positive:
-				case CppPrefixUnaryOp::Negative:
-					{
-						auto primitive = entity->GetPrimitive();
-						Promote(primitive);
+				throw 0;
+			}
 
-						auto promotedEntity = pa.tsys->PrimitiveOf(primitive);
-						if (promotedEntity == entity && primitive.type != TsysPrimitiveType::Float)
-						{
-							AddTemp(result, pa.tsys->PrimitiveOf(primitive)->CVOf(cv));
-						}
-						else
-						{
-							AddTemp(result, pa.tsys->PrimitiveOf(primitive));
-						}
-					}
-					break;
-				case CppPrefixUnaryOp::Not:
-					AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool, TsysBytes::_1 }));
-					break;
-				case CppPrefixUnaryOp::AddressOf:
-					if (type->GetType() == TsysType::LRef)
+			switch (self->op)
+			{
+			case CppPrefixUnaryOp::Increase:
+			case CppPrefixUnaryOp::Decrease:
+				AddTemp(result, type->LRefOf());
+				break;
+			case CppPrefixUnaryOp::Revert:
+			case CppPrefixUnaryOp::Positive:
+			case CppPrefixUnaryOp::Negative:
+				{
+					auto primitive = entity->GetPrimitive();
+					Promote(primitive);
+
+					auto promotedEntity = pa.tsys->PrimitiveOf(primitive);
+					if (promotedEntity == entity && primitive.type != TsysPrimitiveType::Float)
 					{
-						AddTemp(result, type->GetElement()->PtrOf());
+						AddTemp(result, pa.tsys->PrimitiveOf(primitive)->CVOf(cv));
 					}
 					else
 					{
-						AddTemp(result, type->PtrOf());
+						AddTemp(result, pa.tsys->PrimitiveOf(primitive));
 					}
-					break;
 				}
-			}
-			else if (entity->GetType() == TsysType::Ptr)
-			{
-				switch (self->op)
+				break;
+			case CppPrefixUnaryOp::Not:
+				AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool, TsysBytes::_1 }));
+				break;
+			case CppPrefixUnaryOp::AddressOf:
+				if (refType == TsysRefType::None && entity->GetType() == TsysType::Ptr && entity->GetElement()->GetType() == TsysType::Member && self->operand.Cast<ChildExpr>())
 				{
-				case CppPrefixUnaryOp::Increase:
-				case CppPrefixUnaryOp::Decrease:
-					AddTemp(result, type->LRefOf());
-					break;
-				case CppPrefixUnaryOp::Dereference:
-					AddTemp(result, entity->GetElement()->LRefOf());
-					break;
+					AddTemp(result, type);
 				}
-			}
-			else if (entity->GetType() == TsysType::Array)
-			{
-				switch (self->op)
+				else if (type->GetType() == TsysType::LRef)
 				{
-				case CppPrefixUnaryOp::Dereference:
-					AddTemp(result, entity->GetElement()->LRefOf());
-					break;
+					AddTemp(result, type->GetElement()->PtrOf());
 				}
-			}
-			else
-			{
-				throw 0;
+				else
+				{
+					AddTemp(result, type->PtrOf());
+				}
+				break;
+			case CppPrefixUnaryOp::Dereference:
+				if (entity->GetType() == TsysType::Ptr || entity->GetType() == TsysType::Array)
+				{
+					AddTemp(result, entity->GetElement()->LRefOf());
+				}
+				break;
 			}
 		}
 	}
@@ -1028,7 +1015,6 @@ public:
 		ExprTsysList leftTypes, rightTypes;
 		ExprToTsys(pa, self->left, leftTypes);
 		ExprToTsys(pa, self->right, rightTypes);
-
 
 		for (vint i = 0; i < leftTypes.Count(); i++)
 		{
@@ -1043,6 +1029,11 @@ public:
 				TsysCV rightCV;
 				TsysRefType rightRefType;
 				auto rightEntity = rightType->GetEntity(rightCV, rightRefType);
+
+				if (leftEntity->GetType() == TsysType::Decl || rightEntity->GetType() == TsysType::Decl)
+				{
+					throw 0;
+				}
 
 				auto leftPrim = leftEntity->GetType() == TsysType::Primitive;
 				auto rightPrim = rightEntity->GetType() == TsysType::Primitive;
@@ -1162,10 +1153,6 @@ public:
 				{
 					// TODO: Platform Specific
 					AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,TsysBytes::_4 }));
-				}
-				else
-				{
-					throw 0;
 				}
 			}
 		}
