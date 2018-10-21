@@ -519,6 +519,37 @@ decltype(&E)	_E3[1] = &E;
 	AssertExpr(L"&_E3",			L"(& _E3)",				L"__int32 () * [] * $PR",			pa);
 }
 
+TEST_CASE(TestParseExpr_DeclType_Var)
+{
+	auto input = LR"(
+conjst int		x;
+auto			a1 = 0;
+decltype(auto)	b1 = 0;
+decltype(0)		c1 = 0;
+auto			a2 = x;
+decltype(auto)	b2 = x;
+decltype(x)		c2 = x;
+auto			a3 = (x);
+decltype(auto)	b3 = (x);
+decltype((x))	c3 = (x);
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"a1",			L"a1",				L"__int32 $L",						pa);
+	AssertExpr(L"b1",			L"b1",				L"__int32 $L",						pa);
+	AssertExpr(L"c1",			L"c1",				L"__int32 $L",						pa);
+	AssertExpr(L"a1",			L"a1",				L"__int32 const $L",				pa);
+	AssertExpr(L"b1",			L"b1",				L"__int32 const $L",				pa);
+	AssertExpr(L"c1",			L"c1",				L"__int32 const $L",				pa);
+	AssertExpr(L"a1",			L"a1",				L"__int32 const $L",				pa);
+	AssertExpr(L"b1",			L"b1",				L"__int32 const & $L",				pa);
+	AssertExpr(L"c1",			L"c1",				L"__int32 const & $L",				pa);
+}
+
+TEST_CASE(TestParseExpr_DeclType_Func)
+{
+}
+
 TEST_CASE(TestParseExpr_EnumAndEnumItem)
 {
 }
