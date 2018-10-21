@@ -212,12 +212,7 @@ public:
 			ExprToTsys(pa, self->expr, types);
 			for (vint i = 0; i < types.Count(); i++)
 			{
-				auto exprType = types[i];
-				auto exprTsys = exprType.tsys;
-				if (exprType.type == ExprTsysType::LValue && self->expr.Cast<ParenthesisExpr>())
-				{
-					exprTsys = exprTsys->LRefOf();
-				}
+				auto exprTsys = types[i].tsys;
 				if (!result.Contains(exprTsys))
 				{
 					result.Add(exprTsys);

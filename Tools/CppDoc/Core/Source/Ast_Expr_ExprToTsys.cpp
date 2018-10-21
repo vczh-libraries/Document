@@ -596,7 +596,19 @@ public:
 
 	void Visit(ParenthesisExpr* self)override
 	{
-		self->expr->Accept(this);
+		ExprTsysList types;
+		ExprToTsys(pa, self->expr, types);
+		for (vint i = 0; i < types.Count(); i++)
+		{
+			if (types[i].type == ExprTsysType::LValue)
+			{
+				AddTemp(result, types[i].tsys->LRefOf());
+			}
+			else
+			{
+				AddTemp(result, types[i].tsys);
+			}
+		}
 	}
 
 	void Visit(CastExpr* self)override
