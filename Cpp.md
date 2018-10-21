@@ -59,8 +59,14 @@
       - [ ] `for`
       - [ ] `catch`
   - [ ] `Using` class members
-  - [ ] Resolve expression types and resolve `decltype`
-    - [ ] Take care of `decltype(a)` (defined type) and `decltype((a))` (reference type)
+  - [x] Resolve expression types and resolve `decltype`
+    - [x] Take care of `decltype(a)` (defined type) and `decltype((a))` (reference type)
+    - [ ] Take care of functions return `auto` or `decltype(auto)`
+  - [ ] C enum
+    - [ ] Item symbol appears in both enum's scope and enum's parent scope, enum item declaration points to the one in the outside scope
+    - [ ] Item returns PRValue
+    - [ ] Overloading
+    - [ ] Promotion
 - [ ] `Using` alias, `Typedef` and anonymous declaration
   - [ ] Assert ASTs
   - [ ] Define variables right after classes
