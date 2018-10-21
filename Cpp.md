@@ -63,7 +63,7 @@
     - [x] Take care of `decltype(a)` (defined type) and `decltype((a))` (reference type)
     - [ ] Take care of functions return `auto` or `decltype(auto)`
   - [ ] C enum
-    - [ ] Item symbol appears in both enum's scope and enum's parent scope, enum item declaration points to the one in the outside scope
+    - [ ] Item symbol appears in both enum scope and enum's parent scope, enum item declaration points to the one in the enum scope
     - [ ] Item returns PRValue
     - [ ] Overloading
     - [ ] Promotion

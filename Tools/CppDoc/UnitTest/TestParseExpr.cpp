@@ -597,6 +597,9 @@ TEST_CASE(TestParseExpr_Universal_Initialization)
 
 TEST_CASE(TestParseExpr_Lambda)
 {
+	// TsysType::Lambda
+	// TsysType::CapturedLambda
+	// GetElement() of them returns a function type
 }
 
 TEST_CASE(TestParseExpr_Overloading_Ref)
@@ -619,6 +622,10 @@ TEST_CASE(TestParseExpr_Overloading_Ref)
 }
 
 TEST_CASE(TestParseExpr_Overloading_Array)
+{
+}
+
+TEST_CASE(TestParseExpr_Overloading_EnumItem)
 {
 }
 
@@ -699,10 +706,6 @@ TEST_CASE(TestParseExpr_Overloading_TypeConversion)
 	}
 }
 
-TEST_CASE(TestParseExpr_Overloading_TypeConversion_DP_VA)
-{
-}
-
 TEST_CASE(TestParseExpr_Overloading_PostfixUnary)
 {
 }
@@ -724,5 +727,9 @@ TEST_CASE(TestParseExpr_Overloading_Universal_Initialization)
 }
 
 TEST_CASE(TestParseExpr_Overloading_Lambda)
+{
+}
+
+TEST_CASE(TestParseExpr_Overloading_CallOP_Ctor_UI_DPVA)
 {
 }
