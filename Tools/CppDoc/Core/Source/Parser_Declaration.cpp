@@ -99,6 +99,25 @@ void ConnectForwards(Symbol* scope, Symbol* symbol, Ptr<CppTokenCursor> cursor)
 ParseDeclaration
 ***********************************************************************/
 
+bool IsPendingType(Ptr<Type> type)
+{
+	if (auto primitiveType = type.Cast<PrimitiveType>())
+	{
+		if (primitiveType->primitive == CppPrimitiveType::_auto)
+		{
+			return true;
+		}
+	}
+	else if (auto declType = type.Cast<DeclType>())
+	{
+		if (!declType->expr)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	while (SkipSpecifiers(cursor));
@@ -523,9 +542,19 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				NAME->decoratorExplicit = decoratorExplicit;\
 				NAME->decoratorInline = decoratorInline;\
 				NAME->decoratorForceInline = decoratorForceInline;\
-				NAME->decoratorAbstract = decoratorAbstract\
+				NAME->decoratorAbstract = decoratorAbstract;\
+				NAME->needResolveTypeFromStatement = needResolveTypeFromStatement\
 
 				bool hasStat = TestToken(cursor, CppTokens::LBRACE, false);
+				bool needResolveTypeFromStatement = false;
+				if (auto funcType = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
+				{
+					needResolveTypeFromStatement = IsPendingType(funcType->returnType) && (!funcType->decoratorReturnType || IsPendingType(funcType->decoratorReturnType));
+					if (needResolveTypeFromStatement && !hasStat)
+					{
+						throw StopParsingException(cursor);
+					}
+				}
 
 				auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
 				if (hasStat)
@@ -582,7 +611,14 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				NAME->decoratorStatic = decoratorStatic;\
 				NAME->decoratorMutable = decoratorMutable;\
 				NAME->decoratorThreadLocal = decoratorThreadLocal;\
-				NAME->decoratorRegister = decoratorRegister\
+				NAME->decoratorRegister = decoratorRegister;\
+				NAME->needResolveTypeFromInitializer = needResolveTypeFromInitializer\
+
+				bool needResolveTypeFromInitializer = IsPendingType(declarator->type);
+				if (needResolveTypeFromInitializer && !declarator->initializer)
+				{
+					throw StopParsingException(cursor);
+				}
 
 				auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
 				if (decoratorExtern || (decoratorStatic && !declarator->initializer))

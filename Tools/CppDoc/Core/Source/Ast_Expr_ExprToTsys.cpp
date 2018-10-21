@@ -144,7 +144,15 @@ public:
 					bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol, varDecl);
 
 					TypeTsysList candidates;
-					TypeToTsys(pa, varDecl->type, candidates);
+					if (varDecl->needResolveTypeFromInitializer)
+					{
+						throw 0;
+					}
+					else
+					{
+						TypeToTsys(pa, varDecl->type, candidates);
+					}
+
 					for (vint k = 0; k < candidates.Count(); k++)
 					{
 						auto tsys = candidates[k];
@@ -207,7 +215,15 @@ public:
 					bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
 
 					TypeTsysList candidates;
-					TypeToTsys(pa, funcDecl->type, candidates);
+					if (funcDecl->needResolveTypeFromStatement)
+					{
+						throw 0;
+					}
+					else
+					{
+						TypeToTsys(pa, funcDecl->type, candidates);
+					}
+
 					for (vint k = 0; k < candidates.Count(); k++)
 					{
 						auto tsys = candidates[k];

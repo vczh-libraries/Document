@@ -74,6 +74,7 @@ public:
 	bool											decoratorMutable = false;
 	bool											decoratorThreadLocal = false;
 	bool											decoratorRegister = false;
+	bool											needResolveTypeFromInitializer = false;
 };
 
 enum class CppMethodType
@@ -101,6 +102,7 @@ public:
 	bool											decoratorInline = false;
 	bool											decoratorForceInline = false;
 	bool											decoratorAbstract = false;
+	bool											needResolveTypeFromStatement = false;
 };
 
 class ForwardEnumDeclaration : public Declaration
