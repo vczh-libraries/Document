@@ -48,12 +48,19 @@ void AssertType(const WString& input, const WString& log, const WString& logTsys
 	{
 		TypeTsysList tsys;
 		TypeToTsys(pa, type, tsys);
-		TEST_ASSERT(tsys.Count() == 1);
-		auto outputTsys = GenerateToStream([&](StreamWriter& writer)
+		if (tsys.Count() == 0)
 		{
-			Log(tsys[0], writer);
-		});
-		TEST_ASSERT(outputTsys == logTsys);
+			TEST_ASSERT(L"" == logTsys);
+		}
+		else
+		{
+			TEST_ASSERT(tsys.Count() == 1);
+			auto outputTsys = GenerateToStream([&](StreamWriter& writer)
+			{
+				Log(tsys[0], writer);
+			});
+			TEST_ASSERT(outputTsys == logTsys);
+		}
 	}
 	catch (const NotConvertableException&)
 	{

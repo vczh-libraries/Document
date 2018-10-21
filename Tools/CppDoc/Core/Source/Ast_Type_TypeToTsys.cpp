@@ -1,5 +1,6 @@
 #include "Ast.h"
 #include "Ast_Type.h"
+#include "Ast_Expr.h"
 #include "Ast_Decl.h"
 #include "Parser.h"
 
@@ -205,7 +206,24 @@ public:
 
 	void Visit(DeclType* self)override
 	{
-		throw NotConvertableException();
+		if (self->expr)
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+			for (vint i = 0; i < types.Count(); i++)
+			{
+				auto exprType = types[i];
+				auto exprTsys = exprType.tsys;
+				if (exprType.type == ExprTsysType::LValue && self->expr.Cast<ParenthesisExpr>())
+				{
+					exprTsys = exprTsys->LRefOf();
+				}
+				if (!result.Contains(exprTsys))
+				{
+					result.Add(exprTsys);
+				}
+			}
+		}
 	}
 
 	void Visit(DecorateType* self)override

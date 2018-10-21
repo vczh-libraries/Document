@@ -151,22 +151,10 @@ public:
 							symbol->resolvedTypes = MakePtr<TypeTsysList>();
 							if (auto rootVarDecl = varDecl.Cast<VariableDeclaration>())
 							{
-								ExprTsysList types;
+								auto declType = MakePtr<DeclType>();
+								declType->expr = rootVarDecl->initializer->arguments[0];
 								ParsingArguments newPa(pa, symbol->parent);
-								ExprToTsys(newPa, rootVarDecl->initializer->arguments[0], types);
-								for (vint k = 0; k < types.Count(); k++)
-								{
-									auto exprType = types[k];
-									auto exprTsys = exprType.tsys;
-									if (exprType.type == ExprTsysType::LValue && rootVarDecl->initializer->arguments[0].Cast<ParenthesisExpr>())
-									{
-										exprTsys = exprTsys->LRefOf();
-									}
-									if (!symbol->resolvedTypes->Contains(exprTsys))
-									{
-										symbol->resolvedTypes->Add(exprTsys);
-									}
-								}
+								TypeToTsys(newPa, declType, *symbol->resolvedTypes.Obj());
 							}
 						}
 						CopyFrom(candidates, *symbol->resolvedTypes.Obj());

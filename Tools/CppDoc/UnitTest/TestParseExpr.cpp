@@ -512,11 +512,11 @@ decltype(&E)	_E3[1] = &E;
 	AssertExpr(L"_D3",			L"_D3",					L"__int32 () (::X ::) * [] $L",		pa);
 	AssertExpr(L"_E3",			L"_E3",					L"__int32 () * [] $L",				pa);
 
-	AssertExpr(L"&_A3",			L"(& _A3)",				L"__int32 * *$PR",					pa);
-	AssertExpr(L"&_B3",			L"(& _B3)",				L"__int32 (::X ::) * *$PR",			pa);
-	AssertExpr(L"&_C3",			L"(& _C3)",				L"__int32 () * *$PR",				pa);
-	AssertExpr(L"&_D3",			L"(& _D3)",				L"__int32 () (::X ::) * *$PR",		pa);
-	AssertExpr(L"&_E3",			L"(& _E3)",				L"__int32 () * *$PR",				pa);
+	AssertExpr(L"&_A3",			L"(& _A3)",				L"__int32 * [] * $PR",				pa);
+	AssertExpr(L"&_B3",			L"(& _B3)",				L"__int32 (::X ::) * [] * $PR",		pa);
+	AssertExpr(L"&_C3",			L"(& _C3)",				L"__int32 () * [] * $PR",			pa);
+	AssertExpr(L"&_D3",			L"(& _D3)",				L"__int32 () (::X ::) * [] * $PR",	pa);
+	AssertExpr(L"&_E3",			L"(& _E3)",				L"__int32 () * [] * $PR",			pa);
 }
 
 TEST_CASE(TestParseExpr_EnumAndEnumItem)

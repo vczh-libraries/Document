@@ -35,7 +35,7 @@ TEST_CASE(TestParseType_Primitive)
 TEST_CASE(TestParseType_Short)
 {
 	AssertType(L"decltype(auto)",					L"decltype(auto)",						L""							);
-	AssertType(L"decltype(0)",						L"decltype(0)",							L""							);
+	AssertType(L"decltype(0)",						L"decltype(0)",							L"0"						);
 	AssertType(L"constexpr int",					L"int constexpr",						L"__int32 const"			);
 	AssertType(L"const int",						L"int const",							L"__int32 const"			);
 	AssertType(L"volatile int",						L"int volatile",						L"__int32 volatile"			);
