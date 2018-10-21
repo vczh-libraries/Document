@@ -968,6 +968,7 @@ public:
 			case CppPrefixUnaryOp::Revert:
 			case CppPrefixUnaryOp::Positive:
 			case CppPrefixUnaryOp::Negative:
+				if (entity->GetType() == TsysType::Primitive)
 				{
 					auto primitive = entity->GetPrimitive();
 					Promote(primitive);
@@ -987,11 +988,24 @@ public:
 				AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool, TsysBytes::_1 }));
 				break;
 			case CppPrefixUnaryOp::AddressOf:
-				if (refType == TsysRefType::None && entity->GetType() == TsysType::Ptr && entity->GetElement()->GetType() == TsysType::Member && self->operand.Cast<ChildExpr>())
+				if (entity->GetType() == TsysType::Ptr && types[i].type == ExprTsysType::PRValue)
 				{
-					AddTemp(result, type);
+					if (entity->GetElement()->GetType() == TsysType::Member)
+					{
+						if (self->operand.Cast<ChildExpr>())
+						{
+							AddTemp(result, type);
+						}
+					}
+					else if(entity->GetElement()->GetType() == TsysType::Function)
+					{
+						if (self->operand.Cast<ChildExpr>() || self->operand.Cast<IdExpr>())
+						{
+							AddTemp(result, type);
+						}
+					}
 				}
-				else if (type->GetType() == TsysType::LRef)
+				else if (type->GetType() == TsysType::LRef || type->GetType() == TsysType::RRef)
 				{
 					AddTemp(result, type->GetElement()->PtrOf());
 				}
