@@ -136,7 +136,12 @@ TEST_CASE(TestTypeConvert_TrivalConversion)
 
 TEST_CASE(TestTypeConvert_IntegralPromotion)
 {
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+	TEST_DECL(
+enum E{};
+enum class C{};
+	);
+	COMPILE_PROGRAM(program, pa, input);
+
 #define S IntegralPromotion
 #define F Illegal
 	TEST_CONV_TYPE(short,					int,									S,	S);
@@ -162,6 +167,46 @@ TEST_CASE(TestTypeConvert_IntegralPromotion)
 	TEST_CONV_TYPE(char,					const char16_t,							S,	S);
 	TEST_CONV_TYPE(char16_t,				const char32_t,							S,	S);
 	TEST_CONV_TYPE(float&&,					const double&&,							F,	S);
+
+	TEST_CONV_TYPE(E,						int,									S,	S);
+	TEST_CONV_TYPE(E,						unsigned int,							S,	S);
+	TEST_CONV_TYPE(E,						char,									S,	S);
+	TEST_CONV_TYPE(E,						unsigned char,							S,	S);
+	TEST_CONV_TYPE(E,						short,									S,	S);
+	TEST_CONV_TYPE(E,						unsigned short,							S,	S);
+	TEST_CONV_TYPE(E,						wchar_t,								S,	S);
+	TEST_CONV_TYPE(E,						char16_t,								S,	S);
+	TEST_CONV_TYPE(E,						char32_t,								S,	S);
+
+	TEST_CONV_TYPE(int,						E,										F,	F);
+	TEST_CONV_TYPE(unsigned int,			E,										F,	F);
+	TEST_CONV_TYPE(char,					E,										F,	F);
+	TEST_CONV_TYPE(unsigned char,			E,										F,	F);
+	TEST_CONV_TYPE(short,					E,										F,	F);
+	TEST_CONV_TYPE(unsigned short,			E,										F,	F);
+	TEST_CONV_TYPE(wchar_t,					E,										F,	F);
+	TEST_CONV_TYPE(char16_t,				E,										F,	F);
+	TEST_CONV_TYPE(char32_t,				E,										F,	F);
+
+	TEST_CONV_TYPE(C,						int,									F,	F);
+	TEST_CONV_TYPE(C,						unsigned int,							F,	F);
+	TEST_CONV_TYPE(C,						char,									F,	F);
+	TEST_CONV_TYPE(C,						unsigned char,							F,	F);
+	TEST_CONV_TYPE(C,						short,									F,	F);
+	TEST_CONV_TYPE(C,						unsigned short,							F,	F);
+	TEST_CONV_TYPE(C,						wchar_t,								F,	F);
+	TEST_CONV_TYPE(C,						char16_t,								F,	F);
+	TEST_CONV_TYPE(C,						char32_t,								F,	F);
+
+	TEST_CONV_TYPE(int,						C,										F,	F);
+	TEST_CONV_TYPE(unsigned int,			C,										F,	F);
+	TEST_CONV_TYPE(char,					C,										F,	F);
+	TEST_CONV_TYPE(unsigned char,			C,										F,	F);
+	TEST_CONV_TYPE(short,					C,										F,	F);
+	TEST_CONV_TYPE(unsigned short,			C,										F,	F);
+	TEST_CONV_TYPE(wchar_t,					C,										F,	F);
+	TEST_CONV_TYPE(char16_t,				C,										F,	F);
+	TEST_CONV_TYPE(char32_t,				C,										F,	F);
 #undef S
 #undef F
 }
