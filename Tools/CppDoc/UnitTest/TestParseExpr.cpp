@@ -629,5 +629,6 @@ TEST_CASE(TestParseExpr_Lambda)
 {
 	// TsysType::Lambda
 	// TsysType::CapturedLambda
-	// GetElement() of them returns a function type
+	// GetElement() returns a function type
+	// GetDecl() returns the scope inside the lambda
 }

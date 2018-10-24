@@ -75,7 +75,6 @@ struct RunTypeConvertFromTemp
 	static const decltype(Tester::Test(static_cast<TFrom>(entity))) test = 0;
 };
 
-#define TEST_DECL(SOMETHING) SOMETHING auto input = L#SOMETHING
 #define TEST_CONV_TYPE(FROM, TO, CONV1, CONV2)\
 	RunTypeConvert<FROM, TO, RunTypeTester<TO, TsysConv::CONV1>>::test,\
 	RunTypeConvertFromTemp<FROM, TO, RunTypeTester<TO, TsysConv::CONV2>>::test,\
@@ -622,7 +621,6 @@ struct Source
 #undef F
 }
 
-#undef TEST_DECL
 #undef TEST_CONV_TYPE
 
 #pragma warning (push)
