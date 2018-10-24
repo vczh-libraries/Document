@@ -62,10 +62,10 @@
   - [x] Resolve expression types and resolve `decltype`
     - [x] Take care of `decltype(a)` (defined type) and `decltype((a))` (reference type)
     - [ ] Take care of functions return `auto` or `decltype(auto)`
-  - [ ] C enum
+  - [x] C enum
     - [x] Item symbol appears in both enum scope and enum's parent scope, enum item declaration points to the one in the enum scope
     - [x] Item returns PRValue
-    - [ ] Overloading
+    - [x] Overloading
     - [x] Promotion
 - [ ] `Using` alias, `Typedef` and anonymous declaration
   - [ ] Assert ASTs

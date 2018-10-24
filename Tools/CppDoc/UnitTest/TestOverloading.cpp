@@ -51,6 +51,29 @@ TEST_CASE(TestParseExpr_Overloading_Array)
 
 TEST_CASE(TestParseExpr_Overloading_EnumItem)
 {
+	{
+		TEST_DECL(
+enum A { a };
+enum B { b };
+enum class C { c };
+enum class D { d };
+
+bool F(A);
+char F(B);
+int F(C);
+float F(D);
+double F(int);
+		);
+		COMPILE_PROGRAM(program, pa, input);
+		
+		ASSERT_OVERLOADING(F(0),							L"F(0)",								double);
+		ASSERT_OVERLOADING(F(a),							L"F(a)",								bool);
+		ASSERT_OVERLOADING(F(b),							L"F(b)",								char);
+		ASSERT_OVERLOADING(F(A::a),							L"F(A :: a)",							bool);
+		ASSERT_OVERLOADING(F(B::b),							L"F(B :: b)",							char);
+		ASSERT_OVERLOADING(F(C::c),							L"F(C :: c)",							int);
+		ASSERT_OVERLOADING(F(D::d),							L"F(D :: d)",							float);
+	}
 }
 
 TEST_CASE(TestParseExpr_Overloading_DefaultParameter)
