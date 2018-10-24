@@ -175,12 +175,21 @@ namespace TestConvert_Helpers
 	bool IsNumericPromotion(ITsys* toType, ITsys* fromType)
 	{
 		if (toType->GetType() != TsysType::Primitive) return false;
-		if (fromType->GetType() != TsysType::Primitive) return false;
-
 		auto toP = toType->GetPrimitive();
-		auto fromP = fromType->GetPrimitive();
-
 		if (toP.type == TsysPrimitiveType::Void) return false;
+
+		if (fromType->GetType() == TsysType::Decl)
+		{
+			auto symbol = fromType->GetDecl();
+			if (symbol->decls.Count() != 1) return false;
+			auto decl = symbol->decls[0].Cast<ForwardEnumDeclaration>();
+			if (!decl) return false;
+			if (decl->enumClass) return false;
+			return true;
+		}
+
+		if (fromType->GetType() != TsysType::Primitive) return false;
+		auto fromP = fromType->GetPrimitive();
 		if (fromP.type == TsysPrimitiveType::Void) return false;
 
 		bool toF = toP.type == TsysPrimitiveType::Float;

@@ -66,7 +66,7 @@
     - [x] Item symbol appears in both enum scope and enum's parent scope, enum item declaration points to the one in the enum scope
     - [x] Item returns PRValue
     - [ ] Overloading
-    - [ ] Promotion
+    - [x] Promotion
 - [ ] `Using` alias, `Typedef` and anonymous declaration
   - [ ] Assert ASTs
   - [ ] Define variables right after classes

@@ -170,13 +170,15 @@ enum class C{};
 
 	TEST_CONV_TYPE(E,						int,									S,	S);
 	TEST_CONV_TYPE(E,						unsigned int,							S,	S);
-	TEST_CONV_TYPE(E,						char,									S,	S);
-	TEST_CONV_TYPE(E,						unsigned char,							S,	S);
+	TEST_CONV_TYPE(const E&&,				char,									S,	S);
+	TEST_CONV_TYPE(const E&&,				unsigned char,							S,	S);
 	TEST_CONV_TYPE(E,						short,									S,	S);
 	TEST_CONV_TYPE(E,						unsigned short,							S,	S);
-	TEST_CONV_TYPE(E,						wchar_t,								S,	S);
-	TEST_CONV_TYPE(E,						char16_t,								S,	S);
-	TEST_CONV_TYPE(E,						char32_t,								S,	S);
+	TEST_CONV_TYPE(E,						const wchar_t,							S,	S);
+	TEST_CONV_TYPE(E,						const char16_t&,						S,	S);
+	TEST_CONV_TYPE(E,						const char32_t,							S,	S);
+	TEST_CONV_TYPE(E,						const char32_t&&,						F,	S);
+	TEST_CONV_TYPE(E&&,						const char32_t&&,						F,	S);
 
 	TEST_CONV_TYPE(int,						E,										F,	F);
 	TEST_CONV_TYPE(unsigned int,			E,										F,	F);
