@@ -222,6 +222,15 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				contextSymbol->CreateDeclSymbol(enumItem);
 				decl->items.Add(enumItem);
 
+				if (!enumClass)
+				{
+					if (pa.context->children.Keys().Contains(enumItem->name.name))
+					{
+						throw StopParsingException(cursor);
+					}
+					pa.context->CreateDeclSymbol(enumItem);
+				}
+
 				if (TestToken(cursor, CppTokens::EQ))
 				{
 					enumItem->value = ParseExpr(newPa, false, cursor);
@@ -231,15 +240,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				{
 					RequireToken(cursor, CppTokens::RBRACE);
 					break;
-				}
-
-				if (!enumClass)
-				{
-					if (pa.context->children.Keys().Contains(enumItem->name.name))
-					{
-						throw StopParsingException(cursor);
-					}
-					pa.context->CreateDeclSymbol(enumItem);
 				}
 			}
 

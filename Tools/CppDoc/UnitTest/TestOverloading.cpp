@@ -60,9 +60,12 @@ enum class D { d };
 
 bool F(A);
 char F(B);
-int F(C);
+wchar_t F(C);
 float F(D);
 double F(int);
+
+bool G(int);
+double G(double);
 		);
 		COMPILE_PROGRAM(program, pa, input);
 		
@@ -71,8 +74,12 @@ double F(int);
 		ASSERT_OVERLOADING(F(b),							L"F(b)",								char);
 		ASSERT_OVERLOADING(F(A::a),							L"F(A :: a)",							bool);
 		ASSERT_OVERLOADING(F(B::b),							L"F(B :: b)",							char);
-		ASSERT_OVERLOADING(F(C::c),							L"F(C :: c)",							int);
+		ASSERT_OVERLOADING(F(C::c),							L"F(C :: c)",							wchar_t);
 		ASSERT_OVERLOADING(F(D::d),							L"F(D :: d)",							float);
+		ASSERT_OVERLOADING(G(0),							L"G(0)",								bool);
+		ASSERT_OVERLOADING(G(a),							L"G(a)",								bool);
+		ASSERT_OVERLOADING(G(b),							L"G(b)",								bool);
+		ASSERT_OVERLOADING(G(0.0),							L"G(0.0)",								double);
 	}
 }
 
