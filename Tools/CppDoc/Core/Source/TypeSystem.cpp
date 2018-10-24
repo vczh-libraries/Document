@@ -430,6 +430,24 @@ public:
 		return &tsysNullptr;
 	}
 
+	ITsys* Int()override
+	{
+		// TODO: Platform Specific
+		return PrimitiveOf({ TsysPrimitiveType::SInt,TsysBytes::_4 });
+	}
+
+	ITsys* Size()override
+	{
+		// TODO: Platform Specific
+		return PrimitiveOf({ TsysPrimitiveType::UInt,TsysBytes::_4 });
+	}
+
+	ITsys* IntPtr()override
+	{
+		// TODO: Platform Specific
+		return PrimitiveOf({ TsysPrimitiveType::SInt,TsysBytes::_4 });
+	}
+
 	ITsys* PrimitiveOf(TsysPrimitive primitive)override
 	{
 		vint a = (vint)primitive.type;

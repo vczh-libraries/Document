@@ -127,6 +127,10 @@ class ITsysAlloc abstract : public Interface
 public:
 	virtual ITsys*				Zero() = 0;
 	virtual ITsys*				Nullptr() = 0;
+	virtual ITsys*				Int() = 0;
+	virtual ITsys*				Size() = 0;
+	virtual ITsys*				IntPtr() = 0;
+
 	virtual ITsys*				PrimitiveOf(TsysPrimitive primitive) = 0;
 	virtual ITsys*				DeclOf(Symbol* decl) = 0;
 	virtual ITsys*				GenericArgOf(Symbol* decl) = 0;

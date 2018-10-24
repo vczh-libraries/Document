@@ -141,6 +141,7 @@ enum class C{};
 	);
 	COMPILE_PROGRAM(program, pa, input);
 
+#define T TrivalConversion
 #define S IntegralPromotion
 #define F Illegal
 	TEST_CONV_TYPE(short,					int,									S,	S);
@@ -167,7 +168,7 @@ enum class C{};
 	TEST_CONV_TYPE(char16_t,				const char32_t,							S,	S);
 	TEST_CONV_TYPE(float&&,					const double&&,							F,	S);
 
-	TEST_CONV_TYPE(E,						int,									S,	S);
+	TEST_CONV_TYPE(E,						int,									T,	T);
 	TEST_CONV_TYPE(E,						unsigned int,							S,	S);
 	TEST_CONV_TYPE(const E&&,				char,									S,	S);
 	TEST_CONV_TYPE(const E&&,				unsigned char,							S,	S);
@@ -208,6 +209,7 @@ enum class C{};
 	TEST_CONV_TYPE(wchar_t,					C,										F,	F);
 	TEST_CONV_TYPE(char16_t,				C,										F,	F);
 	TEST_CONV_TYPE(char32_t,				C,										F,	F);
+#undef T
 #undef S
 #undef F
 }

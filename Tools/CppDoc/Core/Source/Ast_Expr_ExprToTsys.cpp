@@ -697,8 +697,7 @@ public:
 			ExprToTsys(pa, self->expr, types);
 		}
 
-		// TODO: Platform Specific
-		AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,TsysBytes::_4 }));
+		AddTemp(result, pa.tsys->Size());
 	}
 
 	void Visit(ThrowExpr* self)override
@@ -1228,8 +1227,7 @@ public:
 				}
 				else if (leftPtrArr && rightPtrArr)
 				{
-					// TODO: Platform Specific
-					AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,TsysBytes::_4 }));
+					AddTemp(result, pa.tsys->IntPtr());
 				}
 			}
 		}

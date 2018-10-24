@@ -410,23 +410,7 @@ TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromTyp
 	if (fromType->GetType() == TsysType::Zero)
 	{
 		if (toType->GetType() == TsysType::Ptr) return TsysConv::TrivalConversion;
-		if (toType->GetType() == TsysType::CV)
-		{
-			toType = toType->GetElement();
-		}
-
-		if (toType->GetType() == TsysType::Primitive)
-		{
-			switch (toType->GetPrimitive().type)
-			{
-			case TsysPrimitiveType::Float:
-				return TsysConv::StandardConversion;
-			case TsysPrimitiveType::Void:
-				return TsysConv::Illegal;
-			default:
-				return TsysConv::Exact;
-			}
-		}
+		fromType = pa.tsys->Int();
 	}
 
 	if (fromType->GetType() == TsysType::Nullptr)
