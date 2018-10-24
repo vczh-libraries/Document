@@ -1,4 +1,3 @@
-#include <Ast_Stat.h>
 #include "Util.h"
 
 TEST_CASE(TestParseStat_Everything)
