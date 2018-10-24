@@ -4,14 +4,33 @@
 #pragma warning (disable: 4101)
 #pragma warning (disable: 5046)
 
+template<typename T, typename U>
+struct IntIfSameType
+{
+	using Type = void;
+};
+
+template<typename T>
+struct IntIfSameType<T, T>
+{
+	using Type = int;
+};
+
+template<typename T, typename U>
+void RunOverloading()
+{
+	typename IntIfSameType<T, U>::Type test = 0;
+}
+
 #define ASSERT_OVERLOADING(INPUT, OUTPUT, TYPE)\
-	AssertExpr(L#INPUT, OUTPUT, L#TYPE " $PR", pa)
+	RunOverloading<TYPE, decltype(INPUT)>, \
+	AssertExpr(L#INPUT, OUTPUT, L#TYPE " $PR", pa)\
 
 TEST_CASE(TestParseExpr_Overloading_Ref)
 {
 	{
 		TEST_DECL(
-struct X{};
+struct X {};
 double F(const X&);
 bool F(X&);
 char F(X&&);
@@ -46,9 +65,9 @@ TEST_CASE(TestParseExpr_Overloading_Inheritance)
 {
 	{
 		TEST_DECL(
-struct X{};
-struct Y{};
-struct Z:X{};
+struct X {};
+struct Y {};
+struct Z :X {};
 
 double F(X&);
 bool F(Y&);
@@ -68,9 +87,9 @@ TEST_CASE(TestParseExpr_Overloading_TypeConversion)
 {
 	{
 		TEST_DECL(
-struct X{};
-struct Y{};
-struct Z{ operator X(); };
+struct X {};
+struct Y {};
+struct Z { operator X() { throw 0; } };
 
 double F(X);
 bool F(Y);
@@ -87,9 +106,9 @@ Z z;
 
 	{
 		TEST_DECL(
-struct Z{};
-struct X{ X(const Z&); };
-struct Y{};
+struct Z {};
+struct X { X(const Z&) {} };
+struct Y {};
 
 double F(X);
 bool F(Y);
