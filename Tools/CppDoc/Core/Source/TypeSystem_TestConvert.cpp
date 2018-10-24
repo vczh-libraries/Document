@@ -72,7 +72,7 @@ namespace TestConvert_Helpers
 		return symbol->decls[0].Cast<T>();
 	}
 
-	bool IsExactOrTrivalConvert(ITsys* toType, ITsys* fromType, bool fromLRP, bool& performedLRPTrivalConversion)
+	bool IsExactOrTrivalConvert(ITsys* toType, ITsys* fromType, bool fromLRP, bool& performedTrivalConversion)
 	{
 		TsysCV toCV, fromCV;
 		TsysRefType toRef, fromRef;
@@ -115,7 +115,7 @@ namespace TestConvert_Helpers
 			{
 				if (IsCVMatch(toCV, fromCV))
 				{
-					performedLRPTrivalConversion = true;
+					performedTrivalConversion = true;
 				}
 				else
 				{
@@ -138,6 +138,7 @@ namespace TestConvert_Helpers
 			if (primitive.type != TsysPrimitiveType::SInt) return false;
 			if (primitive.bytes != TsysBytes::_4) return false;
 
+			performedTrivalConversion = true;
 			return true;
 		}
 
@@ -145,7 +146,7 @@ namespace TestConvert_Helpers
 			(toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Array) ||
 			(toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array))
 		{
-			if (IsCVMatch(toEntity->GetElement(), fromEntity->GetElement(), performedLRPTrivalConversion))
+			if (IsCVMatch(toEntity->GetElement(), fromEntity->GetElement(), performedTrivalConversion))
 			{
 				return true;
 			}
@@ -434,10 +435,10 @@ TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromTyp
 	}
 
 	{
-		bool performedLRPTrivalConversion = false;
-		if (IsExactOrTrivalConvert(toType, fromType, false, performedLRPTrivalConversion))
+		bool performedTrivalConversion = false;
+		if (IsExactOrTrivalConvert(toType, fromType, false, performedTrivalConversion))
 		{
-			return performedLRPTrivalConversion ? TsysConv::TrivalConversion : TsysConv::Exact;
+			return performedTrivalConversion ? TsysConv::TrivalConversion : TsysConv::Exact;
 		}
 	}
 
