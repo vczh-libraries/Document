@@ -64,6 +64,7 @@ wchar_t F(C);
 float F(D);
 double F(int);
 
+char G(char);
 bool G(int);
 double G(double);
 		);
@@ -76,6 +77,8 @@ double G(double);
 		ASSERT_OVERLOADING(F(B::b),							L"F(B :: b)",							char);
 		ASSERT_OVERLOADING(F(C::c),							L"F(C :: c)",							wchar_t);
 		ASSERT_OVERLOADING(F(D::d),							L"F(D :: d)",							float);
+
+		ASSERT_OVERLOADING(G('a'),							L"G('a')",								char);
 		ASSERT_OVERLOADING(G(0),							L"G(0)",								bool);
 		ASSERT_OVERLOADING(G(a),							L"G(a)",								bool);
 		ASSERT_OVERLOADING(G(b),							L"G(b)",								bool);

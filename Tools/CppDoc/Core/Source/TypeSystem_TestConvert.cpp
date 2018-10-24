@@ -63,6 +63,15 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
+	template<typename T>
+	Ptr<T> TryGetDeclFromType(ITsys* type)
+	{
+		if (type->GetType() != TsysType::Decl) return false;
+		auto symbol = type->GetDecl();
+		if (symbol->decls.Count() != 1) return false;
+		return symbol->decls[0].Cast<T>();
+	}
+
 	bool IsExactOrTrivalConvert(ITsys* toType, ITsys* fromType, bool fromLRP, bool& performedLRPTrivalConversion)
 	{
 		TsysCV toCV, fromCV;
@@ -120,6 +129,18 @@ namespace TestConvert_Helpers
 			return true;
 		}
 
+		if (toEntity->GetType() == TsysType::Primitive && fromEntity->GetType() == TsysType::Decl)
+		{
+			auto decl = TryGetDeclFromType<ForwardEnumDeclaration>(fromEntity);
+			if (decl->enumClass) return false;
+
+			auto primitive = toEntity->GetPrimitive();
+			if (primitive.type != TsysPrimitiveType::SInt) return false;
+			if (primitive.bytes != TsysBytes::_4) return false;
+
+			return true;
+		}
+
 		if ((toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Ptr) ||
 			(toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Array) ||
 			(toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array))
@@ -131,14 +152,6 @@ namespace TestConvert_Helpers
 		}
 
 		return false;
-	}
-
-	Ptr<ClassDeclaration> TryGetClassFromType(ITsys* type)
-	{
-		if (type->GetType() != TsysType::Decl) return false;
-		auto symbol = type->GetDecl();
-		if (symbol->decls.Count() != 1) return false;
-		return symbol->decls[0].Cast<ClassDeclaration>();
 	}
 
 	bool IsEntityConversionAllowed(ITsys*& toType, ITsys*& fromType)
@@ -160,7 +173,7 @@ namespace TestConvert_Helpers
 
 		if (toRef == TsysRefType::LRef || fromRef == TsysRefType::LRef)
 		{
-			if (!TryGetClassFromType(toEntity) || !TryGetClassFromType(fromEntity))
+			if (!TryGetDeclFromType<ClassDeclaration>(toEntity) || !TryGetDeclFromType<ClassDeclaration>(fromEntity))
 			{
 				return false;
 			}
@@ -178,12 +191,8 @@ namespace TestConvert_Helpers
 		auto toP = toType->GetPrimitive();
 		if (toP.type == TsysPrimitiveType::Void) return false;
 
-		if (fromType->GetType() == TsysType::Decl)
+		if (auto decl = TryGetDeclFromType<ForwardEnumDeclaration>(fromType))
 		{
-			auto symbol = fromType->GetDecl();
-			if (symbol->decls.Count() != 1) return false;
-			auto decl = symbol->decls[0].Cast<ForwardEnumDeclaration>();
-			if (!decl) return false;
 			if (decl->enumClass) return false;
 			return true;
 		}
@@ -283,7 +292,7 @@ namespace TestConvert_Helpers
 		}
 
 	BEGIN_SEARCHING_FOR_BASE_CLASSES:
-		if (!TryGetClassFromType(toType)) return false;
+		if (!TryGetDeclFromType<ClassDeclaration>(toType)) return false;
 
 		List<ITsys*> searched;
 		searched.Add(fromType);
@@ -291,7 +300,7 @@ namespace TestConvert_Helpers
 		{
 			auto currentType = searched[i];
 			if (currentType == toType) return true;
-			if (auto currentClass = TryGetClassFromType(currentType))
+			if (auto currentClass = TryGetDeclFromType<ClassDeclaration>(currentType))
 			{
 				ParsingArguments newPa(pa, currentClass->symbol);
 				for (vint j = 0; j < currentClass->baseTypes.Count(); j++)
@@ -317,7 +326,7 @@ namespace TestConvert_Helpers
 		TsysRefType fromRef;
 		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
-		auto fromClass = TryGetClassFromType(fromEntity);
+		auto fromClass = TryGetDeclFromType<ClassDeclaration>(fromEntity);
 		if (!fromClass) return false;
 
 		auto fromSymbol = fromClass->symbol;
@@ -358,7 +367,7 @@ namespace TestConvert_Helpers
 		auto toEntity = toType->GetEntity(toCV, toRef);
 		if (toRef == TsysRefType::LRef && !toCV.isGeneralConst) return false;
 
-		auto toClass = TryGetClassFromType(toEntity);
+		auto toClass = TryGetDeclFromType<ClassDeclaration>(toEntity);
 		if (!toClass) return false;
 
 		auto toSymbol = toClass->symbol;
