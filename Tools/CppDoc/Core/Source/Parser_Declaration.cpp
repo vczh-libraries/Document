@@ -232,6 +232,15 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					RequireToken(cursor, CppTokens::RBRACE);
 					break;
 				}
+
+				if (!enumClass)
+				{
+					if (pa.context->children.Keys().Contains(enumItem->name.name))
+					{
+						throw StopParsingException(cursor);
+					}
+					pa.context->CreateDeclSymbol(enumItem);
+				}
 			}
 
 			RequireToken(cursor, CppTokens::SEMICOLON);

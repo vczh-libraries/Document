@@ -40,7 +40,10 @@ public:
 		symbol->decls.Add(_decl);
 		Add(symbol);
 
-		_decl->symbol = symbol.Obj();
+		if (!_decl->symbol)
+		{
+			_decl->symbol = symbol.Obj();
+		}
 		if (_specializationRoot)
 		{
 			_specializationRoot->specializations.Add(symbol.Obj());

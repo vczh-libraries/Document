@@ -574,14 +574,14 @@ enum class SeasonClass
 	AssertExpr(L"Summer",					L"Summer",					L"::Season $PR",						pa);
 	AssertExpr(L"Autumn",					L"Autumn",					L"::Season $PR",						pa);
 	AssertExpr(L"Winter",					L"Winter",					L"::Season $PR",						pa);
-	AssertExpr(L"Season::Spring",			L"Season::Spring",			L"::Season $PR",						pa);
-	AssertExpr(L"Season::Summer",			L"Season::Summer",			L"::Season $PR",						pa);
-	AssertExpr(L"Season::Autumn",			L"Season::Autumn",			L"::Season $PR",						pa);
-	AssertExpr(L"Season::Winter",			L"Season::Winter",			L"::Season $PR",						pa);
-	AssertExpr(L"SeasonClass::Spring",		L"SeasonClass::Spring",		L"::SeasonClass $PR",					pa);
-	AssertExpr(L"SeasonClass::Summer",		L"SeasonClass::Summer",		L"::SeasonClass $PR",					pa);
-	AssertExpr(L"SeasonClass::Autumn",		L"SeasonClass::Autumn",		L"::SeasonClass $PR",					pa);
-	AssertExpr(L"SeasonClass::Winter",		L"SeasonClass::Winter",		L"::SeasonClass $PR",					pa);
+	AssertExpr(L"Season::Spring",			L"Season :: Spring",		L"::Season $PR",						pa);
+	AssertExpr(L"Season::Summer",			L"Season :: Summer",		L"::Season $PR",						pa);
+	AssertExpr(L"Season::Autumn",			L"Season :: Autumn",		L"::Season $PR",						pa);
+	AssertExpr(L"Season::Winter",			L"Season :: Winter",		L"::Season $PR",						pa);
+	AssertExpr(L"SeasonClass::Spring",		L"SeasonClass :: Spring",	L"::SeasonClass $PR",					pa);
+	AssertExpr(L"SeasonClass::Summer",		L"SeasonClass :: Summer",	L"::SeasonClass $PR",					pa);
+	AssertExpr(L"SeasonClass::Autumn",		L"SeasonClass :: Autumn",	L"::SeasonClass $PR",					pa);
+	AssertExpr(L"SeasonClass::Winter",		L"SeasonClass :: Winter",	L"::SeasonClass $PR",					pa);
 }
 
 TEST_CASE(TestParseExpr_FieldReference)

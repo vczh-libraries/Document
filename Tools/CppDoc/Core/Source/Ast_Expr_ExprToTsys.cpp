@@ -240,6 +240,11 @@ public:
 						}
 					}
 				}
+				else if (auto enumItemDecl = decl.Cast<EnumItemDeclaration>())
+				{
+					auto tsys = pa.tsys->DeclOf(enumItemDecl->symbol->parent);
+					AddInternal(result, { symbol,ExprTsysType::PRValue,tsys });
+				}
 				else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
 				{
 					bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
