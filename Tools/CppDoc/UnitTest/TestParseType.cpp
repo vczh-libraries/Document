@@ -77,21 +77,21 @@ TEST_CASE(TestParseType_LongDeclarator)
 	AssertType(L"int([1])[2][3]",					L"int [3] [2] [1]",						L"__int32 [,,]"		);
 	AssertType(L"int(*&)[][]",						L"int [] [] * &",						L"__int32 [,] * &"	);
 
-	AssertType(L"int(int[][2])",															L"int (int [2] *)",															L"__int32 (__int32 [] *)"		);
-	AssertType(L"auto ()->int constexpr const volatile & && override noexcept throw()",		L"(auto->int constexpr const volatile & &&) () override noexcept throw()",	L"__int32 const volatile & ()"	);
-	AssertType(L"auto ()constexpr const volatile & && ->int override noexcept throw()",		L"(auto->int) () constexpr const volatile & && override noexcept throw()",	L"__int32 ()"					);
+	AssertType(L"int(int[][2])",															L"int (int [2] *)",															L"__int32 __cdecl(__int32 [] *)"		);
+	AssertType(L"auto ()->int constexpr const volatile & && override noexcept throw()",		L"(auto->int constexpr const volatile & &&) () override noexcept throw()",	L"__int32 const volatile & __cdecl()"	);
+	AssertType(L"auto ()constexpr const volatile & && ->int override noexcept throw()",		L"(auto->int) () constexpr const volatile & && override noexcept throw()",	L"__int32 __cdecl()"					);
 
-	AssertType(L"int __cdecl(int)",					L"int (int) __cdecl",					L"__int32 (__int32)"						);
-	AssertType(L"int __clrcall(int)",				L"int (int) __clrcall",					L"__int32 (__int32)"						);
-	AssertType(L"int __stdcall(int)",				L"int (int) __stdcall",					L"__int32 (__int32)"						);
-	AssertType(L"int __fastcall(int)",				L"int (int) __fastcall",				L"__int32 (__int32)"						);
-	AssertType(L"int __thiscall(int)",				L"int (int) __thiscall",				L"__int32 (__int32)"						);
-	AssertType(L"int __vectorcall(int)",			L"int (int) __vectorcall",				L"__int32 (__int32)"						);
-	AssertType(L"int(*)(int)",						L"int (int) *",							L"__int32 (__int32) *"						);
-	AssertType(L"int(__cdecl*)(int)",				L"int (int) __cdecl *",					L"__int32 (__int32) *"						);
+	AssertType(L"int __cdecl(int)",					L"int (int) __cdecl",					L"__int32 __cdecl(__int32)"							);
+	AssertType(L"int __clrcall(int)",				L"int (int) __clrcall",					L"__int32 __clrcall(__int32)"						);
+	AssertType(L"int __stdcall(int)",				L"int (int) __stdcall",					L"__int32 __stdcall(__int32)"						);
+	AssertType(L"int __fastcall(int)",				L"int (int) __fastcall",				L"__int32 __fastcall(__int32)"						);
+	AssertType(L"int __thiscall(int)",				L"int (int) __thiscall",				L"__int32 __thiscall(__int32)"						);
+	AssertType(L"int __vectorcall(int)",			L"int (int) __vectorcall",				L"__int32 __vectorcall(__int32)"					);
+	AssertType(L"int(*)(int)",						L"int (int) *",							L"__int32 __cdecl(__int32) *"						);
+	AssertType(L"int(__cdecl*)(int)",				L"int (int) __cdecl *",					L"__int32 __cdecl(__int32) *"						);
 
-	AssertType(L"int(*[5])(int, int a, int b=0)",	L"int (int, a: int, b: int = 0) * [5]",	L"__int32 (__int32, __int32, __int32) * []"	);
-	AssertType(L"int(&(*[5])(void))[10]",			L"int [10] & () * [5]",					L"__int32 [] & () * []"						);
+	AssertType(L"int(*[5])(int, int a, int b=0)",	L"int (int, a: int, b: int = 0) * [5]",	L"__int32 __cdecl(__int32, __int32, __int32) * []"	);
+	AssertType(L"int(&(*[5])(void))[10]",			L"int [10] & () * [5]",					L"__int32 [] & __cdecl() * []"						);
 }
 
 TEST_CASE(TestParseType_SuperComplexType)
@@ -99,7 +99,7 @@ TEST_CASE(TestParseType_SuperComplexType)
 	AssertType(
 		L"int(__fastcall*const&((*)(int))[10])(int(&a)[], int(__stdcall*b)()noexcept, int(*c[5])(void)=0)",
 		L"int (a: int * &, b: int () noexcept __stdcall *, c: int () * [5] = 0) __fastcall * const & [10] (int) *",
-		L"__int32 (__int32 * &, __int32 () *, __int32 () * []) * const & [] (__int32) *"
+		L"__int32 __fastcall(__int32 * &, __int32 __stdcall() *, __int32 __cdecl() * []) * const & [] __cdecl(__int32) *"
 		);
 }
 
@@ -161,7 +161,7 @@ namespace a::b
 		AssertType(
 			L"a::b::X(__cdecl typename a::b::*)()",
 			L"a :: b :: X () __cdecl (a :: typename b ::) *",
-			L"::a::b::X () (::a::b ::) *",
+			L"::a::b::X __cdecl() (::a::b ::) *",
 			pa);
 		TEST_ASSERT(accessed.Count() == 5);
 	}

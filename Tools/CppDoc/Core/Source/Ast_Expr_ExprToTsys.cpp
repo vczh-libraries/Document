@@ -248,6 +248,7 @@ public:
 				else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
 				{
 					bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
+					bool isMember = classScope && !isStaticSymbol;
 
 					TypeTsysList candidates;
 					if (funcDecl->needResolveTypeFromStatement)
@@ -256,7 +257,7 @@ public:
 					}
 					else
 					{
-						TypeToTsys(pa, funcDecl->type, candidates);
+						TypeToTsys(pa, funcDecl->type, candidates, TsysCallingConvention::None, isMember);
 					}
 
 					for (vint k = 0; k < candidates.Count(); k++)
@@ -267,7 +268,7 @@ public:
 							tsys = tsys->GetElement();
 						}
 
-						if (classScope && !isStaticSymbol && afterScope)
+						if (isMember && afterScope)
 						{
 							tsys = tsys->MemberOf(classScope)->PtrOf();
 						}

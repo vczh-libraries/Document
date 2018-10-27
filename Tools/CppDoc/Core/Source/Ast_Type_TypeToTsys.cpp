@@ -128,14 +128,11 @@ public:
 
 	void Visit(CallingConventionType* self)override
 	{
-		if (cc != TsysCallingConvention::None)
-		{
-			throw NotConvertableException();
-		}
-
+		auto oldCc = cc;
 		cc = self->callingConvention;
+
 		self->type->Accept(this);
-		cc = TsysCallingConvention::None;
+		cc = oldCc;
 	}
 
 	void CreateFunctionType(TypeTsysList* tsyses, vint* tsysIndex, vint level, vint count, const TsysFunc& func)
@@ -213,10 +210,7 @@ public:
 
 	void Visit(MemberType* self)override
 	{
-		if (memberOf)
-		{
-			throw NotConvertableException();
-		}
+		auto oldMemberOf = memberOf;
 		memberOf = true;
 
 		TypeTsysList types, classTypes;
@@ -231,7 +225,7 @@ public:
 			}
 		}
 
-		memberOf = false;
+		memberOf = oldMemberOf;
 	}
 
 	void Visit(DeclType* self)override

@@ -213,13 +213,13 @@ Z* pz = nullptr;
 	AssertExpr(L"pz->y",					L"pz->y",						L"bool $L",								pa);
 	AssertExpr(L"pz->F",					L"pz->F",						L"__int32 __cdecl(double) * $PR",		pa);
 	AssertExpr(L"pz->G",					L"pz->G",						L"__int32 __thiscall(void *) * $PR",	pa);
-	AssertExpr(L"pz->operator->",			L"pz->operator ->",				L"::Y () * $PR",						pa);
+	AssertExpr(L"pz->operator->",			L"pz->operator ->",				L"::Y __thiscall() * $PR",				pa);
 
 	AssertExpr(L"z.x",						L"z.x",							L"bool $L",								pa);
 	AssertExpr(L"z.y",						L"z.y",							L"bool $L",								pa);
 	AssertExpr(L"z.F",						L"z.F",							L"__int32 __cdecl(double) * $PR",		pa);
 	AssertExpr(L"z.G",						L"z.G",							L"__int32 __thiscall(void *) * $PR",	pa);
-	AssertExpr(L"z.operator->",				L"z.operator ->",				L"::Y () * $PR",						pa);
+	AssertExpr(L"z.operator->",				L"z.operator ->",				L"::Y __thiscall() * $PR",				pa);
 	
 	AssertExpr(L"pz->operator->()",			L"pz->operator ->()",			L"::Y $PR",								pa);
 	AssertExpr(L"pz->operator()(0)",		L"pz->operator ()(0)",			L"::X $PR",								pa);
