@@ -465,7 +465,7 @@ public:
 			}
 		}
 
-		Array<TsysConv> funcChoices(funcTypes.Count());
+		ExprTsysList validFuncTypes;
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
 			auto funcType = funcTypes[i];
@@ -476,7 +476,6 @@ public:
 			{
 				if (missParamCount > funcDPs[i])
 				{
-					funcChoices[i] = TsysConv::Illegal;
 					continue;
 				}
 			}
@@ -484,41 +483,55 @@ public:
 			{
 				if (!funcType.tsys->GetFunc().ellipsis)
 				{
-					funcChoices[i] = TsysConv::Illegal;
 					continue;
 				}
 			}
 
-			auto worstChoice = TsysConv::Exact;
-			for (vint j = 0; j < argTypesList.Count(); j++)
-			{
-				auto bestChoice = TsysConv::Illegal;
-				if (j < funcParamCount)
-				{
-					auto paramType = funcType.tsys->GetParam(j);
-					auto& argTypes = *argTypesList[j].Obj();
-
-					for (vint k = 0; k < argTypes.Count(); k++)
-					{
-						auto choice = TestConvert(pa, paramType, argTypes[k]);
-						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
-					}
-				}
-				else
-				{
-					bestChoice = TsysConv::Ellipsis;
-				}
-
-				if (worstChoice < bestChoice) worstChoice = bestChoice;
-			}
-
-			funcChoices[i] = worstChoice;
+			validFuncTypes.Add(funcType);
 		}
 
-		FilterFunctionByQualifier(funcTypes, funcChoices);
-		for (vint i = 0; i < funcTypes.Count(); i++)
+		ExprTsysList selectedFuncTypes;
+		CopyFrom(selectedFuncTypes, validFuncTypes);
+
+		for (vint i = 0; i < argTypesList.Count(); i++)
 		{
-			AddTemp(result, funcTypes[i].tsys->GetElement());
+			ExprTsysList candidateFuncTypes;
+			CopyFrom(candidateFuncTypes, validFuncTypes);
+			Array<TsysConv> funcChoices(candidateFuncTypes.Count());
+
+			for (vint j = 0; j < candidateFuncTypes.Count(); j++)
+			{
+				auto funcType = candidateFuncTypes[j];
+
+				vint funcParamCount = funcType.tsys->GetParamCount();
+				if (funcParamCount <= j)
+				{
+					if (!funcType.tsys->GetFunc().ellipsis)
+					{
+						funcChoices[j] = TsysConv::Illegal;
+						continue;
+					}
+				}
+
+				auto paramType = funcType.tsys->GetParam(j);
+				auto& argTypes = *argTypesList[j].Obj();
+
+				auto bestChoice = TsysConv::Illegal;
+				for (vint k = 0; k < argTypes.Count(); k++)
+				{
+					auto choice = TestConvert(pa, paramType, argTypes[k]);
+					if ((vint)bestChoice > (vint)choice) bestChoice = choice;
+				}
+				funcChoices[j] = bestChoice;
+			}
+
+			FilterFunctionByQualifier(candidateFuncTypes, funcChoices);
+			CopyFrom(selectedFuncTypes, From(selectedFuncTypes).Intersect(candidateFuncTypes));
+		}
+
+		for (vint i = 0; i < selectedFuncTypes.Count(); i++)
+		{
+			AddTemp(result, selectedFuncTypes[i].tsys->GetElement());
 		}
 	}
 
