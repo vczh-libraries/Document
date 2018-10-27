@@ -88,10 +88,46 @@ double G(double);
 
 TEST_CASE(TestParseExpr_Overloading_DefaultParameter)
 {
+	{
+		TEST_DECL(
+bool F(void*);
+char F(int, int);
+wchar_t F(int, double = 0);
+		);
+		COMPILE_PROGRAM(program, pa, input);
+
+		ASSERT_OVERLOADING(F(0),							L"F(0)",								wchar_t);
+		ASSERT_OVERLOADING(F(nullptr),						L"F(nullptr)",							bool);
+		ASSERT_OVERLOADING(F(0,0),							L"F(0, 0)",								char);
+		ASSERT_OVERLOADING(F(0,0.0),						L"F(0, 0.0)",							wchar_t);
+		ASSERT_OVERLOADING(F(0,0.0f),						L"F(0, 0.0f)",							wchar_t);
+	}
 }
 
 TEST_CASE(TestParseExpr_Overloading_VariantArguments)
 {
+	{
+		TEST_DECL(
+char F(int, ...);
+wchar_t F(double, ...);
+float F(int, double);
+double F(double, double);
+		);
+		COMPILE_PROGRAM(program, pa, input);
+
+		ASSERT_OVERLOADING(F(0, 0),							L"F(0, 0)",								float);
+		ASSERT_OVERLOADING(F(0, 0.0),						L"F(0, 0.0)",							float);
+		ASSERT_OVERLOADING(F(0, 0.0f),						L"F(0, 0.0f)",							float);
+
+		ASSERT_OVERLOADING(F(0.0, 0),						L"F(0.0, 0)",							double);
+		ASSERT_OVERLOADING(F(0.0, 0.0),						L"F(0.0, 0.0)",							double);
+		ASSERT_OVERLOADING(F(0.0, 0.0f),					L"F(0.0, 0.0f)",						double);
+		
+		ASSERT_OVERLOADING(F(0),							L"F(0)",								char);
+		ASSERT_OVERLOADING(F(0.0),							L"F(0.0)",								wchar_t);
+		ASSERT_OVERLOADING(F(0, nullptr),					L"F(0, nullptr)",						char);
+		ASSERT_OVERLOADING(F(0.0, nullptr),					L"F(0.0, nullptr)",						wchar_t);
+	}
 }
 
 TEST_CASE(TestParseExpr_Overloading_Inheritance)
