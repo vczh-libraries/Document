@@ -77,22 +77,23 @@ protected:
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
 
-	TsysPrimitive		GetPrimitive()				{ throw "Not Implemented!"; }
-	TsysCV				GetCV()						{ throw "Not Implemented!"; }
-	ITsys*				GetElement()				{ throw "Not Implemented!"; }
-	ITsys*				GetClass()					{ throw "Not Implemented!"; }
-	ITsys*				GetParam(vint index)		{ throw "Not Implemented!"; }
-	vint				GetParamCount()				{ throw "Not Implemented!"; }
-	Symbol*				GetDecl()					{ throw "Not Implemented!"; }
+	TsysPrimitive		GetPrimitive()								{ throw "Not Implemented!"; }
+	TsysCV				GetCV()										{ throw "Not Implemented!"; }
+	ITsys*				GetElement()								{ throw "Not Implemented!"; }
+	ITsys*				GetClass()									{ throw "Not Implemented!"; }
+	ITsys*				GetParam(vint index)						{ throw "Not Implemented!"; }
+	vint				GetParamCount()								{ throw "Not Implemented!"; }
+	bool				GetEllipsis()								{ throw "Not Implemented!"; }
+	Symbol*				GetDecl()									{ throw "Not Implemented!"; }
 
-	ITsys* LRefOf()									override;
-	ITsys* RRefOf()									override;
-	ITsys* PtrOf()									override;
-	ITsys* ArrayOf(vint dimensions)					override;
-	ITsys* FunctionOf(IEnumerable<ITsys*>& params)	override;
-	ITsys* MemberOf(ITsys* classType)				override;
-	ITsys* CVOf(TsysCV cv)							override;
-	ITsys* GenericOf(IEnumerable<ITsys*>& params)	override;
+	ITsys* LRefOf()													override;
+	ITsys* RRefOf()													override;
+	ITsys* PtrOf()													override;
+	ITsys* ArrayOf(vint dimensions)									override;
+	ITsys* FunctionOf(IEnumerable<ITsys*>& params, bool ellipsis)	override;
+	ITsys* MemberOf(ITsys* classType)								override;
+	ITsys* CVOf(TsysCV cv)											override;
+	ITsys* GenericOf(IEnumerable<ITsys*>& params)					override;
 
 	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
 	{
@@ -137,7 +138,7 @@ Concrete Tsys
 
 #define ITSYS_MEMBERS_DECORATE(TYPE, DATA, NAME)													\
 	protected:																						\
-		TsysBase*				element;															\
+		TsysBase*			element;																\
 		DATA				data;																	\
 	public:																							\
 		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element, DATA _data)								\
@@ -147,7 +148,7 @@ Concrete Tsys
 
 #define ITSYS_MEMBERS_WITHPARAMS(TYPE)																\
 	protected:																						\
-		TsysBase*				element;															\
+		TsysBase*			element;																\
 		List<ITsys*>		params;																	\
 	public:																							\
 		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element)											\
@@ -535,7 +536,7 @@ ITsys* TsysBase::ArrayOf(vint dimensions)
 	return itsys;
 }
 
-ITsys* TsysBase::FunctionOf(IEnumerable<ITsys*>& params)
+ITsys* TsysBase::FunctionOf(IEnumerable<ITsys*>& params, bool ellipsis)
 {
 	return ParamsOf(params, functionOf, &TsysAlloc::_function);
 }

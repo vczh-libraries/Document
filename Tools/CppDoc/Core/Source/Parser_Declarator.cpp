@@ -306,7 +306,7 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 	{
 		{
 			auto oldCursor = cursor;
-			CppCallingConvention callingConvention;
+			TsysCallingConvention callingConvention;
 			if (ParseCallingConvention(callingConvention, cursor))
 			{
 				if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
@@ -416,15 +416,13 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 	//   1. it is a function declarator
 	//   2. it is a declarator but not array or function
 	// so we see if we can find __stdcall
-	bool hasCallingConvention = false;
-	CppCallingConvention callingConvention;
+	auto callingConvention = TsysCallingConvention::None;
 	{
 		auto oldCursor = cursor;
-		if ((hasCallingConvention = ParseCallingConvention(callingConvention, cursor)))
+		if (ParseCallingConvention(callingConvention, cursor))
 		{
 			if (!TestToken(cursor, CppTokens::LPARENTHESIS, false))
 			{
-				hasCallingConvention = false;
 				cursor = oldCursor;
 			}
 		}
@@ -432,7 +430,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 
 	if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
 	{
-		if (!forceSpecialMethod || hasCallingConvention)
+		if (!forceSpecialMethod || callingConvention != TsysCallingConvention::None)
 		{
 			// if we see (EXPRESSION, then this is an initializer, we stop here.
 			// for special method, it should be a function, so we don't need to test for an initializer.
@@ -453,7 +451,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 
 		SkipToken(cursor);
 		Ptr<FunctionType> type;
-		if (hasCallingConvention)
+		if (callingConvention != TsysCallingConvention::None)
 		{
 			// __stdcall should appear before CLASS::
 			// so if we see __stdcall ( here, then there is no CLASS:: (maybe CLASS::* but we don't care)

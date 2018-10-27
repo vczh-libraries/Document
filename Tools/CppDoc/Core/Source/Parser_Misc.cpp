@@ -280,12 +280,12 @@ Ptr<Type> AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType)
 ParseCallingConvention
 ***********************************************************************/
 
-bool ParseCallingConvention(CppCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor)
+bool ParseCallingConvention(TsysCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor)
 {
 #define CALLING_CONVENTION_KEYWORD(TOKEN, NAME)\
 	if (TestToken(cursor, CppTokens::TOKEN))\
 	{\
-		callingConvention = CppCallingConvention::NAME;\
+		callingConvention = TsysCallingConvention::NAME;\
 		return true;\
 	}\
 	else\

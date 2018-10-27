@@ -121,7 +121,6 @@ struct StopParsingException
 class FunctionType;
 class ClassDeclaration;
 class VariableDeclaration;
-enum class CppCallingConvention;
 
 // Parser_ResolveSymbol.cpp
 enum class SearchPolicy
@@ -148,7 +147,7 @@ extern bool							ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool 
 extern Ptr<Type>					GetTypeWithoutMemberAndCC(Ptr<Type> type);
 extern Ptr<Type>					ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToReplace);
 extern Ptr<Type>					AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType);
-extern bool							ParseCallingConvention(CppCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
+extern bool							ParseCallingConvention(TsysCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
 
 // Parser_Type.cpp
 extern Ptr<Type>					ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);

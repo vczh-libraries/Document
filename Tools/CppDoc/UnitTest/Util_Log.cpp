@@ -371,22 +371,22 @@ public:
 
 		switch (self->callingConvention)
 		{
-		case CppCallingConvention::CDecl:
+		case TsysCallingConvention::CDecl:
 			writer.WriteString(L" __cdecl");
 			break;
-		case CppCallingConvention::ClrCall:
+		case TsysCallingConvention::ClrCall:
 			writer.WriteString(L" __clrcall");
 			break;
-		case CppCallingConvention::StdCall:
+		case TsysCallingConvention::StdCall:
 			writer.WriteString(L" __stdcall");
 			break;
-		case CppCallingConvention::FastCall:
+		case TsysCallingConvention::FastCall:
 			writer.WriteString(L" __fastcall");
 			break;
-		case CppCallingConvention::ThisCall:
+		case TsysCallingConvention::ThisCall:
 			writer.WriteString(L" __thiscall");
 			break;
-		case CppCallingConvention::VectorCall:
+		case TsysCallingConvention::VectorCall:
 			writer.WriteString(L" __vectorcall");
 			break;
 		}

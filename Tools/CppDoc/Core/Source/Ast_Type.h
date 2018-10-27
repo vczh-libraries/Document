@@ -106,22 +106,12 @@ public:
 	Ptr<Expr>				expr;
 };
 
-enum class CppCallingConvention
-{
-	CDecl,
-	ClrCall,
-	StdCall,
-	FastCall,
-	ThisCall,
-	VectorCall,
-};
-
 class CallingConventionType : public Type
 {
 public:
 	ITypeVisitor_ACCEPT;
 
-	CppCallingConvention	callingConvention = CppCallingConvention::CDecl;
+	TsysCallingConvention	callingConvention = TsysCallingConvention::None;
 	Ptr<Type>				type;
 };
 

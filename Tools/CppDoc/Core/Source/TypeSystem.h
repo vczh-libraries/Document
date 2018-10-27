@@ -36,6 +36,17 @@ enum class TsysBytes
 	_COUNT,
 };
 
+enum class TsysCallingConvention
+{
+	CDecl,
+	ClrCall,
+	StdCall,
+	FastCall,
+	ThisCall,
+	VectorCall,
+	None,
+};
+
 struct TsysPrimitive
 {
 	TsysPrimitiveType			type = TsysPrimitiveType::Void;
@@ -54,21 +65,31 @@ struct TsysCV
 	TsysCV(bool c, bool v) :isGeneralConst(c), isVolatile(v) {}
 };
 
-#define TSYS_TYPE_LIST(F)									\
-	F(Zero)													\
-	F(Nullptr)												\
-	F(Primitive)		/* Primitive					*/	\
-	F(LRef)				/* Element						*/	\
-	F(RRef)				/* Element						*/	\
-	F(Ptr)				/* Element						*/	\
-	F(Array)			/* Element, ParamCount			*/	\
-	F(Function)			/* Element, ParamCount, Param	*/	\
-	F(Member)			/* Element, Class				*/	\
-	F(CV)				/* CV							*/	\
-	F(Decl)				/* Decl							*/	\
-	F(Generic)			/* Element, ParamCount, Param	*/	\
-	F(GenericArg)		/* Decl							*/	\
-	F(Expr)				/* ?							*/	\
+struct TsysFunc
+{
+	
+};
+
+struct TsysGeneric
+{
+
+};
+
+#define TSYS_TYPE_LIST(F)											\
+	F(Zero)															\
+	F(Nullptr)														\
+	F(Primitive)		/* Primitive							*/	\
+	F(LRef)				/* Element								*/	\
+	F(RRef)				/* Element								*/	\
+	F(Ptr)				/* Element								*/	\
+	F(Array)			/* Element, ParamCount					*/	\
+	F(Function)			/* Element, ParamCount, Param, Ellipsis	*/	\
+	F(Member)			/* Element, Class						*/	\
+	F(CV)				/* CV									*/	\
+	F(Decl)				/* Decl									*/	\
+	F(Generic)			/* Element, ParamCount, Param			*/	\
+	F(GenericArg)		/* Decl									*/	\
+	F(Expr)				/* ?									*/	\
 
 enum class TsysType
 {
@@ -104,13 +125,14 @@ public:
 	virtual ITsys*				GetClass() = 0;
 	virtual ITsys*				GetParam(vint index) = 0;
 	virtual vint				GetParamCount() = 0;
+	virtual bool				GetEllipsis() = 0;
 	virtual Symbol*				GetDecl() = 0;
 
 	virtual ITsys*				LRefOf() = 0;
 	virtual ITsys*				RRefOf() = 0;
 	virtual ITsys*				PtrOf() = 0;
 	virtual ITsys*				ArrayOf(vint dimensions) = 0;
-	virtual ITsys*				FunctionOf(IEnumerable<ITsys*>& params) = 0;
+	virtual ITsys*				FunctionOf(IEnumerable<ITsys*>& params, bool ellipsis) = 0;
 	virtual ITsys*				MemberOf(ITsys* classType) = 0;
 	virtual ITsys*				CVOf(TsysCV cv) = 0;
 	virtual ITsys*				GenericOf(IEnumerable<ITsys*>& params) = 0;
