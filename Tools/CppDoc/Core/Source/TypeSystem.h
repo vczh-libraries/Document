@@ -67,12 +67,15 @@ struct TsysCV
 
 struct TsysFunc
 {
-	
+	TsysCallingConvention		callingConvention = TsysCallingConvention::CDecl;
+	bool						ellipsis = false;
+
+	TsysFunc() = default;
+	TsysFunc(TsysCallingConvention _callingConvention, bool _ellipsis) :callingConvention(_callingConvention), ellipsis(_ellipsis) {}
 };
 
 struct TsysGeneric
 {
-
 };
 
 #define TSYS_TYPE_LIST(F)											\
@@ -83,11 +86,11 @@ struct TsysGeneric
 	F(RRef)				/* Element								*/	\
 	F(Ptr)				/* Element								*/	\
 	F(Array)			/* Element, ParamCount					*/	\
-	F(Function)			/* Element, ParamCount, Param, Ellipsis	*/	\
+	F(Function)			/* Element, ParamCount, Param, Func		*/	\
 	F(Member)			/* Element, Class						*/	\
 	F(CV)				/* CV									*/	\
 	F(Decl)				/* Decl									*/	\
-	F(Generic)			/* Element, ParamCount, Param			*/	\
+	F(Generic)			/* Element, ParamCount, Param, Generic	*/	\
 	F(GenericArg)		/* Decl									*/	\
 	F(Expr)				/* ?									*/	\
 
@@ -125,14 +128,15 @@ public:
 	virtual ITsys*				GetClass() = 0;
 	virtual ITsys*				GetParam(vint index) = 0;
 	virtual vint				GetParamCount() = 0;
-	virtual bool				GetEllipsis() = 0;
+	virtual TsysFunc			GetFunc() = 0;
+	virtual TsysGeneric			GetGeneric() = 0;
 	virtual Symbol*				GetDecl() = 0;
 
 	virtual ITsys*				LRefOf() = 0;
 	virtual ITsys*				RRefOf() = 0;
 	virtual ITsys*				PtrOf() = 0;
 	virtual ITsys*				ArrayOf(vint dimensions) = 0;
-	virtual ITsys*				FunctionOf(IEnumerable<ITsys*>& params, bool ellipsis) = 0;
+	virtual ITsys*				FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func) = 0;
 	virtual ITsys*				MemberOf(ITsys* classType) = 0;
 	virtual ITsys*				CVOf(TsysCV cv) = 0;
 	virtual ITsys*				GenericOf(IEnumerable<ITsys*>& params) = 0;

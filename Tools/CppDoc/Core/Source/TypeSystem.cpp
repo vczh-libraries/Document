@@ -83,14 +83,15 @@ public:
 	ITsys*				GetClass()									{ throw "Not Implemented!"; }
 	ITsys*				GetParam(vint index)						{ throw "Not Implemented!"; }
 	vint				GetParamCount()								{ throw "Not Implemented!"; }
-	bool				GetEllipsis()								{ throw "Not Implemented!"; }
+	TsysFunc			GetFunc()									{ throw "Not Implemented!"; }
+	TsysGeneric			GetGeneric()								{ throw "Not Implemented!"; }
 	Symbol*				GetDecl()									{ throw "Not Implemented!"; }
 
 	ITsys* LRefOf()													override;
 	ITsys* RRefOf()													override;
 	ITsys* PtrOf()													override;
 	ITsys* ArrayOf(vint dimensions)									override;
-	ITsys* FunctionOf(IEnumerable<ITsys*>& params, bool ellipsis)	override;
+	ITsys* FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)	override;
 	ITsys* MemberOf(ITsys* classType)								override;
 	ITsys* CVOf(TsysCV cv)											override;
 	ITsys* GenericOf(IEnumerable<ITsys*>& params)					override;
@@ -146,17 +147,19 @@ Concrete Tsys
 		ITsys* GetElement()override { return element; }												\
 		DATA Get##NAME()override { return data; }													\
 
-#define ITSYS_MEMBERS_WITHPARAMS(TYPE)																\
+#define ITSYS_MEMBERS_WITHPARAMS(TYPE, DATA, NAME)													\
 	protected:																						\
 		TsysBase*			element;																\
 		List<ITsys*>		params;																	\
+		DATA				data;																	\
 	public:																							\
-		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element)											\
-			:TsysBase_(_tsys), element(_element) {}													\
+		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element, DATA _data)								\
+			:TsysBase_(_tsys), element(_element), data(_data) {}									\
 		List<ITsys*>& GetParams() { return params; }												\
 		ITsys* GetElement()override { return element; }												\
 		ITsys* GetParam(vint index)override { return params.Get(index); }							\
 		vint GetParamCount()override { return params.Count(); }										\
+		DATA Get##NAME()override { return data; }													\
 
 class ITSYS_CLASS(Zero)
 {
@@ -300,12 +303,12 @@ class ITSYS_CLASS(Member)
 
 class ITSYS_CLASS(Function)
 {
-	ITSYS_MEMBERS_WITHPARAMS(Function)
+	ITSYS_MEMBERS_WITHPARAMS(Function, TsysFunc, Func)
 };
 
 class ITSYS_CLASS(Generic)
 {
-	ITSYS_MEMBERS_WITHPARAMS(Generic)
+	ITSYS_MEMBERS_WITHPARAMS(Generic, TsysGeneric, Generic)
 };
 
 
@@ -536,7 +539,7 @@ ITsys* TsysBase::ArrayOf(vint dimensions)
 	return itsys;
 }
 
-ITsys* TsysBase::FunctionOf(IEnumerable<ITsys*>& params, bool ellipsis)
+ITsys* TsysBase::FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)
 {
 	return ParamsOf(params, functionOf, &TsysAlloc::_function);
 }
