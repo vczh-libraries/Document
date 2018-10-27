@@ -110,7 +110,7 @@ int z2(Z);
 				ASSERT_SYMBOL(0, L"z1", 0, 0, VariableDeclaration, 30, 2)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"z1",			L"z1",					L"::c::Z $L",								pa);
+		AssertExpr(L"z1",			L"z1",					L"::c::Z $L",											pa);
 		TEST_ASSERT(accessed.Count() == 1);
 	}
 	{
@@ -121,7 +121,7 @@ int z2(Z);
 				ASSERT_SYMBOL(0, L"z2", 0, 2, ForwardFunctionDeclaration, 31, 4)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"::z2",			L"__root :: z2",		L"__int32 (::c::Z) * $PR",					pa);
+		AssertExpr(L"::z2",			L"__root :: z2",		L"__int32 __cdecl(::c::Z) * $PR",						pa);
 		TEST_ASSERT(accessed.Count() == 1);
 	}
 	{
@@ -133,7 +133,7 @@ int z2(Z);
 				ASSERT_SYMBOL(1, L"u1", 0, 3, ForwardVariableDeclaration, 9, 11)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"Z::u1",		L"Z :: u1",				L"::a::X::Y $L",							pa);
+		AssertExpr(L"Z::u1",		L"Z :: u1",				L"::a::X::Y $L",										pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -145,7 +145,7 @@ int z2(Z);
 				ASSERT_SYMBOL(1, L"u2", 0, 5, VariableDeclaration, 10, 4)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"::Z::u2",		L"__root :: Z :: u2",	L"::a::X::Y (::a::X ::) * $PR",				pa);
+		AssertExpr(L"::Z::u2",		L"__root :: Z :: u2",	L"::a::X::Y (::a::X ::) * $PR",					pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -157,7 +157,7 @@ int z2(Z);
 				ASSERT_SYMBOL(1, L"v1", 0, 3, FunctionDeclaration, 11, 13)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"Z::v1",		L"Z :: v1",				L"__int32 (::a::X::Y &) * $PR",				pa);
+		AssertExpr(L"Z::v1",		L"Z :: v1",				L"__int32 __cdecl(::a::X::Y &) * $PR",					pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -169,7 +169,7 @@ int z2(Z);
 				ASSERT_SYMBOL(1, L"v2", 0, 5, FunctionDeclaration, 12, 6)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"::Z::v2",		L"__root :: Z :: v2",	L"__int32 (::a::X::Y &) (::a::X ::) * $PR",	pa);
+		AssertExpr(L"::Z::v2",		L"__root :: Z :: v2",	L"__int32 __thiscall(::a::X::Y &) (::a::X ::) * $PR",	pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 }
@@ -209,40 +209,40 @@ Z* pz = nullptr;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(L"pz->x",					L"pz->x",						L"bool $L",					pa);
-	AssertExpr(L"pz->y",					L"pz->y",						L"bool $L",					pa);
-	AssertExpr(L"pz->F",					L"pz->F",						L"__int32 (double) * $PR",	pa);
-	AssertExpr(L"pz->G",					L"pz->G",						L"__int32 (void *) * $PR",	pa);
-	AssertExpr(L"pz->operator->",			L"pz->operator ->",				L"::Y () * $PR",			pa);
+	AssertExpr(L"pz->x",					L"pz->x",						L"bool $L",								pa);
+	AssertExpr(L"pz->y",					L"pz->y",						L"bool $L",								pa);
+	AssertExpr(L"pz->F",					L"pz->F",						L"__int32 __cdecl(double) * $PR",		pa);
+	AssertExpr(L"pz->G",					L"pz->G",						L"__int32 __thiscall(void *) * $PR",	pa);
+	AssertExpr(L"pz->operator->",			L"pz->operator ->",				L"::Y () * $PR",						pa);
 
-	AssertExpr(L"z.x",						L"z.x",							L"bool $L",					pa);
-	AssertExpr(L"z.y",						L"z.y",							L"bool $L",					pa);
-	AssertExpr(L"z.F",						L"z.F",							L"__int32 (double) * $PR",	pa);
-	AssertExpr(L"z.G",						L"z.G",							L"__int32 (void *) * $PR",	pa);
-	AssertExpr(L"z.operator->",				L"z.operator ->",				L"::Y () * $PR",			pa);
+	AssertExpr(L"z.x",						L"z.x",							L"bool $L",								pa);
+	AssertExpr(L"z.y",						L"z.y",							L"bool $L",								pa);
+	AssertExpr(L"z.F",						L"z.F",							L"__int32 __cdecl(double) * $PR",		pa);
+	AssertExpr(L"z.G",						L"z.G",							L"__int32 __thiscall(void *) * $PR",	pa);
+	AssertExpr(L"z.operator->",				L"z.operator ->",				L"::Y () * $PR",						pa);
 	
-	AssertExpr(L"pz->operator->()",			L"pz->operator ->()",			L"::Y $PR",					pa);
-	AssertExpr(L"pz->operator()(0)",		L"pz->operator ()(0)",			L"::X $PR",					pa);
-	AssertExpr(L"pz->operator()(nullptr)",	L"pz->operator ()(nullptr)",	L"::Y $PR",					pa);
-	AssertExpr(L"pz->operator[](\"a\")",	L"pz->operator [](\"a\")",		L"::X $PR",					pa);
-	AssertExpr(L"pz->operator[](Z())",		L"pz->operator [](Z())",		L"::Y $PR",					pa);
-	AssertExpr(L"pz->F(0)",					L"pz->F(0)",					L"__int32 $PR",				pa);
-	AssertExpr(L"pz->G(0)",					L"pz->G(0)",					L"__int32 $PR",				pa);
+	AssertExpr(L"pz->operator->()",			L"pz->operator ->()",			L"::Y $PR",								pa);
+	AssertExpr(L"pz->operator()(0)",		L"pz->operator ()(0)",			L"::X $PR",								pa);
+	AssertExpr(L"pz->operator()(nullptr)",	L"pz->operator ()(nullptr)",	L"::Y $PR",								pa);
+	AssertExpr(L"pz->operator[](\"a\")",	L"pz->operator [](\"a\")",		L"::X $PR",								pa);
+	AssertExpr(L"pz->operator[](Z())",		L"pz->operator [](Z())",		L"::Y $PR",								pa);
+	AssertExpr(L"pz->F(0)",					L"pz->F(0)",					L"__int32 $PR",							pa);
+	AssertExpr(L"pz->G(0)",					L"pz->G(0)",					L"__int32 $PR",							pa);
 	
-	AssertExpr(L"z.operator->()",			L"z.operator ->()",				L"::Y $PR",					pa);
-	AssertExpr(L"z.operator()(0)",			L"z.operator ()(0)",			L"::X $PR",					pa);
-	AssertExpr(L"z.operator()(nullptr)",	L"z.operator ()(nullptr)",		L"::Y $PR",					pa);
-	AssertExpr(L"z.operator[](\"a\")",		L"z.operator [](\"a\")",		L"::X $PR",					pa);
-	AssertExpr(L"z.operator[](Z())",		L"z.operator [](Z())",			L"::Y $PR",					pa);
-	AssertExpr(L"z.F(0)",					L"z.F(0)",						L"__int32 $PR",				pa);
-	AssertExpr(L"z.G(0)",					L"z.G(0)",						L"__int32 $PR",				pa);
+	AssertExpr(L"z.operator->()",			L"z.operator ->()",				L"::Y $PR",								pa);
+	AssertExpr(L"z.operator()(0)",			L"z.operator ()(0)",			L"::X $PR",								pa);
+	AssertExpr(L"z.operator()(nullptr)",	L"z.operator ()(nullptr)",		L"::Y $PR",								pa);
+	AssertExpr(L"z.operator[](\"a\")",		L"z.operator [](\"a\")",		L"::X $PR",								pa);
+	AssertExpr(L"z.operator[](Z())",		L"z.operator [](Z())",			L"::Y $PR",								pa);
+	AssertExpr(L"z.F(0)",					L"z.F(0)",						L"__int32 $PR",							pa);
+	AssertExpr(L"z.G(0)",					L"z.G(0)",						L"__int32 $PR",							pa);
 	
-	AssertExpr(L"z->x",						L"z->x",						L"__int32 $L",				pa);
-	AssertExpr(L"z->y",						L"z->y",						L"__int32 $L",				pa);
-	AssertExpr(L"z(0)",						L"z(0)",						L"::X $PR",					pa);
-	AssertExpr(L"z(nullptr)",				L"z(nullptr)",					L"::Y $PR",					pa);
-	AssertExpr(L"z[\"a\"]",					L"z[\"a\"]",					L"::X $PR",					pa);
-	AssertExpr(L"z[Z()]",					L"z[Z()]",						L"::Y $PR",					pa);
+	AssertExpr(L"z->x",						L"z->x",						L"__int32 $L",							pa);
+	AssertExpr(L"z->y",						L"z->y",						L"__int32 $L",							pa);
+	AssertExpr(L"z(0)",						L"z(0)",						L"::X $PR",								pa);
+	AssertExpr(L"z(nullptr)",				L"z(nullptr)",					L"::Y $PR",								pa);
+	AssertExpr(L"z[\"a\"]",					L"z[\"a\"]",					L"::X $PR",								pa);
+	AssertExpr(L"z[Z()]",					L"z[Z()]",						L"::Y $PR",								pa);
 }
 
 TEST_CASE(TestParseExpr_Field_Qualifier)
@@ -469,53 +469,53 @@ decltype(&E)	_E3[1] = &E;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(L"Y::A",			L"Y :: A",				L"__int32 $L",						pa);
-	AssertExpr(L"Y::B",			L"Y :: B",				L"__int32 (::X ::) * $PR",			pa);
-	AssertExpr(L"Y::C",			L"Y :: C",				L"__int32 () * $PR",				pa);
-	AssertExpr(L"Y::D",			L"Y :: D",				L"__int32 () (::X ::) * $PR",		pa);
-	AssertExpr(L"E",			L"E",					L"__int32 () * $PR",				pa);
+	AssertExpr(L"Y::A",			L"Y :: A",				L"__int32 $L",									pa);
+	AssertExpr(L"Y::B",			L"Y :: B",				L"__int32 (::X ::) * $PR",						pa);
+	AssertExpr(L"Y::C",			L"Y :: C",				L"__int32 __cdecl() * $PR",						pa);
+	AssertExpr(L"Y::D",			L"Y :: D",				L"__int32 __thiscall() (::X ::) * $PR",			pa);
+	AssertExpr(L"E",			L"E",					L"__int32 __cdecl() * $PR",						pa);
 
-	AssertExpr(L"&Y::A",		L"(& Y :: A)",			L"__int32 * $PR",					pa);
-	AssertExpr(L"&Y::B",		L"(& Y :: B)",			L"__int32 (::X ::) * $PR",			pa);
-	AssertExpr(L"&Y::C",		L"(& Y :: C)",			L"__int32 () * $PR",				pa);
-	AssertExpr(L"&Y::D",		L"(& Y :: D)",			L"__int32 () (::X ::) * $PR",		pa);
-	AssertExpr(L"&E",			L"(& E)",				L"__int32 () * $PR",				pa);
+	AssertExpr(L"&Y::A",		L"(& Y :: A)",			L"__int32 * $PR",								pa);
+	AssertExpr(L"&Y::B",		L"(& Y :: B)",			L"__int32 (::X ::) * $PR",						pa);
+	AssertExpr(L"&Y::C",		L"(& Y :: C)",			L"__int32 __cdecl() * $PR",						pa);
+	AssertExpr(L"&Y::D",		L"(& Y :: D)",			L"__int32 __thiscall() (::X ::) * $PR",			pa);
+	AssertExpr(L"&E",			L"(& E)",				L"__int32 __cdecl() * $PR",						pa);
 
-	AssertExpr(L"_A1",			L"_A1",					L"__int32 * $L",					pa);
-	AssertExpr(L"_B1",			L"_B1",					L"__int32 (::X ::) * $L",			pa);
-	AssertExpr(L"_C1",			L"_C1",					L"__int32 () * $L",					pa);
-	AssertExpr(L"_D1",			L"_D1",					L"__int32 () (::X ::) * $L",		pa);
-	AssertExpr(L"_E1",			L"_E1",					L"__int32 () * $L",					pa);
+	AssertExpr(L"_A1",			L"_A1",					L"__int32 * $L",								pa);
+	AssertExpr(L"_B1",			L"_B1",					L"__int32 (::X ::) * $L",						pa);
+	AssertExpr(L"_C1",			L"_C1",					L"__int32 __cdecl() * $L",						pa);
+	AssertExpr(L"_D1",			L"_D1",					L"__int32 __thiscall() (::X ::) * $L",			pa);
+	AssertExpr(L"_E1",			L"_E1",					L"__int32 __cdecl() * $L",						pa);
 
-	AssertExpr(L"&_A1",			L"(& _A1)",				L"__int32 * * $PR",					pa);
-	AssertExpr(L"&_B1",			L"(& _B1)",				L"__int32 (::X ::) * * $PR",		pa);
-	AssertExpr(L"&_C1",			L"(& _C1)",				L"__int32 () * * $PR",				pa);
-	AssertExpr(L"&_D1",			L"(& _D1)",				L"__int32 () (::X ::) * * $PR",		pa);
-	AssertExpr(L"&_E1",			L"(& _E1)",				L"__int32 () * * $PR",				pa);
+	AssertExpr(L"&_A1",			L"(& _A1)",				L"__int32 * * $PR",								pa);
+	AssertExpr(L"&_B1",			L"(& _B1)",				L"__int32 (::X ::) * * $PR",					pa);
+	AssertExpr(L"&_C1",			L"(& _C1)",				L"__int32 __cdecl() * * $PR",					pa);
+	AssertExpr(L"&_D1",			L"(& _D1)",				L"__int32 __thiscall() (::X ::) * * $PR",		pa);
+	AssertExpr(L"&_E1",			L"(& _E1)",				L"__int32 __cdecl() * * $PR",					pa);
 
-	AssertExpr(L"_A2",			L"_A2",					L"__int32 * $L",					pa);
-	AssertExpr(L"_B2",			L"_B2",					L"__int32 (::X ::) * $L",			pa);
-	AssertExpr(L"_C2",			L"_C2",					L"__int32 () * $L",					pa);
-	AssertExpr(L"_D2",			L"_D2",					L"__int32 () (::X ::) * $L",		pa);
-	AssertExpr(L"_E2",			L"_E2",					L"__int32 () * $L",					pa);
+	AssertExpr(L"_A2",			L"_A2",					L"__int32 * $L",								pa);
+	AssertExpr(L"_B2",			L"_B2",					L"__int32 (::X ::) * $L",						pa);
+	AssertExpr(L"_C2",			L"_C2",					L"__int32 __cdecl() * $L",						pa);
+	AssertExpr(L"_D2",			L"_D2",					L"__int32 __thiscall() (::X ::) * $L",			pa);
+	AssertExpr(L"_E2",			L"_E2",					L"__int32 __cdecl() * $L",						pa);
 
-	AssertExpr(L"&_A2",			L"(& _A2)",				L"__int32 * * $PR",					pa);
-	AssertExpr(L"&_B2",			L"(& _B2)",				L"__int32 (::X ::) * * $PR",		pa);
-	AssertExpr(L"&_C2",			L"(& _C2)",				L"__int32 () * * $PR",				pa);
-	AssertExpr(L"&_D2",			L"(& _D2)",				L"__int32 () (::X ::) * * $PR",		pa);
-	AssertExpr(L"&_E2",			L"(& _E2)",				L"__int32 () * * $PR",				pa);
+	AssertExpr(L"&_A2",			L"(& _A2)",				L"__int32 * * $PR",								pa);
+	AssertExpr(L"&_B2",			L"(& _B2)",				L"__int32 (::X ::) * * $PR",					pa);
+	AssertExpr(L"&_C2",			L"(& _C2)",				L"__int32 __cdecl() * * $PR",					pa);
+	AssertExpr(L"&_D2",			L"(& _D2)",				L"__int32 __thiscall() (::X ::) * * $PR",		pa);
+	AssertExpr(L"&_E2",			L"(& _E2)",				L"__int32 __cdecl() * * $PR",					pa);
 
-	AssertExpr(L"_A3",			L"_A3",					L"__int32 * [] $L",					pa);
-	AssertExpr(L"_B3",			L"_B3",					L"__int32 (::X ::) * [] $L",		pa);
-	AssertExpr(L"_C3",			L"_C3",					L"__int32 () * [] $L",				pa);
-	AssertExpr(L"_D3",			L"_D3",					L"__int32 () (::X ::) * [] $L",		pa);
-	AssertExpr(L"_E3",			L"_E3",					L"__int32 () * [] $L",				pa);
+	AssertExpr(L"_A3",			L"_A3",					L"__int32 * [] $L",								pa);
+	AssertExpr(L"_B3",			L"_B3",					L"__int32 (::X ::) * [] $L",					pa);
+	AssertExpr(L"_C3",			L"_C3",					L"__int32 __cdecl() * [] $L",					pa);
+	AssertExpr(L"_D3",			L"_D3",					L"__int32 __thiscall() (::X ::) * [] $L",		pa);
+	AssertExpr(L"_E3",			L"_E3",					L"__int32 __cdecl() * [] $L",					pa);
 
-	AssertExpr(L"&_A3",			L"(& _A3)",				L"__int32 * [] * $PR",				pa);
-	AssertExpr(L"&_B3",			L"(& _B3)",				L"__int32 (::X ::) * [] * $PR",		pa);
-	AssertExpr(L"&_C3",			L"(& _C3)",				L"__int32 () * [] * $PR",			pa);
-	AssertExpr(L"&_D3",			L"(& _D3)",				L"__int32 () (::X ::) * [] * $PR",	pa);
-	AssertExpr(L"&_E3",			L"(& _E3)",				L"__int32 () * [] * $PR",			pa);
+	AssertExpr(L"&_A3",			L"(& _A3)",				L"__int32 * [] * $PR",							pa);
+	AssertExpr(L"&_B3",			L"(& _B3)",				L"__int32 (::X ::) * [] * $PR",					pa);
+	AssertExpr(L"&_C3",			L"(& _C3)",				L"__int32 __cdecl() * [] * $PR",				pa);
+	AssertExpr(L"&_D3",			L"(& _D3)",				L"__int32 __thiscall() (::X ::) * [] * $PR",	pa);
+	AssertExpr(L"&_E3",			L"(& _E3)",				L"__int32 __cdecl() * [] * $PR",				pa);
 }
 
 TEST_CASE(TestParseExpr_DeclType_Var)
