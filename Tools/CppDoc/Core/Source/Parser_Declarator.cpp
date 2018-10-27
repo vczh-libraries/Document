@@ -515,6 +515,13 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 			{
 				while (true)
 				{
+					if (TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
+					{
+						RequireToken(cursor, CppTokens::RPARENTHESIS);
+						type->ellipsis = true;
+						break;
+					}
+
 					{
 						List<Ptr<Declarator>> declarators;
 						ParseNonMemberDeclarator(functionArgsPa, pda_Param(true), cursor, declarators);
