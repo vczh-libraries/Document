@@ -122,6 +122,7 @@ public:
 
 	Ptr<Type>						returnType;
 	List<Ptr<VariableDeclaration>>	parameters;
+	bool							ellipsis = false;
 
 	bool							qualifierConstExpr = false;
 	bool							qualifierConst = false;

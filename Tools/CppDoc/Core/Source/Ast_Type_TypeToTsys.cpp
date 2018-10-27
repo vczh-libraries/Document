@@ -14,9 +14,14 @@ public:
 	TypeTsysList&			result;
 	ParsingArguments&		pa;
 
-	TypeToTsysVisitor(ParsingArguments& _pa, TypeTsysList& _result)
+	TsysCallingConvention	cc = TsysCallingConvention::None;
+	bool					memberOf = false;
+
+	TypeToTsysVisitor(ParsingArguments& _pa, TypeTsysList& _result, TsysCallingConvention _cc, bool _memberOf)
 		:pa(_pa)
 		, result(_result)
+		, cc(_cc)
+		, memberOf(_memberOf)
 	{
 	}
 
@@ -123,10 +128,17 @@ public:
 
 	void Visit(CallingConventionType* self)override
 	{
+		if (cc != TsysCallingConvention::None)
+		{
+			throw NotConvertableException();
+		}
+
+		cc = self->callingConvention;
 		self->type->Accept(this);
+		cc = TsysCallingConvention::None;
 	}
 
-	void CreateFunctionType(TypeTsysList* tsyses, vint* tsysIndex, vint level, vint count)
+	void CreateFunctionType(TypeTsysList* tsyses, vint* tsysIndex, vint level, vint count, const TsysFunc& func)
 	{
 		if (level == count)
 		{
@@ -135,7 +147,7 @@ public:
 			{
 				params[i] = tsyses[i + 1][tsysIndex[i + 1]];
 			}
-			result.Add(tsyses[0][tsysIndex[0]]->FunctionOf(params));
+			result.Add(tsyses[0][tsysIndex[0]]->FunctionOf(params, func));
 		}
 		else
 		{
@@ -143,7 +155,7 @@ public:
 			for (vint i = 0; i < levelCount; i++)
 			{
 				tsysIndex[level] = i;
-				CreateFunctionType(tsyses, tsysIndex, level + 1, count);
+				CreateFunctionType(tsyses, tsysIndex, level + 1, count, func);
 			}
 		}
 	}
@@ -176,7 +188,17 @@ public:
 
 			tsysIndex = new vint[count];
 			memset(tsysIndex, 0, sizeof(vint) * count);
-			CreateFunctionType(tsyses, tsysIndex, 0, count);
+
+			TsysFunc func(cc, self->ellipsis);
+			if (func.callingConvention == TsysCallingConvention::None)
+			{
+				func.callingConvention =
+					memberOf && !func.ellipsis
+					? TsysCallingConvention::ThisCall
+					: TsysCallingConvention::CDecl
+					;
+			}
+			CreateFunctionType(tsyses, tsysIndex, 0, count, func);
 
 			delete[] tsyses;
 			delete[] tsysIndex;
@@ -191,8 +213,14 @@ public:
 
 	void Visit(MemberType* self)override
 	{
+		if (memberOf)
+		{
+			throw NotConvertableException();
+		}
+		memberOf = true;
+
 		TypeTsysList types, classTypes;
-		TypeToTsys(pa, self->type, types);
+		TypeToTsys(pa, self->type, types, cc, memberOf);
 		TypeToTsys(pa, self->classType, classTypes);
 
 		for (vint i = 0; i < types.Count(); i++)
@@ -202,6 +230,8 @@ public:
 				result.Add(types[i]->MemberOf(classTypes[j]));
 			}
 		}
+
+		memberOf = false;
 	}
 
 	void Visit(DeclType* self)override
@@ -276,9 +306,9 @@ public:
 };
 
 // Convert type AST to type system object
-void TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys)
+void TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, TsysCallingConvention cc, bool memberOf)
 {
 	if (!t) throw NotConvertableException();
-	TypeToTsysVisitor visitor(pa, tsys);
+	TypeToTsysVisitor visitor(pa, tsys, cc, memberOf);
 	t->Accept(&visitor);
 }

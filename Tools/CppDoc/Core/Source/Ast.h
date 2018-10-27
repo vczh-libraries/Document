@@ -125,7 +125,7 @@ using TypeTsysList = List<ITsys*>;
 using ExprTsysList = List<ExprTsysItem>;
 
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
-extern void					TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys);
+extern void					TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, TsysCallingConvention cc = TsysCallingConvention::None, bool memberOf = false);
 extern void					ExprToTsys(ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys);
 
 #endif

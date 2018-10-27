@@ -142,8 +142,11 @@ TEST_CASE(TestTypeSystem_Function)
 	types2.Add(tgarg);
 	types2.Add(tdecl);
 
-	TsysFunc data1 = { TsysCallingConvention::StdCall, false };
-	TsysFunc data2 = { TsysCallingConvention::StdCall, true };
+	TsysFunc data1;
+	TsysFunc data2;
+
+	data1.ellipsis = false;
+	data2.ellipsis = true;
 
 	TEST_ASSERT(tvoid->FunctionOf(types1, data1) == tvoid->FunctionOf(types1, data1));
 	TEST_ASSERT(tvoid->FunctionOf(types1, data1) != tvoid->FunctionOf(types1, data2));

@@ -1230,14 +1230,46 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		}
 		return;
 	case TsysType::Function:
-		Log(tsys->GetElement(), writer);
-		writer.WriteString(L" (");
-		for (vint i = 0; i < tsys->GetParamCount(); i++)
 		{
-			if (i > 0) writer.WriteString(L", ");
-			Log(tsys->GetParam(i), writer);
+			auto func = tsys->GetFunc();
+			Log(tsys->GetElement(), writer);
+
+			switch (func.callingConvention)
+			{
+			case TsysCallingConvention::CDecl:
+				writer.WriteString(L" __cdecl(");
+				break;
+			case TsysCallingConvention::ClrCall:
+				writer.WriteString(L" __clrcall(");
+				break;
+			case TsysCallingConvention::StdCall:
+				writer.WriteString(L" __stdcall(");
+				break;
+			case TsysCallingConvention::FastCall:
+				writer.WriteString(L" __fastcall(");
+				break;
+			case TsysCallingConvention::ThisCall:
+				writer.WriteString(L" __thiscall(");
+				break;
+			case TsysCallingConvention::VectorCall:
+				writer.WriteString(L" __vectorcall(");
+				break;
+			default:
+				writer.WriteString(L" (");
+			}
+			for (vint i = 0; i < tsys->GetParamCount(); i++)
+			{
+				if (i > 0) writer.WriteString(L", ");
+				Log(tsys->GetParam(i), writer);
+			}
+
+			if (func.ellipsis)
+			{
+				if (tsys->GetParamCount() > 0) writer.WriteString(L", ");
+				writer.WriteString(L"...");
+			}
+			writer.WriteChar(L')');
 		}
-		writer.WriteChar(L')');
 		return;
 	case TsysType::Member:
 		Log(tsys->GetElement(), writer);
