@@ -339,10 +339,9 @@ public:
 	FilterFunctionByQualifier: Filter functions by their qualifiers
 	***********************************************************************/
 
-	static void FilterFunctionByQualifier(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices)
+	static TsysConv FindMinConv(ArrayBase<TsysConv>& funcChoices)
 	{
 		auto target = TsysConv::Illegal;
-
 		for (vint i = 0; i < funcChoices.Count(); i++)
 		{
 			auto candidate = funcChoices[i];
@@ -351,7 +350,12 @@ public:
 				target = candidate;
 			}
 		}
+		return target;
+	}
 
+	static void FilterFunctionByQualifier(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices)
+	{
+		auto target = FindMinConv(funcChoices);
 		if (target == TsysConv::Illegal)
 		{
 			funcTypes.Clear();
@@ -490,31 +494,29 @@ public:
 			validFuncTypes.Add(funcType);
 		}
 
-		ExprTsysList selectedFuncTypes;
-		CopyFrom(selectedFuncTypes, validFuncTypes);
+		Array<bool> selectedIndices(validFuncTypes.Count());
+		for (vint i = 0; i < validFuncTypes.Count(); i++)
+		{
+			selectedIndices[i] = true;
+		}
 
 		for (vint i = 0; i < argTypesList.Count(); i++)
 		{
-			ExprTsysList candidateFuncTypes;
-			CopyFrom(candidateFuncTypes, validFuncTypes);
-			Array<TsysConv> funcChoices(candidateFuncTypes.Count());
+			Array<TsysConv> funcChoices(validFuncTypes.Count());
 
-			for (vint j = 0; j < candidateFuncTypes.Count(); j++)
+			for (vint j = 0; j < validFuncTypes.Count(); j++)
 			{
-				auto funcType = candidateFuncTypes[j];
+				auto funcType = validFuncTypes[j];
 
 				vint funcParamCount = funcType.tsys->GetParamCount();
-				if (funcParamCount <= j)
+				if (funcParamCount <= i)
 				{
-					if (!funcType.tsys->GetFunc().ellipsis)
-					{
-						funcChoices[j] = TsysConv::Illegal;
-						continue;
-					}
+					funcChoices[j] = TsysConv::Ellipsis;
+					continue;
 				}
 
-				auto paramType = funcType.tsys->GetParam(j);
-				auto& argTypes = *argTypesList[j].Obj();
+				auto paramType = funcType.tsys->GetParam(i);
+				auto& argTypes = *argTypesList[i].Obj();
 
 				auto bestChoice = TsysConv::Illegal;
 				for (vint k = 0; k < argTypes.Count(); k++)
@@ -525,13 +527,27 @@ public:
 				funcChoices[j] = bestChoice;
 			}
 
-			FilterFunctionByQualifier(candidateFuncTypes, funcChoices);
-			CopyFrom(selectedFuncTypes, From(selectedFuncTypes).Intersect(candidateFuncTypes));
+			auto min = FindMinConv(funcChoices);
+			if (min == TsysConv::Illegal)
+			{
+				return;
+			}
+
+			for (vint j = 0; j < validFuncTypes.Count(); j++)
+			{
+				if (funcChoices[j] != min)
+				{
+					selectedIndices[j] = false;
+				}
+			}
 		}
 
-		for (vint i = 0; i < selectedFuncTypes.Count(); i++)
+		for (vint i = 0; i < selectedIndices.Count(); i++)
 		{
-			AddTemp(result, selectedFuncTypes[i].tsys->GetElement());
+			if (selectedIndices[i])
+			{
+				AddTemp(result, validFuncTypes[i].tsys->GetElement());
+			}
 		}
 	}
 
