@@ -440,36 +440,68 @@ public:
 
 	static void VisitOverloadedFunction(ParsingArguments& pa, ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result)
 	{
-		Array<TsysConv> funcChoices(funcTypes.Count());
+		Array<vint> funcDPs(funcTypes.Count());
+		for (vint i = 0; i < funcTypes.Count(); i++)
+		{
+			auto symbol = funcTypes[i].symbol;
+			if (symbol->decls.Count() == 1)
+			{
+				if (auto decl = symbol->decls[0].Cast<ForwardFunctionDeclaration>())
+				{
+					if (auto type = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
+					{
+						for (vint j = 0; j < type->parameters.Count(); j++)
+						{
+							if (type->parameters[j]->initializer)
+							{
+								funcDPs[i] = type->parameters.Count() - j;
+								goto EXAMINE_NEXT_FUNCTION;
+							}
+						}
+						funcDPs[i] = 0;
+					EXAMINE_NEXT_FUNCTION:;
+					}
+				}
+			}
+		}
 
+		Array<TsysConv> funcChoices(funcTypes.Count());
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
 			auto funcType = funcTypes[i];
-			if (funcType.tsys->GetParamCount() == argTypesList.Count())
+
+			vint missParamCount = funcType.tsys->GetParamCount() - argTypesList.Count();
+			if (missParamCount > 0)
 			{
-				auto worstChoice = TsysConv::Exact;
-
-				for (vint j = 0; j < argTypesList.Count(); j++)
+				if (missParamCount > funcDPs[i])
 				{
-					auto paramType = funcType.tsys->GetParam(j);
-					auto& argTypes = *argTypesList[j].Obj();
-					auto bestChoice = TsysConv::Illegal;
-
-					for (vint k = 0; k < argTypes.Count(); k++)
-					{
-						auto choice = TestConvert(pa, paramType, argTypes[k]);
-						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
-					}
-
-					if (worstChoice < bestChoice) worstChoice = bestChoice;
+					funcChoices[i] = TsysConv::Illegal;
+					continue;
 				}
-
-				funcChoices[i] = worstChoice;
 			}
-			else
+			else if (missParamCount < 0)
 			{
 				funcChoices[i] = TsysConv::Illegal;
+				continue;
 			}
+
+			auto worstChoice = TsysConv::Exact;
+			for (vint j = 0; j < argTypesList.Count(); j++)
+			{
+				auto paramType = funcType.tsys->GetParam(j);
+				auto& argTypes = *argTypesList[j].Obj();
+				auto bestChoice = TsysConv::Illegal;
+
+				for (vint k = 0; k < argTypes.Count(); k++)
+				{
+					auto choice = TestConvert(pa, paramType, argTypes[k]);
+					if ((vint)bestChoice > (vint)choice) bestChoice = choice;
+				}
+
+				if (worstChoice < bestChoice) worstChoice = bestChoice;
+			}
+
+			funcChoices[i] = worstChoice;
 		}
 
 		FilterFunctionByQualifier(funcTypes, funcChoices);
