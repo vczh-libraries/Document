@@ -470,7 +470,8 @@ public:
 		{
 			auto funcType = funcTypes[i];
 
-			vint missParamCount = funcType.tsys->GetParamCount() - argTypesList.Count();
+			vint funcParamCount = funcType.tsys->GetParamCount();
+			vint missParamCount = funcParamCount - argTypesList.Count();
 			if (missParamCount > 0)
 			{
 				if (missParamCount > funcDPs[i])
@@ -481,21 +482,31 @@ public:
 			}
 			else if (missParamCount < 0)
 			{
-				funcChoices[i] = TsysConv::Illegal;
-				continue;
+				if (!funcType.tsys->GetFunc().ellipsis)
+				{
+					funcChoices[i] = TsysConv::Illegal;
+					continue;
+				}
 			}
 
 			auto worstChoice = TsysConv::Exact;
 			for (vint j = 0; j < argTypesList.Count(); j++)
 			{
-				auto paramType = funcType.tsys->GetParam(j);
-				auto& argTypes = *argTypesList[j].Obj();
 				auto bestChoice = TsysConv::Illegal;
-
-				for (vint k = 0; k < argTypes.Count(); k++)
+				if (j < funcParamCount)
 				{
-					auto choice = TestConvert(pa, paramType, argTypes[k]);
-					if ((vint)bestChoice > (vint)choice) bestChoice = choice;
+					auto paramType = funcType.tsys->GetParam(j);
+					auto& argTypes = *argTypesList[j].Obj();
+
+					for (vint k = 0; k < argTypes.Count(); k++)
+					{
+						auto choice = TestConvert(pa, paramType, argTypes[k]);
+						if ((vint)bestChoice > (vint)choice) bestChoice = choice;
+					}
+				}
+				else
+				{
+					bestChoice = TsysConv::Ellipsis;
 				}
 
 				if (worstChoice < bestChoice) worstChoice = bestChoice;

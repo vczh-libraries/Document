@@ -213,6 +213,10 @@ TEST_CASE(TestParseExpr_Overloading_Universal_Initialization)
 {
 }
 
+TEST_CASE(TestParseExpr_Overloading_InitializationList)
+{
+}
+
 TEST_CASE(TestParseExpr_Overloading_Lambda)
 {
 }

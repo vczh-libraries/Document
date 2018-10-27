@@ -125,6 +125,7 @@ enum class TsysConv
 	IntegralPromotion,
 	StandardConversion,
 	UserDefinedConversion,
+	Ellipsis,
 	Illegal,
 };
 
