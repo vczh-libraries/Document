@@ -142,8 +142,12 @@ TEST_CASE(TestTypeSystem_Function)
 	types2.Add(tgarg);
 	types2.Add(tdecl);
 
-	TEST_ASSERT(tvoid->FunctionOf(types1) == tvoid->FunctionOf(types1));
-	TEST_ASSERT(tvoid->FunctionOf(types1) != tvoid->FunctionOf(types2));
+	TsysFunc data1 = { TsysCallingConvention::StdCall, false };
+	TsysFunc data2 = { TsysCallingConvention::StdCall, true };
+
+	TEST_ASSERT(tvoid->FunctionOf(types1, data1) == tvoid->FunctionOf(types1, data1));
+	TEST_ASSERT(tvoid->FunctionOf(types1, data1) != tvoid->FunctionOf(types1, data2));
+	TEST_ASSERT(tvoid->FunctionOf(types1, data1) != tvoid->FunctionOf(types2, data1));
 }
 
 TEST_CASE(TestTypeSystem_Generic)
@@ -189,6 +193,6 @@ TEST_CASE(TestTypeSystem_Type)
 	List<ITsys*> types;
 	types.Add(tdecl);
 	types.Add(tgarg);
-	TEST_ASSERT(tvoid->FunctionOf(types)->GetType() == TsysType::Function);
+	TEST_ASSERT(tvoid->FunctionOf(types, {})->GetType() == TsysType::Function);
 	TEST_ASSERT(tvoid->GenericOf(types)->GetType() == TsysType::Generic);
 }
