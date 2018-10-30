@@ -92,10 +92,23 @@ void AssertExpr(const WString& input, const WString& log, const WString& logTsys
 	});
 	TEST_ASSERT(output == log);
 
+	ExprTsysList tsys;
 	try
 	{
-		ExprTsysList tsys;
 		ExprToTsys(pa, expr, tsys);
+	}
+	catch (const IllegalExprException&)
+	{
+		TEST_ASSERT(L"" == logTsys);
+		return;
+	}
+
+	if (L"" == logTsys)
+	{
+		TEST_ASSERT(tsys.Count() == 0);
+	}
+	else
+	{
 		TEST_ASSERT(tsys.Count() == 1);
 		auto outputTsys = GenerateToStream([&](StreamWriter& writer)
 		{
@@ -114,10 +127,6 @@ void AssertExpr(const WString& input, const WString& log, const WString& logTsys
 			}
 		});
 		TEST_ASSERT(outputTsys == logTsys);
-	}
-	catch (const IllegalExprException&)
-	{
-		TEST_ASSERT(L"" == logTsys);
 	}
 }
 
