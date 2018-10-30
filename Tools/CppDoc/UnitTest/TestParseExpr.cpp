@@ -599,6 +599,8 @@ struct A
 
 A a;
 A* pa;
+const A ca;
+volatile A* pva;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
@@ -615,6 +617,20 @@ A* pa;
 	AssertExpr(L"pa->*&A::d",				L"(pa ->* (& A :: d))",		L"double __thiscall() (::A ::) * & $L",			pa);
 	AssertExpr(L"pa->*&A::E",				L"(pa ->* (& A :: E))",		L"double __cdecl(...) * & $L",					pa);
 	AssertExpr(L"pa->*&A::f",				L"(pa ->* (& A :: f))",		L"double __cdecl(...) (::A ::) * & $L",			pa);
+
+	AssertExpr(L"ca.*&A::a",				L"(ca .* (& A :: a))",		L"__int32 const & $L",							pa);
+	AssertExpr(L"ca.*&A::b",				L"(ca .* (& A :: b))",		L"__int32 (::A ::) * const & $L",				pa);
+	AssertExpr(L"ca.*&A::C",				L"(ca .* (& A :: C))",		L"double __thiscall() * & $L",					pa);
+	AssertExpr(L"ca.*&A::d",				L"(ca .* (& A :: d))",		L"double __thiscall() (::A ::) * & $L",			pa);
+	AssertExpr(L"ca.*&A::E",				L"(ca .* (& A :: E))",		L"double __cdecl(...) * & $L",					pa);
+	AssertExpr(L"ca.*&A::f",				L"(ca .* (& A :: f))",		L"double __cdecl(...) (::A ::) * & $L",			pa);
+
+	AssertExpr(L"pca->*&A::a",				L"(pca ->* (& A :: a))",	L"__int32 volatile & $L",						pa);
+	AssertExpr(L"pca->*&A::b",				L"(pca ->* (& A :: b))",	L"__int32 (::A ::) *volatile  & $L",			pa);
+	AssertExpr(L"pca->*&A::C",				L"(pca ->* (& A :: C))",	L"double __thiscall() * & $L",					pa);
+	AssertExpr(L"pca->*&A::d",				L"(pca ->* (& A :: d))",	L"double __thiscall() (::A ::) * & $L",			pa);
+	AssertExpr(L"pca->*&A::E",				L"(pca ->* (& A :: E))",	L"double __cdecl(...) * & $L",					pa);
+	AssertExpr(L"pca->*&A::f",				L"(pca ->* (& A :: f))",	L"double __cdecl(...) (::A ::) * & $L",			pa);
 }
 
 TEST_CASE(TestParseExpr_Ternary_Comma)
