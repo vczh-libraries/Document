@@ -526,7 +526,7 @@ Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 4;
 		}
-		else if (TestToken(cursor, CppTokens::DOT, CppTokens::SUB, CppTokens::MUL, false))
+		else if (TestToken(cursor, CppTokens::SUB, CppTokens::GT, CppTokens::MUL, false))
 		{
 			FillOperatorAndSkip(opName, cursor, 3);
 			precedence = 4;

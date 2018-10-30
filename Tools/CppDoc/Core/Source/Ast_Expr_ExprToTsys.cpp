@@ -1179,6 +1179,20 @@ public:
 				TsysRefType rightRefType;
 				auto rightEntity = rightType->GetEntity(rightCV, rightRefType);
 
+				if (self->op == CppBinaryOp::ValueFieldDeref || self->op == CppBinaryOp::PtrFieldDeref)
+				{
+					if (rightEntity->GetType() == TsysType::Ptr && rightEntity->GetElement()->GetType() == TsysType::Member)
+					{
+						auto fieldEntity = rightEntity->GetElement()->GetElement();
+						if (fieldEntity->GetType() == TsysType::Function)
+						{
+							fieldEntity = fieldEntity->PtrOf();
+						}
+						AddTemp(result, fieldEntity->LRefOf());
+					}
+					continue;
+				}
+
 				if (leftEntity->GetType() == TsysType::Decl || rightEntity->GetType() == TsysType::Decl)
 				{
 					throw 0;

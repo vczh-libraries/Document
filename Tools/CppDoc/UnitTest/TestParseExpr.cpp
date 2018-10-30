@@ -586,6 +586,35 @@ enum class SeasonClass
 
 TEST_CASE(TestParseExpr_FieldReference)
 {
+	auto input = LR"(
+struct A
+{
+	int a;
+	int A::* b;
+	double C();
+	double (A::*d)();
+	double E(...)const;
+	double (A::*f)(...)const;
+};
+
+A a;
+A* pa;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"a.*&A::a",					L"(a .* (& A :: a))",		L"__int32 & $L",								pa);
+	AssertExpr(L"a.*&A::b",					L"(a .* (& A :: b))",		L"__int32 (::A ::) * & $L",						pa);
+	AssertExpr(L"a.*&A::C",					L"(a .* (& A :: C))",		L"double __thiscall() * & $L",					pa);
+	AssertExpr(L"a.*&A::d",					L"(a .* (& A :: d))",		L"double __thiscall() (::A ::) * & $L",			pa);
+	AssertExpr(L"a.*&A::E",					L"(a .* (& A :: E))",		L"double __cdecl(...) * & $L",					pa);
+	AssertExpr(L"a.*&A::f",					L"(a .* (& A :: f))",		L"double __cdecl(...) (::A ::) * & $L",			pa);
+
+	AssertExpr(L"pa->*&A::a",				L"(pa ->* (& A :: a))",		L"__int32 & $L",								pa);
+	AssertExpr(L"pa->*&A::b",				L"(pa ->* (& A :: b))",		L"__int32 (::A ::) * & $L",						pa);
+	AssertExpr(L"pa->*&A::C",				L"(pa ->* (& A :: C))",		L"double __thiscall() * & $L",					pa);
+	AssertExpr(L"pa->*&A::d",				L"(pa ->* (& A :: d))",		L"double __thiscall() (::A ::) * & $L",			pa);
+	AssertExpr(L"pa->*&A::E",				L"(pa ->* (& A :: E))",		L"double __cdecl(...) * & $L",					pa);
+	AssertExpr(L"pa->*&A::f",				L"(pa ->* (& A :: f))",		L"double __cdecl(...) (::A ::) * & $L",			pa);
 }
 
 TEST_CASE(TestParseExpr_Ternary_Comma)
