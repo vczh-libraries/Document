@@ -604,61 +604,61 @@ volatile A* pva;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(L"a.a",						L"a.a",						L"__int32 $L",									pa);
-	AssertExpr(L"a.b",						L"a.b",						L"__int32 (::A ::) * $L",						pa);
-	AssertExpr(L"a.C",						L"a.C",						L"double __thiscall() * $PR",					pa);
-	AssertExpr(L"a.d",						L"a.d",						L"double __thiscall() (::A ::) * $L",			pa);
-	AssertExpr(L"a.E",						L"a.E",						L"double __cdecl(...) * $PR",					pa);
-	AssertExpr(L"a.f",						L"a.f",						L"double __cdecl(...) (::A ::) * $L",			pa);
+	AssertExpr(L"a.a",						L"a.a",						L"__int32 $L",										pa);
+	AssertExpr(L"a.b",						L"a.b",						L"__int32 (::A ::) * $L",							pa);
+	AssertExpr(L"a.C",						L"a.C",						L"double __thiscall() * $PR",						pa);
+	AssertExpr(L"a.d",						L"a.d",						L"double __thiscall() (::A ::) * $L",				pa);
+	AssertExpr(L"a.E",						L"a.E",						L"double __cdecl(...) * $PR",						pa);
+	AssertExpr(L"a.f",						L"a.f",						L"double __cdecl(...) (::A ::) * $L",				pa);
 
-	AssertExpr(L"pa->a",					L"pa->a",					L"__int32 $L",									pa);
-	AssertExpr(L"pa->b",					L"pa->b",					L"__int32 (::A ::) * $L",						pa);
-	AssertExpr(L"pa->C",					L"pa->C",					L"double __thiscall() * $PR",					pa);
-	AssertExpr(L"pa->d",					L"pa->d",					L"double __thiscall() (::A ::) * $L",			pa);
-	AssertExpr(L"pa->E",					L"pa->E",					L"double __cdecl(...) * $PR",					pa);
-	AssertExpr(L"pa->f",					L"pa->f",					L"double __cdecl(...) (::A ::) * $L",			pa);
+	AssertExpr(L"pa->a",					L"pa->a",					L"__int32 $L",										pa);
+	AssertExpr(L"pa->b",					L"pa->b",					L"__int32 (::A ::) * $L",							pa);
+	AssertExpr(L"pa->C",					L"pa->C",					L"double __thiscall() * $PR",						pa);
+	AssertExpr(L"pa->d",					L"pa->d",					L"double __thiscall() (::A ::) * $L",				pa);
+	AssertExpr(L"pa->E",					L"pa->E",					L"double __cdecl(...) * $PR",						pa);
+	AssertExpr(L"pa->f",					L"pa->f",					L"double __cdecl(...) (::A ::) * $L",				pa);
 
-	AssertExpr(L"ca.a",						L"ca.a",					L"__int32 const $L",							pa);
-	AssertExpr(L"ca.b",						L"ca.b",					L"__int32 (::A ::) * const $L",					pa);
-	AssertExpr(L"ca.C",						L"ca.C",					L"",											pa);
-	AssertExpr(L"ca.d",						L"ca.d",					L"double __thiscall() (::A ::) * const $L",		pa);
-	AssertExpr(L"ca.E",						L"ca.E",					L"double __cdecl(...) * $PR",					pa);
-	AssertExpr(L"ca.f",						L"ca.f",					L"double __cdecl(...) (::A ::) * const $L",		pa);
+	AssertExpr(L"ca.a",						L"ca.a",					L"__int32 const $L",								pa);
+	AssertExpr(L"ca.b",						L"ca.b",					L"__int32 (::A ::) * const $L",						pa);
+	AssertExpr(L"ca.C",						L"ca.C",					L"",												pa);
+	AssertExpr(L"ca.d",						L"ca.d",					L"double __thiscall() (::A ::) * const $L",			pa);
+	AssertExpr(L"ca.E",						L"ca.E",					L"double __cdecl(...) * $PR",						pa);
+	AssertExpr(L"ca.f",						L"ca.f",					L"double __cdecl(...) (::A ::) * const $L",			pa);
 
-	AssertExpr(L"pva->a",					L"pva->a",					L"__int32 volatile $L",							pa);
-	AssertExpr(L"pva->b",					L"pva->b",					L"__int32 (::A ::) * volatile $L",				pa);
-	AssertExpr(L"pva->C",					L"pva->C",					L"",											pa);
-	AssertExpr(L"pva->d",					L"pva->d",					L"double __thiscall() (::A ::) * volatile $L",	pa);
-	AssertExpr(L"pva->E",					L"pva->E",					L"",											pa);
-	AssertExpr(L"pva->f",					L"pva->f",					L"double __cdecl(...) (::A ::) * volatile $L",	pa);
+	AssertExpr(L"pva->a",					L"pva->a",					L"__int32 volatile $L",								pa);
+	AssertExpr(L"pva->b",					L"pva->b",					L"__int32 (::A ::) * volatile $L",					pa);
+	AssertExpr(L"pva->C",					L"pva->C",					L"",												pa);
+	AssertExpr(L"pva->d",					L"pva->d",					L"double __thiscall() (::A ::) * volatile $L",		pa);
+	AssertExpr(L"pva->E",					L"pva->E",					L"",												pa);
+	AssertExpr(L"pva->f",					L"pva->f",					L"double __cdecl(...) (::A ::) * volatile $L",		pa);
 
-	AssertExpr(L"a.*&A::a",					L"(a .* (& A :: a))",		L"__int32 & $L",								pa);
-	AssertExpr(L"a.*&A::b",					L"(a .* (& A :: b))",		L"__int32 (::A ::) * & $L",						pa);
-	AssertExpr(L"a.*&A::C",					L"(a .* (& A :: C))",		L"double __thiscall() * & $L",					pa);
-	AssertExpr(L"a.*&A::d",					L"(a .* (& A :: d))",		L"double __thiscall() (::A ::) * & $L",			pa);
-	AssertExpr(L"a.*&A::E",					L"(a .* (& A :: E))",		L"double __cdecl(...) * & $L",					pa);
-	AssertExpr(L"a.*&A::f",					L"(a .* (& A :: f))",		L"double __cdecl(...) (::A ::) * & $L",			pa);
+	AssertExpr(L"a.*&A::a",					L"(a .* (& A :: a))",		L"__int32 & $L",									pa);
+	AssertExpr(L"a.*&A::b",					L"(a .* (& A :: b))",		L"__int32 (::A ::) * & $L",							pa);
+	AssertExpr(L"a.*&A::C",					L"(a .* (& A :: C))",		L"double __thiscall() * & $L",						pa);
+	AssertExpr(L"a.*&A::d",					L"(a .* (& A :: d))",		L"double __thiscall() (::A ::) * & $L",				pa);
+	AssertExpr(L"a.*&A::E",					L"(a .* (& A :: E))",		L"double __cdecl(...) * & $L",						pa);
+	AssertExpr(L"a.*&A::f",					L"(a .* (& A :: f))",		L"double __cdecl(...) (::A ::) * & $L",				pa);
 
-	AssertExpr(L"pa->*&A::a",				L"(pa ->* (& A :: a))",		L"__int32 & $L",								pa);
-	AssertExpr(L"pa->*&A::b",				L"(pa ->* (& A :: b))",		L"__int32 (::A ::) * & $L",						pa);
-	AssertExpr(L"pa->*&A::C",				L"(pa ->* (& A :: C))",		L"double __thiscall() * & $L",					pa);
-	AssertExpr(L"pa->*&A::d",				L"(pa ->* (& A :: d))",		L"double __thiscall() (::A ::) * & $L",			pa);
-	AssertExpr(L"pa->*&A::E",				L"(pa ->* (& A :: E))",		L"double __cdecl(...) * & $L",					pa);
-	AssertExpr(L"pa->*&A::f",				L"(pa ->* (& A :: f))",		L"double __cdecl(...) (::A ::) * & $L",			pa);
+	AssertExpr(L"pa->*&A::a",				L"(pa ->* (& A :: a))",		L"__int32 & $L",									pa);
+	AssertExpr(L"pa->*&A::b",				L"(pa ->* (& A :: b))",		L"__int32 (::A ::) * & $L",							pa);
+	AssertExpr(L"pa->*&A::C",				L"(pa ->* (& A :: C))",		L"double __thiscall() * & $L",						pa);
+	AssertExpr(L"pa->*&A::d",				L"(pa ->* (& A :: d))",		L"double __thiscall() (::A ::) * & $L",				pa);
+	AssertExpr(L"pa->*&A::E",				L"(pa ->* (& A :: E))",		L"double __cdecl(...) * & $L",						pa);
+	AssertExpr(L"pa->*&A::f",				L"(pa ->* (& A :: f))",		L"double __cdecl(...) (::A ::) * & $L",				pa);
 
-	AssertExpr(L"ca.*&A::a",				L"(ca .* (& A :: a))",		L"__int32 const & $L",							pa);
-	AssertExpr(L"ca.*&A::b",				L"(ca .* (& A :: b))",		L"__int32 (::A ::) * const & $L",				pa);
-	AssertExpr(L"ca.*&A::C",				L"(ca .* (& A :: C))",		L"double __thiscall() * & $L",					pa);
-	AssertExpr(L"ca.*&A::d",				L"(ca .* (& A :: d))",		L"double __thiscall() (::A ::) * & $L",			pa);
-	AssertExpr(L"ca.*&A::E",				L"(ca .* (& A :: E))",		L"double __cdecl(...) * & $L",					pa);
-	AssertExpr(L"ca.*&A::f",				L"(ca .* (& A :: f))",		L"double __cdecl(...) (::A ::) * & $L",			pa);
+	AssertExpr(L"ca.*&A::a",				L"(ca .* (& A :: a))",		L"__int32 const & $L",								pa);
+	AssertExpr(L"ca.*&A::b",				L"(ca .* (& A :: b))",		L"__int32 (::A ::) * const & $L",					pa);
+	AssertExpr(L"ca.*&A::C",				L"(ca .* (& A :: C))",		L"double __thiscall() * & $L",						pa);
+	AssertExpr(L"ca.*&A::d",				L"(ca .* (& A :: d))",		L"double __thiscall() (::A ::) * const & $L",		pa);
+	AssertExpr(L"ca.*&A::E",				L"(ca .* (& A :: E))",		L"double __cdecl(...) * & $L",						pa);
+	AssertExpr(L"ca.*&A::f",				L"(ca .* (& A :: f))",		L"double __cdecl(...) (::A ::) * const & $L",		pa);
 
-	AssertExpr(L"pva->*&A::a",				L"(pva ->* (& A :: a))",	L"__int32 volatile & $L",						pa);
-	AssertExpr(L"pva->*&A::b",				L"(pva ->* (& A :: b))",	L"__int32 (::A ::) *volatile  & $L",			pa);
-	AssertExpr(L"pva->*&A::C",				L"(pva ->* (& A :: C))",	L"double __thiscall() * & $L",					pa);
-	AssertExpr(L"pva->*&A::d",				L"(pva ->* (& A :: d))",	L"double __thiscall() (::A ::) * & $L",			pa);
-	AssertExpr(L"pva->*&A::E",				L"(pva ->* (& A :: E))",	L"double __cdecl(...) * & $L",					pa);
-	AssertExpr(L"pva->*&A::f",				L"(pva ->* (& A :: f))",	L"double __cdecl(...) (::A ::) * & $L",			pa);
+	AssertExpr(L"pva->*&A::a",				L"(pva ->* (& A :: a))",	L"__int32 volatile & $L",							pa);
+	AssertExpr(L"pva->*&A::b",				L"(pva ->* (& A :: b))",	L"__int32 (::A ::) * volatile & $L",				pa);
+	AssertExpr(L"pva->*&A::C",				L"(pva ->* (& A :: C))",	L"double __thiscall() * & $L",						pa);
+	AssertExpr(L"pva->*&A::d",				L"(pva ->* (& A :: d))",	L"double __thiscall() (::A ::) * volatile & $L",	pa);
+	AssertExpr(L"pva->*&A::E",				L"(pva ->* (& A :: E))",	L"double __cdecl(...) * & $L",						pa);
+	AssertExpr(L"pva->*&A::f",				L"(pva ->* (& A :: f))",	L"double __cdecl(...) (::A ::) * volatile & $L",	pa);
 }
 
 TEST_CASE(TestParseExpr_Ternary_Comma)

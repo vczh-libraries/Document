@@ -1188,6 +1188,19 @@ public:
 						{
 							fieldEntity = fieldEntity->PtrOf();
 						}
+						else
+						{
+							TsysCV cv = leftCV;
+							TsysRefType refType = leftRefType;
+							if (self->op == CppBinaryOp::PtrFieldDeref)
+							{
+								if (leftEntity->GetType() == TsysType::Ptr)
+								{
+									leftEntity->GetElement()->GetEntity(cv, refType);
+								}
+							}
+							fieldEntity = fieldEntity->CVOf(cv);
+						}
 						AddTemp(result, fieldEntity->LRefOf());
 					}
 					continue;
