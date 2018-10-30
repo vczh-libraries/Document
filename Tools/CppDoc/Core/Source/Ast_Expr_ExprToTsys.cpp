@@ -353,7 +353,7 @@ public:
 		return target;
 	}
 
-	static void FilterFunctionByQualifier(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices)
+	static void FilterFunctionByConv(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices)
 	{
 		auto target = FindMinConv(funcChoices);
 		if (target == TsysConv::Illegal)
@@ -380,7 +380,7 @@ public:
 			funcChoices[i] = TestFunctionQualifier(thisCV, thisRef, funcTypes[i]);
 		}
 
-		FilterFunctionByQualifier(funcTypes, funcChoices);
+		FilterFunctionByConv(funcTypes, funcChoices);
 	}
 
 	/***********************************************************************
@@ -434,7 +434,7 @@ public:
 			}
 		}
 
-		FilterFunctionByQualifier(expandedFuncTypes, funcChoices);
+		FilterFunctionByConv(expandedFuncTypes, funcChoices);
 		CopyFrom(funcTypes, expandedFuncTypes);
 	}
 

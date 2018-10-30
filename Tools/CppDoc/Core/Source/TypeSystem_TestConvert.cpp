@@ -8,7 +8,7 @@ TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionT
 	bool tC = thisCV.isGeneralConst;
 	bool dC = funcType->qualifierConstExpr || funcType->qualifierConst;
 	bool tV = thisCV.isVolatile;
-	bool dV = thisCV.isVolatile;
+	bool dV = funcType->qualifierVolatile;
 	bool tL = thisRef == TsysRefType::LRef;
 	bool dL = funcType->qualifierLRef;
 	bool tR = thisRef == TsysRefType::RRef;
