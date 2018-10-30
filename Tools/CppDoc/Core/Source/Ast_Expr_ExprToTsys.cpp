@@ -1186,12 +1186,13 @@ public:
 						auto fieldEntity = rightEntity->GetElement()->GetElement();
 						if (fieldEntity->GetType() == TsysType::Function)
 						{
-							fieldEntity = fieldEntity->PtrOf();
+							AddInternal(result, { nullptr,ExprTsysType::PRValue,fieldEntity->PtrOf() });
 						}
 						else
 						{
-							TsysCV cv = leftCV;
-							TsysRefType refType = leftRefType;
+							auto cv = leftCV;
+							auto refType = leftRefType;
+
 							if (self->op == CppBinaryOp::PtrFieldDeref)
 							{
 								if (leftEntity->GetType() == TsysType::Ptr)
@@ -1200,8 +1201,16 @@ public:
 								}
 							}
 							fieldEntity = fieldEntity->CVOf(cv);
+
+							if (refType == TsysRefType::RRef)
+							{
+								AddTemp(result, fieldEntity->CVOf(cv)->RRefOf());
+							}
+							else
+							{
+								AddTemp(result, fieldEntity->CVOf(cv)->LRefOf());
+							}
 						}
-						AddTemp(result, fieldEntity->LRefOf());
 					}
 					continue;
 				}
