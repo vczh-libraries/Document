@@ -293,7 +293,6 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - [x] EXPR (`.` | `->`) IDENTIFIER
   - [x] EXPR (`.*` | `->*`) EXPR
   - [x] predefined operators
-  - [ ] Test
 - [x] EXPR `?` EXPR `:` EXPR
   - [ ] Test
 - [x] (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
