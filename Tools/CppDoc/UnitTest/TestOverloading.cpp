@@ -47,6 +47,44 @@ X x;
 
 TEST_CASE(TestParseExpr_Overloading_Array)
 {
+	{
+		TEST_DECL(
+double F(const volatile int*);
+float F(const int*);
+bool F(volatile int*);
+char F(int*);
+
+extern const volatile int a[1];
+extern const int b[1];
+extern volatile int c[1];
+extern int d[1];
+		);
+		COMPILE_PROGRAM(program, pa, input);
+
+		ASSERT_OVERLOADING(F(a),							L"F(a)",								double);
+		ASSERT_OVERLOADING(F(b),							L"F(b)",								float);
+		ASSERT_OVERLOADING(F(c),							L"F(c)",								bool);
+		ASSERT_OVERLOADING(F(d),							L"F(d)",								char);
+	}
+	{
+		TEST_DECL(
+double F(const volatile int[]);
+float F(const int[]);
+bool F(volatile int[]);
+char F(int[]);
+
+extern const volatile int a[1];
+extern const int b[1];
+extern volatile int c[1];
+extern int d[1];
+		);
+		COMPILE_PROGRAM(program, pa, input);
+
+		ASSERT_OVERLOADING(F(a),							L"F(a)",								double);
+		ASSERT_OVERLOADING(F(b),							L"F(b)",								float);
+		ASSERT_OVERLOADING(F(c),							L"F(c)",								bool);
+		ASSERT_OVERLOADING(F(d),							L"F(d)",								char);
+	}
 }
 
 TEST_CASE(TestParseExpr_Overloading_EnumItem)
