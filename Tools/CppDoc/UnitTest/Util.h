@@ -21,7 +21,8 @@ extern void					AssertStat(const WString& input, const WString& log, ParsingArgu
 extern void					AssertProgram(const WString& input, const WString& log, Ptr<IIndexRecorder> recorder = nullptr);
 extern void					AssertProgram(Ptr<Program> program, const WString& log);
 
-#define TEST_DECL(SOMETHING) SOMETHING auto input = L#SOMETHING
+#define TEST_DECL_(SOMETHING, INPUT) SOMETHING auto INPUT = L#SOMETHING
+#define TEST_DECL(SOMETHING) TEST_DECL_(SOMETHING, input)
 
 #define COMPILE_PROGRAM_WITH_RECORDER(PROGRAM, PA, INPUT, RECORDER)\
 	CppTokenReader reader(GlobalCppLexer(), INPUT);\

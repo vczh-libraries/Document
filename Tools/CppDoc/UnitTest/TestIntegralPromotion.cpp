@@ -98,8 +98,6 @@ DEFINE_TSYS(long double);
 Macros
 ***********************************************************************/
 
-#define TEST_DECL(SOMETHING) SOMETHING auto input = L#SOMETHING
-
 #define TEST_DECL_VARS									\
 	TEST_DECL(											\
 		bool						b			= 0;	\

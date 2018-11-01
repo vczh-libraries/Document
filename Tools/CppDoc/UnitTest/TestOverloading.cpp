@@ -231,22 +231,6 @@ Z z;
 	}
 }
 
-TEST_CASE(TestParseExpr_Overloading_PostfixUnary)
-{
-}
-
-TEST_CASE(TestParseExpr_Overloading_PrefixUnary)
-{
-}
-
-TEST_CASE(TestParseExpr_Overloading_Binary)
-{
-}
-
-TEST_CASE(TestParseExpr_Overloading_Binary_Assignment)
-{
-}
-
 TEST_CASE(TestParseExpr_Overloading_Universal_Initialization)
 {
 }
@@ -261,6 +245,774 @@ TEST_CASE(TestParseExpr_Overloading_Lambda)
 
 TEST_CASE(TestParseExpr_Overloading_CallOP_Ctor_UI_DPVA)
 {
+}
+
+TEST_DECL_(
+
+namespace a
+{
+	struct X
+	{
+		void* operator++	(int);
+		void* operator--	(int);
+		void* operator++	();
+		void* operator--	();
+		void* operator~		();
+		void* operator!		();
+		void* operator-		();
+		void* operator+		();
+		void* operator&		();
+		void* operator*		();
+		void* operator*		(int);
+		void* operator/		(int);
+		void* operator%		(int);
+		void* operator+		(int);
+		void* operator-		(int);
+		void* operator<<	(int);
+		void* operator>>	(int);
+		void* operator==	(int);
+		void* operator!=	(int);
+		void* operator<		(int);
+		void* operator<=	(int);
+		void* operator>		(int);
+		void* operator>=	(int);
+		void* operator&		(int);
+		void* operator|		(int);
+		void* operator^		(int);
+		void* operator&&	(int);
+		void* operator||	(int);
+		void* operator=		(int);
+		void* operator*=	(int);
+		void* operator/=	(int);
+		void* operator%=	(int);
+		void* operator+=	(int);
+		void* operator-=	(int);
+		void* operator<<=	(int);
+		void* operator>>=	(int);
+		void* operator&=	(int);
+		void* operator|=	(int);
+		void* operator^=	(int);
+
+		bool* operator++	(int)const;
+		bool* operator--	(int)const;
+		bool* operator++	()const;
+		bool* operator--	()const;
+		bool* operator~		()const;
+		bool* operator!		()const;
+		bool* operator-		()const;
+		bool* operator+		()const;
+		bool* operator&		()const;
+		bool* operator*		()const;
+		bool* operator*		(int)const;
+		bool* operator/		(int)const;
+		bool* operator%		(int)const;
+		bool* operator+		(int)const;
+		bool* operator-		(int)const;
+		bool* operator<<	(int)const;
+		bool* operator>>	(int)const;
+		bool* operator==	(int)const;
+		bool* operator!=	(int)const;
+		bool* operator<		(int)const;
+		bool* operator<=	(int)const;
+		bool* operator>		(int)const;
+		bool* operator>=	(int)const;
+		bool* operator&		(int)const;
+		bool* operator|		(int)const;
+		bool* operator^		(int)const;
+		bool* operator&&	(int)const;
+		bool* operator||	(int)const;
+		bool* operator=		(int)const;
+		bool* operator*=	(int)const;
+		bool* operator/=	(int)const;
+		bool* operator%=	(int)const;
+		bool* operator+=	(int)const;
+		bool* operator-=	(int)const;
+		bool* operator<<=	(int)const;
+		bool* operator>>=	(int)const;
+		bool* operator&=	(int)const;
+		bool* operator|=	(int)const;
+		bool* operator^=	(int)const;
+	};
+}
+
+, op_input_1);
+
+TEST_DECL_(
+
+namespace a
+{
+	struct Y
+	{
+	};
+	void* operator++		(Y&, int);
+	void* operator--		(Y&, int);
+	void* operator++		(Y&);
+	void* operator--		(Y&);
+	void* operator~			(Y&);
+	void* operator!			(Y&);
+	void* operator-			(Y&);
+	void* operator+			(Y&);
+	void* operator&			(Y&);
+	void* operator*			(Y&);
+	void* operator*			(Y&, int);
+	void* operator/			(Y&, int);
+	void* operator%			(Y&, int);
+	void* operator+			(Y&, int);
+	void* operator-			(Y&, int);
+	void* operator<<		(Y&, int);
+	void* operator>>		(Y&, int);
+	void* operator==		(Y&, int);
+	void* operator!=		(Y&, int);
+	void* operator<			(Y&, int);
+	void* operator<=		(Y&, int);
+	void* operator>			(Y&, int);
+	void* operator>=		(Y&, int);
+	void* operator&			(Y&, int);
+	void* operator|			(Y&, int);
+	void* operator^			(Y&, int);
+	void* operator&&		(Y&, int);
+	void* operator||		(Y&, int);
+	void* operator*=		(Y&, int);
+	void* operator/=		(Y&, int);
+	void* operator%=		(Y&, int);
+	void* operator+=		(Y&, int);
+	void* operator-=		(Y&, int);
+	void* operator<<=		(Y&, int);
+	void* operator>>=		(Y&, int);
+	void* operator&=		(Y&, int);
+	void* operator|=		(Y&, int);
+	void* operator^=		(Y&, int);
+	void* operator*			(int, Y&);
+	void* operator/			(int, Y&);
+	void* operator%			(int, Y&);
+	void* operator+			(int, Y&);
+	void* operator-			(int, Y&);
+	void* operator<<		(int, Y&);
+	void* operator>>		(int, Y&);
+	void* operator==		(int, Y&);
+	void* operator!=		(int, Y&);
+	void* operator<			(int, Y&);
+	void* operator<=		(int, Y&);
+	void* operator>			(int, Y&);
+	void* operator>=		(int, Y&);
+	void* operator&			(int, Y&);
+	void* operator|			(int, Y&);
+	void* operator^			(int, Y&);
+	void* operator&&		(int, Y&);
+	void* operator||		(int, Y&);
+	void* operator*=		(int, Y&);
+	void* operator/=		(int, Y&);
+	void* operator%=		(int, Y&);
+	void* operator+=		(int, Y&);
+	void* operator-=		(int, Y&);
+	void* operator<<=		(int, Y&);
+	void* operator>>=		(int, Y&);
+	void* operator&=		(int, Y&);
+	void* operator|=		(int, Y&);
+	void* operator^=		(int, Y&);
+
+	bool* operator++		(const Y&, int);
+	bool* operator--		(const Y&, int);
+	bool* operator++		(const Y&);
+	bool* operator--		(const Y&);
+	bool* operator~			(const Y&);
+	bool* operator!			(const Y&);
+	bool* operator-			(const Y&);
+	bool* operator+			(const Y&);
+	bool* operator&			(const Y&);
+	bool* operator*			(const Y&);
+	bool* operator*			(const Y&, int);
+	bool* operator/			(const Y&, int);
+	bool* operator%			(const Y&, int);
+	bool* operator+			(const Y&, int);
+	bool* operator-			(const Y&, int);
+	bool* operator<<		(const Y&, int);
+	bool* operator>>		(const Y&, int);
+	bool* operator==		(const Y&, int);
+	bool* operator!=		(const Y&, int);
+	bool* operator<			(const Y&, int);
+	bool* operator<=		(const Y&, int);
+	bool* operator>			(const Y&, int);
+	bool* operator>=		(const Y&, int);
+	bool* operator&			(const Y&, int);
+	bool* operator|			(const Y&, int);
+	bool* operator^			(const Y&, int);
+	bool* operator&&		(const Y&, int);
+	bool* operator||		(const Y&, int);
+	bool* operator*=		(const Y&, int);
+	bool* operator/=		(const Y&, int);
+	bool* operator%=		(const Y&, int);
+	bool* operator+=		(const Y&, int);
+	bool* operator-=		(const Y&, int);
+	bool* operator<<=		(const Y&, int);
+	bool* operator>>=		(const Y&, int);
+	bool* operator&=		(const Y&, int);
+	bool* operator|=		(const Y&, int);
+	bool* operator^=		(const Y&, int);
+	bool* operator*			(int, const Y&);
+	bool* operator/			(int, const Y&);
+	bool* operator%			(int, const Y&);
+	bool* operator+			(int, const Y&);
+	bool* operator-			(int, const Y&);
+	bool* operator<<		(int, const Y&);
+	bool* operator>>		(int, const Y&);
+	bool* operator==		(int, const Y&);
+	bool* operator!=		(int, const Y&);
+	bool* operator<			(int, const Y&);
+	bool* operator<=		(int, const Y&);
+	bool* operator>			(int, const Y&);
+	bool* operator>=		(int, const Y&);
+	bool* operator&			(int, const Y&);
+	bool* operator|			(int, const Y&);
+	bool* operator^			(int, const Y&);
+	bool* operator&&		(int, const Y&);
+	bool* operator||		(int, const Y&);
+	bool* operator*=		(int, const Y&);
+	bool* operator/=		(int, const Y&);
+	bool* operator%=		(int, const Y&);
+	bool* operator+=		(int, const Y&);
+	bool* operator-=		(int, const Y&);
+	bool* operator<<=		(int, const Y&);
+	bool* operator>>=		(int, const Y&);
+	bool* operator&=		(int, const Y&);
+	bool* operator|=		(int, const Y&);
+	bool* operator^=		(int, const Y&);
+}
+
+, op_input_2);
+
+TEST_DECL_(
+
+namespace a
+{
+	struct Z
+	{
+	};
+}
+void* operator++			(a::Z&, int);
+void* operator--			(a::Z&, int);
+void* operator++			(a::Z&);
+void* operator--			(a::Z&);
+void* operator~				(a::Z&);
+void* operator!				(a::Z&);
+void* operator-				(a::Z&);
+void* operator+				(a::Z&);
+void* operator&				(a::Z&);
+void* operator*				(a::Z&);
+void* operator*				(a::Z&, int);
+void* operator/				(a::Z&, int);
+void* operator%				(a::Z&, int);
+void* operator+				(a::Z&, int);
+void* operator-				(a::Z&, int);
+void* operator<<			(a::Z&, int);
+void* operator>>			(a::Z&, int);
+void* operator==			(a::Z&, int);
+void* operator!=			(a::Z&, int);
+void* operator<				(a::Z&, int);
+void* operator<=			(a::Z&, int);
+void* operator>				(a::Z&, int);
+void* operator>=			(a::Z&, int);
+void* operator&				(a::Z&, int);
+void* operator|				(a::Z&, int);
+void* operator^				(a::Z&, int);
+void* operator&&			(a::Z&, int);
+void* operator||			(a::Z&, int);
+void* operator*=			(a::Z&, int);
+void* operator/=			(a::Z&, int);
+void* operator%=			(a::Z&, int);
+void* operator+=			(a::Z&, int);
+void* operator-=			(a::Z&, int);
+void* operator<<=			(a::Z&, int);
+void* operator>>=			(a::Z&, int);
+void* operator&=			(a::Z&, int);
+void* operator|=			(a::Z&, int);
+void* operator^=			(a::Z&, int);
+void* operator*				(int, a::Z&);
+void* operator/				(int, a::Z&);
+void* operator%				(int, a::Z&);
+void* operator+				(int, a::Z&);
+void* operator-				(int, a::Z&);
+void* operator<<			(int, a::Z&);
+void* operator>>			(int, a::Z&);
+void* operator==			(int, a::Z&);
+void* operator!=			(int, a::Z&);
+void* operator<				(int, a::Z&);
+void* operator<=			(int, a::Z&);
+void* operator>				(int, a::Z&);
+void* operator>=			(int, a::Z&);
+void* operator&				(int, a::Z&);
+void* operator|				(int, a::Z&);
+void* operator^				(int, a::Z&);
+void* operator&&			(int, a::Z&);
+void* operator||			(int, a::Z&);
+void* operator*=			(int, a::Z&);
+void* operator/=			(int, a::Z&);
+void* operator%=			(int, a::Z&);
+void* operator+=			(int, a::Z&);
+void* operator-=			(int, a::Z&);
+void* operator<<=			(int, a::Z&);
+void* operator>>=			(int, a::Z&);
+void* operator&=			(int, a::Z&);
+void* operator|=			(int, a::Z&);
+void* operator^=			(int, a::Z&);
+
+bool* operator++			(const a::Z&, int);
+bool* operator--			(const a::Z&, int);
+bool* operator++			(const a::Z&);
+bool* operator--			(const a::Z&);
+bool* operator~				(const a::Z&);
+bool* operator!				(const a::Z&);
+bool* operator-				(const a::Z&);
+bool* operator+				(const a::Z&);
+bool* operator&				(const a::Z&);
+bool* operator*				(const a::Z&);
+bool* operator*				(const a::Z&, int);
+bool* operator/				(const a::Z&, int);
+bool* operator%				(const a::Z&, int);
+bool* operator+				(const a::Z&, int);
+bool* operator-				(const a::Z&, int);
+bool* operator<<			(const a::Z&, int);
+bool* operator>>			(const a::Z&, int);
+bool* operator==			(const a::Z&, int);
+bool* operator!=			(const a::Z&, int);
+bool* operator<				(const a::Z&, int);
+bool* operator<=			(const a::Z&, int);
+bool* operator>				(const a::Z&, int);
+bool* operator>=			(const a::Z&, int);
+bool* operator&				(const a::Z&, int);
+bool* operator|				(const a::Z&, int);
+bool* operator^				(const a::Z&, int);
+bool* operator&&			(const a::Z&, int);
+bool* operator||			(const a::Z&, int);
+bool* operator*=			(const a::Z&, int);
+bool* operator/=			(const a::Z&, int);
+bool* operator%=			(const a::Z&, int);
+bool* operator+=			(const a::Z&, int);
+bool* operator-=			(const a::Z&, int);
+bool* operator<<=			(const a::Z&, int);
+bool* operator>>=			(const a::Z&, int);
+bool* operator&=			(const a::Z&, int);
+bool* operator|=			(const a::Z&, int);
+bool* operator^=			(const a::Z&, int);
+bool* operator*				(int, const a::Z&);
+bool* operator/				(int, const a::Z&);
+bool* operator%				(int, const a::Z&);
+bool* operator+				(int, const a::Z&);
+bool* operator-				(int, const a::Z&);
+bool* operator<<			(int, const a::Z&);
+bool* operator>>			(int, const a::Z&);
+bool* operator==			(int, const a::Z&);
+bool* operator!=			(int, const a::Z&);
+bool* operator<				(int, const a::Z&);
+bool* operator<=			(int, const a::Z&);
+bool* operator>				(int, const a::Z&);
+bool* operator>=			(int, const a::Z&);
+bool* operator&				(int, const a::Z&);
+bool* operator|				(int, const a::Z&);
+bool* operator^				(int, const a::Z&);
+bool* operator&&			(int, const a::Z&);
+bool* operator||			(int, const a::Z&);
+bool* operator*=			(int, const a::Z&);
+bool* operator/=			(int, const a::Z&);
+bool* operator%=			(int, const a::Z&);
+bool* operator+=			(int, const a::Z&);
+bool* operator-=			(int, const a::Z&);
+bool* operator<<=			(int, const a::Z&);
+bool* operator>>=			(int, const a::Z&);
+bool* operator&=			(int, const a::Z&);
+bool* operator|=			(int, const a::Z&);
+bool* operator^=			(int, const a::Z&);
+
+, op_input_3);
+
+TEST_DECL_(
+
+extern a::X x;
+extern a::Y y;
+extern a::Z z;
+
+extern const a::X cx;
+extern const a::Y cy;
+extern const a::Z cz;
+
+, op_input_4);
+
+TEST_CASE(TestParseExpr_Overloading_PostfixUnary)
+{
+	WString op_input = WString(op_input_1) + op_input_2 + op_input_3 + op_input_4;
+	COMPILE_PROGRAM(program, pa, op_input.Buffer());
+
+	ASSERT_OVERLOADING(x++,									L"(x ++)",								void*);
+	ASSERT_OVERLOADING(x--,									L"(x --)",								void*);
+	ASSERT_OVERLOADING(y++,									L"(y ++)",								void*);
+	ASSERT_OVERLOADING(y--,									L"(y --)",								void*);
+	ASSERT_OVERLOADING(z++,									L"(z ++)",								void*);
+	ASSERT_OVERLOADING(z--,									L"(z --)",								void*);
+
+	ASSERT_OVERLOADING(cx++,								L"(cx ++)",								bool*);
+	ASSERT_OVERLOADING(cx--,								L"(cx --)",								bool*);
+	ASSERT_OVERLOADING(cy++,								L"(cy ++)",								bool*);
+	ASSERT_OVERLOADING(cy--,								L"(cy --)",								bool*);
+	ASSERT_OVERLOADING(cz++,								L"(cz ++)",								bool*);
+	ASSERT_OVERLOADING(cz--,								L"(cz --)",								bool*);
+}
+
+TEST_CASE(TestParseExpr_Overloading_PrefixUnary)
+{
+	WString op_input = WString(op_input_1) + op_input_2 + op_input_3 + op_input_4;
+	COMPILE_PROGRAM(program, pa, op_input.Buffer());
+
+	ASSERT_OVERLOADING(++x,									L"(++ x)",								void*);
+	ASSERT_OVERLOADING(--x,									L"(-- x)",								void*);
+	ASSERT_OVERLOADING(~x,									L"(~ x)",								void*);
+	ASSERT_OVERLOADING(!x,									L"(! x)",								void*);
+	ASSERT_OVERLOADING(-x,									L"(- x)",								void*);
+	ASSERT_OVERLOADING(+x,									L"(+ x)",								void*);
+	ASSERT_OVERLOADING(&x,									L"(& x)",								void*);
+	ASSERT_OVERLOADING(*x,									L"(* x)",								void*);
+
+	ASSERT_OVERLOADING(++y,									L"(++ y)",								void*);
+	ASSERT_OVERLOADING(--y,									L"(-- y)",								void*);
+	ASSERT_OVERLOADING(~y,									L"(~ y)",								void*);
+	ASSERT_OVERLOADING(!y,									L"(! y)",								void*);
+	ASSERT_OVERLOADING(-y,									L"(- y)",								void*);
+	ASSERT_OVERLOADING(+y,									L"(+ y)",								void*);
+	ASSERT_OVERLOADING(&y,									L"(& y)",								void*);
+	ASSERT_OVERLOADING(*y,									L"(* y)",								void*);
+
+	ASSERT_OVERLOADING(++z,									L"(++ z)",								void*);
+	ASSERT_OVERLOADING(--z,									L"(-- z)",								void*);
+	ASSERT_OVERLOADING(~z,									L"(~ z)",								void*);
+	ASSERT_OVERLOADING(!z,									L"(! z)",								void*);
+	ASSERT_OVERLOADING(-z,									L"(- z)",								void*);
+	ASSERT_OVERLOADING(+z,									L"(+ z)",								void*);
+	ASSERT_OVERLOADING(&z,									L"(& z)",								void*);
+	ASSERT_OVERLOADING(*z,									L"(* z)",								void*);
+
+	ASSERT_OVERLOADING(++cx,								L"(++ cx)",								bool*);
+	ASSERT_OVERLOADING(--cx,								L"(-- cx)",								bool*);
+	ASSERT_OVERLOADING(~cx,									L"(~ cx)",								bool*);
+	ASSERT_OVERLOADING(!cx,									L"(! cx)",								bool*);
+	ASSERT_OVERLOADING(-cx,									L"(- cx)",								bool*);
+	ASSERT_OVERLOADING(+cx,									L"(+ cx)",								bool*);
+	ASSERT_OVERLOADING(&cx,									L"(& cx)",								bool*);
+	ASSERT_OVERLOADING(*cx,									L"(* cx)",								bool*);
+
+	ASSERT_OVERLOADING(++cy,								L"(++ cy)",								bool*);
+	ASSERT_OVERLOADING(--cy,								L"(-- cy)",								bool*);
+	ASSERT_OVERLOADING(~cy,									L"(~ cy)",								bool*);
+	ASSERT_OVERLOADING(!cy,									L"(! cy)",								bool*);
+	ASSERT_OVERLOADING(-cy,									L"(- cy)",								bool*);
+	ASSERT_OVERLOADING(+cy,									L"(+ cy)",								bool*);
+	ASSERT_OVERLOADING(&cy,									L"(& cy)",								bool*);
+	ASSERT_OVERLOADING(*cy,									L"(* cy)",								bool*);
+
+	ASSERT_OVERLOADING(++cz,								L"(++ cz)",								bool*);
+	ASSERT_OVERLOADING(--cz,								L"(-- cz)",								bool*);
+	ASSERT_OVERLOADING(~cz,									L"(~ cz)",								bool*);
+	ASSERT_OVERLOADING(!cz,									L"(! cz)",								bool*);
+	ASSERT_OVERLOADING(-cz,									L"(- cz)",								bool*);
+	ASSERT_OVERLOADING(+cz,									L"(+ cz)",								bool*);
+	ASSERT_OVERLOADING(&cz,									L"(& cz)",								bool*);
+	ASSERT_OVERLOADING(*cz,									L"(* cz)",								bool*);
+}
+
+TEST_CASE(TestParseExpr_Overloading_Binary)
+{
+	WString op_input = WString(op_input_1) + op_input_2 + op_input_3 + op_input_4;
+	COMPILE_PROGRAM(program, pa, op_input.Buffer());
+
+	ASSERT_OVERLOADING(x* 0,								L"(x * 0)",								void*);
+	ASSERT_OVERLOADING(x/ 0,								L"(x / 0)",								void*);
+	ASSERT_OVERLOADING(x% 0,								L"(x % 0)",								void*);
+	ASSERT_OVERLOADING(x+ 0,								L"(x + 0)",								void*);
+	ASSERT_OVERLOADING(x- 0,								L"(x - 0)",								void*);
+	ASSERT_OVERLOADING(x<<0,								L"(x << 0)",							void*);
+	ASSERT_OVERLOADING(x>>0,								L"(x >> 0)",							void*);
+	ASSERT_OVERLOADING(x==0,								L"(x == 0)",							void*);
+	ASSERT_OVERLOADING(x!=0,								L"(x != 0)",							void*);
+	ASSERT_OVERLOADING(x< 0,								L"(x < 0)",								void*);
+	ASSERT_OVERLOADING(x<=0,								L"(x <= 0)",							void*);
+	ASSERT_OVERLOADING(x> 0,								L"(x > 0)",								void*);
+	ASSERT_OVERLOADING(x>=0,								L"(x >= 0)",							void*);
+	ASSERT_OVERLOADING(x& 0,								L"(x & 0)",								void*);
+	ASSERT_OVERLOADING(x| 0,								L"(x | 0)",								void*);
+	ASSERT_OVERLOADING(x^ 0,								L"(x ^ 0)",								void*);
+	ASSERT_OVERLOADING(x&&0,								L"(x && 0)",							void*);
+	ASSERT_OVERLOADING(x||0,								L"(x || 0)",							void*);
+	ASSERT_OVERLOADING(x= 0,								L"(x = 0)",								void*);
+	ASSERT_OVERLOADING(x*=0,								L"(x *= 0)",							void*);
+	ASSERT_OVERLOADING(x/=0,								L"(x /= 0)",							void*);
+	ASSERT_OVERLOADING(x%=0,								L"(x %= 0)",							void*);
+	ASSERT_OVERLOADING(x+=0,								L"(x += 0)",							void*);
+	ASSERT_OVERLOADING(x-=0,								L"(x -= 0)",							void*);
+	ASSERT_OVERLOADING(x<<0,								L"(x << 0)",							void*);
+	ASSERT_OVERLOADING(x>>0,								L"(x >> 0)",							void*);
+	ASSERT_OVERLOADING(x&=0,								L"(x &= 0)",							void*);
+	ASSERT_OVERLOADING(x|=0,								L"(x |= 0)",							void*);
+	ASSERT_OVERLOADING(x^=0,								L"(x ^= 0)",							void*);
+
+	ASSERT_OVERLOADING(y* 0,								L"(y * 0)",								void*);
+	ASSERT_OVERLOADING(y/ 0,								L"(y / 0)",								void*);
+	ASSERT_OVERLOADING(y% 0,								L"(y % 0)",								void*);
+	ASSERT_OVERLOADING(y+ 0,								L"(y + 0)",								void*);
+	ASSERT_OVERLOADING(y- 0,								L"(y - 0)",								void*);
+	ASSERT_OVERLOADING(y<<0,								L"(y << 0)",							void*);
+	ASSERT_OVERLOADING(y>>0,								L"(y >> 0)",							void*);
+	ASSERT_OVERLOADING(y==0,								L"(y == 0)",							void*);
+	ASSERT_OVERLOADING(y!=0,								L"(y != 0)",							void*);
+	ASSERT_OVERLOADING(y< 0,								L"(y < 0)",								void*);
+	ASSERT_OVERLOADING(y<=0,								L"(y <= 0)",							void*);
+	ASSERT_OVERLOADING(y> 0,								L"(y > 0)",								void*);
+	ASSERT_OVERLOADING(y>=0,								L"(y >= 0)",							void*);
+	ASSERT_OVERLOADING(y& 0,								L"(y & 0)",								void*);
+	ASSERT_OVERLOADING(y| 0,								L"(y | 0)",								void*);
+	ASSERT_OVERLOADING(y^ 0,								L"(y ^ 0)",								void*);
+	ASSERT_OVERLOADING(y&&0,								L"(y && 0)",							void*);
+	ASSERT_OVERLOADING(y||0,								L"(y || 0)",							void*);
+	ASSERT_OVERLOADING(y*=0,								L"(y *= 0)",							void*);
+	ASSERT_OVERLOADING(y/=0,								L"(y /= 0)",							void*);
+	ASSERT_OVERLOADING(y%=0,								L"(y %= 0)",							void*);
+	ASSERT_OVERLOADING(y+=0,								L"(y += 0)",							void*);
+	ASSERT_OVERLOADING(y-=0,								L"(y -= 0)",							void*);
+	ASSERT_OVERLOADING(y<<0,								L"(y << 0)",							void*);
+	ASSERT_OVERLOADING(y>>0,								L"(y >> 0)",							void*);
+	ASSERT_OVERLOADING(y&=0,								L"(y &= 0)",							void*);
+	ASSERT_OVERLOADING(y|=0,								L"(y |= 0)",							void*);
+	ASSERT_OVERLOADING(y^=0,								L"(y ^= 0)",							void*);
+
+	ASSERT_OVERLOADING(0* y,								L"(0 * y)",								void*);
+	ASSERT_OVERLOADING(0/ y,								L"(0 / y)",								void*);
+	ASSERT_OVERLOADING(0% y,								L"(0 % y)",								void*);
+	ASSERT_OVERLOADING(0+ y,								L"(0 + y)",								void*);
+	ASSERT_OVERLOADING(0- y,								L"(0 - y)",								void*);
+	ASSERT_OVERLOADING(0<<y,								L"(0 << y)",							void*);
+	ASSERT_OVERLOADING(0>>y,								L"(0 >> y)",							void*);
+	ASSERT_OVERLOADING(0==y,								L"(0 == y)",							void*);
+	ASSERT_OVERLOADING(0!=y,								L"(0 != y)",							void*);
+	ASSERT_OVERLOADING(0< y,								L"(0 < y)",								void*);
+	ASSERT_OVERLOADING(0<=y,								L"(0 <= y)",							void*);
+	ASSERT_OVERLOADING(0> y,								L"(0 > y)",								void*);
+	ASSERT_OVERLOADING(0>=y,								L"(0 >= y)",							void*);
+	ASSERT_OVERLOADING(0& y,								L"(0 & y)",								void*);
+	ASSERT_OVERLOADING(0| y,								L"(0 | y)",								void*);
+	ASSERT_OVERLOADING(0^ y,								L"(0 ^ y)",								void*);
+	ASSERT_OVERLOADING(0&&y,								L"(0 && y)",							void*);
+	ASSERT_OVERLOADING(0||y,								L"(0 || y)",							void*);
+	ASSERT_OVERLOADING(0*=y,								L"(0 *= y)",							void*);
+	ASSERT_OVERLOADING(0/=y,								L"(0 /= y)",							void*);
+	ASSERT_OVERLOADING(0%=y,								L"(0 %= y)",							void*);
+	ASSERT_OVERLOADING(0+=y,								L"(0 += y)",							void*);
+	ASSERT_OVERLOADING(0-=y,								L"(0 -= y)",							void*);
+	ASSERT_OVERLOADING(0<<y,								L"(0 << y)",							void*);
+	ASSERT_OVERLOADING(0>>y,								L"(0 >> y)",							void*);
+	ASSERT_OVERLOADING(0&=y,								L"(0 &= y)",							void*);
+	ASSERT_OVERLOADING(0|=y,								L"(0 |= y)",							void*);
+	ASSERT_OVERLOADING(0^=y,								L"(0 ^= y)",							void*);
+
+	ASSERT_OVERLOADING(z* 0,								L"(z * 0)",								void*);
+	ASSERT_OVERLOADING(z/ 0,								L"(z / 0)",								void*);
+	ASSERT_OVERLOADING(z% 0,								L"(z % 0)",								void*);
+	ASSERT_OVERLOADING(z+ 0,								L"(z + 0)",								void*);
+	ASSERT_OVERLOADING(z- 0,								L"(z - 0)",								void*);
+	ASSERT_OVERLOADING(z<<0,								L"(z << 0)",							void*);
+	ASSERT_OVERLOADING(z>>0,								L"(z >> 0)",							void*);
+	ASSERT_OVERLOADING(z==0,								L"(z == 0)",							void*);
+	ASSERT_OVERLOADING(z!=0,								L"(z != 0)",							void*);
+	ASSERT_OVERLOADING(z< 0,								L"(z < 0)",								void*);
+	ASSERT_OVERLOADING(z<=0,								L"(z <= 0)",							void*);
+	ASSERT_OVERLOADING(z> 0,								L"(z > 0)",								void*);
+	ASSERT_OVERLOADING(z>=0,								L"(z >= 0)",							void*);
+	ASSERT_OVERLOADING(z& 0,								L"(z & 0)",								void*);
+	ASSERT_OVERLOADING(z| 0,								L"(z | 0)",								void*);
+	ASSERT_OVERLOADING(z^ 0,								L"(z ^ 0)",								void*);
+	ASSERT_OVERLOADING(z&&0,								L"(z && 0)",							void*);
+	ASSERT_OVERLOADING(z||0,								L"(z || 0)",							void*);
+	ASSERT_OVERLOADING(z*=0,								L"(z *= 0)",							void*);
+	ASSERT_OVERLOADING(z/=0,								L"(z /= 0)",							void*);
+	ASSERT_OVERLOADING(z%=0,								L"(z %= 0)",							void*);
+	ASSERT_OVERLOADING(z+=0,								L"(z += 0)",							void*);
+	ASSERT_OVERLOADING(z-=0,								L"(z -= 0)",							void*);
+	ASSERT_OVERLOADING(z<<0,								L"(z << 0)",							void*);
+	ASSERT_OVERLOADING(z>>0,								L"(z >> 0)",							void*);
+	ASSERT_OVERLOADING(z&=0,								L"(z &= 0)",							void*);
+	ASSERT_OVERLOADING(z|=0,								L"(z |= 0)",							void*);
+	ASSERT_OVERLOADING(z^=0,								L"(z ^= 0)",							void*);
+
+	ASSERT_OVERLOADING(0* z,								L"(0 * z)",								void*);
+	ASSERT_OVERLOADING(0/ z,								L"(0 / z)",								void*);
+	ASSERT_OVERLOADING(0% z,								L"(0 % z)",								void*);
+	ASSERT_OVERLOADING(0+ z,								L"(0 + z)",								void*);
+	ASSERT_OVERLOADING(0- z,								L"(0 - z)",								void*);
+	ASSERT_OVERLOADING(0<<z,								L"(0 << z)",							void*);
+	ASSERT_OVERLOADING(0>>z,								L"(0 >> z)",							void*);
+	ASSERT_OVERLOADING(0==z,								L"(0 == z)",							void*);
+	ASSERT_OVERLOADING(0!=z,								L"(0 != z)",							void*);
+	ASSERT_OVERLOADING(0< z,								L"(0 < z)",								void*);
+	ASSERT_OVERLOADING(0<=z,								L"(0 <= z)",							void*);
+	ASSERT_OVERLOADING(0> z,								L"(0 > z)",								void*);
+	ASSERT_OVERLOADING(0>=z,								L"(0 >= z)",							void*);
+	ASSERT_OVERLOADING(0& z,								L"(0 & z)",								void*);
+	ASSERT_OVERLOADING(0| z,								L"(0 | z)",								void*);
+	ASSERT_OVERLOADING(0^ z,								L"(0 ^ z)",								void*);
+	ASSERT_OVERLOADING(0&&z,								L"(0 && z)",							void*);
+	ASSERT_OVERLOADING(0||z,								L"(0 || z)",							void*);
+	ASSERT_OVERLOADING(0*=z,								L"(0 *= z)",							void*);
+	ASSERT_OVERLOADING(0/=z,								L"(0 /= z)",							void*);
+	ASSERT_OVERLOADING(0%=z,								L"(0 %= z)",							void*);
+	ASSERT_OVERLOADING(0+=z,								L"(0 += z)",							void*);
+	ASSERT_OVERLOADING(0-=z,								L"(0 -= z)",							void*);
+	ASSERT_OVERLOADING(0<<z,								L"(0 << z)",							void*);
+	ASSERT_OVERLOADING(0>>z,								L"(0 >> z)",							void*);
+	ASSERT_OVERLOADING(0&=z,								L"(0 &= z)",							void*);
+	ASSERT_OVERLOADING(0|=z,								L"(0 |= z)",							void*);
+	ASSERT_OVERLOADING(0^=z,								L"(0 ^= z)",							void*);
+
+	ASSERT_OVERLOADING(cx* 0,								L"(cx * 0)",							bool*);
+	ASSERT_OVERLOADING(cx/ 0,								L"(cx / 0)",							bool*);
+	ASSERT_OVERLOADING(cx% 0,								L"(cx % 0)",							bool*);
+	ASSERT_OVERLOADING(cx+ 0,								L"(cx + 0)",							bool*);
+	ASSERT_OVERLOADING(cx- 0,								L"(cx - 0)",							bool*);
+	ASSERT_OVERLOADING(cx<<0,								L"(cx << 0)",							bool*);
+	ASSERT_OVERLOADING(cx>>0,								L"(cx >> 0)",							bool*);
+	ASSERT_OVERLOADING(cx==0,								L"(cx == 0)",							bool*);
+	ASSERT_OVERLOADING(cx!=0,								L"(cx != 0)",							bool*);
+	ASSERT_OVERLOADING(cx< 0,								L"(cx < 0)",							bool*);
+	ASSERT_OVERLOADING(cx<=0,								L"(cx <= 0)",							bool*);
+	ASSERT_OVERLOADING(cx> 0,								L"(cx > 0)",							bool*);
+	ASSERT_OVERLOADING(cx>=0,								L"(cx >= 0)",							bool*);
+	ASSERT_OVERLOADING(cx& 0,								L"(cx & 0)",							bool*);
+	ASSERT_OVERLOADING(cx| 0,								L"(cx | 0)",							bool*);
+	ASSERT_OVERLOADING(cx^ 0,								L"(cx ^ 0)",							bool*);
+	ASSERT_OVERLOADING(cx&&0,								L"(cx && 0)",							bool*);
+	ASSERT_OVERLOADING(cx||0,								L"(cx || 0)",							bool*);
+	ASSERT_OVERLOADING(cx= 0,								L"(cx = 0)",							bool*);
+	ASSERT_OVERLOADING(cx*=0,								L"(cx *= 0)",							bool*);
+	ASSERT_OVERLOADING(cx/=0,								L"(cx /= 0)",							bool*);
+	ASSERT_OVERLOADING(cx%=0,								L"(cx %= 0)",							bool*);
+	ASSERT_OVERLOADING(cx+=0,								L"(cx += 0)",							bool*);
+	ASSERT_OVERLOADING(cx-=0,								L"(cx -= 0)",							bool*);
+	ASSERT_OVERLOADING(cx<<0,								L"(cx << 0)",							bool*);
+	ASSERT_OVERLOADING(cx>>0,								L"(cx >> 0)",							bool*);
+	ASSERT_OVERLOADING(cx&=0,								L"(cx &= 0)",							bool*);
+	ASSERT_OVERLOADING(cx|=0,								L"(cx |= 0)",							bool*);
+	ASSERT_OVERLOADING(cx^=0,								L"(cx ^= 0)",							bool*);
+
+	ASSERT_OVERLOADING(cy* 0,								L"(cy * 0)",							bool*);
+	ASSERT_OVERLOADING(cy/ 0,								L"(cy / 0)",							bool*);
+	ASSERT_OVERLOADING(cy% 0,								L"(cy % 0)",							bool*);
+	ASSERT_OVERLOADING(cy+ 0,								L"(cy + 0)",							bool*);
+	ASSERT_OVERLOADING(cy- 0,								L"(cy - 0)",							bool*);
+	ASSERT_OVERLOADING(cy<<0,								L"(cy << 0)",							bool*);
+	ASSERT_OVERLOADING(cy>>0,								L"(cy >> 0)",							bool*);
+	ASSERT_OVERLOADING(cy==0,								L"(cy == 0)",							bool*);
+	ASSERT_OVERLOADING(cy!=0,								L"(cy != 0)",							bool*);
+	ASSERT_OVERLOADING(cy< 0,								L"(cy < 0)",							bool*);
+	ASSERT_OVERLOADING(cy<=0,								L"(cy <= 0)",							bool*);
+	ASSERT_OVERLOADING(cy> 0,								L"(cy > 0)",							bool*);
+	ASSERT_OVERLOADING(cy>=0,								L"(cy >= 0)",							bool*);
+	ASSERT_OVERLOADING(cy& 0,								L"(cy & 0)",							bool*);
+	ASSERT_OVERLOADING(cy| 0,								L"(cy | 0)",							bool*);
+	ASSERT_OVERLOADING(cy^ 0,								L"(cy ^ 0)",							bool*);
+	ASSERT_OVERLOADING(cy&&0,								L"(cy && 0)",							bool*);
+	ASSERT_OVERLOADING(cy||0,								L"(cy || 0)",							bool*);
+	ASSERT_OVERLOADING(cy*=0,								L"(cy *= 0)",							bool*);
+	ASSERT_OVERLOADING(cy/=0,								L"(cy /= 0)",							bool*);
+	ASSERT_OVERLOADING(cy%=0,								L"(cy %= 0)",							bool*);
+	ASSERT_OVERLOADING(cy+=0,								L"(cy += 0)",							bool*);
+	ASSERT_OVERLOADING(cy-=0,								L"(cy -= 0)",							bool*);
+	ASSERT_OVERLOADING(cy<<0,								L"(cy << 0)",							bool*);
+	ASSERT_OVERLOADING(cy>>0,								L"(cy >> 0)",							bool*);
+	ASSERT_OVERLOADING(cy&=0,								L"(cy &= 0)",							bool*);
+	ASSERT_OVERLOADING(cy|=0,								L"(cy |= 0)",							bool*);
+	ASSERT_OVERLOADING(cy^=0,								L"(cy ^= 0)",							bool*);
+
+	ASSERT_OVERLOADING(0* cy,								L"(0 * cy)",							bool*);
+	ASSERT_OVERLOADING(0/ cy,								L"(0 / cy)",							bool*);
+	ASSERT_OVERLOADING(0% cy,								L"(0 % cy)",							bool*);
+	ASSERT_OVERLOADING(0+ cy,								L"(0 + cy)",							bool*);
+	ASSERT_OVERLOADING(0- cy,								L"(0 - cy)",							bool*);
+	ASSERT_OVERLOADING(0<<cy,								L"(0 << cy)",							bool*);
+	ASSERT_OVERLOADING(0>>cy,								L"(0 >> cy)",							bool*);
+	ASSERT_OVERLOADING(0==cy,								L"(0 == cy)",							bool*);
+	ASSERT_OVERLOADING(0!=cy,								L"(0 != cy)",							bool*);
+	ASSERT_OVERLOADING(0< cy,								L"(0 < cy)",							bool*);
+	ASSERT_OVERLOADING(0<=cy,								L"(0 <= cy)",							bool*);
+	ASSERT_OVERLOADING(0> cy,								L"(0 > cy)",							bool*);
+	ASSERT_OVERLOADING(0>=cy,								L"(0 >= cy)",							bool*);
+	ASSERT_OVERLOADING(0& cy,								L"(0 & cy)",							bool*);
+	ASSERT_OVERLOADING(0| cy,								L"(0 | cy)",							bool*);
+	ASSERT_OVERLOADING(0^ cy,								L"(0 ^ cy)",							bool*);
+	ASSERT_OVERLOADING(0&&cy,								L"(0 && cy)",							bool*);
+	ASSERT_OVERLOADING(0||cy,								L"(0 || cy)",							bool*);
+	ASSERT_OVERLOADING(0*=cy,								L"(0 *= cy)",							bool*);
+	ASSERT_OVERLOADING(0/=cy,								L"(0 /= cy)",							bool*);
+	ASSERT_OVERLOADING(0%=cy,								L"(0 %= cy)",							bool*);
+	ASSERT_OVERLOADING(0+=cy,								L"(0 += cy)",							bool*);
+	ASSERT_OVERLOADING(0-=cy,								L"(0 -= cy)",							bool*);
+	ASSERT_OVERLOADING(0<<cy,								L"(0 << cy)",							bool*);
+	ASSERT_OVERLOADING(0>>cy,								L"(0 >> cy)",							bool*);
+	ASSERT_OVERLOADING(0&=cy,								L"(0 &= cy)",							bool*);
+	ASSERT_OVERLOADING(0|=cy,								L"(0 |= cy)",							bool*);
+	ASSERT_OVERLOADING(0^=cy,								L"(0 ^= cy)",							bool*);
+
+	ASSERT_OVERLOADING(cz* 0,								L"(cz * 0)",							bool*);
+	ASSERT_OVERLOADING(cz/ 0,								L"(cz / 0)",							bool*);
+	ASSERT_OVERLOADING(cz% 0,								L"(cz % 0)",							bool*);
+	ASSERT_OVERLOADING(cz+ 0,								L"(cz + 0)",							bool*);
+	ASSERT_OVERLOADING(cz- 0,								L"(cz - 0)",							bool*);
+	ASSERT_OVERLOADING(cz<<0,								L"(cz << 0)",							bool*);
+	ASSERT_OVERLOADING(cz>>0,								L"(cz >> 0)",							bool*);
+	ASSERT_OVERLOADING(cz==0,								L"(cz == 0)",							bool*);
+	ASSERT_OVERLOADING(cz!=0,								L"(cz != 0)",							bool*);
+	ASSERT_OVERLOADING(cz< 0,								L"(cz < 0)",							bool*);
+	ASSERT_OVERLOADING(cz<=0,								L"(cz <= 0)",							bool*);
+	ASSERT_OVERLOADING(cz> 0,								L"(cz > 0)",							bool*);
+	ASSERT_OVERLOADING(cz>=0,								L"(cz >= 0)",							bool*);
+	ASSERT_OVERLOADING(cz& 0,								L"(cz & 0)",							bool*);
+	ASSERT_OVERLOADING(cz| 0,								L"(cz | 0)",							bool*);
+	ASSERT_OVERLOADING(cz^ 0,								L"(cz ^ 0)",							bool*);
+	ASSERT_OVERLOADING(cz&&0,								L"(cz && 0)",							bool*);
+	ASSERT_OVERLOADING(cz||0,								L"(cz || 0)",							bool*);
+	ASSERT_OVERLOADING(cz*=0,								L"(cz *= 0)",							bool*);
+	ASSERT_OVERLOADING(cz/=0,								L"(cz /= 0)",							bool*);
+	ASSERT_OVERLOADING(cz%=0,								L"(cz %= 0)",							bool*);
+	ASSERT_OVERLOADING(cz+=0,								L"(cz += 0)",							bool*);
+	ASSERT_OVERLOADING(cz-=0,								L"(cz -= 0)",							bool*);
+	ASSERT_OVERLOADING(cz<<0,								L"(cz << 0)",							bool*);
+	ASSERT_OVERLOADING(cz>>0,								L"(cz >> 0)",							bool*);
+	ASSERT_OVERLOADING(cz&=0,								L"(cz &= 0)",							bool*);
+	ASSERT_OVERLOADING(cz|=0,								L"(cz |= 0)",							bool*);
+	ASSERT_OVERLOADING(cz^=0,								L"(cz ^= 0)",							bool*);
+
+	ASSERT_OVERLOADING(0* cz,								L"(0 * cz)",							bool*);
+	ASSERT_OVERLOADING(0/ cz,								L"(0 / cz)",							bool*);
+	ASSERT_OVERLOADING(0% cz,								L"(0 % cz)",							bool*);
+	ASSERT_OVERLOADING(0+ cz,								L"(0 + cz)",							bool*);
+	ASSERT_OVERLOADING(0- cz,								L"(0 - cz)",							bool*);
+	ASSERT_OVERLOADING(0<<cz,								L"(0 << cz)",							bool*);
+	ASSERT_OVERLOADING(0>>cz,								L"(0 >> cz)",							bool*);
+	ASSERT_OVERLOADING(0==cz,								L"(0 == cz)",							bool*);
+	ASSERT_OVERLOADING(0!=cz,								L"(0 != cz)",							bool*);
+	ASSERT_OVERLOADING(0< cz,								L"(0 < cz)",							bool*);
+	ASSERT_OVERLOADING(0<=cz,								L"(0 <= cz)",							bool*);
+	ASSERT_OVERLOADING(0> cz,								L"(0 > cz)",							bool*);
+	ASSERT_OVERLOADING(0>=cz,								L"(0 >= cz)",							bool*);
+	ASSERT_OVERLOADING(0& cz,								L"(0 & cz)",							bool*);
+	ASSERT_OVERLOADING(0| cz,								L"(0 | cz)",							bool*);
+	ASSERT_OVERLOADING(0^ cz,								L"(0 ^ cz)",							bool*);
+	ASSERT_OVERLOADING(0&&cz,								L"(0 && cz)",							bool*);
+	ASSERT_OVERLOADING(0||cz,								L"(0 || cz)",							bool*);
+	ASSERT_OVERLOADING(0*=cz,								L"(0 *= cz)",							bool*);
+	ASSERT_OVERLOADING(0/=cz,								L"(0 /= cz)",							bool*);
+	ASSERT_OVERLOADING(0%=cz,								L"(0 %= cz)",							bool*);
+	ASSERT_OVERLOADING(0+=cz,								L"(0 += cz)",							bool*);
+	ASSERT_OVERLOADING(0-=cz,								L"(0 -= cz)",							bool*);
+	ASSERT_OVERLOADING(0<<cz,								L"(0 << cz)",							bool*);
+	ASSERT_OVERLOADING(0>>cz,								L"(0 >> cz)",							bool*);
+	ASSERT_OVERLOADING(0&=cz,								L"(0 &= cz)",							bool*);
+	ASSERT_OVERLOADING(0|=cz,								L"(0 |= cz)",							bool*);
+	ASSERT_OVERLOADING(0^=cz,								L"(0 ^= cz)",							bool*);
 }
 
 #undef ASSERT_OVERLOADING
