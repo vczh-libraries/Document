@@ -1031,21 +1031,23 @@ public:
 					List<Ptr<ExprTsysList>> argTypesList;
 					argTypesList.Add(MakePtr<ExprTsysList>());
 					AddInternal(*argTypesList[0].Obj(), { nullptr,ExprTsysType::PRValue,pa.tsys->Int() });
+					FindQualifiedFunctions(pa, {}, TsysRefType::None, opTypes, false);
 					VisitOverloadedFunction(pa, opTypes, argTypesList, result);
 				}
 
 				if (opFuncs.values)
 				{
 					ExprTsysList opTypes;
-					for (vint j = 0; j < opMethods.values->resolvedSymbols.Count(); j++)
+					for (vint j = 0; j < opFuncs.values->resolvedSymbols.Count(); j++)
 					{
-						VisitSymbol(pa, nullptr, opMethods.values->resolvedSymbols[j], true, opTypes);
+						VisitSymbol(pa, nullptr, opFuncs.values->resolvedSymbols[j], true, opTypes);
 					}
 
 					List<Ptr<ExprTsysList>> argTypesList;
 					argTypesList.Add(MakePtr<ExprTsysList>());
 					AddInternal(*argTypesList[0].Obj(), types[i]);
 					AddInternal(*argTypesList[0].Obj(), { nullptr,ExprTsysType::PRValue,pa.tsys->Int() });
+					FindQualifiedFunctions(pa, {}, TsysRefType::None, opTypes, false);
 					VisitOverloadedFunction(pa, opTypes, argTypesList, result);
 				}
 			}
