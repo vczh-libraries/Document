@@ -107,8 +107,24 @@ ParseNameType
 
 Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTokenCursor>& cursor)
 {
-	// NAME
-	Ptr<Type> typeResult = ParseIdType(pa, cursor);
+	Ptr<Type> typeResult;
+	if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
+	{
+		// :: NAME
+		if (auto type = TryParseChildType(pa, MakePtr<RootType>(), false, cursor))
+		{
+			typeResult = type;
+		}
+		else
+		{
+			throw StopParsingException(cursor);
+		}
+	}
+	else
+	{
+		// NAME
+		typeResult = ParseIdType(pa, cursor);
+	}
 
 	while (true)
 	{
@@ -171,18 +187,6 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, bool typenameType, Ptr<CppT
 	{
 		// unsigned INTEGRAL-TYPE
 		return ParsePrimitiveType(cursor, CppPrimitivePrefix::_unsigned);
-	}
-	else if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
-	{
-		// :: NAME
-		if (auto type = TryParseChildType(pa, MakePtr<RootType>(), false, cursor))
-		{
-			return type;
-		}
-		else
-		{
-			throw StopParsingException(cursor);
-		}
 	}
 	else if (TestToken(cursor, CppTokens::DECLTYPE))
 	{

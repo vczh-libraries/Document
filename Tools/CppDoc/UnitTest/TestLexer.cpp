@@ -433,7 +433,14 @@ int main()
 	Ptr<CppTokenCursor> cursors[CursorCount];
 	for (vint i = 0; i < CursorCount; i++)
 	{
-		cursors[i] = reader.GetFirstToken();
+		if (i == 0)
+		{
+			cursors[i] = reader.GetFirstToken();
+		}
+		else
+		{
+			cursors[i] = cursors[0];
+		}
 	}
 
 	for (vint i = 0; i < TokenCount; i++)

@@ -75,5 +75,6 @@ Ptr<CppTokenCursor> CppTokenReader::GetFirstToken()
 	{
 		throw L"You cannot call GetFirstToken() twice.";
 	}
+	gotFirstToken = true;
 	return CreateNextToken();
 }
