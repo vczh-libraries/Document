@@ -1045,8 +1045,9 @@ public:
 
 					List<Ptr<ExprTsysList>> argTypesList;
 					argTypesList.Add(MakePtr<ExprTsysList>());
+					argTypesList.Add(MakePtr<ExprTsysList>());
 					AddInternal(*argTypesList[0].Obj(), types[i]);
-					AddInternal(*argTypesList[0].Obj(), { nullptr,ExprTsysType::PRValue,pa.tsys->Int() });
+					AddInternal(*argTypesList[1].Obj(), { nullptr,ExprTsysType::PRValue,pa.tsys->Int() });
 					FindQualifiedFunctions(pa, {}, TsysRefType::None, opTypes, false);
 					VisitOverloadedFunction(pa, opTypes, argTypesList, result);
 				}
