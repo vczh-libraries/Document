@@ -1052,8 +1052,7 @@ public:
 					VisitOverloadedFunction(pa, opTypes, argTypesList, result);
 				}
 			}
-
-			if (entity->GetType()==TsysType::Primitive)
+			else if (entity->GetType()==TsysType::Primitive)
 			{
 				auto primitive = entity->GetPrimitive();
 				switch (primitive.type)
@@ -1141,7 +1140,58 @@ public:
 
 			if (entity->GetType() == TsysType::Decl)
 			{
-				throw 0;
+				ResolveSymbolResult opMethods, opFuncs;
+				{
+					CppName opName = self->opName;
+					opName.name = L"operator " + opName.name;
+					ParsingArguments newPa(pa, entity->GetDecl());
+					opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbol, opMethods);
+				}
+				{
+					CppName opName = self->opName;
+					opName.name = L"operator " + opName.name;
+					ParsingArguments newPa(pa, entity->GetDecl()->parent);
+					opFuncs = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbol, opFuncs);
+				}
+				{
+					CppName opName = self->opName;
+					opName.name = L"operator " + opName.name;
+					opFuncs = ResolveSymbol(pa, opName, SearchPolicy::SymbolAccessableInScope, opFuncs);
+				}
+
+				if (opMethods.values)
+				{
+					ExprTsysList opTypes;
+					for (vint j = 0; j < opMethods.values->resolvedSymbols.Count(); j++)
+					{
+						VisitSymbol(pa, &types[i], opMethods.values->resolvedSymbols[j], false, opTypes);
+					}
+					FilterFunctionByQualifier(cv, refType, opTypes);
+
+					List<Ptr<ExprTsysList>> argTypesList;
+					FindQualifiedFunctions(pa, {}, TsysRefType::None, opTypes, false);
+					VisitOverloadedFunction(pa, opTypes, argTypesList, result);
+				}
+
+				if (opFuncs.values)
+				{
+					ExprTsysList opTypes;
+					for (vint j = 0; j < opFuncs.values->resolvedSymbols.Count(); j++)
+					{
+						VisitSymbol(pa, nullptr, opFuncs.values->resolvedSymbols[j], true, opTypes);
+					}
+
+					List<Ptr<ExprTsysList>> argTypesList;
+					argTypesList.Add(MakePtr<ExprTsysList>());
+					AddInternal(*argTypesList[0].Obj(), types[i]);
+					FindQualifiedFunctions(pa, {}, TsysRefType::None, opTypes, false);
+					VisitOverloadedFunction(pa, opTypes, argTypesList, result);
+				}
+
+				if (opMethods.values || opFuncs.values)
+				{
+					break;
+				}
 			}
 
 			switch (self->op)
