@@ -48,11 +48,10 @@ class CppTokenReader : public Object
 {
 	friend class CppTokenCursor;
 protected:
+	bool						gotFirstToken = false;
 	Ptr<RegexLexer>				lexer;
 	Ptr<RegexTokens>			tokens;
 	IEnumerator<RegexToken>*	tokenEnumerator;
-
-	Ptr<CppTokenCursor>			firstToken;
 
 	Ptr<CppTokenCursor>			CreateNextToken();
 public:

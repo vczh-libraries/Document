@@ -62,8 +62,6 @@ CppTokenReader::CppTokenReader(Ptr<RegexLexer> _lexer, const WString& input)
 {
 	tokens = new RegexTokens(lexer->Parse(input));
 	tokenEnumerator = tokens->CreateEnumerator();
-
-	firstToken = CreateNextToken();
 }
 
 CppTokenReader::~CppTokenReader()
@@ -73,5 +71,9 @@ CppTokenReader::~CppTokenReader()
 
 Ptr<CppTokenCursor> CppTokenReader::GetFirstToken()
 {
-	return firstToken;
+	if (gotFirstToken)
+	{
+		throw L"You cannot call GetFirstToken() twice.";
+	}
+	return CreateNextToken();
 }
