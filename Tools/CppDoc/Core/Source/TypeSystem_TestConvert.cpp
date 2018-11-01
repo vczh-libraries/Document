@@ -131,15 +131,17 @@ namespace TestConvert_Helpers
 
 		if (toEntity->GetType() == TsysType::Primitive && fromEntity->GetType() == TsysType::Decl)
 		{
-			auto decl = TryGetDeclFromType<ForwardEnumDeclaration>(fromEntity);
-			if (decl->enumClass) return false;
+			if (auto decl = TryGetDeclFromType<ForwardEnumDeclaration>(fromEntity))
+			{
+				if (decl->enumClass) return false;
 
-			auto primitive = toEntity->GetPrimitive();
-			if (primitive.type != TsysPrimitiveType::SInt) return false;
-			if (primitive.bytes != TsysBytes::_4) return false;
+				auto primitive = toEntity->GetPrimitive();
+				if (primitive.type != TsysPrimitiveType::SInt) return false;
+				if (primitive.bytes != TsysBytes::_4) return false;
 
-			performedTrivalConversion = true;
-			return true;
+				performedTrivalConversion = true;
+				return true;
+			}
 		}
 
 		if ((toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Ptr) ||
