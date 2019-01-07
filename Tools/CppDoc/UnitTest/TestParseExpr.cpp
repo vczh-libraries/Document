@@ -430,6 +430,7 @@ const Z* const pcz;
 
 TEST_CASE(TestParseExpr_FFA_Qualifier_OfExplicitOrImplicitThisExpr)
 {
+	// TODO
 }
 
 TEST_CASE(TestParseExpr_AddressOfArrayFunctionMemberPointer)
@@ -547,6 +548,7 @@ decltype((x))	c3 = (x);
 
 TEST_CASE(TestParseExpr_DeclType_Func)
 {
+	// TODO
 }
 
 TEST_CASE(TestParseExpr_EnumAndEnumItem)
@@ -663,6 +665,7 @@ volatile A* pva;
 
 TEST_CASE(TestParseExpr_Ternary_Comma)
 {
+	// TODO
 }
 
 TEST_CASE(TestParseExpr_MISC)
@@ -696,10 +699,12 @@ using namespace std;
 
 TEST_CASE(TestParseExpr_Universal_Initialization)
 {
+	// TODO
 }
 
 TEST_CASE(TestParseExpr_Lambda)
 {
+	// TODO
 	// TsysType::Lambda
 	// TsysType::CapturedLambda
 	// GetElement() returns a function type
