@@ -255,13 +255,16 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 					auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
 					SkipToken(cursor);
 
-					auto expr = MakePtr<FuncAccessExpr>();
+					auto expr = MakePtr<CtorAccessExpr>();
 					expr->type = type;
+					expr->initializer = MakePtr<Initializer>();
+					expr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? InitializerType::Constructor : InitializerType::Universal;
+
 					if (!TestToken(cursor, closeToken))
 					{
 						while (true)
 						{
-							expr->arguments.Add(ParseExpr(pa, false, cursor));
+							expr->initializer->arguments.Add(ParseExpr(pa, false, cursor));
 							if (TestToken(cursor, closeToken))
 							{
 								break;
@@ -450,11 +453,14 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 			auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
 			SkipToken(cursor);
 
+			newExpr->initializer = MakePtr<Initializer>();
+			newExpr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? InitializerType::Constructor : InitializerType::Universal;
+
 			if (!TestToken(cursor, closeToken))
 			{
 				while (true)
 				{
-					newExpr->arguments.Add(ParseExpr(pa, false, cursor));
+					newExpr->initializer->arguments.Add(ParseExpr(pa, false, cursor));
 					if (TestToken(cursor, closeToken))
 					{
 						break;
@@ -466,10 +472,23 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 				}
 			}
 		}
-		else if (TestToken(cursor, CppTokens::LBRACKET))
+		else if (TestToken(cursor, CppTokens::LBRACKET, false))
 		{
-			newExpr->arrayNew = true;
-			newExpr->arguments.Add(ParseExpr(pa, true, cursor));
+			List<Ptr<Expr>> sizeExprs;
+			while (TestToken(cursor, CppTokens::LBRACKET))
+			{
+				sizeExprs.Add(ParseExpr(pa, true, cursor));
+				RequireToken(cursor, CppTokens::RBRACKET);
+			}
+
+			for (vint i = sizeExprs.Count() - 1; i >= 0; i--)
+			{
+				auto arrayType = MakePtr<ArrayType>();
+				arrayType->type = newExpr->type;
+				arrayType->expr = sizeExprs[i];
+				newExpr->type = arrayType;
+			}
+
 			RequireToken(cursor, CppTokens::RBRACKET);
 		}
 		return newExpr;

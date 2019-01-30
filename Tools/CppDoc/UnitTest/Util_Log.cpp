@@ -178,30 +178,6 @@ public:
 		writer.WriteString(L")");
 	}
 
-	void Visit(NewExpr* self)override
-	{
-		writer.WriteString(L"new ");
-		if (self->placementArguments.Count() > 0)
-		{
-			writer.WriteString(L"(");
-			for (vint i = 0; i < self->placementArguments.Count(); i++)
-			{
-				if (i > 0) writer.WriteString(L", ");
-				Log(self->placementArguments[i], writer);
-			}
-			writer.WriteString(L") ");
-		}
-
-		Log(self->type, writer);
-		writer.WriteString(self->arrayNew ? L"[" : L"(");
-		for (vint i = 0; i < self->arguments.Count(); i++)
-		{
-			if (i > 0) writer.WriteString(L", ");
-			Log(self->arguments[i], writer);
-		}
-		writer.WriteString(self->arrayNew ? L"]" : L")");
-	}
-
 	void Visit(DeleteExpr* self)override
 	{
 		writer.WriteString(self->arrayDelete ? L"delete[] (" : L"delete (");
@@ -242,8 +218,7 @@ public:
 
 	void Visit(FuncAccessExpr* self)override
 	{
-		if (self->type) Log(self->type, writer);
-		if (self->expr) Log(self->expr, writer);
+		Log(self->expr, writer);
 		writer.WriteChar(L'(');
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
@@ -251,6 +226,38 @@ public:
 			Log(self->arguments[i], writer);
 		}
 		writer.WriteChar(L')');
+	}
+
+	void Visit(CtorAccessExpr* self)override
+	{
+		Log(self->type, writer);
+		if (self->initializer)
+		{
+			writer.WriteChar(self->initializer->initializerType == InitializerType::Constructor ? L'(' : L'{');
+			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
+			{
+				if (i > 0) writer.WriteString(L", ");
+				Log(self->initializer->arguments[i], writer);
+			}
+			writer.WriteChar(self->initializer->initializerType == InitializerType::Constructor ? L')' : L'}');
+		}
+	}
+
+	void Visit(NewExpr* self)override
+	{
+		writer.WriteString(L"new ");
+		if (self->placementArguments.Count() > 0)
+		{
+			writer.WriteString(L"(");
+			for (vint i = 0; i < self->placementArguments.Count(); i++)
+			{
+				if (i > 0) writer.WriteString(L", ");
+				Log(self->placementArguments[i], writer);
+			}
+			writer.WriteString(L") ");
+		}
+
+		Visit((CtorAccessExpr*)self);
 	}
 
 	void Visit(PostfixUnaryExpr* self)override

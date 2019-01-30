@@ -784,27 +784,6 @@ public:
 		AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }));
 	}
 
-	void Visit(NewExpr* self)override
-	{
-		for (vint i = 0; i < self->placementArguments.Count(); i++)
-		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->placementArguments[i], types);
-		}
-		for (vint i = 0; i < self->arguments.Count(); i++)
-		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->arguments[i], types);
-		}
-
-		TypeTsysList types;
-		TypeToTsys(pa, self->type, types);
-		for (vint i = 0; i < types.Count(); i++)
-		{
-			AddTemp(result, types[i]->PtrOf());
-		}
-	}
-
 	void Visit(DeleteExpr* self)override
 	{
 		{
@@ -971,19 +950,53 @@ public:
 			argTypesList.Add(argTypes);
 		}
 
-		if (self->type)
-		{
-			TypeTsysList types;
-			TypeToTsys(pa, self->type, types);
-			AddTemp(result, types);
-		}
-		else if (self->expr)
 		{
 			ExprTsysList funcTypes;
 			ExprToTsys(pa, self->expr, funcTypes);
 
 			FindQualifiedFunctions(pa, {}, TsysRefType::None, funcTypes, true);
 			VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
+		}
+	}
+
+	void Visit(CtorAccessExpr* self)override
+	{
+		List<Ptr<ExprTsysList>> argTypesList;
+		for (vint i = 0; i < self->initializer->arguments.Count(); i++)
+		{
+			auto argTypes = MakePtr<ExprTsysList>();
+			ExprToTsys(pa, self->initializer->arguments[i], *argTypes.Obj());
+			argTypesList.Add(argTypes);
+		}
+
+		{
+			TypeTsysList types;
+			TypeToTsys(pa, self->type, types);
+			AddTemp(result, types);
+		}
+	}
+
+	void Visit(NewExpr* self)override
+	{
+		for (vint i = 0; i < self->placementArguments.Count(); i++)
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->placementArguments[i], types);
+		}
+		if (self->initializer)
+		{
+			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
+			{
+				ExprTsysList types;
+				ExprToTsys(pa, self->initializer->arguments[i], types);
+			}
+		}
+
+		TypeTsysList types;
+		TypeToTsys(pa, self->type, types);
+		for (vint i = 0; i < types.Count(); i++)
+		{
+			AddTemp(result, types[i]->PtrOf());
 		}
 	}
 

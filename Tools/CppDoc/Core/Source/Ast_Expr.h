@@ -16,13 +16,14 @@ Visitor
 	F(TypeidExpr)\
 	F(SizeofExpr)\
 	F(ThrowExpr)\
-	F(NewExpr)\
 	F(DeleteExpr)\
 	F(IdExpr)\
 	F(ChildExpr)\
 	F(FieldAccessExpr)\
 	F(ArrayAccessExpr)\
 	F(FuncAccessExpr)\
+	F(CtorAccessExpr)\
+	F(NewExpr)\
 	F(PostfixUnaryExpr)\
 	F(PrefixUnaryExpr)\
 	F(BinaryExpr)\
@@ -130,17 +131,6 @@ public:
 	Ptr<Expr>					expr;
 };
 
-class NewExpr : public Expr
-{
-public:
-	IExprVisitor_ACCEPT;
-
-	bool						arrayNew = false;
-	Ptr<Type>					type;
-	List<Ptr<Expr>>				placementArguments;
-	List<Ptr<Expr>>				arguments;
-};
-
 class DeleteExpr : public Expr
 {
 public:
@@ -197,9 +187,25 @@ class FuncAccessExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<Type>				type;
 	Ptr<Expr>				expr;
 	List<Ptr<Expr>>			arguments;
+};
+
+class CtorAccessExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	Ptr<Type>				type;
+	Ptr<Initializer>		initializer;
+};
+
+class NewExpr : public CtorAccessExpr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	List<Ptr<Expr>>				placementArguments;
 };
 
 enum class CppPostfixUnaryOp
