@@ -672,6 +672,7 @@ struct A
 {
 	A(int);
 };
+A a, b;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
@@ -680,6 +681,9 @@ struct A
 	AssertExpr(L"1?2:3.0",					L"(1 ? 2 : 3.0)",			L"double $PR",										pa);
 	AssertExpr(L"1?A(0):0",					L"(1 ? A(0) : 0)",			L"::A $PR",											pa);
 	AssertExpr(L"1?0:A(0)",					L"(1 ? 0 : A(0))",			L"::A $PR",											pa);
+	AssertExpr(L"1?a:b",					L"(1 ? a : b)",				L"::A & $L",										pa);
+	AssertExpr(L"1?A():b",					L"(1 ? A() : b)",			L"::A $PR",											pa);
+	AssertExpr(L"1?a:A()",					L"(1 ? a : A())",			L"::A $PR",											pa);
 	AssertExpr(L"1?0:A(0),true",			L"((1 ? 0 : A(0)) , true)",	L"bool $PR",										pa);
 	AssertExpr(L"true,1?0:A(0)",			L"(true , (1 ? 0 : A(0)))",	L"bool $PR",										pa);
 }

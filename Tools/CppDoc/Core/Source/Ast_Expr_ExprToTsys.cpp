@@ -1515,6 +1515,48 @@ public:
 		ExprToTsys(pa, self->condition, conditionTypes);
 		ExprToTsys(pa, self->left, leftTypes);
 		ExprToTsys(pa, self->right, rightTypes);
+
+		if (leftTypes.Count() == 0 && rightTypes.Count()!=0)
+		{
+			AddInternal(result, rightTypes);
+		}
+		else if (leftTypes.Count() != 0 && rightTypes.Count() == 0)
+		{
+			AddInternal(result, leftTypes);
+		}
+		else
+		{
+			for (vint i = 0; i < leftTypes.Count(); i++)
+			{
+				auto left = leftTypes[i].tsys;
+				for (vint j = 0; j < rightTypes.Count(); j++)
+				{
+					auto right = rightTypes[j].tsys;
+					if (left == right)
+					{
+						AddTemp(result, left);
+					}
+					else
+					{
+						auto l2r = TestConvert(pa, right, leftTypes[i]);
+						auto r2l = TestConvert(pa, left, rightTypes[j]);
+						if (l2r < r2l)
+						{
+							AddTemp(result, right);
+						}
+						else if (l2r > r2l)
+						{
+							AddTemp(result, left);
+						}
+						else
+						{
+							AddTemp(result, left);
+							AddTemp(result, right);
+						}
+					}
+				}
+			}
+		}
 	}
 };
 
