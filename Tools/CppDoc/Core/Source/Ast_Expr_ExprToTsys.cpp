@@ -1549,6 +1549,34 @@ public:
 					{
 						AddInternal(result, left);
 					}
+					else if (leftEntity == rightEntity)
+					{
+						auto cv = leftCV;
+						cv.isGeneralConst |= rightCV.isGeneralConst;
+						cv.isVolatile |= rightCV.isVolatile;
+
+						auto refType = leftRefType == rightRefType ? leftRefType : TsysRefType::None;
+
+						switch (refType)
+						{
+						case TsysRefType::LRef:
+							AddTemp(result, leftEntity->LRefOf());
+							break;
+						case TsysRefType::RRef:
+							AddTemp(result, leftEntity->RRefOf());
+							break;
+						default:
+							if (left.type == right.type)
+							{
+								AddInternal(result, { nullptr,left.type,leftEntity->CVOf(cv) });
+							}
+							else
+							{
+								AddTemp(result, leftEntity->CVOf(cv));
+							}
+							break;
+						}
+					}
 					else
 					{
 						auto l2r = TestConvert(pa, rightType, left);

@@ -695,15 +695,15 @@ const A ca, cb;
 	AssertExpr(L"1?A(0):0",								L"(1 ? A(0) : 0)",										L"::A $PR",					pa);
 	AssertExpr(L"1?0:A(0)",								L"(1 ? 0 : A(0))",										L"::A $PR",					pa);
 
-	AssertExpr(L"1?a:b",								L"(1 ? a : b)",											L"::A $L",					pa);
-	AssertExpr(L"1?ca:b",								L"(1 ? ca : b)",										L"::A const $L",			pa);
-	AssertExpr(L"1?a:cb",								L"(1 ? a : cb)",										L"::A const $L",			pa);
-	AssertExpr(L"1?ca:cb",								L"(1 ? ca : cb)",										L"::A const $L",			pa);
+	AssertExpr(L"1?a:b",								L"(1 ? a : b)",											L"::A & $L",				pa);
+	AssertExpr(L"1?ca:b",								L"(1 ? ca : b)",										L"::A const & $L",			pa);
+	AssertExpr(L"1?a:cb",								L"(1 ? a : cb)",										L"::A const & $L",			pa);
+	AssertExpr(L"1?ca:cb",								L"(1 ? ca : cb)",										L"::A const & $L",			pa);
 
-	AssertExpr(L"1?(A&)a:(A&)b",						L"(1 ? c_cast<A &>(a) : c_cast<A &>(b)",				L"::A & $PR",				pa);
-	AssertExpr(L"1?(const A&)ca:(A&)b",					L"(1 ? c_cast<A const &>(ca) : c_cast<A &>(b))",		L"::A const & $PR",			pa);
-	AssertExpr(L"1?(A&)a:(const A&)cb",					L"(1 ? c_cast<A &>(a) : c_cast<A const &>(cb))",		L"::A const & $PR",			pa);
-	AssertExpr(L"1?(const A&)ca:(const A&)cb",			L"(1 ? c_cast<A const &>(ca) : c_cast<A const &>(cb))",	L"::A const & $PR",			pa);
+	AssertExpr(L"1?(A&)a:(A&)b",						L"(1 ? c_cast<A &>(a) : c_cast<A &>(b))",				L"::A & $L",				pa);
+	AssertExpr(L"1?(const A&)ca:(A&)b",					L"(1 ? c_cast<A const &>(ca) : c_cast<A &>(b))",		L"::A const & $L",			pa);
+	AssertExpr(L"1?(A&)a:(const A&)cb",					L"(1 ? c_cast<A &>(a) : c_cast<A const &>(cb))",		L"::A const & $L",			pa);
+	AssertExpr(L"1?(const A&)ca:(const A&)cb",			L"(1 ? c_cast<A const &>(ca) : c_cast<A const &>(cb))",	L"::A const & $L",			pa);
 
 	AssertExpr(L"1?A():b",								L"(1 ? A() : b)",										L"::A $PR",					pa);
 	AssertExpr(L"1?a:A()",								L"(1 ? a : A())",										L"::A $PR",					pa);
