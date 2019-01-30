@@ -431,7 +431,7 @@ const Z* const pcz;
 TEST_CASE(TestParseExpr_FFA_Qualifier_OfExplicitOrImplicitThisExpr)
 {
 	// TODO
-	// (this->)expr
+	// (this->)variable/function in functions marking with const / volatile / & / &&
 }
 
 TEST_CASE(TestParseExpr_AddressOfArrayFunctionMemberPointer)
@@ -750,9 +750,6 @@ TEST_CASE(TestParseExpr_Universal_Initialization)
 {
 	// TODO
 	// {a, b, c}: always returns void, only overloading will look into types of elements
-	// {a, b, c}: always returns void, only overloading will look into types of elements
-	// TYPE{a, b, c}
-	// Add new TYPE{a, b, c} in TestParseExpr_MISC
 }
 
 TEST_CASE(TestParseExpr_Lambda)
