@@ -431,6 +431,7 @@ const Z* const pcz;
 TEST_CASE(TestParseExpr_FFA_Qualifier_OfExplicitOrImplicitThisExpr)
 {
 	// TODO
+	// (this->)expr
 }
 
 TEST_CASE(TestParseExpr_AddressOfArrayFunctionMemberPointer)
@@ -549,6 +550,7 @@ decltype((x))	c3 = (x);
 TEST_CASE(TestParseExpr_DeclType_Func)
 {
 	// TODO
+	// decltype(auto) func()
 }
 
 TEST_CASE(TestParseExpr_EnumAndEnumItem)
@@ -665,7 +667,21 @@ volatile A* pva;
 
 TEST_CASE(TestParseExpr_Ternary_Comma)
 {
-	// TODO
+	auto input = LR"(
+struct A
+{
+	A(int);
+};
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"1?2:3",					L"(1 ? 2 : 3)",				L"__int32 $PR",										pa);
+	AssertExpr(L"1?2.0:3",					L"(1 ? 2.0 : 3)",			L"double $PR",										pa);
+	AssertExpr(L"1?2:3.0",					L"(1 ? 2 : 3.0)",			L"double $PR",										pa);
+	AssertExpr(L"1?A(0):0",					L"(1 ? A(0) : 0)",			L"::A $PR",											pa);
+	AssertExpr(L"1?0:A(0)",					L"(1 ? 0 : A(0))",			L"::A $PR",											pa);
+	AssertExpr(L"1?0:A(0),true",			L"((1 ? 0 : A(0)) , true)",	L"bool $PR",										pa);
+	AssertExpr(L"true,1?0:A(0)",			L"(true , (1 ? 0 : A(0)))",	L"bool $PR",										pa);
 }
 
 TEST_CASE(TestParseExpr_MISC)
@@ -700,6 +716,7 @@ using namespace std;
 TEST_CASE(TestParseExpr_Universal_Initialization)
 {
 	// TODO
+	// {a, b, c}
 }
 
 TEST_CASE(TestParseExpr_Lambda)

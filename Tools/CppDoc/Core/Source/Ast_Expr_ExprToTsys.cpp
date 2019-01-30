@@ -1511,12 +1511,10 @@ public:
 
 	void Visit(IfExpr* self)override
 	{
-		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->condition, types);
-		}
-		ExprToTsys(pa, self->left, result);
-		ExprToTsys(pa, self->right, result);
+		ExprTsysList conditionTypes, leftTypes, rightTypes;
+		ExprToTsys(pa, self->condition, conditionTypes);
+		ExprToTsys(pa, self->left, leftTypes);
+		ExprToTsys(pa, self->right, rightTypes);
 	}
 };
 

@@ -284,7 +284,13 @@ public:
 
 	void Visit(IfExpr* self)override
 	{
-		throw 0;
+		writer.WriteString(L"(");
+		Log(self->condition, writer);
+		writer.WriteString(L" ? ");
+		Log(self->left, writer);
+		writer.WriteString(L" : ");
+		Log(self->right, writer);
+		writer.WriteString(L")");
 	}
 };
 
