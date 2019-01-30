@@ -551,6 +551,7 @@ TEST_CASE(TestParseExpr_DeclType_Func)
 {
 	// TODO
 	// decltype(auto) func()
+	// Until its see a return statement to determine the return type, this function cannot be used
 }
 
 TEST_CASE(TestParseExpr_EnumAndEnumItem)
