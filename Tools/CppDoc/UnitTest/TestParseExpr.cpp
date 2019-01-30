@@ -671,19 +671,29 @@ TEST_CASE(TestParseExpr_Ternary_Comma)
 struct A
 {
 	A(int);
+	void F();
 };
 A a, b;
+const A ca, cb;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
 	AssertExpr(L"1?2:3",					L"(1 ? 2 : 3)",				L"__int32 $PR",										pa);
 	AssertExpr(L"1?2.0:3",					L"(1 ? 2.0 : 3)",			L"double $PR",										pa);
 	AssertExpr(L"1?2:3.0",					L"(1 ? 2 : 3.0)",			L"double $PR",										pa);
+	AssertExpr(L"1?\"abc\":nullptr",		L"(1 ? \"abc\" : nullptr)",	L"char const * $PR",								pa);
+	AssertExpr(L"1?nullptr:\"abc\"",		L"(1 ? nullptr : \"abc\")",	L"char const * $PR",								pa);
+	AssertExpr(L"1?\"abc\":0",				L"(1 ? \"abc\" : 0)",		L"char const * $PR",								pa);
+	AssertExpr(L"1?0:\"abc\"",				L"(1 ? 0 : \"abc\")",		L"char const * $PR",								pa);
 	AssertExpr(L"1?A(0):0",					L"(1 ? A(0) : 0)",			L"::A $PR",											pa);
 	AssertExpr(L"1?0:A(0)",					L"(1 ? 0 : A(0))",			L"::A $PR",											pa);
 	AssertExpr(L"1?a:b",					L"(1 ? a : b)",				L"::A & $L",										pa);
+	AssertExpr(L"1?ca:b",					L"(1 ? ca : b)",			L"::A const & $L",									pa);
+	AssertExpr(L"1?a:cb",					L"(1 ? a : cb)",			L"::A const & $L",									pa);
+	AssertExpr(L"1?ca:cb",					L"(1 ? ca : cb)",			L"::A const & $L",									pa);
 	AssertExpr(L"1?A():b",					L"(1 ? A() : b)",			L"::A $PR",											pa);
 	AssertExpr(L"1?a:A()",					L"(1 ? a : A())",			L"::A $PR",											pa);
+	AssertExpr(L"1?a.F():b.F()",			L"(1 ? a.F() : b.F())",		L"void $PR",										pa);
 	AssertExpr(L"1?0:A(0),true",			L"((1 ? 0 : A(0)) , true)",	L"bool $PR",										pa);
 	AssertExpr(L"true,1?0:A(0)",			L"(true , (1 ? 0 : A(0)))",	L"bool $PR",										pa);
 }
