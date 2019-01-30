@@ -1071,7 +1071,7 @@ public:
 		}
 	}
 
-	void Promote(TsysPrimitive& primitive)
+	static void Promote(TsysPrimitive& primitive)
 	{
 		switch (primitive.type)
 		{
@@ -1099,7 +1099,7 @@ public:
 		}
 	}
 
-	bool FullyContain(TsysPrimitive large, TsysPrimitive small)
+	static bool FullyContain(TsysPrimitive large, TsysPrimitive small)
 	{
 		if (large.type == TsysPrimitiveType::Float && small.type != TsysPrimitiveType::Float)
 		{
@@ -1257,6 +1257,59 @@ public:
 				break;
 			}
 		}
+	}
+
+	static TsysPrimitive ArithmeticConversion(TsysPrimitive leftP, TsysPrimitive rightP)
+	{
+		if (FullyContain(leftP, rightP))
+		{
+			Promote(leftP);
+			return leftP;
+		}
+
+		if (FullyContain(rightP, leftP))
+		{
+			Promote(rightP);
+			return rightP;
+		}
+
+		Promote(leftP);
+		Promote(rightP);
+
+		TsysPrimitive primitive;
+		primitive.bytes = leftP.bytes > rightP.bytes ? leftP.bytes : rightP.bytes;
+
+		if (leftP.type == TsysPrimitiveType::Float || rightP.type == TsysPrimitiveType::Float)
+		{
+			primitive.type = TsysPrimitiveType::Float;
+		}
+		else if (leftP.bytes > rightP.bytes)
+		{
+			primitive.type = leftP.type;
+		}
+		else if (leftP.bytes < rightP.bytes)
+		{
+			primitive.type = rightP.type;
+		}
+		else
+		{
+			bool sl = leftP.type == TsysPrimitiveType::SInt || leftP.type == TsysPrimitiveType::SChar;
+			bool sr = rightP.type == TsysPrimitiveType::SInt || rightP.type == TsysPrimitiveType::SChar;
+			if (sl && !sr)
+			{
+				primitive.type = rightP.type;
+			}
+			else if (!sl && sr)
+			{
+				primitive.type = leftP.type;
+			}
+			else
+			{
+				primitive.type = leftP.type;
+			}
+		}
+
+		return primitive;
 	}
 
 	void Visit(BinaryExpr* self)override
@@ -1438,57 +1491,7 @@ public:
 						{
 							auto leftP = leftEntity->GetPrimitive();
 							auto rightP = rightEntity->GetPrimitive();
-
-							if (FullyContain(leftP, rightP))
-							{
-								Promote(leftP);
-								AddTemp(result, pa.tsys->PrimitiveOf(leftP));
-								break;
-							}
-
-							if (FullyContain(rightP, leftP))
-							{
-								Promote(rightP);
-								AddTemp(result, pa.tsys->PrimitiveOf(rightP));
-								break;
-							}
-
-							Promote(leftP);
-							Promote(rightP);
-
-							TsysPrimitive primitive;
-							primitive.bytes = leftP.bytes > rightP.bytes ? leftP.bytes : rightP.bytes;
-
-							if (leftP.type == TsysPrimitiveType::Float || rightP.type == TsysPrimitiveType::Float)
-							{
-								primitive.type = TsysPrimitiveType::Float;
-							}
-							else if (leftP.bytes > rightP.bytes)
-							{
-								primitive.type = leftP.type;
-							}
-							else if (leftP.bytes < rightP.bytes)
-							{
-								primitive.type = rightP.type;
-							}
-							else
-							{
-								bool sl = leftP.type == TsysPrimitiveType::SInt || leftP.type == TsysPrimitiveType::SChar;
-								bool sr = rightP.type == TsysPrimitiveType::SInt || rightP.type == TsysPrimitiveType::SChar;
-								if (sl && !sr)
-								{
-									primitive.type = rightP.type;
-								}
-								else if (!sl && sr)
-								{
-									primitive.type = leftP.type;
-								}
-								else
-								{
-									primitive.type = leftP.type;
-								}
-							}
-
+							auto primitive = ArithmeticConversion(leftP, rightP);
 							AddTemp(result, pa.tsys->PrimitiveOf(primitive));
 						}
 					}
@@ -1528,30 +1531,48 @@ public:
 		{
 			for (vint i = 0; i < leftTypes.Count(); i++)
 			{
-				auto left = leftTypes[i].tsys;
+				auto leftType = leftTypes[i].tsys;
+				TsysCV leftCV;
+				TsysRefType leftRefType;
+				auto leftEntity = leftType->GetEntity(leftCV, leftRefType);
+
 				for (vint j = 0; j < rightTypes.Count(); j++)
 				{
-					auto right = rightTypes[j].tsys;
-					if (left == right)
+					auto rightType = rightTypes[j].tsys;
+					TsysCV rightCV;
+					TsysRefType rightRefType;
+					auto rightEntity = rightType->GetEntity(rightCV, rightRefType);
+
+					if (leftType == rightType)
 					{
-						AddTemp(result, left);
+						AddTemp(result, leftType);
 					}
 					else
 					{
-						auto l2r = TestConvert(pa, right, leftTypes[i]);
-						auto r2l = TestConvert(pa, left, rightTypes[j]);
+						auto l2r = TestConvert(pa, rightType, leftTypes[i]);
+						auto r2l = TestConvert(pa, leftType, rightTypes[j]);
 						if (l2r < r2l)
 						{
-							AddTemp(result, right);
+							AddTemp(result, rightType);
 						}
 						else if (l2r > r2l)
 						{
-							AddTemp(result, left);
+							AddTemp(result, leftType);
 						}
 						else
 						{
-							AddTemp(result, left);
-							AddTemp(result, right);
+							auto leftPrim = leftEntity->GetType() == TsysType::Primitive;
+							auto rightPrim = rightEntity->GetType() == TsysType::Primitive;
+							if (l2r == TsysConv::StandardConversion && leftPrim && rightPrim)
+							{
+								auto leftP = leftEntity->GetPrimitive();
+								auto rightP = rightEntity->GetPrimitive();
+								auto primitive = ArithmeticConversion(leftP, rightP);
+								AddTemp(result, pa.tsys->PrimitiveOf(primitive));
+								continue;
+							}
+							AddTemp(result, leftType);
+							AddTemp(result, rightType);
 						}
 					}
 				}
