@@ -24,6 +24,7 @@ Visitor
 	F(FuncAccessExpr)\
 	F(CtorAccessExpr)\
 	F(NewExpr)\
+	F(UniversalInitializerExpr)\
 	F(PostfixUnaryExpr)\
 	F(PrefixUnaryExpr)\
 	F(BinaryExpr)\
@@ -207,6 +208,15 @@ public:
 
 	List<Ptr<Expr>>				placementArguments;
 };
+
+class UniversalInitializerExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	List<Ptr<Expr>>			arguments;
+};
+
 
 enum class CppPostfixUnaryOp
 {

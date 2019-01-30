@@ -260,6 +260,17 @@ public:
 		Visit((CtorAccessExpr*)self);
 	}
 
+	void Visit(UniversalInitializerExpr* self)override
+	{
+		writer.WriteChar(L'{');
+		for (vint i = 0; i < self->arguments.Count(); i++)
+		{
+			if (i > 0) writer.WriteString(L", ");
+			Log(self->arguments[i], writer);
+		}
+		writer.WriteChar(L'}');
+	}
+
 	void Visit(PostfixUnaryExpr* self)override
 	{
 		writer.WriteString(L"(");

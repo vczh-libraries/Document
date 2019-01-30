@@ -712,6 +712,10 @@ const A ca, cb;
 	AssertExpr(L"1?a.F():b.F()",						L"(1 ? a.F() : b.F())",									L"void $PR",				pa);
 	AssertExpr(L"1?0:A(0),true",						L"((1 ? 0 : A(0)) , true)",								L"bool $PR",				pa);
 	AssertExpr(L"true,1?0:A(0)",						L"(true , (1 ? 0 : A(0)))",								L"::A $PR",					pa);
+
+	AssertExpr(L"(1?a.F():b.F())",						L"((1 ? a.F() : b.F()))",								L"void $PR",				pa);
+	AssertExpr(L"(1?0:A(0),true)",						L"(((1 ? 0 : A(0)) , true))",							L"bool $PR",				pa);
+	AssertExpr(L"(true,1?0:A(0))",						L"((true , (1 ? 0 : A(0))))",							L"::A $PR",					pa);
 }
 
 TEST_CASE(TestParseExpr_MISC)
@@ -749,8 +753,9 @@ using namespace std;
 
 TEST_CASE(TestParseExpr_Universal_Initialization)
 {
-	// TODO
-	// {a, b, c}: always returns void, only overloading will look into types of elements
+	AssertExpr(L"{}",						L"{}",							L"void $PR");
+	AssertExpr(L"{1}",						L"{1}",							L"void $PR");
+	AssertExpr(L"{1, 2}",					L"{1, 2}",						L"void $PR");
 }
 
 TEST_CASE(TestParseExpr_Lambda)

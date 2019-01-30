@@ -186,6 +186,24 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 				return expr;
 			}
+		case CppTokens::LBRACE:
+			{
+				SkipToken(cursor);
+				auto expr = MakePtr<UniversalInitializerExpr>();
+				while (!TestToken(cursor, CppTokens::RBRACE))
+				{
+					expr->arguments.Add(ParseExpr(pa, false, cursor));
+					if (TestToken(cursor, CppTokens::RBRACE))
+					{
+						break;
+					}
+					else
+					{
+						RequireToken(cursor, CppTokens::COMMA);
+					}
+				}
+				return expr;
+			}
 		case CppTokens::EXPR_DYNAMIC_CAST:
 		case CppTokens::EXPR_STATIC_CAST:
 		case CppTokens::EXPR_CONST_CAST:

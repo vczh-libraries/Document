@@ -273,7 +273,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 ## EXPR (Expression)
 
 - [x] LITERAL
-- [ ] `{` ... `}`
+- [x] `{` ... `}`
 - [x] `this`
 - [x] `nullptr`
 - [x] IDENTIFIER
@@ -294,23 +294,18 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - [x] EXPR (`.*` | `->*`) EXPR
   - [x] predefined operators
 - [x] EXPR `?` EXPR `:` EXPR
-  - [ ] Test
 - [x] (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
-  - [ ] Test
 - [x] `typeid` `(` (TYPE | EXPR) `)`
 - [x] `sizeof` [`...`] EXPR
   - [ ] `...`
 - [x] `sizeof` [`...`] `(` TYPE `)`
   - [ ] `...`
 - [x] `(` TYPE `)` EXPR
-  - [ ] Test
 - [x] [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
   - [ ] `::`
-  - [x] `{}`
 - [x] [`::`] `delete` [`[` `]`] EXPR
   - [ ] `::`
 - [x] `throw` EXPR
-  - [ ] Test
 - [ ] `[` {`&` | `=` | [IDENTIFIER `=`] EXPR | } `]` FUNCTION-TAIL STAT
 
 ### Operators

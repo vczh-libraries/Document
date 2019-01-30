@@ -1016,6 +1016,16 @@ public:
 		}
 	}
 
+	void Visit(UniversalInitializerExpr* self)override
+	{
+		for (vint i = 0; i < self->arguments.Count(); i++)
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->arguments[i], types);
+		}
+		AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }));
+	}
+
 	void Visit(PostfixUnaryExpr* self)override
 	{
 		ExprTsysList types;
