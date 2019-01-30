@@ -1531,33 +1531,35 @@ public:
 		{
 			for (vint i = 0; i < leftTypes.Count(); i++)
 			{
-				auto leftType = leftTypes[i].tsys;
+				auto left = leftTypes[i];
+				auto leftType = left.tsys;
 				TsysCV leftCV;
 				TsysRefType leftRefType;
 				auto leftEntity = leftType->GetEntity(leftCV, leftRefType);
 
 				for (vint j = 0; j < rightTypes.Count(); j++)
 				{
-					auto rightType = rightTypes[j].tsys;
+					auto right = rightTypes[j];
+					auto rightType = right.tsys;
 					TsysCV rightCV;
 					TsysRefType rightRefType;
 					auto rightEntity = rightType->GetEntity(rightCV, rightRefType);
 
 					if (leftType == rightType)
 					{
-						AddTemp(result, leftType);
+						AddInternal(result, left);
 					}
 					else
 					{
-						auto l2r = TestConvert(pa, rightType, leftTypes[i]);
-						auto r2l = TestConvert(pa, leftType, rightTypes[j]);
+						auto l2r = TestConvert(pa, rightType, left);
+						auto r2l = TestConvert(pa, leftType, right);
 						if (l2r < r2l)
 						{
-							AddTemp(result, rightType);
+							AddInternal(result, right);
 						}
 						else if (l2r > r2l)
 						{
-							AddTemp(result, leftType);
+							AddInternal(result, left);
 						}
 						else
 						{
@@ -1589,8 +1591,8 @@ public:
 								continue;
 							}
 
-							AddTemp(result, leftType);
-							AddTemp(result, rightType);
+							AddInternal(result, left);
+							AddInternal(result, right);
 						}
 					}
 				}
