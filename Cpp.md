@@ -306,7 +306,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - [ ] Test
 - [x] [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
   - [ ] `::`
-  - [ ] `{}`
+  - [x] `{}`
 - [x] [`::`] `delete` [`[` `]`] EXPR
   - [ ] `::`
 - [x] `throw` EXPR

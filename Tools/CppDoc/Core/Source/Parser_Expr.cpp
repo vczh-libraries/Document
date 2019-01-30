@@ -488,8 +488,6 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 				arrayType->expr = sizeExprs[i];
 				newExpr->type = arrayType;
 			}
-
-			RequireToken(cursor, CppTokens::RBRACKET);
 		}
 		return newExpr;
 	}

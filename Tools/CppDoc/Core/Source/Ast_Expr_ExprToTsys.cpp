@@ -983,6 +983,7 @@ public:
 			ExprTsysList types;
 			ExprToTsys(pa, self->placementArguments[i], types);
 		}
+
 		if (self->initializer)
 		{
 			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
@@ -996,7 +997,22 @@ public:
 		TypeToTsys(pa, self->type, types);
 		for (vint i = 0; i < types.Count(); i++)
 		{
-			AddTemp(result, types[i]->PtrOf());
+			auto type = types[i];
+			if (type->GetType() == TsysType::Array)
+			{
+				if (type->GetParamCount() == 1)
+				{
+					AddTemp(result, types[i]->GetElement()->PtrOf());
+				}
+				else
+				{
+					AddTemp(result, types[i]->GetElement()->ArrayOf(type->GetParamCount() - 1)->PtrOf());
+				}
+			}
+			else
+			{
+				AddTemp(result, types[i]->PtrOf());
+			}
 		}
 	}
 
