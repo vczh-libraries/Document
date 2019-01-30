@@ -280,7 +280,6 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] `::` IDENTIFIER
 - [x] TYPE `::` IDENTIFIER
 - [x] `(` EXPR-WITH-COMMA `)`
-  - [ ] Test
 - [x] OPERATOR EXPR
   - [x] predefined operators
 - [x] EXPR OPERATOR
