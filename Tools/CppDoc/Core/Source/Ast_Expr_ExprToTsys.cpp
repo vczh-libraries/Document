@@ -1563,6 +1563,11 @@ public:
 						{
 							auto leftPrim = leftEntity->GetType() == TsysType::Primitive;
 							auto rightPrim = rightEntity->GetType() == TsysType::Primitive;
+							auto leftPtrArr = leftEntity->GetType() == TsysType::Ptr || leftEntity->GetType() == TsysType::Array;
+							auto rightPtrArr = rightEntity->GetType() == TsysType::Ptr || rightEntity->GetType() == TsysType::Array;
+							auto leftNull = leftEntity->GetType() == TsysType::Zero || leftEntity->GetType() == TsysType::Nullptr;
+							auto rightNull = rightEntity->GetType() == TsysType::Zero || rightEntity->GetType() == TsysType::Nullptr;
+
 							if (l2r == TsysConv::StandardConversion && leftPrim && rightPrim)
 							{
 								auto leftP = leftEntity->GetPrimitive();
@@ -1571,6 +1576,19 @@ public:
 								AddTemp(result, pa.tsys->PrimitiveOf(primitive));
 								continue;
 							}
+
+							if (leftPtrArr && rightNull)
+							{
+								AddTemp(result, leftEntity->GetElement()->PtrOf());
+								continue;
+							}
+
+							if (leftNull && rightPtrArr)
+							{
+								AddTemp(result, rightEntity->GetElement()->PtrOf());
+								continue;
+							}
+
 							AddTemp(result, leftType);
 							AddTemp(result, rightType);
 						}
