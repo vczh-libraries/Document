@@ -45,7 +45,7 @@
     - (switch `SUCCESS`) succeeds even if unable to resolve, when dr==ZERO
     - (switch `FAIL-UNRESOLVE`) failed if unable to resolve (during `ParseExpr`)
   - [x] Assert ASTs
-  - [ ] Assert ASTs with precedence
+  - [x] Assert ASTs with precedence
   - [x] Add L/X/PR Value concept to `ExprTsysItem`, remove all additional `->RRefOf` calls
     - https://docs.microsoft.com/en-us/cpp/cpp/lvalues-and-rvalues-visual-cpp?view=vs-2017
   - [ ] Assert resolvings in scopes

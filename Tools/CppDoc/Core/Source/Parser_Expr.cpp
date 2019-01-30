@@ -250,16 +250,19 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 					}
 				}
 
-				if (TestToken(cursor, CppTokens::LPARENTHESIS))
+				if (TestToken(cursor, CppTokens::LPARENTHESIS, false) || TestToken(cursor, CppTokens::LBRACE, false))
 				{
+					auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
+					SkipToken(cursor);
+
 					auto expr = MakePtr<FuncAccessExpr>();
 					expr->type = type;
-					if (!TestToken(cursor, CppTokens::RPARENTHESIS))
+					if (!TestToken(cursor, closeToken))
 					{
 						while (true)
 						{
 							expr->arguments.Add(ParseExpr(pa, false, cursor));
-							if (TestToken(cursor, CppTokens::RPARENTHESIS))
+							if (TestToken(cursor, closeToken))
 							{
 								break;
 							}
@@ -442,14 +445,17 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 		}
 
 		newExpr->type = ParseLongType(pa, cursor);
-		if (TestToken(cursor, CppTokens::LPARENTHESIS))
+		if (TestToken(cursor, CppTokens::LPARENTHESIS, false) || TestToken(cursor, CppTokens::LBRACE, false))
 		{
-			if (!TestToken(cursor, CppTokens::RPARENTHESIS))
+			auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
+			SkipToken(cursor);
+
+			if (!TestToken(cursor, closeToken))
 			{
 				while (true)
 				{
 					newExpr->arguments.Add(ParseExpr(pa, false, cursor));
-					if (TestToken(cursor, CppTokens::RPARENTHESIS))
+					if (TestToken(cursor, closeToken))
 					{
 						break;
 					}

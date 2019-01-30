@@ -745,7 +745,10 @@ using namespace std;
 TEST_CASE(TestParseExpr_Universal_Initialization)
 {
 	// TODO
-	// {a, b, c}
+	// {a, b, c}: always returns void, only overloading will look into types of elements
+	// {a, b, c}: always returns void, only overloading will look into types of elements
+	// TYPE{a, b, c}
+	// Add new TYPE{a, b, c} in TestParseExpr_MISC
 }
 
 TEST_CASE(TestParseExpr_Lambda)
