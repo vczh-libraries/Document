@@ -1560,10 +1560,10 @@ public:
 						switch (refType)
 						{
 						case TsysRefType::LRef:
-							AddTemp(result, leftEntity->LRefOf());
+							AddTemp(result, leftEntity->CVOf(cv)->LRefOf());
 							break;
 						case TsysRefType::RRef:
-							AddTemp(result, leftEntity->RRefOf());
+							AddTemp(result, leftEntity->CVOf(cv)->RRefOf());
 							break;
 						default:
 							AddTemp(result, leftEntity->CVOf(cv));
