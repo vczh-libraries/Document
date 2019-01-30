@@ -1532,7 +1532,7 @@ public:
 			for (vint i = 0; i < leftTypes.Count(); i++)
 			{
 				auto left = leftTypes[i];
-				auto leftType = left.tsys;
+				auto leftType = left.type == ExprTsysType::LValue ? left.tsys->LRefOf() : left.tsys;
 				TsysCV leftCV;
 				TsysRefType leftRefType;
 				auto leftEntity = leftType->GetEntity(leftCV, leftRefType);
@@ -1540,14 +1540,14 @@ public:
 				for (vint j = 0; j < rightTypes.Count(); j++)
 				{
 					auto right = rightTypes[j];
-					auto rightType = right.tsys;
+					auto rightType = right.type == ExprTsysType::LValue ? right.tsys->LRefOf() : right.tsys;
 					TsysCV rightCV;
 					TsysRefType rightRefType;
 					auto rightEntity = rightType->GetEntity(rightCV, rightRefType);
 
 					if (leftType == rightType)
 					{
-						AddInternal(result, left);
+						AddTemp(result, leftType);
 					}
 					else if (leftEntity == rightEntity)
 					{
@@ -1566,14 +1566,7 @@ public:
 							AddTemp(result, leftEntity->RRefOf());
 							break;
 						default:
-							if (left.type == right.type)
-							{
-								AddInternal(result, { nullptr,left.type,leftEntity->CVOf(cv) });
-							}
-							else
-							{
-								AddTemp(result, leftEntity->CVOf(cv));
-							}
+							AddTemp(result, leftEntity->CVOf(cv));
 							break;
 						}
 					}
@@ -1583,11 +1576,11 @@ public:
 						auto r2l = TestConvert(pa, leftType, right);
 						if (l2r < r2l)
 						{
-							AddInternal(result, right);
+							AddTemp(result, rightType);
 						}
 						else if (l2r > r2l)
 						{
-							AddInternal(result, left);
+							AddTemp(result, leftType);
 						}
 						else
 						{
