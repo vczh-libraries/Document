@@ -520,6 +520,25 @@ decltype(&E)	_E3[1] = &E;
 	AssertExpr(L"&_E3",			L"(& _E3)",				L"__int32 __cdecl() * [] * $PR",				pa);
 }
 
+TEST_CASE(TestParseExpr_AddressOfArrayFunctionMemberPointer_OfExplicitOrImplicitThisExpr)
+{
+	// TODO
+	// Inside a non-static method
+	//   field					:	T
+	//   Class::field			:	T
+	//   &field					:	T*
+	//   &Class::field			:	T Class::*
+	//   &this->field			:	T*
+	//   &this->Class::field	:	T*
+	// Obviously "&A::B" is a unit of syntax, not the combination of "&" and "A::B", code needs some refactoring
+}
+
+TEST_CASE(TestParseExpr_AddressOfArrayFunctionMemberPointer_FFA_Qualifier_OfExplicitOrImplicitThisExpr)
+{
+	// TODO
+	// The same but in functions marking with const / volatile / & / &&
+}
+
 TEST_CASE(TestParseExpr_DeclType_Var)
 {
 	auto input = LR"(
