@@ -526,6 +526,9 @@ TEST_CASE(TestParseExpr_AddressOfMember_OfExplicitOrImplicitThisExpr)
 struct S
 {
 	int f;
+	int& r;
+	const int c;
+	static int s;
 
 	void M(double p){}
 	void C(double p)const{}
@@ -539,6 +542,7 @@ struct S
 		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"M"][0]->children[L"$"][0].Obj());
 		AssertExpr(L"this",						L"this",						L"::S * $PR");
 		AssertExpr(L"p",						L"p",							L"double $L");
+
 		AssertExpr(L"f",						L"f",							L"int $L");
 		AssertExpr(L"S::f",						L"S :: f",						L"int $L");
 		AssertExpr(L"&f",						L"(& f)",						L"int * $PR");
@@ -547,6 +551,33 @@ struct S
 		AssertExpr(L"this->S::f",				L"this->S :: f",				L"int $L");
 		AssertExpr(L"&this->f",					L"(& this->f)",					L"int * $PR");
 		AssertExpr(L"&this->S::f",				L"(& this->S :: f)",			L"int * $PR");
+
+		AssertExpr(L"r",						L"r",							L"int & $L");
+		AssertExpr(L"S::r",						L"S :: r",						L"int & $L");
+		AssertExpr(L"&r",						L"(& r)",						L"int * $PR");
+		AssertExpr(L"&S::r",					L"(& S :: r)",					L"int & (::S ::) * $PR");
+		AssertExpr(L"this->r",					L"this->r",						L"int & $L");
+		AssertExpr(L"this->S::r",				L"this->S :: r",				L"int & $L");
+		AssertExpr(L"&this->r",					L"(& this->r)",					L"int * $PR");
+		AssertExpr(L"&this->S::r",				L"(& this->S :: r)",			L"int * $PR");
+
+		AssertExpr(L"c",						L"c",							L"int const $L");
+		AssertExpr(L"S::c",						L"S :: c",						L"int const $L");
+		AssertExpr(L"&c",						L"(& c)",						L"int const * $PR");
+		AssertExpr(L"&S::c",					L"(& S :: c)",					L"int const (::S ::) * $PR");
+		AssertExpr(L"this->c",					L"this->c",						L"int const $L");
+		AssertExpr(L"this->S::c",				L"this->S :: c",				L"int const $L");
+		AssertExpr(L"&this->c",					L"(& this->c)",					L"int const * $PR");
+		AssertExpr(L"&this->S::c",				L"(& this->S :: c)",			L"int const * $PR");
+
+		AssertExpr(L"s",						L"s",							L"int $L");
+		AssertExpr(L"S::s",						L"S :: s",						L"int $L");
+		AssertExpr(L"&s",						L"(& s)",						L"int * $PR");
+		AssertExpr(L"&S::s",					L"(& S :: s)",					L"int * $PR");
+		AssertExpr(L"this->s",					L"this->s",						L"int $L");
+		AssertExpr(L"this->S::s",				L"this->S :: s",				L"int $L");
+		AssertExpr(L"&this->s",					L"(& this->s)",					L"int * $PR");
+		AssertExpr(L"&this->S::s",				L"(& this->S :: s)",			L"int * $PR");
 	}
 	{
 		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"C"][0]->children[L"$"][0].Obj());
