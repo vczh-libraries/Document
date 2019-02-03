@@ -571,14 +571,14 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					// if there is a statement, then it is a function declaration
 					auto decl = MakePtr<FunctionDeclaration>();
 					FILL_FUNCTION(decl);
-					{
-						ParsingArguments statPa(pa, context);
-						decl->statement = ParseStat(statPa, cursor);
-					}
 					auto contextSymbol = context->CreateDeclSymbol(decl);
 					{
 						ParsingArguments newPa(pa, contextSymbol);
 						BuildSymbols(newPa, type->parameters);
+					}
+					{
+						ParsingArguments statPa(pa, contextSymbol);
+						decl->statement = ParseStat(statPa, cursor);
 					}
 					output.Add(decl);
 					ConnectForwards<ForwardFunctionDeclaration>(context, contextSymbol, cursor);

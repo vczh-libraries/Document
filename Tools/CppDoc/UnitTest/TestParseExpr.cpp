@@ -520,23 +520,46 @@ decltype(&E)	_E3[1] = &E;
 	AssertExpr(L"&_E3",			L"(& _E3)",				L"__int32 __cdecl() * [] * $PR",				pa);
 }
 
-TEST_CASE(TestParseExpr_AddressOfArrayFunctionMemberPointer_OfExplicitOrImplicitThisExpr)
+TEST_CASE(TestParseExpr_AddressOfMember_OfExplicitOrImplicitThisExpr)
 {
-	// TODO
-	// Inside a non-static method
-	//   field					:	T
-	//   Class::field			:	T
-	//   &field					:	T*
-	//   &Class::field			:	T Class::*
-	//   &this->field			:	T*
-	//   &this->Class::field	:	T*
-	// Obviously "&A::B" is a unit of syntax, not the combination of "&" and "A::B", code needs some refactoring
-}
+	auto input = LR"(
+struct S
+{
+	int f;
 
-TEST_CASE(TestParseExpr_AddressOfArrayFunctionMemberPointer_FFA_Qualifier_OfExplicitOrImplicitThisExpr)
-{
-	// TODO
-	// The same but in functions marking with const / volatile / & / &&
+	void M(double p){}
+	void C(double p)const{}
+	void V(double p)volatile{}
+	void CV(double p)const volatile{}
+	static void F(double p){}
+};
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	{
+		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"M"][0]->children[L"$"][0].Obj());
+		AssertExpr(L"this",						L"this",						L"::S * $PR");
+		AssertExpr(L"p",						L"p",							L"double $L");
+		AssertExpr(L"f",						L"f",							L"int $L");
+		AssertExpr(L"S::f",						L"S :: f",						L"int $L");
+		AssertExpr(L"&f",						L"(& f)",						L"int * $PR");
+		AssertExpr(L"&S::f",					L"(& S :: f)",					L"int (::S ::) * $PR");
+		AssertExpr(L"this->f",					L"this->f",						L"int $L");
+		AssertExpr(L"this->S::f",				L"this->S :: f",				L"int $L");
+		AssertExpr(L"&this->f",					L"(& this->f)",					L"int * $PR");
+		AssertExpr(L"&this->S::f",				L"(& this->S :: f)",			L"int * $PR");
+	}
+	{
+		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"C"][0]->children[L"$"][0].Obj());
+	}
+	{
+		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"V"][0]->children[L"$"][0].Obj());
+	}
+	{
+		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"CV"][0]->children[L"$"][0].Obj());
+	}
+	{
+		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"F"][0]->children[L"$"][0].Obj());
+	}
 }
 
 TEST_CASE(TestParseExpr_DeclType_Var)

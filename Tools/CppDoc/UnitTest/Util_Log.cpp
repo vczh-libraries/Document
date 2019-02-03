@@ -110,7 +110,7 @@ public:
 
 	void Visit(ThisExpr* self)override
 	{
-		throw 0;
+		writer.WriteString(L"this");
 	}
 
 	void Visit(NullptrExpr* self)override

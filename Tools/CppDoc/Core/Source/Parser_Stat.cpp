@@ -41,9 +41,9 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		// { { STATEMENT ...} }
 		auto stat = MakePtr<BlockStat>();
+		ParsingArguments newPa(pa, pa.context->CreateStatSymbol(stat));
 		while (!TestToken(cursor, CppTokens::RBRACE))
 		{
-			ParsingArguments newPa(pa, pa.context->CreateStatSymbol(stat));
 			stat->stats.Add(ParseStat(newPa, cursor));
 		}
 		return stat;
