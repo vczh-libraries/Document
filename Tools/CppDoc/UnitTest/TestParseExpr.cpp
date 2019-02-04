@@ -766,6 +766,8 @@ void S::F2(double p){}
 		AssertExpr(L"&this->s",					L"(& this->s)",					L"__int32 * $PR",							spa);
 		AssertExpr(L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR",							spa);
 	}
+	// TODO
+	// Refactor and add a function to calculate T->U's type (processing TsysCV, and in the future with template)
 }
 
 TEST_CASE(TestParseExpr_DeclType_Var)
@@ -964,6 +966,8 @@ const A ca, cb;
 	AssertExpr(L"(1?a.F():b.F())",						L"((1 ? a.F() : b.F()))",								L"void $PR",				pa);
 	AssertExpr(L"(1?0:A(0),true)",						L"(((1 ? 0 : A(0)) , true))",							L"bool $PR",				pa);
 	AssertExpr(L"(true,1?0:A(0))",						L"((true , (1 ? 0 : A(0))))",							L"::A $PR",					pa);
+	// TODO
+	// Test operator,
 }
 
 TEST_CASE(TestParseExpr_MISC)
