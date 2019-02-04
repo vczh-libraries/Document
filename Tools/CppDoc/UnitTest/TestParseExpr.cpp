@@ -535,7 +535,19 @@ struct S
 	void V(double p)volatile{}
 	void CV(double p)const volatile{}
 	static void F(double p){}
+
+	void M2(double p);
+	void C2(double p)const;
+	void V2(double p)volatile;
+	void CV2(double p)const volatile;
+	static void F2(double p);
 };
+
+void S::M2(double p){}
+void S::C2(double p)const{}
+void S::V2(double p)volatile{}
+void S::CV2(double p)const volatile{}
+void S::F2(double p){}
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	{
