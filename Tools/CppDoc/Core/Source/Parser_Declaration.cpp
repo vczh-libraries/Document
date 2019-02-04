@@ -572,12 +572,30 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					auto decl = MakePtr<FunctionDeclaration>();
 					FILL_FUNCTION(decl);
 					auto contextSymbol = context->CreateDeclSymbol(decl);
+					if (containingClass || containingClassForMember)
+					{
+						auto methodCache = MakePtr<MethodCache>();
+						contextSymbol->methodCache = methodCache;
+
+						methodCache->classSymbol = containingClass ? containingClass->symbol : containingClassForMember->symbol;
+						methodCache->funcSymbol = contextSymbol;
+						methodCache->classDecl = methodCache->classSymbol->decls[0].Cast<ClassDeclaration>();
+						methodCache->funcDecl = decl;
+
+						auto funcType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>();
+						TsysCV cv;
+						cv.isGeneralConst = funcType->qualifierConstExpr || funcType->qualifierConst;
+						cv.isVolatile = funcType->qualifierVolatile;
+						methodCache->thisType = pa.tsys->DeclOf(methodCache->classSymbol)->CVOf(cv)->PtrOf();
+					}
 					{
 						ParsingArguments newPa(pa, contextSymbol);
+						newPa.funcSymbol = contextSymbol;
 						BuildSymbols(newPa, type->parameters);
 					}
 					{
 						ParsingArguments statPa(pa, contextSymbol);
+						statPa.funcSymbol = contextSymbol;
 						decl->statement = ParseStat(statPa, cursor);
 					}
 					output.Add(decl);

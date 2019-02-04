@@ -9,6 +9,18 @@
 Symbol
 ***********************************************************************/
 
+class ClassDeclaration;
+class FunctionDeclaration;
+
+struct MethodCache
+{
+	Symbol*						classSymbol = nullptr;
+	Symbol*						funcSymbol = nullptr;
+	Ptr<ClassDeclaration>		classDecl;
+	Ptr<FunctionDeclaration>	funcDecl;
+	ITsys*						thisType = nullptr;
+};
+
 class Symbol : public Object
 {
 	using SymbolGroup = Group<WString, Ptr<Symbol>>;
@@ -18,6 +30,7 @@ public:
 	WString					name;
 	List<Ptr<Declaration>>	decls;			// only namespaces share symbols
 	Ptr<Stat>				stat;			// if this scope is created by a statement
+	Ptr<MethodCache>		methodCache;	// if this scope is created by a method with a statement, methodCache->funcSymbol will be itself
 	SymbolGroup				children;
 
 	Ptr<TypeTsysList>		resolvedTypes;	// only for Forward(Variable|Function)Declaration of which has a pending type
@@ -102,6 +115,7 @@ struct ParsingArguments
 {
 	Ptr<Symbol>				root;
 	Symbol*					context = nullptr;
+	Symbol*					funcSymbol = nullptr;
 	Ptr<ITsysAlloc>			tsys;
 	Ptr<IIndexRecorder>		recorder;
 

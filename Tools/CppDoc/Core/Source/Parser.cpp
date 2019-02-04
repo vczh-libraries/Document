@@ -29,6 +29,7 @@ ParsingArguments::ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr
 ParsingArguments::ParsingArguments(const ParsingArguments& pa, Symbol* _context)
 	:root(pa.root)
 	, context(_context)
+	, funcSymbol(pa.funcSymbol)
 	, tsys(pa.tsys)
 	, recorder(pa.recorder)
 {

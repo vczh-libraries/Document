@@ -558,6 +558,7 @@ void S::F2(double p){}
 	COMPILE_PROGRAM(program, pa, input);
 	{
 		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"M"][0]->children[L"$"][0].Obj());
+		spa.funcSymbol = spa.context->parent;
 		AssertExpr(L"this",						L"this",						L"::S * $PR",								spa);
 		AssertExpr(L"p",						L"p",							L"double $L",								spa);
 
@@ -599,6 +600,7 @@ void S::F2(double p){}
 	}
 	{
 		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"C"][0]->children[L"$"][0].Obj());
+		spa.funcSymbol = spa.context->parent;
 		AssertExpr(L"this",						L"this",						L"::S const * $PR",							spa);
 		AssertExpr(L"p",						L"p",							L"double $L",								spa);
 
@@ -640,6 +642,7 @@ void S::F2(double p){}
 	}
 	{
 		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"V"][0]->children[L"$"][0].Obj());
+		spa.funcSymbol = spa.context->parent;
 		AssertExpr(L"this",						L"this",						L"::S volatile * $PR",						spa);
 		AssertExpr(L"p",						L"p",							L"double $L",								spa);
 
@@ -681,6 +684,7 @@ void S::F2(double p){}
 	}
 	{
 		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"CV"][0]->children[L"$"][0].Obj());
+		spa.funcSymbol = spa.context->parent;
 		AssertExpr(L"this",						L"this",						L"::S const volatile * $PR",				spa);
 		AssertExpr(L"p",						L"p",							L"double $L",								spa);
 
@@ -722,6 +726,7 @@ void S::F2(double p){}
 	}
 	{
 		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"F"][0]->children[L"$"][0].Obj());
+		spa.funcSymbol = spa.context->parent;
 		AssertExpr(L"this",						L"this",						L"::S * $PR",								spa);
 		AssertExpr(L"p",						L"p",							L"double $L",								spa);
 
