@@ -164,14 +164,14 @@ enum class CppFieldAccessType
 	Arrow,			// ->
 };
 
-class FieldAccessExpr : public ResolvableExpr
+class FieldAccessExpr : public Expr
 {
 public:
 	IExprVisitor_ACCEPT;
 
 	CppFieldAccessType		type;
 	Ptr<Expr>				expr;
-	CppName					name;
+	Ptr<ResolvableExpr>		name;	// IdExpr or ChildExpr
 };
 
 class ArrayAccessExpr : public Expr

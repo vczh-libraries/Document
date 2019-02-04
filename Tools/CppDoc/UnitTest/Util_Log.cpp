@@ -205,7 +205,7 @@ public:
 		case CppFieldAccessType::Dot: writer.WriteString(L"."); break;
 		case CppFieldAccessType::Arrow: writer.WriteString(L"->"); break;
 		}
-		writer.WriteString(self->name.name);
+		Log(Ptr<Expr>(self->name), writer);
 	}
 
 	void Visit(ArrayAccessExpr* self)override

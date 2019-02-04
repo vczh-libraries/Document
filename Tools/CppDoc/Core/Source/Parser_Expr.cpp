@@ -328,6 +328,32 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 ParsePostfixUnaryExpr
 ***********************************************************************/
 
+Ptr<ResolvableExpr> ParseIdOrChildExprAfterFieldAccess(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	auto oldCursor = cursor;
+	try
+	{
+		auto type = ParseLongType(pa, cursor);
+		RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
+		if (auto childExpr = TryParseChildExpr(pa, type, cursor))
+		{
+			return childExpr;
+		}
+	}
+	catch (const StopParsingException&)
+	{
+	}
+	cursor = oldCursor;
+
+	auto idExpr = MakePtr<IdExpr>();
+	if (!ParseCppName(idExpr->name, cursor, false) && !ParseCppName(idExpr->name, cursor, true))
+	{
+		throw StopParsingException(cursor);
+	}
+	return idExpr;
+}
+
+
 Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	auto expr = ParsePrimitiveExpr(pa, cursor);
@@ -338,10 +364,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			auto newExpr = MakePtr<FieldAccessExpr>();
 			newExpr->type = CppFieldAccessType::Dot;
 			newExpr->expr = expr;
-			if (!ParseCppName(newExpr->name, cursor, false) && !ParseCppName(newExpr->name, cursor, true))
-			{
-				throw StopParsingException(cursor);
-			}
+			newExpr->name = ParseIdOrChildExprAfterFieldAccess(pa, cursor);
 			expr = newExpr;
 		}
 		else if (!TestToken(cursor, CppTokens::SUB, CppTokens::GT, CppTokens::MUL, false) && TestToken(cursor, CppTokens::SUB, CppTokens::GT))
@@ -349,10 +372,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			auto newExpr = MakePtr<FieldAccessExpr>();
 			newExpr->type = CppFieldAccessType::Arrow;
 			newExpr->expr = expr;
-			if (!ParseCppName(newExpr->name, cursor, false) && !ParseCppName(newExpr->name, cursor, true))
-			{
-				throw StopParsingException(cursor);
-			}
+			newExpr->name = ParseIdOrChildExprAfterFieldAccess(pa, cursor);
 			expr = newExpr;
 		}
 		else if (TestToken(cursor, CppTokens::LBRACKET))
