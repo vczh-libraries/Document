@@ -683,7 +683,26 @@ public:
 
 	void Visit(ThisExpr* self)override
 	{
-		throw 0;
+		auto context = pa.context;
+		Symbol* funcContext = nullptr;
+		while (context)
+		{
+			if (context->decls.Count() == 1)
+			{
+				if (auto funcDecl = context->decls[0].Cast<FunctionDeclaration>())
+				{
+					funcContext = context;
+				}
+				else if (auto classDecl = context->decls[0].Cast<ClassDeclaration>())
+				{
+					if (!funcContext) break;
+					AddTemp(result, pa.tsys->DeclOf(context)->PtrOf());
+					return;
+				}
+			}
+			context = context->parent;
+		}
+		throw IllegalExprException();
 	}
 
 	void Visit(NullptrExpr* self)override

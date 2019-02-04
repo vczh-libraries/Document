@@ -555,41 +555,41 @@ void S::F2(double p){}
 		AssertExpr(L"this",						L"this",						L"::S * $PR",							spa);
 		AssertExpr(L"p",						L"p",							L"double $L",							spa);
 
-		AssertExpr(L"f",						L"f",							L"int $L",								spa);
-		AssertExpr(L"S::f",						L"S :: f",						L"int $L",								spa);
-		AssertExpr(L"&f",						L"(& f)",						L"int * $PR",							spa);
-		AssertExpr(L"&S::f",					L"(& S :: f)",					L"int (::S ::) * $PR",					spa);
-		AssertExpr(L"this->f",					L"this->f",						L"int $L",								spa);
-		AssertExpr(L"this->S::f",				L"this->S :: f",				L"int $L",								spa);
-		AssertExpr(L"&this->f",					L"(& this->f)",					L"int * $PR",							spa);
-		AssertExpr(L"&this->S::f",				L"(& this->S :: f)",			L"int * $PR",							spa);
+		AssertExpr(L"f",						L"f",							L"__int32 $L",							spa);
+		AssertExpr(L"S::f",						L"S :: f",						L"__int32 $L",							spa);
+		AssertExpr(L"&f",						L"(& f)",						L"__int32 * $PR",						spa);
+		AssertExpr(L"&S::f",					L"(& S :: f)",					L"__int32 (::S ::) * $PR",				spa);
+		AssertExpr(L"this->f",					L"this->f",						L"__int32 $L",							spa);
+		AssertExpr(L"this->S::f",				L"this->S :: f",				L"__int32 $L",							spa);
+		AssertExpr(L"&this->f",					L"(& this->f)",					L"__int32 * $PR",						spa);
+		AssertExpr(L"&this->S::f",				L"(& this->S :: f)",			L"__int32 * $PR",						spa);
 
-		AssertExpr(L"r",						L"r",							L"int & $L",							spa);
-		AssertExpr(L"S::r",						L"S :: r",						L"int & $L",							spa);
-		AssertExpr(L"&r",						L"(& r)",						L"int * $PR",							spa);
-		AssertExpr(L"&S::r",					L"(& S :: r)",					L"int & (::S ::) * $PR",				spa);
-		AssertExpr(L"this->r",					L"this->r",						L"int & $L",							spa);
-		AssertExpr(L"this->S::r",				L"this->S :: r",				L"int & $L",							spa);
-		AssertExpr(L"&this->r",					L"(& this->r)",					L"int * $PR",							spa);
-		AssertExpr(L"&this->S::r",				L"(& this->S :: r)",			L"int * $PR",							spa);
+		AssertExpr(L"r",						L"r",							L"__int32 & $L",						spa);
+		AssertExpr(L"S::r",						L"S :: r",						L"__int32 & $L",						spa);
+		AssertExpr(L"&r",						L"(& r)",						L"__int32 * $PR",						spa);
+		AssertExpr(L"&S::r",					L"(& S :: r)",					L"__int32 & (::S ::) * $PR",			spa);
+		AssertExpr(L"this->r",					L"this->r",						L"__int32 & $L",						spa);
+		AssertExpr(L"this->S::r",				L"this->S :: r",				L"__int32 & $L",						spa);
+		AssertExpr(L"&this->r",					L"(& this->r)",					L"__int32 * $PR",						spa);
+		AssertExpr(L"&this->S::r",				L"(& this->S :: r)",			L"__int32 * $PR",						spa);
 
-		AssertExpr(L"c",						L"c",							L"int const $L",						spa);
-		AssertExpr(L"S::c",						L"S :: c",						L"int const $L",						spa);
-		AssertExpr(L"&c",						L"(& c)",						L"int const * $PR",						spa);
-		AssertExpr(L"&S::c",					L"(& S :: c)",					L"int const (::S ::) * $PR",			spa);
-		AssertExpr(L"this->c",					L"this->c",						L"int const $L",						spa);
-		AssertExpr(L"this->S::c",				L"this->S :: c",				L"int const $L",						spa);
-		AssertExpr(L"&this->c",					L"(& this->c)",					L"int const * $PR",						spa);
-		AssertExpr(L"&this->S::c",				L"(& this->S :: c)",			L"int const * $PR",						spa);
+		AssertExpr(L"c",						L"c",							L"__int32 const $L",					spa);
+		AssertExpr(L"S::c",						L"S :: c",						L"__int32 const $L",					spa);
+		AssertExpr(L"&c",						L"(& c)",						L"__int32 const * $PR",					spa);
+		AssertExpr(L"&S::c",					L"(& S :: c)",					L"__int32 const (::S ::) * $PR",		spa);
+		AssertExpr(L"this->c",					L"this->c",						L"__int32 const $L",					spa);
+		AssertExpr(L"this->S::c",				L"this->S :: c",				L"__int32 const $L",					spa);
+		AssertExpr(L"&this->c",					L"(& this->c)",					L"__int32 const * $PR",					spa);
+		AssertExpr(L"&this->S::c",				L"(& this->S :: c)",			L"__int32 const * $PR",					spa);
 
-		AssertExpr(L"s",						L"s",							L"int $L",								spa);
-		AssertExpr(L"S::s",						L"S :: s",						L"int $L",								spa);
-		AssertExpr(L"&s",						L"(& s)",						L"int * $PR",							spa);
-		AssertExpr(L"&S::s",					L"(& S :: s)",					L"int * $PR",							spa);
-		AssertExpr(L"this->s",					L"this->s",						L"int $L",								spa);
-		AssertExpr(L"this->S::s",				L"this->S :: s",				L"int $L",								spa);
-		AssertExpr(L"&this->s",					L"(& this->s)",					L"int * $PR",							spa);
-		AssertExpr(L"&this->S::s",				L"(& this->S :: s)",			L"int * $PR",							spa);
+		AssertExpr(L"s",						L"s",							L"__int32 $L",							spa);
+		AssertExpr(L"S::s",						L"S :: s",						L"__int32 $L",							spa);
+		AssertExpr(L"&s",						L"(& s)",						L"__int32 * $PR",						spa);
+		AssertExpr(L"&S::s",					L"(& S :: s)",					L"__int32 * $PR",						spa);
+		AssertExpr(L"this->s",					L"this->s",						L"__int32 $L",							spa);
+		AssertExpr(L"this->S::s",				L"this->S :: s",				L"__int32 $L",							spa);
+		AssertExpr(L"&this->s",					L"(& this->s)",					L"__int32 * $PR",						spa);
+		AssertExpr(L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR",						spa);
 	}
 	{
 		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"C"][0]->children[L"$"][0].Obj());
