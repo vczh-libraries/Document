@@ -199,7 +199,7 @@ public:
 						{
 							if (classScope)
 							{
-								AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope)->PtrOf() });
+								AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope) });
 							}
 							else
 							{
@@ -830,7 +830,7 @@ public:
 		{
 			for (vint i = 0; i < self->resolving->resolvedSymbols.Count(); i++)
 			{
-				VisitSymbol(pa, nullptr, self->resolving->resolvedSymbols[i], true, result);
+				VisitSymbol(pa, nullptr, self->resolving->resolvedSymbols[i], false, result);
 			}
 		}
 	}
@@ -1188,7 +1188,23 @@ public:
 	void Visit(PrefixUnaryExpr* self)override
 	{
 		ExprTsysList types;
+		if (self->op == CppPrefixUnaryOp::AddressOf)
+		{
+			if (auto childExpr = self->operand.Cast<ChildExpr>())
+			{
+				if (childExpr->resolving)
+				{
+					for (vint i = 0; i < childExpr->resolving->resolvedSymbols.Count(); i++)
+					{
+						VisitSymbol(pa, nullptr, childExpr->resolving->resolvedSymbols[i], true, types);
+					}
+				}
+				goto SKIP_RESOLVING_OPERAND;
+			}
+		}
 		ExprToTsys(pa, self->operand, types);
+
+	SKIP_RESOLVING_OPERAND:
 		for (vint i = 0; i < types.Count(); i++)
 		{
 			auto type = types[i].tsys;

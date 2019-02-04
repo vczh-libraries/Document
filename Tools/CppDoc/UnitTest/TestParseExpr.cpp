@@ -107,10 +107,11 @@ int z2(Z);
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
 			BEGIN_ASSERT_SYMBOL
-				ASSERT_SYMBOL(0, L"z1", 0, 0, VariableDeclaration, 30, 2)
+				ASSERT_SYMBOL(0, L"z1", 0, 1, VariableDeclaration, 30, 2)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"z1",			L"z1",					L"::c::Z $L",											pa);
+		AssertExpr(L" z1",			L"z1",						L"::c::Z $L",											pa);
+		AssertExpr(L"&z1",			L"(& z1)",					L"::c::Z * $PR",										pa);
 		TEST_ASSERT(accessed.Count() == 1);
 	}
 	{
@@ -118,10 +119,11 @@ int z2(Z);
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
 			BEGIN_ASSERT_SYMBOL
-				ASSERT_SYMBOL(0, L"z2", 0, 2, ForwardFunctionDeclaration, 31, 4)
+				ASSERT_SYMBOL(0, L"z2", 0, 3, ForwardFunctionDeclaration, 31, 4)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"::z2",			L"__root :: z2",		L"__int32 __cdecl(::c::Z) * $PR",						pa);
+		AssertExpr(L" ::z2",		L"__root :: z2",			L"__int32 __cdecl(::c::Z) * $PR",						pa);
+		AssertExpr(L"&::z2",		L"(& __root :: z2)",		L"__int32 __cdecl(::c::Z) * $PR",						pa);
 		TEST_ASSERT(accessed.Count() == 1);
 	}
 	{
@@ -129,11 +131,12 @@ int z2(Z);
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
 			BEGIN_ASSERT_SYMBOL
-				ASSERT_SYMBOL(0, L"Z", 0, 0, ClassDeclaration, 23, 8)
-				ASSERT_SYMBOL(1, L"u1", 0, 3, ForwardVariableDeclaration, 9, 11)
+				ASSERT_SYMBOL(0, L"Z", 0, 1, ClassDeclaration, 23, 8)
+				ASSERT_SYMBOL(1, L"u1", 0, 4, ForwardVariableDeclaration, 9, 11)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"Z::u1",		L"Z :: u1",				L"::a::X::Y $L",										pa);
+		AssertExpr(L" Z::u1",		L"Z :: u1",					L"::a::X::Y $L",										pa);
+		AssertExpr(L"&Z::u1",		L"(& Z :: u1)",				L"::a::X::Y * $PR",										pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -141,11 +144,12 @@ int z2(Z);
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
 			BEGIN_ASSERT_SYMBOL
-				ASSERT_SYMBOL(0, L"Z", 0, 2, ClassDeclaration, 23, 8)
-				ASSERT_SYMBOL(1, L"u2", 0, 5, VariableDeclaration, 10, 4)
+				ASSERT_SYMBOL(0, L"Z", 0, 3, ClassDeclaration, 23, 8)
+				ASSERT_SYMBOL(1, L"u2", 0, 6, VariableDeclaration, 10, 4)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"::Z::u2",		L"__root :: Z :: u2",	L"::a::X::Y (::a::X ::) * $PR",					pa);
+		AssertExpr(L" ::Z::u2",		L"__root :: Z :: u2",		L"::a::X::Y $L",										pa);
+		AssertExpr(L"&::Z::u2",		L"(& __root :: Z :: u2)",	L"::a::X::Y (::a::X ::) * $PR",							pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -153,11 +157,12 @@ int z2(Z);
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
 			BEGIN_ASSERT_SYMBOL
-				ASSERT_SYMBOL(0, L"Z", 0, 0, ClassDeclaration, 23, 8)
-				ASSERT_SYMBOL(1, L"v1", 0, 3, FunctionDeclaration, 11, 13)
+				ASSERT_SYMBOL(0, L"Z", 0, 1, ClassDeclaration, 23, 8)
+				ASSERT_SYMBOL(1, L"v1", 0, 4, FunctionDeclaration, 11, 13)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"Z::v1",		L"Z :: v1",				L"__int32 __cdecl(::a::X::Y &) * $PR",					pa);
+		AssertExpr(L" Z::v1",		L"Z :: v1",					L"__int32 __cdecl(::a::X::Y &) * $PR",					pa);
+		AssertExpr(L"&Z::v1",		L"(& Z :: v1)",				L"__int32 __cdecl(::a::X::Y &) * $PR",					pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -165,11 +170,12 @@ int z2(Z);
 		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 		{
 			BEGIN_ASSERT_SYMBOL
-				ASSERT_SYMBOL(0, L"Z", 0, 2, ClassDeclaration, 23, 8)
-				ASSERT_SYMBOL(1, L"v2", 0, 5, FunctionDeclaration, 12, 6)
+				ASSERT_SYMBOL(0, L"Z", 0, 3, ClassDeclaration, 23, 8)
+				ASSERT_SYMBOL(1, L"v2", 0, 6, FunctionDeclaration, 12, 6)
 			END_ASSERT_SYMBOL
 		});
-		AssertExpr(L"::Z::v2",		L"__root :: Z :: v2",	L"__int32 __thiscall(::a::X::Y &) (::a::X ::) * $PR",	pa);
+		AssertExpr(L" ::Z::v2",		L"__root :: Z :: v2",		L"__int32 __thiscall(::a::X::Y &) * $PR",				pa);
+		AssertExpr(L"&::Z::v2",		L"(& __root :: Z :: v2)",	L"__int32 __thiscall(::a::X::Y &) (::a::X ::) * $PR",	pa);
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 }
@@ -472,9 +478,9 @@ decltype(&E)	_E3[1] = &E;
 	COMPILE_PROGRAM(program, pa, input);
 
 	AssertExpr(L"Y::A",			L"Y :: A",				L"__int32 $L",									pa);
-	AssertExpr(L"Y::B",			L"Y :: B",				L"__int32 (::X ::) * $PR",						pa);
+	AssertExpr(L"Y::B",			L"Y :: B",				L"__int32 $L",									pa);
 	AssertExpr(L"Y::C",			L"Y :: C",				L"__int32 __cdecl() * $PR",						pa);
-	AssertExpr(L"Y::D",			L"Y :: D",				L"__int32 __thiscall() (::X ::) * $PR",			pa);
+	AssertExpr(L"Y::D",			L"Y :: D",				L"__int32 __thiscall() * $PR",					pa);
 	AssertExpr(L"E",			L"E",					L"__int32 __cdecl() * $PR",						pa);
 
 	AssertExpr(L"&Y::A",		L"(& Y :: A)",			L"__int32 * $PR",								pa);
