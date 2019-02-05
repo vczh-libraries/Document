@@ -457,7 +457,7 @@ struct Z
 	Y operator[](int);
 
 	void M(){}
-	void M2(){}
+	void C()const{}
 };
 )";
 	COMPILE_PROGRAM(program, pa, input);
@@ -469,20 +469,20 @@ struct Z
 		AssertExpr(L"operator->()",				L"operator ->()",				L"::Y const * $PR",		spa);
 		AssertExpr(L"operator()(0)",			L"operator ()(0)",				L"::Y $PR",				spa);
 		AssertExpr(L"operator[](0)",			L"operator [](0)",				L"::Y $PR",				spa);
-		AssertExpr(L"this->x",					L"this->x",						L"double const $L",		spa);
-		AssertExpr(L"(*this)(0)",				L"(* this)(0)",					L"::Y $PR",				spa);
-		AssertExpr(L"(*this)[0]",				L"(* this)[0]",					L"::Y $PR",				spa);
+		AssertExpr(L"(*this)->x",				L"((* this))->x",				L"double const $L",		spa);
+		AssertExpr(L"(*this)(0)",				L"((* this))(0)",				L"::Y $PR",				spa);
+		AssertExpr(L"(*this)[0]",				L"((* this))[0]",				L"::Y $PR",				spa);
 	}
 	{
-		ParsingArguments spa(pa, pa.context->children[L"Z"][0]->children[L"M2"][0]->children[L"$"][0].Obj());
+		ParsingArguments spa(pa, pa.context->children[L"Z"][0]->children[L"C"][0]->children[L"$"][0].Obj());
 		spa.funcSymbol = spa.context->parent;
 
 		AssertExpr(L"operator->()",				L"operator ->()",				L"::X * $PR",			spa);
 		AssertExpr(L"operator()(0)",			L"operator ()(0)",				L"::X $PR",				spa);
 		AssertExpr(L"operator[](0)",			L"operator [](0)",				L"::X $PR",				spa);
-		AssertExpr(L"this->x",					L"this->x",						L"__int32 $L",			spa);
-		AssertExpr(L"(*this)(0)",				L"(* this)(0)",					L"::X $PR",				spa);
-		AssertExpr(L"(*this)[0]",				L"(* this)[0]",					L"::X $PR",				spa);
+		AssertExpr(L"(*this)->x",				L"((* this))->x",				L"__int32 $L",			spa);
+		AssertExpr(L"(*this)(0)",				L"((* this))(0)",				L"::X $PR",				spa);
+		AssertExpr(L"(*this)[0]",				L"((* this))[0]",				L"::X $PR",				spa);
 	}
 }
 
