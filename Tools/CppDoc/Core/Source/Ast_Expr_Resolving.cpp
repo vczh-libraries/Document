@@ -99,7 +99,7 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	Calculate*FieldType: Given thisItem, fill the field type fo ExprTsysList
+	CalculateValueFieldType: Given thisItem, fill the field type fo ExprTsysList
 		Value: t.f
 		Ptr: t->f
 	***********************************************************************/
@@ -135,23 +135,6 @@ namespace symbol_type_resolving
 		else
 		{
 			AddInternal(result, { symbol,thisItem->type,type });
-		}
-	}
-
-	void CalculatePtrFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, bool forFieldDeref, ExprTsysList& result)
-	{
-		TsysCV cv;
-		TsysRefType refType;
-		auto thisType = thisItem->tsys->GetEntity(cv, refType);
-
-		if (thisType->GetType() == TsysType::Ptr)
-		{
-			ExprTsysItem derefThisType(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
-			CalculateValueFieldType(&derefThisType, symbol, fieldType, forFieldDeref, result);
-		}
-		else
-		{
-			CalculateValueFieldType(thisItem, symbol, fieldType, forFieldDeref, result);
 		}
 	}
 
@@ -478,19 +461,16 @@ namespace symbol_type_resolving
 				}
 			}
 
-			VisitSymbol(pa, nullptr, resolving->resolvedSymbols[i], false, *targetTypeList);
+			VisitSymbol(pa, (targetTypeList == &result ? nullptr : thisItem), resolving->resolvedSymbols[i], false, *targetTypeList);
 		}
 
 		if (thisItem)
 		{
-			for (vint i = 0; i < varTypes.Count(); i++)
-			{
-				CalculatePtrFieldType(thisItem, varTypes[i].symbol, varTypes[i].tsys, false, result);
-			}
+			AddInternal(result, varTypes);
 
 			TsysCV thisCv;
 			TsysRefType thisRef;
-			thisItem->tsys->GetEntity(thisCv, thisRef)->GetEntity(thisCv, thisRef);
+			thisItem->tsys->GetEntity(thisCv, thisRef);
 			FilterFieldsAndBestQualifiedFunctions(thisCv, thisRef, funcTypes);
 			AddInternal(result, funcTypes);
 		}
@@ -513,12 +493,7 @@ namespace symbol_type_resolving
 
 		if (auto resolving = FindMembersByName(pa, name, &totalRar, parentItem))
 		{
-			for (vint j = 0; j < resolving->resolvedSymbols.Count(); j++)
-			{
-				auto symbol = resolving->resolvedSymbols[j];
-				VisitSymbol(pa, &parentItem, symbol, false, result);
-			}
-			FilterFieldsAndBestQualifiedFunctions(cv, refType, result);
+			VisitResolvedMember(pa, &parentItem, resolving, result);
 		}
 	}
 

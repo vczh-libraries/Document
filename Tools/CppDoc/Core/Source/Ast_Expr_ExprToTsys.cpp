@@ -263,7 +263,10 @@ public:
 		{
 			if (pa.funcSymbol && pa.funcSymbol->methodCache)
 			{
-				ExprTsysItem thisItem(nullptr, ExprTsysType::PRValue, pa.funcSymbol->methodCache->thisType);
+				TsysCV thisCv;
+				TsysRefType thisRef;
+				auto thisType = pa.funcSymbol->methodCache->thisType->GetEntity(thisCv, thisRef);
+				ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
 				VisitResolvedMember(pa, &thisItem, self->resolving, result);
 			}
 			else
@@ -763,14 +766,12 @@ public:
 						}
 						else
 						{
-							if (self->op == CppBinaryOp::PtrFieldDeref)
+							ExprTsysItem parentItem = leftTypes[i];
+							if (self->op == CppBinaryOp::PtrFieldDeref && leftEntity->GetType() == TsysType::Ptr)
 							{
-								CalculatePtrFieldType(&leftTypes[i], nullptr, fieldEntity, true, result);
+								parentItem = { nullptr,ExprTsysType::LValue,leftEntity->GetElement()->LRefOf() };
 							}
-							else
-							{
-								CalculateValueFieldType(&leftTypes[i], nullptr, fieldEntity, true, result);
-							}
+							CalculateValueFieldType(&parentItem, nullptr, fieldEntity, true, result);
 						}
 					}
 					continue;
