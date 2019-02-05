@@ -1,399 +1,29 @@
 #include "Util.h"
 
-TEST_DECL_(
+#include "TestOverloadingOperator_Input1.h"
+#include "TestOverloadingOperator_Input2.h"
+#include "TestOverloadingOperator_Input3.h"
+#include "TestOverloadingOperator_Input4.h"
 
-namespace a
+WString LoadOverloadingOperatorCode()
 {
-	struct X
-	{
-		void* operator++	(int);
-		void* operator--	(int);
-		void* operator++	();
-		void* operator--	();
-		void* operator~		();
-		void* operator!		();
-		void* operator-		();
-		void* operator+		();
-		void* operator&		();
-		void* operator*		();
-		void* operator*		(int);
-		void* operator/		(int);
-		void* operator%		(int);
-		void* operator+		(int);
-		void* operator-		(int);
-		void* operator<<	(int);
-		void* operator>>	(int);
-		void* operator==	(int);
-		void* operator!=	(int);
-		void* operator<		(int);
-		void* operator<=	(int);
-		void* operator>		(int);
-		void* operator>=	(int);
-		void* operator&		(int);
-		void* operator|		(int);
-		void* operator^		(int);
-		void* operator&&	(int);
-		void* operator||	(int);
-		void* operator=		(int);
-		void* operator*=	(int);
-		void* operator/=	(int);
-		void* operator%=	(int);
-		void* operator+=	(int);
-		void* operator-=	(int);
-		void* operator<<=	(int);
-		void* operator>>=	(int);
-		void* operator&=	(int);
-		void* operator|=	(int);
-		void* operator^=	(int);
+	FilePath input1 = L"../UnitTest/TestOverloadingOperator_Input1.h";
+	FilePath input2 = L"../UnitTest/TestOverloadingOperator_Input2.h";
+	FilePath input3 = L"../UnitTest/TestOverloadingOperator_Input3.h";
+	FilePath input4 = L"../UnitTest/TestOverloadingOperator_Input4.h";
 
-		bool* operator++	(int)const;
-		bool* operator--	(int)const;
-		bool* operator++	()const;
-		bool* operator--	()const;
-		bool* operator~		()const;
-		bool* operator!		()const;
-		bool* operator-		()const;
-		bool* operator+		()const;
-		bool* operator&		()const;
-		bool* operator*		()const;
-		bool* operator*		(int)const;
-		bool* operator/		(int)const;
-		bool* operator%		(int)const;
-		bool* operator+		(int)const;
-		bool* operator-		(int)const;
-		bool* operator<<	(int)const;
-		bool* operator>>	(int)const;
-		bool* operator==	(int)const;
-		bool* operator!=	(int)const;
-		bool* operator<		(int)const;
-		bool* operator<=	(int)const;
-		bool* operator>		(int)const;
-		bool* operator>=	(int)const;
-		bool* operator&		(int)const;
-		bool* operator|		(int)const;
-		bool* operator^		(int)const;
-		bool* operator&&	(int)const;
-		bool* operator||	(int)const;
-		bool* operator=		(int)const;
-		bool* operator*=	(int)const;
-		bool* operator/=	(int)const;
-		bool* operator%=	(int)const;
-		bool* operator+=	(int)const;
-		bool* operator-=	(int)const;
-		bool* operator<<=	(int)const;
-		bool* operator>>=	(int)const;
-		bool* operator&=	(int)const;
-		bool* operator|=	(int)const;
-		bool* operator^=	(int)const;
-	};
+	WString code1, code2, code3, code4;
+	TEST_ASSERT(File(input1).ReadAllTextByBom(code1));
+	TEST_ASSERT(File(input2).ReadAllTextByBom(code2));
+	TEST_ASSERT(File(input3).ReadAllTextByBom(code3));
+	TEST_ASSERT(File(input4).ReadAllTextByBom(code4));
+
+	return code1 + L"\r\n" + code2 + L"\r\n" + code3 + L"\r\n" + code4;
 }
-
-, op_input_1);
-
-TEST_DECL_(
-
-namespace a
-{
-	struct Y
-	{
-	};
-	void* operator++		(Y&, int);
-	void* operator--		(Y&, int);
-	void* operator++		(Y&);
-	void* operator--		(Y&);
-	void* operator~			(Y&);
-	void* operator!			(Y&);
-	void* operator-			(Y&);
-	void* operator+			(Y&);
-	void* operator&			(Y&);
-	void* operator*			(Y&);
-	void* operator*			(Y&, int);
-	void* operator/			(Y&, int);
-	void* operator%			(Y&, int);
-	void* operator+			(Y&, int);
-	void* operator-			(Y&, int);
-	void* operator<<		(Y&, int);
-	void* operator>>		(Y&, int);
-	void* operator==		(Y&, int);
-	void* operator!=		(Y&, int);
-	void* operator<			(Y&, int);
-	void* operator<=		(Y&, int);
-	void* operator>			(Y&, int);
-	void* operator>=		(Y&, int);
-	void* operator&			(Y&, int);
-	void* operator|			(Y&, int);
-	void* operator^			(Y&, int);
-	void* operator&&		(Y&, int);
-	void* operator||		(Y&, int);
-	void* operator*=		(Y&, int);
-	void* operator/=		(Y&, int);
-	void* operator%=		(Y&, int);
-	void* operator+=		(Y&, int);
-	void* operator-=		(Y&, int);
-	void* operator<<=		(Y&, int);
-	void* operator>>=		(Y&, int);
-	void* operator&=		(Y&, int);
-	void* operator|=		(Y&, int);
-	void* operator^=		(Y&, int);
-	void* operator*			(int, Y&);
-	void* operator/			(int, Y&);
-	void* operator%			(int, Y&);
-	void* operator+			(int, Y&);
-	void* operator-			(int, Y&);
-	void* operator<<		(int, Y&);
-	void* operator>>		(int, Y&);
-	void* operator==		(int, Y&);
-	void* operator!=		(int, Y&);
-	void* operator<			(int, Y&);
-	void* operator<=		(int, Y&);
-	void* operator>			(int, Y&);
-	void* operator>=		(int, Y&);
-	void* operator&			(int, Y&);
-	void* operator|			(int, Y&);
-	void* operator^			(int, Y&);
-	void* operator&&		(int, Y&);
-	void* operator||		(int, Y&);
-	void* operator*=		(int, Y&);
-	void* operator/=		(int, Y&);
-	void* operator%=		(int, Y&);
-	void* operator+=		(int, Y&);
-	void* operator-=		(int, Y&);
-	void* operator<<=		(int, Y&);
-	void* operator>>=		(int, Y&);
-	void* operator&=		(int, Y&);
-	void* operator|=		(int, Y&);
-	void* operator^=		(int, Y&);
-
-	bool* operator++		(const Y&, int);
-	bool* operator--		(const Y&, int);
-	bool* operator++		(const Y&);
-	bool* operator--		(const Y&);
-	bool* operator~			(const Y&);
-	bool* operator!			(const Y&);
-	bool* operator-			(const Y&);
-	bool* operator+			(const Y&);
-	bool* operator&			(const Y&);
-	bool* operator*			(const Y&);
-	bool* operator*			(const Y&, int);
-	bool* operator/			(const Y&, int);
-	bool* operator%			(const Y&, int);
-	bool* operator+			(const Y&, int);
-	bool* operator-			(const Y&, int);
-	bool* operator<<		(const Y&, int);
-	bool* operator>>		(const Y&, int);
-	bool* operator==		(const Y&, int);
-	bool* operator!=		(const Y&, int);
-	bool* operator<			(const Y&, int);
-	bool* operator<=		(const Y&, int);
-	bool* operator>			(const Y&, int);
-	bool* operator>=		(const Y&, int);
-	bool* operator&			(const Y&, int);
-	bool* operator|			(const Y&, int);
-	bool* operator^			(const Y&, int);
-	bool* operator&&		(const Y&, int);
-	bool* operator||		(const Y&, int);
-	bool* operator*=		(const Y&, int);
-	bool* operator/=		(const Y&, int);
-	bool* operator%=		(const Y&, int);
-	bool* operator+=		(const Y&, int);
-	bool* operator-=		(const Y&, int);
-	bool* operator<<=		(const Y&, int);
-	bool* operator>>=		(const Y&, int);
-	bool* operator&=		(const Y&, int);
-	bool* operator|=		(const Y&, int);
-	bool* operator^=		(const Y&, int);
-	bool* operator*			(int, const Y&);
-	bool* operator/			(int, const Y&);
-	bool* operator%			(int, const Y&);
-	bool* operator+			(int, const Y&);
-	bool* operator-			(int, const Y&);
-	bool* operator<<		(int, const Y&);
-	bool* operator>>		(int, const Y&);
-	bool* operator==		(int, const Y&);
-	bool* operator!=		(int, const Y&);
-	bool* operator<			(int, const Y&);
-	bool* operator<=		(int, const Y&);
-	bool* operator>			(int, const Y&);
-	bool* operator>=		(int, const Y&);
-	bool* operator&			(int, const Y&);
-	bool* operator|			(int, const Y&);
-	bool* operator^			(int, const Y&);
-	bool* operator&&		(int, const Y&);
-	bool* operator||		(int, const Y&);
-	bool* operator*=		(int, const Y&);
-	bool* operator/=		(int, const Y&);
-	bool* operator%=		(int, const Y&);
-	bool* operator+=		(int, const Y&);
-	bool* operator-=		(int, const Y&);
-	bool* operator<<=		(int, const Y&);
-	bool* operator>>=		(int, const Y&);
-	bool* operator&=		(int, const Y&);
-	bool* operator|=		(int, const Y&);
-	bool* operator^=		(int, const Y&);
-}
-
-, op_input_2);
-
-TEST_DECL_(
-
-namespace a
-{
-	struct Z
-	{
-	};
-}
-void* operator++			(a::Z&, int);
-void* operator--			(a::Z&, int);
-void* operator++			(a::Z&);
-void* operator--			(a::Z&);
-void* operator~				(a::Z&);
-void* operator!				(a::Z&);
-void* operator-				(a::Z&);
-void* operator+				(a::Z&);
-void* operator&				(a::Z&);
-void* operator*				(a::Z&);
-void* operator*				(a::Z&, int);
-void* operator/				(a::Z&, int);
-void* operator%				(a::Z&, int);
-void* operator+				(a::Z&, int);
-void* operator-				(a::Z&, int);
-void* operator<<			(a::Z&, int);
-void* operator>>			(a::Z&, int);
-void* operator==			(a::Z&, int);
-void* operator!=			(a::Z&, int);
-void* operator<				(a::Z&, int);
-void* operator<=			(a::Z&, int);
-void* operator>				(a::Z&, int);
-void* operator>=			(a::Z&, int);
-void* operator&				(a::Z&, int);
-void* operator|				(a::Z&, int);
-void* operator^				(a::Z&, int);
-void* operator&&			(a::Z&, int);
-void* operator||			(a::Z&, int);
-void* operator*=			(a::Z&, int);
-void* operator/=			(a::Z&, int);
-void* operator%=			(a::Z&, int);
-void* operator+=			(a::Z&, int);
-void* operator-=			(a::Z&, int);
-void* operator<<=			(a::Z&, int);
-void* operator>>=			(a::Z&, int);
-void* operator&=			(a::Z&, int);
-void* operator|=			(a::Z&, int);
-void* operator^=			(a::Z&, int);
-void* operator*				(int, a::Z&);
-void* operator/				(int, a::Z&);
-void* operator%				(int, a::Z&);
-void* operator+				(int, a::Z&);
-void* operator-				(int, a::Z&);
-void* operator<<			(int, a::Z&);
-void* operator>>			(int, a::Z&);
-void* operator==			(int, a::Z&);
-void* operator!=			(int, a::Z&);
-void* operator<				(int, a::Z&);
-void* operator<=			(int, a::Z&);
-void* operator>				(int, a::Z&);
-void* operator>=			(int, a::Z&);
-void* operator&				(int, a::Z&);
-void* operator|				(int, a::Z&);
-void* operator^				(int, a::Z&);
-void* operator&&			(int, a::Z&);
-void* operator||			(int, a::Z&);
-void* operator*=			(int, a::Z&);
-void* operator/=			(int, a::Z&);
-void* operator%=			(int, a::Z&);
-void* operator+=			(int, a::Z&);
-void* operator-=			(int, a::Z&);
-void* operator<<=			(int, a::Z&);
-void* operator>>=			(int, a::Z&);
-void* operator&=			(int, a::Z&);
-void* operator|=			(int, a::Z&);
-void* operator^=			(int, a::Z&);
-
-bool* operator++			(const a::Z&, int);
-bool* operator--			(const a::Z&, int);
-bool* operator++			(const a::Z&);
-bool* operator--			(const a::Z&);
-bool* operator~				(const a::Z&);
-bool* operator!				(const a::Z&);
-bool* operator-				(const a::Z&);
-bool* operator+				(const a::Z&);
-bool* operator&				(const a::Z&);
-bool* operator*				(const a::Z&);
-bool* operator*				(const a::Z&, int);
-bool* operator/				(const a::Z&, int);
-bool* operator%				(const a::Z&, int);
-bool* operator+				(const a::Z&, int);
-bool* operator-				(const a::Z&, int);
-bool* operator<<			(const a::Z&, int);
-bool* operator>>			(const a::Z&, int);
-bool* operator==			(const a::Z&, int);
-bool* operator!=			(const a::Z&, int);
-bool* operator<				(const a::Z&, int);
-bool* operator<=			(const a::Z&, int);
-bool* operator>				(const a::Z&, int);
-bool* operator>=			(const a::Z&, int);
-bool* operator&				(const a::Z&, int);
-bool* operator|				(const a::Z&, int);
-bool* operator^				(const a::Z&, int);
-bool* operator&&			(const a::Z&, int);
-bool* operator||			(const a::Z&, int);
-bool* operator*=			(const a::Z&, int);
-bool* operator/=			(const a::Z&, int);
-bool* operator%=			(const a::Z&, int);
-bool* operator+=			(const a::Z&, int);
-bool* operator-=			(const a::Z&, int);
-bool* operator<<=			(const a::Z&, int);
-bool* operator>>=			(const a::Z&, int);
-bool* operator&=			(const a::Z&, int);
-bool* operator|=			(const a::Z&, int);
-bool* operator^=			(const a::Z&, int);
-bool* operator*				(int, const a::Z&);
-bool* operator/				(int, const a::Z&);
-bool* operator%				(int, const a::Z&);
-bool* operator+				(int, const a::Z&);
-bool* operator-				(int, const a::Z&);
-bool* operator<<			(int, const a::Z&);
-bool* operator>>			(int, const a::Z&);
-bool* operator==			(int, const a::Z&);
-bool* operator!=			(int, const a::Z&);
-bool* operator<				(int, const a::Z&);
-bool* operator<=			(int, const a::Z&);
-bool* operator>				(int, const a::Z&);
-bool* operator>=			(int, const a::Z&);
-bool* operator&				(int, const a::Z&);
-bool* operator|				(int, const a::Z&);
-bool* operator^				(int, const a::Z&);
-bool* operator&&			(int, const a::Z&);
-bool* operator||			(int, const a::Z&);
-bool* operator*=			(int, const a::Z&);
-bool* operator/=			(int, const a::Z&);
-bool* operator%=			(int, const a::Z&);
-bool* operator+=			(int, const a::Z&);
-bool* operator-=			(int, const a::Z&);
-bool* operator<<=			(int, const a::Z&);
-bool* operator>>=			(int, const a::Z&);
-bool* operator&=			(int, const a::Z&);
-bool* operator|=			(int, const a::Z&);
-bool* operator^=			(int, const a::Z&);
-
-, op_input_3);
-
-TEST_DECL_(
-
-extern a::X x;
-extern a::Y y;
-extern a::Z z;
-
-extern const a::X cx;
-extern const a::Y cy;
-extern const a::Z cz;
-
-, op_input_4);
 
 TEST_CASE(TestParseExpr_Overloading_PostfixUnary)
 {
-	WString op_input = WString(op_input_1) + op_input_2 + op_input_3 + op_input_4;
-	COMPILE_PROGRAM(program, pa, op_input.Buffer());
+	COMPILE_PROGRAM(program, pa, LoadOverloadingOperatorCode().Buffer());
 
 	ASSERT_OVERLOADING(x++,									L"(x ++)",								void *);
 	ASSERT_OVERLOADING(x--,									L"(x --)",								void *);
@@ -412,8 +42,7 @@ TEST_CASE(TestParseExpr_Overloading_PostfixUnary)
 
 TEST_CASE(TestParseExpr_Overloading_PrefixUnary)
 {
-	WString op_input = WString(op_input_1) + op_input_2 + op_input_3 + op_input_4;
-	COMPILE_PROGRAM(program, pa, op_input.Buffer());
+	COMPILE_PROGRAM(program, pa, LoadOverloadingOperatorCode().Buffer());
 
 	ASSERT_OVERLOADING(++x,									L"(++ x)",								void *);
 	ASSERT_OVERLOADING(--x,									L"(-- x)",								void *);
@@ -472,8 +101,7 @@ TEST_CASE(TestParseExpr_Overloading_PrefixUnary)
 
 TEST_CASE(TestParseExpr_Overloading_Binary)
 {
-	WString op_input = WString(op_input_1) + op_input_2 + op_input_3 + op_input_4;
-	COMPILE_PROGRAM(program, pa, op_input.Buffer());
+	COMPILE_PROGRAM(program, pa, LoadOverloadingOperatorCode().Buffer());
 
 	ASSERT_OVERLOADING(x* 0,								L"(x * 0)",								void *);
 	ASSERT_OVERLOADING(x/ 0,								L"(x / 0)",								void *);

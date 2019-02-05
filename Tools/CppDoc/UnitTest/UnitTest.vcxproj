@@ -167,6 +167,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TestOverloadingOperator_Input1.h" />
+    <ClInclude Include="TestOverloadingOperator_Input2.h" />
+    <ClInclude Include="TestOverloadingOperator_Input3.h" />
+    <ClInclude Include="TestOverloadingOperator_Input4.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
