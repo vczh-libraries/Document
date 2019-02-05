@@ -20,16 +20,13 @@ namespace symbol_type_resolving
 	extern void				VisitNormalField(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, const ExprTsysItem& parentItem, ExprTsysList& result);
 	extern TsysConv			TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, const ExprTsysItem& funcType);
 
-	extern TsysConv			FindMinConv(ArrayBase<TsysConv>& funcChoices);
-	extern void				FilterFunctionByConv(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices);
 	extern void				FilterFunctionByQualifier(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes);
-
 	extern void				FindQualifiedFunctions(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp);
 	extern void				VisitOverloadedFunction(ParsingArguments& pa, ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result);
 
 	extern void				VisitDirectField(ParsingArguments& pa, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, CppName& name, ExprTsysList& result);
 	extern void				VisitResolvedMember(ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result);
 
-	extern void				Promote(TsysPrimitive& primitive);;
+	extern void				Promote(TsysPrimitive& primitive);
 	extern TsysPrimitive	ArithmeticConversion(TsysPrimitive leftP, TsysPrimitive rightP);
 }

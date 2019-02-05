@@ -577,6 +577,10 @@ namespace symbol_type_resolving
 		AddInternal(result, fieldResult);
 	}
 
+	/***********************************************************************
+	VisitResolvedMember: Fill all resolved member symbol to ExprTsysList
+	***********************************************************************/
+
 	void VisitResolvedMember(ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result)
 	{
 		ExprTsysList varTypes, funcTypes;
@@ -628,6 +632,10 @@ namespace symbol_type_resolving
 		}
 	}
 
+	/***********************************************************************
+	Promote: Integer promition
+	***********************************************************************/
+
 	void Promote(TsysPrimitive& primitive)
 	{
 		switch (primitive.type)
@@ -655,6 +663,10 @@ namespace symbol_type_resolving
 			break;
 		}
 	}
+
+	/***********************************************************************
+	ArithmeticConversion: Calculate the result type from two given primitive type
+	***********************************************************************/
 
 	bool FullyContain(TsysPrimitive large, TsysPrimitive small)
 	{
