@@ -72,6 +72,9 @@
     <ClInclude Include="Source\LexerTokenDef.h">
       <Filter>Source Files\Lexer</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Ast_Expr_Resolving.h">
+      <Filter>Source Files\Ast\Expr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Import\Vlpp.cpp">
@@ -124,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="Source\TypeSystem_TestConvert.cpp">
       <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_Expr_Resolving.cpp">
+      <Filter>Source Files\Ast\Expr</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
