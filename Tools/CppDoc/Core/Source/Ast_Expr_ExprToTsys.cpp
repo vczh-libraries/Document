@@ -117,6 +117,55 @@ public:
 	}
 
 	/***********************************************************************
+	Calculate*FieldType: Given thisItem, fill the field type fo ExprTsysList
+		Value: t.f
+		Ptr: t->f
+	***********************************************************************/
+
+	static void CalculateValueFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, ExprTsysList& result)
+	{
+		TsysCV cv;
+		TsysRefType refType;
+		thisItem->tsys->GetEntity(cv, refType);
+		if (refType == TsysRefType::LRef)
+		{
+			AddInternal(result, { symbol,ExprTsysType::LValue,fieldType->CVOf(cv) });
+		}
+		else if (refType == TsysRefType::RRef)
+		{
+			if (thisItem->type == ExprTsysType::LValue)
+			{
+				AddInternal(result, { symbol,ExprTsysType::LValue,fieldType->CVOf(cv) });
+			}
+			else
+			{
+				AddInternal(result, { symbol,ExprTsysType::XValue,fieldType->CVOf(cv)->RRefOf() });
+			}
+		}
+		else
+		{
+			AddInternal(result, { symbol,thisItem->type,fieldType->CVOf(cv) });
+		}
+	}
+
+	static void CalculatePtrFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, ExprTsysList& result)
+	{
+		TsysCV cv;
+		TsysRefType refType;
+		auto thisType = thisItem->tsys->GetEntity(cv, refType);
+
+		if (thisType->GetType() == TsysType::Ptr)
+		{
+			ExprTsysItem derefThisType(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
+			CalculateValueFieldType(&derefThisType, symbol, fieldType, result);
+		}
+		else
+		{
+			CalculateValueFieldType(thisItem, symbol, fieldType, result);
+		}
+	}
+
+	/***********************************************************************
 	VisitSymbol: Fill a symbol to ExprTsysList
 		thisItem: When afterScope==false
 			it represents typeof(x) in x.name or typeof(&x) in x->name
@@ -210,28 +259,7 @@ public:
 						{
 							if (thisItem)
 							{
-								TsysCV cv;
-								TsysRefType refType;
-								thisItem->tsys->GetEntity(cv, refType);
-								if (refType == TsysRefType::LRef)
-								{
-									AddInternal(result, { symbol,ExprTsysType::LValue,tsys->CVOf(cv) });
-								}
-								else if (refType == TsysRefType::RRef)
-								{
-									if (thisItem->type == ExprTsysType::LValue)
-									{
-										AddInternal(result, { symbol,ExprTsysType::LValue,tsys->CVOf(cv) });
-									}
-									else
-									{
-										AddInternal(result, { symbol,ExprTsysType::XValue,tsys->CVOf(cv)->RRefOf() });
-									}
-								}
-								else
-								{
-									AddInternal(result, { symbol,thisItem->type,tsys->CVOf(cv) });
-								}
+								CalculateValueFieldType(thisItem, symbol, tsys, result);
 							}
 							else
 							{
@@ -1422,25 +1450,13 @@ public:
 						}
 						else
 						{
-							auto cv = leftCV;
-							auto refType = leftRefType;
-
 							if (self->op == CppBinaryOp::PtrFieldDeref)
 							{
-								if (leftEntity->GetType() == TsysType::Ptr)
-								{
-									leftEntity->GetElement()->GetEntity(cv, refType);
-								}
-							}
-							fieldEntity = fieldEntity->CVOf(cv);
-
-							if (refType == TsysRefType::RRef)
-							{
-								AddTemp(result, fieldEntity->CVOf(cv)->RRefOf());
+								CalculatePtrFieldType(&leftTypes[i], nullptr, fieldEntity, result);
 							}
 							else
 							{
-								AddTemp(result, fieldEntity->CVOf(cv)->LRefOf());
+								CalculateValueFieldType(&leftTypes[i], nullptr, fieldEntity, result);
 							}
 						}
 					}
