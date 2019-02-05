@@ -13,8 +13,8 @@ namespace symbol_type_resolving
 	extern bool				AddTemp(ExprTsysList& list, ITsys* tsys);
 	extern void				AddTemp(ExprTsysList& list, TypeTsysList& items);
 
-	extern void				CalculateValueFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, ExprTsysList& result);
-	extern void				CalculatePtrFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, ExprTsysList& result);
+	extern void				CalculateValueFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, bool forFieldDeref, ExprTsysList& result);
+	extern void				CalculatePtrFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, bool forFieldDeref, ExprTsysList& result);
 
 	extern void				VisitSymbol(ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result);
 	extern void				FindMembersByName(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, const ExprTsysItem& parentItem, ExprTsysList& result);

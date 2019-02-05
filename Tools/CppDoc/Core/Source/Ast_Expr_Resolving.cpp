@@ -104,33 +104,41 @@ namespace symbol_type_resolving
 		Ptr: t->f
 	***********************************************************************/
 
-	void CalculateValueFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, ExprTsysList& result)
+	void CalculateValueFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, bool forFieldDeref, ExprTsysList& result)
 	{
 		TsysCV cv;
 		TsysRefType refType;
 		thisItem->tsys->GetEntity(cv, refType);
+
+		auto type = fieldType->CVOf(cv);
+		auto lrefType = forFieldDeref ? type->LRefOf() : type;
+
 		if (refType == TsysRefType::LRef)
 		{
-			AddInternal(result, { symbol,ExprTsysType::LValue,fieldType->CVOf(cv) });
+			AddInternal(result, { symbol,ExprTsysType::LValue,lrefType });
 		}
 		else if (refType == TsysRefType::RRef)
 		{
 			if (thisItem->type == ExprTsysType::LValue)
 			{
-				AddInternal(result, { symbol,ExprTsysType::LValue,fieldType->CVOf(cv) });
+				AddInternal(result, { symbol,ExprTsysType::LValue,lrefType });
 			}
 			else
 			{
-				AddInternal(result, { symbol,ExprTsysType::XValue,fieldType->CVOf(cv)->RRefOf() });
+				AddInternal(result, { symbol,ExprTsysType::XValue,type->RRefOf() });
 			}
+		}
+		else if (forFieldDeref)
+		{
+			AddInternal(result, { symbol,ExprTsysType::LValue,lrefType });
 		}
 		else
 		{
-			AddInternal(result, { symbol,thisItem->type,fieldType->CVOf(cv) });
+			AddInternal(result, { symbol,thisItem->type,type });
 		}
 	}
 
-	void CalculatePtrFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, ExprTsysList& result)
+	void CalculatePtrFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, bool forFieldDeref, ExprTsysList& result)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -139,11 +147,11 @@ namespace symbol_type_resolving
 		if (thisType->GetType() == TsysType::Ptr)
 		{
 			ExprTsysItem derefThisType(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
-			CalculateValueFieldType(&derefThisType, symbol, fieldType, result);
+			CalculateValueFieldType(&derefThisType, symbol, fieldType, forFieldDeref, result);
 		}
 		else
 		{
-			CalculateValueFieldType(thisItem, symbol, fieldType, result);
+			CalculateValueFieldType(thisItem, symbol, fieldType, forFieldDeref, result);
 		}
 	}
 
@@ -241,7 +249,7 @@ namespace symbol_type_resolving
 						{
 							if (thisItem)
 							{
-								CalculateValueFieldType(thisItem, symbol, tsys, result);
+								CalculateValueFieldType(thisItem, symbol, tsys, false, result);
 							}
 							else
 							{
@@ -616,7 +624,7 @@ namespace symbol_type_resolving
 		{
 			for (vint i = 0; i < varTypes.Count(); i++)
 			{
-				CalculatePtrFieldType(thisItem, varTypes[i].symbol, varTypes[i].tsys, result);
+				CalculatePtrFieldType(thisItem, varTypes[i].symbol, varTypes[i].tsys, false, result);
 			}
 
 			TsysCV thisCv;

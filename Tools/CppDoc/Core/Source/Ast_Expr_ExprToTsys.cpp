@@ -771,11 +771,11 @@ public:
 						{
 							if (self->op == CppBinaryOp::PtrFieldDeref)
 							{
-								CalculatePtrFieldType(&leftTypes[i], nullptr, fieldEntity, result);
+								CalculatePtrFieldType(&leftTypes[i], nullptr, fieldEntity, true, result);
 							}
 							else
 							{
-								CalculateValueFieldType(&leftTypes[i], nullptr, fieldEntity, result);
+								CalculateValueFieldType(&leftTypes[i], nullptr, fieldEntity, true, result);
 							}
 						}
 					}
