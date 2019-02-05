@@ -310,7 +310,7 @@ namespace symbol_type_resolving
 	FindMembersByName: Fill all members of a name to ExprTsysList
 	***********************************************************************/
 
-	void FindMembersByName(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, const ExprTsysItem& parentItem, ExprTsysList& result)
+	Ptr<Resolving> FindMembersByName(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, const ExprTsysItem& parentItem)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -321,16 +321,9 @@ namespace symbol_type_resolving
 			ParsingArguments fieldPa(pa, symbol);
 			auto rar = ResolveSymbol(fieldPa, name, SearchPolicy::ChildSymbol);
 			if (totalRar) totalRar->Merge(rar);
-
-			if (rar.values)
-			{
-				for (vint j = 0; j < rar.values->resolvedSymbols.Count(); j++)
-				{
-					auto symbol = rar.values->resolvedSymbols[j];
-					VisitSymbol(pa, &parentItem, symbol, false, result);
-				}
-			}
+			return rar.values;
 		}
+		return nullptr;
 	}
 
 	/***********************************************************************
@@ -518,10 +511,15 @@ namespace symbol_type_resolving
 		TsysRefType refType;
 		auto entity = parentItem.tsys->GetEntity(cv, refType);
 
-		ExprTsysList fieldResult;
-		FindMembersByName(pa, name, &totalRar, parentItem, fieldResult);
-		FilterFieldsAndBestQualifiedFunctions(cv, refType, fieldResult);
-		AddInternal(result, fieldResult);
+		if (auto resolving = FindMembersByName(pa, name, &totalRar, parentItem))
+		{
+			for (vint j = 0; j < resolving->resolvedSymbols.Count(); j++)
+			{
+				auto symbol = resolving->resolvedSymbols[j];
+				VisitSymbol(pa, &parentItem, symbol, false, result);
+			}
+			FilterFieldsAndBestQualifiedFunctions(cv, refType, result);
+		}
 	}
 
 	/***********************************************************************
@@ -536,8 +534,15 @@ namespace symbol_type_resolving
 
 		CppName opName;
 		opName.name = name;
-		FindMembersByName(pa, opName, nullptr, parentItem, result);
-		FindQualifiedFunctors(pa, cv, refType, result, false);
+		if (auto resolving = FindMembersByName(pa, opName, nullptr, parentItem))
+		{
+			for (vint j = 0; j < resolving->resolvedSymbols.Count(); j++)
+			{
+				auto symbol = resolving->resolvedSymbols[j];
+				VisitSymbol(pa, &parentItem, symbol, false, result);
+			}
+			FindQualifiedFunctors(pa, cv, refType, result, false);
+		}
 	}
 
 	/***********************************************************************
