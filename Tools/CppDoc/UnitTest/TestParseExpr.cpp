@@ -582,11 +582,11 @@ struct S
 	const int c;
 	static int s;
 
-	void M(double p){}
-	void C(double p)const{}
-	void V(double p)volatile{}
-	void CV(double p)const volatile{}
-	static void F(double p){}
+	void M1(double p){}
+	void C1(double p)const{}
+	void V1(double p)volatile{}
+	void CV1(double p)const volatile{}
+	static void F1(double p){}
 
 	void M2(double p);
 	void C2(double p)const;
@@ -602,8 +602,9 @@ void S::CV2(double p)const volatile{}
 void S::F2(double p){}
 )";
 	COMPILE_PROGRAM(program, pa, input);
+	for (vint i = 1; i <= 2; i++)
 	{
-		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"M"][0]->children[L"$"][0].Obj());
+		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"M" + itow(i)][i - 1]->children[L"$"][0].Obj());
 		spa.funcSymbol = spa.context->parent;
 		AssertExpr(L"this",						L"this",						L"::S * $PR",								spa);
 		AssertExpr(L"p",						L"p",							L"double $L",								spa);
@@ -644,8 +645,9 @@ void S::F2(double p){}
 		AssertExpr(L"&this->s",					L"(& this->s)",					L"__int32 * $PR",							spa);
 		AssertExpr(L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR",							spa);
 	}
+	for (vint i = 1; i <= 2; i++)
 	{
-		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"C"][0]->children[L"$"][0].Obj());
+		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"C" + itow(i)][i - 1]->children[L"$"][0].Obj());
 		spa.funcSymbol = spa.context->parent;
 		AssertExpr(L"this",						L"this",						L"::S const * $PR",							spa);
 		AssertExpr(L"p",						L"p",							L"double $L",								spa);
@@ -686,8 +688,9 @@ void S::F2(double p){}
 		AssertExpr(L"&this->s",					L"(& this->s)",					L"__int32 * $PR",							spa);
 		AssertExpr(L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR",							spa);
 	}
+	for (vint i = 1; i <= 2; i++)
 	{
-		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"V"][0]->children[L"$"][0].Obj());
+		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"V" + itow(i)][i - 1]->children[L"$"][0].Obj());
 		spa.funcSymbol = spa.context->parent;
 		AssertExpr(L"this",						L"this",						L"::S volatile * $PR",						spa);
 		AssertExpr(L"p",						L"p",							L"double $L",								spa);
@@ -728,8 +731,9 @@ void S::F2(double p){}
 		AssertExpr(L"&this->s",					L"(& this->s)",					L"__int32 * $PR",							spa);
 		AssertExpr(L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR",							spa);
 	}
+	for (vint i = 1; i <= 2; i++)
 	{
-		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"CV"][0]->children[L"$"][0].Obj());
+		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"CV" + itow(i)][i - 1]->children[L"$"][0].Obj());
 		spa.funcSymbol = spa.context->parent;
 		AssertExpr(L"this",						L"this",						L"::S const volatile * $PR",				spa);
 		AssertExpr(L"p",						L"p",							L"double $L",								spa);
@@ -770,8 +774,9 @@ void S::F2(double p){}
 		AssertExpr(L"&this->s",					L"(& this->s)",					L"__int32 * $PR",							spa);
 		AssertExpr(L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR",							spa);
 	}
+	for (vint i = 1; i <= 2; i++)
 	{
-		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"F"][0]->children[L"$"][0].Obj());
+		ParsingArguments spa(pa, pa.context->children[L"S"][0]->children[L"F" + itow(i)][i - 1]->children[L"$"][0].Obj());
 		spa.funcSymbol = spa.context->parent;
 		AssertExpr(L"this",						L"this",						L"::S * $PR",								spa);
 		AssertExpr(L"p",						L"p",							L"double $L",								spa);
