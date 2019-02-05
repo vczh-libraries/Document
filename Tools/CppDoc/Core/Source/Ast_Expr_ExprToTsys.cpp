@@ -292,18 +292,21 @@ public:
 		ExprTsysList parentItems;
 		ExprToTsys(pa, self->expr, parentItems);
 
-		if (auto childExpr = self->name.Cast<ChildExpr>())
-		{
-			ExprToTsys(pa, self->name, result);
-			return;
-		}
-
+		auto childExpr = self->name.Cast<ChildExpr>();
 		auto idExpr = self->name.Cast<IdExpr>();
+
 		if (self->type == CppFieldAccessType::Dot)
 		{
 			for (vint i = 0; i < parentItems.Count(); i++)
 			{
-				VisitDirectField(pa, totalRar, parentItems[i], idExpr->name, result);
+				if (idExpr)
+				{
+					VisitDirectField(pa, totalRar, parentItems[i], idExpr->name, result);
+				}
+				else if (childExpr->resolving)
+				{
+					VisitResolvedMember(pa, &parentItems[i], childExpr->resolving, result);
+				}
 			}
 		}
 		else
@@ -317,8 +320,15 @@ public:
 
 				if (entityType->GetType() == TsysType::Ptr)
 				{
-					auto parentItem = parentItems[i];
-					VisitDirectField(pa, totalRar, { nullptr,ExprTsysType::LValue,entityType->GetElement() }, idExpr->name, result);
+					ExprTsysItem parentItem(nullptr, ExprTsysType::LValue, entityType->GetElement());
+					if (idExpr)
+					{
+						VisitDirectField(pa, totalRar, parentItem, idExpr->name, result);
+					}
+					else if (childExpr->resolving)
+					{
+						VisitResolvedMember(pa, &parentItem, childExpr->resolving, result);
+					}
 				}
 				else if (entityType->GetType() == TsysType::Decl)
 				{
@@ -339,16 +349,19 @@ public:
 			}
 		}
 
-		idExpr->resolving = totalRar.values;
-		if (pa.recorder)
+		if (idExpr)
 		{
-			if (totalRar.values)
+			idExpr->resolving = totalRar.values;
+			if (pa.recorder)
 			{
-				pa.recorder->Index(idExpr->name, totalRar.values);
-			}
-			if (totalRar.types)
-			{
-				pa.recorder->ExpectValueButType(idExpr->name, totalRar.types);
+				if (totalRar.values)
+				{
+					pa.recorder->Index(idExpr->name, totalRar.values);
+				}
+				if (totalRar.types)
+				{
+					pa.recorder->ExpectValueButType(idExpr->name, totalRar.types);
+				}
 			}
 		}
 	}
