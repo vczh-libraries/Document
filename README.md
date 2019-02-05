@@ -20,7 +20,7 @@ All **the compiler** here means the compiler created by this project.
 - All features that cl.exe doesn't support, are also not supported here.
 - The compiler doesn't do `const` or `constexpr` calculation, the compiler treats all values identical in types.
   - This usually means the compiler assumes `int[1]` and `int[2]` are the same type, which will cause the compiler fail to compile the input file in some very limited cases.
-  - This also applies for `T<1>` and `T<2>`.
+  - This also applies to `T<1>` and `T<2>`.
 - The compiler doesn't check bodies of template declarations when creating their instances.
   - For example, the compiler resolves the body of a template function right after it is parsed. All recognizable names will be identified at this moment. The body will not be processed again later when this function is instanciating in somewhere else.
   - The reason for this is, **GacUI** and its dependeices offers a lot of template declarations. They are supposed to be used by users. So there is no reason not to process template function bodies if they are not used inside the library. There is also no reason to offer more detailed indexing just for all places using these template functions inside the library.

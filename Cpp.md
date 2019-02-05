@@ -48,8 +48,8 @@
   - [x] Assert ASTs with precedence
   - [x] Add L/X/PR Value concept to `ExprTsysItem`, remove all additional `->RRefOf` calls
     - https://docs.microsoft.com/en-us/cpp/cpp/lvalues-and-rvalues-visual-cpp?view=vs-2017
-  - [ ] Assert resolvings in scopes
-  - [ ] Assert resolvings in scopes inside methods with qualifiers
+  - [x] Assert resolvings in scopes
+  - [x] Assert resolvings in scopes inside methods with qualifiers
   - [ ] Resolve symbols in initializers of fields
   - [ ] Resolve symbols created by statements
     - [ ] Resolve same-name symbols in different nested scopes
@@ -73,7 +73,6 @@
   - [ ] Define types right after typedef classes
   - [ ] Resolve child symbols from type aliases
 - [ ] `Template`
-  - [x] Fix wrong `template` rule created above, `typename A::B` not `A::typename B`
   - [ ] Assert ASTs
   - [ ] Connect generic forward declarations with their root
     - [ ] Matching specializations
