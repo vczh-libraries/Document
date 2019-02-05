@@ -833,16 +833,16 @@ public:
 		AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }));
 	}
 
-	void VisitResolvableExpr(ResolvableExpr* self)
+	static void VisitResolvedMember(ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result)
 	{
-		if (self->resolving)
+		ExprTsysList varTypes, funcTypes;
+		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 		{
-			ExprTsysList varTypes, funcTypes;
-			for (vint i = 0; i < self->resolving->resolvedSymbols.Count(); i++)
+			auto targetTypeList = &result;
+			auto symbol = resolving->resolvedSymbols[i];
+			if (symbol->decls.Count() == 1)
 			{
-				auto targetTypeList = &result;
-				auto symbol = self->resolving->resolvedSymbols[i];
-				if (symbol->decls.Count() == 1)
+				if (symbol->parent && symbol->parent->decls.Count() == 1 && symbol->parent->decls[0].Cast<ClassDeclaration>())
 				{
 					if (auto varDecl = symbol->decls[0].Cast<ForwardVariableDeclaration>())
 					{
@@ -859,28 +859,43 @@ public:
 						}
 					}
 				}
-
-				VisitSymbol(pa, nullptr, self->resolving->resolvedSymbols[i], false, *targetTypeList);
 			}
 
+			VisitSymbol(pa, nullptr, resolving->resolvedSymbols[i], false, *targetTypeList);
+		}
+
+		if (thisItem)
+		{
+			for (vint i = 0; i < varTypes.Count(); i++)
+			{
+				CalculatePtrFieldType(thisItem, varTypes[i].symbol, varTypes[i].tsys, result);
+			}
+
+			TsysCV thisCv;
+			TsysRefType thisRef;
+			thisItem->tsys->GetEntity(thisCv, thisRef)->GetEntity(thisCv, thisRef);
+			FindQualifiedFunctions(pa, thisCv, thisRef, funcTypes, false);
+			AddInternal(result, funcTypes);
+		}
+		else
+		{
+			AddInternal(result, varTypes);
+			AddInternal(result, funcTypes);
+		}
+	}
+
+	void VisitResolvableExpr(ResolvableExpr* self)
+	{
+		if (self->resolving)
+		{
 			if (pa.funcSymbol && pa.funcSymbol->methodCache)
 			{
 				ExprTsysItem thisItem(nullptr, ExprTsysType::PRValue, pa.funcSymbol->methodCache->thisType);
-				for (vint i = 0; i < varTypes.Count(); i++)
-				{
-					CalculatePtrFieldType(&thisItem, varTypes[i].symbol, varTypes[i].tsys, result);
-				}
-
-				TsysCV thisCv;
-				TsysRefType thisRef;
-				pa.funcSymbol->methodCache->thisType->GetEntity(thisCv, thisRef)->GetEntity(thisCv, thisRef);
-				FindQualifiedFunctions(pa, thisCv, thisRef, funcTypes, false);
-				AddInternal(result, funcTypes);
+				VisitResolvedMember(pa, &thisItem, self->resolving, result);
 			}
 			else
 			{
-				AddInternal(result, varTypes);
-				AddInternal(result, funcTypes);
+				VisitResolvedMember(pa, nullptr, self->resolving, result);
 			}
 		}
 	}

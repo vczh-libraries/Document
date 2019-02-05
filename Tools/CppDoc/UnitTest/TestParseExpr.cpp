@@ -667,7 +667,7 @@ void S::F2(double p){}
 		AssertExpr(L"c",						L"c",							L"__int32 const volatile $L",				spa);
 		AssertExpr(L"S::c",						L"S :: c",						L"__int32 const volatile $L",				spa);
 		AssertExpr(L"&c",						L"(& c)",						L"__int32 const volatile * $PR",			spa);
-		AssertExpr(L"&S::c",					L"(& S :: c)",					L"__int32 const volatile (::S ::) * $PR",	spa);
+		AssertExpr(L"&S::c",					L"(& S :: c)",					L"__int32 const (::S ::) * $PR",			spa);
 		AssertExpr(L"this->c",					L"this->c",						L"__int32 const volatile $L",				spa);
 		AssertExpr(L"this->S::c",				L"this->S :: c",				L"__int32 const volatile $L",				spa);
 		AssertExpr(L"&this->c",					L"(& this->c)",					L"__int32 const volatile * $PR",			spa);
@@ -709,7 +709,7 @@ void S::F2(double p){}
 		AssertExpr(L"c",						L"c",							L"__int32 const volatile $L",				spa);
 		AssertExpr(L"S::c",						L"S :: c",						L"__int32 const volatile $L",				spa);
 		AssertExpr(L"&c",						L"(& c)",						L"__int32 const volatile * $PR",			spa);
-		AssertExpr(L"&S::c",					L"(& S :: c)",					L"__int32 const volatile (::S ::) * $PR",	spa);
+		AssertExpr(L"&S::c",					L"(& S :: c)",					L"__int32 const (::S ::) * $PR",			spa);
 		AssertExpr(L"this->c",					L"this->c",						L"__int32 const volatile $L",				spa);
 		AssertExpr(L"this->S::c",				L"this->S :: c",				L"__int32 const volatile $L",				spa);
 		AssertExpr(L"&this->c",					L"(& this->c)",					L"__int32 const volatile * $PR",			spa);
@@ -766,8 +766,6 @@ void S::F2(double p){}
 		AssertExpr(L"&this->s",					L"(& this->s)",					L"__int32 * $PR",							spa);
 		AssertExpr(L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR",							spa);
 	}
-	// TODO
-	// Refactor and add a function to calculate T->U's type (processing TsysCV, and in the future with template)
 }
 
 TEST_CASE(TestParseExpr_DeclType_Var)
