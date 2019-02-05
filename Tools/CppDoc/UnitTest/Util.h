@@ -78,4 +78,26 @@ Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
 		if (!accessed.Contains(INDEX)) accessed.Add(INDEX);\
 	} else \
 
+template<typename T, typename U>
+struct IntIfSameType
+{
+	using Type = void;
+};
+
+template<typename T>
+struct IntIfSameType<T, T>
+{
+	using Type = int;
+};
+
+template<typename T, typename U>
+void RunOverloading()
+{
+	typename IntIfSameType<T, U>::Type test = 0;
+}
+
+#define ASSERT_OVERLOADING(INPUT, OUTPUT, TYPE)\
+	RunOverloading<TYPE, decltype(INPUT)>, \
+	AssertExpr(L#INPUT, OUTPUT, L#TYPE " $PR", pa)\
+
 #endif

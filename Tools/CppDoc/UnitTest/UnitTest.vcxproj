@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="TestIntegralPromotion.cpp" />
     <ClCompile Include="TestOverloading.cpp" />
+    <ClCompile Include="TestOverloadingOperator.cpp" />
     <ClCompile Include="TestTypeConvert.cpp" />
     <ClCompile Include="TestTypeSystem.cpp" />
     <ClCompile Include="Util_Log.cpp" />
