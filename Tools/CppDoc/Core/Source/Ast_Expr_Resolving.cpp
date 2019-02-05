@@ -454,6 +454,93 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
+	VisitResolvedMember: Fill all resolved member symbol to ExprTsysList
+	***********************************************************************/
+
+	void VisitResolvedMember(ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result)
+	{
+		ExprTsysList varTypes, funcTypes;
+		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+		{
+			auto targetTypeList = &result;
+			auto symbol = resolving->resolvedSymbols[i];
+			if (symbol->decls.Count() == 1)
+			{
+				if (symbol->parent && symbol->parent->decls.Count() == 1 && symbol->parent->decls[0].Cast<ClassDeclaration>())
+				{
+					if (auto varDecl = symbol->decls[0].Cast<ForwardVariableDeclaration>())
+					{
+						if (!varDecl->decoratorStatic)
+						{
+							targetTypeList = &varTypes;
+						}
+					}
+					else if (auto funcDecl = symbol->decls[0].Cast<ForwardFunctionDeclaration>())
+					{
+						if (!funcDecl->decoratorStatic)
+						{
+							targetTypeList = &funcTypes;
+						}
+					}
+				}
+			}
+
+			VisitSymbol(pa, nullptr, resolving->resolvedSymbols[i], false, *targetTypeList);
+		}
+
+		if (thisItem)
+		{
+			for (vint i = 0; i < varTypes.Count(); i++)
+			{
+				CalculatePtrFieldType(thisItem, varTypes[i].symbol, varTypes[i].tsys, false, result);
+			}
+
+			TsysCV thisCv;
+			TsysRefType thisRef;
+			thisItem->tsys->GetEntity(thisCv, thisRef)->GetEntity(thisCv, thisRef);
+			FilterFieldsAndBestQualifiedFunctions(thisCv, thisRef, funcTypes);
+			AddInternal(result, funcTypes);
+		}
+		else
+		{
+			AddInternal(result, varTypes);
+			AddInternal(result, funcTypes);
+		}
+	}
+
+	/***********************************************************************
+	VisitDirectField: Find variables or qualified functions
+	***********************************************************************/
+
+	void VisitDirectField(ParsingArguments& pa, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, CppName& name, ExprTsysList& result)
+	{
+		TsysCV cv;
+		TsysRefType refType;
+		auto entity = parentItem.tsys->GetEntity(cv, refType);
+
+		ExprTsysList fieldResult;
+		FindMembersByName(pa, name, &totalRar, parentItem, fieldResult);
+		FilterFieldsAndBestQualifiedFunctions(cv, refType, fieldResult);
+		AddInternal(result, fieldResult);
+	}
+
+	/***********************************************************************
+	VisitFunctors: Find qualified functors (including functions and operator())
+	***********************************************************************/
+
+	void VisitFunctors(ParsingArguments& pa, const ExprTsysItem& parentItem, const WString& name, ExprTsysList& result)
+	{
+		TsysCV cv;
+		TsysRefType refType;
+		parentItem.tsys->GetEntity(cv, refType);
+
+		CppName opName;
+		opName.name = name;
+		FindMembersByName(pa, opName, nullptr, parentItem, result);
+		FindQualifiedFunctors(pa, cv, refType, result, false);
+	}
+
+	/***********************************************************************
 	VisitOverloadedFunction: Select good candidates from overloaded functions
 	***********************************************************************/
 
@@ -563,93 +650,6 @@ namespace symbol_type_resolving
 			{
 				AddTemp(result, validFuncTypes[i].tsys->GetElement());
 			}
-		}
-	}
-
-	/***********************************************************************
-	VisitDirectField: Find variables or qualified functions
-	***********************************************************************/
-
-	void VisitDirectField(ParsingArguments& pa, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, CppName& name, ExprTsysList& result)
-	{
-		TsysCV cv;
-		TsysRefType refType;
-		auto entity = parentItem.tsys->GetEntity(cv, refType);
-
-		ExprTsysList fieldResult;
-		FindMembersByName(pa, name, &totalRar, parentItem, fieldResult);
-		FilterFieldsAndBestQualifiedFunctions(cv, refType, fieldResult);
-		AddInternal(result, fieldResult);
-	}
-
-	/***********************************************************************
-	VisitFunctors: Find qualified functors (including functions and operator())
-	***********************************************************************/
-
-	void VisitFunctors(ParsingArguments& pa, const ExprTsysItem& parentItem, const WString& name, ExprTsysList& result)
-	{
-		TsysCV cv;
-		TsysRefType refType;
-		parentItem.tsys->GetEntity(cv, refType);
-
-		CppName opName;
-		opName.name = name;
-		FindMembersByName(pa, opName, nullptr, parentItem, result);
-		FindQualifiedFunctors(pa, cv, refType, result, false);
-	}
-
-	/***********************************************************************
-	VisitResolvedMember: Fill all resolved member symbol to ExprTsysList
-	***********************************************************************/
-
-	void VisitResolvedMember(ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result)
-	{
-		ExprTsysList varTypes, funcTypes;
-		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
-		{
-			auto targetTypeList = &result;
-			auto symbol = resolving->resolvedSymbols[i];
-			if (symbol->decls.Count() == 1)
-			{
-				if (symbol->parent && symbol->parent->decls.Count() == 1 && symbol->parent->decls[0].Cast<ClassDeclaration>())
-				{
-					if (auto varDecl = symbol->decls[0].Cast<ForwardVariableDeclaration>())
-					{
-						if (!varDecl->decoratorStatic)
-						{
-							targetTypeList = &varTypes;
-						}
-					}
-					else if (auto funcDecl = symbol->decls[0].Cast<ForwardFunctionDeclaration>())
-					{
-						if (!funcDecl->decoratorStatic)
-						{
-							targetTypeList = &funcTypes;
-						}
-					}
-				}
-			}
-
-			VisitSymbol(pa, nullptr, resolving->resolvedSymbols[i], false, *targetTypeList);
-		}
-
-		if (thisItem)
-		{
-			for (vint i = 0; i < varTypes.Count(); i++)
-			{
-				CalculatePtrFieldType(thisItem, varTypes[i].symbol, varTypes[i].tsys, false, result);
-			}
-
-			TsysCV thisCv;
-			TsysRefType thisRef;
-			thisItem->tsys->GetEntity(thisCv, thisRef)->GetEntity(thisCv, thisRef);
-			FindQualifiedFunctors(pa, thisCv, thisRef, funcTypes, false);
-			AddInternal(result, funcTypes);
-		}
-		else
-		{
-			AddInternal(result, varTypes);
-			AddInternal(result, funcTypes);
 		}
 	}
 
