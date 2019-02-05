@@ -436,8 +436,66 @@ const Z* const pcz;
 
 TEST_CASE(TestParseExpr_FFA_Qualifier_OfExplicitOrImplicitThisExpr)
 {
-	// TODO
-	// (this->)variable/function in functions marking with const / volatile / & / &&
+	auto input = LR"(
+struct X
+{
+	int x;
+	int y;
+};
+struct Y
+{
+	double x;
+	double y;
+};
+struct Z
+{
+	X* operator->()const;
+	const Y* operator->();
+	X operator()(int)const;
+	Y operator()(int);
+	X operator[](int)const;
+	Y operator[](int);
+
+	void M(){}
+	void M2(){}
+};
+
+Z z;
+const Z cz;
+
+Z& lz;
+const Z& lcz;
+
+Z&& rz;
+const Z&& rcz;
+
+Z* const pz;
+const Z* const pcz;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	{
+		ParsingArguments spa(pa, pa.context->children[L"Z"][0]->children[L"M"][0]->children[L"$"][0].Obj());
+		spa.funcSymbol = spa.context->parent;
+
+		AssertExpr(L"operator->()",				L"operator ->()",				L"::Y const * $PR",		pa);
+		AssertExpr(L"operator()(0)",			L"operator ()(0)",				L"::Y $PR",				pa);
+		AssertExpr(L"operator[](0)",			L"operator [](0)",				L"::Y $PR",				pa);
+		AssertExpr(L"this->x",					L"this->x",						L"double const $L",		pa);
+		AssertExpr(L"(*this)(0)",				L"(* this)(0)",					L"::Y $PR",				pa);
+		AssertExpr(L"(*this)[0]",				L"(* this)[0]",					L"::Y $PR",				pa);
+	}
+	{
+		ParsingArguments spa(pa, pa.context->children[L"Z"][0]->children[L"M2"][0]->children[L"$"][0].Obj());
+		spa.funcSymbol = spa.context->parent;
+
+		AssertExpr(L"operator->()",				L"operator ->()",				L"::X * $PR",			pa);
+		AssertExpr(L"operator()(0)",			L"operator ()(0)",				L"::X $PR",				pa);
+		AssertExpr(L"operator[](0)",			L"operator [](0)",				L"::X $PR",				pa);
+		AssertExpr(L"this->x",					L"this->x",						L"__int32 $L",			pa);
+		AssertExpr(L"(*this)(0)",				L"(* this)(0)",					L"::X $PR",				pa);
+		AssertExpr(L"(*this)[0]",				L"(* this)[0]",					L"::X $PR",				pa);
+	}
 }
 
 TEST_CASE(TestParseExpr_AddressOfArrayFunctionMemberPointer)
