@@ -323,11 +323,8 @@ public:
 					{
 						visitedDecls.Add(entityType);
 
-						CppName opName;
-						opName.name = L"operator ->";
 						ExprTsysList opResult;
-						FindMembersByName(pa, opName, nullptr, parentItems[i], opResult);
-						FindQualifiedFunctors(pa, cv, refType, opResult, false);
+						VisitFunctors(pa, parentItems[i], L"operator ->", opResult);
 						for (vint j = 0; j < opResult.Count(); j++)
 						{
 							auto item = opResult[j];
@@ -375,11 +372,8 @@ public:
 
 			if (entityType->GetType() == TsysType::Decl)
 			{
-				CppName opName;
-				opName.name = L"operator []";
 				ExprTsysList opResult;
-				FindMembersByName(pa, opName, nullptr, arrayType, opResult);
-				FindQualifiedFunctors(pa, cv, refType, opResult, false);
+				VisitFunctors(pa, arrayType, L"operator []", opResult);
 				AddNonVar(funcTypes, opResult);
 			}
 			else if (entityType->GetType() == TsysType::Array)

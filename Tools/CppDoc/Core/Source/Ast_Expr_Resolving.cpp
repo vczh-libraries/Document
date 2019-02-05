@@ -423,11 +423,8 @@ namespace symbol_type_resolving
 
 				if (entityType->GetType() == TsysType::Decl && lookForOp)
 				{
-					CppName opName;
-					opName.name = L"operator ()";
 					ExprTsysList opResult;
-					FindMembersByName(pa, opName, nullptr, funcType, opResult);
-					FindQualifiedFunctors(pa, cv, refType, opResult, false);
+					VisitFunctors(pa, funcType, L"operator ()", opResult);
 
 					vint oldCount = expandedFuncTypes.Count();
 					AddNonVar(expandedFuncTypes, opResult);
@@ -583,6 +580,22 @@ namespace symbol_type_resolving
 		FindMembersByName(pa, name, &totalRar, parentItem, fieldResult);
 		FilterFieldsAndBestQualifiedFunctions(cv, refType, fieldResult);
 		AddInternal(result, fieldResult);
+	}
+
+	/***********************************************************************
+	VisitFunctors: Find qualified functors (including functions and operator())
+	***********************************************************************/
+
+	void VisitFunctors(ParsingArguments& pa, const ExprTsysItem& parentItem, const WString& name, ExprTsysList& result)
+	{
+		TsysCV cv;
+		TsysRefType refType;
+		parentItem.tsys->GetEntity(cv, refType);
+
+		CppName opName;
+		opName.name = name;
+		FindMembersByName(pa, opName, nullptr, parentItem, result);
+		FindQualifiedFunctors(pa, cv, refType, result, false);
 	}
 
 	/***********************************************************************
