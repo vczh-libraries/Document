@@ -833,26 +833,66 @@ public:
 		AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }));
 	}
 
-	void Visit(IdExpr* self)override
+	void VisitResolvableExpr(ResolvableExpr* self)
 	{
 		if (self->resolving)
 		{
+			ExprTsysList varTypes, funcTypes;
 			for (vint i = 0; i < self->resolving->resolvedSymbols.Count(); i++)
 			{
-				VisitSymbol(pa, nullptr, self->resolving->resolvedSymbols[i], false, result);
+				auto targetTypeList = &result;
+				auto symbol = self->resolving->resolvedSymbols[i];
+				if (symbol->decls.Count() == 1)
+				{
+					if (auto varDecl = symbol->decls[0].Cast<ForwardVariableDeclaration>())
+					{
+						if (!varDecl->decoratorStatic)
+						{
+							targetTypeList = &varTypes;
+						}
+					}
+					else if (auto funcDecl = symbol->decls[0].Cast<ForwardFunctionDeclaration>())
+					{
+						if (!funcDecl->decoratorStatic)
+						{
+							targetTypeList = &funcTypes;
+						}
+					}
+				}
+
+				VisitSymbol(pa, nullptr, self->resolving->resolvedSymbols[i], false, *targetTypeList);
+			}
+
+			if (pa.funcSymbol && pa.funcSymbol->methodCache)
+			{
+				ExprTsysItem thisItem(nullptr, ExprTsysType::PRValue, pa.funcSymbol->methodCache->thisType);
+				for (vint i = 0; i < varTypes.Count(); i++)
+				{
+					CalculatePtrFieldType(&thisItem, varTypes[i].symbol, varTypes[i].tsys, result);
+				}
+
+				TsysCV thisCv;
+				TsysRefType thisRef;
+				pa.funcSymbol->methodCache->thisType->GetEntity(thisCv, thisRef)->GetEntity(thisCv, thisRef);
+				FindQualifiedFunctions(pa, thisCv, thisRef, funcTypes, false);
+				AddInternal(result, funcTypes);
+			}
+			else
+			{
+				AddInternal(result, varTypes);
+				AddInternal(result, funcTypes);
 			}
 		}
 	}
 
+	void Visit(IdExpr* self)override
+	{
+		VisitResolvableExpr(self);
+	}
+
 	void Visit(ChildExpr* self)override
 	{
-		if (self->resolving)
-		{
-			for (vint i = 0; i < self->resolving->resolvedSymbols.Count(); i++)
-			{
-				VisitSymbol(pa, nullptr, self->resolving->resolvedSymbols[i], false, result);
-			}
-		}
+		VisitResolvableExpr(self);
 	}
 
 	void Visit(FieldAccessExpr* self)override
