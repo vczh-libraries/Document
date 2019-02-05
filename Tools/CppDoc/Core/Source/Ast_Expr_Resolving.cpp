@@ -299,10 +299,10 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	VisitNormalField: Fill all members of a name to ExprTsysList
+	FindMembersByName: Fill all members of a name to ExprTsysList
 	***********************************************************************/
 
-	void VisitNormalField(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, const ExprTsysItem& parentItem, ExprTsysList& result)
+	void FindMembersByName(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, const ExprTsysItem& parentItem, ExprTsysList& result)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -346,7 +346,7 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	FilterFunctionByQualifier: Filter functions by their qualifiers
+	FilterFieldsAndBestQualifiedFunctions: Filter functions by their qualifiers
 	***********************************************************************/
 
 	TsysConv FindMinConv(ArrayBase<TsysConv>& funcChoices)
@@ -381,7 +381,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void FilterFunctionByQualifier(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes)
+	void FilterFieldsAndBestQualifiedFunctions(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes)
 	{
 		Array<TsysConv> funcChoices(funcTypes.Count());
 
@@ -394,10 +394,10 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	FindQualifiedFunctions: Remove everything that are not qualified functions
+	FindQualifiedFunctors: Remove everything that are not qualified functors (including functions and operator())
 	***********************************************************************/
 
-	void FindQualifiedFunctions(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
+	void FindQualifiedFunctors(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
 	{
 		ExprTsysList expandedFuncTypes;
 		List<TsysConv> funcChoices;
@@ -418,8 +418,8 @@ namespace symbol_type_resolving
 					CppName opName;
 					opName.name = L"operator ()";
 					ExprTsysList opResult;
-					VisitNormalField(pa, opName, nullptr, funcType, opResult);
-					FindQualifiedFunctions(pa, cv, refType, opResult, false);
+					FindMembersByName(pa, opName, nullptr, funcType, opResult);
+					FindQualifiedFunctors(pa, cv, refType, opResult, false);
 
 					vint oldCount = expandedFuncTypes.Count();
 					AddNonVar(expandedFuncTypes, opResult);
@@ -572,8 +572,8 @@ namespace symbol_type_resolving
 		auto entity = parentItem.tsys->GetEntity(cv, refType);
 
 		ExprTsysList fieldResult;
-		VisitNormalField(pa, name, &totalRar, parentItem, fieldResult);
-		FilterFunctionByQualifier(cv, refType, fieldResult);
+		FindMembersByName(pa, name, &totalRar, parentItem, fieldResult);
+		FilterFieldsAndBestQualifiedFunctions(cv, refType, fieldResult);
 		AddInternal(result, fieldResult);
 	}
 
@@ -622,7 +622,7 @@ namespace symbol_type_resolving
 			TsysCV thisCv;
 			TsysRefType thisRef;
 			thisItem->tsys->GetEntity(thisCv, thisRef)->GetEntity(thisCv, thisRef);
-			FindQualifiedFunctions(pa, thisCv, thisRef, funcTypes, false);
+			FindQualifiedFunctors(pa, thisCv, thisRef, funcTypes, false);
 			AddInternal(result, funcTypes);
 		}
 		else

@@ -326,8 +326,8 @@ public:
 						CppName opName;
 						opName.name = L"operator ->";
 						ExprTsysList opResult;
-						VisitNormalField(pa, opName, nullptr, parentItems[i], opResult);
-						FindQualifiedFunctions(pa, cv, refType, opResult, false);
+						FindMembersByName(pa, opName, nullptr, parentItems[i], opResult);
+						FindQualifiedFunctors(pa, cv, refType, opResult, false);
 						for (vint j = 0; j < opResult.Count(); j++)
 						{
 							auto item = opResult[j];
@@ -378,8 +378,8 @@ public:
 				CppName opName;
 				opName.name = L"operator []";
 				ExprTsysList opResult;
-				VisitNormalField(pa, opName, nullptr, arrayType, opResult);
-				FindQualifiedFunctions(pa, cv, refType, opResult, false);
+				FindMembersByName(pa, opName, nullptr, arrayType, opResult);
+				FindQualifiedFunctors(pa, cv, refType, opResult, false);
 				AddNonVar(funcTypes, opResult);
 			}
 			else if (entityType->GetType() == TsysType::Array)
@@ -428,7 +428,7 @@ public:
 			ExprTsysList funcTypes;
 			ExprToTsys(pa, self->expr, funcTypes);
 
-			FindQualifiedFunctions(pa, {}, TsysRefType::None, funcTypes, true);
+			FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
 			VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
 		}
 	}
@@ -539,12 +539,12 @@ public:
 					{
 						VisitSymbol(pa, &types[i], opMethods.values->resolvedSymbols[j], false, opTypes);
 					}
-					FilterFunctionByQualifier(cv, refType, opTypes);
+					FilterFieldsAndBestQualifiedFunctions(cv, refType, opTypes);
 
 					List<Ptr<ExprTsysList>> argTypesList;
 					argTypesList.Add(MakePtr<ExprTsysList>());
 					AddInternal(*argTypesList[0].Obj(), { nullptr,ExprTsysType::PRValue,pa.tsys->Int() });
-					FindQualifiedFunctions(pa, {}, TsysRefType::None, opTypes, false);
+					FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 					VisitOverloadedFunction(pa, opTypes, argTypesList, result);
 				}
 
@@ -561,7 +561,7 @@ public:
 					argTypesList.Add(MakePtr<ExprTsysList>());
 					AddInternal(*argTypesList[0].Obj(), types[i]);
 					AddInternal(*argTypesList[1].Obj(), { nullptr,ExprTsysType::PRValue,pa.tsys->Int() });
-					FindQualifiedFunctions(pa, {}, TsysRefType::None, opTypes, false);
+					FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 					VisitOverloadedFunction(pa, opTypes, argTypesList, result);
 				}
 			}
@@ -639,10 +639,10 @@ public:
 					{
 						VisitSymbol(pa, &types[i], opMethods.values->resolvedSymbols[j], false, opTypes);
 					}
-					FilterFunctionByQualifier(cv, refType, opTypes);
+					FilterFieldsAndBestQualifiedFunctions(cv, refType, opTypes);
 
 					List<Ptr<ExprTsysList>> argTypesList;
-					FindQualifiedFunctions(pa, {}, TsysRefType::None, opTypes, false);
+					FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 					VisitOverloadedFunction(pa, opTypes, argTypesList, result);
 				}
 
@@ -657,7 +657,7 @@ public:
 					List<Ptr<ExprTsysList>> argTypesList;
 					argTypesList.Add(MakePtr<ExprTsysList>());
 					AddInternal(*argTypesList[0].Obj(), types[i]);
-					FindQualifiedFunctions(pa, {}, TsysRefType::None, opTypes, false);
+					FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 					VisitOverloadedFunction(pa, opTypes, argTypesList, result);
 				}
 
@@ -822,12 +822,12 @@ public:
 						{
 							VisitSymbol(pa, &leftTypes[i], opMethods.values->resolvedSymbols[k], false, opTypes);
 						}
-						FilterFunctionByQualifier(leftCV, leftRefType, opTypes);
+						FilterFieldsAndBestQualifiedFunctions(leftCV, leftRefType, opTypes);
 
 						List<Ptr<ExprTsysList>> argTypesList;
 						argTypesList.Add(MakePtr<ExprTsysList>());
 						AddInternal(*argTypesList[0].Obj(), rightTypes[j]);
-						FindQualifiedFunctions(pa, {}, TsysRefType::None, opTypes, false);
+						FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 						VisitOverloadedFunction(pa, opTypes, argTypesList, result);
 					}
 
@@ -844,7 +844,7 @@ public:
 						argTypesList.Add(MakePtr<ExprTsysList>());
 						AddInternal(*argTypesList[0].Obj(), leftTypes[i]);
 						AddInternal(*argTypesList[1].Obj(), rightTypes[j]);
-						FindQualifiedFunctions(pa, {}, TsysRefType::None, opTypes, false);
+						FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 						VisitOverloadedFunction(pa, opTypes, argTypesList, result);
 					}
 
