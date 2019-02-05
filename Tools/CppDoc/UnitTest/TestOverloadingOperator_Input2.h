@@ -41,6 +41,7 @@ namespace a
 	void* operator&=		(Y&, int);
 	void* operator|=		(Y&, int);
 	void* operator^=		(Y&, int);
+	void* operator,			(Y&, int);
 	void* operator*			(int, Y&);
 	void* operator/			(int, Y&);
 	void* operator%			(int, Y&);

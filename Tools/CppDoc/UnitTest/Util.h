@@ -100,4 +100,8 @@ void RunOverloading()
 	RunOverloading<TYPE, decltype(INPUT)>, \
 	AssertExpr(L#INPUT, OUTPUT, L#TYPE " $PR", pa)\
 
+#define ASSERT_OVERLOADING_2(CODE, INPUT, OUTPUT, TYPE)\
+	RunOverloading<TYPE, decltype(CODE)>, \
+	AssertExpr(INPUT, OUTPUT, L#TYPE " $PR", pa)\
+
 #endif
