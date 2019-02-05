@@ -964,8 +964,6 @@ const A ca, cb;
 	AssertExpr(L"(1?a.F():b.F())",						L"((1 ? a.F() : b.F()))",								L"void $PR",				pa);
 	AssertExpr(L"(1?0:A(0),true)",						L"(((1 ? 0 : A(0)) , true))",							L"bool $PR",				pa);
 	AssertExpr(L"(true,1?0:A(0))",						L"((true , (1 ? 0 : A(0))))",							L"::A $PR",					pa);
-	// TODO
-	// Test operator,
 }
 
 TEST_CASE(TestParseExpr_MISC)

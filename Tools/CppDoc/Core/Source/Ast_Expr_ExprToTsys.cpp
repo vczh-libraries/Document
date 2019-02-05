@@ -762,12 +762,6 @@ public:
 				TsysRefType rightRefType;
 				auto rightEntity = rightType->GetEntity(rightCV, rightRefType);
 
-				if (self->op == CppBinaryOp::Comma)
-				{
-					AddInternal(result, rightTypes);
-					continue;
-				}
-
 				if (self->op == CppBinaryOp::ValueFieldDeref || self->op == CppBinaryOp::PtrFieldDeref)
 				{
 					if (rightEntity->GetType() == TsysType::Ptr && rightEntity->GetElement()->GetType() == TsysType::Member)
@@ -860,6 +854,12 @@ public:
 					{
 						break;
 					}
+				}
+
+				if (self->op == CppBinaryOp::Comma)
+				{
+					AddInternal(result, rightTypes);
+					continue;
 				}
 
 				auto leftPrim = leftEntity->GetType() == TsysType::Primitive;
