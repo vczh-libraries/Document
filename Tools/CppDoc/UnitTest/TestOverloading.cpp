@@ -208,9 +208,79 @@ Z z;
 	}
 }
 
+#define _ ,
+
 TEST_CASE(TestParseExpr_Overloading_Universal_Initialization)
 {
-	// TODO
+	{
+		TEST_DECL(
+struct A
+{
+	A() {}
+	A(int) {}
+	A(int _ void*) {}
+};
+
+struct B
+{
+	B(void*) {}
+	B(void* _ int) {}
+};
+
+struct C
+{
+	C(A, B, bool) {}
+};
+
+struct D
+{
+	D(B, A, bool) {}
+};
+
+bool F(const A&);
+void F(B&&);
+int F(A&);
+double F(B&);
+char F(C);
+wchar_t F(D);
+
+A a;
+B b{ nullptr };
+		);
+		COMPILE_PROGRAM(program, pa, input);
+
+		ASSERT_OVERLOADING(F({}),												L"F({})",											bool);
+		ASSERT_OVERLOADING(F(1),												L"F(1)",											bool);
+		ASSERT_OVERLOADING(F({1}),												L"F({1})",											bool);
+		ASSERT_OVERLOADING(F({{1}}),											L"F({{1}})",										bool);
+		ASSERT_OVERLOADING(F({1 _ nullptr}),									L"F({1, nullptr})",									bool);
+		ASSERT_OVERLOADING(F({{1} _ {nullptr}}),								L"F({{1}, {nullptr}})",								bool);
+		ASSERT_OVERLOADING(F({1 _ {}}),											L"F({1, {}})",										bool);
+		ASSERT_OVERLOADING(F({{1} _ {}}),										L"F({{1}, {}})",									bool);
+		ASSERT_OVERLOADING(F({{} _ nullptr}),									L"F({{}, nullptr})",								bool);
+		ASSERT_OVERLOADING(F({{} _ {nullptr}}),									L"F({{}, {nullptr}})",								bool);
+
+		ASSERT_OVERLOADING(F({nullptr}),										L"F({nullptr})",									void);
+		ASSERT_OVERLOADING(F({nullptr _ 1}),									L"F({nullptr, 1})",									void);
+		ASSERT_OVERLOADING(F({{nullptr} _ {1}}),								L"F({{nullptr}, {1}})",								void);
+		ASSERT_OVERLOADING(F({nullptr _ {}}),									L"F({nullptr, {}})",								void);
+		ASSERT_OVERLOADING(F({{nullptr} _ {}}),									L"F({{nullptr}, {}})",								void);
+		ASSERT_OVERLOADING(F({{} _ 1}),											L"F({{}, 1})",										void);
+		ASSERT_OVERLOADING(F({{} _ {1}}),										L"F({{{}}, {1}})",									void);
+
+		ASSERT_OVERLOADING(F(a),												L"F(a)",											int);
+		ASSERT_OVERLOADING(F(b),												L"F(b)",											double);
+
+		ASSERT_OVERLOADING(F({{} _ nullptr _ true}),							L"F({{}, nullptr, true})",							char);
+		ASSERT_OVERLOADING(F({{} _ {nullptr _ 1} _ true}),						L"F({{}, {nullptr, 1}, true})",						char);
+		ASSERT_OVERLOADING(F({{{1}, {}} _ {{} _ {1}} _ true}),					L"F({{{1}, {}}, {{}, {1}}, true})",					char);
+		ASSERT_OVERLOADING(F({{{}, {nullptr}} _ {{nullptr} _ {}} _ true}),		L"F({{{}, {nullptr}}, {{nullptr}, {}}, true})",		char);
+
+		ASSERT_OVERLOADING(F({nullptr _ {} _ true}),							L"F({nullptr, {}, true})",							wchar_t);
+		ASSERT_OVERLOADING(F({{nullptr _ 1} _ {} _ true}),						L"F({{nullptr, 1}, {}, true})",						wchar_t);
+		ASSERT_OVERLOADING(F({{{} _ {1}} _ {{1}, {}} _ true}),					L"F({{{}, {1}}, {{1}, {}}, true})",					wchar_t);
+		ASSERT_OVERLOADING(F({{{nullptr} _ {}} _ {{}, {nullptr}} _ true}),		L"F({{{nullptr}, {}}, {{}, {nullptr}}, true})",		wchar_t);
+	}
 }
 
 TEST_CASE(TestParseExpr_Overloading_InitializationList)
@@ -228,5 +298,7 @@ TEST_CASE(TestParseExpr_Overloading_CallOP_Ctor_UI_DPVA)
 	// TODO
 	// Mix invoke operator, constructor, universal initialization, default paramter and variant argument together
 }
+
+#undef _
 
 #pragma warning (pop)
