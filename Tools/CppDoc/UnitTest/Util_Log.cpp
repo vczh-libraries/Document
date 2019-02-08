@@ -1321,6 +1321,29 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			writer.WriteString(name);
 		}
 		return;
+	case TsysType::Init:
+		{
+			writer.WriteChar(L'{');
+			for (vint i = 0; i < tsys->GetParamCount(); i++)
+			{
+				if (i > 0) writer.WriteString(L", ");
+				Log(tsys->GetParam(i), writer);
+				switch (tsys->GetInit().types[i])
+				{
+				case ExprTsysType::LValue:
+					writer.WriteString(L" $L");
+					break;
+				case ExprTsysType::PRValue:
+					writer.WriteString(L" $PR");
+					break;
+				case ExprTsysType::XValue:
+					writer.WriteString(L" $X");
+					break;
+				}
+			}
+			writer.WriteChar(L'}');
+		}
+		return;
 	case TsysType::Generic:
 		break;
 	case TsysType::GenericArg:
