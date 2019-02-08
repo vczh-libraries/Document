@@ -175,7 +175,7 @@ public:
 			}
 			else
 			{
-				tsyses[0].Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }));
+				tsyses[0].Add(pa.tsys->Void());
 			}
 
 			for (vint i = 0; i < self->parameters.Count(); i++)

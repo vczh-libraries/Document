@@ -56,7 +56,6 @@ TEST_CASE(TestTypeSystem_Decl)
 	TEST_ASSERT(tsys->DeclOf(n1.Obj()) == tsys->DeclOf(n1.Obj()));
 	TEST_ASSERT(tsys->DeclOf(n1.Obj()) != tsys->DeclOf(n2.Obj()));
 }
-
 TEST_CASE(TestTypeSystem_GenericArg)
 {
 	auto n1 = MakePtr<Symbol>();
@@ -69,28 +68,28 @@ TEST_CASE(TestTypeSystem_GenericArg)
 TEST_CASE(TestTypeSystem_LRef)
 {
 	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	auto tvoid = tsys->Void();
 	TEST_ASSERT(tvoid->LRefOf() == tvoid->LRefOf());
 }
 
 TEST_CASE(TestTypeSystem_RRef)
 {
 	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	auto tvoid = tsys->Void();
 	TEST_ASSERT(tvoid->RRefOf() == tvoid->RRefOf());
 }
 
 TEST_CASE(TestTypeSystem_Ptr)
 {
 	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	auto tvoid = tsys->Void();
 	TEST_ASSERT(tvoid->PtrOf() == tvoid->PtrOf());
 }
 
 TEST_CASE(TestTypeSystem_Array)
 {
 	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	auto tvoid = tsys->Void();
 	TEST_ASSERT(tvoid->ArrayOf(1) == tvoid->ArrayOf(1));
 	TEST_ASSERT(tvoid->ArrayOf(2) == tvoid->ArrayOf(2));
 	TEST_ASSERT(tvoid->ArrayOf(1) != tvoid->ArrayOf(2));
@@ -99,7 +98,7 @@ TEST_CASE(TestTypeSystem_Array)
 TEST_CASE(TestTypeSystem_CV)
 {
 	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	auto tvoid = tsys->Void();
 
 #define CV(INDEX) {((INDEX)>>1)%2==1, ((INDEX)>>0)%2==1}
 	for (vint i = 0; i < 4; i++)
@@ -119,7 +118,7 @@ TEST_CASE(TestTypeSystem_CV)
 TEST_CASE(TestTypeSystem_Member)
 {
 	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	auto tvoid = tsys->Void();
 	auto tbool = tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 });
 	auto tchar = tsys->PrimitiveOf({ TsysPrimitiveType::SChar,TsysBytes::_1 });
 	TEST_ASSERT(tvoid->MemberOf(tbool) == tvoid->MemberOf(tbool));
@@ -130,7 +129,7 @@ TEST_CASE(TestTypeSystem_Function)
 {
 	auto n = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	auto tvoid = tsys->Void();
 	auto tdecl = tsys->DeclOf(n.Obj());
 	auto tgarg = tsys->GenericArgOf(n.Obj());
 
@@ -153,11 +152,43 @@ TEST_CASE(TestTypeSystem_Function)
 	TEST_ASSERT(tvoid->FunctionOf(types1, data1) != tvoid->FunctionOf(types2, data1));
 }
 
+TEST_CASE(TestTypeSystem_Init)
+{
+	auto tsys = ITsysAlloc::Create();
+	auto tvoid = tsys->Void();
+	auto tnull = tsys->Nullptr();
+
+	Array<ExprTsysItem> types[4] = { 2,2,2,2 };
+	types[0][0] = { nullptr,	ExprTsysType::LValue,	tvoid };
+	types[0][1] = { nullptr,	ExprTsysType::PRValue,	tnull };
+	types[1][0] = { nullptr,	ExprTsysType::PRValue,	tvoid };
+	types[1][1] = { nullptr,	ExprTsysType::LValue,	tnull };
+	types[2][0] = { nullptr,	ExprTsysType::LValue,	tnull };
+	types[2][1] = { nullptr,	ExprTsysType::PRValue,	tvoid };
+	types[3][0] = { nullptr,	ExprTsysType::PRValue,	tnull };
+	types[3][1] = { nullptr,	ExprTsysType::LValue,	tvoid };
+
+	for (vint i = 0; i < 4; i++)
+	{
+		for (vint j = 0; j < 4; j++)
+		{
+			if (i == j)
+			{
+				TEST_ASSERT(tvoid->InitOf(types[i]) == tvoid->InitOf(types[j]));
+			}
+			else
+			{
+				TEST_ASSERT(tvoid->InitOf(types[i]) != tvoid->InitOf(types[j]));
+			}
+		}
+	}
+}
+
 TEST_CASE(TestTypeSystem_Generic)
 {
 	auto n = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	auto tvoid = tsys->Void();
 	auto tdecl = tsys->DeclOf(n.Obj());
 	auto tgarg = tsys->GenericArgOf(n.Obj());
 
@@ -177,7 +208,7 @@ TEST_CASE(TestTypeSystem_Type)
 {
 	auto n = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	auto tvoid = tsys->Void();
 	auto tdecl = tsys->DeclOf(n.Obj());
 	auto tgarg = tsys->GenericArgOf(n.Obj());
 

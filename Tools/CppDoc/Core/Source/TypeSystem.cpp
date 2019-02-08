@@ -436,6 +436,11 @@ public:
 	{
 	}
 
+	ITsys* Void()override
+	{
+		return PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	}
+
 	ITsys* Zero()override
 	{
 		return &tsysZero;

@@ -244,7 +244,7 @@ public:
 			ExprToTsys(pa, self->expr, types);
 		}
 
-		AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }));
+		AddTemp(result, pa.tsys->Void());
 	}
 
 	void Visit(DeleteExpr* self)override
@@ -254,7 +254,7 @@ public:
 			ExprToTsys(pa, self->expr, types);
 		}
 
-		AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }));
+		AddTemp(result, pa.tsys->Void());
 	}
 
 	void VisitResolvableExpr(ResolvableExpr* self)
@@ -507,7 +507,7 @@ public:
 			ExprTsysList types;
 			ExprToTsys(pa, self->arguments[i], types);
 		}
-		AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 }));
+		AddTemp(result, pa.tsys->Void());
 	}
 
 	void Visit(PostfixUnaryExpr* self)override

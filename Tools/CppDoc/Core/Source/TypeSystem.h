@@ -230,6 +230,7 @@ ITsysAlloc
 class ITsysAlloc abstract : public Interface
 {
 public:
+	virtual ITsys*				Void() = 0;
 	virtual ITsys*				Zero() = 0;
 	virtual ITsys*				Nullptr() = 0;
 	virtual ITsys*				Int() = 0;
