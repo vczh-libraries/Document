@@ -11,21 +11,29 @@ extern void					Log(Ptr<Declaration> decl, StreamWriter& writer, vint indentatio
 extern void					Log(Ptr<Program> program, StreamWriter& writer);
 extern void					Log(ITsys* tsys, StreamWriter& writer);
 
+extern void					RefineInput(wchar_t* input);
 extern void					AssertMultilines(const WString& output, const WString& log);
-extern void					AssertType(const WString& input, const WString& log, const WString& logTsys);
-extern void					AssertType(const WString& input, const WString& log, const WString& logTsys, ParsingArguments& pa);
-extern void					AssertExpr(const WString& input, const WString& log, const WString& logTsys);
-extern void					AssertExpr(const WString& input, const WString& log, const WString& logTsys, ParsingArguments& pa);
-extern void					AssertStat(const WString& input, const WString& log);
-extern void					AssertStat(const WString& input, const WString& log, ParsingArguments& pa);
-extern void					AssertProgram(const WString& input, const WString& log, Ptr<IIndexRecorder> recorder = nullptr);
-extern void					AssertProgram(Ptr<Program> program, const WString& log);
+extern void					AssertType(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys);
+extern void					AssertType(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys, ParsingArguments& pa);
+extern void					AssertExpr(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys);
+extern void					AssertExpr(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys, ParsingArguments& pa);
+extern void					AssertStat(const wchar_t* input, const wchar_t* log);
+extern void					AssertStat(const wchar_t* input, const wchar_t* log, ParsingArguments& pa);
+extern void					AssertProgram(const wchar_t* input, const wchar_t* log, Ptr<IIndexRecorder> recorder = nullptr);
+extern void					AssertProgram(Ptr<Program> program, const wchar_t* log);
 
-#define TEST_DECL_(SOMETHING, INPUT) SOMETHING auto INPUT = L#SOMETHING
-#define TEST_DECL(SOMETHING) TEST_DECL_(SOMETHING, input)
+#define TEST_DECL(SOMETHING) SOMETHING wchar_t input[] = L#SOMETHING; RefineInput(input)
+
+#define TOKEN_READER(INPUT)\
+	Array<wchar_t> reader_array((vint)wcslen(INPUT) + 1);\
+	memcpy(&reader_array[0], INPUT, (size_t)(reader_array.Count()) * sizeof(wchar_t));\
+	RefineInput(&reader_array[0]);\
+	WString reader_string(&reader_array[0], false);\
+	CppTokenReader reader(GlobalCppLexer(), reader_string)\
+	
 
 #define COMPILE_PROGRAM_WITH_RECORDER(PROGRAM, PA, INPUT, RECORDER)\
-	CppTokenReader reader(GlobalCppLexer(), INPUT);\
+	TOKEN_READER(INPUT);\
 	auto cursor = reader.GetFirstToken();\
 	ParsingArguments PA(new Symbol, ITsysAlloc::Create(), RECORDER);\
 	auto PROGRAM = ParseProgram(PA, cursor);\
@@ -99,9 +107,5 @@ void RunOverloading()
 #define ASSERT_OVERLOADING(INPUT, OUTPUT, TYPE)\
 	RunOverloading<TYPE, decltype(INPUT)>, \
 	AssertExpr(L#INPUT, OUTPUT, L#TYPE " $PR", pa)\
-
-#define ASSERT_OVERLOADING_2(CODE, INPUT, OUTPUT, TYPE)\
-	RunOverloading<TYPE, decltype(CODE)>, \
-	AssertExpr(INPUT, OUTPUT, L#TYPE " $PR", pa)\
 
 #endif

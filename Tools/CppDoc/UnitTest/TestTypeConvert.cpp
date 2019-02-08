@@ -6,13 +6,13 @@ void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WS
 	TypeTsysList fromTypes, toTypes;
 	Ptr<Type> fromType, toType;
 	{
-		CppTokenReader reader(GlobalCppLexer(), fromCppType);
+		TOKEN_READER(fromCppType.Buffer());
 		auto cursor = reader.GetFirstToken();
 		fromType = ParseType(pa, cursor);
 		TEST_ASSERT(cursor == nullptr);
 	}
 	{
-		CppTokenReader reader(GlobalCppLexer(), toCppType);
+		TOKEN_READER(toCppType.Buffer());
 		auto cursor = reader.GetFirstToken();
 		toType = ParseType(pa, cursor);
 		TEST_ASSERT(cursor == nullptr);

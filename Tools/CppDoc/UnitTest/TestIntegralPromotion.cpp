@@ -8,7 +8,7 @@ Predefined Types
 ITsys* GetTsysFromCppType(Ptr<ITsysAlloc> tsys, const WString& cppType)
 {
 	ParsingArguments pa(nullptr, tsys, nullptr);
-	CppTokenReader reader(GlobalCppLexer(), cppType);
+	TOKEN_READER(cppType.Buffer());
 	auto cursor = reader.GetFirstToken();
 	auto type = ParseType(pa, cursor);
 	TEST_ASSERT(!cursor);
@@ -257,7 +257,7 @@ void AssertPostfixUnary(ParsingArguments& pa, const WString& name, const WString
 	auto input = name + op;
 	auto log = L"(" + name + L" " + op + L")";
 	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
-	AssertExpr(input, log, TsysToString(tsys), pa);
+	AssertExpr(input.Buffer(), log.Buffer(), TsysToString(tsys).Buffer(), pa);
 }
 
 TEST_CASE(TestIntegralPromotion_PostfixUnary)
@@ -280,7 +280,7 @@ void AssertPrefixUnary(ParsingArguments& pa, const WString& name, const WString&
 	auto input = op + name;
 	auto log = L"(" + op + L" " + name + L")";
 	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
-	AssertExpr(input, log, TsysToString(tsys), pa);
+	AssertExpr(input.Buffer(), log.Buffer(), TsysToString(tsys).Buffer(), pa);
 }
 
 template<typename T>
@@ -289,7 +289,7 @@ void AssertDereferenceUnary(ParsingArguments& pa, const WString& name)
 	auto input = L"*&" + name;
 	auto log = L"(* (& " + name + L"))";
 	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
-	AssertExpr(input, log, TsysToString(tsys), pa);
+	AssertExpr(input.Buffer(), log.Buffer(), TsysToString(tsys).Buffer(), pa);
 }
 
 TEST_CASE(TestIntegralPromotion_PrefixUnary)
@@ -342,7 +342,7 @@ void AssertBinary(ParsingArguments& pa, const WString& name1, const WString& nam
 	auto input = name1 + op + name2;
 	auto log = L"(" + name1 + L" " + op + L" " + name2 + L")";
 	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
-	AssertExpr(input, log, TsysToString(tsys), pa);
+	AssertExpr(input.Buffer(), log.Buffer(), TsysToString(tsys).Buffer(), pa);
 }
 
 TEST_CASE(TestIntegralPromotion_BinaryIntOp)

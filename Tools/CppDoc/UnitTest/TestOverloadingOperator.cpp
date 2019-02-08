@@ -135,7 +135,7 @@ TEST_CASE(TestParseExpr_Overloading_Binary)
 	ASSERT_OVERLOADING(x|=0,								L"(x |= 0)",							void *);
 	ASSERT_OVERLOADING(x^=0,								L"(x ^= 0)",							void *);
 	ASSERT_OVERLOADING(x^=0,								L"(x ^= 0)",							void *);
-	ASSERT_OVERLOADING_2(x _ 0,		L"x,0",					L"(x , 0)",								void *);
+	ASSERT_OVERLOADING(x _ 0,								L"(x , 0)",								void *);
 
 	ASSERT_OVERLOADING(y* 0,								L"(y * 0)",								void *);
 	ASSERT_OVERLOADING(y/ 0,								L"(y / 0)",								void *);
@@ -165,7 +165,7 @@ TEST_CASE(TestParseExpr_Overloading_Binary)
 	ASSERT_OVERLOADING(y&=0,								L"(y &= 0)",							void *);
 	ASSERT_OVERLOADING(y|=0,								L"(y |= 0)",							void *);
 	ASSERT_OVERLOADING(y^=0,								L"(y ^= 0)",							void *);
-	ASSERT_OVERLOADING_2(y _ 0,		L"y,0",					L"(y , 0)",								void *);
+	ASSERT_OVERLOADING(y _ 0,								L"(y , 0)",								void *);
 
 	ASSERT_OVERLOADING(0* y,								L"(0 * y)",								void *);
 	ASSERT_OVERLOADING(0/ y,								L"(0 / y)",								void *);
@@ -195,7 +195,7 @@ TEST_CASE(TestParseExpr_Overloading_Binary)
 	ASSERT_OVERLOADING(0&=y,								L"(0 &= y)",							void *);
 	ASSERT_OVERLOADING(0|=y,								L"(0 |= y)",							void *);
 	ASSERT_OVERLOADING(0^=y,								L"(0 ^= y)",							void *);
-	ASSERT_OVERLOADING_2(0 _ y,		L"0,y",					L"(0 , y)",								void *);
+	ASSERT_OVERLOADING(0 _ y,								L"(0 , y)",								void *);
 
 	ASSERT_OVERLOADING(z* 0,								L"(z * 0)",								void *);
 	ASSERT_OVERLOADING(z/ 0,								L"(z / 0)",								void *);
@@ -225,7 +225,7 @@ TEST_CASE(TestParseExpr_Overloading_Binary)
 	ASSERT_OVERLOADING(z&=0,								L"(z &= 0)",							void *);
 	ASSERT_OVERLOADING(z|=0,								L"(z |= 0)",							void *);
 	ASSERT_OVERLOADING(z^=0,								L"(z ^= 0)",							void *);
-	ASSERT_OVERLOADING_2(z _ 0,		L"z,0",					L"(z , 0)",								void *);
+	ASSERT_OVERLOADING(z _ 0,								L"(z , 0)",								void *);
 
 	ASSERT_OVERLOADING(0* z,								L"(0 * z)",								void *);
 	ASSERT_OVERLOADING(0/ z,								L"(0 / z)",								void *);
@@ -255,7 +255,7 @@ TEST_CASE(TestParseExpr_Overloading_Binary)
 	ASSERT_OVERLOADING(0&=z,								L"(0 &= z)",							void *);
 	ASSERT_OVERLOADING(0|=z,								L"(0 |= z)",							void *);
 	ASSERT_OVERLOADING(0^=z,								L"(0 ^= z)",							void *);
-	ASSERT_OVERLOADING_2(0 _ z,		L"0,z",					L"(0 , z)",								void *);
+	ASSERT_OVERLOADING(0 _ z,								L"(0 , z)",								void *);
 
 	ASSERT_OVERLOADING(cx* 0,								L"(cx * 0)",							bool *);
 	ASSERT_OVERLOADING(cx/ 0,								L"(cx / 0)",							bool *);
@@ -286,7 +286,7 @@ TEST_CASE(TestParseExpr_Overloading_Binary)
 	ASSERT_OVERLOADING(cx&=0,								L"(cx &= 0)",							bool *);
 	ASSERT_OVERLOADING(cx|=0,								L"(cx |= 0)",							bool *);
 	ASSERT_OVERLOADING(cx^=0,								L"(cx ^= 0)",							bool *);
-	ASSERT_OVERLOADING_2(cx _ 0,	L"cx,0",				L"(cx , 0)",							bool *);
+	ASSERT_OVERLOADING(cx _ 0,								L"(cx , 0)",							bool *);
 
 	ASSERT_OVERLOADING(cy* 0,								L"(cy * 0)",							bool *);
 	ASSERT_OVERLOADING(cy/ 0,								L"(cy / 0)",							bool *);
@@ -316,7 +316,7 @@ TEST_CASE(TestParseExpr_Overloading_Binary)
 	ASSERT_OVERLOADING(cy&=0,								L"(cy &= 0)",							bool *);
 	ASSERT_OVERLOADING(cy|=0,								L"(cy |= 0)",							bool *);
 	ASSERT_OVERLOADING(cy^=0,								L"(cy ^= 0)",							bool *);
-	ASSERT_OVERLOADING_2(cy _ 0,	L"cy,0",				L"(cy , 0)",							bool *);
+	ASSERT_OVERLOADING(cy _ 0,								L"(cy , 0)",							bool *);
 
 	ASSERT_OVERLOADING(0* cy,								L"(0 * cy)",							bool *);
 	ASSERT_OVERLOADING(0/ cy,								L"(0 / cy)",							bool *);
@@ -346,7 +346,7 @@ TEST_CASE(TestParseExpr_Overloading_Binary)
 	ASSERT_OVERLOADING(0&=cy,								L"(0 &= cy)",							bool *);
 	ASSERT_OVERLOADING(0|=cy,								L"(0 |= cy)",							bool *);
 	ASSERT_OVERLOADING(0^=cy,								L"(0 ^= cy)",							bool *);
-	ASSERT_OVERLOADING_2(0 _ cy,	L"0,cy",				L"(0 , cy)",							bool *);
+	ASSERT_OVERLOADING(0 _ cy,								L"(0 , cy)",							bool *);
 
 	ASSERT_OVERLOADING(cz* 0,								L"(cz * 0)",							bool *);
 	ASSERT_OVERLOADING(cz/ 0,								L"(cz / 0)",							bool *);
@@ -376,7 +376,7 @@ TEST_CASE(TestParseExpr_Overloading_Binary)
 	ASSERT_OVERLOADING(cz&=0,								L"(cz &= 0)",							bool *);
 	ASSERT_OVERLOADING(cz|=0,								L"(cz |= 0)",							bool *);
 	ASSERT_OVERLOADING(cz^=0,								L"(cz ^= 0)",							bool *);
-	ASSERT_OVERLOADING_2(cz _ 0,	L"cz,0",				L"(cz , 0)",							bool *);
+	ASSERT_OVERLOADING(cz _ 0,								L"(cz , 0)",							bool *);
 
 	ASSERT_OVERLOADING(0* cz,								L"(0 * cz)",							bool *);
 	ASSERT_OVERLOADING(0/ cz,								L"(0 / cz)",							bool *);
@@ -406,7 +406,7 @@ TEST_CASE(TestParseExpr_Overloading_Binary)
 	ASSERT_OVERLOADING(0&=cz,								L"(0 &= cz)",							bool *);
 	ASSERT_OVERLOADING(0|=cz,								L"(0 |= cz)",							bool *);
 	ASSERT_OVERLOADING(0^=cz,								L"(0 ^= cz)",							bool *);
-	ASSERT_OVERLOADING_2(0 _ cz,	L"0,cz",				L"(0 , cz)",							bool *);
+	ASSERT_OVERLOADING(0 _ cz,								L"(0 , cz)",							bool *);
 }
 
 #undef _

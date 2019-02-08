@@ -4,6 +4,22 @@
 AssertMultilines
 ***********************************************************************/
 
+void RefineInput(wchar_t* input)
+{
+	auto reading = input;
+	while (true)
+	{
+		reading = wcsstr(reading, L" _ ");
+		if (!reading) break;
+		reading[1] = L',';
+		reading += 3;
+	}
+}
+
+/***********************************************************************
+AssertMultilines
+***********************************************************************/
+
 void AssertMultilines(const WString& output, const WString& log)
 {
 	StringReader srExpect(log);
@@ -24,15 +40,15 @@ void AssertMultilines(const WString& output, const WString& log)
 AssertType
 ***********************************************************************/
 
-void AssertType(const WString& input, const WString& log, const WString& logTsys)
+void AssertType(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys)
 {
 	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
 	AssertType(input, log, logTsys, pa);
 }
 
-void AssertType(const WString& input, const WString& log, const WString& logTsys, ParsingArguments& pa)
+void AssertType(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys, ParsingArguments& pa)
 {
-	CppTokenReader reader(GlobalCppLexer(), input);
+	TOKEN_READER(input);
 	auto cursor = reader.GetFirstToken();
 
 	auto type = ParseType(pa, cursor);
@@ -72,15 +88,15 @@ void AssertType(const WString& input, const WString& log, const WString& logTsys
 AssertExpr
 ***********************************************************************/
 
-void AssertExpr(const WString& input, const WString& log, const WString& logTsys)
+void AssertExpr(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys)
 {
 	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
 	AssertExpr(input, log, logTsys, pa);
 }
 
-void AssertExpr(const WString& input, const WString& log, const WString& logTsys, ParsingArguments& pa)
+void AssertExpr(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys, ParsingArguments& pa)
 {
-	CppTokenReader reader(GlobalCppLexer(), input);
+	TOKEN_READER(input);
 	auto cursor = reader.GetFirstToken();
 
 	auto expr = ParseExpr(pa, true, cursor);
@@ -134,15 +150,15 @@ void AssertExpr(const WString& input, const WString& log, const WString& logTsys
 AssertStat
 ***********************************************************************/
 
-void AssertStat(const WString& input, const WString& log)
+void AssertStat(const wchar_t* input, const wchar_t* log)
 {
 	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
 	AssertStat(input, log, pa);
 }
 
-void AssertStat(const WString& input, const WString& log, ParsingArguments& pa)
+void AssertStat(const wchar_t* input, const wchar_t* log, ParsingArguments& pa)
 {
-	CppTokenReader reader(GlobalCppLexer(), input);
+	TOKEN_READER(input);
 	auto cursor = reader.GetFirstToken();
 
 	auto stat = ParseStat(pa, cursor);
@@ -160,13 +176,13 @@ void AssertStat(const WString& input, const WString& log, ParsingArguments& pa)
 AssertProgram
 ***********************************************************************/
 
-void AssertProgram(const WString& input, const WString& log, Ptr<IIndexRecorder> recorder)
+void AssertProgram(const wchar_t* input, const wchar_t* log, Ptr<IIndexRecorder> recorder)
 {
 	COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
 	AssertProgram(program, log);
 }
 
-void AssertProgram(Ptr<Program> program, const WString& log)
+void AssertProgram(Ptr<Program> program, const wchar_t* log)
 {
 	auto output = GenerateToStream([&](StreamWriter& writer)
 	{
