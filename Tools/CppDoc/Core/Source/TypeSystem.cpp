@@ -47,7 +47,7 @@ namespace vl
 	template<typename TType, typename TData>
 	struct POD<WithParams<TType, TData>>
 	{
-		static const bool Result = true;
+		static const bool Result = POD<TData>::Result;
 	};
 }
 
