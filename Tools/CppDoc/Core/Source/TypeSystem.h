@@ -9,6 +9,55 @@ using namespace vl::collections;
 class Symbol;
 struct ParsingArguments;
 class FunctionType;
+class ITsys;
+
+/***********************************************************************
+ExprTsysType
+***********************************************************************/
+
+enum class ExprTsysType
+{
+	LValue,
+	XValue,
+	PRValue,
+};
+
+struct ExprTsysItem
+{
+	Symbol*					symbol = nullptr;
+	ExprTsysType			type = ExprTsysType::PRValue;
+	ITsys*					tsys = nullptr;
+
+	ExprTsysItem() = default;
+	ExprTsysItem(const ExprTsysItem&) = default;
+	ExprTsysItem(ExprTsysItem&&) = default;
+
+	ExprTsysItem(Symbol* _symbol, ExprTsysType _type, ITsys* _tsys)
+		:symbol(_symbol), type(_type), tsys(_tsys)
+	{
+	}
+
+	ExprTsysItem& operator=(const ExprTsysItem&) = default;
+	ExprTsysItem& operator=(ExprTsysItem&&) = default;
+
+	static vint Compare(const ExprTsysItem& a, const ExprTsysItem& b)
+	{
+		if (a.symbol < b.symbol) return -1;
+		if (a.symbol > b.symbol) return 1;
+		if (a.type < b.type) return -1;
+		if (a.type > b.type) return 1;
+		if (a.tsys < b.tsys) return -1;
+		if (a.tsys > b.tsys) return 1;
+		return 0;
+	}
+
+	bool operator==	(const ExprTsysItem& item)const { return Compare(*this, item) == 0; }
+	bool operator!=	(const ExprTsysItem& item)const { return Compare(*this, item) != 0; }
+	bool operator<	(const ExprTsysItem& item)const { return Compare(*this, item) < 0; }
+	bool operator<=	(const ExprTsysItem& item)const { return Compare(*this, item) <= 0; }
+	bool operator>	(const ExprTsysItem& item)const { return Compare(*this, item) > 0; }
+	bool operator>=	(const ExprTsysItem& item)const { return Compare(*this, item) >= 0; }
+};
 
 /***********************************************************************
 Interface
@@ -83,6 +132,22 @@ struct TsysFunc
 	}
 };
 
+struct TsysInit
+{
+	Array<ExprTsysType>			types;
+
+	TsysInit() = default;
+	TsysInit(const TsysInit& init) { CopyFrom(types, init.types); }
+	TsysInit& operator=(const TsysInit& init) { CopyFrom(types, init.types); return *this; }
+
+	TsysInit(vint count) :types(count) {}
+
+	static vint Compare(const TsysInit& a, const TsysInit& b)
+	{
+		return CompareEnumerable(a.types, b.types);
+	}
+};
+
 struct TsysGeneric
 {
 	static vint Compare(TsysGeneric, TsysGeneric) { return 0; }
@@ -100,6 +165,7 @@ struct TsysGeneric
 	F(Member)			/* Element, Class						*/	\
 	F(CV)				/* CV									*/	\
 	F(Decl)				/* Decl									*/	\
+	F(Init)				/* ParamCount, Param, Init				*/	\
 	F(Generic)			/* Element, ParamCount, Param, Generic	*/	\
 	F(GenericArg)		/* Decl									*/	\
 	F(Expr)				/* ?									*/	\
@@ -140,6 +206,7 @@ public:
 	virtual ITsys*				GetParam(vint index) = 0;
 	virtual vint				GetParamCount() = 0;
 	virtual TsysFunc			GetFunc() = 0;
+	virtual TsysInit			GetInit() = 0;
 	virtual TsysGeneric			GetGeneric() = 0;
 	virtual Symbol*				GetDecl() = 0;
 
@@ -150,6 +217,7 @@ public:
 	virtual ITsys*				FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func) = 0;
 	virtual ITsys*				MemberOf(ITsys* classType) = 0;
 	virtual ITsys*				CVOf(TsysCV cv) = 0;
+	virtual ITsys*				InitOf(Array<ExprTsysItem>& params) = 0;
 	virtual ITsys*				GenericOf(IEnumerable<ITsys*>& params) = 0;
 
 	virtual ITsys*				GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
@@ -178,50 +246,6 @@ public:
 /***********************************************************************
 Helpers
 ***********************************************************************/
-
-enum class ExprTsysType
-{
-	LValue,
-	XValue,
-	PRValue,
-};
-
-struct ExprTsysItem
-{
-	Symbol*					symbol = nullptr;
-	ExprTsysType			type = ExprTsysType::PRValue;
-	ITsys*					tsys = nullptr;
-
-	ExprTsysItem() = default;
-	ExprTsysItem(const ExprTsysItem&) = default;
-	ExprTsysItem(ExprTsysItem&&) = default;
-
-	ExprTsysItem(Symbol* _symbol, ExprTsysType _type, ITsys* _tsys)
-		:symbol(_symbol), type(_type), tsys(_tsys)
-	{
-	}
-
-	ExprTsysItem& operator=(const ExprTsysItem&) = default;
-	ExprTsysItem& operator=(ExprTsysItem&&) = default;
-
-	static vint Compare(const ExprTsysItem& a, const ExprTsysItem& b)
-	{
-		if (a.symbol < b.symbol) return -1;
-		if (a.symbol > b.symbol) return 1;
-		if (a.type < b.type) return -1;
-		if (a.type > b.type) return 1;
-		if (a.tsys < b.tsys) return -1;
-		if (a.tsys > b.tsys) return 1;
-		return 0;
-	}
-
-	bool operator==	(const ExprTsysItem& item)const { return Compare(*this, item) == 0; }
-	bool operator!=	(const ExprTsysItem& item)const { return Compare(*this, item) != 0; }
-	bool operator<	(const ExprTsysItem& item)const { return Compare(*this, item) < 0; }
-	bool operator<=	(const ExprTsysItem& item)const { return Compare(*this, item) <= 0; }
-	bool operator>	(const ExprTsysItem& item)const { return Compare(*this, item) > 0; }
-	bool operator>=	(const ExprTsysItem& item)const { return Compare(*this, item) >= 0; }
-};
 
 extern TsysConv					TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType);
 extern TsysConv					TestConvert(ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem);

@@ -68,6 +68,7 @@ protected:
 	Dictionary<ITsys*, ITsys_Member*>				memberOf;
 	ITsys_CV*										cvOf[3] = { 0 };
 	WithParamsList<ITsys_Function, TsysFunc>		functionOf;
+	WithParamsList<ITsys_Init, TsysInit>			initOf;
 	WithParamsList<ITsys_Generic, TsysGeneric>		genericOf;
 
 	template<typename TType, typename TData, vint BlockSize>
@@ -87,6 +88,7 @@ public:
 	ITsys*				GetParam(vint index)						{ throw "Not Implemented!"; }
 	vint				GetParamCount()								{ throw "Not Implemented!"; }
 	TsysFunc			GetFunc()									{ throw "Not Implemented!"; }
+	TsysInit			GetInit()									{ throw "Not Implemented!"; }
 	TsysGeneric			GetGeneric()								{ throw "Not Implemented!"; }
 	Symbol*				GetDecl()									{ throw "Not Implemented!"; }
 
@@ -97,6 +99,7 @@ public:
 	ITsys* FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)	override;
 	ITsys* MemberOf(ITsys* classType)								override;
 	ITsys* CVOf(TsysCV cv)											override;
+	ITsys* InitOf(Array<ExprTsysItem>& params)				override;
 	ITsys* GenericOf(IEnumerable<ITsys*>& params)					override;
 
 	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
@@ -309,6 +312,11 @@ class ITSYS_CLASS(Function)
 	ITSYS_MEMBERS_WITHPARAMS(Function, TsysFunc, Func)
 };
 
+class ITSYS_CLASS(Init)
+{
+	ITSYS_MEMBERS_WITHPARAMS(Init, TsysInit, Init)
+};
+
 class ITSYS_CLASS(Generic)
 {
 	ITSYS_MEMBERS_WITHPARAMS(Generic, TsysGeneric, Generic)
@@ -417,6 +425,7 @@ public:
 	ITsys_Allocator<ITsys_Member,		1024>		_member;
 	ITsys_Allocator<ITsys_CV,			1024>		_cv;
 	ITsys_Allocator<ITsys_Decl,			1024>		_decl;
+	ITsys_Allocator<ITsys_Init,			1024>		_init;
 	ITsys_Allocator<ITsys_Generic,		1024>		_generic;
 	ITsys_Allocator<ITsys_GenericArg,	1024>		_genericArg;
 	ITsys_Allocator<ITsys_Expr,			1024>		_expr;
@@ -574,6 +583,18 @@ ITsys* TsysBase::CVOf(TsysCV cv)
 	auto& itsys = cvOf[index];
 	if (!itsys) itsys = tsys->_cv.Alloc(tsys, this, cv);
 	return itsys;
+}
+
+ITsys* TsysBase::InitOf(Array<ExprTsysItem>& params)
+{
+	Array<ITsys*> tsys(params.Count());
+	TsysInit data(params.Count());
+	for (vint i = 0; i < params.Count(); i++)
+	{
+		tsys[i] = params[i].tsys;
+		data.types[i] = params[i].type;
+	}
+	return ParamsOf(tsys, data, initOf, &TsysAlloc::_init);
 }
 
 ITsys* TsysBase::GenericOf(IEnumerable<ITsys*>& params)
