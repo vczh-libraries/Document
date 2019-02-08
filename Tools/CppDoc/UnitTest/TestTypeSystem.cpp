@@ -174,11 +174,11 @@ TEST_CASE(TestTypeSystem_Init)
 		{
 			if (i == j)
 			{
-				TEST_ASSERT(tvoid->InitOf(types[i]) == tvoid->InitOf(types[j]));
+				TEST_ASSERT(tsys->InitOf(types[i]) == tsys->InitOf(types[j]));
 			}
 			else
 			{
-				TEST_ASSERT(tvoid->InitOf(types[i]) != tvoid->InitOf(types[j]));
+				TEST_ASSERT(tsys->InitOf(types[i]) != tsys->InitOf(types[j]));
 			}
 		}
 	}

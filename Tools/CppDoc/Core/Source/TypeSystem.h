@@ -217,7 +217,6 @@ public:
 	virtual ITsys*				FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func) = 0;
 	virtual ITsys*				MemberOf(ITsys* classType) = 0;
 	virtual ITsys*				CVOf(TsysCV cv) = 0;
-	virtual ITsys*				InitOf(Array<ExprTsysItem>& params) = 0;
 	virtual ITsys*				GenericOf(IEnumerable<ITsys*>& params) = 0;
 
 	virtual ITsys*				GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
@@ -240,6 +239,7 @@ public:
 	virtual ITsys*				PrimitiveOf(TsysPrimitive primitive) = 0;
 	virtual ITsys*				DeclOf(Symbol* decl) = 0;
 	virtual ITsys*				GenericArgOf(Symbol* decl) = 0;
+	virtual ITsys*				InitOf(Array<ExprTsysItem>& params) = 0;
 
 	static Ptr<ITsysAlloc>		Create();
 };

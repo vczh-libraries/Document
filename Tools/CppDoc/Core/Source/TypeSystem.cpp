@@ -51,10 +51,11 @@ namespace vl
 	};
 }
 
+template<typename TType, typename TData>
+using WithParamsList = SortedList<WithParams<TType, TData>>;
+
 class TsysBase : public ITsys
 {
-	template<typename TType, typename TData>
-	using WithParamsList = SortedList<WithParams<TType, TData>>;
 
 #define DEFINE_TSYS_TYPE(NAME) friend class ITsys_##NAME;
 	TSYS_TYPE_LIST(DEFINE_TSYS_TYPE)
@@ -68,11 +69,7 @@ protected:
 	Dictionary<ITsys*, ITsys_Member*>				memberOf;
 	ITsys_CV*										cvOf[3] = { 0 };
 	WithParamsList<ITsys_Function, TsysFunc>		functionOf;
-	WithParamsList<ITsys_Init, TsysInit>			initOf;
 	WithParamsList<ITsys_Generic, TsysGeneric>		genericOf;
-
-	template<typename TType, typename TData, vint BlockSize>
-	ITsys* ParamsOf(IEnumerable<ITsys*>& params, const TData& data, WithParamsList<TType, TData>& paramsOf, ITsys_Allocator<TType, BlockSize> TsysAlloc::* alloc);
 
 	virtual ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)
 	{
@@ -99,7 +96,6 @@ public:
 	ITsys* FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)	override;
 	ITsys* MemberOf(ITsys* classType)								override;
 	ITsys* CVOf(TsysCV cv)											override;
-	ITsys* InitOf(Array<ExprTsysItem>& params)				override;
 	ITsys* GenericOf(IEnumerable<ITsys*>& params)					override;
 
 	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
@@ -109,6 +105,24 @@ public:
 		return GetEntityInternal(cv, refType);
 	}
 };
+
+template<typename TType, typename TData, vint BlockSize>
+ITsys* ParamsOf(IEnumerable<ITsys*>& params, const TData& data, WithParamsList<TType, TData>& paramsOf, TsysBase* element, TsysAlloc* tsys, ITsys_Allocator<TType, BlockSize> TsysAlloc::* alloc)
+{
+	WithParams<TType, TData> key;
+	key.params = &params;
+	key.itsys = nullptr;
+	key.data = data;
+	vint index = paramsOf.IndexOf(key);
+	if (index != -1) return paramsOf[index].itsys;
+
+	auto itsys = (tsys->*alloc).Alloc(tsys, element, data);
+	CopyFrom(itsys->GetParams(), params);
+	key.params = &itsys->GetParams();
+	key.itsys = itsys;
+	paramsOf.Add(key);
+	return itsys;
+}
 
 template<TsysType Type>
 class TsysBase_ : public TsysBase
@@ -153,19 +167,28 @@ Concrete Tsys
 		ITsys* GetElement()override { return element; }												\
 		DATA Get##NAME()override { return data; }													\
 
-#define ITSYS_MEMBERS_WITHPARAMS(TYPE, DATA, NAME)													\
+#define ITSYS_MEMBERS_WITHPARAMS_SHARED(TYPE, DATA, NAME)											\
 	protected:																						\
-		TsysBase*			element;																\
 		List<ITsys*>		params;																	\
 		DATA				data;																	\
 	public:																							\
-		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element, DATA _data)								\
-			:TsysBase_(_tsys), element(_element), data(_data) {}									\
 		List<ITsys*>& GetParams() { return params; }												\
-		ITsys* GetElement()override { return element; }												\
 		ITsys* GetParam(vint index)override { return params.Get(index); }							\
 		vint GetParamCount()override { return params.Count(); }										\
 		DATA Get##NAME()override { return data; }													\
+
+#define ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(TYPE, DATA, NAME)										\
+	protected:																						\
+		TsysBase*			element;																\
+	public:																							\
+		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element, DATA _data)								\
+			:TsysBase_(_tsys), element(_element), data(_data) {}									\
+		ITsys* GetElement()override { return element; }												\
+
+#define ITSYS_MEMBERS_WITHPARAMS_WITHOUT_ELEMENT(TYPE, DATA, NAME)									\
+	public:																							\
+		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase*, DATA _data)										\
+			:TsysBase_(_tsys), data(_data) {}														\
 
 class ITSYS_CLASS(Zero)
 {
@@ -309,17 +332,20 @@ class ITSYS_CLASS(Member)
 
 class ITSYS_CLASS(Function)
 {
-	ITSYS_MEMBERS_WITHPARAMS(Function, TsysFunc, Func)
+	ITSYS_MEMBERS_WITHPARAMS_SHARED(Function, TsysFunc, Func)
+	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(Function, TsysFunc, Func)
 };
 
 class ITSYS_CLASS(Init)
 {
-	ITSYS_MEMBERS_WITHPARAMS(Init, TsysInit, Init)
+	ITSYS_MEMBERS_WITHPARAMS_SHARED(Init, TsysInit, Init)
+	ITSYS_MEMBERS_WITHPARAMS_WITHOUT_ELEMENT(Init, TsysInit, Init)
 };
 
 class ITSYS_CLASS(Generic)
 {
-	ITSYS_MEMBERS_WITHPARAMS(Generic, TsysGeneric, Generic)
+	ITSYS_MEMBERS_WITHPARAMS_SHARED(Generic, TsysGeneric, Generic)
+	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(Generic, TsysGeneric, Generic)
 };
 
 
@@ -414,6 +440,7 @@ protected:
 	ITsys_Primitive*								primitives[(vint)TsysPrimitiveType::_COUNT * (vint)TsysBytes::_COUNT] = { 0 };
 	Dictionary<Symbol*, ITsys_Decl*>				decls;
 	Dictionary<Symbol*, ITsys_GenericArg*>			genericArgs;
+	WithParamsList<ITsys_Init, TsysInit>			initOf;
 
 public:
 	ITsys_Allocator<ITsys_Primitive,	1024>		_primitive;
@@ -501,6 +528,18 @@ public:
 		genericArgs.Add(decl, itsys);
 		return itsys;
 	}
+
+	ITsys* InitOf(Array<ExprTsysItem>& params)override
+	{
+		Array<ITsys*> tsys(params.Count());
+		TsysInit data(params.Count());
+		for (vint i = 0; i < params.Count(); i++)
+		{
+			tsys[i] = params[i].tsys;
+			data.types[i] = params[i].type;
+		}
+		return ParamsOf(tsys, data, initOf, nullptr, this, &TsysAlloc::_init);
+	}
 };
 
 Ptr<ITsysAlloc> ITsysAlloc::Create()
@@ -511,24 +550,6 @@ Ptr<ITsysAlloc> ITsysAlloc::Create()
 /***********************************************************************
 TsysBase (Impl)
 ***********************************************************************/
-
-template<typename TType, typename TData, vint BlockSize>
-ITsys* TsysBase::ParamsOf(IEnumerable<ITsys*>& params, const TData& data, WithParamsList<TType, TData>& paramsOf, ITsys_Allocator<TType, BlockSize> TsysAlloc::* alloc)
-{
-	WithParams<TType, TData> key;
-	key.params = &params;
-	key.itsys = nullptr;
-	key.data = data;
-	vint index = paramsOf.IndexOf(key);
-	if (index != -1) return paramsOf[index].itsys;
-
-	auto itsys = (tsys->*alloc).Alloc(tsys, this, data);
-	CopyFrom(itsys->GetParams(), params);
-	key.params = &itsys->GetParams();
-	key.itsys = itsys;
-	paramsOf.Add(key);
-	return itsys;
-}
 
 ITsys* TsysBase::LRefOf()
 {
@@ -559,7 +580,7 @@ ITsys* TsysBase::ArrayOf(vint dimensions)
 
 ITsys* TsysBase::FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)
 {
-	return ParamsOf(params, func, functionOf, &TsysAlloc::_function);
+	return ParamsOf(params, func, functionOf, this, tsys, &TsysAlloc::_function);
 }
 
 ITsys* TsysBase::MemberOf(ITsys* classType)
@@ -590,19 +611,7 @@ ITsys* TsysBase::CVOf(TsysCV cv)
 	return itsys;
 }
 
-ITsys* TsysBase::InitOf(Array<ExprTsysItem>& params)
-{
-	Array<ITsys*> tsys(params.Count());
-	TsysInit data(params.Count());
-	for (vint i = 0; i < params.Count(); i++)
-	{
-		tsys[i] = params[i].tsys;
-		data.types[i] = params[i].type;
-	}
-	return ParamsOf(tsys, data, initOf, &TsysAlloc::_init);
-}
-
 ITsys* TsysBase::GenericOf(IEnumerable<ITsys*>& params)
 {
-	return ParamsOf(params, TsysGeneric(), genericOf, &TsysAlloc::_generic);
+	return ParamsOf(params, TsysGeneric(), genericOf, this, tsys, &TsysAlloc::_generic);
 }
