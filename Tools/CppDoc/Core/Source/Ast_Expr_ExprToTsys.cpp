@@ -500,14 +500,39 @@ public:
 		}
 	}
 
+	void CreateUniversalInitializerType(List<Ptr<ExprTsysList>>& argTypesList, Array<vint>& indices, vint index)
+	{
+		if (index == argTypesList.Count())
+		{
+			Array<ExprTsysItem> params(index);
+			for (vint i = 0; i < index; i++)
+			{
+				params[i] = argTypesList[i]->Get(indices[i]);
+			}
+			AddInternal(result, { nullptr,ExprTsysType::PRValue,pa.tsys->InitOf(params) });
+		}
+		else
+		{
+			for (vint i = 0; i < argTypesList[index]->Count(); i++)
+			{
+				indices[index] = i;
+				CreateUniversalInitializerType(argTypesList, indices, index + 1);
+			}
+		}
+	}
+
 	void Visit(UniversalInitializerExpr* self)override
 	{
+		List<Ptr<ExprTsysList>> argTypesList;
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->arguments[i], types);
+			auto argTypes = MakePtr<ExprTsysList>();
+			ExprToTsys(pa, self->arguments[i], *argTypes.Obj());
+			argTypesList.Add(argTypes);
 		}
-		AddTemp(result, pa.tsys->Void());
+
+		Array<vint> indices(argTypesList.Count());
+		CreateUniversalInitializerType(argTypesList, indices, 0);
 	}
 
 	void Visit(PostfixUnaryExpr* self)override

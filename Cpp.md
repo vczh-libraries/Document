@@ -5,7 +5,7 @@
 - The syntax has less restrictions than the real C++ language specification, because the tool assumes the input is correct.
 
 ## Short-term tasks
-- [ ] Add an internal `ITsys` type for `{a,b,c}` expressions
+- [x] Add an internal `ITsys` type for `{a,b,c}` expressions
 - [ ] Use this type in overloading
 - [ ] Add an internal `ITsys` type for lambda expressions
 - [ ] Use this type in overloading

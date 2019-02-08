@@ -1052,9 +1052,16 @@ using namespace std;
 
 TEST_CASE(TestParseExpr_Universal_Initialization)
 {
-	AssertExpr(L"{}",						L"{}",							L"void $PR");
-	AssertExpr(L"{1}",						L"{1}",							L"void $PR");
-	AssertExpr(L"{1, 2}",					L"{1, 2}",						L"void $PR");
+	auto input = LR"(
+struct S{};
+int a;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"{}",						L"{}",							L"{} $PR",												pa);
+	AssertExpr(L"{1}",						L"{1}",							L"{__int32 $PR} $PR",									pa);
+	AssertExpr(L"{1, 2}",					L"{1, 2}",						L"{__int32 $PR, __int32 $PR} $PR",						pa);
+	AssertExpr(L"{nullptr, (a), S()}",		L"{nullptr, (a), S()}",			L"{nullptr_t $PR, __int32 & $L, ::S $PR} $PR",			pa);
 }
 
 TEST_CASE(TestParseExpr_Lambda)
