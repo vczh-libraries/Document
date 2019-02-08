@@ -237,12 +237,27 @@ struct D
 	D(B, A, bool) {}
 };
 
+struct X
+{
+	X() {}
+	X(int) {}
+	X(double) {}
+};
+
+struct Y
+{
+	Y() {}
+	Y(void*) {}
+	Y(X) {}
+};
+
 bool F(const A&);
 void F(B&&);
 int F(A&);
 double F(B&);
 char F(C);
 wchar_t F(D);
+void* F(Y _ void*);
 
 A a;
 B b{ nullptr };
@@ -280,6 +295,16 @@ B b{ nullptr };
 		ASSERT_OVERLOADING(F({{nullptr _ 1} _ {} _ true}),						L"F({{nullptr, 1}, {}, true})",						wchar_t);
 		ASSERT_OVERLOADING(F({{{} _ {1}} _ {{1}, {}} _ true}),					L"F({{{}, {1}}, {{1}, {}}, true})",					wchar_t);
 		ASSERT_OVERLOADING(F({{{nullptr} _ {}} _ {{}, {nullptr}} _ true}),		L"F({{{nullptr}, {}}, {{}, {nullptr}}, true})",		wchar_t);
+
+		ASSERT_OVERLOADING(F({} _ nullptr),										L"F({}, nullptr)",									void*);
+		ASSERT_OVERLOADING(F(nullptr _ nullptr),								L"F(nullptr, nullptr)",								void*);
+		ASSERT_OVERLOADING(F({nullptr} _ nullptr),								L"F({nullptr}, nullptr)",							void*);
+		ASSERT_OVERLOADING(F({{nullptr}} _ nullptr),							L"F({{nullptr}}, nullptr)",							void*);
+		ASSERT_OVERLOADING(F({{}} _ nullptr),									L"F({{}}, nullptr)",								void*);
+		ASSERT_OVERLOADING(F({{1}} _ nullptr),									L"F({{1}}, nullptr)",								void*);
+		ASSERT_OVERLOADING(F({{1.0}} _ nullptr),								L"F({{1.0}}, nullptr)",								void*);
+		ASSERT_OVERLOADING(F({{{1}}} _ nullptr),								L"F({{{1}}}, nullptr)",								void*);
+		ASSERT_OVERLOADING(F({{{1.0}}} _ nullptr),								L"F({{{1.0}}}, nullptr)",							void*);
 	}
 }
 
