@@ -189,16 +189,12 @@ namespace TestConvert_Helpers
 		return true;
 	}
 
-	bool IsUniversalInitialization(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+	bool IsUniversalInitialization(ParsingArguments& pa, ITsys* toType, ITsys* fromEntity, const TsysInit& init)
 	{
-		TsysCV toCV, fromCV;
-		TsysRefType toRef, fromRef;
+		TsysCV toCV;
+		TsysRefType toRef;
 		auto toEntity = toType->GetEntity(toCV, toRef);
-		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
-		if (fromEntity->GetType() != TsysType::Init) return false;
-
-		auto& init = fromEntity->GetInit();
 		if (toEntity->GetType() == TsysType::Decl)
 		{
 			if (auto toDecl = TryGetDeclFromType<ClassDeclaration>(toEntity))
@@ -485,6 +481,24 @@ using namespace TestConvert_Helpers;
 
 TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 {
+	{
+		TsysCV fromCV;
+		TsysRefType fromRef;
+		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
+		if (fromEntity->GetType() == TsysType::Init)
+		{
+			auto& init = fromEntity->GetInit();
+			if (IsUniversalInitialization(pa, toType, fromEntity, init))
+			{
+				return TsysConv::UserDefinedConversion;
+			}
+			else
+			{
+				return TsysConv::Illegal;
+			}
+		}
+	}
+
 	if (fromType->GetType() == TsysType::Zero)
 	{
 		if (toType->GetType() == TsysType::Ptr) return TsysConv::TrivalConversion;
@@ -517,7 +531,6 @@ TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromTyp
 	if (IsToBaseClassConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
 	if (IsCustomOperatorConversion(pa, toType, fromType)) return TsysConv::UserDefinedConversion;
 	if (IsCustomContructorConversion(pa, toType, fromType)) return TsysConv::UserDefinedConversion;
-	if (IsUniversalInitialization(pa, toEntity, fromEntity)) return TsysConv::UserDefinedConversion;
 
 	return TsysConv::Illegal;
 }
