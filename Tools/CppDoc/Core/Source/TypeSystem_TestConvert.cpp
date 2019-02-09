@@ -236,6 +236,11 @@ namespace TestConvert_Helpers
 			}
 		}
 
+		if (fromEntity->GetParamCount() == 0)
+		{
+			return true;
+		}
+
 		if (fromEntity->GetParamCount() != 1)
 		{
 			return false;
