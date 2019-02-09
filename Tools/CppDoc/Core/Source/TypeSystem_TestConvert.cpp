@@ -481,24 +481,6 @@ using namespace TestConvert_Helpers;
 
 TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 {
-	{
-		TsysCV fromCV;
-		TsysRefType fromRef;
-		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
-		if (fromEntity->GetType() == TsysType::Init)
-		{
-			auto& init = fromEntity->GetInit();
-			if (IsUniversalInitialization(pa, toType, fromEntity, init))
-			{
-				return TsysConv::UserDefinedConversion;
-			}
-			else
-			{
-				return TsysConv::Illegal;
-			}
-		}
-	}
-
 	if (fromType->GetType() == TsysType::Zero)
 	{
 		if (toType->GetType() == TsysType::Ptr) return TsysConv::TrivalConversion;
@@ -523,6 +505,24 @@ TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromTyp
 	if (!IsEntityConversionAllowed(toEntity, fromEntity))
 	{
 		return TsysConv::Illegal;
+	}
+
+	{
+		TsysCV fromCV;
+		TsysRefType fromRef;
+		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
+		if (fromEntity->GetType() == TsysType::Init)
+		{
+			auto& init = fromEntity->GetInit();
+			if (IsUniversalInitialization(pa, toType, fromEntity, init))
+			{
+				return TsysConv::UserDefinedConversion;
+			}
+			else
+			{
+				return TsysConv::Illegal;
+			}
+		}
 	}
 
 	if (IsNumericPromotion(toEntity, fromEntity)) return TsysConv::IntegralPromotion;
