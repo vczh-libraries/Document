@@ -404,10 +404,20 @@ TEST_CASE(TestParseExpr_Overloading_Lambda)
 	// TODO
 }
 
-TEST_CASE(TestParseExpr_Overloading_CallOP_Ctor_UI_DPVA)
+TEST_CASE(TestParseExpr_Overloading_Default_Delete_Generated)
 {
 	// TODO
-	// Mix invoke operator, constructor, universal initialization, default paramter and variant argument together
+}
+
+TEST_CASE(TestParseExpr_Overloading_CallOP_Ctor_UI_DPVA_DDG)
+{
+	// TODO
+	// Mix
+	//   invoke operator(CallOP)
+	//   constructor(Ctor)
+	//   universal initialization(UI)
+	//   default paramter and variant argument together(DPVA)
+	//   default, delete and generated functions(DDG)
 }
 
 #undef _
