@@ -308,6 +308,12 @@ B b{ nullptr };
 	}
 }
 
+TEST_CASE(TestParseExpr_Overloading_UI_Conv)
+{
+	// TODO
+	// Universal initialization with type conversion priority
+}
+
 TEST_CASE(TestParseExpr_Overloading_InitializationList)
 {
 	// TODO

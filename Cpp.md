@@ -6,7 +6,7 @@
 
 ## Short-term tasks
 - [x] Add an internal `ITsys` type for `{a,b,c}` expressions
-- [ ] Use this type in overloading
+- [x] Use this type in overloading
 - [ ] Add an internal `ITsys` type for lambda expressions
 - [ ] Use this type in overloading
 - [ ] Support `=delete` and `=default` and compiler-generated functions
