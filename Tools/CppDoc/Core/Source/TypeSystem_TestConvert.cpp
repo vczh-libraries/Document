@@ -2,6 +2,7 @@
 #include "Parser.h"
 #include "Ast_Decl.h"
 #include "Ast_Type.h"
+#include "Ast_Expr_Resolving.h"
 
 TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType)
 {
@@ -195,43 +196,67 @@ namespace TestConvert_Helpers
 		auto toEntity = toType->GetEntity(toCV, toRef);
 		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
-		if (fromEntity->GetType() != TsysType::Init)
-		{
-			return false;
-		}
+		if (fromEntity->GetType() != TsysType::Init) return false;
 
 		auto& init = fromEntity->GetInit();
 		if (toEntity->GetType() == TsysType::Decl)
 		{
-			throw 0;
+			if (auto toDecl = TryGetDeclFromType<ClassDeclaration>(toEntity))
+			{
+				auto toSymbol = toDecl->symbol;
+				vint index = toSymbol->children.Keys().IndexOf(L"$__ctor");
+				if (index == -1) return false;
+
+				const auto& ctors = toSymbol->children.GetByIndex(index);
+				ExprTsysList funcTypes;
+				for (vint i = 0; i < ctors.Count(); i++)
+				{
+					auto ctorSymbol = ctors[i];
+					if (ctorSymbol->decls.Count() != 1) continue;
+					auto ctorDecl = ctorSymbol->decls[0].Cast<ForwardFunctionDeclaration>();
+
+					TypeTsysList ctorTypes;
+					TypeToTsys(pa, ctorDecl->type, ctorTypes);
+					for (vint j = 0; j < ctorTypes.Count(); j++)
+					{
+						funcTypes.Add({ ctorSymbol.Obj(),ExprTsysType::PRValue,ctorTypes[j] });
+					}
+				}
+
+				List<Ptr<ExprTsysList>> argTypesList;
+				for (vint i = 0; i < fromEntity->GetParamCount(); i++)
+				{
+					argTypesList.Add(MakePtr<ExprTsysList>());
+					argTypesList[i]->Add({ nullptr,init.types[i],fromEntity->GetParam(i) });
+				}
+
+				ExprTsysList result;
+				symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
+				return result.Count() > 0;
+			}
 		}
-		else
+
+		if (fromEntity->GetParamCount() != 1)
 		{
-			if (fromEntity->GetParamCount() != 1)
-			{
-				return false;
-			}
-
-			auto type = fromEntity->GetParam(0);
-			TsysCV cv;
-			TsysRefType ref;
-			auto entity = type->GetEntity(cv, ref);
-			if (entity->GetType() == TsysType::Init)
-			{
-				return false;
-			}
-
-			switch (init.types[0])
-			{
-			case ExprTsysType::LValue:
-				type = type->LRefOf();
-				break;
-			case ExprTsysType::XValue:
-				type = type->RRefOf();
-				break;
-			}
-			return TestConvertInternal(pa, toType, type) != TsysConv::Illegal;
+			return false;
 		}
+
+		auto type = fromEntity->GetParam(0);
+		TsysCV cv;
+		TsysRefType ref;
+		auto entity = type->GetEntity(cv, ref);
+		if (entity->GetType() == TsysType::Init) return false;
+
+		switch (init.types[0])
+		{
+		case ExprTsysType::LValue:
+			type = type->LRefOf();
+			break;
+		case ExprTsysType::XValue:
+			type = type->RRefOf();
+			break;
+		}
+		return TestConvertInternal(pa, toType, type) != TsysConv::Illegal;
 	}
 
 	bool IsNumericPromotion(ITsys* toType, ITsys* fromType)
