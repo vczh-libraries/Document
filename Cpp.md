@@ -18,6 +18,8 @@
 - [ ] `using` and `typedef`
 - [ ] Test cases for whole program indexing without templates
 - [ ] Templates ...
+- [ ] Initialization list
+- [ ] lambda expressions with capturing
 
 ## Steps
 
