@@ -188,7 +188,7 @@ namespace TestConvert_Helpers
 		return true;
 	}
 
-	bool IsUniversalInitialization(ITsys* toType, ITsys* fromType)
+	bool IsUniversalInitialization(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
 		TsysCV toCV, fromCV;
 		TsysRefType toRef, fromRef;
@@ -200,7 +200,38 @@ namespace TestConvert_Helpers
 			return false;
 		}
 
-		throw 0;
+		auto& init = fromEntity->GetInit();
+		if (toEntity->GetType() == TsysType::Decl)
+		{
+			throw 0;
+		}
+		else
+		{
+			if (fromEntity->GetParamCount() != 1)
+			{
+				return false;
+			}
+
+			auto type = fromEntity->GetParam(0);
+			TsysCV cv;
+			TsysRefType ref;
+			auto entity = type->GetEntity(cv, ref);
+			if (entity->GetType() == TsysType::Init)
+			{
+				return false;
+			}
+
+			switch (init.types[0])
+			{
+			case ExprTsysType::LValue:
+				type = type->LRefOf();
+				break;
+			case ExprTsysType::XValue:
+				type = type->RRefOf();
+				break;
+			}
+			return TestConvertInternal(pa, toType, type) != TsysConv::Illegal;
+		}
 	}
 
 	bool IsNumericPromotion(ITsys* toType, ITsys* fromType)
@@ -450,7 +481,7 @@ TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromTyp
 		return TsysConv::Illegal;
 	}
 
-	if (IsUniversalInitialization(toEntity, fromEntity)) return TsysConv::Exact;
+	if (IsUniversalInitialization(pa, toEntity, fromEntity)) return TsysConv::Exact;
 	if (IsNumericPromotion(toEntity, fromEntity)) return TsysConv::IntegralPromotion;
 	if (IsNumericConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
 	if (IsPointerConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;

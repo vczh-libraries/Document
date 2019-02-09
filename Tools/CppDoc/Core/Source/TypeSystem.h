@@ -233,7 +233,7 @@ public:
 	virtual ITsys*				GetParam(vint index) = 0;
 	virtual vint				GetParamCount() = 0;
 	virtual TsysFunc			GetFunc() = 0;
-	virtual TsysInit			GetInit() = 0;
+	virtual const TsysInit&		GetInit() = 0;
 	virtual TsysGeneric			GetGeneric() = 0;
 	virtual Symbol*				GetDecl() = 0;
 

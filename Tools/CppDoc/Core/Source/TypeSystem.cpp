@@ -85,7 +85,7 @@ public:
 	ITsys*				GetParam(vint index)						{ throw "Not Implemented!"; }
 	vint				GetParamCount()								{ throw "Not Implemented!"; }
 	TsysFunc			GetFunc()									{ throw "Not Implemented!"; }
-	TsysInit			GetInit()									{ throw "Not Implemented!"; }
+	const TsysInit&		GetInit()									{ throw "Not Implemented!"; }
 	TsysGeneric			GetGeneric()								{ throw "Not Implemented!"; }
 	Symbol*				GetDecl()									{ throw "Not Implemented!"; }
 
@@ -167,7 +167,7 @@ Concrete Tsys
 		ITsys* GetElement()override { return element; }												\
 		DATA Get##NAME()override { return data; }													\
 
-#define ITSYS_MEMBERS_WITHPARAMS_SHARED(TYPE, DATA, NAME)											\
+#define ITSYS_MEMBERS_WITHPARAMS_SHARED(TYPE, DATA, DATA_RET, NAME)									\
 	protected:																						\
 		List<ITsys*>		params;																	\
 		DATA				data;																	\
@@ -175,7 +175,7 @@ Concrete Tsys
 		List<ITsys*>& GetParams() { return params; }												\
 		ITsys* GetParam(vint index)override { return params.Get(index); }							\
 		vint GetParamCount()override { return params.Count(); }										\
-		DATA Get##NAME()override { return data; }													\
+		DATA_RET Get##NAME()override { return data; }												\
 
 #define ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(TYPE, DATA, NAME)										\
 	protected:																						\
@@ -332,19 +332,19 @@ class ITSYS_CLASS(Member)
 
 class ITSYS_CLASS(Function)
 {
-	ITSYS_MEMBERS_WITHPARAMS_SHARED(Function, TsysFunc, Func)
+	ITSYS_MEMBERS_WITHPARAMS_SHARED(Function, TsysFunc, TsysFunc, Func)
 	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(Function, TsysFunc, Func)
 };
 
 class ITSYS_CLASS(Init)
 {
-	ITSYS_MEMBERS_WITHPARAMS_SHARED(Init, TsysInit, Init)
+	ITSYS_MEMBERS_WITHPARAMS_SHARED(Init, TsysInit, const TsysInit&, Init)
 	ITSYS_MEMBERS_WITHPARAMS_WITHOUT_ELEMENT(Init, TsysInit, Init)
 };
 
 class ITSYS_CLASS(Generic)
 {
-	ITSYS_MEMBERS_WITHPARAMS_SHARED(Generic, TsysGeneric, Generic)
+	ITSYS_MEMBERS_WITHPARAMS_SHARED(Generic, TsysGeneric, TsysGeneric, Generic)
 	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(Generic, TsysGeneric, Generic)
 };
 
