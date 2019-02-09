@@ -310,8 +310,88 @@ B b{ nullptr };
 
 TEST_CASE(TestParseExpr_Overloading_UI_Conv)
 {
-	// TODO
-	// Universal initialization with type conversion priority
+	// UI v.s. exact match
+	{
+		TEST_DECL(
+struct S
+{
+	S(int) {}
+};
+
+bool F(int);
+char F(S);
+		);
+		COMPILE_PROGRAM(program, pa, input);
+		ASSERT_OVERLOADING(F(0),					L"F(0)",						bool);
+		ASSERT_OVERLOADING(F({0}),					L"F({0})",						bool);
+	}
+
+	// UI v.s. trival conversion
+	{
+		TEST_DECL(
+struct S
+{
+	S(int) {}
+};
+
+bool F(const int&);
+char F(S);
+		);
+		COMPILE_PROGRAM(program, pa, input);
+		ASSERT_OVERLOADING(F(0),					L"F(0)",						bool);
+		ASSERT_OVERLOADING(F({0}),					L"F({0})",						bool);
+	}
+
+	// UI v.s. integral promition
+	{
+		TEST_DECL(
+struct S
+{
+	S(int) {}
+};
+
+bool F(long long);
+char F(S);
+		);
+		COMPILE_PROGRAM(program, pa, input);
+		ASSERT_OVERLOADING(F(0),					L"F(0)",						bool);
+		ASSERT_OVERLOADING(F({0}),					L"F({0})",						bool);
+	}
+
+	// UI v.s. standard conversion
+	{
+		TEST_DECL(
+struct S
+{
+	S(int) {}
+};
+
+bool F(double);
+char F(S);
+		);
+		COMPILE_PROGRAM(program, pa, input);
+		ASSERT_OVERLOADING(F(0),					L"F(0)",						bool);
+		ASSERT_OVERLOADING(F({0}),					L"F({0})",						bool);
+	}
+
+	// UI v.s. user-defined conversion
+	// should be ambiguous, not able to test using ASSERT_OVERLOADING
+
+	// UI v.s. ellipsis
+	{
+		TEST_DECL(
+struct S
+{
+	S(int) {}
+};
+
+bool F(...);
+char F(S);
+		);
+		COMPILE_PROGRAM(program, pa, input);
+		ASSERT_OVERLOADING(F(0),					L"F(0)",						char);
+		ASSERT_OVERLOADING(F({0}),					L"F({0})",						char);
+	}
 }
 
 TEST_CASE(TestParseExpr_Overloading_InitializationList)

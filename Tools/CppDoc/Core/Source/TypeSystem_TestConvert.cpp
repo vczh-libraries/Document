@@ -511,13 +511,13 @@ TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromTyp
 		return TsysConv::Illegal;
 	}
 
-	if (IsUniversalInitialization(pa, toEntity, fromEntity)) return TsysConv::Exact;
 	if (IsNumericPromotion(toEntity, fromEntity)) return TsysConv::IntegralPromotion;
 	if (IsNumericConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
 	if (IsPointerConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
 	if (IsToBaseClassConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
 	if (IsCustomOperatorConversion(pa, toType, fromType)) return TsysConv::UserDefinedConversion;
 	if (IsCustomContructorConversion(pa, toType, fromType)) return TsysConv::UserDefinedConversion;
+	if (IsUniversalInitialization(pa, toEntity, fromEntity)) return TsysConv::UserDefinedConversion;
 
 	return TsysConv::Illegal;
 }
