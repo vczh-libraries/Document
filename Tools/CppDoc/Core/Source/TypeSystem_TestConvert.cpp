@@ -189,7 +189,7 @@ namespace TestConvert_Helpers
 		return true;
 	}
 
-	bool IsUniversalInitialization(ParsingArguments& pa, ITsys* toType, ITsys* fromEntity, const TsysInit& init)
+	TsysConv IsUniversalInitialization(ParsingArguments& pa, ITsys* toType, ITsys* fromEntity, const TsysInit& init)
 	{
 		TsysCV toCV;
 		TsysRefType toRef;
@@ -201,7 +201,10 @@ namespace TestConvert_Helpers
 			{
 				auto toSymbol = toDecl->symbol;
 				vint index = toSymbol->children.Keys().IndexOf(L"$__ctor");
-				if (index == -1) return false;
+				if (index == -1)
+				{
+					return TsysConv::Illegal;
+				}
 
 				const auto& ctors = toSymbol->children.GetByIndex(index);
 				ExprTsysList funcTypes;
@@ -228,25 +231,35 @@ namespace TestConvert_Helpers
 
 				ExprTsysList result;
 				symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
-				return result.Count() > 0;
+				if (result.Count() > 0)
+				{
+					return TsysConv::UserDefinedConversion;
+				}
+				else
+				{
+					return TsysConv::Illegal;
+				}
 			}
 		}
 
 		if (fromEntity->GetParamCount() == 0)
 		{
-			return true;
+			return TsysConv::Exact;
 		}
 
 		if (fromEntity->GetParamCount() != 1)
 		{
-			return false;
+			return TsysConv::Illegal;
 		}
 
 		auto type = fromEntity->GetParam(0);
 		TsysCV cv;
 		TsysRefType ref;
 		auto entity = type->GetEntity(cv, ref);
-		if (entity->GetType() == TsysType::Init) return false;
+		if (entity->GetType() == TsysType::Init)
+		{
+			return TsysConv::Illegal;
+		}
 
 		switch (init.types[0])
 		{
@@ -257,7 +270,7 @@ namespace TestConvert_Helpers
 			type = type->RRefOf();
 			break;
 		}
-		return TestConvertInternal(pa, toType, type) != TsysConv::Illegal;
+		return TestConvertInternal(pa, toType, type);
 	}
 
 	bool IsNumericPromotion(ITsys* toType, ITsys* fromType)
@@ -514,14 +527,7 @@ TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromTyp
 		if (fromEntity->GetType() == TsysType::Init)
 		{
 			auto& init = fromEntity->GetInit();
-			if (IsUniversalInitialization(pa, toType, fromEntity, init))
-			{
-				return TsysConv::UserDefinedConversion;
-			}
-			else
-			{
-				return TsysConv::Illegal;
-			}
+			return IsUniversalInitialization(pa, toType, fromEntity, init);
 		}
 	}
 
