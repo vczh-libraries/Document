@@ -102,6 +102,8 @@ public:
 	bool											decoratorInline = false;
 	bool											decoratorForceInline = false;
 	bool											decoratorAbstract = false;
+	bool											decoratorDefault = false;
+	bool											decoratorDelete = false;
 	bool											needResolveTypeFromStatement = false;
 };
 

@@ -898,6 +898,14 @@ private:
 		{
 			writer.WriteString(L" = 0");
 		}
+		if (self->decoratorDefault)
+		{
+			writer.WriteString(L" = default");
+		}
+		if (self->decoratorDelete)
+		{
+			writer.WriteString(L" = delete");
+		}
 	}
 
 	void WriteHeader(ForwardEnumDeclaration* self)

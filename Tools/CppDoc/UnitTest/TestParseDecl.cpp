@@ -385,8 +385,8 @@ struct Vector
 
 	__stdcall Vector();
 	Vector(double _x, double _y);
-	Vector(const Vector& v);
-	Vector(Vector&& v);
+	Vector(const Vector& v)=default;
+	Vector(Vector&& v)=delete;
 	~Vector();
 
 	operator bool()const;
@@ -403,8 +403,8 @@ struct Vector
 	public y: double = 0;
 	public __forward __ctor $__ctor: __null () __stdcall;
 	public __forward __ctor $__ctor: __null (_x: double, _y: double);
-	public __forward __ctor $__ctor: __null (v: Vector const &);
-	public __forward __ctor $__ctor: __null (v: Vector &&);
+	public __forward __ctor $__ctor: __null (v: Vector const &) = default;
+	public __forward __ctor $__ctor: __null (v: Vector &&) = delete;
 	public __forward __dtor ~Vector: __null ();
 	public __forward __type $__type: bool () const;
 	public __forward explicit __type $__type: double () const;

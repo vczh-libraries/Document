@@ -525,19 +525,24 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			{
 				// for functions
 				bool decoratorAbstract = false;
+				bool decoratorDefault = false;
+				bool decoratorDelete = false;
 
-				// the only legal initializer is = 0
-				if (declarator->initializer)
+				if (TestToken(cursor, CppTokens::EQ))
 				{
-					if (declarator->initializer->initializerType != InitializerType::Equal) throw StopParsingException(cursor);
-					if (declarator->initializer->arguments.Count() != 1) throw StopParsingException(cursor);
-
-					auto expr = declarator->initializer->arguments[0].Cast<LiteralExpr>();
-					if (!expr) throw StopParsingException(cursor);
-					if (expr->tokens.Count() != 1) throw StopParsingException(cursor);
-					if (expr->tokens[0].length != 1) throw StopParsingException(cursor);
-					if (*expr->tokens[0].reading != L'0') throw StopParsingException(cursor);
-					decoratorAbstract = true;
+					if (TestToken(cursor, CppTokens::STAT_DEFAULT))
+					{
+						decoratorDefault = true;
+					}
+					else if (TestToken(cursor, CppTokens::DELETE))
+					{
+						decoratorDelete = true;
+					}
+					else
+					{
+						RequireToken(cursor, L"0");
+						decoratorAbstract = true;
+					}
 				}
 
 #define FILL_FUNCTION(NAME)\
@@ -552,6 +557,8 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				NAME->decoratorInline = decoratorInline;\
 				NAME->decoratorForceInline = decoratorForceInline;\
 				NAME->decoratorAbstract = decoratorAbstract;\
+				NAME->decoratorDefault = decoratorDefault;\
+				NAME->decoratorDelete = decoratorDelete;\
 				NAME->needResolveTypeFromStatement = needResolveTypeFromStatement\
 
 				bool hasStat = TestToken(cursor, CppTokens::LBRACE, false);
