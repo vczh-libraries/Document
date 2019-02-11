@@ -258,8 +258,8 @@ Z* pz = nullptr;
 	
 	AssertExpr(L"x(0)",						L"x(0)",						L"::X $PR",								pa);
 	AssertExpr(L"y(0)",						L"y(0)",						L"::Y $PR",								pa);
-	AssertExpr(L"x2(0)(nullptr)",			L"x2(0)(nullptr)",				L"::X $PR",								pa);
-	AssertExpr(L"y2(0)(nullptr)",			L"y2(0)(nullptr)",				L"::Y $PR",								pa);
+	AssertExpr(L"x2(nullptr)(0)",			L"x2(nullptr)(0)",				L"::X $PR",								pa);
+	AssertExpr(L"y2(nullptr)(0)",			L"y2(nullptr)(0)",				L"::Y $PR",								pa);
 }
 
 TEST_CASE(TestParseExpr_Field_Qualifier)
