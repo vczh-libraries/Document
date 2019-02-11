@@ -529,23 +529,25 @@ namespace symbol_type_resolving
 		Array<vint> funcDPs(funcTypes.Count());
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
-			auto symbol = funcTypes[i].symbol;
-			if (symbol->decls.Count() == 1)
+			funcDPs[i] = 0;
+			if (auto symbol = funcTypes[i].symbol)
 			{
-				if (auto decl = symbol->decls[0].Cast<ForwardFunctionDeclaration>())
+				if (symbol->decls.Count() == 1)
 				{
-					if (auto type = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
+					if (auto decl = symbol->decls[0].Cast<ForwardFunctionDeclaration>())
 					{
-						for (vint j = 0; j < type->parameters.Count(); j++)
+						if (auto type = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 						{
-							if (type->parameters[j]->initializer)
+							for (vint j = 0; j < type->parameters.Count(); j++)
 							{
-								funcDPs[i] = type->parameters.Count() - j;
-								goto EXAMINE_NEXT_FUNCTION;
+								if (type->parameters[j]->initializer)
+								{
+									funcDPs[i] = type->parameters.Count() - j;
+									goto EXAMINE_NEXT_FUNCTION;
+								}
 							}
+						EXAMINE_NEXT_FUNCTION:;
 						}
-						funcDPs[i] = 0;
-					EXAMINE_NEXT_FUNCTION:;
 					}
 				}
 			}

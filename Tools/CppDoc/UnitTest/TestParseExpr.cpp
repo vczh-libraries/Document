@@ -210,8 +210,11 @@ struct Z
 	int G(void*);
 };
 
-X (*x)() = nullptr;
-Y (*const y)() = nullptr;
+X (*x)(int) = nullptr;
+Y (*const y)(int) = nullptr;
+
+X (*(*x2)(void*))(int) = nullptr;
+Y (*const (*const y2)(void*))(int) = nullptr;
 
 Z z;
 Z* pz = nullptr;
@@ -255,6 +258,8 @@ Z* pz = nullptr;
 	
 	AssertExpr(L"x(0)",						L"x(0)",						L"::X $PR",								pa);
 	AssertExpr(L"y(0)",						L"y(0)",						L"::Y $PR",								pa);
+	AssertExpr(L"x2(0)(nullptr)",			L"x2(0)(nullptr)",				L"::X $PR",								pa);
+	AssertExpr(L"y2(0)(nullptr)",			L"y2(0)(nullptr)",				L"::Y $PR",								pa);
 }
 
 TEST_CASE(TestParseExpr_Field_Qualifier)
