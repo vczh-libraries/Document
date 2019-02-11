@@ -7,8 +7,7 @@
 ## Short-term tasks
 - [x] Add an internal `ITsys` type for `{a,b,c}` expressions
 - [x] Use this type in overloading
-- [ ] Support `=delete` and `=default`
-- [ ] Use this information only in overloading, users explicitly calling these functions are ignored
+- [x] Support `=delete` and `=default`
 - [ ] Delay process function bodies while doing whole program parsing
 - [ ] Build symbols for variables created by statements
 - [ ] Process functions returning `decltype(auto)`, take care about recursion, during delay processing function bodies
