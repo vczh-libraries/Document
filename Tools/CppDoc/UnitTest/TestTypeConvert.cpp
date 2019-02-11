@@ -290,7 +290,7 @@ class Derived : public Base {};
 
 #define S StandardConversion
 #define F Illegal
-	
+
 	TEST_CONV_TYPE(Derived*,			Base*,										S,	S);
 	TEST_CONV_TYPE(Derived&,			Base&,										S,	S);
 	TEST_CONV_TYPE(Derived&&,			Base&&,										F,	S);

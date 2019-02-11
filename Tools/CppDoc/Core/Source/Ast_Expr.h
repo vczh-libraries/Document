@@ -217,7 +217,6 @@ public:
 	List<Ptr<Expr>>			arguments;
 };
 
-
 enum class CppPostfixUnaryOp
 {
 	Increase,
@@ -250,7 +249,7 @@ class PrefixUnaryExpr : public Expr
 {
 public:
 	IExprVisitor_ACCEPT;
-	
+
 	CppPrefixUnaryOp		op;
 	CppName					opName;
 	Ptr<Expr>				operand;

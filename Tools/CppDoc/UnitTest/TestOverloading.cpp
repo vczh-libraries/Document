@@ -84,7 +84,7 @@ bool G(int);
 double G(double);
 		);
 		COMPILE_PROGRAM(program, pa, input);
-		
+
 		ASSERT_OVERLOADING(F(0),							L"F(0)",								double);
 		ASSERT_OVERLOADING(F(a),							L"F(a)",								bool);
 		ASSERT_OVERLOADING(F(b),							L"F(b)",								char);
@@ -137,7 +137,7 @@ double F(double, double);
 		ASSERT_OVERLOADING(F(0.0, 0),						L"F(0.0, 0)",							double);
 		ASSERT_OVERLOADING(F(0.0, 0.0),						L"F(0.0, 0.0)",							double);
 		ASSERT_OVERLOADING(F(0.0, 0.0f),					L"F(0.0, 0.0f)",						double);
-		
+
 		ASSERT_OVERLOADING(F(0),							L"F(0)",								char);
 		ASSERT_OVERLOADING(F(0.0),							L"F(0.0)",								wchar_t);
 		ASSERT_OVERLOADING(F(0, nullptr),					L"F(0, nullptr)",						char);

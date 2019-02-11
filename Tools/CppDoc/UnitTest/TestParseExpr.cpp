@@ -46,7 +46,7 @@ TEST_CASE(TestParseExpr_Literal)
 	AssertExpr(L"0B1uL",		L"0B1uL",		L"unsigned __int64 $PR"		);
 	AssertExpr(L"0B1Ul",		L"0B1Ul",		L"unsigned __int64 $PR"		);
 	AssertExpr(L"0B1UL",		L"0B1UL",		L"unsigned __int64 $PR"		);
-	
+
 	AssertExpr(L"1.0",			L"1.0",			L"double $PR"				);
 	AssertExpr(L"1.0f",			L"1.0f",		L"float $PR"				);
 	AssertExpr(L"1.0F",			L"1.0F",		L"float $PR"				);
@@ -232,7 +232,7 @@ Z* pz = nullptr;
 	AssertExpr(L"z.F",						L"z.F",							L"__int32 __cdecl(double) * $PR",		pa);
 	AssertExpr(L"z.G",						L"z.G",							L"__int32 __thiscall(void *) * $PR",	pa);
 	AssertExpr(L"z.operator->",				L"z.operator ->",				L"::Y __thiscall() * $PR",				pa);
-	
+
 	AssertExpr(L"pz->operator->()",			L"pz->operator ->()",			L"::Y $PR",								pa);
 	AssertExpr(L"pz->operator()(0)",		L"pz->operator ()(0)",			L"::X $PR",								pa);
 	AssertExpr(L"pz->operator()(nullptr)",	L"pz->operator ()(nullptr)",	L"::Y $PR",								pa);
@@ -240,7 +240,7 @@ Z* pz = nullptr;
 	AssertExpr(L"pz->operator[](Z())",		L"pz->operator [](Z())",		L"::Y $PR",								pa);
 	AssertExpr(L"pz->F(0)",					L"pz->F(0)",					L"__int32 $PR",							pa);
 	AssertExpr(L"pz->G(0)",					L"pz->G(0)",					L"__int32 $PR",							pa);
-	
+
 	AssertExpr(L"z.operator->()",			L"z.operator ->()",				L"::Y $PR",								pa);
 	AssertExpr(L"z.operator()(0)",			L"z.operator ()(0)",			L"::X $PR",								pa);
 	AssertExpr(L"z.operator()(nullptr)",	L"z.operator ()(nullptr)",		L"::Y $PR",								pa);
@@ -248,14 +248,14 @@ Z* pz = nullptr;
 	AssertExpr(L"z.operator[](Z())",		L"z.operator [](Z())",			L"::Y $PR",								pa);
 	AssertExpr(L"z.F(0)",					L"z.F(0)",						L"__int32 $PR",							pa);
 	AssertExpr(L"z.G(0)",					L"z.G(0)",						L"__int32 $PR",							pa);
-	
+
 	AssertExpr(L"z->x",						L"z->x",						L"__int32 $L",							pa);
 	AssertExpr(L"z->y",						L"z->y",						L"__int32 $L",							pa);
 	AssertExpr(L"z(0)",						L"z(0)",						L"::X $PR",								pa);
 	AssertExpr(L"z(nullptr)",				L"z(nullptr)",					L"::Y $PR",								pa);
 	AssertExpr(L"z[\"a\"]",					L"z[\"a\"]",					L"::X $PR",								pa);
 	AssertExpr(L"z[Z()]",					L"z[Z()]",						L"::Y $PR",								pa);
-	
+
 	AssertExpr(L"x(0)",						L"x(0)",						L"::X $PR",								pa);
 	AssertExpr(L"y(0)",						L"y(0)",						L"::Y $PR",								pa);
 	AssertExpr(L"x2(nullptr)(0)",			L"x2(nullptr)(0)",				L"::X $PR",								pa);
@@ -312,7 +312,7 @@ const X* cpx;
 	AssertExpr(L"cF().x",					L"cF().x",						L"__int32 const $PR",		pa);
 	AssertExpr(L"clF().x",					L"clF().x",						L"__int32 const $L",		pa);
 	AssertExpr(L"crF().x",					L"crF().x",						L"__int32 const && $X",		pa);
-	
+
 	AssertExpr(L"px",						L"px",							L"::X * $L",				pa);
 	AssertExpr(L"cpx",						L"cpx",							L"::X const * $L",			pa);
 	AssertExpr(L"px->x",					L"px->x",						L"__int32 $L",				pa);
@@ -1044,7 +1044,7 @@ using namespace std;
 	AssertExpr(L"sizeof(int)",							L"sizeof(int)",											L"unsigned __int32 $PR",		pa);
 	AssertExpr(L"sizeof 0",								L"sizeof(0)",											L"unsigned __int32 $PR",		pa);
 	AssertExpr(L"throw 0",								L"throw(0)",											L"void $PR",					pa);
-																												
+
 	AssertExpr(L"new type_info",						L"new type_info",										L"::std::type_info * $PR",		pa);
 	AssertExpr(L"new type_info(0)",						L"new type_info(0)",									L"::std::type_info * $PR",		pa);
 	AssertExpr(L"new type_info{0}",						L"new type_info{0}",									L"::std::type_info * $PR",		pa);

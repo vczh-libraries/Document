@@ -854,7 +854,6 @@ class LogDeclVisitor : public Object, public virtual IDeclarationVisitor, privat
 private:
 	bool					semicolon;
 
-
 	void WriteHeader(ForwardVariableDeclaration* self)
 	{
 		if (self->decoratorExtern) writer.WriteString(L"extern ");

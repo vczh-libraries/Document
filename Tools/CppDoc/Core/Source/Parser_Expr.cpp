@@ -353,7 +353,6 @@ Ptr<ResolvableExpr> ParseIdOrChildExprAfterFieldAccess(const ParsingArguments& p
 	return idExpr;
 }
 
-
 Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	auto expr = ParsePrimitiveExpr(pa, cursor);

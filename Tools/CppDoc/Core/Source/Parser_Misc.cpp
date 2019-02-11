@@ -165,7 +165,7 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		{
 			return false;
 		}
-		
+
 		cursor = nameCursor;
 		return true;
 

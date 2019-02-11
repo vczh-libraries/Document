@@ -30,7 +30,6 @@ extern void					AssertProgram(Ptr<Program> program, const wchar_t* log);
 	RefineInput(&reader_array[0]);\
 	WString reader_string(&reader_array[0], false);\
 	CppTokenReader reader(GlobalCppLexer(), reader_string)\
-	
 
 #define COMPILE_PROGRAM_WITH_RECORDER(PROGRAM, PA, INPUT, RECORDER)\
 	TOKEN_READER(INPUT);\
