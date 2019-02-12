@@ -466,3 +466,52 @@ int main()
 		}
 	}
 }
+
+TEST_CASE(TestLexer_Clone)
+{
+	WString input = LR"(
+using namespace std;
+
+/// <summary>The main function.</summary>
+/// <returns>This value is not used.</returns>
+int main()
+{
+	cout << "Hello, world!" << endl;
+}
+)";
+	const wchar_t* output[] = {
+		L"using", L"namespace", L"std", L";",
+		L"/// <summary>The main function.</summary>",
+		L"/// <returns>This value is not used.</returns>",
+		L"int", L"main", L"(", L")",
+		L"{",
+		L"cout", L"<", L"<", L"\"Hello, world!\"", L"<", L"<", L"endl", L";",
+		L"}",
+	};
+	const vint TokenCount = sizeof(output) / sizeof(*output);
+
+	Ptr<CppTokenReader> reader1, reader2;
+	Ptr<CppTokenCursor> cursor1, cursor2;
+
+	reader1 = MakePtr<CppTokenReader>(GlobalCppLexer(), input);
+	cursor1 = reader1->GetFirstToken();
+	{
+		auto reading = cursor1;
+		for (vint i = 0; i < 5; i++)
+		{
+			reading = reading->Next();
+		}
+	}
+	cursor1->Clone(reader2, cursor2);
+
+	for (vint i = 0; i < TokenCount; i++)
+	{
+		TEST_ASSERT(WString(cursor1->token.reading, cursor1->token.length) == output[i]);
+		TEST_ASSERT(WString(cursor2->token.reading, cursor2->token.length) == output[i]);
+
+		cursor1 = cursor1->Next();
+		cursor2 = cursor2->Next();
+	}
+	TEST_ASSERT(!cursor1);
+	TEST_ASSERT(!cursor2);
+}

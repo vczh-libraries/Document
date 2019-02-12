@@ -42,6 +42,7 @@ public:
 	RegexToken					token;
 
 	Ptr<CppTokenCursor>			Next();
+	void						Clone(Ptr<CppTokenReader>& _reader, Ptr<CppTokenCursor>& _cursor);
 };
 
 class CppTokenReader : public Object
@@ -54,6 +55,8 @@ protected:
 	IEnumerator<RegexToken>*	tokenEnumerator;
 
 	Ptr<CppTokenCursor>			CreateNextToken();
+
+	CppTokenReader(const CppTokenReader& _reader);
 public:
 	CppTokenReader(Ptr<RegexLexer> _lexer, const WString& input);
 	~CppTokenReader();

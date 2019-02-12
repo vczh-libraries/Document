@@ -36,6 +36,22 @@ Ptr<CppTokenCursor> CppTokenCursor::Next()
 	return next;
 }
 
+void CppTokenCursor::Clone(Ptr<CppTokenReader>& _reader, Ptr<CppTokenCursor>& _cursor)
+{
+	_reader = new CppTokenReader(*reader);
+	_cursor = new CppTokenCursor(_reader.Obj(), token);
+
+	auto reading = this;
+	auto writing = _cursor.Obj();
+	while (reading->next)
+	{
+		reading = reading->next.Obj();
+		auto next = new CppTokenCursor(writing->reader, reading->token);
+		writing->next = next;
+		writing = next;
+	}
+}
+
 /***********************************************************************
 CppTokenReader
 ***********************************************************************/
@@ -55,6 +71,14 @@ Ptr<CppTokenCursor> CppTokenReader::CreateNextToken()
 		return new CppTokenCursor(this, token);
 	}
 	return nullptr;
+}
+
+CppTokenReader::CppTokenReader(const CppTokenReader& _reader)
+	:gotFirstToken(_reader.gotFirstToken)
+	, lexer(_reader.lexer)
+	, tokens(_reader.tokens)
+	, tokenEnumerator(_reader.tokenEnumerator ? _reader.tokenEnumerator->Clone() : nullptr)
+{
 }
 
 CppTokenReader::CppTokenReader(Ptr<RegexLexer> _lexer, const WString& input)
