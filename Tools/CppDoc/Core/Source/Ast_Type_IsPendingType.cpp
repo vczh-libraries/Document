@@ -109,3 +109,71 @@ bool IsPendingType(Ptr<Type> type)
 	type->Accept(&visitor);
 	return visitor.result;
 }
+
+/***********************************************************************
+ResolvePendingType
+***********************************************************************/
+
+class ResolvePendingTypeVisitor : public Object, public virtual ITypeVisitor
+{
+public:
+	ITsys*					result = nullptr;
+
+	void Visit(PrimitiveType* self)override
+	{
+	}
+
+	void Visit(ReferenceType* self)override
+	{
+	}
+
+	void Visit(ArrayType* self)override
+	{
+	}
+
+	void Visit(CallingConventionType* self)override
+	{
+	}
+
+	void Visit(FunctionType* self)override
+	{
+	}
+
+	void Visit(MemberType* self)override
+	{
+	}
+
+	void Visit(DeclType* self)override
+	{
+	}
+
+	void Visit(DecorateType* self)override
+	{
+	}
+
+	void Visit(RootType* self)override
+	{
+	}
+
+	void Visit(IdType* self)override
+	{
+	}
+
+	void Visit(ChildType* self)override
+	{
+	}
+
+	void Visit(GenericType* self)override
+	{
+	}
+
+	void Visit(VariadicTemplateArgumentType* self)override
+	{
+	}
+};
+
+// Resolve a pending type to a target type
+ITsys* ResolvePendingType(Ptr<Type> type, ExprTsysItem target)
+{
+	throw 0;
+}

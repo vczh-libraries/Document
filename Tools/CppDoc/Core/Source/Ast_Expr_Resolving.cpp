@@ -173,27 +173,22 @@ namespace symbol_type_resolving
 							symbol->resolvedTypes = MakePtr<TypeTsysList>();
 							if (auto rootVarDecl = varDecl.Cast<VariableDeclaration>())
 							{
-								auto declType = MakePtr<DeclType>();
-								declType->expr = rootVarDecl->initializer->arguments[0];
-
-								TypeTsysList types;
+								ExprTsysList types;
 								ParsingArguments newPa(pa, symbol->parent);
-								TypeToTsys(newPa, declType, types);
+								ExprToTsys(newPa, rootVarDecl->initializer->arguments[0], types);
 
 								for (vint k = 0; k < types.Count(); k++)
 								{
-									auto type = types[k];
-
-									if (auto primitiveType = varDecl->type.Cast<PrimitiveType>())
+									if (auto type = ResolvePendingType(rootVarDecl->type, types[k]))
 									{
-										TsysCV cv;
-										TsysRefType refType;
-										type = type->GetEntity(cv, refType);
+										if (!symbol->resolvedTypes->Contains(type))
+										{
+											symbol->resolvedTypes->Add(type);
+										}
 									}
-
-									if (!symbol->resolvedTypes->Contains(type))
+									else
 									{
-										symbol->resolvedTypes->Add(type);
+										throw NotConvertableException();
 									}
 								}
 							}

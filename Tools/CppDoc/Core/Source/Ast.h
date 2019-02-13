@@ -126,6 +126,7 @@ using ExprTsysList = List<ExprTsysItem>;
 
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
 extern bool					IsPendingType(Ptr<Type> type);
+extern ITsys*				ResolvePendingType(Ptr<Type> type, ExprTsysItem target);
 extern void					TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, TsysCallingConvention cc = TsysCallingConvention::None, bool memberOf = false);
 extern void					ExprToTsys(ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys);
 
