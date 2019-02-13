@@ -162,7 +162,7 @@ public:
 	{
 		if (self->primitive == CppPrimitiveType::_auto)
 		{
-			throw 0;
+			result = targetType ? targetType : targetExpr.tsys;
 		}
 		else
 		{
@@ -211,7 +211,9 @@ public:
 				throw NotResolvableException();
 			}
 		}
-		self->type->Accept(this);
+		
+		Execute(self->type.Obj(), entity, true);
+		result = targetType ? targetType : targetExpr.tsys;
 	}
 
 	void Visit(FunctionType* self)override
@@ -222,6 +224,14 @@ public:
 			{
 				throw NotResolvableException();
 			}
+		}
+
+		TsysCV cv;
+		TsysRefType ref;
+		auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
+		if (entity->GetType() != TsysType::Function)
+		{
+			throw NotResolvableException();
 		}
 
 		if (self->decoratorReturnType)
@@ -237,12 +247,13 @@ public:
 		}
 		else if (IsPendingType(self->returnType))
 		{
-			throw 0;
+			Execute(self->returnType.Obj(), entity->GetElement(), true);
 		}
 		else
 		{
 			AssumeEqual(self);
 		}
+		result = targetType ? targetType : targetExpr.tsys;
 	}
 
 	void Visit(MemberType* self)override
@@ -252,14 +263,23 @@ public:
 			throw NotResolvableException();
 		}
 
+		TsysCV cv;
+		TsysRefType ref;
+		auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
+		if (entity->GetType() != TsysType::Member)
+		{
+			throw NotResolvableException();
+		}
+
 		if (IsPendingType(self->type))
 		{
-			throw 0;
+			Execute(self->type.Obj(), entity->GetElement(), true);
 		}
 		else
 		{
 			AssumeEqual(self);
 		}
+		result = targetType ? targetType : targetExpr.tsys;
 	}
 
 	void Visit(DeclType* self)override
@@ -268,9 +288,24 @@ public:
 		{
 			AssumeEqual(self);
 		}
+		else if (targetType)
+		{
+			result = targetType;
+		}
 		else
 		{
-			throw 0;
+			switch (targetExpr.type)
+			{
+			case ExprTsysType::LValue:
+				result = targetExpr.tsys->LRefOf();
+				break;
+			case ExprTsysType::XValue:
+				result = targetExpr.tsys->RRefOf();
+				break;
+			case ExprTsysType::PRValue:
+				result = targetExpr.tsys;
+				break;
+			}
 		}
 	}
 
@@ -278,7 +313,20 @@ public:
 	{
 		if (IsPendingType(self->type))
 		{
-			throw 0;
+			TsysCV cv;
+			TsysRefType ref;
+			auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
+
+			if (cv.isGeneralConst && !(self->isConst || self->isConstExpr))
+			{
+				throw NotResolvableException();
+			}
+			if (cv.isVolatile && !self->isVolatile)
+			{
+				throw NotResolvableException();
+			}
+			Execute(self->type.Obj(), entity, true);
+			result = entity->CVOf(cv);
 		}
 		else
 		{
