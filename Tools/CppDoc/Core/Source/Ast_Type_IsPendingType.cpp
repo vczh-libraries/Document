@@ -227,9 +227,24 @@ public:
 		if (IsPendingType(self->type))
 		{
 			ITsys* resolved = nullptr;
+			if (targetType)
 			{
-				DeclType type;
-				resolved = Execute(pa, &type, targetType ? targetType : targetExpr.tsys, true);
+				resolved = targetType;
+			}
+			else
+			{
+				switch (targetExpr.type)
+				{
+				case ExprTsysType::LValue:
+					resolved = targetExpr.tsys->LRefOf();
+					break;
+				case ExprTsysType::XValue:
+					resolved = targetExpr.tsys->RRefOf();
+					break;
+				case ExprTsysType::PRValue:
+					resolved = targetExpr.tsys;
+					break;
+				}
 			}
 
 			TsysCV cv;
@@ -453,18 +468,7 @@ public:
 		}
 		else
 		{
-			switch (targetExpr.type)
-			{
-			case ExprTsysType::LValue:
-				result = targetExpr.tsys->LRefOf();
-				break;
-			case ExprTsysType::XValue:
-				result = targetExpr.tsys->RRefOf();
-				break;
-			case ExprTsysType::PRValue:
-				result = targetExpr.tsys;
-				break;
-			}
+			result = targetExpr.tsys;
 		}
 		if (result->GetType() == TsysType::Zero)
 		{
