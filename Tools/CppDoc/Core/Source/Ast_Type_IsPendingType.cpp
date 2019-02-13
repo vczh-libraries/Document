@@ -187,10 +187,33 @@ public:
 	{
 		if (self->primitive == CppPrimitiveType::_auto)
 		{
-			result = targetType ? targetType : targetExpr.tsys;
-			if (result->GetType() == TsysType::Zero)
+			TsysCV cv;
+			TsysRefType ref;
+			auto entity = (targetType ? targetType : targetExpr.tsys)->GetEntity(cv, ref);
+
+			if (entity->GetType() == TsysType::Zero)
 			{
-				result = pa.tsys->Int();
+				entity = pa.tsys->Int();
+			}
+
+			if (exactMatch)
+			{
+				switch (ref)
+				{
+				case TsysRefType::LRef:
+					result = entity->CVOf(cv)->LRefOf();
+					break;
+				case TsysRefType::RRef:
+					result = entity->CVOf(cv)->RRefOf();
+					break;
+				case TsysRefType::None:
+					result = entity->CVOf(cv);
+					break;
+				}
+			}
+			else
+			{
+				result = entity;
 			}
 		}
 		else
@@ -237,7 +260,7 @@ public:
 				switch (ref)
 				{
 				case TsysRefType::LRef:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), exactMatch)->LRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), true)->LRefOf();
 					break;
 				case TsysRefType::RRef:
 					throw NotResolvableException();
@@ -247,7 +270,7 @@ public:
 						throw NotResolvableException();
 					}
 					cv.isGeneralConst = true;
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), exactMatch)->LRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), true)->LRefOf();
 					break;
 				}
 				break;
@@ -255,13 +278,13 @@ public:
 				switch (ref)
 				{
 				case TsysRefType::LRef:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv)->LRefOf(), exactMatch);
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv)->LRefOf(), true);
 					break;
 				case TsysRefType::RRef:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), exactMatch)->RRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), true)->RRefOf();
 					break;
 				case TsysRefType::None:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), exactMatch)->RRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), true)->RRefOf();
 					break;
 				}
 				break;
