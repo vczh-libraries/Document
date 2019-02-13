@@ -102,12 +102,17 @@ public:
 };
 
 // Test if a type contains auto or decltype(auto)
-bool IsPendingType(Ptr<Type> type)
+bool IsPendingType(Type* type)
 {
 	if (!type) return false;
 	IsPendingTypeVisitor visitor;
 	type->Accept(&visitor);
 	return visitor.result;
+}
+
+bool IsPendingType(Ptr<Type> type)
+{
+	return IsPendingType(type.Obj());
 }
 
 /***********************************************************************
@@ -121,7 +126,7 @@ public:
 	ITsys*					targetType = nullptr;
 	ExprTsysItem			targetExpr;
 
-	static ITsys* Execute(Ptr<Type> type, ITsys* target)
+	static ITsys* Execute(Type* type, ITsys* target)
 	{
 		ResolvePendingTypeVisitor visitor;
 		visitor.targetType = target;
@@ -129,12 +134,25 @@ public:
 		return visitor.result;
 	}
 
-	static ITsys* Execute(Ptr<Type> type, ExprTsysItem target)
+	static ITsys* Execute(Type* type, ExprTsysItem target)
 	{
 		ResolvePendingTypeVisitor visitor;
 		visitor.targetExpr = target;
 		type->Accept(&visitor);
 		return visitor.result;
+	}
+
+	void AssumeEqual(Type* self)
+	{
+	}
+
+	void ShouldEqual(Type* self)
+	{
+		if (IsPendingType(self))
+		{
+			throw NotResolvableException();
+		}
+		AssumeEqual(self);
 	}
 
 	void Visit(PrimitiveType* self)override
@@ -145,23 +163,52 @@ public:
 		}
 		else
 		{
-			throw 0;
+			AssumeEqual(self);
 		}
 	}
 
 	void Visit(ReferenceType* self)override
 	{
-		throw 0;
+		if (IsPendingType(self->type))
+		{
+			throw 0;
+		}
+		else
+		{
+			AssumeEqual(self);
+		}
 	}
 
 	void Visit(ArrayType* self)override
 	{
-		throw NotResolvableException();
+		ShouldEqual(self);
 	}
 
 	void Visit(CallingConventionType* self)override
 	{
-		throw 0;
+		TsysCV cv;
+		TsysRefType ref;
+		auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
+		if (entity->GetType() != TsysType::Function)
+		{
+			throw NotResolvableException();
+		}
+
+		if (self->callingConvention == TsysCallingConvention::None)
+		{
+			if (entity->GetFunc().callingConvention != TsysCallingConvention::CDecl)
+			{
+				throw NotResolvableException();
+			}
+		}
+		else
+		{
+			if (entity->GetFunc().callingConvention != self->callingConvention)
+			{
+				throw NotResolvableException();
+			}
+		}
+		self->type->Accept(this);
 	}
 
 	void Visit(FunctionType* self)override
@@ -174,7 +221,25 @@ public:
 			}
 		}
 
-		throw 0;
+		if (self->decoratorReturnType)
+		{
+			if (IsPendingType(self->decoratorReturnType))
+			{
+				throw NotResolvableException();
+			}
+			else
+			{
+				AssumeEqual(self);
+			}
+		}
+		else if (IsPendingType(self->returnType))
+		{
+			throw 0;
+		}
+		else
+		{
+			AssumeEqual(self);
+		}
 	}
 
 	void Visit(MemberType* self)override
@@ -184,7 +249,14 @@ public:
 			throw NotResolvableException();
 		}
 
-		throw 0;
+		if (IsPendingType(self->type))
+		{
+			throw 0;
+		}
+		else
+		{
+			AssumeEqual(self);
+		}
 	}
 
 	void Visit(DeclType* self)override
@@ -201,37 +273,44 @@ public:
 
 	void Visit(DecorateType* self)override
 	{
-		throw 0;
+		if (IsPendingType(self->type))
+		{
+			throw 0;
+		}
+		else
+		{
+			AssumeEqual(self);
+		}
 	}
 
 	void Visit(RootType* self)override
 	{
-		throw NotResolvableException();
+		ShouldEqual(self);
 	}
 
 	void Visit(IdType* self)override
 	{
-		throw NotResolvableException();
+		ShouldEqual(self);
 	}
 
 	void Visit(ChildType* self)override
 	{
-		throw NotResolvableException();
+		ShouldEqual(self);
 	}
 
 	void Visit(GenericType* self)override
 	{
-		throw NotResolvableException();
+		ShouldEqual(self);
 	}
 
 	void Visit(VariadicTemplateArgumentType* self)override
 	{
-		throw NotResolvableException();
+		ShouldEqual(self);
 	}
 };
 
 // Resolve a pending type to a target type
 ITsys* ResolvePendingType(Ptr<Type> type, ExprTsysItem target)
 {
-	return ResolvePendingTypeVisitor::Execute(type, target);
+	return ResolvePendingTypeVisitor::Execute(type.Obj(), target);
 }

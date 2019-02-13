@@ -300,9 +300,14 @@ public:
 };
 
 // Convert type AST to type system object
-void TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, TsysCallingConvention cc, bool memberOf)
+void TypeToTsys(ParsingArguments& pa, Type* t, TypeTsysList& tsys, TsysCallingConvention cc, bool memberOf)
 {
 	if (!t) throw NotConvertableException();
 	TypeToTsysVisitor visitor(pa, tsys, cc, memberOf);
 	t->Accept(&visitor);
+}
+
+void TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, TsysCallingConvention cc, bool memberOf)
+{
+	TypeToTsys(pa, t.Obj(), tsys, cc, memberOf);
 }
