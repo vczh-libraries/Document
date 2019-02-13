@@ -179,7 +179,7 @@ namespace symbol_type_resolving
 
 								for (vint k = 0; k < types.Count(); k++)
 								{
-									auto type = ResolvePendingType(rootVarDecl->type, types[k]);
+									auto type = ResolvePendingType(pa, rootVarDecl->type, types[k]);
 									if (!symbol->resolvedTypes->Contains(type))
 									{
 										symbol->resolvedTypes->Add(type);

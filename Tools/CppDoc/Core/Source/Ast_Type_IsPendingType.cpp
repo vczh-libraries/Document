@@ -122,31 +122,55 @@ ResolvePendingType
 class ResolvePendingTypeVisitor : public Object, public virtual ITypeVisitor
 {
 public:
+	ParsingArguments&		pa;
 	ITsys*					result = nullptr;
 	bool					exactMatch = false;
 	ITsys*					targetType = nullptr;
 	ExprTsysItem			targetExpr;
 
-	static ITsys* Execute(Type* type, ITsys* target, bool _exactMatch)
+	static ITsys* Execute(ParsingArguments& pa, Type* type, ITsys* target, bool _exactMatch)
 	{
-		ResolvePendingTypeVisitor visitor;
-		visitor.exactMatch = _exactMatch;
-		visitor.targetType = target;
+		ResolvePendingTypeVisitor visitor(pa, target, _exactMatch);
 		type->Accept(&visitor);
 		return visitor.result;
 	}
 
-	static ITsys* Execute(Type* type, ExprTsysItem target, bool _exactMatch)
+	static ITsys* Execute(ParsingArguments& pa, Type* type, ExprTsysItem target, bool _exactMatch)
 	{
-		ResolvePendingTypeVisitor visitor;
-		visitor.exactMatch = _exactMatch;
-		visitor.targetExpr = target;
+		ResolvePendingTypeVisitor visitor(pa, target, _exactMatch);
 		type->Accept(&visitor);
 		return visitor.result;
+	}
+
+	ResolvePendingTypeVisitor(ParsingArguments& _pa, ITsys* target, bool _exactMatch)
+		:pa(_pa)
+		, targetType(target)
+		, exactMatch(_exactMatch)
+	{
+	}
+
+	ResolvePendingTypeVisitor(ParsingArguments& _pa, ExprTsysItem target, bool _exactMatch)
+		:pa(_pa)
+		, targetExpr(target)
+		, exactMatch(_exactMatch)
+	{
 	}
 
 	void AssumeEqual(Type* self)
 	{
+		auto target = targetType ? targetType : targetExpr.tsys;
+
+		TypeTsysList types;
+		TypeToTsys(pa, self, types);
+		for (vint i = 0; i < types.Count(); i++)
+		{
+			if (types[i] == target)
+			{
+				result = target;
+				return;
+			}
+		}
+		throw NotResolvableException();
 	}
 
 	void ShouldEqual(Type* self)
@@ -177,7 +201,7 @@ public:
 			ITsys* resolved = nullptr;
 			{
 				DeclType type;
-				resolved = Execute(&type, targetType ? targetType : targetExpr.tsys, true);
+				resolved = Execute(pa, &type, targetType ? targetType : targetExpr.tsys, true);
 			}
 
 			TsysCV cv;
@@ -201,14 +225,14 @@ public:
 				}
 				else
 				{
-					result = Execute(self->type.Obj(), entity, true);
+					result = Execute(pa, self->type.Obj(), entity, true);
 				}
 				break;
 			case CppReferenceType::LRef:
 				switch (ref)
 				{
 				case TsysRefType::LRef:
-					result = Execute(self->type.Obj(), entity->CVOf(cv), exactMatch)->LRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), exactMatch)->LRefOf();
 					break;
 				case TsysRefType::RRef:
 					throw NotResolvableException();
@@ -218,7 +242,7 @@ public:
 						throw NotResolvableException();
 					}
 					cv.isGeneralConst = true;
-					result = Execute(self->type.Obj(), entity->CVOf(cv), exactMatch)->LRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), exactMatch)->LRefOf();
 					break;
 				}
 				break;
@@ -226,9 +250,9 @@ public:
 				switch (ref)
 				{
 				case TsysRefType::LRef:
-					result = Execute(self->type.Obj(), entity->CVOf(cv)->LRefOf(), exactMatch);
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv)->LRefOf(), exactMatch);
 				case TsysRefType::RRef:
-					result = Execute(self->type.Obj(), entity->CVOf(cv), exactMatch)->RRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), exactMatch)->RRefOf();
 				case TsysRefType::None:
 					throw NotResolvableException();
 				}
@@ -283,7 +307,7 @@ public:
 			}
 		}
 
-		Execute(self->type.Obj(), entity, true);
+		Execute(pa, self->type.Obj(), entity, true);
 		result = targetType ? targetType : targetExpr.tsys;
 	}
 
@@ -322,7 +346,7 @@ public:
 		}
 		for (vint i = 0; i < self->parameters.Count(); i++)
 		{
-			Execute(self->parameters[i]->type.Obj(), entity->GetParam(i), true);
+			Execute(pa, self->parameters[i]->type.Obj(), entity->GetParam(i), true);
 		}
 
 		if (self->decoratorReturnType)
@@ -338,7 +362,7 @@ public:
 		}
 		else if (IsPendingType(self->returnType))
 		{
-			Execute(self->returnType.Obj(), entity->GetElement(), true);
+			Execute(pa, self->returnType.Obj(), entity->GetElement(), true);
 		}
 		else
 		{
@@ -373,11 +397,11 @@ public:
 		{
 			throw NotResolvableException();
 		}
-		Execute(self->classType.Obj(), entity->GetClass(), true);
+		Execute(pa, self->classType.Obj(), entity->GetClass(), true);
 
 		if (IsPendingType(self->type))
 		{
-			Execute(self->type.Obj(), entity->GetElement(), true);
+			Execute(pa, self->type.Obj(), entity->GetElement(), true);
 		}
 		else
 		{
@@ -450,7 +474,7 @@ public:
 					throw NotResolvableException();
 				}
 			}
-			Execute(self->type.Obj(), entity, true);
+			Execute(pa, self->type.Obj(), entity, true);
 			result = entity->CVOf(cv);
 		}
 		else
@@ -486,7 +510,7 @@ public:
 };
 
 // Resolve a pending type to a target type
-ITsys* ResolvePendingType(Ptr<Type> type, ExprTsysItem target)
+ITsys* ResolvePendingType(ParsingArguments& pa, Ptr<Type> type, ExprTsysItem target)
 {
-	return ResolvePendingTypeVisitor::Execute(type.Obj(), target, false);
+	return ResolvePendingTypeVisitor::Execute(pa, type.Obj(), target, false);
 }
