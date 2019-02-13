@@ -123,20 +123,23 @@ class ResolvePendingTypeVisitor : public Object, public virtual ITypeVisitor
 {
 public:
 	ITsys*					result = nullptr;
+	bool					exactMatch = false;
 	ITsys*					targetType = nullptr;
 	ExprTsysItem			targetExpr;
 
-	static ITsys* Execute(Type* type, ITsys* target)
+	static ITsys* Execute(Type* type, ITsys* target, bool _exactMatch)
 	{
 		ResolvePendingTypeVisitor visitor;
+		visitor.exactMatch = _exactMatch;
 		visitor.targetType = target;
 		type->Accept(&visitor);
 		return visitor.result;
 	}
 
-	static ITsys* Execute(Type* type, ExprTsysItem target)
+	static ITsys* Execute(Type* type, ExprTsysItem target, bool _exactMatch)
 	{
 		ResolvePendingTypeVisitor visitor;
+		visitor.exactMatch = _exactMatch;
 		visitor.targetExpr = target;
 		type->Accept(&visitor);
 		return visitor.result;
@@ -263,7 +266,7 @@ public:
 	{
 		if (self->expr)
 		{
-			throw 0;
+			AssumeEqual(self);
 		}
 		else
 		{
@@ -312,5 +315,5 @@ public:
 // Resolve a pending type to a target type
 ITsys* ResolvePendingType(Ptr<Type> type, ExprTsysItem target)
 {
-	return ResolvePendingTypeVisitor::Execute(type.Obj(), target);
+	return ResolvePendingTypeVisitor::Execute(type.Obj(), target, false);
 }
