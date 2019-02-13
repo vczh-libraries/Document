@@ -174,7 +174,66 @@ public:
 	{
 		if (IsPendingType(self->type))
 		{
-			throw 0;
+			ITsys* resolved = nullptr;
+			{
+				DeclType type;
+				resolved = Execute(&type, targetType ? targetType : targetExpr.tsys, true);
+			}
+
+			TsysCV cv;
+			TsysRefType ref;
+			auto entity = resolved->GetEntity(cv, ref);
+
+			if (exactMatch)
+			{
+				if (cv.isGeneralConst || cv.isVolatile)
+				{
+					throw NotResolvableException();
+				}
+			}
+
+			switch (self->reference)
+			{
+			case CppReferenceType::Ptr:
+				if (entity->GetType() != TsysType::Ptr)
+				{
+					throw NotResolvableException();
+				}
+				else
+				{
+					result = Execute(self->type.Obj(), entity, true);
+				}
+				break;
+			case CppReferenceType::LRef:
+				switch (ref)
+				{
+				case TsysRefType::LRef:
+					result = Execute(self->type.Obj(), entity->CVOf(cv), exactMatch)->LRefOf();
+					break;
+				case TsysRefType::RRef:
+					throw NotResolvableException();
+				case TsysRefType::None:
+					if (exactMatch)
+					{
+						throw NotResolvableException();
+					}
+					cv.isGeneralConst = true;
+					result = Execute(self->type.Obj(), entity->CVOf(cv), exactMatch)->LRefOf();
+					break;
+				}
+				break;
+			case CppReferenceType::RRef:
+				switch (ref)
+				{
+				case TsysRefType::LRef:
+					result = Execute(self->type.Obj(), entity->CVOf(cv)->LRefOf(), exactMatch);
+				case TsysRefType::RRef:
+					result = Execute(self->type.Obj(), entity->CVOf(cv), exactMatch)->RRefOf();
+				case TsysRefType::None:
+					throw NotResolvableException();
+				}
+				break;
+			}
 		}
 		else
 		{
@@ -192,6 +251,18 @@ public:
 		TsysCV cv;
 		TsysRefType ref;
 		auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
+		if (exactMatch)
+		{
+			if (cv.isGeneralConst || cv.isVolatile)
+			{
+				throw NotResolvableException();
+			}
+			if (ref != TsysRefType::None)
+			{
+				throw NotResolvableException();
+			}
+		}
+
 		if (entity->GetType() != TsysType::Function)
 		{
 			throw NotResolvableException();
@@ -211,7 +282,7 @@ public:
 				throw NotResolvableException();
 			}
 		}
-		
+
 		Execute(self->type.Obj(), entity, true);
 		result = targetType ? targetType : targetExpr.tsys;
 	}
@@ -229,9 +300,29 @@ public:
 		TsysCV cv;
 		TsysRefType ref;
 		auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
+		if (exactMatch)
+		{
+			if (cv.isGeneralConst || cv.isVolatile)
+			{
+				throw NotResolvableException();
+			}
+			if (ref != TsysRefType::None)
+			{
+				throw NotResolvableException();
+			}
+		}
+
 		if (entity->GetType() != TsysType::Function)
 		{
 			throw NotResolvableException();
+		}
+		if (self->parameters.Count() != entity->GetParamCount())
+		{
+			throw NotResolvableException();
+		}
+		for (vint i = 0; i < self->parameters.Count(); i++)
+		{
+			Execute(self->parameters[i]->type.Obj(), entity->GetParam(i), true);
 		}
 
 		if (self->decoratorReturnType)
@@ -266,10 +357,23 @@ public:
 		TsysCV cv;
 		TsysRefType ref;
 		auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
+		if (exactMatch)
+		{
+			if (cv.isGeneralConst || cv.isVolatile)
+			{
+				throw NotResolvableException();
+			}
+			if (ref != TsysRefType::None)
+			{
+				throw NotResolvableException();
+			}
+		}
+
 		if (entity->GetType() != TsysType::Member)
 		{
 			throw NotResolvableException();
 		}
+		Execute(self->classType.Obj(), entity->GetClass(), true);
 
 		if (IsPendingType(self->type))
 		{
@@ -316,14 +420,35 @@ public:
 			TsysCV cv;
 			TsysRefType ref;
 			auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
-
-			if (cv.isGeneralConst && !(self->isConst || self->isConstExpr))
+			if (exactMatch)
 			{
-				throw NotResolvableException();
+				if (ref != TsysRefType::None)
+				{
+					throw NotResolvableException();
+				}
 			}
-			if (cv.isVolatile && !self->isVolatile)
+
+			if (exactMatch)
 			{
-				throw NotResolvableException();
+				if (cv.isGeneralConst != (self->isConst || self->isConstExpr))
+				{
+					throw NotResolvableException();
+				}
+				if (cv.isVolatile != self->isVolatile)
+				{
+					throw NotResolvableException();
+				}
+			}
+			else
+			{
+				if (cv.isGeneralConst && !(self->isConst || self->isConstExpr))
+				{
+					throw NotResolvableException();
+				}
+				if (cv.isVolatile && !self->isVolatile)
+				{
+					throw NotResolvableException();
+				}
 			}
 			Execute(self->type.Obj(), entity, true);
 			result = entity->CVOf(cv);
