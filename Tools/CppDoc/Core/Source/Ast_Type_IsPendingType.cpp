@@ -1,6 +1,7 @@
 #include "Ast.h"
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
+#include "Parser.h"
 
 /***********************************************************************
 IsPendingType
@@ -187,6 +188,10 @@ public:
 		if (self->primitive == CppPrimitiveType::_auto)
 		{
 			result = targetType ? targetType : targetExpr.tsys;
+			if (result->GetType() == TsysType::Zero)
+			{
+				result = pa.tsys->Int();
+			}
 		}
 		else
 		{
@@ -251,10 +256,13 @@ public:
 				{
 				case TsysRefType::LRef:
 					result = Execute(pa, self->type.Obj(), entity->CVOf(cv)->LRefOf(), exactMatch);
+					break;
 				case TsysRefType::RRef:
 					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), exactMatch)->RRefOf();
+					break;
 				case TsysRefType::None:
-					throw NotResolvableException();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), exactMatch)->RRefOf();
+					break;
 				}
 				break;
 			}
@@ -434,6 +442,10 @@ public:
 				result = targetExpr.tsys;
 				break;
 			}
+		}
+		if (result->GetType() == TsysType::Zero)
+		{
+			result = pa.tsys->Int();
 		}
 	}
 
