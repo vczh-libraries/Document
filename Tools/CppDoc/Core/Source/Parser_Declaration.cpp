@@ -99,25 +99,6 @@ void ConnectForwards(Symbol* scope, Symbol* symbol, Ptr<CppTokenCursor> cursor)
 ParseDeclaration
 ***********************************************************************/
 
-bool IsPendingType(Ptr<Type> type)
-{
-	if (auto primitiveType = type.Cast<PrimitiveType>())
-	{
-		if (primitiveType->primitive == CppPrimitiveType::_auto)
-		{
-			return true;
-		}
-	}
-	else if (auto declType = type.Cast<DeclType>())
-	{
-		if (!declType->expr)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
 void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	while (SkipSpecifiers(cursor));

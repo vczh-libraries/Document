@@ -171,6 +171,7 @@
     <ClCompile Include="Source\Ast.cpp" />
     <ClCompile Include="Source\Ast_Expr_ExprToTsys.cpp" />
     <ClCompile Include="Source\Ast_Expr_Resolving.cpp" />
+    <ClCompile Include="Source\Ast_Type_IsPendingType.cpp" />
     <ClCompile Include="Source\Ast_Type_IsSameResolvedType.cpp" />
     <ClCompile Include="Source\Ast_Type_TypeToTsys.cpp" />
     <ClCompile Include="Source\Lexer.cpp" />
