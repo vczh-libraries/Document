@@ -179,16 +179,10 @@ namespace symbol_type_resolving
 
 								for (vint k = 0; k < types.Count(); k++)
 								{
-									if (auto type = ResolvePendingType(rootVarDecl->type, types[k]))
+									auto type = ResolvePendingType(rootVarDecl->type, types[k]);
+									if (!symbol->resolvedTypes->Contains(type))
 									{
-										if (!symbol->resolvedTypes->Contains(type))
-										{
-											symbol->resolvedTypes->Add(type);
-										}
-									}
-									else
-									{
-										throw NotConvertableException();
+										symbol->resolvedTypes->Add(type);
 									}
 								}
 							}

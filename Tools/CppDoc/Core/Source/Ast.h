@@ -120,6 +120,7 @@ Helpers
 
 struct NotConvertableException {};
 struct IllegalExprException {};
+struct NotResolvableException {};
 
 using TypeTsysList = List<ITsys*>;
 using ExprTsysList = List<ExprTsysItem>;
