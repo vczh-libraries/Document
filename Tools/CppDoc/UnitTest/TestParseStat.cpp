@@ -179,4 +179,47 @@ void F8()
 
 TEST_CASE(TestParseStat_MultiVars)
 {
+	auto input = LR"(
+void F1()
+{
+	{
+		int a = 0, b;
+		int c;
+		{
+		}
+	}
+}
+
+void F2()
+{
+	for (int a = 0, b = 0, c = 0; a < 0; a++, b++, c++)
+	{
+	}
+}
+
+void F3()
+{
+	if (int a, b; int c = 0)
+	{
+	}
+}
+
+void F4()
+{
+	if (int a, b, c; true)
+	{
+	}
+}
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	for (vint i = 1; i <= 4; i++)
+	{
+		ParsingArguments spa(pa, pa.context->children[L"F" + itow(i)][0]->children[L"$"][0].Obj()->children[L"$"][0].Obj()->children[L"$"][0].Obj());
+		spa.funcSymbol = spa.context->parent->parent->parent;
+		TEST_ASSERT(spa.funcSymbol->decls.Count() == 1);
+		TEST_ASSERT(spa.funcSymbol->decls[0].Cast<FunctionDeclaration>()->name.name == L"F" + itow(i));
+		AssertExpr(L"a", L"a", L"__int32 $L", spa);
+		AssertExpr(L"b", L"b", L"__int32 $L", spa);
+		AssertExpr(L"c", L"c", L"__int32 $L", spa);
+	}
 }

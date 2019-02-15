@@ -9,7 +9,8 @@
 - [x] Use this type in overloading
 - [x] Support `=delete` and `=default`
 - [ ] Delay process function bodies while doing whole program parsing
-- [ ] Build symbols for variables created by statements
+- [x] Build symbols for variables created by statements
+- [ ] Deal with `for(auto a : something_array_or_objects)`
 - [ ] Process functions returning `decltype(auto)`, take care about recursion, during delay processing function bodies
 - [ ] Compiler-generated functions
 - [ ] Add an internal `ITsys` type for lambda expressions
