@@ -97,7 +97,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		ParseVariableOrExpression(newPa, cursor, stat);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
-		stat->stat = ParseStat(pa, cursor);
+		stat->stat = ParseStat(newPa, cursor);
 		return stat;
 	}
 	else if (TestToken(cursor, CppTokens::STAT_DO))
@@ -225,7 +225,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		ParseVariableOrExpression(newPa, cursor, stat);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
-		stat->stat = ParseStat(pa, cursor);
+		stat->stat = ParseStat(newPa, cursor);
 		return stat;
 	}
 	else if (TestToken(cursor, CppTokens::STAT_TRY))
