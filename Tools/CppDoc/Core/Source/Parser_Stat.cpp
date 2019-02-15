@@ -236,13 +236,15 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		stat->tryStat = ParseStat(pa, cursor);
 		RequireToken(cursor, CppTokens::STAT_CATCH);
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
+
+		ParsingArguments newPa(pa, pa.context->CreateStatSymbol(stat));
 		if (!TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
 		{
-			auto declarator = ParseNonMemberDeclarator(pa, pda_VarType(), cursor);
-			stat->exception = BuildVariableAndSymbol(pa, declarator);
+			auto declarator = ParseNonMemberDeclarator(newPa, pda_VarType(), cursor);
+			stat->exception = BuildVariableAndSymbol(newPa, declarator);
 		}
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
-		stat->catchStat = ParseStat(pa, cursor);
+		stat->catchStat = ParseStat(newPa, cursor);
 		return stat;
 	}
 	else if (TestToken(cursor, CppTokens::STAT_RETURN))
