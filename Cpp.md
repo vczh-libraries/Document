@@ -10,7 +10,15 @@
 - [x] Support `=delete` and `=default`
 - [ ] Delay process function bodies while doing whole program parsing
 - [x] Build symbols for variables created by statements
-- [ ] Deal with `for(auto a : something_array_or_objects)`
+- [ ] Correctly implement [Argument-dependent lookup](https://en.cppreference.com/w/cpp/language/adl)
+  - [ ] `TestAdlOverloading.cpp`
+  - [ ] Add a function for searching ADL scopes, providing collected types and namespaces
+  - [ ] Fix `ResolveSymbol` if necessary to search symbols in these scopes, since
+    - Friends declarations are visible
+    - Using declarations are ignored
+    - Only functions are needed (functors are igored)
+  - [ ] Fix `PostfixUnaryExpr`, `PrefixUnaryExpr` and `BinaryExpr` operator lookup
+  - [ ] Deal with `for(auto a : something_array_or_objects)`
 - [ ] Process functions returning `decltype(auto)`, take care about recursion, during delay processing function bodies
 - [ ] Compiler-generated functions
 - [ ] Add an internal `ITsys` type for lambda expressions

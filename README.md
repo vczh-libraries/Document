@@ -29,8 +29,6 @@ All **the compiler** here means the compiler created by this project.
   - If you have `int Foo::Bar(int(&)[1])` and `int Foo::Bar(int(&)[2])`, although this code is valid, but due to the limitation mentioned above, the compiler stops here.
   - This also applies when the compiler finds two function definitions match the same forward declaration in a similar way.
   - For most of the cases, like `struct Foo { static inline virtual int Bar() = 0; };`, the compiler doesn't care.
-- For any expression like `Foo(bar)`, the compiler will first resolve `Foo` and then matches all candidates with `bar`. In the C++ standard, `Foo` could also appear in the namespace of the entity type of `bar`, so even if you cannot see `Foo` under this context the code could be valid. But the compiler won't try to do this.
-  - Except user defined operator overloadings.
 
 ## If you want to use it but you have trouble processing your own source code ...
 - I will announce when I think this project is ready to release. Now it is not completed so you are expected to have trouble.
