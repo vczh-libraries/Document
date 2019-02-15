@@ -726,6 +726,5 @@ Ptr<VariableDeclaration> BuildVariableAndSymbol(const ParsingArguments& pa, Ptr<
 
 	List<Ptr<VariableDeclaration>> varDecls;
 	BuildVariablesAndSymbols(pa, declarators, varDecls);
-	BuildSymbols(pa, varDecls);
 	return varDecls[0];
 }
