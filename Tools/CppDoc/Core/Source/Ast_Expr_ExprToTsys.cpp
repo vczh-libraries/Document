@@ -617,7 +617,10 @@ public:
 				}
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 				VisitOverloadedFunction(pa, opTypes, argTypesList, result);
-				return true;
+				if (result.Count() > 0)
+				{
+					return true;
+				}
 			}
 		}
 		{
@@ -643,8 +646,12 @@ public:
 					argTypesList.Add(MakePtr<ExprTsysList>());
 					AddInternal(*argTypesList[1].Obj(), *rightType);
 				}
+				FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, false);
 				VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
-				return true;
+				if (result.Count() > 0)
+				{
+					return true;
+				}
 			}
 		}
 		return false;
