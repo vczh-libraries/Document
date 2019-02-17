@@ -30,6 +30,7 @@ namespace symbol_type_resolving
 	extern void				SearchAdlClassesAndNamespaces(ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
 	extern void				SearchAdlClassesAndNamespaces(ParsingArguments& pa, TypeTsysList& types, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
 	extern void				SearchAdlClassesAndNamespaces(ParsingArguments& pa, ExprTsysList& types, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
+	extern void				SerachAdlFunction(ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result);
 
 	extern void				Promote(TsysPrimitive& primitive);
 	extern TsysPrimitive	ArithmeticConversion(TsysPrimitive leftP, TsysPrimitive rightP);

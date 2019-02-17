@@ -295,4 +295,33 @@ namespace symbol_type_resolving
 			SearchAdlClassesAndNamespaces(pa, types[i].tsys, nss, classes);
 		}
 	}
+
+	/***********************************************************************
+	SerachAdlFunction: Find functions in namespaces
+	***********************************************************************/
+
+	void SerachAdlFunction(ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result)
+	{
+		for (vint i = 0; i < nss.Count(); i++)
+		{
+			auto ns = nss[i];
+			vint index = ns->children.Keys().IndexOf(name);
+			if (index != -1)
+			{
+				auto& children = ns->children.GetByIndex(index);
+				for (vint j = 0; j < children.Count(); j++)
+				{
+					auto child = children[j].Obj();
+					if (child->decls.Count() == 1 && child->decls[0].Cast<ForwardFunctionDeclaration>())
+					{
+						if (child->forwardDeclarationRoot)
+						{
+							child = child->forwardDeclarationRoot;
+						}
+						VisitSymbol(pa, nullptr, child, false, result);
+					}
+				}
+			}
+		}
+	}
 }
