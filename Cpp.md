@@ -12,12 +12,12 @@
 - [x] Build symbols for variables created by statements
 - [ ] Correctly implement [Argument-dependent lookup](https://en.cppreference.com/w/cpp/language/adl)
   - [ ] `TestAdlOverloading.cpp`
-  - [ ] Add a function for searching ADL scopes, providing collected types and namespaces
+  - [x] Add a function for searching ADL scopes, providing collected types and namespaces
   - [ ] Fix `ResolveSymbol` if necessary to search symbols in these scopes, since
     - Friends declarations are visible
     - Using declarations are ignored
     - Only functions are needed (functors are igored)
-  - [ ] Fix `PostfixUnaryExpr`, `PrefixUnaryExpr` and `BinaryExpr` operator lookup
+  - [x] Fix `PostfixUnaryExpr`, `PrefixUnaryExpr` and `BinaryExpr` operator lookup
   - [ ] Deal with `for(auto a : something_array_or_objects)`
 - [ ] Process functions returning `decltype(auto)`, take care about recursion, during delay processing function bodies
 - [ ] Compiler-generated functions
