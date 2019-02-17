@@ -535,8 +535,125 @@ public:
 		CreateUniversalInitializerType(argTypesList, indices, 0);
 	}
 
+	bool VisitOperator(ExprTsysItem* leftType, ExprTsysItem* rightType, const WString& name)
+	{
+		TsysCV leftCV, rightCV;
+		TsysRefType leftRef, rightRef;
+		auto leftEntity = leftType->tsys->GetEntity(leftCV, leftRef);
+		auto rightEntity = rightType ? rightType->tsys->GetEntity(rightCV, rightRef) : nullptr;
+
+		CppName opName;
+		opName.type = CppNameType::Operator;
+		opName.name = L"operator " + name;
+
+		if (leftEntity->GetType() == TsysType::Decl)
+		{
+			ParsingArguments newPa(pa, leftEntity->GetDecl());
+			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbol);
+
+			if (opMethods.values)
+			{
+				ExprTsysList opTypes;
+				for (vint j = 0; j < opMethods.values->resolvedSymbols.Count(); j++)
+				{
+					VisitSymbol(pa, leftType, opMethods.values->resolvedSymbols[j], false, opTypes);
+				}
+				FilterFieldsAndBestQualifiedFunctions(leftCV, leftRef, opTypes);
+
+				List<Ptr<ExprTsysList>> argTypesList;
+				if (rightType)
+				{
+					argTypesList.Add(MakePtr<ExprTsysList>());
+					AddInternal(*argTypesList[0].Obj(), *rightType);
+				}
+				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
+				VisitOverloadedFunction(pa, opTypes, argTypesList, result);
+				return true;
+			}
+		}
+		if (rightEntity && rightEntity->GetType() == TsysType::Decl)
+		{
+			ParsingArguments newPa(pa, rightEntity->GetDecl());
+			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbol);
+
+			if (opMethods.values)
+			{
+				ExprTsysList opTypes;
+				for (vint j = 0; j < opMethods.values->resolvedSymbols.Count(); j++)
+				{
+					VisitSymbol(pa, leftType, opMethods.values->resolvedSymbols[j], false, opTypes);
+				}
+				FilterFieldsAndBestQualifiedFunctions(rightCV, rightRef, opTypes);
+
+				List<Ptr<ExprTsysList>> argTypesList;
+				{
+					argTypesList.Add(MakePtr<ExprTsysList>());
+					AddInternal(*argTypesList[0].Obj(), *leftType);
+				}
+				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
+				VisitOverloadedFunction(pa, opTypes, argTypesList, result);
+				return true;
+			}
+		}
+		{
+			auto opFuncs = ResolveSymbol(pa, opName, SearchPolicy::SymbolAccessableInScope);
+			if (opFuncs.values)
+			{
+				ExprTsysList opTypes;
+				for (vint j = 0; j < opFuncs.values->resolvedSymbols.Count(); j++)
+				{
+					VisitSymbol(pa, leftType, opFuncs.values->resolvedSymbols[j], false, opTypes);
+				}
+
+				List<Ptr<ExprTsysList>> argTypesList;
+				{
+					argTypesList.Add(MakePtr<ExprTsysList>());
+					AddInternal(*argTypesList[0].Obj(), *leftType);
+				}
+				if (rightType)
+				{
+					argTypesList.Add(MakePtr<ExprTsysList>());
+					AddInternal(*argTypesList[1].Obj(), *rightType);
+				}
+				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
+				VisitOverloadedFunction(pa, opTypes, argTypesList, result);
+				return true;
+			}
+		}
+		{
+			SortedList<Symbol*> nss, classes;
+			SearchAdlClassesAndNamespaces(pa, leftEntity, nss, classes);
+			if (rightEntity)
+			{
+				SearchAdlClassesAndNamespaces(pa, rightEntity, nss, classes);
+			}
+
+			ExprTsysList funcTypes;
+			SerachAdlFunction(pa, nss, opName.name, funcTypes);
+
+			if (funcTypes.Count())
+			{
+				List<Ptr<ExprTsysList>> argTypesList;
+				{
+					argTypesList.Add(MakePtr<ExprTsysList>());
+					AddInternal(*argTypesList[0].Obj(), *leftType);
+				}
+				if (rightType)
+				{
+					argTypesList.Add(MakePtr<ExprTsysList>());
+					AddInternal(*argTypesList[1].Obj(), *rightType);
+				}
+				VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void Visit(PostfixUnaryExpr* self)override
 	{
+		ExprTsysItem extraParam(nullptr, ExprTsysType::PRValue, pa.tsys->Int());
+
 		ExprTsysList types;
 		ExprToTsys(pa, self->operand, types);
 		for (vint i = 0; i < types.Count(); i++)
