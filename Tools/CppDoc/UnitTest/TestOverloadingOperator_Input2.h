@@ -1,4 +1,4 @@
-namespace a
+namespace test_overloading
 {
 	struct Y
 	{

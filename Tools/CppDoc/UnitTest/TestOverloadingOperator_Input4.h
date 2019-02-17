@@ -1,7 +1,7 @@
-extern a::X x;
-extern a::Y y;
-extern a::Z z;
+extern test_overloading::X x;
+extern test_overloading::Y y;
+extern test_overloading::Z z;
 
-extern const a::X cx;
-extern const a::Y cy;
-extern const a::Z cz;
+extern const test_overloading::X cx;
+extern const test_overloading::Y cy;
+extern const test_overloading::Z cz;
