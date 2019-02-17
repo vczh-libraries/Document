@@ -134,5 +134,8 @@
     <ClCompile Include="Source\Ast_Type_IsPendingType.cpp">
       <Filter>Source Files\Ast\Type</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Ast_Expr_Resolving_Overloading.cpp">
+      <Filter>Source Files\Ast\Expr</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
