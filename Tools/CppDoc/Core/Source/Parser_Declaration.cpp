@@ -581,10 +581,45 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 						newPa.funcSymbol = contextSymbol;
 						BuildSymbols(newPa, type->parameters);
 					}
+					// delay parse the statement
 					{
-						ParsingArguments statPa(pa, contextSymbol);
-						statPa.funcSymbol = contextSymbol;
-						decl->statement = ParseStat(statPa, cursor);
+						decl->delayParse = MakePtr<DelayParse>();
+						decl->delayParse->pa = { pa,contextSymbol };
+						cursor->Clone(decl->delayParse->reader, decl->delayParse->begin);
+
+						vint counter = 1;
+						RequireToken(cursor, CppTokens::LBRACE);
+						while (true)
+						{
+							if (TestToken(cursor, CppTokens::LBRACE))
+							{
+								counter++;
+							}
+							else if (TestToken(cursor, CppTokens::RBRACE))
+							{
+								counter--;
+								if (counter == 0)
+								{
+									if (cursor)
+									{
+										decl->delayParse->end = cursor->token;
+									}
+									else
+									{
+										memset(&decl->delayParse->end, 0, sizeof(RegexToken));
+									}
+									break;
+								}
+							}
+							else
+							{
+								SkipToken(cursor);
+								if (!cursor)
+								{
+									throw StopParsingException();
+								}
+							}
+						}
 					}
 					output.Add(decl);
 					ConnectForwards<ForwardFunctionDeclaration>(context, contextSymbol, cursor);

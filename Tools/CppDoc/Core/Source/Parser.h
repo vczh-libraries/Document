@@ -97,7 +97,7 @@ public:
 };
 
 /***********************************************************************
-Parsers
+Parser Objects
 ***********************************************************************/
 
 class IIndexRecorder : public virtual Interface
@@ -105,20 +105,6 @@ class IIndexRecorder : public virtual Interface
 public:
 	virtual void			Index(CppName& name, Ptr<Resolving> resolving) = 0;
 	virtual void			ExpectValueButType(CppName& name, Ptr<Resolving> resolving) = 0;
-};
-
-enum class DeclaratorRestriction
-{
-	Zero,
-	Optional,
-	One,
-	Many,
-};
-
-enum class InitializerRestriction
-{
-	Zero,
-	Optional,
 };
 
 struct ParsingArguments
@@ -134,12 +120,39 @@ struct ParsingArguments
 	ParsingArguments(const ParsingArguments& pa, Symbol* _context);
 };
 
+class DelayParse : public Object
+{
+public:
+	ParsingArguments								pa;
+	Ptr<CppTokenReader>								reader;
+	Ptr<CppTokenCursor>								begin;
+	RegexToken										end;
+};
+
 struct StopParsingException
 {
 	Ptr<CppTokenCursor>		position;
 
 	StopParsingException() {}
 	StopParsingException(Ptr<CppTokenCursor> _position) :position(_position) {}
+};
+
+/***********************************************************************
+Parser Functions
+***********************************************************************/
+
+enum class DeclaratorRestriction
+{
+	Zero,
+	Optional,
+	One,
+	Many,
+};
+
+enum class InitializerRestriction
+{
+	Zero,
+	Optional,
 };
 
 class FunctionType;

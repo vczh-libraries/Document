@@ -3,6 +3,8 @@
 
 #include "Ast.h"
 
+class DelayParse;
+
 /***********************************************************************
 Visitor
 ***********************************************************************/
@@ -154,6 +156,7 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Stat>										statement;
+	Ptr<DelayParse>									delayParse;
 };
 
 class EnumItemDeclaration : public Declaration

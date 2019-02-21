@@ -14,7 +14,7 @@
   - [x] Add a function for searching ADL scopes, providing collected types and namespaces
   - [x] Fix `PostfixUnaryExpr`, `PrefixUnaryExpr` and `BinaryExpr` operator lookup
   - [ ] Deal with `for(auto a : something_array_or_objects)`
-- [ ] Delay process function bodies while doing whole program parsing
+- [x] Delay process function bodies while doing whole program parsing
 - [ ] Call `ExprToTsys` on all expressions during parsing.
   - [ ] Variable initializer, but do not evaluate variable's initializer if it has been scanned.
   - [ ] Variable declarations in statements.
