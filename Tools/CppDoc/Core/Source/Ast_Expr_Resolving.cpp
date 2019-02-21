@@ -139,6 +139,104 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
+	EvaluateSymbol: Evaluate the declared type for a symbol
+	***********************************************************************/
+
+	void EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, Ptr<ForwardVariableDeclaration> varDecl)
+	{
+		switch (symbol->evaluation)
+		{
+		case SymbolEvaluation::Evaluated: return;
+		case SymbolEvaluation::Evaluating: throw NotResolvableException();
+		}
+
+		symbol->evaluation = SymbolEvaluation::Evaluating;
+		symbol->evaluatedTypes = MakePtr<TypeTsysList>();
+
+		if (varDecl->needResolveTypeFromInitializer)
+		{
+			if (auto rootVarDecl = varDecl.Cast<VariableDeclaration>())
+			{
+				ExprTsysList types;
+				ParsingArguments newPa(pa, symbol->parent);
+				ExprToTsys(newPa, rootVarDecl->initializer->arguments[0], types);
+
+				for (vint k = 0; k < types.Count(); k++)
+				{
+					auto type = ResolvePendingType(pa, rootVarDecl->type, types[k]);
+					if (!symbol->evaluatedTypes->Contains(type))
+					{
+						symbol->evaluatedTypes->Add(type);
+					}
+				}
+			}
+			else
+			{
+				throw NotResolvableException();
+			}
+		}
+		else
+		{
+			ParsingArguments newPa(pa, symbol->parent);
+			TypeToTsys(newPa, varDecl->type, *symbol->evaluatedTypes.Obj());
+		}
+		symbol->evaluation = SymbolEvaluation::Evaluated;
+	}
+
+	void EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, Ptr<ForwardFunctionDeclaration> funcDecl)
+	{
+		switch (symbol->evaluation)
+		{
+		case SymbolEvaluation::Evaluated: return;
+		case SymbolEvaluation::Evaluating: throw NotResolvableException();
+		}
+
+		symbol->evaluation = SymbolEvaluation::Evaluating;
+		symbol->evaluatedTypes = MakePtr<TypeTsysList>();
+
+		if (funcDecl->needResolveTypeFromStatement)
+		{
+			if (auto rootFuncDecl = funcDecl.Cast<FunctionDeclaration>())
+			{
+				throw 0;
+			}
+			else
+			{
+				throw NotResolvableException();
+			}
+		}
+		else
+		{
+			ParsingArguments newPa(pa, symbol->parent);
+			TypeToTsys(newPa, funcDecl->type, *symbol->evaluatedTypes.Obj());
+		}
+		symbol->evaluation = SymbolEvaluation::Evaluated;
+	}
+
+	void EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, Ptr<ClassDeclaration> classDecl)
+	{
+		switch (symbol->evaluation)
+		{
+		case SymbolEvaluation::Evaluated: return;
+		case SymbolEvaluation::Evaluating: throw NotResolvableException();
+		}
+
+		symbol->evaluation = SymbolEvaluation::Evaluating;
+		symbol->evaluatedBaseTypes = MakePtr<List<Ptr<TypeTsysList>>>();
+
+		{
+			ParsingArguments newPa(pa, symbol);
+			for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
+			{
+				auto baseTypes = MakePtr<TypeTsysList>();
+				symbol->evaluatedBaseTypes->Add(baseTypes);
+				TypeToTsys(newPa, classDecl->baseTypes[i].f1, *baseTypes.Obj());
+			}
+		}
+		symbol->evaluation = SymbolEvaluation::Evaluated;
+	}
+
+	/***********************************************************************
 	VisitSymbol: Fill a symbol to ExprTsysList
 		thisItem: When afterScope==false
 			it represents typeof(x) in x.name or typeof(&x) in x->name
@@ -163,44 +261,12 @@ namespace symbol_type_resolving
 				auto decl = symbol->decls[j];
 				if (auto varDecl = decl.Cast<ForwardVariableDeclaration>())
 				{
+					EvaluateSymbol(pa, symbol, varDecl);
 					bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol, varDecl);
 
-					TypeTsysList candidates;
-					if (varDecl->needResolveTypeFromInitializer)
+					for (vint k = 0; k < symbol->evaluatedTypes->Count(); k++)
 					{
-						if (!symbol->resolvedTypes)
-						{
-							symbol->resolvedTypes = MakePtr<TypeTsysList>();
-							if (auto rootVarDecl = varDecl.Cast<VariableDeclaration>())
-							{
-								ExprTsysList types;
-								ParsingArguments newPa(pa, symbol->parent);
-								ExprToTsys(newPa, rootVarDecl->initializer->arguments[0], types);
-
-								for (vint k = 0; k < types.Count(); k++)
-								{
-									auto type = ResolvePendingType(pa, rootVarDecl->type, types[k]);
-									if (!symbol->resolvedTypes->Contains(type))
-									{
-										symbol->resolvedTypes->Add(type);
-									}
-								}
-							}
-						}
-						CopyFrom(candidates, *symbol->resolvedTypes.Obj());
-					}
-					else
-					{
-						TypeToTsys(pa, varDecl->type, candidates);
-					}
-
-					for (vint k = 0; k < candidates.Count(); k++)
-					{
-						auto tsys = candidates[k];
-						if (tsys->GetType() == TsysType::Member && tsys->GetClass() == classScope)
-						{
-							tsys = tsys->GetElement();
-						}
+						auto tsys = symbol->evaluatedTypes->Get(k);
 
 						if (isStaticSymbol)
 						{
@@ -237,26 +303,13 @@ namespace symbol_type_resolving
 				}
 				else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
 				{
+					EvaluateSymbol(pa, symbol, funcDecl);
 					bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
 					bool isMember = classScope && !isStaticSymbol;
 
-					TypeTsysList candidates;
-					if (funcDecl->needResolveTypeFromStatement)
+					for (vint k = 0; k < symbol->evaluatedTypes->Count(); k++)
 					{
-						throw 0;
-					}
-					else
-					{
-						TypeToTsys(pa, funcDecl->type, candidates, TsysCallingConvention::None, isMember);
-					}
-
-					for (vint k = 0; k < candidates.Count(); k++)
-					{
-						auto tsys = candidates[k];
-						if (tsys->GetType() == TsysType::Member && tsys->GetClass() == classScope)
-						{
-							tsys = tsys->GetElement();
-						}
+						auto tsys = symbol->evaluatedTypes->Get(k);
 
 						if (isMember && afterScope)
 						{

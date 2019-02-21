@@ -21,30 +21,40 @@ struct MethodCache
 	ITsys*						thisType = nullptr;
 };
 
+enum class SymbolEvaluation
+{
+	NotEvaluated,
+	Evaluating,
+	Evaluated,
+};
+
 class Symbol : public Object
 {
 	using SymbolGroup = Group<WString, Ptr<Symbol>>;
 	using SymbolPtrList = List<Symbol*>;
 public:
-	Symbol*					parent = nullptr;
-	WString					name;
-	List<Ptr<Declaration>>	decls;			// only namespaces share symbols
-	Ptr<Stat>				stat;			// if this scope is created by a statement
-	Ptr<MethodCache>		methodCache;	// if this scope is created by a method with a statement, methodCache->funcSymbol will be itself
-	SymbolGroup				children;
+	Symbol*							parent = nullptr;
+	WString							name;
+	List<Ptr<Declaration>>			decls;					// only namespaces share symbols, otherwise (decls.Count() <= 1)
+	Ptr<Stat>						stat;					// if this scope is created by a statement
+	Ptr<MethodCache>				methodCache;			// if this scope is created by a method with a statement, methodCache->funcSymbol will be itself
+	SymbolGroup						children;
 
-	Ptr<TypeTsysList>		resolvedTypes;	// only for Forward(Variable|Function)Declaration of which has a pending type
+	SymbolEvaluation				evaluation = SymbolEvaluation::NotEvaluated;
+	Ptr<TypeTsysList>				evaluatedTypes;			// only for Forward(Variable|Function)Declaration
+	Ptr<List<Ptr<TypeTsysList>>>	evaluatedBaseTypes;		// only for ClassDeclaration
 
-	bool					isForwardDeclaration = false;
-	Symbol*					forwardDeclarationRoot = nullptr;
-	SymbolPtrList			forwardDeclarations;
+	bool							isForwardDeclaration = false;
+	Symbol*							forwardDeclarationRoot = nullptr;
+	SymbolPtrList					forwardDeclarations;
 
-	Symbol*					specializationRoot = nullptr;
-	SymbolPtrList			specializations;
+	bool							isSpecificationDeclaration = false;
+	Symbol*							specializationRoot = nullptr;
+	SymbolPtrList					specializations;
 
-	SymbolPtrList			usingNss;
+	SymbolPtrList					usingNss;
 
-	void					Add(Ptr<Symbol> child);
+	void							Add(Ptr<Symbol> child);
 
 	Symbol* CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* _specializationRoot = nullptr)
 	{

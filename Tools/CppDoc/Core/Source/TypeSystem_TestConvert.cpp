@@ -213,12 +213,12 @@ namespace TestConvert_Helpers
 					auto ctorSymbol = ctors[i];
 					if (ctorSymbol->decls.Count() != 1) continue;
 					auto ctorDecl = ctorSymbol->decls[0].Cast<ForwardFunctionDeclaration>();
+					symbol_type_resolving::EvaluateSymbol(pa, ctorSymbol.Obj(), ctorDecl);
 
-					TypeTsysList ctorTypes;
-					TypeToTsys(pa, ctorDecl->type, ctorTypes);
-					for (vint j = 0; j < ctorTypes.Count(); j++)
+					for (vint j = 0; j < ctorSymbol->evaluatedTypes->Count(); j++)
 					{
-						funcTypes.Add({ ctorSymbol.Obj(),ExprTsysType::PRValue,ctorTypes[j] });
+						auto tsys = ctorSymbol->evaluatedTypes->Get(j);
+						funcTypes.Add({ ctorSymbol.Obj(),ExprTsysType::PRValue,tsys });
 					}
 				}
 
@@ -390,11 +390,10 @@ namespace TestConvert_Helpers
 			if (currentType == toType) return true;
 			if (auto currentClass = TryGetDeclFromType<ClassDeclaration>(currentType))
 			{
-				ParsingArguments newPa(pa, currentClass->symbol);
-				for (vint j = 0; j < currentClass->baseTypes.Count(); j++)
+				symbol_type_resolving::EvaluateSymbol(pa, currentClass->symbol, currentClass);
+				for (vint j = 0; j < currentClass->symbol->evaluatedBaseTypes->Count(); j++)
 				{
-					TypeTsysList baseTypes;
-					TypeToTsys(newPa, currentClass->baseTypes[j].f1, baseTypes);
+					auto& baseTypes = *currentClass->symbol->evaluatedBaseTypes->Get(j).Obj();
 					for (vint k = 0; k < baseTypes.Count(); k++)
 					{
 						if (!searched.Contains(baseTypes[k]))
@@ -428,17 +427,19 @@ namespace TestConvert_Helpers
 			auto typeOpSymbol = typeOps[i];
 			if (typeOpSymbol->decls.Count() != 1) continue;
 			auto typeOpDecl = typeOpSymbol->decls[0].Cast<ForwardFunctionDeclaration>();
-			if (typeOpDecl->decoratorExplicit) return false;
-			auto typeOpType = GetTypeWithoutMemberAndCC(typeOpDecl->type).Cast<FunctionType>();
-			if (!typeOpType) continue;
-			if (typeOpType->parameters.Count() != 0) continue;
-			if (TestFunctionQualifier(fromCV, fromRef, typeOpType) == TsysConv::Illegal) continue;
-
-			TypeTsysList targetTypes;
-			TypeToTsys(newPa, typeOpType->returnType, targetTypes);
-			for (vint j = 0; j < targetTypes.Count(); j++)
 			{
-				if (TestConvertInternal(newPa, toType, targetTypes[j]->RRefOf()) != TsysConv::Illegal)
+				if (typeOpDecl->decoratorExplicit) return false;
+				auto typeOpType = GetTypeWithoutMemberAndCC(typeOpDecl->type).Cast<FunctionType>();
+				if (!typeOpType) continue;
+				if (typeOpType->parameters.Count() != 0) continue;
+				if (TestFunctionQualifier(fromCV, fromRef, typeOpType) == TsysConv::Illegal) continue;
+			}
+			symbol_type_resolving::EvaluateSymbol(pa, typeOpSymbol.Obj(), typeOpDecl);
+
+			for (vint j = 0; j < typeOpSymbol->evaluatedTypes->Count(); j++)
+			{
+				auto tsys = typeOpSymbol->evaluatedTypes->Get(j);
+				if (TestConvertInternal(newPa, toType, tsys->GetElement()->RRefOf()) != TsysConv::Illegal)
 				{
 					return true;
 				}
@@ -471,16 +472,18 @@ namespace TestConvert_Helpers
 			auto ctorSymbol = ctors[i];
 			if (ctorSymbol->decls.Count() != 1) continue;
 			auto ctorDecl = ctorSymbol->decls[0].Cast<ForwardFunctionDeclaration>();
-			if (ctorDecl->decoratorExplicit) return false;
-			auto ctorType = GetTypeWithoutMemberAndCC(ctorDecl->type).Cast<FunctionType>();
-			if (!ctorType) continue;
-			if (ctorType->parameters.Count() != 1) continue;
-
-			TypeTsysList sourceTypes;
-			TypeToTsys(newPa, ctorType->parameters[0]->type, sourceTypes);
-			for (vint j = 0; j < sourceTypes.Count(); j++)
 			{
-				if (TestConvertInternal(newPa, sourceTypes[j], fromType) != TsysConv::Illegal)
+				if (ctorDecl->decoratorExplicit) return false;
+				auto ctorType = GetTypeWithoutMemberAndCC(ctorDecl->type).Cast<FunctionType>();
+				if (!ctorType) continue;
+				if (ctorType->parameters.Count() != 1) continue;
+			}
+			symbol_type_resolving::EvaluateSymbol(pa, ctorSymbol.Obj(), ctorDecl);
+
+			for (vint j = 0; j < ctorSymbol->evaluatedTypes->Count(); j++)
+			{
+				auto tsys = ctorSymbol->evaluatedTypes->Get(j);
+				if (TestConvertInternal(newPa, tsys->GetParam(0), fromType) != TsysConv::Illegal)
 				{
 					return true;
 				}
