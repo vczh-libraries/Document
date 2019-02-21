@@ -10,7 +10,7 @@
 - [x] Support `=delete` and `=default`
 - [ ] Delay process function bodies while doing whole program parsing
 - [x] Build symbols for variables created by statements
-- [ ] Correctly implement [Argument-dependent lookup](https://en.cppreference.com/w/cpp/language/adl)
+- [x] Correctly implement [Argument-dependent lookup](https://en.cppreference.com/w/cpp/language/adl)
   - [x] `TestAdlOverloading.cpp`
   - [x] Add a function for searching ADL scopes, providing collected types and namespaces
   - [x] Fix `PostfixUnaryExpr`, `PrefixUnaryExpr` and `BinaryExpr` operator lookup
@@ -19,6 +19,8 @@
 - [ ] Compiler-generated functions
 - [ ] `using` and `typedef`
 - [ ] Test cases for whole program indexing without templates
+
+## Template short-term tasks
 - [ ] Templates ...
 - [ ] Initialization list
 - [ ] Add an internal `ITsys` type for lambda expressions
