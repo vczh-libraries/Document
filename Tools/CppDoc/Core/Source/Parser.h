@@ -233,6 +233,7 @@ extern Ptr<VariableDeclaration>		BuildVariableAndSymbol(const ParsingArguments& 
 
 extern Ptr<Expr>					ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Stat>					ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern void							EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl);
 extern Ptr<Program>					ParseProgram(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 /***********************************************************************

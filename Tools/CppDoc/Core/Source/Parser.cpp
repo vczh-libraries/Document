@@ -65,27 +65,7 @@ public:
 
 	void Visit(FunctionDeclaration* self) override
 	{
-		if (self->delayParse)
-		{
-			auto delayParse = self->delayParse;
-			self->delayParse = nullptr;
-
-			self->statement = ParseStat(delayParse->pa, delayParse->begin);
-			if (delayParse->begin)
-			{
-				if (delayParse->end.reading != delayParse->begin->token.reading)
-				{
-					throw StopParsingException();
-				}
-			}
-			else
-			{
-				if (delayParse->end.reading != nullptr)
-				{
-					throw StopParsingException();
-				}
-			}
-		}
+		EnsureFunctionBodyParsed(self);
 	}
 
 	void Visit(EnumItemDeclaration* self) override
@@ -123,8 +103,32 @@ public:
 			self->decls[i]->Accept(this);
 		}
 	}
-
 };
+
+void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
+{
+	if (funcDecl->delayParse)
+	{
+		auto delayParse = funcDecl->delayParse;
+		funcDecl->delayParse = nullptr;
+
+		funcDecl->statement = ParseStat(delayParse->pa, delayParse->begin);
+		if (delayParse->begin)
+		{
+			if (delayParse->end.reading != delayParse->begin->token.reading)
+			{
+				throw StopParsingException();
+			}
+		}
+		else
+		{
+			if (delayParse->end.reading != nullptr)
+			{
+				throw StopParsingException();
+			}
+		}
+	}
+}
 
 Ptr<Program> ParseProgram(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
