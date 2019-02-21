@@ -582,30 +582,6 @@ public:
 				return true;
 			}
 		}
-		if (rightEntity && rightEntity->GetType() == TsysType::Decl)
-		{
-			ParsingArguments newPa(pa, rightEntity->GetDecl());
-			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbol);
-
-			if (opMethods.values)
-			{
-				ExprTsysList opTypes;
-				for (vint j = 0; j < opMethods.values->resolvedSymbols.Count(); j++)
-				{
-					VisitSymbol(pa, leftType, opMethods.values->resolvedSymbols[j], false, opTypes);
-				}
-				FilterFieldsAndBestQualifiedFunctions(rightCV, rightRef, opTypes);
-
-				List<Ptr<ExprTsysList>> argTypesList;
-				{
-					argTypesList.Add(MakePtr<ExprTsysList>());
-					AddInternal(*argTypesList[0].Obj(), *leftType);
-				}
-				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
-				VisitOverloadedFunction(pa, opTypes, argTypesList, result);
-				return true;
-			}
-		}
 		{
 			ExprTsysList opTypes;
 
