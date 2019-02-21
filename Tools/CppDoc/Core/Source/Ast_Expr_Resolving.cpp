@@ -194,6 +194,21 @@ namespace symbol_type_resolving
 		symbol->evaluation = SymbolEvaluation::Evaluating;
 		symbol->evaluatedTypes = MakePtr<TypeTsysList>();
 
+		bool isMember = false;
+		{
+			ITsys* classScope = nullptr;
+			if (symbol->parent && symbol->parent->decls.Count() > 0)
+			{
+				if (auto decl = symbol->parent->decls[0].Cast<ClassDeclaration>())
+				{
+					classScope = pa.tsys->DeclOf(symbol->parent);
+				}
+			}
+
+			bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
+			isMember = classScope && !isStaticSymbol;
+		}
+
 		if (funcDecl->needResolveTypeFromStatement)
 		{
 			if (auto rootFuncDecl = funcDecl.Cast<FunctionDeclaration>())
@@ -208,7 +223,7 @@ namespace symbol_type_resolving
 		else
 		{
 			ParsingArguments newPa(pa, symbol->parent);
-			TypeToTsys(newPa, funcDecl->type, *symbol->evaluatedTypes.Obj());
+			TypeToTsys(newPa, funcDecl->type, *symbol->evaluatedTypes.Obj(), TsysCallingConvention::None, isMember);
 		}
 		symbol->evaluation = SymbolEvaluation::Evaluated;
 	}
