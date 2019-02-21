@@ -122,8 +122,6 @@ namespace symbol_type_resolving
 	SearchAdlClassesAndNamespaces: Preparing for argument-dependent lookup
 	***********************************************************************/
 
-	void SearchAdlClassesAndNamespaces(ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
-
 	class SearchBaseTypeAdlClassesAndNamespacesVisitor : public Object, public virtual ITypeVisitor
 	{
 	public:
@@ -204,6 +202,7 @@ namespace symbol_type_resolving
 
 	void SearchAdlClassesAndNamespaces(ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
 	{
+		auto firstSymbol = symbol;
 		while (symbol)
 		{
 			if (symbol->decls.Count() > 0)
@@ -215,13 +214,16 @@ namespace symbol_type_resolving
 						classes.Add(symbol);
 					}
 
-					ParsingArguments classPa(pa, symbol);
-					classPa.funcSymbol = nullptr;
-
-					SearchBaseTypeAdlClassesAndNamespacesVisitor visitor(classPa, nss, classes);
-					for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
+					if (symbol == firstSymbol)
 					{
-						classDecl->baseTypes[i].f1->Accept(&visitor);
+						ParsingArguments classPa(pa, symbol);
+						classPa.funcSymbol = nullptr;
+
+						SearchBaseTypeAdlClassesAndNamespacesVisitor visitor(classPa, nss, classes);
+						for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
+						{
+							classDecl->baseTypes[i].f1->Accept(&visitor);
+						}
 					}
 				}
 				else if (auto namespaceDecl = symbol->decls[0].Cast<NamespaceDeclaration>())
@@ -277,14 +279,6 @@ namespace symbol_type_resolving
 				SearchAdlClassesAndNamespaces(pa, type->GetParam(i), nss, classes);
 			}
 			break;
-		}
-	}
-
-	void SearchAdlClassesAndNamespaces(ParsingArguments& pa, TypeTsysList& types, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
-	{
-		for (vint i = 0; i < types.Count(); i++)
-		{
-			SearchAdlClassesAndNamespaces(pa, types[i], nss, classes);
 		}
 	}
 

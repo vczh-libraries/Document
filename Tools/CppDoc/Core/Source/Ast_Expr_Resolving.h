@@ -27,8 +27,8 @@ namespace symbol_type_resolving
 	extern void				VisitFunctors(ParsingArguments& pa, const ExprTsysItem& parentItem, const WString& name, ExprTsysList& result);
 	extern void				VisitOverloadedFunction(ParsingArguments& pa, ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result);
 
+	extern void				SearchAdlClassesAndNamespaces(ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
 	extern void				SearchAdlClassesAndNamespaces(ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
-	extern void				SearchAdlClassesAndNamespaces(ParsingArguments& pa, TypeTsysList& types, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
 	extern void				SearchAdlClassesAndNamespaces(ParsingArguments& pa, ExprTsysList& types, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
 	extern void				SerachAdlFunction(ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result);
 
