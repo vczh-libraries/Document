@@ -74,3 +74,6 @@ namespace test_overloading_adl
 	void(*pFE)(z::E);
 	void(*pFF)(z::E::F);
 }
+
+extern char pF(...);
+extern char pG(...);

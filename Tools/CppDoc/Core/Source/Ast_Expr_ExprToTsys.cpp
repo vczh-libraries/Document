@@ -440,6 +440,24 @@ public:
 
 			FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
 			VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
+			if (result.Count() > 0)
+			{
+				return;
+			}
+		}
+
+		if (auto idExpr = self->expr.Cast<IdExpr>())
+		{
+			SortedList<Symbol*> nss, classes;
+			for (vint i = 0; i < argTypesList.Count(); i++)
+			{
+				SearchAdlClassesAndNamespaces(pa, *argTypesList[i].Obj(), nss, classes);
+			}
+
+			ExprTsysList funcTypes;
+			SerachAdlFunction(pa, nss, idExpr->name.name, funcTypes);
+			FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, false);
+			VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
 		}
 	}
 
