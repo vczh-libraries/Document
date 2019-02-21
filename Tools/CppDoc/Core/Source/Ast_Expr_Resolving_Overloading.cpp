@@ -132,14 +132,14 @@ namespace symbol_type_resolving
 				auto parent = symbol->parent;
 				while (parent)
 				{
-					if (symbol->decls.Count() > 0)
+					if (parent->decls.Count() > 0)
 					{
-						if (!symbol->decls[0].Cast<NamespaceDeclaration>())
+						if (!parent->decls[0].Cast<NamespaceDeclaration>())
 						{
 							return false;
 						}
 					}
-					else
+					else if (parent->parent)
 					{
 						return false;
 					}
