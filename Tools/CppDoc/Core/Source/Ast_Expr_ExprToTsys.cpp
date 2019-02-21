@@ -625,9 +625,7 @@ public:
 				{
 					SearchAdlClassesAndNamespaces(pa, rightEntity, nss, classes);
 				}
-
-				ExprTsysList funcTypes;
-				SerachAdlFunction(pa, nss, opName.name, funcTypes);
+				SerachAdlFunction(pa, nss, opName.name, opTypes);
 			}
 
 			if (opTypes.Count() > 0)
