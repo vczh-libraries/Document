@@ -8,16 +8,22 @@
 - [x] Add an internal `ITsys` type for `{a,b,c}` expressions
 - [x] Use this type in overloading
 - [x] Support `=delete` and `=default`
-- [ ] Delay process function bodies while doing whole program parsing
 - [x] Build symbols for variables created by statements
 - [x] Correctly implement [Argument-dependent lookup](https://en.cppreference.com/w/cpp/language/adl)
   - [x] `TestAdlOverloading.cpp`
   - [x] Add a function for searching ADL scopes, providing collected types and namespaces
   - [x] Fix `PostfixUnaryExpr`, `PrefixUnaryExpr` and `BinaryExpr` operator lookup
   - [ ] Deal with `for(auto a : something_array_or_objects)`
+- [ ] Delay process function bodies while doing whole program parsing
+- [ ] Call `ExprToTsys` on all expressions during parsing.
+  - [ ] Variable initializer, but do not evaluate variable's initializer if it has been scanned.
+  - [ ] Variable declarations in statements.
+  - [ ] Variable defined in statement's headers.
+  - [ ] Expression statements.
 - [ ] Process functions returning `decltype(auto)`, take care about recursion, during delay processing function bodies
 - [ ] Compiler-generated functions
 - [ ] `using` and `typedef`
+= [ ] After ADL is called, re-index unqualified function names or operator expressions
 - [ ] Test cases for whole program indexing without templates
 
 ## Template short-term tasks
