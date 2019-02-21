@@ -11,20 +11,20 @@
 - [ ] Delay process function bodies while doing whole program parsing
 - [x] Build symbols for variables created by statements
 - [ ] Correctly implement [Argument-dependent lookup](https://en.cppreference.com/w/cpp/language/adl)
-  - [ ] `TestAdlOverloading.cpp`
+  - [x] `TestAdlOverloading.cpp`
   - [x] Add a function for searching ADL scopes, providing collected types and namespaces
   - [x] Fix `PostfixUnaryExpr`, `PrefixUnaryExpr` and `BinaryExpr` operator lookup
   - [ ] Deal with `for(auto a : something_array_or_objects)`
 - [ ] Process functions returning `decltype(auto)`, take care about recursion, during delay processing function bodies
 - [ ] Compiler-generated functions
-- [ ] Add an internal `ITsys` type for lambda expressions
-- [ ] Use this type in overloading
-- [ ] New test cases for overloading mixing all these things
 - [ ] `using` and `typedef`
 - [ ] Test cases for whole program indexing without templates
 - [ ] Templates ...
 - [ ] Initialization list
+- [ ] Add an internal `ITsys` type for lambda expressions
+- [ ] Use this type in overloading
 - [ ] lambda expressions with capturing
+- [ ] New test cases for overloading mixing all these things
 
 ## Steps
 

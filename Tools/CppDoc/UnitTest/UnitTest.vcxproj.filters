@@ -57,6 +57,9 @@
     <ClCompile Include="TestOverloadingOperator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestOverloadingAdl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">
@@ -72,6 +75,9 @@
       <Filter>Source Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="TestOverloadingOperator_Input4.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="TestOverloadingAdl_Input.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
   </ItemGroup>

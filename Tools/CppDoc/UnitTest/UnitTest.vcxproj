@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="TestIntegralPromotion.cpp" />
     <ClCompile Include="TestOverloading.cpp" />
+    <ClCompile Include="TestOverloadingAdl.cpp" />
     <ClCompile Include="TestOverloadingOperator.cpp" />
     <ClCompile Include="TestTypeConvert.cpp" />
     <ClCompile Include="TestTypeSystem.cpp" />
@@ -167,6 +168,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TestOverloadingAdl_Input.h" />
     <ClInclude Include="TestOverloadingOperator_Input1.h" />
     <ClInclude Include="TestOverloadingOperator_Input2.h" />
     <ClInclude Include="TestOverloadingOperator_Input3.h" />
