@@ -434,31 +434,24 @@ public:
 			argTypesList.Add(argTypes);
 		}
 
-		{
-			ExprTsysList funcTypes;
-			ExprToTsys(pa, self->expr, funcTypes);
-
-			FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
-			VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
-			if (result.Count() > 0)
-			{
-				return;
-			}
-		}
-
+		ExprTsysList funcTypes;
+		ExprToTsys(pa, self->expr, funcTypes);
 		if (auto idExpr = self->expr.Cast<IdExpr>())
 		{
-			SortedList<Symbol*> nss, classes;
-			for (vint i = 0; i < argTypesList.Count(); i++)
+			if (!idExpr->resolving || IsAdlEnabled(pa, idExpr->resolving))
 			{
-				SearchAdlClassesAndNamespaces(pa, *argTypesList[i].Obj(), nss, classes);
+				SortedList<Symbol*> nss, classes;
+				for (vint i = 0; i < argTypesList.Count(); i++)
+				{
+					SearchAdlClassesAndNamespaces(pa, *argTypesList[i].Obj(), nss, classes);
+				}
+				SerachAdlFunction(pa, nss, idExpr->name.name, funcTypes);
 			}
-
-			ExprTsysList funcTypes;
-			SerachAdlFunction(pa, nss, idExpr->name.name, funcTypes);
-			FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, false);
-			VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
 		}
+
+		FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
+		VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
+
 	}
 
 	void Visit(CtorAccessExpr* self)override
@@ -614,15 +607,31 @@ public:
 			}
 		}
 		{
+			ExprTsysList opTypes;
+
 			auto opFuncs = ResolveSymbol(pa, opName, SearchPolicy::SymbolAccessableInScope);
 			if (opFuncs.values)
 			{
-				ExprTsysList opTypes;
 				for (vint j = 0; j < opFuncs.values->resolvedSymbols.Count(); j++)
 				{
 					VisitSymbol(pa, leftType, opFuncs.values->resolvedSymbols[j], false, opTypes);
 				}
+			}
+			if (!opFuncs.values || IsAdlEnabled(pa, opFuncs.values))
+			{
+				SortedList<Symbol*> nss, classes;
+				SearchAdlClassesAndNamespaces(pa, leftEntity, nss, classes);
+				if (rightEntity)
+				{
+					SearchAdlClassesAndNamespaces(pa, rightEntity, nss, classes);
+				}
 
+				ExprTsysList funcTypes;
+				SerachAdlFunction(pa, nss, opName.name, funcTypes);
+			}
+
+			if (opTypes.Count() > 0)
+			{
 				List<Ptr<ExprTsysList>> argTypesList;
 				{
 					argTypesList.Add(MakePtr<ExprTsysList>());
@@ -635,37 +644,6 @@ public:
 				}
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 				VisitOverloadedFunction(pa, opTypes, argTypesList, result);
-				if (result.Count() > 0)
-				{
-					return true;
-				}
-			}
-		}
-		{
-			SortedList<Symbol*> nss, classes;
-			SearchAdlClassesAndNamespaces(pa, leftEntity, nss, classes);
-			if (rightEntity)
-			{
-				SearchAdlClassesAndNamespaces(pa, rightEntity, nss, classes);
-			}
-
-			ExprTsysList funcTypes;
-			SerachAdlFunction(pa, nss, opName.name, funcTypes);
-
-			if (funcTypes.Count())
-			{
-				List<Ptr<ExprTsysList>> argTypesList;
-				{
-					argTypesList.Add(MakePtr<ExprTsysList>());
-					AddInternal(*argTypesList[0].Obj(), *leftType);
-				}
-				if (rightType)
-				{
-					argTypesList.Add(MakePtr<ExprTsysList>());
-					AddInternal(*argTypesList[1].Obj(), *rightType);
-				}
-				FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, false);
-				VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
 				if (result.Count() > 0)
 				{
 					return true;

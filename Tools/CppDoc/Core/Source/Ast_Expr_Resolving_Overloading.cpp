@@ -119,6 +119,42 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
+	IsAdlEnabled: Check if argument-dependent lookup is considered according to the unqualified lookup result
+	***********************************************************************/
+
+	bool IsAdlEnabled(ParsingArguments& pa, Ptr<Resolving> resolving)
+	{
+		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+		{
+			auto symbol = resolving->resolvedSymbols[i];
+			if (symbol->decls.Count() == 1 && symbol->decls[0].Cast<ForwardFunctionDeclaration>())
+			{
+				auto parent = symbol->parent;
+				while (parent)
+				{
+					if (symbol->decls.Count() > 0)
+					{
+						if (!symbol->decls[0].Cast<NamespaceDeclaration>())
+						{
+							return false;
+						}
+					}
+					else
+					{
+						return false;
+					}
+					parent = parent->parent;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/***********************************************************************
 	SearchAdlClassesAndNamespaces: Preparing for argument-dependent lookup
 	***********************************************************************/
 
