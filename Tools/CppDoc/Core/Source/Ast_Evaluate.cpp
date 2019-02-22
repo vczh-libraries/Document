@@ -17,52 +17,59 @@ public:
 
 	void Visit(EmptyStat* self) override
 	{
-		throw 0;
 	}
 
 	void Visit(BlockStat* self) override
 	{
-		throw 0;
+		ParsingArguments spa(pa, self->symbol);
+		for (vint i = 0; i < self->stats.Count(); i++)
+		{
+			EvaluateStat(spa, self->stats[i]);
+		}
 	}
 
 	void Visit(DeclStat* self) override
 	{
-		throw 0;
+		for (vint i = 0; i < self->decls.Count(); i++)
+		{
+			EvaluateDeclaration(pa, self->decls[i]);
+		}
 	}
 
 	void Visit(ExprStat* self) override
 	{
-		throw 0;
+		ExprTsysList types;
+		ExprToTsys(pa, self->expr, types);
 	}
 
 	void Visit(LabelStat* self) override
 	{
-		throw 0;
 	}
 
 	void Visit(DefaultStat* self) override
 	{
-		throw 0;
+		self->stat->Accept(this);
 	}
 
 	void Visit(CaseStat* self) override
 	{
-		throw 0;
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+		}
+		self->stat->Accept(this);
 	}
 
 	void Visit(GotoStat* self) override
 	{
-		throw 0;
 	}
 
 	void Visit(BreakStat* self) override
 	{
-		throw 0;
 	}
 
 	void Visit(ContinueStat* self) override
 	{
-		throw 0;
 	}
 
 	void Visit(WhileStat* self) override
@@ -102,32 +109,49 @@ public:
 
 	void Visit(ReturnStat* self) override
 	{
-		throw 0;
+		if (self->expr)
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+		}
 	}
 
 	void Visit(__Try__ExceptStat* self) override
 	{
-		throw 0;
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+		}
+		self->tryStat->Accept(this);
+		self->exceptStat->Accept(this);
 	}
 
 	void Visit(__Try__FinallyStat* self) override
 	{
-		throw 0;
+		self->tryStat->Accept(this);
+		self->finallyStat->Accept(this);
 	}
 
 	void Visit(__LeaveStat* self) override
 	{
-		throw 0;
 	}
 
 	void Visit(__IfExistsStat* self) override
 	{
-		throw 0;
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+		}
+		self->stat->Accept(this);
 	}
 
 	void Visit(__IfNotExistsStat* self) override
 	{
-		throw 0;
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+		}
+		self->stat->Accept(this);
 	}
 
 };
