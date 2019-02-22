@@ -74,37 +74,111 @@ public:
 
 	void Visit(WhileStat* self) override
 	{
-		throw 0;
+		ParsingArguments spa(pa, self->symbol);
+		if (self->varExpr)
+		{
+			EvaluateDeclaration(spa, self->varExpr);
+		}
+		if (self->expr)
+		{
+			ExprTsysList types;
+			ExprToTsys(spa, self->expr, types);
+		}
+		EvaluateStat(spa, self->stat);
 	}
 
 	void Visit(DoWhileStat* self) override
 	{
-		throw 0;
+		{
+			ExprTsysList types;
+			ExprToTsys(pa, self->expr, types);
+		}
+		EvaluateStat(pa, self->stat);
 	}
 
 	void Visit(ForEachStat* self) override
 	{
-		throw 0;
+		ParsingArguments spa(pa, self->symbol);
+		EvaluateDeclaration(spa, self->varDecl);
+		{
+			ExprTsysList types;
+			ExprToTsys(spa, self->expr, types);
+		}
+		EvaluateStat(spa, self->stat);
 	}
 
 	void Visit(ForStat* self) override
 	{
-		throw 0;
+		ParsingArguments spa(pa, self->symbol);
+		for (vint i = 0; i < self->varDecls.Count(); i++)
+		{
+			EvaluateDeclaration(spa, self->varDecls[i]);
+		}
+		if (self->init)
+		{
+			ExprTsysList types;
+			ExprToTsys(spa, self->init, types);
+		}
+		if (self->expr)
+		{
+			ExprTsysList types;
+			ExprToTsys(spa, self->expr, types);
+		}
+		if (self->effect)
+		{
+			ExprTsysList types;
+			ExprToTsys(spa, self->effect, types);
+		}
+		EvaluateStat(spa, self->stat);
 	}
 
 	void Visit(IfElseStat* self) override
 	{
-		throw 0;
+		ParsingArguments spa(pa, self->symbol);
+		for (vint i = 0; i < self->varDecls.Count(); i++)
+		{
+			EvaluateDeclaration(spa, self->varDecls[i]);
+		}
+		if (self->varExpr)
+		{
+			EvaluateDeclaration(spa, self->varExpr);
+		}
+		if (self->expr)
+		{
+			ExprTsysList types;
+			ExprToTsys(spa, self->expr, types);
+		}
+		EvaluateStat(spa, self->trueStat);
+		if (self->falseStat)
+		{
+			EvaluateStat(spa, self->falseStat);
+		}
 	}
 
 	void Visit(SwitchStat* self) override
 	{
-		throw 0;
+		ParsingArguments spa(pa, self->symbol);
+		if (self->varExpr)
+		{
+			EvaluateDeclaration(spa, self->varExpr);
+		}
+		if (self->expr)
+		{
+			ExprTsysList types;
+			ExprToTsys(spa, self->expr, types);
+		}
+		EvaluateStat(spa, self->stat);
 	}
 
 	void Visit(TryCatchStat* self) override
 	{
-		throw 0;
+		self->tryStat->Accept(this);
+		ParsingArguments spa(pa, self->symbol);
+		if (self->exception)
+		{
+			EvaluateDeclaration(spa, self->exception);
+		}
+		EvaluateStat(spa, self->catchStat);
 	}
 
 	void Visit(ReturnStat* self) override
@@ -153,7 +227,6 @@ public:
 		}
 		self->stat->Accept(this);
 	}
-
 };
 
 /***********************************************************************

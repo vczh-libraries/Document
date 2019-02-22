@@ -15,11 +15,8 @@
   - [x] Fix `PostfixUnaryExpr`, `PrefixUnaryExpr` and `BinaryExpr` operator lookup
   - [ ] Deal with `for(auto a : something_array_or_objects)`
 - [x] Delay process function bodies while doing whole program parsing
-- [ ] Call `ExprToTsys` on all expressions during parsing.
-  - [ ] Variable initializer, but do not evaluate variable's initializer if it has been scanned.
-  - [ ] Variable declarations in statements.
-  - [ ] Variable defined in statement's headers.
-  - [ ] Expression statements.
+- [x] Call `ExprToTsys` on all expressions during parsing.
+  - [ ] Test.
 - [ ] Process functions returning `decltype(auto)`, take care about recursion, during delay processing function bodies
 - [ ] Compiler-generated functions
 - [ ] `using` and `typedef`
