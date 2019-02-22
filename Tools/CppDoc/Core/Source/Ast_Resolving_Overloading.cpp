@@ -1,4 +1,4 @@
-#include "Ast_Expr_Resolving.h"
+#include "Ast_Resolving.h"
 
 namespace symbol_type_resolving
 {

@@ -132,5 +132,8 @@ extern ITsys*				ResolvePendingType(ParsingArguments& pa, Ptr<Type> type, ExprTs
 extern void					TypeToTsys(ParsingArguments& pa, Type* t, TypeTsysList& tsys, TsysCallingConvention cc = TsysCallingConvention::None, bool memberOf = false);
 extern void					TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, TsysCallingConvention cc = TsysCallingConvention::None, bool memberOf = false);
 extern void					ExprToTsys(ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys);
+extern void					EvaluateStat(ParsingArguments& pa, Ptr<Stat> s);
+extern void					EvaluateDeclaration(ParsingArguments& pa, Ptr<Declaration> s);
+extern void					EvaluateProgram(ParsingArguments& pa, Ptr<Program> program);
 
 #endif

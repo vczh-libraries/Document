@@ -585,6 +585,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					{
 						decl->delayParse = MakePtr<DelayParse>();
 						decl->delayParse->pa = { pa,contextSymbol };
+						decl->delayParse->pa.funcSymbol = contextSymbol;
 						cursor->Clone(decl->delayParse->reader, decl->delayParse->begin);
 
 						vint counter = 1;

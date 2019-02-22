@@ -1,4 +1,4 @@
-#include "Ast_Expr_Resolving.h"
+#include "Ast_Resolving.h"
 #include "Ast_Expr.h"
 
 using namespace symbol_type_resolving;
@@ -560,6 +560,7 @@ public:
 		if (leftEntity->GetType() == TsysType::Decl)
 		{
 			ParsingArguments newPa(pa, leftEntity->GetDecl());
+			newPa.funcSymbol = nullptr;
 			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbol);
 
 			if (opMethods.values)

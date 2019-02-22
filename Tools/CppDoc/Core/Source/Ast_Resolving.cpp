@@ -1,4 +1,4 @@
-#include "Ast_Expr_Resolving.h"
+#include "Ast_Resolving.h"
 
 namespace symbol_type_resolving
 {
@@ -68,9 +68,9 @@ namespace symbol_type_resolving
 	***********************************************************************/
 
 	template<typename TForward>
-	bool IsStaticSymbol(Symbol* symbol, Ptr<TForward> decl)
+	bool IsStaticSymbol(Symbol* symbol, TForward* decl)
 	{
-		if (auto rootDecl = decl.Cast<typename TForward::ForwardRootType>())
+		if (auto rootDecl = dynamic_cast<typename TForward::ForwardRootType*>(decl))
 		{
 			if (rootDecl->decoratorStatic)
 			{
@@ -83,7 +83,7 @@ namespace symbol_type_resolving
 					auto forwardSymbol = symbol->forwardDeclarations[i];
 					for (vint j = 0; j < forwardSymbol->decls.Count(); j++)
 					{
-						if (IsStaticSymbol<TForward>(forwardSymbol, forwardSymbol->decls[j].Cast<TForward>()))
+						if (IsStaticSymbol<TForward>(forwardSymbol, forwardSymbol->decls[j].Cast<TForward>().Obj()))
 						{
 							return true;
 						}
@@ -142,7 +142,7 @@ namespace symbol_type_resolving
 	EvaluateSymbol: Evaluate the declared type for a symbol
 	***********************************************************************/
 
-	void EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, Ptr<ForwardVariableDeclaration> varDecl)
+	void EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, ForwardVariableDeclaration* varDecl)
 	{
 		switch (symbol->evaluation)
 		{
@@ -155,7 +155,7 @@ namespace symbol_type_resolving
 
 		if (varDecl->needResolveTypeFromInitializer)
 		{
-			if (auto rootVarDecl = varDecl.Cast<VariableDeclaration>())
+			if (auto rootVarDecl = dynamic_cast<VariableDeclaration*>(varDecl))
 			{
 				ExprTsysList types;
 				ParsingArguments newPa(pa, symbol->parent);
@@ -183,7 +183,7 @@ namespace symbol_type_resolving
 		symbol->evaluation = SymbolEvaluation::Evaluated;
 	}
 
-	void EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, Ptr<ForwardFunctionDeclaration> funcDecl)
+	void EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, ForwardFunctionDeclaration* funcDecl)
 	{
 		switch (symbol->evaluation)
 		{
@@ -211,8 +211,9 @@ namespace symbol_type_resolving
 
 		if (funcDecl->needResolveTypeFromStatement)
 		{
-			if (auto rootFuncDecl = funcDecl.Cast<FunctionDeclaration>())
+			if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))
 			{
+				EnsureFunctionBodyParsed(rootFuncDecl);
 				throw 0;
 			}
 			else
@@ -228,7 +229,7 @@ namespace symbol_type_resolving
 		symbol->evaluation = SymbolEvaluation::Evaluated;
 	}
 
-	void EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, Ptr<ClassDeclaration> classDecl)
+	void EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, ClassDeclaration* classDecl)
 	{
 		switch (symbol->evaluation)
 		{
@@ -276,8 +277,8 @@ namespace symbol_type_resolving
 				auto decl = symbol->decls[j];
 				if (auto varDecl = decl.Cast<ForwardVariableDeclaration>())
 				{
-					EvaluateSymbol(pa, symbol, varDecl);
-					bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol, varDecl);
+					EvaluateSymbol(pa, symbol, varDecl.Obj());
+					bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol, varDecl.Obj());
 
 					for (vint k = 0; k < symbol->evaluatedTypes->Count(); k++)
 					{
@@ -318,8 +319,8 @@ namespace symbol_type_resolving
 				}
 				else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
 				{
-					EvaluateSymbol(pa, symbol, funcDecl);
-					bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
+					EvaluateSymbol(pa, symbol, funcDecl.Obj());
+					bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl.Obj());
 					bool isMember = classScope && !isStaticSymbol;
 
 					for (vint k = 0; k < symbol->evaluatedTypes->Count(); k++)

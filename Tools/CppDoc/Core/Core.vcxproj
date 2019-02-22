@@ -151,7 +151,7 @@
     <ClInclude Include="Source\Ast.h" />
     <ClInclude Include="Source\Ast_Decl.h" />
     <ClInclude Include="Source\Ast_Expr.h" />
-    <ClInclude Include="Source\Ast_Expr_Resolving.h" />
+    <ClInclude Include="Source\Ast_Resolving.h" />
     <ClInclude Include="Source\Ast_Stat.h" />
     <ClInclude Include="Source\Ast_Type.h" />
     <ClInclude Include="Source\IncludeAll.h" />
@@ -169,12 +169,13 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="Source\Ast.cpp" />
-    <ClCompile Include="Source\Ast_Expr_ExprToTsys.cpp" />
-    <ClCompile Include="Source\Ast_Expr_Resolving.cpp" />
-    <ClCompile Include="Source\Ast_Expr_Resolving_Overloading.cpp" />
+    <ClCompile Include="Source\Ast_Evaluate.cpp" />
+    <ClCompile Include="Source\Ast_Evaluate_ExprToTsys.cpp" />
+    <ClCompile Include="Source\Ast_Resolving.cpp" />
+    <ClCompile Include="Source\Ast_Resolving_Overloading.cpp" />
     <ClCompile Include="Source\Ast_Type_IsPendingType.cpp" />
     <ClCompile Include="Source\Ast_Type_IsSameResolvedType.cpp" />
-    <ClCompile Include="Source\Ast_Type_TypeToTsys.cpp" />
+    <ClCompile Include="Source\Ast_Evaluate_TypeToTsys.cpp" />
     <ClCompile Include="Source\Lexer.cpp" />
     <ClCompile Include="Source\Parser.cpp" />
     <ClCompile Include="Source\Parser_Declaration.cpp" />
