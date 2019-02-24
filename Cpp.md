@@ -20,7 +20,7 @@
 - [x] Process functions returning `decltype(auto)`, take care about recursion, during delay processing function bodies
 - [ ] Compiler-generated functions
 - [ ] `using` and `typedef`
-= [ ] After ADL is called, re-index unqualified function names or operator expressions
+- [ ] After ADL is called, re-index unqualified function names or operator expressions
 - [ ] Test cases for whole program indexing without templates
 
 ## Template short-term tasks
