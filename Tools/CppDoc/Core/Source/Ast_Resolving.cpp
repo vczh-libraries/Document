@@ -194,7 +194,6 @@ namespace symbol_type_resolving
 		}
 
 		symbol->evaluation = SymbolEvaluation::Evaluating;
-		symbol->evaluatedTypes = MakePtr<TypeTsysList>();
 
 		bool isMember = false;
 		{
@@ -211,12 +210,24 @@ namespace symbol_type_resolving
 			isMember = classScope && !isStaticSymbol;
 		}
 
+		auto newPa = pa.WithContextNoFunction(symbol->parent);
+
 		if (funcDecl->needResolveTypeFromStatement)
 		{
 			if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))
 			{
 				EnsureFunctionBodyParsed(rootFuncDecl);
-				throw 0;
+				EvaluateStat(pa, rootFuncDecl->statement);
+				if (!symbol->evaluatedTypes || symbol->evaluatedTypes->Count() == 0)
+				{
+					throw NotResolvableException();
+				}
+				else
+				{
+					auto returnTypes = symbol->evaluatedTypes;
+					symbol->evaluatedTypes = MakePtr<TypeTsysList>();
+					TypeToTsysAndReplaceFunctionReturnType(newPa, funcDecl->type, *returnTypes.Obj(), *symbol->evaluatedTypes.Obj(), isMember);
+				}
 			}
 			else
 			{
@@ -225,7 +236,7 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			auto newPa = pa.WithContextNoFunction(symbol->parent);
+			symbol->evaluatedTypes = MakePtr<TypeTsysList>();
 			TypeToTsys(newPa, funcDecl->type, *symbol->evaluatedTypes.Obj(), TsysCallingConvention::None, isMember);
 		}
 		symbol->evaluation = SymbolEvaluation::Evaluated;

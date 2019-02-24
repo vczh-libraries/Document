@@ -12,14 +12,16 @@ class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
 {
 public:
 	TypeTsysList&			result;
+	TypeTsysList*			returnTypes;
 	ParsingArguments&		pa;
 
 	TsysCallingConvention	cc = TsysCallingConvention::None;
 	bool					memberOf = false;
 
-	TypeToTsysVisitor(ParsingArguments& _pa, TypeTsysList& _result, TsysCallingConvention _cc, bool _memberOf)
+	TypeToTsysVisitor(ParsingArguments& _pa, TypeTsysList& _result, TypeTsysList* _returnTypes, TsysCallingConvention _cc, bool _memberOf)
 		:pa(_pa)
 		, result(_result)
+		, returnTypes(_returnTypes)
 		, cc(_cc)
 		, memberOf(_memberOf)
 	{
@@ -165,7 +167,11 @@ public:
 		{
 			vint count = self->parameters.Count() + 1;
 			tsyses = new TypeTsysList[count];
-			if (self->decoratorReturnType)
+			if (returnTypes)
+			{
+				CopyFrom(tsyses[0], *returnTypes);
+			}
+			else if (self->decoratorReturnType)
 			{
 				TypeToTsys(pa, self->decoratorReturnType, tsyses[0]);
 			}
@@ -303,11 +309,18 @@ public:
 void TypeToTsys(ParsingArguments& pa, Type* t, TypeTsysList& tsys, TsysCallingConvention cc, bool memberOf)
 {
 	if (!t) throw NotConvertableException();
-	TypeToTsysVisitor visitor(pa, tsys, cc, memberOf);
+	TypeToTsysVisitor visitor(pa, tsys, nullptr, cc, memberOf);
 	t->Accept(&visitor);
 }
 
 void TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, TsysCallingConvention cc, bool memberOf)
 {
 	TypeToTsys(pa, t.Obj(), tsys, cc, memberOf);
+}
+
+void TypeToTsysAndReplaceFunctionReturnType(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf)
+{
+	if (!t) throw NotConvertableException();
+	TypeToTsysVisitor visitor(pa, tsys, &returnTypes, TsysCallingConvention::None, memberOf);
+	t->Accept(&visitor);
 }
