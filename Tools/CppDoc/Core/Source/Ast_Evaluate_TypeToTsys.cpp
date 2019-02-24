@@ -220,7 +220,7 @@ public:
 		memberOf = true;
 
 		TypeTsysList types, classTypes;
-		TypeToTsys(pa, self->type, types, cc, memberOf);
+		TypeToTsys(pa, self->type, types, memberOf, cc);
 		TypeToTsys(pa, self->classType, classTypes);
 
 		for (vint i = 0; i < types.Count(); i++)
@@ -306,16 +306,16 @@ public:
 };
 
 // Convert type AST to type system object
-void TypeToTsys(ParsingArguments& pa, Type* t, TypeTsysList& tsys, TsysCallingConvention cc, bool memberOf)
+void TypeToTsys(ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool memberOf, TsysCallingConvention cc)
 {
 	if (!t) throw NotConvertableException();
 	TypeToTsysVisitor visitor(pa, tsys, nullptr, cc, memberOf);
 	t->Accept(&visitor);
 }
 
-void TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, TsysCallingConvention cc, bool memberOf)
+void TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool memberOf, TsysCallingConvention cc)
 {
-	TypeToTsys(pa, t.Obj(), tsys, cc, memberOf);
+	TypeToTsys(pa, t.Obj(), tsys, memberOf, cc);
 }
 
 void TypeToTsysAndReplaceFunctionReturnType(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf)

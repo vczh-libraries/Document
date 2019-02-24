@@ -17,7 +17,7 @@
 - [x] Delay process function bodies while doing whole program parsing
 - [x] Call `ExprToTsys` on all expressions during parsing.
   - [ ] Test.
-- [ ] Process functions returning `decltype(auto)`, take care about recursion, during delay processing function bodies
+- [x] Process functions returning `decltype(auto)`, take care about recursion, during delay processing function bodies
 - [ ] Compiler-generated functions
 - [ ] `using` and `typedef`
 = [ ] After ADL is called, re-index unqualified function names or operator expressions

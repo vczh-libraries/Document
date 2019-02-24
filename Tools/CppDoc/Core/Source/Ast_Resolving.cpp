@@ -265,7 +265,7 @@ namespace symbol_type_resolving
 		{
 			auto newPa = pa.WithContextNoFunction(symbol->parent);
 			symbol->evaluatedTypes = MakePtr<TypeTsysList>();
-			TypeToTsys(newPa, funcDecl->type, *symbol->evaluatedTypes.Obj(), TsysCallingConvention::None, IsMemberFunction(pa, funcDecl));
+			TypeToTsys(newPa, funcDecl->type, *symbol->evaluatedTypes.Obj(), IsMemberFunction(pa, funcDecl));
 			symbol->evaluation = SymbolEvaluation::Evaluated;
 		}
 	}
