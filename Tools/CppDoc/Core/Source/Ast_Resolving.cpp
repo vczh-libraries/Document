@@ -227,7 +227,21 @@ namespace symbol_type_resolving
 				{
 					auto returnTypes = symbol->evaluatedTypes;
 					symbol->evaluatedTypes = MakePtr<TypeTsysList>();
-					TypeToTsysAndReplaceFunctionReturnType(newPa, funcDecl->type, *returnTypes.Obj(), *symbol->evaluatedTypes.Obj(), isMember);
+
+					TypeTsysList processedReturnTypes;
+					{
+						auto funcType = GetTypeWithoutMemberAndCC(rootFuncDecl->type).Cast<FunctionType>();
+						auto pendingType = funcType->decoratorReturnType ? funcType->decoratorReturnType : funcType->returnType;
+						for (vint i = 0; i < returnTypes->Count(); i++)
+						{
+							auto tsys = ResolvePendingType(newPa, pendingType, { nullptr,ExprTsysType::PRValue,returnTypes->Get(i) });
+							if (!processedReturnTypes.Contains(tsys))
+							{
+								processedReturnTypes.Add(tsys);
+							}
+						}
+					}
+					TypeToTsysAndReplaceFunctionReturnType(newPa, funcDecl->type, processedReturnTypes, *symbol->evaluatedTypes.Obj(), isMember);
 				}
 			}
 			else
