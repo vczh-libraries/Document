@@ -913,9 +913,25 @@ decltype((x))	c3 = (x);
 
 TEST_CASE(TestParseExpr_DeclType_Func)
 {
-	// TODO
-	// decltype(auto) func()
-	// Until its see a return statement to determine the return type, this function cannot be used
+	auto input = LR"(
+struct X
+{
+	int x;
+	auto a() { return a_(); }
+	auto a_() { return (x); }
+	decltype(auto) b() { return b_(); }
+	decltype(auto) b_() { return (x); }
+	auto c()->decltype(auto) { return c_(); }
+	auto c_()->decltype(auto) { return (x); }
+	auto r(int p) { if (!p) return 0; else return r(0); }
+};
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	
+	AssertExpr(L"X().a()",			L"X().a()",				L"__int32 $L",						pa);
+	AssertExpr(L"X().b()",			L"X().b()",				L"__int32 $L",						pa);
+	AssertExpr(L"X().c()",			L"X().c()",				L"__int32 $L",						pa);
+	AssertExpr(L"X().r(0)",			L"X().r(0)",			L"__int32 $L",						pa);
 }
 
 TEST_CASE(TestParseExpr_EnumAndEnumItem)

@@ -50,7 +50,7 @@ void SearchForwards(Symbol* scope, Symbol* symbol, Ptr<CppTokenCursor> cursor, S
 	for (vint i = 0; i < siblings.Count(); i++)
 	{
 		auto& sibling = siblings[i];
-		bool sameCategory = ForwardPolicy<TForward>::IsSameCategory(symbol, sibling.Obj());
+		bool sameCategory = symbol == sibling.Obj() ? true : ForwardPolicy<TForward>::IsSameCategory(symbol, sibling.Obj());
 		if (sibling->decls[0].Cast<typename TForward::ForwardRootType>())
 		{
 			if (sameCategory)

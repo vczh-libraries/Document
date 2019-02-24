@@ -88,7 +88,21 @@ public:
 
 	void Visit(DeclType* self)override
 	{
-		throw 0;
+		if (self->expr)
+		{
+			throw 0;
+		}
+		else
+		{
+			if (auto declType = peerType.Cast<DeclType>())
+			{
+				result = !declType->expr;
+			}
+			else
+			{
+				result = false;
+			}
+		}
 	}
 
 	void Visit(DecorateType* self)override
