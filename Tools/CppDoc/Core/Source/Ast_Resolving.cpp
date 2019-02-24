@@ -217,7 +217,8 @@ namespace symbol_type_resolving
 			if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))
 			{
 				EnsureFunctionBodyParsed(rootFuncDecl);
-				EvaluateStat(pa, rootFuncDecl->statement);
+				auto funcPa = pa.WithContextAndFunction(symbol, symbol);
+				EvaluateStat(funcPa, rootFuncDecl->statement);
 				if (!symbol->evaluatedTypes || symbol->evaluatedTypes->Count() == 0)
 				{
 					throw NotResolvableException();

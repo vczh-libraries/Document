@@ -183,10 +183,34 @@ public:
 
 	void Visit(ReturnStat* self) override
 	{
+		ExprTsysList types;
 		if (self->expr)
 		{
-			ExprTsysList types;
 			ExprToTsys(pa, self->expr, types);
+		}
+
+		if (pa.funcSymbol && pa.funcSymbol->evaluation == SymbolEvaluation::Evaluating)
+		{
+			if (!pa.funcSymbol->evaluatedTypes)
+			{
+				pa.funcSymbol->evaluatedTypes = MakePtr<TypeTsysList>();
+				auto& returnTypes = *pa.funcSymbol->evaluatedTypes.Obj();
+				if (self->expr)
+				{
+					for (vint i = 0; i < types.Count(); i++)
+					{
+						auto tsys = types[i].tsys;
+						if (!returnTypes.Contains(tsys))
+						{
+							returnTypes.Add(tsys);
+						}
+					}
+				}
+				else
+				{
+					returnTypes.Add(pa.tsys->Void());
+				}
+			}
 		}
 	}
 
@@ -276,7 +300,7 @@ public:
 	{
 		EnsureFunctionBodyParsed(self);
 		symbol_type_resolving::EvaluateSymbol(pa, self->symbol, self);
-		if (!self->needResolveTypeFromStatement && self->symbol->evaluation == SymbolEvaluation::NotEvaluated)
+		if (!self->needResolveTypeFromStatement)
 		{
 			auto fpa = pa.WithContextAndFunction(self->symbol, self->symbol);
 			EvaluateStat(fpa, self->statement);
