@@ -252,8 +252,7 @@ namespace symbol_type_resolving
 
 					if (symbol == firstSymbol)
 					{
-						ParsingArguments classPa(pa, symbol);
-						classPa.funcSymbol = nullptr;
+						auto classPa = pa.WithContextNoFunction(symbol);
 
 						SearchBaseTypeAdlClassesAndNamespacesVisitor visitor(classPa, nss, classes);
 						for (vint i = 0; i < classDecl->baseTypes.Count(); i++)

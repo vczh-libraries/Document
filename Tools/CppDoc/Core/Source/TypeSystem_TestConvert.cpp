@@ -421,7 +421,7 @@ namespace TestConvert_Helpers
 		if (index == -1) return false;
 		const auto& typeOps = fromSymbol->children.GetByIndex(index);
 
-		ParsingArguments newPa(pa, fromSymbol);
+		auto newPa = pa.WithContextNoFunction(fromSymbol);
 		for (vint i = 0; i < typeOps.Count(); i++)
 		{
 			auto typeOpSymbol = typeOps[i];
@@ -466,7 +466,7 @@ namespace TestConvert_Helpers
 		if (index == -1) return false;
 		const auto& ctors = toSymbol->children.GetByIndex(index);
 
-		ParsingArguments newPa(pa, toSymbol);
+		auto newPa = pa.WithContextNoFunction(toSymbol);
 		for (vint i = 0; i < ctors.Count(); i++)
 		{
 			auto ctorSymbol = ctors[i];

@@ -21,7 +21,7 @@ public:
 
 	void Visit(BlockStat* self) override
 	{
-		ParsingArguments spa(pa, self->symbol);
+		auto spa = pa.WithContext(self->symbol);
 		for (vint i = 0; i < self->stats.Count(); i++)
 		{
 			EvaluateStat(spa, self->stats[i]);
@@ -74,7 +74,7 @@ public:
 
 	void Visit(WhileStat* self) override
 	{
-		ParsingArguments spa(pa, self->symbol);
+		auto spa = pa.WithContext(self->symbol);
 		if (self->varExpr)
 		{
 			EvaluateDeclaration(spa, self->varExpr);
@@ -98,7 +98,7 @@ public:
 
 	void Visit(ForEachStat* self) override
 	{
-		ParsingArguments spa(pa, self->symbol);
+		auto spa = pa.WithContext(self->symbol);
 		EvaluateDeclaration(spa, self->varDecl);
 		{
 			ExprTsysList types;
@@ -109,7 +109,7 @@ public:
 
 	void Visit(ForStat* self) override
 	{
-		ParsingArguments spa(pa, self->symbol);
+		auto spa = pa.WithContext(self->symbol);
 		for (vint i = 0; i < self->varDecls.Count(); i++)
 		{
 			EvaluateDeclaration(spa, self->varDecls[i]);
@@ -134,7 +134,7 @@ public:
 
 	void Visit(IfElseStat* self) override
 	{
-		ParsingArguments spa(pa, self->symbol);
+		auto spa = pa.WithContext(self->symbol);
 		for (vint i = 0; i < self->varDecls.Count(); i++)
 		{
 			EvaluateDeclaration(spa, self->varDecls[i]);
@@ -157,7 +157,7 @@ public:
 
 	void Visit(SwitchStat* self) override
 	{
-		ParsingArguments spa(pa, self->symbol);
+		auto spa = pa.WithContext(self->symbol);
 		if (self->varExpr)
 		{
 			EvaluateDeclaration(spa, self->varExpr);
@@ -173,7 +173,7 @@ public:
 	void Visit(TryCatchStat* self) override
 	{
 		self->tryStat->Accept(this);
-		ParsingArguments spa(pa, self->symbol);
+		auto spa = pa.WithContext(self->symbol);
 		if (self->exception)
 		{
 			EvaluateDeclaration(spa, self->exception);
@@ -278,8 +278,7 @@ public:
 		symbol_type_resolving::EvaluateSymbol(pa, self->symbol, self);
 		if (!self->needResolveTypeFromStatement && self->symbol->evaluation == SymbolEvaluation::NotEvaluated)
 		{
-			ParsingArguments fpa(pa, self->symbol);
-			fpa.funcSymbol = self->symbol;
+			auto fpa = pa.WithContextAndFunction(self->symbol, self->symbol);
 			EvaluateStat(fpa, self->statement);
 		}
 	}
@@ -304,7 +303,7 @@ public:
 	void Visit(ClassDeclaration* self) override
 	{
 		symbol_type_resolving::EvaluateSymbol(pa, self->symbol, self);
-		ParsingArguments dpa(pa, self->symbol);
+		auto dpa = pa.WithContextNoFunction(self->symbol);
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
 			EvaluateDeclaration(dpa, self->decls[i].f1);
@@ -325,7 +324,7 @@ public:
 
 	void Visit(NamespaceDeclaration* self) override
 	{
-		ParsingArguments dpa(pa, self->symbol);
+		auto dpa = pa.WithContextNoFunction(self->symbol);
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
 			EvaluateDeclaration(dpa, self->decls[i]);
@@ -345,7 +344,7 @@ void EvaluateStat(ParsingArguments& pa, Ptr<Stat> s)
 
 void EvaluateDeclaration(ParsingArguments& pa, Ptr<Declaration> s)
 {
-	ParsingArguments dpa(pa, s->symbol);
+	auto dpa = pa.WithContextNoFunction(s->symbol);
 	EvaluateDeclarationVisitor visitor(dpa);
 	s->Accept(&visitor);
 }

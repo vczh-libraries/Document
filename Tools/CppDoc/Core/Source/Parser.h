@@ -116,8 +116,16 @@ struct ParsingArguments
 	Ptr<IIndexRecorder>		recorder;
 
 	ParsingArguments();
+	ParsingArguments(const ParsingArguments&) = default;
+	ParsingArguments(ParsingArguments&&) = default;
 	ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr<IIndexRecorder> _recorder);
-	ParsingArguments(const ParsingArguments& pa, Symbol* _context);
+
+	ParsingArguments& operator=(const ParsingArguments&) = default;
+	ParsingArguments& operator=(ParsingArguments&&) = default;
+
+	ParsingArguments WithContext(Symbol* context)const;
+	ParsingArguments WithContextNoFunction(Symbol* context)const;
+	ParsingArguments WithContextAndFunction(Symbol* context, Symbol* newFuncSymbol)const;
 };
 
 class DelayParse : public Object

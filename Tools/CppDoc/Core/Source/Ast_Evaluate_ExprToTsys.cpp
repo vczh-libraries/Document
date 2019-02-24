@@ -559,8 +559,7 @@ public:
 
 		if (leftEntity->GetType() == TsysType::Decl)
 		{
-			ParsingArguments newPa(pa, leftEntity->GetDecl());
-			newPa.funcSymbol = nullptr;
+			auto newPa = pa.WithContextNoFunction(leftEntity->GetDecl());
 			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbol);
 
 			if (opMethods.values)

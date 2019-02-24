@@ -153,12 +153,15 @@ namespace symbol_type_resolving
 		symbol->evaluation = SymbolEvaluation::Evaluating;
 		symbol->evaluatedTypes = MakePtr<TypeTsysList>();
 
+		auto parentSymbol = symbol->parent;
+		bool isInFunc = parentSymbol->stat;
+		auto newPa = isInFunc ? pa.WithContext(parentSymbol) : pa.WithContextNoFunction(parentSymbol);
+
 		if (varDecl->needResolveTypeFromInitializer)
 		{
 			if (auto rootVarDecl = dynamic_cast<VariableDeclaration*>(varDecl))
 			{
 				ExprTsysList types;
-				ParsingArguments newPa(pa, symbol->parent);
 				ExprToTsys(newPa, rootVarDecl->initializer->arguments[0], types);
 
 				for (vint k = 0; k < types.Count(); k++)
@@ -177,7 +180,6 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			ParsingArguments newPa(pa, symbol->parent);
 			TypeToTsys(newPa, varDecl->type, *symbol->evaluatedTypes.Obj());
 		}
 		symbol->evaluation = SymbolEvaluation::Evaluated;
@@ -223,7 +225,7 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			ParsingArguments newPa(pa, symbol->parent);
+			auto newPa = pa.WithContextNoFunction(symbol->parent);
 			TypeToTsys(newPa, funcDecl->type, *symbol->evaluatedTypes.Obj(), TsysCallingConvention::None, isMember);
 		}
 		symbol->evaluation = SymbolEvaluation::Evaluated;
@@ -241,7 +243,7 @@ namespace symbol_type_resolving
 		symbol->evaluatedBaseTypes = MakePtr<List<Ptr<TypeTsysList>>>();
 
 		{
-			ParsingArguments newPa(pa, symbol);
+			auto newPa = pa.WithContextNoFunction(symbol);
 			for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 			{
 				auto baseTypes = MakePtr<TypeTsysList>();
@@ -359,7 +361,7 @@ namespace symbol_type_resolving
 		if (entity->GetType() == TsysType::Decl)
 		{
 			auto symbol = entity->GetDecl();
-			ParsingArguments fieldPa(pa, symbol);
+			auto fieldPa = pa.WithContextNoFunction(symbol);
 			auto rar = ResolveSymbol(fieldPa, name, SearchPolicy::ChildSymbol);
 			if (totalRar) totalRar->Merge(rar);
 			return rar.values;

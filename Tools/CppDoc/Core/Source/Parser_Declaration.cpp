@@ -163,7 +163,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			}
 		}
 
-		ParsingArguments newPa(pa, contextSymbol);
+		auto newPa = pa.WithContext(contextSymbol);
 		while (!TestToken(cursor, CppTokens::RBRACE))
 		{
 			ParseDeclaration(newPa, cursor, contextDecl->decls);
@@ -194,7 +194,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			decl->baseType = baseType;
 
 			auto contextSymbol = pa.context->CreateDeclSymbol(decl);
-			ParsingArguments newPa(pa, contextSymbol);
+			auto newPa = pa.WithContext(contextSymbol);
 
 			while (!TestToken(cursor, CppTokens::RBRACE))
 			{
@@ -287,7 +287,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			output.Add(decl);
 			ConnectForwards<ForwardClassDeclaration>(pa.context, contextSymbol, cursor);
 
-			ParsingArguments declPa(pa, contextSymbol);
+			auto declPa = pa.WithContext(contextSymbol);
 
 			if (TestToken(cursor, CppTokens::COLON))
 			{
@@ -577,15 +577,13 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 						methodCache->thisType = pa.tsys->DeclOf(methodCache->classSymbol)->CVOf(cv)->PtrOf();
 					}
 					{
-						ParsingArguments newPa(pa, contextSymbol);
-						newPa.funcSymbol = contextSymbol;
+						auto newPa = pa.WithContextAndFunction(contextSymbol, contextSymbol);
 						BuildSymbols(newPa, type->parameters);
 					}
 					// delay parse the statement
 					{
 						decl->delayParse = MakePtr<DelayParse>();
-						decl->delayParse->pa = { pa,contextSymbol };
-						decl->delayParse->pa.funcSymbol = contextSymbol;
+						decl->delayParse->pa = pa.WithContextAndFunction(contextSymbol, contextSymbol);
 						cursor->Clone(decl->delayParse->reader, decl->delayParse->begin);
 
 						vint counter = 1;

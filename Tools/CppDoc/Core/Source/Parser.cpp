@@ -27,13 +27,28 @@ ParsingArguments::ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr
 {
 }
 
-ParsingArguments::ParsingArguments(const ParsingArguments& pa, Symbol* _context)
-	:root(pa.root)
-	, context(_context)
-	, funcSymbol(pa.funcSymbol)
-	, tsys(pa.tsys)
-	, recorder(pa.recorder)
+ParsingArguments ParsingArguments::WithContext(Symbol* context)const
 {
+	ParsingArguments pa(root, tsys, recorder);
+	pa.funcSymbol = funcSymbol;
+	pa.context = context;
+	return pa;
+}
+
+ParsingArguments ParsingArguments::WithContextNoFunction(Symbol* context)const
+{
+	ParsingArguments pa(root, tsys, recorder);
+	pa.funcSymbol = nullptr;
+	pa.context = context;
+	return pa;
+}
+
+ParsingArguments ParsingArguments::WithContextAndFunction(Symbol* context, Symbol* newFuncSymbol)const
+{
+	ParsingArguments pa(root, tsys, recorder);
+	pa.funcSymbol = newFuncSymbol;
+	pa.context = context;
+	return pa;
 }
 
 /***********************************************************************
