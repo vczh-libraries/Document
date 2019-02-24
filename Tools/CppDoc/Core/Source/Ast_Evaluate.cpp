@@ -210,6 +210,7 @@ public:
 				{
 					returnTypes.Add(pa.tsys->Void());
 				}
+				symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.funcSymbol->decls[0].Cast<FunctionDeclaration>().Obj());
 			}
 		}
 	}
@@ -285,7 +286,7 @@ public:
 
 	void Visit(VariableDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateSymbol(pa, self->symbol, self);
+		symbol_type_resolving::EvaluateSymbol(pa, self);
 		if (!self->needResolveTypeFromInitializer && self->initializer && self->symbol->evaluation == SymbolEvaluation::NotEvaluated)
 		{
 			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
@@ -299,7 +300,7 @@ public:
 	void Visit(FunctionDeclaration* self) override
 	{
 		EnsureFunctionBodyParsed(self);
-		symbol_type_resolving::EvaluateSymbol(pa, self->symbol, self);
+		symbol_type_resolving::EvaluateSymbol(pa, self);
 		if (!self->needResolveTypeFromStatement)
 		{
 			auto fpa = pa.WithContextAndFunction(self->symbol, self->symbol);
@@ -326,7 +327,7 @@ public:
 
 	void Visit(ClassDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateSymbol(pa, self->symbol, self);
+		symbol_type_resolving::EvaluateSymbol(pa, self);
 		auto dpa = pa.WithContextNoFunction(self->symbol);
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{

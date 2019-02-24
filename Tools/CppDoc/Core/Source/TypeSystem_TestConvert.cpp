@@ -213,7 +213,7 @@ namespace TestConvert_Helpers
 					auto ctorSymbol = ctors[i];
 					if (ctorSymbol->decls.Count() != 1) continue;
 					auto ctorDecl = ctorSymbol->decls[0].Cast<ForwardFunctionDeclaration>();
-					symbol_type_resolving::EvaluateSymbol(pa, ctorSymbol.Obj(), ctorDecl.Obj());
+					symbol_type_resolving::EvaluateSymbol(pa, ctorDecl.Obj());
 
 					for (vint j = 0; j < ctorSymbol->evaluatedTypes->Count(); j++)
 					{
@@ -390,7 +390,7 @@ namespace TestConvert_Helpers
 			if (currentType == toType) return true;
 			if (auto currentClass = TryGetDeclFromType<ClassDeclaration>(currentType))
 			{
-				symbol_type_resolving::EvaluateSymbol(pa, currentClass->symbol, currentClass.Obj());
+				symbol_type_resolving::EvaluateSymbol(pa, currentClass.Obj());
 				for (vint j = 0; j < currentClass->symbol->evaluatedBaseTypes->Count(); j++)
 				{
 					auto& baseTypes = *currentClass->symbol->evaluatedBaseTypes->Get(j).Obj();
@@ -434,7 +434,7 @@ namespace TestConvert_Helpers
 				if (typeOpType->parameters.Count() != 0) continue;
 				if (TestFunctionQualifier(fromCV, fromRef, typeOpType) == TsysConv::Illegal) continue;
 			}
-			symbol_type_resolving::EvaluateSymbol(pa, typeOpSymbol.Obj(), typeOpDecl.Obj());
+			symbol_type_resolving::EvaluateSymbol(pa, typeOpDecl.Obj());
 
 			for (vint j = 0; j < typeOpSymbol->evaluatedTypes->Count(); j++)
 			{
@@ -478,7 +478,7 @@ namespace TestConvert_Helpers
 				if (!ctorType) continue;
 				if (ctorType->parameters.Count() != 1) continue;
 			}
-			symbol_type_resolving::EvaluateSymbol(pa, ctorSymbol.Obj(), ctorDecl.Obj());
+			symbol_type_resolving::EvaluateSymbol(pa, ctorDecl.Obj());
 
 			for (vint j = 0; j < ctorSymbol->evaluatedTypes->Count(); j++)
 			{

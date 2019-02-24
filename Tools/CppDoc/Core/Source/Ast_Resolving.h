@@ -14,9 +14,11 @@ namespace symbol_type_resolving
 	extern void				AddTemp(ExprTsysList& list, TypeTsysList& items);
 
 	extern void				CalculateValueFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, bool forFieldDeref, ExprTsysList& result);
-	extern void				EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, ForwardVariableDeclaration* varDecl);
-	extern void				EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, ForwardFunctionDeclaration* funcDecl);
-	extern void				EvaluateSymbol(ParsingArguments& pa, Symbol* symbol, ClassDeclaration* classDecl);
+	extern void				EvaluateSymbol(ParsingArguments& pa, ForwardVariableDeclaration* varDecl);
+	extern bool				IsMemberFunction(ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
+	extern void				FinishEvaluatingSymbol(ParsingArguments& pa, FunctionDeclaration* funcDecl);
+	extern void				EvaluateSymbol(ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
+	extern void				EvaluateSymbol(ParsingArguments& pa, ClassDeclaration* classDecl);
 	extern void				VisitSymbol(ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result);
 
 	extern TsysConv			FindMinConv(ArrayBase<TsysConv>& funcChoices);
