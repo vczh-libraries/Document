@@ -934,8 +934,8 @@ struct X
 	COMPILE_PROGRAM(program, pa, input);
 	
 	AssertExpr(L"X().a()",			L"X().a()",				L"__int32 $PR",						pa);
-	AssertExpr(L"X().b()",			L"X().b()",				L"__int32 & $PR",					pa);
-	AssertExpr(L"X().c()",			L"X().c()",				L"__int32 & $PR",					pa);
+	AssertExpr(L"X().b()",			L"X().b()",				L"__int32 & $L",					pa);
+	AssertExpr(L"X().c()",			L"X().c()",				L"__int32 & $L",					pa);
 	AssertExpr(L"X().r(0)",			L"X().r(0)",			L"__int32 $PR",						pa);
 }
 
