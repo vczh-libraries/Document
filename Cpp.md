@@ -77,18 +77,13 @@
     - https://docs.microsoft.com/en-us/cpp/cpp/lvalues-and-rvalues-visual-cpp?view=vs-2017
   - [x] Assert resolvings in scopes
   - [x] Assert resolvings in scopes inside methods with qualifiers
-  - [ ] Resolve symbols in initializers of fields
-  - [ ] Resolve symbols created by statements
-    - [ ] Resolve same-name symbols in different nested scopes
-      - [ ] declaration statement
-      - [ ] `if`
-      - [ ] `foreach`
-      - [ ] `for`
-      - [ ] `catch`
+  - [x] Resolve symbols in initializers of fields
+  - [x] Resolve symbols created by statements
+    - [x] Resolve same-name symbols in different nested scopes
   - [ ] `Using` class members
   - [x] Resolve expression types and resolve `decltype`
     - [x] Take care of `decltype(a)` (defined type) and `decltype((a))` (reference type)
-    - [ ] Take care of functions return `auto` or `decltype(auto)`
+    - [x] Take care of functions return `auto` or `decltype(auto)`
   - [x] C enum
     - [x] Item symbol appears in both enum scope and enum's parent scope, enum item declaration points to the one in the enum scope
     - [x] Item returns PRValue
