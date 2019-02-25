@@ -210,6 +210,30 @@ explicit extern friend inline __forceinline static virtual Div: int (int, int) _
 	AssertProgram(input, output);
 }
 
+TEST_CASE(TestParseDecl_ExternC)
+{
+	auto input = LR"(
+extern "C" int x = 0;
+extern "C" { int y, z = 0; int w; }
+extern "C" int Add(int a, int b);
+extern "C"
+{
+	int Mul(int a, int b);
+	int Div(int a, int b);
+}
+)";
+	auto output = LR"(
+x: int = 0;
+y: int;
+z: int = 0;
+w: int
+__forward Add: int (a: int, b: int);
+__forward Mul: int (a: int, b: int);
+__forward Div: int (a: int, b: int);
+)";
+	AssertProgram(input, output);
+}
+
 TEST_CASE(TestParseDecl_FunctionsConnectForward)
 {
 	auto input = LR"(
