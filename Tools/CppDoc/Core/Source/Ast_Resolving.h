@@ -14,28 +14,29 @@ namespace symbol_type_resolving
 	extern void				AddTemp(ExprTsysList& list, TypeTsysList& items);
 
 	extern void				CalculateValueFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, bool forFieldDeref, ExprTsysList& result);
-	extern void				EvaluateSymbol(ParsingArguments& pa, ForwardVariableDeclaration* varDecl);
-	extern bool				IsMemberFunction(ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
-	extern void				FinishEvaluatingSymbol(ParsingArguments& pa, FunctionDeclaration* funcDecl);
-	extern void				EvaluateSymbol(ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
-	extern void				EvaluateSymbol(ParsingArguments& pa, ClassDeclaration* classDecl);
-	extern void				VisitSymbol(ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result);
+	extern void				EvaluateSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl);
+	extern bool				IsMemberFunction(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
+	extern void				FinishEvaluatingSymbol(const ParsingArguments& pa, FunctionDeclaration* funcDecl);
+	extern void				EvaluateSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
+	extern void				EvaluateSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl);
+	extern void				EvaluateSymbol(const ParsingArguments& pa, UsingDeclaration* usingDecl);
+	extern void				VisitSymbol(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result);
 
 	extern TsysConv			FindMinConv(ArrayBase<TsysConv>& funcChoices);
 	extern void				FilterFunctionByConv(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices);
 	extern void				FilterFieldsAndBestQualifiedFunctions(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes);
-	extern void				FindQualifiedFunctors(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp);
+	extern void				FindQualifiedFunctors(const ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp);
 
-	extern void				VisitResolvedMember(ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result);
-	extern void				VisitDirectField(ParsingArguments& pa, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, CppName& name, ExprTsysList& result);
-	extern void				VisitFunctors(ParsingArguments& pa, const ExprTsysItem& parentItem, const WString& name, ExprTsysList& result);
-	extern void				VisitOverloadedFunction(ParsingArguments& pa, ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result);
+	extern void				VisitResolvedMember(const ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result);
+	extern void				VisitDirectField(const ParsingArguments& pa, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, CppName& name, ExprTsysList& result);
+	extern void				VisitFunctors(const ParsingArguments& pa, const ExprTsysItem& parentItem, const WString& name, ExprTsysList& result);
+	extern void				VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result);
 
-	extern bool				IsAdlEnabled(ParsingArguments& pa, Ptr<Resolving> resolving);
-	extern void				SearchAdlClassesAndNamespaces(ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
-	extern void				SearchAdlClassesAndNamespaces(ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
-	extern void				SearchAdlClassesAndNamespaces(ParsingArguments& pa, ExprTsysList& types, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
-	extern void				SerachAdlFunction(ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result);
+	extern bool				IsAdlEnabled(const ParsingArguments& pa, Ptr<Resolving> resolving);
+	extern void				SearchAdlClassesAndNamespaces(const ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
+	extern void				SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
+	extern void				SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ExprTsysList& types, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
+	extern void				SerachAdlFunction(const ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result);
 
 	extern void				Promote(TsysPrimitive& primitive);
 	extern TsysPrimitive	ArithmeticConversion(TsysPrimitive leftP, TsysPrimitive rightP);

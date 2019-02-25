@@ -1,6 +1,4 @@
-#include "Parser.h"
-#include "Ast_Type.h"
-#include "Ast_Decl.h"
+#include "Ast_Resolving.h"
 
 /***********************************************************************
 IsPotentialTypeDeclVisitor
@@ -151,7 +149,7 @@ void AddSymbolToResolve(Ptr<Resolving>& resolving, Symbol* symbol)
 }
 
 /***********************************************************************
-ResolveChildSymbolInternal
+ResolveSymbolInternal
 ***********************************************************************/
 
 void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, ResolveSymbolArguments& rsa)
@@ -183,7 +181,19 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 				for (vint i = 0; i < symbol->decls.Count(); i++)
 				{
 					rsa.found = true;
-					if (IsPotentialTypeDecl(symbol->decls[i].Obj()))
+					if (auto usingDecl = symbol->decls[i].Cast<UsingDeclaration>())
+					{
+						symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
+						for (vint i = 0; i < usingDecl->symbol->evaluatedTypes->Count(); i++)
+						{
+							auto tsys = usingDecl->symbol->evaluatedTypes->Get(i);
+							if (tsys->GetType() == TsysType::Decl)
+							{
+								AddSymbolToResolve(rsa.result.types, tsys->GetDecl());
+							}
+						}
+					}
+					else if (IsPotentialTypeDecl(symbol->decls[i].Obj()))
 					{
 						AddSymbolToResolve(rsa.result.types, symbol);
 					}

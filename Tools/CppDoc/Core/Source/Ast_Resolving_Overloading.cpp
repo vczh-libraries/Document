@@ -7,7 +7,7 @@ namespace symbol_type_resolving
 	VisitOverloadedFunction: Select good candidates from overloaded functions
 	***********************************************************************/
 
-	void VisitOverloadedFunction(ParsingArguments& pa, ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result)
+	void VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result)
 	{
 		Array<vint> funcDPs(funcTypes.Count());
 		for (vint i = 0; i < funcTypes.Count(); i++)
@@ -122,7 +122,7 @@ namespace symbol_type_resolving
 	IsAdlEnabled: Check if argument-dependent lookup is considered according to the unqualified lookup result
 	***********************************************************************/
 
-	bool IsAdlEnabled(ParsingArguments& pa, Ptr<Resolving> resolving)
+	bool IsAdlEnabled(const ParsingArguments& pa, Ptr<Resolving> resolving)
 	{
 		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 		{
@@ -161,11 +161,11 @@ namespace symbol_type_resolving
 	class SearchBaseTypeAdlClassesAndNamespacesVisitor : public Object, public virtual ITypeVisitor
 	{
 	public:
-		ParsingArguments&			pa;
+		const ParsingArguments&		pa;
 		SortedList<Symbol*>&		nss;
 		SortedList<Symbol*>&		classes;
 
-		SearchBaseTypeAdlClassesAndNamespacesVisitor(ParsingArguments& _pa, SortedList<Symbol*>& _nss, SortedList<Symbol*>& _classes)
+		SearchBaseTypeAdlClassesAndNamespacesVisitor(const ParsingArguments& _pa, SortedList<Symbol*>& _nss, SortedList<Symbol*>& _classes)
 			:pa(_pa)
 			, nss(_nss)
 			, classes(_classes)
@@ -236,7 +236,7 @@ namespace symbol_type_resolving
 		}
 	};
 
-	void SearchAdlClassesAndNamespaces(ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
+	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
 	{
 		auto firstSymbol = symbol;
 		while (symbol)
@@ -282,7 +282,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void SearchAdlClassesAndNamespaces(ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
+	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
 	{
 		switch (type->GetType())
 		{
@@ -317,7 +317,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void SearchAdlClassesAndNamespaces(ParsingArguments& pa, ExprTsysList& types, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
+	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ExprTsysList& types, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
 	{
 		for (vint i = 0; i < types.Count(); i++)
 		{
@@ -329,7 +329,7 @@ namespace symbol_type_resolving
 	SerachAdlFunction: Find functions in namespaces
 	***********************************************************************/
 
-	void SerachAdlFunction(ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result)
+	void SerachAdlFunction(const ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result)
 	{
 		for (vint i = 0; i < nss.Count(); i++)
 		{

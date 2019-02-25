@@ -10,10 +10,10 @@ ExprToTsys
 class ExprToTsysVisitor : public Object, public virtual IExprVisitor
 {
 public:
-	ExprTsysList&			result;
-	ParsingArguments&		pa;
+	ExprTsysList&				result;
+	const ParsingArguments&		pa;
 
-	ExprToTsysVisitor(ParsingArguments& _pa, ExprTsysList& _result)
+	ExprToTsysVisitor(const ParsingArguments& _pa, ExprTsysList& _result)
 		:pa(_pa)
 		, result(_result)
 	{
@@ -1001,7 +1001,7 @@ public:
 };
 
 // Resolve expressions to types
-void ExprToTsys(ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys)
+void ExprToTsys(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys)
 {
 	if (!e) throw IllegalExprException();
 	ExprToTsysVisitor visitor(pa, tsys);

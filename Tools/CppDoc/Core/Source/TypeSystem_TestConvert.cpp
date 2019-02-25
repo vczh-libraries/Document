@@ -20,7 +20,7 @@ TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionT
 	return TsysConv::TrivalConversion;
 }
 
-TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromType);
+TsysConv TestConvertInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType);
 
 namespace TestConvert_Helpers
 {
@@ -189,7 +189,7 @@ namespace TestConvert_Helpers
 		return true;
 	}
 
-	TsysConv IsUniversalInitialization(ParsingArguments& pa, ITsys* toType, ITsys* fromEntity, const TsysInit& init)
+	TsysConv IsUniversalInitialization(const ParsingArguments& pa, ITsys* toType, ITsys* fromEntity, const TsysInit& init)
 	{
 		TsysCV toCV;
 		TsysRefType toRef;
@@ -331,7 +331,7 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
-	bool IsToBaseClassConversion(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+	bool IsToBaseClassConversion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
 		{
 			TsysCV toCV, fromCV;
@@ -407,7 +407,7 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
-	bool IsCustomOperatorConversion(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+	bool IsCustomOperatorConversion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
 		TsysCV fromCV;
 		TsysRefType fromRef;
@@ -449,7 +449,7 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
-	bool IsCustomContructorConversion(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+	bool IsCustomContructorConversion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
 		TsysCV toCV;
 		TsysRefType toRef;
@@ -495,7 +495,7 @@ namespace TestConvert_Helpers
 }
 using namespace TestConvert_Helpers;
 
-TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+TsysConv TestConvertInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 {
 	if (fromType->GetType() == TsysType::Zero)
 	{
@@ -544,7 +544,7 @@ TsysConv TestConvertInternal(ParsingArguments& pa, ITsys* toType, ITsys* fromTyp
 	return TsysConv::Illegal;
 }
 
-TsysConv TestConvert(ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem)
+TsysConv TestConvert(const ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem)
 {
 	return TestConvertInternal(pa, toType, (fromItem.type == ExprTsysType::LValue ? fromItem.tsys->LRefOf() : fromItem.tsys));
 }

@@ -276,6 +276,6 @@ Helpers
 ***********************************************************************/
 
 extern TsysConv					TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType);
-extern TsysConv					TestConvert(ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem);
+extern TsysConv					TestConvert(const ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem);
 
 #endif

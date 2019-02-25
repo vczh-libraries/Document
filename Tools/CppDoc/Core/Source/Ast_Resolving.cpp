@@ -142,7 +142,7 @@ namespace symbol_type_resolving
 	EvaluateSymbol: Evaluate the declared type for a symbol
 	***********************************************************************/
 
-	void EvaluateSymbol(ParsingArguments& pa, ForwardVariableDeclaration* varDecl)
+	void EvaluateSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl)
 	{
 		auto symbol = varDecl->symbol;
 		switch (symbol->evaluation)
@@ -191,7 +191,7 @@ namespace symbol_type_resolving
 		symbol->evaluation = SymbolEvaluation::Evaluated;
 	}
 
-	bool IsMemberFunction(ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl)
+	bool IsMemberFunction(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl)
 	{
 		auto symbol = funcDecl->symbol;
 		ITsys* classScope = nullptr;
@@ -207,7 +207,7 @@ namespace symbol_type_resolving
 		return classScope && !isStaticSymbol;
 	}
 
-	void FinishEvaluatingSymbol(ParsingArguments& pa, FunctionDeclaration* funcDecl)
+	void FinishEvaluatingSymbol(const ParsingArguments& pa, FunctionDeclaration* funcDecl)
 	{
 		auto symbol = funcDecl->symbol;
 		if (symbol->evaluatedTypes->Count() == 0)
@@ -238,7 +238,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void EvaluateSymbol(ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl)
+	void EvaluateSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl)
 	{
 		auto symbol = funcDecl->symbol;
 		switch (symbol->evaluation)
@@ -275,7 +275,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void EvaluateSymbol(ParsingArguments& pa, ClassDeclaration* classDecl)
+	void EvaluateSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl)
 	{
 		auto symbol = classDecl->symbol;
 		switch (symbol->evaluation)
@@ -299,6 +299,22 @@ namespace symbol_type_resolving
 		symbol->evaluation = SymbolEvaluation::Evaluated;
 	}
 
+	void EvaluateSymbol(const ParsingArguments& pa, UsingDeclaration* usingDecl)
+	{
+		auto symbol = usingDecl->symbol;
+		switch (symbol->evaluation)
+		{
+		case SymbolEvaluation::Evaluated: return;
+		case SymbolEvaluation::Evaluating: throw NotResolvableException();
+		}
+
+		symbol->evaluation = SymbolEvaluation::Evaluating;
+		symbol->evaluatedTypes = MakePtr<TypeTsysList>();
+		auto newPa = pa.WithContextNoFunction(symbol->parent);
+		TypeToTsys(newPa, usingDecl->type, *symbol->evaluatedTypes.Obj());
+		symbol->evaluation = SymbolEvaluation::Evaluated;
+	}
+
 	/***********************************************************************
 	VisitSymbol: Fill a symbol to ExprTsysList
 		thisItem: When afterScope==false
@@ -306,7 +322,7 @@ namespace symbol_type_resolving
 			it could be null if it is initiated by IdExpr
 	***********************************************************************/
 
-	void VisitSymbol(ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result)
+	void VisitSymbol(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result)
 	{
 		ITsys* classScope = nullptr;
 		if (symbol->parent && symbol->parent->decls.Count() > 0)
@@ -398,7 +414,7 @@ namespace symbol_type_resolving
 	FindMembersByName: Fill all members of a name to ExprTsysList
 	***********************************************************************/
 
-	Ptr<Resolving> FindMembersByName(ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, const ExprTsysItem& parentItem)
+	Ptr<Resolving> FindMembersByName(const ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, const ExprTsysItem& parentItem)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -486,7 +502,7 @@ namespace symbol_type_resolving
 	FindQualifiedFunctors: Remove everything that are not qualified functors (including functions and operator())
 	***********************************************************************/
 
-	void FindQualifiedFunctors(ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
+	void FindQualifiedFunctors(const ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
 	{
 		ExprTsysList expandedFuncTypes;
 		List<TsysConv> funcChoices;
@@ -538,7 +554,7 @@ namespace symbol_type_resolving
 	VisitResolvedMember: Fill all resolved member symbol to ExprTsysList
 	***********************************************************************/
 
-	void VisitResolvedMember(ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result)
+	void VisitResolvedMember(const ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result)
 	{
 		ExprTsysList varTypes, funcTypes;
 		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
@@ -590,7 +606,7 @@ namespace symbol_type_resolving
 	VisitDirectField: Find variables or qualified functions
 	***********************************************************************/
 
-	void VisitDirectField(ParsingArguments& pa, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, CppName& name, ExprTsysList& result)
+	void VisitDirectField(const ParsingArguments& pa, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, CppName& name, ExprTsysList& result)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -606,7 +622,7 @@ namespace symbol_type_resolving
 	VisitFunctors: Find qualified functors (including functions and operator())
 	***********************************************************************/
 
-	void VisitFunctors(ParsingArguments& pa, const ExprTsysItem& parentItem, const WString& name, ExprTsysList& result)
+	void VisitFunctors(const ParsingArguments& pa, const ExprTsysItem& parentItem, const WString& name, ExprTsysList& result)
 	{
 		TsysCV cv;
 		TsysRefType refType;

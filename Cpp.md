@@ -6,19 +6,22 @@
 - The syntax has less restrictions than the real C++ language specification, because the tool assumes the input is correct.
 
 ## Short-term tasks
+
+- [ ] Merge 3 `ParsingArguments::WithContext` to one, automatically fill `funcSymbol` field instead of passing.
 - [ ] Test `ExprToTsys` on all expressions during parsing.
-- [ ] Compiler-generated functions
-- [ ] `using` and `typedef`
-- [ ] After ADL is called, re-index unqualified function names or operator expressions
-- [ ] Test cases for whole program indexing without templates
+- [ ] Compiler-generated functions.
+- [ ] `using` and `typedef`.
+- [ ] After ADL is called, re-index unqualified function names or operator expressions.
+- [ ] Test cases for whole program indexing without templates.
 
 ## Template short-term tasks
-- [ ] Templates ...
-- [ ] Initialization list
-- [ ] Add an internal `ITsys` type for lambda expressions
-- [ ] Use this type in overloading
-- [ ] lambda expressions with capturing
-- [ ] New test cases for overloading mixing all these things
+
+- [ ] Templates `...`.
+- [ ] Initialization list.
+- [ ] Add an internal `ITsys` type for lambda expressions.
+- [ ] Use this type in overloading.
+- [ ] lambda expressions with capturing.
+- [ ] New test cases for overloading mixing all these things.
 
 ## Work Items
 
@@ -182,7 +185,6 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - [ ] `typedef` (CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;`
     - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
   - [ ] `typedef` TYPE-MULTIPLE-INITIALIZER `;`
-  - [ ] [TEMPLATE-SPEC] `using` NAME = TYPE-ZERO `;`
 - [ ] **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
 - [ ] **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
 - [x] **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`

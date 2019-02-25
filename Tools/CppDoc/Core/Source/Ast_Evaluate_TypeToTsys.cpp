@@ -11,14 +11,14 @@ TypeToTsys
 class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
 {
 public:
-	TypeTsysList&			result;
-	TypeTsysList*			returnTypes;
-	ParsingArguments&		pa;
+	TypeTsysList&				result;
+	TypeTsysList*				returnTypes;
+	const ParsingArguments&		pa;
 
-	TsysCallingConvention	cc = TsysCallingConvention::None;
-	bool					memberOf = false;
+	TsysCallingConvention		cc = TsysCallingConvention::None;
+	bool						memberOf = false;
 
-	TypeToTsysVisitor(ParsingArguments& _pa, TypeTsysList& _result, TypeTsysList* _returnTypes, TsysCallingConvention _cc, bool _memberOf)
+	TypeToTsysVisitor(const ParsingArguments& _pa, TypeTsysList& _result, TypeTsysList* _returnTypes, TsysCallingConvention _cc, bool _memberOf)
 		:pa(_pa)
 		, result(_result)
 		, returnTypes(_returnTypes)
@@ -306,19 +306,19 @@ public:
 };
 
 // Convert type AST to type system object
-void TypeToTsys(ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool memberOf, TsysCallingConvention cc)
+void TypeToTsys(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool memberOf, TsysCallingConvention cc)
 {
 	if (!t) throw NotConvertableException();
 	TypeToTsysVisitor visitor(pa, tsys, nullptr, cc, memberOf);
 	t->Accept(&visitor);
 }
 
-void TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool memberOf, TsysCallingConvention cc)
+void TypeToTsys(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool memberOf, TsysCallingConvention cc)
 {
 	TypeToTsys(pa, t.Obj(), tsys, memberOf, cc);
 }
 
-void TypeToTsysAndReplaceFunctionReturnType(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf)
+void TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf)
 {
 	if (!t) throw NotConvertableException();
 	TypeToTsysVisitor visitor(pa, tsys, &returnTypes, TsysCallingConvention::None, memberOf);

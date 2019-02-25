@@ -128,13 +128,13 @@ using ExprTsysList = List<ExprTsysItem>;
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
 extern bool					IsPendingType(Type* type);
 extern bool					IsPendingType(Ptr<Type> type);
-extern ITsys*				ResolvePendingType(ParsingArguments& pa, Ptr<Type> type, ExprTsysItem target);
-extern void					TypeToTsys(ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
-extern void					TypeToTsys(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
-extern void					TypeToTsysAndReplaceFunctionReturnType(ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf);
-extern void					ExprToTsys(ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys);
-extern void					EvaluateStat(ParsingArguments& pa, Ptr<Stat> s);
-extern void					EvaluateDeclaration(ParsingArguments& pa, Ptr<Declaration> s);
-extern void					EvaluateProgram(ParsingArguments& pa, Ptr<Program> program);
+extern ITsys*				ResolvePendingType(const ParsingArguments& pa, Ptr<Type> type, ExprTsysItem target);
+extern void					TypeToTsys(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
+extern void					TypeToTsys(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
+extern void					TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf);
+extern void					ExprToTsys(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys);
+extern void					EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s);
+extern void					EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s);
+extern void					EvaluateProgram(const ParsingArguments& pa, Ptr<Program> program);
 
 #endif

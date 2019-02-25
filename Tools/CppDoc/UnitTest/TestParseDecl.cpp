@@ -757,10 +757,25 @@ TEST_CASE(TestParseDecl_TypeAlias)
 		auto input = LR"(
 using A = int;
 using B = A(*)(A);
+
+struct S
+{
+	struct T {};
+};
+using C = S;
+using D = C::T;
 )";
 		auto output = LR"(
 using A = int;
 using B = A (A) *;
+struct S
+{
+	public struct T
+	{
+	};
+};
+using C = S;
+using D = C :: T;
 )";
 		AssertProgram(input, output);
 	}

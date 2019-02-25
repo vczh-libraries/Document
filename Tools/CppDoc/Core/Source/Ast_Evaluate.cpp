@@ -9,9 +9,9 @@ EvaluateStatVisitor
 class EvaluateStatVisitor : public Object, public IStatVisitor
 {
 public:
-	ParsingArguments&					pa;
+	const ParsingArguments&			pa;
 
-	EvaluateStatVisitor(ParsingArguments& _pa)
+	EvaluateStatVisitor(const ParsingArguments& _pa)
 		:pa(_pa)
 	{
 	}
@@ -360,9 +360,9 @@ EvaluateDeclarationVisitor
 class EvaluateDeclarationVisitor : public Object, public IDeclarationVisitor
 {
 public:
-	ParsingArguments&					pa;
+	const ParsingArguments&			pa;
 
-	EvaluateDeclarationVisitor(ParsingArguments& _pa)
+	EvaluateDeclarationVisitor(const ParsingArguments& _pa)
 		:pa(_pa)
 	{
 	}
@@ -444,6 +444,7 @@ public:
 
 	void Visit(UsingDeclaration* self) override
 	{
+		symbol_type_resolving::EvaluateSymbol(pa, self);
 	}
 
 	void Visit(NamespaceDeclaration* self) override
@@ -460,20 +461,20 @@ public:
 Evaluate
 ***********************************************************************/
 
-void EvaluateStat(ParsingArguments& pa, Ptr<Stat> s)
+void EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s)
 {
 	EvaluateStatVisitor visitor(pa);
 	s->Accept(&visitor);
 }
 
-void EvaluateDeclaration(ParsingArguments& pa, Ptr<Declaration> s)
+void EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s)
 {
 	auto dpa = pa.WithContextNoFunction(s->symbol);
 	EvaluateDeclarationVisitor visitor(dpa);
 	s->Accept(&visitor);
 }
 
-void EvaluateProgram(ParsingArguments& pa, Ptr<Program> program)
+void EvaluateProgram(const ParsingArguments& pa, Ptr<Program> program)
 {
 	for (vint i = 0; i < program->decls.Count(); i++)
 	{

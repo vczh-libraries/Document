@@ -130,34 +130,34 @@ enum class PendingMatching
 class ResolvePendingTypeVisitor : public Object, public virtual ITypeVisitor
 {
 public:
-	ParsingArguments&		pa;
-	ITsys*					result = nullptr;
-	PendingMatching			matching = PendingMatching::Exact;
-	ITsys*					targetType = nullptr;
-	ExprTsysItem			targetExpr;
+	const ParsingArguments&		pa;
+	ITsys*						result = nullptr;
+	PendingMatching				matching = PendingMatching::Exact;
+	ITsys*						targetType = nullptr;
+	ExprTsysItem				targetExpr;
 
-	static ITsys* Execute(ParsingArguments& pa, Type* type, ITsys* target, PendingMatching _matching)
+	static ITsys* Execute(const ParsingArguments& pa, Type* type, ITsys* target, PendingMatching _matching)
 	{
 		ResolvePendingTypeVisitor visitor(pa, target, _matching);
 		type->Accept(&visitor);
 		return visitor.result;
 	}
 
-	static ITsys* Execute(ParsingArguments& pa, Type* type, ExprTsysItem target, PendingMatching _matching)
+	static ITsys* Execute(const ParsingArguments& pa, Type* type, ExprTsysItem target, PendingMatching _matching)
 	{
 		ResolvePendingTypeVisitor visitor(pa, target, _matching);
 		type->Accept(&visitor);
 		return visitor.result;
 	}
 
-	ResolvePendingTypeVisitor(ParsingArguments& _pa, ITsys* target, PendingMatching _matching)
+	ResolvePendingTypeVisitor(const ParsingArguments& _pa, ITsys* target, PendingMatching _matching)
 		:pa(_pa)
 		, targetType(target)
 		, matching(_matching)
 	{
 	}
 
-	ResolvePendingTypeVisitor(ParsingArguments& _pa, ExprTsysItem target, PendingMatching _matching)
+	ResolvePendingTypeVisitor(const ParsingArguments& _pa, ExprTsysItem target, PendingMatching _matching)
 		:pa(_pa)
 		, targetExpr(target)
 		, matching(_matching)
@@ -554,7 +554,7 @@ public:
 };
 
 // Resolve a pending type to a target type
-ITsys* ResolvePendingType(ParsingArguments& pa, Ptr<Type> type, ExprTsysItem target)
+ITsys* ResolvePendingType(const ParsingArguments& pa, Ptr<Type> type, ExprTsysItem target)
 {
 	return ResolvePendingTypeVisitor::Execute(pa, type.Obj(), target, PendingMatching::Free);
 }
