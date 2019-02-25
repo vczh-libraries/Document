@@ -1,6 +1,7 @@
 # Draft
 
 - Candidates of names with overloading may not be completely narrowed because of incomplete template-related type inferencing.
+- Anonymous namespaces and extern "C" are ignored, and declarations inside them are treated as they are directly written inside the parent scope.
 - The tool consumes a single preprocessed C++ source file, the following syntax is collected for this purpose.
 - The syntax has less restrictions than the real C++ language specification, because the tool assumes the input is correct.
 
@@ -159,20 +160,18 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ### FUNCTION
 
-- [ ] [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT)
-- [ ] [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT)
+- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT)
+  - [ ] TEMPLATE-SPEC
+- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT)
+  - [ ] TEMPLATE-SPEC
 
-### CLASS_STRUCT
+### OBJECT
 
-- [ ] [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
-
-### ENUM
-
-- [x] `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}`
-
-### UNION
-
-- [ ] [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}`
+- [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
+  - [ ] TEMPLATE-SPEC
+- `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}`
+- [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}`
+  - [ ] TEMPLATE-SPEC
 
 ### DECL (Declaration)
 
