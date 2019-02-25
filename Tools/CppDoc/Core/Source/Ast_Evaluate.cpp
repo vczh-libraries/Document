@@ -123,10 +123,13 @@ public:
 							{
 								symbol->evaluatedTypes->Add(resolved);
 							}
-							continue;
 						}
+						types.RemoveAt(i--);
 					}
-					throw 0;
+				}
+				if (symbol->evaluatedTypes->Count() == 0)
+				{
+					throw NotResolvableException();
 				}
 				symbol->evaluation = SymbolEvaluation::Evaluated;
 			}
