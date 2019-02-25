@@ -517,6 +517,8 @@ public:
 				}
 			}
 			Execute(pa, self->type.Obj(), entity, (matching == PendingMatching::Free ? PendingMatching::ExactExceptDecorator : matching));
+			cv.isGeneralConst |= (self->isConst || self->isConstExpr);
+			cv.isVolatile |= self->isVolatile;
 			result = entity->CVOf(cv);
 		}
 		else
