@@ -764,6 +764,8 @@ struct S
 };
 using C = S;
 using D = C::T;
+typedef int a, int b, int c;
+typedef C::T(*d)(A, B);
 )";
 		auto output = LR"(
 using A = int;
@@ -776,6 +778,10 @@ struct S
 };
 using C = S;
 using D = C :: T;
+using a = int;
+using b = int;
+using c = int;
+using d = C :: T (A, B) *;
 )";
 		AssertProgram(input, output);
 	}
