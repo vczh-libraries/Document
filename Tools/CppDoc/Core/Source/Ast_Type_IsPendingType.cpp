@@ -120,40 +120,47 @@ bool IsPendingType(Ptr<Type> type)
 ResolvePendingType
 ***********************************************************************/
 
+enum class PendingMatching
+{
+	Free,						// totally free
+	ExactExceptDecorator,		// enable const->non const etc
+	Exact,						// exactly match
+};
+
 class ResolvePendingTypeVisitor : public Object, public virtual ITypeVisitor
 {
 public:
 	ParsingArguments&		pa;
 	ITsys*					result = nullptr;
-	bool					exactMatch = false;
+	PendingMatching			matching = PendingMatching::Exact;
 	ITsys*					targetType = nullptr;
 	ExprTsysItem			targetExpr;
 
-	static ITsys* Execute(ParsingArguments& pa, Type* type, ITsys* target, bool _exactMatch)
+	static ITsys* Execute(ParsingArguments& pa, Type* type, ITsys* target, PendingMatching _matching)
 	{
-		ResolvePendingTypeVisitor visitor(pa, target, _exactMatch);
+		ResolvePendingTypeVisitor visitor(pa, target, _matching);
 		type->Accept(&visitor);
 		return visitor.result;
 	}
 
-	static ITsys* Execute(ParsingArguments& pa, Type* type, ExprTsysItem target, bool _exactMatch)
+	static ITsys* Execute(ParsingArguments& pa, Type* type, ExprTsysItem target, PendingMatching _matching)
 	{
-		ResolvePendingTypeVisitor visitor(pa, target, _exactMatch);
+		ResolvePendingTypeVisitor visitor(pa, target, _matching);
 		type->Accept(&visitor);
 		return visitor.result;
 	}
 
-	ResolvePendingTypeVisitor(ParsingArguments& _pa, ITsys* target, bool _exactMatch)
+	ResolvePendingTypeVisitor(ParsingArguments& _pa, ITsys* target, PendingMatching _matching)
 		:pa(_pa)
 		, targetType(target)
-		, exactMatch(_exactMatch)
+		, matching(_matching)
 	{
 	}
 
-	ResolvePendingTypeVisitor(ParsingArguments& _pa, ExprTsysItem target, bool _exactMatch)
+	ResolvePendingTypeVisitor(ParsingArguments& _pa, ExprTsysItem target, PendingMatching _matching)
 		:pa(_pa)
 		, targetExpr(target)
-		, exactMatch(_exactMatch)
+		, matching(_matching)
 	{
 	}
 
@@ -196,8 +203,15 @@ public:
 				entity = pa.tsys->Int();
 			}
 
-			if (exactMatch)
+			switch (matching)
 			{
+			case PendingMatching::Free:
+				result = entity;
+				break;
+			case PendingMatching::ExactExceptDecorator:
+				result = entity->CVOf(cv);
+				break;
+			case PendingMatching::Exact:
 				switch (ref)
 				{
 				case TsysRefType::LRef:
@@ -210,10 +224,7 @@ public:
 					result = entity->CVOf(cv);
 					break;
 				}
-			}
-			else
-			{
-				result = entity->CVOf(cv);
+				break;
 			}
 		}
 		else
@@ -250,14 +261,7 @@ public:
 			TsysCV cv;
 			TsysRefType ref;
 			auto entity = resolved->GetEntity(cv, ref);
-
-			if (exactMatch)
-			{
-				if (cv.isGeneralConst || cv.isVolatile)
-				{
-					throw NotResolvableException();
-				}
-			}
+			auto subMatching = matching == PendingMatching::Free ? PendingMatching::ExactExceptDecorator : matching;
 
 			switch (self->reference)
 			{
@@ -268,24 +272,24 @@ public:
 				}
 				else
 				{
-					result = Execute(pa, self->type.Obj(), entity, false);
+					result = Execute(pa, self->type.Obj(), entity, subMatching);
 				}
 				break;
 			case CppReferenceType::LRef:
 				switch (ref)
 				{
 				case TsysRefType::LRef:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), false)->LRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), subMatching)->LRefOf();
 					break;
 				case TsysRefType::RRef:
 					throw NotResolvableException();
 				case TsysRefType::None:
-					if (exactMatch)
+					if (matching != PendingMatching::Free)
 					{
 						throw NotResolvableException();
 					}
 					cv.isGeneralConst = true;
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), false)->LRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), subMatching)->LRefOf();
 					break;
 				}
 				break;
@@ -293,13 +297,13 @@ public:
 				switch (ref)
 				{
 				case TsysRefType::LRef:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv)->LRefOf(), false);
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv)->LRefOf(), subMatching);
 					break;
 				case TsysRefType::RRef:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), false)->RRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), subMatching)->RRefOf();
 					break;
 				case TsysRefType::None:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), false)->RRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), subMatching)->RRefOf();
 					break;
 				}
 				break;
@@ -321,7 +325,7 @@ public:
 		TsysCV cv;
 		TsysRefType ref;
 		auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
-		if (exactMatch)
+		if (matching == PendingMatching::Exact)
 		{
 			if (cv.isGeneralConst || cv.isVolatile)
 			{
@@ -353,7 +357,7 @@ public:
 			}
 		}
 
-		Execute(pa, self->type.Obj(), entity, true);
+		Execute(pa, self->type.Obj(), entity, PendingMatching::Exact);
 		result = targetType ? targetType : targetExpr.tsys;
 	}
 
@@ -370,7 +374,7 @@ public:
 		TsysCV cv;
 		TsysRefType ref;
 		auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
-		if (exactMatch)
+		if (matching == PendingMatching::Exact)
 		{
 			if (cv.isGeneralConst || cv.isVolatile)
 			{
@@ -392,7 +396,7 @@ public:
 		}
 		for (vint i = 0; i < self->parameters.Count(); i++)
 		{
-			Execute(pa, self->parameters[i]->type.Obj(), entity->GetParam(i), true);
+			Execute(pa, self->parameters[i]->type.Obj(), entity->GetParam(i), PendingMatching::Exact);
 		}
 
 		if (self->decoratorReturnType)
@@ -408,7 +412,7 @@ public:
 		}
 		else if (IsPendingType(self->returnType))
 		{
-			Execute(pa, self->returnType.Obj(), entity->GetElement(), true);
+			Execute(pa, self->returnType.Obj(), entity->GetElement(), PendingMatching::Exact);
 		}
 		else
 		{
@@ -427,7 +431,7 @@ public:
 		TsysCV cv;
 		TsysRefType ref;
 		auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
-		if (exactMatch)
+		if (matching == PendingMatching::Exact)
 		{
 			if (cv.isGeneralConst || cv.isVolatile)
 			{
@@ -443,11 +447,11 @@ public:
 		{
 			throw NotResolvableException();
 		}
-		Execute(pa, self->classType.Obj(), entity->GetClass(), true);
+		Execute(pa, self->classType.Obj(), entity->GetClass(), PendingMatching::Exact);
 
 		if (IsPendingType(self->type))
 		{
-			Execute(pa, self->type.Obj(), entity->GetElement(), true);
+			Execute(pa, self->type.Obj(), entity->GetElement(), PendingMatching::Exact);
 		}
 		else
 		{
@@ -483,16 +487,14 @@ public:
 			TsysCV cv;
 			TsysRefType ref;
 			auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
-			if (exactMatch)
+
+			if (matching == PendingMatching::Exact)
 			{
 				if (ref != TsysRefType::None)
 				{
 					throw NotResolvableException();
 				}
-			}
 
-			if (exactMatch)
-			{
 				if (cv.isGeneralConst != (self->isConst || self->isConstExpr))
 				{
 					throw NotResolvableException();
@@ -514,7 +516,7 @@ public:
 					throw NotResolvableException();
 				}
 			}
-			Execute(pa, self->type.Obj(), entity, true);
+			Execute(pa, self->type.Obj(), entity, (matching == PendingMatching::Free ? PendingMatching::ExactExceptDecorator : matching));
 			result = entity->CVOf(cv);
 		}
 		else
@@ -552,5 +554,5 @@ public:
 // Resolve a pending type to a target type
 ITsys* ResolvePendingType(ParsingArguments& pa, Ptr<Type> type, ExprTsysItem target)
 {
-	return ResolvePendingTypeVisitor::Execute(pa, type.Obj(), target, false);
+	return ResolvePendingTypeVisitor::Execute(pa, type.Obj(), target, PendingMatching::Free);
 }
