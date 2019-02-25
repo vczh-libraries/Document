@@ -107,69 +107,81 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 	if (TestToken(cursor, CppTokens::DECL_NAMESPACE))
 	{
-		// namespace NAME { :: NAME ...} { DECLARATION ...}
-		auto contextSymbol = pa.context;
-		Ptr<NamespaceDeclaration> topDecl;
-		Ptr<NamespaceDeclaration> contextDecl;
-
-		while (cursor)
+		if (TestToken(cursor, CppTokens::LBRACE))
 		{
-			// create AST
-			auto decl = MakePtr<NamespaceDeclaration>();
-			if (!topDecl)
+			// namespace { DECLARATION ...}
+			// ignore the namespace and add everything to its parent
+			while (!TestToken(cursor, CppTokens::RBRACE))
 			{
-				topDecl = decl;
+				ParseDeclaration(pa, cursor, output);
 			}
-			if (contextDecl)
-			{
-				contextDecl->decls.Add(decl);
-			}
-			contextDecl = decl;
+		}
+		else
+		{
+			// namespace NAME { :: NAME ...} { DECLARATION ...}
+			auto contextSymbol = pa.context;
+			Ptr<NamespaceDeclaration> topDecl;
+			Ptr<NamespaceDeclaration> contextDecl;
 
-			if (ParseCppName(decl->name, cursor))
+			while (cursor)
 			{
-				// ensure all other overloadings are namespaces, and merge the scope with them
-				vint index = contextSymbol->children.Keys().IndexOf(decl->name.name);
-				if (index == -1)
+				// create AST
+				auto decl = MakePtr<NamespaceDeclaration>();
+				if (!topDecl)
 				{
-					contextSymbol = contextSymbol->CreateDeclSymbol(decl);
+					topDecl = decl;
 				}
-				else
+				if (contextDecl)
 				{
-					auto& symbols = contextSymbol->children.GetByIndex(index);
-					if (symbols.Count() == 1 && symbols[0]->decls[0].Cast<NamespaceDeclaration>())
+					contextDecl->decls.Add(decl);
+				}
+				contextDecl = decl;
+
+				if (ParseCppName(decl->name, cursor))
+				{
+					// ensure all other overloadings are namespaces, and merge the scope with them
+					vint index = contextSymbol->children.Keys().IndexOf(decl->name.name);
+					if (index == -1)
 					{
-						contextSymbol = symbols[0].Obj();
-						contextSymbol->decls.Add(decl);
+						contextSymbol = contextSymbol->CreateDeclSymbol(decl);
 					}
 					else
 					{
-						throw StopParsingException(cursor);
+						auto& symbols = contextSymbol->children.GetByIndex(index);
+						if (symbols.Count() == 1 && symbols[0]->decls[0].Cast<NamespaceDeclaration>())
+						{
+							contextSymbol = symbols[0].Obj();
+							contextSymbol->decls.Add(decl);
+						}
+						else
+						{
+							throw StopParsingException(cursor);
+						}
 					}
 				}
-			}
-			else
-			{
-				throw StopParsingException(cursor);
+				else
+				{
+					throw StopParsingException(cursor);
+				}
+
+				if (TestToken(cursor, CppTokens::LBRACE))
+				{
+					break;
+				}
+				else
+				{
+					RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
+				}
 			}
 
-			if (TestToken(cursor, CppTokens::LBRACE))
+			auto newPa = pa.WithContext(contextSymbol);
+			while (!TestToken(cursor, CppTokens::RBRACE))
 			{
-				break;
+				ParseDeclaration(newPa, cursor, contextDecl->decls);
 			}
-			else
-			{
-				RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
-			}
+
+			output.Add(topDecl);
 		}
-
-		auto newPa = pa.WithContext(contextSymbol);
-		while (!TestToken(cursor, CppTokens::RBRACE))
-		{
-			ParseDeclaration(newPa, cursor, contextDecl->decls);
-		}
-
-		output.Add(topDecl);
 	}
 	else if (TestToken(cursor, CppTokens::DECL_ENUM))
 	{
@@ -341,7 +353,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					accessor = CppClassAccessor::Private;
 					RequireToken(cursor, CppTokens::COLON);
 				}
-				else if(TestToken(cursor,CppTokens::RBRACE))
+				else if (TestToken(cursor,CppTokens::RBRACE))
 				{
 					break;
 				}

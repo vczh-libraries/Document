@@ -6,6 +6,15 @@ TEST_CASE(TestParseDecl_Namespaces)
 	auto input = LR"(
 namespace vl {}
 namespace vl::presentation::controls {}
+namespace {}
+namespace vl
+{
+	int x;
+	namespace
+	{
+		int y;
+	}
+}
 )";
 	auto output = LR"(
 namespace vl
@@ -19,6 +28,11 @@ namespace vl
 		{
 		}
 	}
+}
+namespace vl
+{
+	x: int;
+	y: int;
 }
 )";
 	AssertProgram(input, output);

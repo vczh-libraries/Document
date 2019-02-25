@@ -1,6 +1,6 @@
 # Draft
 
-- This is a code index tool, which means it doesn't narrow candidates using type inference, it shows every possible candidates instead.
+- Candidates of names with overloading may not be completely narrowed because of incomplete template-related type inferencing.
 - The tool consumes a single preprocessed C++ source file, the following syntax is collected for this purpose.
 - The syntax has less restrictions than the real C++ language specification, because the tool assumes the input is correct.
 
