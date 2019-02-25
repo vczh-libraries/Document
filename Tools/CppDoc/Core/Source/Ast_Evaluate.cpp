@@ -1,4 +1,5 @@
 #include "Ast_Stat.h"
+#include "Ast_Expr.h"
 #include "Ast_Resolving.h"
 
 /***********************************************************************
@@ -98,9 +99,8 @@ public:
 
 	void Visit(ForEachStat* self) override
 	{
-		auto spa = pa.WithContext(self->symbol);
 		ExprTsysList types;
-		ExprToTsys(spa, self->expr, types);
+		ExprToTsys(pa, self->expr, types);
 
 		if (self->varDecl->needResolveTypeFromInitializer)
 		{
@@ -118,7 +118,7 @@ public:
 						auto entity = tsys->GetEntity(cv, refType);
 						if (entity->GetType() == TsysType::Array)
 						{
-							auto resolved = ResolvePendingType(spa, self->varDecl->type, { nullptr,ExprTsysType::LValue,entity->GetElement()->LRefOf() });
+							auto resolved = ResolvePendingType(pa, self->varDecl->type, { nullptr,ExprTsysType::LValue,entity->GetElement()->LRefOf() });
 							if (!symbol->evaluatedTypes->Contains(resolved))
 							{
 								symbol->evaluatedTypes->Add(resolved);
@@ -127,6 +127,65 @@ public:
 						types.RemoveAt(i--);
 					}
 				}
+
+				if (types.Count() > 0)
+				{
+					ExprTsysList virtualExprTypes;
+					{
+						auto placeholderExpr = MakePtr<PlaceholderExpr>();
+						placeholderExpr->types = &types;
+
+						auto beginExpr = MakePtr<IdExpr>();
+						beginExpr->name.name = L"begin";
+						beginExpr->name.type = CppNameType::Normal;
+
+						auto callExpr = MakePtr<FuncAccessExpr>();
+						callExpr->expr = beginExpr;
+						callExpr->arguments.Add(placeholderExpr);
+
+						auto derefExpr = MakePtr<PrefixUnaryExpr>();
+						derefExpr->op = CppPrefixUnaryOp::Dereference;
+						derefExpr->opName.name = L"*";
+						derefExpr->opName.type = CppNameType::Operator;
+						derefExpr->operand = callExpr;
+
+						ExprToTsys(pa, derefExpr, virtualExprTypes);
+					}
+					{
+						auto placeholderExpr = MakePtr<PlaceholderExpr>();
+						placeholderExpr->types = &types;
+
+						auto beginExpr = MakePtr<IdExpr>();
+						beginExpr->name.name = L"begin";
+						beginExpr->name.type = CppNameType::Normal;
+
+						auto fieldExpr = MakePtr<FieldAccessExpr>();
+						fieldExpr->expr = placeholderExpr;
+						fieldExpr->name = beginExpr;
+						fieldExpr->type = CppFieldAccessType::Dot;
+
+						auto callExpr = MakePtr<FuncAccessExpr>();
+						callExpr->expr = fieldExpr;
+
+						auto derefExpr = MakePtr<PrefixUnaryExpr>();
+						derefExpr->op = CppPrefixUnaryOp::Dereference;
+						derefExpr->opName.name = L"*";
+						derefExpr->opName.type = CppNameType::Operator;
+						derefExpr->operand = callExpr;
+
+						ExprToTsys(pa, derefExpr, virtualExprTypes);
+					}
+
+					for (vint i = 0; i < virtualExprTypes.Count(); i++)
+					{
+						auto resolved = ResolvePendingType(pa, self->varDecl->type, virtualExprTypes[i]);
+						if (!symbol->evaluatedTypes->Contains(resolved))
+						{
+							symbol->evaluatedTypes->Add(resolved);
+						}
+					}
+				}
+
 				if (symbol->evaluatedTypes->Count() == 0)
 				{
 					throw NotResolvableException();
@@ -136,8 +195,10 @@ public:
 		}
 		else
 		{
-			EvaluateDeclaration(spa, self->varDecl);
+			EvaluateDeclaration(pa, self->varDecl);
 		}
+
+		auto spa = pa.WithContext(self->symbol);
 		EvaluateStat(spa, self->stat);
 	}
 
