@@ -223,3 +223,64 @@ void F4()
 		AssertExpr(L"c", L"c", L"__int32 $L", spa);
 	}
 }
+
+TEST_CASE(TestParseStat_RangeBasedFor)
+{
+	auto input = LR"(
+
+void F1()
+{
+	int v[10];
+	for (auto& a : v)
+	{
+	}
+}
+
+namespace std2
+{
+	struct Vector
+	{
+		int* begin();
+		int* end();
+	};
+}
+
+void F2()
+{
+	for (const auto& a : std2::Vector())
+	{
+	}
+}
+
+namespace std3
+{
+	struct Vector
+	{
+		struct Iterator
+		{
+			int& operator*();
+		};
+	};
+
+	Vector::Iterator begin(const Vector&);
+	Vector::Iterator end(const Vector&);
+}
+
+void F3()
+{
+	for (decltype(auto) a : std3::Vector())
+	{
+	}
+}
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	const wchar_t* expectedTypes[] = { L"__int32 & $L", L"__int32 const & $L", L"__int32 & $L" };
+	for (vint i = 1; i <= 3; i++)
+	{
+		auto funcSymbol = pa.context->children[L"F" + itow(i)][0].Obj();
+		auto spa = pa.WithContextAndFunction(funcSymbol->children[L"$"][0].Obj()->children[L"$"][0].Obj()->children[L"$"][0].Obj(), funcSymbol);
+		TEST_ASSERT(spa.funcSymbol->decls.Count() == 1);
+		TEST_ASSERT(spa.funcSymbol->decls[0].Cast<FunctionDeclaration>()->name.name == L"F" + itow(i));
+		AssertExpr(L"a", L"a", expectedTypes[i - 1], spa);
+	}
+}

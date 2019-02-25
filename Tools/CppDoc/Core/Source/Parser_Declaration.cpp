@@ -719,6 +719,7 @@ void BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclara
 		varDecl->type = declarator->type;
 		varDecl->name = declarator->name;
 		varDecl->initializer = declarator->initializer;
+		varDecl->needResolveTypeFromInitializer = IsPendingType(varDecl->type);
 		varDecls.Add(varDecl);
 	}
 }

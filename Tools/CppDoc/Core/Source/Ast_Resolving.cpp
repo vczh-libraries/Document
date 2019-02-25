@@ -162,6 +162,11 @@ namespace symbol_type_resolving
 		{
 			if (auto rootVarDecl = dynamic_cast<VariableDeclaration*>(varDecl))
 			{
+				if (!rootVarDecl->initializer)
+				{
+					throw NotResolvableException();
+				}
+
 				ExprTsysList types;
 				ExprToTsys(newPa, rootVarDecl->initializer->arguments[0], types);
 
