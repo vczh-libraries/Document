@@ -385,6 +385,10 @@ public:
 
 	void Visit(VariableDeclaration* self) override
 	{
+		if (self->name.name == L"_A6")
+		{
+			int a = 0;
+		}
 		symbol_type_resolving::EvaluateSymbol(pa, self);
 		if (!self->needResolveTypeFromInitializer && self->initializer)
 		{

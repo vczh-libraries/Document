@@ -213,7 +213,7 @@ public:
 			}
 			else
 			{
-				result = entity;
+				result = entity->CVOf(cv);
 			}
 		}
 		else
@@ -268,14 +268,14 @@ public:
 				}
 				else
 				{
-					result = Execute(pa, self->type.Obj(), entity, true);
+					result = Execute(pa, self->type.Obj(), entity, false);
 				}
 				break;
 			case CppReferenceType::LRef:
 				switch (ref)
 				{
 				case TsysRefType::LRef:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), true)->LRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), false)->LRefOf();
 					break;
 				case TsysRefType::RRef:
 					throw NotResolvableException();
@@ -285,7 +285,7 @@ public:
 						throw NotResolvableException();
 					}
 					cv.isGeneralConst = true;
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), true)->LRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), false)->LRefOf();
 					break;
 				}
 				break;
@@ -293,13 +293,13 @@ public:
 				switch (ref)
 				{
 				case TsysRefType::LRef:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv)->LRefOf(), true);
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv)->LRefOf(), false);
 					break;
 				case TsysRefType::RRef:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), true)->RRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), false)->RRefOf();
 					break;
 				case TsysRefType::None:
-					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), true)->RRefOf();
+					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), false)->RRefOf();
 					break;
 				}
 				break;
@@ -497,6 +497,7 @@ public:
 				{
 					throw NotResolvableException();
 				}
+
 				if (cv.isVolatile != self->isVolatile)
 				{
 					throw NotResolvableException();
