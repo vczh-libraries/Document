@@ -287,7 +287,7 @@ public:
 	void Visit(VariableDeclaration* self) override
 	{
 		symbol_type_resolving::EvaluateSymbol(pa, self);
-		if (!self->needResolveTypeFromInitializer && self->initializer && self->symbol->evaluation == SymbolEvaluation::NotEvaluated)
+		if (!self->needResolveTypeFromInitializer)
 		{
 			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
 			{
