@@ -750,3 +750,18 @@ namespace c
 	AssertProgram(input, output, recorder);
 	TEST_ASSERT(accessed.Count() == 10);
 }
+
+TEST_CASE(TestParseDecl_TypeAlias)
+{
+	{
+		auto input = LR"(
+using A = int;
+using B = A(*)(A);
+)";
+		auto output = LR"(
+using A = int;
+using B = A (A) *;
+)";
+		AssertProgram(input, output);
+	}
+}

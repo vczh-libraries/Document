@@ -119,7 +119,6 @@ public:
 
 	void Visit(UsingDeclaration* self)override
 	{
-		isPotentialType = false;
 	}
 
 	void Visit(NamespaceDeclaration* self)override

@@ -432,8 +432,18 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		}
 		else
 		{
-			throw StopParsingException(cursor);
-		}
+			// using NAME = TYPE;
+			auto decl = MakePtr<UsingDeclaration>();
+			if (!ParseCppName(decl->name, cursor))
+			{
+				throw StopParsingException();
+			}
+			RequireToken(cursor, CppTokens::EQ);
+			decl->type = ParseType(pa, cursor);
+			RequireToken(cursor, CppTokens::SEMICOLON);
+			pa.context->CreateDeclSymbol(decl);
+			output.Add(decl);
+;		}
 	}
 	else
 	{

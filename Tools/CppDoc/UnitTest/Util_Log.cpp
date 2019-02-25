@@ -1099,7 +1099,11 @@ public:
 
 	void Visit(UsingDeclaration* self)override
 	{
-		throw 0;
+		writer.WriteString(L"using ");
+		writer.WriteString(self->name.name);
+		writer.WriteString(L" = ");
+		Log(self->type, writer);
+		if (semicolon) writer.WriteLine(L";");
 	}
 
 	void Visit(NamespaceDeclaration* self)override
