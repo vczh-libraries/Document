@@ -445,6 +445,29 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			output.Add(decl);
 ;		}
 	}
+	else if(TestToken(cursor,CppTokens::DECL_TYPEDEF))
+	{
+		if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_CLASS, false))
+		{
+			// typedef class{} ...;
+			throw StopParsingException(cursor);
+		}
+		else
+		{
+			// typedef ...;
+			List<Ptr<Declarator>> declarators;
+			ParseMemberDeclarator(pa, pda_Typedefs(), cursor, declarators);
+			RequireToken(cursor, CppTokens::SEMICOLON);
+			for (vint i = 0; i < declarators.Count(); i++)
+			{
+				auto decl = MakePtr<UsingDeclaration>();
+				decl->name = declarators[i]->name;
+				decl->type = declarators[i]->type;
+				pa.context->CreateDeclSymbol(decl);
+				output.Add(decl);
+			}
+		}
+	}
 	else
 	{
 		// parse declarators for functions and variables
