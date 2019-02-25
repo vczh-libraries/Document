@@ -36,7 +36,9 @@ extern void					AssertProgram(Ptr<Program> program, const wchar_t* log);
 	auto cursor = reader.GetFirstToken();\
 	ParsingArguments PA(new Symbol, ITsysAlloc::Create(), RECORDER);\
 	auto PROGRAM = ParseProgram(PA, cursor);\
-	TEST_ASSERT(!cursor)\
+	TEST_ASSERT(!cursor);\
+	TEST_ASSERT(PROGRAM);\
+	EvaluateProgram(PA, PROGRAM)\
 
 #define COMPILE_PROGRAM(PROGRAM, PA, INPUT) COMPILE_PROGRAM_WITH_RECORDER(PROGRAM, PA, INPUT, nullptr)
 
