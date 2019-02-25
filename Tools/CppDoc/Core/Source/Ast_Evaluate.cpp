@@ -123,8 +123,8 @@ public:
 							{
 								symbol->evaluatedTypes->Add(resolved);
 							}
+							types.RemoveAt(i--);
 						}
-						types.RemoveAt(i--);
 					}
 				}
 
@@ -132,6 +132,8 @@ public:
 				{
 					ExprTsysList virtualExprTypes;
 					{
+						// *begin(container)
+
 						auto placeholderExpr = MakePtr<PlaceholderExpr>();
 						placeholderExpr->types = &types;
 
@@ -152,6 +154,8 @@ public:
 						ExprToTsys(pa, derefExpr, virtualExprTypes);
 					}
 					{
+						// *container.begin()
+
 						auto placeholderExpr = MakePtr<PlaceholderExpr>();
 						placeholderExpr->types = &types;
 
