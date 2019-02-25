@@ -96,6 +96,11 @@ public:
 	{
 	}
 
+	void Visit(PlaceholderExpr* self)override
+	{
+		writer.WriteString(L"<PLACE-HOLDER>");
+	}
+
 	void Visit(LiteralExpr* self)override
 	{
 		for (vint i = 0; i < self->tokens.Count(); i++)

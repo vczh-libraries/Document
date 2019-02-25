@@ -99,10 +99,41 @@ public:
 	void Visit(ForEachStat* self) override
 	{
 		auto spa = pa.WithContext(self->symbol);
-		EvaluateDeclaration(spa, self->varDecl);
+		ExprTsysList types;
+		ExprToTsys(spa, self->expr, types);
+
+		if (self->varDecl->needResolveTypeFromInitializer)
 		{
-			ExprTsysList types;
-			ExprToTsys(spa, self->expr, types);
+			auto symbol = self->varDecl->symbol;
+			if (symbol->evaluation == SymbolEvaluation::NotEvaluated)
+			{
+				symbol->evaluation = SymbolEvaluation::Evaluating;
+				symbol->evaluatedTypes = MakePtr<TypeTsysList>();
+				for (vint i = 0; i < types.Count(); i++)
+				{
+					auto tsys = types[i].tsys;
+					{
+						TsysCV cv;
+						TsysRefType refType;
+						auto entity = tsys->GetEntity(cv, refType);
+						if (entity->GetType() == TsysType::Array)
+						{
+							auto resolved = ResolvePendingType(spa, self->varDecl->type, { nullptr,ExprTsysType::LValue,entity->GetElement()->LRefOf() });
+							if (!symbol->evaluatedTypes->Contains(resolved))
+							{
+								symbol->evaluatedTypes->Add(resolved);
+							}
+							continue;
+						}
+					}
+					throw 0;
+				}
+				symbol->evaluation = SymbolEvaluation::Evaluated;
+			}
+		}
+		else
+		{
+			EvaluateDeclaration(spa, self->varDecl);
 		}
 		EvaluateStat(spa, self->stat);
 	}

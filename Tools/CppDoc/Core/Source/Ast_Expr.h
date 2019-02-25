@@ -8,6 +8,7 @@ Visitor
 ***********************************************************************/
 
 #define CPPDOC_EXPR_LIST(F)\
+	F(PlaceholderExpr)\
 	F(LiteralExpr)\
 	F(ThisExpr)\
 	F(NullptrExpr)\
@@ -51,7 +52,15 @@ Preparation
 class ResolvableExpr : public Expr
 {
 public:
-	Ptr<Resolving>			resolving;
+	Ptr<Resolving>				resolving;
+};
+
+class PlaceholderExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	ExprTsysList*				types = nullptr;
 };
 
 /***********************************************************************

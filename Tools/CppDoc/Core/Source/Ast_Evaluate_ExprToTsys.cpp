@@ -23,6 +23,11 @@ public:
 	Expressions
 	***********************************************************************/
 
+	void Visit(PlaceholderExpr* self)override
+	{
+		AddInternal(result, *self->types);
+	}
+
 	void Visit(LiteralExpr* self)override
 	{
 		switch ((CppTokens)self->tokens[0].token)
