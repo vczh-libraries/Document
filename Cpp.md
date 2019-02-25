@@ -185,7 +185,8 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - [ ] `typedef` (CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;`
     - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
   - [ ] `typedef` TYPE-MULTIPLE-INITIALIZER `;`
-- [ ] **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
+- [x] **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
+  - [ ] TEMPLATE-SPEC
 - [ ] **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
 - [x] **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`
 - [x] **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`

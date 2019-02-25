@@ -181,19 +181,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 				for (vint i = 0; i < symbol->decls.Count(); i++)
 				{
 					rsa.found = true;
-					if (auto usingDecl = symbol->decls[i].Cast<UsingDeclaration>())
-					{
-						symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
-						for (vint i = 0; i < usingDecl->symbol->evaluatedTypes->Count(); i++)
-						{
-							auto tsys = usingDecl->symbol->evaluatedTypes->Get(i);
-							if (tsys->GetType() == TsysType::Decl)
-							{
-								AddSymbolToResolve(rsa.result.types, tsys->GetDecl());
-							}
-						}
-					}
-					else if (IsPotentialTypeDecl(symbol->decls[i].Obj()))
+					if (IsPotentialTypeDecl(symbol->decls[i].Obj()))
 					{
 						AddSymbolToResolve(rsa.result.types, symbol);
 					}
@@ -287,7 +275,24 @@ public:
 			auto& symbols = parentResolving->resolvedSymbols;
 			for (vint i = 0; i < symbols.Count(); i++)
 			{
-				ResolveSymbolInternal(pa.WithContextNoFunction(symbols[i]), policy, rsa);
+				auto symbol = symbols[i];
+				if (symbol->decls.Count() == 1)
+				{
+					if (auto usingDecl = symbol->decls[i].Cast<UsingDeclaration>())
+					{
+						symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
+						for (vint i = 0; i < usingDecl->symbol->evaluatedTypes->Count(); i++)
+						{
+							auto tsys = usingDecl->symbol->evaluatedTypes->Get(i);
+							if (tsys->GetType() == TsysType::Decl)
+							{
+								symbol = tsys->GetDecl();
+								continue;
+							}
+						}
+					}
+				}
+				ResolveSymbolInternal(pa.WithContextNoFunction(symbol), policy, rsa);
 			}
 		}
 	}
