@@ -764,7 +764,7 @@ struct S
 };
 using C = S;
 using D = C::T;
-typedef int a, int b, int c;
+typedef int a, b, c;
 typedef C::T(*d)(A, B);
 )";
 		auto output = LR"(
