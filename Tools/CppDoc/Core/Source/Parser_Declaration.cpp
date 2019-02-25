@@ -105,12 +105,37 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 	bool decoratorFriend = TestToken(cursor, CppTokens::DECL_FRIEND);
 
+	{
+		auto oldCursor = cursor;
+		if (TestToken(cursor, CppTokens::DECL_EXTERN) && TestToken(cursor, CppTokens::STRING))
+		{
+			// extern "C"
+			// ignore it and add everything to its parent
+			if (TestToken(cursor, CppTokens::LBRACE))
+			{
+				while (!TestToken(cursor, CppTokens::RBRACE))
+				{
+					ParseDeclaration(pa, cursor, output);
+				}
+			}
+			else
+			{
+				ParseDeclaration(pa, cursor, output);
+			}
+			return;
+		}
+		else
+		{
+			cursor = oldCursor;
+		}
+	}
+
 	if (TestToken(cursor, CppTokens::DECL_NAMESPACE))
 	{
 		if (TestToken(cursor, CppTokens::LBRACE))
 		{
 			// namespace { DECLARATION ...}
-			// ignore the namespace and add everything to its parent
+			// ignore it and add everything to its parent
 			while (!TestToken(cursor, CppTokens::RBRACE))
 			{
 				ParseDeclaration(pa, cursor, output);

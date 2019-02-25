@@ -227,7 +227,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 ### DECL
 
 - [x] **Friend**: `friend` DECL `;`
-- [ ] **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
+- [x] **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
 - [x] **Type definition**: (CLASS_STRUCT | ENUM | UNION) {DECLARATOR [INITIALIZER] `,` ...}+ `;`
 - [ ] **Type alias**:
   - [ ] `typedef` (CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;`

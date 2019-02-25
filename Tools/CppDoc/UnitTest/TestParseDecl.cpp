@@ -226,7 +226,7 @@ extern "C"
 x: int = 0;
 y: int;
 z: int = 0;
-w: int
+w: int;
 __forward Add: int (a: int, b: int);
 __forward Mul: int (a: int, b: int);
 __forward Div: int (a: int, b: int);
