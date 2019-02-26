@@ -34,13 +34,8 @@ struct CppName
 
 class Resolving : public Object
 {
-protected:
-	bool					fullyCalibrated = false;
-
 public:
 	List<Symbol*>			resolvedSymbols;
-
-	void					Calibrate();
 };
 
 /***********************************************************************

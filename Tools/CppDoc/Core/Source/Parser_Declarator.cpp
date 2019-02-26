@@ -97,12 +97,10 @@ ClassDeclaration* EnsureMemberTypeResolved(Ptr<MemberType> memberType, Ptr<CppTo
 	auto resolvableType = memberType->classType.Cast<ResolvableType>();
 	if (!resolvableType) throw StopParsingException(cursor);
 	if (!resolvableType->resolving) throw StopParsingException(cursor);
-	resolvableType->resolving->Calibrate();
 	if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
 
 	auto symbol = resolvableType->resolving->resolvedSymbols[0];
-	if (!symbol->decls.Count() == 1) throw StopParsingException(cursor);
-	auto containingClass = symbol->decls[0].Cast<ClassDeclaration>().Obj();
+	auto containingClass = symbol->declaration.Cast<ClassDeclaration>().Obj();
 	if (!containingClass) throw StopParsingException(cursor);
 	return containingClass;
 }

@@ -214,13 +214,12 @@ public:
 		for (vint i = 0; i < tis.Count(); i++)
 		{
 			auto ti = tis[i];
-			if (ti->decls.Count() > 0)
+			switch (ti->kind)
 			{
-				if (ti->decls[0].Cast<ClassDeclaration>())
-				{
-					AddInternal(result, { nullptr,ExprTsysType::LValue,pa.tsys->DeclOf(ti.Obj()) });
-					return;
-				}
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+				AddInternal(result, { nullptr,ExprTsysType::LValue,pa.tsys->DeclOf(ti.Obj()) });
+				return;
 			}
 		}
 	}

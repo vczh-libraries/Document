@@ -277,36 +277,29 @@ public:
 		{
 			throw NotConvertableException();
 		}
-		resolving->Calibrate();
 
 		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 		{
 			auto symbol = resolving->resolvedSymbols[i];
-			if (symbol->forwardDeclarationRoot)
+			switch (symbol->kind)
 			{
-				symbol = symbol->forwardDeclarationRoot;
-			}
-			if (symbol->decls.Count() == 1)
-			{
-				if (auto usingDecl = symbol->decls[0].Cast<UsingDeclaration>())
+			case symbol_component::SymbolKind::TypeAlias:
 				{
+					auto usingDecl = symbol->declaration.Cast<UsingDeclaration>();
 					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
-					for (vint j = 0; j < usingDecl->symbol->evaluatedTypes->Count(); j++)
+					auto& types = symbol->evaluation.Get(0);
+					for (vint j = 0; j < types.Count(); j++)
 					{
-						AddResult(usingDecl->symbol->evaluatedTypes->Get(j));
+						AddResult(types[j]);
 					}
-					continue;
 				}
-				else if (auto classDecl = symbol->decls[0].Cast<ForwardClassDeclaration>())
-				{
-					AddResult(pa.tsys->DeclOf(symbol));
-					continue;
-				}
-				else if (auto classDecl = symbol->decls[0].Cast<ForwardEnumDeclaration>())
-				{
-					AddResult(pa.tsys->DeclOf(symbol));
-					continue;
-				}
+				continue;
+			case symbol_component::SymbolKind::Enum:
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+			case symbol_component::SymbolKind::Union:
+				AddResult(pa.tsys->DeclOf(symbol));
+				continue;
 			}
 			throw NotConvertableException();
 		}

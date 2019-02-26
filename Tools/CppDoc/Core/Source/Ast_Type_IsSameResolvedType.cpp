@@ -18,8 +18,6 @@ public:
 		{
 			if (type->resolving)
 			{
-				resolving->Calibrate();
-				type->resolving->Calibrate();
 				result = CompareEnumerable(resolving->resolvedSymbols, type->resolving->resolvedSymbols) == 0;
 			}
 		}

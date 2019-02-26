@@ -271,7 +271,6 @@ public:
 	{
 		if (parentResolving)
 		{
-			parentResolving->Calibrate();
 			auto& symbols = parentResolving->resolvedSymbols;
 			for (vint i = 0; i < symbols.Count(); i++)
 			{
