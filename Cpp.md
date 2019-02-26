@@ -273,6 +273,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 [Built-in Operators, Precedence and Associativity](https://docs.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=vs-2017)
 
 **Precedence Groups**
+
 0. : primitive
 1. : `::`
 2. : `.` `->` `[]` `()` `x++` `x--`
