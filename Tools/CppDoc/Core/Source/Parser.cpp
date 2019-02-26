@@ -1,6 +1,37 @@
 #include "Parser.h"
 #include "Ast_Decl.h"
 
+namespace symbol_component
+{
+/***********************************************************************
+Evaluation
+***********************************************************************/
+
+	void Evaluation::Allocate(vint count)
+	{
+		typeList.Clear();
+		for (vint i = 0; i < count; i++)
+		{
+			typeList.Add(MakePtr<TypeTsysList>());
+		}
+	}
+
+	void Evaluation::Clear()
+	{
+		typeList.Clear();
+	}
+
+	vint Evaluation::Count()
+	{
+		return typeList.Count();
+	}
+
+	TypeTsysList& Evaluation::Get(vint index)
+	{
+		return *typeList[index].Obj();
+	}
+}
+
 /***********************************************************************
 Symbol
 ***********************************************************************/
