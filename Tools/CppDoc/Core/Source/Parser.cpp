@@ -64,6 +64,7 @@ Symbol* Symbol::AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::Sy
 		if (symbols.Count() != 1) return nullptr;
 		auto symbol = symbols[0].Obj();
 		if (symbol->kind != kind) return nullptr;
+		_decl->symbol = symbol;
 		return symbol;
 	}
 }
@@ -76,16 +77,16 @@ void Symbol::Add(Ptr<Symbol> child)
 
 Symbol* Symbol::CreateForwardDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
 {
-	auto symbol = CreateSymbolInternal(_decl, existingSymbol, kind);
-	symbol->definitions.Add(_decl);
-	return symbol;
+	existingSymbol = CreateSymbolInternal(_decl, existingSymbol, kind);
+	existingSymbol->definitions.Add(_decl);
+	return existingSymbol;
 }
 
 Symbol* Symbol::CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
 {
-	auto symbol = CreateSymbolInternal(_decl, existingSymbol, kind);
+	existingSymbol = CreateSymbolInternal(_decl, existingSymbol, kind);
 	existingSymbol->declaration = _decl;
-	return symbol;
+	return existingSymbol;
 }
 
 Symbol* Symbol::AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind)

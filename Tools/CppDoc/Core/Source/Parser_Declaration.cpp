@@ -118,7 +118,8 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				if (ParseCppName(decl->name, cursor))
 				{
 					// ensure all other overloadings are namespaces, and merge the scope with them
-					if (!contextSymbol->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Namespace))
+					contextSymbol = contextSymbol->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Namespace);
+					if (!contextSymbol)
 					{
 						throw StopParsingException(cursor);
 					}
@@ -192,10 +193,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					{
 						throw StopParsingException(cursor);
 					}
-					if (!pa.context->AddDeclToSymbol(enumItem, symbol_component::SymbolKind::EnumItem))
-					{
-						throw StopParsingException(cursor);
-					}
+					pa.context->children.Add(enumItem->name.name, contextSymbol->children[enumItem->name.name][0]);
 				}
 
 				if (TestToken(cursor, CppTokens::EQ))

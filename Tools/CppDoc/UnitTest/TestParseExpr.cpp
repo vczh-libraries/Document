@@ -669,7 +669,7 @@ void S::F2(double p){}
 	COMPILE_PROGRAM(program, pa, input);
 	for (vint i = 1; i <= 2; i++)
 	{
-		auto funcSymbol = pa.context->children[L"S"][0]->children[L"M" + itow(i)][i - 1].Obj();
+		auto funcSymbol = pa.context->children[L"S"][0]->children[L"M" + itow(i)][0].Obj();
 		auto spa = pa.WithContextAndFunction(funcSymbol->children[L"$"][0].Obj(), funcSymbol);
 
 		AssertExpr(L"this",						L"this",						L"::S * $PR",								spa);
@@ -713,7 +713,7 @@ void S::F2(double p){}
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
-		auto funcSymbol = pa.context->children[L"S"][0]->children[L"C" + itow(i)][i - 1].Obj();
+		auto funcSymbol = pa.context->children[L"S"][0]->children[L"C" + itow(i)][0].Obj();
 		auto spa = pa.WithContextAndFunction(funcSymbol->children[L"$"][0].Obj(), funcSymbol);
 
 		AssertExpr(L"this",						L"this",						L"::S const * $PR",							spa);
@@ -757,7 +757,7 @@ void S::F2(double p){}
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
-		auto funcSymbol = pa.context->children[L"S"][0]->children[L"V" + itow(i)][i - 1].Obj();
+		auto funcSymbol = pa.context->children[L"S"][0]->children[L"V" + itow(i)][0].Obj();
 		auto spa = pa.WithContextAndFunction(funcSymbol->children[L"$"][0].Obj(), funcSymbol);
 
 		AssertExpr(L"this",						L"this",						L"::S volatile * $PR",						spa);
@@ -801,7 +801,7 @@ void S::F2(double p){}
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
-		auto funcSymbol = pa.context->children[L"S"][0]->children[L"CV" + itow(i)][i - 1].Obj();
+		auto funcSymbol = pa.context->children[L"S"][0]->children[L"CV" + itow(i)][0].Obj();
 		auto spa = pa.WithContextAndFunction(funcSymbol->children[L"$"][0].Obj(), funcSymbol);
 
 		AssertExpr(L"this",						L"this",						L"::S const volatile * $PR",				spa);
@@ -845,7 +845,7 @@ void S::F2(double p){}
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
-		auto funcSymbol = pa.context->children[L"S"][0]->children[L"F" + itow(i)][i - 1].Obj();
+		auto funcSymbol = pa.context->children[L"S"][0]->children[L"F" + itow(i)][0].Obj();
 		auto spa = pa.WithContextAndFunction(funcSymbol->children[L"$"][0].Obj(), funcSymbol);
 
 		AssertExpr(L"this",						L"this",						L"::S * $PR",								spa);

@@ -547,7 +547,7 @@ namespace a
 			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Function);
 		}
 		TEST_ASSERT(symbol->declaration == outClassDecl);
-		TEST_ASSERT(symbol->definitions.Count() == 0);
+		TEST_ASSERT(symbol->definitions.Count() == 1);
 		TEST_ASSERT(symbol->definitions[0] == inClassDecl);
 	}
 }
