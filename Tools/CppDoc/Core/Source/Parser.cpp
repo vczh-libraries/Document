@@ -207,14 +207,14 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 		{
 			if (delayParse->end.reading != delayParse->begin->token.reading)
 			{
-				throw StopParsingException();
+				throw StopParsingException(delayParse->begin);
 			}
 		}
 		else
 		{
 			if (delayParse->end.reading != nullptr)
 			{
-				throw StopParsingException();
+				throw StopParsingException(delayParse->begin);
 			}
 		}
 	}
