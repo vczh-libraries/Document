@@ -68,9 +68,14 @@ namespace TestConvert_Helpers
 	Ptr<T> TryGetDeclFromType(ITsys* type)
 	{
 		if (type->GetType() != TsysType::Decl) return false;
-		auto symbol = type->GetDecl();
-		if (symbol->decls.Count() != 1) return false;
-		return symbol->decls[0].Cast<T>();
+		return type->GetDecl()->declaration.Cast<T>();
+	}
+
+	template<typename T>
+	Ptr<T> TryGetForwardDeclFromType(ITsys* type)
+	{
+		if (type->GetType() != TsysType::Decl) return false;
+		return type->GetDecl()->GetAnyForwardDecl<T>();
 	}
 
 	bool IsExactOrTrivalConvert(ITsys* toType, ITsys* fromType, bool fromLRP, bool& performedTrivalConversion)
@@ -132,7 +137,7 @@ namespace TestConvert_Helpers
 
 		if (toEntity->GetType() == TsysType::Primitive && fromEntity->GetType() == TsysType::Decl)
 		{
-			if (auto decl = TryGetDeclFromType<ForwardEnumDeclaration>(fromEntity))
+			if (auto decl = TryGetForwardDeclFromType<ForwardEnumDeclaration>(fromEntity))
 			{
 				if (decl->enumClass) return false;
 
@@ -211,13 +216,11 @@ namespace TestConvert_Helpers
 				for (vint i = 0; i < ctors.Count(); i++)
 				{
 					auto ctorSymbol = ctors[i];
-					if (ctorSymbol->decls.Count() != 1) continue;
-					auto ctorDecl = ctorSymbol->decls[0].Cast<ForwardFunctionDeclaration>();
-					symbol_type_resolving::EvaluateSymbol(pa, ctorDecl.Obj());
+					symbol_type_resolving::EvaluateSymbol(pa, ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>().Obj());
 
-					for (vint j = 0; j < ctorSymbol->evaluatedTypes->Count(); j++)
+					for (vint j = 0; j < ctorSymbol->evaluation.Get().Count(); j++)
 					{
-						auto tsys = ctorSymbol->evaluatedTypes->Get(j);
+						auto tsys = ctorSymbol->evaluation.Get()[j];
 						funcTypes.Add({ ctorSymbol.Obj(),ExprTsysType::PRValue,tsys });
 					}
 				}
@@ -279,7 +282,7 @@ namespace TestConvert_Helpers
 		auto toP = toType->GetPrimitive();
 		if (toP.type == TsysPrimitiveType::Void) return false;
 
-		if (auto decl = TryGetDeclFromType<ForwardEnumDeclaration>(fromType))
+		if (auto decl = TryGetForwardDeclFromType<ForwardEnumDeclaration>(fromType))
 		{
 			if (decl->enumClass) return false;
 			return true;
@@ -425,8 +428,7 @@ namespace TestConvert_Helpers
 		for (vint i = 0; i < typeOps.Count(); i++)
 		{
 			auto typeOpSymbol = typeOps[i];
-			if (typeOpSymbol->decls.Count() != 1) continue;
-			auto typeOpDecl = typeOpSymbol->decls[0].Cast<ForwardFunctionDeclaration>();
+			auto typeOpDecl = typeOpSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 			{
 				if (typeOpDecl->decoratorExplicit) return false;
 				auto typeOpType = GetTypeWithoutMemberAndCC(typeOpDecl->type).Cast<FunctionType>();
@@ -436,9 +438,9 @@ namespace TestConvert_Helpers
 			}
 			symbol_type_resolving::EvaluateSymbol(pa, typeOpDecl.Obj());
 
-			for (vint j = 0; j < typeOpSymbol->evaluatedTypes->Count(); j++)
+			for (vint j = 0; j < typeOpSymbol->evaluation.Get().Count(); j++)
 			{
-				auto tsys = typeOpSymbol->evaluatedTypes->Get(j);
+				auto tsys = typeOpSymbol->evaluation.Get()[j];
 				if (TestConvertInternal(newPa, toType, tsys->GetElement()->RRefOf()) != TsysConv::Illegal)
 				{
 					return true;
@@ -470,8 +472,7 @@ namespace TestConvert_Helpers
 		for (vint i = 0; i < ctors.Count(); i++)
 		{
 			auto ctorSymbol = ctors[i];
-			if (ctorSymbol->decls.Count() != 1) continue;
-			auto ctorDecl = ctorSymbol->decls[0].Cast<ForwardFunctionDeclaration>();
+			auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 			{
 				if (ctorDecl->decoratorExplicit) return false;
 				auto ctorType = GetTypeWithoutMemberAndCC(ctorDecl->type).Cast<FunctionType>();
@@ -480,9 +481,9 @@ namespace TestConvert_Helpers
 			}
 			symbol_type_resolving::EvaluateSymbol(pa, ctorDecl.Obj());
 
-			for (vint j = 0; j < ctorSymbol->evaluatedTypes->Count(); j++)
+			for (vint j = 0; j < ctorSymbol->evaluation.Get().Count(); j++)
 			{
-				auto tsys = ctorSymbol->evaluatedTypes->Get(j);
+				auto tsys = ctorSymbol->evaluation.Get()[j];
 				if (TestConvertInternal(newPa, tsys->GetParam(0), fromType) != TsysConv::Illegal)
 				{
 					return true;
