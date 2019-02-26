@@ -310,8 +310,15 @@ namespace symbol_type_resolving
 
 		symbol->evaluation = SymbolEvaluation::Evaluating;
 		symbol->evaluatedTypes = MakePtr<TypeTsysList>();
-		auto newPa = pa.WithContextNoFunction(symbol->parent);
-		TypeToTsys(newPa, usingDecl->type, *symbol->evaluatedTypes.Obj());
+		{
+			auto newPa = pa.WithContextNoFunction(symbol->parent);
+			TypeToTsys(newPa, usingDecl->type, *symbol->evaluatedTypes.Obj());
+		}
+
+		if (symbol->evaluatedTypes->Count() == 0)
+		{
+			throw NotResolvableException();
+		}
 		symbol->evaluation = SymbolEvaluation::Evaluated;
 	}
 

@@ -8,6 +8,7 @@
 ## Short-term tasks
 
 - [ ] Merge 3 `ParsingArguments::WithContext` to one, automatically fill `funcSymbol` field instead of passing.
+- [ ] Test type equivalent while one see a forward class declaration and another see the class definition.
 - [ ] Test `ExprToTsys` on all expressions during parsing.
 - [ ] Compiler-generated functions.
 - [ ] `using` and `typedef`.

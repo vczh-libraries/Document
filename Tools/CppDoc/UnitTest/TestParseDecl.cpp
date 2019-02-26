@@ -795,9 +795,9 @@ _d: d;
 		AssertProgram(input, output);
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertExpr(L"_a",				L"_a",					L"__int32 $L",										pa);
-		AssertExpr(L"_b",				L"_b",					L"__int32 $L",										pa);
-		AssertExpr(L"_c",				L"_c",					L"__int32 $L",										pa);
-		AssertExpr(L"_d",				L"_d",					L"::S::T (__int32, __int32 (__int32)*)* $L",		pa);
+		AssertExpr(L"_a",				L"_a",					L"__int32 $L",														pa);
+		AssertExpr(L"_b",				L"_b",					L"__int32 $L",														pa);
+		AssertExpr(L"_c",				L"_c",					L"__int32 $L",														pa);
+		AssertExpr(L"_d",				L"_d",					L"::S::T __cdecl(__int32, __int32 __cdecl(__int32) *) * $L",		pa);
 	}
 }

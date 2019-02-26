@@ -1,8 +1,5 @@
-#include "Ast.h"
-#include "Ast_Type.h"
 #include "Ast_Expr.h"
-#include "Ast_Decl.h"
-#include "Parser.h"
+#include "Ast_Resolving.h"
 
 /***********************************************************************
 TypeToTsys
@@ -27,6 +24,14 @@ public:
 	{
 	}
 
+	void AddResult(ITsys* tsys)
+	{
+		if (!result.Contains(tsys))
+		{
+			result.Add(tsys);
+		}
+	}
+
 	void Visit(PrimitiveType* self)override
 	{
 		switch (self->prefix)
@@ -34,54 +39,54 @@ public:
 		case CppPrimitivePrefix::_none:
 			switch (self->primitive)
 			{
-			case CppPrimitiveType::_void:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::_bool:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::_char:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SChar,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::_wchar_t:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UWChar,	TsysBytes::_2 })); return;
-			case CppPrimitiveType::_char16_t:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UChar,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::_char32_t:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UChar,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_short:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::_int:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int8:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::___int16:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::___int32:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int64:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
-			case CppPrimitiveType::_long:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_int:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_long:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
-			case CppPrimitiveType::_float:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_double:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float,		TsysBytes::_8 })); return;
-			case CppPrimitiveType::_long_double:	result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float,		TsysBytes::_8 })); return;
+			case CppPrimitiveType::_void:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,		TsysBytes::_1 })); return;
+			case CppPrimitiveType::_bool:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,		TsysBytes::_1 })); return;
+			case CppPrimitiveType::_char:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SChar,		TsysBytes::_1 })); return;
+			case CppPrimitiveType::_wchar_t:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UWChar,		TsysBytes::_2 })); return;
+			case CppPrimitiveType::_char16_t:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UChar,		TsysBytes::_2 })); return;
+			case CppPrimitiveType::_char32_t:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UChar,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::_short:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
+			case CppPrimitiveType::_int:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::___int8:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_1 })); return;
+			case CppPrimitiveType::___int16:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
+			case CppPrimitiveType::___int32:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::___int64:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
+			case CppPrimitiveType::_long:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::_long_int:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::_long_long:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
+			case CppPrimitiveType::_float:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::_double:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float,		TsysBytes::_8 })); return;
+			case CppPrimitiveType::_long_double:	AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float,		TsysBytes::_8 })); return;
 			}
 			break;
 		case CppPrimitivePrefix::_signed:
 			switch (self->primitive)
 			{
-			case CppPrimitiveType::_char:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::_short:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::_int:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int8:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::___int16:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::___int32:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int64:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
-			case CppPrimitiveType::_long:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_int:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_long:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
+			case CppPrimitiveType::_char:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_1 })); return;
+			case CppPrimitiveType::_short:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
+			case CppPrimitiveType::_int:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::___int8:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_1 })); return;
+			case CppPrimitiveType::___int16:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
+			case CppPrimitiveType::___int32:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::___int64:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
+			case CppPrimitiveType::_long:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::_long_int:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::_long_long:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
 			}
 			break;
 		case CppPrimitivePrefix::_unsigned:
 			switch (self->primitive)
 			{
-			case CppPrimitiveType::_char:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::_short:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::_int:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int8:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::___int16:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::___int32:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int64:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_8 })); return;
-			case CppPrimitiveType::_long:			result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_int:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_long:		result.Add(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_8 })); return;
+			case CppPrimitiveType::_char:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_1 })); return;
+			case CppPrimitiveType::_short:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_2 })); return;
+			case CppPrimitiveType::_int:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::___int8:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_1 })); return;
+			case CppPrimitiveType::___int16:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_2 })); return;
+			case CppPrimitiveType::___int32:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::___int64:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_8 })); return;
+			case CppPrimitiveType::_long:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::_long_int:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
+			case CppPrimitiveType::_long_long:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_8 })); return;
 			}
 			break;
 		}
@@ -146,7 +151,7 @@ public:
 			{
 				params[i] = tsyses[i + 1][tsysIndex[i + 1]];
 			}
-			result.Add(tsyses[0][tsysIndex[0]]->FunctionOf(params, func));
+			AddResult(tsyses[0][tsysIndex[0]]->FunctionOf(params, func));
 		}
 		else
 		{
@@ -227,7 +232,7 @@ public:
 		{
 			for (vint j = 0; j < classTypes.Count(); j++)
 			{
-				result.Add(types[i]->MemberOf(classTypes[j]));
+				AddResult(types[i]->MemberOf(classTypes[j]));
 			}
 		}
 
@@ -247,10 +252,7 @@ public:
 				{
 					exprTsys = pa.tsys->Int();
 				}
-				if (!result.Contains(exprTsys))
-				{
-					result.Add(exprTsys);
-				}
+				AddResult(exprTsys);
 			}
 		}
 	}
@@ -280,7 +282,33 @@ public:
 		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 		{
 			auto symbol = resolving->resolvedSymbols[i];
-			result.Add(pa.tsys->DeclOf(symbol));
+			if (symbol->forwardDeclarationRoot)
+			{
+				symbol = symbol->forwardDeclarationRoot;
+			}
+			if (symbol->decls.Count() == 1)
+			{
+				if (auto usingDecl = symbol->decls[0].Cast<UsingDeclaration>())
+				{
+					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
+					for (vint j = 0; j < usingDecl->symbol->evaluatedTypes->Count(); j++)
+					{
+						AddResult(usingDecl->symbol->evaluatedTypes->Get(j));
+					}
+					continue;
+				}
+				else if (auto classDecl = symbol->decls[0].Cast<ForwardClassDeclaration>())
+				{
+					AddResult(pa.tsys->DeclOf(symbol));
+					continue;
+				}
+				else if (auto classDecl = symbol->decls[0].Cast<ForwardEnumDeclaration>())
+				{
+					AddResult(pa.tsys->DeclOf(symbol));
+					continue;
+				}
+			}
+			throw NotConvertableException();
 		}
 	}
 
