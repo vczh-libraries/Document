@@ -51,6 +51,10 @@ namespace symbol_component
 		List<Ptr<TypeTsysList>>						typeList;
 
 	public:
+		Evaluation() = default;
+		Evaluation(const Evaluation&) = delete;
+		Evaluation(Evaluation&&) = delete;
+
 		EvaluationProgress							progress = EvaluationProgress::NotEvaluated;
 
 		void										Allocate(vint count = 1);

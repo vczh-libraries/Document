@@ -105,10 +105,12 @@ public:
 		if (self->varDecl->needResolveTypeFromInitializer)
 		{
 			auto symbol = self->varDecl->symbol;
-			if (symbol->evaluation == symbol_component::EvaluationProgress::NotEvaluated)
+			auto& ev = symbol->evaluation;
+			if (ev.progress == symbol_component::EvaluationProgress::NotEvaluated)
 			{
-				symbol->evaluation = symbol_component::EvaluationProgress::Evaluating;
-				symbol->evaluatedTypes = MakePtr<TypeTsysList>();
+				ev.progress = symbol_component::EvaluationProgress::Evaluating;
+				ev.Allocate();
+
 				for (vint i = 0; i < types.Count(); i++)
 				{
 					auto tsys = types[i].tsys;
@@ -119,9 +121,9 @@ public:
 						if (entity->GetType() == TsysType::Array)
 						{
 							auto resolved = ResolvePendingType(pa, self->varDecl->type, { nullptr,ExprTsysType::LValue,entity->GetElement()->LRefOf() });
-							if (!symbol->evaluatedTypes->Contains(resolved))
+							if (!ev.Get().Contains(resolved))
 							{
-								symbol->evaluatedTypes->Add(resolved);
+								ev.Get().Add(resolved);
 							}
 							types.RemoveAt(i--);
 						}
@@ -183,18 +185,18 @@ public:
 					for (vint i = 0; i < virtualExprTypes.Count(); i++)
 					{
 						auto resolved = ResolvePendingType(pa, self->varDecl->type, virtualExprTypes[i]);
-						if (!symbol->evaluatedTypes->Contains(resolved))
+						if (!ev.Get().Contains(resolved))
 						{
-							symbol->evaluatedTypes->Add(resolved);
+							ev.Get().Add(resolved);
 						}
 					}
 				}
 
-				if (symbol->evaluatedTypes->Count() == 0)
+				if (ev.Get().Count() == 0)
 				{
 					throw NotResolvableException();
 				}
-				symbol->evaluation = symbol_component::EvaluationProgress::Evaluated;
+				ev.progress = symbol_component::EvaluationProgress::Evaluated;
 			}
 		}
 		else
@@ -288,28 +290,31 @@ public:
 			ExprToTsys(pa, self->expr, types);
 		}
 
-		if (pa.funcSymbol && pa.funcSymbol->evaluation == symbol_component::EvaluationProgress::Evaluating)
+		if (pa.funcSymbol)
 		{
-			if (!pa.funcSymbol->evaluatedTypes)
+			auto& ev = pa.funcSymbol->evaluation;
+			if (ev.progress == symbol_component::EvaluationProgress::Evaluating)
 			{
-				pa.funcSymbol->evaluatedTypes = MakePtr<TypeTsysList>();
-				auto& returnTypes = *pa.funcSymbol->evaluatedTypes.Obj();
-				if (self->expr)
+				if (ev.Count() == 0)
 				{
-					for (vint i = 0; i < types.Count(); i++)
+					ev.Allocate();
+					if (self->expr)
 					{
-						auto tsys = types[i].tsys;
-						if (!returnTypes.Contains(tsys))
+						for (vint i = 0; i < types.Count(); i++)
 						{
-							returnTypes.Add(tsys);
+							auto tsys = types[i].tsys;
+							if (!ev.Get().Contains(tsys))
+							{
+								ev.Get().Add(tsys);
+							}
 						}
 					}
+					else
+					{
+						ev.Get().Add(pa.tsys->Void());
+					}
+					symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.funcSymbol->declaration.Cast<FunctionDeclaration>().Obj());
 				}
-				else
-				{
-					returnTypes.Add(pa.tsys->Void());
-				}
-				symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.funcSymbol->decls[0].Cast<FunctionDeclaration>().Obj());
 			}
 		}
 	}
