@@ -12,88 +12,75 @@ Symbol
 class ClassDeclaration;
 class FunctionDeclaration;
 
-struct MethodCache
+namespace symbol_component
 {
-	Symbol*						classSymbol = nullptr;
-	Symbol*						funcSymbol = nullptr;
-	Ptr<ClassDeclaration>		classDecl;
-	Ptr<FunctionDeclaration>	funcDecl;
-	ITsys*						thisType = nullptr;
-};
+	struct MethodCache
+	{
+		Symbol*						classSymbol = nullptr;
+		Symbol*						funcSymbol = nullptr;
+		Ptr<ClassDeclaration>		classDecl;
+		Ptr<FunctionDeclaration>	funcDecl;
+		ITsys*						thisType = nullptr;
+	};
 
-enum class SymbolEvaluation
-{
-	NotEvaluated,
-	Evaluating,
-	Evaluated,
-};
+	enum class EvaluationProgress
+	{
+		NotEvaluated,
+		Evaluating,
+		Evaluated,
+	};
+
+	enum class SymbolKind
+	{
+		TypeDecl,
+		TypeAlias,
+		Function,
+		Variable,
+		Namespace,
+		Statement,
+		Root,
+	};
+
+	struct Evaluation
+	{
+	private:
+		List<Ptr<TypeTsysList>>						typeList;
+
+	public:
+		EvaluationProgress							progress = EvaluationProgress::NotEvaluated;
+
+		void										Allocate(vint count = 1);
+		void										Clear();
+		vint										Count();
+		TypeTsysList&								Get(vint index = 0);
+	};
+}
 
 class Symbol : public Object
 {
 	using SymbolGroup = Group<WString, Ptr<Symbol>>;
 	using SymbolPtrList = List<Symbol*>;
+
+	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
+	void											Add(Ptr<Symbol> child);
 public:
-	Symbol*							parent = nullptr;
-	WString							name;
-	List<Ptr<Declaration>>			decls;					// only namespaces share symbols, otherwise (decls.Count() <= 1)
-	Ptr<Stat>						stat;					// if this scope is created by a statement
-	Ptr<MethodCache>				methodCache;			// if this scope is created by a method with a statement, methodCache->funcSymbol will be itself
-	SymbolGroup						children;
+	Symbol*											parent = nullptr;
+	symbol_component::SymbolKind					kind = symbol_component::SymbolKind::Root;
+	WString											name;
 
-	SymbolEvaluation				evaluation = SymbolEvaluation::NotEvaluated;
-	Ptr<TypeTsysList>				evaluatedTypes;			// only for Forward(Variable|Function)Declaration
-	Ptr<List<Ptr<TypeTsysList>>>	evaluatedBaseTypes;		// only for ClassDeclaration
+	Ptr<Declaration>								declaration;			// for declaration root (class, struct, union, enum, function, variable)
+	List<Ptr<Declaration>>							definitions;			// for forward declarations and namespaces
+	Ptr<Stat>										statement;				// for statement
 
-	bool							isForwardDeclaration = false;
-	Symbol*							forwardDeclarationRoot = nullptr;
-	SymbolPtrList					forwardDeclarations;
+	Ptr<symbol_component::MethodCache>				methodCache;			// for function declaration
+	symbol_component::Evaluation					evaluation;
 
-	bool							isSpecificationDeclaration = false;
-	Symbol*							specializationRoot = nullptr;
-	SymbolPtrList					specializations;
+	SymbolPtrList									usingNss;
+	SymbolGroup										children;
 
-	SymbolPtrList					usingNss;
-
-	void							Add(Ptr<Symbol> child);
-
-	Symbol* CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* _specializationRoot = nullptr)
-	{
-		auto symbol = MakePtr<Symbol>();
-		symbol->name = _decl->name.name;
-		symbol->decls.Add(_decl);
-		Add(symbol);
-
-		if (!_decl->symbol)
-		{
-			_decl->symbol = symbol.Obj();
-		}
-		if (_specializationRoot)
-		{
-			_specializationRoot->specializations.Add(symbol.Obj());
-			symbol->specializationRoot = _specializationRoot;
-		}
-		return symbol.Obj();
-	}
-
-	Symbol* CreateStatSymbol(Ptr<Stat> _stat)
-	{
-		auto symbol = MakePtr<Symbol>();
-		symbol->name = L"$";
-		symbol->stat = _stat;
-		Add(symbol);
-
-		_stat->symbol = symbol.Obj();
-		return symbol.Obj();
-	}
-
-	bool SetForwardDeclarationRoot(Symbol* root)
-	{
-		if (forwardDeclarationRoot == root) return true;
-		if (forwardDeclarationRoot) return false;
-		forwardDeclarationRoot = root;
-		root->forwardDeclarations.Add(this);
-		return true;
-	}
+	Symbol*											CreateForwardDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
+	Symbol*											CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
+	Symbol*											CreateStatSymbol(Ptr<Stat> _stat);
 };
 
 /***********************************************************************

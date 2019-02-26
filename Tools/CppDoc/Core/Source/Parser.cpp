@@ -5,10 +5,51 @@
 Symbol
 ***********************************************************************/
 
+Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
+{
+	if (!existingSymbol)
+	{
+		auto symbol = MakePtr<Symbol>();
+		symbol->name = _decl->name.name;
+		symbol->kind = kind;
+		Add(symbol);
+		existingSymbol = symbol.Obj();
+	}
+
+	_decl->symbol = existingSymbol;
+	return existingSymbol;
+}
+
 void Symbol::Add(Ptr<Symbol> child)
 {
 	child->parent = this;
 	children.Add(child->name, child);
+}
+
+Symbol* Symbol::CreateForwardDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
+{
+	auto symbol = CreateSymbolInternal(_decl, existingSymbol, kind);
+	symbol->definitions.Add(_decl);
+	return symbol;
+}
+
+Symbol* Symbol::CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
+{
+	auto symbol = CreateSymbolInternal(_decl, existingSymbol, kind);
+	existingSymbol->declaration = _decl;
+	return symbol;
+}
+
+Symbol* Symbol::CreateStatSymbol(Ptr<Stat> _stat)
+{
+	auto symbol = MakePtr<Symbol>();
+	symbol->name = L"$";
+	symbol->kind = symbol_component::SymbolKind::Statement;
+	symbol->statement = _stat;
+	Add(symbol);
+
+	_stat->symbol = symbol.Obj();
+	return symbol.Obj();
 }
 
 /***********************************************************************
