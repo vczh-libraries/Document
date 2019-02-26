@@ -808,14 +808,17 @@ void BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclara
 BuildSymbols
 ***********************************************************************/
 
-void BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls)
+void BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor)
 {
 	for (vint i = 0; i < varDecls.Count(); i++)
 	{
 		auto varDecl = varDecls[i];
 		if (varDecl->name)
 		{
-			pa.context->CreateDeclSymbol(varDecl);
+			if (!pa.context->AddDeclToSymbol(varDecl, symbol_component::SymbolKind::Variable))
+			{
+				throw StopParsingException(cursor);
+			}
 		}
 	}
 }
@@ -824,22 +827,22 @@ void BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& va
 BuildVariablesAndSymbols
 ***********************************************************************/
 
-void BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls)
+void BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor)
 {
 	BuildVariables(declarators, varDecls);
-	BuildSymbols(pa, varDecls);
+	BuildSymbols(pa, varDecls, cursor);
 }
 
 /***********************************************************************
 BuildVariableAndSymbol
 ***********************************************************************/
 
-Ptr<VariableDeclaration> BuildVariableAndSymbol(const ParsingArguments& pa, Ptr<Declarator> declarator)
+Ptr<VariableDeclaration> BuildVariableAndSymbol(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<CppTokenCursor>& cursor)
 {
 	List<Ptr<Declarator>> declarators;
 	declarators.Add(declarator);
 
 	List<Ptr<VariableDeclaration>> varDecls;
-	BuildVariablesAndSymbols(pa, declarators, varDecls);
+	BuildVariablesAndSymbols(pa, declarators, varDecls, cursor);
 	return varDecls[0];
 }

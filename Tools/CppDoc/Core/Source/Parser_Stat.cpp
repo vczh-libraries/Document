@@ -22,7 +22,7 @@ void ParseVariableOrExpression(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 
 	if (declarator)
 	{
-		stat->varExpr = BuildVariableAndSymbol(pa, declarator);
+		stat->varExpr = BuildVariableAndSymbol(pa, declarator, cursor);
 	}
 	else
 	{
@@ -134,7 +134,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			auto stat = MakePtr<ForEachStat>();
 			auto newPa = pa.WithContext(pa.context->CreateStatSymbol(stat));
 			{
-				stat->varDecl = BuildVariableAndSymbol(newPa, declarator);
+				stat->varDecl = BuildVariableAndSymbol(newPa, declarator, cursor);
 			}
 
 			stat->expr = ParseExpr(newPa, true, cursor);
@@ -163,7 +163,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 
 				if (declarators.Count() > 0)
 				{
-					BuildVariablesAndSymbols(newPa, declarators, stat->varDecls);
+					BuildVariablesAndSymbols(newPa, declarators, stat->varDecls, cursor);
 				}
 				else
 				{
@@ -199,7 +199,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			{
 				ParseNonMemberDeclarator(newPa, pda_Decls(), cursor, declarators);
 				RequireToken(cursor, CppTokens::SEMICOLON);
-				BuildVariablesAndSymbols(newPa, declarators, stat->varDecls);
+				BuildVariablesAndSymbols(newPa, declarators, stat->varDecls, cursor);
 			}
 			catch (const StopParsingException&)
 			{
@@ -241,7 +241,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		if (!TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
 		{
 			auto declarator = ParseNonMemberDeclarator(newPa, pda_VarType(), cursor);
-			stat->exception = BuildVariableAndSymbol(newPa, declarator);
+			stat->exception = BuildVariableAndSymbol(newPa, declarator, cursor);
 		}
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		stat->catchStat = ParseStat(newPa, cursor);
