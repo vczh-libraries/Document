@@ -32,7 +32,10 @@ namespace symbol_component
 
 	enum class SymbolKind
 	{
-		TypeDecl,
+		Enum,
+		Class,
+		Struct,
+		Union,
 		TypeAlias,
 		Function,
 		Variable,

@@ -79,7 +79,9 @@ Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
 	{\
 		TEST_ASSERT(name.name == NAME);\
 		TEST_ASSERT(resolving->resolvedSymbols.Count() == 1);\
-		auto decl = resolving->resolvedSymbols[0]->decls[0].Cast<TYPE>();\
+		auto symbol = resolving->resolvedSymbols[0];\
+		auto decl = symbol->declaration.Cast<TYPE>();\
+		if (!decl) decl = symbol->definitions[0].Cast<TYPE>();\
 		TEST_ASSERT(decl);\
 		TEST_ASSERT(decl->name.name == NAME);\
 		TEST_ASSERT(decl->name.nameTokens[0].rowStart == PROW);\

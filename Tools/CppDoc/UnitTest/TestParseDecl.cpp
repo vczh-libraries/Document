@@ -98,28 +98,17 @@ namespace a::b
 	COMPILE_PROGRAM(program, pa, input);
 	TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
 	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
-	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"A"].Count() == 5);
-	const auto& symbols = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"A"];
+	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"A"].Count() == 1);
+	auto symbol = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"A"][0].Obj();
 
-	for (vint i = 0; i < 5; i++)
+	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Enum);
+	TEST_ASSERT(symbol->declaration.Cast<EnumDeclaration>());
+	TEST_ASSERT(symbol->definitions.Count() == 4);
+	TEST_ASSERT(From(symbol->definitions).Distinct().Count() == 4);
+	for (vint i = 0; i < 4; i++)
 	{
-		auto& symbol = symbols[i];
-		if (i == 2)
-		{
-			TEST_ASSERT(symbol->isForwardDeclaration == false);
-			TEST_ASSERT(symbol->forwardDeclarationRoot == nullptr);
-			TEST_ASSERT(symbol->forwardDeclarations.Count() == 4);
-			TEST_ASSERT(symbol->forwardDeclarations[0] == symbols[0].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations[1] == symbols[1].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations[2] == symbols[3].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations[3] == symbols[4].Obj());
-		}
-		else
-		{
-			TEST_ASSERT(symbol->isForwardDeclaration == true);
-			TEST_ASSERT(symbol->forwardDeclarationRoot == symbols[2].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations.Count() == 0);
-		}
+		TEST_ASSERT(symbol->definitions[i].Cast<ForwardEnumDeclaration>());
+		TEST_ASSERT(!symbol->definitions[i].Cast<EnumDeclaration>());
 	}
 }
 
@@ -162,28 +151,17 @@ namespace a::b
 	COMPILE_PROGRAM(program, pa, input);
 	TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
 	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
-	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"x"].Count() == 5);
-	const auto& symbols = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"x"];
+	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"x"].Count() == 1);
+	auto symbol = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"x"][0].Obj();
 
-	for (vint i = 0; i < 5; i++)
+	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
+	TEST_ASSERT(symbol->declaration.Cast<VariableDeclaration>());
+	TEST_ASSERT(symbol->definitions.Count() == 4);
+	TEST_ASSERT(From(symbol->definitions).Distinct().Count() == 4);
+	for (vint i = 0; i < 4; i++)
 	{
-		auto& symbol = symbols[i];
-		if (i == 2)
-		{
-			TEST_ASSERT(symbol->isForwardDeclaration == false);
-			TEST_ASSERT(symbol->forwardDeclarationRoot == nullptr);
-			TEST_ASSERT(symbol->forwardDeclarations.Count() == 4);
-			TEST_ASSERT(symbol->forwardDeclarations[0] == symbols[0].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations[1] == symbols[1].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations[2] == symbols[3].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations[3] == symbols[4].Obj());
-		}
-		else
-		{
-			TEST_ASSERT(symbol->isForwardDeclaration == true);
-			TEST_ASSERT(symbol->forwardDeclarationRoot == symbols[2].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations.Count() == 0);
-		}
+		TEST_ASSERT(symbol->definitions[i].Cast<ForwardVariableDeclaration>());
+		TEST_ASSERT(!symbol->definitions[i].Cast<VariableDeclaration>());
 	}
 }
 
@@ -255,28 +233,17 @@ namespace a::b
 	COMPILE_PROGRAM(program, pa, input);
 	TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
 	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
-	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Add"].Count() == 5);
-	const auto& symbols = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Add"];
+	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Add"].Count() == 1);
+	auto symbol = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Add"][0].Obj();
 
-	for (vint i = 0; i < 5; i++)
+	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Function);
+	TEST_ASSERT(symbol->declaration.Cast<FunctionDeclaration>());
+	TEST_ASSERT(symbol->definitions.Count() == 4);
+	TEST_ASSERT(From(symbol->definitions).Distinct().Count() == 4);
+	for (vint i = 0; i < 4; i++)
 	{
-		auto& symbol = symbols[i];
-		if (i == 2)
-		{
-			TEST_ASSERT(symbol->isForwardDeclaration == false);
-			TEST_ASSERT(symbol->forwardDeclarationRoot == nullptr);
-			TEST_ASSERT(symbol->forwardDeclarations.Count() == 4);
-			TEST_ASSERT(symbol->forwardDeclarations[0] == symbols[0].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations[1] == symbols[1].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations[2] == symbols[3].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations[3] == symbols[4].Obj());
-		}
-		else
-		{
-			TEST_ASSERT(symbol->isForwardDeclaration == true);
-			TEST_ASSERT(symbol->forwardDeclarationRoot == symbols[2].Obj());
-			TEST_ASSERT(symbol->forwardDeclarations.Count() == 0);
-		}
+		TEST_ASSERT(symbol->definitions[i].Cast<ForwardFunctionDeclaration>());
+		TEST_ASSERT(!symbol->definitions[i].Cast<FunctionDeclaration>());
 	}
 }
 
@@ -387,28 +354,22 @@ namespace a::b
 		COMPILE_PROGRAM(program, pa, inputs[i]);
 		TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
 		TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
-		TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"X"].Count() == 5);
-		const auto& symbols = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"X"];
+		TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"X"].Count() == 1);
+		auto symbol = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"X"][0].Obj();
 
-		for (vint i = 0; i < 5; i++)
+		switch (i)
 		{
-			auto& symbol = symbols[i];
-			if (i == 2)
-			{
-				TEST_ASSERT(symbol->isForwardDeclaration == false);
-				TEST_ASSERT(symbol->forwardDeclarationRoot == nullptr);
-				TEST_ASSERT(symbol->forwardDeclarations.Count() == 4);
-				TEST_ASSERT(symbol->forwardDeclarations[0] == symbols[0].Obj());
-				TEST_ASSERT(symbol->forwardDeclarations[1] == symbols[1].Obj());
-				TEST_ASSERT(symbol->forwardDeclarations[2] == symbols[3].Obj());
-				TEST_ASSERT(symbol->forwardDeclarations[3] == symbols[4].Obj());
-			}
-			else
-			{
-				TEST_ASSERT(symbol->isForwardDeclaration == true);
-				TEST_ASSERT(symbol->forwardDeclarationRoot == symbols[2].Obj());
-				TEST_ASSERT(symbol->forwardDeclarations.Count() == 0);
-			}
+		case 0: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Class); break;
+		case 1: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Struct); break;
+		case 2: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Union); break;
+		}
+		TEST_ASSERT(symbol->declaration.Cast<ClassDeclaration>());
+		TEST_ASSERT(symbol->definitions.Count() == 4);
+		TEST_ASSERT(From(symbol->definitions).Distinct().Count() == 4);
+		for (vint i = 0; i < 4; i++)
+		{
+			TEST_ASSERT(symbol->definitions[i].Cast<ForwardClassDeclaration>());
+			TEST_ASSERT(!symbol->definitions[i].Cast<ClassDeclaration>());
 		}
 	}
 }
@@ -564,22 +525,30 @@ namespace a
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	auto& inClassMembers = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Something"][0]->decls[0].Cast<ClassDeclaration>()->decls;
+	auto& inClassMembers = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Something"][0]->declaration.Cast<ClassDeclaration>()->decls;
 	TEST_ASSERT(inClassMembers.Count() == 13);
 
-	auto& outClassMembers = pa.root->children[L"a"][0]->children[L"b"][0]->decls[1].Cast<NamespaceDeclaration>()->decls;
+	auto& outClassMembers = pa.root->children[L"a"][0]->children[L"b"][0]->definitions[1].Cast<NamespaceDeclaration>()->decls;
 	TEST_ASSERT(outClassMembers.Count() == 12);
 
 	for (vint i = 0; i < 12; i++)
 	{
-		auto inClassSymbol = inClassMembers[i + 1].f1->symbol;
-		auto outClassSymbol = outClassMembers[i]->symbol;
+		auto inClassDecl = inClassMembers[i + 1].f1;
+		auto outClassDecl = outClassMembers[i];
+		TEST_ASSERT(inClassDecl->symbol == outClassDecl->symbol);
 
-		TEST_ASSERT(inClassSymbol->isForwardDeclaration == true);
-		TEST_ASSERT(inClassSymbol->forwardDeclarationRoot == outClassSymbol);
-		TEST_ASSERT(outClassSymbol->isForwardDeclaration == false);
-		TEST_ASSERT(outClassSymbol->forwardDeclarations.Count() == 1);
-		TEST_ASSERT(outClassSymbol->forwardDeclarations[0] == inClassSymbol);
+		auto symbol = inClassDecl->symbol;
+		if (i == 0)
+		{
+			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
+		}
+		else
+		{
+			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Function);
+		}
+		TEST_ASSERT(symbol->declaration == outClassDecl);
+		TEST_ASSERT(symbol->definitions.Count() == 0);
+		TEST_ASSERT(symbol->definitions[0] == inClassDecl);
 	}
 }
 
