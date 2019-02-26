@@ -1,14 +1,11 @@
 # Draft
 
-- Candidates of names with overloading may not be completely narrowed because of incomplete template-related type inferencing.
-- Anonymous namespaces and extern "C" are ignored, and declarations inside them are treated as they are directly written inside the parent scope.
 - The tool consumes a single preprocessed C++ source file, the following syntax is collected for this purpose.
 - The syntax has less restrictions than the real C++ language specification, because the tool assumes the input is correct.
 
 ## Short-term tasks
 
 - [ ] Merge 3 `ParsingArguments::WithContext` to one, automatically fill `funcSymbol` field instead of passing.
-- [ ] Test type equivalent while one see a forward class declaration and another see the class definition.
 - [ ] Test `ExprToTsys` on all expressions during parsing.
 - [ ] Compiler-generated functions.
 - [x] `using` and `typedef`.
@@ -275,22 +272,23 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 [Built-in Operators, Precedence and Associativity](https://docs.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=vs-2017)
 
-- Group 0 precedence: primitive
-- Group 1 precedence: `::`
-- Group 2 precedence: `.` `->` `[]` `()` `x++` `x--`
-- Group 3 precedence (<-): `sizeof` `new` `delete` `++x` `--x` `~` `!` `-x` `+x` `&x` `*x` `(T)E`
-- Group 4 precedence: `.*` `->*`
-- Group 5 precedence: `*` `/` `%`
-- Group 6 precedence: `+` `-`
-- Group 7 precedence: `<<` `>>`
-- Group 8 precedence: `<` `>` `<=` `>=`
-- Group 9 precedence: `==` `!=`
-- Group 10 precedence: `&`
-- Group 11 precedence: `^`
-- Group 12 precedence: `|`
-- Group 13 precedence: `&&`
-- Group 14 precedence: `||`
-- Group 15 precedence (<-): `a?b:c`
-- Group 16 precedence (<-): `=` `*=` `/=` `%=` `+=` `-=` `<<=` `>>=` `&=` `|=` `^=`
-- Group 17 precedence (<-): `throw`
-- Group 18 precedence: `,`
+**Precedence Groups**
+0. : primitive
+1. : `::`
+2. : `.` `->` `[]` `()` `x++` `x--`
+3. (<-): `sizeof` `new` `delete` `++x` `--x` `~` `!` `-x` `+x` `&x` `*x` `(T)E`
+4. : `.*` `->*`
+5. : `*` `/` `%`
+6. : `+` `-`
+7. : `<<` `>>`
+8. : `<` `>` `<=` `>=`
+9. : `==` `!=`
+10. : `&`
+11. : `^`
+12. : `|`
+13. : `&&`
+14. : `||`
+15. (<-): `a?b:c`
+16. (<-): `=` `*=` `/=` `%=` `+=` `-=` `<<=` `>>=` `&=` `|=` `^=`
+17. (<-): `throw`
+18. : `,`
