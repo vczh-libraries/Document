@@ -57,81 +57,6 @@ struct ResolveSymbolArguments
 void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType, SearchPolicy policy, ResolveSymbolArguments& rsa);
 
 /***********************************************************************
-IsPotentialTypeDeclVisitor
-***********************************************************************/
-
-class IsPotentialTypeDeclVisitor : public Object, public virtual IDeclarationVisitor
-{
-public:
-	bool					isPotentialType = true;
-
-	void Visit(ForwardVariableDeclaration* self)override
-	{
-		isPotentialType = false;
-	}
-
-	void Visit(ForwardFunctionDeclaration* self)override
-	{
-		isPotentialType = false;
-	}
-
-	void Visit(ForwardEnumDeclaration* self)override
-	{
-	}
-
-	void Visit(ForwardClassDeclaration* self)override
-	{
-	}
-
-	void Visit(VariableDeclaration* self)override
-	{
-		isPotentialType = false;
-	}
-
-	void Visit(FunctionDeclaration* self)override
-	{
-		isPotentialType = false;
-	}
-
-	void Visit(EnumItemDeclaration* self)override
-	{
-		isPotentialType = false;
-	}
-
-	void Visit(EnumDeclaration* self)override
-	{
-	}
-
-	void Visit(ClassDeclaration* self)override
-	{
-	}
-
-	void Visit(TypeAliasDeclaration* self)override
-	{
-	}
-
-	void Visit(UsingNamespaceDeclaration* self)override
-	{
-		isPotentialType = false;
-	}
-
-	void Visit(UsingDeclaration* self)override
-	{
-	}
-
-	void Visit(NamespaceDeclaration* self)override
-	{
-	}
-};
-
-bool IsPotentialTypeDecl(Declaration* decl)
-{
-	IsPotentialTypeDeclVisitor visitor;
-	decl->Accept(&visitor);
-	return visitor.isPotentialType;
-}
-
-/***********************************************************************
 AddSymbolToResolve
 ***********************************************************************/
 
@@ -173,50 +98,46 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			for (vint i = 0; i < symbols.Count(); i++)
 			{
 				auto symbol = symbols[i].Obj();
-				if (symbol->forwardDeclarationRoot)
+				switch (symbol->kind)
 				{
-					symbol = symbol->forwardDeclarationRoot;
-				}
-
-				for (vint i = 0; i < symbol->decls.Count(); i++)
-				{
-					rsa.found = true;
-					if (IsPotentialTypeDecl(symbol->decls[i].Obj()))
-					{
-						AddSymbolToResolve(rsa.result.types, symbol);
-					}
-					else
-					{
-						AddSymbolToResolve(rsa.result.values, symbol);
-					}
+				case symbol_component::SymbolKind::Enum:
+				case symbol_component::SymbolKind::Class:
+				case symbol_component::SymbolKind::Struct:
+				case symbol_component::SymbolKind::Union:
+				case symbol_component::SymbolKind::TypeAlias:
+				case symbol_component::SymbolKind::Namespace:
+					AddSymbolToResolve(rsa.result.types, symbol);
+					break;
+				case symbol_component::SymbolKind::EnumItem:
+				case symbol_component::SymbolKind::Function:
+				case symbol_component::SymbolKind::Variable:
+					AddSymbolToResolve(rsa.result.values, symbol);
 					break;
 				}
 			}
 		}
 		if (rsa.found) break;
 
-		if (scope->decls.Count() > 0)
+		if (auto decl = scope->declaration.Cast<ClassDeclaration>())
 		{
-			if (auto decl = scope->decls[0].Cast<ClassDeclaration>())
+			if (decl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbol)
 			{
-				if (decl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbol)
+				rsa.found = true;
+				AddSymbolToResolve(rsa.result.types, decl->symbol);
+			}
+			else
+			{
+				for (vint i = 0; i < decl->baseTypes.Count(); i++)
 				{
-					rsa.found = true;
-					AddSymbolToResolve(rsa.result.types, decl->symbol);
-				}
-				else
-				{
-					for (vint i = 0; i < decl->baseTypes.Count(); i++)
-					{
-						auto childPolicy =
-							policy == SearchPolicy::ChildSymbol
-							? SearchPolicy::ChildSymbol
-							: SearchPolicy::ChildSymbolRequestedFromSubClass;
-						ResolveChildSymbolInternal(pa, decl->baseTypes[i].f1, childPolicy, rsa);
-					}
+					auto childPolicy =
+						policy == SearchPolicy::ChildSymbol
+						? SearchPolicy::ChildSymbol
+						: SearchPolicy::ChildSymbolRequestedFromSubClass;
+					ResolveChildSymbolInternal(pa, decl->baseTypes[i].f1, childPolicy, rsa);
 				}
 			}
 		}
+
 		if (rsa.found) break;
 
 		if (scope->usingNss.Count() > 0)
@@ -275,19 +196,17 @@ public:
 			for (vint i = 0; i < symbols.Count(); i++)
 			{
 				auto symbol = symbols[i];
-				if (symbol->decls.Count() == 1)
+				if (auto usingDecl = symbol->declaration.Cast<UsingDeclaration>())
 				{
-					if (auto usingDecl = symbol->decls[i].Cast<UsingDeclaration>())
+					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
+					auto& types = symbol->evaluation.Get(0);
+					for (vint i = 0; i < types.Count(); i++)
 					{
-						symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
-						for (vint i = 0; i < usingDecl->symbol->evaluatedTypes->Count(); i++)
+						auto tsys = types[i];
+						if (tsys->GetType() == TsysType::Decl)
 						{
-							auto tsys = usingDecl->symbol->evaluatedTypes->Get(i);
-							if (tsys->GetType() == TsysType::Decl)
-							{
-								symbol = tsys->GetDecl();
-								continue;
-							}
+							symbol = tsys->GetDecl();
+							continue;
 						}
 					}
 				}

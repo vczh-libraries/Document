@@ -33,6 +33,7 @@ namespace symbol_component
 	enum class SymbolKind
 	{
 		Enum,
+		EnumItem,
 		Class,
 		Struct,
 		Union,
