@@ -391,9 +391,9 @@ namespace TestConvert_Helpers
 			if (auto currentClass = TryGetDeclFromType<ClassDeclaration>(currentType))
 			{
 				symbol_type_resolving::EvaluateSymbol(pa, currentClass.Obj());
-				for (vint j = 0; j < currentClass->symbol->evaluatedBaseTypes->Count(); j++)
+				for (vint j = 0; j < currentClass->symbol->evaluation.Count(); j++)
 				{
-					auto& baseTypes = *currentClass->symbol->evaluatedBaseTypes->Get(j).Obj();
+					auto& baseTypes = currentClass->symbol->evaluation.Get(j);
 					for (vint k = 0; k < baseTypes.Count(); k++)
 					{
 						if (!searched.Contains(baseTypes[k]))

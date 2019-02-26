@@ -15,22 +15,19 @@ namespace symbol_type_resolving
 			funcDPs[i] = 0;
 			if (auto symbol = funcTypes[i].symbol)
 			{
-				if (symbol->decls.Count() == 1)
+				if (auto decl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 				{
-					if (auto decl = symbol->decls[0].Cast<ForwardFunctionDeclaration>())
+					if (auto type = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 					{
-						if (auto type = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
+						for (vint j = 0; j < type->parameters.Count(); j++)
 						{
-							for (vint j = 0; j < type->parameters.Count(); j++)
+							if (type->parameters[j]->initializer)
 							{
-								if (type->parameters[j]->initializer)
-								{
-									funcDPs[i] = type->parameters.Count() - j;
-									goto EXAMINE_NEXT_FUNCTION;
-								}
+								funcDPs[i] = type->parameters.Count() - j;
+								goto EXAMINE_NEXT_FUNCTION;
 							}
-						EXAMINE_NEXT_FUNCTION:;
 						}
+					EXAMINE_NEXT_FUNCTION:;
 					}
 				}
 			}
@@ -127,23 +124,20 @@ namespace symbol_type_resolving
 		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 		{
 			auto symbol = resolving->resolvedSymbols[i];
-			if (symbol->decls.Count() == 1 && symbol->decls[0].Cast<ForwardFunctionDeclaration>())
+			if (symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 			{
 				auto parent = symbol->parent;
 				while (parent)
 				{
-					if (parent->decls.Count() > 0)
+					switch (parent->kind)
 					{
-						if (!parent->decls[0].Cast<NamespaceDeclaration>())
-						{
-							return false;
-						}
-					}
-					else if (parent->parent)
-					{
+					case symbol_component::SymbolKind::Root:
+					case symbol_component::SymbolKind::Namespace:
+						parent = parent->parent;
+						break;
+					default:
 						return false;
 					}
-					parent = parent->parent;
 				}
 			}
 			else
@@ -241,37 +235,29 @@ namespace symbol_type_resolving
 		auto firstSymbol = symbol;
 		while (symbol)
 		{
-			if (symbol->decls.Count() > 0)
+			if (symbol->kind == symbol_component::SymbolKind::Namespace)
 			{
-				if (auto classDecl = symbol->decls[0].Cast<ClassDeclaration>())
+				if (!nss.Contains(symbol))
 				{
-					if (!classes.Contains(symbol))
-					{
-						classes.Add(symbol);
-					}
-
-					if (symbol == firstSymbol)
-					{
-						auto classPa = pa.WithContextNoFunction(symbol);
-
-						SearchBaseTypeAdlClassesAndNamespacesVisitor visitor(classPa, nss, classes);
-						for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
-						{
-							classDecl->baseTypes[i].f1->Accept(&visitor);
-						}
-					}
+					nss.Add(symbol);
 				}
-				else if (auto namespaceDecl = symbol->decls[0].Cast<NamespaceDeclaration>())
+			}
+			else if (auto classDecl = symbol->declaration.Cast<ClassDeclaration>())
+			{
+				if (!classes.Contains(symbol))
 				{
-					if (!nss.Contains(symbol))
-					{
-						nss.Add(symbol);
-					}
-					break;
+					classes.Add(symbol);
 				}
-				else
+
+				if (symbol == firstSymbol)
 				{
-					break;
+					auto classPa = pa.WithContextNoFunction(symbol);
+
+					SearchBaseTypeAdlClassesAndNamespacesVisitor visitor(classPa, nss, classes);
+					for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
+					{
+						classDecl->baseTypes[i].f1->Accept(&visitor);
+					}
 				}
 			}
 			else
@@ -341,12 +327,8 @@ namespace symbol_type_resolving
 				for (vint j = 0; j < children.Count(); j++)
 				{
 					auto child = children[j].Obj();
-					if (child->decls.Count() == 1 && child->decls[0].Cast<ForwardFunctionDeclaration>())
+					if (child->kind == symbol_component::SymbolKind::Function)
 					{
-						if (child->forwardDeclarationRoot)
-						{
-							child = child->forwardDeclarationRoot;
-						}
 						VisitSymbol(pa, nullptr, child, false, result);
 					}
 				}

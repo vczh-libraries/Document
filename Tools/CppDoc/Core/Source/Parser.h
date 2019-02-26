@@ -85,6 +85,14 @@ public:
 	Symbol*											CreateForwardDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
 	Symbol*											CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
 	Symbol*											CreateStatSymbol(Ptr<Stat> _stat);
+
+	template<typename T>
+	Ptr<T> GetAnyForwardDecl()
+	{
+		if (auto decl = declaration.Cast<T>()) return decl;
+		if (definitions.Count() == 0) return nullptr;
+		return definitions[0].Cast<T>();
+	}
 };
 
 /***********************************************************************
