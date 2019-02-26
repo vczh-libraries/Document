@@ -68,34 +68,21 @@ namespace symbol_type_resolving
 	***********************************************************************/
 
 	template<typename TForward>
-	bool IsStaticSymbol(Symbol* symbol, TForward* decl)
+	bool IsStaticSymbol(Symbol* symbol)
 	{
-		if (auto rootDecl = dynamic_cast<typename TForward::ForwardRootType*>(decl))
+		bool isStatic = false;
+		if (auto decl = symbol->declaration.Cast<TForward>())
 		{
-			if (rootDecl->decoratorStatic)
+			isStatic |= decl->decoratorStatic;
+		}
+		for (vint i = 0; i < symbol->definitions.Count(); i++)
+		{
+			if (auto decl = symbol->definitions[i].Cast<TForward>())
 			{
-				return true;
-			}
-			else
-			{
-				for (vint i = 0; i < symbol->forwardDeclarations.Count(); i++)
-				{
-					auto forwardSymbol = symbol->forwardDeclarations[i];
-					for (vint j = 0; j < forwardSymbol->decls.Count(); j++)
-					{
-						if (IsStaticSymbol<TForward>(forwardSymbol, forwardSymbol->decls[j].Cast<TForward>().Obj()))
-						{
-							return true;
-						}
-					}
-				}
-				return false;
+				isStatic |= decl->decoratorStatic;
 			}
 		}
-		else
-		{
-			return decl->decoratorStatic;
-		}
+		return isStatic;
 	}
 
 	/***********************************************************************
@@ -201,7 +188,7 @@ namespace symbol_type_resolving
 			classScope = pa.tsys->DeclOf(symbol->parent);
 		}
 
-		bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl);
+		bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol);
 		return classScope && !isStaticSymbol;
 	}
 
@@ -334,88 +321,84 @@ namespace symbol_type_resolving
 	void VisitSymbol(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result)
 	{
 		ITsys* classScope = nullptr;
-		if (symbol->parent && symbol->parent->decls.Count() > 0)
+		if (symbol->parent && symbol->parent->declaration.Cast<ClassDeclaration>())
 		{
-			if (auto decl = symbol->parent->decls[0].Cast<ClassDeclaration>())
-			{
-				classScope = pa.tsys->DeclOf(symbol->parent);
-			}
+			classScope = pa.tsys->DeclOf(symbol->parent);
 		}
 
-		if (!symbol->forwardDeclarationRoot)
+		switch (symbol->kind)
 		{
-			for (vint j = 0; j < symbol->decls.Count(); j++)
+		case symbol_component::SymbolKind::Variable:
 			{
-				auto decl = symbol->decls[j];
-				if (auto varDecl = decl.Cast<ForwardVariableDeclaration>())
+				auto varDecl = symbol->GetAnyForwardDecl<ForwardVariableDeclaration>();
+				EvaluateSymbol(pa, varDecl.Obj());
+				bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol);
+
+				for (vint k = 0; k < symbol->evaluation.Get().Count(); k++)
 				{
-					EvaluateSymbol(pa, varDecl.Obj());
-					bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol, varDecl.Obj());
+					auto tsys = symbol->evaluation.Get()[k];
 
-					for (vint k = 0; k < symbol->evaluatedTypes->Count(); k++)
+					if (isStaticSymbol)
 					{
-						auto tsys = symbol->evaluatedTypes->Get(k);
-
-						if (isStaticSymbol)
+						AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
+					}
+					else if (afterScope)
+					{
+						if (classScope)
+						{
+							AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope) });
+						}
+						else
 						{
 							AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
 						}
-						else if (afterScope)
-						{
-							if (classScope)
-							{
-								AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope) });
-							}
-							else
-							{
-								AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
-							}
-						}
-						else
-						{
-							if (thisItem)
-							{
-								CalculateValueFieldType(thisItem, symbol, tsys, false, result);
-							}
-							else
-							{
-								AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
-							}
-						}
 					}
-				}
-				else if (auto enumItemDecl = decl.Cast<EnumItemDeclaration>())
-				{
-					auto tsys = pa.tsys->DeclOf(enumItemDecl->symbol->parent);
-					AddInternal(result, { symbol,ExprTsysType::PRValue,tsys });
-				}
-				else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
-				{
-					EvaluateSymbol(pa, funcDecl.Obj());
-					bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol, funcDecl.Obj());
-					bool isMember = classScope && !isStaticSymbol;
-
-					for (vint k = 0; k < symbol->evaluatedTypes->Count(); k++)
+					else
 					{
-						auto tsys = symbol->evaluatedTypes->Get(k);
-
-						if (isMember && afterScope)
+						if (thisItem)
 						{
-							tsys = tsys->MemberOf(classScope)->PtrOf();
+							CalculateValueFieldType(thisItem, symbol, tsys, false, result);
 						}
 						else
 						{
-							tsys = tsys->PtrOf();
+							AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
 						}
-
-						AddInternal(result, { symbol,ExprTsysType::PRValue,tsys });
 					}
-				}
-				else
-				{
-					throw IllegalExprException();
 				}
 			}
+			break;
+		case symbol_component::SymbolKind::Function:
+			{
+				auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+				EvaluateSymbol(pa, funcDecl.Obj());
+				bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol);
+				bool isMember = classScope && !isStaticSymbol;
+
+				for (vint k = 0; k < symbol->evaluation.Get().Count(); k++)
+				{
+					auto tsys = symbol->evaluation.Get()[k];
+
+					if (isMember && afterScope)
+					{
+						tsys = tsys->MemberOf(classScope)->PtrOf();
+					}
+					else
+					{
+						tsys = tsys->PtrOf();
+					}
+
+					AddInternal(result, { symbol,ExprTsysType::PRValue,tsys });
+				}
+			}
+			break;
+		case symbol_component::SymbolKind::EnumItem:
+			{
+				auto tsys = pa.tsys->DeclOf(symbol->parent);
+				AddInternal(result, { symbol,ExprTsysType::PRValue,tsys });
+			}
+			break;
+		default:
+			throw IllegalExprException();
 		}
 	}
 
@@ -446,9 +429,9 @@ namespace symbol_type_resolving
 
 	TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, const ExprTsysItem& funcType)
 	{
-		if (funcType.symbol && funcType.symbol->decls.Count() > 0)
+		if (funcType.symbol)
 		{
-			if (auto decl = funcType.symbol->decls[0].Cast<ForwardFunctionDeclaration>())
+			if (auto decl = funcType.symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 			{
 				if (auto declType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 				{
@@ -570,25 +553,28 @@ namespace symbol_type_resolving
 		{
 			auto targetTypeList = &result;
 			auto symbol = resolving->resolvedSymbols[i];
-			if (symbol->decls.Count() == 1)
+
+			switch (symbol->parent->kind)
 			{
-				if (symbol->parent && symbol->parent->decls.Count() == 1 && symbol->parent->decls[0].Cast<ClassDeclaration>())
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+			case symbol_component::SymbolKind::Union:
+				switch (symbol->kind)
 				{
-					if (auto varDecl = symbol->decls[0].Cast<ForwardVariableDeclaration>())
+				case symbol_component::SymbolKind::Variable:
+					if (!IsStaticSymbol<ForwardVariableDeclaration>(symbol))
 					{
-						if (!varDecl->decoratorStatic)
-						{
-							targetTypeList = &varTypes;
-						}
+						targetTypeList = &varTypes;
 					}
-					else if (auto funcDecl = symbol->decls[0].Cast<ForwardFunctionDeclaration>())
+					break;
+				case symbol_component::SymbolKind::Function:
+					if (!IsStaticSymbol<ForwardFunctionDeclaration>(symbol))
 					{
-						if (!funcDecl->decoratorStatic)
-						{
-							targetTypeList = &funcTypes;
-						}
+						targetTypeList = &funcTypes;
 					}
+					break;
 				}
+				break;
 			}
 
 			VisitSymbol(pa, (targetTypeList == &result ? nullptr : thisItem), resolving->resolvedSymbols[i], false, *targetTypeList);
