@@ -105,9 +105,9 @@ public:
 		if (self->varDecl->needResolveTypeFromInitializer)
 		{
 			auto symbol = self->varDecl->symbol;
-			if (symbol->evaluation == SymbolEvaluation::NotEvaluated)
+			if (symbol->evaluation == symbol_component::EvaluationProgress::NotEvaluated)
 			{
-				symbol->evaluation = SymbolEvaluation::Evaluating;
+				symbol->evaluation = symbol_component::EvaluationProgress::Evaluating;
 				symbol->evaluatedTypes = MakePtr<TypeTsysList>();
 				for (vint i = 0; i < types.Count(); i++)
 				{
@@ -194,7 +194,7 @@ public:
 				{
 					throw NotResolvableException();
 				}
-				symbol->evaluation = SymbolEvaluation::Evaluated;
+				symbol->evaluation = symbol_component::EvaluationProgress::Evaluated;
 			}
 		}
 		else
@@ -288,7 +288,7 @@ public:
 			ExprToTsys(pa, self->expr, types);
 		}
 
-		if (pa.funcSymbol && pa.funcSymbol->evaluation == SymbolEvaluation::Evaluating)
+		if (pa.funcSymbol && pa.funcSymbol->evaluation == symbol_component::EvaluationProgress::Evaluating)
 		{
 			if (!pa.funcSymbol->evaluatedTypes)
 			{

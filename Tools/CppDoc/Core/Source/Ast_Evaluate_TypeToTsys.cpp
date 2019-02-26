@@ -287,7 +287,7 @@ public:
 				{
 					auto usingDecl = symbol->declaration.Cast<UsingDeclaration>();
 					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
-					auto& types = symbol->evaluation.Get(0);
+					auto& types = symbol->evaluation.Get();
 					for (vint j = 0; j < types.Count(); j++)
 					{
 						AddResult(types[j]);

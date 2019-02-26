@@ -199,7 +199,7 @@ public:
 				if (auto usingDecl = symbol->declaration.Cast<UsingDeclaration>())
 				{
 					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
-					auto& types = symbol->evaluation.Get(0);
+					auto& types = symbol->evaluation.Get();
 					for (vint i = 0; i < types.Count(); i++)
 					{
 						auto tsys = types[i];
