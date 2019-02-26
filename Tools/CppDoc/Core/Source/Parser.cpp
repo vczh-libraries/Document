@@ -20,6 +20,23 @@ Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, Symbol* existingSym
 	return existingSymbol;
 }
 
+Symbol* Symbol::AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind)
+{
+	vint index = children.Keys().IndexOf(_decl->name.name);
+	if (index == -1)
+	{
+		return CreateSymbolInternal(_decl, nullptr, kind);
+	}
+	else
+	{
+		auto& symbols = children.GetByIndex(index);
+		if (symbols.Count() != 1) return nullptr;
+		auto symbol = symbols[0].Obj();
+		if (symbol->kind != kind) return nullptr;
+		return symbol;
+	}
+}
+
 void Symbol::Add(Ptr<Symbol> child)
 {
 	child->parent = this;
@@ -37,6 +54,23 @@ Symbol* Symbol::CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol,
 {
 	auto symbol = CreateSymbolInternal(_decl, existingSymbol, kind);
 	existingSymbol->declaration = _decl;
+	return symbol;
+}
+
+Symbol* Symbol::AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind)
+{
+	auto symbol = AddToSymbolInternal(_decl, kind);
+	if (!symbol) return nullptr;
+	symbol->definitions.Add(_decl);
+	return symbol;
+}
+
+Symbol* Symbol::AddDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind)
+{
+	auto symbol = AddToSymbolInternal(_decl, kind);
+	if (!symbol) return nullptr;
+	if (symbol->declaration) return nullptr;
+	symbol->declaration = _decl;
 	return symbol;
 }
 

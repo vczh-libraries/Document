@@ -165,23 +165,9 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				if (ParseCppName(decl->name, cursor))
 				{
 					// ensure all other overloadings are namespaces, and merge the scope with them
-					vint index = contextSymbol->children.Keys().IndexOf(decl->name.name);
-					if (index == -1)
+					if (!contextSymbol->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Namespace))
 					{
-						contextSymbol = contextSymbol->CreateDeclSymbol(decl);
-					}
-					else
-					{
-						auto& symbols = contextSymbol->children.GetByIndex(index);
-						if (symbols.Count() == 1 && symbols[0]->decls[0].Cast<NamespaceDeclaration>())
-						{
-							contextSymbol = symbols[0].Obj();
-							contextSymbol->decls.Add(decl);
-						}
-						else
-						{
-							throw StopParsingException(cursor);
-						}
+						throw StopParsingException(cursor);
 					}
 				}
 				else
@@ -230,15 +216,22 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			decl->name = cppName;
 			decl->baseType = baseType;
 
-			auto contextSymbol = pa.context->CreateDeclSymbol(decl);
+			auto contextSymbol = pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::Enum);
+			if (!contextSymbol)
+			{
+				throw StopParsingException(cursor);
+			}
 			auto newPa = pa.WithContext(contextSymbol);
 
 			while (!TestToken(cursor, CppTokens::RBRACE))
 			{
 				auto enumItem = MakePtr<EnumItemDeclaration>();
 				if (!ParseCppName(enumItem->name, cursor)) throw StopParsingException(cursor);
-				contextSymbol->CreateDeclSymbol(enumItem);
 				decl->items.Add(enumItem);
+				if (!contextSymbol->AddDeclToSymbol(enumItem, symbol_component::SymbolKind::EnumItem))
+				{
+					throw StopParsingException(cursor);
+				}
 
 				if (!enumClass)
 				{
@@ -246,7 +239,10 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					{
 						throw StopParsingException(cursor);
 					}
-					pa.context->CreateDeclSymbol(enumItem);
+					if (!pa.context->AddDeclToSymbol(enumItem, symbol_component::SymbolKind::EnumItem))
+					{
+						throw StopParsingException(cursor);
+					}
 				}
 
 				if (TestToken(cursor, CppTokens::EQ))
@@ -273,26 +269,31 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			decl->enumClass = enumClass;
 			decl->name = cppName;
 			decl->baseType = baseType;
-			auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
-			forwardSymbol->isForwardDeclaration = true;
 			output.Add(decl);
-			ConnectForwards<ForwardEnumDeclaration>(pa.context, forwardSymbol, cursor);
+
+			if (!pa.context->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Enum))
+			{
+				throw StopParsingException(cursor);
+			}
 		}
 	}
 	else if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
 	{
 		// [union | class | struct] NAME ...
 		auto classType = CppClassType::Union;
+		auto symbolKind = symbol_component::SymbolKind::Union;
 		auto defaultAccessor = CppClassAccessor::Public;
 
 		switch ((CppTokens)cursor->token.token)
 		{
 		case CppTokens::DECL_CLASS:
 			classType = CppClassType::Class;
+			symbolKind = symbol_component::SymbolKind::Class;
 			defaultAccessor = CppClassAccessor::Private;
 			break;
 		case CppTokens::DECL_STRUCT:
 			classType = CppClassType::Struct;
+			symbolKind = symbol_component::SymbolKind::Struct;
 			break;
 		}
 		cursor = cursor->Next();
@@ -309,10 +310,12 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			auto decl = MakePtr<ForwardClassDeclaration>();
 			decl->classType = classType;
 			decl->name = cppName;
-			auto forwardSymbol = pa.context->CreateDeclSymbol(decl);
-			forwardSymbol->isForwardDeclaration = true;
 			output.Add(decl);
-			ConnectForwards<ForwardClassDeclaration>(pa.context, forwardSymbol, cursor);
+
+			if (!pa.context->AddForwardDeclToSymbol(decl, symbolKind))
+			{
+				throw StopParsingException(cursor);
+			}
 		}
 		else
 		{
@@ -320,9 +323,13 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			auto decl = MakePtr<ClassDeclaration>();
 			decl->classType = classType;
 			decl->name = cppName;
-			auto contextSymbol = pa.context->CreateDeclSymbol(decl);
 			output.Add(decl);
-			ConnectForwards<ForwardClassDeclaration>(pa.context, contextSymbol, cursor);
+
+			auto contextSymbol = pa.context->AddDeclToSymbol(decl, symbolKind);
+			if (!contextSymbol)
+			{
+				throw StopParsingException(cursor);
+			}
 
 			auto declPa = pa.WithContext(contextSymbol);
 
@@ -412,12 +419,9 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
 				auto symbol = resolvableType->resolving->resolvedSymbols[0];
 
-				if (symbol->decls.Count() != 0)
+				if (symbol->kind != symbol_component::SymbolKind::Namespace)
 				{
-					if (!symbol->decls[0].Cast<NamespaceDeclaration>())
-					{
-						throw StopParsingException(cursor);
-					}
+					throw StopParsingException(cursor);
 				}
 
 				if (pa.context && !(pa.context->usingNss.Contains(symbol)))
@@ -436,13 +440,17 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			auto decl = MakePtr<UsingDeclaration>();
 			if (!ParseCppName(decl->name, cursor))
 			{
-				throw StopParsingException();
+				throw StopParsingException(cursor);
 			}
 			RequireToken(cursor, CppTokens::EQ);
 			decl->type = ParseType(pa, cursor);
 			RequireToken(cursor, CppTokens::SEMICOLON);
-			pa.context->CreateDeclSymbol(decl);
 			output.Add(decl);
+
+			if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias))
+			{
+				throw StopParsingException(cursor);
+			}
 ;		}
 	}
 	else if(TestToken(cursor,CppTokens::DECL_TYPEDEF))
@@ -463,8 +471,12 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				auto decl = MakePtr<UsingDeclaration>();
 				decl->name = declarators[i]->name;
 				decl->type = declarators[i]->type;
-				pa.context->CreateDeclSymbol(decl);
 				output.Add(decl);
+
+				if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias))
+				{
+					throw StopParsingException(cursor);
+				}
 			}
 		}
 	}
@@ -501,69 +513,63 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		// non-null containingClassForMember means this declaration is a class member defined out of the class
 		List<Ptr<Declarator>> declarators;
 		auto methodType = CppMethodType::Function;
-		ClassDeclaration* containingClass = nullptr;
+		ClassDeclaration* containingClass = pa.context->declaration.Cast<ClassDeclaration>().Obj();
 		ClassDeclaration* containingClassForMember = nullptr;
 
+		// get all declarators
 		{
-			if (pa.context->decls.Count() > 0)
+			auto pda = pda_Decls();
+			pda.containingClass = containingClass;
+			ParseMemberDeclarator(pa, pda, cursor, declarators);
+		}
+
+		if (declarators.Count() > 0)
+		{
+			// a function declaration can only have one declarator
+			auto declarator = declarators[0];
+			if (GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
 			{
-				containingClass = pa.context->decls[0].Cast<ClassDeclaration>().Obj();
+				if (declarators.Count() != 1)
+				{
+					throw StopParsingException(cursor);
+				}
 			}
-			// get all declarators
+
+			// see if it is a class member declarator defined out of the class
+			if (!containingClass)
 			{
-				auto pda = pda_Decls();
-				pda.containingClass = containingClass;
-				ParseMemberDeclarator(pa, pda, cursor, declarators);
+				if (declarator->containingClassSymbol)
+				{
+					containingClassForMember = declarator->containingClassSymbol->declaration.Cast<ClassDeclaration>().Obj();
+				}
 			}
 
-			if (declarators.Count() > 0)
+			if (declarator->type.Cast<MemberType>())
 			{
-				// a function declaration can only have one declarator
-				auto declarator = declarators[0];
-				if (GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
+				if (containingClass || !containingClassForMember)
 				{
-					if (declarators.Count() != 1)
-					{
-						throw StopParsingException(cursor);
-					}
+					throw StopParsingException(cursor);
 				}
+			}
 
-				// see if it is a class member declarator defined out of the class
-				if (!containingClass)
+			// adjust name type
+			if (containingClass || containingClassForMember)
+			{
+				auto& cppName = declarators[0]->name;
+				switch (cppName.type)
 				{
-					if (declarator->containingClassSymbol)
+				case CppNameType::Operator:
+					if (cppName.tokenCount == 1)
 					{
-						containingClassForMember = declarator->containingClassSymbol->decls[0].Cast<ClassDeclaration>().Obj();
+						methodType = CppMethodType::TypeConversion;
 					}
-				}
-
-				if (declarator->type.Cast<MemberType>())
-				{
-					if (containingClass || !containingClassForMember)
-					{
-						throw StopParsingException(cursor);
-					}
-				}
-
-				// adjust name type
-				if (containingClass || containingClassForMember)
-				{
-					auto& cppName = declarators[0]->name;
-					switch (cppName.type)
-					{
-					case CppNameType::Operator:
-						if (cppName.tokenCount == 1)
-						{
-							methodType = CppMethodType::TypeConversion;
-						}
-						break;
-					case CppNameType::Constructor:
-						methodType = CppMethodType::Constructor;
-						break;
-					case CppNameType::Destructor:
-						methodType = CppMethodType::Destructor;
-						break;
-					}
+					break;
+				case CppNameType::Constructor:
+					methodType = CppMethodType::Constructor;
+					break;
+				case CppNameType::Destructor:
+					methodType = CppMethodType::Destructor;
+					break;
 				}
 			}
 		}
@@ -632,12 +638,12 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					auto contextSymbol = context->CreateDeclSymbol(decl);
 					if (containingClass || containingClassForMember)
 					{
-						auto methodCache = MakePtr<MethodCache>();
+						auto methodCache = MakePtr<symbol_component::MethodCache>();
 						contextSymbol->methodCache = methodCache;
 
 						methodCache->classSymbol = containingClass ? containingClass->symbol : containingClassForMember->symbol;
 						methodCache->funcSymbol = contextSymbol;
-						methodCache->classDecl = methodCache->classSymbol->decls[0].Cast<ClassDeclaration>();
+						methodCache->classDecl = methodCache->classSymbol->declaration.Cast<ClassDeclaration>();
 						methodCache->funcDecl = decl;
 
 						auto funcType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>();
@@ -750,10 +756,12 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 					auto decl = MakePtr<ForwardVariableDeclaration>();
 					FILL_VARIABLE(decl);
-					auto forwardSymbol = context->CreateDeclSymbol(decl);
-					forwardSymbol->isForwardDeclaration = true;
 					output.Add(decl);
-					ConnectForwards<ForwardVariableDeclaration>(context, forwardSymbol, cursor);
+
+					if (!context->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
+					{
+						throw StopParsingException(cursor);
+					}
 				}
 				else
 				{
@@ -761,10 +769,12 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 					auto decl = MakePtr<VariableDeclaration>();
 					FILL_VARIABLE(decl);
 					decl->initializer = declarator->initializer;
-					auto contextSymbol = context->CreateDeclSymbol(decl);
 					output.Add(decl);
 
-					ConnectForwards<ForwardVariableDeclaration>(context, contextSymbol, cursor);
+					if (!context->AddDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
+					{
+						throw StopParsingException(cursor);
+					}
 				}
 #undef FILL_VARIABLE
 			}
