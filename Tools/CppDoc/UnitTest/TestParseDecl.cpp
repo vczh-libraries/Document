@@ -766,6 +766,11 @@ using C = S;
 using D = C::T;
 typedef int a, b, c;
 typedef C::T(*d)(A, B);
+
+a _a;
+b _b;
+c _c;
+d _d;
 )";
 		auto output = LR"(
 using A = int;
@@ -782,7 +787,17 @@ using a = int;
 using b = int;
 using c = int;
 using d = C :: T (A, B) *;
+_a: a;
+_b: b;
+_c: c;
+_d: d;
 )";
 		AssertProgram(input, output);
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(L"_a",				L"_a",					L"__int32 $L",										pa);
+		AssertExpr(L"_b",				L"_b",					L"__int32 $L",										pa);
+		AssertExpr(L"_c",				L"_c",					L"__int32 $L",										pa);
+		AssertExpr(L"_d",				L"_d",					L"::S::T (__int32, __int32 (__int32)*)* $L",		pa);
 	}
 }
