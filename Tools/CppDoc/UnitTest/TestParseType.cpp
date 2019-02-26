@@ -107,7 +107,10 @@ TEST_CASE(TestParseType_MemberType)
 	auto input = LR"(
 namespace a::b
 {
-	enum X;
+	struct S
+	{
+		enum X;
+	};
 }
 )";
 	COMPILE_PROGRAM(program, pa, input);
@@ -118,15 +121,16 @@ namespace a::b
 			BEGIN_ASSERT_SYMBOL
 				ASSERT_SYMBOL(0, L"a", 0, 0, NamespaceDeclaration, 1, 10)
 				ASSERT_SYMBOL(1, L"b", 0, 3, NamespaceDeclaration, 1, 13)
-				ASSERT_SYMBOL(2, L"X", 0, 6, ForwardEnumDeclaration, 3, 6)
+				ASSERT_SYMBOL(2, L"S", 0, 6, ClassDeclaration, 3, 8)
+				ASSERT_SYMBOL(3, L"X", 0, 9, ForwardEnumDeclaration, 5, 7)
 			END_ASSERT_SYMBOL
 		});
 		AssertType(
-			L"a::b::X",
-			L"a :: b :: X",
-			L"::a::b::X",
+			L"a::b::S::X",
+			L"a :: b :: S :: X",
+			L"::a::b::S::X",
 			pa);
-		TEST_ASSERT(accessed.Count() == 3);
+		TEST_ASSERT(accessed.Count() == 4);
 	}
 	{
 		SortedList<vint> accessed;
@@ -135,7 +139,6 @@ namespace a::b
 			BEGIN_ASSERT_SYMBOL
 				ASSERT_SYMBOL(0, L"a", 0, 11, NamespaceDeclaration, 1, 10)
 				ASSERT_SYMBOL(1, L"b", 0, 14, NamespaceDeclaration, 1, 13)
-				ASSERT_SYMBOL(2, L"X", 0, 17, ForwardEnumDeclaration, 3, 6)
 			END_ASSERT_SYMBOL
 		});
 		AssertType(
@@ -143,7 +146,7 @@ namespace a::b
 			L"__root :: a :: typename b :: typename X :: typename Y :: typename Z",
 			L"",
 			pa);
-		TEST_ASSERT(accessed.Count() == 3);
+		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
 		SortedList<vint> accessed;
@@ -152,17 +155,19 @@ namespace a::b
 			BEGIN_ASSERT_SYMBOL
 				ASSERT_SYMBOL(0, L"a", 0, 0, NamespaceDeclaration, 1, 10)
 				ASSERT_SYMBOL(1, L"b", 0, 3, NamespaceDeclaration, 1, 13)
-				ASSERT_SYMBOL(2, L"X", 0, 6, ForwardEnumDeclaration, 3, 6)
-				ASSERT_SYMBOL(3, L"a", 0, 25, NamespaceDeclaration, 1, 10)
-				ASSERT_SYMBOL(4, L"b", 0, 28, NamespaceDeclaration, 1, 13)
+				ASSERT_SYMBOL(2, L"S", 0, 6, ClassDeclaration, 3, 8)
+				ASSERT_SYMBOL(3, L"X", 0, 9, ForwardEnumDeclaration, 5, 7)
+				ASSERT_SYMBOL(4, L"a", 0, 28, NamespaceDeclaration, 1, 10)
+				ASSERT_SYMBOL(5, L"b", 0, 31, NamespaceDeclaration, 1, 13)
+				ASSERT_SYMBOL(6, L"S", 0, 34, ClassDeclaration, 3, 8)
 			END_ASSERT_SYMBOL
 		});
 		AssertType(
-			L"a::b::X(__cdecl typename a::b::*)()",
-			L"a :: b :: X () __cdecl (a :: typename b ::) *",
-			L"::a::b::X __cdecl() (::a::b ::) *",
+			L"a::b::S::X(__cdecl typename a::b::S::*)()",
+			L"a :: b :: S :: X () __cdecl (a :: typename b :: typename S ::) *",
+			L"::a::b::S::X __cdecl() (::a::b::S ::) *",
 			pa);
-		TEST_ASSERT(accessed.Count() == 5);
+		TEST_ASSERT(accessed.Count() == 7);
 	}
 }
 

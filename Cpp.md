@@ -11,7 +11,9 @@
 - [ ] Test type equivalent while one see a forward class declaration and another see the class definition.
 - [ ] Test `ExprToTsys` on all expressions during parsing.
 - [ ] Compiler-generated functions.
-- [ ] `using` and `typedef`.
+- [x] `using` and `typedef`.
+- [ ] `typedef int a, int b;`
+- [ ] `typedef` with classes.
 - [ ] After ADL is called, re-index unqualified function names or operator expressions.
 - [ ] Test cases for whole program indexing without templates.
 
