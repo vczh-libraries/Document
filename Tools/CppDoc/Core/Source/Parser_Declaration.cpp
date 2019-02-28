@@ -208,7 +208,7 @@ void ParseDeclaration_Enum(const ParsingArguments& pa, Ptr<CppTokenCursor>& curs
 ParseDeclaration_<CLASS / STRUCT / UNION>
 ***********************************************************************/
 
-void ParseDeclaration_Class(const ParsingArguments& pa, bool forTypeDef, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+Ptr<ClassDeclaration> ParseDeclaration_Class(const ParsingArguments& pa, bool forTypeDef, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	// [union | class | struct] NAME ...
 	auto classType = CppClassType::Union;
@@ -259,6 +259,7 @@ void ParseDeclaration_Class(const ParsingArguments& pa, bool forTypeDef, Ptr<Cpp
 		}
 
 		RequireToken(cursor, CppTokens::SEMICOLON);
+		return nullptr;
 	}
 	else
 	{
@@ -270,6 +271,11 @@ void ParseDeclaration_Class(const ParsingArguments& pa, bool forTypeDef, Ptr<Cpp
 
 		if (TestToken(cursor, CppTokens::SEMICOLON))
 		{
+			if (forTypeDef)
+			{
+				throw StopParsingException(cursor);
+			}
+
 			// ... ;
 			auto decl = MakePtr<ForwardClassDeclaration>();
 			decl->classType = classType;
@@ -280,6 +286,7 @@ void ParseDeclaration_Class(const ParsingArguments& pa, bool forTypeDef, Ptr<Cpp
 			{
 				throw StopParsingException(cursor);
 			}
+			return nullptr;
 		}
 		else
 		{
@@ -364,7 +371,11 @@ void ParseDeclaration_Class(const ParsingArguments& pa, bool forTypeDef, Ptr<Cpp
 				}
 			}
 
-			RequireToken(cursor, CppTokens::SEMICOLON);
+			if (!forTypeDef)
+			{
+				RequireToken(cursor, CppTokens::SEMICOLON);
+			}
+			return decl;
 		}
 	}
 }
@@ -422,7 +433,6 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 		{
 			throw StopParsingException(cursor);
 		}
-		;
 	}
 }
 
@@ -433,28 +443,36 @@ ParseDeclaration_<TYPEDEF>
 void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	RequireToken(cursor, CppTokens::DECL_TYPEDEF);
-	if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_CLASS, false))
+	List<Ptr<Declarator>> declarators;
+
+	if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
 	{
 		// typedef class{} ...;
-		throw StopParsingException(cursor);
+		auto classDecl = ParseDeclaration_Class(pa, true, cursor, output);
+
+		auto type = MakePtr<IdType>();
+		type->name = classDecl->name;
+		type->resolving = MakePtr<Resolving>();
+		type->resolving->resolvedSymbols.Add(classDecl->symbol);
+		ParseNonMemberDeclarator(pa, pda_Typedefs(), type, cursor, declarators);
 	}
 	else
 	{
 		// typedef ...;
-		List<Ptr<Declarator>> declarators;
 		ParseNonMemberDeclarator(pa, pda_Typedefs(), cursor, declarators);
-		RequireToken(cursor, CppTokens::SEMICOLON);
-		for (vint i = 0; i < declarators.Count(); i++)
-		{
-			auto decl = MakePtr<UsingDeclaration>();
-			decl->name = declarators[i]->name;
-			decl->type = declarators[i]->type;
-			output.Add(decl);
+	}
 
-			if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias))
-			{
-				throw StopParsingException(cursor);
-			}
+	RequireToken(cursor, CppTokens::SEMICOLON);
+	for (vint i = 0; i < declarators.Count(); i++)
+	{
+		auto decl = MakePtr<UsingDeclaration>();
+		decl->name = declarators[i]->name;
+		decl->type = declarators[i]->type;
+		output.Add(decl);
+
+		if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias))
+		{
+			throw StopParsingException(cursor);
 		}
 	}
 }

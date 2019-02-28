@@ -883,6 +883,11 @@ void ParseMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorAr
 	ParseDeclarator(pa, pda, true, cursor, declarators);
 }
 
+void ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<Type> type, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+{
+	ParseDeclaratorWithInitializer(pa, type, { pda,false }, cursor, declarators);
+}
+
 void ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
 	ParseDeclarator(pa, pda, false, cursor, declarators);

@@ -727,14 +727,14 @@ TEST_CASE(TestParseDecl_TypeAlias)
 using A = int;
 using B = A(*)(A);
 
-struct S
+typedef struct S_
 {
 	struct T {};
-};
+} S, *pS;
 using C = S;
 using D = C::T;
 typedef int a, b, c;
-typedef C::T(*d)(A, B);
+typedef C::T(*d)(A, B, pS);
 
 a _a;
 b _b;
@@ -744,18 +744,20 @@ d _d;
 		auto output = LR"(
 using A = int;
 using B = A (A) *;
-struct S
+struct S_
 {
 	public struct T
 	{
 	};
 };
+using S = S_;
+using pS = S_ *;
 using C = S;
 using D = C :: T;
 using a = int;
 using b = int;
 using c = int;
-using d = C :: T (A, B) *;
+using d = C :: T (A, B, pS) *;
 _a: a;
 _b: b;
 _c: c;
@@ -764,10 +766,10 @@ _d: d;
 		AssertProgram(input, output);
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertExpr(L"_a",				L"_a",					L"__int32 $L",														pa);
-		AssertExpr(L"_b",				L"_b",					L"__int32 $L",														pa);
-		AssertExpr(L"_c",				L"_c",					L"__int32 $L",														pa);
-		AssertExpr(L"_d",				L"_d",					L"::S::T __cdecl(__int32, __int32 __cdecl(__int32) *) * $L",		pa);
+		AssertExpr(L"_a",				L"_a",					L"__int32 $L",																pa);
+		AssertExpr(L"_b",				L"_b",					L"__int32 $L",																pa);
+		AssertExpr(L"_c",				L"_c",					L"__int32 $L",																pa);
+		AssertExpr(L"_d",				L"_d",					L"::S_::T __cdecl(__int32, __int32 __cdecl(__int32) *, ::S_ *) * $L",		pa);
 	}
 }
 
