@@ -187,6 +187,7 @@ class ClassDeclaration : public ForwardClassDeclaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
+	bool											anonymous = false;
 	List<Tuple<CppClassAccessor, Ptr<Type>>>		baseTypes;
 	List<Tuple<CppClassAccessor, Ptr<Declaration>>>	decls;
 };
