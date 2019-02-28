@@ -239,6 +239,7 @@ void ParseDeclaration_Class(const ParsingArguments& pa, bool forTypeDef, Ptr<Cpp
 	{
 		auto decl = MakePtr<NestedAnonymousClassDeclaration>();
 		decl->classType = classType;
+		output.Add(decl);
 
 		// ... { { (public: | protected: | private: | DECLARATION) } };
 		while (true)

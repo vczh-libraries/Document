@@ -11,7 +11,7 @@
 - [x] `using` and `typedef`.
 - [ ] `typedef int a, int b;`
 - [ ] `typedef` with classes.
-- [ ] Recursively nested anonymous `union` or `struct`.
+- [x] Recursively nested anonymous `union` or `struct`.
 - [ ] After ADL is called, re-index unqualified function names or operator expressions.
 - [ ] Test cases for whole program indexing without templates.
 

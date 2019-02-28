@@ -37,17 +37,15 @@ Ptr<Type> ParsePrimitiveType(Ptr<CppTokenCursor>& cursor, CppPrimitivePrefix pre
 		TEST_LONG_KEYWORD(TYPE_DOUBLE, double);
 		return MakePtr<PrimitiveType>(prefix, CppPrimitiveType::_long);
 	}
+#undef TEST_SINGLE_KEYWORD
+#undef TEST_LONG_KEYWORD
 
-	if (prefix != CppPrimitivePrefix::_none)
-	{
-		throw StopParsingException(cursor);
-	}
-	else
+	if (prefix == CppPrimitivePrefix::_none)
 	{
 		return nullptr;
 	}
-#undef TEST_SINGLE_KEYWORD
-#undef TEST_LONG_KEYWORD
+
+	return MakePtr<PrimitiveType>(prefix, CppPrimitiveType::_int);
 }
 
 /***********************************************************************

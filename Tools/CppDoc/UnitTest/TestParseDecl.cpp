@@ -770,3 +770,44 @@ _d: d;
 		AssertExpr(L"_d",				L"_d",					L"::S::T __cdecl(__int32, __int32 __cdecl(__int32) *) * $L",		pa);
 	}
 }
+
+TEST_CASE(TestParseDecl_NestedAnonymousClass)
+{
+	auto input = LR"(
+struct Color
+{
+	union
+	{
+		struct
+		{
+			unsigned char r, g, b, a;
+		};
+		unsigned value;
+	};
+};
+)";
+	auto output = LR"(
+struct Color
+{
+	public union
+	{
+		public struct
+		{
+			public r: unsigned char;
+			public g: unsigned char;
+			public b: unsigned char;
+			public a: unsigned char;
+		};
+		public value: unsigned int;
+	};
+};
+)";
+	AssertProgram(input, output);
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"Color().r",				L"Color().r",				L"unsigned __int8 $PR",			pa);
+	AssertExpr(L"Color().g",				L"Color().g",				L"unsigned __int8 $PR",			pa);
+	AssertExpr(L"Color().b",				L"Color().b",				L"unsigned __int8 $PR",			pa);
+	AssertExpr(L"Color().a",				L"Color().a",				L"unsigned __int8 $PR",			pa);
+	AssertExpr(L"Color().value",			L"Color().value",			L"unsigned __int32 $PR",		pa);
+}

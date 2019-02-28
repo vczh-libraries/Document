@@ -28,6 +28,9 @@ TEST_CASE(TestParseType_Primitive)
 	TEST_PRIMITIVE_TYPE(double,			L"double",		L"",					L""					);
 	TEST_PRIMITIVE_TYPE(long double,	L"double",		L"",					L""					);
 
+	AssertType(L"signed",				L"signed int",							L"__int32"			);
+	AssertType(L"unsigned",				L"unsigned int",						L"unsigned __int32"	);
+
 #undef TEST_PRIMITIVE_TYPE
 }
 
