@@ -206,8 +206,12 @@ public:
 		}
 	}
 
-	void Visit(TypeAliasDeclaration* self) override
+	void Visit(NestedAnonymousClassDeclaration* self) override
 	{
+		for (vint i = 0; i < self->decls.Count(); i++)
+		{
+			self->decls[i]->Accept(this);
+		}
 	}
 
 	void Visit(UsingNamespaceDeclaration* self) override

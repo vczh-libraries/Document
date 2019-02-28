@@ -208,7 +208,7 @@ void ParseDeclaration_Enum(const ParsingArguments& pa, Ptr<CppTokenCursor>& curs
 ParseDeclaration_<CLASS / STRUCT / UNION>
 ***********************************************************************/
 
-void ParseDeclaration_Class(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+void ParseDeclaration_Class(const ParsingArguments& pa, bool forTypeDef, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	// [union | class | struct] NAME ...
 	auto classType = CppClassType::Union;
@@ -235,109 +235,136 @@ void ParseDeclaration_Class(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 	}
 	cursor = cursor->Next();
 
-	CppName cppName;
-	if (!ParseCppName(cppName, cursor))
+	if (!forTypeDef && TestToken(cursor, CppTokens::LBRACE))
 	{
-		throw StopParsingException(cursor);
-	}
-
-	if (TestToken(cursor, CppTokens::SEMICOLON))
-	{
-		// ... ;
-		auto decl = MakePtr<ForwardClassDeclaration>();
+		auto decl = MakePtr<NestedAnonymousClassDeclaration>();
 		decl->classType = classType;
-		decl->name = cppName;
-		output.Add(decl);
-
-		if (!pa.context->AddForwardDeclToSymbol(decl, symbolKind))
-		{
-			throw StopParsingException(cursor);
-		}
-	}
-	else
-	{
-		// ... [: { [public|protected|private] TYPE , ...} ]
-		auto decl = MakePtr<ClassDeclaration>();
-		decl->classType = classType;
-		decl->name = cppName;
-		output.Add(decl);
-
-		auto contextSymbol = pa.context->AddDeclToSymbol(decl, symbolKind);
-		if (!contextSymbol)
-		{
-			throw StopParsingException(cursor);
-		}
-
-		auto declPa = pa.WithContext(contextSymbol);
-
-		if (TestToken(cursor, CppTokens::COLON))
-		{
-			while (!TestToken(cursor, CppTokens::LBRACE, false))
-			{
-				auto accessor = defaultAccessor;
-				if (TestToken(cursor, CppTokens::PUBLIC))
-				{
-					accessor = CppClassAccessor::Public;
-				}
-				else if (TestToken(cursor, CppTokens::PROTECTED))
-				{
-					accessor = CppClassAccessor::Protected;
-				}
-				else if (TestToken(cursor, CppTokens::PRIVATE))
-				{
-					accessor = CppClassAccessor::Private;
-				}
-
-				auto type = ParseType(declPa, cursor);
-				decl->baseTypes.Add({ accessor,type });
-
-				if (TestToken(cursor, CppTokens::LBRACE, false))
-				{
-					break;
-				}
-				else
-				{
-					RequireToken(cursor, CppTokens::COMMA);
-				}
-			}
-		}
 
 		// ... { { (public: | protected: | private: | DECLARATION) } };
-		RequireToken(cursor, CppTokens::LBRACE);
-		auto accessor = defaultAccessor;
 		while (true)
 		{
-			if (TestToken(cursor, CppTokens::PUBLIC))
+			if (TestToken(cursor, CppTokens::PUBLIC) || TestToken(cursor, CppTokens::PROTECTED) || TestToken(cursor, CppTokens::PRIVATE))
 			{
-				accessor = CppClassAccessor::Public;
 				RequireToken(cursor, CppTokens::COLON);
 			}
-			else if (TestToken(cursor, CppTokens::PROTECTED))
-			{
-				accessor = CppClassAccessor::Protected;
-				RequireToken(cursor, CppTokens::COLON);
-			}
-			else if (TestToken(cursor, CppTokens::PRIVATE))
-			{
-				accessor = CppClassAccessor::Private;
-				RequireToken(cursor, CppTokens::COLON);
-			}
-			else if (TestToken(cursor,CppTokens::RBRACE))
+			else if (TestToken(cursor, CppTokens::RBRACE))
 			{
 				break;
 			}
 			else
 			{
-				List<Ptr<Declaration>> declarations;
-				ParseDeclaration(declPa, cursor, declarations);
-				for (vint i = 0; i < declarations.Count(); i++)
-				{
-					decl->decls.Add({ accessor,declarations[i] });
-				}
+				ParseDeclaration(pa, cursor, decl->decls);
 			}
 		}
 
 		RequireToken(cursor, CppTokens::SEMICOLON);
+	}
+	else
+	{
+		CppName cppName;
+		if (!ParseCppName(cppName, cursor))
+		{
+			throw StopParsingException(cursor);
+		}
+
+		if (TestToken(cursor, CppTokens::SEMICOLON))
+		{
+			// ... ;
+			auto decl = MakePtr<ForwardClassDeclaration>();
+			decl->classType = classType;
+			decl->name = cppName;
+			output.Add(decl);
+
+			if (!pa.context->AddForwardDeclToSymbol(decl, symbolKind))
+			{
+				throw StopParsingException(cursor);
+			}
+		}
+		else
+		{
+			// ... [: { [public|protected|private] TYPE , ...} ]
+			auto decl = MakePtr<ClassDeclaration>();
+			decl->classType = classType;
+			decl->name = cppName;
+			output.Add(decl);
+
+			auto contextSymbol = pa.context->AddDeclToSymbol(decl, symbolKind);
+			if (!contextSymbol)
+			{
+				throw StopParsingException(cursor);
+			}
+
+			auto declPa = pa.WithContext(contextSymbol);
+
+			if (TestToken(cursor, CppTokens::COLON))
+			{
+				while (!TestToken(cursor, CppTokens::LBRACE, false))
+				{
+					auto accessor = defaultAccessor;
+					if (TestToken(cursor, CppTokens::PUBLIC))
+					{
+						accessor = CppClassAccessor::Public;
+					}
+					else if (TestToken(cursor, CppTokens::PROTECTED))
+					{
+						accessor = CppClassAccessor::Protected;
+					}
+					else if (TestToken(cursor, CppTokens::PRIVATE))
+					{
+						accessor = CppClassAccessor::Private;
+					}
+
+					auto type = ParseType(declPa, cursor);
+					decl->baseTypes.Add({ accessor,type });
+
+					if (TestToken(cursor, CppTokens::LBRACE, false))
+					{
+						break;
+					}
+					else
+					{
+						RequireToken(cursor, CppTokens::COMMA);
+					}
+				}
+			}
+
+			// ... { { (public: | protected: | private: | DECLARATION) } };
+			RequireToken(cursor, CppTokens::LBRACE);
+			auto accessor = defaultAccessor;
+			while (true)
+			{
+				if (TestToken(cursor, CppTokens::PUBLIC))
+				{
+					accessor = CppClassAccessor::Public;
+					RequireToken(cursor, CppTokens::COLON);
+				}
+				else if (TestToken(cursor, CppTokens::PROTECTED))
+				{
+					accessor = CppClassAccessor::Protected;
+					RequireToken(cursor, CppTokens::COLON);
+				}
+				else if (TestToken(cursor, CppTokens::PRIVATE))
+				{
+					accessor = CppClassAccessor::Private;
+					RequireToken(cursor, CppTokens::COLON);
+				}
+				else if (TestToken(cursor, CppTokens::RBRACE))
+				{
+					break;
+				}
+				else
+				{
+					List<Ptr<Declaration>> declarations;
+					ParseDeclaration(declPa, cursor, declarations);
+					for (vint i = 0; i < declarations.Count(); i++)
+					{
+						decl->decls.Add({ accessor,declarations[i] });
+					}
+				}
+			}
+
+			RequireToken(cursor, CppTokens::SEMICOLON);
+		}
 	}
 }
 
@@ -838,7 +865,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
 	{
-		ParseDeclaration_Class(pa, cursor, output);
+		ParseDeclaration_Class(pa, false, cursor, output);
 	}
 	else if (TestToken(cursor, CppTokens::DECL_USING, false))
 	{

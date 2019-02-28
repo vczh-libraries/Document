@@ -439,8 +439,12 @@ public:
 		}
 	}
 
-	void Visit(TypeAliasDeclaration* self) override
+	void Visit(NestedAnonymousClassDeclaration* self) override
 	{
+		for (vint i = 0; i < self->decls.Count(); i++)
+		{
+			EvaluateDeclaration(pa, self->decls[i]);
+		}
 	}
 
 	void Visit(UsingNamespaceDeclaration* self) override

@@ -1085,9 +1085,36 @@ public:
 		if (semicolon) writer.WriteLine(L";");
 	}
 
-	void Visit(TypeAliasDeclaration* self)override
+	void Visit(NestedAnonymousClassDeclaration* self)override
 	{
-		throw 0;
+		switch (self->classType)
+		{
+		case CppClassType::Class:
+			writer.WriteLine(L"class");
+			break;
+		case CppClassType::Struct:
+			writer.WriteLine(L"struct");
+			break;
+		case CppClassType::Union:
+			writer.WriteLine(L"union");
+			break;
+		}
+
+		WriteIndentation();
+		writer.WriteLine(L"{");
+
+		indentation++;
+		for (vint i = 0; i < self->decls.Count(); i++)
+		{
+			WriteIndentation();
+			writer.WriteString(L"public ");
+			self->decls[i]->Accept(this);
+		}
+		indentation--;
+
+		WriteIndentation();
+		writer.WriteString(L"}");
+		if (semicolon) writer.WriteLine(L";");
 	}
 
 	void Visit(UsingNamespaceDeclaration* self)override

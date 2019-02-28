@@ -19,7 +19,7 @@ Visitor
 	F(EnumItemDeclaration)\
 	F(EnumDeclaration)\
 	F(ClassDeclaration)\
-	F(TypeAliasDeclaration)\
+	F(NestedAnonymousClassDeclaration)\
 	F(UsingNamespaceDeclaration)\
 	F(UsingDeclaration)\
 	F(NamespaceDeclaration)\
@@ -187,7 +187,6 @@ class ClassDeclaration : public ForwardClassDeclaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	bool											anonymous = false;
 	List<Tuple<CppClassAccessor, Ptr<Type>>>		baseTypes;
 	List<Tuple<CppClassAccessor, Ptr<Declaration>>>	decls;
 };
@@ -196,13 +195,13 @@ public:
 Othere Declarations
 ***********************************************************************/
 
-class TypeAliasDeclaration : public Declaration
+class NestedAnonymousClassDeclaration : public Declaration
 {
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	Ptr<TemplateSpec>								templateSpec;
-	Ptr<Type>										type;
+	CppClassType									classType;
+	List<Ptr<Declaration>>							decls;
 };
 
 class UsingNamespaceDeclaration : public Declaration
@@ -218,6 +217,7 @@ class UsingDeclaration : public Declaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
+	Ptr<TemplateSpec>								templateSpec;
 	Ptr<Type>										type;
 };
 
