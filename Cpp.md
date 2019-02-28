@@ -13,6 +13,8 @@
 - [x] `typedef` with classes.
 - [ ] `typedef` with anonymous classes.
 - [x] Recursively nested anonymous `union` or `struct`.
+- [ ] Class followed by variable `struct X{}x;`.
+- [ ] Anonymous class followed by variable `struct {}x;`.
 - [ ] After ADL is called, re-index unqualified function names or operator expressions.
 - [ ] Test cases for whole program indexing without templates.
 
@@ -33,11 +35,6 @@
     - (switch `SUCCESS`) succeeds even if unable to resolve, when dr==ZERO
     - (switch `FAIL-UNRESOLVE`) failed if unable to resolve (during `ParseExpr`)
   - [ ] `Using` class members
-- [ ] `Using` alias, `Typedef` and anonymous declaration
-  - [ ] Assert ASTs
-  - [ ] Define variables right after classes
-  - [ ] Define types right after typedef classes
-  - [ ] Resolve child symbols from type aliases
 - [ ] `Template`
   - [ ] Assert ASTs
   - [ ] Connect generic forward declarations with their root
