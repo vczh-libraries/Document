@@ -432,12 +432,9 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 }
 
 /***********************************************************************
-ParseDeclaration_VarFunc
+ParseDeclaration_FuncVar
 ***********************************************************************/
 
-void ParseDeclaration_VarFunc(const ParsingArguments& pa, bool decoratorFriend, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
-{
-	// parse declarators for functions and variables
 #define FUNCVAR_DECORATORS(F)\
 	F(DECL_EXTERN, Extern)\
 	F(STATIC, Static)\
@@ -448,6 +445,59 @@ void ParseDeclaration_VarFunc(const ParsingArguments& pa, bool decoratorFriend, 
 	F(EXPLICIT, Explicit)\
 	F(INLINE, Inline)\
 	F(__FORCEINLINE, ForceInline)\
+
+#define FUNCVAR_DECORATORS_FOR_FUNCTION(F)\
+	F(Extern)\
+	F(Friend)\
+	F(Static)\
+	F(Virtual)\
+	F(Explicit)\
+	F(Inline)\
+	F(ForceInline)\
+	F(Abstract)\
+	F(Default)\
+	F(Delete)\
+
+#define FUNCVAR_DECORATORS_FOR_VARIABLE(F)\
+	F(Extern)\
+	F(Static)\
+	F(Mutable)\
+	F(ThreadLocal)\
+	F(Register)\
+
+#define FUNCVAR_PARAMETER(NAME) bool decorator##NAME,
+#define FUNCVAR_ARGUMENT(NAME) decorator##NAME,
+#define FUNCVAR_FILL_DECLARATOR(NAME) decl->decorator##NAME = decorator##NAME;
+
+void ParseDeclaration_Function(
+	const ParsingArguments& pa,
+	Ptr<Declarator> declarator,
+	Ptr<Type> funcType,
+	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_PARAMETER)
+	CppMethodType methodType,
+	ClassDeclaration* containingClass,
+	ClassDeclaration* containingClassForMember,
+	Ptr<CppTokenCursor>& cursor,
+	List<Ptr<Declaration>>& output
+)
+{
+}
+
+void ParseDeclaration_Variable(
+	const ParsingArguments& pa,
+	Ptr<Declarator> declarator,
+	FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_PARAMETER)
+	ClassDeclaration* containingClass,
+	ClassDeclaration* containingClassForMember,
+	Ptr<CppTokenCursor>& cursor,
+	List<Ptr<Declaration>>& output
+)
+{
+}
+
+void ParseDeclaration_FuncVar(const ParsingArguments& pa, bool decoratorFriend, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+{
+	// parse declarators for functions and variables
 
 #define DEFINE_FUNCVAR_BOOL(TOKEN, NAME) bool decorator##NAME = false;
 	FUNCVAR_DECORATORS(DEFINE_FUNCVAR_BOOL)
@@ -460,8 +510,6 @@ void ParseDeclaration_VarFunc(const ParsingArguments& pa, bool decoratorFriend, 
 #undef DEFINE_FUNCVAR_TEST
 		break;
 	}
-
-#undef FUNCVAR_DECORATORS
 
 	// prepare data structures for class members defined out of classes
 	// non-null containingClass means this declaration is defined right inside a class
@@ -557,21 +605,21 @@ void ParseDeclaration_VarFunc(const ParsingArguments& pa, bool decoratorFriend, 
 				}
 			}
 
-#define FILL_FUNCTION(NAME)\
-			NAME->name = declarator->name;\
-			NAME->type = declarator->type;\
-			NAME->methodType = methodType;\
-			NAME->decoratorExtern = decoratorExtern;\
-			NAME->decoratorFriend = decoratorFriend;\
-			NAME->decoratorStatic = decoratorStatic;\
-			NAME->decoratorVirtual = decoratorVirtual;\
-			NAME->decoratorExplicit = decoratorExplicit;\
-			NAME->decoratorInline = decoratorInline;\
-			NAME->decoratorForceInline = decoratorForceInline;\
-			NAME->decoratorAbstract = decoratorAbstract;\
-			NAME->decoratorDefault = decoratorDefault;\
-			NAME->decoratorDelete = decoratorDelete;\
-			NAME->needResolveTypeFromStatement = needResolveTypeFromStatement\
+#define FILL_FUNCTION\
+			decl->name = declarator->name;\
+			decl->type = declarator->type;\
+			decl->methodType = methodType;\
+			decl->decoratorExtern = decoratorExtern;\
+			decl->decoratorFriend = decoratorFriend;\
+			decl->decoratorStatic = decoratorStatic;\
+			decl->decoratorVirtual = decoratorVirtual;\
+			decl->decoratorExplicit = decoratorExplicit;\
+			decl->decoratorInline = decoratorInline;\
+			decl->decoratorForceInline = decoratorForceInline;\
+			decl->decoratorAbstract = decoratorAbstract;\
+			decl->decoratorDefault = decoratorDefault;\
+			decl->decoratorDelete = decoratorDelete;\
+			decl->needResolveTypeFromStatement = needResolveTypeFromStatement\
 
 			bool hasStat = TestToken(cursor, CppTokens::LBRACE, false);
 			bool needResolveTypeFromStatement = false;
@@ -589,7 +637,7 @@ void ParseDeclaration_VarFunc(const ParsingArguments& pa, bool decoratorFriend, 
 			{
 				// if there is a statement, then it is a function declaration
 				auto decl = MakePtr<FunctionDeclaration>();
-				FILL_FUNCTION(decl);
+				FILL_FUNCTION;
 				output.Add(decl);
 
 				auto contextSymbol = context->CreateDeclSymbol(decl, SearchForFunctionWithSameSignature(context, decl, cursor), symbol_component::SymbolKind::Function);
@@ -667,7 +715,7 @@ void ParseDeclaration_VarFunc(const ParsingArguments& pa, bool decoratorFriend, 
 				}
 
 				auto decl = MakePtr<ForwardFunctionDeclaration>();
-				FILL_FUNCTION(decl);
+				FILL_FUNCTION;
 				output.Add(decl);
 				RequireToken(cursor, CppTokens::SEMICOLON);
 				context->CreateForwardDeclSymbol(decl, SearchForFunctionWithSameSignature(context, decl, cursor), symbol_component::SymbolKind::Function);
@@ -683,15 +731,15 @@ void ParseDeclaration_VarFunc(const ParsingArguments& pa, bool decoratorFriend, 
 				throw StopParsingException(cursor);
 			}
 
-#define FILL_VARIABLE(NAME)\
-			NAME->name = declarator->name;\
-			NAME->type = declarator->type;\
-			NAME->decoratorExtern = decoratorExtern;\
-			NAME->decoratorStatic = decoratorStatic;\
-			NAME->decoratorMutable = decoratorMutable;\
-			NAME->decoratorThreadLocal = decoratorThreadLocal;\
-			NAME->decoratorRegister = decoratorRegister;\
-			NAME->needResolveTypeFromInitializer = needResolveTypeFromInitializer\
+#define FILL_VARIABLE\
+			decl->name = declarator->name;\
+			decl->type = declarator->type;\
+			decl->decoratorExtern = decoratorExtern;\
+			decl->decoratorStatic = decoratorStatic;\
+			decl->decoratorMutable = decoratorMutable;\
+			decl->decoratorThreadLocal = decoratorThreadLocal;\
+			decl->decoratorRegister = decoratorRegister;\
+			decl->needResolveTypeFromInitializer = needResolveTypeFromInitializer\
 
 			bool needResolveTypeFromInitializer = IsPendingType(declarator->type);
 			if (needResolveTypeFromInitializer && (!declarator->initializer || declarator->initializer->initializerType != InitializerType::Equal))
@@ -709,7 +757,7 @@ void ParseDeclaration_VarFunc(const ParsingArguments& pa, bool decoratorFriend, 
 				}
 
 				auto decl = MakePtr<ForwardVariableDeclaration>();
-				FILL_VARIABLE(decl);
+				FILL_VARIABLE;
 				output.Add(decl);
 
 				if (!context->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
@@ -721,7 +769,7 @@ void ParseDeclaration_VarFunc(const ParsingArguments& pa, bool decoratorFriend, 
 			{
 				// it is a variable declaration
 				auto decl = MakePtr<VariableDeclaration>();
-				FILL_VARIABLE(decl);
+				FILL_VARIABLE;
 				decl->initializer = declarator->initializer;
 				output.Add(decl);
 
@@ -737,6 +785,13 @@ void ParseDeclaration_VarFunc(const ParsingArguments& pa, bool decoratorFriend, 
 	// ; is required after any forward function declaration, forward function declaration, or variable declaration
 	RequireToken(cursor, CppTokens::SEMICOLON);
 }
+
+#undef FUNCVAR_DECORATORS
+#undef FUNCVAR_DECORATORS_FOR_FUNCTION
+#undef FUNCVAR_DECORATORS_FOR_VARIABLE
+#undef FUNCVAR_FILL_DECLARATOR
+#undef FUNCVAR_PARAMETER
+#undef FUNCVAR_ARGUMENT
 
 /***********************************************************************
 ParseDeclaration
@@ -795,7 +850,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else
 	{
-		ParseDeclaration_VarFunc(pa, decoratorFriend, cursor, output);
+		ParseDeclaration_FuncVar(pa, decoratorFriend, cursor, output);
 	}
 }
 
