@@ -469,10 +469,12 @@ ParseDeclaration_FuncVar
 #define FUNCVAR_ARGUMENT(NAME) decorator##NAME,
 #define FUNCVAR_FILL_DECLARATOR(NAME) decl->decorator##NAME = decorator##NAME;
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 void ParseDeclaration_Function(
 	const ParsingArguments& pa,
 	Ptr<Declarator> declarator,
-	Ptr<Type> funcType,
+	Ptr<FunctionType> funcType,
 	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_PARAMETER)
 	CppMethodType methodType,
 	ClassDeclaration* containingClass,
@@ -481,19 +483,171 @@ void ParseDeclaration_Function(
 	List<Ptr<Declaration>>& output
 )
 {
+#define FILL_FUNCTION\
+	decl->name = declarator->name;\
+	decl->type = declarator->type;\
+	decl->methodType = methodType;\
+	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_FILL_DECLARATOR)\
+	decl->needResolveTypeFromStatement = needResolveTypeFromStatement\
+
+	bool hasStat = TestToken(cursor, CppTokens::LBRACE, false);
+	bool needResolveTypeFromStatement = IsPendingType(funcType->returnType) && (!funcType->decoratorReturnType || IsPendingType(funcType->decoratorReturnType));
+	if (needResolveTypeFromStatement && !hasStat)
+	{
+		throw StopParsingException(cursor);
+	}
+
+	auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
+	if (hasStat)
+	{
+		// if there is a statement, then it is a function declaration
+		auto decl = MakePtr<FunctionDeclaration>();
+		FILL_FUNCTION;
+		output.Add(decl);
+
+		auto contextSymbol = context->CreateDeclSymbol(decl, SearchForFunctionWithSameSignature(context, decl, cursor), symbol_component::SymbolKind::Function);
+
+		if (containingClass || containingClassForMember)
+		{
+			auto methodCache = MakePtr<symbol_component::MethodCache>();
+			contextSymbol->methodCache = methodCache;
+
+			methodCache->classSymbol = containingClass ? containingClass->symbol : containingClassForMember->symbol;
+			methodCache->funcSymbol = contextSymbol;
+			methodCache->classDecl = methodCache->classSymbol->declaration.Cast<ClassDeclaration>();
+			methodCache->funcDecl = decl;
+
+			TsysCV cv;
+			cv.isGeneralConst = funcType->qualifierConstExpr || funcType->qualifierConst;
+			cv.isVolatile = funcType->qualifierVolatile;
+			methodCache->thisType = pa.tsys->DeclOf(methodCache->classSymbol)->CVOf(cv)->PtrOf();
+		}
+		{
+			auto newPa = pa.WithContextAndFunction(contextSymbol, contextSymbol);
+			BuildSymbols(newPa, funcType->parameters, cursor);
+		}
+		// delay parse the statement
+		{
+			decl->delayParse = MakePtr<DelayParse>();
+			decl->delayParse->pa = pa.WithContextAndFunction(contextSymbol, contextSymbol);
+			cursor->Clone(decl->delayParse->reader, decl->delayParse->begin);
+
+			vint counter = 1;
+			RequireToken(cursor, CppTokens::LBRACE);
+			while (true)
+			{
+				if (TestToken(cursor, CppTokens::LBRACE))
+				{
+					counter++;
+				}
+				else if (TestToken(cursor, CppTokens::RBRACE))
+				{
+					counter--;
+					if (counter == 0)
+					{
+						if (cursor)
+						{
+							decl->delayParse->end = cursor->token;
+						}
+						else
+						{
+							memset(&decl->delayParse->end, 0, sizeof(RegexToken));
+						}
+						break;
+					}
+				}
+				else
+				{
+					SkipToken(cursor);
+					if (!cursor)
+					{
+						throw StopParsingException(cursor);
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		// if there is ;, then it is a forward function declaration
+		if (containingClassForMember)
+		{
+			throw StopParsingException(cursor);
+		}
+
+		auto decl = MakePtr<ForwardFunctionDeclaration>();
+		FILL_FUNCTION;
+		output.Add(decl);
+		RequireToken(cursor, CppTokens::SEMICOLON);
+		context->CreateForwardDeclSymbol(decl, SearchForFunctionWithSameSignature(context, decl, cursor), symbol_component::SymbolKind::Function);
+	}
+#undef FILL_FUNCTION
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 void ParseDeclaration_Variable(
 	const ParsingArguments& pa,
 	Ptr<Declarator> declarator,
 	FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_PARAMETER)
-	ClassDeclaration* containingClass,
 	ClassDeclaration* containingClassForMember,
 	Ptr<CppTokenCursor>& cursor,
 	List<Ptr<Declaration>>& output
 )
 {
+	// for variables, names should not be constructor names, destructor names, type conversion operator names, or other operator names
+	if (declarator->name.type != CppNameType::Normal)
+	{
+		throw StopParsingException(cursor);
+	}
+
+#define FILL_VARIABLE\
+	decl->name = declarator->name;\
+	decl->type = declarator->type;\
+	FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_FILL_DECLARATOR)\
+	decl->needResolveTypeFromInitializer = needResolveTypeFromInitializer\
+
+	bool needResolveTypeFromInitializer = IsPendingType(declarator->type);
+	if (needResolveTypeFromInitializer && (!declarator->initializer || declarator->initializer->initializerType != InitializerType::Equal))
+	{
+		throw StopParsingException(cursor);
+	}
+
+	auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
+	if (decoratorExtern || (decoratorStatic && !declarator->initializer))
+	{
+		// if there is extern, or static without an initializer, then it is a forward variable declaration
+		if (containingClassForMember)
+		{
+			throw StopParsingException(cursor);
+		}
+
+		auto decl = MakePtr<ForwardVariableDeclaration>();
+		FILL_VARIABLE;
+		output.Add(decl);
+
+		if (!context->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
+		{
+			throw StopParsingException(cursor);
+		}
+	}
+	else
+	{
+		// it is a variable declaration
+		auto decl = MakePtr<VariableDeclaration>();
+		FILL_VARIABLE;
+		decl->initializer = declarator->initializer;
+		output.Add(decl);
+
+		if (!context->AddDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
+		{
+			throw StopParsingException(cursor);
+		}
+	}
+#undef FILL_VARIABLE
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 void ParseDeclaration_FuncVar(const ParsingArguments& pa, bool decoratorFriend, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
@@ -526,11 +680,13 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, bool decoratorFriend, 
 		ParseMemberDeclarator(pa, pda, cursor, declarators);
 	}
 
+	Ptr<FunctionType> funcType;
 	if (declarators.Count() > 0)
 	{
 		// a function declaration can only have one declarator
 		auto declarator = declarators[0];
-		if (GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
+		funcType = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>();
+		if (funcType)
 		{
 			if (declarators.Count() != 1)
 			{
@@ -577,213 +733,57 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, bool decoratorFriend, 
 		}
 	}
 
-	for (vint i = 0; i < declarators.Count(); i++)
+	if (funcType)
 	{
-		auto declarator = declarators[i];
+		// for functions
+		bool decoratorAbstract = false;
+		bool decoratorDefault = false;
+		bool decoratorDelete = false;
 
-		if (auto type = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
+		if (TestToken(cursor, CppTokens::EQ))
 		{
-			// for functions
-			bool decoratorAbstract = false;
-			bool decoratorDefault = false;
-			bool decoratorDelete = false;
-
-			if (TestToken(cursor, CppTokens::EQ))
+			if (TestToken(cursor, CppTokens::STAT_DEFAULT))
 			{
-				if (TestToken(cursor, CppTokens::STAT_DEFAULT))
-				{
-					decoratorDefault = true;
-				}
-				else if (TestToken(cursor, CppTokens::DELETE))
-				{
-					decoratorDelete = true;
-				}
-				else
-				{
-					RequireToken(cursor, L"0");
-					decoratorAbstract = true;
-				}
+				decoratorDefault = true;
 			}
-
-#define FILL_FUNCTION\
-			decl->name = declarator->name;\
-			decl->type = declarator->type;\
-			decl->methodType = methodType;\
-			decl->decoratorExtern = decoratorExtern;\
-			decl->decoratorFriend = decoratorFriend;\
-			decl->decoratorStatic = decoratorStatic;\
-			decl->decoratorVirtual = decoratorVirtual;\
-			decl->decoratorExplicit = decoratorExplicit;\
-			decl->decoratorInline = decoratorInline;\
-			decl->decoratorForceInline = decoratorForceInline;\
-			decl->decoratorAbstract = decoratorAbstract;\
-			decl->decoratorDefault = decoratorDefault;\
-			decl->decoratorDelete = decoratorDelete;\
-			decl->needResolveTypeFromStatement = needResolveTypeFromStatement\
-
-			bool hasStat = TestToken(cursor, CppTokens::LBRACE, false);
-			bool needResolveTypeFromStatement = false;
-			if (auto funcType = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>())
+			else if (TestToken(cursor, CppTokens::DELETE))
 			{
-				needResolveTypeFromStatement = IsPendingType(funcType->returnType) && (!funcType->decoratorReturnType || IsPendingType(funcType->decoratorReturnType));
-				if (needResolveTypeFromStatement && !hasStat)
-				{
-					throw StopParsingException(cursor);
-				}
-			}
-
-			auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
-			if (hasStat)
-			{
-				// if there is a statement, then it is a function declaration
-				auto decl = MakePtr<FunctionDeclaration>();
-				FILL_FUNCTION;
-				output.Add(decl);
-
-				auto contextSymbol = context->CreateDeclSymbol(decl, SearchForFunctionWithSameSignature(context, decl, cursor), symbol_component::SymbolKind::Function);
-
-				if (containingClass || containingClassForMember)
-				{
-					auto methodCache = MakePtr<symbol_component::MethodCache>();
-					contextSymbol->methodCache = methodCache;
-
-					methodCache->classSymbol = containingClass ? containingClass->symbol : containingClassForMember->symbol;
-					methodCache->funcSymbol = contextSymbol;
-					methodCache->classDecl = methodCache->classSymbol->declaration.Cast<ClassDeclaration>();
-					methodCache->funcDecl = decl;
-
-					auto funcType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>();
-					TsysCV cv;
-					cv.isGeneralConst = funcType->qualifierConstExpr || funcType->qualifierConst;
-					cv.isVolatile = funcType->qualifierVolatile;
-					methodCache->thisType = pa.tsys->DeclOf(methodCache->classSymbol)->CVOf(cv)->PtrOf();
-				}
-				{
-					auto newPa = pa.WithContextAndFunction(contextSymbol, contextSymbol);
-					BuildSymbols(newPa, type->parameters, cursor);
-				}
-				// delay parse the statement
-				{
-					decl->delayParse = MakePtr<DelayParse>();
-					decl->delayParse->pa = pa.WithContextAndFunction(contextSymbol, contextSymbol);
-					cursor->Clone(decl->delayParse->reader, decl->delayParse->begin);
-
-					vint counter = 1;
-					RequireToken(cursor, CppTokens::LBRACE);
-					while (true)
-					{
-						if (TestToken(cursor, CppTokens::LBRACE))
-						{
-							counter++;
-						}
-						else if (TestToken(cursor, CppTokens::RBRACE))
-						{
-							counter--;
-							if (counter == 0)
-							{
-								if (cursor)
-								{
-									decl->delayParse->end = cursor->token;
-								}
-								else
-								{
-									memset(&decl->delayParse->end, 0, sizeof(RegexToken));
-								}
-								break;
-							}
-						}
-						else
-						{
-							SkipToken(cursor);
-							if (!cursor)
-							{
-								throw StopParsingException(cursor);
-							}
-						}
-					}
-				}
-
-				// no ; after a function declaration
-				return;
+				decoratorDelete = true;
 			}
 			else
 			{
-				// if there is ;, then it is a forward function declaration
-				if (containingClassForMember)
-				{
-					throw StopParsingException(cursor);
-				}
-
-				auto decl = MakePtr<ForwardFunctionDeclaration>();
-				FILL_FUNCTION;
-				output.Add(decl);
-				RequireToken(cursor, CppTokens::SEMICOLON);
-				context->CreateForwardDeclSymbol(decl, SearchForFunctionWithSameSignature(context, decl, cursor), symbol_component::SymbolKind::Function);
-				return;
+				RequireToken(cursor, L"0");
+				decoratorAbstract = true;
 			}
-#undef FILL_FUNCTION
 		}
-		else
-		{
-			// for variables, names should not be constructor names, destructor names, type conversion operator names, or other operator names
-			if (declarator->name.type != CppNameType::Normal)
-			{
-				throw StopParsingException(cursor);
-			}
 
-#define FILL_VARIABLE\
-			decl->name = declarator->name;\
-			decl->type = declarator->type;\
-			decl->decoratorExtern = decoratorExtern;\
-			decl->decoratorStatic = decoratorStatic;\
-			decl->decoratorMutable = decoratorMutable;\
-			decl->decoratorThreadLocal = decoratorThreadLocal;\
-			decl->decoratorRegister = decoratorRegister;\
-			decl->needResolveTypeFromInitializer = needResolveTypeFromInitializer\
-
-			bool needResolveTypeFromInitializer = IsPendingType(declarator->type);
-			if (needResolveTypeFromInitializer && (!declarator->initializer || declarator->initializer->initializerType != InitializerType::Equal))
-			{
-				throw StopParsingException(cursor);
-			}
-
-			auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
-			if (decoratorExtern || (decoratorStatic && !declarator->initializer))
-			{
-				// if there is extern, or static without an initializer, then it is a forward variable declaration
-				if (containingClassForMember)
-				{
-					throw StopParsingException(cursor);
-				}
-
-				auto decl = MakePtr<ForwardVariableDeclaration>();
-				FILL_VARIABLE;
-				output.Add(decl);
-
-				if (!context->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
-				{
-					throw StopParsingException(cursor);
-				}
-			}
-			else
-			{
-				// it is a variable declaration
-				auto decl = MakePtr<VariableDeclaration>();
-				FILL_VARIABLE;
-				decl->initializer = declarator->initializer;
-				output.Add(decl);
-
-				if (!context->AddDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
-				{
-					throw StopParsingException(cursor);
-				}
-			}
-#undef FILL_VARIABLE
-		}
+		ParseDeclaration_Function(
+			pa,
+			declarators[0],
+			funcType,
+			FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_ARGUMENT)
+			methodType,
+			containingClass,
+			containingClassForMember,
+			cursor,
+			output
+		);
 	}
-
-	// ; is required after any forward function declaration, forward function declaration, or variable declaration
-	RequireToken(cursor, CppTokens::SEMICOLON);
+	else
+	{
+		for (vint i = 0; i < declarators.Count(); i++)
+		{
+			ParseDeclaration_Variable(
+				pa,
+				declarators[i],
+				FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_ARGUMENT)
+				containingClassForMember,
+				cursor,
+				output
+			);
+		}
+		RequireToken(cursor, CppTokens::SEMICOLON);
+	}
 }
 
 #undef FUNCVAR_DECORATORS
