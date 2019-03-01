@@ -18,6 +18,7 @@ All **the compiler** here means the compiler created by this project.
 - **All limitations could be changed in the future**
 - The compiler doesn't parse all C++17 features, but it parses more enough for most of C++ programs.
 - All features that cl.exe doesn't support, are also not supported here.
+- The compiler only allow anonymous `class`/`struct`/`union` to be used in two way: after `typedef`, or embedded into another `class`/`struct`/`union` to define fields (not define a new type).
 - The compiler doesn't do `const` or `constexpr` constant folding, the compiler treats all values identical.
   - This usually means the compiler assumes `int[1]` and `int[2]` are the same type, which will cause the compiler fail to compile the input file in some very limited cases.
   - This also applies to `T<1>` and `T<2>`.

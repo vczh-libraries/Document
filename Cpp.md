@@ -9,12 +9,10 @@
 - [ ] Test `ExprToTsys` on all expressions during parsing.
 - [ ] Compiler-generated functions.
 - [x] `using` and `typedef`.
-- [ ] `typedef int a, int b;`
 - [x] `typedef` with classes.
 - [ ] `typedef` with anonymous classes.
 - [x] Recursively nested anonymous `union` or `struct`.
-- [ ] Class followed by variable `struct X{}x;`.
-- [ ] Anonymous class followed by variable `struct {}x;`.
+- [x] Class followed by variable `struct X{}x;`.
 - [ ] After ADL is called, re-index unqualified function names or operator expressions.
 - [ ] Test cases for whole program indexing without templates.
 

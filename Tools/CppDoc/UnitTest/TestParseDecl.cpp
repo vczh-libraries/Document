@@ -813,3 +813,28 @@ struct Color
 	AssertExpr(L"Color().a",				L"Color().a",				L"unsigned __int8 $PR",			pa);
 	AssertExpr(L"Color().value",			L"Color().value",			L"unsigned __int32 $PR",		pa);
 }
+
+TEST_CASE(TestParseDecl_ClassFollowedVariables)
+{
+	auto input = LR"(
+struct X
+{
+	int x;
+} x, *px;
+)";
+	auto output = LR"(
+struct X
+{
+	public x: int;
+};
+x: X;
+px: X *;
+)";
+	AssertProgram(input, output);
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"x",						L"x",						L"::X $L",						pa);
+	AssertExpr(L"x.x",						L"x.x",						L"__int32 $L",					pa);
+	AssertExpr(L"px",						L"px",						L"::X * $L",					pa);
+	AssertExpr(L"px->x",					L"px->x",					L"__int32 $L",					pa);
+}
