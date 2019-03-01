@@ -124,8 +124,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ### FUNCTION-TAIL
 
-- [x] `(` {TYPE-OPTIONAL [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override`}
-  - `= 0` will be in the initializer
+- `(` {TYPE-OPTIONAL [INITIALIZER] `,` ...} `)` {QUALIFIERS | EXCEPTION-SPEC | `->` TYPE | `override`)}
 
 ### DECLARATOR
 
@@ -155,9 +154,9 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ### FUNCTION
 
-- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT)
+- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT) [ = (`0` | `default` | `delete`]
   - [ ] TEMPLATE-SPEC
-- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT)
+- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT) [ = (`0` | `default` | `delete`]
   - [ ] TEMPLATE-SPEC
 
 ### OBJECT
