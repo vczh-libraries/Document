@@ -268,6 +268,8 @@ public:
 	virtual ITsys*				GenericArgOf(Symbol* decl) = 0;
 	virtual ITsys*				InitOf(Array<ExprTsysItem>& params) = 0;
 
+	virtual vint				AllocateAnonymousCounter() = 0;
+
 	static Ptr<ITsysAlloc>		Create();
 };
 

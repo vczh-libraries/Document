@@ -440,6 +440,7 @@ protected:
 	Dictionary<Symbol*, ITsys_Decl*>				decls;
 	Dictionary<Symbol*, ITsys_GenericArg*>			genericArgs;
 	WithParamsList<ITsys_Init, TsysInit>			initOf;
+	vint											anonymousCounter = 0;
 
 public:
 	ITsys_Allocator<ITsys_Primitive,	1024>		_primitive;
@@ -538,6 +539,11 @@ public:
 			data.types[i] = params[i].type;
 		}
 		return ParamsOf(tsys, data, initOf, nullptr, this, &TsysAlloc::_init);
+	}
+
+	vint AllocateAnonymousCounter()
+	{
+		return anonymousCounter++;
 	}
 };
 

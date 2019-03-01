@@ -265,7 +265,15 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		CppName cppName;
 		if (!ParseCppName(cppName, cursor))
 		{
-			throw StopParsingException(cursor);
+			if (forTypeDef)
+			{
+				cppName.name = L"<anonymous>" + itow(pa.tsys->AllocateAnonymousCounter());
+				cppName.type = CppNameType::Normal;
+			}
+			else
+			{
+				throw StopParsingException(cursor);
+			}
 		}
 
 		if (TestToken(cursor, CppTokens::SEMICOLON, false))

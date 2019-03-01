@@ -838,3 +838,38 @@ px: X *;
 	AssertExpr(L"px",						L"px",						L"::X * $L",					pa);
 	AssertExpr(L"px->x",					L"px->x",					L"__int32 $L",					pa);
 }
+
+TEST_CASE(TestParseDecl_TypedefWithAnonymousClass)
+{
+	auto input = LR"(
+typedef struct
+{
+	int x;
+} X, *pX;
+
+typedef struct
+{
+	X x;
+	pX px;
+} Y;
+)";
+	auto output = LR"(
+struct <anonymous>0
+{
+	public x: int;
+};
+using X = <anonymous>0;
+using pX = <anonymous>0 *;
+struct <anonymous>1
+{
+	public x: X;
+	public px: pX;
+};
+using Y = <anonymous>1;
+)";
+	AssertProgram(input, output);
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"Y().x.x",					L"Y().x.x",					L"__int32 $PR",					pa);
+	AssertExpr(L"Y().px->x",				L"Y().px->x",				L"__int32 $L",					pa);
+}
