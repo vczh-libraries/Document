@@ -19,6 +19,60 @@ public:
 	{
 	}
 
+	void ReIndex(CppName* name, Ptr<Resolving>* nameResolving, CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols)
+	{
+		bool firstName = true;
+		bool firstOp = true;
+
+		for (vint i = 0; i < symbols.Count(); i++)
+		{
+			if (auto symbol = symbols[i].symbol)
+			{
+				bool isOperator = false;
+				if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+				{
+					isOperator = funcDecl->name.type == CppNameType::Operator;
+				}
+
+				if (name)
+				{
+					if (!isOperator || name->type == CppNameType::Operator)
+					{
+						if (firstName)
+						{
+							*nameResolving = MakePtr<Resolving>();
+						}
+						(*nameResolving)->resolvedSymbols.Add(symbol);
+						firstName = false;
+						continue;
+					}
+				}
+
+				if (op)
+				{
+					if (isOperator)
+					{
+						if (firstOp)
+						{
+							*opResolving = MakePtr<Resolving>();
+						}
+						(*opResolving)->resolvedSymbols.Add(symbol);
+						firstOp = false;
+					}
+				}
+			}
+		}
+
+		if (!firstName && name)
+		{
+			pa.recorder->IndexOverloadingResolution(*name, *nameResolving);
+		}
+		if (!firstOp && op)
+		{
+			pa.recorder->IndexOverloadingResolution(*op, *opResolving);
+		}
+	}
+
 	/***********************************************************************
 	Expressions
 	***********************************************************************/
@@ -425,7 +479,12 @@ public:
 			}
 		}
 
-		VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
+		ExprTsysList selectedFunctions;
+		VisitOverloadedFunction(pa, funcTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
+		if (pa.recorder)
+		{
+			ReIndex(nullptr, nullptr, &self->opName, &self->opResolving, selectedFunctions);
+		}
 	}
 
 	void Visit(FuncAccessExpr* self)override
@@ -454,8 +513,26 @@ public:
 		}
 
 		FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
-		VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
 
+		ExprTsysList selectedFunctions;
+		VisitOverloadedFunction(pa, funcTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
+		if (pa.recorder)
+		{
+			CppName* name = nullptr;
+			Ptr<Resolving>* nameResolving = nullptr;
+			if (auto idExpr = self->expr.Cast<IdExpr>())
+			{
+				name = &idExpr->name;
+				nameResolving = &idExpr->resolving;
+			}
+			else if (auto childExpr = self->expr.Cast<ChildExpr>())
+			{
+				name = &childExpr->name;
+				nameResolving = &childExpr->resolving;
+			}
+
+			ReIndex(name, nameResolving, &self->opName, &self->opResolving, selectedFunctions);
+		}
 	}
 
 	void Visit(CtorAccessExpr* self)override
@@ -550,7 +627,7 @@ public:
 		CreateUniversalInitializerType(argTypesList, indices, 0);
 	}
 
-	bool VisitOperator(ExprTsysItem* leftType, ExprTsysItem* rightType, const WString& name)
+	bool VisitOperator(ExprTsysItem* leftType, ExprTsysItem* rightType, const WString& name, CppName& resolvableName, Ptr<Resolving>& resolving)
 	{
 		TsysCV leftCV, rightCV;
 		TsysRefType leftRef, rightRef;
@@ -582,7 +659,13 @@ public:
 					AddInternal(*argTypesList[0].Obj(), *rightType);
 				}
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
-				VisitOverloadedFunction(pa, opTypes, argTypesList, result);
+
+				ExprTsysList selectedFunctions;
+				VisitOverloadedFunction(pa, opTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
+				if (pa.recorder)
+				{
+					ReIndex(nullptr, nullptr, &resolvableName, &resolving, selectedFunctions);
+				}
 				return true;
 			}
 		}
@@ -621,7 +704,13 @@ public:
 					AddInternal(*argTypesList[1].Obj(), *rightType);
 				}
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
-				VisitOverloadedFunction(pa, opTypes, argTypesList, result);
+
+				ExprTsysList selectedFunctions;
+				VisitOverloadedFunction(pa, opTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
+				if (pa.recorder)
+				{
+					ReIndex(nullptr, nullptr, &resolvableName, &resolving, selectedFunctions);
+				}
 				if (result.Count() > 0)
 				{
 					return true;
@@ -646,7 +735,7 @@ public:
 
 			if (entity->GetType() == TsysType::Decl)
 			{
-				VisitOperator(&types[i], &extraParam, self->opName.name);
+				VisitOperator(&types[i], &extraParam, self->opName.name, self->opName, self->opResolving);
 			}
 			else if (entity->GetType()==TsysType::Primitive)
 			{
@@ -696,7 +785,7 @@ public:
 
 			if (entity->GetType() == TsysType::Decl)
 			{
-				if (VisitOperator(&types[i], nullptr, self->opName.name))
+				if (VisitOperator(&types[i], nullptr, self->opName.name, self->opName, self->opResolving))
 				{
 					break;
 				}
@@ -809,7 +898,7 @@ public:
 					continue;
 				}
 
-				if (VisitOperator(&leftTypes[i], &rightTypes[i], self->opName.name))
+				if (VisitOperator(&leftTypes[i], &rightTypes[i], self->opName.name, self->opName, self->opResolving))
 				{
 					break;
 				}

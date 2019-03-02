@@ -11,7 +11,7 @@ void FillOperatorAndSkip(CppName& name, Ptr<CppTokenCursor>& cursor, vint count)
 	auto reading = cursor->token.reading;
 	vint length = 0;
 
-	name.type = CppNameType::Normal;
+	name.type = CppNameType::Operator;
 	name.tokenCount = count;
 	for (vint i = 0; i < count; i++)
 	{
@@ -374,18 +374,34 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			newExpr->name = ParseIdOrChildExprAfterFieldAccess(pa, cursor);
 			expr = newExpr;
 		}
-		else if (TestToken(cursor, CppTokens::LBRACKET))
+		else if (TestToken(cursor, CppTokens::LBRACKET, false))
 		{
 			auto newExpr = MakePtr<ArrayAccessExpr>();
+			{
+				newExpr->opName.type = CppNameType::Operator;
+				newExpr->opName.name = L"[]";
+				newExpr->opName.tokenCount = 1;
+				newExpr->opName.nameTokens[0] = cursor->token;
+				SkipToken(cursor);
+			}
 			newExpr->expr = expr;
 			newExpr->index = ParseExpr(pa, true, cursor);
+
 			RequireToken(cursor, CppTokens::RBRACKET);
 			expr = newExpr;
 		}
-		else if (TestToken(cursor, CppTokens::LPARENTHESIS))
+		else if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
 		{
 			auto newExpr = MakePtr<FuncAccessExpr>();
+			{
+				newExpr->opName.type = CppNameType::Operator;
+				newExpr->opName.name = L"()";
+				newExpr->opName.tokenCount = 1;
+				newExpr->opName.nameTokens[0] = cursor->token;
+				SkipToken(cursor);
+			}
 			newExpr->expr = expr;
+
 			if (!TestToken(cursor, CppTokens::RPARENTHESIS))
 			{
 				while (true)

@@ -233,7 +233,7 @@ namespace TestConvert_Helpers
 				}
 
 				ExprTsysList result;
-				symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, result);
+				symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, result, nullptr);
 				if (result.Count() > 0)
 				{
 					return TsysConv::UserDefinedConversion;

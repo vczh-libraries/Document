@@ -188,6 +188,9 @@ class ArrayAccessExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
+	CppName					opName;
+	Ptr<Resolving>			opResolving;
+
 	Ptr<Expr>				expr;
 	Ptr<Expr>				index;
 };
@@ -196,6 +199,9 @@ class FuncAccessExpr : public Expr
 {
 public:
 	IExprVisitor_ACCEPT;
+
+	CppName					opName;
+	Ptr<Resolving>			opResolving;
 
 	Ptr<Expr>				expr;
 	List<Ptr<Expr>>			arguments;
@@ -237,7 +243,8 @@ class PostfixUnaryExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	CppPostfixUnaryOp			op;
+	Ptr<Resolving>			opResolving;
+	CppPostfixUnaryOp		op;
 	CppName					opName;
 	Ptr<Expr>				operand;
 };
@@ -259,6 +266,7 @@ class PrefixUnaryExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
+	Ptr<Resolving>			opResolving;
 	CppPrefixUnaryOp		op;
 	CppName					opName;
 	Ptr<Expr>				operand;
@@ -279,6 +287,7 @@ class BinaryExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
+	Ptr<Resolving>			opResolving;
 	vint					precedence = -1;
 	CppBinaryOp				op;
 	CppName					opName;

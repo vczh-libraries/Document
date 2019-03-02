@@ -59,6 +59,11 @@ public:
 		callback(name, resolving);
 	}
 
+	void IndexOverloadingResolution(CppName& name, Ptr<Resolving> resolving)
+	{
+		callback(name, resolving);
+	}
+
 	void ExpectValueButType(CppName& name, Ptr<Resolving> resolving)
 	{
 		TEST_ASSERT(false);
