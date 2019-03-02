@@ -450,14 +450,16 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 			// using TYPE[::NAME];
 			auto decl = MakePtr<UsingSymbolDeclaration>();
 			decl->type = ParseType(pa, cursor);
-			output.Add(decl);
 			RequireToken(cursor, CppTokens::SEMICOLON);
+			output.Add(decl);
 
 			if (auto resolvableType = decl->type.Cast<ResolvableType>())
 			{
 				if (!resolvableType->resolving) throw StopParsingException(cursor);
 				if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
-				auto symbol = resolvableType->resolving->resolvedSymbols[0];
+				auto rawSymbolPtr = resolvableType->resolving->resolvedSymbols[0];
+				auto& siblings = rawSymbolPtr->parent->children[rawSymbolPtr->name];
+				auto symbol = siblings[siblings.IndexOf(rawSymbolPtr)];
 
 				switch (symbol->kind)
 				{
@@ -474,7 +476,6 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 							throw StopParsingException(cursor);
 						}
 						pa.context->children.Add(symbol->name, symbol);
-						throw StopParsingException(cursor);
 					}
 					break;
 				case symbol_component::SymbolKind::Function:
@@ -485,7 +486,6 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 							throw StopParsingException(cursor);
 						}
 						pa.context->children.Add(symbol->name, symbol);
-						throw StopParsingException(cursor);
 					}
 					break;
 				default:
