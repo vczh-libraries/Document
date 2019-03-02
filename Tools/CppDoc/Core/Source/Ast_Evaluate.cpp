@@ -451,6 +451,10 @@ public:
 	{
 	}
 
+	void Visit(UsingSymbolDeclaration* self) override
+	{
+	}
+
 	void Visit(UsingDeclaration* self) override
 	{
 		symbol_type_resolving::EvaluateSymbol(pa, self);

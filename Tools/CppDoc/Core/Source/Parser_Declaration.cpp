@@ -393,11 +393,11 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 	{
 		// using namespace TYPE;
 		auto decl = MakePtr<UsingNamespaceDeclaration>();
-		decl->type = ParseType(pa, cursor);
+		decl->ns = ParseType(pa, cursor);
 		output.Add(decl);
 		RequireToken(cursor, CppTokens::SEMICOLON);
 
-		if (auto resolvableType = decl->type.Cast<ResolvableType>())
+		if (auto resolvableType = decl->ns.Cast<ResolvableType>())
 		{
 			if (!resolvableType->resolving) throw StopParsingException(cursor);
 			if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
@@ -405,33 +405,6 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 
 			switch (symbol->kind)
 			{
-			case symbol_component::SymbolKind::Enum:
-			case symbol_component::SymbolKind::EnumItem:
-			case symbol_component::SymbolKind::Class:
-			case symbol_component::SymbolKind::Struct:
-			case symbol_component::SymbolKind::Union:
-			case symbol_component::SymbolKind::TypeAlias:
-			case symbol_component::SymbolKind::Variable:
-				{
-					if (pa.context->children.Keys().Contains(symbol->name))
-					{
-						throw StopParsingException(cursor);
-					}
-					pa.context->children.Add(symbol->name, symbol);
-					throw StopParsingException(cursor);
-				}
-				break;
-			case symbol_component::SymbolKind::Function:
-				{
-					vint index = pa.context->children.Keys().IndexOf(symbol->name);
-					if (index != -1 && pa.context->children.GetByIndex(index)[0]->kind != symbol_component::SymbolKind::Function)
-					{
-						throw StopParsingException(cursor);
-					}
-					pa.context->children.Add(symbol->name, symbol);
-					throw StopParsingException(cursor);
-				}
-				break;
 			case symbol_component::SymbolKind::Namespace:
 				{
 					if (pa.context && !(pa.context->usingNss.Contains(symbol)))
@@ -451,20 +424,78 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 	}
 	else
 	{
-		// using NAME = TYPE;
-		auto decl = MakePtr<UsingDeclaration>();
-		if (!ParseCppName(decl->name, cursor))
+		auto oldCursor = cursor;
 		{
-			throw StopParsingException(cursor);
-		}
-		RequireToken(cursor, CppTokens::EQ);
-		decl->type = ParseType(pa, cursor);
-		RequireToken(cursor, CppTokens::SEMICOLON);
-		output.Add(decl);
+			// using NAME = TYPE;
+			CppName cppName;
+			if (!ParseCppName(cppName, cursor) || !TestToken(cursor, CppTokens::EQ))
+			{
+				cursor = oldCursor;
+				goto SKIP_TYPE_ALIAS;
+			}
 
-		if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias))
+			auto decl = MakePtr<UsingDeclaration>();
+			decl->name = cppName;
+			decl->type = ParseType(pa, cursor);
+			RequireToken(cursor, CppTokens::SEMICOLON);
+			output.Add(decl);
+
+			if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias))
+			{
+				throw StopParsingException(cursor);
+			}
+		}
+	SKIP_TYPE_ALIAS:
 		{
-			throw StopParsingException(cursor);
+			// using TYPE[::NAME];
+			auto decl = MakePtr<UsingSymbolDeclaration>();
+			decl->type = ParseType(pa, cursor);
+			output.Add(decl);
+			RequireToken(cursor, CppTokens::SEMICOLON);
+
+			if (auto resolvableType = decl->type.Cast<ResolvableType>())
+			{
+				if (!resolvableType->resolving) throw StopParsingException(cursor);
+				if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
+				auto symbol = resolvableType->resolving->resolvedSymbols[0];
+
+				switch (symbol->kind)
+				{
+				case symbol_component::SymbolKind::Enum:
+				case symbol_component::SymbolKind::EnumItem:
+				case symbol_component::SymbolKind::Class:
+				case symbol_component::SymbolKind::Struct:
+				case symbol_component::SymbolKind::Union:
+				case symbol_component::SymbolKind::TypeAlias:
+				case symbol_component::SymbolKind::Variable:
+					{
+						if (pa.context->children.Keys().Contains(symbol->name))
+						{
+							throw StopParsingException(cursor);
+						}
+						pa.context->children.Add(symbol->name, symbol);
+						throw StopParsingException(cursor);
+					}
+					break;
+				case symbol_component::SymbolKind::Function:
+					{
+						vint index = pa.context->children.Keys().IndexOf(symbol->name);
+						if (index != -1 && pa.context->children.GetByIndex(index)[0]->kind != symbol_component::SymbolKind::Function)
+						{
+							throw StopParsingException(cursor);
+						}
+						pa.context->children.Add(symbol->name, symbol);
+						throw StopParsingException(cursor);
+					}
+					break;
+				default:
+					throw StopParsingException(cursor);
+				}
+			}
+			else
+			{
+				throw StopParsingException(cursor);
+			}
 		}
 	}
 }

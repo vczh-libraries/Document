@@ -21,6 +21,7 @@ Visitor
 	F(ClassDeclaration)\
 	F(NestedAnonymousClassDeclaration)\
 	F(UsingNamespaceDeclaration)\
+	F(UsingSymbolDeclaration)\
 	F(UsingDeclaration)\
 	F(NamespaceDeclaration)\
 
@@ -209,7 +210,16 @@ class UsingNamespaceDeclaration : public Declaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
+	Ptr<Type>										ns;
+};
+
+class UsingSymbolDeclaration : public Declaration
+{
+public:
+	IDeclarationVisitor_ACCEPT;
+
 	Ptr<Type>										type;
+	Ptr<Type>										expr;
 };
 
 class UsingDeclaration : public Declaration

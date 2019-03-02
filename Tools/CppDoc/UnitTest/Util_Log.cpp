@@ -1120,7 +1120,15 @@ public:
 	void Visit(UsingNamespaceDeclaration* self)override
 	{
 		writer.WriteString(L"using namespace ");
-		Log(self->type, writer);
+		Log(self->ns, writer);
+		if (semicolon) writer.WriteLine(L";");
+	}
+
+	void Visit(UsingSymbolDeclaration* self)override
+	{
+		writer.WriteString(L"using ");
+		if (self->type) Log(self->type, writer);
+		if (self->expr) Log(self->expr, writer);
 		if (semicolon) writer.WriteLine(L";");
 	}
 

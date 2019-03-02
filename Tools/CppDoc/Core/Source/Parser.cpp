@@ -218,6 +218,10 @@ public:
 	{
 	}
 
+	void Visit(UsingSymbolDeclaration* self) override
+	{
+	}
+
 	void Visit(UsingDeclaration* self) override
 	{
 	}

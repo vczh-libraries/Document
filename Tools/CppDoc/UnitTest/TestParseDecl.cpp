@@ -723,6 +723,9 @@ namespace c
 	AssertExpr(L"c::X()",					L"c::X()",						L"::a::b::X $PR");
 	AssertExpr(L"c::b::X()",				L"c::b::X()",					L"::a::b::X $PR");
 	AssertExpr(L"c::a::b::X()",				L"c::a:;b::X()",				L"::a::b::X $PR");
+	AssertExpr(L"c::Y()",					L"c::Y()",						L"::a::b::Y $PR");
+	AssertExpr(L"c::b::Y()",				L"c::b::Y()",					L"::a::b::Y $PR");
+	AssertExpr(L"c::a::b::Y()",				L"c::a:;b::Y()",				L"::a::b::Y $PR");
 }
 
 TEST_CASE(TestParseDecl_Using_Type)
@@ -781,25 +784,29 @@ namespace c
 	auto recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
 	{
 		BEGIN_ASSERT_SYMBOL
-			ASSERT_SYMBOL(0, L"a", 8, 17, NamespaceDeclaration, 1, 10)
-			ASSERT_SYMBOL(1, L"a", 9, 17, NamespaceDeclaration, 1, 10)
-			ASSERT_SYMBOL(2, L"b", 9, 20, NamespaceDeclaration, 1, 13)
-			ASSERT_SYMBOL(3, L"X", 13, 12, ClassDeclaration, 3, 8)
-			ASSERT_SYMBOL(4, L"a", 15, 2, NamespaceDeclaration, 1, 10)
-			ASSERT_SYMBOL(5, L"b", 15, 5, NamespaceDeclaration, 1, 13)
-			ASSERT_SYMBOL(6, L"Y", 15, 8, EnumDeclaration, 4, 12)
-			ASSERT_SYMBOL(7, L"b", 16, 2, NamespaceDeclaration, 1, 13)
-			ASSERT_SYMBOL(8, L"Y", 16, 5, EnumDeclaration, 4, 12)
-			ASSERT_SYMBOL(9, L"Y", 17, 2, EnumDeclaration, 4, 12)
+			ASSERT_SYMBOL(0, L"a", 8, 7, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(1, L"b", 8, 10, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(2, L"X", 8, 13, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(3, L"a", 9, 17, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(4, L"b", 9, 20, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(5, L"Y", 8, 13, EnumDeclaration, 3, 8)
+			ASSERT_SYMBOL(6, L"X", 13, 12, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(7, L"a", 15, 2, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(8, L"b", 15, 5, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(9, L"Y", 15, 8, EnumDeclaration, 4, 12)
+			ASSERT_SYMBOL(10, L"b", 16, 2, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(11, L"Y", 16, 5, EnumDeclaration, 4, 12)
+			ASSERT_SYMBOL(12, L"Y", 17, 2, EnumDeclaration, 4, 12)
 		END_ASSERT_SYMBOL
 	});
 	AssertProgram(input, output, recorder);
-	TEST_ASSERT(accessed.Count() == 10);
+	TEST_ASSERT(accessed.Count() == 13);
 
 	COMPILE_PROGRAM(program, pa, input);
 	AssertExpr(L"c::X()",					L"c::X()",						L"::a::b::X $PR");
-	AssertExpr(L"c::b::X()",				L"c::b::X()",					L"::a::b::X $PR");
 	AssertExpr(L"c::a::b::X()",				L"c::a:;b::X()",				L"::a::b::X $PR");
+	AssertExpr(L"c::Y()",					L"c::Y()",						L"::a::b::Y $PR");
+	AssertExpr(L"c::a::b::Y()",				L"c::a:;b::Y()",				L"::a::b::Y $PR");
 }
 
 TEST_CASE(TestParseDecl_TypeAlias)
