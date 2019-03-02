@@ -247,6 +247,7 @@ extern void							BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDecl
 extern void							BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor);
 extern Ptr<VariableDeclaration>		BuildVariableAndSymbol(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<CppTokenCursor>& cursor);
 
+extern Ptr<Expr>					ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Expr>					ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Stat>					ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern void							EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl);

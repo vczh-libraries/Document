@@ -219,7 +219,7 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Type>										type;
-	Ptr<Type>										expr;
+	Ptr<Expr>										expr;
 };
 
 class UsingDeclaration : public Declaration
