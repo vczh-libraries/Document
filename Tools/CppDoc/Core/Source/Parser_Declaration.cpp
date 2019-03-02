@@ -403,14 +403,45 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 			if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
 			auto symbol = resolvableType->resolving->resolvedSymbols[0];
 
-			if (symbol->kind != symbol_component::SymbolKind::Namespace)
+			switch (symbol->kind)
 			{
+			case symbol_component::SymbolKind::Enum:
+			case symbol_component::SymbolKind::EnumItem:
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+			case symbol_component::SymbolKind::Union:
+			case symbol_component::SymbolKind::TypeAlias:
+			case symbol_component::SymbolKind::Variable:
+				{
+					if (pa.context->children.Keys().Contains(symbol->name))
+					{
+						throw StopParsingException(cursor);
+					}
+					pa.context->children.Add(symbol->name, symbol);
+					throw StopParsingException(cursor);
+				}
+				break;
+			case symbol_component::SymbolKind::Function:
+				{
+					vint index = pa.context->children.Keys().IndexOf(symbol->name);
+					if (index != -1 && pa.context->children.GetByIndex(index)[0]->kind != symbol_component::SymbolKind::Function)
+					{
+						throw StopParsingException(cursor);
+					}
+					pa.context->children.Add(symbol->name, symbol);
+					throw StopParsingException(cursor);
+				}
+				break;
+			case symbol_component::SymbolKind::Namespace:
+				{
+					if (pa.context && !(pa.context->usingNss.Contains(symbol)))
+					{
+						pa.context->usingNss.Add(symbol);
+					}
+				}
+				break;
+			default:
 				throw StopParsingException(cursor);
-			}
-
-			if (pa.context && !(pa.context->usingNss.Contains(symbol)))
-			{
-				pa.context->usingNss.Add(symbol);
 			}
 		}
 		else
