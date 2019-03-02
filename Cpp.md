@@ -8,7 +8,6 @@
 - [ ] Merge 3 `ParsingArguments::WithContext` to one, automatically fill `funcSymbol` field instead of passing.
 - [ ] Test `ExprToTsys` on all expressions during parsing.
 - [ ] Compiler-generated functions.
-- [ ] `using` class members
 - [ ] After ADL is called, re-index unqualified function names or operator expressions.
 - [ ] Test cases for whole program indexing without templates.
 
