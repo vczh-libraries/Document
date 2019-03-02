@@ -648,7 +648,7 @@ namespace b
 	TEST_ASSERT(accessed.Count() == 29);
 }
 
-TEST_CASE(TestParseDecl_UsingNamespace)
+TEST_CASE(TestParseDecl_Using_Namespace)
 {
 	auto input = LR"(
 namespace a::b
@@ -718,6 +718,88 @@ namespace c
 	});
 	AssertProgram(input, output, recorder);
 	TEST_ASSERT(accessed.Count() == 10);
+
+	COMPILE_PROGRAM(program, pa, input);
+	AssertExpr(L"c::X()",					L"c::X()",						L"::a::b::X $PR");
+	AssertExpr(L"c::b::X()",				L"c::b::X()",					L"::a::b::X $PR");
+	AssertExpr(L"c::a::b::X()",				L"c::a:;b::X()",				L"::a::b::X $PR");
+}
+
+TEST_CASE(TestParseDecl_Using_Type)
+{
+	auto input = LR"(
+namespace a::b
+{
+	struct X {};
+	enum class Y {};
+}
+namespace c
+{
+	using a::b::X;
+	using a::b::Y;
+}
+namespace c
+{
+	struct Z : X
+	{
+		a::b::Y y1;
+		b::Y y2;
+		Y y3;
+	};
+}
+)";
+	auto output = LR"(
+namespace a
+{
+	namespace b
+	{
+		struct X
+		{
+		};
+		enum class Y
+		{
+		};
+	}
+}
+namespace c
+{
+	using a :: b :: X;
+	using a :: b :: Y;
+}
+namespace c
+{
+	struct Z : public X
+	{
+		public y1: a :: b :: Y;
+		public y2: b :: Y;
+		public y3: Y;
+	};
+}
+)";
+
+	SortedList<vint> accessed;
+	auto recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
+	{
+		BEGIN_ASSERT_SYMBOL
+			ASSERT_SYMBOL(0, L"a", 8, 17, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(1, L"a", 9, 17, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(2, L"b", 9, 20, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(3, L"X", 13, 12, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(4, L"a", 15, 2, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(5, L"b", 15, 5, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(6, L"Y", 15, 8, EnumDeclaration, 4, 12)
+			ASSERT_SYMBOL(7, L"b", 16, 2, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(8, L"Y", 16, 5, EnumDeclaration, 4, 12)
+			ASSERT_SYMBOL(9, L"Y", 17, 2, EnumDeclaration, 4, 12)
+		END_ASSERT_SYMBOL
+	});
+	AssertProgram(input, output, recorder);
+	TEST_ASSERT(accessed.Count() == 10);
+
+	COMPILE_PROGRAM(program, pa, input);
+	AssertExpr(L"c::X()",					L"c::X()",						L"::a::b::X $PR");
+	AssertExpr(L"c::b::X()",				L"c::b::X()",					L"::a::b::X $PR");
+	AssertExpr(L"c::a::b::X()",				L"c::a:;b::X()",				L"::a::b::X $PR");
 }
 
 TEST_CASE(TestParseDecl_TypeAlias)
