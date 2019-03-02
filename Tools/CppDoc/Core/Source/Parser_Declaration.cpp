@@ -453,14 +453,13 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 			try
 			{
 				decl->expr = ParsePrimitiveExpr(pa, cursor);
-				RequireToken(cursor, CppTokens::SEMICOLON);
 			}
 			catch (const StopParsingException&)
 			{
 				cursor = oldCursor;
 				decl->type = ParseType(pa, cursor);
-				RequireToken(cursor, CppTokens::SEMICOLON);
 			}
+			RequireToken(cursor, CppTokens::SEMICOLON);
 			output.Add(decl);
 
 			Ptr<Resolving> resolving;
