@@ -444,6 +444,7 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 			{
 				throw StopParsingException(cursor);
 			}
+			return;
 		}
 	SKIP_TYPE_ALIAS:
 		{

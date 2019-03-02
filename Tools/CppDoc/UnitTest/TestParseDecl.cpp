@@ -809,6 +809,23 @@ namespace c
 	AssertExpr(L"c::Y()",					L"c :: Y()",					L"::a::b::Y $PR",			pa);
 }
 
+TEST_CASE(TestParseDecl_Using_Value)
+{
+	auto input = LR"(
+namespace a
+{
+	int x;
+	void y();
+}
+using a::x;
+using a::y;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"a",			L"a",			L"__int32 $L",				pa);
+	AssertExpr(L"b",			L"b",			L"void () * $L",			pa);
+}
+
 TEST_CASE(TestParseDecl_TypeAlias)
 {
 	{
