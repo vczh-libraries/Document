@@ -809,7 +809,7 @@ namespace c
 	AssertExpr(L"c::Y()",					L"c :: Y()",					L"::a::b::Y $PR",			pa);
 }
 
-TEST_CASE(TestParseDecl_Using_Value)
+TEST_CASE(TestParseDecl_Using_Value_InNamespace)
 {
 	auto input = LR"(
 namespace a
@@ -824,6 +824,56 @@ using a::y;
 
 	AssertExpr(L"x",			L"x",			L"__int32 $L",				pa);
 	AssertExpr(L"y",			L"y",			L"void __cdecl() * $PR",	pa);
+}
+
+TEST_CASE(TestParseDecl_Using_Value_InClass)
+{
+	{
+		auto input = LR"(
+struct A
+{
+	char f(char);
+};
+
+struct B : A
+{
+	int f(int);
+};
+
+struct C : A
+{
+	using A::f;
+	int f(int);
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(L"B().f('a')",			L"B().f('a')",			L"__int32 $PR",			pa);
+		AssertExpr(L"C().f('a')",			L"C().f('a')",			L"char $PR",			pa);
+	}
+	{
+		auto input = LR"(
+struct A
+{
+	static char f(char);
+};
+
+struct B : A
+{
+	static int f(int);
+};
+
+struct C : A
+{
+	using A::f;
+	static int f(int);
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(L"B::f('a')",			L"B :: f('a')",			L"__int32 $PR",			pa);
+		AssertExpr(L"C::f('a')",			L"C :: f('a')",			L"char $PR",			pa);
+	}
 }
 
 TEST_CASE(TestParseDecl_TypeAlias)
