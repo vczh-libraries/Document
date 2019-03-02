@@ -118,6 +118,17 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 				}
 			}
 		}
+
+		if (scope->usingNss.Count() > 0)
+		{
+			for (vint i = 0; i < scope->usingNss.Count(); i++)
+			{
+				auto usingNs = scope->usingNss[i];
+				auto newPa = pa.WithContextNoFunction(usingNs);
+				ResolveSymbolInternal(newPa, SearchPolicy::ChildSymbol, rsa);
+			}
+		}
+
 		if (rsa.found) break;
 
 		if (auto decl = scope->declaration.Cast<ClassDeclaration>())
@@ -140,17 +151,6 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			}
 		}
 
-		if (rsa.found) break;
-
-		if (scope->usingNss.Count() > 0)
-		{
-			for (vint i = 0; i < scope->usingNss.Count(); i++)
-			{
-				auto usingNs = scope->usingNss[i];
-				auto newPa = pa.WithContextNoFunction(usingNs);
-				ResolveSymbolInternal(newPa, SearchPolicy::ChildSymbol, rsa);
-			}
-		}
 		if (rsa.found) break;
 
 		if (policy != SearchPolicy::SymbolAccessableInScope) break;
