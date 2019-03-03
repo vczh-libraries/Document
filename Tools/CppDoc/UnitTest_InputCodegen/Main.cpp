@@ -1,6 +1,7 @@
 #include <Vlpp.h>
 
 using namespace vl;
+using namespace vl::collections;
 using namespace vl::filesystem;
 using namespace vl::stream;
 
@@ -203,8 +204,109 @@ namespace generated_functions
 		EncoderStream encoderStream(fileStream, encoder);
 		StreamWriter writer(encoderStream);
 
+		auto Write = [&](const wchar_t* input, const WString& name, const wchar_t* keyword)
+		{
+			while (true)
+			{
+				auto pName = wcsstr(input, L"NAME");
+				auto pKeyword = wcsstr(input, L"KEYWORD");
+
+				if (pName && pKeyword)
+				{
+					if (pName < pKeyword)
+					{
+						writer.WriteString(name);
+						input += 4;
+					}
+					else
+					{
+						writer.WriteString(keyword);
+						input += 7;
+					}
+				}
+				else if (pName)
+				{
+					writer.WriteString(name);
+					input += 4;
+				}
+				else if (pKeyword)
+				{
+					writer.WriteString(keyword);
+					input += 7;
+				}
+				else
+				{
+					writer.WriteString(input);
+					return;
+				}
+			}
+		};
+
+		auto dDC = [&](const WString& name, const wchar_t* keyword)
+		{
+			writer.WriteString(L"\t\t");
+			Write(L"NAME()=KEYWORD;", name, keyword);
+			writer.WriteLine(L"");
+		};
+
+		auto dCC = [&](const WString& name, const wchar_t* keyword)
+		{
+			writer.WriteString(L"\t\t");
+			Write(L"NAME(const NAME&)=KEYWORD; NAME(const volatile NAME&)=KEYWORD;", name, keyword);
+			writer.WriteLine(L"");
+		};
+
+		auto dMC = [&](const WString& name, const wchar_t* keyword)
+		{
+			writer.WriteString(L"\t\t");
+			Write(L"NAME(const NAME&&)=KEYWORD; NAME(const volatile NAME&&)=KEYWORD; NAME(NAME&&)=KEYWORD; NAME(volatile NAME&&)=KEYWORD;", name, keyword);
+			writer.WriteLine(L"");
+		};
+
+		auto dCA = [&](const WString& name, const wchar_t* keyword)
+		{
+			writer.WriteString(L"\t\t");
+			Write(L"NAME&operator=(const NAME&)=KEYWORD; NAME&operator=(const volatile NAME&)=KEYWORD; NAME&operator=(NAME&)=KEYWORD; NAME&operator=(volatile NAME&)=KEYWORD;", name, keyword);
+			writer.WriteLine(L"");
+		};
+
+		auto dMA = [&](const WString& name, const wchar_t* keyword)
+		{
+			writer.WriteString(L"\t\t");
+			Write(L"NAME&operator=(const NAME&&)=KEYWORD; NAME&operator=(const volatile NAME&&)=KEYWORD; NAME&operator=(NAME&&)=KEYWORD; NAME&operator=(volatile NAME&&)=KEYWORD;", name, keyword);
+			writer.WriteLine(L"");
+		};
+
+		auto dDD = [&](const WString& name, const wchar_t* keyword)
+		{
+			writer.WriteString(L"\t\t");
+			Write(L"~NAME()=KEYWORD;", name, keyword);
+			writer.WriteLine(L"");
+		};
+
 		writer.WriteLine(L"namespace test_generated_functions");
 		writer.WriteLine(L"{");
+
+		List<WString> classNames;
+		for (vint i = 0; i < 3 * 3 * 3 * 3 * 3 * 3; i++)
+		{
+			vint fDC = i % 3;
+			vint fCC = (i / 3) % 3;
+			vint fMC = (i / (3 * 3)) % 3;
+			vint fCA = (i / (3 * 3 * 3)) % 3;
+			vint fMA = (i / (3 * 3 * 3 * 3)) % 3;
+			vint fDD = (i / (3 * 3 * 3 * 3 * 3)) % 3;
+
+			WString className;
+			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
+			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
+			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
+			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
+			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
+			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
+			classNames.Add(className);
+		}
+
 		writer.WriteLine(L"}");
 		writer.WriteLine(L"using namespace test_generated_functions;");
 	}
