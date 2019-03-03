@@ -266,7 +266,7 @@ TEST_CASE(TestIntegralPromotion_PostfixUnary)
 	COMPILE_PROGRAM(program, pa, input);
 
 #define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME++))>(pa, L#NAME, L"++");
-	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME--))>(pa, L#NAME, L"--");
@@ -298,7 +298,7 @@ TEST_CASE(TestIntegralPromotion_PrefixUnary)
 	COMPILE_PROGRAM(program, pa, input);
 
 #define TEST_VAR(NAME) AssertPrefixUnary<decltype((++NAME))>(pa, L#NAME, L"++");
-	TEST_EACH_VAR(TEST_VAR)
+	TEST_EACH_VAR_NO_BOOL(TEST_VAR)
 #undef TEST_VAR
 
 #define TEST_VAR(NAME) AssertPrefixUnary<decltype((--NAME))>(pa, L#NAME, L"--");

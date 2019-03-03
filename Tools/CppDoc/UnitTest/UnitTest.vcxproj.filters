@@ -16,24 +16,21 @@
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{6d6100ad-d931-4578-99d1-07d14c77ec62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestParser">
+      <UniqueIdentifier>{7ec1ac2f-4094-4cf1-834f-ffde7373f9d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestOverloading">
+      <UniqueIdentifier>{88fa7c97-d335-4e61-8f2d-759ecb4926b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestType">
+      <UniqueIdentifier>{f4d1e0cb-1861-411c-99d2-78e387183e0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MISC">
+      <UniqueIdentifier>{13c2642f-d820-48fd-91d4-73f8fa1f89b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TestLexer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestParseType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestParseExpr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestParseStat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestParseDecl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Util_Assert.cpp">
@@ -42,23 +39,41 @@
     <ClCompile Include="Util_Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestTypeSystem.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="TestParseDecl.cpp">
+      <Filter>Source Files\TestParser</Filter>
     </ClCompile>
-    <ClCompile Include="TestTypeConvert.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="TestParseExpr.cpp">
+      <Filter>Source Files\TestParser</Filter>
     </ClCompile>
-    <ClCompile Include="TestIntegralPromotion.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="TestParseStat.cpp">
+      <Filter>Source Files\TestParser</Filter>
+    </ClCompile>
+    <ClCompile Include="TestParseType.cpp">
+      <Filter>Source Files\TestParser</Filter>
     </ClCompile>
     <ClCompile Include="TestOverloading.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestOverloadingOperator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\TestOverloading</Filter>
     </ClCompile>
     <ClCompile Include="TestOverloadingAdl.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\TestOverloading</Filter>
+    </ClCompile>
+    <ClCompile Include="TestOverloadingOperator.cpp">
+      <Filter>Source Files\TestOverloading</Filter>
+    </ClCompile>
+    <ClCompile Include="TestIntegralPromotion.cpp">
+      <Filter>Source Files\TestType</Filter>
+    </ClCompile>
+    <ClCompile Include="TestTypeConvert.cpp">
+      <Filter>Source Files\TestType</Filter>
+    </ClCompile>
+    <ClCompile Include="TestTypeSystem.cpp">
+      <Filter>Source Files\TestType</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGeneratedFunctions.cpp">
+      <Filter>Source Files\MISC</Filter>
+    </ClCompile>
+    <ClCompile Include="TestLexer.cpp">
+      <Filter>Source Files\TestParser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
