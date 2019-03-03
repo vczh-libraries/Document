@@ -3,8 +3,6 @@
 #include "TestGeneratedFunctions_Macro.h"
 #include <type_traits>
 
-using namespace std;
-
 WString LoadGeneratedFunctionsCode()
 {
 	FilePath input = L"../UnitTest/TestGeneratedFunctions_Input.h";
@@ -36,50 +34,75 @@ struct TestGC_TypeSelector<false>
 template<bool Ability>
 struct TestGC_Helper
 {
-	static void DefaultCtor(const WString& name, const ParsingArguments& pa)
+	static void DefaultCtor(const WString& name, ParsingArguments& pa)
 	{
 		WString code = name + L"()";
 		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code, code, TestGC_TypeSelector<Ability>::GetType(type), pa);
+		AssertExpr(code.Buffer(), code.Buffer(), TestGC_TypeSelector<Ability>::GetType(type).Buffer(), pa);
 	}
 
-	static void CopyCtor(const WString& name, const ParsingArguments& pa)
+	static void CopyCtor(const WString& name, ParsingArguments& pa)
 	{
 		WString code = name + L"(static_cast<" + name + L" const &>(nullptr))";
 		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code, code, TestGC_TypeSelector<Ability>::GetType(type), pa);
+		AssertExpr(code.Buffer(), code.Buffer(), TestGC_TypeSelector<Ability>::GetType(type).Buffer(), pa);
 	}
 
-	static void MoveCtor(const WString& name, const ParsingArguments& pa)
+	static void MoveCtor(const WString& name, ParsingArguments& pa)
 	{
 		WString code = name + L"(static_cast<" + name + L" &&>(nullptr))";
 		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code, code, TestGC_TypeSelector<Ability>::GetType(type), pa);
+		AssertExpr(code.Buffer(), code.Buffer(), TestGC_TypeSelector<Ability>::GetType(type).Buffer(), pa);
 	}
 
-	static void CopyAssign(const WString& name, const ParsingArguments& pa)
+	static void CopyAssign(const WString& name, ParsingArguments& pa)
 	{
 		WString code = L"static_cast<" + name + L" &>(nullptr) = " + L"static_cast<" + name + L" const &>(nullptr)";
 		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code, L"(" + code + L")", TestGC_TypeSelector<Ability>::GetType(type + L" &"), pa);
+		AssertExpr(code.Buffer(), (L"(" + code + L")").Buffer(), TestGC_TypeSelector<Ability>::GetType(type + L" &").Buffer(), pa);
 	}
 
-	static void MoveAssign(const WString& name, const ParsingArguments& pa)
+	static void MoveAssign(const WString& name, ParsingArguments& pa)
 	{
 		WString code = L"static_cast<" + name + L" &>(nullptr) = " + L"static_cast<" + name + L" &&>(nullptr)";
 		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code, L"(" + code + L")", TestGC_TypeSelector<Ability>::GetType(type + L" &"), pa);
+		AssertExpr(code.Buffer(), (L"(" + code + L")").Buffer(), TestGC_TypeSelector<Ability>::GetType(type + L" &").Buffer(), pa);
 	}
 
-	static void DefaultConstructible(const WString& name, const ParsingArguments& pa)
+	static void DefaultDtor(const WString& name, ParsingArguments& pa)
 	{
 		WString code = L"static_cast<" + name + L" &>(nullptr).~" + name + L"()";
 		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code, L"(" + code + L")", TestGC_TypeSelector<Ability>::GetType(type + L" &"), pa);
+		AssertExpr(code.Buffer(), code.Buffer(), TestGC_TypeSelector<Ability>::GetType(type + L" &").Buffer(), pa);
 	}
 };
 
 TEST_CASE(TestGF_Features)
 {
+	return;
 	COMPILE_PROGRAM(program, pa, LoadGeneratedFunctionsCode().Buffer());
+
+#define FEATURE(TYPE) TestGC_Helper<std::is_default_constructible_v<TYPE>>::DefaultCtor(L#TYPE, pa);
+	GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
+
+#define FEATURE(TYPE) TestGC_Helper<std::is_copy_constructible_v<TYPE>>::CopyCtor(L#TYPE, pa);
+		GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
+
+#define FEATURE(TYPE) TestGC_Helper<std::is_move_constructible_v<TYPE>>::MoveCtor(L#TYPE, pa);
+		GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
+
+#define FEATURE(TYPE) TestGC_Helper<std::is_copy_assignable_v<TYPE>>::CopyAssign(L#TYPE, pa);
+		GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
+
+#define FEATURE(TYPE) TestGC_Helper<std::is_move_assignable_v<TYPE>>::MoveAssign(L#TYPE, pa);
+		GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
+
+#define FEATURE(TYPE) TestGC_Helper<std::is_destructible_v<TYPE>>::DefaultDtor(L#TYPE, pa);
+		GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
 }
