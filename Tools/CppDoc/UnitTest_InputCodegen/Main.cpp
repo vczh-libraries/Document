@@ -110,7 +110,7 @@ namespace operator_overloading
 		for (auto op : ops)
 		{
 			if (wcscmp(op.name, L"=") == 0) continue;
-			writer.WriteString(L"\t\tvoid* operator");
+			writer.WriteString(L"\tvoid* operator");
 			writer.WriteString(op.name);
 			writer.WriteString(op.name[1] ? L"\t\t" : L"\t\t\t");
 			writer.WriteLine(op.parameter ? L"(Y&, int);" : L"(Y&);");
@@ -118,7 +118,7 @@ namespace operator_overloading
 		for (auto op : ops2)
 		{
 			if (wcscmp(op.name, L"=") == 0) continue;
-			writer.WriteString(L"\t\tvoid* operator");
+			writer.WriteString(L"\tvoid* operator");
 			writer.WriteString(op.name);
 			writer.WriteString(op.name[1] ? L"\t\t" : L"\t\t\t");
 			writer.WriteLine(L"(int, Y&);");
@@ -127,7 +127,7 @@ namespace operator_overloading
 		for (auto op : ops)
 		{
 			if (wcscmp(op.name, L"=") == 0) continue;
-			writer.WriteString(L"\t\tvoid* operator");
+			writer.WriteString(L"\tbool* operator");
 			writer.WriteString(op.name);
 			writer.WriteString(op.name[1] ? L"\t\t" : L"\t\t\t");
 			writer.WriteLine(op.parameter ? L"(const Y&, int);" : L"(const Y&);");
@@ -135,7 +135,7 @@ namespace operator_overloading
 		for (auto op : ops2)
 		{
 			if (wcscmp(op.name, L"=") == 0) continue;
-			writer.WriteString(L"\t\tvoid* operator");
+			writer.WriteString(L"\tbool* operator");
 			writer.WriteString(op.name);
 			writer.WriteString(op.name[1] ? L"\t\t" : L"\t\t\t");
 			writer.WriteLine(L"(int, const Y&);");
@@ -145,6 +145,51 @@ namespace operator_overloading
 
 	void GenerateInput3()
 	{
+		FilePath path = L"../UnitTest/TestOverloadingOperator_Input3.h";
+		FileStream fileStream(path.GetFullPath(), FileStream::WriteOnly);
+		Utf8Encoder encoder;
+		EncoderStream encoderStream(fileStream, encoder);
+		StreamWriter writer(encoderStream);
+
+		writer.WriteLine(L"namespace test_overloading");
+		writer.WriteLine(L"{");
+		writer.WriteLine(L"\tstruct Z");
+		writer.WriteLine(L"\t{");
+		writer.WriteLine(L"\t};");
+		writer.WriteLine(L"}");
+		for (auto op : ops)
+		{
+			if (wcscmp(op.name, L"=") == 0) continue;
+			writer.WriteString(L"void* operator");
+			writer.WriteString(op.name);
+			writer.WriteString(op.name[1] ? L"\t\t\t" : L"\t\t\t\t");
+			writer.WriteLine(op.parameter ? L"(test_overloading::Z&, int);" : L"(test_overloading::Z&);");
+		}
+		for (auto op : ops2)
+		{
+			if (wcscmp(op.name, L"=") == 0) continue;
+			writer.WriteString(L"void* operator");
+			writer.WriteString(op.name);
+			writer.WriteString(op.name[1] ? L"\t\t\t" : L"\t\t\t\t");
+			writer.WriteLine(L"(int, test_overloading::Z&);");
+		}
+		writer.WriteLine(L"");
+		for (auto op : ops)
+		{
+			if (wcscmp(op.name, L"=") == 0) continue;
+			writer.WriteString(L"bool* operator");
+			writer.WriteString(op.name);
+			writer.WriteString(op.name[1] ? L"\t\t\t" : L"\t\t\t\t");
+			writer.WriteLine(op.parameter ? L"(const test_overloading::Z&, int);" : L"(const test_overloading::Z&);");
+		}
+		for (auto op : ops2)
+		{
+			if (wcscmp(op.name, L"=") == 0) continue;
+			writer.WriteString(L"bool* operator");
+			writer.WriteString(op.name);
+			writer.WriteString(op.name[1] ? L"\t\t\t" : L"\t\t\t\t");
+			writer.WriteLine(L"(int, const test_overloading::Z&);");
+		}
 	}
 }
 
