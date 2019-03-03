@@ -79,7 +79,6 @@ struct TestGC_Helper
 
 TEST_CASE(TestGF_Features)
 {
-	return;
 	COMPILE_PROGRAM(program, pa, LoadGeneratedFunctionsCode().Buffer());
 
 #define FEATURE(TYPE) TestGC_Helper<std::is_default_constructible_v<TYPE>>::DefaultCtor(L#TYPE, pa);
