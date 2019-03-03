@@ -198,117 +198,159 @@ namespace generated_functions
 {
 	void GenerateInput()
 	{
-		FilePath path = L"../UnitTest/TestGeneratedFunctions_Input.h";
-		FileStream fileStream(path.GetFullPath(), FileStream::WriteOnly);
-		Utf8Encoder encoder;
-		EncoderStream encoderStream(fileStream, encoder);
-		StreamWriter writer(encoderStream);
-
-		auto Write = [&](const wchar_t* input, const WString& name, const wchar_t* keyword)
+		List<WString> classNames;
 		{
-			while (true)
-			{
-				auto pName = wcsstr(input, L"NAME");
-				auto pKeyword = wcsstr(input, L"KEYWORD");
+			FilePath path = L"../UnitTest/TestGeneratedFunctions_Input.h";
+			FileStream fileStream(path.GetFullPath(), FileStream::WriteOnly);
+			Utf8Encoder encoder;
+			EncoderStream encoderStream(fileStream, encoder);
+			StreamWriter writer(encoderStream);
 
-				if (pName && pKeyword)
+			auto Write = [&](const wchar_t* input, const wchar_t* name, const wchar_t* keyword)
+			{
+				while (true)
 				{
-					if (pName < pKeyword)
+					auto pName = wcsstr(input, L"NAME");
+					auto pKeyword = wcsstr(input, L"KEYWORD");
+					vint skip = 0;
+					const wchar_t* search = nullptr;
+					const wchar_t* replace = nullptr;
+
+					if (pName && pKeyword)
 					{
-						writer.WriteString(name);
-						input += 4;
+						if (pName < pKeyword)
+						{
+							skip = 4;
+							search = pName;
+							replace = name;
+						}
+						else
+						{
+							skip = 7;
+							search = pKeyword;
+							replace = keyword;
+						}
+					}
+					else if (pName)
+					{
+						skip = 4;
+						search = pName;
+						replace = name;
+					}
+					else if (pKeyword)
+					{
+						skip = 7;
+						search = pKeyword;
+						replace = keyword;
+					}
+
+					if (search)
+					{
+						writer.WriteString(WString(input, false).Left((vint)(search - input)));
+						writer.WriteString(replace);
+						input = search + skip;
 					}
 					else
 					{
-						writer.WriteString(keyword);
-						input += 7;
+						writer.WriteString(input);
+						return;
 					}
 				}
-				else if (pName)
-				{
-					writer.WriteString(name);
-					input += 4;
-				}
-				else if (pKeyword)
-				{
-					writer.WriteString(keyword);
-					input += 7;
-				}
-				else
-				{
-					writer.WriteString(input);
-					return;
-				}
+			};
+
+			auto dDC = [&](const WString& name, const wchar_t* keyword)
+			{
+				writer.WriteString(L"\t\t");
+				Write(L"NAME()=KEYWORD;", name.Buffer(), keyword);
+				writer.WriteLine(L"");
+			};
+
+			auto dCC = [&](const WString& name, const wchar_t* keyword)
+			{
+				writer.WriteString(L"\t\t");
+				Write(L"NAME(const NAME&)=KEYWORD;", name.Buffer(), keyword);
+				writer.WriteLine(L"");
+			};
+
+			auto dMC = [&](const WString& name, const wchar_t* keyword)
+			{
+				writer.WriteString(L"\t\t");
+				Write(L"NAME(NAME&&)=KEYWORD;", name.Buffer(), keyword);
+				writer.WriteLine(L"");
+			};
+
+			auto dCA = [&](const WString& name, const wchar_t* keyword)
+			{
+				writer.WriteString(L"\t\t");
+				Write(L"NAME&operator=(const NAME&)=KEYWORD;", name.Buffer(), keyword);
+				writer.WriteLine(L"");
+			};
+
+			auto dMA = [&](const WString& name, const wchar_t* keyword)
+			{
+				writer.WriteString(L"\t\t");
+				Write(L"NAME&operator=(NAME&&)=KEYWORD;", name.Buffer(), keyword);
+				writer.WriteLine(L"");
+			};
+
+			auto dDD = [&](const WString& name, const wchar_t* keyword)
+			{
+				writer.WriteString(L"\t\t");
+				Write(L"~NAME()=KEYWORD;", name.Buffer(), keyword);
+				writer.WriteLine(L"");
+			};
+
+			writer.WriteLine(L"namespace test_generated_functions");
+			writer.WriteLine(L"{");
+
+			for (vint i = 0; i < 3 * 3 * 3 * 3 * 3 * 3; i++)
+			{
+				vint fDC = i % 3;
+				vint fCC = (i / 3) % 3;
+				vint fMC = (i / (3 * 3)) % 3;
+				vint fCA = (i / (3 * 3 * 3)) % 3;
+				vint fMA = (i / (3 * 3 * 3 * 3)) % 3;
+				vint fDD = (i / (3 * 3 * 3 * 3 * 3)) % 3;
+
+				WString className;
+				className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
+				className += (fCC == 0 ? L"oCC_" : fCC == 2 ? L"xCC_" : L"nCC_");
+				className += (fMC == 0 ? L"oMC_" : fMC == 2 ? L"xMC_" : L"nMC_");
+				className += (fCA == 0 ? L"oCA_" : fCA == 2 ? L"xCA_" : L"nCA_");
+				className += (fMA == 0 ? L"oMA_" : fMA == 2 ? L"xMA_" : L"nMA_");
+				className += (fDD == 0 ? L"oDD_" : fDD == 2 ? L"xDD_" : L"nDD_");
+				classNames.Add(className);
+
+				writer.WriteString(L"\tstruct ");
+				writer.WriteLine(className);
+				writer.WriteLine(L"\t{");
+				if (fDC == 0) dDC(className, L"default"); else if (fDC == 2) dDC(className, L"delete");
+				if (fCC == 0) dCC(className, L"default"); else if (fCC == 2) dCC(className, L"delete");
+				if (fMC == 0) dMC(className, L"default"); else if (fMC == 2) dMC(className, L"delete");
+				if (fCA == 0) dCA(className, L"default"); else if (fCA == 2) dCA(className, L"delete");
+				if (fMA == 0) dMA(className, L"default"); else if (fMA == 2) dMA(className, L"delete");
+				if (fDD == 0) dDD(className, L"default"); else if (fDD == 2) dDD(className, L"delete");
+				writer.WriteLine(L"\t};");
 			}
-		};
 
-		auto dDC = [&](const WString& name, const wchar_t* keyword)
-		{
-			writer.WriteString(L"\t\t");
-			Write(L"NAME()=KEYWORD;", name, keyword);
-			writer.WriteLine(L"");
-		};
-
-		auto dCC = [&](const WString& name, const wchar_t* keyword)
-		{
-			writer.WriteString(L"\t\t");
-			Write(L"NAME(const NAME&)=KEYWORD; NAME(const volatile NAME&)=KEYWORD;", name, keyword);
-			writer.WriteLine(L"");
-		};
-
-		auto dMC = [&](const WString& name, const wchar_t* keyword)
-		{
-			writer.WriteString(L"\t\t");
-			Write(L"NAME(const NAME&&)=KEYWORD; NAME(const volatile NAME&&)=KEYWORD; NAME(NAME&&)=KEYWORD; NAME(volatile NAME&&)=KEYWORD;", name, keyword);
-			writer.WriteLine(L"");
-		};
-
-		auto dCA = [&](const WString& name, const wchar_t* keyword)
-		{
-			writer.WriteString(L"\t\t");
-			Write(L"NAME&operator=(const NAME&)=KEYWORD; NAME&operator=(const volatile NAME&)=KEYWORD; NAME&operator=(NAME&)=KEYWORD; NAME&operator=(volatile NAME&)=KEYWORD;", name, keyword);
-			writer.WriteLine(L"");
-		};
-
-		auto dMA = [&](const WString& name, const wchar_t* keyword)
-		{
-			writer.WriteString(L"\t\t");
-			Write(L"NAME&operator=(const NAME&&)=KEYWORD; NAME&operator=(const volatile NAME&&)=KEYWORD; NAME&operator=(NAME&&)=KEYWORD; NAME&operator=(volatile NAME&&)=KEYWORD;", name, keyword);
-			writer.WriteLine(L"");
-		};
-
-		auto dDD = [&](const WString& name, const wchar_t* keyword)
-		{
-			writer.WriteString(L"\t\t");
-			Write(L"~NAME()=KEYWORD;", name, keyword);
-			writer.WriteLine(L"");
-		};
-
-		writer.WriteLine(L"namespace test_generated_functions");
-		writer.WriteLine(L"{");
-
-		List<WString> classNames;
-		for (vint i = 0; i < 3 * 3 * 3 * 3 * 3 * 3; i++)
-		{
-			vint fDC = i % 3;
-			vint fCC = (i / 3) % 3;
-			vint fMC = (i / (3 * 3)) % 3;
-			vint fCA = (i / (3 * 3 * 3)) % 3;
-			vint fMA = (i / (3 * 3 * 3 * 3)) % 3;
-			vint fDD = (i / (3 * 3 * 3 * 3 * 3)) % 3;
-
-			WString className;
-			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
-			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
-			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
-			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
-			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
-			className += (fDC == 0 ? L"oDC_" : fDC == 2 ? L"xDC_" : L"nDC_");
-			classNames.Add(className);
+			writer.WriteLine(L"}");
+			writer.WriteLine(L"using namespace test_generated_functions;");
 		}
-
-		writer.WriteLine(L"}");
-		writer.WriteLine(L"using namespace test_generated_functions;");
+		{
+			FilePath path = L"../UnitTest/TestGeneratedFunctions_Macro.h";
+			FileStream fileStream(path.GetFullPath(), FileStream::WriteOnly);
+			Utf8Encoder encoder;
+			EncoderStream encoderStream(fileStream, encoder);
+			StreamWriter writer(encoderStream);
+			writer.WriteLine(L"#define GENERATED_FUNCTION_TYPES(F)\\");
+			FOREACH(WString, className, classNames)
+			{
+				writer.WriteString(L"\tF(");
+				writer.WriteString(className);
+				writer.WriteLine(L")\\");
+			}
+			writer.WriteLine(L"");
+		}
 	}
 }
 
