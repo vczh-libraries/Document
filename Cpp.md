@@ -5,9 +5,52 @@
 
 ## Short-term tasks
 
+- [ ] Add exception messages so that the final application won't crash leaving nothing.
 - [ ] Merge 3 `ParsingArguments::WithContext` to one, automatically fill `funcSymbol` field instead of passing.
 - [ ] Test `ExprToTsys` on all expressions during parsing.
 - [ ] Compiler-generated functions.
+  - Only try to generate if there is no user-defined one.
+  - If any user-defined functions exist, move functions are deleted.
+  - If any user-defined move functions exist, copy functions are deleted.
+  - `operator=` are always generated (even as `deleted`), those in base types are hidden.
+  - Default ctor
+    - **not able to generate**
+      - if there is any non-static member that is one of the following type and it doesn't have a default initializer
+        - has reference type member
+        - has const type member
+        - has member of type without a default ctor
+        - has a deleted dtor
+      - has any base type that has a deleted default ctor or dtor.
+    - `default` if it is not `deleted`.
+    - `deleted` if there are other user-defined ctors, or it is not able to generate.
+  - Copy ctor
+    - **not able to generate**
+      - if there is any non-static member that is not copy-constructible.
+      - if there is any non-static member that is a rvalue refence type.
+      - has any base type that is not copy-constructible.
+    - `default` if it is not `deleted`.
+      - If all copy ctors of non-static members and base types are `const T&` or `const volatile T&`, then the generated copy ctor is `const T&`, otherwise it is `T&`.
+    - `deleted` if there are user-defined move ctor or move `operator=`, or it is not able to generate.
+  - Move ctor
+    - **not able to generate**
+      - if there is any non-static member that is not `T&&` or `const T&&` move constructible.
+      - has any base type that is not `T&&` or `const T&&` move constructible.
+    - `default` if it is not `deleted`.
+    - `deleted` if there are user-defined dtor, copy ctor, copy `operator=` or move `operator=`, or it is not able to generate.
+  - copy `operator=`
+    - **not able to generate**
+      - if there is any non-static member that is not copy-assignable. (either `T`, `const T&` or `const volatile T&` counts)
+      - has any base type that is not copy-assignable.
+    - `default` if it is not `deleted`.
+    - `deleted` if there are user-defined move ctor or move `operator=`, or it is not able to generate.
+  - move `operator=`
+    - **not able to generate**
+      - if there is any non-static member that is one of the following type and it is not move-assignable.
+        - has const type member
+        - has reference type member
+      - has any base type that is not move-assignable.
+    - `default` if it is not `deleted`.
+    - `deleted` if there are user-defined dtor, copy ctor, move ctor or copy `operator=`, or it is not able to generate.
 - [x] After ADL is called, re-index unqualified function names or operator expressions.
   - [ ] Test
 - [ ] Test cases for whole program indexing without templates.
@@ -263,24 +306,24 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 [Built-in Operators, Precedence and Associativity](https://docs.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=vs-2017)
 
-**Precedence Groups**
+### Precedence Groups
 
-0. : primitive
-1. : `::`
-2. : `.` `->` `[]` `()` `x++` `x--`
-3. (<-): `sizeof` `new` `delete` `++x` `--x` `~` `!` `-x` `+x` `&x` `*x` `(T)E`
-4. : `.*` `->*`
-5. : `*` `/` `%`
-6. : `+` `-`
-7. : `<<` `>>`
-8. : `<` `>` `<=` `>=`
-9. : `==` `!=`
-10. : `&`
-11. : `^`
-12. : `|`
-13. : `&&`
-14. : `||`
-15. (<-): `a?b:c`
-16. (<-): `=` `*=` `/=` `%=` `+=` `-=` `<<=` `>>=` `&=` `|=` `^=`
-17. (<-): `throw`
-18. : `,`
+1. : primitive
+2. : `::`
+3. : `.` `->` `[]` `()` `x++` `x--`
+4. (<-): `sizeof` `new` `delete` `++x` `--x` `~` `!` `-x` `+x` `&x` `*x` `(T)E`
+5. : `.*` `->*`
+6. : `*` `/` `%`
+7. : `+` `-`
+8. : `<<` `>>`
+9. : `<` `>` `<=` `>=`
+10. : `==` `!=`
+11. : `&`
+12. : `^`
+13. : `|`
+14. : `&&`
+15. : `||`
+16. (<-): `a?b:c`
+17. (<-): `=` `*=` `/=` `%=` `+=` `-=` `<<=` `>>=` `&=` `|=` `^=`
+18. (<-): `throw`
+19. : `,`

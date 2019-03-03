@@ -451,8 +451,8 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 		Ptr<FunctionType> type;
 		if (callingConvention != TsysCallingConvention::None)
 		{
-			// __stdcall should appear before CLASS::
-			// so if we see __stdcall ( here, then there is no CLASS:: (maybe CLASS::* but we don't care)
+			// __stdcall should appear before "CLASS::"
+			// so if we see "__stdcall (" here, then there is no "CLASS::" (maybe "CLASS::*" but we don't care)
 			// we can simply decorate the function with __stdcall, no need to worry about adjusting the return type
 			if (declarator->type != targetType)
 			{
