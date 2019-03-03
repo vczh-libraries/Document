@@ -53,6 +53,7 @@
     - `deleted` if there are user-defined dtor, copy ctor, move ctor or copy `operator=`, or it is not able to generate.
 - [x] After ADL is called, re-index unqualified function names or operator expressions.
   - [ ] Test
+- [ ] Initializer list in constructors.
 - [ ] Test cases for whole program indexing without templates.
 
 ## Template short-term tasks
