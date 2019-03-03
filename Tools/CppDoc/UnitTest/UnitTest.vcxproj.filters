@@ -95,5 +95,8 @@
     <ClInclude Include="TestOverloadingAdl_Input.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
+    <ClInclude Include="TestGeneratedFunctions_Input.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

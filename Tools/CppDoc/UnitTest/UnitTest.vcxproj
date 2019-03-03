@@ -173,6 +173,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TestGeneratedFunctions_Input.h" />
     <ClInclude Include="TestOverloadingAdl_Input.h" />
     <ClInclude Include="TestOverloadingOperator_Input1.h" />
     <ClInclude Include="TestOverloadingOperator_Input2.h" />

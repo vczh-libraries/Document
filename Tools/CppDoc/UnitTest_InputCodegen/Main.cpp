@@ -193,6 +193,23 @@ namespace operator_overloading
 	}
 }
 
+namespace generated_functions
+{
+	void GenerateInput()
+	{
+		FilePath path = L"../UnitTest/TestGeneratedFunctions_Input.h";
+		FileStream fileStream(path.GetFullPath(), FileStream::WriteOnly);
+		Utf8Encoder encoder;
+		EncoderStream encoderStream(fileStream, encoder);
+		StreamWriter writer(encoderStream);
+
+		writer.WriteLine(L"namespace test_generated_functions");
+		writer.WriteLine(L"{");
+		writer.WriteLine(L"}");
+		writer.WriteLine(L"using namespace test_generated_functions;");
+	}
+}
+
 int main()
 {
 	{
@@ -203,6 +220,10 @@ int main()
 		GenerateInput1();
 		GenerateInput2();
 		GenerateInput3();
+	}
+	{
+		using namespace generated_functions;
+		GenerateInput();
 	}
 	return 0;
 }
