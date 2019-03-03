@@ -113,22 +113,22 @@ TEST_CASE(TestGF_Features)
 #undef FEATURE
 
 #define FEATURE(TYPE) TestGC_Helper<std::is_copy_constructible_v<TYPE>>::CopyCtor(L#TYPE, pa);
-		GENERATED_FUNCTION_TYPES(FEATURE)
+	GENERATED_FUNCTION_TYPES(FEATURE)
 #undef FEATURE
 
 #define FEATURE(TYPE) TestGC_Helper<std::is_move_constructible_v<TYPE>>::MoveCtor(L#TYPE, pa);
-		GENERATED_FUNCTION_TYPES(FEATURE)
+	GENERATED_FUNCTION_TYPES(FEATURE)
 #undef FEATURE
 
 #define FEATURE(TYPE) TestGC_Helper<std::is_copy_assignable_v<TYPE>>::CopyAssign(L#TYPE, pa);
-		GENERATED_FUNCTION_TYPES(FEATURE)
+	GENERATED_FUNCTION_TYPES(FEATURE)
 #undef FEATURE
 
 #define FEATURE(TYPE) TestGC_Helper<std::is_move_assignable_v<TYPE>>::MoveAssign(L#TYPE, pa);
-		GENERATED_FUNCTION_TYPES(FEATURE)
+	GENERATED_FUNCTION_TYPES(FEATURE)
 #undef FEATURE
 
 #define FEATURE(TYPE) TestGC_Helper<std::is_destructible_v<TYPE>>::DefaultDtor(L#TYPE, pa);
-		GENERATED_FUNCTION_TYPES(FEATURE)
+	GENERATED_FUNCTION_TYPES(FEATURE)
 #undef FEATURE
 }
