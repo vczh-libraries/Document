@@ -177,6 +177,7 @@
     <ClCompile Include="Source\Ast_Evaluate_ExprToTsys.cpp" />
     <ClCompile Include="Source\Ast_Resolving.cpp" />
     <ClCompile Include="Source\Ast_Resolving_Overloading.cpp" />
+    <ClCompile Include="Source\Ast_Type_GenerateMembers.cpp" />
     <ClCompile Include="Source\Ast_Type_IsPendingType.cpp" />
     <ClCompile Include="Source\Ast_Type_IsSameResolvedType.cpp" />
     <ClCompile Include="Source\Ast_Evaluate_TypeToTsys.cpp" />

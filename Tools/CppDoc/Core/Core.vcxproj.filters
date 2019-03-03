@@ -143,5 +143,8 @@
     <ClCompile Include="Source\Ast_Resolving_Overloading.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Ast_Type_GenerateMembers.cpp">
+      <Filter>Source Files\Ast\Type</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

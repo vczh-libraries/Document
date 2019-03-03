@@ -377,6 +377,11 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 					}
 				}
 			}
+
+			if (classType != CppClassType::Union)
+			{
+				GenerateMembers(declPa, contextSymbol);
+			}
 			return decl;
 		}
 	}
