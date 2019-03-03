@@ -1,7 +1,9 @@
+#include <type_traits>
 #include "Util.h"
+#include "..\Core\Source\Ast_Decl.h"
+#include "..\Core\Source\Ast_Type.h"
 #include "TestGeneratedFunctions_Input.h"
 #include "TestGeneratedFunctions_Macro.h"
-#include <type_traits>
 
 WString LoadGeneratedFunctionsCode()
 {
@@ -34,46 +36,71 @@ struct TestGC_TypeSelector<false>
 template<bool Ability>
 struct TestGC_Helper
 {
+	static void Assert(const WString& name, const WString& functionName, CppReferenceType parameterRefType, ParsingArguments& pa)
+	{
+		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
+		vint index = classSymbol->children.Keys().IndexOf(functionName);
+		if (index != -1)
+		{
+			auto& funcs = classSymbol->children.GetByIndex(index);
+			for (vint i = 0; i < funcs.Count(); i++)
+			{
+				auto funcDecl = funcs[i]->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+				auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>();
+				if (funcType->parameters.Count() == 0)
+				{
+					if (parameterRefType == CppReferenceType::Ptr)
+					{
+						if (funcDecl->decoratorDefault) TEST_ASSERT(Ability);
+						if (funcDecl->decoratorDelete) TEST_ASSERT(!Ability);
+						return;
+					}
+				}
+				else if (funcType->parameters.Count() == 1)
+				{
+					if (auto refType = funcType->parameters[0]->type.Cast<ReferenceType>())
+					{
+						if (refType->reference == parameterRefType)
+						{
+							if (funcDecl->decoratorDefault) TEST_ASSERT(Ability);
+							if (funcDecl->decoratorDelete) TEST_ASSERT(!Ability);
+							return;
+						}
+					}
+				}
+			}
+		}
+		TEST_ASSERT(!Ability);
+	}
+
 	static void DefaultCtor(const WString& name, ParsingArguments& pa)
 	{
-		WString code = name + L"()";
-		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code.Buffer(), code.Buffer(), TestGC_TypeSelector<Ability>::GetType(type).Buffer(), pa);
+		Assert(name, L"$__ctor", CppReferenceType::Ptr, pa);
 	}
 
 	static void CopyCtor(const WString& name, ParsingArguments& pa)
 	{
-		WString code = name + L"(static_cast<" + name + L" const &>(nullptr))";
-		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code.Buffer(), code.Buffer(), TestGC_TypeSelector<Ability>::GetType(type).Buffer(), pa);
+		Assert(name, L"$__ctor", CppReferenceType::LRef, pa);
 	}
 
 	static void MoveCtor(const WString& name, ParsingArguments& pa)
 	{
-		WString code = name + L"(static_cast<" + name + L" &&>(nullptr))";
-		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code.Buffer(), code.Buffer(), TestGC_TypeSelector<Ability>::GetType(type).Buffer(), pa);
+		Assert(name, L"$__ctor", CppReferenceType::RRef, pa);
 	}
 
 	static void CopyAssign(const WString& name, ParsingArguments& pa)
 	{
-		WString code = L"static_cast<" + name + L" &>(nullptr) = " + L"static_cast<" + name + L" const &>(nullptr)";
-		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code.Buffer(), (L"(" + code + L")").Buffer(), TestGC_TypeSelector<Ability>::GetType(type + L" &").Buffer(), pa);
+		Assert(name, L"operator =", CppReferenceType::LRef, pa);
 	}
 
 	static void MoveAssign(const WString& name, ParsingArguments& pa)
 	{
-		WString code = L"static_cast<" + name + L" &>(nullptr) = " + L"static_cast<" + name + L" &&>(nullptr)";
-		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code.Buffer(), (L"(" + code + L")").Buffer(), TestGC_TypeSelector<Ability>::GetType(type + L" &").Buffer(), pa);
+		Assert(name, L"operator =", CppReferenceType::RRef, pa);
 	}
 
 	static void DefaultDtor(const WString& name, ParsingArguments& pa)
 	{
-		WString code = L"static_cast<" + name + L" &>(nullptr).~" + name + L"()";
-		WString type = L"::test_generated_functions::" + name;
-		AssertExpr(code.Buffer(), code.Buffer(), TestGC_TypeSelector<Ability>::GetType(type + L" &").Buffer(), pa);
+		Assert(name, L"~" + name, CppReferenceType::Ptr, pa);
 	}
 };
 
