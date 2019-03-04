@@ -217,7 +217,9 @@ namespace TestConvert_Helpers
 				for (vint i = 0; i < ctors.Count(); i++)
 				{
 					auto ctorSymbol = ctors[i];
-					symbol_type_resolving::EvaluateSymbol(pa, ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>().Obj());
+					auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+					if (ctorDecl->decoratorDelete) continue;
+					symbol_type_resolving::EvaluateSymbol(pa, ctorDecl.Obj());
 
 					for (vint j = 0; j < ctorSymbol->evaluation.Get().Count(); j++)
 					{
