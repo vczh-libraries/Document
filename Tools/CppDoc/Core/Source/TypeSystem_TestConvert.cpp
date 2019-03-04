@@ -430,7 +430,8 @@ namespace TestConvert_Helpers
 			auto typeOpSymbol = typeOps[i];
 			auto typeOpDecl = typeOpSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 			{
-				if (typeOpDecl->decoratorExplicit) return false;
+				if (typeOpDecl->decoratorExplicit) continue;
+				if (typeOpDecl->decoratorDelete) continue;
 				auto typeOpType = GetTypeWithoutMemberAndCC(typeOpDecl->type).Cast<FunctionType>();
 				if (!typeOpType) continue;
 				if (typeOpType->parameters.Count() != 0) continue;
@@ -474,7 +475,8 @@ namespace TestConvert_Helpers
 			auto ctorSymbol = ctors[i];
 			auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 			{
-				if (ctorDecl->decoratorExplicit) return false;
+				if (ctorDecl->decoratorExplicit) continue;
+				if (ctorDecl->decoratorDelete) continue;
 				auto ctorType = GetTypeWithoutMemberAndCC(ctorDecl->type).Cast<FunctionType>();
 				if (!ctorType) continue;
 				if (ctorType->parameters.Count() != 1) continue;
