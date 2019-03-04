@@ -54,6 +54,7 @@
 - [x] After ADL is called, re-index unqualified function names or operator expressions.
   - [ ] Test
 - [ ] Initializer list in constructors.
+- [ ] Anonymous parameter in functions with bodies.
 - [ ] Test cases for whole program indexing without templates.
 
 ## Template short-term tasks

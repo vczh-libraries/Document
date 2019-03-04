@@ -248,14 +248,11 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 					deleted = false;
 				}
 
-				auto funcType = MakePtr<FunctionType>();
-
 				auto decl = MakePtr<ForwardFunctionDeclaration>();
 				decl->name.name = L"$__ctor";
-				decl->name.tokenCount = 0;
 				decl->name.type = CppNameType::Constructor;
 				decl->methodType = CppMethodType::Constructor;
-				decl->type = funcType;
+				decl->type = MakePtr<FunctionType>();
 				if (!deleted) decl->decoratorDefault = true;
 				if (deleted) decl->decoratorDelete = true;
 
@@ -263,9 +260,44 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 			}
 			if (!symbolCopyCtor)
 			{
+				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::CopyCtor, false))
 				{
+					if (!symbolMoveCtor && !symbolMoveAssignOp)
+					{
+						deleted = false;
+					}
 				}
+
+				auto decl = MakePtr<ForwardFunctionDeclaration>();
+				decl->name.name = L"$__ctor";
+				decl->name.type = CppNameType::Constructor;
+				decl->methodType = CppMethodType::Constructor;
+				{
+					auto funcType = MakePtr<FunctionType>();
+					decl->type = funcType;
+
+					auto idType = MakePtr<IdType>();
+					idType->name = decl->name;
+					idType->resolving = MakePtr<Resolving>();
+					idType->resolving->resolvedSymbols.Add(classSymbol);
+
+					auto decoratedType = MakePtr<DecorateType>();
+					decoratedType->type = idType;
+					decoratedType->isConst = true;
+
+					auto refType = MakePtr<ReferenceType>();
+					refType->type = decoratedType;
+					refType->reference = CppReferenceType::LRef;
+
+					auto parameter = MakePtr<VariableDeclaration>();
+					parameter->type = refType;
+					funcType->parameters.Add(parameter);
+				}
+				if (!deleted) decl->decoratorDefault = true;
+				if (deleted) decl->decoratorDelete = true;
+
+				generatedMembers.Add(decl);
 			}
 			if (!symbolMoveCtor)
 			{
@@ -293,14 +325,11 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 					deleted = false;
 				}
 
-				auto funcType = MakePtr<FunctionType>();
-
 				auto decl = MakePtr<ForwardFunctionDeclaration>();
 				decl->name.name = L"~" + classSymbol->name;
-				decl->name.tokenCount = 0;
 				decl->name.type = CppNameType::Destructor;
 				decl->methodType = CppMethodType::Destructor;
-				decl->type = funcType;
+				decl->type = MakePtr<FunctionType>();
 				if (!deleted) decl->decoratorDefault = true;
 				if (deleted) decl->decoratorDelete = true;
 
