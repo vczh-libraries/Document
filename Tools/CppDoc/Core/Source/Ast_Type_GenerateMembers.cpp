@@ -239,7 +239,7 @@ Ptr<VariableDeclaration> GenerateCopyParameter(Symbol* classSymbol)
 	return parameter;
 }
 
-Ptr<VariableDeclaration> GenerateMoveParameter(Symbol* classSymbol)
+Ptr<Type> GenerateRefType(Symbol* classSymbol, CppReferenceType ref)
 {
 	auto idType = MakePtr<IdType>();
 	idType->name.name = classSymbol->name;
@@ -249,10 +249,14 @@ Ptr<VariableDeclaration> GenerateMoveParameter(Symbol* classSymbol)
 
 	auto refType = MakePtr<ReferenceType>();
 	refType->type = idType;
-	refType->reference = CppReferenceType::RRef;
+	refType->reference = ref;
+	return refType;
+}
 
+Ptr<VariableDeclaration> GenerateMoveParameter(Symbol* classSymbol)
+{
 	auto parameter = MakePtr<VariableDeclaration>();
-	parameter->type = refType;
+	parameter->type = GenerateRefType(classSymbol, CppReferenceType::RRef);
 	return parameter;
 }
 
@@ -265,6 +269,27 @@ Ptr<ForwardFunctionDeclaration> GenerateCtor(Symbol* classSymbol, bool deleted, 
 	{
 		auto funcType = MakePtr<FunctionType>();
 		decl->type = funcType;
+		if (parameter)
+		{
+			funcType->parameters.Add(parameter);
+		}
+	}
+	if (!deleted) decl->decoratorDefault = true;
+	if (deleted) decl->decoratorDelete = true;
+	return decl;
+}
+
+Ptr<ForwardFunctionDeclaration> GenerateAssignOp(Symbol* classSymbol, bool deleted, Ptr<VariableDeclaration> parameter)
+{
+	auto decl = MakePtr<ForwardFunctionDeclaration>();
+	decl->name.name = L"operator =";
+	decl->name.type = CppNameType::Operator;
+	decl->methodType = CppMethodType::Function;
+	{
+		auto funcType = MakePtr<FunctionType>();
+		decl->type = funcType;
+		
+		funcType->returnType = GenerateRefType(classSymbol, CppReferenceType::LRef);
 		if (parameter)
 		{
 			funcType->parameters.Add(parameter);
@@ -297,6 +322,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 
 			List<Ptr<ForwardFunctionDeclaration>> generatedMembers;
 			bool generatedEnabledCopyCtor = false;
+			bool generatedEnabledCopyAssignOp = false;
 
 			if (!symbolDefaultCtor)
 			{
@@ -327,10 +353,6 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 			}
 			if (!symbolMoveCtor)
 			{
-				if (classSymbol->name == L"oDC_nCC_nMC_oCA_nMA_oDD_")
-				{
-					int a = 0;
-				}
 				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::MoveCtor, false))
 				{
@@ -347,14 +369,32 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 			}
 			if (!symbolCopyAssignOp)
 			{
+				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::CopyAssignOp, false))
 				{
+					if (!symbolMoveCtor && !symbolMoveAssignOp)
+					{
+						deleted = false;
+					}
 				}
+
+				generatedMembers.Add(GenerateAssignOp(classSymbol, deleted, GenerateCopyParameter(classSymbol)));
+				generatedEnabledCopyAssignOp = !deleted;
 			}
 			if (!symbolMoveAssignOp)
 			{
+				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::MoveAssignOp, false))
 				{
+					if (!symbolCopyCtor && !symbolCopyAssignOp && !symbolMoveCtor && !symbolDtor)
+					{
+						deleted = false;
+					}
+				}
+
+				if (!deleted || !(enabledCopyAssignOp || generatedEnabledCopyAssignOp))
+				{
+					generatedMembers.Add(GenerateAssignOp(classSymbol, deleted, GenerateMoveParameter(classSymbol)));
 				}
 			}
 			if (!symbolDtor)
