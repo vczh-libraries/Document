@@ -296,6 +296,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 			auto enabledDtor = IsSpecialMemberEnabled(symbolDtor);
 
 			List<Ptr<ForwardFunctionDeclaration>> generatedMembers;
+			bool generatedEnabledCopyCtor = false;
 
 			if (!symbolDefaultCtor)
 			{
@@ -322,9 +323,14 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 				}
 
 				generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateCopyParameter(classSymbol)));
+				generatedEnabledCopyCtor = !deleted;
 			}
 			if (!symbolMoveCtor)
 			{
+				if (classSymbol->name == L"oDC_nCC_nMC_oCA_nMA_oDD_")
+				{
+					int a = 0;
+				}
 				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::MoveCtor, false))
 				{
@@ -334,7 +340,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 					}
 				}
 
-				if (!enabledCopyCtor)
+				if (!deleted || !(enabledCopyCtor || generatedEnabledCopyCtor))
 				{
 					generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateMoveParameter(classSymbol)));
 				}
