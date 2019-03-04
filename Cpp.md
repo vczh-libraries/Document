@@ -171,20 +171,20 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ### DECL (Declaration)
 
-- [x] **Friend**: `friend` DECL `;`
-- [x] **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
-- [x] **Type definition**: (CLASS_STRUCT | ENUM | UNION) {DECLARATOR [INITIALIZER] `,` ...}+ `;`
-- [ ] **Type alias**:
-  - [ ] `typedef` (CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;`
+- **Friend**: `friend` DECL `;`
+- **Extern**" `extern` [STRING] (DECL `;` | `{` {DECLARATION ...} `}`)
+- **Type definition**: (CLASS_STRUCT | ENUM | UNION) {DECLARATOR [INITIALIZER] `,` ...}+ `;`
+- **Type alias**:
+  - `typedef` (CLASS_STRUCT | ENUM | UNION) {DECLARATOR `,` ...}+ `;` (**no template**)
+  - `typedef` TYPE-MULTIPLE-INITIALIZER `;` (**no template**)
     - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
-  - [ ] `typedef` TYPE-MULTIPLE-INITIALIZER `;`
-- [x] **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;`
+- **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;` (**no specialization**)
   - [ ] TEMPLATE-SPEC
-- [ ] **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
-- [x] **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`
-- [x] **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
-- [x] **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
-- [x] FUNCTION
+- **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
+- **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`
+- **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
+- **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
+- FUNCTION
 
 ## TYPE (Type)
 
