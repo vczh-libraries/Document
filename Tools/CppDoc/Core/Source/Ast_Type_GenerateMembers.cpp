@@ -224,9 +224,23 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 	{
 		if (classDecl->classType != CppClassType::Union)
 		{
+			auto symbolDefaultCtor = GetSpecialMember(pa, classSymbol, SpecialMemberKind::DefaultCtor);
+			auto symbolCopyCtor = GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyCtor);
+			auto symbolMoveCtor = GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveCtor);
+			auto symbolCopyAssignOp = GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyAssignOp);
+			auto symbolMoveAssignOp = GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveAssignOp);
+			auto symbolDtor = GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor);
+
+			auto enabledDefaultCtor = IsSpecialMemberEnabled(symbolDefaultCtor);
+			auto enabledCopyCtor = IsSpecialMemberEnabled(symbolCopyCtor);
+			auto enabledMoveCtor = IsSpecialMemberEnabled(symbolMoveCtor);
+			auto enabledCopyAssignOp = IsSpecialMemberEnabled(symbolCopyAssignOp);
+			auto enabledMoveAssignOp = IsSpecialMemberEnabled(symbolMoveAssignOp);
+			auto enabledDtor = IsSpecialMemberEnabled(symbolDtor);
+
 			List<Ptr<ForwardFunctionDeclaration>> generatedMembers;
 
-			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::DefaultCtor) == nullptr)
+			if (!symbolDefaultCtor)
 			{
 				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::DefaultCtor, true))
@@ -247,31 +261,31 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 
 				generatedMembers.Add(decl);
 			}
-			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyCtor) == nullptr)
+			if (!symbolCopyCtor)
 			{
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::CopyCtor, false))
 				{
 				}
 			}
-			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveCtor) == nullptr)
+			if (!symbolMoveCtor)
 			{
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::MoveCtor, false))
 				{
 				}
 			}
-			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyAssignOp) == nullptr)
+			if (!symbolCopyAssignOp)
 			{
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::CopyAssignOp, false))
 				{
 				}
 			}
-			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveAssignOp) == nullptr)
+			if (!symbolMoveAssignOp)
 			{
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::MoveAssignOp, false))
 				{
 				}
 			}
-			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor) == nullptr)
+			if (!symbolDtor)
 			{
 				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::Dtor, false))
