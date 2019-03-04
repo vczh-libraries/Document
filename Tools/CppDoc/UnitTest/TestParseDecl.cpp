@@ -525,7 +525,10 @@ namespace a
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	auto& inClassMembers = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Something"][0]->declaration.Cast<ClassDeclaration>()->decls;
+	using Item = Tuple<CppClassAccessor, Ptr<Declaration>>;
+	List<Ptr<Declaration>> inClassMembers;
+	auto& inClassMembersUnfiltered = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Something"][0]->declaration.Cast<ClassDeclaration>()->decls;
+	CopyFrom(inClassMembers, From(inClassMembersUnfiltered).Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; }));
 	TEST_ASSERT(inClassMembers.Count() == 13);
 
 	auto& outClassMembers = pa.root->children[L"a"][0]->children[L"b"][0]->definitions[1].Cast<NamespaceDeclaration>()->decls;
@@ -533,7 +536,7 @@ namespace a
 
 	for (vint i = 0; i < 12; i++)
 	{
-		auto inClassDecl = inClassMembers[i + 1].f1;
+		auto inClassDecl = inClassMembers[i + 1];
 		auto outClassDecl = outClassMembers[i];
 		TEST_ASSERT(inClassDecl->symbol == outClassDecl->symbol);
 

@@ -1062,8 +1062,9 @@ public:
 		indentation++;
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
-			WriteIndentation();
 			auto pair = self->decls[i];
+			if (pair.f1->implicitlyGeneratedMember) continue;
+			WriteIndentation();
 			switch (pair.f0)
 			{
 			case CppClassAccessor::Public:

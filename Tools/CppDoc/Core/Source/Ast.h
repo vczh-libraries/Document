@@ -48,6 +48,7 @@ class Declaration : public Object
 public:
 	CppName					name;
 	Symbol*					symbol = nullptr;
+	bool					implicitlyGeneratedMember = false;
 
 	virtual void			Accept(IDeclarationVisitor* visitor) = 0;
 };

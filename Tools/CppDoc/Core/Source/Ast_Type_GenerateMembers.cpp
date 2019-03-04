@@ -416,6 +416,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 			for (vint i = 0; i < generatedMembers.Count(); i++)
 			{
 				auto decl = generatedMembers[i];
+				decl->implicitlyGeneratedMember = true;
 				classDecl->decls.Add({ CppClassAccessor::Public,decl });
 				classSymbol->CreateForwardDeclSymbol(decl, nullptr, symbol_component::SymbolKind::Function);
 			}
