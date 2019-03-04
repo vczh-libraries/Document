@@ -122,7 +122,6 @@ using ExprTsysList = List<ExprTsysItem>;
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
 extern bool					IsPendingType(Type* type);
 extern bool					IsPendingType(Ptr<Type> type);
-extern void					GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol);
 extern ITsys*				ResolvePendingType(const ParsingArguments& pa, Ptr<Type> type, ExprTsysItem target);
 extern void					TypeToTsys(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
 extern void					TypeToTsys(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
@@ -131,5 +130,19 @@ extern void					ExprToTsys(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList
 extern void					EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s);
 extern void					EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s);
 extern void					EvaluateProgram(const ParsingArguments& pa, Ptr<Program> program);
+
+enum class SpecialMemberKind
+{
+	DefaultCtor,
+	CopyCtor,
+	MoveCtor,
+	CopyAssignOp,
+	MoveAssignOp,
+	Dtor,
+};
+
+extern Symbol*				GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, SpecialMemberKind kind);
+extern bool					IsSpecialMemberEnabled(Symbol* member);
+extern void					GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol);
 
 #endif

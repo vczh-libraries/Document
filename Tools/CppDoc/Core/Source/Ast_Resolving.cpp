@@ -64,28 +64,6 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	IsStaticSymbol: Test if a symbol is a class member
-	***********************************************************************/
-
-	template<typename TForward>
-	bool IsStaticSymbol(Symbol* symbol)
-	{
-		bool isStatic = false;
-		if (auto decl = symbol->declaration.Cast<TForward>())
-		{
-			isStatic |= decl->decoratorStatic;
-		}
-		for (vint i = 0; i < symbol->definitions.Count(); i++)
-		{
-			if (auto decl = symbol->definitions[i].Cast<TForward>())
-			{
-				isStatic |= decl->decoratorStatic;
-			}
-		}
-		return isStatic;
-	}
-
-	/***********************************************************************
 	CalculateValueFieldType: Given thisItem, fill the field type fo ExprTsysList
 		Value: t.f
 		Ptr: t->f

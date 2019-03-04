@@ -5,6 +5,24 @@
 
 namespace symbol_type_resolving
 {
+	template<typename TForward>
+	bool IsStaticSymbol(Symbol* symbol)
+	{
+		bool isStatic = false;
+		if (auto decl = symbol->declaration.Cast<TForward>())
+		{
+			isStatic |= decl->decoratorStatic;
+		}
+		for (vint i = 0; i < symbol->definitions.Count(); i++)
+		{
+			if (auto decl = symbol->definitions[i].Cast<TForward>())
+			{
+				isStatic |= decl->decoratorStatic;
+			}
+		}
+		return isStatic;
+	}
+
 	extern bool				AddInternal(ExprTsysList& list, const ExprTsysItem& item);
 	extern void				AddInternal(ExprTsysList& list, ExprTsysList& items);
 	extern bool				AddVar(ExprTsysList& list, const ExprTsysItem& item);
