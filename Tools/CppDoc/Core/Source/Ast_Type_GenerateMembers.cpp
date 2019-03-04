@@ -99,7 +99,7 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 }
 
 /***********************************************************************
-IsSpecialMemberEnabled
+IsSpecialMemberFeatureEnabled
 ***********************************************************************/
 
 bool IsSpecialMemberEnabled(Symbol* member)
@@ -110,6 +110,37 @@ bool IsSpecialMemberEnabled(Symbol* member)
 	if (forwardFunc->decoratorDefault) return true;
 	if (forwardFunc->decoratorDelete) return false;
 	return true;
+}
+
+bool IsSpecialMemberFeatureEnabled(const ParsingArguments& pa, Symbol* classSymbol, SpecialMemberKind kind)
+{
+	Symbol* symbolDefaultCtor = nullptr;
+	Symbol* symbolCopyCtor = nullptr;
+	Symbol* symbolMoveCtor = nullptr;
+	Symbol* symbolCopyAssignOp = nullptr;
+	Symbol* symbolMoveAssignOp = nullptr;
+	Symbol* symbolDtor = nullptr;
+
+#define SYMBOL(KIND) (symbol##KIND ? symbol##KIND : (symbol##KIND = GetSpecialMember(pa, classSymbol, SpecialMemberKind::KIND)))
+#define DEFINED(KIND) (SYMBOL(KIND) != nullptr)
+#define DELETED(KIND) (SYMBOL(KIND) && symbol##KIND->GetAnyForwardDecl<ForwardFunctionDeclaration>()->decoratorDelete)
+#define ENABLED(KIND) IsSpecialMemberEnabled(SYMBOL(KIND))
+
+	switch (kind)
+	{
+	case SpecialMemberKind::DefaultCtor:	return ENABLED(DefaultCtor) && ENABLED(Dtor);
+	case SpecialMemberKind::CopyCtor:		return ENABLED(CopyCtor) && ENABLED(Dtor);
+	case SpecialMemberKind::MoveCtor:		return (ENABLED(CopyCtor) || ENABLED(MoveCtor)) && !DELETED(MoveCtor) && ENABLED(Dtor);
+	case SpecialMemberKind::CopyAssignOp:	return ENABLED(CopyAssignOp);
+	case SpecialMemberKind::MoveAssignOp:	return (ENABLED(CopyAssignOp) || ENABLED(MoveAssignOp)) && !DELETED(MoveAssignOp);
+	case SpecialMemberKind::Dtor:			return ENABLED(Dtor);
+	}
+	return false;
+
+#undef SYMBOL
+#undef DEFINED
+#undef DELETED
+#undef ENABLED
 }
 
 /***********************************************************************
@@ -154,8 +185,7 @@ bool IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, Spec
 			auto classDecl = type->GetDecl()->declaration.Cast<ClassDeclaration>();
 			if (!classDecl) return true;
 			if (classDecl->classType == CppClassType::Union) return true;
-			auto specialMember = GetSpecialMember(pa, classDecl->symbol, kind);
-			return IsSpecialMemberEnabled(specialMember);
+			return IsSpecialMemberFeatureEnabled(pa, classDecl->symbol, kind);
 		}
 	case TsysType::Init:
 		for (vint i = 0; i < type->GetParamCount(); i++)
