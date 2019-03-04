@@ -1,6 +1,6 @@
 #include <type_traits>
 #include "Util.h"
-#include "..\Core\Source\Ast.h"
+#include "..\Core\Source\Ast_Decl.h"
 #include "TestGeneratedFunctions_Input.h"
 #include "TestGeneratedFunctions_Macro.h"
 
@@ -35,50 +35,52 @@ struct TestGC_TypeSelector<false>
 template<bool Ability>
 struct TestGC_Helper
 {
+#define SYMBOL(KIND) GetSpecialMember(pa, classSymbol, SpecialMemberKind::KIND)
+#define DEFINED(KIND) (SYMBOL(KIND) != nullptr)
+#define DELETED(KIND) ([&](){auto symbol = SYMBOL(KIND); return symbol && symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>()->decoratorDelete; }())
+#define ENABLED(KIND) IsSpecialMemberEnabled(SYMBOL(KIND))
+
 	static void DefaultCtor(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
-		auto ctorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::DefaultCtor));
-		auto dtorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor));
-		TEST_ASSERT(Ability == (ctorEnabled && dtorEnabled));
+		TEST_ASSERT(Ability == (ENABLED(DefaultCtor) && ENABLED(Dtor)));
 	}
 
 	static void CopyCtor(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
-		auto ctorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyCtor));
-		auto dtorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor));
-		TEST_ASSERT(Ability == (ctorEnabled && dtorEnabled));
+		TEST_ASSERT(Ability == (ENABLED(CopyCtor) && ENABLED(Dtor)));
 	}
 
 	static void MoveCtor(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
-		auto ctorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveCtor));
-		auto dtorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor));
-		TEST_ASSERT(Ability == (ctorEnabled && dtorEnabled));
+		TEST_ASSERT(Ability == ((ENABLED(CopyCtor) || ENABLED(MoveCtor)) && !DELETED(MoveCtor) && ENABLED(Dtor)));
 	}
 
 	static void CopyAssign(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
-		auto opEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyAssignOp));
-		TEST_ASSERT(Ability == opEnabled);
+		TEST_ASSERT(Ability == ENABLED(CopyAssignOp));
 	}
 
 	static void MoveAssign(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
 		auto opEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveAssignOp));
-		TEST_ASSERT(Ability == opEnabled);
+		TEST_ASSERT(Ability == ((ENABLED(CopyAssignOp) || ENABLED(MoveAssignOp)) &&  !DELETED(MoveAssignOp)));
 	}
 
 	static void DefaultDtor(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
-		auto dtorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor));
-		TEST_ASSERT(Ability == dtorEnabled);
+		TEST_ASSERT(Ability == ENABLED(Dtor));
 	}
+
+#undef SYMBOL
+#undef DEFINED
+#undef DELETED
+#undef ENABLED
 };
 
 TEST_CASE(TestGF_Features)

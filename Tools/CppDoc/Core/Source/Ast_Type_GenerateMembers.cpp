@@ -307,6 +307,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 						deleted = false;
 					}
 				}
+
 				generatedMembers.Add(GenerateCtor(classSymbol, deleted, nullptr));
 			}
 			if (!symbolCopyCtor)
@@ -319,6 +320,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 						deleted = false;
 					}
 				}
+
 				generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateCopyParameter(classSymbol)));
 			}
 			if (!symbolMoveCtor)
@@ -331,7 +333,11 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 						deleted = false;
 					}
 				}
-				generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateMoveParameter(classSymbol)));
+
+				if (!enabledCopyCtor)
+				{
+					generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateMoveParameter(classSymbol)));
+				}
 			}
 			if (!symbolCopyAssignOp)
 			{
