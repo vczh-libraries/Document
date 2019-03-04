@@ -245,7 +245,10 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::DefaultCtor, true))
 				{
-					deleted = false;
+					if (!classSymbol->children.Keys().Contains(L"$__ctor"))
+					{
+						deleted = false;
+					}
 				}
 
 				auto decl = MakePtr<ForwardFunctionDeclaration>();
@@ -278,7 +281,8 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 					decl->type = funcType;
 
 					auto idType = MakePtr<IdType>();
-					idType->name = decl->name;
+					idType->name.name = classSymbol->name;
+					idType->name.type = CppNameType::Normal;
 					idType->resolving = MakePtr<Resolving>();
 					idType->resolving->resolvedSymbols.Add(classSymbol);
 
@@ -340,7 +344,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 			{
 				auto decl = generatedMembers[i];
 				classDecl->decls.Add({ CppClassAccessor::Public,decl });
-				classSymbol->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Function);
+				classSymbol->CreateForwardDeclSymbol(decl, nullptr, symbol_component::SymbolKind::Function);
 			}
 		}
 	}
