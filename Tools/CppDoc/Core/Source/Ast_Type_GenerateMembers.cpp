@@ -189,7 +189,7 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 		{
 			if (!IsSpecialMemberEnabledForType(pa, types[j], SpecialMemberKind::DefaultCtor))
 			{
-				return false;
+				return true;
 			}
 		}
 	}
@@ -209,13 +209,13 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 				{
 					if (!IsSpecialMemberEnabledForType(pa, types[j], SpecialMemberKind::DefaultCtor))
 					{
-						return false;
+						return true;
 					}
 				}
 			}
 		}
 	}
-	return true;
+	return false;
 }
 
 void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
@@ -224,11 +224,28 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 	{
 		if (classDecl->classType != CppClassType::Union)
 		{
+			List<Ptr<ForwardFunctionDeclaration>> generatedMembers;
+
 			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::DefaultCtor) == nullptr)
 			{
+				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::DefaultCtor, true))
 				{
+					deleted = false;
 				}
+
+				auto funcType = MakePtr<FunctionType>();
+
+				auto decl = MakePtr<ForwardFunctionDeclaration>();
+				decl->name.name = L"$__ctor";
+				decl->name.tokenCount = 0;
+				decl->name.type = CppNameType::Constructor;
+				decl->methodType = CppMethodType::Constructor;
+				decl->type = funcType;
+				if (!deleted) decl->decoratorDefault = true;
+				if (deleted) decl->decoratorDelete = true;
+
+				generatedMembers.Add(decl);
 			}
 			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyCtor) == nullptr)
 			{
@@ -259,6 +276,13 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::Dtor, false))
 				{
 				}
+			}
+
+			for (vint i = 0; i < generatedMembers.Count(); i++)
+			{
+				auto decl = generatedMembers[i];
+				classDecl->decls.Add({ CppClassAccessor::Public,decl });
+				classSymbol->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Function);
 			}
 		}
 	}
