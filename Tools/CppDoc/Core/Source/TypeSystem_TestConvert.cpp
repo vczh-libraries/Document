@@ -20,7 +20,8 @@ TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionT
 	return TsysConv::TrivalConversion;
 }
 
-TsysConv TestConvertInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType);
+using TCITestedSet = SortedList<Tuple<ITsys*, ITsys*>>;
+TsysConv TestConvertInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested);
 
 namespace TestConvert_Helpers
 {
@@ -194,7 +195,7 @@ namespace TestConvert_Helpers
 		return true;
 	}
 
-	TsysConv IsUniversalInitialization(const ParsingArguments& pa, ITsys* toType, ITsys* fromEntity, const TsysInit& init)
+	TsysConv IsUniversalInitialization(const ParsingArguments& pa, ITsys* toType, ITsys* fromEntity, const TsysInit& init, TCITestedSet& tested)
 	{
 		TsysCV toCV;
 		TsysRefType toRef;
@@ -273,7 +274,15 @@ namespace TestConvert_Helpers
 			type = type->RRefOf();
 			break;
 		}
-		return TestConvertInternal(pa, toType, type);
+
+		if (tested.Contains({ toType,type }))
+		{
+			return TsysConv::Illegal;
+		}
+		else
+		{
+			return TestConvertInternal(pa, toType, type, tested);
+		}
 	}
 
 	bool IsNumericPromotion(ITsys* toType, ITsys* fromType)
@@ -410,7 +419,7 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
-	bool IsCustomOperatorConversion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+	bool IsCustomOperatorConversion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested)
 	{
 		TsysCV fromCV;
 		TsysRefType fromRef;
@@ -442,9 +451,15 @@ namespace TestConvert_Helpers
 			for (vint j = 0; j < typeOpSymbol->evaluation.Get().Count(); j++)
 			{
 				auto tsys = typeOpSymbol->evaluation.Get()[j];
-				if (TestConvertInternal(newPa, toType, tsys->GetElement()->RRefOf()) != TsysConv::Illegal)
 				{
-					return true;
+					auto newFromType = tsys->GetElement()->RRefOf();
+					if (!tested.Contains({ toType,newFromType }))
+					{
+						if (TestConvertInternal(newPa, toType, newFromType, tested) != TsysConv::Illegal)
+						{
+							return true;
+						}
+					}
 				}
 			}
 		}
@@ -452,7 +467,7 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
-	bool IsCustomContructorConversion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+	bool IsCustomContructorConversion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested)
 	{
 		TsysCV toCV;
 		TsysRefType toRef;
@@ -463,7 +478,16 @@ namespace TestConvert_Helpers
 		if (!toClass) return false;
 
 		auto toSymbol = toClass->symbol;
-		if (TestConvertInternal(pa, toType, pa.tsys->DeclOf(toSymbol)->RRefOf()) == TsysConv::Illegal) return false;
+		{
+			auto newFromType = pa.tsys->DeclOf(toSymbol)->RRefOf();
+			if (!tested.Contains({ toType,newFromType }))
+			{
+				if (TestConvertInternal(pa, toType, newFromType, tested) == TsysConv::Illegal)
+				{
+					return false;
+				}
+			}
+		}
 
 		vint index = toSymbol->children.Keys().IndexOf(L"$__ctor");
 		if (index == -1) return false;
@@ -486,9 +510,15 @@ namespace TestConvert_Helpers
 			for (vint j = 0; j < ctorSymbol->evaluation.Get().Count(); j++)
 			{
 				auto tsys = ctorSymbol->evaluation.Get()[j];
-				if (TestConvertInternal(newPa, tsys->GetParam(0), fromType) != TsysConv::Illegal)
 				{
-					return true;
+					auto newToType = tsys->GetParam(0);
+					if (!tested.Contains({ newToType,fromType }))
+					{
+						if (TestConvertInternal(newPa, newToType, fromType, tested) != TsysConv::Illegal)
+						{
+							return true;
+						}
+					}
 				}
 			}
 		}
@@ -498,7 +528,7 @@ namespace TestConvert_Helpers
 }
 using namespace TestConvert_Helpers;
 
-TsysConv TestConvertInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+TsysConv TestConvertInternalUnsafe(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested)
 {
 	if (fromType->GetType() == TsysType::Zero)
 	{
@@ -533,7 +563,7 @@ TsysConv TestConvertInternal(const ParsingArguments& pa, ITsys* toType, ITsys* f
 		if (fromEntity->GetType() == TsysType::Init)
 		{
 			auto& init = fromEntity->GetInit();
-			return IsUniversalInitialization(pa, toType, fromEntity, init);
+			return IsUniversalInitialization(pa, toType, fromEntity, init, tested);
 		}
 	}
 
@@ -541,13 +571,30 @@ TsysConv TestConvertInternal(const ParsingArguments& pa, ITsys* toType, ITsys* f
 	if (IsNumericConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
 	if (IsPointerConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
 	if (IsToBaseClassConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
-	if (IsCustomOperatorConversion(pa, toType, fromType)) return TsysConv::UserDefinedConversion;
-	if (IsCustomContructorConversion(pa, toType, fromType)) return TsysConv::UserDefinedConversion;
+	if (IsCustomOperatorConversion(pa, toType, fromType, tested)) return TsysConv::UserDefinedConversion;
+	if (IsCustomContructorConversion(pa, toType, fromType, tested)) return TsysConv::UserDefinedConversion;
 
 	return TsysConv::Illegal;
 }
 
+TsysConv TestConvertInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested)
+{
+	Tuple<ITsys*, ITsys*> pair(toType, fromType);
+	if (tested.Contains(pair))
+	{
+		// make sure caller doesn't call this function recursively for the same pair of type.
+		struct TestConvertInternalStackOverflowException {};
+		throw TestConvertInternalStackOverflowException();
+	}
+
+	vint index = tested.Add(pair);
+	auto result = TestConvertInternalUnsafe(pa, toType, fromType, tested);
+	tested.RemoveAt(index);
+	return result;
+}
+
 TsysConv TestConvert(const ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem)
 {
-	return TestConvertInternal(pa, toType, (fromItem.type == ExprTsysType::LValue ? fromItem.tsys->LRefOf() : fromItem.tsys));
+	TCITestedSet tested;
+	return TestConvertInternal(pa, toType, (fromItem.type == ExprTsysType::LValue ? fromItem.tsys->LRefOf() : fromItem.tsys), tested);
 }
