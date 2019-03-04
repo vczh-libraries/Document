@@ -99,7 +99,7 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 }
 
 /***********************************************************************
-GetSpecialMember
+IsSpecialMemberEnabled
 ***********************************************************************/
 
 bool IsSpecialMemberEnabled(Symbol* member)
@@ -113,9 +113,153 @@ bool IsSpecialMemberEnabled(Symbol* member)
 }
 
 /***********************************************************************
+IsSpecialMemberEnabledForType
+***********************************************************************/
+
+bool IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, SpecialMemberKind kind)
+{
+	switch (type->GetType())
+	{
+	case TsysType::Primitive:
+	case TsysType::Ptr:
+		return true;
+	case TsysType::LRef:
+	case TsysType::RRef:
+		switch (kind)
+		{
+		case SpecialMemberKind::DefaultCtor: return false;
+		case SpecialMemberKind::CopyCtor: return true;
+		case SpecialMemberKind::MoveCtor: return true;
+		case SpecialMemberKind::CopyAssignOp: return false;
+		case SpecialMemberKind::MoveAssignOp: return false;
+		case SpecialMemberKind::Dtor: return true;
+		}
+		break;
+	case TsysType::Array:
+		return IsSpecialMemberEnabledForType(pa, type->GetElement(), kind);
+	case TsysType::CV:
+		switch (kind)
+		{
+		case SpecialMemberKind::DefaultCtor: return false;
+		case SpecialMemberKind::CopyCtor: return IsSpecialMemberEnabledForType(pa, type->GetElement(), kind);
+		case SpecialMemberKind::MoveCtor: return IsSpecialMemberEnabledForType(pa, type->GetElement(), kind);
+		case SpecialMemberKind::CopyAssignOp: return false;
+		case SpecialMemberKind::MoveAssignOp: return false;
+		case SpecialMemberKind::Dtor: return true;
+		}
+		break;
+	case TsysType::Decl:
+		{
+			if (!type->GetDecl()->declaration) return false;
+			auto classDecl = type->GetDecl()->declaration.Cast<ClassDeclaration>();
+			if (!classDecl) return true;
+			if (classDecl->classType == CppClassType::Union) return true;
+			auto specialMember = GetSpecialMember(pa, classDecl->symbol, kind);
+			return IsSpecialMemberEnabled(specialMember);
+		}
+	case TsysType::Init:
+		for (vint i = 0; i < type->GetParamCount(); i++)
+		{
+			if (!IsSpecialMemberEnabledForType(pa, type->GetParam(i), kind))
+			{
+				return false;
+			}
+		}
+		return true;
+	case TsysType::Function:
+	case TsysType::Member:
+		// these type cannot be used as a value
+		throw NotResolvableException();
+	}
+	throw NotResolvableException();
+}
+
+/***********************************************************************
 GenerateMembers
 ***********************************************************************/
 
+bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclaration* classDecl, SpecialMemberKind kind, bool passIfFieldHasInitializer)
+{
+	symbol_type_resolving::EvaluateSymbol(pa, classDecl);
+	auto classSymbol = classDecl->symbol;
+	for (vint i = 0; i < classSymbol->evaluation.Count(); i++)
+	{
+		auto& types = classSymbol->evaluation.Get(i);
+		for (vint j = 0; j < types.Count(); j++)
+		{
+			if (!IsSpecialMemberEnabledForType(pa, types[j], SpecialMemberKind::DefaultCtor))
+			{
+				return false;
+			}
+		}
+	}
+
+	for (vint i = 0; i < classDecl->decls.Count(); i++)
+	{
+		if (auto varDecl = classDecl->decls[i].f1.Cast<VariableDeclaration>())
+		{
+			if (passIfFieldHasInitializer && varDecl->initializer)
+			{
+				continue;
+			}
+			if (varDecl->symbol->evaluation.Count() == 1)
+			{
+				auto& types = varDecl->symbol->evaluation.Get();
+				for (vint j = 0; j < types.Count(); j++)
+				{
+					if (!IsSpecialMemberEnabledForType(pa, types[j], SpecialMemberKind::DefaultCtor))
+					{
+						return false;
+					}
+				}
+			}
+		}
+	}
+	return true;
+}
+
 void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 {
+	if (auto classDecl = classSymbol->declaration.Cast<ClassDeclaration>())
+	{
+		if (classDecl->classType != CppClassType::Union)
+		{
+			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::DefaultCtor) == nullptr)
+			{
+				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::DefaultCtor, true))
+				{
+				}
+			}
+			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyCtor) == nullptr)
+			{
+				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::CopyCtor, false))
+				{
+				}
+			}
+			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveCtor) == nullptr)
+			{
+				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::MoveCtor, false))
+				{
+				}
+			}
+			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyAssignOp) == nullptr)
+			{
+				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::CopyAssignOp, false))
+				{
+				}
+			}
+			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveAssignOp) == nullptr)
+			{
+				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::MoveAssignOp, false))
+				{
+				}
+			}
+			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor) == nullptr)
+			{
+				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::Dtor, false))
+				{
+				}
+			}
+		}
+	}
 }

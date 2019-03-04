@@ -143,6 +143,7 @@ enum class SpecialMemberKind
 
 extern Symbol*				GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, SpecialMemberKind kind);
 extern bool					IsSpecialMemberEnabled(Symbol* member);
+extern bool					IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, SpecialMemberKind kind);
 extern void					GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol);
 
 #endif
