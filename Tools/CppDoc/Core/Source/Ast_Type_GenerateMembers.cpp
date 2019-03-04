@@ -273,9 +273,24 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 			}
 			if (GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor) == nullptr)
 			{
+				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::Dtor, false))
 				{
+					deleted = false;
 				}
+
+				auto funcType = MakePtr<FunctionType>();
+
+				auto decl = MakePtr<ForwardFunctionDeclaration>();
+				decl->name.name = L"~" + classSymbol->name;
+				decl->name.tokenCount = 0;
+				decl->name.type = CppNameType::Destructor;
+				decl->methodType = CppMethodType::Destructor;
+				decl->type = funcType;
+				if (!deleted) decl->decoratorDefault = true;
+				if (deleted) decl->decoratorDelete = true;
+
+				generatedMembers.Add(decl);
 			}
 
 			for (vint i = 0; i < generatedMembers.Count(); i++)

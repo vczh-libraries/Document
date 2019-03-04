@@ -38,37 +38,46 @@ struct TestGC_Helper
 	static void DefaultCtor(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
-		TEST_ASSERT(Ability == IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::DefaultCtor)));
+		auto ctorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::DefaultCtor));
+		auto dtorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor));
+		TEST_ASSERT(Ability == (ctorEnabled && dtorEnabled));
 	}
 
 	static void CopyCtor(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
-		TEST_ASSERT(Ability == IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyCtor)));
+		auto ctorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyCtor));
+		auto dtorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor));
+		TEST_ASSERT(Ability == (ctorEnabled && dtorEnabled));
 	}
 
 	static void MoveCtor(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
-		TEST_ASSERT(Ability == IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveCtor)));
+		auto ctorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveCtor));
+		auto dtorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor));
+		TEST_ASSERT(Ability == (ctorEnabled && dtorEnabled));
 	}
 
 	static void CopyAssign(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
-		TEST_ASSERT(Ability == IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyAssignOp)));
+		auto opEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyAssignOp));
+		TEST_ASSERT(Ability == opEnabled);
 	}
 
 	static void MoveAssign(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
-		TEST_ASSERT(Ability == IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveAssignOp)));
+		auto opEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveAssignOp));
+		TEST_ASSERT(Ability == opEnabled);
 	}
 
 	static void DefaultDtor(const WString& name, ParsingArguments& pa)
 	{
 		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
-		TEST_ASSERT(Ability == IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor)));
+		auto dtorEnabled = IsSpecialMemberEnabled(GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor));
+		TEST_ASSERT(Ability == dtorEnabled);
 	}
 };
 
