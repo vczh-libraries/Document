@@ -345,55 +345,19 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
-	bool IsToBaseClassConversion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+	bool IsEntityTypeInheriting(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
-		{
-			TsysCV toCV, fromCV;
-			TsysRefType toRef, fromRef;
-			auto toEntity = toType->GetEntity(toCV, toRef);
-			auto fromEntity = fromType->GetEntity(fromCV, fromRef);
-
-			if (toRef != TsysRefType::None && fromRef != TsysRefType::None)
-			{
-				if ((toRef != TsysRefType::LRef) != (fromRef != TsysRefType::LRef))
-				{
-					return false;
-				}
-
-				if (!IsCVMatch(toCV, fromCV))
-				{
-					return false;
-				}
-			}
-
-			toType = toEntity;
-			fromType = fromEntity;
-			if (toRef != TsysRefType::None && fromRef != TsysRefType::None)
-			{
-				goto BEGIN_SEARCHING_FOR_BASE_CLASSES;
-			}
-		}
+		TsysCV toCV, fromCV;
+		TsysRefType toRef, fromRef;
+		toType = toType->GetEntity(toCV, toRef);
+		fromType = fromType->GetEntity(fromCV, fromRef);
 
 		if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Ptr)
 		{
-			TsysCV toCV, fromCV;
-			TsysRefType toRef, fromRef;
-			auto toEntity = toType->GetElement()->GetEntity(toCV, toRef);
-			auto fromEntity = fromType->GetElement()->GetEntity(fromCV, fromRef);
-
-			if (toRef != TsysRefType::None) return false;
-			if (fromRef != TsysRefType::None) return false;
-			if (!IsCVMatch(toCV, fromCV)) return false;
-
-			toType = toEntity;
-			fromType = fromEntity;
-		}
-		else
-		{
-			return false;
+			toType = toType->GetElement()->GetEntity(toCV, toRef);
+			fromType = fromType->GetElement()->GetEntity(fromCV, fromRef);
 		}
 
-	BEGIN_SEARCHING_FOR_BASE_CLASSES:
 		if (!TryGetDeclFromType<ClassDeclaration>(toType)) return false;
 
 		List<ITsys*> searched;
@@ -419,6 +383,56 @@ namespace TestConvert_Helpers
 			}
 		}
 		return false;
+	}
+
+	bool IsToBaseClassConversion_AssumingInheriting(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+	{
+		{
+			TsysCV toCV, fromCV;
+			TsysRefType toRef, fromRef;
+			auto toEntity = toType->GetEntity(toCV, toRef);
+			auto fromEntity = fromType->GetEntity(fromCV, fromRef);
+
+			if (toRef != TsysRefType::None && fromRef != TsysRefType::None)
+			{
+				if ((toRef != TsysRefType::LRef) != (fromRef != TsysRefType::LRef))
+				{
+					return false;
+				}
+
+				if (!IsCVMatch(toCV, fromCV))
+				{
+					return false;
+				}
+			}
+
+			toType = toEntity;
+			fromType = fromEntity;
+			if (toRef != TsysRefType::None && fromRef != TsysRefType::None)
+			{
+				return true;
+			}
+		}
+
+		if (toType->GetType() == TsysType::Ptr && fromType->GetType() == TsysType::Ptr)
+		{
+			TsysCV toCV, fromCV;
+			TsysRefType toRef, fromRef;
+			auto toEntity = toType->GetElement()->GetEntity(toCV, toRef);
+			auto fromEntity = fromType->GetElement()->GetEntity(fromCV, fromRef);
+
+			if (toRef != TsysRefType::None) return false;
+			if (fromRef != TsysRefType::None) return false;
+			if (!IsCVMatch(toCV, fromCV)) return false;
+
+			toType = toEntity;
+			fromType = fromEntity;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	bool IsCustomOperatorConversion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested)
@@ -572,9 +586,15 @@ TsysConv TestConvertInternalUnsafe(const ParsingArguments& pa, ITsys* toType, IT
 	if (IsNumericPromotion(toEntity, fromEntity)) return TsysConv::IntegralPromotion;
 	if (IsNumericConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
 	if (IsPointerConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
-	if (IsToBaseClassConversion(pa, toType, fromType)) return TsysConv::StandardConversion;
-	if (IsCustomOperatorConversion(pa, toType, fromType, tested)) return TsysConv::UserDefinedConversion;
-	if (IsCustomContructorConversion(pa, toType, fromType, tested)) return TsysConv::UserDefinedConversion;
+	if (IsEntityTypeInheriting(pa, toType, fromType))
+	{
+		if (IsToBaseClassConversion_AssumingInheriting(pa, toType, fromType)) return TsysConv::StandardConversion;
+	}
+	else
+	{
+		if (IsCustomOperatorConversion(pa, toType, fromType, tested)) return TsysConv::UserDefinedConversion;
+		if (IsCustomContructorConversion(pa, toType, fromType, tested)) return TsysConv::UserDefinedConversion;
+	}
 
 	return TsysConv::Illegal;
 }

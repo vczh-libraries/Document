@@ -151,7 +151,7 @@ TEST_CASE(TestParseExpr_Overloading_Inheritance)
 		TEST_DECL(
 struct X {};
 struct Y {};
-struct Z :X {};
+struct Z : X {};
 
 double F(X&);
 bool F(Y&);
