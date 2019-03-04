@@ -218,6 +218,63 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 	return false;
 }
 
+Ptr<VariableDeclaration> GenerateCopyParameter(Symbol* classSymbol)
+{
+	auto idType = MakePtr<IdType>();
+	idType->name.name = classSymbol->name;
+	idType->name.type = CppNameType::Normal;
+	idType->resolving = MakePtr<Resolving>();
+	idType->resolving->resolvedSymbols.Add(classSymbol);
+
+	auto decoratedType = MakePtr<DecorateType>();
+	decoratedType->type = idType;
+	decoratedType->isConst = true;
+
+	auto refType = MakePtr<ReferenceType>();
+	refType->type = decoratedType;
+	refType->reference = CppReferenceType::LRef;
+
+	auto parameter = MakePtr<VariableDeclaration>();
+	parameter->type = refType;
+	return parameter;
+}
+
+Ptr<VariableDeclaration> GenerateMoveParameter(Symbol* classSymbol)
+{
+	auto idType = MakePtr<IdType>();
+	idType->name.name = classSymbol->name;
+	idType->name.type = CppNameType::Normal;
+	idType->resolving = MakePtr<Resolving>();
+	idType->resolving->resolvedSymbols.Add(classSymbol);
+
+	auto refType = MakePtr<ReferenceType>();
+	refType->type = idType;
+	refType->reference = CppReferenceType::RRef;
+
+	auto parameter = MakePtr<VariableDeclaration>();
+	parameter->type = refType;
+	return parameter;
+}
+
+Ptr<ForwardFunctionDeclaration> GenerateCtor(Symbol* classSymbol, bool deleted, Ptr<VariableDeclaration> parameter)
+{
+	auto decl = MakePtr<ForwardFunctionDeclaration>();
+	decl->name.name = L"$__ctor";
+	decl->name.type = CppNameType::Constructor;
+	decl->methodType = CppMethodType::Constructor;
+	{
+		auto funcType = MakePtr<FunctionType>();
+		decl->type = funcType;
+		if (parameter)
+		{
+			funcType->parameters.Add(parameter);
+		}
+	}
+	if (!deleted) decl->decoratorDefault = true;
+	if (deleted) decl->decoratorDelete = true;
+	return decl;
+}
+
 void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 {
 	if (auto classDecl = classSymbol->declaration.Cast<ClassDeclaration>())
@@ -250,16 +307,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 						deleted = false;
 					}
 				}
-
-				auto decl = MakePtr<ForwardFunctionDeclaration>();
-				decl->name.name = L"$__ctor";
-				decl->name.type = CppNameType::Constructor;
-				decl->methodType = CppMethodType::Constructor;
-				decl->type = MakePtr<FunctionType>();
-				if (!deleted) decl->decoratorDefault = true;
-				if (deleted) decl->decoratorDelete = true;
-
-				generatedMembers.Add(decl);
+				generatedMembers.Add(GenerateCtor(classSymbol, deleted, nullptr));
 			}
 			if (!symbolCopyCtor)
 			{
@@ -271,43 +319,19 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 						deleted = false;
 					}
 				}
-
-				auto decl = MakePtr<ForwardFunctionDeclaration>();
-				decl->name.name = L"$__ctor";
-				decl->name.type = CppNameType::Constructor;
-				decl->methodType = CppMethodType::Constructor;
-				{
-					auto funcType = MakePtr<FunctionType>();
-					decl->type = funcType;
-
-					auto idType = MakePtr<IdType>();
-					idType->name.name = classSymbol->name;
-					idType->name.type = CppNameType::Normal;
-					idType->resolving = MakePtr<Resolving>();
-					idType->resolving->resolvedSymbols.Add(classSymbol);
-
-					auto decoratedType = MakePtr<DecorateType>();
-					decoratedType->type = idType;
-					decoratedType->isConst = true;
-
-					auto refType = MakePtr<ReferenceType>();
-					refType->type = decoratedType;
-					refType->reference = CppReferenceType::LRef;
-
-					auto parameter = MakePtr<VariableDeclaration>();
-					parameter->type = refType;
-					funcType->parameters.Add(parameter);
-				}
-				if (!deleted) decl->decoratorDefault = true;
-				if (deleted) decl->decoratorDelete = true;
-
-				generatedMembers.Add(decl);
+				generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateCopyParameter(classSymbol)));
 			}
 			if (!symbolMoveCtor)
 			{
+				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::MoveCtor, false))
 				{
+					if (!symbolCopyCtor && !symbolCopyAssignOp && !symbolMoveAssignOp && !symbolDtor)
+					{
+						deleted = false;
+					}
 				}
+				generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateMoveParameter(classSymbol)));
 			}
 			if (!symbolCopyAssignOp)
 			{
