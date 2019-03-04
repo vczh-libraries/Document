@@ -290,10 +290,7 @@ Ptr<ForwardFunctionDeclaration> GenerateAssignOp(Symbol* classSymbol, bool delet
 		decl->type = funcType;
 		
 		funcType->returnType = GenerateRefType(classSymbol, CppReferenceType::LRef);
-		if (parameter)
-		{
-			funcType->parameters.Add(parameter);
-		}
+		funcType->parameters.Add(parameter);
 	}
 	if (!deleted) decl->decoratorDefault = true;
 	if (deleted) decl->decoratorDelete = true;
