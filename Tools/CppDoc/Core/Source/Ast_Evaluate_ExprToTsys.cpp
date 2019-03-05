@@ -640,7 +640,7 @@ public:
 
 		if (leftEntity->GetType() == TsysType::Decl)
 		{
-			auto newPa = pa.WithContextNoFunction(leftEntity->GetDecl());
+			auto newPa = pa.WithContext(leftEntity->GetDecl());
 			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbol);
 
 			if (opMethods.values)

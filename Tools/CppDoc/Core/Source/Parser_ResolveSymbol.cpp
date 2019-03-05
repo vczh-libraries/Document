@@ -124,7 +124,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			for (vint i = 0; i < scope->usingNss.Count(); i++)
 			{
 				auto usingNs = scope->usingNss[i];
-				auto newPa = pa.WithContextNoFunction(usingNs);
+				auto newPa = pa.WithContext(usingNs);
 				ResolveSymbolInternal(newPa, SearchPolicy::ChildSymbol, rsa);
 			}
 		}
@@ -212,7 +212,7 @@ public:
 						}
 					}
 				}
-				ResolveSymbolInternal(pa.WithContextNoFunction(symbol), policy, rsa);
+				ResolveSymbolInternal(pa.WithContext(symbol), policy, rsa);
 			}
 		}
 	}
@@ -253,7 +253,7 @@ public:
 
 	void Visit(RootType* self)override
 	{
-		ResolveSymbolInternal(pa.WithContextNoFunction(pa.root.Obj()), SearchPolicy::ChildSymbol, rsa);
+		ResolveSymbolInternal(pa.WithContext(pa.root.Obj()), SearchPolicy::ChildSymbol, rsa);
 	}
 
 	void Visit(IdType* self)override

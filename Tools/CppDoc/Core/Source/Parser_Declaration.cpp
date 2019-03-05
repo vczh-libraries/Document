@@ -663,13 +663,13 @@ void ParseDeclaration_Function(
 			methodCache->thisType = pa.tsys->DeclOf(methodCache->classSymbol)->CVOf(cv)->PtrOf();
 		}
 		{
-			auto newPa = pa.WithContextAndFunction(contextSymbol, contextSymbol);
+			auto newPa = pa.WithContext(contextSymbol);
 			BuildSymbols(newPa, funcType->parameters, cursor);
 		}
 		// delay parse the statement
 		{
 			decl->delayParse = MakePtr<DelayParse>();
-			decl->delayParse->pa = pa.WithContextAndFunction(contextSymbol, contextSymbol);
+			decl->delayParse->pa = pa.WithContext(contextSymbol);
 			cursor->Clone(decl->delayParse->reader, decl->delayParse->begin);
 
 			vint counter = 1;

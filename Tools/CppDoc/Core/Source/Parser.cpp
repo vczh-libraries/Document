@@ -134,27 +134,29 @@ ParsingArguments::ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr
 {
 }
 
-ParsingArguments ParsingArguments::WithContext(Symbol* context)const
+ParsingArguments ParsingArguments::WithContext(Symbol* _context)const
 {
 	ParsingArguments pa(root, tsys, recorder);
-	pa.funcSymbol = funcSymbol;
-	pa.context = context;
-	return pa;
-}
+	pa.context = _context;
 
-ParsingArguments ParsingArguments::WithContextNoFunction(Symbol* context)const
-{
-	ParsingArguments pa(root, tsys, recorder);
-	pa.funcSymbol = nullptr;
-	pa.context = context;
-	return pa;
-}
+	while (_context)
+	{
+		if (_context == context)
+		{
+			pa.funcSymbol = funcSymbol;
+			break;
+		}
+		else if (_context->kind == symbol_component::SymbolKind::Function)
+		{
+			pa.funcSymbol = _context;
+			break;
+		}
+		else
+		{
+			_context = _context->parent;
+		}
+	}
 
-ParsingArguments ParsingArguments::WithContextAndFunction(Symbol* context, Symbol* newFuncSymbol)const
-{
-	ParsingArguments pa(root, tsys, recorder);
-	pa.funcSymbol = newFuncSymbol;
-	pa.context = context;
 	return pa;
 }
 

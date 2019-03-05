@@ -6,7 +6,7 @@
 ## Short-term tasks
 
 - [ ] Add exception messages so that the final application won't crash leaving nothing.
-- [ ] Merge 3 `ParsingArguments::WithContext` to one, automatically fill `funcSymbol` field instead of passing.
+- [x] Merge 3 `ParsingArguments::WithContext` to one, automatically fill `funcSymbol` field instead of passing.
 - [ ] Test `ExprToTsys` on all expressions during parsing.
 - [x] Compiler-generated functions.
   - [ ] Test classes with fields and base classes

@@ -449,7 +449,7 @@ namespace TestConvert_Helpers
 		if (index == -1) return false;
 		const auto& typeOps = fromSymbol->children.GetByIndex(index);
 
-		auto newPa = pa.WithContextNoFunction(fromSymbol);
+		auto newPa = pa.WithContext(fromSymbol);
 		for (vint i = 0; i < typeOps.Count(); i++)
 		{
 			auto typeOpSymbol = typeOps[i];
@@ -509,7 +509,7 @@ namespace TestConvert_Helpers
 		if (index == -1) return false;
 		const auto& ctors = toSymbol->children.GetByIndex(index);
 
-		auto newPa = pa.WithContextNoFunction(toSymbol);
+		auto newPa = pa.WithContext(toSymbol);
 		for (vint i = 0; i < ctors.Count(); i++)
 		{
 			auto ctorSymbol = ctors[i];

@@ -120,9 +120,7 @@ namespace symbol_type_resolving
 		ev.progress = symbol_component::EvaluationProgress::Evaluating;
 		ev.Allocate();
 
-		auto parentSymbol = symbol->parent;
-		bool isInFunc = parentSymbol->statement;
-		auto newPa = isInFunc ? pa.WithContext(parentSymbol) : pa.WithContextNoFunction(parentSymbol);
+		auto newPa = pa.WithContext(symbol->parent);
 
 		if (varDecl->needResolveTypeFromInitializer)
 		{
@@ -180,7 +178,7 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			auto newPa = pa.WithContextNoFunction(symbol->parent);
+			auto newPa = pa.WithContext(symbol->parent);
 			TypeTsysList returnTypes;
 			CopyFrom(returnTypes, ev.Get());
 			ev.Get().Clear();
@@ -220,7 +218,7 @@ namespace symbol_type_resolving
 			if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))
 			{
 				EnsureFunctionBodyParsed(rootFuncDecl);
-				auto funcPa = pa.WithContextAndFunction(symbol, symbol);
+				auto funcPa = pa.WithContext(symbol);
 				EvaluateStat(funcPa, rootFuncDecl->statement);
 				if (ev.Count() == 0)
 				{
@@ -234,7 +232,7 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			auto newPa = pa.WithContextNoFunction(symbol->parent);
+			auto newPa = pa.WithContext(symbol->parent);
 			ev.Allocate();
 			TypeToTsys(newPa, funcDecl->type, ev.Get(), IsMemberFunction(pa, funcDecl));
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
@@ -255,7 +253,7 @@ namespace symbol_type_resolving
 		ev.Allocate(classDecl->baseTypes.Count());
 
 		{
-			auto newPa = pa.WithContextNoFunction(symbol);
+			auto newPa = pa.WithContext(symbol);
 			for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 			{
 				TypeToTsys(newPa, classDecl->baseTypes[i].f1, ev.Get(i));
@@ -278,7 +276,7 @@ namespace symbol_type_resolving
 		ev.Allocate();
 
 		{
-			auto newPa = pa.WithContextNoFunction(symbol->parent);
+			auto newPa = pa.WithContext(symbol->parent);
 			TypeToTsys(newPa, usingDecl->type, ev.Get());
 		}
 
@@ -392,7 +390,7 @@ namespace symbol_type_resolving
 		if (entity->GetType() == TsysType::Decl)
 		{
 			auto symbol = entity->GetDecl();
-			auto fieldPa = pa.WithContextNoFunction(symbol);
+			auto fieldPa = pa.WithContext(symbol);
 			auto rar = ResolveSymbol(fieldPa, name, SearchPolicy::ChildSymbol);
 			if (totalRar) totalRar->Merge(rar);
 			return rar.values;

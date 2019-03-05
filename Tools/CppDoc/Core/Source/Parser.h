@@ -130,9 +130,7 @@ struct ParsingArguments
 	ParsingArguments& operator=(const ParsingArguments&) = default;
 	ParsingArguments& operator=(ParsingArguments&&) = default;
 
-	ParsingArguments WithContext(Symbol* context)const;
-	ParsingArguments WithContextNoFunction(Symbol* context)const;
-	ParsingArguments WithContextAndFunction(Symbol* context, Symbol* newFuncSymbol)const;
+	ParsingArguments WithContext(Symbol* _context)const;
 };
 
 class DelayParse : public Object
