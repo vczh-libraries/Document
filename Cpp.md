@@ -13,7 +13,7 @@
   - [ ] Test overloading
 - [x] After ADL is called, re-index unqualified function names or operator expressions.
   - [ ] Test
-- [ ] Initializer list in constructors.
+- [x] Initializer list in constructors.
 - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
 - [ ] Test cases for whole program indexing without templates.
 

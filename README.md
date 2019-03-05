@@ -85,6 +85,7 @@ All **the compiler** here means the compiler created by this project.
       - unable to resolve the type of the expression in the first return statement.
     - Unable to resolve the type of a `using` or `typedef` type alias declaration.
     - After getting a type, it doesn't fit into `auto`, `decltype(auto)` or similar types.
+    - Find initialization list in a function, but this function is not a constructor defined in a class.
   - If you have `int Foo::Bar(int(&)[1])` and `int Foo::Bar(int(&)[2])`, although this code is valid, but due to the limitation mentioned above, the compiler stops here.
   - Generic type instances with constant arguments are affected for the same reason.
   - For most of wrong cases, like `struct Foo { static inline virtual int Bar() = 0; };`, the compiler doesn't care.

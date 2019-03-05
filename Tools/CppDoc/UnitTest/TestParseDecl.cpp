@@ -555,6 +555,42 @@ namespace a
 	}
 }
 
+TEST_CASE(TestParserDecl_CtorInitList)
+{
+	auto input = LR"(
+struct Vector
+{
+	double x;
+	double y;
+
+	Vector() : x(0), y(0) {}
+	Vector(int _x, int _y) : x(_x), y(_y) {}
+};
+static Vector operator+(Vector v1, Vector v2);
+static Vector operator-(Vector v1, Vector v2);
+)";
+	auto output = LR"(
+struct Vector
+{
+	public x: double;
+	public y: double;
+	public __ctor $__ctor: __null ()
+		: x(0)
+		, y(0)
+	{
+	}
+	public __ctor $__ctor: __null (_x: int, _y: int)
+		: x(_x)
+		, y(_y)
+	{
+	}
+};
+__forward static operator +: Vector (v1: Vector, v2: Vector);
+__forward static operator -: Vector (v1: Vector, v2: Vector);
+)";
+	AssertProgram(input, output);
+}
+
 TEST_CASE(TestParseDecl_ClassMemberScope)
 {
 	auto input = LR"(
@@ -922,8 +958,8 @@ _b: b;
 _c: c;
 _d: d;
 )";
-		AssertProgram(input, output);
 		COMPILE_PROGRAM(program, pa, input);
+		AssertProgram(program, output);
 
 		AssertExpr(L"_a",				L"_a",					L"__int32 $L",																pa);
 		AssertExpr(L"_b",				L"_b",					L"__int32 $L",																pa);
@@ -963,8 +999,8 @@ struct Color
 	};
 };
 )";
-	AssertProgram(input, output);
 	COMPILE_PROGRAM(program, pa, input);
+	AssertProgram(program, output);
 
 	AssertExpr(L"Color().r",				L"Color().r",				L"unsigned __int8 $PR",			pa);
 	AssertExpr(L"Color().g",				L"Color().g",				L"unsigned __int8 $PR",			pa);
@@ -989,8 +1025,8 @@ struct X
 x: X;
 px: X *;
 )";
-	AssertProgram(input, output);
 	COMPILE_PROGRAM(program, pa, input);
+	AssertProgram(program, output);
 
 	AssertExpr(L"x",						L"x",						L"::X $L",						pa);
 	AssertExpr(L"x.x",						L"x.x",						L"__int32 $L",					pa);
@@ -1026,8 +1062,8 @@ struct <anonymous>1
 };
 using Y = <anonymous>1;
 )";
-	AssertProgram(input, output);
 	COMPILE_PROGRAM(program, pa, input);
+	AssertProgram(program, output);
 
 	AssertExpr(L"Y().x.x",					L"Y().x.x",					L"__int32 $PR",					pa);
 	AssertExpr(L"Y().px->x",				L"Y().px->x",				L"__int32 $L",					pa);

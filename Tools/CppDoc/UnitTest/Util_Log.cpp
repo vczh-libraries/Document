@@ -989,6 +989,16 @@ public:
 	{
 		WriteHeader(self);
 		writer.WriteLine(L"");
+		for (vint i = 0; i < self->initList.Count(); i++)
+		{
+			auto& item = self->initList[i];
+			WriteIndentation();
+			writer.WriteString(i == 0 ? L"\t: " : L"\t, ");
+			writer.WriteString(item.f0->name.name);
+			writer.WriteString(L"(");
+			Log(item.f1, writer);
+			writer.WriteLine(L")");
+		}
 		WriteIndentation();
 		Log(self->statement, writer, indentation + 1);
 	}

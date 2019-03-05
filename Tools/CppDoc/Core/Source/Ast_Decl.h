@@ -39,6 +39,8 @@ public:
 
 #define IDeclarationVisitor_ACCEPT void Accept(IDeclarationVisitor* visitor)override
 
+class IdExpr;
+
 /***********************************************************************
 Types
 ***********************************************************************/
@@ -156,6 +158,9 @@ class FunctionDeclaration : public ForwardFunctionDeclaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
+	using InitItem = Tuple<Ptr<IdExpr>, Ptr<Expr>>;
+
+	List<InitItem>									initList;
 	Ptr<Stat>										statement;
 	Ptr<DelayParse>									delayParse;
 };

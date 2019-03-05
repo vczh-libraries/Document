@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Ast_Decl.h"
+#include "Ast_Expr.h"
 
 namespace symbol_component
 {
@@ -243,6 +244,41 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 	{
 		auto delayParse = funcDecl->delayParse;
 		funcDecl->delayParse = nullptr;
+
+		if (TestToken(delayParse->begin, CppTokens::COLON))
+		{
+			while (true)
+			{
+				FunctionDeclaration::InitItem item;
+				item.f0 = MakePtr<IdExpr>();
+				if (!ParseCppName(item.f0->name, delayParse->begin))
+				{
+					throw StopParsingException(delayParse->begin);
+				}
+				if (item.f0->name.type != CppNameType::Normal)
+				{
+					throw StopParsingException(delayParse->begin);
+				}
+
+				RequireToken(delayParse->begin, CppTokens::LPARENTHESIS);
+				item.f1 = ParseExpr(delayParse->pa, true, delayParse->begin);
+				RequireToken(delayParse->begin, CppTokens::RPARENTHESIS);
+
+				funcDecl->initList.Add(item);
+
+				if (!TestToken(delayParse->begin, CppTokens::COMMA))
+				{
+					if (TestToken(delayParse->begin, CppTokens::LBRACE, false))
+					{
+						break;
+					}
+					else
+					{
+						throw StopParsingException(delayParse->begin);
+					}
+				}
+			}
+		}
 
 		funcDecl->statement = ParseStat(delayParse->pa, delayParse->begin);
 		if (delayParse->begin)

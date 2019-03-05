@@ -405,6 +405,40 @@ public:
 	{
 		EnsureFunctionBodyParsed(self);
 		symbol_type_resolving::EvaluateSymbol(pa, self);
+
+		if(self->initList.Count() > 0)
+		{
+			auto classDecl = self->symbol->parent->declaration.Cast<ClassDeclaration>();
+			if (!classDecl)
+			{
+				throw NotResolvableException();
+			}
+			if (self->name.type != CppNameType::Constructor)
+			{
+				throw NotResolvableException();
+			}
+
+			auto newPa = pa.WithContext(self->symbol);
+			for (vint i = 0; i < self->initList.Count(); i++)
+			{
+				auto& item = self->initList[i];
+				{
+					vint index = classDecl->symbol->children.Keys().IndexOf(item.f0->name.name);
+					if (index == -1) goto SKIP_RESOLVING_FIELD;
+					auto& vars = classDecl->symbol->children.GetByIndex(index);
+					if (vars.Count() != 1) goto SKIP_RESOLVING_FIELD;
+					auto varSymbol = vars[0].Obj();
+					if (varSymbol->kind != symbol_component::SymbolKind::Variable) goto SKIP_RESOLVING_FIELD;
+
+					item.f0->resolving = MakePtr<Resolving>();
+					item.f0->resolving->resolvedSymbols.Add(varSymbol);
+				}
+			SKIP_RESOLVING_FIELD:;
+				ExprTsysList types;
+				ExprToTsys(newPa, item.f1, types);
+			}
+		}
+
 		if (!self->needResolveTypeFromStatement)
 		{
 			auto fpa = pa.WithContext(self->symbol);

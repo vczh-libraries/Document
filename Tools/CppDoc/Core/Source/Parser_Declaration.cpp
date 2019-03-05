@@ -625,12 +625,7 @@ void ParseDeclaration_Function(
 	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_FILL_DECLARATOR)\
 	decl->needResolveTypeFromStatement = needResolveTypeFromStatement\
 
-	if (TestToken(cursor, CppTokens::COLON, false))
-	{
-		// initializer list in constructors
-		throw StopParsingException(cursor);
-	}
-	bool hasStat = TestToken(cursor, CppTokens::LBRACE, false);
+	bool hasStat = TestToken(cursor, CppTokens::COLON, false) || TestToken(cursor, CppTokens::LBRACE, false);
 	bool needResolveTypeFromStatement = IsPendingType(funcType->returnType) && (!funcType->decoratorReturnType || IsPendingType(funcType->decoratorReturnType));
 	if (needResolveTypeFromStatement && !hasStat)
 	{
@@ -672,8 +667,7 @@ void ParseDeclaration_Function(
 			decl->delayParse->pa = pa.WithContext(contextSymbol);
 			cursor->Clone(decl->delayParse->reader, decl->delayParse->begin);
 
-			vint counter = 1;
-			RequireToken(cursor, CppTokens::LBRACE);
+			vint counter = 0;
 			while (true)
 			{
 				if (TestToken(cursor, CppTokens::LBRACE))
