@@ -217,7 +217,7 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 		auto& types = classSymbol->evaluation.Get(i);
 		for (vint j = 0; j < types.Count(); j++)
 		{
-			if (!IsSpecialMemberEnabledForType(pa, types[j], SpecialMemberKind::DefaultCtor))
+			if (!IsSpecialMemberEnabledForType(pa, types[j], kind))
 			{
 				return true;
 			}
@@ -232,12 +232,14 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 			{
 				continue;
 			}
+
+			symbol_type_resolving::EvaluateSymbol(pa, varDecl.Obj());
 			if (varDecl->symbol->evaluation.Count() == 1)
 			{
 				auto& types = varDecl->symbol->evaluation.Get();
 				for (vint j = 0; j < types.Count(); j++)
 				{
-					if (!IsSpecialMemberEnabledForType(pa, types[j], SpecialMemberKind::DefaultCtor))
+					if (!IsSpecialMemberEnabledForType(pa, types[j], kind))
 					{
 						return true;
 					}

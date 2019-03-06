@@ -100,3 +100,127 @@ TEST_CASE(TestGF_Features)
 	GENERATED_FUNCTION_TYPES(FEATURE)
 #undef FEATURE
 }
+
+TEST_CASE(TestGF_FieldsAndBaseClasses)
+{
+	{
+		auto input = LR"(
+struct Unfeatured
+{
+	Unfeatured()=delete;
+};
+
+struct A : Unfeatured
+{
+};
+
+struct B
+{
+	Unfeatured unfeatured;
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::DefaultCtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::DefaultCtor) == false);
+	}
+	{
+		auto input = LR"(
+struct Unfeatured
+{
+	Unfeatured(const Unfeatured&)=delete;
+};
+
+struct A : Unfeatured
+{
+};
+
+struct B
+{
+	Unfeatured unfeatured;
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::CopyCtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::CopyCtor) == false);
+	}
+	{
+		auto input = LR"(
+struct Unfeatured
+{
+	Unfeatured(Unfeatured&&)=delete;
+};
+
+struct A : Unfeatured
+{
+};
+
+struct B
+{
+	Unfeatured unfeatured;
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::MoveCtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::MoveCtor) == false);
+	}
+	{
+		auto input = LR"(
+struct Unfeatured
+{
+	Unfeatured& operator=(const Unfeatured&)=delete;
+};
+
+struct A : Unfeatured
+{
+};
+
+struct B
+{
+	Unfeatured unfeatured;
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::CopyAssignOp) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::CopyAssignOp) == false);
+	}
+	{
+		auto input = LR"(
+struct Unfeatured
+{
+	Unfeatured& operator=(Unfeatured&&)=delete;
+};
+
+struct A : Unfeatured
+{
+};
+
+struct B
+{
+	Unfeatured unfeatured;
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::MoveAssignOp) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::MoveAssignOp) == false);
+	}
+	{
+		auto input = LR"(
+struct Unfeatured
+{
+	~Unfeatured()=delete;
+};
+
+struct A : Unfeatured
+{
+};
+
+struct B
+{
+	Unfeatured unfeatured;
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::Dtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::Dtor) == false);
+	}
+}
