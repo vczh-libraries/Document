@@ -50,15 +50,16 @@ class CppTokenReader : public Object
 	friend class CppTokenCursor;
 protected:
 	bool						gotFirstToken = false;
+	bool						skipSpaceAndComment = false;
 	Ptr<RegexLexer>				lexer;
 	Ptr<RegexTokens>			tokens;
 	IEnumerator<RegexToken>*	tokenEnumerator;
 
 	Ptr<CppTokenCursor>			CreateNextToken();
 
-	CppTokenReader(const CppTokenReader& _reader);
+	CppTokenReader(const CppTokenReader& _reader, bool _skipSpaceAndComment);
 public:
-	CppTokenReader(Ptr<RegexLexer> _lexer, const WString& input);
+	CppTokenReader(Ptr<RegexLexer> _lexer, const WString& input, bool _skipSpaceAndComment = true);
 	~CppTokenReader();
 
 	Ptr<CppTokenCursor>			GetFirstToken();

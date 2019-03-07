@@ -38,7 +38,7 @@ Ptr<CppTokenCursor> CppTokenCursor::Next()
 
 void CppTokenCursor::Clone(Ptr<CppTokenReader>& _reader, Ptr<CppTokenCursor>& _cursor)
 {
-	_reader = new CppTokenReader(*reader);
+	_reader = new CppTokenReader(*reader, reader->skipSpaceAndComment);
 	_cursor = new CppTokenCursor(_reader.Obj(), token);
 
 	auto reading = this;
@@ -61,28 +61,33 @@ Ptr<CppTokenCursor> CppTokenReader::CreateNextToken()
 	while (tokenEnumerator->Next())
 	{
 		auto token = tokenEnumerator->Current();
-		switch((CppTokens)token.token)
+		if (skipSpaceAndComment)
 		{
-		case CppTokens::SPACE:
-		case CppTokens::COMMENT1:
-		case CppTokens::COMMENT2:
-			continue;
+			switch ((CppTokens)token.token)
+			{
+			case CppTokens::SPACE:
+			case CppTokens::COMMENT1:
+			case CppTokens::COMMENT2:
+				continue;
+			}
 		}
 		return new CppTokenCursor(this, token);
 	}
 	return nullptr;
 }
 
-CppTokenReader::CppTokenReader(const CppTokenReader& _reader)
+CppTokenReader::CppTokenReader(const CppTokenReader& _reader, bool _skipSpaceAndComment)
 	:gotFirstToken(_reader.gotFirstToken)
+	, skipSpaceAndComment(_skipSpaceAndComment)
 	, lexer(_reader.lexer)
 	, tokens(_reader.tokens)
 	, tokenEnumerator(_reader.tokenEnumerator ? _reader.tokenEnumerator->Clone() : nullptr)
 {
 }
 
-CppTokenReader::CppTokenReader(Ptr<RegexLexer> _lexer, const WString& input)
-	:lexer(_lexer)
+CppTokenReader::CppTokenReader(Ptr<RegexLexer> _lexer, const WString& input, bool _skipSpaceAndComment)
+	:skipSpaceAndComment(_skipSpaceAndComment)
+	, lexer(_lexer)
 {
 	tokens = new RegexTokens(lexer->Parse(input));
 	tokenEnumerator = tokens->CreateEnumerator();
