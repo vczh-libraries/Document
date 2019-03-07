@@ -86,7 +86,11 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 								case CppTokens::RPARENTHESIS:
 									lastTokenIsSkipping = false;
 									parenthesisCounter--;
-									if (parenthesisCounter == 0) goto STOP_SHARP;
+									if (parenthesisCounter == 0)
+									{
+										cursor = cursor->Next();
+										goto STOP_SHARP;
+									}
 									break;
 								case CppTokens::SPACE:
 								case CppTokens::COMMENT1:
@@ -122,6 +126,10 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 					}
 					else
 					{
+						while (oldCursor != cursor)
+						{
+							oldCursor = oldCursor->Next();
+						}
 						mapping.Add(ts);
 						writer.WriteLine(L"", 0);
 					}
@@ -168,9 +176,9 @@ int main()
 			CleanUpPreprocessFile(
 				lexer,
 				file.GetFilePath(),
-				folderOutput.GetFilePath() / L"Preprocessed.txt",
-				folderOutput.GetFilePath() / L"Input.txt",
-				folderOutput.GetFilePath() / L"Mapping.txt"
+				folderOutput.GetFilePath() / L"Preprocessed.cpp",
+				folderOutput.GetFilePath() / L"Input.cpp",
+				folderOutput.GetFilePath() / L"Mapping.bin"
 			);
 		}
 	}
