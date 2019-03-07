@@ -1003,6 +1003,35 @@ struct Color
 	AssertExpr(L"Color().value",			L"Color().value",			L"unsigned __int32 $PR",		pa);
 }
 
+TEST_CASE(TestParseDecl_NestedAnonymousEnum)
+{
+	auto input = LR"(
+enum
+{
+	X
+};
+enum : int
+{
+	Y
+};
+)";
+	auto output = LR"(
+enum <anonymous>0
+{
+	X,
+};
+enum <anonymous>1 : int
+{
+	Y,
+};
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	AssertProgram(program, output);
+
+	AssertExpr(L"X",						L"X",						L"::<anonymous>0 $PR",			pa);
+	AssertExpr(L"Y",						L"Y",						L"::<anonymous>1 $PR",			pa);
+}
+
 TEST_CASE(TestParseDecl_ClassFollowedVariables)
 {
 	auto input = LR"(
@@ -1061,4 +1090,62 @@ using Y = <anonymous>1;
 
 	AssertExpr(L"Y().x.x",					L"Y().x.x",					L"__int32 $PR",					pa);
 	AssertExpr(L"Y().px->x",				L"Y().px->x",				L"__int32 $L",					pa);
+}
+
+TEST_CASE(TestParseDecl_TypedefWithAnonymousEnum)
+{
+	auto input = LR"(
+typedef enum
+{
+	A
+} _A, *pA;
+
+typedef enum : int
+{
+	B
+} _B. *pB;
+
+typedef enum C_
+{
+	C
+} _C. *pC;
+
+typedef enum class D_
+{
+	D
+} _D. *pD;
+)";
+	auto output = LR"(
+enum <anonymous>0
+{
+	A,
+};
+using _A = <anonymous>0;
+using pA = <anonymous>0 *;
+enum <anonymous>1 : int
+{
+	B,
+};
+using _B = <anonymous>0;
+using pB = <anonymous>0 *;
+enum C_
+{
+	C,
+};
+using _C = C;
+using pC = C *;
+enum class D_
+{
+	D,
+};
+using _D = D;
+using pD = D *;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	AssertProgram(program, output);
+
+	AssertExpr(L"A",						L"A",						L"::<anonymous>0 $PR",				pa);
+	AssertExpr(L"B",						L"B",						L"::<anonymous>1 $PR",				pa);
+	AssertExpr(L"C",						L"C",						L"::C_ $PR",						pa);
+	AssertExpr(L"_D::D",					L"_D :: D",					L"::D_ $PR",						pa);
 }
