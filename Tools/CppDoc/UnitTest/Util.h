@@ -56,12 +56,12 @@ public:
 
 	void Index(CppName& name, Ptr<Resolving> resolving)
 	{
-		callback(name, resolving);
+		callback(name, resolving, false);
 	}
 
 	void IndexOverloadingResolution(CppName& name, Ptr<Resolving> resolving)
 	{
-		callback(name, resolving);
+		callback(name, resolving, true);
 	}
 
 	void ExpectValueButType(CppName& name, Ptr<Resolving> resolving)
@@ -76,23 +76,34 @@ Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
 	return new TestIndexRecorder<T>(ForwardValue<T&&>(callback));
 }
 
-#define BEGIN_ASSERT_SYMBOL TEST_ASSERT(name.tokenCount > 0);
-#define END_ASSERT_SYMBOL TEST_ASSERT(false);
+#define BEGIN_ASSERT_SYMBOL \
+	CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving, bool reIndex)\
+	{\
+		TEST_ASSERT(name.tokenCount > 0);\
+
+#define END_ASSERT_SYMBOL \
+		TEST_ASSERT(false);\
+	})\
+
+#define ASSERT_SYMBOL_INTERNAL(REINDEX, INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)\
+		if (reIndex == REINDEX && name.nameTokens[0].rowStart == TROW && name.nameTokens[0].columnStart == TCOL)\
+		{\
+			TEST_ASSERT(name.name == NAME);\
+			TEST_ASSERT(resolving->resolvedSymbols.Count() == 1);\
+			auto symbol = resolving->resolvedSymbols[0];\
+			auto decl = symbol->GetAnyForwardDecl<TYPE>();\
+			TEST_ASSERT(decl);\
+			TEST_ASSERT(decl->name.name == NAME);\
+			TEST_ASSERT(decl->name.nameTokens[0].rowStart == PROW);\
+			TEST_ASSERT(decl->name.nameTokens[0].columnStart == PCOL);\
+			if (!accessed.Contains(INDEX)) accessed.Add(INDEX);\
+		} else\
 
 #define ASSERT_SYMBOL(INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)\
-	if (name.nameTokens[0].rowStart == TROW && name.nameTokens[0].columnStart == TCOL)\
-	{\
-		TEST_ASSERT(name.name == NAME);\
-		TEST_ASSERT(resolving->resolvedSymbols.Count() == 1);\
-		auto symbol = resolving->resolvedSymbols[0];\
-		auto decl = symbol->declaration.Cast<TYPE>();\
-		if (!decl) decl = symbol->definitions[0].Cast<TYPE>();\
-		TEST_ASSERT(decl);\
-		TEST_ASSERT(decl->name.name == NAME);\
-		TEST_ASSERT(decl->name.nameTokens[0].rowStart == PROW);\
-		TEST_ASSERT(decl->name.nameTokens[0].columnStart == PCOL);\
-		if (!accessed.Contains(INDEX)) accessed.Add(INDEX);\
-	} else \
+		ASSERT_SYMBOL_INTERNAL(false, INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)
+
+#define ASSERT_SYMBOL_OVERLOAD(INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)\
+		ASSERT_SYMBOL_INTERNAL(true, INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)
 
 template<typename T, typename U>
 struct IntIfSameType

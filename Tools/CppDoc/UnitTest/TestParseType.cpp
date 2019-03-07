@@ -119,15 +119,13 @@ namespace a::b
 	COMPILE_PROGRAM(program, pa, input);
 	{
 		SortedList<vint> accessed;
-		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
-		{
-			BEGIN_ASSERT_SYMBOL
-				ASSERT_SYMBOL(0, L"a", 0, 0, NamespaceDeclaration, 1, 10)
-				ASSERT_SYMBOL(1, L"b", 0, 3, NamespaceDeclaration, 1, 13)
-				ASSERT_SYMBOL(2, L"S", 0, 6, ClassDeclaration, 3, 8)
-				ASSERT_SYMBOL(3, L"X", 0, 9, ForwardEnumDeclaration, 5, 7)
-			END_ASSERT_SYMBOL
-		});
+		pa.recorder = BEGIN_ASSERT_SYMBOL
+			ASSERT_SYMBOL(0, L"a", 0, 0, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(1, L"b", 0, 3, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(2, L"S", 0, 6, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(3, L"X", 0, 9, ForwardEnumDeclaration, 5, 7)
+		END_ASSERT_SYMBOL;
+
 		AssertType(
 			L"a::b::S::X",
 			L"a :: b :: S :: X",
@@ -137,13 +135,11 @@ namespace a::b
 	}
 	{
 		SortedList<vint> accessed;
-		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
-		{
-			BEGIN_ASSERT_SYMBOL
-				ASSERT_SYMBOL(0, L"a", 0, 11, NamespaceDeclaration, 1, 10)
-				ASSERT_SYMBOL(1, L"b", 0, 14, NamespaceDeclaration, 1, 13)
-			END_ASSERT_SYMBOL
-		});
+		pa.recorder = BEGIN_ASSERT_SYMBOL
+			ASSERT_SYMBOL(0, L"a", 0, 11, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(1, L"b", 0, 14, NamespaceDeclaration, 1, 13)
+		END_ASSERT_SYMBOL;
+
 		AssertType(
 			L"typename ::a::b::X::Y::Z",
 			L"__root :: a :: typename b :: typename X :: typename Y :: typename Z",
@@ -153,18 +149,16 @@ namespace a::b
 	}
 	{
 		SortedList<vint> accessed;
-		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
-		{
-			BEGIN_ASSERT_SYMBOL
-				ASSERT_SYMBOL(0, L"a", 0, 0, NamespaceDeclaration, 1, 10)
-				ASSERT_SYMBOL(1, L"b", 0, 3, NamespaceDeclaration, 1, 13)
-				ASSERT_SYMBOL(2, L"S", 0, 6, ClassDeclaration, 3, 8)
-				ASSERT_SYMBOL(3, L"X", 0, 9, ForwardEnumDeclaration, 5, 7)
-				ASSERT_SYMBOL(4, L"a", 0, 28, NamespaceDeclaration, 1, 10)
-				ASSERT_SYMBOL(5, L"b", 0, 31, NamespaceDeclaration, 1, 13)
-				ASSERT_SYMBOL(6, L"S", 0, 34, ClassDeclaration, 3, 8)
-			END_ASSERT_SYMBOL
-		});
+		pa.recorder = BEGIN_ASSERT_SYMBOL
+			ASSERT_SYMBOL(0, L"a", 0, 0, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(1, L"b", 0, 3, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(2, L"S", 0, 6, ClassDeclaration, 3, 8)
+			ASSERT_SYMBOL(3, L"X", 0, 9, ForwardEnumDeclaration, 5, 7)
+			ASSERT_SYMBOL(4, L"a", 0, 28, NamespaceDeclaration, 1, 10)
+			ASSERT_SYMBOL(5, L"b", 0, 31, NamespaceDeclaration, 1, 13)
+			ASSERT_SYMBOL(6, L"S", 0, 34, ClassDeclaration, 3, 8)
+		END_ASSERT_SYMBOL;
+
 		AssertType(
 			L"a::b::S::X(__cdecl typename a::b::S::*)()",
 			L"a :: b :: S :: X () __cdecl (a :: typename b :: typename S ::) *",
@@ -197,16 +191,14 @@ namespace c::d
 	COMPILE_PROGRAM(program, pa, input);
 	{
 		SortedList<vint> accessed;
-		pa.recorder = CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving)
-		{
-			BEGIN_ASSERT_SYMBOL
-				ASSERT_SYMBOL(0, L"c", 0, 0, NamespaceDeclaration, 8, 10)
-				ASSERT_SYMBOL(1, L"d", 0, 3, NamespaceDeclaration, 8, 13)
-				ASSERT_SYMBOL(2, L"Y", 0, 6, ClassDeclaration, 10, 8)
-				ASSERT_SYMBOL(3, L"Z", 0, 9, ClassDeclaration, 12, 9)
-				ASSERT_SYMBOL(4, L"Y", 0, 12, ForwardEnumDeclaration, 5, 7)
-			END_ASSERT_SYMBOL
-		});
+		pa.recorder = BEGIN_ASSERT_SYMBOL
+			ASSERT_SYMBOL(0, L"c", 0, 0, NamespaceDeclaration, 8, 10)
+			ASSERT_SYMBOL(1, L"d", 0, 3, NamespaceDeclaration, 8, 13)
+			ASSERT_SYMBOL(2, L"Y", 0, 6, ClassDeclaration, 10, 8)
+			ASSERT_SYMBOL(3, L"Z", 0, 9, ClassDeclaration, 12, 9)
+			ASSERT_SYMBOL(4, L"Y", 0, 12, ForwardEnumDeclaration, 5, 7)
+		END_ASSERT_SYMBOL;
+
 		AssertType(
 			L"c::d::Y::Z::Y",
 			L"c :: d :: Y :: Z :: Y",

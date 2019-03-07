@@ -6,12 +6,7 @@
 ## Short-term tasks
 
 - [ ] Add exception messages so that the final application won't crash leaving nothing.
-- [x] Merge 3 `ParsingArguments::WithContext` to one, automatically fill `funcSymbol` field instead of passing.
 - [ ] Test `ExprToTsys` on all expressions during parsing.
-- [x] Compiler-generated functions.
-- [x] After ADL is called, re-index unqualified function names or operator expressions.
-  - [ ] Test
-- [x] Initializer list in constructors.
 - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
 - [ ] Test cases for whole program indexing without templates.
 
