@@ -123,7 +123,7 @@ void ParseDeclaration_Namespace(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 ParseDeclaration_<ENUM>
 ***********************************************************************/
 
-void ParseDeclaration_Enum(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArguments& pa, bool forTypeDef, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	RequireToken(cursor, CppTokens::DECL_ENUM);
 	// enum [CLASS] NAME [: TYPE] ...
@@ -195,13 +195,12 @@ void ParseDeclaration_Enum(const ParsingArguments& pa, Ptr<CppTokenCursor>& curs
 			}
 		}
 
-		RequireToken(cursor, CppTokens::SEMICOLON);
 		output.Add(decl);
+		return decl;
 	}
 	else
 	{
 		// ... ;
-		RequireToken(cursor, CppTokens::SEMICOLON);
 		auto decl = MakePtr<ForwardEnumDeclaration>();
 		decl->enumClass = enumClass;
 		decl->name = cppName;
@@ -212,6 +211,7 @@ void ParseDeclaration_Enum(const ParsingArguments& pa, Ptr<CppTokenCursor>& curs
 		{
 			throw StopParsingException(cursor);
 		}
+		return nullptr;
 	}
 }
 
@@ -944,6 +944,29 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, bool decoratorFriend, 
 ParseDeclaration
 ***********************************************************************/
 
+void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa, Ptr<Declaration> decl, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+{
+	auto type = MakePtr<IdType>();
+	type->name = decl->name;
+	type->resolving = MakePtr<Resolving>();
+	type->resolving->resolvedSymbols.Add(decl->symbol);
+
+	List<Ptr<Declarator>> declarators;
+	ParseNonMemberDeclarator(pa, pda_Typedefs(), type, cursor, declarators);
+
+	for (vint i = 0; i < declarators.Count(); i++)
+	{
+		ParseDeclaration_Variable(
+			pa,
+			declarators[i],
+			false, false, false, false, false,
+			nullptr,
+			cursor,
+			output
+		);
+	}
+}
+
 void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	while (SkipSpecifiers(cursor));
@@ -981,40 +1004,25 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else if (TestToken(cursor, CppTokens::DECL_ENUM, false))
 	{
-		ParseDeclaration_Enum(pa, cursor, output);
+		if (auto enumDecl = ParseDeclaration_Enum_NotConsumeSemicolon(pa, false, cursor, output))
+		{
+			if (!TestToken(cursor, CppTokens::SEMICOLON, false))
+			{
+				ParseVariablesFollowedByDecl_NotConsumeSemicolon(pa, enumDecl, cursor, output);
+			}
+		}
+		RequireToken(cursor, CppTokens::SEMICOLON);
 	}
 	else if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
 	{
 		if (auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, false, cursor, output))
 		{
-			if (!TestToken(cursor, CppTokens::SEMICOLON))
+			if (!TestToken(cursor, CppTokens::SEMICOLON, false))
 			{
-				auto type = MakePtr<IdType>();
-				type->name = classDecl->name;
-				type->resolving = MakePtr<Resolving>();
-				type->resolving->resolvedSymbols.Add(classDecl->symbol);
-
-				List<Ptr<Declarator>> declarators;
-				ParseNonMemberDeclarator(pa, pda_Typedefs(), type, cursor, declarators);
-
-				for (vint i = 0; i < declarators.Count(); i++)
-				{
-					ParseDeclaration_Variable(
-						pa,
-						declarators[i],
-						false, false, false, false, false,
-						nullptr,
-						cursor,
-						output
-					);
-				}
-				RequireToken(cursor, CppTokens::SEMICOLON);
+				ParseVariablesFollowedByDecl_NotConsumeSemicolon(pa, classDecl, cursor, output);
 			}
 		}
-		else
-		{
-			RequireToken(cursor, CppTokens::SEMICOLON);
-		}
+		RequireToken(cursor, CppTokens::SEMICOLON);
 	}
 	else if (TestToken(cursor, CppTokens::DECL_USING, false))
 	{
