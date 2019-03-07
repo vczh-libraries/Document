@@ -579,7 +579,8 @@ ParseDeclaration_FuncVar
 	F(VIRTUAL, Virtual)\
 	F(EXPLICIT, Explicit)\
 	F(INLINE, Inline)\
-	F(__FORCEINLINE, ForceInline)\
+	F(__INLINE, __Inline)\
+	F(__FORCEINLINE, __ForceInline)\
 
 #define FUNCVAR_DECORATORS_FOR_FUNCTION(F)\
 	F(Extern)\
@@ -588,7 +589,8 @@ ParseDeclaration_FuncVar
 	F(Virtual)\
 	F(Explicit)\
 	F(Inline)\
-	F(ForceInline)\
+	F(__Inline)\
+	F(__ForceInline)\
 	F(Abstract)\
 	F(Default)\
 	F(Delete)\

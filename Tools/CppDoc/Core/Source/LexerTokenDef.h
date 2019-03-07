@@ -47,6 +47,7 @@ Keywords
 	F(VIRTUAL,					virtual)				\
 	F(EXPLICIT,					explicit)				\
 	F(INLINE,					inline)					\
+	F(__INLINE,					__inline)				\
 	F(__FORCEINLINE,			__forceinline)			\
 	F(REGISTER,					register)				\
 	F(MUTABLE,					mutable)				\
@@ -96,6 +97,8 @@ Keywords
 	F(PUBLIC,					public)					\
 	F(PROTECTED,				protected)				\
 	F(PRIVATE,					private)				\
+	F(__PRAGMA,					__pragma)				\
+	F(__DECLSPEC,				__declspec)				\
 
 /***********************************************************************
 Others

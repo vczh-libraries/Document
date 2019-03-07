@@ -105,7 +105,8 @@ public:
 	bool											decoratorVirtual = false;
 	bool											decoratorExplicit = false;
 	bool											decoratorInline = false;
-	bool											decoratorForceInline = false;
+	bool											decorator__Inline = false;
+	bool											decorator__ForceInline = false;
 	bool											decoratorAbstract = false;
 	bool											decoratorDefault = false;
 	bool											decoratorDelete = false;

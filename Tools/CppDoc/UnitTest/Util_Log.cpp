@@ -880,7 +880,8 @@ private:
 		if (self->decoratorExtern) writer.WriteString(L"extern ");
 		if (self->decoratorFriend) writer.WriteString(L"friend ");
 		if (self->decoratorInline) writer.WriteString(L"inline ");
-		if (self->decoratorForceInline) writer.WriteString(L"__forceinline ");
+		if (self->decorator__Inline) writer.WriteString(L"__inline ");
+		if (self->decorator__ForceInline) writer.WriteString(L"__forceinline ");
 		if (self->decoratorStatic) writer.WriteString(L"static ");
 		if (self->decoratorVirtual) writer.WriteString(L"virtual ");
 		switch (self->methodType)

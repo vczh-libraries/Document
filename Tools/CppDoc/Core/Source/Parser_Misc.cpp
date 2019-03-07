@@ -31,7 +31,7 @@ bool SkipSpecifiers(Ptr<CppTokenCursor>& cursor)
 		}
 		throw StopParsingException(cursor);
 	}
-	else if (TestToken(cursor, L"__declspec"))
+	else if (TestToken(cursor, CppTokens::__DECLSPEC) || TestToken(cursor, CppTokens::__PRAGMA))
 	{
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		int counter = 1;

@@ -156,12 +156,23 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 	}
 }
 
+void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput)
+{
+	WString input = File(pathInput).ReadAllTextByBom();
+	CppTokenReader reader(lexer, input);
+	auto cursor = reader.GetFirstToken();
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+	auto program = ParseProgram(pa, cursor);
+	EvaluateProgram(pa, program);
+}
+
 int main()
 {
 	Folder folderCase(L"../UnitTest_Cases");
 	List<File> files;
 	folderCase.GetFiles(files);
 	auto lexer = CreateCppLexer();
+
 	FOREACH(File, file, files)
 	{
 		if (wupper(file.GetFilePath().GetFullPath().Right(2)) == L".I")
@@ -179,6 +190,19 @@ int main()
 				folderOutput.GetFilePath() / L"Preprocessed.cpp",
 				folderOutput.GetFilePath() / L"Input.cpp",
 				folderOutput.GetFilePath() / L"Mapping.bin"
+			);
+		}
+	}
+
+	FOREACH(File, file, files)
+	{
+		if (wupper(file.GetFilePath().GetFullPath().Right(2)) == L".I")
+		{
+			Folder folderOutput(file.GetFilePath().GetFullPath() + L".Output");
+			Compile(
+				lexer,
+				file.GetFilePath(),
+				folderOutput.GetFilePath() / L"Input.cpp"
 			);
 		}
 	}
