@@ -149,7 +149,27 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 		baseType = ParseType(pa, cursor);
 	}
 
-	if (TestToken(cursor, CppTokens::LBRACE))
+	if (TestToken(cursor, CppTokens::SEMICOLON, false))
+	{
+		if (forTypeDef)
+		{
+			throw StopParsingException(cursor);
+		}
+
+		// ... ;
+		auto decl = MakePtr<ForwardEnumDeclaration>();
+		decl->enumClass = enumClass;
+		decl->name = cppName;
+		decl->baseType = baseType;
+		output.Add(decl);
+
+		if (!pa.context->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Enum))
+		{
+			throw StopParsingException(cursor);
+		}
+		return nullptr;
+	}
+	else
 	{
 		// ... { { IDENTIFIER [= EXPRESSION] ,... } };
 		auto decl = MakePtr<EnumDeclaration>();
@@ -164,6 +184,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 		}
 		auto newPa = pa.WithContext(contextSymbol);
 
+		RequireToken(cursor, CppTokens::LBRACE);
 		while (!TestToken(cursor, CppTokens::RBRACE))
 		{
 			auto enumItem = MakePtr<EnumItemDeclaration>();
@@ -197,21 +218,6 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 
 		output.Add(decl);
 		return decl;
-	}
-	else
-	{
-		// ... ;
-		auto decl = MakePtr<ForwardEnumDeclaration>();
-		decl->enumClass = enumClass;
-		decl->name = cppName;
-		decl->baseType = baseType;
-		output.Add(decl);
-
-		if (!pa.context->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Enum))
-		{
-			throw StopParsingException(cursor);
-		}
-		return nullptr;
 	}
 }
 
@@ -554,6 +560,17 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		type->name = classDecl->name;
 		type->resolving = MakePtr<Resolving>();
 		type->resolving->resolvedSymbols.Add(classDecl->symbol);
+		ParseNonMemberDeclarator(pa, pda_Typedefs(), type, cursor, declarators);
+	}
+	else if (TestToken(cursor, CppTokens::DECL_ENUM, false))
+	{
+		// typedef enum{} ...;
+		auto enumDecl = ParseDeclaration_Enum_NotConsumeSemicolon(pa, true, cursor, output);
+
+		auto type = MakePtr<IdType>();
+		type->name = enumDecl->name;
+		type->resolving = MakePtr<Resolving>();
+		type->resolving->resolvedSymbols.Add(enumDecl->symbol);
 		ParseNonMemberDeclarator(pa, pda_Typedefs(), type, cursor, declarators);
 	}
 	else

@@ -1124,17 +1124,17 @@ typedef enum
 typedef enum : int
 {
 	B
-} _B. *pB;
+} _B, *pB;
 
 typedef enum C_
 {
 	C
-} _C. *pC;
+} _C, *pC;
 
 typedef enum class D_
 {
 	D
-} _D. *pD;
+} _D, *pD;
 )";
 	auto output = LR"(
 enum <anonymous>0
@@ -1147,20 +1147,20 @@ enum <anonymous>1 : int
 {
 	B,
 };
-using _B = <anonymous>0;
-using pB = <anonymous>0 *;
+using _B = <anonymous>1;
+using pB = <anonymous>1 *;
 enum C_
 {
 	C,
 };
-using _C = C;
-using pC = C *;
+using _C = C_;
+using pC = C_ *;
 enum class D_
 {
 	D,
 };
-using _D = D;
-using pD = D *;
+using _D = D_;
+using pD = D_ *;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);

@@ -5,7 +5,6 @@
 
 ## Short-term tasks
 
-- [ ] Anonymous enum, add symbols to parent scope.
 - [ ] Add exception messages so that the final application won't crash leaving nothing.
 - [ ] Test `ExprToTsys` on all expressions during parsing.
 - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
