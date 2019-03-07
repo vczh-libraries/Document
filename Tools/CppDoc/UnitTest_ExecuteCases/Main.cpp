@@ -58,52 +58,61 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 
 					while (cursor)
 					{
-						ts.rowUntil = cursor->token.rowEnd;
-						ts.columnUntil = cursor->token.columnEnd;
+						ts.rowUntil = cursor->token.rowStart;
+						ts.columnUntil = cursor->token.columnStart;
 
-						vint lastSharpRowEnd = cursor->token.rowEnd;
 						if ((CppTokens)cursor->token.token == CppTokens::SHARP)
 						{
 							vint parenthesisCounter = 0;
+							vint lastSharpRowEnd = ts.rowUntil;
+							bool lastTokenIsSkipping = false;
+
 							while (cursor)
 							{
-								ts.rowStart = cursor->token.rowStart;
-								ts.columnStart = cursor->token.columnStart;
+								ts.rowUntil = cursor->token.rowStart;
+								ts.columnUntil = cursor->token.columnStart;
+								if (lastTokenIsSkipping && lastSharpRowEnd != ts.rowUntil)
+								{
+									goto STOP_SHARP;
+								}
+								lastSharpRowEnd = ts.rowUntil;
+
 								switch ((CppTokens)cursor->token.token)
 								{
 								case CppTokens::LPARENTHESIS:
+									lastTokenIsSkipping = false;
 									parenthesisCounter++;
 									break;
 								case CppTokens::RPARENTHESIS:
+									lastTokenIsSkipping = false;
 									parenthesisCounter--;
 									if (parenthesisCounter == 0) goto STOP_SHARP;
 									break;
 								case CppTokens::SPACE:
 								case CppTokens::COMMENT1:
 								case CppTokens::COMMENT2:
-									if (cursor->token.rowEnd != lastSharpRowEnd)
-									{
-										goto STOP_SHARP;
-									}
+									lastTokenIsSkipping = true;
+									break;
 								default:
-									lastSharpRowEnd = cursor->token.rowEnd;
+									lastTokenIsSkipping = false;
 								}
 								cursor = cursor->Next();
 							}
+						STOP_SHARP:;
 						}
-					STOP_SHARP:
-
-						switch ((CppTokens)cursor->token.token)
+						else
 						{
-						case CppTokens::SPACE:
-						case CppTokens::COMMENT1:
-						case CppTokens::COMMENT2:
-							break;
-						default:
-							goto STOP_SKIPPING;
+							switch ((CppTokens)cursor->token.token)
+							{
+							case CppTokens::SPACE:
+							case CppTokens::COMMENT1:
+							case CppTokens::COMMENT2:
+								break;
+							default:
+								goto STOP_SKIPPING;
+							}
+							cursor = cursor->Next();
 						}
-
-						cursor = cursor->Next();
 					}
 					STOP_SKIPPING:
 
