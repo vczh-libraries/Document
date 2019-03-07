@@ -101,3 +101,34 @@ int c = x::X()+1;
 	COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
 	TEST_ASSERT(accessed.Count() == 15);
 }
+
+TEST_CASE(TestParseExpr_Overloading_ADL_ReIndexOperator2)
+{
+	auto input = LR"(
+struct X
+{
+	int x;
+	int operator()(int);
+	int operator[](int);
+	X* operator->();
+};
+int a = X()(0);
+int b = X()[0];
+int c = X()->x;
+)";
+
+	SortedList<vint> accessed;
+	auto recorder = BEGIN_ASSERT_SYMBOL
+		ASSERT_SYMBOL			(0, L"X", 6, 1, ClassDeclaration, 1, 7)
+		ASSERT_SYMBOL			(1, L"X", 8, 8, ClassDeclaration, 1, 7)
+		ASSERT_SYMBOL			(2, L"X", 9, 8, ClassDeclaration, 1, 7)
+		ASSERT_SYMBOL			(3, L"X", 10, 8, ClassDeclaration, 1, 7)
+		ASSERT_SYMBOL			(4, L"x", 10, 13, VariableDeclaration, 3, 5)
+		ASSERT_SYMBOL_OVERLOAD	(5, L"()", 8, 11, ForwardFunctionDeclaration, 4, 5)
+		ASSERT_SYMBOL_OVERLOAD	(6, L"[]", 9, 11, ForwardFunctionDeclaration, 5, 5)
+		ASSERT_SYMBOL_OVERLOAD	(7, L"->", 10, 11, ForwardFunctionDeclaration, 6, 4)
+	END_ASSERT_SYMBOL;
+
+	COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
+	TEST_ASSERT(accessed.Count() == 7);
+}
