@@ -4,6 +4,10 @@
 #Vczh Libraries
 .Output/
 
+#UnitTest_Cases
+**/UnitTest_Cases/*.i
+**/UnitTest_Cases/*.i.Output/
+
 # User-specific files
 *.suo
 *.user
