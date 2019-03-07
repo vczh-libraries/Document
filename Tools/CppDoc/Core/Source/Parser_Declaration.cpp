@@ -130,7 +130,18 @@ void ParseDeclaration_Enum(const ParsingArguments& pa, Ptr<CppTokenCursor>& curs
 	bool enumClass = TestToken(cursor, CppTokens::DECL_CLASS);
 
 	CppName cppName;
-	if (!ParseCppName(cppName, cursor)) throw StopParsingException(cursor);
+	if (!ParseCppName(cppName, cursor))
+	{
+		if (enumClass)
+		{
+			throw StopParsingException(cursor);
+		}
+		else
+		{
+			cppName.name = L"<anonymous>" + itow(pa.tsys->AllocateAnonymousCounter());
+			cppName.type = CppNameType::Normal;
+		}
+	}
 
 	Ptr<Type> baseType;
 	if (TestToken(cursor, CppTokens::COLON))
