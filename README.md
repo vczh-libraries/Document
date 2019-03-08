@@ -24,7 +24,6 @@ All **the compiler** here means the compiler created by this project.
 
 - The compiler doesn't parse all C++17 features, but it parses more enough for most of C++ programs.
 - All features that cl.exe doesn't support, are also not supported here.
-- The compiler only allow anonymous `class`/`struct`/`union`/`enum` to be used in two way: after `typedef`, or embedded into another `class`/`struct`/`union`/`enum` to define fields (not define a new type).
 - The compiler doesn't handle implicitly declared ctors or dtor for `union`, all `union` are assumed constructible in any default ways.
 - The compiler ignores anonymous namespaces and `extern "C"` declarations, and parses sub declarations without creating an anonymous scope.
 

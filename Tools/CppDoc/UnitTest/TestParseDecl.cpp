@@ -1028,6 +1028,31 @@ px: X *;
 	AssertExpr(L"px->x",					L"px->x",					L"__int32 $L",					pa);
 }
 
+TEST_CASE(TestParseDecl_AnonymousClassFollowedVariables)
+{
+	auto input = LR"(
+struct
+{
+	int x;
+} x, *px;
+)";
+	auto output = LR"(
+struct <anonymous>0
+{
+	public x: int;
+};
+x: <anonymous>0;
+px: <anonymous>0 *;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	AssertProgram(program, output);
+
+	AssertExpr(L"x",						L"x",						L"::<anonymous>0 $L",			pa);
+	AssertExpr(L"x.x",						L"x.x",						L"__int32 $L",					pa);
+	AssertExpr(L"px",						L"px",						L"::<anonymous>0 * $L",			pa);
+	AssertExpr(L"px->x",					L"px->x",					L"__int32 $L",					pa);
+}
+
 TEST_CASE(TestParseDecl_NestedAnonymousEnum)
 {
 	auto input = LR"(
@@ -1076,6 +1101,27 @@ px: X *;
 
 	AssertExpr(L"x",						L"x",						L"::X $L",						pa);
 	AssertExpr(L"px",						L"px",						L"::X * $L",					pa);
+}
+
+TEST_CASE(TestParseDecl_AnonymousEnumFollowedVariables)
+{
+	auto input = LR"(
+enum
+{
+} x, *px;
+)";
+	auto output = LR"(
+enum <anonymous>0
+{
+};
+x: <anonymous>0;
+px: <anonymous>0 *;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	AssertProgram(program, output);
+
+	AssertExpr(L"x",						L"x",						L"::<anonymous>0 $L",			pa);
+	AssertExpr(L"px",						L"px",						L"::<anonymous>0 * $L",			pa);
 }
 
 TEST_CASE(TestParseDecl_TypedefWithAnonymousClass)
