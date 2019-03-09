@@ -19,14 +19,17 @@
   - [ ] Default template argument.
   - [ ] Type function calculation, may need to create `TemplateDeclaration` and `TsysType::Generic` as a function, removing current ones.
 - [ ] `template` on functions.
+  - [ ] Connect function with forward declarations
   - [ ] Overload functions with all template argument (except defaults) specified.
   - [ ] Call a function with type inference.
   - [ ] Overload functions with type inference.
 - [ ] `template` on classes.
   - [ ] Nested template declaration.
+  - [ ] Connect method with forward declarations inside multiple levels of template classes.
   - [ ] `template` or `typename` in types or expressions.
   - [ ] Child type calculation, outer class either have all template argument specified, or some of them are still `TsysType::GenericArgument`.
   - [ ] Member type calculation, outer class either have all template argument specified, or some of them are still `TsysType::GenericArgument`.
+  - [ ] High level template argument.
 - [ ] Template specialization.
 - [ ] Variadic template argument.
 - [ ] Initialization list.
