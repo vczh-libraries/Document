@@ -69,7 +69,7 @@ namespace TestConvert_Helpers
 	Ptr<T> TryGetDeclFromType(ITsys* type)
 	{
 		if (type->GetType() != TsysType::Decl) return false;
-		return type->GetDecl()->declaration.Cast<T>();
+		return type->GetDecl()->definition.Cast<T>();
 	}
 
 	template<typename T>

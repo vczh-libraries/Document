@@ -79,14 +79,14 @@ void Symbol::Add(Ptr<Symbol> child)
 Symbol* Symbol::CreateForwardDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
 {
 	existingSymbol = CreateSymbolInternal(_decl, existingSymbol, kind);
-	existingSymbol->definitions.Add(_decl);
+	existingSymbol->declarations.Add(_decl);
 	return existingSymbol;
 }
 
 Symbol* Symbol::CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
 {
 	existingSymbol = CreateSymbolInternal(_decl, existingSymbol, kind);
-	existingSymbol->declaration = _decl;
+	existingSymbol->definition = _decl;
 	return existingSymbol;
 }
 
@@ -94,7 +94,7 @@ Symbol* Symbol::AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component:
 {
 	auto symbol = AddToSymbolInternal(_decl, kind);
 	if (!symbol) return nullptr;
-	symbol->definitions.Add(_decl);
+	symbol->declarations.Add(_decl);
 	return symbol;
 }
 
@@ -102,8 +102,8 @@ Symbol* Symbol::AddDeclToSymbol(Ptr<Declaration> _decl, symbol_component::Symbol
 {
 	auto symbol = AddToSymbolInternal(_decl, kind);
 	if (!symbol) return nullptr;
-	if (symbol->declaration) return nullptr;
-	symbol->declaration = _decl;
+	if (symbol->definition) return nullptr;
+	symbol->definition = _decl;
 	return symbol;
 }
 

@@ -102,13 +102,13 @@ namespace a::b
 	auto symbol = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"A"][0].Obj();
 
 	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Enum);
-	TEST_ASSERT(symbol->declaration.Cast<EnumDeclaration>());
-	TEST_ASSERT(symbol->definitions.Count() == 4);
-	TEST_ASSERT(From(symbol->definitions).Distinct().Count() == 4);
+	TEST_ASSERT(symbol->definition.Cast<EnumDeclaration>());
+	TEST_ASSERT(symbol->declarations.Count() == 4);
+	TEST_ASSERT(From(symbol->declarations).Distinct().Count() == 4);
 	for (vint i = 0; i < 4; i++)
 	{
-		TEST_ASSERT(symbol->definitions[i].Cast<ForwardEnumDeclaration>());
-		TEST_ASSERT(!symbol->definitions[i].Cast<EnumDeclaration>());
+		TEST_ASSERT(symbol->declarations[i].Cast<ForwardEnumDeclaration>());
+		TEST_ASSERT(!symbol->declarations[i].Cast<EnumDeclaration>());
 	}
 }
 
@@ -155,13 +155,13 @@ namespace a::b
 	auto symbol = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"x"][0].Obj();
 
 	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
-	TEST_ASSERT(symbol->declaration.Cast<VariableDeclaration>());
-	TEST_ASSERT(symbol->definitions.Count() == 4);
-	TEST_ASSERT(From(symbol->definitions).Distinct().Count() == 4);
+	TEST_ASSERT(symbol->definition.Cast<VariableDeclaration>());
+	TEST_ASSERT(symbol->declarations.Count() == 4);
+	TEST_ASSERT(From(symbol->declarations).Distinct().Count() == 4);
 	for (vint i = 0; i < 4; i++)
 	{
-		TEST_ASSERT(symbol->definitions[i].Cast<ForwardVariableDeclaration>());
-		TEST_ASSERT(!symbol->definitions[i].Cast<VariableDeclaration>());
+		TEST_ASSERT(symbol->declarations[i].Cast<ForwardVariableDeclaration>());
+		TEST_ASSERT(!symbol->declarations[i].Cast<VariableDeclaration>());
 	}
 }
 
@@ -237,13 +237,13 @@ namespace a::b
 	auto symbol = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Add"][0].Obj();
 
 	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Function);
-	TEST_ASSERT(symbol->declaration.Cast<FunctionDeclaration>());
-	TEST_ASSERT(symbol->definitions.Count() == 4);
-	TEST_ASSERT(From(symbol->definitions).Distinct().Count() == 4);
+	TEST_ASSERT(symbol->definition.Cast<FunctionDeclaration>());
+	TEST_ASSERT(symbol->declarations.Count() == 4);
+	TEST_ASSERT(From(symbol->declarations).Distinct().Count() == 4);
 	for (vint i = 0; i < 4; i++)
 	{
-		TEST_ASSERT(symbol->definitions[i].Cast<ForwardFunctionDeclaration>());
-		TEST_ASSERT(!symbol->definitions[i].Cast<FunctionDeclaration>());
+		TEST_ASSERT(symbol->declarations[i].Cast<ForwardFunctionDeclaration>());
+		TEST_ASSERT(!symbol->declarations[i].Cast<FunctionDeclaration>());
 	}
 }
 
@@ -363,13 +363,13 @@ namespace a::b
 		case 1: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Struct); break;
 		case 2: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Union); break;
 		}
-		TEST_ASSERT(symbol->declaration.Cast<ClassDeclaration>());
-		TEST_ASSERT(symbol->definitions.Count() == 4);
-		TEST_ASSERT(From(symbol->definitions).Distinct().Count() == 4);
+		TEST_ASSERT(symbol->definition.Cast<ClassDeclaration>());
+		TEST_ASSERT(symbol->declarations.Count() == 4);
+		TEST_ASSERT(From(symbol->declarations).Distinct().Count() == 4);
 		for (vint i = 0; i < 4; i++)
 		{
-			TEST_ASSERT(symbol->definitions[i].Cast<ForwardClassDeclaration>());
-			TEST_ASSERT(!symbol->definitions[i].Cast<ClassDeclaration>());
+			TEST_ASSERT(symbol->declarations[i].Cast<ForwardClassDeclaration>());
+			TEST_ASSERT(!symbol->declarations[i].Cast<ClassDeclaration>());
 		}
 	}
 }
@@ -527,11 +527,11 @@ namespace a
 
 	using Item = Tuple<CppClassAccessor, Ptr<Declaration>>;
 	List<Ptr<Declaration>> inClassMembers;
-	auto& inClassMembersUnfiltered = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Something"][0]->declaration.Cast<ClassDeclaration>()->decls;
+	auto& inClassMembersUnfiltered = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Something"][0]->definition.Cast<ClassDeclaration>()->decls;
 	CopyFrom(inClassMembers, From(inClassMembersUnfiltered).Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; }));
 	TEST_ASSERT(inClassMembers.Count() == 13);
 
-	auto& outClassMembers = pa.root->children[L"a"][0]->children[L"b"][0]->definitions[1].Cast<NamespaceDeclaration>()->decls;
+	auto& outClassMembers = pa.root->children[L"a"][0]->children[L"b"][0]->declarations[1].Cast<NamespaceDeclaration>()->decls;
 	TEST_ASSERT(outClassMembers.Count() == 12);
 
 	for (vint i = 0; i < 12; i++)
@@ -549,9 +549,9 @@ namespace a
 		{
 			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Function);
 		}
-		TEST_ASSERT(symbol->declaration == outClassDecl);
-		TEST_ASSERT(symbol->definitions.Count() == 1);
-		TEST_ASSERT(symbol->definitions[0] == inClassDecl);
+		TEST_ASSERT(symbol->definition == outClassDecl);
+		TEST_ASSERT(symbol->declarations.Count() == 1);
+		TEST_ASSERT(symbol->declarations[0] == inClassDecl);
 	}
 }
 

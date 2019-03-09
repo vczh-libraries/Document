@@ -246,7 +246,7 @@ namespace symbol_type_resolving
 					nss.Add(symbol);
 				}
 			}
-			else if (auto classDecl = symbol->declaration.Cast<ClassDeclaration>())
+			else if (auto classDecl = symbol->definition.Cast<ClassDeclaration>())
 			{
 				if (!classes.Contains(symbol))
 				{

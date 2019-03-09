@@ -9,7 +9,7 @@ FindForward
 
 Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
 {
-	bool inClass = context->declaration.Cast<ClassDeclaration>();
+	bool inClass = context->definition.Cast<ClassDeclaration>();
 
 	vint index = context->children.Keys().IndexOf(decl->name.name);
 	if (index == -1) return nullptr;
@@ -374,7 +374,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 			// and all members should be either variables or nested anonymous classes
 			// so a NestedAnonymousClassDeclaration is created, copy all members to it, and move all symbols to pa.context, which is the parent class declaration
 
-			if (!pa.context->declaration.Cast<ClassDeclaration>())
+			if (!pa.context->definition.Cast<ClassDeclaration>())
 			{
 				throw StopParsingException(cursor);
 			}
@@ -702,7 +702,7 @@ void ParseDeclaration_Function(
 
 			methodCache->classSymbol = containingClass ? containingClass->symbol : containingClassForMember->symbol;
 			methodCache->funcSymbol = contextSymbol;
-			methodCache->classDecl = methodCache->classSymbol->declaration.Cast<ClassDeclaration>();
+			methodCache->classDecl = methodCache->classSymbol->definition.Cast<ClassDeclaration>();
 			methodCache->funcDecl = decl;
 
 			TsysCV cv;
@@ -857,7 +857,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, bool decoratorFriend, 
 	// non-null containingClassForMember means this declaration is a class member defined out of the class
 	List<Ptr<Declarator>> declarators;
 	auto methodType = CppMethodType::Function;
-	ClassDeclaration* containingClass = pa.context->declaration.Cast<ClassDeclaration>().Obj();
+	ClassDeclaration* containingClass = pa.context->definition.Cast<ClassDeclaration>().Obj();
 	ClassDeclaration* containingClassForMember = nullptr;
 
 	// get all declarators
@@ -886,7 +886,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, bool decoratorFriend, 
 		{
 			if (declarator->containingClassSymbol)
 			{
-				containingClassForMember = declarator->containingClassSymbol->declaration.Cast<ClassDeclaration>().Obj();
+				containingClassForMember = declarator->containingClassSymbol->definition.Cast<ClassDeclaration>().Obj();
 			}
 		}
 

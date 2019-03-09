@@ -313,7 +313,7 @@ public:
 					{
 						ev.Get().Add(pa.tsys->Void());
 					}
-					symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.funcSymbol->declaration.Cast<FunctionDeclaration>().Obj());
+					symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.funcSymbol->definition.Cast<FunctionDeclaration>().Obj());
 				}
 			}
 		}
@@ -408,7 +408,7 @@ public:
 
 		if(self->initList.Count() > 0)
 		{
-			auto classDecl = self->symbol->parent->declaration.Cast<ClassDeclaration>();
+			auto classDecl = self->symbol->parent->definition.Cast<ClassDeclaration>();
 			if (!classDecl)
 			{
 				throw NotResolvableException();

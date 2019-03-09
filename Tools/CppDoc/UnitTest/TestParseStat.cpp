@@ -171,7 +171,7 @@ void F8()
 	{
 		auto funcSymbol = pa.context->children[L"F" + itow(i)][0].Obj();
 		auto spa = pa.WithContext(funcSymbol->children[L"$"][0].Obj()->children[L"$"][0].Obj()->children[L"$"][0].Obj());
-		TEST_ASSERT(spa.funcSymbol->declaration.Cast<FunctionDeclaration>()->name.name == L"F" + itow(i));
+		TEST_ASSERT(spa.funcSymbol->definition.Cast<FunctionDeclaration>()->name.name == L"F" + itow(i));
 		AssertExpr(L"a", L"a", L"__int32 $L", spa);
 	}
 }
@@ -215,7 +215,7 @@ void F4()
 	{
 		auto funcSymbol = pa.context->children[L"F" + itow(i)][0].Obj();
 		auto spa = pa.WithContext(funcSymbol->children[L"$"][0].Obj()->children[L"$"][0].Obj()->children[L"$"][0].Obj());
-		TEST_ASSERT(spa.funcSymbol->declaration.Cast<FunctionDeclaration>()->name.name == L"F" + itow(i));
+		TEST_ASSERT(spa.funcSymbol->definition.Cast<FunctionDeclaration>()->name.name == L"F" + itow(i));
 		AssertExpr(L"a", L"a", L"__int32 $L", spa);
 		AssertExpr(L"b", L"b", L"__int32 $L", spa);
 		AssertExpr(L"c", L"c", L"__int32 $L", spa);
@@ -277,7 +277,7 @@ void F3()
 	{
 		auto funcSymbol = pa.context->children[L"F" + itow(i)][0].Obj();
 		auto spa = pa.WithContext(funcSymbol->children[L"$"][0].Obj()->children[L"$"][0].Obj()->children[L"$"][0].Obj());
-		TEST_ASSERT(spa.funcSymbol->declaration.Cast<FunctionDeclaration>()->name.name == L"F" + itow(i));
+		TEST_ASSERT(spa.funcSymbol->definition.Cast<FunctionDeclaration>()->name.name == L"F" + itow(i));
 		AssertExpr(L"a", L"a", expectedTypes[i - 1], spa);
 	}
 }

@@ -159,7 +159,7 @@ namespace symbol_type_resolving
 	{
 		auto symbol = funcDecl->symbol;
 		ITsys* classScope = nullptr;
-		if (symbol->parent && symbol->parent->declaration.Cast<ClassDeclaration>())
+		if (symbol->parent && symbol->parent->definition.Cast<ClassDeclaration>())
 		{
 			classScope = pa.tsys->DeclOf(symbol->parent);
 		}
@@ -297,7 +297,7 @@ namespace symbol_type_resolving
 	void VisitSymbol(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result)
 	{
 		ITsys* classScope = nullptr;
-		if (symbol->parent && symbol->parent->declaration.Cast<ClassDeclaration>())
+		if (symbol->parent && symbol->parent->definition.Cast<ClassDeclaration>())
 		{
 			classScope = pa.tsys->DeclOf(symbol->parent);
 		}

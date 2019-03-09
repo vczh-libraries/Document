@@ -285,7 +285,7 @@ public:
 			{
 			case symbol_component::SymbolKind::TypeAlias:
 				{
-					auto usingDecl = symbol->declaration.Cast<UsingDeclaration>();
+					auto usingDecl = symbol->definition.Cast<UsingDeclaration>();
 					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
 					auto& types = symbol->evaluation.Get();
 					for (vint j = 0; j < types.Count(); j++)

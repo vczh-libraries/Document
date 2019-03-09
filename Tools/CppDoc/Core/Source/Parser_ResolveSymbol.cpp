@@ -131,7 +131,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 		if (rsa.found) break;
 
-		if (auto decl = scope->declaration.Cast<ClassDeclaration>())
+		if (auto decl = scope->definition.Cast<ClassDeclaration>())
 		{
 			if (decl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbol)
 			{
@@ -198,7 +198,7 @@ public:
 			for (vint i = 0; i < symbols.Count(); i++)
 			{
 				auto symbol = symbols[i];
-				if (auto usingDecl = symbol->declaration.Cast<UsingDeclaration>())
+				if (auto usingDecl = symbol->definition.Cast<UsingDeclaration>())
 				{
 					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
 					auto& types = symbol->evaluation.Get();

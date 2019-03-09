@@ -10,7 +10,7 @@ GetSpecialMember
 
 Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, SpecialMemberKind kind)
 {
-	auto classDecl = classSymbol->declaration.Cast<ClassDeclaration>();
+	auto classDecl = classSymbol->definition.Cast<ClassDeclaration>();
 	if (!classDecl) return nullptr;
 	if (classDecl->classType == CppClassType::Union) return nullptr;
 
@@ -181,8 +181,8 @@ bool IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, Spec
 		break;
 	case TsysType::Decl:
 		{
-			if (!type->GetDecl()->declaration) return false;
-			auto classDecl = type->GetDecl()->declaration.Cast<ClassDeclaration>();
+			if (!type->GetDecl()->definition) return false;
+			auto classDecl = type->GetDecl()->definition.Cast<ClassDeclaration>();
 			if (!classDecl) return true;
 			if (classDecl->classType == CppClassType::Union) return true;
 			return IsSpecialMemberFeatureEnabled(pa, classDecl->symbol, kind);
@@ -331,7 +331,7 @@ Ptr<ForwardFunctionDeclaration> GenerateAssignOp(Symbol* classSymbol, bool delet
 
 void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 {
-	if (auto classDecl = classSymbol->declaration.Cast<ClassDeclaration>())
+	if (auto classDecl = classSymbol->definition.Cast<ClassDeclaration>())
 	{
 		if (classDecl->classType != CppClassType::Union)
 		{

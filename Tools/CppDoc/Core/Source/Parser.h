@@ -77,8 +77,8 @@ public:
 	symbol_component::SymbolKind					kind = symbol_component::SymbolKind::Root;
 	WString											name;
 
-	Ptr<Declaration>								declaration;			// for declaration root (class, struct, union, enum, function, variable)
-	List<Ptr<Declaration>>							definitions;			// for forward declarations and namespaces
+	Ptr<Declaration>								definition;				// for declaration root (class, struct, union, enum, function, variable)
+	List<Ptr<Declaration>>							declarations;			// for forward declarations and namespaces
 	Ptr<Stat>										statement;				// for statement
 
 	Ptr<symbol_component::MethodCache>				methodCache;			// for function declaration
@@ -96,9 +96,9 @@ public:
 	template<typename T>
 	Ptr<T> GetAnyForwardDecl()
 	{
-		if (auto decl = declaration.Cast<T>()) return decl;
-		if (definitions.Count() == 0) return nullptr;
-		return definitions[0].Cast<T>();
+		if (auto decl = definition.Cast<T>()) return decl;
+		if (declarations.Count() == 0) return nullptr;
+		return declarations[0].Cast<T>();
 	}
 };
 
