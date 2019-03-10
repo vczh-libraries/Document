@@ -176,6 +176,7 @@ class IdType : public ResolvableType
 public:
 	ITypeVisitor_ACCEPT;
 
+	bool					cStyleTypeReference = false;	// e.g. struct something
 	CppName					name;
 };
 

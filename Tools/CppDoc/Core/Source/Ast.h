@@ -79,6 +79,7 @@ public:
 class Program : public Object
 {
 public:
+	vint					createdForwardDeclByCStyleTypeReference = 0;
 	List<Ptr<Declaration>>	decls;
 };
 

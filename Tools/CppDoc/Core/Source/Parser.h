@@ -119,6 +119,8 @@ public:
 struct ParsingArguments
 {
 	Ptr<Symbol>				root;
+	Ptr<Program>			program;
+
 	Symbol*					context = nullptr;
 	Symbol*					funcSymbol = nullptr;
 	Ptr<ITsysAlloc>			tsys;
@@ -252,7 +254,7 @@ extern Ptr<Expr>					ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppToken
 extern Ptr<Expr>					ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Stat>					ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern void							EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl);
-extern Ptr<Program>					ParseProgram(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Program>					ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 /***********************************************************************
 Helpers

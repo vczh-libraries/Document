@@ -138,6 +138,7 @@ ParsingArguments::ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr
 ParsingArguments ParsingArguments::WithContext(Symbol* _context)const
 {
 	ParsingArguments pa(root, tsys, recorder);
+	pa.program = program;
 	pa.context = _context;
 
 	while (_context)
@@ -298,9 +299,10 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 	}
 }
 
-Ptr<Program> ParseProgram(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Program> ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	auto program = MakePtr<Program>();
+	pa.program = program;
 	while (cursor)
 	{
 		ParseDeclaration(pa, cursor, program->decls);

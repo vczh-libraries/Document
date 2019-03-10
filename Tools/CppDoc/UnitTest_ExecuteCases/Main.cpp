@@ -126,6 +126,7 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 					}
 					else
 					{
+						// prevent from stack overflowing in CppTokenCursor's destructor
 						while (oldCursor != cursor)
 						{
 							oldCursor = oldCursor->Next();

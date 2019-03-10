@@ -55,20 +55,18 @@ ParseIdType
 Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	auto idKind = cursor ? (CppTokens)cursor->token.token : CppTokens::ID;
-	bool cStyleTypeReference = false;
+
+	// check if this is a c style type reference, e.g. struct something
+	auto type = MakePtr<IdType>();
 	if (TestToken(cursor, CppTokens::DECL_ENUM, false) || TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
 	{
-		cStyleTypeReference = true;
+		type->cStyleTypeReference = true;
 		SkipToken(cursor);
 	}
 
-	CppName cppName;
-	if (ParseCppName(cppName, cursor))
+	if (ParseCppName(type->name, cursor))
 	{
-		auto type = MakePtr<IdType>();
-		type->name = cppName;
-
-		if (auto resolving = ResolveSymbol(pa, cppName, SearchPolicy::SymbolAccessableInScope).types)
+		if (auto resolving = ResolveSymbol(pa, type->name, SearchPolicy::SymbolAccessableInScope).types)
 		{
 			type->resolving = resolving;
 			if (pa.recorder)
@@ -76,7 +74,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				pa.recorder->Index(type->name, type->resolving);
 			}
 
-			if (cStyleTypeReference)
+			if (type->cStyleTypeReference)
 			{
 				for (vint i = 0; i < type->resolving->resolvedSymbols.Count(); i++)
 				{
@@ -110,10 +108,66 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 					}
 				}
 			}
+
+			return type;
 		}
 
-		if (cStyleTypeReference || type->resolving)
+		// if a c style type reference doesn't resolve, a forward declaration is created
+		if (type->cStyleTypeReference)
 		{
+			if (!type->resolving)
+			{
+				Ptr<Declaration> forwardDecl;
+				symbol_component::SymbolKind symbolKind;
+				switch (idKind)
+				{
+				case CppTokens::DECL_ENUM:
+					{
+						symbolKind = symbol_component::SymbolKind::Enum;
+						auto decl = MakePtr<ForwardEnumDeclaration>();
+						forwardDecl = decl;
+					}
+					break;
+				case CppTokens::DECL_CLASS:
+					{
+						symbolKind = symbol_component::SymbolKind::Class;
+						auto decl = MakePtr<ForwardClassDeclaration>();
+						decl->classType = CppClassType::Class;
+						forwardDecl = decl;
+					}
+					break;
+				case CppTokens::DECL_STRUCT:
+					{
+						symbolKind = symbol_component::SymbolKind::Struct;
+						auto decl = MakePtr<ForwardClassDeclaration>();
+						decl->classType = CppClassType::Struct;
+						forwardDecl = decl;
+					}
+					break;
+				case CppTokens::DECL_UNION:
+					{
+						symbolKind = symbol_component::SymbolKind::Union;
+						auto decl = MakePtr<ForwardClassDeclaration>();
+						decl->classType = CppClassType::Union;
+						forwardDecl = decl;
+					}
+					break;
+				}
+
+				if (pa.program)
+				{
+					pa.program->decls.Insert(pa.program->createdForwardDeclByCStyleTypeReference++, forwardDecl);
+				}
+				if (auto contextSymbol = pa.root->AddForwardDeclToSymbol(forwardDecl, symbolKind))
+				{
+					type->resolving = MakePtr<Resolving>();
+					type->resolving->resolvedSymbols.Add(contextSymbol);
+				}
+				else
+				{
+					throw StopParsingException(cursor);
+				}
+			}
 			return type;
 		}
 	}

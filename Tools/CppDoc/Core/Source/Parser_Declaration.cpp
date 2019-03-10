@@ -1111,6 +1111,12 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	while (SkipSpecifiers(cursor));
+	if (TestToken(cursor, CppTokens::SEMICOLON))
+	{
+		// ignore lonely semicolon
+		return;
+	}
+
 	TemplateSpecResult spec;
 	if (TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
 	{
@@ -1175,6 +1181,12 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			else
 			{
 				ParseDeclaration(pa, cursor, output);
+			}
+
+			// prevent from stack overflowing in CppTokenCursor's destructor
+			while (oldCursor != cursor)
+			{
+				oldCursor = oldCursor->Next();
 			}
 			return;
 		}
