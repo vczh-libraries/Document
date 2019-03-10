@@ -18,7 +18,7 @@
   - [x] When a `template` begins, an anonymous symbol is created to store template arguments.
   - [x] Support C's `struct <TYPE>` type reference as IdType, along with `class`, `union` and `enum`, also allow that the type is not even declared.
   - [x] After a template header is parsed, search for the matching `}`, maybe a `;` is right after that, ignore all of them.
-  - [ ] Parse current cases in `UnitTest_Cases`.
+  - [x] Parse current cases in `UnitTest_Cases`.
   - [ ] Add more cases, ensure that preprocessed files of them doesn't really touch template things.
   - [ ] Generate HTML index.
   - [ ] Revert the ignoring.
