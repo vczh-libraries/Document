@@ -118,7 +118,7 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 							cursor = cursor->Next();
 						}
 					}
-					STOP_SKIPPING:
+				STOP_SKIPPING:
 
 					if (ts.rowSkip == ts.rowUntil)
 					{
@@ -157,14 +157,133 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 	}
 }
 
+class IndexRecorder : public Object, public virtual IIndexRecorder
+{
+public:
+	struct Token
+	{
+		vint			rowStart;
+		vint			columnStart;
+		vint			rowEnd;
+		vint			columnEnd;
+
+		static vint Compare(const Token& a, const Token& b)
+		{
+			vint result;
+			if ((result = a.rowStart - b.rowStart) != 0) return result;
+			if ((result = a.columnStart - b.columnStart) != 0) return result;
+			if ((result = a.rowEnd - b.rowEnd) != 0) return result;
+			if ((result = a.columnEnd - b.columnEnd) != 0) return result;
+			return 0;
+		}
+
+		bool operator <  (const Token& k)const { return Compare(*this, k) <  0; }
+		bool operator <= (const Token& k)const { return Compare(*this, k) <= 0; }
+		bool operator >  (const Token& k)const { return Compare(*this, k) >  0; }
+		bool operator >= (const Token& k)const { return Compare(*this, k) >= 0; }
+		bool operator == (const Token& k)const { return Compare(*this, k) == 0; }
+		bool operator != (const Token& k)const { return Compare(*this, k) != 0; }
+	};
+
+	enum Reason
+	{
+		Resolved,
+		OverloadedResolution,
+		NeedValueButType,
+	};
+
+	using Key = Tuple<Token, Reason>;
+	using IndexMap = Group<Key, Symbol*>;
+	using ReverseIndexMap = Group<Symbol*, Key>;
+
+	IndexMap&			index;
+	ReverseIndexMap&	reverseIndex;
+
+	IndexRecorder(IndexMap& _index, ReverseIndexMap& _reverseIndex)
+		:index(_index)
+		, reverseIndex(_reverseIndex)
+	{
+	}
+
+	static Token GetToken(CppName& name)
+	{
+		return {
+			name.nameTokens[0].rowStart,
+			name.nameTokens[0].columnStart,
+			name.nameTokens[name.tokenCount - 1].rowEnd,
+			name.nameTokens[name.tokenCount - 1].columnEnd,
+		};
+	}
+
+	void IndexInternal(CppName& name, Ptr<Resolving> resolving, Reason reason)
+	{
+		if (name.tokenCount > 0)
+		{
+			Key key = { GetToken(name),reason };
+			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+			{
+				auto symbol = resolving->resolvedSymbols[i];
+				if (!index.Contains(key, symbol))
+				{
+					index.Add(key, symbol);
+					reverseIndex.Add(symbol, key);
+				}
+			}
+		}
+	}
+
+	void Index(CppName& name, Ptr<Resolving> resolving)override
+	{
+		IndexInternal(name, resolving, Resolved);
+	}
+
+	void IndexOverloadingResolution(CppName& name, Ptr<Resolving> resolving)override
+	{
+		IndexInternal(name, resolving, OverloadedResolution);
+	}
+
+	void ExpectValueButType(CppName& name, Ptr<Resolving> resolving)override
+	{
+		IndexInternal(name, resolving, NeedValueButType);
+	}
+};
+
 void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput)
 {
+	Dictionary<WString, Symbol*> ids;
+	IndexRecorder::IndexMap index;
+	IndexRecorder::ReverseIndexMap reverseIndex;
+	Dictionary<IndexRecorder::Token, Symbol*> decls;
+
 	WString input = File(pathInput).ReadAllTextByBom();
 	CppTokenReader reader(lexer, input);
 	auto cursor = reader.GetFirstToken();
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), new IndexRecorder(index, reverseIndex));
 	auto program = ParseProgram(pa, cursor);
 	EvaluateProgram(pa, program);
+
+	pa.root->GenerateUniqueId(ids, L"");
+	for (vint i = 0; i < ids.Count(); i++)
+	{
+		auto symbol = ids.Values()[i];
+		if (symbol->definition)
+		{
+			auto& name = symbol->definition->name;
+			if (name.tokenCount > 0)
+			{
+				decls.Add(IndexRecorder::GetToken(name), symbol);
+			}
+		}
+		for (vint i = 0; i < symbol->declarations.Count(); i++)
+		{
+			auto& name = symbol->declarations[i]->name;
+			if (name.tokenCount > 0)
+			{
+				decls.Add(IndexRecorder::GetToken(name), symbol);
+			}
+		}
+	}
 }
 
 int main()

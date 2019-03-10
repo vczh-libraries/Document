@@ -119,6 +119,43 @@ Symbol* Symbol::CreateStatSymbol(Ptr<Stat> _stat)
 	return symbol.Obj();
 }
 
+void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& prefix)
+{
+	WString nextPrefix;
+	switch (kind)
+	{
+	case symbol_component::SymbolKind::Root:
+	case symbol_component::SymbolKind::Statement:
+		nextPrefix = prefix;
+		break;
+	default:
+		{
+			vint counter = 1;
+			while (true)
+			{
+				WString id = prefix + name + (counter == 1 ? WString(L"", false) : itow(counter));
+				if (!ids.Keys().Contains(id))
+				{
+					uniqueId = id;
+					ids.Add(id, this);
+					nextPrefix = id + L"::";
+					break;
+				}
+				counter++;
+			}
+		}
+	}
+
+	for (vint i = 0; i < children.Count(); i++)
+	{
+		auto& symbols = children.GetByIndex(i);
+		for (vint j = 0; j < symbols.Count(); j++)
+		{
+			symbols[j]->GenerateUniqueId(ids, nextPrefix);
+		}
+	}
+}
+
 /***********************************************************************
 ParsingArguments
 ***********************************************************************/

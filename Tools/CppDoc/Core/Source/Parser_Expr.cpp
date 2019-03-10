@@ -95,7 +95,7 @@ Ptr<IdExpr> ParseIdExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			auto type = MakePtr<IdExpr>();
 			type->name = cppName;
 			type->resolving = rsr.values;
-			if (pa.recorder)
+			if (pa.recorder && type->resolving)
 			{
 				pa.recorder->Index(type->name, type->resolving);
 			}

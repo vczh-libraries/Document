@@ -78,6 +78,7 @@ public:
 	Symbol*											parent = nullptr;
 	symbol_component::SymbolKind					kind = symbol_component::SymbolKind::Root;
 	WString											name;
+	WString											uniqueId;
 
 	Ptr<Declaration>								definition;				// for declaration root (class, struct, union, enum, function, variable)
 	List<Ptr<Declaration>>							declarations;			// for forward declarations and namespaces
@@ -102,6 +103,8 @@ public:
 		if (declarations.Count() == 0) return nullptr;
 		return declarations[0].Cast<T>();
 	}
+
+	void											GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& prefix);
 };
 
 /***********************************************************************
