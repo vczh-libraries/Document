@@ -21,7 +21,9 @@
   - [ ] Parse current cases in `UnitTest_Cases`.
   - [ ] Add more cases, ensure that preprocessed files of them doesn't really touch template things.
   - [ ] Generate HTML index.
-  - [ ] Revert the ignoring. After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
+  - [ ] Revert the ignoring.
+  - [ ] Revert `Macro_va_start` in `Parser_Stat.cpp`.
+  - [ ] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
 - [ ] `template` on `using` type alias declaration.
   - [ ] Default template argument.
   - [ ] Type function calculation, may need to create `TemplateDeclaration` and `TsysType::Generic` as a function, removing current ones.
