@@ -119,11 +119,18 @@ public:
 					return;
 				}
 			NOT_ZERO:
-				wchar_t _1 = token.length > 1 ? token.reading[token.length - 2] : 0;
-				wchar_t _2 = token.reading[token.length - 1];
-				bool u = _1 == L'u' || _1 == L'U' || _2 == L'u' || _2 == L'U';
-				bool l = _1 == L'l' || _1 == L'L' || _2 == L'l' || _2 == L'L';
-				AddTemp(result, pa.tsys->PrimitiveOf({ (u ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{l ? TsysBytes::_8 : TsysBytes::_4} }));
+#define COUNT_CHAR(NUM, UC, LC) ((_##NUM == UC || _##NUM == LC) ? 1 : 0)
+#define COUNT_U(NUM) COUNT_CHAR(NUM, L'u', L'U')
+#define COUNT_L(NUM) COUNT_CHAR(NUM, L'l', L'L')
+				wchar_t _1 = token.length > 2 ? token.reading[token.length - 3] : 0;
+				wchar_t _2 = token.length > 1 ? token.reading[token.length - 2] : 0;
+				wchar_t _3 = token.reading[token.length - 1];
+				vint us = COUNT_U(1) + COUNT_U(2) + COUNT_U(3);
+				vint ls = COUNT_L(1) + COUNT_L(2) + COUNT_L(3);
+				AddTemp(result, pa.tsys->PrimitiveOf({ (us > 0 ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{ls > 1 ? TsysBytes::_8 : TsysBytes::_4} }));
+#undef COUNT_CHAR
+#undef COUNT_U
+#undef COUNT_L
 			}
 			return;
 		case CppTokens::FLOAT:

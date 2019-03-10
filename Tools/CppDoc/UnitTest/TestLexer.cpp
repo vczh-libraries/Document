@@ -89,19 +89,12 @@ vint CheckTokens(List<RegexToken>& tokens)
 				auto reading = token.reading;
 				auto length = token.length;
 
-				if (length > 2 && (reading[length - 2] == L'u' || reading[length - 2] == L'U'))
+				while (reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
 				{
-					TEST_ASSERT(reading[length - 1] == L'l' || reading[length - 1] == L'L');
-					length -= 2;
-				}
-				else if (length > 1)
-				{
-					if (reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
-					{
-						length -= 1;
-					}
+					length--;
 				}
 
+				TEST_ASSERT(token.length - length <= 3);
 				for (vint i = 0; i < length; i++)
 				{
 					TEST_ASSERT((L'0' <= reading[i] && reading[i] <= L'9') || reading[i] == L'\'');
@@ -117,19 +110,13 @@ vint CheckTokens(List<RegexToken>& tokens)
 
 				reading += 2;
 				length -= 2;
-				if (length > 2 && (reading[length - 2] == L'u' || reading[length - 2] == L'U'))
+
+				while (reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
 				{
-					TEST_ASSERT(reading[length - 1] == L'l' || reading[length - 1] == L'L');
-					length -= 2;
-				}
-				else if (length > 1)
-				{
-					if (reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
-					{
-						length -= 1;
-					}
+					length--;
 				}
 
+				TEST_ASSERT(token.length - length <= 5);
 				for (vint i = 0; i < length; i++)
 				{
 					TEST_ASSERT((L'0' <= reading[i] && reading[i] <= L'9') || (L'a' <= reading[i] && reading[i] <= L'f') || (L'A' <= reading[i] && reading[i] <= L'F'));
@@ -145,19 +132,13 @@ vint CheckTokens(List<RegexToken>& tokens)
 
 				reading += 2;
 				length -= 2;
-				if (length > 2 && (reading[length - 2] == L'u' || reading[length - 2] == L'U'))
+
+				while (reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
 				{
-					TEST_ASSERT(reading[length - 1] == L'l' || reading[length - 1] == L'L');
-					length -= 2;
-				}
-				else if (length > 1)
-				{
-					if (reading[length - 1] == L'u' || reading[length - 1] == L'U' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
-					{
-						length -= 1;
-					}
+					length--;
 				}
 
+				TEST_ASSERT(token.length - length <= 5);
 				for (vint i = 0; i < length; i++)
 				{
 					TEST_ASSERT(reading[i] == L'0' || reading[i] == L'1');
