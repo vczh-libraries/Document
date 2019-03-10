@@ -276,7 +276,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 					auto expr = MakePtr<CtorAccessExpr>();
 					expr->type = type;
 					expr->initializer = MakePtr<Initializer>();
-					expr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? InitializerType::Constructor : InitializerType::Universal;
+					expr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? CppInitializerType::Constructor : CppInitializerType::Universal;
 
 					if (!TestToken(cursor, closeToken))
 					{
@@ -507,7 +507,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 			SkipToken(cursor);
 
 			newExpr->initializer = MakePtr<Initializer>();
-			newExpr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? InitializerType::Constructor : InitializerType::Universal;
+			newExpr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? CppInitializerType::Constructor : CppInitializerType::Universal;
 
 			if (!TestToken(cursor, closeToken))
 			{

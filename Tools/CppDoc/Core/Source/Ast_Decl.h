@@ -45,21 +45,32 @@ class IdExpr;
 Types
 ***********************************************************************/
 
+enum class CppTemplateArgumentType
+{
+	HighLevelType,		// templateSpec(declaration), type(default value)
+	Type,				// type(default value)
+	Value,				// type(value, type), expr(default value)
+};
+
 class TemplateSpec : public Object
 {
 public:
+	struct Argument
+	{
+		CppName										name;
+		CppTemplateArgumentType						argumentType;
+		Ptr<TemplateSpec>							templateSpec;
+		Ptr<Type>									type;
+		Ptr<Expr>									expr;
+	};
+
+	List<Argument>									arguments;
 };
 
 class SpecializationSpec : public Object
 {
 public:
-};
-
-class SpecializableDeclaration : public Declaration
-{
-public:
-	Ptr<TemplateSpec>								templateSpec;
-	Ptr<SpecializationSpec>							speclizationSpec;
+	List<GenericArgument>							arguments;
 };
 
 /***********************************************************************
@@ -90,13 +101,15 @@ enum class CppMethodType
 	TypeConversion,
 };
 
-class ForwardFunctionDeclaration : public SpecializableDeclaration
+class ForwardFunctionDeclaration : public Declaration
 {
 public:
 	using ForwardRootType = FunctionDeclaration;
 
 	IDeclarationVisitor_ACCEPT;
 
+	Ptr<TemplateSpec>								templateSpec;
+	Ptr<SpecializationSpec>							speclizationSpec;
 	Ptr<Type>										type;
 	CppMethodType									methodType = CppMethodType::Function;
 	bool											decoratorExtern = false;
@@ -131,13 +144,15 @@ enum class CppClassType
 	Union,
 };
 
-class ForwardClassDeclaration : public SpecializableDeclaration
+class ForwardClassDeclaration : public Declaration
 {
 public:
 	using ForwardRootType = ClassDeclaration;
 
 	IDeclarationVisitor_ACCEPT;
 
+	Ptr<TemplateSpec>								templateSpec;
+	Ptr<SpecializationSpec>							speclizationSpec;
 	CppClassType									classType;
 	bool											decoratorFriend = false;
 };

@@ -739,15 +739,15 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 
 	if (TestToken(cursor, CppTokens::EQ))
 	{
-		initializer->initializerType = InitializerType::Equal;
+		initializer->initializerType = CppInitializerType::Equal;
 	}
 	else if (TestToken(cursor, CppTokens::LBRACE))
 	{
-		initializer->initializerType = InitializerType::Universal;
+		initializer->initializerType = CppInitializerType::Universal;
 	}
 	else if (TestToken(cursor, CppTokens::LPARENTHESIS))
 	{
-		initializer->initializerType = InitializerType::Constructor;
+		initializer->initializerType = CppInitializerType::Constructor;
 	}
 	else
 	{
@@ -758,7 +758,7 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 	{
 		initializer->arguments.Add(ParseExpr(pa, false, cursor));
 
-		if (initializer->initializerType == InitializerType::Equal)
+		if (initializer->initializerType == CppInitializerType::Equal)
 		{
 			break;
 		}
@@ -766,10 +766,10 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 		{
 			switch (initializer->initializerType)
 			{
-			case InitializerType::Universal:
+			case CppInitializerType::Universal:
 				RequireToken(cursor, CppTokens::RBRACE);
 				break;
-			case InitializerType::Constructor:
+			case CppInitializerType::Constructor:
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 				break;
 			}

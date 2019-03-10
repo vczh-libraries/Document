@@ -795,7 +795,7 @@ void ParseDeclaration_Variable(
 	decl->needResolveTypeFromInitializer = needResolveTypeFromInitializer\
 
 	bool needResolveTypeFromInitializer = IsPendingType(declarator->type);
-	if (needResolveTypeFromInitializer && (!declarator->initializer || declarator->initializer->initializerType != InitializerType::Equal))
+	if (needResolveTypeFromInitializer && (!declarator->initializer || declarator->initializer->initializerType != CppInitializerType::Equal))
 	{
 		throw StopParsingException(cursor);
 	}

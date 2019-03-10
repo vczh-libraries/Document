@@ -189,12 +189,6 @@ public:
 	CppName					name;
 };
 
-struct GenericArgument
-{
-	Ptr<Type>				type;
-	Ptr<Expr>				expr;
-};
-
 class GenericType : public Type
 {
 public:

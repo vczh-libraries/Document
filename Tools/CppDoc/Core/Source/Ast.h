@@ -29,7 +29,7 @@ struct CppName
 	WString					name;
 	RegexToken				nameTokens[4];
 
-	operator bool()const { return tokenCount != 0; }
+	operator bool()const { return name.Length() != 0; }
 };
 
 class Resolving : public Object
@@ -82,11 +82,17 @@ public:
 	List<Ptr<Declaration>>	decls;
 };
 
+struct GenericArgument
+{
+	Ptr<Type>				type;
+	Ptr<Expr>				expr;
+};
+
 /***********************************************************************
 Declarator
 ***********************************************************************/
 
-enum class InitializerType
+enum class CppInitializerType
 {
 	Equal,
 	Constructor,
@@ -96,7 +102,7 @@ enum class InitializerType
 class Initializer : public Object
 {
 public:
-	InitializerType			initializerType;
+	CppInitializerType		initializerType;
 	List<Ptr<Expr>>			arguments;
 };
 

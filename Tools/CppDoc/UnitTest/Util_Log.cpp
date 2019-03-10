@@ -9,13 +9,13 @@ void Log(Ptr<Initializer> initializer, StreamWriter& writer)
 {
 	switch (initializer->initializerType)
 	{
-	case InitializerType::Equal:
+	case CppInitializerType::Equal:
 		writer.WriteString(L" = ");
 		break;
-	case InitializerType::Constructor:
+	case CppInitializerType::Constructor:
 		writer.WriteString(L" (");
 		break;
-	case InitializerType::Universal:
+	case CppInitializerType::Universal:
 		writer.WriteString(L" {");
 		break;
 	}
@@ -31,10 +31,10 @@ void Log(Ptr<Initializer> initializer, StreamWriter& writer)
 
 	switch (initializer->initializerType)
 	{
-	case InitializerType::Constructor:
+	case CppInitializerType::Constructor:
 		writer.WriteChar(L')');
 		break;
-	case InitializerType::Universal:
+	case CppInitializerType::Universal:
 		writer.WriteChar(L'}');
 		break;
 	}
@@ -238,13 +238,13 @@ public:
 		Log(self->type, writer);
 		if (self->initializer)
 		{
-			writer.WriteChar(self->initializer->initializerType == InitializerType::Constructor ? L'(' : L'{');
+			writer.WriteChar(self->initializer->initializerType == CppInitializerType::Constructor ? L'(' : L'{');
 			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
 			{
 				if (i > 0) writer.WriteString(L", ");
 				Log(self->initializer->arguments[i], writer);
 			}
-			writer.WriteChar(self->initializer->initializerType == InitializerType::Constructor ? L')' : L'}');
+			writer.WriteChar(self->initializer->initializerType == CppInitializerType::Constructor ? L')' : L'}');
 		}
 	}
 
