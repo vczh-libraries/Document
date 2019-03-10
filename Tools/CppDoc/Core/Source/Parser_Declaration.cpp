@@ -49,6 +49,100 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 }
 
 /***********************************************************************
+ParseTemplateSpec
+***********************************************************************/
+
+Tuple<Ptr<Symbol>, Ptr<TemplateSpec>> ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	RequireToken(cursor, CppTokens::DECL_TEMPLATE);
+	RequireToken(cursor, CppTokens::LT);
+
+	auto symbol = MakePtr<Symbol>();
+	symbol->parent = pa.context;
+	auto newPa = pa.WithContext(symbol.Obj());
+
+	auto spec = MakePtr<TemplateSpec>();
+	while (!TestToken(cursor, CppTokens::GT))
+	{
+		TemplateSpec::Argument argument;
+		if (TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
+		{
+			argument.templateSpec = ParseTemplateSpec(newPa, cursor).f1;
+		}
+
+		if (TestToken(cursor, CppTokens::TYPENAME) || TestToken(cursor, CppTokens::DECL_CLASS))
+		{
+			argument.argumentType = CppTemplateArgumentType::Type;
+			if (ParseCppName(argument.name, cursor))
+			{
+				if (symbol->children.Keys().Contains(argument.name.name))
+				{
+					throw StopParsingException(cursor);
+				}
+				auto argumentSymbol = MakePtr<Symbol>();
+				argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
+				argumentSymbol->name = argument.name.name;
+				argumentSymbol->evaluation.Allocate();
+				argumentSymbol->evaluation.Get().Add(pa.tsys->GenericArgOf(argumentSymbol.Obj()));
+				symbol->children.Add(argumentSymbol->name, argumentSymbol);
+			}
+
+			if (TestToken(cursor, CppTokens::EQ))
+			{
+				argument.type = ParseType(newPa, cursor);
+			}
+		}
+		else
+		{
+			if (argument.templateSpec)
+			{
+				throw StopParsingException(cursor);
+			}
+
+			auto declarator = ParseNonMemberDeclarator(newPa, pda_VarInit(), cursor);
+			argument.argumentType = CppTemplateArgumentType::Value;
+			argument.name = declarator->name;
+			argument.type = declarator->type;
+			if (declarator->initializer)
+			{
+				if (declarator->initializer->initializerType != CppInitializerType::Equal)
+				{
+					throw StopParsingException(cursor);
+				}
+				argument.expr = declarator->initializer->arguments[0];
+			}
+			if (argument.name)
+			{
+				if (symbol->children.Keys().Contains(argument.name.name))
+				{
+					throw StopParsingException(cursor);
+				}
+				auto argumentSymbol = MakePtr<Symbol>();
+				argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
+				argumentSymbol->name = argument.name.name;
+				argumentSymbol->evaluation.Allocate();
+				TypeToTsys(newPa, argument.type, argumentSymbol->evaluation.Get());
+				if (argumentSymbol->evaluation.Get().Count() == 0)
+				{
+					throw StopParsingException(cursor);
+				}
+				argumentSymbol->evaluation.Get().Add(pa.tsys->GenericArgOf(argumentSymbol.Obj()));
+				symbol->children.Add(argumentSymbol->name, argumentSymbol);
+			}
+		}
+		spec->arguments.Add(argument);
+
+		if (!TestToken(cursor, CppTokens::COMMA))
+		{
+			RequireToken(cursor, CppTokens::GT);
+			break;
+		}
+	}
+
+	return { symbol,spec };
+}
+
+/***********************************************************************
 ParseDeclaration_<NAMESPACE>
 ***********************************************************************/
 

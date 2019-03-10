@@ -139,13 +139,10 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 					type->arguments.Add(argument);
 				}
 
-				if (TestToken(cursor, CppTokens::GT))
+				if (!TestToken(cursor, CppTokens::COMMA))
 				{
+					RequireToken(cursor, CppTokens::GT);
 					break;
-				}
-				else
-				{
-					RequireToken(cursor, CppTokens::COMMA);
 				}
 			}
 			typeResult = type;

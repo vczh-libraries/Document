@@ -15,7 +15,7 @@
 ## Template short-term tasks
 
 - [ ] Parse template headers.
-  - [ ] When a `template` begins, an anonymous symbol is created to store template arguments.
+  - [x] When a `template` begins, an anonymous symbol is created to store template arguments.
   - [ ] After a template header is parsed, search for the matching `}`, maybe a `;` is right after that, ignore all of them.
   - [ ] Parse current cases in `UnitTest_Cases`.
   - [ ] Add more cases, ensure that preprocessed files of them doesn't really touch template things.

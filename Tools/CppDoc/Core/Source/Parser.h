@@ -42,6 +42,8 @@ namespace symbol_component
 		Variable,
 		Namespace,
 		Statement,
+		GenericTypeArgument,
+		GenericValueArgument,
 		Root,
 	};
 

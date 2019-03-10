@@ -407,13 +407,10 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 				while (true)
 				{
 					newExpr->arguments.Add(ParseExpr(pa, false, cursor));
-					if (TestToken(cursor, CppTokens::RPARENTHESIS))
+					if (!TestToken(cursor, CppTokens::COMMA))
 					{
+						RequireToken(cursor, CppTokens::RPARENTHESIS);
 						break;
-					}
-					else
-					{
-						RequireToken(cursor, CppTokens::COMMA);
 					}
 				}
 			}

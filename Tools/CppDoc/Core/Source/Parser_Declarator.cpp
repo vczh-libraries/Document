@@ -528,13 +528,10 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 						type->parameters.Add(varDecls[0]);
 					}
 
-					if (TestToken(cursor, CppTokens::RPARENTHESIS))
+					if (!TestToken(cursor, CppTokens::COMMA))
 					{
+						RequireToken(cursor, CppTokens::RPARENTHESIS);
 						break;
-					}
-					else
-					{
-						RequireToken(cursor, CppTokens::COMMA);
 					}
 				}
 			}
@@ -606,13 +603,10 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 					{
 						type->exceptions.Add(ParseType(pa, cursor));
 
-						if (TestToken(cursor, CppTokens::RPARENTHESIS))
+						if (!TestToken(cursor, CppTokens::COMMA))
 						{
+							RequireToken(cursor, CppTokens::RPARENTHESIS);
 							break;
-						}
-						else
-						{
-							RequireToken(cursor, CppTokens::COMMA);
 						}
 					}
 				}
