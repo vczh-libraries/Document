@@ -26,6 +26,7 @@ All **the compiler** here means the compiler created by this project.
 - All features that cl.exe doesn't support, are also not supported here.
 - The compiler doesn't handle implicitly declared ctors or dtor for `union`, all `union` are assumed constructible in any default ways.
 - The compiler ignores anonymous namespaces and `extern "C"` declarations, and parses sub declarations without creating an anonymous scope.
+- The compiler doesn't recognize [user-defined literals](https://en.cppreference.com/w/cpp/language/user_literal), maybe I will finish it later.
 
 ### Semantic
 
