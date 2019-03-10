@@ -51,6 +51,10 @@ bool SkipSpecifiers(Ptr<CppTokenCursor>& cursor)
 					return true;
 				}
 			}
+			else
+			{
+				SkipToken(cursor);
+			}
 		}
 		throw StopParsingException(cursor);
 	}

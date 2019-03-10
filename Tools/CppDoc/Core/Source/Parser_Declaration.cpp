@@ -52,7 +52,9 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 ParseTemplateSpec
 ***********************************************************************/
 
-Tuple<Ptr<Symbol>, Ptr<TemplateSpec>> ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+using TemplateSpecResult = Tuple<Ptr<Symbol>, Ptr<TemplateSpec>>;
+
+TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	RequireToken(cursor, CppTokens::DECL_TEMPLATE);
 	RequireToken(cursor, CppTokens::LT);
@@ -667,28 +669,29 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 {
 	RequireToken(cursor, CppTokens::DECL_TYPEDEF);
 	List<Ptr<Declarator>> declarators;
+	Ptr<IdType> createdType;
 
 	if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
 	{
 		// typedef class{} ...;
 		auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, true, cursor, output);
 
-		auto type = MakePtr<IdType>();
-		type->name = classDecl->name;
-		type->resolving = MakePtr<Resolving>();
-		type->resolving->resolvedSymbols.Add(classDecl->symbol);
-		ParseNonMemberDeclarator(pa, pda_Typedefs(), type, cursor, declarators);
+		createdType = MakePtr<IdType>();
+		createdType->name = classDecl->name;
+		createdType->resolving = MakePtr<Resolving>();
+		createdType->resolving->resolvedSymbols.Add(classDecl->symbol);
+		ParseNonMemberDeclarator(pa, pda_Typedefs(), createdType, cursor, declarators);
 	}
 	else if (TestToken(cursor, CppTokens::DECL_ENUM, false))
 	{
 		// typedef enum{} ...;
 		auto enumDecl = ParseDeclaration_Enum_NotConsumeSemicolon(pa, true, cursor, output);
 
-		auto type = MakePtr<IdType>();
-		type->name = enumDecl->name;
-		type->resolving = MakePtr<Resolving>();
-		type->resolving->resolvedSymbols.Add(enumDecl->symbol);
-		ParseNonMemberDeclarator(pa, pda_Typedefs(), type, cursor, declarators);
+		createdType = MakePtr<IdType>();
+		createdType->name = enumDecl->name;
+		createdType->resolving = MakePtr<Resolving>();
+		createdType->resolving->resolvedSymbols.Add(enumDecl->symbol);
+		ParseNonMemberDeclarator(pa, pda_Typedefs(), createdType, cursor, declarators);
 	}
 	else
 	{
@@ -699,6 +702,10 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 	RequireToken(cursor, CppTokens::SEMICOLON);
 	for (vint i = 0; i < declarators.Count(); i++)
 	{
+		if (declarators[i]->type == createdType && declarators[i]->name.name == createdType->name.name)
+		{
+			continue;
+		}
 		auto decl = MakePtr<UsingDeclaration>();
 		decl->name = declarators[i]->name;
 		decl->type = declarators[i]->type;
@@ -1104,6 +1111,34 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	while (SkipSpecifiers(cursor));
+	TemplateSpecResult spec;
+	if (TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
+	{
+		spec = ParseTemplateSpec(pa, cursor);
+		// skip the whole thing for now
+
+		int counter = 0;
+		while (cursor)
+		{
+			if (TestToken(cursor, CppTokens::LBRACE))
+			{
+				counter++;
+			}
+			else if (TestToken(cursor, CppTokens::RBRACE))
+			{
+				counter--;
+				if (counter == 0)
+				{
+					TestToken(cursor, CppTokens::SEMICOLON);
+					return;
+				}
+			}
+			else
+			{
+				SkipToken(cursor);
+			}
+		}
+	}
 
 	bool decoratorFriend = TestToken(cursor, CppTokens::DECL_FRIEND);
 

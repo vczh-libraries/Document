@@ -183,7 +183,7 @@ int main()
 				folderOutput.Create(false);
 			}
 
-			Console::WriteLine(L"Processing " + file.GetFilePath().GetName() + L" ...");
+			Console::WriteLine(L"Preprocessing " + file.GetFilePath().GetName() + L" ...");
 			CleanUpPreprocessFile(
 				lexer,
 				file.GetFilePath(),
@@ -198,6 +198,7 @@ int main()
 	{
 		if (wupper(file.GetFilePath().GetFullPath().Right(2)) == L".I")
 		{
+			Console::WriteLine(L"Compiling " + file.GetFilePath().GetName() + L" ...");
 			Folder folderOutput(file.GetFilePath().GetFullPath() + L".Output");
 			Compile(
 				lexer,
