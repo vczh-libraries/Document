@@ -54,18 +54,66 @@ ParseIdType
 
 Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
+	auto idKind = cursor ? (CppTokens)cursor->token.token : CppTokens::ID;
+	bool cStyleTypeReference = false;
+	if (TestToken(cursor, CppTokens::DECL_ENUM, false) || TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
+	{
+		cStyleTypeReference = true;
+		SkipToken(cursor);
+	}
+
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
+		auto type = MakePtr<IdType>();
+		type->name = cppName;
+
 		if (auto resolving = ResolveSymbol(pa, cppName, SearchPolicy::SymbolAccessableInScope).types)
 		{
-			auto type = MakePtr<IdType>();
-			type->name = cppName;
 			type->resolving = resolving;
 			if (pa.recorder)
 			{
 				pa.recorder->Index(type->name, type->resolving);
 			}
+
+			if (cStyleTypeReference)
+			{
+				for (vint i = 0; i < type->resolving->resolvedSymbols.Count(); i++)
+				{
+					auto symbol = type->resolving->resolvedSymbols[i];
+					switch (idKind)
+					{
+					case CppTokens::DECL_ENUM:
+						if (symbol->kind != symbol_component::SymbolKind::Enum)
+						{
+							throw StopParsingException(cursor);
+						}
+						break;
+					case CppTokens::DECL_CLASS:
+						if (symbol->kind != symbol_component::SymbolKind::Class)
+						{
+							throw StopParsingException(cursor);
+						}
+						break;
+					case CppTokens::DECL_STRUCT:
+						if (symbol->kind != symbol_component::SymbolKind::Struct)
+						{
+							throw StopParsingException(cursor);
+						}
+						break;
+					case CppTokens::DECL_UNION:
+						if (symbol->kind != symbol_component::SymbolKind::Union)
+						{
+							throw StopParsingException(cursor);
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		if (cStyleTypeReference || type->resolving)
+		{
 			return type;
 		}
 	}
