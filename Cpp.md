@@ -130,7 +130,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 ### DECLARATOR
 
 - [x] `operator` OPERATOR
-- [ ] IDENTIFIER [SPECIALIZATION-SPEC]
+- [ ] IDENTIFIER [SPECIALIZATION-SPEC]: Only allowed for functions
 - [x] SPECIFIERS DECLARATOR
 - [x] CALL DECLARATOR
 - [x] `alignas` `(` EXPR `)` DECLARATOR
@@ -157,16 +157,19 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 - [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT) [ = (`0` | `default` | `delete`]
   - [ ] TEMPLATE-SPEC
+  - [ ] SPECIALIZATION-SPEC
 - [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT) [ = (`0` | `default` | `delete`]
   - [ ] TEMPLATE-SPEC
 
 ### OBJECT
 
 - [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
-  - [ ] TEMPLATE-SPEC
+  - [ ] TEMPLATE-SPEC: Not allowed when the class is defined after `typedef`, or is anonymous followed by no variable declaration.
+  - [ ] SPECIALIZATION-SPEC
 - `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}`
 - [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}`
-  - [ ] TEMPLATE-SPEC
+  - [ ] TEMPLATE-SPEC: Not allowed when the class is defined after `typedef`, or is anonymous followed by no variable declaration.
+  - [ ] SPECIALIZATION-SPEC
 
 ### DECL (Declaration)
 
