@@ -34,6 +34,7 @@ All **the compiler** here means the compiler created by this project.
   - This also applies to `T<1>` and `T<2>`.
 - All members are treated as public.
 - Implicitly generated members doesn't care if any base class is virtual.
+- C style type reference is allowed to refer to a unexisting type. In this case, a forward declaration with the symbol is created in the root namespace.
 
 ### Analyzing Code
 
