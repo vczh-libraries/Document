@@ -168,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Cpp.css" />
+    <None Include="Cpp.js" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="favicon.ico" />

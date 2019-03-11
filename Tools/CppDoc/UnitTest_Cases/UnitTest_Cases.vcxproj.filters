@@ -31,5 +31,8 @@
     <None Include="Cpp.css">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Cpp.js">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

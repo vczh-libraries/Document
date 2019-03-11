@@ -652,6 +652,11 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skippin
 		GenerateHtmlToken(cursor, result, symbolForToken, indexResolve, rawBegin, rawEnd, html, lineCounter, callback);
 
 		cursor = cursor->Next();
+		if (cursor && (CppTokens)cursor->token.token == CppTokens::SHARP)
+		{
+			// let the outside decide whether this # need to be generate HTML code or not
+			break;
+		}
 	}
 }
 
@@ -696,10 +701,59 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 		writer.WriteLine(L"<body>");
 		writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
 
-		GenerateHtmlLine(cursor, skipping, result, [&](vint lineCount, const wchar_t* rawBegin, const wchar_t* rawEnd, const WString& htmlCode)
+		vint currentLineNumber = 0;
+		WString currentFilePath;
+		bool rightAfterSharpLine = false;
+		while (cursor)
 		{
-			writer.WriteLine(htmlCode);
-		});
+			{
+				auto oldCursor = cursor;
+				{
+					if (!TestToken(cursor, CppTokens::SHARP)) goto GIVE_UP;
+					if (!TestToken(cursor, L"line")) goto GIVE_UP;
+					if (!TestToken(cursor, CppTokens::SPACE)) goto GIVE_UP;
+					if (!TestToken(cursor, CppTokens::INT, false)) goto GIVE_UP;
+					vint lineNumber = wtoi(WString(cursor->token.reading, cursor->token.length));
+					SkipToken(cursor);
+					if (!TestToken(cursor, CppTokens::SPACE)) goto GIVE_UP;
+					if (!TestToken(cursor, CppTokens::STRING, false)) goto GIVE_UP;
+					Array<wchar_t> buffer(cursor->token.length - 2);
+					auto reading = cursor->token.reading + 1;
+					auto writing = &buffer[0];
+					while (*reading != L'\"')
+					{
+						if (*reading == L'\\')
+						{
+							reading++;
+						}
+						*writing++ = *reading++;
+					}
+
+					currentLineNumber = lineNumber;
+					currentFilePath = WString(&buffer[0], (vint)(writing - &buffer[0]));
+					rightAfterSharpLine = true;
+					SkipToken(cursor);
+					continue;
+				}
+			GIVE_UP:
+				cursor = oldCursor;
+			}
+			GenerateHtmlLine(cursor, skipping, result, [&](vint lineCount, const wchar_t* rawBegin, const wchar_t* rawEnd, const WString& htmlCode)
+			{
+				if (rightAfterSharpLine)
+				{
+					if (htmlCode.Length() != 0)
+					{
+						throw Exception(L"An empty line should have been submitted right after #line.");
+					}
+					rightAfterSharpLine = false;
+				}
+				else
+				{
+					writer.WriteLine(htmlCode);
+				}
+			});
+		}
 
 		writer.WriteLine(L"</div></div>");
 		writer.WriteLine(L"</body>");
@@ -716,6 +770,19 @@ int main()
 	Folder folderCase(L"../UnitTest_Cases");
 	List<File> files;
 	folderCase.GetFiles(files);
+
+	Console::WriteLine(L"Cleaning ...");
+	FOREACH(File, file, files)
+	{
+		if (wupper(file.GetFilePath().GetFullPath().Right(2)) == L".I")
+		{
+			Folder folderOutput(file.GetFilePath().GetFullPath() + L".Output");
+			if (folderOutput.Exists())
+			{
+				folderOutput.Delete(true);
+			}
+		}
+	}
 	auto lexer = CreateCppLexer();
 
 	FOREACH(File, file, files)
