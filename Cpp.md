@@ -20,7 +20,8 @@
   - [x] After a template header is parsed, search for the matching `}`, maybe a `;` is right after that, ignore all of them.
   - [x] Parse current cases in `UnitTest_Cases`.
   - [ ] Add more cases, ensure that preprocessed files of them doesn't really touch template things.
-  - [ ] Generate HTML index. (single page)
+  - [x] Generate HTML index. (single page)
+  - [x] Generate HTML index. (multiple pages)
   - [ ] Revert the ignoring.
   - [ ] Revert `Macro_va_start` in `Parser_Stat.cpp`.
   - [ ] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
@@ -50,7 +51,7 @@
 - [ ] Parse `UnitTest_Cases`
 - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
 - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
-- [ ] Generic HTML index. (multiple page)
+- [ ] Generic HTML index. (multiple pages)
 - [ ] Attach document content to declarations.
 - [ ] Enable markdown inside xml elements in comment.
 - [ ] Resolve symbols in markdown in comment.
