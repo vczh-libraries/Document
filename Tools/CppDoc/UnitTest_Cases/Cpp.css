@@ -14,9 +14,14 @@ body {
     display: inline;
 }
 
+.def {
+    font-weight: bold;
+}
+
 .ref {
     text-decoration: underline dotted;
-    text-decoration-color: #555555;
+    text-decoration-color: #7f7f7f;
+    cursor: pointer;
 }
 
     .ref:hover {

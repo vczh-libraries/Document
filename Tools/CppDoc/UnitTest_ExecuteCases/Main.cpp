@@ -205,6 +205,7 @@ enum class IndexReason
 	Resolved = 0,
 	OverloadedResolution = 1,
 	NeedValueButType = 2,
+	Max = 3,
 };
 
 using IndexMap = Group<IndexToken, Symbol*>;
@@ -214,8 +215,8 @@ struct IndexResult
 {
 	ParsingArguments				pa;
 	Dictionary<WString, Symbol*>	ids;
-	IndexMap						index[3];
-	ReverseIndexMap					reverseIndex[3];
+	IndexMap						index[(vint)IndexReason::Max];
+	ReverseIndexMap					reverseIndex[(vint)IndexReason::Max];
 	IndexMap						decls;
 };
 
@@ -427,48 +428,62 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 		writer.WriteLine(L"<div class=\"codebox\"><div class=\"cpp_default\">");
 
 		AdjustSkippingResult asr;
-		IndexTracking indexSkipping, indexDecl, indexResolve[3];
+		IndexTracking indexSkipping, indexDecl, indexResolve[(vint)IndexReason::Max];
 		while (cursor)
 		{
 			AdjustSkippingIndex(cursor, skipping, indexSkipping, asr);
 			if (!indexSkipping.inRange)
 			{
 				AdjustRefIndex(cursor, result.decls.Keys(), indexDecl, asr);
-				for (vint i = 0; i < 3; i++)
+				for (vint i = 0; i < (vint)IndexReason::Max; i++)
 				{
 					AdjustRefIndex(cursor, result.index[i].Keys(), indexResolve[i], asr);
 				}
 			}
 
+			bool isDefToken = indexDecl.inRange;
+			bool isRefToken = indexResolve[(vint)IndexReason::Resolved].inRange || indexResolve[(vint)IndexReason::OverloadedResolution].inRange;
 			const wchar_t* divClass = nullptr;
+
 			switch ((CppTokens)cursor->token.token)
 			{
 			case CppTokens::DOCUMENT:
 			case CppTokens::COMMENT1:
 			case CppTokens::COMMENT2:
-				divClass = L"cpp_comment";
+				divClass = L"cpp_comment ";
 				break;
 			case CppTokens::STRING:
 			case CppTokens::CHAR:
-				divClass = L"cpp_string";
+				divClass = L"cpp_string ";
 				break;
 			case CppTokens::INT:
 			case CppTokens::HEX:
 			case CppTokens::BIN:
 			case CppTokens::FLOAT:
-				divClass = L"cpp_number";
+				divClass = L"cpp_number ";
 				break;
 #define CASE_KEYWORD(NAME, REGEX) case CppTokens::NAME:
 			CPP_KEYWORD_TOKENS(CASE_KEYWORD)
 #undef CASE_KEYWORD
-				divClass = L"cpp_keyword";
+				divClass = L"cpp_keyword ";
 				break;
 			}
 
-			if (divClass)
+			if (divClass || isDefToken || isRefToken)
 			{
 				writer.WriteString(L"<div class=\"");
-				writer.WriteString(divClass);
+				if (isDefToken)
+				{
+					writer.WriteString(L"def ");
+				}
+				if (isRefToken)
+				{
+					writer.WriteString(L"ref ");
+				}
+				if (divClass)
+				{
+					writer.WriteString(divClass);
+				}
 				writer.WriteString(L"\">");
 			}
 			
@@ -503,7 +518,7 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 				}
 			}
 
-			if (divClass)
+			if (divClass || isDefToken || isRefToken)
 			{
 				writer.WriteString(L"</div>");
 			}
