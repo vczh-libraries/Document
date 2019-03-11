@@ -305,9 +305,9 @@ Generating
 
 struct AdjustSkippingResult
 {
+	vint							rowSkipped = 0;
 	vint							rowUntil = 0;
 	vint							columnUntil = 0;
-	vint							rowInPreprocessed = 0;
 };
 
 struct IndexTracking
@@ -316,22 +316,79 @@ struct IndexTracking
 	bool							inRange = false;
 };
 
-void AdjustSkippingIndex(Ptr<CppTokenCursor> cursor, Array<TokenSkipping>& skipping, IndexTracking& index, AdjustSkippingResult& asr)
+void AdjustSkippingIndex(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skipping, IndexTracking& index, AdjustSkippingResult& asr)
 {
-	if (index.index >= skipping.Count())
+	auto& token = cursor->token;
+
+	while (true)
+	{
+		if (index.index >= skipping.Count())
+		{
+			index.inRange = false;
+			return;
+		}
+
+		auto& current = skipping[index.index];
+		if (token.rowStart > current.rowUntil || (token.rowStart == current.rowUntil && token.columnStart >= current.columnUntil))
+		{
+			asr.rowSkipped += current.rowUntil - current.rowSkip - 1;
+			index.index++;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	auto& current = skipping[index.index];
+	if (token.rowStart < current.rowSkip || (token.rowStart == current.rowSkip && token.columnStart < current.columnSkip))
 	{
 		index.inRange = false;
 		return;
 	}
+
+	index.inRange = true;
+	asr.rowUntil = current.rowUntil;
+	asr.columnUntil = current.columnUntil;
 }
 
-void AdjustRefIndex(Ptr<CppTokenCursor> cursor, const SortedList<IndexToken>& keys, IndexTracking& index, const AdjustSkippingResult& asr)
+void AdjustRefIndex(Ptr<CppTokenCursor>& cursor, const SortedList<IndexToken>& keys, IndexTracking& index, const AdjustSkippingResult& asr)
 {
-	if (index.index >= keys.Count())
+	vint row = cursor->token.rowStart;
+	vint column = cursor->token.columnStart;
+	if (row == asr.rowUntil)
+	{
+		column -= asr.columnUntil;
+	}
+	row -= asr.rowSkipped;
+
+	while (true)
+	{
+		if (index.index >= keys.Count())
+		{
+			index.inRange = false;
+			return;
+		}
+
+		auto& current = keys[index.index];
+		if (row > current.rowEnd || (row == current.rowEnd && column > current.columnEnd))
+		{
+			index.index++;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	auto& current = keys[index.index];
+	if (row < current.rowStart || (row == current.rowStart && column < current.columnStart))
 	{
 		index.inRange = false;
 		return;
 	}
+
+	index.inRange = true;
 }
 
 void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result, FilePath pathHtml)
