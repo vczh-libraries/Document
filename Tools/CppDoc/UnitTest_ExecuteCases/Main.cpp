@@ -248,31 +248,36 @@ public:
 	}
 };
 
-void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput)
+struct IndexResult
 {
 	Dictionary<WString, Symbol*> ids;
 	IndexRecorder::IndexMap index;
 	IndexRecorder::ReverseIndexMap reverseIndex;
 	Dictionary<IndexRecorder::Token, Symbol*> decls;
 
+	ParsingArguments pa;
+};
+
+void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, IndexResult& result)
+{
 	WString input = File(pathInput).ReadAllTextByBom();
 	CppTokenReader reader(lexer, input);
 	auto cursor = reader.GetFirstToken();
 
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), new IndexRecorder(index, reverseIndex));
-	auto program = ParseProgram(pa, cursor);
-	EvaluateProgram(pa, program);
+	result.pa = { new Symbol, ITsysAlloc::Create(), new IndexRecorder(result.index, result.reverseIndex) };
+	auto program = ParseProgram(result.pa, cursor);
+	EvaluateProgram(result.pa, program);
 
-	pa.root->GenerateUniqueId(ids, L"");
-	for (vint i = 0; i < ids.Count(); i++)
+	result.pa.root->GenerateUniqueId(result.ids, L"");
+	for (vint i = 0; i < result.ids.Count(); i++)
 	{
-		auto symbol = ids.Values()[i];
+		auto symbol = result.ids.Values()[i];
 		if (symbol->definition)
 		{
 			auto& name = symbol->definition->name;
 			if (name.tokenCount > 0)
 			{
-				decls.Add(IndexRecorder::GetToken(name), symbol);
+				result.decls.Add(IndexRecorder::GetToken(name), symbol);
 			}
 		}
 		for (vint i = 0; i < symbol->declarations.Count(); i++)
@@ -280,7 +285,7 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput)
 			auto& name = symbol->declarations[i]->name;
 			if (name.tokenCount > 0)
 			{
-				decls.Add(IndexRecorder::GetToken(name), symbol);
+				result.decls.Add(IndexRecorder::GetToken(name), symbol);
 			}
 		}
 	}
@@ -298,6 +303,10 @@ int main()
 		if (wupper(file.GetFilePath().GetFullPath().Right(2)) == L".I")
 		{
 			Folder folderOutput(file.GetFilePath().GetFullPath() + L".Output");
+			auto pathPreprocessed = folderOutput.GetFilePath() / L"Preprocessed.cpp";
+			auto pathInput = folderOutput.GetFilePath() / L"Input.cpp";
+			auto pathMapping = folderOutput.GetFilePath() / L"Mapping.bin";
+
 			if (!folderOutput.Exists())
 			{
 				folderOutput.Create(false);
@@ -307,16 +316,18 @@ int main()
 			CleanUpPreprocessFile(
 				lexer,
 				file.GetFilePath(),
-				folderOutput.GetFilePath() / L"Preprocessed.cpp",
-				folderOutput.GetFilePath() / L"Input.cpp",
-				folderOutput.GetFilePath() / L"Mapping.bin"
+				pathPreprocessed,
+				pathInput,
+				pathMapping
 			);
 
 			Console::WriteLine(L"Compiling " + file.GetFilePath().GetName() + L" ...");
+			IndexResult indexResult;
 			Compile(
 				lexer,
 				file.GetFilePath(),
-				folderOutput.GetFilePath() / L"Input.cpp"
+				pathInput,
+				indexResult
 			);
 		}
 	}
