@@ -536,6 +536,7 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 				}
 				if (divClass)
 				{
+					writer.WriteString(L"token ");
 					writer.WriteString(divClass);
 				}
 

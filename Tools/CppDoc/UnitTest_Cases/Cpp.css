@@ -10,29 +10,8 @@ body {
     tab-size: 4;
 }
 
-.codebox div{
-    display: inline;
-}
-
-.focused {
-    font-size: 28px;
-    color: #000000;
-    background-color: #FFFF00;
-}
-
-.def {
-    font-weight: bold;
-}
-
-.ref {
-    text-decoration: underline dotted;
-    text-decoration-color: #7f7f7f;
-    cursor: pointer;
-}
-
-    .ref:hover {
-        text-decoration: underline;
-        text-decoration-color: unset;
+    .codebox div {
+        display: inline;
     }
 
 /* token color */
@@ -78,3 +57,29 @@ body {
 .cpp_function {
     color: #dcdcaa;
 }
+
+/* functional color */
+
+.def.focused {
+    font-size: 28px;
+    background-color: #FFFF00;
+}
+
+    .def.focused .token {
+        color: #000000;
+    }
+
+.def {
+    font-weight: bold;
+}
+
+.ref {
+    text-decoration: underline dotted;
+    text-decoration-color: #7f7f7f;
+    cursor: pointer;
+}
+
+    .ref:hover {
+        text-decoration: underline;
+        text-decoration-color: unset;
+    }
