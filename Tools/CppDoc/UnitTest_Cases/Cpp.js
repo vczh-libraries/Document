@@ -8,6 +8,7 @@ function jumpToSymbol(symbolName) {
     lastFocusedElement = document.getElementById('symbol$' + symbolName[0]);
     if (lastFocusedElement !== undefined) {
         lastFocusedElement.classList.add('focused');
+        window.location.href = '#';
         window.location.href = '#' + lastFocusedElement.id;
     }
 }

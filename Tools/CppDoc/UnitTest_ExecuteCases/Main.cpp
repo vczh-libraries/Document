@@ -501,9 +501,9 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 						for (vint j = 0; j < symbols.Count(); j++)
 						{
 							if (j != 0) writer.WriteString(L", ");
-							writer.WriteString(L"\\\"");
+							writer.WriteString(L"\'");
 							writer.WriteString(symbols[j]->uniqueId);
-							writer.WriteString(L"\\\"");
+							writer.WriteString(L"\'");
 						}
 						writer.WriteString(L"])");
 						break;
