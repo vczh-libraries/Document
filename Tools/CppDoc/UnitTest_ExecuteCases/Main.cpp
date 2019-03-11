@@ -470,13 +470,15 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 				break;
 			}
 
-			if (divClass || isDefToken || isRefToken)
+			if (isDefToken)
+			{
+				writer.WriteString(L"<div class=\"def\" id=\"symbol$");
+				writer.WriteString(result.decls.Values()[indexDecl.index]->uniqueId);
+				writer.WriteString(L"\">");
+			}
+			if (divClass || isRefToken)
 			{
 				writer.WriteString(L"<div class=\"");
-				if (isDefToken)
-				{
-					writer.WriteString(L"def ");
-				}
 				if (isRefToken)
 				{
 					writer.WriteString(L"ref ");
@@ -484,12 +486,6 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 				if (divClass)
 				{
 					writer.WriteString(divClass);
-				}
-
-				if (isDefToken)
-				{
-					writer.WriteString(L"\" id=\"symbol$");
-					writer.WriteString(result.decls.Values()[indexDecl.index]->uniqueId);
 				}
 
 				for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
@@ -543,7 +539,11 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 				}
 			}
 
-			if (divClass || isDefToken || isRefToken)
+			if (divClass|| isRefToken)
+			{
+				writer.WriteString(L"</div>");
+			}
+			if (isDefToken)
 			{
 				writer.WriteString(L"</div>");
 			}
