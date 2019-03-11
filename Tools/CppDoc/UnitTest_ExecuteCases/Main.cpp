@@ -4,6 +4,10 @@ using namespace vl::stream;
 using namespace vl::filesystem;
 using namespace vl::console;
 
+/***********************************************************************
+Preprocessing
+***********************************************************************/
+
 // skip these tokens to in space
 struct TokenSkipping
 {
@@ -157,55 +161,35 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 	}
 }
 
-class IndexRecorder : public Object, public virtual IIndexRecorder
+/***********************************************************************
+Indexing
+***********************************************************************/
+
+struct IndexToken
 {
-public:
-	struct Token
+	vint			rowStart;
+	vint			columnStart;
+	vint			rowEnd;
+	vint			columnEnd;
+
+	static vint Compare(const IndexToken& a, const IndexToken& b)
 	{
-		vint			rowStart;
-		vint			columnStart;
-		vint			rowEnd;
-		vint			columnEnd;
-
-		static vint Compare(const Token& a, const Token& b)
-		{
-			vint result;
-			if ((result = a.rowStart - b.rowStart) != 0) return result;
-			if ((result = a.columnStart - b.columnStart) != 0) return result;
-			if ((result = a.rowEnd - b.rowEnd) != 0) return result;
-			if ((result = a.columnEnd - b.columnEnd) != 0) return result;
-			return 0;
-		}
-
-		bool operator <  (const Token& k)const { return Compare(*this, k) <  0; }
-		bool operator <= (const Token& k)const { return Compare(*this, k) <= 0; }
-		bool operator >  (const Token& k)const { return Compare(*this, k) >  0; }
-		bool operator >= (const Token& k)const { return Compare(*this, k) >= 0; }
-		bool operator == (const Token& k)const { return Compare(*this, k) == 0; }
-		bool operator != (const Token& k)const { return Compare(*this, k) != 0; }
-	};
-
-	enum Reason
-	{
-		Resolved,
-		OverloadedResolution,
-		NeedValueButType,
-	};
-
-	using Key = Tuple<Token, Reason>;
-	using IndexMap = Group<Key, Symbol*>;
-	using ReverseIndexMap = Group<Symbol*, Key>;
-
-	IndexMap&			index;
-	ReverseIndexMap&	reverseIndex;
-
-	IndexRecorder(IndexMap& _index, ReverseIndexMap& _reverseIndex)
-		:index(_index)
-		, reverseIndex(_reverseIndex)
-	{
+		vint result;
+		if ((result = a.rowStart - b.rowStart) != 0) return result;
+		if ((result = a.columnStart - b.columnStart) != 0) return result;
+		if ((result = a.rowEnd - b.rowEnd) != 0) return result;
+		if ((result = a.columnEnd - b.columnEnd) != 0) return result;
+		return 0;
 	}
 
-	static Token GetToken(CppName& name)
+	bool operator <  (const IndexToken& k)const { return Compare(*this, k) < 0; }
+	bool operator <= (const IndexToken& k)const { return Compare(*this, k) <= 0; }
+	bool operator >  (const IndexToken& k)const { return Compare(*this, k) > 0; }
+	bool operator >= (const IndexToken& k)const { return Compare(*this, k) >= 0; }
+	bool operator == (const IndexToken& k)const { return Compare(*this, k) == 0; }
+	bool operator != (const IndexToken& k)const { return Compare(*this, k) != 0; }
+
+	static IndexToken GetToken(CppName& name)
 	{
 		return {
 			name.nameTokens[0].rowStart,
@@ -214,19 +198,49 @@ public:
 			name.nameTokens[name.tokenCount - 1].columnEnd,
 		};
 	}
+};
 
-	void IndexInternal(CppName& name, Ptr<Resolving> resolving, Reason reason)
+enum class IndexReason
+{
+	Resolved = 0,
+	OverloadedResolution = 1,
+	NeedValueButType = 2,
+};
+
+using IndexMap = Group<IndexToken, Symbol*>;
+using ReverseIndexMap = Group<Symbol*, IndexToken>;
+
+struct IndexResult
+{
+	ParsingArguments				pa;
+	Dictionary<WString, Symbol*>	ids;
+	IndexMap						index[3];
+	ReverseIndexMap					reverseIndex[3];
+	IndexMap						decls;
+};
+
+class IndexRecorder : public Object, public virtual IIndexRecorder
+{
+public:
+	IndexResult&				result;
+
+	IndexRecorder(IndexResult& _result)
+		:result(_result)
 	{
+	}
+
+	void IndexInternal(CppName& name, Ptr<Resolving> resolving, IndexReason reason)
+	{
+		auto key = IndexToken::GetToken(name);
 		if (name.tokenCount > 0)
 		{
-			Key key = { GetToken(name),reason };
 			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 			{
 				auto symbol = resolving->resolvedSymbols[i];
-				if (!index.Contains(key, symbol))
+				if (!result.index[(vint)reason].Contains(key, symbol))
 				{
-					index.Add(key, symbol);
-					reverseIndex.Add(symbol, key);
+					result.index[(vint)reason].Add(key, symbol);
+					result.reverseIndex[(vint)reason].Add(symbol, key);
 				}
 			}
 		}
@@ -234,29 +248,23 @@ public:
 
 	void Index(CppName& name, Ptr<Resolving> resolving)override
 	{
-		IndexInternal(name, resolving, Resolved);
+		IndexInternal(name, resolving, IndexReason::Resolved);
 	}
 
 	void IndexOverloadingResolution(CppName& name, Ptr<Resolving> resolving)override
 	{
-		IndexInternal(name, resolving, OverloadedResolution);
+		IndexInternal(name, resolving, IndexReason::OverloadedResolution);
 	}
 
 	void ExpectValueButType(CppName& name, Ptr<Resolving> resolving)override
 	{
-		IndexInternal(name, resolving, NeedValueButType);
+		IndexInternal(name, resolving, IndexReason::NeedValueButType);
 	}
 };
 
-struct IndexResult
-{
-	Dictionary<WString, Symbol*> ids;
-	IndexRecorder::IndexMap index;
-	IndexRecorder::ReverseIndexMap reverseIndex;
-	Dictionary<IndexRecorder::Token, Symbol*> decls;
-
-	ParsingArguments pa;
-};
+/***********************************************************************
+Compiling
+***********************************************************************/
 
 void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, IndexResult& result)
 {
@@ -264,7 +272,7 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 	CppTokenReader reader(lexer, input);
 	auto cursor = reader.GetFirstToken();
 
-	result.pa = { new Symbol, ITsysAlloc::Create(), new IndexRecorder(result.index, result.reverseIndex) };
+	result.pa = { new Symbol, ITsysAlloc::Create(), new IndexRecorder(result) };
 	auto program = ParseProgram(result.pa, cursor);
 	EvaluateProgram(result.pa, program);
 
@@ -277,7 +285,7 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 			auto& name = symbol->definition->name;
 			if (name.tokenCount > 0)
 			{
-				result.decls.Add(IndexRecorder::GetToken(name), symbol);
+				result.decls.Add(IndexToken::GetToken(name), symbol);
 			}
 		}
 		for (vint i = 0; i < symbol->declarations.Count(); i++)
@@ -285,11 +293,15 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 			auto& name = symbol->declarations[i]->name;
 			if (name.tokenCount > 0)
 			{
-				result.decls.Add(IndexRecorder::GetToken(name), symbol);
+				result.decls.Add(IndexToken::GetToken(name), symbol);
 			}
 		}
 	}
 }
+
+/***********************************************************************
+Generating
+***********************************************************************/
 
 void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result, FilePath pathHtml)
 {
@@ -298,12 +310,13 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 		FileStream fileStream(pathMapping.GetFullPath(), FileStream::ReadOnly);
 		vint count;
 		fileStream.Read(&count, sizeof(count));
-		skipping.Resize(count);
+		skipping.Resize(count + 1);
 
 		if (count > 0)
 		{
 			fileStream.Read(&skipping[0], sizeof(TokenSkipping)*count);
 		}
+		skipping[skipping.Count() - 1] = { 0x7FFFFFFF,0,0x7FFFFFFF,0 };
 	}
 
 	WString preprocessed = File(pathPreprocessed).ReadAllTextByBom();
@@ -324,8 +337,11 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 		writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
 		writer.WriteLine(L"</head>");
 		writer.WriteLine(L"<body>");
-
 		writer.WriteLine(L"<div class=\"codebox\"><div class=\"cpp_default\">");
+
+		vint indexSkipping = 0;
+		vint indexDecl = 0;
+		vint indexResolve[3] = { 0,0,0 };
 		while (cursor)
 		{
 			const wchar_t* divClass = nullptr;
@@ -397,12 +413,16 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 			}
 			cursor = cursor->Next();
 		}
-		writer.WriteLine(L"</div></div>");
 
+		writer.WriteLine(L"</div></div>");
 		writer.WriteLine(L"</body>");
 		writer.WriteLine(L"</html>");
 	}
 }
+
+/***********************************************************************
+Main
+***********************************************************************/
 
 int main()
 {
