@@ -21,7 +21,9 @@
   - [x] Parse current cases in `UnitTest_Cases`.
   - [ ] Add more cases, ensure that preprocessed files of them doesn't really touch template things.
   - [x] Generate HTML index. (single page)
-  - [x] Generate HTML index. (multiple pages)
+  - [ ] Wrong HTML for multi-token name, need to generate only one def div containing all tokens.
+  - [ ] One symbol may have multiple declarations, need to show them all in drop down.
+  - [ ] Generate HTML index. (multiple pages)
   - [ ] Revert the ignoring.
   - [ ] Revert `Macro_va_start` in `Parser_Stat.cpp`.
   - [ ] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
