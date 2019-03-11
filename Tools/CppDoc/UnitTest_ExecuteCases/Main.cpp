@@ -293,6 +293,19 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 
 void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result, FilePath pathHtml)
 {
+	Array<TokenSkipping> skipping;
+	{
+		FileStream fileStream(pathMapping.GetFullPath(), FileStream::ReadOnly);
+		vint count;
+		fileStream.Read(&count, sizeof(count));
+		skipping.Resize(count);
+
+		if (count > 0)
+		{
+			fileStream.Read(&skipping[0], sizeof(TokenSkipping)*count);
+		}
+	}
+
 	WString preprocessed = File(pathPreprocessed).ReadAllTextByBom();
 	CppTokenReader reader(lexer, preprocessed, false);
 	auto cursor = reader.GetFirstToken();

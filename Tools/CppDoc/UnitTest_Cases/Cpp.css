@@ -10,9 +10,15 @@ body {
     tab-size: 4;
 }
 
-.codebox div {
-    display: inline;
+.ref {
+    text-decoration: underline dotted;
+    text-decoration-color: #555555;
 }
+
+    .ref:hover {
+        text-decoration: underline;
+        text-decoration-color: unset;
+    }
 
 /* token color */
 
