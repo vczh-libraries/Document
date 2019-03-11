@@ -63,6 +63,7 @@ body {
 .def.focused {
     font-size: 28px;
     background-color: #FFFF00;
+    color: #000000;
 }
 
     .def.focused .token {

@@ -427,7 +427,7 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 		writer.WriteLine(L"    <script src=\"../Cpp.js\" ></script>");
 		writer.WriteLine(L"</head>");
 		writer.WriteLine(L"<body>");
-		writer.WriteLine(L"<div class=\"codebox\"><div class=\"cpp_default\">");
+		writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
 
 		AdjustSkippingResult asr;
 		IndexTracking indexSkipping, indexDecl, indexResolve[(vint)IndexReason::Max];
