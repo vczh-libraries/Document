@@ -366,12 +366,6 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 			{
 				switch (reading[i])
 				{
-				case L' ':
-					writer.WriteString(L"&nbsp;");
-					break;
-				case L'\t':
-					writer.WriteString(L"&#9;");
-					break;
 				case L'\r':
 					break;
 				case L'\n':
