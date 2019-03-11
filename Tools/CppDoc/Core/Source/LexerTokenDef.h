@@ -129,6 +129,7 @@ Others
 	F(AND,						L"&")																											\
 	F(OR,						L"/|")																											\
 	F(REVERT,					L"~")																											\
+	F(INCLUDE,					L"#include/s*(/<[^>]*/>|\"[^\"]*\")")																			\
 	F(SHARP,					L"#")																											\
 	F(INT,						L"(/d+('/d+)*)("		L"[uU]|[lL]|[uU][lL]|[lL][uU]|[lL][lL]|[uU][lL][lL]|[lL][uU][lL]|[lL][lL][uU]"	L")?")	\
 	F(HEX,						L"0[xX][0-9a-fA-F]+("	L"[uU]|[lL]|[uU][lL]|[lL][uU]|[lL][lL]|[uU][lL][lL]|[lL][uU][lL]|[lL][lL][uU]"	L")?")	\

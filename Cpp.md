@@ -21,7 +21,7 @@
   - [x] Parse current cases in `UnitTest_Cases`.
   - [ ] Add more cases, ensure that preprocessed files of them doesn't really touch template things.
   - [x] Generate HTML index. (single page)
-  - [ ] Wrong HTML for multi-token name, need to generate only one def div containing all tokens.
+  - [x] Wrong HTML for multi-token name, need to generate only one def div containing all tokens.
   - [ ] One symbol may have multiple declarations, need to show them all in drop down.
   - [ ] Generate HTML index. (multiple pages)
     - Separate `Preprocessed.cpp` to multiple lines as much as possible (if a comment across lines it cannot be separated).

@@ -393,6 +393,268 @@ void AdjustRefIndex(Ptr<CppTokenCursor>& cursor, const SortedList<IndexToken>& k
 	index.inRange = true;
 }
 
+struct StreamHolder
+{
+	MemoryStream					memoryStream;
+	StreamWriter					streamWriter;
+
+	StreamHolder()
+		:streamWriter(memoryStream)
+	{
+	}
+};
+
+WString Submit(Ptr<StreamHolder>& holder)
+{
+	if (!holder) return WString::Empty;
+	holder->memoryStream.SeekFromBegin(0);
+	auto result = StreamReader(holder->memoryStream).ReadToEnd();
+	holder = nullptr;
+	return result;
+}
+
+StreamWriter& Use(Ptr<StreamHolder>& holder)
+{
+	if (!holder)
+	{
+		holder = new StreamHolder;
+	}
+	return holder->streamWriter;
+}
+
+template<typename T>
+void GenerateHtmlToken(
+	Ptr<CppTokenCursor>& cursor,
+	IndexResult& result,
+	Symbol* symbolForToken,
+	IndexTracking (&indexResolve)[(vint)IndexReason::Max],
+	const wchar_t*& rawBegin,
+	const wchar_t*& rawEnd,
+	Ptr<StreamHolder>& html,
+	vint& lineCounter,
+	const T& callback
+)
+{
+	const wchar_t* divClass = nullptr;
+
+	switch ((CppTokens)cursor->token.token)
+	{
+	case CppTokens::DOCUMENT:
+	case CppTokens::COMMENT1:
+	case CppTokens::COMMENT2:
+		divClass = L"cpp_comment ";
+		break;
+	case CppTokens::STRING:
+	case CppTokens::CHAR:
+		divClass = L"cpp_string ";
+		break;
+	case CppTokens::INT:
+	case CppTokens::HEX:
+	case CppTokens::BIN:
+	case CppTokens::FLOAT:
+		divClass = L"cpp_number ";
+		break;
+#define CASE_KEYWORD(NAME, REGEX) case CppTokens::NAME:
+		CPP_KEYWORD_TOKENS(CASE_KEYWORD)
+#undef CASE_KEYWORD
+			divClass = L"cpp_keyword ";
+		break;
+	default:
+		if (symbolForToken)
+		{
+			switch (symbolForToken->kind)
+			{
+			case symbol_component::SymbolKind::Enum:
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+			case symbol_component::SymbolKind::Union:
+			case symbol_component::SymbolKind::TypeAlias:
+				divClass = L"cpp_type";
+				break;
+			case symbol_component::SymbolKind::EnumItem:
+				divClass = L"cpp_enum";
+				break;
+			case symbol_component::SymbolKind::Variable:
+				if (symbolForToken->parent)
+				{
+					if (symbolForToken->parent->definition.Cast<FunctionDeclaration>())
+					{
+						divClass = L"cpp_argument";
+					}
+					else if (symbolForToken->parent->definition.Cast<ClassDeclaration>())
+					{
+						divClass = L"cpp_field";
+					}
+				}
+				break;
+			case symbol_component::SymbolKind::Function:
+				divClass = L"cpp_function";
+				break;
+			}
+		}
+	}
+
+	if (divClass)
+	{
+		Use(html).WriteString(L"<div class=\"");
+		if (divClass)
+		{
+			Use(html).WriteString(L"token ");
+			Use(html).WriteString(divClass);
+		}
+		Use(html).WriteString(L"\">");
+	}
+
+	auto reading = cursor->token.reading;
+	auto length = cursor->token.length;
+	bool canLineBreak = !symbolForToken && !divClass && (CppTokens)cursor->token.token == CppTokens::SPACE;
+	for (vint i = 0; i < length; i++)
+	{
+		switch (reading[i])
+		{
+		case L'\r':
+			if (canLineBreak)
+			{
+				rawEnd = &reading[i];
+			}
+			break;
+		case L'\n':
+			if (canLineBreak)
+			{
+				// the last token is always a space, so it is not necessary to submit a line after all cursor is read
+				if (rawEnd != &reading[i - 1])
+				{
+					rawEnd = &reading[i];
+				}
+				lineCounter++;
+				callback(lineCounter, rawBegin, rawEnd, Submit(html));
+
+				lineCounter = 0;
+				rawBegin = &reading[i + 1];
+				rawEnd = rawBegin;
+			}
+			else
+			{
+				Use(html).WriteLine(L"");
+			}
+			break;
+		case L'<':
+			Use(html).WriteString(L"&lt;");
+			break;
+		case L'>':
+			Use(html).WriteString(L"&gt;");
+			break;
+		case L'&':
+			Use(html).WriteString(L"&amp;");
+			break;
+		case L'\'':
+			Use(html).WriteString(L"&apos;");
+			break;
+		case L'\"':
+			Use(html).WriteString(L"&quot;");
+			break;
+		default:
+			Use(html).WriteChar(reading[i]);
+		}
+	}
+
+	if (divClass)
+	{
+		Use(html).WriteString(L"</div>");
+	}
+}
+
+template<typename T>
+void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skipping, IndexResult& result, const T& callback)
+{
+	if (!cursor) return;
+	const wchar_t* rawBegin = cursor->token.reading;
+	const wchar_t * rawEnd = rawBegin;
+	Ptr<StreamHolder> html;
+	vint lineCounter = 0;
+
+	AdjustSkippingResult asr;
+	IndexTracking indexSkipping, indexDecl, indexResolve[(vint)IndexReason::Max];
+	bool lastTokenIsDef = false;
+	bool lastTokenIsRef = false;
+	while (cursor)
+	{
+		// calculate the surrounding context of the current token
+		AdjustSkippingIndex(cursor, skipping, indexSkipping, asr);
+		if (!indexSkipping.inRange)
+		{
+			AdjustRefIndex(cursor, result.decls.Keys(), indexDecl, asr);
+			for (vint i = 0; i < (vint)IndexReason::Max; i++)
+			{
+				AdjustRefIndex(cursor, result.index[i].Keys(), indexResolve[i], asr);
+			}
+		}
+
+		// a link is not possible to be the last token of a valid C++ file, so this should just work
+		bool isDefToken = indexDecl.inRange;
+		bool isRefToken = indexResolve[(vint)IndexReason::Resolved].inRange || indexResolve[(vint)IndexReason::OverloadedResolution].inRange;
+		if (isDefToken && !lastTokenIsDef)
+		{
+			Use(html).WriteString(L"<div class=\"def\" id=\"symbol$");
+			Use(html).WriteString(result.decls.Values()[indexDecl.index]->uniqueId);
+			Use(html).WriteString(L"\">");
+		}
+		else if(!isDefToken && lastTokenIsDef)
+		{
+			Use(html).WriteString(L"</div>");
+		}
+		if (isRefToken && !lastTokenIsRef)
+		{
+			Use(html).WriteString(L"<div class=\"ref\" onclick=\"");
+			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
+			{
+				if (indexResolve[i].inRange)
+				{
+					auto& symbols = result.index[i].GetByIndex(indexResolve[i].index);
+					Use(html).WriteString(L"jumpToSymbol([");
+					for (vint j = 0; j < symbols.Count(); j++)
+					{
+						if (j != 0) Use(html).WriteString(L", ");
+						Use(html).WriteString(L"\'");
+						Use(html).WriteString(symbols[j]->uniqueId);
+						Use(html).WriteString(L"\'");
+					}
+					Use(html).WriteString(L"])");
+					break;
+				}
+			}
+			Use(html).WriteString(L"\">");
+		}
+		else if (!isRefToken && lastTokenIsRef)
+		{
+			Use(html).WriteString(L"</div>");
+		}
+		lastTokenIsDef = isDefToken;
+		lastTokenIsRef = isRefToken;
+
+		// write a token
+		Symbol* symbolForToken = nullptr;
+		if (isDefToken)
+		{
+			symbolForToken = result.decls.Values()[indexDecl.index];
+		}
+		else if (isRefToken)
+		{
+			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
+			{
+				if (indexResolve[i].inRange)
+				{
+					symbolForToken = result.index[i].GetByIndex(indexResolve[i].index)[0];
+					break;
+				}
+			}
+		}
+		GenerateHtmlToken(cursor, result, symbolForToken, indexResolve, rawBegin, rawEnd, html, lineCounter, callback);
+
+		cursor = cursor->Next();
+	}
+}
+
 void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result, FilePath pathHtml)
 {
 	Array<TokenSkipping> skipping;
@@ -409,6 +671,11 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 	}
 
 	WString preprocessed = File(pathPreprocessed).ReadAllTextByBom();
+	if (preprocessed.Right(1) != L"\n")
+	{
+		preprocessed += L"\r\n";
+	}
+
 	CppTokenReader reader(lexer, preprocessed, false);
 	auto cursor = reader.GetFirstToken();
 
@@ -429,178 +696,10 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 		writer.WriteLine(L"<body>");
 		writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
 
-		AdjustSkippingResult asr;
-		IndexTracking indexSkipping, indexDecl, indexResolve[(vint)IndexReason::Max];
-		while (cursor)
+		GenerateHtmlLine(cursor, skipping, result, [&](vint lineCount, const wchar_t* rawBegin, const wchar_t* rawEnd, const WString& htmlCode)
 		{
-			AdjustSkippingIndex(cursor, skipping, indexSkipping, asr);
-			if (!indexSkipping.inRange)
-			{
-				AdjustRefIndex(cursor, result.decls.Keys(), indexDecl, asr);
-				for (vint i = 0; i < (vint)IndexReason::Max; i++)
-				{
-					AdjustRefIndex(cursor, result.index[i].Keys(), indexResolve[i], asr);
-				}
-			}
-
-			bool isDefToken = indexDecl.inRange;
-			bool isRefToken = indexResolve[(vint)IndexReason::Resolved].inRange || indexResolve[(vint)IndexReason::OverloadedResolution].inRange;
-			const wchar_t* divClass = nullptr;
-
-			Symbol* symbolForToken = nullptr;
-			if (isDefToken)
-			{
-				symbolForToken = result.decls.Values()[indexDecl.index];
-			}
-			else if (isRefToken)
-			{
-				for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
-				{
-					if (indexResolve[i].inRange)
-					{
-						symbolForToken = result.index[i].GetByIndex(indexResolve[i].index)[0];
-						break;
-					}
-				}
-			}
-
-			switch ((CppTokens)cursor->token.token)
-			{
-			case CppTokens::DOCUMENT:
-			case CppTokens::COMMENT1:
-			case CppTokens::COMMENT2:
-				divClass = L"cpp_comment ";
-				break;
-			case CppTokens::STRING:
-			case CppTokens::CHAR:
-				divClass = L"cpp_string ";
-				break;
-			case CppTokens::INT:
-			case CppTokens::HEX:
-			case CppTokens::BIN:
-			case CppTokens::FLOAT:
-				divClass = L"cpp_number ";
-				break;
-#define CASE_KEYWORD(NAME, REGEX) case CppTokens::NAME:
-			CPP_KEYWORD_TOKENS(CASE_KEYWORD)
-#undef CASE_KEYWORD
-				divClass = L"cpp_keyword ";
-				break;
-			default:
-				if (symbolForToken)
-				{
-					switch (symbolForToken->kind)
-					{
-					case symbol_component::SymbolKind::Enum:
-					case symbol_component::SymbolKind::Class:
-					case symbol_component::SymbolKind::Struct:
-					case symbol_component::SymbolKind::Union:
-					case symbol_component::SymbolKind::TypeAlias:
-						divClass = L"cpp_type";
-						break;
-					case symbol_component::SymbolKind::EnumItem:
-						divClass = L"cpp_enum";
-						break;
-					case symbol_component::SymbolKind::Variable:
-						if (symbolForToken->parent)
-						{
-							if (symbolForToken->parent->definition.Cast<FunctionDeclaration>())
-							{
-								divClass = L"cpp_argument";
-							}
-							else if (symbolForToken->parent->definition.Cast<ClassDeclaration>())
-							{
-								divClass = L"cpp_field";
-							}
-						}
-						break;
-					case symbol_component::SymbolKind::Function:
-						divClass = L"cpp_function";
-						break;
-					}
-				}
-			}
-
-			if (isDefToken)
-			{
-				writer.WriteString(L"<div class=\"def\" id=\"symbol$");
-				writer.WriteString(result.decls.Values()[indexDecl.index]->uniqueId);
-				writer.WriteString(L"\">");
-			}
-			if (divClass || isRefToken)
-			{
-				writer.WriteString(L"<div class=\"");
-				if (isRefToken)
-				{
-					writer.WriteString(L"ref ");
-				}
-				if (divClass)
-				{
-					writer.WriteString(L"token ");
-					writer.WriteString(divClass);
-				}
-
-				for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
-				{
-					if (indexResolve[i].inRange)
-					{
-						auto& symbols = result.index[i].GetByIndex(indexResolve[i].index);
-						writer.WriteString(L"\" onclick=\"jumpToSymbol([");
-						for (vint j = 0; j < symbols.Count(); j++)
-						{
-							if (j != 0) writer.WriteString(L", ");
-							writer.WriteString(L"\'");
-							writer.WriteString(symbols[j]->uniqueId);
-							writer.WriteString(L"\'");
-						}
-						writer.WriteString(L"])");
-						break;
-					}
-				}
-				writer.WriteString(L"\">");
-			}
-			
-			auto reading = cursor->token.reading;
-			auto length = cursor->token.length;
-			for (vint i = 0; i < length; i++)
-			{
-				switch (reading[i])
-				{
-				case L'\r':
-					break;
-				case L'\n':
-					writer.WriteLine(L"");
-					break;
-				case L'<':
-					writer.WriteString(L"&lt;");
-					break;
-				case L'>':
-					writer.WriteString(L"&gt;");
-					break;
-				case L'&':
-					writer.WriteString(L"&amp;");
-					break;
-				case L'\'':
-					writer.WriteString(L"&apos;");
-					break;
-				case L'\"':
-					writer.WriteString(L"&quot;");
-					break;
-				default:
-					writer.WriteChar(reading[i]);
-				}
-			}
-
-			if (divClass|| isRefToken)
-			{
-				writer.WriteString(L"</div>");
-			}
-			if (isDefToken)
-			{
-				writer.WriteString(L"</div>");
-			}
-			cursor = cursor->Next();
-		}
+			writer.WriteLine(htmlCode);
+		});
 
 		writer.WriteLine(L"</div></div>");
 		writer.WriteLine(L"</body>");

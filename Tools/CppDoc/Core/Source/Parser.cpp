@@ -133,7 +133,7 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 			vint counter = 1;
 			while (true)
 			{
-				WString id = prefix + name + (counter == 1 ? WString(L"", false) : itow(counter));
+				WString id = prefix + name + (counter == 1 ? WString::Empty : itow(counter));
 				if (!ids.Keys().Contains(id))
 				{
 					uniqueId = id;
