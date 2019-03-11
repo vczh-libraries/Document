@@ -68,9 +68,13 @@ body {
 }
 
 .cpp_field {
-    color: #c8c8c8;
+    color: #9cdcfe;
 }
 
 .cpp_argument {
     color: #7f7f7f;
+}
+
+.cpp_function {
+    color: #dcdcaa;
 }

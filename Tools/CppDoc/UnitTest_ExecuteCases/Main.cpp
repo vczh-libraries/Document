@@ -1,4 +1,5 @@
 #include <Parser.h>
+#include <Ast_Decl.h>
 
 using namespace vl::stream;
 using namespace vl::filesystem;
@@ -446,6 +447,23 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 			bool isRefToken = indexResolve[(vint)IndexReason::Resolved].inRange || indexResolve[(vint)IndexReason::OverloadedResolution].inRange;
 			const wchar_t* divClass = nullptr;
 
+			Symbol* symbolForToken = nullptr;
+			if (isDefToken)
+			{
+				symbolForToken = result.decls.Values()[indexDecl.index];
+			}
+			else if (isRefToken)
+			{
+				for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
+				{
+					if (indexResolve[i].inRange)
+					{
+						symbolForToken = result.index[i].GetByIndex(indexResolve[i].index)[0];
+						break;
+					}
+				}
+			}
+
 			switch ((CppTokens)cursor->token.token)
 			{
 			case CppTokens::DOCUMENT:
@@ -468,6 +486,39 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 #undef CASE_KEYWORD
 				divClass = L"cpp_keyword ";
 				break;
+			default:
+				if (symbolForToken)
+				{
+					switch (symbolForToken->kind)
+					{
+					case symbol_component::SymbolKind::Enum:
+					case symbol_component::SymbolKind::Class:
+					case symbol_component::SymbolKind::Struct:
+					case symbol_component::SymbolKind::Union:
+					case symbol_component::SymbolKind::TypeAlias:
+						divClass = L"cpp_type";
+						break;
+					case symbol_component::SymbolKind::EnumItem:
+						divClass = L"cpp_enum";
+						break;
+					case symbol_component::SymbolKind::Variable:
+						if (symbolForToken->parent)
+						{
+							if (symbolForToken->parent->definition.Cast<FunctionDeclaration>())
+							{
+								divClass = L"cpp_argument";
+							}
+							else if (symbolForToken->parent->definition.Cast<ClassDeclaration>())
+							{
+								divClass = L"cpp_field";
+							}
+						}
+						break;
+					case symbol_component::SymbolKind::Function:
+						divClass = L"cpp_function";
+						break;
+					}
+				}
 			}
 
 			if (isDefToken)
