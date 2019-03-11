@@ -217,7 +217,7 @@ struct IndexResult
 	Dictionary<WString, Symbol*>	ids;
 	IndexMap						index[(vint)IndexReason::Max];
 	ReverseIndexMap					reverseIndex[(vint)IndexReason::Max];
-	IndexMap						decls;
+	Dictionary<IndexToken, Symbol*>	decls;
 };
 
 class IndexRecorder : public Object, public virtual IIndexRecorder
@@ -423,6 +423,7 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 		writer.WriteLine(L"    <title>" + title + L"</title>");
 		writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
 		writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
+		writer.WriteLine(L"    <script src=\"../Cpp.js\" ></script>");
 		writer.WriteLine(L"</head>");
 		writer.WriteLine(L"<body>");
 		writer.WriteLine(L"<div class=\"codebox\"><div class=\"cpp_default\">");
@@ -483,6 +484,30 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 				if (divClass)
 				{
 					writer.WriteString(divClass);
+				}
+
+				if (isDefToken)
+				{
+					writer.WriteString(L"\" id=\"symbol$");
+					writer.WriteString(result.decls.Values()[indexDecl.index]->uniqueId);
+				}
+
+				for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
+				{
+					if (indexResolve[i].inRange)
+					{
+						auto& symbols = result.index[i].GetByIndex(indexResolve[i].index);
+						writer.WriteString(L"\" onclick=\"jumpToSymbol([");
+						for (vint j = 0; j < symbols.Count(); j++)
+						{
+							if (j != 0) writer.WriteString(L", ");
+							writer.WriteString(L"\\\"");
+							writer.WriteString(symbols[j]->uniqueId);
+							writer.WriteString(L"\\\"");
+						}
+						writer.WriteString(L"])");
+						break;
+					}
 				}
 				writer.WriteString(L"\">");
 			}
