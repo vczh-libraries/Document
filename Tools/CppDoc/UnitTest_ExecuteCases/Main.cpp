@@ -311,15 +311,8 @@ int main()
 				folderOutput.GetFilePath() / L"Input.cpp",
 				folderOutput.GetFilePath() / L"Mapping.bin"
 			);
-		}
-	}
 
-	FOREACH(File, file, files)
-	{
-		if (wupper(file.GetFilePath().GetFullPath().Right(2)) == L".I")
-		{
 			Console::WriteLine(L"Compiling " + file.GetFilePath().GetName() + L" ...");
-			Folder folderOutput(file.GetFilePath().GetFullPath() + L".Output");
 			Compile(
 				lexer,
 				file.GetFilePath(),
@@ -327,5 +320,6 @@ int main()
 			);
 		}
 	}
+
 	return 0;
 }
