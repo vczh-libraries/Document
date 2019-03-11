@@ -1,41 +1,50 @@
 body {
     font-family: 'Segoe UI';
     font-size: 14px;
-    color: #000000 Background #1e1e1e
+    color: #000000;
+    background-color: #1e1e1e;
+}
+
+.codebox {
+    white-space: nowrap;
 }
 
 /* token color */
 
 .cpp_default {
-    color: #dcdcdc
+    color: #dcdcdc;
 }
 
 .cpp_number {
-    color: #b8d7a3
+    color: #b8d7a3;
 }
 
 .cpp_string {
-    color: #d69d85
+    color: #d69d85;
 }
 
 .cpp_keyword {
-    color: #569cd6
+    color: #569cd6;
+}
+
+.cpp_comment {
+    color: #57a64a;
 }
 
 /* context sensitive color */
 
 .cpp_type {
-    color: #4ec9b0
+    color: #4ec9b0;
 }
 
 .cpp_enum {
-    color: #b8d7a3
+    color: #b8d7a3;
 }
 
 .cpp_field {
-    color: #c8c8c8
+    color: #c8c8c8;
 }
 
 .cpp_argument {
-    color: #7f7f7f
+    color: #7f7f7f;
 }

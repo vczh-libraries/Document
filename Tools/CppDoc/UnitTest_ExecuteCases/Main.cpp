@@ -294,7 +294,7 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result, FilePath pathHtml)
 {
 	WString preprocessed = File(pathPreprocessed).ReadAllTextByBom();
-	CppTokenReader reader(lexer, preprocessed);
+	CppTokenReader reader(lexer, preprocessed, false);
 	auto cursor = reader.GetFirstToken();
 
 	{
@@ -311,6 +311,86 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 		writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
 		writer.WriteLine(L"</head>");
 		writer.WriteLine(L"<body>");
+
+		writer.WriteLine(L"<div class=\"codebox cpp_default\">");
+		while (cursor)
+		{
+			const wchar_t* divClass = nullptr;
+			switch ((CppTokens)cursor->token.token)
+			{
+			case CppTokens::DOCUMENT:
+			case CppTokens::COMMENT1:
+			case CppTokens::COMMENT2:
+				divClass = L"cpp_comment";
+				break;
+			case CppTokens::STRING:
+			case CppTokens::CHAR:
+				divClass = L"cpp_string";
+				break;
+			case CppTokens::INT:
+			case CppTokens::HEX:
+			case CppTokens::BIN:
+			case CppTokens::FLOAT:
+				divClass = L"cpp_number";
+				break;
+#define CASE_KEYWORD(NAME, REGEX) case CppTokens::NAME:
+			CPP_KEYWORD_TOKENS(CASE_KEYWORD)
+#undef CASE_KEYWORD
+				divClass = L"cpp_keyword";
+				break;
+			}
+
+			if (divClass)
+			{
+				writer.WriteString(L"<div class=\"");
+				writer.WriteString(divClass);
+				writer.WriteString(L"\">");
+			}
+			
+			auto reading = cursor->token.reading;
+			auto length = cursor->token.length;
+			for (vint i = 0; i < length; i++)
+			{
+				switch (reading[i])
+				{
+				case L' ':
+					writer.WriteString(L"&nbsp;");
+					break;
+				case L'\t':
+					writer.WriteString(L"&#9;");
+					break;
+				case L'\r':
+					break;
+				case L'\n':
+					writer.WriteLine(L"<br/>");
+					break;
+				case L'<':
+					writer.WriteString(L"&lt;");
+					break;
+				case L'>':
+					writer.WriteString(L"&gt;");
+					break;
+				case L'&':
+					writer.WriteString(L"&amp;");
+					break;
+				case L'\'':
+					writer.WriteString(L"&apos;");
+					break;
+				case L'\"':
+					writer.WriteString(L"&quot;");
+					break;
+				default:
+					writer.WriteChar(reading[i]);
+				}
+			}
+
+			if (divClass)
+			{
+				writer.WriteString(L"</div>");
+			}
+			cursor = cursor->Next();
+		}
+		writer.WriteLine(L"</div>");
 
 		writer.WriteLine(L"</body>");
 		writer.WriteLine(L"</html>");
