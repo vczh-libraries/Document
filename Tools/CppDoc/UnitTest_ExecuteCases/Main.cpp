@@ -11,10 +11,10 @@ Preprocessing
 // skip these tokens to in space
 struct TokenSkipping
 {
-	vint		rowSkip = -1;
-	vint		columnSkip = -1;
-	vint		rowUntil = -1;
-	vint		columnUntil = -1;
+	vint							rowSkip = -1;
+	vint							columnSkip = -1;
+	vint							rowUntil = -1;
+	vint							columnUntil = -1;
 };
 
 bool NeedToSkip(RegexToken& token)
@@ -167,10 +167,10 @@ Indexing
 
 struct IndexToken
 {
-	vint			rowStart;
-	vint			columnStart;
-	vint			rowEnd;
-	vint			columnEnd;
+	vint							rowStart;
+	vint							columnStart;
+	vint							rowEnd;
+	vint							columnEnd;
 
 	static vint Compare(const IndexToken& a, const IndexToken& b)
 	{
@@ -303,6 +303,37 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 Generating
 ***********************************************************************/
 
+struct AdjustSkippingResult
+{
+	vint							rowUntil = 0;
+	vint							columnUntil = 0;
+	vint							rowInPreprocessed = 0;
+};
+
+struct IndexTracking
+{
+	vint							index = 0;
+	bool							inRange = false;
+};
+
+void AdjustSkippingIndex(Ptr<CppTokenCursor> cursor, Array<TokenSkipping>& skipping, IndexTracking& index, AdjustSkippingResult& asr)
+{
+	if (index.index >= skipping.Count())
+	{
+		index.inRange = false;
+		return;
+	}
+}
+
+void AdjustRefIndex(Ptr<CppTokenCursor> cursor, const SortedList<IndexToken>& keys, IndexTracking& index, const AdjustSkippingResult& asr)
+{
+	if (index.index >= keys.Count())
+	{
+		index.inRange = false;
+		return;
+	}
+}
+
 void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result, FilePath pathHtml)
 {
 	Array<TokenSkipping> skipping;
@@ -310,13 +341,12 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 		FileStream fileStream(pathMapping.GetFullPath(), FileStream::ReadOnly);
 		vint count;
 		fileStream.Read(&count, sizeof(count));
-		skipping.Resize(count + 1);
+		skipping.Resize(count);
 
 		if (count > 0)
 		{
 			fileStream.Read(&skipping[0], sizeof(TokenSkipping)*count);
 		}
-		skipping[skipping.Count() - 1] = { 0x7FFFFFFF,0,0x7FFFFFFF,0 };
 	}
 
 	WString preprocessed = File(pathPreprocessed).ReadAllTextByBom();
@@ -339,11 +369,20 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 		writer.WriteLine(L"<body>");
 		writer.WriteLine(L"<div class=\"codebox\"><div class=\"cpp_default\">");
 
-		vint indexSkipping = 0;
-		vint indexDecl = 0;
-		vint indexResolve[3] = { 0,0,0 };
+		AdjustSkippingResult asr;
+		IndexTracking indexSkipping, indexDecl, indexResolve[3];
 		while (cursor)
 		{
+			AdjustSkippingIndex(cursor, skipping, indexSkipping, asr);
+			if (!indexSkipping.inRange)
+			{
+				AdjustRefIndex(cursor, result.decls.Keys(), indexDecl, asr);
+				for (vint i = 0; i < 3; i++)
+				{
+					AdjustRefIndex(cursor, result.index[i].Keys(), indexResolve[i], asr);
+				}
+			}
+
 			const wchar_t* divClass = nullptr;
 			switch ((CppTokens)cursor->token.token)
 			{
