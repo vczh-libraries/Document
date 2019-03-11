@@ -302,7 +302,7 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 }
 
 /***********************************************************************
-Generating
+Token Indexing
 ***********************************************************************/
 
 struct AdjustSkippingResult
@@ -392,6 +392,10 @@ void AdjustRefIndex(Ptr<CppTokenCursor>& cursor, const SortedList<IndexToken>& k
 
 	index.inRange = true;
 }
+
+/***********************************************************************
+HTML Generating
+***********************************************************************/
 
 struct StreamHolder
 {
@@ -660,8 +664,35 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skippin
 	}
 }
 
-void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result, FilePath pathHtml)
+/***********************************************************************
+Line Indexing
+***********************************************************************/
+
+struct HtmlLineRecord
 {
+	vint											lineCount;
+	const wchar_t*									rawBegin;
+	const wchar_t*									rawEnd;
+	WString											htmlCode;
+};
+
+struct FileLinesRecord
+{
+	Dictionary<vint, HtmlLineRecord>				lines;
+};
+
+struct GlobalLinesRecord
+{
+	Dictionary<WString, Ptr<FileLinesRecord>>		fileLines;
+};
+
+/***********************************************************************
+File Generating
+***********************************************************************/
+
+Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result)
+{
+	auto global = MakePtr<GlobalLinesRecord>();
 	Array<TokenSkipping> skipping;
 	{
 		FileStream fileStream(pathMapping.GetFullPath(), FileStream::ReadOnly);
@@ -685,21 +716,21 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 	auto cursor = reader.GetFirstToken();
 
 	{
-		FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
-		Utf8Encoder encoder;
-		EncoderStream encoderStream(fileStream, encoder);
-		StreamWriter writer(encoderStream);
+		//FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
+		//Utf8Encoder encoder;
+		//EncoderStream encoderStream(fileStream, encoder);
+		//StreamWriter writer(encoderStream);
 
-		writer.WriteLine(L"<!DOCTYPE html>");
-		writer.WriteLine(L"<html>");
-		writer.WriteLine(L"<head>");
-		writer.WriteLine(L"    <title>" + title + L"</title>");
-		writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
-		writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
-		writer.WriteLine(L"    <script src=\"../Cpp.js\" ></script>");
-		writer.WriteLine(L"</head>");
-		writer.WriteLine(L"<body>");
-		writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
+		//writer.WriteLine(L"<!DOCTYPE html>");
+		//writer.WriteLine(L"<html>");
+		//writer.WriteLine(L"<head>");
+		//writer.WriteLine(L"    <title>" + title + L"</title>");
+		//writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
+		//writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
+		//writer.WriteLine(L"    <script src=\"../Cpp.js\" ></script>");
+		//writer.WriteLine(L"</head>");
+		//writer.WriteLine(L"<body>");
+		//writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
 
 		vint currentLineNumber = 0;
 		WString currentFilePath;
@@ -729,7 +760,7 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 						*writing++ = *reading++;
 					}
 
-					currentLineNumber = lineNumber;
+					currentLineNumber = lineNumber - 1;
 					currentFilePath = WString(&buffer[0], (vint)(writing - &buffer[0]));
 					rightAfterSharpLine = true;
 					SkipToken(cursor);
@@ -750,15 +781,29 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 				}
 				else
 				{
-					writer.WriteLine(htmlCode);
+					Ptr<FileLinesRecord> flr;
+					vint fileIndex = global->fileLines.Keys().IndexOf(currentFilePath);
+					if (fileIndex == -1)
+					{
+						flr = MakePtr<FileLinesRecord>();
+						global->fileLines.Add(currentFilePath, flr);
+					}
+					else
+					{
+						flr = global->fileLines.Values()[fileIndex];
+					}
+
+					flr->lines.Add(currentLineNumber, { lineCount,rawBegin,rawEnd,htmlCode });
+					currentLineNumber += lineCount;
 				}
 			});
 		}
 
-		writer.WriteLine(L"</div></div>");
-		writer.WriteLine(L"</body>");
-		writer.WriteLine(L"</html>");
+		//writer.WriteLine(L"</div></div>");
+		//writer.WriteLine(L"</body>");
+		//writer.WriteLine(L"</html>");
 	}
+	return global;
 }
 
 /***********************************************************************
@@ -818,14 +863,13 @@ int main()
 			);
 
 			Console::WriteLine(L"Generating HTML for " + file.GetFilePath().GetName() + L" ...");
-			GenerateHtml(
+			auto global = Collect(
 				lexer,
 				file.GetFilePath().GetName(),
 				pathPreprocessed,
 				pathInput,
 				pathMapping,
-				indexResult,
-				folderOutput.GetFilePath() / L"Preprocessed.html"
+				indexResult
 			);
 		}
 	}
