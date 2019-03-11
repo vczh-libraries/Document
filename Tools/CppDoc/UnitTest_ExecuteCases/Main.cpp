@@ -29,7 +29,7 @@ bool NeedToSkip(RegexToken& token)
 void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath pathPreprocessed, FilePath pathOutput, FilePath pathMapping)
 {
 	WString input = File(pathInput).ReadAllTextByBom();
-	File(pathPreprocessed).WriteAllText(input, false, BomEncoder::Utf8);
+	File(pathPreprocessed).WriteAllText(input, true, BomEncoder::Utf16);
 
 	List<TokenSkipping> mapping;
 	{
@@ -37,7 +37,7 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 		auto cursor = reader.GetFirstToken();
 
 		FileStream fileStream(pathOutput.GetFullPath(), FileStream::WriteOnly);
-		Utf8Encoder encoder;
+		BomEncoder encoder(BomEncoder::Utf16);
 		EncoderStream encoderStream(fileStream, encoder);
 		StreamWriter writer(encoderStream);
 
@@ -291,6 +291,32 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 	}
 }
 
+void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result, FilePath pathHtml)
+{
+	WString preprocessed = File(pathPreprocessed).ReadAllTextByBom();
+	CppTokenReader reader(lexer, preprocessed);
+	auto cursor = reader.GetFirstToken();
+
+	{
+		FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
+		Utf8Encoder encoder;
+		EncoderStream encoderStream(fileStream, encoder);
+		StreamWriter writer(encoderStream);
+
+		writer.WriteLine(L"<!DOCTYPE html>");
+		writer.WriteLine(L"<html>");
+		writer.WriteLine(L"<head>");
+		writer.WriteLine(L"    <title>" + title + L"</title>");
+		writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
+		writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
+		writer.WriteLine(L"</head>");
+		writer.WriteLine(L"<body>");
+
+		writer.WriteLine(L"</body>");
+		writer.WriteLine(L"</html>");
+	}
+}
+
 int main()
 {
 	Folder folderCase(L"../UnitTest_Cases");
@@ -328,6 +354,17 @@ int main()
 				file.GetFilePath(),
 				pathInput,
 				indexResult
+			);
+
+			Console::WriteLine(L"Generating HTML for " + file.GetFilePath().GetName() + L" ...");
+			GenerateHtml(
+				lexer,
+				file.GetFilePath().GetName(),
+				pathPreprocessed,
+				pathInput,
+				pathMapping,
+				indexResult,
+				folderOutput.GetFilePath() / L"Preprocessed.html"
 			);
 		}
 	}
