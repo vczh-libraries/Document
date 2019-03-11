@@ -312,7 +312,7 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 		writer.WriteLine(L"</head>");
 		writer.WriteLine(L"<body>");
 
-		writer.WriteLine(L"<div class=\"codebox cpp_default\">");
+		writer.WriteLine(L"<div class=\"codebox\"><div class=\"cpp_default\">");
 		while (cursor)
 		{
 			const wchar_t* divClass = nullptr;
@@ -362,7 +362,7 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 				case L'\r':
 					break;
 				case L'\n':
-					writer.WriteLine(L"<br/>");
+					writer.WriteLine(L"");
 					break;
 				case L'<':
 					writer.WriteString(L"&lt;");
@@ -390,7 +390,7 @@ void GenerateHtml(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPrep
 			}
 			cursor = cursor->Next();
 		}
-		writer.WriteLine(L"</div>");
+		writer.WriteLine(L"</div></div>");
 
 		writer.WriteLine(L"</body>");
 		writer.WriteLine(L"</html>");

@@ -1,12 +1,17 @@
 body {
-    font-family: 'Segoe UI';
+    font-family: monospace;
     font-size: 14px;
     color: #000000;
     background-color: #1e1e1e;
 }
 
 .codebox {
-    white-space: nowrap;
+    white-space: pre;
+    tab-size: 4;
+}
+
+.codebox div {
+    display: inline;
 }
 
 /* token color */
