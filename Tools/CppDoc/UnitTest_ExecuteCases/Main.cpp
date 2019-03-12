@@ -961,11 +961,36 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 			if (disableEnd != -1)
 			{
 				writer.WriteString(L"<div class=\"disabled\"/>");
-				while (originalIndex < disableEnd)
+				for (vint i = originalIndex; i < disableEnd; i++)
 				{
-					writer.WriteLine(L"");
-					writer.WriteString(originalLines[originalIndex]);
-					originalIndex++;
+					if (i > originalIndex)
+					{
+						writer.WriteLine(L"");
+					}
+					auto reading = originalLines[i].Buffer();
+					while (auto c = *reading++)
+					{
+						switch (c)
+						{
+						case L'<':
+							writer.WriteString(L"&lt;");
+							break;
+						case L'>':
+							writer.WriteString(L"&gt;");
+							break;
+						case L'&':
+							writer.WriteString(L"&amp;");
+							break;
+						case L'\'':
+							writer.WriteString(L"&apos;");
+							break;
+						case L'\"':
+							writer.WriteString(L"&quot;");
+							break;
+						default:
+							writer.WriteChar(c);
+						}
+					}
 				}
 				writer.WriteLine(L"</div>");
 				if (embedHtmlInDisabled.Length() != 0)
