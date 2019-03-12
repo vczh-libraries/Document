@@ -552,6 +552,7 @@ void GenerateHtmlToken(
 			}
 			break;
 		case L'\n':
+			lineCounter++;
 			if (canLineBreak)
 			{
 				// the last token is always a space, so it is not necessary to submit a line after all cursor is read
@@ -559,7 +560,6 @@ void GenerateHtmlToken(
 				{
 					rawEnd = &reading[i];
 				}
-				lineCounter++;
 				callback({ lineCounter, rawBegin, rawEnd, Submit(html) });
 
 				lineCounter = 0;
