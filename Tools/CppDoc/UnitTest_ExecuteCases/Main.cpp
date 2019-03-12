@@ -408,6 +408,8 @@ struct HtmlLineRecord
 
 struct FileLinesRecord
 {
+	FilePath										filePath;
+	WString											displayName;
 	Dictionary<vint, HtmlLineRecord>				lines;
 	SortedList<Symbol*>								refSymbols;
 };
@@ -416,6 +418,7 @@ struct GlobalLinesRecord
 {
 	Dictionary<WString, Ptr<FileLinesRecord>>		fileLines;
 	Dictionary<Ptr<Declaration>, WString>			declToFiles;
+	SortedList<WString>								displayNames;
 };
 
 /***********************************************************************
@@ -734,7 +737,7 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 }
 
 /***********************************************************************
-File Generating
+Index Collecting
 ***********************************************************************/
 
 Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result)
@@ -762,92 +765,114 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, File
 	CppTokenReader reader(lexer, preprocessed, false);
 	auto cursor = reader.GetFirstToken();
 
+	vint currentLineNumber = 0;
+	WString currentFilePath;
+	bool rightAfterSharpLine = false;
+	while (cursor)
 	{
-		//FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
-		//Utf8Encoder encoder;
-		//EncoderStream encoderStream(fileStream, encoder);
-		//StreamWriter writer(encoderStream);
-
-		//writer.WriteLine(L"<!DOCTYPE html>");
-		//writer.WriteLine(L"<html>");
-		//writer.WriteLine(L"<head>");
-		//writer.WriteLine(L"    <title>" + title + L"</title>");
-		//writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
-		//writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
-		//writer.WriteLine(L"    <script src=\"../Cpp.js\" ></script>");
-		//writer.WriteLine(L"</head>");
-		//writer.WriteLine(L"<body>");
-		//writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
-
-		vint currentLineNumber = 0;
-		WString currentFilePath;
-		bool rightAfterSharpLine = false;
-		while (cursor)
 		{
+			auto oldCursor = cursor;
 			{
-				auto oldCursor = cursor;
+				if (!TestToken(cursor, CppTokens::SHARP)) goto GIVE_UP;
+				if (!TestToken(cursor, L"line")) goto GIVE_UP;
+				if (!TestToken(cursor, CppTokens::SPACE)) goto GIVE_UP;
+				if (!TestToken(cursor, CppTokens::INT, false)) goto GIVE_UP;
+				vint lineNumber = wtoi(WString(cursor->token.reading, cursor->token.length));
+				SkipToken(cursor);
+				if (!TestToken(cursor, CppTokens::SPACE)) goto GIVE_UP;
+				if (!TestToken(cursor, CppTokens::STRING, false)) goto GIVE_UP;
+				Array<wchar_t> buffer(cursor->token.length - 2);
+				auto reading = cursor->token.reading + 1;
+				auto writing = &buffer[0];
+				while (*reading != L'\"')
 				{
-					if (!TestToken(cursor, CppTokens::SHARP)) goto GIVE_UP;
-					if (!TestToken(cursor, L"line")) goto GIVE_UP;
-					if (!TestToken(cursor, CppTokens::SPACE)) goto GIVE_UP;
-					if (!TestToken(cursor, CppTokens::INT, false)) goto GIVE_UP;
-					vint lineNumber = wtoi(WString(cursor->token.reading, cursor->token.length));
-					SkipToken(cursor);
-					if (!TestToken(cursor, CppTokens::SPACE)) goto GIVE_UP;
-					if (!TestToken(cursor, CppTokens::STRING, false)) goto GIVE_UP;
-					Array<wchar_t> buffer(cursor->token.length - 2);
-					auto reading = cursor->token.reading + 1;
-					auto writing = &buffer[0];
-					while (*reading != L'\"')
+					if (*reading == L'\\')
 					{
-						if (*reading == L'\\')
-						{
-							reading++;
-						}
-						*writing++ = *reading++;
+						reading++;
 					}
-
-					currentLineNumber = lineNumber - 1;
-					currentFilePath = WString(&buffer[0], (vint)(writing - &buffer[0]));
-					rightAfterSharpLine = true;
-
-					{
-						vint fileIndex = global->fileLines.Keys().IndexOf(currentFilePath);
-						if (fileIndex == -1)
-						{
-							global->fileLines.Add(currentFilePath, MakePtr<FileLinesRecord>());
-						}
-					}
-					SkipToken(cursor);
-					continue;
+					*writing++ = *reading++;
 				}
-			GIVE_UP:
-				cursor = oldCursor;
+
+				currentLineNumber = lineNumber - 1;
+				currentFilePath = wupper(WString(&buffer[0], (vint)(writing - &buffer[0])));
+				rightAfterSharpLine = true;
+
+				{
+					vint fileIndex = global->fileLines.Keys().IndexOf(currentFilePath);
+					if (fileIndex == -1)
+					{
+						auto flr = MakePtr<FileLinesRecord>();
+						flr->filePath = currentFilePath;
+
+						WString displayName = flr->filePath.GetName();
+						vint counter = 1;
+						while (true)
+						{
+							flr->displayName = displayName + (counter == 1 ? WString::Empty : itow(counter));
+							if (!global->displayNames.Contains(flr->displayName))
+							{
+								global->displayNames.Add(flr->displayName);
+								break;
+							}
+							counter++;
+
+						}
+						global->fileLines.Add(currentFilePath, flr);
+					}
+				}
+				SkipToken(cursor);
+				continue;
 			}
-			GenerateHtmlLine(cursor, global, currentFilePath, skipping, result, [&](HtmlLineRecord hlr)
-			{
-				if (rightAfterSharpLine)
-				{
-					if (hlr.htmlCode.Length() != 0)
-					{
-						throw Exception(L"An empty line should have been submitted right after #line.");
-					}
-					rightAfterSharpLine = false;
-				}
-				else
-				{
-					auto flr = global->fileLines[currentFilePath];
-					flr->lines.Add(currentLineNumber, hlr);
-					currentLineNumber += hlr.lineCount;
-				}
-			});
+		GIVE_UP:
+			cursor = oldCursor;
 		}
-
-		//writer.WriteLine(L"</div></div>");
-		//writer.WriteLine(L"</body>");
-		//writer.WriteLine(L"</html>");
+		GenerateHtmlLine(cursor, global, currentFilePath, skipping, result, [&](HtmlLineRecord hlr)
+		{
+			if (rightAfterSharpLine)
+			{
+				if (hlr.htmlCode.Length() != 0)
+				{
+					throw Exception(L"An empty line should have been submitted right after #line.");
+				}
+				rightAfterSharpLine = false;
+			}
+			else
+			{
+				auto flr = global->fileLines[currentFilePath];
+				flr->lines.Add(currentLineNumber, hlr);
+				currentLineNumber += hlr.lineCount;
+			}
+		});
 	}
+
 	return global;
+}
+
+/***********************************************************************
+File Generating
+***********************************************************************/
+
+void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, IndexResult& result, FilePath pathHtml)
+{
+	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
+	Utf8Encoder encoder;
+	EncoderStream encoderStream(fileStream, encoder);
+	StreamWriter writer(encoderStream);
+
+	writer.WriteLine(L"<!DOCTYPE html>");
+	writer.WriteLine(L"<html>");
+	writer.WriteLine(L"<head>");
+	writer.WriteLine(L"    <title>" + flr->filePath.GetName() + L"</title>");
+	writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
+	writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
+	writer.WriteLine(L"    <script src=\"../Cpp.js\" ></script>");
+	writer.WriteLine(L"</head>");
+	writer.WriteLine(L"<body>");
+	writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
+
+	writer.WriteLine(L"</div></div>");
+	writer.WriteLine(L"</body>");
+	writer.WriteLine(L"</html>");
 }
 
 /***********************************************************************
@@ -915,6 +940,12 @@ int main()
 				pathMapping,
 				indexResult
 			);
+
+			for (vint i = 0; i < global->fileLines.Keys().Count(); i++)
+			{
+				auto flr = global->fileLines.Values()[i];
+				GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / (flr->displayName + L".html"));
+			}
 		}
 	}
 
