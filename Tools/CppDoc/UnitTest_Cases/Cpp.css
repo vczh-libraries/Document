@@ -103,3 +103,26 @@ div.expandable {
 
     div.expandable .expanded {
     }
+
+/* links */
+
+a.button {
+    display: inline-block;
+    margin: 2px 2px 2px 2px;
+    padding: 5px 0 5px 0;
+    width: 150px;
+    text-align: center;
+    vertical-align: middle;
+    color: #569cd6;
+    background-color: #2f2f2f;
+    text-decoration: none;
+}
+
+a.fileIndex {
+    color: #569cd6;
+    text-decoration: none;
+}
+
+    a.fileIndex:hover {
+        text-decoration: underline;
+    }

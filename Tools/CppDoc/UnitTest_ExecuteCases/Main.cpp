@@ -869,6 +869,9 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	writer.WriteLine(L"    <script type=\"text/javascript\" src=\"../Cpp.js\" ></script>");
 	writer.WriteLine(L"</head>");
 	writer.WriteLine(L"<body>");
+	writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
+	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
+	writer.WriteLine(L"<br>");
 	writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
 
 	{
@@ -1091,10 +1094,55 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 
 void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml)
 {
+	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
+	Utf8Encoder encoder;
+	EncoderStream encoderStream(fileStream, encoder);
+	StreamWriter writer(encoderStream);
+
+	writer.WriteLine(L"<!DOCTYPE html>");
+	writer.WriteLine(L"<html>");
+	writer.WriteLine(L"<head>");
+	writer.WriteLine(L"    <title>File Index</title>");
+	writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
+	writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
+	writer.WriteLine(L"</head>");
+	writer.WriteLine(L"<body>");
+	writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
+	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
+	writer.WriteLine(L"<br>");
+	writer.WriteLine(L"<br>");
+	for (vint i = 0; i < global->fileLines.Count(); i++)
+	{
+		writer.WriteString(L"<a class=\"fileIndex\" href=\"./");
+		writer.WriteString(global->fileLines.Values()[i]->displayName);
+		writer.WriteString(L".html\">");
+		writer.WriteString(global->fileLines.Values()[i]->filePath.GetName());
+		writer.WriteLine(L"</a><br>");
+	}
+	writer.WriteLine(L"</body>");
+	writer.WriteLine(L"</html>");
 }
 
 void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml)
 {
+	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
+	Utf8Encoder encoder;
+	EncoderStream encoderStream(fileStream, encoder);
+	StreamWriter writer(encoderStream);
+
+	writer.WriteLine(L"<!DOCTYPE html>");
+	writer.WriteLine(L"<html>");
+	writer.WriteLine(L"<head>");
+	writer.WriteLine(L"    <title>Symbol Index</title>");
+	writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
+	writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
+	writer.WriteLine(L"</head>");
+	writer.WriteLine(L"<body>");
+	writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
+	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
+	writer.WriteLine(L"<br>");
+	writer.WriteLine(L"</body>");
+	writer.WriteLine(L"</html>");
 }
 
 /***********************************************************************
