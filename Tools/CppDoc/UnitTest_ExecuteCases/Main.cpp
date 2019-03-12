@@ -614,13 +614,10 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 	{
 		// calculate the surrounding context of the current token
 		AdjustSkippingIndex(cursor, skipping, indexSkipping, asr);
-		if (!indexSkipping.inRange)
+		AdjustRefIndex(cursor, result.decls.Keys(), indexDecl, asr);
+		for (vint i = 0; i < (vint)IndexReason::Max; i++)
 		{
-			AdjustRefIndex(cursor, result.decls.Keys(), indexDecl, asr);
-			for (vint i = 0; i < (vint)IndexReason::Max; i++)
-			{
-				AdjustRefIndex(cursor, result.index[i].Keys(), indexResolve[i], asr);
-			}
+			AdjustRefIndex(cursor, result.index[i].Keys(), indexResolve[i], asr);
 		}
 
 		// a link is not possible to be the last token of a valid C++ file, so this should just work
@@ -630,7 +627,10 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 		if (isDefToken && !lastTokenIsDef)
 		{
 			auto decl = result.decls.Values()[indexDecl.index];
-			global->declToFiles.Add(decl, currentFilePath);
+			if (!global->declToFiles.Keys().Contains(decl.Obj()))
+			{
+				global->declToFiles.Add(decl, currentFilePath);
+			}
 
 			Use(html).WriteString(L"<div class=\"def\" id=\"");
 			if (decl == decl->symbol->definition)
