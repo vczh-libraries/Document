@@ -19,7 +19,7 @@
   - [x] Support C's `struct <TYPE>` type reference as IdType, along with `class`, `union` and `enum`, also allow that the type is not even declared.
   - [x] After a template header is parsed, search for the matching `}`, maybe a `;` is right after that, ignore all of them.
   - [x] Parse current cases in `UnitTest_Cases`.
-  - [ ] Add more cases, ensure that preprocessed files of them doesn't really touch template things.
+  - [x] Add more cases, ensure that preprocessed files of them doesn't really touch template things.
   - [x] Generate HTML index. (single page)
   - [x] Wrong HTML for multi-token name, need to generate only one def div containing all tokens.
   - [ ] One symbol may have multiple declarations, need to show them all in drop down.
