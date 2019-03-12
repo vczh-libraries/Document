@@ -660,54 +660,52 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 			Use(html).WriteString(L"</div></div>");
 		}
 
-		if (!isDefToken)
+		// sometimes the compiler will try to parse an expression and see if it fails.
+		// in this case an indexed token may finally become the name of a definition.
+		// so we should ignore these tokens.
+		if (!isDefToken && isRefToken && !lastTokenIsRef)
 		{
-			// sometimes the compiler will try to parse an expression and see if it fails.
-			// in this case an indexed token may finally become the name of a definition.
-			// so we should ignore these tokens.
-			if (isRefToken && !lastTokenIsRef)
+			auto flr = global->fileLines[currentFilePath];
+			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
-				auto flr = global->fileLines[currentFilePath];
-				for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
+				if (indexResolve[i].inRange)
 				{
-					if (indexResolve[i].inRange)
+					auto& symbols = result.index[i].GetByIndex(indexResolve[i].index);
+					for (vint j = 0; j < symbols.Count(); j++)
 					{
-						auto& symbols = result.index[i].GetByIndex(indexResolve[i].index);
-						for (vint j = 0; j < symbols.Count(); j++)
+						auto symbol = symbols[j];
+						if (!flr->refSymbols.Contains(symbol))
 						{
-							auto symbol = symbols[j];
-							if (!flr->refSymbols.Contains(symbol))
-							{
-								flr->refSymbols.Add(symbol);
-							}
+							flr->refSymbols.Add(symbol);
 						}
 					}
 				}
+			}
 
-				Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([");
-				for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
-				{
-					if (i != 0) Use(html).WriteString(L"], [");
-					if (indexResolve[i].inRange)
-					{
-						auto& symbols = result.index[i].GetByIndex(indexResolve[i].index);
-						for (vint j = 0; j < symbols.Count(); j++)
-						{
-							if (j != 0) Use(html).WriteString(L", ");
-							Use(html).WriteString(L"\'");
-							Use(html).WriteString(symbols[j]->uniqueId);
-							Use(html).WriteString(L"\'");
-						}
-						break;
-					}
-				}
-				Use(html).WriteString(L"])\">");
-			}
-			else if (!isRefToken && lastTokenIsRef)
+			Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([");
+			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
-				Use(html).WriteString(L"</div>");
+				if (i != 0) Use(html).WriteString(L"], [");
+				if (indexResolve[i].inRange)
+				{
+					auto& symbols = result.index[i].GetByIndex(indexResolve[i].index);
+					for (vint j = 0; j < symbols.Count(); j++)
+					{
+						if (j != 0) Use(html).WriteString(L", ");
+						Use(html).WriteString(L"\'");
+						Use(html).WriteString(symbols[j]->uniqueId);
+						Use(html).WriteString(L"\'");
+					}
+					break;
+				}
 			}
+			Use(html).WriteString(L"])\">");
 		}
+		else if (!lastTokenIsDef && !isRefToken && lastTokenIsRef)
+		{
+			Use(html).WriteString(L"</div>");
+		}
+
 		lastTokenIsDef = isDefToken;
 		lastTokenIsRef = isRefToken;
 
