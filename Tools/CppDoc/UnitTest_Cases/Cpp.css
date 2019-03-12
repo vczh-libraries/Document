@@ -88,5 +88,17 @@ body {
 
 .disabled {
     color: #7f7f7f;
-    background-color: #2f2f2f;
 }
+
+.expandable {
+    box-sizing: border-box;
+    display: inline-block;
+    border: 1px dashed #3f3f3f;
+}
+
+    .expandable .disabled {
+        background-color: #2f2f2f;
+    }
+
+    .expandable .expanded {
+    }

@@ -960,6 +960,11 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 
 			if (disableEnd != -1)
 			{
+				bool hasEmbeddedHtml = embedHtmlInDisabled.Length() != 0;
+				if (hasEmbeddedHtml)
+				{
+					writer.WriteString(L"<div class=\"expandable\"/>");
+				}
 				writer.WriteString(L"<div class=\"disabled\"/>");
 				for (vint i = originalIndex; i < disableEnd; i++)
 				{
@@ -993,9 +998,11 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 					}
 				}
 				writer.WriteLine(L"</div>");
-				if (embedHtmlInDisabled.Length() != 0)
+				if (hasEmbeddedHtml)
 				{
-					writer.WriteLine(embedHtmlInDisabled);
+					writer.WriteString(L"<div class=\"expanded\">");
+					writer.WriteString(embedHtmlInDisabled);
+					writer.WriteLine(L"</div></div>");
 				}
 			}
 			originalIndex = nextProcessingLine;
