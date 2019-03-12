@@ -90,15 +90,16 @@ body {
     color: #7f7f7f;
 }
 
-.expandable {
+div.expandable {
     box-sizing: border-box;
     display: inline-block;
     border: 1px dashed #3f3f3f;
+    margin: 3px 0 3px 0;
 }
 
-    .expandable .disabled {
+    div.expandable .disabled {
         background-color: #2f2f2f;
     }
 
-    .expandable .expanded {
+    div.expandable .expanded {
     }
