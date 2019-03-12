@@ -621,6 +621,7 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 		}
 
 		// a link is not possible to be the last token of a valid C++ file, so this should just work
+		auto flr = global->fileLines[currentFilePath];
 		bool isDefToken = indexDecl.inRange;
 		bool isRefToken = indexResolve[(vint)IndexReason::Resolved].inRange || indexResolve[(vint)IndexReason::OverloadedResolution].inRange;
 
@@ -646,6 +647,10 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 
 			if ((decl->symbol->definition ? 1 : 0) + decl->symbol->declarations.Count() > 1)
 			{
+				if (!flr->refSymbols.Contains(decl->symbol))
+				{
+					flr->refSymbols.Add(decl->symbol);
+				}
 				Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([], [\'");
 				Use(html).WriteString(decl->symbol->uniqueId);
 				Use(html).WriteString(L"\'])\">");
@@ -665,7 +670,6 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 		// so we should ignore these tokens.
 		if (!isDefToken && isRefToken && !lastTokenIsRef)
 		{
-			auto flr = global->fileLines[currentFilePath];
 			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
 				if (indexResolve[i].inRange)
