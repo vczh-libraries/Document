@@ -865,12 +865,94 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	writer.WriteLine(L"    <title>" + flr->filePath.GetName() + L"</title>");
 	writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
 	writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
-	writer.WriteLine(L"    <script src=\"../Cpp.js\" ></script>");
+	writer.WriteLine(L"    <script type=\"text/javascript\" src=\"../Cpp.js\" ></script>");
 	writer.WriteLine(L"</head>");
 	writer.WriteLine(L"<body>");
 	writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
 
+	for (vint i = 0; i < flr->lines.Count(); i++)
+	{
+		auto& line = flr->lines.Values()[i];
+		writer.WriteLine(line.htmlCode);
+	}
+
 	writer.WriteLine(L"</div></div>");
+
+	writer.WriteLine(L"<script type=\"text/javascript\">");
+
+	writer.WriteLine(L"referencedSymbols = {");
+	for (vint i = 0; i < flr->refSymbols.Count(); i++)
+	{
+		auto symbol = flr->refSymbols[i];
+		writer.WriteString(L"    \'");
+		writer.WriteString(symbol->uniqueId);
+		writer.WriteString(L"\': { \'name\': \'");
+		writer.WriteString(symbol->name);
+		writer.WriteString(L"\', \'definition\': ");
+		writer.WriteString(symbol->definition ? L"true" : L"false");
+		writer.WriteString(L", \'declarations\': ");
+		writer.WriteString(itow(symbol->declarations.Count()));
+		if (i == flr->refSymbols.Count() - 1)
+		{
+			writer.WriteLine(L"}");
+		}
+		else
+		{
+			writer.WriteLine(L"},");
+		}
+	}
+	writer.WriteLine(L"};");
+
+	writer.WriteLine(L"symbolToFiles = {");
+	for (vint i = 0; i < flr->refSymbols.Count(); i++)
+	{
+		auto symbol = flr->refSymbols[i];
+		if (symbol->definition)
+		{
+			auto decl = symbol->definition;
+			writer.WriteString(L"    \'Decl$");
+			writer.WriteString(symbol->uniqueId);
+			writer.WriteString(L"\': \'");
+
+			auto filePath = global->declToFiles[decl.Obj()];
+			writer.WriteString(global->fileLines[filePath]->displayName);
+			writer.WriteString(L".html\'");
+
+			if (i == flr->refSymbols.Count() - 1 && symbol->declarations.Count() == 0)
+			{
+				writer.WriteLine(L"");
+			}
+			else
+			{
+				writer.WriteLine(L",");
+			}
+		}
+		for (vint j = 0; j < symbol->declarations.Count(); j++)
+		{
+			auto decl = symbol->declarations[j];
+			writer.WriteString(L"    \'Forward[");
+			writer.WriteString(itow(j));
+			writer.WriteString(L"]$");
+			writer.WriteString(symbol->uniqueId);
+			writer.WriteString(L"\': \'");
+
+			auto filePath = global->declToFiles[decl.Obj()];
+			writer.WriteString(global->fileLines[filePath]->displayName);
+			writer.WriteString(L".html\'");
+
+			if (i == flr->refSymbols.Count() - 1 && j == symbol->declarations.Count() - 1)
+			{
+				writer.WriteLine(L"");
+			}
+			else
+			{
+				writer.WriteLine(L",");
+			}
+		}
+	}
+	writer.WriteLine(L"};");
+
+	writer.WriteLine(L"</script>");
 	writer.WriteLine(L"</body>");
 	writer.WriteLine(L"</html>");
 }

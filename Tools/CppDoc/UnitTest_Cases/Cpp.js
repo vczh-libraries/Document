@@ -1,7 +1,10 @@
 
 let lastFocusedElement = undefined;
+let referencedSymbols = undefined;
+let symbolToFiles = undefined;
 
 function jumpToSymbol(overloadResolutions, resolved) {
+    return;
     if (lastFocusedElement !== undefined) {
         lastFocusedElement.classList.remove('focused');
     }
