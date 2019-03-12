@@ -926,15 +926,11 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 
 		auto filePath = global->declToFiles.Values()[index];
 		auto flrTarget = global->fileLines[filePath];
-		if (flrTarget == flr)
-		{
-			writer.WriteString(L"\'");
-		}
-		else
+		if (flrTarget != flr)
 		{
 			writer.WriteString(global->fileLines[filePath]->displayName);
-			writer.WriteString(L".html\'");
 		}
+		writer.WriteString(L"\'");
 	};
 	for (vint i = 0; i < flr->refSymbols.Count(); i++)
 	{

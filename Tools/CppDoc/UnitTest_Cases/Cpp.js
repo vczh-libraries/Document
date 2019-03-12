@@ -28,7 +28,7 @@ function jumpToSymbolInThisPage(id) {
 }
 
 function jumpToSymbolInOtherPage(id, file) {
-    window.location.href = './' + file + '#' + id;
+    window.location.href = './' + file + '.html#' + id;
 }
 
 function jumpToSymbol(overloadResolutions, resolved) {
