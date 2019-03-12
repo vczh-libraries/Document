@@ -1237,6 +1237,43 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, vi
 		{
 			writer.WriteString(L"</div>");
 		}
+
+		if (auto decl = context->definition)
+		{
+			vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
+			if (index != -1)
+			{
+				auto filePath = global->declToFiles.Values()[index];
+				auto fileDisplayName = global->fileLines[filePath]->displayName;
+				writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
+				writer.WriteString(fileDisplayName);
+				writer.WriteString(L".html#Decl$");
+				writer.WriteString(context->uniqueId);
+				writer.WriteString(L"\">");
+				writer.WriteString(L"definition");
+				writer.WriteString(L"</a>");
+			}
+		}
+		for (vint i = 0; i < context->declarations.Count(); i++)
+		{
+			auto decl = context->declarations[i];
+			vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
+			if (index != -1)
+			{
+				auto filePath = global->declToFiles.Values()[index];
+				auto fileDisplayName = global->fileLines[filePath]->displayName;
+				writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
+				writer.WriteString(fileDisplayName);
+				writer.WriteString(L".html#Forward[");
+				writer.WriteString(itow(i));
+				writer.WriteString(L"]$");
+				writer.WriteString(context->uniqueId);
+				writer.WriteString(L"\">");
+				writer.WriteString(L"decl[");
+				writer.WriteString(itow(i + 1));
+				writer.WriteString(L"]</a>");
+			}
+		}
 		writer.WriteLine(L"");
 	}
 

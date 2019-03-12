@@ -125,3 +125,17 @@ a.fileIndex {
     a.fileIndex:hover {
         text-decoration: underline;
     }
+
+
+a.symbolIndex {
+    font-size: 10px;
+    margin-left: 5px;
+    padding: 0 2px 0 2px;
+    color: #afafaf;
+    background-color: #2f2f2f;
+    text-decoration: none;
+}
+
+    a.symbolIndex:hover {
+        text-decoration: underline;
+    }
