@@ -952,6 +952,7 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	}
 	writer.WriteLine(L"");
 	writer.WriteLine(L"};");
+	writer.WriteLine(L"turnOnSymbol();");
 
 	writer.WriteLine(L"</script>");
 	writer.WriteLine(L"</body>");

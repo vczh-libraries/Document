@@ -4,6 +4,13 @@ let referencedSymbols = undefined;
 let symbolToFiles = undefined;
 
 function turnOnSymbol(id) {
+    if (id === undefined) {
+        id = window.location.hash.substring(1);
+    }
+    if (id === '') {
+        return;
+    }
+
     if (lastFocusedElement !== undefined) {
         lastFocusedElement.classList.remove('focused');
     }
@@ -16,13 +23,12 @@ function turnOnSymbol(id) {
 function jumpToSymbolInThisPage(id) {
     turnOnSymbol(id);
     if (lastFocusedElement !== undefined) {
-        window.location.href = '#';
-        window.location.href = '#' + symbolId;
+        window.location.hash = id;
     }
 }
 
 function jumpToSymbolInOtherPage(id, file) {
-    alert('Not implemented.');
+    window.location.href = './' + file + '#' + id;
 }
 
 function jumpToSymbol(overloadResolutions, resolved) {
