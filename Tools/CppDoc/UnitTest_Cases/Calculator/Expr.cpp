@@ -88,7 +88,7 @@ Evaluation
 	public:
 		void Visit(NumberExpr* self) override
 		{
-			printf("%f", self->number);
+			printf("%g", self->number);
 		}
 
 		void Visit(UnaryExpr* self) override

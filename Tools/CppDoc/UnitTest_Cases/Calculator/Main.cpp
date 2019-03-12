@@ -19,7 +19,7 @@ int main()
 
 		auto expr = Parse(input);
 		Print(expr);
-		printf(" = %f\n", Evaluate(expr));
+		printf(" = %g\n", Evaluate(expr));
 	}
 	return 0;
 }
