@@ -622,6 +622,7 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 		// a link is not possible to be the last token of a valid C++ file, so this should just work
 		bool isDefToken = indexDecl.inRange;
 		bool isRefToken = indexResolve[(vint)IndexReason::Resolved].inRange || indexResolve[(vint)IndexReason::OverloadedResolution].inRange;
+
 		if (isDefToken && !lastTokenIsDef)
 		{
 			auto decl = result.decls.Values()[indexDecl.index];
@@ -638,13 +639,29 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 			}
 			Use(html).WriteString(decl->symbol->uniqueId);
 			Use(html).WriteString(L"\">");
+
+			if ((decl->symbol->definition ? 1 : 0) + decl->symbol->declarations.Count() > 1)
+			{
+				Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([], [\'");
+				Use(html).WriteString(decl->symbol->uniqueId);
+				Use(html).WriteString(L"\'])\">");
+			}
+			else
+			{
+				Use(html).WriteString(L"<div>");
+			}
 		}
 		else if(!isDefToken && lastTokenIsDef)
 		{
-			Use(html).WriteString(L"</div>");
+			Use(html).WriteString(L"</div></div>");
 		}
+
 		if (isRefToken && !lastTokenIsRef)
 		{
+			if (isDefToken)
+			{
+				throw Exception(L"It is not possible for a token to be a definition and a reference at the same time.");
+			}
 			auto flr = global->fileLines[currentFilePath];
 			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
