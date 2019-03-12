@@ -1137,31 +1137,43 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, vi
 	switch (context->kind)
 	{
 	case symbol_component::SymbolKind::Enum:
-		searchForChild = true;
-		if (context->GetAnyForwardDecl<ForwardEnumDeclaration>()->enumClass)
+		if (context->GetAnyForwardDecl<ForwardEnumDeclaration>()->name.tokenCount > 0)
 		{
-			keyword = L"enum class";
+			searchForChild = true;
+			if (context->GetAnyForwardDecl<ForwardEnumDeclaration>()->enumClass)
+			{
+				keyword = L"enum class";
+			}
+			else
+			{
+				keyword = L"enum";
+			}
+			tokenClass = L"cpp_type";
 		}
-		else
-		{
-			keyword = L"enum";
-		}
-		tokenClass = L"cpp_type";
 		break;
 	case symbol_component::SymbolKind::Class:
-		searchForChild = true;
-		keyword = L"class";
-		tokenClass = L"cpp_type";
+		if (context->GetAnyForwardDecl<ForwardClassDeclaration>()->name.tokenCount > 0)
+		{
+			searchForChild = true;
+			keyword = L"class";
+			tokenClass = L"cpp_type";
+		}
 		break;
 	case symbol_component::SymbolKind::Struct:
-		searchForChild = true;
-		keyword = L"struct";
-		tokenClass = L"cpp_type";
+		if (context->GetAnyForwardDecl<ForwardClassDeclaration>()->name.tokenCount > 0)
+		{
+			searchForChild = true;
+			keyword = L"struct";
+			tokenClass = L"cpp_type";
+		}
 		break;
 	case symbol_component::SymbolKind::Union:
-		searchForChild = true;
-		keyword = L"union";
-		tokenClass = L"cpp_type";
+		if (context->GetAnyForwardDecl<ForwardClassDeclaration>()->name.tokenCount > 0)
+		{
+			searchForChild = true;
+			keyword = L"union";
+			tokenClass = L"cpp_type";
+		}
 		break;
 	case symbol_component::SymbolKind::TypeAlias:
 		keyword = L"typedef";

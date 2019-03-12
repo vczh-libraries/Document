@@ -154,6 +154,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 					break;
 				}
 
+				forwardDecl->name.name = type->name.name;
 				if (pa.program)
 				{
 					pa.program->decls.Insert(pa.program->createdForwardDeclByCStyleTypeReference++, forwardDecl);
