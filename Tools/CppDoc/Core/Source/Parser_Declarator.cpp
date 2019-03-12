@@ -710,13 +710,14 @@ READY_FOR_ARRAY_OR_FUNCTION:
 
 	// if there is [, we see an array declarator
 	// an array could be multiple dimension
+	auto newPa = declarator->containingClassSymbol ? pa.WithContext(declarator->containingClassSymbol) : pa;
 	if (TestToken(cursor, CppTokens::LBRACKET, false))
 	{
-		while (ParseSingleDeclarator_Array(pa, declarator, targetType, pdc.forParameter, cursor));
+		while (ParseSingleDeclarator_Array(newPa, declarator, targetType, pdc.forParameter, cursor));
 	}
 	else
 	{
-		ParseSingleDeclarator_Function(pa, declarator, targetType, pdc.forceSpecialMethod, cursor);
+		ParseSingleDeclarator_Function(newPa, declarator, targetType, pdc.forceSpecialMethod, cursor);
 	}
 	return declarator;
 }

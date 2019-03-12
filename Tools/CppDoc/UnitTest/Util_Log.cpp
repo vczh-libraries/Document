@@ -1211,7 +1211,7 @@ void Log(Ptr<Declaration> decl, StreamWriter& writer, vint indentation, bool sem
 
 void Log(Ptr<Program> program, StreamWriter& writer)
 {
-	for (vint i = 0; i < program->decls.Count(); i++)
+	for (vint i = program->createdForwardDeclByCStyleTypeReference; i < program->decls.Count(); i++)
 	{
 		Log(program->decls[i], writer, 0, true);
 	}

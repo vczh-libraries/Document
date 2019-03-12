@@ -151,7 +151,12 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 		auto& symbols = children.GetByIndex(i);
 		for (vint j = 0; j < symbols.Count(); j++)
 		{
-			symbols[j]->GenerateUniqueId(ids, nextPrefix);
+			auto symbol = symbols[j];
+			// skip some copied enum item symbols
+			if (symbol->parent == this)
+			{
+				symbol->GenerateUniqueId(ids, nextPrefix);
+			}
 		}
 	}
 }
@@ -341,8 +346,7 @@ void PredefineType(Ptr<Program> program, const ParsingArguments& pa, const wchar
 	auto decl = isForwardDeclaration ? MakePtr<ForwardClassDeclaration>() : (Ptr<ForwardClassDeclaration>)MakePtr<ClassDeclaration>();
 	decl->classType = classType;
 	decl->name.name = name;
-	program->decls.Add(decl);
-	program->createdForwardDeclByCStyleTypeReference++;
+	program->decls.Insert(program->createdForwardDeclByCStyleTypeReference++, decl);
 	if (isForwardDeclaration)
 	{
 		pa.root->AddForwardDeclToSymbol(decl, symbolKind);
