@@ -12,10 +12,10 @@ Preprocessing
 // skip these tokens to in space
 struct TokenSkipping
 {
-	vint							rowSkip = -1;
-	vint							columnSkip = -1;
-	vint							rowUntil = -1;
-	vint							columnUntil = -1;
+	vint											rowSkip = -1;
+	vint											columnSkip = -1;
+	vint											rowUntil = -1;
+	vint											columnUntil = -1;
 };
 
 bool NeedToSkip(RegexToken& token)
@@ -168,10 +168,10 @@ Indexing
 
 struct IndexToken
 {
-	vint							rowStart;
-	vint							columnStart;
-	vint							rowEnd;
-	vint							columnEnd;
+	vint											rowStart;
+	vint											columnStart;
+	vint											rowEnd;
+	vint											columnEnd;
 
 	static vint Compare(const IndexToken& a, const IndexToken& b)
 	{
@@ -214,11 +214,11 @@ using ReverseIndexMap = Group<Symbol*, IndexToken>;
 
 struct IndexResult
 {
-	ParsingArguments				pa;
-	Dictionary<WString, Symbol*>	ids;
-	IndexMap						index[(vint)IndexReason::Max];
-	ReverseIndexMap					reverseIndex[(vint)IndexReason::Max];
-	Dictionary<IndexToken, Symbol*>	decls;
+	ParsingArguments								pa;
+	Dictionary<WString, Symbol*>					ids;
+	IndexMap										index[(vint)IndexReason::Max];
+	ReverseIndexMap									reverseIndex[(vint)IndexReason::Max];
+	Dictionary<IndexToken, Ptr<Declaration>>		decls;
 };
 
 class IndexRecorder : public Object, public virtual IIndexRecorder
@@ -287,15 +287,16 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 			auto& name = symbol->definition->name;
 			if (name.tokenCount > 0)
 			{
-				result.decls.Add(IndexToken::GetToken(name), symbol);
+				result.decls.Add(IndexToken::GetToken(name), symbol->definition);
 			}
 		}
 		for (vint i = 0; i < symbol->declarations.Count(); i++)
 		{
-			auto& name = symbol->declarations[i]->name;
+			auto decl = symbol->declarations[i];
+			auto& name = decl->name;
 			if (name.tokenCount > 0)
 			{
-				result.decls.Add(IndexToken::GetToken(name), symbol);
+				result.decls.Add(IndexToken::GetToken(name), decl);
 			}
 		}
 	}
@@ -307,15 +308,15 @@ Token Indexing
 
 struct AdjustSkippingResult
 {
-	vint							rowSkipped = 0;
-	vint							rowUntil = 0;
-	vint							columnUntil = 0;
+	vint											rowSkipped = 0;
+	vint											rowUntil = 0;
+	vint											columnUntil = 0;
 };
 
 struct IndexTracking
 {
-	vint							index = 0;
-	bool							inRange = false;
+	vint											index = 0;
+	bool											inRange = false;
 };
 
 void AdjustSkippingIndex(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skipping, IndexTracking& index, AdjustSkippingResult& asr)
@@ -394,13 +395,37 @@ void AdjustRefIndex(Ptr<CppTokenCursor>& cursor, const SortedList<IndexToken>& k
 }
 
 /***********************************************************************
+Line Indexing
+***********************************************************************/
+
+struct HtmlLineRecord
+{
+	vint											lineCount;
+	const wchar_t*									rawBegin;
+	const wchar_t*									rawEnd;
+	WString											htmlCode;
+};
+
+struct FileLinesRecord
+{
+	Dictionary<vint, HtmlLineRecord>				lines;
+	SortedList<Symbol*>								refSymbols;
+};
+
+struct GlobalLinesRecord
+{
+	Dictionary<WString, Ptr<FileLinesRecord>>		fileLines;
+	Dictionary<Ptr<Declaration>, WString>			declToFiles;
+};
+
+/***********************************************************************
 HTML Generating
 ***********************************************************************/
 
 struct StreamHolder
 {
-	MemoryStream					memoryStream;
-	StreamWriter					streamWriter;
+	MemoryStream									memoryStream;
+	StreamWriter									streamWriter;
 
 	StreamHolder()
 		:streamWriter(memoryStream)
@@ -531,7 +556,7 @@ void GenerateHtmlToken(
 					rawEnd = &reading[i];
 				}
 				lineCounter++;
-				callback(lineCounter, rawBegin, rawEnd, Submit(html));
+				callback({ lineCounter, rawBegin, rawEnd, Submit(html) });
 
 				lineCounter = 0;
 				rawBegin = &reading[i + 1];
@@ -569,7 +594,7 @@ void GenerateHtmlToken(
 }
 
 template<typename T>
-void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skipping, IndexResult& result, const T& callback)
+void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global, const WString& currentFilePath, Array<TokenSkipping>& skipping, IndexResult& result, const T& callback)
 {
 	if (!cursor) return;
 	const wchar_t* rawBegin = cursor->token.reading;
@@ -599,8 +624,11 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skippin
 		bool isRefToken = indexResolve[(vint)IndexReason::Resolved].inRange || indexResolve[(vint)IndexReason::OverloadedResolution].inRange;
 		if (isDefToken && !lastTokenIsDef)
 		{
+			auto decl = result.decls.Values()[indexDecl.index];
+			global->declToFiles.Add(decl, currentFilePath);
+
 			Use(html).WriteString(L"<div class=\"def\" id=\"symbol$");
-			Use(html).WriteString(result.decls.Values()[indexDecl.index]->uniqueId);
+			Use(html).WriteString(decl->symbol->uniqueId);
 			Use(html).WriteString(L"\">");
 		}
 		else if(!isDefToken && lastTokenIsDef)
@@ -609,6 +637,23 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skippin
 		}
 		if (isRefToken && !lastTokenIsRef)
 		{
+			auto flr = global->fileLines[currentFilePath];
+			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
+			{
+				if (indexResolve[i].inRange)
+				{
+					auto& symbols = result.index[i].GetByIndex(indexResolve[i].index);
+					for (vint j = 0; j < symbols.Count(); j++)
+					{
+						auto symbol = symbols[j];
+						if (!flr->refSymbols.Contains(symbol))
+						{
+							flr->refSymbols.Add(symbol);
+						}
+					}
+				}
+			}
+
 			Use(html).WriteString(L"<div class=\"ref\" onclick=\"");
 			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
@@ -640,7 +685,7 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skippin
 		Symbol* symbolForToken = nullptr;
 		if (isDefToken)
 		{
-			symbolForToken = result.decls.Values()[indexDecl.index];
+			symbolForToken = result.decls.Values()[indexDecl.index]->symbol;
 		}
 		else if (isRefToken)
 		{
@@ -663,28 +708,6 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skippin
 		}
 	}
 }
-
-/***********************************************************************
-Line Indexing
-***********************************************************************/
-
-struct HtmlLineRecord
-{
-	vint											lineCount;
-	const wchar_t*									rawBegin;
-	const wchar_t*									rawEnd;
-	WString											htmlCode;
-};
-
-struct FileLinesRecord
-{
-	Dictionary<vint, HtmlLineRecord>				lines;
-};
-
-struct GlobalLinesRecord
-{
-	Dictionary<WString, Ptr<FileLinesRecord>>		fileLines;
-};
 
 /***********************************************************************
 File Generating
@@ -763,17 +786,25 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, File
 					currentLineNumber = lineNumber - 1;
 					currentFilePath = WString(&buffer[0], (vint)(writing - &buffer[0]));
 					rightAfterSharpLine = true;
+
+					{
+						vint fileIndex = global->fileLines.Keys().IndexOf(currentFilePath);
+						if (fileIndex == -1)
+						{
+							global->fileLines.Add(currentFilePath, MakePtr<FileLinesRecord>());
+						}
+					}
 					SkipToken(cursor);
 					continue;
 				}
 			GIVE_UP:
 				cursor = oldCursor;
 			}
-			GenerateHtmlLine(cursor, skipping, result, [&](vint lineCount, const wchar_t* rawBegin, const wchar_t* rawEnd, const WString& htmlCode)
+			GenerateHtmlLine(cursor, global, currentFilePath, skipping, result, [&](HtmlLineRecord hlr)
 			{
 				if (rightAfterSharpLine)
 				{
-					if (htmlCode.Length() != 0)
+					if (hlr.htmlCode.Length() != 0)
 					{
 						throw Exception(L"An empty line should have been submitted right after #line.");
 					}
@@ -781,20 +812,9 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, File
 				}
 				else
 				{
-					Ptr<FileLinesRecord> flr;
-					vint fileIndex = global->fileLines.Keys().IndexOf(currentFilePath);
-					if (fileIndex == -1)
-					{
-						flr = MakePtr<FileLinesRecord>();
-						global->fileLines.Add(currentFilePath, flr);
-					}
-					else
-					{
-						flr = global->fileLines.Values()[fileIndex];
-					}
-
-					flr->lines.Add(currentLineNumber, { lineCount,rawBegin,rawEnd,htmlCode });
-					currentLineNumber += lineCount;
+					auto flr = global->fileLines[currentFilePath];
+					flr->lines.Add(currentLineNumber, hlr);
+					currentLineNumber += hlr.lineCount;
 				}
 			});
 		}

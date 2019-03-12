@@ -26,7 +26,7 @@
   - [ ] Generate HTML index. (multiple pages)
     - [x] Separate `Preprocessed.cpp` to multiple lines as much as possible (if a comment across lines it cannot be separated).
     - [x] Parse `#line NUMBER "FILE-PATH"` and store raw text and generated html in grouped lines: `Dictionary<LineRange, Raw Lines and HTML Lines>`.
-    - [ ] Group def and ref by files, store def->file relationships in each files by a JavaScript map.
+    - [x] Group def and ref by files, store def->file relationships in each files by a JavaScript map.
     - [ ] Modify jumpToSymbol function to use this map.
     - [ ] Compare original files with grouped lines, if they are not matched then
       - If target line does not exist, then gray them out.
