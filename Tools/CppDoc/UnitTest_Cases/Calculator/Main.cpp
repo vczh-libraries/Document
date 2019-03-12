@@ -2,6 +2,8 @@
 #include <string.h>
 #include "Calculator.h"
 
+using namespace calculator;
+
 #define MAX_BUFFER 1024
 
 int main()
@@ -14,7 +16,10 @@ int main()
 		{
 			break;
 		}
-		printf("%s\n", input);
+
+		auto expr = Parse(input);
+		Print(expr);
+		printf(" = %f\n", Evaluate(expr));
 	}
 	return 0;
 }

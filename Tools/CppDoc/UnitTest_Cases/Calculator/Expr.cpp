@@ -38,6 +38,12 @@ namespace calculator
 		Inc();
 	}
 
+	Expr::Ptr::Ptr(Expr* _expr)
+		:expr(_expr)
+	{
+		Inc();
+	}
+
 	Expr::Ptr::Ptr(const Ptr& ptr)
 		:expr(ptr.expr)
 	{

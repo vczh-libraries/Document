@@ -37,6 +37,7 @@ namespace calculator
 			void			Dec();
 		public:
 			Ptr();
+			Ptr(Expr* _expr);
 			Ptr(const Ptr& ptr);
 			Ptr(Ptr&& ptr);
 			~Ptr();

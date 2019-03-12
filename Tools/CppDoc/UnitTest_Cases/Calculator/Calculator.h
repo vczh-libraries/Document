@@ -4,4 +4,5 @@
 
 namespace calculator
 {
+	extern Expr::Ptr			Parse(const char* input);
 }
