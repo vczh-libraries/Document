@@ -27,6 +27,9 @@
     - [x] Separate `Preprocessed.cpp` to multiple lines as much as possible (if a comment across lines it cannot be separated).
     - [x] Parse `#line NUMBER "FILE-PATH"` and store raw text and generated html in grouped lines: `Dictionary<LineRange, Raw Lines and HTML Lines>`.
     - [x] Group def and ref by files, store def->file relationships in each files by a JavaScript map.
+    - [x] Stop generating symbol id for multiple forward declarations.
+      - `Forward[INDEX]$id`
+      - `Decl$id`
     - [ ] Modify jumpToSymbol function to use this map.
     - [ ] Compare original files with grouped lines, if they are not matched then
       - If target line does not exist, then gray them out.

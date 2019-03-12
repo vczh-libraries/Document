@@ -627,7 +627,15 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 			auto decl = result.decls.Values()[indexDecl.index];
 			global->declToFiles.Add(decl, currentFilePath);
 
-			Use(html).WriteString(L"<div class=\"def\" id=\"symbol$");
+			Use(html).WriteString(L"<div class=\"def\" id=\"");
+			if (decl == decl->symbol->definition)
+			{
+				Use(html).WriteString(L"Decl$");
+			}
+			else
+			{
+				Use(html).WriteString(L"Forward[" + itow(decl->symbol->declarations.IndexOf(decl.Obj())) + L"]$");
+			}
 			Use(html).WriteString(decl->symbol->uniqueId);
 			Use(html).WriteString(L"\">");
 		}
@@ -654,13 +662,13 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 				}
 			}
 
-			Use(html).WriteString(L"<div class=\"ref\" onclick=\"");
+			Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([");
 			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
+				if (i != 0) Use(html).WriteString(L"], [");
 				if (indexResolve[i].inRange)
 				{
 					auto& symbols = result.index[i].GetByIndex(indexResolve[i].index);
-					Use(html).WriteString(L"jumpToSymbol([");
 					for (vint j = 0; j < symbols.Count(); j++)
 					{
 						if (j != 0) Use(html).WriteString(L", ");
@@ -668,11 +676,10 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 						Use(html).WriteString(symbols[j]->uniqueId);
 						Use(html).WriteString(L"\'");
 					}
-					Use(html).WriteString(L"])");
 					break;
 				}
 			}
-			Use(html).WriteString(L"\">");
+			Use(html).WriteString(L"])\">");
 		}
 		else if (!isRefToken && lastTokenIsRef)
 		{
