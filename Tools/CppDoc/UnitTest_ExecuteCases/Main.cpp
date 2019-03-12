@@ -850,7 +850,7 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, File
 }
 
 /***********************************************************************
-File Generating
+Source Code Page Generating
 ***********************************************************************/
 
 void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, IndexResult& result, FilePath pathHtml)
@@ -871,6 +871,7 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	writer.WriteLine(L"<body>");
 	writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
 	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
+	writer.WriteLine(L"<br>");
 	writer.WriteLine(L"<br>");
 	writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
 
@@ -1092,6 +1093,10 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	writer.WriteLine(L"</html>");
 }
 
+/***********************************************************************
+Index Page Generating
+***********************************************************************/
+
 void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml)
 {
 	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
@@ -1123,7 +1128,129 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml)
 	writer.WriteLine(L"</html>");
 }
 
-void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml)
+void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, vint indentation, Symbol* context, bool printBraceBeforeFirstChild, bool& printedChild)
+{
+	bool isRoot = false;
+	bool searchForChild = false;
+	const wchar_t* keyword = nullptr;
+	const wchar_t* tokenClass = nullptr;
+	switch (context->kind)
+	{
+	case symbol_component::SymbolKind::Enum:
+		searchForChild = true;
+		if (context->GetAnyForwardDecl<ForwardEnumDeclaration>()->enumClass)
+		{
+			keyword = L"enum class";
+		}
+		else
+		{
+			keyword = L"enum";
+		}
+		tokenClass = L"cpp_type";
+		break;
+	case symbol_component::SymbolKind::Class:
+		searchForChild = true;
+		keyword = L"class";
+		tokenClass = L"cpp_type";
+		break;
+	case symbol_component::SymbolKind::Struct:
+		searchForChild = true;
+		keyword = L"struct";
+		tokenClass = L"cpp_type";
+		break;
+	case symbol_component::SymbolKind::Union:
+		searchForChild = true;
+		keyword = L"union";
+		tokenClass = L"cpp_type";
+		break;
+	case symbol_component::SymbolKind::TypeAlias:
+		keyword = L"typedef";
+		tokenClass = L"cpp_type";
+		break;
+	case symbol_component::SymbolKind::Function:
+		if (!context->GetAnyForwardDecl<ForwardFunctionDeclaration>()->implicitlyGeneratedMember)
+		{
+			keyword = L"function";
+			tokenClass = L"cpp_function";
+		}
+		break;
+	case symbol_component::SymbolKind::Variable:
+		keyword = L"variable";
+		if (context->parent && context->parent->definition.Cast<ClassDeclaration>())
+		{
+			tokenClass = L"cpp_field";
+		}
+		break;
+	case symbol_component::SymbolKind::Namespace:
+		searchForChild = true;
+		keyword = L"namespace";
+		break;
+	case symbol_component::SymbolKind::Root:
+		searchForChild = true;
+		isRoot = true;
+		break;
+	}
+
+	if (keyword)
+	{
+		if (printBraceBeforeFirstChild)
+		{
+			if (!printedChild)
+			{
+				printedChild = true;
+				for (vint i = 0; i < indentation - 1; i++)
+				{
+					writer.WriteString(L"    ");
+				}
+				writer.WriteLine(L"{");
+			}
+		}
+
+		for (vint i = 0; i < indentation; i++)
+		{
+			writer.WriteString(L"    ");
+		}
+		writer.WriteString(L"<div class=\"cpp_keyword\">");
+		writer.WriteString(keyword);
+		writer.WriteString(L"</div>");
+		writer.WriteChar(L' ');
+		if (tokenClass)
+		{
+			writer.WriteString(L"<div class=\"");
+			writer.WriteString(tokenClass);
+			writer.WriteString(L"\">");
+		}
+		writer.WriteString(context->name);
+		if (tokenClass)
+		{
+			writer.WriteString(L"</div>");
+		}
+		writer.WriteLine(L"");
+	}
+
+	if (searchForChild)
+	{
+		bool printedChildNextLevel = false;
+		for (vint i = 0; i < context->children.Count(); i++)
+		{
+			auto& children = context->children.GetByIndex(i);
+			for (vint j = 0; j < children.Count(); j++)
+			{
+				GenerateSymbolIndex(global, writer, indentation + (isRoot ? 0 : 1), children[j].Obj(), !isRoot, printedChildNextLevel);
+			}
+		}
+		if (printedChildNextLevel)
+		{
+			for (vint i = 0; i < indentation; i++)
+			{
+				writer.WriteString(L"    ");
+			}
+			writer.WriteLine(L"}");
+		}
+	}
+}
+
+void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml)
 {
 	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
 	Utf8Encoder encoder;
@@ -1141,6 +1268,11 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml)
 	writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
 	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
 	writer.WriteLine(L"<br>");
+	writer.WriteLine(L"<br>");
+	writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
+	bool printedChild = false;
+	GenerateSymbolIndex(global, writer, 0, result.pa.root.Obj(), false, printedChild);
+	writer.WriteLine(L"</div></div>");
 	writer.WriteLine(L"</body>");
 	writer.WriteLine(L"</html>");
 }
@@ -1217,7 +1349,7 @@ int main()
 				GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / (flr->displayName + L".html"));
 			}
 			GenerateFileIndex(global, folderOutput.GetFilePath() / L"FileIndex.html");
-			GenerateSymbolIndex(global, folderOutput.GetFilePath() / L"SymbolIndex.html");
+			GenerateSymbolIndex(global, indexResult, folderOutput.GetFilePath() / L"SymbolIndex.html");
 		}
 	}
 
