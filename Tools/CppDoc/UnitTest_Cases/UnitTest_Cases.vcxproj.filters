@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Calculator">
+      <UniqueIdentifier>{b83eef7b-173d-4d07-afaa-586586c7fa86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelloWorld.cpp">
@@ -20,6 +23,18 @@
     </ClCompile>
     <ClCompile Include="Sum1to100.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculator\Calculator.cpp">
+      <Filter>Source Files\Calculator</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculator\Expr.cpp">
+      <Filter>Source Files\Calculator</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculator\Main.cpp">
+      <Filter>Source Files\Calculator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -34,5 +49,13 @@
     <None Include="Cpp.js">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Calculator\Calculator.h">
+      <Filter>Source Files\Calculator</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculator\Expr.h">
+      <Filter>Source Files\Calculator</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
