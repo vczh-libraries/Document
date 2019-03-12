@@ -416,6 +416,7 @@ struct FileLinesRecord
 
 struct GlobalLinesRecord
 {
+	WString											preprocessed;
 	Dictionary<WString, Ptr<FileLinesRecord>>		fileLines;
 	Dictionary<Ptr<Declaration>, WString>			declToFiles;
 	SortedList<WString>								displayNames;
@@ -756,13 +757,13 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, File
 		}
 	}
 
-	WString preprocessed = File(pathPreprocessed).ReadAllTextByBom();
-	if (preprocessed.Right(1) != L"\n")
+	global->preprocessed = File(pathPreprocessed).ReadAllTextByBom();
+	if (global->preprocessed.Right(1) != L"\n")
 	{
-		preprocessed += L"\r\n";
+		global->preprocessed += L"\r\n";
 	}
 
-	CppTokenReader reader(lexer, preprocessed, false);
+	CppTokenReader reader(lexer, global->preprocessed, false);
 	auto cursor = reader.GetFirstToken();
 
 	vint currentLineNumber = 0;
@@ -870,10 +871,110 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	writer.WriteLine(L"<body>");
 	writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
 
-	for (vint i = 0; i < flr->lines.Count(); i++)
 	{
-		auto& line = flr->lines.Values()[i];
-		writer.WriteLine(line.htmlCode);
+		List<WString> originalLines;
+		File(flr->filePath).ReadAllLinesByBom(originalLines);
+
+		vint originalIndex = 0;
+		vint flrIndex = 0;
+		while (originalIndex < originalLines.Count())
+		{
+			vint disableEnd = -1;
+			vint nextProcessingLine = -1;
+			WString embedHtmlInDisabled;
+
+			if (flrIndex == flr->lines.Count())
+			{
+				disableEnd = originalLines.Count();
+				nextProcessingLine = disableEnd;
+			}
+			else
+			{
+				vint nextAvailable = flr->lines.Keys()[flrIndex];
+				if (originalIndex < nextAvailable)
+				{
+					disableEnd = nextAvailable;
+					nextProcessingLine = disableEnd;
+				}
+				else if (originalIndex == nextAvailable)
+				{
+					auto& currentHtmlLines = flr->lines.Values()[flrIndex++];
+					if (flrIndex == flr->lines.Count())
+					{
+						nextProcessingLine = originalLines.Count();
+					}
+					else
+					{
+						nextProcessingLine = flr->lines.Keys()[flrIndex];
+					}
+
+					bool macroExpanded = (nextProcessingLine - originalIndex) != currentHtmlLines.lineCount;
+					if (!macroExpanded)
+					{
+						StringReader reader(WString(currentHtmlLines.rawBegin, (vint)(currentHtmlLines.rawEnd - currentHtmlLines.rawBegin)));
+						for (vint i = originalIndex; i < nextProcessingLine; i++)
+						{
+							if (originalLines[i] != reader.ReadLine())
+							{
+								macroExpanded = true;
+								break;
+							}
+						}
+					}
+
+					if (!macroExpanded)
+					{
+						writer.WriteLine(currentHtmlLines.htmlCode);
+					}
+					else
+					{
+						bool allSpaces = true;
+						for (auto reading = currentHtmlLines.rawBegin; allSpaces && reading < currentHtmlLines.rawEnd; reading++)
+						{
+							switch (*reading++)
+							{
+							case L' ':
+							case L'\t':
+							case L'\r':
+							case L'\n':
+							case L'\v':
+							case L'\f':
+								break;
+							default:
+								allSpaces = false;
+							}
+						}
+
+						if (!allSpaces)
+						{
+							embedHtmlInDisabled = currentHtmlLines.htmlCode;
+						}
+						disableEnd = nextProcessingLine;
+					}
+				}
+				else
+				{
+					throw Exception(L"Too many lines are processed.");
+				}
+			}
+
+			if (disableEnd != -1)
+			{
+				writer.WriteString(L"<div class=\"disabled\"/>");
+				while (originalIndex < disableEnd)
+				{
+					writer.WriteLine(L"");
+					writer.WriteString(originalLines[originalIndex]);
+					originalIndex++;
+				}
+				writer.WriteLine(L"</div>");
+				if (embedHtmlInDisabled.Length() != 0)
+				{
+					writer.WriteLine(embedHtmlInDisabled);
+				}
+			}
+			originalIndex = nextProcessingLine;
+		}
 	}
 
 	writer.WriteLine(L"</div></div>");

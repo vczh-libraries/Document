@@ -8,6 +8,7 @@ body {
 .codebox {
     white-space: pre;
     tab-size: 4;
+    margin-left: 1em;
 }
 
     .codebox div {
@@ -84,3 +85,9 @@ body {
         text-decoration: underline;
         text-decoration-color: unset;
     }
+
+.disabled {
+    color: #7f7f7f;
+    border: 1px solid #7f7f7f;
+    display: block;
+}
