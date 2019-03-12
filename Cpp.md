@@ -31,7 +31,7 @@
       - `Forward[INDEX]$id`
       - `Decl$id`
     - [x] Modify jumpToSymbol function to use this map.
-    - [ ] Compare original files with grouped lines, if they are not matched then
+    - [x] Compare original files with grouped lines, if they are not matched then
       - If target line does not exist, then gray them out.
       - If target lines are all spaces, then gray them out.
       - Otherwise these lines are changed by macro expansion, generate tab pages and set to gray-ed out code before expanding by default.

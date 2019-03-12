@@ -908,23 +908,24 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 						nextProcessingLine = flr->lines.Keys()[flrIndex];
 					}
 
-					bool macroExpanded = (nextProcessingLine - originalIndex) != currentHtmlLines.lineCount;
-					if (!macroExpanded)
+					bool rawCodeMatched = (nextProcessingLine - originalIndex) >= currentHtmlLines.lineCount;
+					if (rawCodeMatched)
 					{
 						StringReader reader(WString(currentHtmlLines.rawBegin, (vint)(currentHtmlLines.rawEnd - currentHtmlLines.rawBegin)));
-						for (vint i = originalIndex; i < nextProcessingLine; i++)
+						for (vint i = 0; i < currentHtmlLines.lineCount; i++)
 						{
-							if (originalLines[i] != reader.ReadLine())
+							if (originalLines[originalIndex + i] != reader.ReadLine())
 							{
-								macroExpanded = true;
+								rawCodeMatched = false;
 								break;
 							}
 						}
 					}
 
-					if (!macroExpanded)
+					if (rawCodeMatched)
 					{
 						writer.WriteLine(currentHtmlLines.htmlCode);
+						nextProcessingLine = originalIndex + currentHtmlLines.lineCount;
 					}
 					else
 					{
@@ -1088,6 +1089,14 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	writer.WriteLine(L"</html>");
 }
 
+void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml)
+{
+}
+
+void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml)
+{
+}
+
 /***********************************************************************
 Main
 ***********************************************************************/
@@ -1159,6 +1168,8 @@ int main()
 				auto flr = global->fileLines.Values()[i];
 				GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / (flr->displayName + L".html"));
 			}
+			GenerateFileIndex(global, folderOutput.GetFilePath() / L"FileIndex.html");
+			GenerateSymbolIndex(global, folderOutput.GetFilePath() / L"SymbolIndex.html");
 		}
 	}
 
