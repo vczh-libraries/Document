@@ -904,52 +904,50 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	writer.WriteLine(L"};");
 
 	writer.WriteLine(L"symbolToFiles = {");
+	bool firstFileMapping = false;
+	auto writeFileMapping = [&](const WString& prefix, Ptr<Declaration> decl)
+	{
+		if (!firstFileMapping)
+		{
+			firstFileMapping = true;
+		}
+		else
+		{
+			writer.WriteLine(L",");
+		}
+
+		writer.WriteString(L"    \'");
+		writer.WriteString(prefix);
+		writer.WriteString(decl->symbol->uniqueId);
+		writer.WriteString(L"\': \'");
+
+		auto filePath = global->declToFiles[decl.Obj()];
+		auto flrTarget = global->fileLines[filePath];
+		if (flrTarget == flr)
+		{
+			writer.WriteString(L"\'");
+		}
+		else
+		{
+			writer.WriteString(global->fileLines[filePath]->displayName);
+			writer.WriteString(L".html\'");
+		}
+	};
 	for (vint i = 0; i < flr->refSymbols.Count(); i++)
 	{
 		auto symbol = flr->refSymbols[i];
 		if (symbol->definition)
 		{
 			auto decl = symbol->definition;
-			writer.WriteString(L"    \'Decl$");
-			writer.WriteString(symbol->uniqueId);
-			writer.WriteString(L"\': \'");
-
-			auto filePath = global->declToFiles[decl.Obj()];
-			writer.WriteString(global->fileLines[filePath]->displayName);
-			writer.WriteString(L".html\'");
-
-			if (i == flr->refSymbols.Count() - 1 && symbol->declarations.Count() == 0)
-			{
-				writer.WriteLine(L"");
-			}
-			else
-			{
-				writer.WriteLine(L",");
-			}
+			writeFileMapping(L"Decl$", decl);
 		}
 		for (vint j = 0; j < symbol->declarations.Count(); j++)
 		{
 			auto decl = symbol->declarations[j];
-			writer.WriteString(L"    \'Forward[");
-			writer.WriteString(itow(j));
-			writer.WriteString(L"]$");
-			writer.WriteString(symbol->uniqueId);
-			writer.WriteString(L"\': \'");
-
-			auto filePath = global->declToFiles[decl.Obj()];
-			writer.WriteString(global->fileLines[filePath]->displayName);
-			writer.WriteString(L".html\'");
-
-			if (i == flr->refSymbols.Count() - 1 && j == symbol->declarations.Count() - 1)
-			{
-				writer.WriteLine(L"");
-			}
-			else
-			{
-				writer.WriteLine(L",");
-			}
+			writeFileMapping(L"Forward[" + itow(j) + L"]$", decl);
 		}
 	}
+	writer.WriteLine(L"");
 	writer.WriteLine(L"};");
 
 	writer.WriteLine(L"</script>");
