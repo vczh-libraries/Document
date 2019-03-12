@@ -93,7 +93,7 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 									parenthesisCounter--;
 									if (parenthesisCounter == 0)
 									{
-										cursor = cursor->Next();
+										SkipToken(cursor);
 										goto STOP_SHARP;
 									}
 									break;
@@ -105,7 +105,7 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 								default:
 									lastTokenIsSkipping = false;
 								}
-								cursor = cursor->Next();
+								SkipToken(cursor);
 							}
 						STOP_SHARP:;
 						}
@@ -120,7 +120,7 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 							default:
 								goto STOP_SKIPPING;
 							}
-							cursor = cursor->Next();
+							SkipToken(cursor);
 						}
 					}
 				STOP_SKIPPING:
@@ -145,7 +145,7 @@ void CleanUpPreprocessFile(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath p
 			if (cursor)
 			{
 				writer.WriteString(cursor->token.reading, cursor->token.length);
-				cursor = cursor->Next();
+				SkipToken(cursor);
 			}
 		}
 	}
@@ -728,7 +728,7 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 		}
 		GenerateHtmlToken(cursor, result, symbolForToken, indexResolve, rawBegin, rawEnd, html, lineCounter, callback);
 
-		cursor = cursor->Next();
+		SkipToken(cursor);
 		if (cursor && (CppTokens)cursor->token.token == CppTokens::SHARP)
 		{
 			// let the outside decide whether this # need to be generate HTML code or not

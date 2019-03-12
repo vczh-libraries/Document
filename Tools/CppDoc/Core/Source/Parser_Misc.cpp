@@ -78,7 +78,7 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		name.tokenCount = 1;
 		name.name = L"operator ";
 		name.nameTokens[0] = token;
-		cursor = cursor->Next();
+		SkipToken(cursor);
 
 		if (forceSpecialMethod)
 		{
@@ -188,7 +188,8 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		name.nameTokens[0] = cursor->token;
 		name.nameTokens[1] = cursor->Next()->token;
 		name.name = WString(cursor->token.reading, cursor->token.length + cursor->Next()->token.length);
-		cursor = cursor->Next()->Next();
+		SkipToken(cursor);
+		SkipToken(cursor);
 		return true;
 	}
 	else if (TestToken(cursor, CppTokens::ID, false))
@@ -197,7 +198,7 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		name.tokenCount = 1;
 		name.nameTokens[0] = cursor->token;
 		name.name = WString(cursor->token.reading, cursor->token.length);
-		cursor = cursor->Next();
+		SkipToken(cursor);
 		return true;
 	}
 	return false;

@@ -336,10 +336,34 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 	}
 }
 
+void PredefineType(Ptr<Program> program, const ParsingArguments& pa, const wchar_t* name, bool isForwardDeclaration, CppClassType classType, symbol_component::SymbolKind symbolKind)
+{
+	auto decl = isForwardDeclaration ? MakePtr<ForwardClassDeclaration>() : (Ptr<ForwardClassDeclaration>)MakePtr<ClassDeclaration>();
+	decl->classType = classType;
+	decl->name.name = name;
+	program->decls.Add(decl);
+	program->createdForwardDeclByCStyleTypeReference++;
+	if (isForwardDeclaration)
+	{
+		pa.root->AddForwardDeclToSymbol(decl, symbolKind);
+	}
+	else
+	{
+		pa.root->AddDeclToSymbol(decl, symbolKind);
+	}
+}
+
 Ptr<Program> ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	auto program = MakePtr<Program>();
 	pa.program = program;
+
+	// these types will be used before it is defined
+	PredefineType(program, pa, L"__m64", false, CppClassType::Struct, symbol_component::SymbolKind::Struct);
+	PredefineType(program, pa, L"__m128", false, CppClassType::Struct, symbol_component::SymbolKind::Struct);
+	PredefineType(program, pa, L"__m128d", true, CppClassType::Struct, symbol_component::SymbolKind::Struct);
+	PredefineType(program, pa, L"__m128i", true, CppClassType::Union, symbol_component::SymbolKind::Union);
+
 	while (cursor)
 	{
 		ParseDeclaration(pa, cursor, program->decls);

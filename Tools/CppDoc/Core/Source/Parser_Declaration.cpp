@@ -224,6 +224,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 	RequireToken(cursor, CppTokens::DECL_ENUM);
 	// enum [CLASS] NAME [: TYPE] ...
 	bool enumClass = TestToken(cursor, CppTokens::DECL_CLASS);
+	while (SkipSpecifiers(cursor));
 
 	CppName cppName;
 	bool isAnonymous = false;
@@ -285,6 +286,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 		RequireToken(cursor, CppTokens::LBRACE);
 		while (!TestToken(cursor, CppTokens::RBRACE))
 		{
+			while (SkipSpecifiers(cursor));
 			auto enumItem = MakePtr<EnumItemDeclaration>();
 			if (!ParseCppName(enumItem->name, cursor)) throw StopParsingException(cursor);
 			decl->items.Add(enumItem);
@@ -348,7 +350,8 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 	default:
 		throw StopParsingException(cursor);
 	}
-	cursor = cursor->Next();
+	SkipToken(cursor);
+	while (SkipSpecifiers(cursor));
 
 	CppName cppName;
 	bool isAnonymous = false;

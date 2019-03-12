@@ -522,6 +522,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 
 					{
 						List<Ptr<Declarator>> declarators;
+						while (SkipSpecifiers(cursor));
 						ParseNonMemberDeclarator(functionArgsPa, pda_Param(true), cursor, declarators);
 						List<Ptr<VariableDeclaration>> varDecls;
 						BuildVariables(declarators, varDecls);
