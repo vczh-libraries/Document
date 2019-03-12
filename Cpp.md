@@ -23,7 +23,7 @@
   - [x] Generate HTML index. (single page)
   - [x] Wrong HTML for multi-token name, need to generate only one def div containing all tokens.
   - [ ] One symbol may have multiple declarations, need to show them all in drop down.
-  - [ ] Generate HTML index. (multiple pages)
+  - [x] Generate HTML index. (multiple pages)
     - [x] Separate `Preprocessed.cpp` to multiple lines as much as possible (if a comment across lines it cannot be separated).
     - [x] Parse `#line NUMBER "FILE-PATH"` and store raw text and generated html in grouped lines: `Dictionary<LineRange, Raw Lines and HTML Lines>`.
     - [x] Group def and ref by files, store def->file relationships in each files by a JavaScript map.
@@ -35,7 +35,7 @@
       - If target line does not exist, then gray them out.
       - If target lines are all spaces, then gray them out.
       - Otherwise these lines are changed by macro expansion, generate tab pages and set to gray-ed out code before expanding by default.
-    - [ ] Generate index by files and symbols as static HTML pages.
+    - [x] Generate index by files and symbols as static HTML pages.
   - [ ] Revert the ignoring.
   - [ ] Revert `Macro_va_start` in `Parser_Stat.cpp`.
   - [ ] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
