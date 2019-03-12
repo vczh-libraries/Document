@@ -37,6 +37,7 @@
       - Otherwise these lines are changed by macro expansion, generate tab pages and set to gray-ed out code before expanding by default.
     - [x] Generate index by files and symbols as static HTML pages.
     - [ ] Fix no-indexing in `Calculator.h`
+      - In `GenerateHtmlLine` function, `asr`, `indexSkipping`, `indexDecl` and `indexResolve` need to move to its caller `Collect` function, and then debug again setting `current.rowStart == 9187` after `AdjustRefIndex`'s `auto& current = keys[index.index];` line.
   - [ ] Revert the ignoring.
   - [ ] Revert `Macro_va_start` in `Parser_Stat.cpp`.
   - [ ] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.

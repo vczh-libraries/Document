@@ -1406,5 +1406,26 @@ int main()
 		}
 	}
 
+	//{
+	//	Folder folderOutput(L"../../../.Output/Import/Preprocessed.txt.Output");
+	//	auto pathPreprocessed = folderOutput.GetFilePath() / L"Preprocessed.cpp";
+	//	auto pathInput = folderOutput.GetFilePath() / L"Input.cpp";
+	//	auto pathMapping = folderOutput.GetFilePath() / L"Mapping.bin";
+
+	//	if (!folderOutput.Exists())
+	//	{
+	//		folderOutput.Create(false);
+	//	}
+
+	//	Console::WriteLine(L"Preprocessing Preprocessed.txt ...");
+	//	CleanUpPreprocessFile(
+	//		lexer,
+	//		folderOutput.GetFilePath() / L"../Preprocessed.txt",
+	//		pathPreprocessed,
+	//		pathInput,
+	//		pathMapping
+	//	);
+	//}
+
 	return 0;
 }
