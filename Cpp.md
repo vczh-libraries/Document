@@ -30,7 +30,7 @@
     - [x] Stop generating symbol id for multiple forward declarations.
       - `Forward[INDEX]$id`
       - `Decl$id`
-    - [ ] Modify jumpToSymbol function to use this map.
+    - [x] Modify jumpToSymbol function to use this map.
     - [ ] Compare original files with grouped lines, if they are not matched then
       - If target line does not exist, then gray them out.
       - If target lines are all spaces, then gray them out.

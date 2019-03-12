@@ -907,6 +907,9 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	bool firstFileMapping = false;
 	auto writeFileMapping = [&](const WString& prefix, Ptr<Declaration> decl)
 	{
+		vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
+		if (index == -1) return;
+
 		if (!firstFileMapping)
 		{
 			firstFileMapping = true;
@@ -921,7 +924,7 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 		writer.WriteString(decl->symbol->uniqueId);
 		writer.WriteString(L"\': \'");
 
-		auto filePath = global->declToFiles[decl.Obj()];
+		auto filePath = global->declToFiles.Values()[index];
 		auto flrTarget = global->fileLines[filePath];
 		if (flrTarget == flr)
 		{
