@@ -25,7 +25,7 @@ namespace calculator
 	{
 		if (expr)
 		{
-			if (_InterlockedDecrement(&expr->counter))
+			if (_InterlockedDecrement(&expr->counter) == 0)
 			{
 				delete expr;
 				expr = nullptr;

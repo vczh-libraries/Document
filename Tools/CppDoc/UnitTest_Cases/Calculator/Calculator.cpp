@@ -48,13 +48,13 @@ namespace calculator
 
 	Expr::Ptr ParseExpr(const char*& input)
 	{
-		auto expr = ParseTerm(input);
+		auto expr = ParseFactor(input);
 		while (*input == '+' || *input == '-')
 		{
 			auto binaryExpr = new BinaryExpr;
 			binaryExpr->left = expr;
 			binaryExpr->op = *input++ == '+' ? BinaryOperator::Add : BinaryOperator::Sub;
-			binaryExpr->right = ParseTerm(input);
+			binaryExpr->right = ParseFactor(input);
 			expr = binaryExpr;
 		}
 		return expr;
