@@ -86,6 +86,7 @@ Keywords
 	F(EXPR_FALSE,				false)					\
 	F(EXPR_THIS,				this)					\
 	F(EXPR_NULLPTR,				nullptr)				\
+	F(EXPR___NULLPTR,			__nullptr)				\
 	F(EXPR_TYPEID,				typeid)					\
 	F(EXPR_SIZEOF,				sizeof)					\
 	F(EXPR_DYNAMIC_CAST,		dynamic_cast)			\

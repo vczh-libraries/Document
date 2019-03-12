@@ -174,6 +174,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				return MakePtr<ThisExpr>();
 			}
 		case CppTokens::EXPR_NULLPTR:
+		case CppTokens::EXPR___NULLPTR:
 			{
 				SkipToken(cursor);
 				return MakePtr<NullptrExpr>();
