@@ -84,6 +84,7 @@ function promptTooltipMessage(message, underElement) {
  */
 
 function jumpToSymbol(overloadResolutions, resolved) {
+    closeTooltip();
     const packedArguments = {
         'Overload Resolution': overloadResolutions,
         'Resolved': resolved
@@ -124,7 +125,7 @@ function jumpToSymbol(overloadResolutions, resolved) {
     }
 
     if (dropdownData.length === 0) {
-        alert('The target symbol is not defined in the source code.');
+        promptTooltipMessage('The target symbol is not defined in the source code.', event.target);
         return;
     }
 

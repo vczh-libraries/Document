@@ -150,6 +150,7 @@ a.symbolIndex {
 .tooltip {
     white-space: normal;
     display: block;
+    font-weight: normal;
     position: fixed;
     height: 0.8em;
     color: #000000;
