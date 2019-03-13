@@ -97,8 +97,8 @@ function promptTooltipDropdownData(dropdownData, underElement) {
                                 <td></td>
                                 <td><span class="dropdownData label">${decl.label}</span></td>
                                 <td>
-                                    <a class="dropdownData link" onclick="${decl.file === '' ? `closeTooltip(); jumpToSymbolInThisPage('${decl.elementId}');` : `closeTooltip(); jumpToSymbolInOtherPage('${decl.elementId}', '${decl.file}');`}">
-                                        ${decl.file === '' ? 'Jump To' : decl.file}
+                                    <a class="dropdownData link" onclick="${decl.file === null ? `closeTooltip(); jumpToSymbolInThisPage('${decl.elementId}');` : `closeTooltip(); jumpToSymbolInOtherPage('${decl.elementId}', '${decl.file.htmlFileName}');`}">
+                                        ${decl.file === null ? 'Jump To' : decl.file.displayName}
                                     </a>
                                 </td>
                             </tr>
@@ -119,13 +119,16 @@ function promptTooltipDropdownData(dropdownData, underElement) {
 
 /*
  * dropdownData: {
- *   name: string;          // group name
+ *   name: string,                  // group name
  *   symbols: {
- *     name: string;        // symbol name
+ *     name: string,                // symbol name
  *     decls: {
- *       label: string;     // the label of this declaration
- *       file: string;      // file that contain this declaration
- *       elementId;         // the element id of this declaration
+ *       label: string,             // the label of this declaration
+ *       file: {
+ *          displayName: string,    // the display name of the file
+ *          htmlFileName: string    // the html file name of the file without ".html"
+ *       },
+ *       elementId: string          // the element id of this declaration
  *     }[]
  *   }[]
  * }[]
@@ -185,11 +188,11 @@ function jumpToSymbol(overloadResolutions, resolved) {
             const symbol = idGroup.symbols[0];
             if (symbol.decls.length === 1) {
                 const decl = symbol.decls[0];
-                if (decl.file === '') {
+                if (decl.file === null) {
                     jumpToSymbolInThisPage(decl.elementId);
                 }
                 else {
-                    jumpToSymbolInOtherPage(decl.elementId, decl.file);
+                    jumpToSymbolInOtherPage(decl.elementId, decl.file.htmlFileName);
                 }
                 return;
             }

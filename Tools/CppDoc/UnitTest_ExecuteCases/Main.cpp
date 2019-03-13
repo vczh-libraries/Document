@@ -1110,7 +1110,7 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 		auto flrTarget = global->fileLines[filePath];
 		if (flrTarget == flr)
 		{
-			writer.WriteString(L"undefined");
+			writer.WriteString(L"null");
 		}
 		else
 		{
