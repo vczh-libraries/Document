@@ -23,9 +23,6 @@
   - [x] Generate HTML index. (single page)
   - [x] Wrong HTML for multi-token name, need to generate only one def div containing all tokens.
   - [x] One symbol may have multiple declarations, need to show them all in drop down.
-    - File name on links should be the real name, not the display name.
-      - Fix `FilePath` to use `GetShortPathName` and `GetLongPathName` to get a proper cased file path.
-      - Stop using `wupper`, and change string key to FilePath for file name.
     - Need to display keyword (e.g. `class`), symbol name and C++ full name in dropdown, instead of just a name.
       - e.g. `ClassName::Function(arg1, arg2)` in colors.
       - Change `displayName` field to `htmlFileName`.

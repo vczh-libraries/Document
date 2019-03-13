@@ -409,7 +409,7 @@ struct HtmlLineRecord
 struct FileLinesRecord
 {
 	FilePath										filePath;
-	WString											displayName;
+	WString											htmlFileName;
 	Dictionary<vint, HtmlLineRecord>				lines;
 	SortedList<Symbol*>								refSymbols;
 };
@@ -417,9 +417,9 @@ struct FileLinesRecord
 struct GlobalLinesRecord
 {
 	WString											preprocessed;
-	Dictionary<WString, Ptr<FileLinesRecord>>		fileLines;
-	Dictionary<Ptr<Declaration>, WString>			declToFiles;
-	SortedList<WString>								displayNames;
+	Dictionary<FilePath, Ptr<FileLinesRecord>>		fileLines;
+	Dictionary<Ptr<Declaration>, FilePath>			declToFiles;
+	SortedList<WString>								htmlFileNames;
 };
 
 struct TokenTracker
@@ -610,7 +610,7 @@ template<typename T>
 void GenerateHtmlLine(
 	Ptr<CppTokenCursor>& cursor,
 	Ptr<GlobalLinesRecord> global,
-	const WString& currentFilePath,
+	FilePath currentFilePath,
 	Array<TokenSkipping>& skipping,
 	IndexResult& result,
 	TokenTracker& tracker,
@@ -773,6 +773,7 @@ Index Collecting
 Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result)
 {
 	auto global = MakePtr<GlobalLinesRecord>();
+	Dictionary<WString, FilePath> filePathCache;
 	Array<TokenSkipping> skipping;
 	{
 		FileStream fileStream(pathMapping.GetFullPath(), FileStream::ReadOnly);
@@ -796,7 +797,7 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, File
 	auto cursor = reader.GetFirstToken();
 
 	vint currentLineNumber = 0;
-	WString currentFilePath;
+	FilePath currentFilePath;
 	bool rightAfterSharpLine = false;
 	TokenTracker tracker;
 	while (cursor)
@@ -825,7 +826,20 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, File
 				}
 
 				currentLineNumber = lineNumber - 1;
-				currentFilePath = wupper(WString(&buffer[0], (vint)(writing - &buffer[0])));
+				{
+					WString filePathText(&buffer[0], (vint)(writing - &buffer[0]));
+					vint index = filePathCache.Keys().IndexOf(filePathText);
+					if (index == -1)
+					{
+						currentFilePath = filePathText;
+						filePathCache.Add(filePathText, currentFilePath);
+					}
+					else
+					{
+						currentFilePath = filePathCache.Values()[index];
+					}
+				}
+
 				rightAfterSharpLine = true;
 
 				{
@@ -839,10 +853,10 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, File
 						vint counter = 1;
 						while (true)
 						{
-							flr->displayName = displayName + (counter == 1 ? WString::Empty : itow(counter));
-							if (!global->displayNames.Contains(flr->displayName))
+							flr->htmlFileName = displayName + (counter == 1 ? WString::Empty : itow(counter));
+							if (!global->htmlFileNames.Contains(flr->htmlFileName))
 							{
-								global->displayNames.Add(flr->displayName);
+								global->htmlFileNames.Add(flr->htmlFileName);
 								break;
 							}
 							counter++;
@@ -1090,15 +1104,22 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 		writer.WriteString(L"    \'");
 		writer.WriteString(prefix);
 		writer.WriteString(decl->symbol->uniqueId);
-		writer.WriteString(L"\': \'");
+		writer.WriteString(L"\': ");
 
 		auto filePath = global->declToFiles.Values()[index];
 		auto flrTarget = global->fileLines[filePath];
-		if (flrTarget != flr)
+		if (flrTarget == flr)
 		{
-			writer.WriteString(global->fileLines[filePath]->displayName);
+			writer.WriteString(L"undefined");
 		}
-		writer.WriteString(L"\'");
+		else
+		{
+			writer.WriteString(L"{ \'htmlFileName\': \'");
+			writer.WriteString(flrTarget->htmlFileName);
+			writer.WriteString(L"\', \'displayName\': \'");
+			writer.WriteString(flrTarget->filePath.GetName());
+			writer.WriteString(L"\' }");
+		}
 	};
 	for (vint i = 0; i < flr->refSymbols.Count(); i++)
 	{
@@ -1149,7 +1170,7 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml)
 	for (vint i = 0; i < global->fileLines.Count(); i++)
 	{
 		writer.WriteString(L"<a class=\"fileIndex\" href=\"./");
-		writer.WriteString(global->fileLines.Values()[i]->displayName);
+		writer.WriteString(global->fileLines.Values()[i]->htmlFileName);
 		writer.WriteString(L".html\">");
 		writer.WriteString(global->fileLines.Values()[i]->filePath.GetName());
 		writer.WriteLine(L"</a><br>");
@@ -1274,9 +1295,9 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, vi
 			if (index != -1)
 			{
 				auto filePath = global->declToFiles.Values()[index];
-				auto fileDisplayName = global->fileLines[filePath]->displayName;
+				auto htmlFileName = global->fileLines[filePath]->htmlFileName;
 				writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
-				writer.WriteString(fileDisplayName);
+				writer.WriteString(htmlFileName);
 				writer.WriteString(L".html#Decl$");
 				writer.WriteString(context->uniqueId);
 				writer.WriteString(L"\">");
@@ -1291,9 +1312,9 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, vi
 			if (index != -1)
 			{
 				auto filePath = global->declToFiles.Values()[index];
-				auto fileDisplayName = global->fileLines[filePath]->displayName;
+				auto htmlFileName = global->fileLines[filePath]->htmlFileName;
 				writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
-				writer.WriteString(fileDisplayName);
+				writer.WriteString(htmlFileName);
 				writer.WriteString(L".html#Forward[");
 				writer.WriteString(itow(i));
 				writer.WriteString(L"]$");
@@ -1425,7 +1446,7 @@ int main()
 			for (vint i = 0; i < global->fileLines.Keys().Count(); i++)
 			{
 				auto flr = global->fileLines.Values()[i];
-				GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / (flr->displayName + L".html"));
+				GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / (flr->htmlFileName + L".html"));
 			}
 			GenerateFileIndex(global, folderOutput.GetFilePath() / L"FileIndex.html");
 			GenerateSymbolIndex(global, indexResult, folderOutput.GetFilePath() / L"SymbolIndex.html");
