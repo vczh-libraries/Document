@@ -1,6 +1,6 @@
 body {
     font-family: monospace;
-    font-size: 14px;
+    font-size: 1.2em;
     color: #000000;
     background-color: #1e1e1e;
 }
@@ -61,7 +61,7 @@ body {
 /* functional color */
 
 .def.focused {
-    font-size: 28px;
+    font-size: 1.8em;
     background-color: #FFFF00;
     color: #000000;
 }
@@ -128,7 +128,7 @@ a.fileIndex {
 
 
 a.symbolIndex {
-    font-size: 10px;
+    font-size: 0.7em;
     margin-left: 5px;
     padding: 0 2px 0 2px;
     color: #afafaf;
@@ -142,6 +142,10 @@ a.symbolIndex {
 
 /* tooltip */
 
+.tooltipContent.message {
+    color: #FFFFFF;
+}
+
 .tooltip div {
     white-space: normal;
     display: block;
@@ -153,7 +157,6 @@ a.symbolIndex {
     font-weight: normal;
     position: fixed;
     height: 0.8em;
-    color: #000000;
     cursor: default;
 }
 
@@ -172,7 +175,7 @@ a.symbolIndex {
     top: 0;
     border-left: 0.5em solid transparent;
     border-right: 0.5em solid transparent;
-    border-bottom: 0.5em solid black;
+    border-bottom: 0.5em solid green;
 }
 
 .tooltipHeaderFill {
@@ -184,17 +187,48 @@ a.symbolIndex {
     top: 1px;
     border-left: calc(0.5em - 1px) solid transparent;
     border-right: calc(0.5em - 1px) solid transparent;
-    border-bottom: calc(0.5em - 1px) solid cornsilk;
+    border-bottom: calc(0.5em - 1px) solid green;
 }
 
 .tooltipContainer {
     margin-top: calc(0.5em - 1px);
-    border: 1px solid black;
+    border: 1px solid green;
     padding: 0.5em;
-    background-color: cornsilk;
     z-index: 0;
+    background-color: #1e1e1e;
 }
 
 .tooltipContent {
     display: none;
 }
+
+/* dropdown data */
+
+.dropdownData.idGroup {
+    font-weight: 900;
+    color: #FFFFFF;
+}
+
+.dropdownData.symbol {
+    padding-left: 1em;
+    vertical-align: top;
+}
+
+.dropdownData.label {
+    color: #FFFFFF;
+    font-size: 0.7em;
+    padding: 2px;
+    color: #afafaf;
+    background-color: #2f2f2f;
+    text-decoration: none;
+}
+
+.dropdownData.link {
+    color: #569cd6;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    .dropdownData.link:hover {
+        text-decoration: underline;
+    }

@@ -3,6 +3,18 @@ let lastFocusedElement = undefined;
 let referencedSymbols = undefined;
 let symbolToFiles = undefined;
 
+function turnOffCurrentSymbol() {
+    if (lastFocusedElement !== undefined) {
+        lastFocusedElement.classList.remove('focused');
+    }
+}
+
+function turnOnCurrentSymbol() {
+    if (lastFocusedElement !== undefined) {
+        lastFocusedElement.classList.add('focused');
+    }
+}
+
 function turnOnSymbol(id) {
     if (id === undefined) {
         id = decodeURIComponent(window.location.hash.substring(1));
@@ -11,13 +23,9 @@ function turnOnSymbol(id) {
         return;
     }
 
-    if (lastFocusedElement !== undefined) {
-        lastFocusedElement.classList.remove('focused');
-    }
+    turnOffCurrentSymbol();
     lastFocusedElement = document.getElementById(id);
-    if (lastFocusedElement !== undefined) {
-        lastFocusedElement.classList.add('focused');
-    }
+    turnOnCurrentSymbol();
 }
 
 function jumpToSymbolInThisPage(id) {
@@ -41,14 +49,14 @@ function closeTooltip() {
 function promptTooltip(contentElement, underElement) {
     closeTooltip();
     const tooltipElement = new DOMParser().parseFromString(`
-<div class="tooltip" onclick="event.stopPropagation()">
-<div>&nbsp;</div>
-<div class="tooltipHeader">
-    <div class="tooltipHeaderBorder"></div>
-    <div class="tooltipHeaderFill"></div>
-</div>
-<div class="tooltipContainer" onmouseleave="closeTooltip()"></div>
-</div>
+    <div class="tooltip" onclick="event.stopPropagation()">
+    <div>&nbsp;</div>
+    <div class="tooltipHeader">
+        <div class="tooltipHeaderBorder"></div>
+        <div class="tooltipHeaderFill"></div>
+    </div>
+    <div class="tooltipContainer" onmouseleave="closeTooltip()"></div>
+    </div>
 `, 'text/html').getElementsByClassName('tooltip')[0];
     tooltipElement.getElementsByClassName('tooltipContainer')[0].appendChild(contentElement);
 
@@ -65,7 +73,46 @@ function promptTooltip(contentElement, underElement) {
 }
 
 function promptTooltipMessage(message, underElement) {
-    const htmlCode = `<div class="tooltipContent">${message}</div>`;
+    const htmlCode = `<div class="tooltipContent message">${message}</div>`;
+    const tooltipContent = new DOMParser().parseFromString(htmlCode, 'text/html').getElementsByClassName('tooltipContent')[0];
+    promptTooltip(tooltipContent, underElement);
+}
+
+function promptTooltipDropdownData(dropdownData, underElement) {
+    const htmlCode = `
+    <div class="tooltipContent">
+    <table>
+    ${
+        dropdownData.map(function (idGroup) {
+            return `
+            <tr><td colspan="3" class="dropdownData idGroup">${idGroup.name}</td></tr>
+            ${
+                idGroup.symbols.map(function (symbol) {
+                    return `
+                    <tr><td rowspan="${symbol.decls.length + 1}" class="dropdownData symbol">${symbol.name}</td></tr>
+                    ${
+                        symbol.decls.map(function (decl) {
+                            return `
+                            <tr>
+                                <td></td>
+                                <td><span class="dropdownData label">${decl.label}</span></td>
+                                <td>
+                                    <a class="dropdownData link" onclick="${decl.file === '' ? `closeTooltip(); jumpToSymbolInThisPage('${decl.elementId}');` : `closeTooltip(); jumpToSymbolInOtherPage('${decl.elementId}', '${decl.file}');`}">
+                                        ${decl.file === '' ? 'Jump To' : decl.file}
+                                    </a>
+                                </td>
+                            </tr>
+                            `;
+                        }).join('')
+                    }
+                    `;
+                }).join('')
+            }
+            `;
+        }).join('')
+    }
+    </table>
+    </div>`;
     const tooltipContent = new DOMParser().parseFromString(htmlCode, 'text/html').getElementsByClassName('tooltipContent')[0];
     promptTooltip(tooltipContent, underElement);
 }
@@ -76,8 +123,9 @@ function promptTooltipMessage(message, underElement) {
  *   symbols: {
  *     name: string;        // symbol name
  *     decls: {
+ *       label: string;     // the label of this declaration
  *       file: string;      // file that contain this declaration
- *       elementId;          // the element id of this declaration
+ *       elementId;         // the element id of this declaration
  *     }[]
  *   }[]
  * }[]
@@ -100,17 +148,19 @@ function jumpToSymbol(overloadResolutions, resolved) {
 
                 if (referencedSymbol.definition === true) {
                     const elementId = 'Decl$' + uniqueId;
+                    const label = 'declaration';
                     const file = symbolToFiles[elementId];
                     if (file !== undefined) {
-                        symbol.decls.push({ file, elementId });
+                        symbol.decls.push({ label, file, elementId });
                     }
                 }
 
                 for (i = 0; i < referencedSymbol.declarations; i++) {
                     const elementId = 'Forward[' + i + ']$' + uniqueId;
+                    const label = 'decl[' + i + ']';
                     const file = symbolToFiles[elementId];
                     if (file !== undefined) {
-                        symbol.decls.push({ file, elementId });
+                        symbol.decls.push({ label, file, elementId });
                     }
                 }
 
@@ -146,5 +196,5 @@ function jumpToSymbol(overloadResolutions, resolved) {
         }
     }
 
-    promptTooltipMessage('Multiple symbols jumping is not implemented yet.', event.target);
+    promptTooltipDropdownData(dropdownData, event.target);
 }

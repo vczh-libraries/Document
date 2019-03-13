@@ -22,7 +22,10 @@
   - [x] Add more cases, ensure that preprocessed files of them doesn't really touch template things.
   - [x] Generate HTML index. (single page)
   - [x] Wrong HTML for multi-token name, need to generate only one def div containing all tokens.
-  - [ ] One symbol may have multiple declarations, need to show them all in drop down.
+  - [x] One symbol may have multiple declarations, need to show them all in drop down.
+    - File name on links should be the real name, not the display name.
+    - Need to display keyword (e.g. `class`), symbol name and C++ full name in dropdown, instead of just a name.
+    - When clicked on a turnning on element, the dropdown should not scale.
   - [x] Generate HTML index. (multiple pages)
   - [ ] Revert the ignoring.
   - [ ] Revert `Macro_va_start` in `Parser_Stat.cpp`.
