@@ -31,6 +31,35 @@ function jumpToSymbolInOtherPage(id, file) {
     window.location.href = './' + file + '.html#' + id;
 }
 
+function promptTooltipMessage(message, underElement) {
+    const htmlCode = `
+<div class="tooltip">
+<div>&nbsp;</div>
+<div class="tooltipHeader">
+    <div class="tooltipHeaderBorder"></div>
+    <div class="tooltipHeaderFill"></div>
+</div>
+<div class="tooltipContainer">
+    <div class="tooltipContent">
+        ${message}
+    </div>
+</div>
+</div>`;
+
+    const tooltipElement = new DOMParser().parseFromString(htmlCode, 'text/html');
+
+    var elementRect = underElement.getBoundingClientRect();
+    var bodyRect = document.body.parentElement.getBoundingClientRect();
+    var offsetX = elementRect.left - bodyRect.left;
+    var offsetY = elementRect.top - bodyRect.top;
+    var scrollX = document.body.scrollLeft + document.body.parentElement.scrollLeft;
+    var scrollY = document.body.scrollTop + document.body.parentElement.scrollTop;
+
+    tooltipElement.style.left = (offsetX - scrollX) + "px";
+    tooltipElement.style.top = (offsetY - scrollY) + "px";
+    underElement.appendChild(tooltipElement);
+}
+
 /*
  * dropdownData: {
  *   name: string;          // group name
@@ -106,5 +135,5 @@ function jumpToSymbol(overloadResolutions, resolved) {
         }
     }
 
-    alert('Multiple symbols jumping is not implemented yet.');
+    promptTooltipMessage('Multiple symbols jumping is not implemented yet.', event.target);
 }
