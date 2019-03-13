@@ -31,20 +31,26 @@ function jumpToSymbolInOtherPage(id, file) {
     window.location.href = './' + file + '.html#' + id;
 }
 
-function promptTooltipMessage(message, underElement) {
-    const htmlCode = `
+function closeTooltip() {
+    const tooltipElement = document.getElementsByClassName('tooltip')[0];
+    if (tooltipElement !== undefined) {
+        tooltipElement.remove();
+    }
+}
+
+function promptTooltip(contentElement, underElement) {
+    closeTooltip();
+    const tooltipElement = new DOMParser().parseFromString(`
 <div class="tooltip" onclick="event.stopPropagation();">
 <div>&nbsp;</div>
 <div class="tooltipHeader">
     <div class="tooltipHeaderBorder"></div>
     <div class="tooltipHeaderFill"></div>
 </div>
-<div class="tooltipContainer"><div class="tooltipContent">
-${message}
-</div></div>
-</div>`;
-
-    const tooltipElement = new DOMParser().parseFromString(htmlCode, 'text/html').getElementsByClassName('tooltip')[0];
+<div class="tooltipContainer"></div>
+</div>
+`, 'text/html').getElementsByClassName('tooltip')[0];
+    tooltipElement.getElementsByClassName('tooltipContainer')[0].appendChild(contentElement);
 
     var elementRect = underElement.getBoundingClientRect();
     var bodyRect = document.body.parentElement.getBoundingClientRect();
@@ -56,6 +62,12 @@ ${message}
     tooltipElement.style.left = (offsetX - scrollX) + "px";
     tooltipElement.style.top = (offsetY - scrollY) + "px";
     underElement.appendChild(tooltipElement);
+}
+
+function promptTooltipMessage(message, underElement) {
+    const htmlCode = `<div class="tooltipContent">${message}</div>`;
+    const tooltipContent = new DOMParser().parseFromString(htmlCode, 'text/html').getElementsByClassName('tooltipContent')[0];
+    promptTooltip(tooltipContent, underElement);
 }
 
 /*
