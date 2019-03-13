@@ -5,7 +5,7 @@ let symbolToFiles = undefined;
 
 function turnOnSymbol(id) {
     if (id === undefined) {
-        id = window.location.hash.substring(1);
+        id = decodeURIComponent(window.location.hash.substring(1));
     }
     if (id === '') {
         return;
