@@ -33,20 +33,18 @@ function jumpToSymbolInOtherPage(id, file) {
 
 function promptTooltipMessage(message, underElement) {
     const htmlCode = `
-<div class="tooltip">
+<div class="tooltip" onclick="event.stopPropagation();">
 <div>&nbsp;</div>
 <div class="tooltipHeader">
     <div class="tooltipHeaderBorder"></div>
     <div class="tooltipHeaderFill"></div>
 </div>
-<div class="tooltipContainer">
-    <div class="tooltipContent">
-        ${message}
-    </div>
-</div>
+<div class="tooltipContainer"><div class="tooltipContent">
+${message}
+</div></div>
 </div>`;
 
-    const tooltipElement = new DOMParser().parseFromString(htmlCode, 'text/html');
+    const tooltipElement = new DOMParser().parseFromString(htmlCode, 'text/html').getElementsByClassName('tooltip')[0];
 
     var elementRect = underElement.getBoundingClientRect();
     var bodyRect = document.body.parentElement.getBoundingClientRect();

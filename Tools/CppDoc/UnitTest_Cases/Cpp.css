@@ -142,15 +142,21 @@ a.symbolIndex {
 
 /* tooltip */
 
+.tooltip div {
+    white-space: normal;
+    display: block;
+}
+
 .tooltip {
+    white-space: normal;
     display: block;
     position: fixed;
     height: 0.8em;
-    white-space: normal;
+    color: #000000;
+    cursor: default;
 }
 
 .tooltipHeader {
-    display: block;
     position: relative;
     margin-left: 1em;
     z-index: 1;
