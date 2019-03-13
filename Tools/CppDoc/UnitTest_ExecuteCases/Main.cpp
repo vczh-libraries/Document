@@ -422,6 +422,16 @@ struct GlobalLinesRecord
 	SortedList<WString>								displayNames;
 };
 
+struct TokenTracker
+{
+	AdjustSkippingResult							asr;
+	IndexTracking									indexSkipping;
+	IndexTracking									indexDecl;
+	IndexTracking									indexResolve[(vint)IndexReason::Max];
+	bool											lastTokenIsDef = false;
+	bool											lastTokenIsRef = false;
+};
+
 /***********************************************************************
 HTML Generating
 ***********************************************************************/
@@ -460,7 +470,6 @@ void GenerateHtmlToken(
 	Ptr<CppTokenCursor>& cursor,
 	IndexResult& result,
 	Symbol* symbolForToken,
-	IndexTracking (&indexResolve)[(vint)IndexReason::Max],
 	const wchar_t*& rawBegin,
 	const wchar_t*& rawEnd,
 	Ptr<StreamHolder>& html,
@@ -598,7 +607,14 @@ void GenerateHtmlToken(
 }
 
 template<typename T>
-void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global, const WString& currentFilePath, Array<TokenSkipping>& skipping, IndexResult& result, const T& callback)
+void GenerateHtmlLine(
+	Ptr<CppTokenCursor>& cursor,
+	Ptr<GlobalLinesRecord> global,
+	const WString& currentFilePath,
+	Array<TokenSkipping>& skipping,
+	IndexResult& result,
+	TokenTracker& tracker,
+	const T& callback)
 {
 	if (!cursor) return;
 	const wchar_t* rawBegin = cursor->token.reading;
@@ -606,28 +622,36 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 	Ptr<StreamHolder> html;
 	vint lineCounter = 0;
 
-	AdjustSkippingResult asr;
-	IndexTracking indexSkipping, indexDecl, indexResolve[(vint)IndexReason::Max];
-	bool lastTokenIsDef = false;
-	bool lastTokenIsRef = false;
+	bool firstToken = true;
 	while (cursor)
 	{
 		// calculate the surrounding context of the current token
-		AdjustSkippingIndex(cursor, skipping, indexSkipping, asr);
-		AdjustRefIndex(cursor, result.decls.Keys(), indexDecl, asr);
-		for (vint i = 0; i < (vint)IndexReason::Max; i++)
+		AdjustSkippingIndex(cursor, skipping, tracker.indexSkipping, tracker.asr);
+		if (tracker.indexSkipping.inRange)
 		{
-			AdjustRefIndex(cursor, result.index[i].Keys(), indexResolve[i], asr);
+			tracker.indexDecl.inRange = false;
+			for (vint i = 0; i < (vint)IndexReason::Max; i++)
+			{
+				tracker.indexResolve[i].inRange = false;
+			}
+		}
+		else
+		{
+			AdjustRefIndex(cursor, result.decls.Keys(), tracker.indexDecl, tracker.asr);
+			for (vint i = 0; i < (vint)IndexReason::Max; i++)
+			{
+				AdjustRefIndex(cursor, result.index[i].Keys(), tracker.indexResolve[i], tracker.asr);
+			}
 		}
 
 		// a link is not possible to be the last token of a valid C++ file, so this should just work
 		auto flr = global->fileLines[currentFilePath];
-		bool isDefToken = indexDecl.inRange;
-		bool isRefToken = indexResolve[(vint)IndexReason::Resolved].inRange || indexResolve[(vint)IndexReason::OverloadedResolution].inRange;
+		bool isDefToken = tracker.indexDecl.inRange;
+		bool isRefToken = tracker.indexResolve[(vint)IndexReason::Resolved].inRange || tracker.indexResolve[(vint)IndexReason::OverloadedResolution].inRange;
 
-		if (isDefToken && !lastTokenIsDef)
+		if (isDefToken && !tracker.lastTokenIsDef)
 		{
-			auto decl = result.decls.Values()[indexDecl.index];
+			auto decl = result.decls.Values()[tracker.indexDecl.index];
 			if (!global->declToFiles.Keys().Contains(decl.Obj()))
 			{
 				global->declToFiles.Add(decl, currentFilePath);
@@ -660,7 +684,7 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 				Use(html).WriteString(L"<div>");
 			}
 		}
-		else if(!isDefToken && lastTokenIsDef)
+		else if(!isDefToken && tracker.lastTokenIsDef)
 		{
 			Use(html).WriteString(L"</div></div>");
 		}
@@ -668,13 +692,13 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 		// sometimes the compiler will try to parse an expression and see if it fails.
 		// in this case an indexed token may finally become the name of a definition.
 		// so we should ignore these tokens.
-		if (!isDefToken && isRefToken && !lastTokenIsRef)
+		if (!isDefToken && isRefToken && !tracker.lastTokenIsRef)
 		{
 			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
-				if (indexResolve[i].inRange)
+				if (tracker.indexResolve[i].inRange)
 				{
-					auto& symbols = result.index[i].GetByIndex(indexResolve[i].index);
+					auto& symbols = result.index[i].GetByIndex(tracker.indexResolve[i].index);
 					for (vint j = 0; j < symbols.Count(); j++)
 					{
 						auto symbol = symbols[j];
@@ -690,9 +714,9 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
 				if (i != 0) Use(html).WriteString(L"], [");
-				if (indexResolve[i].inRange)
+				if (tracker.indexResolve[i].inRange)
 				{
-					auto& symbols = result.index[i].GetByIndex(indexResolve[i].index);
+					auto& symbols = result.index[i].GetByIndex(tracker.indexResolve[i].index);
 					for (vint j = 0; j < symbols.Count(); j++)
 					{
 						if (j != 0) Use(html).WriteString(L", ");
@@ -705,39 +729,40 @@ void GenerateHtmlLine(Ptr<CppTokenCursor>& cursor, Ptr<GlobalLinesRecord> global
 			}
 			Use(html).WriteString(L"])\">");
 		}
-		else if (!lastTokenIsDef && !isRefToken && lastTokenIsRef)
+		else if (!tracker.lastTokenIsDef && !isRefToken && tracker.lastTokenIsRef)
 		{
 			Use(html).WriteString(L"</div>");
 		}
 
-		lastTokenIsDef = isDefToken;
-		lastTokenIsRef = isRefToken;
+		tracker.lastTokenIsDef = isDefToken;
+		tracker.lastTokenIsRef = isRefToken;
+
+		if (!firstToken && cursor && (CppTokens)cursor->token.token == CppTokens::SHARP)
+		{
+			// let the outside decide whether this # need to be generate HTML code or not
+			break;
+		}
 
 		// write a token
 		Symbol* symbolForToken = nullptr;
 		if (isDefToken)
 		{
-			symbolForToken = result.decls.Values()[indexDecl.index]->symbol;
+			symbolForToken = result.decls.Values()[tracker.indexDecl.index]->symbol;
 		}
 		else if (isRefToken)
 		{
 			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
-				if (indexResolve[i].inRange)
+				if (tracker.indexResolve[i].inRange)
 				{
-					symbolForToken = result.index[i].GetByIndex(indexResolve[i].index)[0];
+					symbolForToken = result.index[i].GetByIndex(tracker.indexResolve[i].index)[0];
 					break;
 				}
 			}
 		}
-		GenerateHtmlToken(cursor, result, symbolForToken, indexResolve, rawBegin, rawEnd, html, lineCounter, callback);
-
+		GenerateHtmlToken(cursor, result, symbolForToken, rawBegin, rawEnd, html, lineCounter, callback);
 		SkipToken(cursor);
-		if (cursor && (CppTokens)cursor->token.token == CppTokens::SHARP)
-		{
-			// let the outside decide whether this # need to be generate HTML code or not
-			break;
-		}
+		firstToken = false;
 	}
 }
 
@@ -773,6 +798,7 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, File
 	vint currentLineNumber = 0;
 	WString currentFilePath;
 	bool rightAfterSharpLine = false;
+	TokenTracker tracker;
 	while (cursor)
 	{
 		{
@@ -831,7 +857,7 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, File
 		GIVE_UP:
 			cursor = oldCursor;
 		}
-		GenerateHtmlLine(cursor, global, currentFilePath, skipping, result, [&](HtmlLineRecord hlr)
+		GenerateHtmlLine(cursor, global, currentFilePath, skipping, result, tracker, [&](HtmlLineRecord hlr)
 		{
 			if (rightAfterSharpLine)
 			{
