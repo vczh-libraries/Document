@@ -1148,7 +1148,9 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 Index Page Generating
 ***********************************************************************/
 
-void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml)
+using FileGroupConfig = List<Tuple<WString, WString>>;
+
+void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGroupConfig& fileGroups)
 {
 	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
 	Utf8Encoder encoder;
@@ -1167,13 +1169,49 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml)
 	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
 	writer.WriteLine(L"<br>");
 	writer.WriteLine(L"<br>");
-	for (vint i = 0; i < global->fileLines.Count(); i++)
+
+	List<Ptr<FileLinesRecord>> flrs;
+	CopyFrom(
+		flrs,
+		From(global->fileLines.Values())
+			.OrderBy([](Ptr<FileLinesRecord> flr1, Ptr<FileLinesRecord> flr2)
+			{
+				return WString::Compare(flr1->filePath.GetFullPath(), flr2->filePath.GetFullPath());
+			})
+		);
+	for (vint i = 0; i < fileGroups.Count(); i++)
 	{
-		writer.WriteString(L"<a class=\"fileIndex\" href=\"./");
-		writer.WriteString(global->fileLines.Values()[i]->htmlFileName);
-		writer.WriteString(L".html\">");
-		writer.WriteString(global->fileLines.Values()[i]->filePath.GetName());
-		writer.WriteLine(L"</a><br>");
+		auto prefix = fileGroups[i].f0;
+		writer.WriteString(L"<span class=\"fileGroupLabel\">");
+		writer.WriteString(fileGroups[i].f1);
+		writer.WriteLine(L"</span><br>");
+
+		for (vint j = 0; j < flrs.Count(); j++)
+		{
+			auto flr = flrs[j];
+			if (INVLOC.StartsWith(wupper(flr->filePath.GetFullPath()), prefix, Locale::Normalization::None))
+			{
+				writer.WriteString(L"&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"fileIndex\" href=\"./");
+				writer.WriteString(flr->htmlFileName);
+				writer.WriteString(L".html\">");
+				writer.WriteString(flr->filePath.GetFullPath().Right(flr->filePath.GetFullPath().Length() - prefix.Length()));
+				writer.WriteLine(L"</a><br>");
+				flrs.RemoveAt(j--);
+			}
+		}
+	}
+	{
+		writer.WriteString(L"<span class=\"fileGroupLabel\">");
+
+		for (vint j = 0; j < flrs.Count(); j++)
+		{
+			auto flr = flrs[j];
+			writer.WriteString(L"<a class=\"fileIndex\" href=\"./");
+			writer.WriteString(flr->htmlFileName);
+			writer.WriteString(L".html\">");
+			writer.WriteString(flr->filePath.GetFullPath());
+			writer.WriteLine(L"</a><br>");
+		}
 	}
 	writer.WriteLine(L"</body>");
 	writer.WriteLine(L"</html>");
@@ -1448,7 +1486,39 @@ int main()
 				auto flr = global->fileLines.Values()[i];
 				GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / (flr->htmlFileName + L".html"));
 			}
-			GenerateFileIndex(global, folderOutput.GetFilePath() / L"FileIndex.html");
+
+			FileGroupConfig fileGroups;
+			{
+				auto projectFolder = wupper(folderOutput.GetFilePath().GetFolder().GetFullPath() + FilePath::Delimiter);
+				fileGroups.Add({ projectFolder, L"Project Files" });
+
+				FilePath sdkPath;
+				for (vint i = 0; i < global->fileLines.Count(); i++)
+				{
+					auto filePath = global->fileLines.Values()[i]->filePath;
+					if (!INVLOC.StartsWith(wupper(filePath.GetFullPath()), projectFolder, Locale::Normalization::None))
+					{
+						if (sdkPath.IsRoot())
+						{
+							sdkPath = filePath;
+						}
+						else
+						{
+							while (!sdkPath.IsRoot() && !INVLOC.StartsWith(wupper(filePath.GetFullPath()), wupper(sdkPath.GetFullPath() + FilePath::Delimiter), Locale::Normalization::None))
+							{
+								sdkPath = sdkPath.GetFolder();
+							}
+						}
+					}
+				}
+
+				if (!sdkPath.IsRoot())
+				{
+					fileGroups.Add({ wupper(sdkPath.GetFullPath() + FilePath::Delimiter), L"Windows SDK Files in: " + sdkPath.GetFullPath() });
+				}
+			}
+
+			GenerateFileIndex(global, folderOutput.GetFilePath() / L"FileIndex.html", fileGroups);
 			GenerateSymbolIndex(global, indexResult, folderOutput.GetFilePath() / L"SymbolIndex.html");
 		}
 	}

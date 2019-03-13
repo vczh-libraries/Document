@@ -126,6 +126,11 @@ a.fileIndex {
         text-decoration: underline;
     }
 
+span.fileGroupLabel {
+    color: #FFFFFF;
+    font-weight: 900;
+}
+
 
 a.symbolIndex {
     font-size: 0.7em;

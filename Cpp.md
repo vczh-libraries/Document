@@ -27,8 +27,7 @@
       - e.g. `ClassName::Function(arg1, arg2)` in colors.
       - Change `displayName` field to `htmlFileName`.
     - When clicked on a turnning on element, the dropdown should not scale.
-    - Index pages need to separate my files and sdk files.
-    - File Index page need to show directory hierarchy.
+    - Symbol Index page need to separate my files and sdk files.
   - [x] Generate HTML index. (multiple pages)
   - [ ] Revert the ignoring.
   - [ ] Revert `Macro_va_start` in `Parser_Stat.cpp`.
