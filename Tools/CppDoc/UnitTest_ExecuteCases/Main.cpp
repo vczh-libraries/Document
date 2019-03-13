@@ -465,6 +465,38 @@ StreamWriter& Use(Ptr<StreamHolder>& holder)
 	return holder->streamWriter;
 }
 
+const wchar_t* GetSymbolDivClass(Symbol* symbol)
+{
+	switch (symbol->kind)
+	{
+	case symbol_component::SymbolKind::Enum:
+	case symbol_component::SymbolKind::Class:
+	case symbol_component::SymbolKind::Struct:
+	case symbol_component::SymbolKind::Union:
+	case symbol_component::SymbolKind::TypeAlias:
+		return L"cpp_type";
+	case symbol_component::SymbolKind::EnumItem:
+		return L"cpp_enum";
+	case symbol_component::SymbolKind::Variable:
+		if (symbol->parent)
+		{
+			if (symbol->parent->definition.Cast<FunctionDeclaration>())
+			{
+				return L"cpp_argument";
+			}
+			else if (symbol->parent->definition.Cast<ClassDeclaration>())
+			{
+				return L"cpp_field";
+			}
+		}
+		break;
+	case symbol_component::SymbolKind::Function:
+		return L"cpp_function";
+	default:
+		return nullptr;
+	}
+}
+
 template<typename T>
 void GenerateHtmlToken(
 	Ptr<CppTokenCursor>& cursor,
@@ -504,35 +536,7 @@ void GenerateHtmlToken(
 	default:
 		if (symbolForToken)
 		{
-			switch (symbolForToken->kind)
-			{
-			case symbol_component::SymbolKind::Enum:
-			case symbol_component::SymbolKind::Class:
-			case symbol_component::SymbolKind::Struct:
-			case symbol_component::SymbolKind::Union:
-			case symbol_component::SymbolKind::TypeAlias:
-				divClass = L"cpp_type";
-				break;
-			case symbol_component::SymbolKind::EnumItem:
-				divClass = L"cpp_enum";
-				break;
-			case symbol_component::SymbolKind::Variable:
-				if (symbolForToken->parent)
-				{
-					if (symbolForToken->parent->definition.Cast<FunctionDeclaration>())
-					{
-						divClass = L"cpp_argument";
-					}
-					else if (symbolForToken->parent->definition.Cast<ClassDeclaration>())
-					{
-						divClass = L"cpp_field";
-					}
-				}
-				break;
-			case symbol_component::SymbolKind::Function:
-				divClass = L"cpp_function";
-				break;
-			}
+			divClass = GetSymbolDivClass(symbolForToken);
 		}
 	}
 
@@ -1068,8 +1072,42 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 		auto symbol = flr->refSymbols[i];
 		writer.WriteString(L"    \'");
 		writer.WriteString(symbol->uniqueId);
-		writer.WriteString(L"\': { \'name\': \'");
-		writer.WriteString(symbol->name);
+		writer.WriteString(L"\': { \'displayNameInHtml\': \'");
+		{
+			WString displayNameInHtml;
+			if (symbol->kind == symbol_component::SymbolKind::Namespace)
+			{
+				auto current = symbol;
+				while (current->kind != symbol_component::SymbolKind::Root)
+				{
+					if (current != symbol) displayNameInHtml = L"::" + displayNameInHtml;
+					displayNameInHtml = current->name + displayNameInHtml;
+					current = current->parent;
+				}
+			}
+			else if (symbol->kind == symbol_component::SymbolKind::Variable && (symbol->parent && !symbol->parent->definition.Cast<ClassDeclaration>()))
+			{
+				displayNameInHtml = symbol->name;
+			}
+			else
+			{
+				auto current = symbol;
+				while (current->kind != symbol_component::SymbolKind::Root && current->kind != symbol_component::SymbolKind::Namespace)
+				{
+					if (current != symbol) displayNameInHtml = L"::" + displayNameInHtml;
+					if (auto divClass = GetSymbolDivClass(current))
+					{
+						displayNameInHtml = L"<span class=\"" + WString(divClass, false) + L"\">" + current->name + L"</span>" + displayNameInHtml;
+					}
+					else
+					{
+						displayNameInHtml = current->name + displayNameInHtml;
+					}
+					current = current->parent;
+				}
+			}
+			writer.WriteString(displayNameInHtml);
+		}
 		writer.WriteString(L"\', \'definition\': ");
 		writer.WriteString(symbol->definition ? L"true" : L"false");
 		writer.WriteString(L", \'declarations\': ");
@@ -1492,29 +1530,19 @@ int main()
 				auto projectFolder = wupper(folderOutput.GetFilePath().GetFolder().GetFullPath() + FilePath::Delimiter);
 				fileGroups.Add({ projectFolder, L"Project Files" });
 
-				FilePath sdkPath;
+				SortedList<FilePath> sdkPaths;
 				for (vint i = 0; i < global->fileLines.Count(); i++)
 				{
 					auto filePath = global->fileLines.Values()[i]->filePath;
 					if (!INVLOC.StartsWith(wupper(filePath.GetFullPath()), projectFolder, Locale::Normalization::None))
 					{
-						if (sdkPath.IsRoot())
+						auto sdkPath = filePath.GetFolder();
+						if (!sdkPaths.Contains(sdkPath))
 						{
-							sdkPath = filePath;
-						}
-						else
-						{
-							while (!sdkPath.IsRoot() && !INVLOC.StartsWith(wupper(filePath.GetFullPath()), wupper(sdkPath.GetFullPath() + FilePath::Delimiter), Locale::Normalization::None))
-							{
-								sdkPath = sdkPath.GetFolder();
-							}
+							sdkPaths.Add(sdkPath);
+							fileGroups.Add({ wupper(sdkPath.GetFullPath() + FilePath::Delimiter), L"SDK Files in: " + sdkPath.GetFullPath() });
 						}
 					}
-				}
-
-				if (!sdkPath.IsRoot())
-				{
-					fileGroups.Add({ wupper(sdkPath.GetFullPath() + FilePath::Delimiter), L"Windows SDK Files in: " + sdkPath.GetFullPath() });
 				}
 			}
 

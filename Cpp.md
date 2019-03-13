@@ -23,9 +23,7 @@
   - [x] Generate HTML index. (single page)
   - [x] Wrong HTML for multi-token name, need to generate only one def div containing all tokens.
   - [x] One symbol may have multiple declarations, need to show them all in drop down.
-    - Need to display keyword (e.g. `class`), symbol name and C++ full name in dropdown, instead of just a name.
-      - e.g. `ClassName::Function(arg1, arg2)` in colors.
-      - Change `displayName` field to `htmlFileName`.
+    - Missing `Overload Resolution`
     - When clicked on a turnning on element, the dropdown should not scale.
     - Symbol Index page need to separate my files and sdk files.
   - [x] Generate HTML index. (multiple pages)

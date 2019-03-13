@@ -152,10 +152,10 @@ Evaluation
 			double right = (self->right->Accept(this), result);
 			switch (self->op)
 			{
-			case BinaryOperator::Add:result = left + right; break;
-			case BinaryOperator::Sub:result = left - right; break;
-			case BinaryOperator::Mul:result = left * right; break;
-			case BinaryOperator::Div:result = left / right; break;
+			case BinaryOperator::Add: result = left + right; break;
+			case BinaryOperator::Sub: result = left - right; break;
+			case BinaryOperator::Mul: result = left * right; break;
+			case BinaryOperator::Div: result = left / right; break;
 			}
 		}
 	};

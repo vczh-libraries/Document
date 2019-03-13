@@ -61,7 +61,6 @@ body {
 /* functional color */
 
 .def.focused {
-    font-size: 1.8em;
     background-color: #FFFF00;
     color: #000000;
 }
@@ -128,7 +127,6 @@ a.fileIndex {
 
 span.fileGroupLabel {
     color: #FFFFFF;
-    font-weight: 900;
 }
 
 
@@ -216,17 +214,21 @@ a.symbolIndex {
 
 .dropdownData.symbol {
     padding-left: 1em;
-    vertical-align: top;
+    color: #FFFFFF;
 }
 
 .dropdownData.label {
-    color: #FFFFFF;
-    font-size: 0.7em;
-    padding: 2px;
-    color: #afafaf;
-    background-color: #2f2f2f;
-    text-decoration: none;
+    padding-left: 2em;
 }
+
+    .dropdownData.label span {
+        color: #FFFFFF;
+        font-size: 0.7em;
+        padding: 2px;
+        color: #afafaf;
+        background-color: #2f2f2f;
+        text-decoration: none;
+    }
 
 .dropdownData.link {
     color: #569cd6;

@@ -85,20 +85,19 @@ function promptTooltipDropdownData(dropdownData, underElement) {
     ${
         dropdownData.map(function (idGroup) {
             return `
-            <tr><td colspan="3" class="dropdownData idGroup">${idGroup.name}</td></tr>
+            <tr><td colspan="2" class="dropdownData idGroup">${idGroup.name}</td></tr>
             ${
                 idGroup.symbols.map(function (symbol) {
                     return `
-                    <tr><td rowspan="${symbol.decls.length + 1}" class="dropdownData symbol">${symbol.name}</td></tr>
+                    <tr><td colspan="2" class="dropdownData symbol">${symbol.displayNameInHtml}</td></tr>
                     ${
                         symbol.decls.map(function (decl) {
                             return `
                             <tr>
-                                <td></td>
-                                <td><span class="dropdownData label">${decl.label}</span></td>
+                                <td class="dropdownData label"><span>${decl.label}</span></td>
                                 <td>
                                     <a class="dropdownData link" onclick="${decl.file === null ? `closeTooltip(); jumpToSymbolInThisPage('${decl.elementId}');` : `closeTooltip(); jumpToSymbolInOtherPage('${decl.elementId}', '${decl.file.htmlFileName}');`}">
-                                        ${decl.file === null ? 'Jump To' : decl.file.displayName}
+                                        ${decl.file === null ? 'Highlight it' : decl.file.displayName}
                                     </a>
                                 </td>
                             </tr>
@@ -121,7 +120,7 @@ function promptTooltipDropdownData(dropdownData, underElement) {
  * dropdownData: {
  *   name: string,                  // group name
  *   symbols: {
- *     name: string,                // symbol name
+ *     displayNameInHtml: string,   // display name
  *     decls: {
  *       label: string,             // the label of this declaration
  *       file: {
@@ -147,7 +146,7 @@ function jumpToSymbol(overloadResolutions, resolved) {
         for (uniqueId of packedArguments[idsKey]) {
             const referencedSymbol = referencedSymbols[uniqueId];
             if (referencedSymbol !== undefined) {
-                const symbol = { name: referencedSymbol.name, decls: [] };
+                const symbol = { displayNameInHtml: referencedSymbol.displayNameInHtml, decls: [] };
 
                 if (referencedSymbol.definition === true) {
                     const elementId = 'Decl$' + uniqueId;
@@ -178,7 +177,7 @@ function jumpToSymbol(overloadResolutions, resolved) {
     }
 
     if (dropdownData.length === 0) {
-        promptTooltipMessage('The target symbol is not defined in the source code.', event.target);
+        promptTooltipMessage('The target symbol is not defined in the source code.', event.target.parentElement);
         return;
     }
 
@@ -199,5 +198,5 @@ function jumpToSymbol(overloadResolutions, resolved) {
         }
     }
 
-    promptTooltipDropdownData(dropdownData, event.target);
+    promptTooltipDropdownData(dropdownData, event.target.parentElement);
 }
