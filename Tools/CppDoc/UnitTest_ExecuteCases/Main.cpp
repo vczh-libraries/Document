@@ -955,7 +955,6 @@ public:
 		{
 			result = L"(" + result + L")";
 		}
-		self->type->Accept(this);
 
 		if (self->expr)
 		{
@@ -965,6 +964,8 @@ public:
 		{
 			result += L"[]";
 		}
+
+		self->type->Accept(this);
 	}
 
 	void Visit(CallingConventionType* self)override
@@ -987,7 +988,6 @@ public:
 		{
 			result = L"(" + result + L")";
 		}
-		self->returnType->Accept(this);
 
 		result += L"(";
 		for (vint i = 0; i < self->parameters.Count(); i++)
@@ -1010,6 +1010,8 @@ public:
 			self->decoratorReturnType->Accept(&visitor);
 			result += visitor.result;
 		}
+
+		self->returnType->Accept(this);
 	}
 
 	void Visit(MemberType* self)override
