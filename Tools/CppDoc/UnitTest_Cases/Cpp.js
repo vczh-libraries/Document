@@ -49,13 +49,13 @@ function closeTooltip() {
 function promptTooltip(contentElement, underElement) {
     closeTooltip();
     const tooltipElement = new DOMParser().parseFromString(`
-    <div class="tooltip" onclick="event.stopPropagation()">
+    <div class="tooltip" onmouseleave="closeTooltip()" onclick="event.stopPropagation()">
     <div>&nbsp;</div>
     <div class="tooltipHeader">
         <div class="tooltipHeaderBorder"></div>
         <div class="tooltipHeaderFill"></div>
     </div>
-    <div class="tooltipContainer" onmouseleave="closeTooltip()"></div>
+    <div class="tooltipContainer"></div>
     </div>
 `, 'text/html').getElementsByClassName('tooltip')[0];
     tooltipElement.getElementsByClassName('tooltipContainer')[0].appendChild(contentElement);
@@ -135,6 +135,9 @@ function promptTooltipDropdownData(dropdownData, underElement) {
 
 function jumpToSymbol(overloadResolutions, resolved) {
     closeTooltip();
+    if (overloadResolutions.length === 1 && resolved.length === 1 && overloadResolutions[0] === resolved[0]) {
+        overloadResolutions = [];
+    }
     const packedArguments = {
         'Overload Resolution': overloadResolutions,
         'Resolved': resolved
