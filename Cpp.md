@@ -24,8 +24,6 @@
   - [x] Wrong HTML for multi-token name, need to generate only one def div containing all tokens.
   - [x] One symbol may have multiple declarations, need to show them all in drop down.
     - Missing `Overload Resolution`
-    - When clicked on a turnning on element, the dropdown should not scale.
-    - Symbol Index page need to separate my files and sdk files.
   - [x] Generate HTML index. (multiple pages)
   - [ ] Revert the ignoring.
   - [ ] Revert `Macro_va_start` in `Parser_Stat.cpp`.

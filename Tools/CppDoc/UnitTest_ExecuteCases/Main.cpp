@@ -492,9 +492,8 @@ const wchar_t* GetSymbolDivClass(Symbol* symbol)
 		break;
 	case symbol_component::SymbolKind::Function:
 		return L"cpp_function";
-	default:
-		return nullptr;
 	}
+	return nullptr;
 }
 
 template<typename T>
@@ -1255,8 +1254,39 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 	writer.WriteLine(L"</html>");
 }
 
-void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, vint indentation, Symbol* context, bool printBraceBeforeFirstChild, bool& printedChild)
+void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, const WString& fileGroupPrefix, vint indentation, Symbol* context, bool printBraceBeforeFirstChild, bool& printedChild)
 {
+	if (context->kind != symbol_component::SymbolKind::Root)
+	{
+		bool definedInThisFileGroup = false;
+		if (context->definition)
+		{
+			vint index = global->declToFiles.Keys().IndexOf(context->definition.Obj());
+			if (index != -1)
+			{
+				if (INVLOC.StartsWith(wupper(global->declToFiles.Values()[index].GetFullPath()), fileGroupPrefix, Locale::Normalization::None))
+				{
+					definedInThisFileGroup = true;
+				}
+			}
+		}
+		for (vint i = 0; !definedInThisFileGroup && i < context->declarations.Count(); i++)
+		{
+			vint index = global->declToFiles.Keys().IndexOf(context->declarations[i].Obj());
+			if (index != -1)
+			{
+				if (INVLOC.StartsWith(wupper(global->declToFiles.Values()[index].GetFullPath()), fileGroupPrefix, Locale::Normalization::None))
+				{
+					definedInThisFileGroup = true;
+				}
+			}
+		}
+		if (!definedInThisFileGroup)
+		{
+			return;
+		}
+	}
+
 	bool isRoot = false;
 	bool searchForChild = false;
 	const wchar_t* keyword = nullptr;
@@ -1412,7 +1442,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, vi
 			auto& children = context->children.GetByIndex(i);
 			for (vint j = 0; j < children.Count(); j++)
 			{
-				GenerateSymbolIndex(global, writer, indentation + (isRoot ? 0 : 1), children[j].Obj(), !isRoot, printedChildNextLevel);
+				GenerateSymbolIndex(global, writer, fileGroupPrefix, indentation + 1, children[j].Obj(), !isRoot, printedChildNextLevel);
 			}
 		}
 		if (printedChildNextLevel)
@@ -1426,7 +1456,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, vi
 	}
 }
 
-void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml)
+void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FileGroupConfig& fileGroups)
 {
 	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
 	Utf8Encoder encoder;
@@ -1446,8 +1476,16 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 	writer.WriteLine(L"<br>");
 	writer.WriteLine(L"<br>");
 	writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
-	bool printedChild = false;
-	GenerateSymbolIndex(global, writer, 0, result.pa.root.Obj(), false, printedChild);
+	for (vint i = 0; i < fileGroups.Count(); i++)
+	{
+		auto prefix = fileGroups[i].f0;
+		writer.WriteString(L"<span class=\"fileGroupLabel\">");
+		writer.WriteString(fileGroups[i].f1);
+		writer.WriteLine(L"</span>");
+
+		bool printedChild = false;
+		GenerateSymbolIndex(global, writer, prefix, 0, result.pa.root.Obj(), false, printedChild);
+	}
 	writer.WriteLine(L"</div></div>");
 	writer.WriteLine(L"</body>");
 	writer.WriteLine(L"</html>");
@@ -1528,7 +1566,7 @@ int main()
 			FileGroupConfig fileGroups;
 			{
 				auto projectFolder = wupper(folderOutput.GetFilePath().GetFolder().GetFullPath() + FilePath::Delimiter);
-				fileGroups.Add({ projectFolder, L"Project Files" });
+				fileGroups.Add({ projectFolder, L"In This Project" });
 
 				SortedList<FilePath> sdkPaths;
 				for (vint i = 0; i < global->fileLines.Count(); i++)
@@ -1540,14 +1578,14 @@ int main()
 						if (!sdkPaths.Contains(sdkPath))
 						{
 							sdkPaths.Add(sdkPath);
-							fileGroups.Add({ wupper(sdkPath.GetFullPath() + FilePath::Delimiter), L"SDK Files in: " + sdkPath.GetFullPath() });
+							fileGroups.Add({ wupper(sdkPath.GetFullPath() + FilePath::Delimiter), L"In SDK: " + sdkPath.GetFullPath() });
 						}
 					}
 				}
 			}
 
 			GenerateFileIndex(global, folderOutput.GetFilePath() / L"FileIndex.html", fileGroups);
-			GenerateSymbolIndex(global, indexResult, folderOutput.GetFilePath() / L"SymbolIndex.html");
+			GenerateSymbolIndex(global, indexResult, folderOutput.GetFilePath() / L"SymbolIndex.html", fileGroups);
 		}
 	}
 
