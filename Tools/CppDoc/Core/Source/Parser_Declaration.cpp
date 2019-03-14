@@ -668,13 +668,34 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cur
 ParseDeclaration_<TYPEDEF>
 ***********************************************************************/
 
+bool IsCStyleTypeReference(Ptr<CppTokenCursor>& cursor)
+{
+	bool cStyleTypeReference = false;
+	if (TestToken(cursor, CppTokens::DECL_ENUM, false) || TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
+	{
+		auto oldCursor = cursor;
+		SkipToken(cursor);
+		CppName name;
+		if (ParseCppName(name, cursor))
+		{
+			if (!TestToken(cursor, CppTokens::SEMICOLON) && !TestToken(cursor, CppTokens::LT) && !TestToken(cursor, CppTokens::COLON) && !TestToken(cursor, CppTokens::LBRACE))
+			{
+				cStyleTypeReference = true;
+			}
+		}
+		cursor = oldCursor;
+	}
+	return cStyleTypeReference;
+}
+
 void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	RequireToken(cursor, CppTokens::DECL_TYPEDEF);
 	List<Ptr<Declarator>> declarators;
 	Ptr<IdType> createdType;
 
-	if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
+	bool cStyleTypeReference = IsCStyleTypeReference(cursor);
+	if (!cStyleTypeReference && (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false)))
 	{
 		// typedef class{} ...;
 		auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, true, cursor, output);
@@ -685,7 +706,7 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		createdType->resolving->resolvedSymbols.Add(classDecl->symbol);
 		ParseNonMemberDeclarator(pa, pda_Typedefs(), createdType, cursor, declarators);
 	}
-	else if (TestToken(cursor, CppTokens::DECL_ENUM, false))
+	else if (!cStyleTypeReference && TestToken(cursor, CppTokens::DECL_ENUM, false))
 	{
 		// typedef enum{} ...;
 		auto enumDecl = ParseDeclaration_Enum_NotConsumeSemicolon(pa, true, cursor, output);
@@ -1150,23 +1171,19 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 
 	bool decoratorFriend = TestToken(cursor, CppTokens::DECL_FRIEND);
-	bool cStyleTypeReference = false;
-
-	// check if the following `struct Id` is trying to reference a type instead of to define a type
-	if (TestToken(cursor, CppTokens::DECL_ENUM, false) || TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
+	if (decoratorFriend)
 	{
+		// someone will write "friend TYPE_NAME;", just throw away, since this name must have been declared.
 		auto oldCursor = cursor;
-		SkipToken(cursor);
-		CppName name;
-		if (ParseCppName(name, cursor))
+		if (TestToken(cursor, CppTokens::ID) && TestToken(cursor, CppTokens::SEMICOLON))
 		{
-			if (!TestToken(cursor, CppTokens::SEMICOLON) && !TestToken(cursor, CppTokens::LT) && !TestToken(cursor, CppTokens::COLON) && !TestToken(cursor, CppTokens::LBRACE))
-			{
-				cStyleTypeReference = true;
-			}
+			return;
 		}
 		cursor = oldCursor;
 	}
+	bool cStyleTypeReference = IsCStyleTypeReference(cursor);
+
+	// check if the following `struct Id` is trying to reference a type instead of to define a type
 
 	{
 		auto oldCursor = cursor;

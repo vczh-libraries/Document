@@ -637,6 +637,8 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 
 	if (pdc.dr != DeclaratorRestriction::Zero)
 	{
+		while (SkipSpecifiers(cursor));
+
 		// there may be a declarator name
 		CppName cppName;
 		if (ParseDeclaratorName(pa, cppName, targetType, pdc, cursor))
@@ -645,6 +647,12 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 			declarator->type = targetType;
 			declarator->name = cppName;
 		}
+	}
+
+	if (TestToken(cursor, CppTokens::COLON))
+	{
+		// bit fields, just ignore
+		ParseExpr(pa, false, cursor);
 	}
 
 	if (!declarator)
