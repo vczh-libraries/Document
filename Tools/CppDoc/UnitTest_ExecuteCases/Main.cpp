@@ -714,9 +714,8 @@ void GenerateHtmlLine(
 			}
 
 			Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([");
-			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
+			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; (Use(html).WriteString(L"], ["), i--))
 			{
-				if (i != 0) Use(html).WriteString(L"], [");
 				if (tracker.indexResolve[i].inRange)
 				{
 					auto& symbols = result.index[i].GetByIndex(tracker.indexResolve[i].index);
@@ -727,7 +726,6 @@ void GenerateHtmlLine(
 						Use(html).WriteString(symbols[j]->uniqueId);
 						Use(html).WriteString(L"\'");
 					}
-					break;
 				}
 			}
 			Use(html).WriteString(L"])\">");

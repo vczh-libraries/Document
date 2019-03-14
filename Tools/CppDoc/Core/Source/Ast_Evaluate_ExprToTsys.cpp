@@ -537,6 +537,14 @@ public:
 				name = &childExpr->name;
 				nameResolving = &childExpr->resolving;
 			}
+			else if (auto fieldExpr = self->expr.Cast<FieldAccessExpr>())
+			{
+				if (auto fieldExprName = fieldExpr->name.Cast<IdExpr>())
+				{
+					name = &fieldExprName->name;
+					nameResolving = &fieldExprName->resolving;
+				}
+			}
 
 			ReIndex(name, nameResolving, &self->opName, &self->opResolving, selectedFunctions);
 		}
