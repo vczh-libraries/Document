@@ -14,6 +14,10 @@ body {
         display: inline;
     }
 
+    .codebox > div.cpp_default {
+        padding-bottom: calc(100vh - 5em);
+    }
+
 /* token color */
 
 .cpp_default {
@@ -219,6 +223,7 @@ a.symbolIndex {
 
 .dropdownData.label {
     padding-left: 2em;
+    width: 5em;
 }
 
     .dropdownData.label span {
@@ -230,12 +235,12 @@ a.symbolIndex {
         text-decoration: none;
     }
 
-.dropdownData.link {
+.dropdownData.link a {
     color: #569cd6;
     text-decoration: none;
     cursor: pointer;
 }
 
-    .dropdownData.link:hover {
+    .dropdownData.link a:hover {
         text-decoration: underline;
     }

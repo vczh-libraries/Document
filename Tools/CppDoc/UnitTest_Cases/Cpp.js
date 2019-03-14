@@ -49,7 +49,7 @@ function closeTooltip() {
 function promptTooltip(contentElement, underElement) {
     closeTooltip();
     const tooltipElement = new DOMParser().parseFromString(`
-    <div class="tooltip" onclick="event.stopPropagation()">
+    <div class="tooltip" onmouseleave="closeTooltip()" onclick="event.stopPropagation()">
     <div>&nbsp;</div>
     <div class="tooltipHeader">
         <div class="tooltipHeaderBorder"></div>
@@ -95,8 +95,8 @@ function promptTooltipDropdownData(dropdownData, underElement) {
                             return `
                             <tr>
                                 <td class="dropdownData label"><span>${decl.label}</span></td>
-                                <td>
-                                    <a class="dropdownData link" onclick="${decl.file === null ? `closeTooltip(); jumpToSymbolInThisPage('${decl.elementId}');` : `closeTooltip(); jumpToSymbolInOtherPage('${decl.elementId}', '${decl.file.htmlFileName}');`}">
+                                <td class="dropdownData link">
+                                    <a onclick="${decl.file === null ? `closeTooltip(); jumpToSymbolInThisPage('${decl.elementId}');` : `closeTooltip(); jumpToSymbolInOtherPage('${decl.elementId}', '${decl.file.htmlFileName}');`}">
                                         ${decl.file === null ? 'Highlight it' : decl.file.displayName}
                                     </a>
                                 </td>
