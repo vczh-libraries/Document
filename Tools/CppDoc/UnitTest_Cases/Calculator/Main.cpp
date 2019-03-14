@@ -6,6 +6,10 @@ using namespace calculator;
 
 #define MAX_BUFFER 1024
 
+// See if the parameter type is correctly rendered, by clicking the JustForFun call in the main function.
+void JustForFun() {}
+void JustForFun(const int*(&(__fastcall * const&)(const volatile Expr &&, int Expr::Ptr::*))[10]) {}
+
 int main()
 {
 	char input[MAX_BUFFER];
@@ -21,5 +25,6 @@ int main()
 		Print(expr);
 		printf(" = %g\n", Evaluate(expr));
 	}
+	JustForFun(nullptr);
 	return 0;
 }

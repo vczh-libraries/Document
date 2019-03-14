@@ -49,7 +49,7 @@ function closeTooltip() {
 function promptTooltip(contentElement, underElement) {
     closeTooltip();
     const tooltipElement = new DOMParser().parseFromString(`
-    <div class="tooltip" onmouseleave="closeTooltip()" onclick="event.stopPropagation()">
+    <div class="tooltip" onclick="event.stopPropagation()">
     <div>&nbsp;</div>
     <div class="tooltipHeader">
         <div class="tooltipHeaderBorder"></div>

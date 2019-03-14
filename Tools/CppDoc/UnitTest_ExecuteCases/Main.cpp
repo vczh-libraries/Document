@@ -1,5 +1,6 @@
 #include <Parser.h>
 #include <Ast_Decl.h>
+#include <Ast_Type.h>
 
 using namespace vl::stream;
 using namespace vl::filesystem;
@@ -898,6 +899,239 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, File
 Source Code Page Generating
 ***********************************************************************/
 
+WString GetDisplayNameInHtml(Symbol* symbol);
+
+class GetDisplayNameInHtmlTypeVisitor : public Object, public ITypeVisitor
+{
+public:
+	WString											result;
+
+	void Visit(PrimitiveType* self)override
+	{
+		switch (self->primitive)
+		{
+		case CppPrimitiveType::_auto:			result = L"<span class=\"cpp_keyword\">auto</span>" + result;			break;
+		case CppPrimitiveType::_void:			result = L"<span class=\"cpp_keyword\">void</span>" + result;			break;
+		case CppPrimitiveType::_bool:			result = L"<span class=\"cpp_keyword\">bool</span>" + result;			break;
+		case CppPrimitiveType::_char:			result = L"<span class=\"cpp_keyword\">char</span>" + result;			break;
+		case CppPrimitiveType::_wchar_t:		result = L"<span class=\"cpp_keyword\">wchar_t</span>" + result;		break;
+		case CppPrimitiveType::_char16_t:		result = L"<span class=\"cpp_keyword\">char16_t</span>" + result;		break;
+		case CppPrimitiveType::_char32_t:		result = L"<span class=\"cpp_keyword\">char32_t</span>" + result;		break;
+		case CppPrimitiveType::_short:			result = L"<span class=\"cpp_keyword\">short</span>" + result;			break;
+		case CppPrimitiveType::_int:			result = L"<span class=\"cpp_keyword\">int</span>" + result;			break;
+		case CppPrimitiveType::___int8:			result = L"<span class=\"cpp_keyword\">__int8</span>" + result;			break;
+		case CppPrimitiveType::___int16:		result = L"<span class=\"cpp_keyword\">__int16</span>" + result;		break;
+		case CppPrimitiveType::___int32:		result = L"<span class=\"cpp_keyword\">__int32</span>" + result;		break;
+		case CppPrimitiveType::___int64:		result = L"<span class=\"cpp_keyword\">__int64;</span>" + result;		break;
+		case CppPrimitiveType::_long:			result = L"<span class=\"cpp_keyword\">long</span>" + result;			break;
+		case CppPrimitiveType::_long_int:		result = L"<span class=\"cpp_keyword\">long int</span>" + result;		break;
+		case CppPrimitiveType::_long_long:		result = L"<span class=\"cpp_keyword\">long long</span>" + result;		break;
+		case CppPrimitiveType::_float:			result = L"<span class=\"cpp_keyword\">float</span>" + result;			break;
+		case CppPrimitiveType::_double:			result = L"<span class=\"cpp_keyword\">double</span>" + result;			break;
+		case CppPrimitiveType::_long_double:	result = L"<span class=\"cpp_keyword\">long double</span>" + result;	break;
+		}
+
+		switch (self->prefix)
+		{
+		case CppPrimitivePrefix::_signed:		result = L"<span class=\"cpp_keyword\">signed</span>" + result;			break;
+		case CppPrimitivePrefix::_unsigned:		result = L"<span class=\"cpp_keyword\">unsigned</span>" + result;		break;
+		}
+	}
+
+	void Visit(ReferenceType* self)override
+	{
+		switch (self->reference)
+		{
+		case CppReferenceType::Ptr:				result = L" *" + result;	break;
+		case CppReferenceType::LRef:			result = L" &" + result;	break;
+		case CppReferenceType::RRef:			result = L" &&" + result;	break;
+		}
+		self->type->Accept(this);
+	}
+
+	void Visit(ArrayType* self)override
+	{
+		if (result != L"")
+		{
+			result = L"(" + result + L")";
+		}
+		self->type->Accept(this);
+
+		if (self->expr)
+		{
+			result += L"[...]";
+		}
+		else
+		{
+			result += L"[]";
+		}
+	}
+
+	void Visit(CallingConventionType* self)override
+	{
+		switch (self->callingConvention)
+		{
+		case TsysCallingConvention::CDecl:		result = L" <span class=\"cpp_keyword\">__cdecl</span>" + result;		break;
+		case TsysCallingConvention::ClrCall:	result = L" <span class=\"cpp_keyword\">__clrcall</span>" + result;		break;
+		case TsysCallingConvention::StdCall:	result = L" <span class=\"cpp_keyword\">__stdcall</span>" + result;		break;
+		case TsysCallingConvention::FastCall:	result = L" <span class=\"cpp_keyword\">__fastcall</span>" + result;	break;
+		case TsysCallingConvention::ThisCall:	result = L" <span class=\"cpp_keyword\">__thiscall</span>" + result;	break;
+		case TsysCallingConvention::VectorCall:	result = L" <span class=\"cpp_keyword\">__vectorcall</span>" + result;	break;
+		}
+		self->type->Accept(this);
+	}
+
+	void Visit(FunctionType* self)override
+	{
+		if (result != L"")
+		{
+			result = L"(" + result + L")";
+		}
+		self->returnType->Accept(this);
+
+		result += L"(";
+		for (vint i = 0; i < self->parameters.Count(); i++)
+		{
+			if (i != 0) result += L", ";
+			GetDisplayNameInHtmlTypeVisitor visitor;
+			self->parameters[i]->type->Accept(&visitor);
+			result += visitor.result;
+		}
+		if (self->ellipsis)
+		{
+			result += L" ...";
+		}
+		result += L")";
+
+		if (self->decoratorReturnType)
+		{
+			result += L"->";
+			GetDisplayNameInHtmlTypeVisitor visitor;
+			self->decoratorReturnType->Accept(&visitor);
+			result += visitor.result;
+		}
+	}
+
+	void Visit(MemberType* self)override
+	{
+		result = L"::" + result;
+		self->classType->Accept(this);
+		result = L" " + result;
+		self->type->Accept(this);
+	}
+
+	void Visit(DeclType* self)override
+	{
+		result = L"<span class=\"cpp_keyword\">decltype</span>(...)" + result;
+	}
+
+	void Visit(DecorateType* self)override
+	{
+		if (self->isVolatile) result = L"<span class=\"cpp_keyword\"> volatile</span>" + result;
+		if (self->isConst) result = L"<span class=\"cpp_keyword\"> const</span>" + result;
+		if (self->isConstExpr) result = L"<span class=\"cpp_keyword\"> constexpr</span>" + result;
+		self->type->Accept(this);
+	}
+
+	void Visit(RootType* self)override
+	{
+		result = L"::" + result;
+	}
+
+	void Visit(IdType* self)override
+	{
+		if (self->resolving)
+		{
+			result = GetDisplayNameInHtml(self->resolving->resolvedSymbols[0]) + result;
+		}
+		else
+		{
+			result = self->name.name + result;
+		}
+	}
+
+	void Visit(ChildType* self)override
+	{
+		if (self->resolving)
+		{
+			result = GetDisplayNameInHtml(self->resolving->resolvedSymbols[0]) + result;
+		}
+		else
+		{
+			result = L"::" + self->name.name + result;
+			self->classType->Accept(this);
+		}
+	}
+
+	void Visit(GenericType* self)override
+	{
+		throw Exception(L"Not Implemented.");
+	}
+
+	void Visit(VariadicTemplateArgumentType* self)override
+	{
+		throw Exception(L"Not Implemented.");
+	}
+
+};
+
+WString GetDisplayNameInHtml(Symbol* symbol)
+{
+	WString displayNameInHtml;
+	if (symbol->kind == symbol_component::SymbolKind::Namespace)
+	{
+		auto current = symbol;
+		while (current->kind != symbol_component::SymbolKind::Root)
+		{
+			if (current != symbol) displayNameInHtml = L"::" + displayNameInHtml;
+			displayNameInHtml = current->name + displayNameInHtml;
+			current = current->parent;
+		}
+	}
+	else if (symbol->kind == symbol_component::SymbolKind::Variable && (symbol->parent && !symbol->parent->definition.Cast<ClassDeclaration>()))
+	{
+		displayNameInHtml = symbol->name;
+	}
+	else
+	{
+		auto current = symbol;
+		while (current->kind != symbol_component::SymbolKind::Root && current->kind != symbol_component::SymbolKind::Namespace)
+		{
+			if (current != symbol) displayNameInHtml = L"::" + displayNameInHtml;
+			if (auto divClass = GetSymbolDivClass(current))
+			{
+				displayNameInHtml = L"<span class=\"" + WString(divClass, false) + L"\">" + current->name + L"</span>" + displayNameInHtml;
+			}
+			else
+			{
+				displayNameInHtml = current->name + displayNameInHtml;
+			}
+			current = current->parent;
+		}
+	}
+
+	if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+	{
+		if (auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>())
+		{
+			displayNameInHtml += L"(";
+			for (vint i = 0; i < funcType->parameters.Count(); i++)
+			{
+				if (i != 0) displayNameInHtml += L", ";
+				GetDisplayNameInHtmlTypeVisitor visitor;
+				funcType->parameters[i]->type->Accept(&visitor);
+				displayNameInHtml += visitor.result;
+			}
+			if (funcType->ellipsis)
+			{
+				displayNameInHtml += L" ...";
+			}
+			displayNameInHtml += L")";
+		}
+	}
+	return displayNameInHtml;
+}
+
 void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, IndexResult& result, FilePath pathHtml)
 {
 	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
@@ -1071,39 +1305,7 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 		writer.WriteString(symbol->uniqueId);
 		writer.WriteString(L"\': { \'displayNameInHtml\': \'");
 		{
-			WString displayNameInHtml;
-			if (symbol->kind == symbol_component::SymbolKind::Namespace)
-			{
-				auto current = symbol;
-				while (current->kind != symbol_component::SymbolKind::Root)
-				{
-					if (current != symbol) displayNameInHtml = L"::" + displayNameInHtml;
-					displayNameInHtml = current->name + displayNameInHtml;
-					current = current->parent;
-				}
-			}
-			else if (symbol->kind == symbol_component::SymbolKind::Variable && (symbol->parent && !symbol->parent->definition.Cast<ClassDeclaration>()))
-			{
-				displayNameInHtml = symbol->name;
-			}
-			else
-			{
-				auto current = symbol;
-				while (current->kind != symbol_component::SymbolKind::Root && current->kind != symbol_component::SymbolKind::Namespace)
-				{
-					if (current != symbol) displayNameInHtml = L"::" + displayNameInHtml;
-					if (auto divClass = GetSymbolDivClass(current))
-					{
-						displayNameInHtml = L"<span class=\"" + WString(divClass, false) + L"\">" + current->name + L"</span>" + displayNameInHtml;
-					}
-					else
-					{
-						displayNameInHtml = current->name + displayNameInHtml;
-					}
-					current = current->parent;
-				}
-			}
-			writer.WriteString(displayNameInHtml);
+			writer.WriteString(GetDisplayNameInHtml(symbol));
 		}
 		writer.WriteString(L"\', \'definition\': ");
 		writer.WriteString(symbol->definition ? L"true" : L"false");
