@@ -15,21 +15,16 @@
 ## Template short-term tasks
 
 - [ ] Parse template headers.
-  - [x] When a `template` begins, an anonymous symbol is created to store template arguments.
-  - [x] Support C's `struct <TYPE>` type reference as IdType, along with `class`, `union` and `enum`, also allow that the type is not even declared.
-  - [x] After a template header is parsed, search for the matching `}`, maybe a `;` is right after that, ignore all of them.
-  - [x] Parse current cases in `UnitTest_Cases`.
-  - [x] Add more cases, ensure that preprocessed files of them doesn't really touch template things.
-  - [x] Generate HTML index. (single page)
-  - [x] Wrong HTML for multi-token name, need to generate only one def div containing all tokens.
-  - [x] One symbol may have multiple declarations, need to show them all in drop down.
-  - [x] Generate HTML index. (multiple pages)
   - [ ] Revert the ignoring.
   - [ ] Revert `Macro_va_start` in `Parser_Stat.cpp`.
   - [ ] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
+  - [ ] Change `TemplateArgument` type to be `Decl` + index (order in argument list).
 - [ ] `template` on `using` type alias declaration.
   - [ ] Default template argument.
   - [ ] Type function calculation, may need to create `TemplateDeclaration` and `TsysType::Generic` as a function, removing current ones.
+  - [ ] `...` type.
+  - [ ] Write a lot of test cases for `decltype` inside `using`.
+  - [ ] Test both unresolved type (when type arguments are not assigned) and resolved type (when type arguments are assigned), or partially resolved type (when type arguments are assigned to other unresolved type).
 - [ ] `template` on functions.
   - [ ] Connect function with forward declarations
   - [ ] Overload functions with all template argument (except defaults) specified.
