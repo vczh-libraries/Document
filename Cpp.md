@@ -15,8 +15,6 @@
 ## Template short-term tasks
 
 - [ ] Parse template headers.
-  - [ ] Revert the ignoring.
-  - [ ] Revert `Macro_va_start` in `Parser_Stat.cpp`.
   - [ ] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
   - [ ] Change `TemplateArgument` type to be `Decl` + index (order in argument list).
 - [ ] `template` on `using` type alias declaration.
@@ -42,6 +40,7 @@
 - [ ] Initialization list.
 - [ ] Lambda expressions.
 - [ ] `Using` constant values (e.g. `is_const_v<T>`).
+- [ ] `nullptr` failed to convert to `const function_type*&`.
 
 ## Finisher Work Items
 

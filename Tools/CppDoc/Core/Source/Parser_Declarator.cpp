@@ -115,6 +115,7 @@ struct ParseDeclaratorContext
 	bool					forParameter;
 	DeclaratorRestriction	dr;
 	InitializerRestriction	ir;
+	bool					allowBitField;
 	bool					forceSpecialMethod;
 
 	ParseDeclaratorContext(const ParsingDeclaratorArguments& pda, bool _forceSpecialMethod)
@@ -122,6 +123,7 @@ struct ParseDeclaratorContext
 		, forParameter(pda.forParameter)
 		, dr(pda.dr)
 		, ir(pda.ir)
+		, allowBitField(pda.allowBitField)
 		, forceSpecialMethod(_forceSpecialMethod)
 	{
 	}
@@ -649,7 +651,7 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 		}
 	}
 
-	if (TestToken(cursor, CppTokens::COLON))
+	if (pdc.allowBitField && TestToken(cursor, CppTokens::COLON))
 	{
 		// bit fields, just ignore
 		ParseExpr(pa, false, cursor);

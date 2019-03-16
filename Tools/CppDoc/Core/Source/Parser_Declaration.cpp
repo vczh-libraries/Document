@@ -325,8 +325,13 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 ParseDeclaration_<CLASS / STRUCT / UNION>
 ***********************************************************************/
 
-Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingArguments& pa, bool forTypeDef, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingArguments& pa, const TemplateSpecResult& spec, bool forTypeDef, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
+	if (spec.f1)
+	{
+		throw StopParsingException(cursor);
+	}
+
 	// [union | class | struct] NAME ...
 	auto classType = CppClassType::Union;
 	auto symbolKind = symbol_component::SymbolKind::Union;
@@ -530,8 +535,13 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 ParseDeclaration_<USING>
 ***********************************************************************/
 
-void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult& spec, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
+	if (spec.f1)
+	{
+		throw StopParsingException(cursor);
+	}
+
 	RequireToken(cursor, CppTokens::DECL_USING);
 	if (TestToken(cursor, CppTokens::DECL_NAMESPACE))
 	{
@@ -698,7 +708,7 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 	if (!cStyleTypeReference && (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false)))
 	{
 		// typedef class{} ...;
-		auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, true, cursor, output);
+		auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, { nullptr, nullptr }, true, cursor, output);
 
 		createdType = MakePtr<IdType>();
 		createdType->name = classDecl->name;
@@ -786,6 +796,7 @@ ParseDeclaration_FuncVar
 
 void ParseDeclaration_Function(
 	const ParsingArguments& pa,
+	const TemplateSpecResult& spec,
 	Ptr<Declarator> declarator,
 	Ptr<FunctionType> funcType,
 	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_PARAMETER)
@@ -802,6 +813,11 @@ void ParseDeclaration_Function(
 	decl->methodType = methodType;\
 	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_FILL_DECLARATOR)\
 	decl->needResolveTypeFromStatement = needResolveTypeFromStatement\
+
+	if (spec.f1)
+	{
+		throw StopParsingException(cursor);
+	}
 
 	bool hasStat = TestToken(cursor, CppTokens::COLON, false) || TestToken(cursor, CppTokens::LBRACE, false);
 	bool needResolveTypeFromStatement = IsPendingType(funcType->returnType) && (!funcType->decoratorReturnType || IsPendingType(funcType->decoratorReturnType));
@@ -961,7 +977,7 @@ void ParseDeclaration_Variable(
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void ParseDeclaration_FuncVar(const ParsingArguments& pa, bool decoratorFriend, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResult& spec, bool decoratorFriend, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	// parse declarators for functions and variables
 
@@ -987,7 +1003,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, bool decoratorFriend, 
 
 	// get all declarators
 	{
-		auto pda = pda_Decls();
+		auto pda = pda_Decls(pa.context->definition.Cast<ClassDeclaration>());
 		pda.containingClass = containingClass;
 		ParseMemberDeclarator(pa, pda, cursor, declarators);
 	}
@@ -1071,6 +1087,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, bool decoratorFriend, 
 
 		ParseDeclaration_Function(
 			pa,
+			spec,
 			declarators[0],
 			funcType,
 			FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_ARGUMENT)
@@ -1083,6 +1100,10 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, bool decoratorFriend, 
 	}
 	else
 	{
+		if (spec.f1)
+		{
+			throw StopParsingException(cursor);
+		}
 		for (vint i = 0; i < declarators.Count(); i++)
 		{
 			ParseDeclaration_Variable(
@@ -1145,29 +1166,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	if (TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
 	{
 		spec = ParseTemplateSpec(pa, cursor);
-		// skip the whole thing for now
-
-		int counter = 0;
-		while (cursor)
-		{
-			if (TestToken(cursor, CppTokens::LBRACE))
-			{
-				counter++;
-			}
-			else if (TestToken(cursor, CppTokens::RBRACE))
-			{
-				counter--;
-				if (counter == 0)
-				{
-					TestToken(cursor, CppTokens::SEMICOLON);
-					return;
-				}
-			}
-			else
-			{
-				SkipToken(cursor);
-			}
-		}
 	}
 
 	bool decoratorFriend = TestToken(cursor, CppTokens::DECL_FRIEND);
@@ -1218,10 +1216,18 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 	if (TestToken(cursor, CppTokens::DECL_NAMESPACE, false))
 	{
+		if (spec.f1)
+		{
+			throw StopParsingException(cursor);
+		}
 		ParseDeclaration_Namespace(pa, cursor, output);
 	}
 	else if (!cStyleTypeReference && TestToken(cursor, CppTokens::DECL_ENUM, false))
 	{
+		if (spec.f1)
+		{
+			throw StopParsingException(cursor);
+		}
 		if (auto enumDecl = ParseDeclaration_Enum_NotConsumeSemicolon(pa, false, cursor, output))
 		{
 			if (!TestToken(cursor, CppTokens::SEMICOLON, false))
@@ -1233,7 +1239,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else if (!cStyleTypeReference && (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false)))
 	{
-		if (auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, false, cursor, output))
+		if (auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, spec, false, cursor, output))
 		{
 			if (!TestToken(cursor, CppTokens::SEMICOLON, false))
 			{
@@ -1244,15 +1250,19 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else if (TestToken(cursor, CppTokens::DECL_USING, false))
 	{
-		ParseDeclaration_Using(pa, cursor, output);
+		ParseDeclaration_Using(pa, spec, cursor, output);
 	}
 	else if(TestToken(cursor,CppTokens::DECL_TYPEDEF, false))
 	{
+		if (spec.f1)
+		{
+			throw StopParsingException(cursor);
+		}
 		ParseDeclaration_Typedef(pa, cursor, output);
 	}
 	else
 	{
-		ParseDeclaration_FuncVar(pa, decoratorFriend, cursor, output);
+		ParseDeclaration_FuncVar(pa, spec, decoratorFriend, cursor, output);
 	}
 }
 

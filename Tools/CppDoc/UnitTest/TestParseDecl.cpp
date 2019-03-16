@@ -782,6 +782,7 @@ namespace c
 {
 	struct Z : X
 	{
+		friend X;
 		a::b::Y y1;
 		Y y3;
 	};
@@ -824,10 +825,10 @@ namespace c
 		ASSERT_SYMBOL(4, L"b", 9, 10, NamespaceDeclaration, 1, 13)
 		ASSERT_SYMBOL(5, L"Y", 9, 13, EnumDeclaration, 4, 12)
 		ASSERT_SYMBOL(6, L"X", 13, 12, ClassDeclaration, 3, 8)
-		ASSERT_SYMBOL(7, L"a", 15, 2, NamespaceDeclaration, 1, 10)
-		ASSERT_SYMBOL(8, L"b", 15, 5, NamespaceDeclaration, 1, 13)
-		ASSERT_SYMBOL(9, L"Y", 15, 8, EnumDeclaration, 4, 12)
-		ASSERT_SYMBOL(10, L"Y", 16, 2, EnumDeclaration, 4, 12)
+		ASSERT_SYMBOL(7, L"a", 16, 2, NamespaceDeclaration, 1, 10)
+		ASSERT_SYMBOL(8, L"b", 16, 5, NamespaceDeclaration, 1, 13)
+		ASSERT_SYMBOL(9, L"Y", 16, 8, EnumDeclaration, 4, 12)
+		ASSERT_SYMBOL(10, L"Y", 17, 2, EnumDeclaration, 4, 12)
 	END_ASSERT_SYMBOL;
 
 	AssertProgram(input, output, recorder);
@@ -924,6 +925,7 @@ using C = S;
 using D = C::T;
 typedef int a, b, c;
 typedef C::T(*d)(A, B, pS);
+typedef struct S_ S__;
 
 a _a;
 b _b;
@@ -947,6 +949,7 @@ using a = int;
 using b = int;
 using c = int;
 using d = C :: T (A, B, pS) *;
+using S__ = S_;
 _a: a;
 _b: b;
 _c: c;
@@ -1033,7 +1036,7 @@ TEST_CASE(TestParseDecl_AnonymousClassFollowedVariables)
 	auto input = LR"(
 struct
 {
-	int x;
+	int x:1;
 } x, *px;
 )";
 	auto output = LR"(

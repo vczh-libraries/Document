@@ -32,34 +32,6 @@ void ParseVariableOrExpression(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 
 Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	// TODO: Remove this one later, because currently __vcrt_assert_va_start_is_not_reference is a template struct and it is ignored in ParseDeclaration
-	static const wchar_t Macro_va_start[] = L"((void)(__vcrt_assert_va_start_is_not_reference<decltype(";
-	if (cursor && wcsncmp(cursor->token.reading, Macro_va_start, sizeof(Macro_va_start) / sizeof(*Macro_va_start) - 1) == 0)
-	{
-		vint counter = 0;
-		while (cursor)
-		{
-			if (TestToken(cursor, CppTokens::LPARENTHESIS))
-			{
-				counter++;
-			}
-			else if (TestToken(cursor, CppTokens::RPARENTHESIS))
-			{
-				counter--;
-				if (counter == 0)
-				{
-					RequireToken(cursor, CppTokens::SEMICOLON);
-					break;
-				}
-			}
-			else
-			{
-				SkipToken(cursor);
-			}
-		}
-		return MakePtr<EmptyStat>();
-	}
-
 	if (TestToken(cursor, CppTokens::SEMICOLON))
 	{
 		// ;
@@ -182,7 +154,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				List<Ptr<Declarator>> declarators;
 				try
 				{
-					ParseNonMemberDeclarator(newPa, pda_Decls(), cursor, declarators);
+					ParseNonMemberDeclarator(newPa, pda_Decls(false), cursor, declarators);
 				}
 				catch (const StopParsingException&)
 				{
@@ -225,7 +197,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			List<Ptr<Declarator>> declarators;
 			try
 			{
-				ParseNonMemberDeclarator(newPa, pda_Decls(), cursor, declarators);
+				ParseNonMemberDeclarator(newPa, pda_Decls(false), cursor, declarators);
 				RequireToken(cursor, CppTokens::SEMICOLON);
 				BuildVariablesAndSymbols(newPa, declarators, stat->varDecls, cursor);
 			}
