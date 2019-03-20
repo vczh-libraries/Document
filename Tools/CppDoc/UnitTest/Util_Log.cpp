@@ -1469,9 +1469,25 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		}
 		return;
 	case TsysType::GenericFunction:
-		break;
+		{
+			writer.WriteChar(L'<');
+			for (vint i = 0; i < tsys->GetParamCount(); i++)
+			{
+				if (i > 0) writer.WriteString(L", ");
+				Log(tsys->GetParam(i), writer);
+			}
+			writer.WriteString(L"> ");
+			Log(tsys->GetElement(), writer);
+		}
+		return;
 	case TsysType::GenericArg:
-		break;
+		{
+			Log(tsys->GetElement(), writer);
+			writer.WriteString(L"::typename[");
+			writer.WriteString(tsys->GetGenericArg().argSymbol->name);
+			writer.WriteChar(L']');
+		}
+		return;
 	}
 	throw L"Invalid!";
 }

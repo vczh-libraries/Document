@@ -20,7 +20,7 @@ using RRef = T &&;
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);
 
-		AssertType(L"LRef",				L"LRef",				L"<0:t> __arg<0> &",			pa);
-		AssertType(L"RRef",				L"RRef",				L"<0:t> __arg<0> &&",			pa);
+		AssertType(L"LRef",				L"LRef",				L"<::LRef::typename[T]> ::LRef::typename[T] &",		pa);
+		AssertType(L"RRef",				L"RRef",				L"<::RRef::typename[T]> ::RRef::typename[T] &&",	pa);
 	}
 }

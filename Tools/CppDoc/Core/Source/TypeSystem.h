@@ -206,7 +206,7 @@ namespace vl
 	};
 
 	template<>
-	struct POD<TsysGenericFunction>
+	struct POD<TsysGenericArg>
 	{
 		static const bool Result = true;
 	};
