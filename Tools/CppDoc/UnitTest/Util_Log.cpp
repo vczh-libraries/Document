@@ -941,6 +941,49 @@ private:
 		writer.WriteString(self->name.name);
 	}
 
+	void WriteTemplateSpec(TemplateSpec* spec)
+	{
+		writer.WriteString(L"template<");
+		for (vint i = 0; i < spec->arguments.Count(); i++)
+		{
+			if (i > 0) writer.WriteString(L", ");
+			auto arg = spec->arguments[i];
+			switch (arg.argumentType)
+			{
+			case CppTemplateArgumentType::HighLevelType:
+				WriteTemplateSpec(arg.templateSpec.Obj());
+				writer.WriteChar(L' ');
+			case CppTemplateArgumentType::Type:
+				writer.WriteString(L"typename");
+				if (arg.name)
+				{
+					writer.WriteChar(L' ');
+					writer.WriteString(arg.name.name);
+				}
+				if (arg.type)
+				{
+					writer.WriteString(L" = ");
+					Log(arg.type, writer);
+				}
+				break;
+			case CppTemplateArgumentType::Value:
+				Log(arg.type, writer);
+				if (arg.name)
+				{
+					writer.WriteChar(L' ');
+					writer.WriteString(arg.name.name);
+				}
+				if (arg.expr)
+				{
+					writer.WriteString(L" = ");
+					Log(arg.expr, writer);
+				}
+				break;
+			}
+		}
+		writer.WriteString(L">");
+	}
+
 public:
 	LogDeclVisitor(StreamWriter& _writer, vint _indentation, bool _semicolon)
 		:LogIndentation(_writer, _indentation)
@@ -957,6 +1000,12 @@ public:
 
 	void Visit(ForwardFunctionDeclaration* self)override
 	{
+		if (self->templateSpec)
+		{
+			WriteTemplateSpec(self->templateSpec.Obj());
+			writer.WriteLine(L"");
+			WriteIndentation();
+		}
 		writer.WriteString(L"__forward ");
 		WriteHeader(self);
 		if (semicolon) writer.WriteLine(L";");
@@ -971,6 +1020,12 @@ public:
 
 	void Visit(ForwardClassDeclaration* self)override
 	{
+		if (self->templateSpec)
+		{
+			WriteTemplateSpec(self->templateSpec.Obj());
+			writer.WriteLine(L"");
+			WriteIndentation();
+		}
 		writer.WriteString(L"__forward ");
 		WriteHeader(self);
 		if (semicolon) writer.WriteLine(L";");
@@ -1146,6 +1201,12 @@ public:
 
 	void Visit(UsingDeclaration* self)override
 	{
+		if (self->templateSpec)
+		{
+			WriteTemplateSpec(self->templateSpec.Obj());
+			writer.WriteLine(L"");
+			WriteIndentation();
+		}
 		writer.WriteString(L"using ");
 		writer.WriteString(self->name.name);
 		writer.WriteString(L" = ");

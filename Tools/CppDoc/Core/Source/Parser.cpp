@@ -52,15 +52,30 @@ Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, Symbol* existingSym
 	return existingSymbol;
 }
 
-Symbol* Symbol::AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind)
+Symbol* Symbol::AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol)
 {
 	vint index = children.Keys().IndexOf(_decl->name.name);
 	if (index == -1)
 	{
-		return CreateSymbolInternal(_decl, nullptr, kind);
+		if (reusedSymbol)
+		{
+			reusedSymbol->name = _decl->name.name;
+			reusedSymbol->kind = kind;
+			Add(reusedSymbol);
+			_decl->symbol = reusedSymbol.Obj();
+			return reusedSymbol.Obj();
+		}
+		else
+		{
+			return CreateSymbolInternal(_decl, nullptr, kind);
+		}
 	}
 	else
 	{
+		if (reusedSymbol)
+		{
+			return nullptr;
+		}
 		auto& symbols = children.GetByIndex(index);
 		if (symbols.Count() != 1) return nullptr;
 		auto symbol = symbols[0].Obj();
@@ -92,15 +107,15 @@ Symbol* Symbol::CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol,
 
 Symbol* Symbol::AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind)
 {
-	auto symbol = AddToSymbolInternal(_decl, kind);
+	auto symbol = AddToSymbolInternal(_decl, kind, nullptr);
 	if (!symbol) return nullptr;
 	symbol->declarations.Add(_decl);
 	return symbol;
 }
 
-Symbol* Symbol::AddDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind)
+Symbol* Symbol::AddDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol)
 {
-	auto symbol = AddToSymbolInternal(_decl, kind);
+	auto symbol = AddToSymbolInternal(_decl, kind, reusedSymbol);
 	if (!symbol) return nullptr;
 	if (symbol->definition) return nullptr;
 	symbol->definition = _decl;

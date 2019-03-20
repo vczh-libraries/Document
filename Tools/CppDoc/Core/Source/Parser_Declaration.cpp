@@ -537,14 +537,14 @@ ParseDeclaration_<USING>
 
 void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult& spec, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
-	if (spec.f1)
-	{
-		throw StopParsingException(cursor);
-	}
-
 	RequireToken(cursor, CppTokens::DECL_USING);
 	if (TestToken(cursor, CppTokens::DECL_NAMESPACE))
 	{
+		if (spec.f1)
+		{
+			throw StopParsingException(cursor);
+		}
+
 		// using namespace TYPE;
 		auto decl = MakePtr<UsingNamespaceDeclaration>();
 		decl->ns = ParseType(pa, cursor);
@@ -589,19 +589,28 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 			}
 
 			auto decl = MakePtr<UsingDeclaration>();
+			decl->templateSpec = spec.f1;
 			decl->name = cppName;
-			decl->type = ParseType(pa, cursor);
-			RequireToken(cursor, CppTokens::SEMICOLON);
 			output.Add(decl);
 
-			if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias))
+			auto contextSymbol = pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias, spec.f0);
+			if (!contextSymbol)
 			{
 				throw StopParsingException(cursor);
 			}
+
+			auto newPa = pa.WithContext(contextSymbol);
+			decl->type = ParseType(newPa, cursor);
+			RequireToken(cursor, CppTokens::SEMICOLON);
 			return;
 		}
 	SKIP_TYPE_ALIAS:
 		{
+			if (spec.f1)
+			{
+				throw StopParsingException(cursor);
+			}
+
 			// using TYPE[::NAME];
 			auto decl = MakePtr<UsingSymbolDeclaration>();
 			try

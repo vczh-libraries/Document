@@ -271,7 +271,7 @@ public:
 		throw NotConvertableException();
 	}
 
-	void CreateDeclType(Ptr<Resolving> resolving)
+	void CreateIdReferenceType(Ptr<Resolving> resolving)
 	{
 		if (!resolving || resolving->resolvedSymbols.Count() == 0)
 		{
@@ -300,6 +300,15 @@ public:
 			case symbol_component::SymbolKind::Union:
 				AddResult(pa.tsys->DeclOf(symbol));
 				continue;
+			case symbol_component::SymbolKind::GenericTypeArgument:
+				{
+					auto& types = symbol->evaluation.Get();
+					for (vint j = 0; j < types.Count(); j++)
+					{
+						AddResult(types[j]);
+					}
+				}
+				continue;
 			}
 			throw NotConvertableException();
 		}
@@ -307,12 +316,12 @@ public:
 
 	void Visit(IdType* self)override
 	{
-		CreateDeclType(self->resolving);
+		CreateIdReferenceType(self->resolving);
 	}
 
 	void Visit(ChildType* self)override
 	{
-		CreateDeclType(self->resolving);
+		CreateIdReferenceType(self->resolving);
 	}
 
 	void Visit(GenericType* self)override

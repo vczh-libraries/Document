@@ -72,7 +72,7 @@ class Symbol : public Object
 	using SymbolPtrList = List<Symbol*>;
 
 	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
-	Symbol*											AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind);
+	Symbol*											AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol);
 	void											Add(Ptr<Symbol> child);
 public:
 	Symbol*											parent = nullptr;
@@ -93,7 +93,7 @@ public:
 	Symbol*											CreateForwardDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
 	Symbol*											CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
 	Symbol*											AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind);
-	Symbol*											AddDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind);
+	Symbol*											AddDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol = nullptr);
 	Symbol*											CreateStatSymbol(Ptr<Stat> _stat);
 
 	template<typename T>

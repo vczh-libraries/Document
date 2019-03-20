@@ -15,8 +15,10 @@
 ## Template short-term tasks
 
 - [ ] Parse template headers.
-  - [ ] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
+  - [x] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
   - [ ] Change `TemplateArgument` type to be `Decl` + index (order in argument list).
+  - [ ] Parse `T<U>` type.
+  - [ ] Parse High level template argument.
 - [ ] `template` on `using` type alias declaration.
   - [ ] Default template argument.
   - [ ] Type function calculation, may need to create `TemplateDeclaration` and `TsysType::Generic` as a function, removing current ones.
@@ -34,7 +36,6 @@
   - [ ] `template` or `typename` in types or expressions.
   - [ ] Child type calculation, outer class either have all template argument specified, or some of them are still `TsysType::GenericArgument`.
   - [ ] Member type calculation, outer class either have all template argument specified, or some of them are still `TsysType::GenericArgument`.
-  - [ ] High level template argument.
 - [ ] Template specialization.
 - [ ] Variadic template argument.
 - [ ] Initialization list.

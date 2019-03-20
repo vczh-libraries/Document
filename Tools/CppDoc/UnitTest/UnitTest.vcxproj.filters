@@ -28,6 +28,9 @@
     <Filter Include="Source Files\MISC">
       <UniqueIdentifier>{13c2642f-d820-48fd-91d4-73f8fa1f89b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestParserGeneric">
+      <UniqueIdentifier>{b971998b-4604-4c67-9467-bba9df34b60f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -74,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="TestLexer.cpp">
       <Filter>Source Files\TestParser</Filter>
+    </ClCompile>
+    <ClCompile Include="TestParseGenericDecl.cpp">
+      <Filter>Source Files\TestParserGeneric</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
