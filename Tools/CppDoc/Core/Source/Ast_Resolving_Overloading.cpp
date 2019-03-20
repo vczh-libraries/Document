@@ -297,13 +297,6 @@ namespace symbol_type_resolving
 		case TsysType::Decl:
 			SearchAdlClassesAndNamespaces(pa, type->GetDecl(), nss, classes);
 			break;
-		case TsysType::Generic:
-			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss, classes);
-			for (vint i = 0; i < type->GetParamCount(); i++)
-			{
-				SearchAdlClassesAndNamespaces(pa, type->GetParam(i), nss, classes);
-			}
-			break;
 		}
 	}
 

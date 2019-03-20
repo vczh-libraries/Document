@@ -53,9 +53,9 @@ struct ExprTsysItem
 
 	bool operator==	(const ExprTsysItem& item)const { return Compare(*this, item) == 0; }
 	bool operator!=	(const ExprTsysItem& item)const { return Compare(*this, item) != 0; }
-	bool operator<	(const ExprTsysItem& item)const { return Compare(*this, item) < 0; }
+	bool operator<	(const ExprTsysItem& item)const { return Compare(*this, item) < 0;  }
 	bool operator<=	(const ExprTsysItem& item)const { return Compare(*this, item) <= 0; }
-	bool operator>	(const ExprTsysItem& item)const { return Compare(*this, item) > 0; }
+	bool operator>	(const ExprTsysItem& item)const { return Compare(*this, item) > 0;  }
 	bool operator>=	(const ExprTsysItem& item)const { return Compare(*this, item) >= 0; }
 };
 
@@ -138,9 +138,8 @@ struct TsysInit
 
 	TsysInit() = default;
 	TsysInit(const TsysInit& init) { CopyFrom(types, init.types); }
-	TsysInit& operator=(const TsysInit& init) { CopyFrom(types, init.types); return *this; }
-
 	TsysInit(vint count) :types(count) {}
+	TsysInit& operator=(const TsysInit& init) { CopyFrom(types, init.types); return *this; }
 
 	static vint Compare(const TsysInit& a, const TsysInit& b)
 	{
@@ -148,9 +147,44 @@ struct TsysInit
 	}
 };
 
-struct TsysGeneric
+struct TsysGenericFunction
 {
-	static vint Compare(TsysGeneric, TsysGeneric) { return 0; }
+	Array<ITsys*>				arguments;
+
+	TsysGenericFunction() = default;
+	TsysGenericFunction(const TsysGenericFunction& genericFunction) { CopyFrom(arguments, genericFunction.arguments); }
+	TsysGenericFunction(vint count) :arguments(count) {}
+	TsysGenericFunction& operator=(const TsysGenericFunction& genericFunction) { CopyFrom(arguments, genericFunction.arguments); return *this; }
+
+	static vint Compare(const TsysGenericFunction& a, const TsysGenericFunction& b)
+	{
+		return CompareEnumerable(a.arguments, b.arguments);
+	}
+};
+
+struct TsysGenericArg
+{
+	vint						argIndex = -1;
+	Symbol*						argSymbol = nullptr;
+	bool						isVariadic = false;
+
+	static vint Compare(const TsysGenericArg& a, const TsysGenericArg& b)
+	{
+		if (a.argIndex < b.argIndex) return -1;
+		if (a.argIndex > b.argIndex) return 1;
+		if (a.argSymbol < b.argSymbol) return -1;
+		if (a.argSymbol > b.argSymbol) return 1;
+		if (a.isVariadic < b.isVariadic) return -1;
+		if (a.isVariadic > b.isVariadic) return 1;
+		return 0;
+	}
+
+	bool operator==	(const TsysGenericArg& arg)const { return Compare(*this, arg) == 0; }
+	bool operator!=	(const TsysGenericArg& arg)const { return Compare(*this, arg) != 0; }
+	bool operator<	(const TsysGenericArg& arg)const { return Compare(*this, arg) < 0;  }
+	bool operator<=	(const TsysGenericArg& arg)const { return Compare(*this, arg) <= 0; }
+	bool operator>	(const TsysGenericArg& arg)const { return Compare(*this, arg) > 0;  }
+	bool operator>=	(const TsysGenericArg& arg)const { return Compare(*this, arg) >= 0; }
 };
 
 namespace vl
@@ -174,28 +208,45 @@ namespace vl
 	};
 
 	template<>
-	struct POD<TsysGeneric>
+	struct POD<TsysGenericFunction>
 	{
 		static const bool Result = true;
 	};
 }
 
-#define TSYS_TYPE_LIST(F)											\
-	F(Zero)															\
-	F(Nullptr)														\
-	F(Primitive)		/* Primitive							*/	\
-	F(LRef)				/* Element								*/	\
-	F(RRef)				/* Element								*/	\
-	F(Ptr)				/* Element								*/	\
-	F(Array)			/* Element, ParamCount					*/	\
-	F(Function)			/* Element, ParamCount, Param, Func		*/	\
-	F(Member)			/* Element, Class						*/	\
-	F(CV)				/* CV									*/	\
-	F(Decl)				/* Decl									*/	\
-	F(Init)				/* ParamCount, Param, Init				*/	\
-	F(Generic)			/* Element, ParamCount, Param, Generic	*/	\
-	F(GenericArg)		/* Decl									*/	\
-	F(Expr)				/* ?									*/	\
+#define TSYS_TYPE_LIST(F)															\
+	F(Zero)																			\
+	F(Nullptr)																		\
+	F(Primitive)		/* Primitive											*/	\
+	F(LRef)				/* Element												*/	\
+	F(RRef)				/* Element												*/	\
+	F(Ptr)				/* Element												*/	\
+	F(Array)			/* Element, ParamCount									*/	\
+	F(Function)			/* Element, ParamCount, Param, Func						*/	\
+	F(Member)			/* Element, Class										*/	\
+	F(CV)				/* CV													*/	\
+	F(Decl)				/* Decl													*/	\
+	F(Init)				/* ParamCount, Param, Init								*/	\
+	F(GenericFunction)	/* Element(Decl), ParamCount, Param, GenericFunction	*/	\
+	F(GenericArg)		/* Element(Decl), GenericArg							*/	\
+
+/*
+	Zero:				type of 0
+	Nullptr:			type of nullptr
+	Primitive:			primitive type
+	LRef:				Element&
+	RRef:				Element&&
+	Ptr:				Element*
+	Array:				Element[]
+	Function:			(Params)->Element, Func contrains other configuration
+	Member:				Element Class::
+	CV:					Element const volatile
+	Decl:				Type symbol of a declaration
+	Init:				{Params}
+	GenericFunction:	<Params>->Element, GenericFunction contains all type arguments
+							For example: <T&&, U*>->Tuple<T, U>, GenericFunction contains T and U.
+	GenericArg:			The GenericArg.argIndex-th type argument in Element
+*/
 
 enum class TsysType
 {
@@ -225,28 +276,30 @@ enum class TsysConv
 class ITsys abstract : public Interface
 {
 public:
-	virtual TsysType			GetType() = 0;
-	virtual TsysPrimitive		GetPrimitive() = 0;
-	virtual TsysCV				GetCV() = 0;
-	virtual ITsys*				GetElement() = 0;
-	virtual ITsys*				GetClass() = 0;
-	virtual ITsys*				GetParam(vint index) = 0;
-	virtual vint				GetParamCount() = 0;
-	virtual TsysFunc			GetFunc() = 0;
-	virtual const TsysInit&		GetInit() = 0;
-	virtual TsysGeneric			GetGeneric() = 0;
-	virtual Symbol*				GetDecl() = 0;
+	virtual TsysType					GetType() = 0;
+	virtual TsysPrimitive				GetPrimitive() = 0;
+	virtual TsysCV						GetCV() = 0;
+	virtual ITsys*						GetElement() = 0;
+	virtual ITsys*						GetClass() = 0;
+	virtual ITsys*						GetParam(vint index) = 0;
+	virtual vint						GetParamCount() = 0;
+	virtual TsysFunc					GetFunc() = 0;
+	virtual const TsysInit&				GetInit() = 0;
+	virtual const TsysGenericFunction&	GetGenericFunction() = 0;
+	virtual TsysGenericArg				GetGenericArg() = 0;
+	virtual Symbol*						GetDecl() = 0;
 
-	virtual ITsys*				LRefOf() = 0;
-	virtual ITsys*				RRefOf() = 0;
-	virtual ITsys*				PtrOf() = 0;
-	virtual ITsys*				ArrayOf(vint dimensions) = 0;
-	virtual ITsys*				FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func) = 0;
-	virtual ITsys*				MemberOf(ITsys* classType) = 0;
-	virtual ITsys*				CVOf(TsysCV cv) = 0;
-	virtual ITsys*				GenericOf(IEnumerable<ITsys*>& params) = 0;
+	virtual ITsys*						LRefOf() = 0;
+	virtual ITsys*						RRefOf() = 0;
+	virtual ITsys*						PtrOf() = 0;
+	virtual ITsys*						ArrayOf(vint dimensions) = 0;
+	virtual ITsys*						FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func) = 0;
+	virtual ITsys*						MemberOf(ITsys* classType) = 0;
+	virtual ITsys*						CVOf(TsysCV cv) = 0;
+	virtual ITsys*						GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction) = 0;
+	virtual ITsys*						GenericArgOf(TsysGenericArg genericArg) = 0;
 
-	virtual ITsys*				GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
+	virtual ITsys*						GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
 };
 
 /***********************************************************************
@@ -265,7 +318,6 @@ public:
 
 	virtual ITsys*				PrimitiveOf(TsysPrimitive primitive) = 0;
 	virtual ITsys*				DeclOf(Symbol* decl) = 0;
-	virtual ITsys*				GenericArgOf(Symbol* decl) = 0;
 	virtual ITsys*				InitOf(Array<ExprTsysItem>& params) = 0;
 
 	virtual vint				AllocateAnonymousCounter() = 0;

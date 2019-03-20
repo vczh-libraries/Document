@@ -16,8 +16,10 @@
 
 - [ ] Parse template headers.
   - [x] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
-  - [ ] Change `TemplateArgument` type to be `Decl` + index (order in argument list).
+  - [x] Change `TemplateArgument` type to be `Decl` + index (order in argument list).
   - [ ] Parse `T<U>` type.
+  - [ ] `TsysType::Expr`
+  - [ ] `Using` constant values (e.g. `template<typename T, T t> using Id = T;`).
   - [ ] Parse High level template argument.
 - [ ] `template` on `using` type alias declaration.
   - [ ] Default template argument.
@@ -40,7 +42,6 @@
 - [ ] Variadic template argument.
 - [ ] Initialization list.
 - [ ] Lambda expressions.
-- [ ] `Using` constant values (e.g. `is_const_v<T>`).
 - [ ] `nullptr` failed to convert to `const function_type*&`.
 
 ## Finisher Work Items

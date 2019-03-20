@@ -85,7 +85,12 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
 				argumentSymbol->name = argument.name.name;
 				argumentSymbol->evaluation.Allocate();
-				argumentSymbol->evaluation.Get().Add(pa.tsys->GenericArgOf(argumentSymbol.Obj()));
+
+				TsysGenericArg arg;
+				arg.argIndex = spec->arguments.Count();
+				arg.argSymbol = argumentSymbol.Obj();
+				arg.isVariadic = false;
+				argumentSymbol->evaluation.Get().Add(pa.tsys->DeclOf(symbol.Obj())->GenericArgOf(arg));
 				symbol->children.Add(argumentSymbol->name, argumentSymbol);
 			}
 
@@ -128,7 +133,12 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				{
 					throw StopParsingException(cursor);
 				}
-				argumentSymbol->evaluation.Get().Add(pa.tsys->GenericArgOf(argumentSymbol.Obj()));
+
+				TsysGenericArg arg;
+				arg.argIndex = spec->arguments.Count();
+				arg.argSymbol = argumentSymbol.Obj();
+				arg.isVariadic = false;
+				argumentSymbol->evaluation.Get().Add(pa.tsys->DeclOf(symbol.Obj())->GenericArgOf(arg));
 				symbol->children.Add(argumentSymbol->name, argumentSymbol);
 			}
 		}

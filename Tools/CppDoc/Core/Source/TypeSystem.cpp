@@ -69,7 +69,6 @@ protected:
 	Dictionary<ITsys*, ITsys_Member*>				memberOf;
 	ITsys_CV*										cvOf[3] = { 0 };
 	WithParamsList<ITsys_Function, TsysFunc>		functionOf;
-	WithParamsList<ITsys_Generic, TsysGeneric>		genericOf;
 
 	virtual ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)
 	{
@@ -78,25 +77,27 @@ protected:
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
 
-	TsysPrimitive		GetPrimitive()								{ throw "Not Implemented!"; }
-	TsysCV				GetCV()										{ throw "Not Implemented!"; }
-	ITsys*				GetElement()								{ throw "Not Implemented!"; }
-	ITsys*				GetClass()									{ throw "Not Implemented!"; }
-	ITsys*				GetParam(vint index)						{ throw "Not Implemented!"; }
-	vint				GetParamCount()								{ throw "Not Implemented!"; }
-	TsysFunc			GetFunc()									{ throw "Not Implemented!"; }
-	const TsysInit&		GetInit()									{ throw "Not Implemented!"; }
-	TsysGeneric			GetGeneric()								{ throw "Not Implemented!"; }
-	Symbol*				GetDecl()									{ throw "Not Implemented!"; }
+	TsysPrimitive									GetPrimitive()								{ throw "Not Implemented!"; }
+	TsysCV											GetCV()										{ throw "Not Implemented!"; }
+	ITsys*											GetElement()								{ throw "Not Implemented!"; }
+	ITsys*											GetClass()									{ throw "Not Implemented!"; }
+	ITsys*											GetParam(vint index)						{ throw "Not Implemented!"; }
+	vint											GetParamCount()								{ throw "Not Implemented!"; }
+	TsysFunc										GetFunc()									{ throw "Not Implemented!"; }
+	const TsysInit&									GetInit()									{ throw "Not Implemented!"; }
+	const TsysGenericFunction&						GetGenericFunction()						{ throw "Not Implemented!"; }
+	TsysGenericArg									GetGenericArg()								{ throw "Not Implemented!"; }
+	Symbol*											GetDecl()									{ throw "Not Implemented!"; }
 
-	ITsys* LRefOf()													override;
-	ITsys* RRefOf()													override;
-	ITsys* PtrOf()													override;
-	ITsys* ArrayOf(vint dimensions)									override;
-	ITsys* FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)	override;
-	ITsys* MemberOf(ITsys* classType)								override;
-	ITsys* CVOf(TsysCV cv)											override;
-	ITsys* GenericOf(IEnumerable<ITsys*>& params)					override;
+	ITsys* LRefOf()																				override;
+	ITsys* RRefOf()																				override;
+	ITsys* PtrOf()																				override;
+	ITsys* ArrayOf(vint dimensions)																override;
+	ITsys* FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)								override;
+	ITsys* MemberOf(ITsys* classType)															override;
+	ITsys* CVOf(TsysCV cv)																		override;
+	ITsys* GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction)	override { throw "Not Implemented!"; }
+	ITsys* GenericArgOf(TsysGenericArg genericArg)												override { throw "Not Implemented!"; }
 
 	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
 	{
@@ -134,38 +135,16 @@ public:
 };
 
 /***********************************************************************
-Concrete Tsys
+Concrete Tsys (Commons)
 ***********************************************************************/
 
 #define ITSYS_CLASS(TYPE) ITsys_##TYPE : public TsysBase_<TsysType::TYPE>
 
-#define ITSYS_MEMBERS_MINIMIZED(TYPE)																\
-	public:																							\
-		ITsys_##TYPE(TsysAlloc* _tsys) :TsysBase_(_tsys) {}											\
-
-#define ITSYS_MEMBERS_DATA(TYPE, DATA, NAME)														\
-	protected:																						\
-		DATA				data;																	\
-	public:																							\
-		ITsys_##TYPE(TsysAlloc* _tsys, DATA _data) :TsysBase_(_tsys), data(_data) {}				\
-		DATA Get##NAME()override { return data; }													\
-
-#define ITSYS_MEMBERS_REF(TYPE)																		\
+#define ITSYS_MEMBERS_WITHELEMENT_SHARED															\
 	protected:																						\
 		TsysBase*			element;																\
 	public:																							\
-		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element) :TsysBase_(_tsys), element(_element) {}	\
 		ITsys* GetElement()override { return element; }												\
-
-#define ITSYS_MEMBERS_DECORATE(TYPE, DATA, NAME)													\
-	protected:																						\
-		TsysBase*			element;																\
-		DATA				data;																	\
-	public:																							\
-		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element, DATA _data)								\
-			:TsysBase_(_tsys), element(_element), data(_data) {}									\
-		ITsys* GetElement()override { return element; }												\
-		DATA Get##NAME()override { return data; }													\
 
 #define ITSYS_MEMBERS_WITHPARAMS_SHARED(TYPE, DATA, DATA_RET, NAME)									\
 	protected:																						\
@@ -177,17 +156,49 @@ Concrete Tsys
 		vint GetParamCount()override { return params.Count(); }										\
 		DATA_RET Get##NAME()override { return data; }												\
 
-#define ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(TYPE, DATA, NAME)										\
+/***********************************************************************
+Concrete Tsys
+***********************************************************************/
+
+#define ITSYS_MEMBERS_MINIMIZED(TYPE)																\
+	public:																							\
+		ITsys_##TYPE(TsysAlloc* _tsys) :TsysBase_(_tsys) {}											\
+
+#define ITSYS_MEMBERS_DATA(TYPE, DATA, NAME)														\
+	protected:																						\
+		DATA				data;																	\
+	public:																							\
+		ITsys_##TYPE(TsysAlloc* _tsys, DATA const& _data) :TsysBase_(_tsys), data(_data) {}			\
+		DATA Get##NAME()override { return data; }													\
+
+#define ITSYS_MEMBERS_REF(TYPE)																		\
+	ITSYS_MEMBERS_WITHELEMENT_SHARED																\
+	public:																							\
+		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element)											\
+			:TsysBase_(_tsys), element(_element) {}													\
+
+#define ITSYS_MEMBERS_DATA_WITHELEMENT(TYPE, DATA, NAME)											\
+	ITSYS_MEMBERS_WITHELEMENT_SHARED																\
+	protected:																						\
+		DATA				data;																	\
+	public:																							\
+		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element, DATA const& _data)						\
+			:TsysBase_(_tsys), element(_element), data(_data) {}									\
+		DATA Get##NAME()override { return data; }													\
+
+#define ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(TYPE, DATA, DATA_RET, NAME)							\
+	ITSYS_MEMBERS_WITHPARAMS_SHARED(TYPE, DATA, DATA_RET, NAME)										\
 	protected:																						\
 		TsysBase*			element;																\
 	public:																							\
-		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element, DATA _data)								\
+		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase* _element, DATA const& _data)						\
 			:TsysBase_(_tsys), element(_element), data(_data) {}									\
 		ITsys* GetElement()override { return element; }												\
 
-#define ITSYS_MEMBERS_WITHPARAMS_WITHOUT_ELEMENT(TYPE, DATA, NAME)									\
+#define ITSYS_MEMBERS_WITHPARAMS_WITHOUT_ELEMENT(TYPE, DATA, DATA_RET, NAME)						\
+	ITSYS_MEMBERS_WITHPARAMS_SHARED(TYPE, DATA, DATA_RET, NAME)										\
 	public:																							\
-		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase*, DATA _data)										\
+		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase*, DATA const& _data)								\
 			:TsysBase_(_tsys), data(_data) {}														\
 
 class ITSYS_CLASS(Zero)
@@ -238,11 +249,25 @@ class ITSYS_CLASS(Primitive)
 class ITSYS_CLASS(Decl)
 {
 	ITSYS_MEMBERS_DATA(Decl, Symbol*, Decl)
+
+protected:
+	WithParamsList<ITsys_GenericFunction, TsysGenericFunction>		genericFunctionOf;
+	Dictionary<TsysGenericArg, ITsys*>								genericArgs;
+
+public:
+	ITsys*											GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction)override;
+	ITsys*											GenericArgOf(TsysGenericArg genericArg)override;
 };
 
 class ITSYS_CLASS(GenericArg)
 {
-	ITSYS_MEMBERS_DATA(GenericArg, Symbol*, Decl)
+	ITSYS_MEMBERS_DATA_WITHELEMENT(GenericArg, TsysGenericArg, GenericArg)
+
+public:
+	Symbol* GetDecl()override
+	{
+		return element->GetDecl();
+	}
 };
 
 class ITSYS_CLASS(LRef)
@@ -304,12 +329,12 @@ class ITSYS_CLASS(Ptr)
 
 class ITSYS_CLASS(Array)
 {
-	ITSYS_MEMBERS_DECORATE(Array, vint, ParamCount)
+	ITSYS_MEMBERS_DATA_WITHELEMENT(Array, vint, ParamCount)
 };
 
 class ITSYS_CLASS(CV)
 {
-	ITSYS_MEMBERS_DECORATE(CV, TsysCV, CV)
+	ITSYS_MEMBERS_DATA_WITHELEMENT(CV, TsysCV, CV)
 
 	ITsys* CVOf(TsysCV cv)override
 	{
@@ -327,25 +352,22 @@ protected:
 
 class ITSYS_CLASS(Member)
 {
-	ITSYS_MEMBERS_DECORATE(Member, ITsys*, Class)
+	ITSYS_MEMBERS_DATA_WITHELEMENT(Member, ITsys*, Class)
 };
 
 class ITSYS_CLASS(Function)
 {
-	ITSYS_MEMBERS_WITHPARAMS_SHARED(Function, TsysFunc, TsysFunc, Func)
-	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(Function, TsysFunc, Func)
+	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(Function, TsysFunc, TsysFunc, Func)
 };
 
 class ITSYS_CLASS(Init)
 {
-	ITSYS_MEMBERS_WITHPARAMS_SHARED(Init, TsysInit, const TsysInit&, Init)
-	ITSYS_MEMBERS_WITHPARAMS_WITHOUT_ELEMENT(Init, TsysInit, Init)
+	ITSYS_MEMBERS_WITHPARAMS_WITHOUT_ELEMENT(Init, TsysInit, const TsysInit&, Init)
 };
 
-class ITSYS_CLASS(Generic)
+class ITSYS_CLASS(GenericFunction)
 {
-	ITSYS_MEMBERS_WITHPARAMS_SHARED(Generic, TsysGeneric, TsysGeneric, Generic)
-	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(Generic, TsysGeneric, Generic)
+	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(GenericFunction, TsysGenericFunction, const TsysGenericFunction&, GenericFunction)
 };
 
 #undef ITSYS_MEMBERS_DATA
@@ -353,15 +375,6 @@ class ITSYS_CLASS(Generic)
 #undef ITSYS_MEMBERS_DECORATE
 #undef ITSYS_MEMBERS_WITHPARAMS
 #undef ITSYS_CLASS
-
-class ITsys_Expr : TsysBase_<TsysType::Expr>
-{
-public:
-	ITsys_Expr(TsysAlloc* _tsys)
-		:TsysBase_(_tsys)
-	{
-	}
-};
 
 /***********************************************************************
 ITsys_Allocator
@@ -403,7 +416,7 @@ public:
 	}
 
 	template<typename ...TArgs>
-	T* Alloc(TArgs ...args)
+	T* Alloc(TArgs&& ...args)
 	{
 		if (!firstNode)
 		{
@@ -420,7 +433,7 @@ public:
 #ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
 #undef new
 #endif
-		return new(itsys)T(args...);
+		return new(itsys)T(ForwardValue<TArgs&&>(args)...);
 #ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
 #define new VCZH_CHECK_MEMORY_LEAKS_NEW
 #endif
@@ -434,28 +447,26 @@ ITsysAlloc
 class TsysAlloc : public Object, public ITsysAlloc
 {
 protected:
-	ITsys_Zero										tsysZero;
-	ITsys_Nullptr									tsysNullptr;
-	ITsys_Primitive*								primitives[(vint)TsysPrimitiveType::_COUNT * (vint)TsysBytes::_COUNT] = { 0 };
-	Dictionary<Symbol*, ITsys_Decl*>				decls;
-	Dictionary<Symbol*, ITsys_GenericArg*>			genericArgs;
-	WithParamsList<ITsys_Init, TsysInit>			initOf;
-	vint											anonymousCounter = 0;
+	ITsys_Zero												tsysZero;
+	ITsys_Nullptr											tsysNullptr;
+	ITsys_Primitive*										primitives[(vint)TsysPrimitiveType::_COUNT * (vint)TsysBytes::_COUNT] = { 0 };
+	Dictionary<Symbol*, ITsys_Decl*>						decls;
+	WithParamsList<ITsys_Init, TsysInit>					initOf;
+	vint													anonymousCounter = 0;
 
 public:
-	ITsys_Allocator<ITsys_Primitive,	1024>		_primitive;
-	ITsys_Allocator<ITsys_LRef,			1024>		_lref;
-	ITsys_Allocator<ITsys_RRef,			1024>		_rref;
-	ITsys_Allocator<ITsys_Ptr,			1024>		_ptr;
-	ITsys_Allocator<ITsys_Array,		1024>		_array;
-	ITsys_Allocator<ITsys_Function,		1024>		_function;
-	ITsys_Allocator<ITsys_Member,		1024>		_member;
-	ITsys_Allocator<ITsys_CV,			1024>		_cv;
-	ITsys_Allocator<ITsys_Decl,			1024>		_decl;
-	ITsys_Allocator<ITsys_Init,			1024>		_init;
-	ITsys_Allocator<ITsys_Generic,		1024>		_generic;
-	ITsys_Allocator<ITsys_GenericArg,	1024>		_genericArg;
-	ITsys_Allocator<ITsys_Expr,			1024>		_expr;
+	ITsys_Allocator<ITsys_Primitive,			1024>		_primitive;
+	ITsys_Allocator<ITsys_LRef,					1024>		_lref;
+	ITsys_Allocator<ITsys_RRef,					1024>		_rref;
+	ITsys_Allocator<ITsys_Ptr,					1024>		_ptr;
+	ITsys_Allocator<ITsys_Array,				1024>		_array;
+	ITsys_Allocator<ITsys_Function,				1024>		_function;
+	ITsys_Allocator<ITsys_Member,				1024>		_member;
+	ITsys_Allocator<ITsys_CV,					1024>		_cv;
+	ITsys_Allocator<ITsys_Decl,					1024>		_decl;
+	ITsys_Allocator<ITsys_Init,					1024>		_init;
+	ITsys_Allocator<ITsys_GenericFunction,		1024>		_genericFunction;
+	ITsys_Allocator<ITsys_GenericArg,			1024>		_genericArg;
 
 	TsysAlloc()
 		:tsysZero(this)
@@ -517,15 +528,6 @@ public:
 		if (index != -1) return decls.Values()[index];
 		auto itsys = _decl.Alloc(this, decl);
 		decls.Add(decl, itsys);
-		return itsys;
-	}
-
-	ITsys* GenericArgOf(Symbol* decl)override
-	{
-		vint index = genericArgs.Keys().IndexOf(decl);
-		if (index != -1) return genericArgs.Values()[index];
-		auto itsys = _genericArg.Alloc(this, decl);
-		genericArgs.Add(decl, itsys);
 		return itsys;
 	}
 
@@ -616,7 +618,21 @@ ITsys* TsysBase::CVOf(TsysCV cv)
 	return itsys;
 }
 
-ITsys* TsysBase::GenericOf(IEnumerable<ITsys*>& params)
+/***********************************************************************
+ITsys_Decl (Impl)
+***********************************************************************/
+
+ITsys* ITsys_Decl::GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction)
 {
-	return ParamsOf(params, TsysGeneric(), genericOf, this, tsys, &TsysAlloc::_generic);
+	return ParamsOf(params, genericFunction, genericFunctionOf, this, tsys, &TsysAlloc::_genericFunction);
+}
+
+ITsys* ITsys_Decl::GenericArgOf(TsysGenericArg genericArg)
+{
+	vint index = genericArgs.Keys().IndexOf(genericArg);
+	if (index != -1) return genericArgs.Values()[index];
+
+	auto itsys = tsys->_genericArg.Alloc(tsys, this, genericArg);
+	genericArgs.Add(genericArg, itsys);
+	return itsys;
 }

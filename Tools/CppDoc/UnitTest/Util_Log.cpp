@@ -1468,11 +1468,9 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			writer.WriteChar(L'}');
 		}
 		return;
-	case TsysType::Generic:
+	case TsysType::GenericFunction:
 		break;
 	case TsysType::GenericArg:
-		break;
-	case TsysType::Expr:
 		break;
 	}
 	throw L"Invalid!";

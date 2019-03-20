@@ -48,23 +48,6 @@ TEST_CASE(TestTypeSystem_Primitive)
 #undef TEST_PRIMITIVE_BYTES
 }
 
-TEST_CASE(TestTypeSystem_Decl)
-{
-	auto n1 = MakePtr<Symbol>();
-	auto n2 = MakePtr<Symbol>();
-	auto tsys = ITsysAlloc::Create();
-	TEST_ASSERT(tsys->DeclOf(n1.Obj()) == tsys->DeclOf(n1.Obj()));
-	TEST_ASSERT(tsys->DeclOf(n1.Obj()) != tsys->DeclOf(n2.Obj()));
-}
-TEST_CASE(TestTypeSystem_GenericArg)
-{
-	auto n1 = MakePtr<Symbol>();
-	auto n2 = MakePtr<Symbol>();
-	auto tsys = ITsysAlloc::Create();
-	TEST_ASSERT(tsys->GenericArgOf(n1.Obj()) == tsys->GenericArgOf(n1.Obj()));
-	TEST_ASSERT(tsys->GenericArgOf(n1.Obj()) != tsys->GenericArgOf(n2.Obj()));
-}
-
 TEST_CASE(TestTypeSystem_LRef)
 {
 	auto tsys = ITsysAlloc::Create();
@@ -95,6 +78,44 @@ TEST_CASE(TestTypeSystem_Array)
 	TEST_ASSERT(tvoid->ArrayOf(1) != tvoid->ArrayOf(2));
 }
 
+TEST_CASE(TestTypeSystem_Function)
+{
+	auto n1 = MakePtr<Symbol>();
+	auto n2 = MakePtr<Symbol>();
+	auto tsys = ITsysAlloc::Create();
+	auto tvoid = tsys->Void();
+	auto tdecl1 = tsys->DeclOf(n1.Obj());
+	auto tdecl2 = tsys->DeclOf(n2.Obj());
+
+	List<ITsys*> types1;
+	types1.Add(tdecl1);
+	types1.Add(tdecl2);
+
+	List<ITsys*> types2;
+	types2.Add(tdecl2);
+	types2.Add(tdecl1);
+
+	TsysFunc data1;
+	TsysFunc data2;
+
+	data1.ellipsis = false;
+	data2.ellipsis = true;
+
+	TEST_ASSERT(tvoid->FunctionOf(types1, data1) == tvoid->FunctionOf(types1, data1));
+	TEST_ASSERT(tvoid->FunctionOf(types1, data1) != tvoid->FunctionOf(types1, data2));
+	TEST_ASSERT(tvoid->FunctionOf(types1, data1) != tvoid->FunctionOf(types2, data1));
+}
+
+TEST_CASE(TestTypeSystem_Member)
+{
+	auto tsys = ITsysAlloc::Create();
+	auto tvoid = tsys->Void();
+	auto tbool = tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 });
+	auto tchar = tsys->PrimitiveOf({ TsysPrimitiveType::SChar,TsysBytes::_1 });
+	TEST_ASSERT(tvoid->MemberOf(tbool) == tvoid->MemberOf(tbool));
+	TEST_ASSERT(tvoid->MemberOf(tbool) != tvoid->MemberOf(tchar));
+}
+
 TEST_CASE(TestTypeSystem_CV)
 {
 	auto tsys = ITsysAlloc::Create();
@@ -115,41 +136,13 @@ TEST_CASE(TestTypeSystem_CV)
 #undef CV
 }
 
-TEST_CASE(TestTypeSystem_Member)
+TEST_CASE(TestTypeSystem_Decl)
 {
+	auto n1 = MakePtr<Symbol>();
+	auto n2 = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->Void();
-	auto tbool = tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 });
-	auto tchar = tsys->PrimitiveOf({ TsysPrimitiveType::SChar,TsysBytes::_1 });
-	TEST_ASSERT(tvoid->MemberOf(tbool) == tvoid->MemberOf(tbool));
-	TEST_ASSERT(tvoid->MemberOf(tbool) != tvoid->MemberOf(tchar));
-}
-
-TEST_CASE(TestTypeSystem_Function)
-{
-	auto n = MakePtr<Symbol>();
-	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->Void();
-	auto tdecl = tsys->DeclOf(n.Obj());
-	auto tgarg = tsys->GenericArgOf(n.Obj());
-
-	List<ITsys*> types1;
-	types1.Add(tdecl);
-	types1.Add(tgarg);
-
-	List<ITsys*> types2;
-	types2.Add(tgarg);
-	types2.Add(tdecl);
-
-	TsysFunc data1;
-	TsysFunc data2;
-
-	data1.ellipsis = false;
-	data2.ellipsis = true;
-
-	TEST_ASSERT(tvoid->FunctionOf(types1, data1) == tvoid->FunctionOf(types1, data1));
-	TEST_ASSERT(tvoid->FunctionOf(types1, data1) != tvoid->FunctionOf(types1, data2));
-	TEST_ASSERT(tvoid->FunctionOf(types1, data1) != tvoid->FunctionOf(types2, data1));
+	TEST_ASSERT(tsys->DeclOf(n1.Obj()) == tsys->DeclOf(n1.Obj()));
+	TEST_ASSERT(tsys->DeclOf(n1.Obj()) != tsys->DeclOf(n2.Obj()));
 }
 
 TEST_CASE(TestTypeSystem_Init)
@@ -184,37 +177,59 @@ TEST_CASE(TestTypeSystem_Init)
 	}
 }
 
-TEST_CASE(TestTypeSystem_Generic)
+TEST_CASE(TestTypeSystem_GenericFunction)
 {
 	auto n = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
-	auto tvoid = tsys->Void();
 	auto tdecl = tsys->DeclOf(n.Obj());
-	auto tgarg = tsys->GenericArgOf(n.Obj());
+
+	TsysGenericArg arg = { 0,nullptr,false };
+	auto targ = tsys->DeclOf(n.Obj())->GenericArgOf(arg);
+
+	TsysGenericFunction gf;
+	gf.arguments.Resize(1);
+	gf.arguments[0] = targ;
 
 	List<ITsys*> types1;
-	types1.Add(tdecl);
-	types1.Add(tgarg);
+	types1.Add(targ->LRefOf());
+	types1.Add(targ->PtrOf());
 
 	List<ITsys*> types2;
-	types2.Add(tgarg);
-	types2.Add(tdecl);
+	types2.Add(targ->PtrOf());
+	types2.Add(targ->LRefOf());
 
-	TEST_ASSERT(tvoid->GenericOf(types1) == tvoid->GenericOf(types1));
-	TEST_ASSERT(tvoid->GenericOf(types1) != tvoid->GenericOf(types2));
+	TEST_ASSERT(tdecl->GenericFunctionOf(types1, gf) == tdecl->GenericFunctionOf(types1, gf));
+	TEST_ASSERT(tdecl->GenericFunctionOf(types1, gf) != tdecl->GenericFunctionOf(types2, gf));
+}
+
+TEST_CASE(TestTypeSystem_GenericArg)
+{
+	auto n = MakePtr<Symbol>();
+	auto tsys = ITsysAlloc::Create();
+	TsysGenericArg arg1 = { 0,nullptr,false };
+	TsysGenericArg arg2 = { 0,nullptr,true };
+	auto targ1 = tsys->DeclOf(n.Obj())->GenericArgOf(arg1);
+	auto targ2 = tsys->DeclOf(n.Obj())->GenericArgOf(arg2);
+
+	TEST_ASSERT(targ1->GetElement()->GetDecl() == n.Obj());
+	TEST_ASSERT(targ2->GetElement()->GetDecl() == n.Obj());
+	TEST_ASSERT(targ1->GetElement() == targ2->GetElement());
+	TEST_ASSERT(tsys->DeclOf(n.Obj())->GenericArgOf(arg1) == targ1);
+	TEST_ASSERT(tsys->DeclOf(n.Obj())->GenericArgOf(arg1) != targ2);
 }
 
 TEST_CASE(TestTypeSystem_Type)
 {
-	auto n = MakePtr<Symbol>();
+	auto n1 = MakePtr<Symbol>();
+	auto n2 = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
 	auto tvoid = tsys->Void();
-	auto tdecl = tsys->DeclOf(n.Obj());
-	auto tgarg = tsys->GenericArgOf(n.Obj());
+	auto tdecl1 = tsys->DeclOf(n1.Obj());
+	auto tdecl2 = tsys->DeclOf(n2.Obj());
 
 	TEST_ASSERT(tvoid->GetType() == TsysType::Primitive);
-	TEST_ASSERT(tdecl->GetType() == TsysType::Decl);
-	TEST_ASSERT(tgarg->GetType() == TsysType::GenericArg);
+	TEST_ASSERT(tdecl1->GetType() == TsysType::Decl);
+	TEST_ASSERT(tdecl2->GetType() == TsysType::Decl);
 
 	TEST_ASSERT(tvoid->LRefOf()->GetType() == TsysType::LRef);
 	TEST_ASSERT(tvoid->RRefOf()->GetType() == TsysType::RRef);
@@ -222,11 +237,12 @@ TEST_CASE(TestTypeSystem_Type)
 	TEST_ASSERT(tvoid->ArrayOf(1)->GetType() == TsysType::Array);
 	TEST_ASSERT(tvoid->CVOf({ false,false }) == tvoid);
 	TEST_ASSERT(tvoid->CVOf({ true,true })->GetType() == TsysType::CV);
-	TEST_ASSERT(tvoid->MemberOf(tdecl)->GetType() == TsysType::Member);
+	TEST_ASSERT(tvoid->MemberOf(tdecl1)->GetType() == TsysType::Member);
 
+	TsysGenericFunction gf;
 	List<ITsys*> types;
-	types.Add(tdecl);
-	types.Add(tgarg);
+	types.Add(tdecl1);
+	types.Add(tdecl2);
 	TEST_ASSERT(tvoid->FunctionOf(types, {})->GetType() == TsysType::Function);
-	TEST_ASSERT(tvoid->GenericOf(types)->GetType() == TsysType::Generic);
+	TEST_ASSERT(tvoid->GenericFunctionOf(types, gf)->GetType() == TsysType::GenericFunction);
 }
