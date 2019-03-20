@@ -58,6 +58,7 @@ public:
 	struct Argument
 	{
 		CppName										name;
+		Symbol*										argumentSymbol;
 		CppTemplateArgumentType						argumentType;
 		Ptr<TemplateSpec>							templateSpec;
 		Ptr<Type>									type;

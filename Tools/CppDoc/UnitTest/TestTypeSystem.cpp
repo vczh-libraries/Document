@@ -180,6 +180,7 @@ TEST_CASE(TestTypeSystem_Init)
 TEST_CASE(TestTypeSystem_GenericFunction)
 {
 	auto n = MakePtr<Symbol>();
+	auto narg = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
 	auto tdecl = tsys->DeclOf(n.Obj());
 
@@ -187,8 +188,7 @@ TEST_CASE(TestTypeSystem_GenericFunction)
 	auto targ = tsys->DeclOf(n.Obj())->GenericArgOf(arg);
 
 	TsysGenericFunction gf;
-	gf.arguments.Resize(1);
-	gf.arguments[0] = targ;
+	gf.arguments.Add(narg.Obj());
 
 	List<ITsys*> types1;
 	types1.Add(targ->LRefOf());

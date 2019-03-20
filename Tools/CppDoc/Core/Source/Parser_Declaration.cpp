@@ -81,17 +81,28 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				{
 					throw StopParsingException(cursor);
 				}
-				auto argumentSymbol = MakePtr<Symbol>();
-				argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
-				argumentSymbol->name = argument.name.name;
-				argumentSymbol->evaluation.Allocate();
+			}
 
-				TsysGenericArg arg;
-				arg.argIndex = spec->arguments.Count();
-				arg.argSymbol = argumentSymbol.Obj();
-				arg.isVariadic = false;
-				argumentSymbol->evaluation.Get().Add(pa.tsys->DeclOf(symbol.Obj())->GenericArgOf(arg));
+			auto argumentSymbol = MakePtr<Symbol>();
+			argument.argumentSymbol = argumentSymbol.Obj();
+
+			argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
+			argumentSymbol->name = argument.name.name;
+			argumentSymbol->evaluation.Allocate();
+
+			TsysGenericArg arg;
+			arg.argIndex = spec->arguments.Count();
+			arg.argSymbol = argumentSymbol.Obj();
+			arg.isVariadic = false;
+			argumentSymbol->evaluation.Get().Add(pa.tsys->DeclOf(symbol.Obj())->GenericArgOf(arg));
+
+			if (argument.name)
+			{
 				symbol->children.Add(argumentSymbol->name, argumentSymbol);
+			}
+			else
+			{
+				symbol->children.Add(L"$", argumentSymbol);
 			}
 
 			if (TestToken(cursor, CppTokens::EQ))
@@ -106,7 +117,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				throw StopParsingException(cursor);
 			}
 
-			auto declarator = ParseNonMemberDeclarator(newPa, pda_VarInit(), cursor);
+			auto declarator = ParseNonMemberDeclarator(newPa, pda_Param(false), cursor);
 			argument.argumentType = CppTemplateArgumentType::Value;
 			argument.name = declarator->name;
 			argument.type = declarator->type;
@@ -124,22 +135,26 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				{
 					throw StopParsingException(cursor);
 				}
-				auto argumentSymbol = MakePtr<Symbol>();
-				argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
-				argumentSymbol->name = argument.name.name;
-				argumentSymbol->evaluation.Allocate();
-				TypeToTsys(newPa, argument.type, argumentSymbol->evaluation.Get());
-				if (argumentSymbol->evaluation.Get().Count() == 0)
-				{
-					throw StopParsingException(cursor);
-				}
+			}
 
-				TsysGenericArg arg;
-				arg.argIndex = spec->arguments.Count();
-				arg.argSymbol = argumentSymbol.Obj();
-				arg.isVariadic = false;
-				argumentSymbol->evaluation.Get().Add(pa.tsys->DeclOf(symbol.Obj())->GenericArgOf(arg));
+			auto argumentSymbol = MakePtr<Symbol>();
+			argument.argumentSymbol = argumentSymbol.Obj();
+			argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
+			argumentSymbol->name = argument.name.name;
+			argumentSymbol->evaluation.Allocate();
+			TypeToTsys(newPa, argument.type, argumentSymbol->evaluation.Get());
+			if (argumentSymbol->evaluation.Get().Count() == 0)
+			{
+				throw StopParsingException(cursor);
+			}
+
+			if (argument.name)
+			{
 				symbol->children.Add(argumentSymbol->name, argumentSymbol);
+			}
+			else
+			{
+				symbol->children.Add(L"$", argumentSymbol);
 			}
 		}
 		spec->arguments.Add(argument);

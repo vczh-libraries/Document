@@ -275,8 +275,35 @@ namespace symbol_type_resolving
 		ev.progress = symbol_component::EvaluationProgress::Evaluating;
 		ev.Allocate();
 
+		auto newPa = pa.WithContext(symbol->parent);
+		if (usingDecl->templateSpec)
 		{
-			auto newPa = pa.WithContext(symbol->parent);
+			TypeTsysList types;
+			TypeToTsys(newPa, usingDecl->type, types);
+
+			TsysGenericFunction genericFunction;
+			TypeTsysList params;
+			for (vint i = 0; i < usingDecl->templateSpec->arguments.Count(); i++)
+			{
+				auto argument = usingDecl->templateSpec->arguments[i];
+				if (argument.argumentType == CppTemplateArgumentType::Value)
+				{
+					throw "Not Implemented!"; // add TsysType::Expr to params
+				}
+				else
+				{
+					genericFunction.arguments.Add(argument.argumentSymbol);
+					params.Add(argument.argumentSymbol->evaluation.Get()[0]);
+				}
+			}
+
+			for(vint i=0;i<types.Count();i++)
+			{
+				ev.Get().Add(types[i]->GenericFunctionOf(params, genericFunction));
+			}
+		}
+		else
+		{
 			TypeToTsys(newPa, usingDecl->type, ev.Get());
 		}
 

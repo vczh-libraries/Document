@@ -61,14 +61,15 @@ class TsysBase : public ITsys
 	TSYS_TYPE_LIST(DEFINE_TSYS_TYPE)
 #undef DEFINE_TSYS_TYPE
 protected:
-	TsysAlloc*										tsys;
-	ITsys_LRef*										lrefOf = nullptr;
-	ITsys_RRef*										rrefOf = nullptr;
-	ITsys_Ptr*										ptrOf = nullptr;
-	Dictionary<vint, ITsys_Array*>					arrayOf;
-	Dictionary<ITsys*, ITsys_Member*>				memberOf;
-	ITsys_CV*										cvOf[3] = { 0 };
-	WithParamsList<ITsys_Function, TsysFunc>		functionOf;
+	TsysAlloc*														tsys;
+	ITsys_LRef*														lrefOf = nullptr;
+	ITsys_RRef*														rrefOf = nullptr;
+	ITsys_Ptr*														ptrOf = nullptr;
+	Dictionary<vint, ITsys_Array*>									arrayOf;
+	Dictionary<ITsys*, ITsys_Member*>								memberOf;
+	ITsys_CV*														cvOf[3] = { 0 };
+	WithParamsList<ITsys_Function, TsysFunc>						functionOf;
+	WithParamsList<ITsys_GenericFunction, TsysGenericFunction>		genericFunctionOf;
 
 	virtual ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)
 	{
@@ -77,17 +78,17 @@ protected:
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
 
-	TsysPrimitive									GetPrimitive()								{ throw "Not Implemented!"; }
-	TsysCV											GetCV()										{ throw "Not Implemented!"; }
-	ITsys*											GetElement()								{ throw "Not Implemented!"; }
-	ITsys*											GetClass()									{ throw "Not Implemented!"; }
-	ITsys*											GetParam(vint index)						{ throw "Not Implemented!"; }
-	vint											GetParamCount()								{ throw "Not Implemented!"; }
-	TsysFunc										GetFunc()									{ throw "Not Implemented!"; }
-	const TsysInit&									GetInit()									{ throw "Not Implemented!"; }
-	const TsysGenericFunction&						GetGenericFunction()						{ throw "Not Implemented!"; }
-	TsysGenericArg									GetGenericArg()								{ throw "Not Implemented!"; }
-	Symbol*											GetDecl()									{ throw "Not Implemented!"; }
+	TsysPrimitive													GetPrimitive()				{ throw "Not Implemented!"; }
+	TsysCV															GetCV()						{ throw "Not Implemented!"; }
+	ITsys*															GetElement()				{ throw "Not Implemented!"; }
+	ITsys*															GetClass()					{ throw "Not Implemented!"; }
+	ITsys*															GetParam(vint index)		{ throw "Not Implemented!"; }
+	vint															GetParamCount()				{ throw "Not Implemented!"; }
+	TsysFunc														GetFunc()					{ throw "Not Implemented!"; }
+	const TsysInit&													GetInit()					{ throw "Not Implemented!"; }
+	const TsysGenericFunction&										GetGenericFunction()		{ throw "Not Implemented!"; }
+	TsysGenericArg													GetGenericArg()				{ throw "Not Implemented!"; }
+	Symbol*															GetDecl()					{ throw "Not Implemented!"; }
 
 	ITsys* LRefOf()																				override;
 	ITsys* RRefOf()																				override;
@@ -96,7 +97,7 @@ public:
 	ITsys* FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)								override;
 	ITsys* MemberOf(ITsys* classType)															override;
 	ITsys* CVOf(TsysCV cv)																		override;
-	ITsys* GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction)	override { throw "Not Implemented!"; }
+	ITsys* GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction)	override;
 	ITsys* GenericArgOf(TsysGenericArg genericArg)												override { throw "Not Implemented!"; }
 
 	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
@@ -251,11 +252,9 @@ class ITSYS_CLASS(Decl)
 	ITSYS_MEMBERS_DATA(Decl, Symbol*, Decl)
 
 protected:
-	WithParamsList<ITsys_GenericFunction, TsysGenericFunction>		genericFunctionOf;
 	Dictionary<TsysGenericArg, ITsys*>								genericArgs;
 
 public:
-	ITsys*											GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction)override;
 	ITsys*											GenericArgOf(TsysGenericArg genericArg)override;
 };
 
@@ -533,12 +532,13 @@ public:
 
 	ITsys* InitOf(Array<ExprTsysItem>& params)override
 	{
-		Array<ITsys*> tsys(params.Count());
-		TsysInit data(params.Count());
+		List<ITsys*> tsys;
+		TsysInit data;
+
 		for (vint i = 0; i < params.Count(); i++)
 		{
-			tsys[i] = params[i].tsys;
-			data.types[i] = params[i].type;
+			tsys.Add(params[i].tsys);
+			data.types.Add(params[i].type);
 		}
 		return ParamsOf(tsys, data, initOf, nullptr, this, &TsysAlloc::_init);
 	}
@@ -618,14 +618,14 @@ ITsys* TsysBase::CVOf(TsysCV cv)
 	return itsys;
 }
 
-/***********************************************************************
-ITsys_Decl (Impl)
-***********************************************************************/
-
-ITsys* ITsys_Decl::GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction)
+ITsys* TsysBase::GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction)
 {
 	return ParamsOf(params, genericFunction, genericFunctionOf, this, tsys, &TsysAlloc::_genericFunction);
 }
+
+/***********************************************************************
+ITsys_Decl (Impl)
+***********************************************************************/
 
 ITsys* ITsys_Decl::GenericArgOf(TsysGenericArg genericArg)
 {

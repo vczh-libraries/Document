@@ -134,11 +134,10 @@ struct TsysFunc
 
 struct TsysInit
 {
-	Array<ExprTsysType>			types;
+	List<ExprTsysType>			types;
 
 	TsysInit() = default;
 	TsysInit(const TsysInit& init) { CopyFrom(types, init.types); }
-	TsysInit(vint count) :types(count) {}
 	TsysInit& operator=(const TsysInit& init) { CopyFrom(types, init.types); return *this; }
 
 	static vint Compare(const TsysInit& a, const TsysInit& b)
@@ -149,11 +148,10 @@ struct TsysInit
 
 struct TsysGenericFunction
 {
-	Array<ITsys*>				arguments;
+	List<Symbol*>				arguments;
 
 	TsysGenericFunction() = default;
 	TsysGenericFunction(const TsysGenericFunction& genericFunction) { CopyFrom(arguments, genericFunction.arguments); }
-	TsysGenericFunction(vint count) :arguments(count) {}
 	TsysGenericFunction& operator=(const TsysGenericFunction& genericFunction) { CopyFrom(arguments, genericFunction.arguments); return *this; }
 
 	static vint Compare(const TsysGenericFunction& a, const TsysGenericFunction& b)
