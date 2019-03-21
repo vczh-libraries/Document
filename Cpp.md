@@ -18,11 +18,11 @@
   - [x] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
   - [x] Change `TemplateArgument` type to be `Decl` + index (order in argument list).
   - [ ] Parse `T<U>` type.
-  - [x] `Using` constant values (e.g. `template<typename T, T t> using Id = T;`).
+  - [x] `Using` constant values
+  - [ ] Value template argument
   - [ ] Parse High level template argument.
 - [ ] `template` on `using` type alias declaration.
   - [ ] Default template argument.
-  - [ ] Type function calculation, may need to create `TemplateDeclaration` and `TsysType::Generic` as a function, removing current ones.
   - [ ] `...` type and expression. Don't make an AST for it, always render or skip `...` by reading its symbol.
   - [ ] Write a lot of test cases for `decltype` inside `using`.
   - [ ] Test both unresolved type (when type arguments are not assigned) and resolved type (when type arguments are assigned), or partially resolved type (when type arguments are assigned to other unresolved type).
