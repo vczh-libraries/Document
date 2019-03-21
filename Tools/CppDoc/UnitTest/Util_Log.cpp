@@ -1210,7 +1210,8 @@ public:
 		writer.WriteString(L"using ");
 		writer.WriteString(self->name.name);
 		writer.WriteString(L" = ");
-		Log(self->type, writer);
+		if (self->type) Log(self->type, writer);
+		if (self->expr) Log(self->expr, writer);
 		if (semicolon) writer.WriteLine(L";");
 	}
 

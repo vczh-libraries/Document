@@ -283,6 +283,12 @@ public:
 			auto symbol = resolving->resolvedSymbols[i];
 			switch (symbol->kind)
 			{
+			case symbol_component::SymbolKind::Enum:
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+			case symbol_component::SymbolKind::Union:
+				AddResult(pa.tsys->DeclOf(symbol));
+				continue;
 			case symbol_component::SymbolKind::TypeAlias:
 				{
 					auto usingDecl = symbol->definition.Cast<UsingDeclaration>();
@@ -293,12 +299,6 @@ public:
 						AddResult(types[j]);
 					}
 				}
-				continue;
-			case symbol_component::SymbolKind::Enum:
-			case symbol_component::SymbolKind::Class:
-			case symbol_component::SymbolKind::Struct:
-			case symbol_component::SymbolKind::Union:
-				AddResult(pa.tsys->DeclOf(symbol));
 				continue;
 			case symbol_component::SymbolKind::GenericTypeArgument:
 				{

@@ -243,6 +243,7 @@ namespace vl
 	Init:				{Params}
 	GenericFunction:	<Params>->Element, GenericFunction contains all type arguments
 							For example: <T&&, U*>->Tuple<T, U>, GenericFunction contains T and U.
+							Null pattern means that argument accepts a constant value instead of a type.
 	GenericArg:			The GenericArg.argIndex-th type argument in Element
 */
 

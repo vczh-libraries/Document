@@ -33,17 +33,20 @@ namespace symbol_component
 	enum class SymbolKind
 	{
 		Enum,
-		EnumItem,
 		Class,
 		Struct,
 		Union,
 		TypeAlias,
+		GenericTypeArgument,
+
+		EnumItem,
 		Function,
 		Variable,
+		ValueAlias,
+		GenericValueArgument,
+
 		Namespace,
 		Statement,
-		GenericTypeArgument,
-		GenericValueArgument,
 		Root,
 	};
 

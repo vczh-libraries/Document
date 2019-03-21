@@ -18,8 +18,7 @@
   - [x] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
   - [x] Change `TemplateArgument` type to be `Decl` + index (order in argument list).
   - [ ] Parse `T<U>` type.
-  - [ ] `TsysType::Expr`
-  - [ ] `Using` constant values (e.g. `template<typename T, T t> using Id = T;`).
+  - [x] `Using` constant values (e.g. `template<typename T, T t> using Id = T;`).
   - [ ] Parse High level template argument.
 - [ ] `template` on `using` type alias declaration.
   - [ ] Default template argument.

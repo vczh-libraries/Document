@@ -10,17 +10,29 @@ using LRef = T&;
 
 template<typename T>
 using RRef = T&&;
+
+template<typename T>
+using Size = sizeof(T);
+
+template<typename T>
+using Ctor = T();
 )";
 		auto output = LR"(
 template<typename T>
 using LRef = T &;
 template<typename T>
 using RRef = T &&;
+template<typename T>
+using Size = sizeof(T);
+template<typename T>
+using Ctor = T();
 )";
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);
 
 		AssertType(L"LRef",				L"LRef",				L"<::LRef::typename[T]> ::LRef::typename[T] &",		pa);
 		AssertType(L"RRef",				L"RRef",				L"<::RRef::typename[T]> ::RRef::typename[T] &&",	pa);
+		AssertExpr(L"Size",				L"Size",				L"<::RRef::typename[T]> unsigned __int32 $PR",		pa);
+		AssertExpr(L"Ctor",				L"Ctor",				L"<::RRef::typename[T]> ::RRef::typename[T] $PR",	pa);
 	}
 }

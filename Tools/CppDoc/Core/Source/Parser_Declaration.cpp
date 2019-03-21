@@ -618,15 +618,26 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 			decl->name = cppName;
 			output.Add(decl);
 
-			auto contextSymbol = pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias, spec.f0);
-			if (!contextSymbol)
+			auto newPa = pa.WithContext(spec.f0.Obj());
+			auto kind = symbol_component::SymbolKind::TypeAlias;
+			auto oldCursor = cursor;
+			try
+			{
+				decl->expr = ParseExpr(newPa, true, cursor);
+				kind = symbol_component::SymbolKind::ValueAlias;
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+				decl->type = ParseType(newPa, cursor);
+			}
+			RequireToken(cursor, CppTokens::SEMICOLON);
+
+			if (!pa.context->AddDeclToSymbol(decl, kind, spec.f0))
 			{
 				throw StopParsingException(cursor);
 			}
 
-			auto newPa = pa.WithContext(contextSymbol);
-			decl->type = ParseType(newPa, cursor);
-			RequireToken(cursor, CppTokens::SEMICOLON);
 			return;
 		}
 	SKIP_TYPE_ALIAS:
@@ -676,12 +687,13 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 				switch (symbol->kind)
 				{
 				case symbol_component::SymbolKind::Enum:
-				case symbol_component::SymbolKind::EnumItem:
 				case symbol_component::SymbolKind::Class:
 				case symbol_component::SymbolKind::Struct:
 				case symbol_component::SymbolKind::Union:
 				case symbol_component::SymbolKind::TypeAlias:
+				case symbol_component::SymbolKind::EnumItem:
 				case symbol_component::SymbolKind::Variable:
+				case symbol_component::SymbolKind::ValueAlias:
 					{
 						if (pa.context->children.Keys().Contains(symbol->name))
 						{

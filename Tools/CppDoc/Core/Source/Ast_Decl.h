@@ -251,6 +251,7 @@ public:
 
 	Ptr<TemplateSpec>								templateSpec;
 	Ptr<Type>										type;
+	Ptr<Expr>										expr;
 };
 
 class NamespaceDeclaration : public Declaration

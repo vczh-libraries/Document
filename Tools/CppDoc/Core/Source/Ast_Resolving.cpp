@@ -276,11 +276,24 @@ namespace symbol_type_resolving
 		ev.Allocate();
 
 		auto newPa = pa.WithContext(symbol->parent);
+
+		TypeTsysList types;
+		if (usingDecl->type)
+		{
+			TypeToTsys(newPa, usingDecl->type, types);
+		}
+		else
+		{
+			ExprTsysList tsys;
+			ExprToTsys(newPa, usingDecl->expr, tsys);
+			for (vint i = 0; i < tsys.Count(); i++)
+			{
+				types.Add(tsys[i].tsys);
+			}
+		}
+
 		if (usingDecl->templateSpec)
 		{
-			TypeTsysList types;
-			TypeToTsys(newPa, usingDecl->type, types);
-
 			TsysGenericFunction genericFunction;
 			TypeTsysList params;
 			for (vint i = 0; i < usingDecl->templateSpec->arguments.Count(); i++)
@@ -288,7 +301,7 @@ namespace symbol_type_resolving
 				auto argument = usingDecl->templateSpec->arguments[i];
 				if (argument.argumentType == CppTemplateArgumentType::Value)
 				{
-					throw "Not Implemented!"; // add TsysType::Expr to params
+					params.Add(nullptr);
 				}
 				else
 				{
@@ -304,7 +317,7 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			TypeToTsys(newPa, usingDecl->type, ev.Get());
+			CopyFrom(ev.Get(), types);
 		}
 
 		if (ev.Get().Count() == 0)
@@ -398,6 +411,18 @@ namespace symbol_type_resolving
 			{
 				auto tsys = pa.tsys->DeclOf(symbol->parent);
 				AddInternal(result, { symbol,ExprTsysType::PRValue,tsys });
+			}
+			break;
+		case symbol_component::SymbolKind::ValueAlias:
+			{
+				auto usingDecl = symbol->definition.Cast<UsingDeclaration>();
+				EvaluateSymbol(pa, usingDecl.Obj());
+				AddTemp(result, symbol->evaluation.Get());
+			}
+			break;
+		case symbol_component::SymbolKind::GenericValueArgument:
+			{
+				AddTemp(result, symbol->evaluation.Get());
 			}
 			break;
 		default:
