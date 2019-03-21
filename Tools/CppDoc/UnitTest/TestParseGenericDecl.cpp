@@ -32,7 +32,7 @@ using Ctor = T();
 
 		AssertType(L"LRef",				L"LRef",				L"<::LRef::typename[T]> ::LRef::typename[T] &",		pa);
 		AssertType(L"RRef",				L"RRef",				L"<::RRef::typename[T]> ::RRef::typename[T] &&",	pa);
-		AssertExpr(L"Size",				L"Size",				L"<::RRef::typename[T]> unsigned __int32 $PR",		pa);
-		AssertExpr(L"Ctor",				L"Ctor",				L"<::RRef::typename[T]> ::RRef::typename[T] $PR",	pa);
+		AssertExpr(L"Size",				L"Size",				L"<::Size::typename[T]> unsigned __int32 $PR",		pa);
+		AssertExpr(L"Ctor",				L"Ctor",				L"<::Ctor::typename[T]> ::Ctor::typename[T] $PR",	pa);
 	}
 }

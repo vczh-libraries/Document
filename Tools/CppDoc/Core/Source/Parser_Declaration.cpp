@@ -618,7 +618,7 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 			decl->name = cppName;
 			output.Add(decl);
 
-			auto newPa = pa.WithContext(spec.f0.Obj());
+			auto newPa = spec.f1 ? pa.WithContext(spec.f0.Obj()) : pa;
 			auto kind = symbol_component::SymbolKind::TypeAlias;
 			auto oldCursor = cursor;
 			try

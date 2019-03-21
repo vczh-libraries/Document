@@ -113,6 +113,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 				case symbol_component::SymbolKind::EnumItem:
 				case symbol_component::SymbolKind::Function:
 				case symbol_component::SymbolKind::Variable:
+				case symbol_component::SymbolKind::ValueAlias:
 				case symbol_component::SymbolKind::GenericValueArgument:
 					rsa.found = true;
 					AddSymbolToResolve(rsa.result.values, symbol);
