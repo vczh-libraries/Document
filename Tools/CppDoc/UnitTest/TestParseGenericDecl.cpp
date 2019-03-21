@@ -16,6 +16,12 @@ using Size = sizeof(T);
 
 template<typename T>
 using Ctor = T();
+
+template<typename T, T Value>
+using Id = Value;
+
+template<typename, bool>
+using True = true;
 )";
 		auto output = LR"(
 template<typename T>
@@ -26,6 +32,10 @@ template<typename T>
 using Size = sizeof(T);
 template<typename T>
 using Ctor = T();
+template<typename T, T Value>
+using Id = Value;
+template<typename, bool>
+using True = true;
 )";
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);
@@ -34,5 +44,7 @@ using Ctor = T();
 		AssertType(L"RRef",				L"RRef",				L"<::RRef::typename[T]> ::RRef::typename[T] &&",	pa);
 		AssertExpr(L"Size",				L"Size",				L"<::Size::typename[T]> unsigned __int32 $PR",		pa);
 		AssertExpr(L"Ctor",				L"Ctor",				L"<::Ctor::typename[T]> ::Ctor::typename[T] $PR",	pa);
+		AssertExpr(L"Id",				L"Id",					L"<::Id::typename[T], *> ::Id::typename[T] $PR",	pa);
+		AssertExpr(L"True",				L"True",				L"<::True::typename[], *> bool $PR",				pa);
 	}
 }

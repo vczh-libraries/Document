@@ -1475,7 +1475,14 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			for (vint i = 0; i < tsys->GetParamCount(); i++)
 			{
 				if (i > 0) writer.WriteString(L", ");
-				Log(tsys->GetParam(i), writer);
+				if (auto param = tsys->GetParam(i))
+				{
+					Log(param, writer);
+				}
+				else
+				{
+					writer.WriteChar(L'*');
+				}
 			}
 			writer.WriteString(L"> ");
 			Log(tsys->GetElement(), writer);

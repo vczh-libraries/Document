@@ -581,28 +581,31 @@ namespace symbol_type_resolving
 		{
 			auto targetTypeList = &result;
 			auto symbol = resolving->resolvedSymbols[i];
-
-			switch (symbol->parent->kind)
+			
+			if (symbol->parent)
 			{
-			case symbol_component::SymbolKind::Class:
-			case symbol_component::SymbolKind::Struct:
-			case symbol_component::SymbolKind::Union:
-				switch (symbol->kind)
+				switch (symbol->parent->kind)
 				{
-				case symbol_component::SymbolKind::Variable:
-					if (!IsStaticSymbol<ForwardVariableDeclaration>(symbol))
+				case symbol_component::SymbolKind::Class:
+				case symbol_component::SymbolKind::Struct:
+				case symbol_component::SymbolKind::Union:
+					switch (symbol->kind)
 					{
-						targetTypeList = &varTypes;
-					}
-					break;
-				case symbol_component::SymbolKind::Function:
-					if (!IsStaticSymbol<ForwardFunctionDeclaration>(symbol))
-					{
-						targetTypeList = &funcTypes;
+					case symbol_component::SymbolKind::Variable:
+						if (!IsStaticSymbol<ForwardVariableDeclaration>(symbol))
+						{
+							targetTypeList = &varTypes;
+						}
+						break;
+					case symbol_component::SymbolKind::Function:
+						if (!IsStaticSymbol<ForwardFunctionDeclaration>(symbol))
+						{
+							targetTypeList = &funcTypes;
+						}
+						break;
 					}
 					break;
 				}
-				break;
 			}
 
 			VisitSymbol(pa, (targetTypeList == &result ? nullptr : thisItem), resolving->resolvedSymbols[i], false, *targetTypeList);
