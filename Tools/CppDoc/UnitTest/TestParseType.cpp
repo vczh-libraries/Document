@@ -56,7 +56,6 @@ TEST_CASE(TestParseType_Long)
 	AssertType(L"int const volatile",				L"int const volatile",					L"__int32 const volatile"			);
 	AssertType(L"int volatile constexpr",			L"int constexpr volatile",				L"__int32 const volatile"			);
 	AssertType(L"int volatile const constexpr",		L"int constexpr const volatile",		L"__int32 const volatile"			);
-	AssertType(L"int ...",							L"int...",								L"");
 }
 
 TEST_CASE(TestParseType_ShortDeclarator)
