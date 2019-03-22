@@ -304,6 +304,7 @@ public:
 	virtual ITsys*						GenericArgOf(TsysGenericArg genericArg) = 0;
 
 	virtual ITsys*						GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
+	virtual bool						HasGenericArgs() = 0;
 	virtual void						ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output) = 0;
 };
 

@@ -108,6 +108,11 @@ public:
 		return GetEntityInternal(cv, refType);
 	}
 
+	bool HasGenericArgs()override
+	{
+		return false;
+	}
+
 	void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override
 	{
 		output.Add(this);
@@ -196,6 +201,10 @@ Concrete Tsys (ReplaceGenericArgs)
 
 #define ITSYS_REPLACE_GENERIC_ARGS(NAME, DATA)\
 	public:\
+		bool HasGenericArgs()override\
+		{\
+			return element->HasGenericArgs();\
+		}\
 		void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override\
 		{\
 			element->ReplaceGenericArgs(context, output);\
@@ -420,25 +429,48 @@ ITsys* ParamsOf(IEnumerable<ITsys*>& params, const TData& data, WithParamsList<T
 }
 
 template<typename TITsys>
-void ReplaceGenericArgsWithParams(List<ITsys*>& params, ITsys* element, bool& hasGenericArgs, List<ITsys*>& output, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
+bool ReplaceGenericArgsWithParams(List<ITsys*>& params, ITsys* element, List<ITsys*>& output, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
 {
+}
+
+bool HasGenericArgsWithParams(List<ITsys*>& params, ITsys* element, bool& initializedHasGenericArgs, bool& hasGenericArgs)
+{
+	if (!initializedHasGenericArgs)
+	{
+		initializedHasGenericArgs = true;
+		if (element && element->HasGenericArgs())
+		{
+			return (hasGenericArgs = true);
+		}
+		for (vint i = 0; i < params.Count(); i++)
+		{
+			if (params[i]->HasGenericArgs())
+			{
+				return (hasGenericArgs = true);
+			}
+		}
+	}
+	return hasGenericArgs;
 }
 
 #define ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(ELEMENT) \
 public:\
 	bool					initializedHasGenericArgs = false;\
 	bool					hasGenericArgs = false;\
+	bool HasGenericArgs()override\
+	{\
+		return HasGenericArgsWithParams(params, ELEMENT, initializedHasGenericArgs, hasGenericArgs);\
+	}\
 	void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override\
 	{\
-		if ((initializedHasGenericArgs && !hasGenericArgs) || context.arguments.Count() == 0)\
+		if (context.arguments.Count() != 0)\
 		{\
-			output.Add(this);\
+			if (ReplaceGenericArgsWithParams(params, ELEMENT, output, this, &RemoveReference<decltype(*this)>::Type::ReplaceGenericArgsCallback))\
+			{\
+				return;\
+			}\
 		}\
-		else\
-		{\
-			initializedHasGenericArgs = true;\
-			ReplaceGenericArgsWithParams(params, ELEMENT, hasGenericArgs, output, this, &RemoveReference<decltype(*this)>::Type::ReplaceGenericArgsCallback);\
-		}\
+		output.Add(this);\
 	}\
 
 class ITSYS_CLASS(Function)
