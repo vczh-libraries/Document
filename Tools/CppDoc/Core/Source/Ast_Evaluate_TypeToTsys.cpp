@@ -9,16 +9,17 @@ class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
 {
 public:
 	TypeTsysList&				result;
-	TypeTsysList*				returnTypes;
 	const ParsingArguments&		pa;
-
-	TsysCallingConvention		cc = TsysCallingConvention::None;
+	TypeTsysList*				returnTypes;
+	GenericArgContext*			gaContext;
 	bool						memberOf = false;
+	TsysCallingConvention		cc = TsysCallingConvention::None;
 
-	TypeToTsysVisitor(const ParsingArguments& _pa, TypeTsysList& _result, TypeTsysList* _returnTypes, TsysCallingConvention _cc, bool _memberOf)
+	TypeToTsysVisitor(const ParsingArguments& _pa, TypeTsysList& _result, TypeTsysList* _returnTypes, GenericArgContext* _gaContext, bool _memberOf, TsysCallingConvention _cc)
 		:pa(_pa)
 		, result(_result)
 		, returnTypes(_returnTypes)
+		, gaContext(_gaContext)
 		, cc(_cc)
 		, memberOf(_memberOf)
 	{
@@ -178,11 +179,11 @@ public:
 			}
 			else if (self->decoratorReturnType)
 			{
-				TypeToTsys(pa, self->decoratorReturnType, tsyses[0]);
+				TypeToTsys(pa, self->decoratorReturnType, tsyses[0], gaContext);
 			}
 			else if (self->returnType)
 			{
-				TypeToTsys(pa, self->returnType, tsyses[0]);
+				TypeToTsys(pa, self->returnType, tsyses[0], gaContext);
 			}
 			else
 			{
@@ -191,7 +192,7 @@ public:
 
 			for (vint i = 0; i < self->parameters.Count(); i++)
 			{
-				TypeToTsys(pa, self->parameters[i]->type, tsyses[i + 1]);
+				TypeToTsys(pa, self->parameters[i]->type, tsyses[i + 1], gaContext);
 			}
 
 			tsysIndex = new vint[count];
@@ -225,8 +226,8 @@ public:
 		memberOf = true;
 
 		TypeTsysList types, classTypes;
-		TypeToTsys(pa, self->type, types, memberOf, cc);
-		TypeToTsys(pa, self->classType, classTypes);
+		TypeToTsys(pa, self->type, types, gaContext, memberOf, cc);
+		TypeToTsys(pa, self->classType, classTypes, gaContext);
 
 		for (vint i = 0; i < types.Count(); i++)
 		{
@@ -336,21 +337,21 @@ public:
 };
 
 // Convert type AST to type system object
-void TypeToTsys(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool memberOf, TsysCallingConvention cc)
+void TypeToTsys(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf, TsysCallingConvention cc)
 {
 	if (!t) throw NotConvertableException();
-	TypeToTsysVisitor visitor(pa, tsys, nullptr, cc, memberOf);
+	TypeToTsysVisitor visitor(pa, tsys, nullptr, gaContext, memberOf, cc);
 	t->Accept(&visitor);
 }
 
-void TypeToTsys(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool memberOf, TsysCallingConvention cc)
+void TypeToTsys(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf, TsysCallingConvention cc)
 {
-	TypeToTsys(pa, t.Obj(), tsys, memberOf, cc);
+	TypeToTsys(pa, t.Obj(), tsys, gaContext, memberOf, cc);
 }
 
-void TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf)
+void TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf)
 {
 	if (!t) throw NotConvertableException();
-	TypeToTsysVisitor visitor(pa, tsys, &returnTypes, TsysCallingConvention::None, memberOf);
+	TypeToTsysVisitor visitor(pa, tsys, &returnTypes, gaContext, memberOf, TsysCallingConvention::None);
 	t->Accept(&visitor);
 }

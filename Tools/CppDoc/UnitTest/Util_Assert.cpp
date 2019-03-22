@@ -63,7 +63,7 @@ void AssertType(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys
 	try
 	{
 		TypeTsysList tsys;
-		TypeToTsys(pa, type, tsys);
+		TypeToTsys(pa, type, tsys, nullptr);
 		if (tsys.Count() == 0)
 		{
 			TEST_ASSERT(L"" == logTsys);

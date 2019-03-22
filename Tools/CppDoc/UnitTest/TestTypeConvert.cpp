@@ -18,8 +18,8 @@ void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WS
 		TEST_ASSERT(cursor == nullptr);
 	}
 
-	TypeToTsys(pa, fromType, fromTypes);
-	TypeToTsys(pa, toType, toTypes);
+	TypeToTsys(pa, fromType, fromTypes, nullptr);
+	TypeToTsys(pa, toType, toTypes, nullptr);
 	TEST_ASSERT(fromTypes.Count() == 1);
 	TEST_ASSERT(toTypes.Count() == 1);
 

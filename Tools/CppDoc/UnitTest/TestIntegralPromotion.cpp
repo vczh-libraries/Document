@@ -14,7 +14,7 @@ ITsys* GetTsysFromCppType(Ptr<ITsysAlloc> tsys, const WString& cppType)
 	TEST_ASSERT(!cursor);
 
 	TypeTsysList types;
-	TypeToTsys(pa, type, types);
+	TypeToTsys(pa, type, types, nullptr);
 	TEST_ASSERT(types.Count() == 1);
 	return types[0];
 }
