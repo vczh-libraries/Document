@@ -95,11 +95,6 @@ public:
 			}
 		}
 	}
-
-	void Visit(VariadicTemplateArgumentType* self)override
-	{
-		self->type->Accept(this);
-	}
 };
 
 // Test if a type contains auto or decltype(auto)
@@ -169,7 +164,7 @@ public:
 		auto target = targetType ? targetType : targetExpr.tsys;
 
 		TypeTsysList types;
-		TypeToTsys(pa, self, types);
+		TypeToTsys(pa, self, types, nullptr);
 		for (vint i = 0; i < types.Count(); i++)
 		{
 			if (types[i] == target)
@@ -543,11 +538,6 @@ public:
 	}
 
 	void Visit(GenericType* self)override
-	{
-		ShouldEqual(self);
-	}
-
-	void Visit(VariadicTemplateArgumentType* self)override
 	{
 		ShouldEqual(self);
 	}

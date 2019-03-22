@@ -11,7 +11,7 @@ public:
 	TypeTsysList&				result;
 	const ParsingArguments&		pa;
 	TypeTsysList*				returnTypes;
-	GenericArgContext*			gaContext;
+	GenericArgContext*			gaContext = nullptr;
 	bool						memberOf = false;
 	TsysCallingConvention		cc = TsysCallingConvention::None;
 
@@ -326,11 +326,6 @@ public:
 	}
 
 	void Visit(GenericType* self)override
-	{
-		throw NotConvertableException();
-	}
-
-	void Visit(VariadicTemplateArgumentType* self)override
 	{
 		throw NotConvertableException();
 	}

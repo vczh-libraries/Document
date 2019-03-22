@@ -12,10 +12,12 @@ class ExprToTsysVisitor : public Object, public virtual IExprVisitor
 public:
 	ExprTsysList&				result;
 	const ParsingArguments&		pa;
+	GenericArgContext*			gaContext = nullptr;
 
-	ExprToTsysVisitor(const ParsingArguments& _pa, ExprTsysList& _result)
+	ExprToTsysVisitor(const ParsingArguments& _pa, ExprTsysList& _result, GenericArgContext* _gaContext)
 		:pa(_pa)
 		, result(_result)
+		, gaContext(_gaContext)
 	{
 	}
 
@@ -245,7 +247,7 @@ public:
 		}
 		{
 			TypeTsysList types;
-			TypeToTsys(pa, self->type, types);
+			TypeToTsys(pa, self->type, types, gaContext);
 			AddTemp(result, types);
 		}
 	}
@@ -255,7 +257,7 @@ public:
 		if (self->type)
 		{
 			TypeTsysList types;
-			TypeToTsys(pa, self->type, types);
+			TypeToTsys(pa, self->type, types, gaContext);
 		}
 		if (self->expr)
 		{
@@ -290,7 +292,7 @@ public:
 		if (self->type)
 		{
 			TypeTsysList types;
-			TypeToTsys(pa, self->type, types);
+			TypeToTsys(pa, self->type, types, gaContext);
 		}
 		if (self->expr)
 		{
@@ -562,7 +564,7 @@ public:
 
 		{
 			TypeTsysList types;
-			TypeToTsys(pa, self->type, types);
+			TypeToTsys(pa, self->type, types, gaContext);
 			AddTemp(result, types);
 		}
 	}
@@ -585,7 +587,7 @@ public:
 		}
 
 		TypeTsysList types;
-		TypeToTsys(pa, self->type, types);
+		TypeToTsys(pa, self->type, types, gaContext);
 		for (vint i = 0; i < types.Count(); i++)
 		{
 			auto type = types[i];
@@ -1107,6 +1109,6 @@ public:
 void ExprToTsys(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys)
 {
 	if (!e) throw IllegalExprException();
-	ExprToTsysVisitor visitor(pa, tsys);
+	ExprToTsysVisitor visitor(pa, tsys, nullptr);
 	e->Accept(&visitor);
 }

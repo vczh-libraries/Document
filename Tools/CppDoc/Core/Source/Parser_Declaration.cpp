@@ -142,7 +142,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
 			argumentSymbol->name = argument.name.name;
 			argumentSymbol->evaluation.Allocate();
-			TypeToTsys(newPa, argument.type, argumentSymbol->evaluation.Get());
+			TypeToTsys(newPa, argument.type, argumentSymbol->evaluation.Get(), nullptr);
 			if (argumentSymbol->evaluation.Get().Count() == 0)
 			{
 				throw StopParsingException(cursor);

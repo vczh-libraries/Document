@@ -535,12 +535,6 @@ public:
 		}
 		writer.WriteString(L">");
 	}
-
-	void Visit(VariadicTemplateArgumentType* self)override
-	{
-		self->type->Accept(this);
-		writer.WriteString(L"...");
-	}
 };
 
 /***********************************************************************

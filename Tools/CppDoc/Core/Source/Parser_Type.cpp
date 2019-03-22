@@ -399,9 +399,7 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		else if (TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
 		{
 			// TYPE ...
-			auto type = MakePtr<VariadicTemplateArgumentType>();
-			type->type = typeResult;
-			typeResult = type;
+			throw StopParsingException(cursor);
 		}
 		else
 		{

@@ -228,10 +228,6 @@ namespace symbol_type_resolving
 		{
 			self->type->Accept(this);
 		}
-
-		void Visit(VariadicTemplateArgumentType* self)override
-		{
-		}
 	};
 
 	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)

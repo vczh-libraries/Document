@@ -1069,12 +1069,6 @@ public:
 	{
 		throw Exception(L"Not Implemented.");
 	}
-
-	void Visit(VariadicTemplateArgumentType* self)override
-	{
-		throw Exception(L"Not Implemented.");
-	}
-
 };
 
 WString GetDisplayNameInHtml(Symbol* symbol)

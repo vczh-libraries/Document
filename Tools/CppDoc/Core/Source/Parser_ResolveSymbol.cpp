@@ -273,10 +273,6 @@ public:
 	{
 		self->type->Accept(this);
 	}
-
-	void Visit(VariadicTemplateArgumentType* self)override
-	{
-	}
 };
 
 void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType, SearchPolicy policy, ResolveSymbolArguments& rsa)

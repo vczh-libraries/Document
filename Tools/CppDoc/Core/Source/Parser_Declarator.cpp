@@ -81,11 +81,6 @@ public:
 	{
 		Execute(self->type);
 	}
-
-	void Visit(VariadicTemplateArgumentType* self)override
-	{
-		Execute(self->type);
-	}
 };
 
 /***********************************************************************

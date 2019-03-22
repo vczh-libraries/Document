@@ -20,7 +20,6 @@ Visitor
 	F(IdType)\
 	F(ChildType)\
 	F(GenericType)\
-	F(VariadicTemplateArgumentType)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
 CPPDOC_TYPE_LIST(CPPDOC_FORWARD)
@@ -197,14 +196,6 @@ public:
 
 	Ptr<Type>				type;
 	List<GenericArgument>	arguments;
-};
-
-class VariadicTemplateArgumentType : public Type
-{
-public:
-	ITypeVisitor_ACCEPT;
-
-	Ptr<Type>				type;
 };
 
 #endif

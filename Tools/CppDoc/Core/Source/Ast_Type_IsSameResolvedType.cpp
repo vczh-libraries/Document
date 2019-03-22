@@ -160,14 +160,6 @@ public:
 			result = true;
 		}
 	}
-
-	void Visit(VariadicTemplateArgumentType* self)override
-	{
-		if (auto type = peerType.Cast<VariadicTemplateArgumentType>())
-		{
-			result = IsSameResolvedType(self->type, type->type);
-		}
-	}
 };
 
 // Test if two types are actually the same one
