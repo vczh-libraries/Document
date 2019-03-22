@@ -23,6 +23,7 @@ public:
 
 	void ReIndex(CppName* name, Ptr<Resolving>* nameResolving, CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols)
 	{
+		if (gaContext) return;
 		bool firstName = true;
 		bool firstOp = true;
 
@@ -416,7 +417,7 @@ public:
 			}
 		}
 
-		if (idExpr)
+		if (idExpr && !gaContext)
 		{
 			idExpr->resolving = totalRar.values;
 			if (pa.recorder)

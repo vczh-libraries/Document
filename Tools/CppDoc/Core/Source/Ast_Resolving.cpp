@@ -104,7 +104,7 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	EvaluateSymbol: Evaluate the declared type for a symbol
+	EvaluateSymbol: Evaluate the declared type for a variable
 	***********************************************************************/
 
 	void EvaluateSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl)
@@ -150,10 +150,14 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			TypeToTsys(newPa, varDecl->type, ev.Get());
+			TypeToTsys(newPa, varDecl->type, ev.Get(), nullptr);
 		}
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;
 	}
+
+	/***********************************************************************
+	EvaluateSymbol: Evaluate the declared type for a function
+	***********************************************************************/
 
 	bool IsMemberFunction(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl)
 	{
@@ -196,7 +200,7 @@ namespace symbol_type_resolving
 					}
 				}
 			}
-			TypeToTsysAndReplaceFunctionReturnType(newPa, funcDecl->type, processedReturnTypes, ev.Get(), IsMemberFunction(pa, funcDecl));
+			TypeToTsysAndReplaceFunctionReturnType(newPa, funcDecl->type, processedReturnTypes, ev.Get(), nullptr, IsMemberFunction(pa, funcDecl));
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		}
 	}
@@ -234,10 +238,14 @@ namespace symbol_type_resolving
 		{
 			auto newPa = pa.WithContext(symbol->parent);
 			ev.Allocate();
-			TypeToTsys(newPa, funcDecl->type, ev.Get(), IsMemberFunction(pa, funcDecl));
+			TypeToTsys(newPa, funcDecl->type, ev.Get(), nullptr, IsMemberFunction(pa, funcDecl));
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		}
 	}
+
+	/***********************************************************************
+	EvaluateSymbol: Evaluate base types for a class
+	***********************************************************************/
 
 	void EvaluateSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl)
 	{
@@ -256,11 +264,15 @@ namespace symbol_type_resolving
 			auto newPa = pa.WithContext(symbol);
 			for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 			{
-				TypeToTsys(newPa, classDecl->baseTypes[i].f1, ev.Get(i));
+				TypeToTsys(newPa, classDecl->baseTypes[i].f1, ev.Get(i), nullptr);
 			}
 		}
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;
 	}
+
+	/***********************************************************************
+	EvaluateSymbol: Evaluate the declared type for an alias
+	***********************************************************************/
 
 	void EvaluateSymbol(const ParsingArguments& pa, UsingDeclaration* usingDecl)
 	{
@@ -280,7 +292,7 @@ namespace symbol_type_resolving
 		TypeTsysList types;
 		if (usingDecl->type)
 		{
-			TypeToTsys(newPa, usingDecl->type, types);
+			TypeToTsys(newPa, usingDecl->type, types, nullptr);
 		}
 		else
 		{
