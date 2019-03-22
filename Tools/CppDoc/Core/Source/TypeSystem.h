@@ -59,6 +59,11 @@ struct ExprTsysItem
 	bool operator>=	(const ExprTsysItem& item)const { return Compare(*this, item) >= 0; }
 };
 
+struct GenericArgContext
+{
+	Group<ITsys*, ITsys*>	arguments;
+};
+
 /***********************************************************************
 Interface
 ***********************************************************************/
@@ -295,10 +300,11 @@ public:
 	virtual ITsys*						FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func) = 0;
 	virtual ITsys*						MemberOf(ITsys* classType) = 0;
 	virtual ITsys*						CVOf(TsysCV cv) = 0;
-	virtual ITsys*						GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction) = 0;
+	virtual ITsys*						GenericFunctionOf(IEnumerable<ITsys*>& params, const TsysGenericFunction& genericFunction) = 0;
 	virtual ITsys*						GenericArgOf(TsysGenericArg genericArg) = 0;
 
 	virtual ITsys*						GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
+	virtual void						ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output) = 0;
 };
 
 /***********************************************************************

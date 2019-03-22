@@ -75,6 +75,7 @@ protected:
 	{
 		return this;
 	}
+
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
 
@@ -90,15 +91,15 @@ public:
 	TsysGenericArg													GetGenericArg()				{ throw "Not Implemented!"; }
 	Symbol*															GetDecl()					{ throw "Not Implemented!"; }
 
-	ITsys* LRefOf()																				override;
-	ITsys* RRefOf()																				override;
-	ITsys* PtrOf()																				override;
-	ITsys* ArrayOf(vint dimensions)																override;
-	ITsys* FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)								override;
-	ITsys* MemberOf(ITsys* classType)															override;
-	ITsys* CVOf(TsysCV cv)																		override;
-	ITsys* GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction)	override;
-	ITsys* GenericArgOf(TsysGenericArg genericArg)												override { throw "Not Implemented!"; }
+	ITsys* LRefOf()																						override;
+	ITsys* RRefOf()																						override;
+	ITsys* PtrOf()																						override;
+	ITsys* ArrayOf(vint dimensions)																		override;
+	ITsys* FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)										override;
+	ITsys* MemberOf(ITsys* classType)																	override;
+	ITsys* CVOf(TsysCV cv)																				override;
+	ITsys* GenericFunctionOf(IEnumerable<ITsys*>& params, const TsysGenericFunction& genericFunction)	override;
+	ITsys* GenericArgOf(TsysGenericArg genericArg)														override { throw "Not Implemented!"; }
 
 	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
 	{
@@ -106,25 +107,12 @@ public:
 		refType = TsysRefType::None;
 		return GetEntityInternal(cv, refType);
 	}
+
+	void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override
+	{
+		output.Add(this);
+	}
 };
-
-template<typename TType, typename TData, vint BlockSize>
-ITsys* ParamsOf(IEnumerable<ITsys*>& params, const TData& data, WithParamsList<TType, TData>& paramsOf, TsysBase* element, TsysAlloc* tsys, ITsys_Allocator<TType, BlockSize> TsysAlloc::* alloc)
-{
-	WithParams<TType, TData> key;
-	key.params = &params;
-	key.itsys = nullptr;
-	key.data = data;
-	vint index = paramsOf.IndexOf(key);
-	if (index != -1) return paramsOf[index].itsys;
-
-	auto itsys = (tsys->*alloc).Alloc(tsys, element, data);
-	CopyFrom(itsys->GetParams(), params);
-	key.params = &itsys->GetParams();
-	key.itsys = itsys;
-	paramsOf.Add(key);
-	return itsys;
-}
 
 template<TsysType Type>
 class TsysBase_ : public TsysBase
@@ -136,7 +124,7 @@ public:
 };
 
 /***********************************************************************
-Concrete Tsys (Commons)
+Concrete Tsys (Commons Members)
 ***********************************************************************/
 
 #define ITSYS_CLASS(TYPE) ITsys_##TYPE : public TsysBase_<TsysType::TYPE>
@@ -158,7 +146,7 @@ Concrete Tsys (Commons)
 		DATA_RET Get##NAME()override { return data; }												\
 
 /***********************************************************************
-Concrete Tsys
+Concrete Tsys (Members)
 ***********************************************************************/
 
 #define ITSYS_MEMBERS_MINIMIZED(TYPE)																\
@@ -201,6 +189,32 @@ Concrete Tsys
 	public:																							\
 		ITsys_##TYPE(TsysAlloc* _tsys, TsysBase*, DATA const& _data)								\
 			:TsysBase_(_tsys), data(_data) {}														\
+
+/***********************************************************************
+Concrete Tsys (ReplaceGenericArgs)
+***********************************************************************/
+
+#define ITSYS_REPLACE_GENERIC_ARGS(NAME, DATA)\
+	public:\
+		void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override\
+		{\
+			element->ReplaceGenericArgs(context, output);\
+			if (output.Count() == 1 && output[0] == element)\
+			{\
+				output[0] = this;\
+			}\
+			else\
+			{\
+				for (vint i = 0; i < output.Count(); i++)\
+				{\
+					output[i] = output[i]->NAME(DATA);\
+				}\
+			}\
+		}\
+
+/***********************************************************************
+Concrete Tsys (Singleton)
+***********************************************************************/
 
 class ITSYS_CLASS(Zero)
 {
@@ -247,6 +261,10 @@ class ITSYS_CLASS(Primitive)
 	ITSYS_MEMBERS_DATA(Primitive, TsysPrimitive, Primitive)
 };
 
+/***********************************************************************
+Concrete Tsys (User Defined)
+***********************************************************************/
+
 class ITSYS_CLASS(Decl)
 {
 	ITSYS_MEMBERS_DATA(Decl, Symbol*, Decl)
@@ -267,11 +285,29 @@ public:
 	{
 		return element->GetDecl();
 	}
+
+	void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override
+	{
+		vint index = context.arguments.Keys().IndexOf(this);
+		if (index == -1)
+		{
+			output.Add(this);
+		}
+		else
+		{
+			CopyFrom(output, context.arguments.GetByIndex(index));
+		}
+	}
 };
+
+/***********************************************************************
+Concrete Tsys (Element Only)
+***********************************************************************/
 
 class ITSYS_CLASS(LRef)
 {
 	ITSYS_MEMBERS_REF(LRef)
+	ITSYS_REPLACE_GENERIC_ARGS(LRefOf, )
 
 	ITsys* LRefOf()override
 	{
@@ -287,6 +323,7 @@ class ITSYS_CLASS(LRef)
 	{
 		return this;
 	}
+
 protected:
 	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
@@ -298,6 +335,7 @@ protected:
 class ITSYS_CLASS(RRef)
 {
 	ITSYS_MEMBERS_REF(RRef)
+	ITSYS_REPLACE_GENERIC_ARGS(RRefOf, )
 
 	ITsys* LRefOf()override
 	{
@@ -313,6 +351,7 @@ class ITSYS_CLASS(RRef)
 	{
 		return this;
 	}
+
 protected:
 	ITsys* GetEntityInternal(TsysCV& cv, TsysRefType& refType)override
 	{
@@ -324,16 +363,19 @@ protected:
 class ITSYS_CLASS(Ptr)
 {
 	ITSYS_MEMBERS_REF(Ptr)
+	ITSYS_REPLACE_GENERIC_ARGS(PtrOf, )
 };
 
 class ITSYS_CLASS(Array)
 {
 	ITSYS_MEMBERS_DATA_WITHELEMENT(Array, vint, ParamCount)
+	ITSYS_REPLACE_GENERIC_ARGS(ArrayOf, data)
 };
 
 class ITSYS_CLASS(CV)
 {
 	ITSYS_MEMBERS_DATA_WITHELEMENT(CV, TsysCV, CV)
+	ITSYS_REPLACE_GENERIC_ARGS(CVOf, data)
 
 	ITsys* CVOf(TsysCV cv)override
 	{
@@ -352,21 +394,78 @@ protected:
 class ITSYS_CLASS(Member)
 {
 	ITSYS_MEMBERS_DATA_WITHELEMENT(Member, ITsys*, Class)
+	ITSYS_REPLACE_GENERIC_ARGS(MemberOf, data)
 };
+
+/***********************************************************************
+Concrete Tsys (Params)
+***********************************************************************/
+
+template<typename TType, typename TData, vint BlockSize>
+ITsys* ParamsOf(IEnumerable<ITsys*>& params, const TData& data, WithParamsList<TType, TData>& paramsOf, TsysBase* element, TsysAlloc* tsys, ITsys_Allocator<TType, BlockSize> TsysAlloc::* alloc)
+{
+	WithParams<TType, TData> key;
+	key.params = &params;
+	key.itsys = nullptr;
+	key.data = data;
+	vint index = paramsOf.IndexOf(key);
+	if (index != -1) return paramsOf[index].itsys;
+
+	auto itsys = (tsys->*alloc).Alloc(tsys, element, data);
+	CopyFrom(itsys->GetParams(), params);
+	key.params = &itsys->GetParams();
+	key.itsys = itsys;
+	paramsOf.Add(key);
+	return itsys;
+}
+
+template<typename TITsys>
+void ReplaceGenericArgsWithParams(List<ITsys*>& params, ITsys* element, bool& hasGenericArgs, List<ITsys*>& output, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
+{
+}
+
+#define ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(ELEMENT) \
+public:\
+	bool					initializedHasGenericArgs = false;\
+	bool					hasGenericArgs = false;\
+	void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override\
+	{\
+		if ((initializedHasGenericArgs && !hasGenericArgs) || context.arguments.Count() == 0)\
+		{\
+			output.Add(this);\
+		}\
+		else\
+		{\
+			initializedHasGenericArgs = true;\
+			ReplaceGenericArgsWithParams(params, ELEMENT, hasGenericArgs, output, this, &RemoveReference<decltype(*this)>::Type::ReplaceGenericArgsCallback);\
+		}\
+	}\
 
 class ITSYS_CLASS(Function)
 {
 	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(Function, TsysFunc, TsysFunc, Func)
+	ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(element)
+
+private:
+	ITsys*					ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params);
 };
 
 class ITSYS_CLASS(Init)
 {
 	ITSYS_MEMBERS_WITHPARAMS_WITHOUT_ELEMENT(Init, TsysInit, const TsysInit&, Init)
+	ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(nullptr)
+
+private:
+	ITsys*					ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params);
 };
 
 class ITSYS_CLASS(GenericFunction)
 {
 	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(GenericFunction, TsysGenericFunction, const TsysGenericFunction&, GenericFunction)
+	ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(element)
+
+private:
+	ITsys*					ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params);
 };
 
 #undef ITSYS_MEMBERS_DATA
@@ -618,7 +717,7 @@ ITsys* TsysBase::CVOf(TsysCV cv)
 	return itsys;
 }
 
-ITsys* TsysBase::GenericFunctionOf(IEnumerable<ITsys*>& params, TsysGenericFunction& genericFunction)
+ITsys* TsysBase::GenericFunctionOf(IEnumerable<ITsys*>& params, const TsysGenericFunction& genericFunction)
 {
 	return ParamsOf(params, genericFunction, genericFunctionOf, this, tsys, &TsysAlloc::_genericFunction);
 }
@@ -635,4 +734,36 @@ ITsys* ITsys_Decl::GenericArgOf(TsysGenericArg genericArg)
 	auto itsys = tsys->_genericArg.Alloc(tsys, this, genericArg);
 	genericArgs.Add(genericArg, itsys);
 	return itsys;
+}
+
+/***********************************************************************
+ITsys_Function (Impl)
+***********************************************************************/
+
+ITsys* ITsys_Function::ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params)
+{
+	return element->FunctionOf(params, data);
+}
+
+/***********************************************************************
+ITsys_Init (Impl)
+***********************************************************************/
+
+ITsys* ITsys_Init::ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params)
+{
+	Array<ExprTsysItem> items(params.Count());
+	for (vint i = 0; i < params.Count(); i++)
+	{
+		items[i] = { nullptr,data.types[i],params[i] };
+	}
+	return tsys->InitOf(items);
+}
+
+/***********************************************************************
+ITsys_GenericFunction (Impl)
+***********************************************************************/
+
+ITsys* ITsys_GenericFunction::ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params)
+{
+	return element->GenericFunctionOf(params, data);
 }
