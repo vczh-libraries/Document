@@ -145,16 +145,21 @@ public:
 			for (vint i = 0; i < self->arguments.Count(); i++)
 			{
 				auto ga1 = self->arguments[i];
-				auto ga2 = self->arguments[i];
+				auto ga2 = type->arguments[i];
 				if ((ga1.type == nullptr) != (ga2.type == nullptr)) return;
 
 				if (ga1.type && ga2.type)
 				{
 					if (!IsSameResolvedType(ga1.type, ga2.type)) return;
 				}
+				else if (ga1.expr && ga2.expr)
+				{
+					// assume all constant expression in type arguments to be identical
+					continue;
+				}
 				else
 				{
-					throw 0;
+					return;
 				}
 			}
 			result = true;

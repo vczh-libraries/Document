@@ -327,7 +327,7 @@ public:
 
 	void Visit(GenericType* self)override
 	{
-		throw NotConvertableException();
+		throw 0;
 	}
 };
 

@@ -1024,7 +1024,14 @@ public:
 
 	void Visit(DeclType* self)override
 	{
-		result = L"<span class=\"cpp_keyword\">decltype</span>(...)" + result;
+		if (self->expr)
+		{
+			result = L"<span class=\"cpp_keyword\">decltype</span>(...)" + result;
+		}
+		else
+		{
+			result = L"<span class=\"cpp_keyword\">decltype</span>(<span class=\"cpp_keyword\">auto</span>)" + result;
+		}
 	}
 
 	void Visit(DecorateType* self)override

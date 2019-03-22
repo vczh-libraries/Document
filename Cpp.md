@@ -42,6 +42,8 @@
 - [ ] Initialization list.
 - [ ] Lambda expressions.
 - [ ] `nullptr` failed to convert to `const function_type*&`.
+- [ ] `decltype(EXPR)::ChildType`
+- [ ] Connect function with forward declarations containing `decltype(EXPR)` in expression type.
 
 ## Finisher Work Items
 

@@ -247,6 +247,10 @@ public:
 
 	void Visit(DeclType* self)override
 	{
+		if (self->expr)
+		{
+			throw 0;
+		}
 	}
 
 	void Visit(DecorateType* self)override
