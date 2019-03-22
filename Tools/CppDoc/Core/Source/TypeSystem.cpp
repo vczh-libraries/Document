@@ -428,11 +428,6 @@ ITsys* ParamsOf(IEnumerable<ITsys*>& params, const TData& data, WithParamsList<T
 	return itsys;
 }
 
-template<typename TITsys>
-bool ReplaceGenericArgsWithParams(List<ITsys*>& params, ITsys* element, List<ITsys*>& output, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
-{
-}
-
 bool HasGenericArgsWithParams(List<ITsys*>& params, ITsys* element, bool& initializedHasGenericArgs, bool& hasGenericArgs)
 {
 	if (!initializedHasGenericArgs)
@@ -453,6 +448,52 @@ bool HasGenericArgsWithParams(List<ITsys*>& params, ITsys* element, bool& initia
 	return hasGenericArgs;
 }
 
+template<typename TITsys>
+void ReplaceGenericArgsWithParamsPartial(ITsys* element, Array<vint>& indices, Array<List<ITsys*>>& replacedParams, Array<ITsys*>& selectedParams, vint count, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
+{
+	if (count == replacedParams.Count())
+	{
+		(self->*callback)(element, selectedParams);
+	}
+	else
+	{
+		for (vint i = 0; i < replacedParams[count].Count(); i++)
+		{
+			indices[count] = i;
+			selectedParams[count] = replacedParams[count][i];
+			ReplaceGenericArgsWithParamsPartial(element, indices, replacedParams, selectedParams, count + 1, self, callback);
+		}
+	}
+}
+
+template<typename TITsys>
+void ReplaceGenericArgsWithParams(const GenericArgContext& context, List<ITsys*>& params, ITsys* element, List<ITsys*>& output, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
+{
+	List<ITsys*> replacedElement;
+	Array<vint> indices;
+	Array<List<ITsys*>> replacedParams(params.Count());
+	Array<ITsys*> selectedParams(params.Count());
+
+	if (element)
+	{
+		element->ReplaceGenericArgs(context, replacedElement);
+	}
+	else
+	{
+		replacedElement.Add(nullptr);
+	}
+
+	for (vint i = 0; i < params.Count(); i++)
+	{
+		params[i]->ReplaceGenericArgs(context, replacedParams[i]);
+	}
+
+	for (vint i = 0; i < replacedElement.Count(); i++)
+	{
+		ReplaceGenericArgsWithParamsPartial(replacedElement[i], indices, replacedParams, selectedParams, 0, self, callback);
+	}
+}
+
 #define ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(ELEMENT) \
 public:\
 	bool					initializedHasGenericArgs = false;\
@@ -463,14 +504,14 @@ public:\
 	}\
 	void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override\
 	{\
-		if (context.arguments.Count() != 0)\
+		if (context.arguments.Count() != 0 && HasGenericArgs())\
 		{\
-			if (ReplaceGenericArgsWithParams(params, ELEMENT, output, this, &RemoveReference<decltype(*this)>::Type::ReplaceGenericArgsCallback))\
-			{\
-				return;\
-			}\
+			ReplaceGenericArgsWithParams(context, params, ELEMENT, output, this, &RemoveReference<decltype(*this)>::Type::ReplaceGenericArgsCallback);\
 		}\
-		output.Add(this);\
+		else\
+		{\
+			output.Add(this);\
+		}\
 	}\
 
 class ITSYS_CLASS(Function)
