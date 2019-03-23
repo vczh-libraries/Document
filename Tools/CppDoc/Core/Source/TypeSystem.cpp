@@ -408,7 +408,32 @@ protected:
 class ITSYS_CLASS(Member)
 {
 	ITSYS_MEMBERS_DATA_WITHELEMENT(Member, ITsys*, Class)
-	ITSYS_REPLACE_GENERIC_ARGS(MemberOf, data)
+
+	bool HasGenericArgs()override
+	{
+		return element->HasGenericArgs() || data->HasGenericArgs();
+	}
+
+	void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override
+	{
+		if (!HasGenericArgs() || context.arguments.Count() == 0)
+		{
+			output.Add(this);
+		}
+		else
+		{
+			List<ITsys*> classTypes, elementTypes;
+			data->ReplaceGenericArgs(context, classTypes);
+			element->ReplaceGenericArgs(context, elementTypes);
+			for (vint i = 0; i < elementTypes.Count(); i++)
+			{
+				for (vint j = 0; j < classTypes.Count(); j++)
+				{
+					output.Add(elementTypes[i]->MemberOf(classTypes[j]));
+				}
+			}
+		}
+	}
 };
 
 /***********************************************************************
@@ -454,11 +479,15 @@ bool HasGenericArgsWithParams(List<ITsys*>& params, ITsys* element, bool& initia
 }
 
 template<typename TITsys>
-void ReplaceGenericArgsWithParamsPartial(ITsys* element, Array<vint>& indices, Array<List<ITsys*>>& replacedParams, Array<ITsys*>& selectedParams, vint count, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
+void ReplaceGenericArgsWithParamsPartial(ITsys* element, Array<vint>& indices, Array<List<ITsys*>>& replacedParams, Array<ITsys*>& selectedParams, vint count, List<ITsys*>& output, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
 {
 	if (count == replacedParams.Count())
 	{
-		(self->*callback)(element, selectedParams);
+		auto result = (self->*callback)(element, selectedParams);
+		if (!output.Contains(result))
+		{
+			output.Add(result);
+		}
 	}
 	else
 	{
@@ -466,7 +495,7 @@ void ReplaceGenericArgsWithParamsPartial(ITsys* element, Array<vint>& indices, A
 		{
 			indices[count] = i;
 			selectedParams[count] = replacedParams[count][i];
-			ReplaceGenericArgsWithParamsPartial(element, indices, replacedParams, selectedParams, count + 1, self, callback);
+			ReplaceGenericArgsWithParamsPartial(element, indices, replacedParams, selectedParams, count + 1, output, self, callback);
 		}
 	}
 }
@@ -475,7 +504,7 @@ template<typename TITsys>
 void ReplaceGenericArgsWithParams(const GenericArgContext& context, List<ITsys*>& params, ITsys* element, List<ITsys*>& output, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
 {
 	List<ITsys*> replacedElement;
-	Array<vint> indices;
+	Array<vint> indices(params.Count());
 	Array<List<ITsys*>> replacedParams(params.Count());
 	Array<ITsys*> selectedParams(params.Count());
 
@@ -495,7 +524,7 @@ void ReplaceGenericArgsWithParams(const GenericArgContext& context, List<ITsys*>
 
 	for (vint i = 0; i < replacedElement.Count(); i++)
 	{
-		ReplaceGenericArgsWithParamsPartial(replacedElement[i], indices, replacedParams, selectedParams, 0, self, callback);
+		ReplaceGenericArgsWithParamsPartial(replacedElement[i], indices, replacedParams, selectedParams, 0, output, self, callback);
 	}
 }
 
