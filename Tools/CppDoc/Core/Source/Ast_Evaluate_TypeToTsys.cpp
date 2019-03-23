@@ -348,25 +348,8 @@ public:
 			{
 				throw NotConvertableException();
 			}
-			if (genericType->GetElement()->GetType() != TsysType::Decl)
-			{
-				throw NotConvertableException();
-			}
 			if (genericType->GetParamCount() != self->arguments.Count())
 			{
-				throw NotConvertableException();
-			}
-
-			auto symbolDecl = genericType->GetElement()->GetDecl();
-			switch (symbolDecl->kind)
-			{
-			case symbol_component::SymbolKind::TypeAlias:
-				{
-					auto decl = symbolDecl->definition.Cast<UsingDeclaration>();
-					if (!decl->templateSpec) throw NotConvertableException();
-				}
-				break;
-			default:
 				throw NotConvertableException();
 			}
 
@@ -396,7 +379,7 @@ public:
 			}
 
 			TypeTsysList replaceResult;
-			genericTypes[i]->ReplaceGenericArgs(newGaContext, replaceResult);
+			genericTypes[i]->GetElement()->ReplaceGenericArgs(newGaContext, replaceResult);
 			for (vint j = 0; j < replaceResult.Count(); j++)
 			{
 				AddResult(replaceResult[j]);
