@@ -327,7 +327,81 @@ public:
 
 	void Visit(GenericType* self)override
 	{
-		throw 0;
+		TypeTsysList genericTypes;
+		Array<Ptr<TypeTsysList>> argumentTypes(self->arguments.Count());
+		TypeToTsys(pa, self->type, genericTypes, gaContext);
+
+		for (vint i = 0; i < self->arguments.Count(); i++)
+		{
+			auto argument = self->arguments[i];
+			if (argument.type)
+			{
+				argumentTypes[i] = MakePtr<TypeTsysList>();
+				TypeToTsys(pa, argument.type, *argumentTypes[i].Obj(), gaContext);
+			}
+		}
+
+		for (vint i = 0; i < genericTypes.Count(); i++)
+		{
+			auto genericType = genericTypes[i];
+			if (genericType->GetType() != TsysType::GenericFunction)
+			{
+				throw NotConvertableException();
+			}
+			if (genericType->GetElement()->GetType() != TsysType::Decl)
+			{
+				throw NotConvertableException();
+			}
+			if (genericType->GetParamCount() != self->arguments.Count())
+			{
+				throw NotConvertableException();
+			}
+
+			auto symbolDecl = genericType->GetElement()->GetDecl();
+			switch (symbolDecl->kind)
+			{
+			case symbol_component::SymbolKind::TypeAlias:
+				{
+					auto decl = symbolDecl->definition.Cast<UsingDeclaration>();
+					if (!decl->templateSpec) throw NotConvertableException();
+				}
+				break;
+			default:
+				throw NotConvertableException();
+			}
+
+			GenericArgContext newGaContext;
+			for (vint j = 0; j < genericType->GetParamCount(); j++)
+			{
+				auto pattern = genericType->GetParam(j);
+				if ((pattern == nullptr) ^ (self->arguments[j].expr))
+				{
+					throw NotConvertableException();
+				}
+
+				if (pattern != nullptr)
+				{
+					if (pattern->GetType() != TsysType::GenericArg)
+					{
+						// until class specialization begins to develop, this should always not happen
+						throw NotConvertableException();
+					}
+
+					auto& argTypes = *argumentTypes[j].Obj();
+					for (vint k = 0; k < argTypes.Count(); k++)
+					{
+						newGaContext.arguments.Add(pattern, argTypes[k]);
+					}
+				}
+			}
+
+			TypeTsysList replaceResult;
+			genericTypes[i]->ReplaceGenericArgs(newGaContext, replaceResult);
+			for (vint j = 0; j < replaceResult.Count(); j++)
+			{
+				AddResult(replaceResult[j]);
+			}
+		}
 	}
 };
 
