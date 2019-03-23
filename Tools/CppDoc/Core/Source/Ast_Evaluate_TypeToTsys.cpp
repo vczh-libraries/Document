@@ -353,7 +353,7 @@ public:
 				throw NotConvertableException();
 			}
 
-			GenericArgContext newGaContext;
+			symbol_type_resolving::EvaluateSymbolContext esContext;
 			for (vint j = 0; j < genericType->GetParamCount(); j++)
 			{
 				auto pattern = genericType->GetParam(j);
@@ -373,16 +373,30 @@ public:
 					auto& argTypes = *argumentTypes[j].Obj();
 					for (vint k = 0; k < argTypes.Count(); k++)
 					{
-						newGaContext.arguments.Add(pattern, argTypes[k]);
+						esContext.gaContext.arguments.Add(pattern, argTypes[k]);
 					}
 				}
 			}
 
-			TypeTsysList replaceResult;
-			genericTypes[i]->GetElement()->ReplaceGenericArgs(newGaContext, replaceResult);
-			for (vint j = 0; j < replaceResult.Count(); j++)
+			if (auto declSymbol = genericType->GetGenericFunction().declSymbol)
 			{
-				AddResult(replaceResult[j]);
+				switch (declSymbol->kind)
+				{
+				case symbol_component::SymbolKind::TypeAlias:
+					{
+						auto decl = declSymbol->definition.Cast<UsingDeclaration>();
+						if (!decl->templateSpec) throw NotConvertableException();
+						symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
+					}
+					break;
+				default:
+					throw NotConvertableException();
+				}
+			}
+
+			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
+			{
+				AddResult(esContext.evaluatedTypes[j]);
 			}
 		}
 	}

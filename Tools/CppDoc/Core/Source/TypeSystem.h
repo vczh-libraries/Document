@@ -154,6 +154,7 @@ struct TsysInit
 struct TsysGenericFunction
 {
 	List<Symbol*>				arguments;
+	Symbol*						declSymbol = nullptr;
 
 	TsysGenericFunction() = default;
 	TsysGenericFunction(const TsysGenericFunction& genericFunction) { CopyFrom(arguments, genericFunction.arguments); }

@@ -274,25 +274,28 @@ namespace symbol_type_resolving
 	EvaluateSymbol: Evaluate the declared type for an alias
 	***********************************************************************/
 
-	void EvaluateSymbol(const ParsingArguments& pa, UsingDeclaration* usingDecl)
+	void EvaluateSymbol(const ParsingArguments& pa, UsingDeclaration* usingDecl, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = usingDecl->symbol;
-		auto& ev = symbol->evaluation;
-		switch (ev.progress)
+		if (!esContext)
 		{
-		case symbol_component::EvaluationProgress::Evaluated: return;
-		case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
+			auto& ev = symbol->evaluation;
+			switch (ev.progress)
+			{
+			case symbol_component::EvaluationProgress::Evaluated: return;
+			case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
+			}
+			ev.progress = symbol_component::EvaluationProgress::Evaluating;
+			ev.Allocate();
 		}
 
-		ev.progress = symbol_component::EvaluationProgress::Evaluating;
-		ev.Allocate();
-
 		auto newPa = pa.WithContext(symbol->parent);
+		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->evaluation.Get();
 
 		TypeTsysList types;
 		if (usingDecl->type)
 		{
-			TypeToTsys(newPa, usingDecl->type, types, nullptr);
+			TypeToTsys(newPa, usingDecl->type, types, (esContext ? &esContext->gaContext : nullptr));
 		}
 		else
 		{
@@ -307,6 +310,8 @@ namespace symbol_type_resolving
 		if (usingDecl->templateSpec)
 		{
 			TsysGenericFunction genericFunction;
+			genericFunction.declSymbol = symbol;
+
 			TypeTsysList params;
 			for (vint i = 0; i < usingDecl->templateSpec->arguments.Count(); i++)
 			{
@@ -324,19 +329,24 @@ namespace symbol_type_resolving
 
 			for(vint i=0;i<types.Count();i++)
 			{
-				ev.Get().Add(types[i]->GenericFunctionOf(params, genericFunction));
+				evaluatedTypes.Add(types[i]->GenericFunctionOf(params, genericFunction));
 			}
 		}
 		else
 		{
-			CopyFrom(ev.Get(), types);
+			CopyFrom(evaluatedTypes, types);
 		}
 
-		if (ev.Get().Count() == 0)
+		if (evaluatedTypes.Count() == 0)
 		{
 			throw NotResolvableException();
 		}
-		ev.progress = symbol_component::EvaluationProgress::Evaluated;
+
+		if (!esContext)
+		{
+			auto& ev = symbol->evaluation;
+			ev.progress = symbol_component::EvaluationProgress::Evaluated;
+		}
 	}
 
 	/***********************************************************************
