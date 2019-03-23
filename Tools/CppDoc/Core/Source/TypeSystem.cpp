@@ -289,6 +289,11 @@ class ITSYS_CLASS(GenericArg)
 {
 	ITSYS_MEMBERS_DATA_WITHELEMENT(GenericArg, TsysGenericArg, GenericArg)
 
+	bool HasGenericArgs()override
+	{
+		return true;
+	}
+
 public:
 	Symbol* GetDecl()override
 	{
