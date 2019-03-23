@@ -183,7 +183,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			{
 				SkipToken(cursor);
 				auto expr = MakePtr<ParenthesisExpr>();
-				expr->expr = ParseExpr(pa, true, cursor);
+				expr->expr = ParseExpr(pa, pea_Full(), cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 				return expr;
 			}
@@ -193,7 +193,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				auto expr = MakePtr<UniversalInitializerExpr>();
 				while (!TestToken(cursor, CppTokens::RBRACE))
 				{
-					expr->arguments.Add(ParseExpr(pa, false, cursor));
+					expr->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
 					if (TestToken(cursor, CppTokens::RBRACE))
 					{
 						break;
@@ -226,7 +226,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				expr->type = ParseType(pa, cursor);
 				RequireToken(cursor, CppTokens::GT);
 				RequireToken(cursor, CppTokens::LPARENTHESIS);
-				expr->expr = ParseExpr(pa, true, cursor);
+				expr->expr = ParseExpr(pa, pea_Full(), cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 				return expr;
 			}
@@ -235,7 +235,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				SkipToken(cursor);
 				auto expr = MakePtr<TypeidExpr>();
 				RequireToken(cursor, CppTokens::LPARENTHESIS);
-				ParseTypeOrExpr(pa, true, cursor, expr->type, expr->expr);
+				ParseTypeOrExpr(pa, pea_Full(), cursor, expr->type, expr->expr);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 				return expr;
 			}
@@ -270,7 +270,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 					{
 						while (true)
 						{
-							expr->initializer->arguments.Add(ParseExpr(pa, false, cursor));
+							expr->initializer->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
 							if (TestToken(cursor, closeToken))
 							{
 								break;
@@ -373,7 +373,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 				SkipToken(cursor);
 			}
 			newExpr->expr = expr;
-			newExpr->index = ParseExpr(pa, true, cursor);
+			newExpr->index = ParseExpr(pa, pea_Full(), cursor);
 
 			RequireToken(cursor, CppTokens::RBRACKET);
 			expr = newExpr;
@@ -394,7 +394,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			{
 				while (true)
 				{
-					newExpr->arguments.Add(ParseExpr(pa, false, cursor));
+					newExpr->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
 					if (!TestToken(cursor, CppTokens::COMMA))
 					{
 						RequireToken(cursor, CppTokens::RPARENTHESIS);
@@ -473,7 +473,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 		{
 			while (true)
 			{
-				newExpr->placementArguments.Add(ParseExpr(pa, false, cursor));
+				newExpr->placementArguments.Add(ParseExpr(pa, pea_Argument(), cursor));
 				if (TestToken(cursor, CppTokens::RPARENTHESIS))
 				{
 					break;
@@ -498,7 +498,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 			{
 				while (true)
 				{
-					newExpr->initializer->arguments.Add(ParseExpr(pa, false, cursor));
+					newExpr->initializer->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
 					if (TestToken(cursor, closeToken))
 					{
 						break;
@@ -515,7 +515,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 			List<Ptr<Expr>> sizeExprs;
 			while (TestToken(cursor, CppTokens::LBRACKET))
 			{
-				sizeExprs.Add(ParseExpr(pa, true, cursor));
+				sizeExprs.Add(ParseExpr(pa, pea_Full(), cursor));
 				RequireToken(cursor, CppTokens::RBRACKET);
 			}
 
@@ -573,7 +573,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 ParseBinaryExpr
 ***********************************************************************/
 
-Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor)
 {
 	List<Ptr<BinaryExpr>> binaryStack;
 	auto popped = ParsePrefixUnaryExpr(pa, cursor);
@@ -637,7 +637,7 @@ Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 8;
 		}
-		else if (TestToken(cursor, CppTokens::GT, false) && !TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ, false))
+		else if (pea.allowGt && TestToken(cursor, CppTokens::GT, false) && !TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ, false))
 		{
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 8;
@@ -711,16 +711,16 @@ Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 ParseIfExpr
 ***********************************************************************/
 
-Ptr<Expr> ParseIfExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Expr> ParseIfExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor)
 {
-	auto expr = ParseBinaryExpr(pa, cursor);
+	auto expr = ParseBinaryExpr(pa, pea, cursor);
 	if (TestToken(cursor, CppTokens::QUESTIONMARK))
 	{
 		auto newExpr = MakePtr<IfExpr>();
 		newExpr->condition = expr;
-		newExpr->left = ParseIfExpr(pa, cursor);
+		newExpr->left = ParseIfExpr(pa, pea, cursor);
 		RequireToken(cursor, CppTokens::COLON);
-		newExpr->right = ParseIfExpr(pa, cursor);
+		newExpr->right = ParseIfExpr(pa, pea, cursor);
 		return newExpr;
 	}
 	else
@@ -733,9 +733,9 @@ Ptr<Expr> ParseIfExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 ParseAssignExpr
 ***********************************************************************/
 
-Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor)
 {
-	auto expr = ParseIfExpr(pa, cursor);
+	auto expr = ParseIfExpr(pa, pea, cursor);
 	if (TestToken(cursor, CppTokens::EQ, false))
 	{
 		auto newExpr = MakePtr<BinaryExpr>();
@@ -743,7 +743,7 @@ Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
 		newExpr->left = expr;
-		newExpr->right = ParseAssignExpr(pa, cursor);
+		newExpr->right = ParseAssignExpr(pa, pea, cursor);
 		return newExpr;
 	}
 	else if (
@@ -761,7 +761,7 @@ Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
 		newExpr->left = expr;
-		newExpr->right = ParseAssignExpr(pa, cursor);
+		newExpr->right = ParseAssignExpr(pa, pea, cursor);
 		return newExpr;
 	}
 	else if (
@@ -773,7 +773,7 @@ Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
 		newExpr->left = expr;
-		newExpr->right = ParseAssignExpr(pa, cursor);
+		newExpr->right = ParseAssignExpr(pa, pea, cursor);
 		return newExpr;
 	}
 	else
@@ -786,20 +786,20 @@ Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& curso
 ParseThrowExpr
 ***********************************************************************/
 
-Ptr<Expr> ParseThrowExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Expr> ParseThrowExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor)
 {
 	if (TestToken(cursor, CppTokens::THROW))
 	{
 		auto newExpr = MakePtr<ThrowExpr>();
 		if (!TestToken(cursor, CppTokens::SEMICOLON, false))
 		{
-			newExpr->expr = ParseAssignExpr(pa, cursor);
+			newExpr->expr = ParseAssignExpr(pa, pea, cursor);
 		}
 		return newExpr;
 	}
 	else
 	{
-		return ParseAssignExpr(pa, cursor);
+		return ParseAssignExpr(pa, pea, cursor);
 	}
 }
 
@@ -807,10 +807,10 @@ Ptr<Expr> ParseThrowExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor
 ParseExpr
 ***********************************************************************/
 
-Ptr<Expr> ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor)
+Ptr<Expr> ParseExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor)
 {
-	auto expr = ParseThrowExpr(pa, cursor);
-	while (allowComma)
+	auto expr = ParseThrowExpr(pa, pea, cursor);
+	while (pea.allowComma)
 	{
 		if (TestToken(cursor, CppTokens::COMMA, false))
 		{
@@ -819,7 +819,7 @@ Ptr<Expr> ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCur
 			FillOperator(newExpr->opName, newExpr->op);
 			newExpr->precedence = 18;
 			newExpr->left = expr;
-			newExpr->right = ParseThrowExpr(pa, cursor);
+			newExpr->right = ParseThrowExpr(pa, pea, cursor);
 			expr = newExpr;
 		}
 		else

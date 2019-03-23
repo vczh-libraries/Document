@@ -99,7 +99,7 @@ void AssertExpr(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys
 	TOKEN_READER(input);
 	auto cursor = reader.GetFirstToken();
 
-	auto expr = ParseExpr(pa, true, cursor);
+	auto expr = ParseExpr(pa, pea_Full(), cursor);
 	TEST_ASSERT(!cursor);
 
 	auto output = GenerateToStream([&](StreamWriter& writer)

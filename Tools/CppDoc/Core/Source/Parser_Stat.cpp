@@ -26,7 +26,7 @@ void ParseVariableOrExpression(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	}
 	else
 	{
-		stat->expr = ParseExpr(pa, true, cursor);
+		stat->expr = ParseExpr(pa, pea_Full(), cursor);
 	}
 }
 
@@ -60,7 +60,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		// case EXPRESSION: STATEMENT
 		auto stat = MakePtr<CaseStat>();
-		stat->expr = ParseExpr(pa, false, cursor);
+		stat->expr = ParseExpr(pa, pea_Argument(), cursor);
 		RequireToken(cursor, CppTokens::COLON);
 		stat->stat = ParseStat(pa, cursor);
 		return stat;
@@ -107,7 +107,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		stat->stat = ParseStat(pa, cursor);
 		RequireToken(cursor, CppTokens::STAT_WHILE);
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
-		stat->expr = ParseExpr(pa, true, cursor);
+		stat->expr = ParseExpr(pa, pea_Full(), cursor);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		RequireToken(cursor, CppTokens::SEMICOLON);
 		return stat;
@@ -137,7 +137,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				stat->varDecl = BuildVariableAndSymbol(newPa, declarator, cursor);
 			}
 
-			stat->expr = ParseExpr(newPa, true, cursor);
+			stat->expr = ParseExpr(newPa, pea_Full(), cursor);
 			RequireToken(cursor, CppTokens::RPARENTHESIS);
 			stat->stat = ParseStat(newPa, cursor);
 			return stat;
@@ -167,18 +167,18 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				}
 				else
 				{
-					stat->init = ParseExpr(newPa, true, cursor);
+					stat->init = ParseExpr(newPa, pea_Full(), cursor);
 				}
 				RequireToken(cursor, CppTokens::SEMICOLON);
 			}
 			if (!TestToken(cursor, CppTokens::SEMICOLON))
 			{
-				stat->expr = ParseExpr(newPa, true, cursor);
+				stat->expr = ParseExpr(newPa, pea_Full(), cursor);
 				RequireToken(cursor, CppTokens::SEMICOLON);
 			}
 			if (!TestToken(cursor, CppTokens::RPARENTHESIS))
 			{
-				stat->effect = ParseExpr(newPa, true, cursor);
+				stat->effect = ParseExpr(newPa, pea_Full(), cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 			}
 			stat->stat = ParseStat(newPa, cursor);
@@ -253,7 +253,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		auto stat = MakePtr<ReturnStat>();
 		if (!TestToken(cursor, CppTokens::SEMICOLON))
 		{
-			stat->expr = ParseExpr(pa, true, cursor);
+			stat->expr = ParseExpr(pa, pea_Full(), cursor);
 			RequireToken(cursor, CppTokens::SEMICOLON);
 		}
 		return stat;
@@ -275,7 +275,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			auto stat = MakePtr<__Try__ExceptStat>();
 			stat->tryStat = tryStat;
 			RequireToken(cursor, CppTokens::LPARENTHESIS);
-			stat->expr = ParseExpr(pa, true, cursor);
+			stat->expr = ParseExpr(pa, pea_Full(), cursor);
 			RequireToken(cursor, CppTokens::RPARENTHESIS);
 			stat->exceptStat = ParseStat(pa, cursor);
 			return stat;
@@ -296,7 +296,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		// __if_exists (EXPRESSION) STATEMENT
 		auto stat = MakePtr<__IfExistsStat>();
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
-		stat->expr = ParseExpr(pa, true, cursor);
+		stat->expr = ParseExpr(pa, pea_Full(), cursor);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		stat->stat = ParseStat(pa, cursor);
 		return stat;
@@ -306,7 +306,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		// __if_not_exists (EXPRESSION) STATEMENT
 		auto stat = MakePtr<__IfNotExistsStat>();
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
-		stat->expr = ParseExpr(pa, true, cursor);
+		stat->expr = ParseExpr(pa, pea_Full(), cursor);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		stat->stat = ParseStat(pa, cursor);
 		return stat;
@@ -335,7 +335,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			auto oldCursor = cursor;
 			try
 			{
-				auto expr = ParseExpr(pa, true, cursor);
+				auto expr = ParseExpr(pa, pea_Full(), cursor);
 				RequireToken(cursor, CppTokens::SEMICOLON);
 				auto stat = MakePtr<ExprStat>();
 				stat->expr = expr;

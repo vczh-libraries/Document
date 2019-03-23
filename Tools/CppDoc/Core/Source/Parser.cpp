@@ -319,7 +319,7 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 				}
 
 				RequireToken(delayParse->begin, CppTokens::LPARENTHESIS);
-				item.f1 = ParseExpr(delayParse->pa, true, delayParse->begin);
+				item.f1 = ParseExpr(delayParse->pa, pea_Full(), delayParse->begin);
 				RequireToken(delayParse->begin, CppTokens::RPARENTHESIS);
 
 				funcDecl->initList.Add(item);
@@ -372,12 +372,12 @@ void PredefineType(Ptr<Program> program, const ParsingArguments& pa, const wchar
 	}
 }
 
-bool ParseTypeOrExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor, Ptr<Type>& type, Ptr<Expr>& expr)
+bool ParseTypeOrExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor, Ptr<Type>& type, Ptr<Expr>& expr)
 {
 	auto oldCursor = cursor;
 	try
 	{
-		expr = ParseExpr(pa, allowComma, cursor);
+		expr = ParseExpr(pa, pea, cursor);
 		return false;
 	}
 	catch (const StopParsingException&)

@@ -242,7 +242,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 			while (!TestToken(cursor, CppTokens::GT))
 			{
 				GenericArgument argument;
-				ParseTypeOrExpr(pa, false, cursor, argument.type, argument.expr);
+				ParseTypeOrExpr(pa, pea_GenericArgument(), cursor, argument.type, argument.expr);
 				type->arguments.Add(argument);
 
 				if (!TestToken(cursor, CppTokens::COMMA))
@@ -296,7 +296,7 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, bool typenameType, Ptr<CppT
 		auto type = MakePtr<DeclType>();
 		if (!TestToken(cursor, CppTokens::TYPE_AUTO))
 		{
-			type->expr = ParseExpr(pa, true, cursor);
+			type->expr = ParseExpr(pa, pea_Full(), cursor);
 		}
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		return type;

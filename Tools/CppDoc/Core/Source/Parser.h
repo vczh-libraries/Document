@@ -258,11 +258,28 @@ extern void							BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDecl
 extern void							BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor);
 extern Ptr<VariableDeclaration>		BuildVariableAndSymbol(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<CppTokenCursor>& cursor);
 
-extern Ptr<Expr>					ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Expr>					ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor);
+// Parser_Expr.cpp
+struct ParsingExprArguments
+{
+	bool							allowComma;
+	bool							allowGt;
+};
+
+inline ParsingExprArguments			pea_Full()
+	{	return { true, true }; }
+inline ParsingExprArguments			pea_Argument()
+	{	return { false, true }; }
+inline ParsingExprArguments			pea_GenericArgument()
+	{	return { false, false }; }
+
+extern Ptr<Expr>					ParseExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor);
+
+// Parser_Stat.cpp
 extern Ptr<Stat>					ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+
+// Parser.cpp
 extern void							EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl);
-extern bool							ParseTypeOrExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor, Ptr<Type>& type, Ptr<Expr>& expr);
+extern bool							ParseTypeOrExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor, Ptr<Type>& type, Ptr<Expr>& expr);
 extern Ptr<Program>					ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 /***********************************************************************

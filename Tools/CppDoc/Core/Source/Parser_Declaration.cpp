@@ -333,7 +333,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 
 			if (TestToken(cursor, CppTokens::EQ))
 			{
-				enumItem->value = ParseExpr(newPa, false, cursor);
+				enumItem->value = ParseExpr(newPa, pea_Argument(), cursor);
 			}
 
 			if (!TestToken(cursor, CppTokens::COMMA))
@@ -621,7 +621,7 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 			output.Add(decl);
 
 			auto newPa = spec.f1 ? pa.WithContext(spec.f0.Obj()) : pa;
-			auto kind = ParseTypeOrExpr(newPa, true, cursor, decl->type, decl->expr)
+			auto kind = ParseTypeOrExpr(newPa, pea_Full(), cursor, decl->type, decl->expr)
 				? symbol_component::SymbolKind::TypeAlias
 				: symbol_component::SymbolKind::ValueAlias
 				;
@@ -643,7 +643,7 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 
 			// using TYPE[::NAME];
 			auto decl = MakePtr<UsingSymbolDeclaration>();
-			ParseTypeOrExpr(pa, true, cursor, decl->type, decl->expr);
+			ParseTypeOrExpr(pa, pea_Full(), cursor, decl->type, decl->expr);
 			RequireToken(cursor, CppTokens::SEMICOLON);
 			output.Add(decl);
 

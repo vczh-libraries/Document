@@ -230,7 +230,7 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 	{
 		// alignas (EXPRESSION) DECLARATOR
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
-		ParseExpr(pa, false, cursor);
+		ParseExpr(pa, pea_Argument(), cursor);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		return ParseTypeBeforeDeclarator(pa, baselineType, pdc, cursor);
 	}
@@ -364,7 +364,7 @@ bool ParseSingleDeclarator_Array(const ParsingArguments& pa, Ptr<Declarator> dec
 		Ptr<Expr> index;
 		if (!TestToken(cursor, CppTokens::RBRACKET, false))
 		{
-			index = ParseExpr(pa, true, cursor);
+			index = ParseExpr(pa, pea_Full(), cursor);
 		}
 
 		ReplaceOutOfDeclaratorTypeVisitor replacer;
@@ -434,7 +434,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 			try
 			{
 				SkipToken(cursor);
-				ParseExpr(pa, false, cursor);
+				ParseExpr(pa, pea_Argument(), cursor);
 				cursor = oldCursor;
 				return true;
 			}
@@ -649,7 +649,7 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 	if (pdc.allowBitField && TestToken(cursor, CppTokens::COLON))
 	{
 		// bit fields, just ignore
-		ParseExpr(pa, false, cursor);
+		ParseExpr(pa, pea_Argument(), cursor);
 	}
 
 	if (!declarator)
@@ -757,7 +757,7 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 
 	while (true)
 	{
-		initializer->arguments.Add(ParseExpr(pa, false, cursor));
+		initializer->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
 
 		if (initializer->initializerType == CppInitializerType::Equal)
 		{
