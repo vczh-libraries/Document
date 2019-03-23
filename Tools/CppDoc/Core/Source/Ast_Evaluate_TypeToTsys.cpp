@@ -306,6 +306,20 @@ public:
 					auto& types = symbol->evaluation.Get();
 					for (vint j = 0; j < types.Count(); j++)
 					{
+						if (gaContext)
+						{
+							auto type = types[j];
+							vint index = gaContext->arguments.Keys().IndexOf(type);
+							if (index != -1)
+							{
+								auto& replacedTypes = gaContext->arguments.GetByIndex(index);
+								for (vint k = 0; k < replacedTypes.Count(); k++)
+								{
+									AddResult(replacedTypes[k]);
+								}
+								continue;
+							}
+						}
 						AddResult(types[j]);
 					}
 				}
@@ -392,6 +406,10 @@ public:
 				default:
 					throw NotConvertableException();
 				}
+			}
+			else
+			{
+				throw NotConvertableException();
 			}
 
 			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)

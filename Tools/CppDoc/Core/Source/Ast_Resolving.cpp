@@ -307,7 +307,7 @@ namespace symbol_type_resolving
 			}
 		}
 
-		if (usingDecl->templateSpec)
+		if (usingDecl->templateSpec && !esContext)
 		{
 			TsysGenericFunction genericFunction;
 			genericFunction.declSymbol = symbol;

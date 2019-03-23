@@ -157,11 +157,24 @@ struct TsysGenericFunction
 	Symbol*						declSymbol = nullptr;
 
 	TsysGenericFunction() = default;
-	TsysGenericFunction(const TsysGenericFunction& genericFunction) { CopyFrom(arguments, genericFunction.arguments); }
-	TsysGenericFunction& operator=(const TsysGenericFunction& genericFunction) { CopyFrom(arguments, genericFunction.arguments); return *this; }
+
+	TsysGenericFunction(const TsysGenericFunction& genericFunction)
+		:declSymbol(genericFunction.declSymbol)
+	{
+		CopyFrom(arguments, genericFunction.arguments);
+	}
+
+	TsysGenericFunction& operator=(const TsysGenericFunction& genericFunction)
+	{
+		declSymbol = genericFunction.declSymbol;
+		CopyFrom(arguments, genericFunction.arguments);
+		return *this;
+	}
 
 	static vint Compare(const TsysGenericFunction& a, const TsysGenericFunction& b)
 	{
+		if (a.declSymbol < b.declSymbol) return -1;
+		if (a.declSymbol > b.declSymbol) return 1;
 		return CompareEnumerable(a.arguments, b.arguments);
 	}
 };

@@ -85,14 +85,14 @@ using ComplexType = Member<Function<RRef<Array<Null<char>>>, LRef<Ptr<CV<Int<boo
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertType(L"Null<bool>",				L"Null<bool>",						L"nullptr_t",															pa);
-	AssertType(L"Int<bool>",				L"Int<bool>",						L"__int32",																pa);
-	AssertType(L"LRef<bool>",				L"LRef<bool>",						L"bool &",																pa);
-	AssertType(L"RRef<bool>",				L"RRef<bool>",						L"bool &&",																pa);
-	AssertType(L"Ptr<bool>",				L"Ptr<bool>",						L"bool *",																pa);
-	AssertType(L"Array<bool>",				L"Array<bool>",						L"bool []",																pa);
-	AssertType(L"Function<bool, char>",		L"Function<bool, char>",			L"bool __cdecl(char) *",												pa);
-	AssertType(L"Member<bool, char>",		L"Member<bool, char>",				L"bool (char ::) *",													pa);
-	AssertType(L"CV<bool>",					L"CV<bool>",						L"bool const volatile",													pa);
-	AssertType(L"ComplexType<S>",			L"ComplexType<S>",					L"nullptr_t [] && __cdecl(__int32 const volatile * &) * (::S ::) *",	pa);
+	AssertType(L"Null<bool>",				L"Null<bool>",						L"nullptr_t",																pa);
+	AssertType(L"Int<bool>",				L"Int<bool>",						L"__int32",																	pa);
+	AssertType(L"LRef<bool>",				L"LRef<bool>",						L"bool &",																	pa);
+	AssertType(L"RRef<bool>",				L"RRef<bool>",						L"bool &&",																	pa);
+	AssertType(L"Ptr<bool>",				L"Ptr<bool>",						L"bool *",																	pa);
+	AssertType(L"Array<bool>",				L"Array<bool>",						L"bool []",																	pa);
+	AssertType(L"Function<bool, char>",		L"Function<bool, char>",			L"bool __cdecl(char) *",													pa);
+	AssertType(L"Member<bool, char>",		L"Member<bool, char>",				L"bool (char ::) *",														pa);
+	AssertType(L"CV<bool>",					L"CV<bool>",						L"bool const volatile",														pa);
+	AssertType(L"ComplexType<S>",			L"ComplexType<S>",					L"nullptr_t [] && __cdecl(__int32 const volatile * &) * (::S ::) *",		pa);
 }
