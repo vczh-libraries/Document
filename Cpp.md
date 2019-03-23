@@ -17,7 +17,7 @@
 - [ ] Parse template headers.
   - [x] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
   - [x] Change `TemplateArgument` type to be `Decl` + index (order in argument list).
-  - [ ] Parse `T<U>` type.
+  - [x] Parse `T<U>` type.
   - [x] `Using` constant values
   - [x] Value template argument
   - [ ] Parse High level template argument.

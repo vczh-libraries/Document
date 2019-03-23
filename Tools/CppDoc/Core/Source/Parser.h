@@ -262,6 +262,7 @@ extern Ptr<Expr>					ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppToken
 extern Ptr<Expr>					ParseExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Stat>					ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 extern void							EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl);
+extern bool							ParseTypeOrExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor, Ptr<Type>& type, Ptr<Expr>& expr);
 extern Ptr<Program>					ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 /***********************************************************************

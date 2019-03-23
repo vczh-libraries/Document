@@ -372,6 +372,22 @@ void PredefineType(Ptr<Program> program, const ParsingArguments& pa, const wchar
 	}
 }
 
+bool ParseTypeOrExpr(const ParsingArguments& pa, bool allowComma, Ptr<CppTokenCursor>& cursor, Ptr<Type>& type, Ptr<Expr>& expr)
+{
+	auto oldCursor = cursor;
+	try
+	{
+		expr = ParseExpr(pa, allowComma, cursor);
+		return false;
+	}
+	catch (const StopParsingException&)
+	{
+	}
+	cursor = oldCursor;
+	type = ParseType(pa, cursor);
+	return true;
+}
+
 Ptr<Program> ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	auto program = MakePtr<Program>();

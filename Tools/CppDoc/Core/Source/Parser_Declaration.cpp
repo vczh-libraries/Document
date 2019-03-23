@@ -603,8 +603,8 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 	}
 	else
 	{
-		auto oldCursor = cursor;
 		{
+			auto oldCursor = cursor;
 			// using NAME = TYPE;
 			CppName cppName;
 			if (!ParseCppName(cppName, cursor) || !TestToken(cursor, CppTokens::EQ))
@@ -619,18 +619,10 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 			output.Add(decl);
 
 			auto newPa = spec.f1 ? pa.WithContext(spec.f0.Obj()) : pa;
-			auto kind = symbol_component::SymbolKind::TypeAlias;
-			auto oldCursor = cursor;
-			try
-			{
-				decl->expr = ParseExpr(newPa, true, cursor);
-				kind = symbol_component::SymbolKind::ValueAlias;
-			}
-			catch (const StopParsingException&)
-			{
-				cursor = oldCursor;
-				decl->type = ParseType(newPa, cursor);
-			}
+			auto kind = ParseTypeOrExpr(newPa, true, cursor, decl->type, decl->expr)
+				? symbol_component::SymbolKind::TypeAlias
+				: symbol_component::SymbolKind::ValueAlias
+				;
 			RequireToken(cursor, CppTokens::SEMICOLON);
 
 			if (!pa.context->AddDeclToSymbol(decl, kind, spec.f0))
@@ -649,15 +641,7 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 
 			// using TYPE[::NAME];
 			auto decl = MakePtr<UsingSymbolDeclaration>();
-			try
-			{
-				decl->expr = ParsePrimitiveExpr(pa, cursor);
-			}
-			catch (const StopParsingException&)
-			{
-				cursor = oldCursor;
-				decl->type = ParseType(pa, cursor);
-			}
+			ParseTypeOrExpr(pa, true, cursor, decl->type, decl->expr);
 			RequireToken(cursor, CppTokens::SEMICOLON);
 			output.Add(decl);
 

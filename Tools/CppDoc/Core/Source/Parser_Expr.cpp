@@ -235,20 +235,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				SkipToken(cursor);
 				auto expr = MakePtr<TypeidExpr>();
 				RequireToken(cursor, CppTokens::LPARENTHESIS);
-				{
-					auto oldCursor = cursor;
-					try
-					{
-						expr->expr = ParseExpr(pa, true, cursor);
-						goto SUCCESS_EXPR;
-					}
-					catch (const StopParsingException&)
-					{
-						cursor = oldCursor;
-					}
-				}
-				expr->type = ParseType(pa, cursor);
-			SUCCESS_EXPR:
+				ParseTypeOrExpr(pa, true, cursor, expr->type, expr->expr);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 				return expr;
 			}
