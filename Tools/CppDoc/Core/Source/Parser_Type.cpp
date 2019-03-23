@@ -231,7 +231,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 	{
 		if (TestToken(cursor, CppTokens::LT))
 		{
-			// TYPE< { TYPE ...} >
+			// TYPE< { TYPE/EXPR ...} >
 			if (!typeResult.Cast<ResolvableType>())
 			{
 				throw StopParsingException(cursor);
@@ -241,11 +241,9 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 			type->type = typeResult;
 			while (!TestToken(cursor, CppTokens::GT))
 			{
-				{
-					GenericArgument argument;
-					argument.type = ParseType(pa, cursor);
-					type->arguments.Add(argument);
-				}
+				GenericArgument argument;
+				ParseTypeOrExpr(pa, false, cursor, argument.type, argument.expr);
+				type->arguments.Add(argument);
 
 				if (!TestToken(cursor, CppTokens::COMMA))
 				{

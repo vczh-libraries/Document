@@ -69,7 +69,9 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 		TemplateSpec::Argument argument;
 		if (TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
 		{
-			argument.templateSpec = ParseTemplateSpec(newPa, cursor).f1;
+			auto argumentSpec = ParseTemplateSpec(newPa, cursor);
+			argument.templateSpecScope = argumentSpec.f0;
+			argument.templateSpec = argumentSpec.f1;
 		}
 
 		if (TestToken(cursor, CppTokens::TYPENAME) || TestToken(cursor, CppTokens::DECL_CLASS))

@@ -60,6 +60,7 @@ public:
 		CppName										name;
 		Symbol*										argumentSymbol;
 		CppTemplateArgumentType						argumentType;
+		Ptr<Symbol>									templateSpecScope;
 		Ptr<TemplateSpec>							templateSpec;
 		Ptr<Type>									type;
 		Ptr<Expr>									expr;

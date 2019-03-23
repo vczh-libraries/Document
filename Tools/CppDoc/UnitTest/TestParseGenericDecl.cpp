@@ -96,3 +96,19 @@ using ComplexType = Member<Function<RRef<Array<Null<char>>>, LRef<Ptr<CV<Int<boo
 	AssertType(L"CV<bool>",					L"CV<bool>",						L"bool const volatile",														pa);
 	AssertType(L"ComplexType<S>",			L"ComplexType<S>",					L"nullptr_t [] && __cdecl(__int32 const volatile * &) * (::S ::) *",		pa);
 }
+
+TEST_CASE(TestParseGenericDecl_TypeAlias_HighLevelArgument)
+{
+	auto input = LR"(
+template<typename T, template<typename U, U> class U>
+using Container = U<T, {}>;
+
+template<typename T, T Value>
+using Impl = T(*)(decltype(Value), int);
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertType(L"Container",				L"Container",						L"<::Container::template[T], ::Container::template[U]> any_t",												pa);
+	AssertType(L"Impl",						L"Impl",							L"<::Container::template[T], *> ::Container::template[T] __cdecl(::Container::template[T], __int32) *",		pa);
+	AssertType(L"Container<double, Impl>",	L"Container<double, Impl>",			L"double __cdecl(double, __int32) *",																		pa);
+}
