@@ -21,6 +21,7 @@
   - [x] `Using` constant values
   - [x] Value template argument
   - [ ] Parse High level template argument.
+  - [ ] Parse `E<U>` expression.
 - [ ] `template` on `using` type alias declaration.
   - [ ] Default template argument.
   - [ ] `...` type and expression. Don't make an AST for it, always render or skip `...` by reading its symbol.
