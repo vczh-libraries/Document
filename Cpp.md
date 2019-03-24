@@ -25,7 +25,12 @@
 - [ ] `template` on `using` type alias declaration.
   - [ ] Default template argument.
   - [ ] `...` type and expression. Don't make an AST for it, always render or skip `...` by reading its symbol.
+    - [ ] When `...` applies to a generic function, it creates multiple `TsysType::Any` arguments for all rest of type arguments. Throws if there are value arguments.
+    - [ ] When types applies to a `...` arguments, there should be something to record it in `GenericArgContext`.
   - [ ] Write a lot of test cases for `decltype` inside `using`, with `TsysType::Any` to represent unknown type.
+    - [ ] Test cases for all kind of expressions of which types contain generic arguments.
+    - [ ] Test cases for all operators on expressions of which types contain generic arguments.
+    - [ ] Test cases for overloadings on arguments of which types contain generic arguments.
   - [ ] Test both unresolved type (when type arguments are not assigned) and resolved type (when type arguments are assigned), or partially resolved type (when type arguments are assigned to other unresolved type).
 - [ ] `template` on functions.
   - [ ] Connect function with forward declarations
