@@ -20,7 +20,7 @@
   - [x] Parse `T<U>` type.
   - [x] `Using` constant values
   - [x] Value template argument
-  - [ ] Parse High level template argument.
+  - [x] Parse High level template argument.
   - [ ] Parse `E<U>` expression.
 - [ ] `template` on `using` type alias declaration.
   - [ ] Default template argument.

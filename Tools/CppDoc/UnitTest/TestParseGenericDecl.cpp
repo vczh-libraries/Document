@@ -104,7 +104,7 @@ template<typename T, template<typename U, U> class U>
 using Container = U<T, {}>;
 
 template<typename T, T Value>
-using Impl = T(*)(decltype(Value), int);
+using Impl = T(*)(T, int);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
