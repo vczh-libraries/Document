@@ -151,8 +151,10 @@ bool IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, Spec
 {
 	switch (type->GetType())
 	{
+	case TsysType::Any:
 	case TsysType::Primitive:
 	case TsysType::Ptr:
+	case TsysType::GenericArg:
 		return true;
 	case TsysType::LRef:
 	case TsysType::RRef:
@@ -198,6 +200,7 @@ bool IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, Spec
 		return true;
 	case TsysType::Function:
 	case TsysType::Member:
+	case TsysType::GenericFunction:
 		// these type cannot be used as a value
 		throw NotResolvableException();
 	}

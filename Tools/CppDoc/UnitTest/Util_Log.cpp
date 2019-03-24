@@ -1277,6 +1277,9 @@ void Log(ITsys* tsys, StreamWriter& writer)
 {
 	switch (tsys->GetType())
 	{
+	case TsysType::Any:
+		writer.WriteString(L"any_t");
+		return;
 	case TsysType::Zero:
 		writer.WriteString(L"0");
 		return;

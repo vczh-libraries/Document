@@ -232,6 +232,7 @@ namespace vl
 }
 
 #define TSYS_TYPE_LIST(F)															\
+	F(Any)																			\
 	F(Zero)																			\
 	F(Nullptr)																		\
 	F(Primitive)		/* Primitive											*/	\
@@ -248,6 +249,7 @@ namespace vl
 	F(GenericArg)		/* Element(Decl), GenericArg							*/	\
 
 /*
+	Any:				a type that could be any type
 	Zero:				type of 0
 	Nullptr:			type of nullptr
 	Primitive:			primitive type
@@ -330,6 +332,7 @@ class ITsysAlloc abstract : public Interface
 {
 public:
 	virtual ITsys*				Void() = 0;
+	virtual ITsys*				Any() = 0;
 	virtual ITsys*				Zero() = 0;
 	virtual ITsys*				Nullptr() = 0;
 	virtual ITsys*				Int() = 0;

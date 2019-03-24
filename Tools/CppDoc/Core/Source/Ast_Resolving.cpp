@@ -104,6 +104,27 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
+	CreateGenericFunctionHeader: Calculate enough information to create a generic function type
+	***********************************************************************/
+
+	void CreateGenericFunctionHeader(Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction)
+	{
+		for (vint i = 0; i < spec->arguments.Count(); i++)
+		{
+			auto argument = spec->arguments[i];
+			if (argument.argumentType == CppTemplateArgumentType::Value)
+			{
+				params.Add(nullptr);
+			}
+			else
+			{
+				genericFunction.arguments.Add(argument.argumentSymbol);
+				params.Add(argument.argumentSymbol->evaluation.Get()[0]);
+			}
+		}
+	}
+
+	/***********************************************************************
 	EvaluateSymbol: Evaluate the declared type for a variable
 	***********************************************************************/
 
@@ -310,22 +331,10 @@ namespace symbol_type_resolving
 		if (usingDecl->templateSpec && !esContext)
 		{
 			TsysGenericFunction genericFunction;
-			genericFunction.declSymbol = symbol;
-
 			TypeTsysList params;
-			for (vint i = 0; i < usingDecl->templateSpec->arguments.Count(); i++)
-			{
-				auto argument = usingDecl->templateSpec->arguments[i];
-				if (argument.argumentType == CppTemplateArgumentType::Value)
-				{
-					params.Add(nullptr);
-				}
-				else
-				{
-					genericFunction.arguments.Add(argument.argumentSymbol);
-					params.Add(argument.argumentSymbol->evaluation.Get()[0]);
-				}
-			}
+
+			genericFunction.declSymbol = symbol;
+			CreateGenericFunctionHeader(usingDecl->templateSpec, params, genericFunction);
 
 			for(vint i=0;i<types.Count();i++)
 			{

@@ -225,6 +225,26 @@ Concrete Tsys (ReplaceGenericArgs)
 Concrete Tsys (Singleton)
 ***********************************************************************/
 
+class ITSYS_CLASS(Any)
+{
+	ITSYS_MEMBERS_MINIMIZED(Any)
+
+	ITsys* LRefOf()override
+	{
+		return this;
+	}
+
+	ITsys* RRefOf()override
+	{
+		return this;
+	}
+
+	ITsys* CVOf(TsysCV cv)override
+	{
+		return this;
+	}
+};
+
 class ITSYS_CLASS(Zero)
 {
 	ITSYS_MEMBERS_MINIMIZED(Zero)
@@ -652,6 +672,7 @@ ITsysAlloc
 class TsysAlloc : public Object, public ITsysAlloc
 {
 protected:
+	ITsys_Any												tsysAny;
 	ITsys_Zero												tsysZero;
 	ITsys_Nullptr											tsysNullptr;
 	ITsys_Primitive*										primitives[(vint)TsysPrimitiveType::_COUNT * (vint)TsysBytes::_COUNT] = { 0 };
@@ -682,6 +703,11 @@ public:
 	ITsys* Void()override
 	{
 		return PrimitiveOf({ TsysPrimitiveType::Void,TsysBytes::_1 });
+	}
+
+	ITsys* Any()override
+	{
+		return &tsysAny;
 	}
 
 	ITsys* Zero()override
