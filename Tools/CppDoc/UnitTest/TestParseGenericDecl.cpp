@@ -105,10 +105,15 @@ using Container = U<T, {}>;
 
 template<typename T, T Value>
 using Impl = T(*)(T, int);
+
+template<typename T, T Value>
+using Impl2 = T(*)(decltype(Value), int);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
 	AssertType(L"Container",				L"Container",						L"<::Container::[T], <::Container::[U]::[U], *> any_t> any_t",			pa);
 	AssertType(L"Impl",						L"Impl",							L"<::Impl::[T], *> ::Impl::[T] __cdecl(::Impl::[T], __int32) *",		pa);
+	AssertType(L"Impl2",					L"Impl2",							L"<::Impl2::[T], *> ::Impl2::[T] __cdecl(::Impl2::[T], __int32) *",		pa);
 	AssertType(L"Container<double, Impl>",	L"Container<double, Impl>",			L"double __cdecl(double, __int32) *",									pa);
+	AssertType(L"Container<double, Impl2>",	L"Container<double, Impl2>",		L"double __cdecl(double, __int32) *",									pa);
 }
