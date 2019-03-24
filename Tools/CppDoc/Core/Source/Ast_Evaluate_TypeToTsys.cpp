@@ -339,6 +339,46 @@ public:
 		CreateIdReferenceType(self->resolving);
 	}
 
+	void EnsureGenericParameterAndArgumentMatched(ITsys* parameter, ITsys* argument)
+	{
+		if (parameter->GetParamCount() != argument->GetParamCount())
+		{
+			throw NotConvertableException();
+		}
+		for (vint i = 0; i < parameter->GetParamCount(); i++)
+		{
+			auto nestedParameter = parameter->GetParam(i);
+			auto nestedArgument = parameter->GetParam(i);
+			if ((nestedParameter == nullptr) ^ (nestedArgument == nullptr))
+			{
+				throw NotConvertableException();
+			}
+
+			if (nestedParameter)
+			{
+				switch (nestedParameter->GetType())
+				{
+				case TsysType::GenericArg:
+					if (nestedArgument->GetType() == TsysType::GenericFunction)
+					{
+						throw NotConvertableException();
+					}
+					break;
+				case TsysType::GenericFunction:
+					if (nestedArgument->GetType() != TsysType::GenericFunction)
+					{
+						throw NotConvertableException();
+					}
+					EnsureGenericParameterAndArgumentMatched(nestedParameter, nestedArgument);
+					break;
+				default:
+					// there is not specialization for high-level template argument
+					throw NotConvertableException();
+				}
+			}
+		}
+	}
+
 	void Visit(GenericType* self)override
 	{
 		TypeTsysList genericTypes;
@@ -373,18 +413,42 @@ public:
 				auto pattern = genericType->GetParam(j);
 				if ((pattern == nullptr) ^ (self->arguments[j].expr))
 				{
+					// type doesn't overload, it is reasonable to throw exception when the argument doesn't match
+					// GenericExpr cannot do this
 					throw NotConvertableException();
 				}
 
 				if (pattern != nullptr)
 				{
-					if (pattern->GetType() != TsysType::GenericArg)
+					auto& argTypes = *argumentTypes[j].Obj();
+					switch (pattern->GetType())
 					{
+					case TsysType::GenericArg:
+						for (vint k = 0; k < argTypes.Count(); k++)
+						{
+							auto tsys = argTypes[k];
+							if (tsys->GetType() == TsysType::GenericFunction)
+							{
+								throw NotConvertableException();
+							}
+						}
+						break;
+					case TsysType::GenericFunction:
+						for (vint k = 0; k < argTypes.Count(); k++)
+						{
+							auto tsys = argTypes[k];
+							if (tsys->GetType() != TsysType::GenericFunction)
+							{
+								throw NotConvertableException();
+							}
+							EnsureGenericParameterAndArgumentMatched(pattern, tsys);
+						}
+						break;
+					default:
 						// until class specialization begins to develop, this should always not happen
 						throw NotConvertableException();
 					}
 
-					auto& argTypes = *argumentTypes[j].Obj();
 					for (vint k = 0; k < argTypes.Count(); k++)
 					{
 						esContext.gaContext.arguments.Add(pattern, argTypes[k]);
