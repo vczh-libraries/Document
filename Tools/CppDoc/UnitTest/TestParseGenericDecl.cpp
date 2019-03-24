@@ -41,12 +41,12 @@ using True = true;
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	AssertType(L"LRef",				L"LRef",				L"<::LRef::typename[T]> ::LRef::typename[T] &",		pa);
-	AssertType(L"RRef",				L"RRef",				L"<::RRef::typename[T]> ::RRef::typename[T] &&",	pa);
-	AssertExpr(L"Size",				L"Size",				L"<::Size::typename[T]> unsigned __int32 $PR",		pa);
-	AssertExpr(L"Ctor",				L"Ctor",				L"<::Ctor::typename[T]> ::Ctor::typename[T] $PR",	pa);
-	AssertExpr(L"Id",				L"Id",					L"<::Id::typename[T], *> ::Id::typename[T] $PR",	pa);
-	AssertExpr(L"True",				L"True",				L"<::True::typename[], *> bool $PR",				pa);
+	AssertType(L"LRef",				L"LRef",				L"<::LRef::[T]> ::LRef::[T] &",				pa);
+	AssertType(L"RRef",				L"RRef",				L"<::RRef::[T]> ::RRef::[T] &&",			pa);
+	AssertExpr(L"Size",				L"Size",				L"<::Size::[T]> unsigned __int32 $PR",		pa);
+	AssertExpr(L"Ctor",				L"Ctor",				L"<::Ctor::[T]> ::Ctor::[T] $PR",			pa);
+	AssertExpr(L"Id",				L"Id",					L"<::Id::[T], *> ::Id::[T] $PR",			pa);
+	AssertExpr(L"True",				L"True",				L"<::True::[], *> bool $PR",				pa);
 }
 
 TEST_CASE(TestParseGenericDecl_TypeAlias_SimpleReplace)
@@ -108,7 +108,7 @@ using Impl = T(*)(decltype(Value), int);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertType(L"Container",				L"Container",						L"<::Container::template[T], ::Container::template[U]> any_t",												pa);
-	AssertType(L"Impl",						L"Impl",							L"<::Container::template[T], *> ::Container::template[T] __cdecl(::Container::template[T], __int32) *",		pa);
-	AssertType(L"Container<double, Impl>",	L"Container<double, Impl>",			L"double __cdecl(double, __int32) *",																		pa);
+	AssertType(L"Container",				L"Container",						L"<::Container::[T], <::Container::[U]::[U], *> any_t> any_t",			pa);
+	AssertType(L"Impl",						L"Impl",							L"<::Impl::[T], *> ::Impl::[T] __cdecl(::Impl::[T], __int32) *",		pa);
+	AssertType(L"Container<double, Impl>",	L"Container<double, Impl>",			L"double __cdecl(double, __int32) *",									pa);
 }

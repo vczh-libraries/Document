@@ -1,7 +1,6 @@
 #include "Parser.h"
-#include "Ast_Type.h"
 #include "Ast_Expr.h"
-#include "Ast_Decl.h"
+#include "Ast_Resolving.h"
 
 /***********************************************************************
 FindForward
@@ -85,7 +84,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				}
 			}
 
-			auto argumentSymbol = MakePtr<Symbol>();
+			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : MakePtr<Symbol>();
 			argument.argumentSymbol = argumentSymbol.Obj();
 
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
@@ -96,7 +95,19 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			arg.argIndex = spec->arguments.Count();
 			arg.argSymbol = argumentSymbol.Obj();
 			arg.isVariadic = false;
-			argumentSymbol->evaluation.Get().Add(pa.tsys->DeclOf(symbol.Obj())->GenericArgOf(arg));
+
+			if (argument.templateSpec)
+			{
+				TsysGenericFunction genericFunction;
+				TypeTsysList params;
+				genericFunction.declSymbol = argumentSymbol.Obj();
+				symbol_type_resolving::CreateGenericFunctionHeader(argument.templateSpec, params, genericFunction);
+				argumentSymbol->evaluation.Get().Add(pa.tsys->Any()->GenericFunctionOf(params, genericFunction));
+			}
+			else
+			{
+				argumentSymbol->evaluation.Get().Add(pa.tsys->DeclOf(symbol.Obj())->GenericArgOf(arg));
+			}
 
 			if (argument.name)
 			{

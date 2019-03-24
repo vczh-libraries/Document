@@ -396,6 +396,9 @@ public:
 			{
 				switch (declSymbol->kind)
 				{
+				case symbol_component::SymbolKind::GenericTypeArgument:
+					genericType->GetElement()->ReplaceGenericArgs(esContext.gaContext, esContext.evaluatedTypes);
+					break;
 				case symbol_component::SymbolKind::TypeAlias:
 					{
 						auto decl = declSymbol->definition.Cast<UsingDeclaration>();

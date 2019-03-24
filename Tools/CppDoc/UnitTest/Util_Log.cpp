@@ -1437,7 +1437,14 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			WString name;
 			while (symbol && symbol->parent)
 			{
-				name = L"::" + symbol->name + name;
+				if (symbol->kind == symbol_component::SymbolKind::GenericTypeArgument)
+				{
+					name = L"::[" + symbol->name + L"]" + name;
+				}
+				else
+				{
+					name = L"::" + symbol->name + name;
+				}
 				symbol = symbol->parent;
 			}
 			writer.WriteString(name);
@@ -1488,7 +1495,7 @@ void Log(ITsys* tsys, StreamWriter& writer)
 	case TsysType::GenericArg:
 		{
 			Log(tsys->GetElement(), writer);
-			writer.WriteString(L"::typename[");
+			writer.WriteString(L"::[");
 			writer.WriteString(tsys->GetGenericArg().argSymbol->name);
 			writer.WriteChar(L']');
 		}
