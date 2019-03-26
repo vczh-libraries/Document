@@ -16,9 +16,7 @@
 
 - [ ] `template` on `using` type alias declaration.
   - [ ] Default template argument.
-  - [ ] `...` type and expression. Don't make an AST for it, always render or skip `...` by reading its symbol.
-    - [ ] When `...` applies to a generic function, it creates multiple `TsysType::Any` arguments for all rest of type arguments. Throws if there are value arguments.
-    - [ ] When types applies to a `...` arguments, there should be something to record it in `GenericArgContext`.
+  - [ ] `...` type and expression AST, only one `...` argument is allowed to appear.
   - [ ] Write a lot of test cases for `decltype` inside `using`, with `TsysType::Any` to represent unknown type.
     - [ ] Test cases for all kind of expressions of which types contain generic arguments.
     - [ ] Test cases for all operators on expressions of which types contain generic arguments.
