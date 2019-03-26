@@ -194,7 +194,7 @@ class GenericType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<Type>				type;
+	Ptr<ResolvableType>		type;
 	List<GenericArgument>	arguments;
 };
 

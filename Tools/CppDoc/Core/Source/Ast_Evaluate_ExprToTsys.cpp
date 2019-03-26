@@ -1121,6 +1121,11 @@ public:
 			}
 		}
 	}
+
+	void Visit(GenericExpr* self)override
+	{
+		throw 0;
+	}
 };
 
 // Resolve expressions to types

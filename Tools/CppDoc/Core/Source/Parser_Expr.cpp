@@ -1,6 +1,7 @@
 #include "Parser.h"
 #include "Ast_Expr.h"
 #include "Ast_Type.h"
+#include "Ast_Decl.h"
 
 /***********************************************************************
 FillOperatorAndSkip
@@ -136,6 +137,125 @@ Ptr<ChildExpr> TryParseChildExpr(const ParsingArguments& pa, Ptr<Type> classType
 }
 
 /***********************************************************************
+ParseNameOrCtorAccessExpr
+***********************************************************************/
+
+Ptr<Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<ResolvableExpr> resolvableExpr)
+{
+	if (!TestToken(cursor, CppTokens::LT, false)) return resolvableExpr;
+	if (!resolvableExpr->resolving) return resolvableExpr;
+
+	List<Symbol*> genericSymbols;
+	for (vint i = 0; i < resolvableExpr->resolving->resolvedSymbols.Count(); i++)
+	{
+		auto symbol = resolvableExpr->resolving->resolvedSymbols[i];
+		switch (symbol->kind)
+		{
+		case symbol_component::SymbolKind::ValueAlias:
+			if (auto usingDecl = symbol->definition.Cast<UsingDeclaration>())
+			{
+				if (usingDecl->templateSpec)
+				{
+					genericSymbols.Add(symbol);
+				}
+			}
+			break;
+		}
+	}
+
+	if (genericSymbols.Count() == 0) return resolvableExpr;
+	CopyFrom(resolvableExpr->resolving->resolvedSymbols, genericSymbols);
+
+	SkipToken(cursor);
+	auto expr = MakePtr<GenericExpr>();
+	expr->expr = resolvableExpr;
+	while (!TestToken(cursor, CppTokens::GT))
+	{
+		GenericArgument argument;
+		ParseTypeOrExpr(pa, pea_GenericArgument(), cursor, argument.type, argument.expr);
+		expr->arguments.Add(argument);
+
+		if (!TestToken(cursor, CppTokens::COMMA))
+		{
+			RequireToken(cursor, CppTokens::GT);
+			break;
+		}
+	}
+	return expr;
+}
+
+Ptr<Expr> ParseNameOrCtorAccessExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+{
+	{
+		auto oldCursor = cursor;
+		try
+		{
+			auto type = ParseLongType(pa, cursor);
+
+			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
+			{
+				if (auto expr = TryParseChildExpr(pa, type, cursor))
+				{
+					return TryParseGenericExpr(pa, cursor, expr);
+				}
+			}
+
+			if (TestToken(cursor, CppTokens::LPARENTHESIS, false) || TestToken(cursor, CppTokens::LBRACE, false))
+			{
+				auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
+				SkipToken(cursor);
+
+				auto expr = MakePtr<CtorAccessExpr>();
+				expr->type = type;
+				expr->initializer = MakePtr<Initializer>();
+				expr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? CppInitializerType::Constructor : CppInitializerType::Universal;
+
+				if (!TestToken(cursor, closeToken))
+				{
+					while (true)
+					{
+						expr->initializer->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
+						if (TestToken(cursor, closeToken))
+						{
+							break;
+						}
+						else
+						{
+							RequireToken(cursor, CppTokens::COMMA);
+						}
+					}
+				}
+				return expr;
+			}
+
+			throw StopParsingException(cursor);
+		}
+		catch (const StopParsingException&)
+		{
+			cursor = oldCursor;
+			goto GIVE_UP_CHILD_SYMBOL;
+		}
+	}
+GIVE_UP_CHILD_SYMBOL:
+
+	if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
+	{
+		if (auto expr = TryParseChildExpr(pa, MakePtr<RootType>(), cursor))
+		{
+			return TryParseGenericExpr(pa, cursor, expr);
+		}
+	}
+	else
+	{
+		if (auto expr = ParseIdExpr(pa, cursor))
+		{
+			return TryParseGenericExpr(pa, cursor, expr);
+		}
+	}
+	throw StopParsingException(cursor);
+}
+
+/***********************************************************************
 ParsePrimitiveExpr
 ***********************************************************************/
 
@@ -241,75 +361,8 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			}
 			break;
 		}
-
-		{
-			auto oldCursor = cursor;
-			try
-			{
-				auto type = ParseLongType(pa, cursor);
-
-				if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
-				{
-					if (auto expr = TryParseChildExpr(pa, type, cursor))
-					{
-						return expr;
-					}
-				}
-
-				if (TestToken(cursor, CppTokens::LPARENTHESIS, false) || TestToken(cursor, CppTokens::LBRACE, false))
-				{
-					auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
-					SkipToken(cursor);
-
-					auto expr = MakePtr<CtorAccessExpr>();
-					expr->type = type;
-					expr->initializer = MakePtr<Initializer>();
-					expr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? CppInitializerType::Constructor : CppInitializerType::Universal;
-
-					if (!TestToken(cursor, closeToken))
-					{
-						while (true)
-						{
-							expr->initializer->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
-							if (TestToken(cursor, closeToken))
-							{
-								break;
-							}
-							else
-							{
-								RequireToken(cursor, CppTokens::COMMA);
-							}
-						}
-					}
-					return expr;
-				}
-
-				throw StopParsingException(cursor);
-			}
-			catch (const StopParsingException&)
-			{
-				cursor = oldCursor;
-				goto GIVE_UP_CHILD_SYMBOL;
-			}
-		}
-	GIVE_UP_CHILD_SYMBOL:
-
-		if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
-		{
-			if (auto expr = TryParseChildExpr(pa, MakePtr<RootType>(), cursor))
-			{
-				return expr;
-			}
-		}
-		else
-		{
-			if (auto expr = ParseIdExpr(pa, cursor))
-			{
-				return expr;
-			}
-		}
 	}
-	throw StopParsingException(cursor);
+	return ParseNameOrCtorAccessExpr(pa, cursor);
 }
 
 /***********************************************************************

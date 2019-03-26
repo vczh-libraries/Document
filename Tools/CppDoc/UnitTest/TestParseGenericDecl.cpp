@@ -117,3 +117,18 @@ using Impl2 = T(*)(decltype(Value), int);
 	AssertType(L"Container<double, Impl>",	L"Container<double, Impl>",			L"double __cdecl(double, __int32) *",									pa);
 	AssertType(L"Container<double, Impl2>",	L"Container<double, Impl2>",		L"double __cdecl(double, __int32) *",									pa);
 }
+
+TEST_CASE(TestParseGenericDecl_TypeAlias_GenericExpr)
+{
+	auto input = LR"(
+template<typename T, T Value>
+using Id = Value;
+
+template<typename, bool>
+using True = true;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(L"Id<int, 0>",				L"Id<int, 0>",						L"__int32 $PR",				pa);
+	AssertExpr(L"True<bool, true>",			L"True<bool, true>",				L"bool $PR",				pa);
+}

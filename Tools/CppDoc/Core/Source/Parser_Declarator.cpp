@@ -79,7 +79,9 @@ public:
 
 	void Visit(GenericType* self)override
 	{
-		Execute(self->type);
+		// self->type does not need to check, because it is not possible to write
+		// 1. T(&a)[0]<U>
+		// 2. T(&a)()<U>
 	}
 };
 

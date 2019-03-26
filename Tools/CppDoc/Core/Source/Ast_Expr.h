@@ -30,6 +30,7 @@ Visitor
 	F(PrefixUnaryExpr)\
 	F(BinaryExpr)\
 	F(IfExpr)\
+	F(GenericExpr)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
 CPPDOC_EXPR_LIST(CPPDOC_FORWARD)
@@ -303,6 +304,15 @@ public:
 	Ptr<Expr>				condition;
 	Ptr<Expr>				left;
 	Ptr<Expr>				right;
+};
+
+class GenericExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	Ptr<ResolvableExpr>		expr;
+	List<GenericArgument>	arguments;
 };
 
 #endif

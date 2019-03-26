@@ -315,6 +315,24 @@ public:
 		Log(self->right, writer);
 		writer.WriteString(L")");
 	}
+
+	void Visit(GenericExpr* self)override
+	{
+		Log(Ptr<Expr>(self->expr), writer);
+		writer.WriteString(L"<");
+		for (vint i = 0; i < self->arguments.Count(); i++)
+		{
+			if (i != 0)
+			{
+				writer.WriteString(L", ");
+			}
+
+			auto arg = self->arguments[i];
+			if (arg.expr) Log(arg.expr, writer);
+			if (arg.type) Log(arg.type, writer);
+		}
+		writer.WriteString(L">");
+	}
 };
 
 /***********************************************************************
@@ -520,7 +538,7 @@ public:
 
 	void Visit(GenericType* self)override
 	{
-		Log(self->type, writer);
+		Log(Ptr<Type>(self->type), writer);
 		writer.WriteString(L"<");
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
