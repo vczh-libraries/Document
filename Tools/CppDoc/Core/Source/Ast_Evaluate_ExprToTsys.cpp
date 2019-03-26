@@ -226,7 +226,7 @@ public:
 	void Visit(ParenthesisExpr* self)override
 	{
 		ExprTsysList types;
-		ExprToTsys(pa, self->expr, types);
+		ExprToTsys(pa, self->expr, types, gaContext);
 		for (vint i = 0; i < types.Count(); i++)
 		{
 			if (types[i].type == ExprTsysType::LValue)
@@ -244,7 +244,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsys(pa, self->expr, types, gaContext);
 		}
 		{
 			TypeTsysList types;
@@ -263,7 +263,7 @@ public:
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsys(pa, self->expr, types, gaContext);
 		}
 
 		auto global = pa.root.Obj();
@@ -298,7 +298,7 @@ public:
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsys(pa, self->expr, types, gaContext);
 		}
 
 		AddTemp(result, pa.tsys->Size());
@@ -309,7 +309,7 @@ public:
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsys(pa, self->expr, types, gaContext);
 		}
 
 		AddTemp(result, pa.tsys->Void());
@@ -319,7 +319,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsys(pa, self->expr, types, gaContext);
 		}
 
 		AddTemp(result, pa.tsys->Void());
@@ -329,17 +329,34 @@ public:
 	{
 		if (self->resolving)
 		{
+			ExprTsysList resolvableResult;
+			auto& outputTarget = gaContext ? resolvableResult : result;
+
 			if (pa.funcSymbol && pa.funcSymbol->methodCache)
 			{
 				TsysCV thisCv;
 				TsysRefType thisRef;
 				auto thisType = pa.funcSymbol->methodCache->thisType->GetEntity(thisCv, thisRef);
 				ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
-				VisitResolvedMember(pa, &thisItem, self->resolving, result);
+				VisitResolvedMember(pa, &thisItem, self->resolving, outputTarget);
 			}
 			else
 			{
-				VisitResolvedMember(pa, nullptr, self->resolving, result);
+				VisitResolvedMember(pa, nullptr, self->resolving, outputTarget);
+			}
+
+			if (gaContext)
+			{
+				for (vint i = 0; i < resolvableResult.Count(); i++)
+				{
+					auto item = resolvableResult[i];
+					TypeTsysList types;
+					item.tsys->ReplaceGenericArgs(*gaContext, types);
+					for (vint j = 0; j < types.Count(); j++)
+					{
+						AddInternal(result, { item.symbol,item.type,types[j] });
+					}
+				}
 			}
 		}
 	}
@@ -358,7 +375,7 @@ public:
 	{
 		ResolveSymbolResult totalRar;
 		ExprTsysList parentItems;
-		ExprToTsys(pa, self->expr, parentItems);
+		ExprToTsys(pa, self->expr, parentItems, gaContext);
 
 		auto childExpr = self->name.Cast<ChildExpr>();
 		auto idExpr = self->name.Cast<IdExpr>();
@@ -439,12 +456,12 @@ public:
 		List<Ptr<ExprTsysList>> argTypesList;
 		{
 			auto argTypes = MakePtr<ExprTsysList>();
-			ExprToTsys(pa, self->index, *argTypes.Obj());
+			ExprToTsys(pa, self->index, *argTypes.Obj(), gaContext);
 			argTypesList.Add(argTypes);
 		}
 
 		ExprTsysList arrayTypes, funcTypes;
-		ExprToTsys(pa, self->expr, arrayTypes);
+		ExprToTsys(pa, self->expr, arrayTypes, gaContext);
 
 		for (vint i = 0; i < arrayTypes.Count(); i++)
 		{
@@ -503,12 +520,12 @@ public:
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
 			auto argTypes = MakePtr<ExprTsysList>();
-			ExprToTsys(pa, self->arguments[i], *argTypes.Obj());
+			ExprToTsys(pa, self->arguments[i], *argTypes.Obj(), gaContext);
 			argTypesList.Add(argTypes);
 		}
 
 		ExprTsysList funcTypes;
-		ExprToTsys(pa, self->expr, funcTypes);
+		ExprToTsys(pa, self->expr, funcTypes, gaContext);
 		if (auto idExpr = self->expr.Cast<IdExpr>())
 		{
 			if (!idExpr->resolving || IsAdlEnabled(pa, idExpr->resolving))
@@ -559,7 +576,7 @@ public:
 		for (vint i = 0; i < self->initializer->arguments.Count(); i++)
 		{
 			auto argTypes = MakePtr<ExprTsysList>();
-			ExprToTsys(pa, self->initializer->arguments[i], *argTypes.Obj());
+			ExprToTsys(pa, self->initializer->arguments[i], *argTypes.Obj(), gaContext);
 			argTypesList.Add(argTypes);
 		}
 
@@ -575,7 +592,7 @@ public:
 		for (vint i = 0; i < self->placementArguments.Count(); i++)
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->placementArguments[i], types);
+			ExprToTsys(pa, self->placementArguments[i], types, gaContext);
 		}
 
 		if (self->initializer)
@@ -583,7 +600,7 @@ public:
 			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
 			{
 				ExprTsysList types;
-				ExprToTsys(pa, self->initializer->arguments[i], types);
+				ExprToTsys(pa, self->initializer->arguments[i], types, gaContext);
 			}
 		}
 
@@ -637,7 +654,7 @@ public:
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
 			auto argTypes = MakePtr<ExprTsysList>();
-			ExprToTsys(pa, self->arguments[i], *argTypes.Obj());
+			ExprToTsys(pa, self->arguments[i], *argTypes.Obj(), gaContext);
 			argTypesList.Add(argTypes);
 		}
 
@@ -743,7 +760,7 @@ public:
 		ExprTsysItem extraParam(nullptr, ExprTsysType::PRValue, pa.tsys->Int());
 
 		ExprTsysList types;
-		ExprToTsys(pa, self->operand, types);
+		ExprToTsys(pa, self->operand, types, gaContext);
 		for (vint i = 0; i < types.Count(); i++)
 		{
 			auto type = types[i].tsys;
@@ -791,7 +808,7 @@ public:
 				goto SKIP_RESOLVING_OPERAND;
 			}
 		}
-		ExprToTsys(pa, self->operand, types);
+		ExprToTsys(pa, self->operand, types, gaContext);
 
 	SKIP_RESOLVING_OPERAND:
 		for (vint i = 0; i < types.Count(); i++)
@@ -877,8 +894,8 @@ public:
 	void Visit(BinaryExpr* self)override
 	{
 		ExprTsysList leftTypes, rightTypes;
-		ExprToTsys(pa, self->left, leftTypes);
-		ExprToTsys(pa, self->right, rightTypes);
+		ExprToTsys(pa, self->left, leftTypes, gaContext);
+		ExprToTsys(pa, self->right, rightTypes, gaContext);
 
 		for (vint i = 0; i < leftTypes.Count(); i++)
 		{
@@ -999,9 +1016,9 @@ public:
 	void Visit(IfExpr* self)override
 	{
 		ExprTsysList conditionTypes, leftTypes, rightTypes;
-		ExprToTsys(pa, self->condition, conditionTypes);
-		ExprToTsys(pa, self->left, leftTypes);
-		ExprToTsys(pa, self->right, rightTypes);
+		ExprToTsys(pa, self->condition, conditionTypes, gaContext);
+		ExprToTsys(pa, self->left, leftTypes, gaContext);
+		ExprToTsys(pa, self->right, rightTypes, gaContext);
 
 		if (leftTypes.Count() == 0 && rightTypes.Count()!=0)
 		{
@@ -1107,9 +1124,9 @@ public:
 };
 
 // Resolve expressions to types
-void ExprToTsys(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys)
+void ExprToTsys(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, GenericArgContext* gaContext)
 {
 	if (!e) throw IllegalExprException();
-	ExprToTsysVisitor visitor(pa, tsys, nullptr);
+	ExprToTsysVisitor visitor(pa, tsys, gaContext);
 	e->Accept(&visitor);
 }

@@ -245,7 +245,7 @@ public:
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsys(pa, self->expr, types, gaContext);
 			for (vint i = 0; i < types.Count(); i++)
 			{
 				auto exprTsys = types[i].tsys;

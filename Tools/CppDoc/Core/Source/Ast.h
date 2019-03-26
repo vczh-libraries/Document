@@ -134,7 +134,7 @@ extern ITsys*				ResolvePendingType(const ParsingArguments& pa, Ptr<Type> type, 
 extern void					TypeToTsys(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
 extern void					TypeToTsys(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
 extern void					TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf);
-extern void					ExprToTsys(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys);
+extern void					ExprToTsys(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, GenericArgContext* gaContext = nullptr);
 extern void					EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s);
 extern void					EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s);
 extern void					EvaluateProgram(const ParsingArguments& pa, Ptr<Program> program);
