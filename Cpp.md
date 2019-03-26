@@ -14,14 +14,6 @@
 
 ## Template short-term tasks
 
-- [ ] Parse template headers.
-  - [x] After that the symbol is reused to create a symbol for that declaration. Until beginning to connect implementation and forward declarations.
-  - [x] Change `TemplateArgument` type to be `Decl` + index (order in argument list).
-  - [x] Parse `T<U>` type.
-  - [x] `Using` constant values
-  - [x] Value template argument
-  - [x] Parse High level template argument.
-  - [ ] Parse `E<U>` expression.
 - [ ] `template` on `using` type alias declaration.
   - [ ] Default template argument.
   - [ ] `...` type and expression. Don't make an AST for it, always render or skip `...` by reading its symbol.
