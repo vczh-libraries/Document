@@ -15,12 +15,12 @@
 ## Template short-term tasks
 
 - [ ] `template` on `using` type alias declaration.
-  - [ ] Default template argument.
-  - [ ] `...` type and expression AST, only one `...` argument is allowed to appear.
   - [ ] Write a lot of test cases for `decltype` inside `using`, with `TsysType::Any` to represent unknown type.
     - [ ] Test cases for all kind of expressions of which types contain generic arguments.
     - [ ] Test cases for all operators on expressions of which types contain generic arguments.
     - [ ] Test cases for overloadings on arguments of which types contain generic arguments.
+  - [ ] Default template argument.
+  - [ ] `...` type and expression AST, only one `...` argument is allowed to appear.
   - [ ] Test both unresolved type (when type arguments are not assigned) and resolved type (when type arguments are assigned), or partially resolved type (when type arguments are assigned to other unresolved type).
 - [ ] `template` on functions.
   - [ ] Connect function with forward declarations

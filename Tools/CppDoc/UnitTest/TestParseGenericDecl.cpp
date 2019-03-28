@@ -9,18 +9,6 @@ using LRef = T&;
 
 template<typename T>
 using RRef = T&&;
-
-template<typename T>
-using Size = sizeof(T);
-
-template<typename T>
-using Ctor = T();
-
-template<typename T, T Value>
-using Id = Value;
-
-template<typename, bool>
-using True = true;
 )";
 
 	auto output = LR"(
@@ -28,14 +16,6 @@ template<typename T>
 using LRef = T &;
 template<typename T>
 using RRef = T &&;
-template<typename T>
-using Size = sizeof(T);
-template<typename T>
-using Ctor = T();
-template<typename T, T Value>
-using Id = Value;
-template<typename, bool>
-using True = true;
 )";
 
 	COMPILE_PROGRAM(program, pa, input);
@@ -43,10 +23,6 @@ using True = true;
 
 	AssertType(L"LRef",				L"LRef",				L"<::LRef::[T]> ::LRef::[T] &",				pa);
 	AssertType(L"RRef",				L"RRef",				L"<::RRef::[T]> ::RRef::[T] &&",			pa);
-	AssertExpr(L"Size",				L"Size",				L"<::Size::[T]> unsigned __int32 $PR",		pa);
-	AssertExpr(L"Ctor",				L"Ctor",				L"<::Ctor::[T]> ::Ctor::[T] $PR",			pa);
-	AssertExpr(L"Id",				L"Id",					L"<::Id::[T], *> ::Id::[T] $PR",			pa);
-	AssertExpr(L"True",				L"True",				L"<::True::[], *> bool $PR",				pa);
 }
 
 TEST_CASE(TestParseGenericDecl_TypeAlias_SimpleReplace)
@@ -118,7 +94,43 @@ using Impl2 = T(*)(decltype(Value), int);
 	AssertType(L"Container<double, Impl2>",	L"Container<double, Impl2>",		L"double __cdecl(double, __int32) *",									pa);
 }
 
-TEST_CASE(TestParseGenericDecl_TypeAlias_GenericExpr)
+TEST_CASE(TestParseGenericDecl_ValueAlias)
+{
+	auto input = LR"(
+template<typename T>
+using Size = sizeof(T);
+
+template<typename T>
+using Ctor = T();
+
+template<typename T, T Value>
+using Id = Value;
+
+template<typename, bool>
+using True = true;
+)";
+
+	auto output = LR"(
+template<typename T>
+using Size = sizeof(T);
+template<typename T>
+using Ctor = T();
+template<typename T, T Value>
+using Id = Value;
+template<typename, bool>
+using True = true;
+)";
+
+	COMPILE_PROGRAM(program, pa, input);
+	AssertProgram(program, output);
+
+	AssertExpr(L"Size",				L"Size",				L"<::Size::[T]> unsigned __int32 $PR",		pa);
+	AssertExpr(L"Ctor",				L"Ctor",				L"<::Ctor::[T]> ::Ctor::[T] $PR",			pa);
+	AssertExpr(L"Id",				L"Id",					L"<::Id::[T], *> ::Id::[T] $PR",			pa);
+	AssertExpr(L"True",				L"True",				L"<::True::[], *> bool $PR",				pa);
+}
+
+TEST_CASE(TestParseGenericDecl_ValueAlias_GenericExpr)
 {
 	auto input = LR"(
 template<typename T, T Value>
