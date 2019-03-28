@@ -154,10 +154,10 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ### FUNCTION
 
-- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT) [ = (`0` | `default` | `delete`]
+- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT) [ = (`0` | `default` | `delete`)
   - [ ] TEMPLATE-SPEC
   - [ ] SPECIALIZATION-SPEC
-- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT) [ = (`0` | `default` | `delete`]
+- [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT) [ = (`0` | `default` | `delete`)
   - [ ] TEMPLATE-SPEC
 
 ### OBJECT
@@ -240,7 +240,7 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [x] EXPR OPERATOR
   - [x] EXPR `(` {EXPR `,` ...} `)`
   - [x] EXPR `[` EXPR `]`
-  - [ ] EXPR `<` {TYPE `,` ...} `>`
+  - [x] EXPR `<` {TYPE `,` ...} `>`
   - [x] predefined operators
 - [ ] EXPR `...`
 - [x] EXPR OPERATOR EXPR
