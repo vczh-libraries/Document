@@ -38,7 +38,6 @@ namespace symbol_type_resolving
 	};
 
 	extern void				CalculateValueFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, bool forFieldDeref, ExprTsysList& result);
-	extern void				CreateGenericFunctionHeader(Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction);
 	extern void				EvaluateSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl);
 	extern bool				IsMemberFunction(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
 	extern void				FinishEvaluatingSymbol(const ParsingArguments& pa, FunctionDeclaration* funcDecl);
@@ -65,4 +64,8 @@ namespace symbol_type_resolving
 
 	extern void				Promote(TsysPrimitive& primitive);
 	extern TsysPrimitive	ArithmeticConversion(TsysPrimitive leftP, TsysPrimitive rightP);
+
+	extern void				CreateGenericFunctionHeader(Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction);
+	extern void				ResolveGenericArguments(const ParsingArguments& pa, List<GenericArgument>& arguments, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* gaContext);
+	extern bool				ResolveGenericParameters(ITsys* genericFunction, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* newGaContext);
 }

@@ -339,143 +339,42 @@ public:
 		CreateIdReferenceType(self->resolving);
 	}
 
-	void EnsureGenericParameterAndArgumentMatched(ITsys* parameter, ITsys* argument)
-	{
-		if (parameter->GetParamCount() != argument->GetParamCount())
-		{
-			throw NotConvertableException();
-		}
-		for (vint i = 0; i < parameter->GetParamCount(); i++)
-		{
-			auto nestedParameter = parameter->GetParam(i);
-			auto nestedArgument = parameter->GetParam(i);
-			if ((nestedParameter == nullptr) ^ (nestedArgument == nullptr))
-			{
-				throw NotConvertableException();
-			}
-
-			if (nestedParameter)
-			{
-				switch (nestedParameter->GetType())
-				{
-				case TsysType::GenericArg:
-					if (nestedArgument->GetType() == TsysType::GenericFunction)
-					{
-						throw NotConvertableException();
-					}
-					break;
-				case TsysType::GenericFunction:
-					if (nestedArgument->GetType() != TsysType::GenericFunction)
-					{
-						throw NotConvertableException();
-					}
-					EnsureGenericParameterAndArgumentMatched(nestedParameter, nestedArgument);
-					break;
-				default:
-					// there is not specialization for high-level template argument
-					throw NotConvertableException();
-				}
-			}
-		}
-	}
-
 	void Visit(GenericType* self)override
 	{
 		TypeTsysList genericTypes;
-		Array<Ptr<TypeTsysList>> argumentTypes(self->arguments.Count());
-		TypeToTsys(pa, self->type, genericTypes, gaContext);
+		Array<Ptr<TypeTsysList>> argumentTypes;
 
-		for (vint i = 0; i < self->arguments.Count(); i++)
-		{
-			auto argument = self->arguments[i];
-			if (argument.type)
-			{
-				argumentTypes[i] = MakePtr<TypeTsysList>();
-				TypeToTsys(pa, argument.type, *argumentTypes[i].Obj(), gaContext);
-			}
-		}
+		TypeToTsys(pa, self->type, genericTypes, gaContext);
+		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, argumentTypes, gaContext);
 
 		for (vint i = 0; i < genericTypes.Count(); i++)
 		{
-			auto genericType = genericTypes[i];
-			if (genericType->GetType() != TsysType::GenericFunction)
-			{
-				throw NotConvertableException();
-			}
-			if (genericType->GetParamCount() != self->arguments.Count())
+			auto genericFunction = genericTypes[i];
+			auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
+			if (!declSymbol)
 			{
 				throw NotConvertableException();
 			}
 
 			symbol_type_resolving::EvaluateSymbolContext esContext;
-			for (vint j = 0; j < genericType->GetParamCount(); j++)
+			if (!symbol_type_resolving::ResolveGenericParameters(genericFunction, argumentTypes, &esContext.gaContext))
 			{
-				auto pattern = genericType->GetParam(j);
-				if ((pattern == nullptr) ^ (self->arguments[j].expr))
-				{
-					// type doesn't overload, it is reasonable to throw exception when the argument doesn't match
-					// GenericExpr cannot do this
-					throw NotConvertableException();
-				}
-
-				if (pattern != nullptr)
-				{
-					auto& argTypes = *argumentTypes[j].Obj();
-					switch (pattern->GetType())
-					{
-					case TsysType::GenericArg:
-						for (vint k = 0; k < argTypes.Count(); k++)
-						{
-							auto tsys = argTypes[k];
-							if (tsys->GetType() == TsysType::GenericFunction)
-							{
-								throw NotConvertableException();
-							}
-						}
-						break;
-					case TsysType::GenericFunction:
-						for (vint k = 0; k < argTypes.Count(); k++)
-						{
-							auto tsys = argTypes[k];
-							if (tsys->GetType() != TsysType::GenericFunction)
-							{
-								throw NotConvertableException();
-							}
-							EnsureGenericParameterAndArgumentMatched(pattern, tsys);
-						}
-						break;
-					default:
-						// until class specialization begins to develop, this should always not happen
-						throw NotConvertableException();
-					}
-
-					for (vint k = 0; k < argTypes.Count(); k++)
-					{
-						esContext.gaContext.arguments.Add(pattern, argTypes[k]);
-					}
-				}
+				throw NotConvertableException();
 			}
 
-			if (auto declSymbol = genericType->GetGenericFunction().declSymbol)
+			switch (declSymbol->kind)
 			{
-				switch (declSymbol->kind)
+			case symbol_component::SymbolKind::GenericTypeArgument:
+				genericFunction->GetElement()->ReplaceGenericArgs(esContext.gaContext, esContext.evaluatedTypes);
+				break;
+			case symbol_component::SymbolKind::TypeAlias:
 				{
-				case symbol_component::SymbolKind::GenericTypeArgument:
-					genericType->GetElement()->ReplaceGenericArgs(esContext.gaContext, esContext.evaluatedTypes);
-					break;
-				case symbol_component::SymbolKind::TypeAlias:
-					{
-						auto decl = declSymbol->definition.Cast<UsingDeclaration>();
-						if (!decl->templateSpec) throw NotConvertableException();
-						symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
-					}
-					break;
-				default:
-					throw NotConvertableException();
+					auto decl = declSymbol->definition.Cast<UsingDeclaration>();
+					if (!decl->templateSpec) throw NotConvertableException();
+					symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
 				}
-			}
-			else
-			{
+				break;
+			default:
 				throw NotConvertableException();
 			}
 

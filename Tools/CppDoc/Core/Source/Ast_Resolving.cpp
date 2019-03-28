@@ -300,7 +300,7 @@ namespace symbol_type_resolving
 		else
 		{
 			ExprTsysList tsys;
-			ExprToTsys(newPa, usingDecl->expr, tsys, &esContext->gaContext);
+			ExprToTsys(newPa, usingDecl->expr, tsys, (esContext ? &esContext->gaContext : nullptr));
 			for (vint i = 0; i < tsys.Count(); i++)
 			{
 				types.Add(tsys[i].tsys);

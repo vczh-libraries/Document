@@ -1124,7 +1124,45 @@ public:
 
 	void Visit(GenericExpr* self)override
 	{
-		throw 0;
+		ExprTsysList genericTypes;
+		Array<Ptr<TypeTsysList>> argumentTypes;
+
+		ExprToTsys(pa, self->expr, genericTypes, gaContext);
+		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, argumentTypes, gaContext);
+
+		for (vint i = 0; i < genericTypes.Count(); i++)
+		{
+			auto genericFunction = genericTypes[i].tsys;
+			auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
+			if (!declSymbol)
+			{
+				throw NotConvertableException();
+			}
+
+			symbol_type_resolving::EvaluateSymbolContext esContext;
+			if (!symbol_type_resolving::ResolveGenericParameters(genericFunction, argumentTypes, &esContext.gaContext))
+			{
+				throw NotConvertableException();
+			}
+
+			switch (declSymbol->kind)
+			{
+			case symbol_component::SymbolKind::ValueAlias:
+				{
+					auto decl = declSymbol->definition.Cast<UsingDeclaration>();
+					if (!decl->templateSpec) throw NotConvertableException();
+					symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
+				}
+				break;
+			default:
+				throw NotConvertableException();
+			}
+
+			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
+			{
+				AddInternal(result, { nullptr,ExprTsysType::PRValue,esContext.evaluatedTypes[j] });
+			}
+		}
 	}
 };
 
