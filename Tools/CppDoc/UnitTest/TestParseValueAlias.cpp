@@ -77,10 +77,16 @@ template<typename T>
 using Child = T::Value;
 
 template<typename T, T Value>
-using Field = Value.field;
+using Field1 = Value.field;
 
 template<typename T, T Value>
-using PtrField = Value->field;
+using Field2 = Value.T::field;
+
+template<typename T, T* Value>
+using PtrField1 = Value->field;
+
+template<typename T, T* Value>
+using PtrField2 = Value->T::field;
 
 template<typename T, T Value>
 using Array = Value[0];
@@ -138,8 +144,10 @@ struct S
 	AssertExpr(L"New",				L"New",							L"<::New::[T], *> ::New::[T] * $PR",											pa);
 	AssertExpr(L"Delete",			L"Delete",						L"<::Delete::[T], *> void $PR",													pa);
 	AssertExpr(L"Child",			L"Child",						L"<::Child::[T]> any_t $PR",													pa);
-	AssertExpr(L"Field",			L"Field",						L"<::Field::[T], *> any_t $PR",													pa);
-	AssertExpr(L"PtrField",			L"PtrField",					L"<::PtrField::[T], *> any_t $PR",												pa);
+	AssertExpr(L"Field1",			L"Field1",						L"<::Field1::[T], *> any_t $PR",												pa);
+	AssertExpr(L"Field2",			L"Field2",						L"<::Field2::[T], *> any_t $PR",												pa);
+	AssertExpr(L"PtrField1",		L"PtrField1",					L"<::PtrField1::[T], *> any_t $PR",												pa);
+	AssertExpr(L"PtrField2",		L"PtrField2",					L"<::PtrField2::[T], *> any_t $PR",												pa);
 	AssertExpr(L"Array",			L"Array",						L"<::Array::[T], *> any_t $PR",													pa);
 	AssertExpr(L"Func",				L"Func",						L"<::Func::[T], *> any_t $PR",													pa);
 	AssertExpr(L"Ctor",				L"Ctor",						L"<::Ctor::[T], *> ::Ctor::[T] $PR",											pa);
@@ -158,9 +166,11 @@ struct S
 	AssertExpr(L"Throw<int, 0>",									L"Throw<int, 0>",											L"void $PR",												pa);
 	AssertExpr(L"New<S, S()>",										L"New<S, S()>",												L"::S * $PR",												pa);
 	AssertExpr(L"Delete<S*, nullptr>",								L"Delete<S *, nullptr>",									L"void $PR",												pa);
-	AssertExpr(L"Child<S>",											L"Child<S>",												L"__int32 $PR",												pa);
-	AssertExpr(L"Field<S, S()>",									L"Field<S, S()>",											L"double $PR",												pa);
-	AssertExpr(L"PtrField<S*, nullptr>",							L"PtrField<S *, nullptr>",									L"double $PR",												pa);
+	AssertExpr(L"Child<S>",											L"Child<S>",												L"0 $PR",													pa);
+	AssertExpr(L"Field1<S, S()>",									L"Field1<S, S()>",											L"double $PR",												pa);
+	AssertExpr(L"Field2<S, S()>",									L"Field2<S, S()>",											L"double $PR",												pa);
+	AssertExpr(L"PtrField1<S, nullptr>",							L"PtrField1<S, nullptr>",									L"double $PR",												pa);
+	AssertExpr(L"PtrField2<S, nullptr>",							L"PtrField2<S, nullptr>",									L"double $PR",												pa);
 	AssertExpr(L"Array<S*, nullptr>",								L"Array<S *, nullptr>",										L"::S & $PR",												pa);
 	AssertExpr(L"Func<S(*)(), nullptr>",							L"Func<S () *, nullptr>",									L"::S $PR",													pa);
 	AssertExpr(L"Ctor<S, S()>",										L"Ctor<S, S()>",											L"::S $PR",													pa);
