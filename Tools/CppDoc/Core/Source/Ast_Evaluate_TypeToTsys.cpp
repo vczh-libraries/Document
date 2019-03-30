@@ -274,7 +274,12 @@ public:
 
 	void CreateIdReferenceType(Ptr<Resolving> resolving)
 	{
-		if (!resolving || resolving->resolvedSymbols.Count() == 0)
+		if (!resolving)
+		{
+			AddResult(pa.tsys->Any());
+			return;
+		}
+		else if (resolving->resolvedSymbols.Count() == 0)
 		{
 			throw NotConvertableException();
 		}

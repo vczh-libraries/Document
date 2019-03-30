@@ -325,37 +325,44 @@ public:
 		AddTemp(result, pa.tsys->Void());
 	}
 
-	void VisitResolvableExpr(ResolvableExpr* self)
+	void VisitResolvableExpr(Ptr<Resolving> resolving)
 	{
-		if (self->resolving)
+		if (!resolving)
 		{
-			ExprTsysList resolvableResult;
-			auto& outputTarget = gaContext ? resolvableResult : result;
+			AddTemp(result, pa.tsys->Any());
+			return;
+		}
+		else if (resolving->resolvedSymbols.Count() == 0)
+		{
+			throw NotConvertableException();
+		}
 
-			if (pa.funcSymbol && pa.funcSymbol->methodCache)
-			{
-				TsysCV thisCv;
-				TsysRefType thisRef;
-				auto thisType = pa.funcSymbol->methodCache->thisType->GetEntity(thisCv, thisRef);
-				ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
-				VisitResolvedMember(pa, &thisItem, self->resolving, outputTarget);
-			}
-			else
-			{
-				VisitResolvedMember(pa, nullptr, self->resolving, outputTarget);
-			}
+		ExprTsysList resolvableResult;
+		auto& outputTarget = gaContext ? resolvableResult : result;
 
-			if (gaContext)
+		if (pa.funcSymbol && pa.funcSymbol->methodCache)
+		{
+			TsysCV thisCv;
+			TsysRefType thisRef;
+			auto thisType = pa.funcSymbol->methodCache->thisType->GetEntity(thisCv, thisRef);
+			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
+			VisitResolvedMember(pa, &thisItem, resolving, outputTarget);
+		}
+		else
+		{
+			VisitResolvedMember(pa, nullptr, resolving, outputTarget);
+		}
+
+		if (gaContext)
+		{
+			for (vint i = 0; i < resolvableResult.Count(); i++)
 			{
-				for (vint i = 0; i < resolvableResult.Count(); i++)
+				auto item = resolvableResult[i];
+				TypeTsysList types;
+				item.tsys->ReplaceGenericArgs(*gaContext, types);
+				for (vint j = 0; j < types.Count(); j++)
 				{
-					auto item = resolvableResult[i];
-					TypeTsysList types;
-					item.tsys->ReplaceGenericArgs(*gaContext, types);
-					for (vint j = 0; j < types.Count(); j++)
-					{
-						AddInternal(result, { item.symbol,item.type,types[j] });
-					}
+					AddInternal(result, { item.symbol,item.type,types[j] });
 				}
 			}
 		}
@@ -363,12 +370,12 @@ public:
 
 	void Visit(IdExpr* self)override
 	{
-		VisitResolvableExpr(self);
+		VisitResolvableExpr(self->resolving);
 	}
 
 	void Visit(ChildExpr* self)override
 	{
-		VisitResolvableExpr(self);
+		VisitResolvableExpr(self->resolving);
 	}
 
 	void Visit(FieldAccessExpr* self)override
@@ -384,7 +391,11 @@ public:
 		{
 			for (vint i = 0; i < parentItems.Count(); i++)
 			{
-				if (idExpr)
+				if (parentItems[i].tsys->IsUnknownType())
+				{
+					AddTemp(result, pa.tsys->Any());
+				}
+				else if (idExpr)
 				{
 					VisitDirectField(pa, totalRar, parentItems[i], idExpr->name, result);
 				}
@@ -399,35 +410,42 @@ public:
 			SortedList<ITsys*> visitedDecls;
 			for (vint i = 0; i < parentItems.Count(); i++)
 			{
-				TsysCV cv;
-				TsysRefType refType;
-				auto entityType = parentItems[i].tsys->GetEntity(cv, refType);
-
-				if (entityType->GetType() == TsysType::Ptr)
+				if (parentItems[i].tsys->IsUnknownType())
 				{
-					ExprTsysItem parentItem(nullptr, ExprTsysType::LValue, entityType->GetElement());
-					if (idExpr)
-					{
-						VisitDirectField(pa, totalRar, parentItem, idExpr->name, result);
-					}
-					else if (childExpr->resolving)
-					{
-						VisitResolvedMember(pa, &parentItem, childExpr->resolving, result);
-					}
+					AddTemp(result, pa.tsys->Any());
 				}
-				else if (entityType->GetType() == TsysType::Decl)
+				else
 				{
-					if (!visitedDecls.Contains(entityType))
-					{
-						visitedDecls.Add(entityType);
+					TsysCV cv;
+					TsysRefType refType;
+					auto entityType = parentItems[i].tsys->GetEntity(cv, refType);
 
-						ExprTsysList opResult;
-						VisitFunctors(pa, parentItems[i], L"operator ->", opResult);
-						for (vint j = 0; j < opResult.Count(); j++)
+					if (entityType->GetType() == TsysType::Ptr)
+					{
+						ExprTsysItem parentItem(nullptr, ExprTsysType::LValue, entityType->GetElement());
+						if (idExpr)
 						{
-							auto item = opResult[j];
-							item.tsys = item.tsys->GetElement();
-							AddNonVar(parentItems, item);
+							VisitDirectField(pa, totalRar, parentItem, idExpr->name, result);
+						}
+						else if (childExpr->resolving)
+						{
+							VisitResolvedMember(pa, &parentItem, childExpr->resolving, result);
+						}
+					}
+					else if (entityType->GetType() == TsysType::Decl)
+					{
+						if (!visitedDecls.Contains(entityType))
+						{
+							visitedDecls.Add(entityType);
+
+							ExprTsysList opResult;
+							VisitFunctors(pa, parentItems[i], L"operator ->", opResult);
+							for (vint j = 0; j < opResult.Count(); j++)
+							{
+								auto item = opResult[j];
+								item.tsys = item.tsys->GetElement();
+								AddNonVar(parentItems, item);
+							}
 						}
 					}
 				}
@@ -471,7 +489,11 @@ public:
 			TsysRefType refType;
 			auto entityType = arrayType.tsys->GetEntity(cv, refType);
 
-			if (entityType->GetType() == TsysType::Decl)
+			if (entityType->IsUnknownType())
+			{
+				AddTemp(result, pa.tsys->Any());
+			}
+			else if (entityType->GetType() == TsysType::Decl)
 			{
 				ExprTsysList opResult;
 				VisitFunctors(pa, arrayType, L"operator []", opResult);
@@ -668,6 +690,17 @@ public:
 		TsysRefType leftRef, rightRef;
 		auto leftEntity = leftType->tsys->GetEntity(leftCV, leftRef);
 		auto rightEntity = rightType ? rightType->tsys->GetEntity(rightCV, rightRef) : nullptr;
+		
+		if (leftEntity->IsUnknownType())
+		{
+			AddTemp(result, pa.tsys->Any());
+			return true;
+		}
+		if (rightEntity && rightEntity->IsUnknownType())
+		{
+			AddTemp(result, pa.tsys->Any());
+			return true;
+		}
 
 		CppName opName;
 		opName.type = CppNameType::Operator;
@@ -929,6 +962,10 @@ public:
 							}
 							CalculateValueFieldType(&parentItem, nullptr, fieldEntity, true, result);
 						}
+					}
+					else if (rightEntity->IsUnknownType())
+					{
+						AddTemp(result, pa.tsys->Any());
 					}
 					continue;
 				}

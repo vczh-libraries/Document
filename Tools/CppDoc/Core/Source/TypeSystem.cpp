@@ -101,6 +101,11 @@ public:
 	ITsys* GenericFunctionOf(IEnumerable<ITsys*>& params, const TsysGenericFunction& genericFunction)	override;
 	ITsys* GenericArgOf(TsysGenericArg genericArg)														override { throw "Not Implemented!"; }
 
+	bool IsUnknownType()override
+	{
+		return false;
+	}
+
 	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
 	{
 		cv = { false,false };
@@ -228,20 +233,19 @@ Concrete Tsys (Singleton)
 class ITSYS_CLASS(Any)
 {
 	ITSYS_MEMBERS_MINIMIZED(Any)
+		
+	ITsys* LRefOf()																						override { return this; }
+	ITsys* RRefOf()																						override { return this; }
+	ITsys* PtrOf()																						override { return this; }
+	ITsys* ArrayOf(vint dimensions)																		override { return this; }
+	ITsys* FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)										override { return this; }
+	ITsys* MemberOf(ITsys* classType)																	override { return this; }
+	ITsys* CVOf(TsysCV cv)																				override { return this; }
+	ITsys* GenericArgOf(TsysGenericArg genericArg)														override { return this; }
 
-	ITsys* LRefOf()override
+	bool IsUnknownType()override
 	{
-		return this;
-	}
-
-	ITsys* RRefOf()override
-	{
-		return this;
-	}
-
-	ITsys* CVOf(TsysCV cv)override
-	{
-		return this;
+		return true;
 	}
 };
 
@@ -308,6 +312,11 @@ public:
 class ITSYS_CLASS(GenericArg)
 {
 	ITSYS_MEMBERS_DATA_WITHELEMENT(GenericArg, TsysGenericArg, GenericArg)
+
+	bool IsUnknownType()override
+	{
+		return true;
+	}
 
 	bool HasGenericArgs()override
 	{
@@ -590,6 +599,13 @@ class ITSYS_CLASS(GenericFunction)
 {
 	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(GenericFunction, TsysGenericFunction, const TsysGenericFunction&, GenericFunction)
 	ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(element)
+
+public:
+
+	bool IsUnknownType()override
+	{
+		return true;
+	}
 
 private:
 	ITsys*					ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params);
