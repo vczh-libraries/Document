@@ -172,7 +172,7 @@ struct S
 	AssertExpr(L"PtrField1<S, nullptr>",							L"PtrField1<S, nullptr>",									L"double $PR",												pa);
 	AssertExpr(L"PtrField2<S, nullptr>",							L"PtrField2<S, nullptr>",									L"double $PR",												pa);
 	AssertExpr(L"Array<S*, nullptr>",								L"Array<S *, nullptr>",										L"::S & $PR",												pa);
-	AssertExpr(L"Func<S(*)(), nullptr>",							L"Func<S () *, nullptr>",									L"::S $PR",													pa);
+	AssertExpr(L"Func<S(*)(int), nullptr>",							L"Func<S (int) *, nullptr>",								L"::S $PR",													pa);
 	AssertExpr(L"Ctor<S, S()>",										L"Ctor<S, S()>",											L"::S $PR",													pa);
 	AssertExpr(L"Init<S, S()>",										L"Init<S, S()>",											L"{nullptr_t $PR, ::S $PR, 0 $PR} $PR",						pa);
 	AssertExpr(L"Postfix<S*, nullptr>",								L"Postfix<S *, nullptr>",									L"{::S * $PR, ::S * $PR} $PR",								pa);
