@@ -19,6 +19,7 @@
     - [ ] Test cases for all kind of expressions of which types contain generic arguments.
     - [ ] Test cases for all operators on expressions of which types contain generic arguments.
     - [ ] Test cases for overloadings on arguments of which types contain generic arguments.
+    - [ ] Test `typename` and `template` keywords in types and expressions.
   - [ ] Default template argument.
   - [ ] `...` type and expression AST, only one `...` argument is allowed to appear.
   - [ ] Test both unresolved type (when type arguments are not assigned) and resolved type (when type arguments are assigned), or partially resolved type (when type arguments are assigned to other unresolved type).

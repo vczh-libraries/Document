@@ -156,7 +156,8 @@
     <ClCompile Include="TestOverloading.cpp" />
     <ClCompile Include="TestOverloadingAdl.cpp" />
     <ClCompile Include="TestOverloadingOperator.cpp" />
-    <ClCompile Include="TestParseGenericDecl.cpp" />
+    <ClCompile Include="TestParseTypeAlias.cpp" />
+    <ClCompile Include="TestParseValueAlias.cpp" />
     <ClCompile Include="TestTypeConvert.cpp" />
     <ClCompile Include="TestTypeSystem.cpp" />
     <ClCompile Include="Util_Log.cpp" />
