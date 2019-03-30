@@ -325,11 +325,14 @@ public:
 		AddTemp(result, pa.tsys->Void());
 	}
 
-	void VisitResolvableExpr(Ptr<Resolving> resolving)
+	void VisitResolvableExpr(Ptr<Resolving> resolving, bool allowAny)
 	{
 		if (!resolving)
 		{
-			AddTemp(result, pa.tsys->Any());
+			if (allowAny)
+			{
+				AddTemp(result, pa.tsys->Any());
+			}
 			return;
 		}
 		else if (resolving->resolvedSymbols.Count() == 0)
@@ -370,12 +373,12 @@ public:
 
 	void Visit(IdExpr* self)override
 	{
-		VisitResolvableExpr(self->resolving);
+		VisitResolvableExpr(self->resolving, false);
 	}
 
 	void Visit(ChildExpr* self)override
 	{
-		VisitResolvableExpr(self->resolving);
+		VisitResolvableExpr(self->resolving, true);
 	}
 
 	void Visit(FieldAccessExpr* self)override
@@ -530,7 +533,7 @@ public:
 
 		ExprTsysList selectedFunctions;
 		VisitOverloadedFunction(pa, funcTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
-		if (pa.recorder)
+		if (pa.recorder && !gaContext)
 		{
 			ReIndex(nullptr, nullptr, &self->opName, &self->opResolving, selectedFunctions);
 		}
@@ -548,6 +551,7 @@ public:
 
 		ExprTsysList funcTypes;
 		ExprToTsys(pa, self->expr, funcTypes, gaContext);
+
 		if (auto idExpr = self->expr.Cast<IdExpr>())
 		{
 			if (!idExpr->resolving || IsAdlEnabled(pa, idExpr->resolving))
@@ -561,11 +565,21 @@ public:
 			}
 		}
 
+		for (vint i = 0; i < funcTypes.Count(); i++)
+		{
+			TsysCV cv;
+			TsysRefType refType;
+			auto entityType = funcTypes[i].tsys->GetEntity(cv, refType);
+			if (entityType->IsUnknownType())
+			{
+				AddTemp(result, pa.tsys->Any());
+			}
+		}
 		FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
 
 		ExprTsysList selectedFunctions;
 		VisitOverloadedFunction(pa, funcTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
-		if (pa.recorder)
+		if (pa.recorder && !gaContext)
 		{
 			CppName* name = nullptr;
 			Ptr<Resolving>* nameResolving = nullptr;
@@ -730,7 +744,7 @@ public:
 
 				ExprTsysList selectedFunctions;
 				VisitOverloadedFunction(pa, opTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
-				if (pa.recorder)
+				if (pa.recorder && !gaContext)
 				{
 					ReIndex(nullptr, nullptr, &resolvableName, &resolving, selectedFunctions);
 				}
@@ -775,7 +789,7 @@ public:
 
 				ExprTsysList selectedFunctions;
 				VisitOverloadedFunction(pa, opTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
-				if (pa.recorder)
+				if (pa.recorder && !gaContext)
 				{
 					ReIndex(nullptr, nullptr, &resolvableName, &resolving, selectedFunctions);
 				}
@@ -801,7 +815,11 @@ public:
 			TsysRefType refType;
 			auto entity = type->GetEntity(cv, refType);
 
-			if (entity->GetType() == TsysType::Decl)
+			if (entity->IsUnknownType())
+			{
+				AddTemp(result, pa.tsys->Any());
+			}
+			else if (entity->GetType() == TsysType::Decl)
 			{
 				VisitOperator(&types[i], &extraParam, self->opName.name, self->opName, self->opResolving);
 			}
@@ -851,7 +869,12 @@ public:
 			TsysRefType refType;
 			auto entity = type->GetEntity(cv, refType);
 
-			if (entity->GetType() == TsysType::Decl)
+			if (entity->IsUnknownType())
+			{
+				AddTemp(result, pa.tsys->Any());
+				continue;
+			}
+			else if (entity->GetType() == TsysType::Decl)
 			{
 				if (VisitOperator(&types[i], nullptr, self->opName.name, self->opName, self->opResolving))
 				{

@@ -272,12 +272,19 @@ public:
 		throw NotConvertableException();
 	}
 
-	void CreateIdReferenceType(Ptr<Resolving> resolving)
+	void CreateIdReferenceType(Ptr<Resolving> resolving, bool allowAny)
 	{
 		if (!resolving)
 		{
-			AddResult(pa.tsys->Any());
-			return;
+			if (allowAny)
+			{
+				AddResult(pa.tsys->Any());
+				return;
+			}
+			else
+			{
+				throw NotConvertableException();
+			}
 		}
 		else if (resolving->resolvedSymbols.Count() == 0)
 		{
@@ -336,12 +343,12 @@ public:
 
 	void Visit(IdType* self)override
 	{
-		CreateIdReferenceType(self->resolving);
+		CreateIdReferenceType(self->resolving, false);
 	}
 
 	void Visit(ChildType* self)override
 	{
-		CreateIdReferenceType(self->resolving);
+		CreateIdReferenceType(self->resolving, true);
 	}
 
 	void Visit(GenericType* self)override
