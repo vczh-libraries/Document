@@ -14,10 +14,10 @@
 
 ## Template short-term tasks
 
-- [ ] `template` on `using` type alias declaration.
-  - [ ] Write a lot of test cases for `decltype` inside `using`, with `TsysType::Any` to represent unknown type.
-    - [ ] Test cases for all kind of expressions of which types contain generic arguments.
-    - [ ] Test cases for all operators on expressions of which types contain generic arguments.
+- [x] `template` on `using` type alias declaration.
+  - [x] Write a lot of test cases for `decltype` inside `using`, with `TsysType::Any` to represent unknown type.
+    - [x] Test cases for all kind of expressions of which types contain generic arguments.
+    - [x] Test cases for all operators on expressions of which types contain generic arguments.
     - [ ] Test cases for overloadings on arguments of which types contain generic arguments.
     - [ ] Test `typename` and `template` keywords in types and expressions.
   - [ ] Default template argument.
