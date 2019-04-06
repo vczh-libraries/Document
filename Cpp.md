@@ -21,8 +21,11 @@
     - [ ] Test cases for overloadings on arguments of which types contain generic arguments.
     - [ ] Test `typename` and `template` keywords in types and expressions.
   - [ ] Default template argument.
-  - [ ] `...` type and expression AST, only one `...` argument is allowed to appear.
-  - [ ] Test both unresolved type (when type arguments are not assigned) and resolved type (when type arguments are assigned), or partially resolved type (when type arguments are assigned to other unresolved type).
+  - [ ] `...` type and expression AST, only one `...` argument is allowed to appear in one type or expression.
+    - [ ] `...` type will be converted to multiple `any_t` when applying on template declarations.
+    - [ ] `...` expression will be converted to multiple nullptr when applying on template declarations.
+    - [ ] `...` type will be unchanged when it appear in other places.
+    - [ ] Add test cases to `TestTypeConvertGeneric`.
 - [ ] `template` on functions.
   - [ ] Connect function with forward declarations
   - [ ] Overload functions with all template argument (except defaults) specified.
