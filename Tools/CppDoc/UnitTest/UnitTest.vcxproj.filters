@@ -78,10 +78,13 @@
     <ClCompile Include="TestLexer.cpp">
       <Filter>Source Files\TestParser</Filter>
     </ClCompile>
-    <ClCompile Include="TestParseTypeAlias.cpp">
+    <ClCompile Include="TestParseGenericTypeAlias.cpp">
       <Filter>Source Files\TestParserGeneric</Filter>
     </ClCompile>
-    <ClCompile Include="TestParseValueAlias.cpp">
+    <ClCompile Include="TestParseGenericValueAlias.cpp">
+      <Filter>Source Files\TestParserGeneric</Filter>
+    </ClCompile>
+    <ClCompile Include="TestTypeConvertGeneric.cpp">
       <Filter>Source Files\TestParserGeneric</Filter>
     </ClCompile>
   </ItemGroup>

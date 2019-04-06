@@ -284,6 +284,9 @@ enum class TsysRefType
 
 enum class TsysConv
 {
+	// Any means this could be any conversion including illegal.
+	// Any is not superior than any conversion, instead it should be always included in overloading resolutions.
+	Any,
 	Exact,
 	TrivalConversion,
 	IntegralPromotion,
