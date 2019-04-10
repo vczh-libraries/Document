@@ -577,17 +577,38 @@ TsysConv TestConvertInternalUnsafe(const ParsingArguments& pa, ITsys* toType, IT
 		return IsUniversalInitialization(pa, toType, fromEntity, init, tested);
 	}
 
-	if (IsNumericPromotion(toEntity, fromEntity)) return TsysConv::IntegralPromotion;
-	if (IsNumericConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
-	if (IsPointerConversion(toEntity, fromEntity)) return TsysConv::StandardConversion;
+	if (IsNumericPromotion(toEntity, fromEntity))
+	{
+		return TsysConv::IntegralPromotion;
+	}
+
+	if (IsNumericConversion(toEntity, fromEntity))
+	{
+		return TsysConv::StandardConversion;
+	}
+
+	if (IsPointerConversion(toEntity, fromEntity))
+	{
+		return TsysConv::StandardConversion;
+	}
+
 	if (IsEntityTypeInheriting(pa, toType, fromType))
 	{
-		if (IsToBaseClassConversion_AssumingInheriting(pa, toType, fromType)) return TsysConv::StandardConversion;
+		if (IsToBaseClassConversion_AssumingInheriting(pa, toType, fromType))
+		{
+			return TsysConv::StandardConversion;
+		}
 	}
 	else
 	{
-		if (IsCustomOperatorConversion(pa, toType, fromType, tested)) return TsysConv::UserDefinedConversion;
-		if (IsCustomContructorConversion(pa, toType, fromType, tested)) return TsysConv::UserDefinedConversion;
+		if (IsCustomOperatorConversion(pa, toType, fromType, tested))
+		{
+			return TsysConv::UserDefinedConversion;
+		}
+		if (IsCustomContructorConversion(pa, toType, fromType, tested))
+		{
+			return TsysConv::UserDefinedConversion;
+		}
 	}
 
 	return TsysConv::Illegal;
