@@ -164,21 +164,16 @@ namespace TestConvert_Helpers
 		return false;
 	}
 
-	bool IsEntityConversionAllowed(ITsys*& toType, ITsys*& fromType)
+	bool IsEntityConversionAllowed(ITsys* toEntity, TsysCV toCV, TsysRefType toRef, ITsys* fromEntity, TsysCV fromCV, TsysRefType fromRef)
 	{
-		TsysCV toCV, fromCV;
-		TsysRefType toRef, fromRef;
-		auto toEntity = toType->GetEntity(toCV, toRef);
-		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
-
 		if (toRef == TsysRefType::LRef && toCV.isGeneralConst)
 		{
-			goto ALLOW;
+			return true;
 		}
 
 		if (toRef == TsysRefType::None)
 		{
-			goto ALLOW;
+			return true;
 		}
 
 		if (toRef == TsysRefType::LRef || fromRef == TsysRefType::LRef)
@@ -189,9 +184,6 @@ namespace TestConvert_Helpers
 			}
 		}
 
-	ALLOW:
-		toType = toEntity;
-		fromType = fromEntity;
 		return true;
 	}
 
@@ -565,22 +557,24 @@ TsysConv TestConvertInternalUnsafe(const ParsingArguments& pa, ITsys* toType, IT
 		}
 	}
 
-	auto toEntity = toType;
-	auto fromEntity = fromType;
-	if (!IsEntityConversionAllowed(toEntity, fromEntity))
+	TsysCV fromCV, toCV;
+	TsysRefType fromRef, toRef;
+	auto fromEntity = fromType->GetEntity(fromCV, fromRef);
+	auto toEntity = toType->GetEntity(toCV, toRef);
+	if (toEntity->IsUnknownType() || fromEntity->IsUnknownType())
+	{
+		return TsysConv::Any;
+	}
+
+	if (!IsEntityConversionAllowed(toEntity, toCV, toRef, fromEntity, fromCV, fromRef))
 	{
 		return TsysConv::Illegal;
 	}
 
+	if (fromEntity->GetType() == TsysType::Init)
 	{
-		TsysCV fromCV;
-		TsysRefType fromRef;
-		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
-		if (fromEntity->GetType() == TsysType::Init)
-		{
-			auto& init = fromEntity->GetInit();
-			return IsUniversalInitialization(pa, toType, fromEntity, init, tested);
-		}
+		auto& init = fromEntity->GetInit();
+		return IsUniversalInitialization(pa, toType, fromEntity, init, tested);
 	}
 
 	if (IsNumericPromotion(toEntity, fromEntity)) return TsysConv::IntegralPromotion;
