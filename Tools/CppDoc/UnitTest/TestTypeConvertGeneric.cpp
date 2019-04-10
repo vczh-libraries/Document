@@ -5,6 +5,7 @@ TEST_CASE(TestTypeConvertGeneric)
 {
 	auto contextInput = LR"(
 struct S{};
+class C{};
 
 template<typename T, T Value>
 using Context = T;
@@ -12,66 +13,138 @@ using Context = T;
 	COMPILE_PROGRAM(program, pa, contextInput);
 
 	const wchar_t* typeCodes[] = {
-		L"T",
-		L"const T",
-		L"volatile T",
-		L"const volatile T",
+		/*  0 */ L"T",
+		/*  1 */ L"const T",
+		/*  2 */ L"volatile T",
+		/*  3 */ L"const volatile T",
 
-		L"T*",
-		L"const T*",
-		L"volatile T*",
-		L"const volatile T*",
+		/*  4 */ L"T*",
+		/*  5 */ L"const T*",
+		/*  6 */ L"volatile T*",
+		/*  7 */ L"const volatile T*",
 
-		L"T&",
-		L"const T&",
-		L"volatile T&",
-		L"const volatile T&",
+		/*  8 */ L"T&",
+		/*  9 */ L"const T&",
+		/* 10 */ L"volatile T&",
+		/* 11 */ L"const volatile T&",
 
-		L"T&&",
-		L"const T&&",
-		L"volatile T&&",
-		L"const volatile T&&",
+		/* 12 */ L"T&&",
+		/* 13 */ L"const T&&",
+		/* 14 */ L"volatile T&&",
+		/* 15 */ L"const volatile T&&",
 
-		L"T[10]",
-		L"const T[10]",
-		L"volatile T[10]",
-		L"const volatile T[10]",
+		/* 16 */ L"T[10]",
+		/* 17 */ L"const T[10]",
+		/* 18 */ L"volatile T[10]",
+		/* 19 */ L"const volatile T[10]",
 
-		L"T(*)[10]",
-		L"const T(*)[10]",
-		L"volatile T(*)[10]",
-		L"const volatile T(*)[10]",
+		/* 20 */ L"T(*)[10]",
+		/* 21 */ L"const T(*)[10]",
+		/* 22 */ L"volatile T(*)[10]",
+		/* 23 */ L"const volatile T(*)[10]",
 
-		L"T(&)[10]",
-		L"const T(&)[10]",
-		L"volatile T(&)[10]",
-		L"const volatile T(&)[10]",
+		/* 24 */ L"T(&)[10]",
+		/* 25 */ L"const T(&)[10]",
+		/* 26 */ L"volatile T(&)[10]",
+		/* 27 */ L"const volatile T(&)[10]",
 
-		L"T(&&)[10]",
-		L"const T(&&)[10]",
-		L"volatile T(&&)[10]",
-		L"const volatile T(&&)[10]",
+		/* 28 */ L"T(&&)[10]",
+		/* 29 */ L"const T(&&)[10]",
+		/* 30 */ L"volatile T(&&)[10]",
+		/* 31 */ L"const volatile T(&&)[10]",
 
-		L"T S::*",
-		L"S T::*",
-		L"decltype({Value})",
-		L"decltype({Value,S()})",
-		L"decltype({S(),Value})",
-		L"T(*)(S)",
-		L"S(*)(T)",
-		L"T(*)()",
-		L"T(*[10])(S)",
-		L"S(*[10])(T)",
-		L"T(*[10])()",
-		L"T(*&)(S)",
-		L"S(*&)(T)",
-		L"T(*&)()",
-		L"T(*&&)(S)",
-		L"S(*&&)(T)",
-		L"T(*&&)()",
+		/* 32 */ L"T C::*",
+		/* 33 */ L"C T::*",
+		/* 34 */ L"decltype({Value})",
+		/* 35 */ L"decltype({Value,C()})",
+		/* 36 */ L"decltype({C(),Value})",
+		/* 37 */ L"T(*)(C)",
+		/* 38 */ L"C(*)(T)",
+		/* 39 */ L"T(*)()",
+		/* 40 */ L"T(*[10])(C)",
+		/* 41 */ L"C(*[10])(T)",
+		/* 42 */ L"T(*[10])()",
+		/* 43 */ L"T(*&)(C)",
+		/* 44 */ L"C(*&)(T)",
+		/* 45 */ L"T(*&)()",
+		/* 46 */ L"T(*&&)(C)",
+		/* 47 */ L"C(*&&)(T)",
+		/* 48 */ L"T(*&&)()",
 	};
 
 	const int TypeCount = sizeof(typeCodes) / sizeof(*typeCodes);
+
+	// E = Exact, * = Any, SPACE = Illegal
+
+	// conversion from generic to concrete
+	const wchar_t g2c[TypeCount][TypeCount + 1] = {
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+
+		L"    " L"****" L"    " L"    " L"    " L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"    " L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"    " L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"    " L"****" L"    " L"    " L"     ***         ",
+
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+		L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"****" L"*****************",
+
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+
+		L"    " L"    " L"    " L"    " L"    " L"****" L"    " L"    " L"                 ",
+		L"    " L"    " L"    " L"    " L"    " L"****" L"    " L"    " L"                 ",
+		L"    " L"    " L"    " L"    " L"    " L"****" L"    " L"    " L"                 ",
+		L"    " L"    " L"    " L"    " L"    " L"****" L"    " L"    " L"                 ",
+
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"    " L"     ***         ",
+
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"*                ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L" *               ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"  *              ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"   *             ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    *            ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"     *           ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"      *          ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"       *         ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"        *        ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"         *       ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"          *      ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"           *     ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"            *    ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"             *   ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"              *  ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"               * ",
+		L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"    " L"                *",
+	};
+
+	// conversion from concrete to generic
+	const wchar_t c2g[TypeCount][TypeCount + 1] = {
+	};
+
+	// conversion from generic to generic
+	const wchar_t g2g[TypeCount][TypeCount + 1] = {
+	};
+
 	ITsys* genericTypes[TypeCount];
 	ITsys* intTypes[TypeCount];
 	ITsys* structTypes[TypeCount];
@@ -120,27 +193,35 @@ using Context = T;
 		{
 			{
 				auto toType = intTypes[j];
+				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+				auto expect = g2c[i][j];
+				TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
 			}
 			{
 				auto toType = structTypes[j];
+				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+				auto expect = g2c[i][j];
+				// TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
 			}
 		}
 	}
 
 	for (vint i = 0; i < TypeCount; i++)
 	{
+		auto toType = genericTypes[i];
+		for (vint j = 0; j < TypeCount; j++)
 		{
-			auto fromType = intTypes[i];
-			for (vint j = 0; j < TypeCount; j++)
 			{
-				auto toType = genericTypes[j];
+				auto fromType = intTypes[j];
+				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+				auto expect = g2c[j][i];
+				// TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
 			}
-		}
-		{
-			auto fromType = structTypes[i];
-			for (vint j = 0; j < TypeCount; j++)
 			{
-				auto toType = genericTypes[j];
+				auto fromType = structTypes[j];
+				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+				auto expect = g2c[j][i];
+				// TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
 			}
 		}
 	}
@@ -151,6 +232,9 @@ using Context = T;
 		for (vint j = 0; j < TypeCount; j++)
 		{
 			auto toType = genericTypes[j];
+			auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+			auto expect = g2g[i][j];
+			// TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
 		}
 	}
 
@@ -159,7 +243,7 @@ using Context = T;
 		auto fromType = genericTypes[i];
 		auto toType = pa.tsys->Any();
 		auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
-		TEST_ASSERT(result == TsysConv::Any);
+		// TEST_ASSERT(result == TsysConv::Any);
 	}
 
 	for (vint i = 0; i < TypeCount; i++)
@@ -167,6 +251,6 @@ using Context = T;
 		auto fromType = pa.tsys->Any();
 		auto toType = genericTypes[i];
 		auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
-		TEST_ASSERT(result == TsysConv::Any);
+		// TEST_ASSERT(result == TsysConv::Any);
 	}
 }
