@@ -55,6 +55,23 @@ namespace TestConvert_Helpers
 		return tsys;
 	}
 
+	ITsys* ArrayRemoveDims(ITsys* tsys, vint dimension)
+	{
+		if (tsys->GetType() == TsysType::Array)
+		{
+			vint d = tsys->GetParamCount();
+			if (d == dimension)
+			{
+				tsys = tsys->GetElement();
+			}
+			else if (d > dimension)
+			{
+				tsys = tsys->GetElement()->ArrayOf(d - dimension);
+			}
+		}
+		return tsys;
+	}
+
 	bool IsExactMatch(ITsys* toType, ITsys* fromType, bool& isAny)
 	{
 		// this function is called to compare everything inside a pointer
@@ -254,7 +271,7 @@ namespace TestConvert_Helpers
 		return type->GetDecl()->GetAnyForwardDecl<T>();
 	}
 
-	bool IsExactOrTrivalConvert(ITsys* toType, ITsys* fromType, bool fromLRP, bool& isTrivial, bool& isAny)
+	bool IsExactOrTrivalConvert(ITsys* toType, ITsys* fromType, bool& isTrivial, bool& isAny)
 	{
 		TsysCV toCV, fromCV;
 		TsysRefType toRef, fromRef;
@@ -267,38 +284,64 @@ namespace TestConvert_Helpers
 			return true;
 		}
 
-		if (toRef == TsysRefType::LRef && toCV.isGeneralConst)
-		{
-			fromLRP = true;
-		}
-		else switch (toRef)
-		{
-		case TsysRefType::LRef:
-			switch (fromRef)
-			{
-			case TsysRefType::LRef:
-				fromLRP = true;
-				break;
-			case TsysRefType::RRef:
-			case TsysRefType::None:
-				return false;
-			}
-			break;
-		case TsysRefType::RRef:
-			switch (fromRef)
-			{
-			case TsysRefType::LRef:
-				return false;
-			case TsysRefType::RRef:
-			case TsysRefType::None:
-				fromLRP = true;
-				break;
-			}
-			break;
-		}
+		bool constLRef = toRef == TsysRefType::LRef && toCV.isGeneralConst;
+		bool allowCVConversion = constLRef
+			|| (toRef == TsysRefType::LRef && fromRef == TsysRefType::LRef)
+			|| (toRef == TsysRefType::RRef && fromRef == TsysRefType::RRef)
+			|| (toRef == TsysRefType::RRef && fromRef == TsysRefType::None)
+			;
+		bool allowEntityConversion = constLRef
+			|| toRef == TsysRefType::None
+			|| (toRef == TsysRefType::RRef && fromRef == TsysRefType::None)
+			;
 
-		if (fromLRP)
+		if (allowEntityConversion)
 		{
+			if (toEntity->GetType() == TsysType::Primitive && fromEntity->GetType() == TsysType::Decl)
+			{
+				if (auto decl = TryGetForwardDeclFromType<ForwardEnumDeclaration>(fromEntity))
+				{
+					if (decl->enumClass) return false;
+
+					auto primitive = toEntity->GetPrimitive();
+					if (primitive.type != TsysPrimitiveType::SInt) return false;
+					if (primitive.bytes != TsysBytes::_4) return false;
+
+					isTrivial = true;
+					return true;
+				}
+			}
+
+			if ((toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Ptr) ||
+				(toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Array) ||
+				(toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array))
+			{
+				toEntity = ArrayToPtr(toEntity);
+				fromEntity = ArrayToPtr(fromEntity);
+				return IsPointerOfTypeConvertable(toEntity->GetElement(), fromEntity->GetElement(), isTrivial, isAny);
+			}
+
+			return IsExactMatch(toEntity, fromEntity, isAny);
+		}
+		else if (allowCVConversion)
+		{
+			if (toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array)
+			{
+				vint toD = toEntity->GetParamCount();
+				vint fromD = fromEntity->GetParamCount();
+				vint minD = toD < fromD ? toD : fromD;
+
+				TsysCV newToCV, newFromCV;
+				toEntity = ArrayRemoveDims(toEntity, minD)->GetEntity(newToCV, toRef);
+				fromEntity = ArrayRemoveDims(fromEntity, minD)->GetEntity(newFromCV, fromRef);
+
+				toCV.isGeneralConst |= newToCV.isGeneralConst;
+				toCV.isVolatile |= newToCV.isVolatile;
+
+				fromCV.isGeneralConst |= newFromCV.isGeneralConst;
+				fromCV.isVolatile |= newFromCV.isVolatile;
+			}
+
 			if (!IsCVSame(toCV, fromCV))
 			{
 				if (IsCVMatch(toCV, fromCV))
@@ -310,48 +353,12 @@ namespace TestConvert_Helpers
 					return false;
 				}
 			}
-		}
-
-		if (toEntity == fromEntity)
-		{
-			return true;
-		}
-
-		if (toEntity->GetType() == TsysType::Primitive && fromEntity->GetType() == TsysType::Decl)
-		{
-			if (auto decl = TryGetForwardDeclFromType<ForwardEnumDeclaration>(fromEntity))
-			{
-				if (decl->enumClass) return false;
-
-				auto primitive = toEntity->GetPrimitive();
-				if (primitive.type != TsysPrimitiveType::SInt) return false;
-				if (primitive.bytes != TsysBytes::_4) return false;
-
-				isTrivial = true;
-				return true;
-			}
-		}
-
-		if ((toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Ptr) ||
-			(toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Array) ||
-			(toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array))
-		{
-			toEntity = ArrayToPtr(toEntity);
-			fromEntity = ArrayToPtr(fromEntity);
-			if (IsPointerOfTypeConvertable(toEntity->GetElement(), fromEntity->GetElement(), isTrivial, isAny))
-			{
-				return true;
-			}
+			return IsExactMatch(toEntity, fromEntity, isAny);
 		}
 		else
 		{
-			if (IsPointerOfTypeConvertable(toEntity, fromEntity, isTrivial, isAny))
-			{
-				return true;
-			}
+			return IsExactMatch(toType, fromType, isAny);
 		}
-
-		return false;
 	}
 
 	bool IsEntityConversionAllowed(ITsys* toEntity, TsysCV toCV, TsysRefType toRef, ITsys* fromEntity, TsysCV fromCV, TsysRefType fromRef)
@@ -742,7 +749,7 @@ TsysConv TestConvertInternalUnsafe(const ParsingArguments& pa, ITsys* toType, IT
 	{
 		bool isTrivial = false;
 		bool isAny = false;
-		if (IsExactOrTrivalConvert(toType, fromType, false, isTrivial, isAny))
+		if (IsExactOrTrivalConvert(toType, fromType, isTrivial, isAny))
 		{
 			return
 				isAny ? TsysConv::Any :
