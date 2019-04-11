@@ -157,17 +157,27 @@ namespace TestConvert_Helpers
 			switch (fromType->GetType())
 			{
 			case TsysType::CV:
-				if (toType->IsUnknownType())
-				{
-					return true;
-				}
-				else if (fromType->IsUnknownType())
 				{
 					auto toCV = toType->GetCV();
 					auto fromCV = fromType->GetCV();
-					if (!toCV.isGeneralConst && fromCV.isGeneralConst) return false;
-					if (!toCV.isVolatile && fromCV.isVolatile) return false;
-					return true;
+					bool toU = toType->GetElement()->IsUnknownType();
+					bool fromU = fromType->GetElement()->IsUnknownType();
+
+					if (toU && fromU)
+					{
+						return true;
+					}
+					else if (toU)
+					{
+						if (!fromCV.isGeneralConst && toCV.isGeneralConst) return false;
+						if (!fromCV.isVolatile && toCV.isVolatile) return false;
+					}
+					else if (fromU)
+					{
+						if (!toCV.isGeneralConst && fromCV.isGeneralConst) return false;
+						if (!toCV.isVolatile && fromCV.isVolatile) return false;
+					}
+					return IsExactMatch(toType->GetElement(), fromType->GetElement(), isAny);
 				}
 			}
 			break;
@@ -207,6 +217,10 @@ namespace TestConvert_Helpers
 			{
 				isAny = true;
 				return true;
+			}
+			else
+			{
+				return false;
 			}
 		}
 
