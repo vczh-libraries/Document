@@ -108,12 +108,12 @@ using Context = T;
 		L"    " L"    " L"    " L"    " L"    " L"  **" L"    " L"    " L"                 ",
 		L"    " L"    " L"    " L"    " L"    " L"   *" L"    " L"    " L"                 ",
 
-		L"    " L"****" L"    " L"    " L"****" L"****" L"****" L"    " L"     ***      ***",
+		L"    " L"****" L"    " L"    " L"****" L"****" L"****" L"    " L"     ******   ***",
 		L"    " L" * *" L"    " L"    " L" * *" L" * *" L" * *" L"    " L"                 ",
 		L"    " L"  **" L"    " L"    " L"  **" L"  **" L"  **" L"    " L"                 ",
 		L"    " L"   *" L"    " L"    " L"   *" L"   *" L"   *" L"    " L"                 ",
 
-		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"****" L"     ***      ***",
+		L"    " L"****" L"    " L"    " L"****" L"****" L"    " L"****" L"     ******   ***",
 		L"    " L" * *" L"    " L"    " L" * *" L" * *" L"    " L" * *" L"                 ",
 		L"    " L"  **" L"    " L"    " L"  **" L"  **" L"    " L"  **" L"                 ",
 		L"    " L"   *" L"    " L"    " L"   *" L"   *" L"    " L"   *" L"                 ",
@@ -191,10 +191,6 @@ using Context = T;
 		auto fromType = genericTypes[i];
 		for (vint j = 0; j < TypeCount; j++)
 		{
-			if (i == 21 && j == 21)
-			{
-				int a = 0;
-			}
 			{
 				auto toType = intTypes[j];
 				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
