@@ -39,30 +39,60 @@ namespace TestConvert_Helpers
 		return true;
 	}
 
-	bool IsCVMatch(ITsys* toType, ITsys* fromType, bool& performedLRPTrivalConversion)
+	bool IsExactMatch(ITsys* toType, ITsys* fromType, bool& isAny)
 	{
-		TsysCV toCV, fromCV;
-		if (toType->GetType() == TsysType::CV)
-		{
-			toCV = toType->GetCV();
-			toType = toType->GetElement();
-		}
-		if (fromType->GetType() == TsysType::CV)
-		{
-			fromCV = fromType->GetCV();
-			fromType = fromType->GetElement();
-		}
-
 		if (toType == fromType)
 		{
-			if (IsCVSame(toCV, fromCV)) return true;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool IsPointerOfTypeConvertable(ITsys* toType, ITsys* fromType, bool& isTrivial, bool& isAny)
+	{
+		if (toType == fromType)
+		{
+			return true;
+		}
+
+		TsysCV toCV, fromCV;
+		TsysRefType toRef, fromRef;
+		auto toEntity = toType->GetEntity(toCV, toRef);
+		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
+
+		if (toEntity->IsUnknownType() || fromEntity->IsUnknownType())
+		{
+			isAny = true;
+			return true;
+		}
+
+		if (IsCVMatch(toCV, fromCV))
+		{
+			isTrivial = true;
+		}
+
+		if (IsExactMatch(toEntity, fromEntity, isAny))
+		{
 			if (IsCVMatch(toCV, fromCV))
 			{
-				performedLRPTrivalConversion = true;
-				return true;
+				isTrivial = !isAny;
 			}
+			else
+			{
+				isAny = false;
+				return false;
+			}
+			return true;
 		}
-		return false;
+		else
+		{
+			isAny = false;
+			isTrivial = false;
+			return false;
+		}
 	}
 
 	template<typename T>
@@ -88,8 +118,11 @@ namespace TestConvert_Helpers
 
 		if (toEntity->IsUnknownType() || fromEntity->IsUnknownType())
 		{
-			isAny = true;
-			return true;
+			if (toEntity->GetType() != TsysType::Member && fromEntity->GetType() != TsysType::Member)
+			{
+				isAny = true;
+				return true;
+			}
 		}
 
 		if (toRef == TsysRefType::LRef && toCV.isGeneralConst)
@@ -161,7 +194,7 @@ namespace TestConvert_Helpers
 			(toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Array) ||
 			(toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array))
 		{
-			if (IsCVMatch(toEntity->GetElement(), fromEntity->GetElement(), isTrivial))
+			if (IsPointerOfTypeConvertable(toEntity->GetElement(), fromEntity->GetElement(), isTrivial, isAny))
 			{
 				return true;
 			}
