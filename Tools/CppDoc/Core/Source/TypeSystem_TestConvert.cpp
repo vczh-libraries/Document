@@ -101,6 +101,12 @@ namespace TestConvert_Helpers
 			return true;
 		}
 
+		if (toType->GetType() != TsysType::Init && fromType->GetType() == TsysType::Init && fromType->GetParamCount() == 1 && fromType->GetParam(0)->IsUnknownType())
+		{
+			isAny = true;
+			return true;
+		}
+
 		switch (toType->GetType())
 		{
 		case TsysType::Primitive:
