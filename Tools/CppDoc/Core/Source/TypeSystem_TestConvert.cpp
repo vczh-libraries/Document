@@ -65,25 +65,26 @@ namespace TestConvert_Helpers
 
 		if (toEntity->IsUnknownType() || fromEntity->IsUnknownType())
 		{
-			isAny = true;
-			return true;
-		}
-
-		if (IsCVMatch(toCV, fromCV))
-		{
-			isTrivial = true;
+			if (toEntity->GetType() != TsysType::Member && fromEntity->GetType() != TsysType::Member)
+			{
+				isAny = true;
+				return true;
+			}
 		}
 
 		if (IsExactMatch(toEntity, fromEntity, isAny))
 		{
-			if (IsCVMatch(toCV, fromCV))
+			if (!IsCVSame(toCV, fromCV))
 			{
-				isTrivial = !isAny;
-			}
-			else
-			{
-				isAny = false;
-				return false;
+				if (IsCVMatch(toCV, fromCV))
+				{
+					isTrivial = !isAny;
+				}
+				else
+				{
+					isAny = false;
+					return false;
+				}
 			}
 			return true;
 		}
@@ -118,11 +119,8 @@ namespace TestConvert_Helpers
 
 		if (toEntity->IsUnknownType() || fromEntity->IsUnknownType())
 		{
-			if (toEntity->GetType() != TsysType::Member && fromEntity->GetType() != TsysType::Member)
-			{
-				isAny = true;
-				return true;
-			}
+			isAny = true;
+			return true;
 		}
 
 		if (toRef == TsysRefType::LRef && toCV.isGeneralConst)
@@ -195,6 +193,13 @@ namespace TestConvert_Helpers
 			(toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array))
 		{
 			if (IsPointerOfTypeConvertable(toEntity->GetElement(), fromEntity->GetElement(), isTrivial, isAny))
+			{
+				return true;
+			}
+		}
+		else
+		{
+			if (IsPointerOfTypeConvertable(toEntity, fromEntity, isTrivial, isAny))
 			{
 				return true;
 			}
