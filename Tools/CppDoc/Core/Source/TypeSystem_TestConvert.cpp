@@ -294,6 +294,39 @@ namespace TestConvert_Helpers
 			|| toRef == TsysRefType::None
 			|| (toRef == TsysRefType::RRef && fromRef == TsysRefType::None)
 			;
+		bool allowAnyEntityConversion = toRef == TsysRefType::RRef && fromRef == TsysRefType::RRef;
+
+		if (allowCVConversion)
+		{
+			if (toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array)
+			{
+				vint toD = toEntity->GetParamCount();
+				vint fromD = fromEntity->GetParamCount();
+				vint minD = toD < fromD ? toD : fromD;
+
+				TsysCV newToCV, newFromCV;
+				toEntity = ArrayRemoveDims(toEntity, minD)->GetEntity(newToCV, toRef);
+				fromEntity = ArrayRemoveDims(fromEntity, minD)->GetEntity(newFromCV, fromRef);
+
+				toCV.isGeneralConst |= newToCV.isGeneralConst;
+				toCV.isVolatile |= newToCV.isVolatile;
+
+				fromCV.isGeneralConst |= newFromCV.isGeneralConst;
+				fromCV.isVolatile |= newFromCV.isVolatile;
+			}
+
+			if (!IsCVSame(toCV, fromCV))
+			{
+				if (IsCVMatch(toCV, fromCV))
+				{
+					isTrivial = true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
 
 		if (allowEntityConversion)
 		{
@@ -325,34 +358,6 @@ namespace TestConvert_Helpers
 		}
 		else if (allowCVConversion)
 		{
-			if (toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array)
-			{
-				vint toD = toEntity->GetParamCount();
-				vint fromD = fromEntity->GetParamCount();
-				vint minD = toD < fromD ? toD : fromD;
-
-				TsysCV newToCV, newFromCV;
-				toEntity = ArrayRemoveDims(toEntity, minD)->GetEntity(newToCV, toRef);
-				fromEntity = ArrayRemoveDims(fromEntity, minD)->GetEntity(newFromCV, fromRef);
-
-				toCV.isGeneralConst |= newToCV.isGeneralConst;
-				toCV.isVolatile |= newToCV.isVolatile;
-
-				fromCV.isGeneralConst |= newFromCV.isGeneralConst;
-				fromCV.isVolatile |= newFromCV.isVolatile;
-			}
-
-			if (!IsCVSame(toCV, fromCV))
-			{
-				if (IsCVMatch(toCV, fromCV))
-				{
-					isTrivial = true;
-				}
-				else
-				{
-					return false;
-				}
-			}
 			return IsExactMatch(toEntity, fromEntity, isAny);
 		}
 		else
