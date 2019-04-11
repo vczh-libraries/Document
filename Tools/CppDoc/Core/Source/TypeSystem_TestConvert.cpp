@@ -63,6 +63,18 @@ namespace TestConvert_Helpers
 		auto toEntity = toType->GetEntity(toCV, toRef);
 		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
+		if (!IsCVSame(toCV, fromCV))
+		{
+			if (IsCVMatch(toCV, fromCV))
+			{
+				isTrivial = true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		if (toEntity->IsUnknownType() || fromEntity->IsUnknownType())
 		{
 			if (toEntity->GetType() != TsysType::Member && fromEntity->GetType() != TsysType::Member)
@@ -74,17 +86,9 @@ namespace TestConvert_Helpers
 
 		if (IsExactMatch(toEntity, fromEntity, isAny))
 		{
-			if (!IsCVSame(toCV, fromCV))
+			if (isAny)
 			{
-				if (IsCVMatch(toCV, fromCV))
-				{
-					isTrivial = !isAny;
-				}
-				else
-				{
-					isAny = false;
-					return false;
-				}
+				isTrivial = false;
 			}
 			return true;
 		}
