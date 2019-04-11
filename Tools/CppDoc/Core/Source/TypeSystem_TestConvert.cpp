@@ -284,17 +284,17 @@ namespace TestConvert_Helpers
 			return true;
 		}
 
-		bool constLRef = toRef == TsysRefType::LRef && toCV.isGeneralConst;
-		bool allowCVConversion = constLRef
+		bool toConstLRef = toRef == TsysRefType::LRef && toCV.isGeneralConst;
+		bool rRefToRRef = (toRef == TsysRefType::RRef && fromRef == TsysRefType::RRef);
+		bool allowCVConversion = toConstLRef
+			|| rRefToRRef
 			|| (toRef == TsysRefType::LRef && fromRef == TsysRefType::LRef)
-			|| (toRef == TsysRefType::RRef && fromRef == TsysRefType::RRef)
 			|| (toRef == TsysRefType::RRef && fromRef == TsysRefType::None)
 			;
-		bool allowEntityConversion = constLRef
+		bool allowEntityConversion = toConstLRef
 			|| toRef == TsysRefType::None
 			|| (toRef == TsysRefType::RRef && fromRef == TsysRefType::None)
 			;
-		bool allowAnyEntityConversion = toRef == TsysRefType::RRef && fromRef == TsysRefType::RRef;
 
 		if (allowCVConversion)
 		{
@@ -358,7 +358,16 @@ namespace TestConvert_Helpers
 		}
 		else if (allowCVConversion)
 		{
-			return IsExactMatch(toEntity, fromEntity, isAny);
+			if (!IsExactMatch(toEntity, fromEntity, isAny))
+			{
+				return false;
+			}
+
+			if (rRefToRRef && !isAny && toEntity != fromEntity)
+			{
+				return false;
+			}
+			return true;
 		}
 		else
 		{
