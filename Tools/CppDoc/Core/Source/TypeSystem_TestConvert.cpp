@@ -79,12 +79,18 @@ namespace TestConvert_Helpers
 		return type->GetDecl()->GetAnyForwardDecl<T>();
 	}
 
-	bool IsExactOrTrivalConvert(ITsys* toType, ITsys* fromType, bool fromLRP, bool& performedTrivalConversion)
+	bool IsExactOrTrivalConvert(ITsys* toType, ITsys* fromType, bool fromLRP, bool& isTrivial, bool& isAny)
 	{
 		TsysCV toCV, fromCV;
 		TsysRefType toRef, fromRef;
 		auto toEntity = toType->GetEntity(toCV, toRef);
 		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
+
+		if (toEntity->IsUnknownType() || fromEntity->IsUnknownType())
+		{
+			isAny = true;
+			return true;
+		}
 
 		if (toRef == TsysRefType::LRef && toCV.isGeneralConst)
 		{
@@ -122,7 +128,7 @@ namespace TestConvert_Helpers
 			{
 				if (IsCVMatch(toCV, fromCV))
 				{
-					performedTrivalConversion = true;
+					isTrivial = true;
 				}
 				else
 				{
@@ -146,7 +152,7 @@ namespace TestConvert_Helpers
 				if (primitive.type != TsysPrimitiveType::SInt) return false;
 				if (primitive.bytes != TsysBytes::_4) return false;
 
-				performedTrivalConversion = true;
+				isTrivial = true;
 				return true;
 			}
 		}
@@ -155,7 +161,7 @@ namespace TestConvert_Helpers
 			(toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Array) ||
 			(toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array))
 		{
-			if (IsCVMatch(toEntity->GetElement(), fromEntity->GetElement(), performedTrivalConversion))
+			if (IsCVMatch(toEntity->GetElement(), fromEntity->GetElement(), isTrivial))
 			{
 				return true;
 			}
@@ -550,10 +556,14 @@ TsysConv TestConvertInternalUnsafe(const ParsingArguments& pa, ITsys* toType, IT
 	}
 
 	{
-		bool performedTrivalConversion = false;
-		if (IsExactOrTrivalConvert(toType, fromType, false, performedTrivalConversion))
+		bool isTrivial = false;
+		bool isAny = false;
+		if (IsExactOrTrivalConvert(toType, fromType, false, isTrivial, isAny))
 		{
-			return performedTrivalConversion ? TsysConv::TrivalConversion : TsysConv::Exact;
+			return
+				isAny ? TsysConv::Any :
+				isTrivial ? TsysConv::TrivalConversion :
+				TsysConv::Exact;
 		}
 	}
 
@@ -561,10 +571,6 @@ TsysConv TestConvertInternalUnsafe(const ParsingArguments& pa, ITsys* toType, IT
 	TsysRefType fromRef, toRef;
 	auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 	auto toEntity = toType->GetEntity(toCV, toRef);
-	if (toEntity->IsUnknownType() || fromEntity->IsUnknownType())
-	{
-		return TsysConv::Any;
-	}
 
 	if (!IsEntityConversionAllowed(toEntity, toCV, toRef, fromEntity, fromCV, fromRef))
 	{
