@@ -39,16 +39,142 @@ namespace TestConvert_Helpers
 		return true;
 	}
 
+	ITsys* ArrayToPtr(ITsys* tsys)
+	{
+		if (tsys->GetType() == TsysType::Array)
+		{
+			if (tsys->GetParamCount() == 1)
+			{
+				tsys = tsys->GetElement()->PtrOf();
+			}
+			else
+			{
+				tsys = tsys->GetElement()->ArrayOf(tsys->GetParamCount() - 1)->PtrOf();
+			}
+		}
+		return tsys;
+	}
+
 	bool IsExactMatch(ITsys* toType, ITsys* fromType, bool& isAny)
 	{
+		// this function is called to compare everything inside a pointer
+		// so there is no way to have Zero, Nullptr or Init
+
 		if (toType == fromType)
 		{
 			return true;
 		}
-		else
+
+		if (toType->IsUnknownType() || fromType->IsUnknownType())
 		{
+			isAny = true;
+			return true;
+		}
+
+		switch (toType->GetType())
+		{
+		case TsysType::Primitive:
+			return fromType->IsUnknownType();
+		case TsysType::LRef:
+			switch (fromType->GetType())
+			{
+			case TsysType::LRef:
+				return IsExactMatch(toType->GetElement(), fromType->GetElement(), isAny);
+			case TsysType::RRef:
+				return IsExactMatch(toType, fromType->GetElement(), isAny);
+			}
+			break;
+		case TsysType::RRef:
+			switch (fromType->GetType())
+			{
+			case TsysType::LRef:
+				return IsExactMatch(toType->GetElement(), fromType, isAny);
+			case TsysType::RRef:
+				return IsExactMatch(toType->GetElement(), fromType->GetElement(), isAny);
+			}
+			break;
+		case TsysType::Ptr:
+			switch (fromType->GetType())
+			{
+			case TsysType::Ptr:
+				if ((toType->GetElement()->GetType() == TsysType::Member) == (fromType->GetElement()->GetType() == TsysType::Member))
+				{
+					return IsExactMatch(toType->GetElement(), fromType->GetElement(), isAny);
+				}
+			}
+			break;
+		case TsysType::Array:
+			switch (fromType->GetType())
+			{
+			case TsysType::Array:
+				if (toType->GetParamCount() == fromType->GetParamCount())
+				{
+					return IsExactMatch(toType->GetElement(), fromType->GetElement(), isAny);
+				}
+			}
+			break;
+		case TsysType::Function:
+			switch (fromType->GetType())
+			{
+			case TsysType::Function:
+				if (toType->GetParamCount() != fromType->GetParamCount())
+				{
+					return false;
+				}
+				if (toType->GetFunc().callingConvention != fromType->GetFunc().callingConvention)
+				{
+					return false;
+				}
+				if (toType->GetFunc().ellipsis != fromType->GetFunc().ellipsis)
+				{
+					return false;
+				}
+				if (!IsExactMatch(toType->GetElement(), fromType->GetElement(), isAny))
+				{
+					return false;
+				}
+				for (vint i = 0; i < toType->GetParamCount(); i++)
+				{
+					auto toParam = ArrayToPtr(toType->GetParam(i));
+					auto fromParam = ArrayToPtr(fromType->GetParam(i));
+
+					if (!IsExactMatch(toParam, fromParam, isAny))
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			break;
+		case TsysType::Member:
+			switch (fromType->GetType())
+			{
+			case TsysType::Member:
+				return IsExactMatch(toType->GetElement(), fromType->GetElement(), isAny) && IsExactMatch(toType->GetClass(), fromType->GetClass(), isAny);
+			}
+			break;
+		case TsysType::CV:
+			switch (fromType->GetType())
+			{
+			case TsysType::CV:
+				if (toType->IsUnknownType())
+				{
+					return true;
+				}
+				else if (fromType->IsUnknownType())
+				{
+					auto toCV = toType->GetCV();
+					auto fromCV = fromType->GetCV();
+					if (!toCV.isGeneralConst && fromCV.isGeneralConst) return false;
+					if (!toCV.isVolatile && fromCV.isVolatile) return false;
+					return true;
+				}
+			}
+			break;
+		case TsysType::Decl:
 			return false;
 		}
+		return false;
 	}
 
 	bool IsPointerOfTypeConvertable(ITsys* toType, ITsys* fromType, bool& isTrivial, bool& isAny)
@@ -196,6 +322,8 @@ namespace TestConvert_Helpers
 			(toEntity->GetType() == TsysType::Ptr && fromEntity->GetType() == TsysType::Array) ||
 			(toEntity->GetType() == TsysType::Array && fromEntity->GetType() == TsysType::Array))
 		{
+			toEntity = ArrayToPtr(toEntity);
+			fromEntity = ArrayToPtr(fromEntity);
 			if (IsPointerOfTypeConvertable(toEntity->GetElement(), fromEntity->GetElement(), isTrivial, isAny))
 			{
 				return true;
