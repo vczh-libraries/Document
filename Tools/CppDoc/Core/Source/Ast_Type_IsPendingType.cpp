@@ -239,18 +239,7 @@ public:
 			}
 			else
 			{
-				switch (targetExpr.type)
-				{
-				case ExprTsysType::LValue:
-					resolved = targetExpr.tsys->LRefOf();
-					break;
-				case ExprTsysType::XValue:
-					resolved = targetExpr.tsys->RRefOf();
-					break;
-				case ExprTsysType::PRValue:
-					resolved = targetExpr.tsys;
-					break;
-				}
+				resolved = ApplyExprTsysType(targetExpr.tsys, targetExpr.type);
 			}
 
 			TsysCV cv;

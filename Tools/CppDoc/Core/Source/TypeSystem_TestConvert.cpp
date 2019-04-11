@@ -4,6 +4,19 @@
 #include "Ast_Type.h"
 #include "Ast_Resolving.h"
 
+ITsys* ApplyExprTsysType(ITsys* tsys, ExprTsysType type)
+{
+	switch (type)
+	{
+	case ExprTsysType::LValue:
+		return tsys->LRefOf();
+	case ExprTsysType::XValue:
+		return tsys->RRefOf();
+	default:
+		return tsys;
+	}
+}
+
 TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType)
 {
 	bool tC = thisCV.isGeneralConst;
@@ -75,7 +88,7 @@ namespace TestConvert_Helpers
 	bool IsExactMatch(ITsys* toType, ITsys* fromType, bool& isAny)
 	{
 		// this function is called to compare everything inside a pointer
-		// so there is no way to have Zero, Nullptr or Init
+		// so there is no way to have Zero or Nullptr
 
 		if (toType == fromType)
 		{
@@ -200,6 +213,27 @@ namespace TestConvert_Helpers
 			break;
 		case TsysType::Decl:
 			return false;
+		case TsysType::Init:
+			switch (fromType->GetType())
+			{
+			case TsysType::Init:
+				if (toType->GetParamCount() != fromType->GetParamCount())
+				{
+					return false;
+				}
+				for (vint i = 0; i < toType->GetParamCount(); i++)
+				{
+					auto toParam = ApplyExprTsysType(toType->GetParam(i), toType->GetInit().types[i]);
+					auto fromParam = ApplyExprTsysType(fromType->GetParam(i), fromType->GetInit().types[i]);
+
+					if (!IsExactMatch(toParam, fromParam, isAny))
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			break;
 		}
 		return false;
 	}
@@ -286,12 +320,11 @@ namespace TestConvert_Helpers
 
 		bool toConstLRef = toRef == TsysRefType::LRef && toCV.isGeneralConst;
 		bool rRefToRRef = (toRef == TsysRefType::RRef && fromRef == TsysRefType::RRef);
-		bool allowCVConversion = toConstLRef
-			|| rRefToRRef
+		bool allowCVConversion = toConstLRef || rRefToRRef
 			|| (toRef == TsysRefType::LRef && fromRef == TsysRefType::LRef)
 			|| (toRef == TsysRefType::RRef && fromRef == TsysRefType::None)
 			;
-		bool allowEntityConversion = toConstLRef
+		bool allowEntityConversion = toConstLRef || rRefToRRef
 			|| toRef == TsysRefType::None
 			|| (toRef == TsysRefType::RRef && fromRef == TsysRefType::None)
 			;
@@ -353,10 +386,9 @@ namespace TestConvert_Helpers
 				fromEntity = ArrayToPtr(fromEntity);
 				return IsPointerOfTypeConvertable(toEntity->GetElement(), fromEntity->GetElement(), isTrivial, isAny);
 			}
-
-			return IsExactMatch(toEntity, fromEntity, isAny);
 		}
-		else if (allowCVConversion)
+
+		if (allowCVConversion || allowEntityConversion)
 		{
 			if (!IsExactMatch(toEntity, fromEntity, isAny))
 			{
@@ -462,23 +494,16 @@ namespace TestConvert_Helpers
 		}
 
 		auto type = fromEntity->GetParam(0);
-		TsysCV cv;
-		TsysRefType ref;
-		auto entity = type->GetEntity(cv, ref);
-		if (entity->GetType() == TsysType::Init)
 		{
-			return TsysConv::Illegal;
+			TsysCV cv;
+			TsysRefType ref;
+			auto entity = type->GetEntity(cv, ref);
+			if (entity->GetType() == TsysType::Init)
+			{
+				return TsysConv::Illegal;
+			}
 		}
-
-		switch (init.types[0])
-		{
-		case ExprTsysType::LValue:
-			type = type->LRefOf();
-			break;
-		case ExprTsysType::XValue:
-			type = type->RRefOf();
-			break;
-		}
+		type = ApplyExprTsysType(type, init.types[0]);
 
 		if (tested.Contains({ toType,type }))
 		{
