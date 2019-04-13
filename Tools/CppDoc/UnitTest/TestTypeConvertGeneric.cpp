@@ -312,13 +312,13 @@ using Context = T;
 				auto toType = intTypes[j];
 				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 				auto expect = g2c[i][j];
-				TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
+				TEST_ASSERT(result == (expect == L'*' ? TsysConv::Any : TsysConv::Illegal));
 			}
 			{
 				auto toType = structTypes[j];
 				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 				auto expect = g2c[i][j];
-				TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
+				TEST_ASSERT(result == (expect == L'*' ? TsysConv::Any : TsysConv::Illegal));
 			}
 		}
 	}
@@ -332,7 +332,7 @@ using Context = T;
 				auto toType = genericTypes[j];
 				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 				auto expect = c2g[i][j];
-				TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
+				TEST_ASSERT(result == (expect == L'*' ? TsysConv::Any : TsysConv::Illegal));
 			}
 		}
 		{
@@ -342,7 +342,7 @@ using Context = T;
 				auto toType = genericTypes[j];
 				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 				auto expect = c2g[i][j];
-				TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
+				TEST_ASSERT(result == (expect == L'*' ? TsysConv::Any : TsysConv::Illegal));
 			}
 		}
 	}
@@ -352,14 +352,10 @@ using Context = T;
 		auto fromType = genericTypes[i];
 		for (vint j = 0; j < TypeCount; j++)
 		{
-			if (i == 25 && j == 20)
-			{
-				int a = 0;
-			}
 			auto toType = genericTypes[j];
 			auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 			auto expect = g2g[i][j];
-			TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
+			TEST_ASSERT(result == (expect == L'*' ? TsysConv::Any : TsysConv::Illegal));
 		}
 	}
 
