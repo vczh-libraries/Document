@@ -60,6 +60,10 @@ namespace TestConvert_Helpers
 
 		if (toType == fromType)
 		{
+			if (toType->HasUnknownType())
+			{
+				isAny = true;
+			}
 			return true;
 		}
 
@@ -239,6 +243,10 @@ namespace TestConvert_Helpers
 	{
 		if (toType == fromType)
 		{
+			if (toType->HasUnknownType())
+			{
+				isAny = true;
+			}
 			return true;
 		}
 
