@@ -256,7 +256,7 @@ namespace TestConvert_Helpers
 		auto toEntity = toType->GetEntity(toCV, toRef);
 		auto fromEntity = fromType->GetEntity(fromCV, fromRef);
 
-		if (!IsCVSame(toCV, fromCV))
+		if (!toEntity->IsUnknownType() && !IsCVSame(toCV, fromCV))
 		{
 			if (IsCVMatch(toCV, fromCV))
 			{
@@ -354,7 +354,7 @@ namespace TestConvert_Helpers
 				fromCV.isVolatile |= newFromCV.isVolatile;
 			}
 
-			if (!IsCVSame(toCV, fromCV))
+			if (!toEntity->IsUnknownType() && !IsCVSame(toCV, fromCV))
 			{
 				if (IsCVMatch(toCV, fromCV))
 				{
@@ -800,6 +800,10 @@ TsysConv TestConvertInternalUnsafe(const ParsingArguments& pa, ITsys* toType, IT
 				isAny ? TsysConv::Any :
 				isTrivial ? TsysConv::TrivalConversion :
 				TsysConv::Exact;
+		}
+		else if (toType->HasUnknownType() || fromType->HasUnknownType())
+		{
+			return TsysConv::Illegal;
 		}
 	}
 
