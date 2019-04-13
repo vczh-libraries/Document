@@ -274,7 +274,7 @@ using Context = T;
 				auto toType = genericTypes[j];
 				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 				auto expect = c2g[i][j];
-				// TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
+				TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
 			}
 		}
 		{
@@ -284,7 +284,7 @@ using Context = T;
 				auto toType = genericTypes[j];
 				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 				auto expect = c2g[i][j];
-				// TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
+				TEST_ASSERT(expect == L'E' ? result == TsysConv::Exact : expect == L'*' ? result == TsysConv::Any : result == TsysConv::Illegal);
 			}
 		}
 	}

@@ -288,7 +288,7 @@ enum class TsysConv
 	// Any is not superior than any conversion, instead it should be always included in overloading resolutions.
 	Any,
 	Exact,
-	TrivalConversion,
+	TrivialConversion,
 	IntegralPromotion,
 	StandardConversion,
 	UserDefinedConversion,

@@ -149,5 +149,8 @@
     <ClCompile Include="Source\Ast_Resolving_Generic.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TypeSystem_TestConvert_ExactOrTrivial.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -110,6 +110,20 @@ public:
 	void											GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& prefix);
 };
 
+template<typename T>
+Ptr<T> TryGetDeclFromType(ITsys* type)
+{
+	if (type->GetType() != TsysType::Decl) return false;
+	return type->GetDecl()->definition.Cast<T>();
+}
+
+template<typename T>
+Ptr<T> TryGetForwardDeclFromType(ITsys* type)
+{
+	if (type->GetType() != TsysType::Decl) return false;
+	return type->GetDecl()->GetAnyForwardDecl<T>();
+}
+
 /***********************************************************************
 Parser Objects
 ***********************************************************************/

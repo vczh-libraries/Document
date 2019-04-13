@@ -112,7 +112,7 @@ TEST_CASE(TestTypeConvert_Exact)
 TEST_CASE(TestTypeConvert_TrivalConversion)
 {
 	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
-#define S TrivalConversion
+#define S TrivialConversion
 #define F Illegal
 	TEST_CONV_TYPE(int*,					const int*,								S,	S);
 	TEST_CONV_TYPE(int*,					volatile int*,							S,	S);
@@ -141,7 +141,7 @@ enum class C{};
 	);
 	COMPILE_PROGRAM(program, pa, input);
 
-#define T TrivalConversion
+#define T TrivialConversion
 #define S IntegralPromotion
 #define F Illegal
 	TEST_CONV_TYPE(short,					int,									S,	S);
