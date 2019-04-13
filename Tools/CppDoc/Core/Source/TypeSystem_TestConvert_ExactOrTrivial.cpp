@@ -158,6 +158,11 @@ namespace TestConvert_Helpers
 			}
 			break;
 		case TsysType::CV:
+			if (toType->GetElement()->IsUnknownType())
+			{
+				isAny = true;
+				return true;
+			}
 			switch (fromType->GetType())
 			{
 			case TsysType::CV:
