@@ -37,21 +37,6 @@ using True = true;
 	AssertExpr(L"True",				L"True",				L"<::True::[], *> bool $PR",				pa);
 }
 
-TEST_CASE(TestParseValueAlias_GenericExpr)
-{
-	auto input = LR"(
-template<typename T, T Value>
-using Id = Value;
-
-template<typename, bool>
-using True = true;
-)";
-	COMPILE_PROGRAM(program, pa, input);
-
-	AssertExpr(L"Id<int, 0>",				L"Id<int, 0>",						L"__int32 $PR",				pa);
-	AssertExpr(L"True<bool, true>",			L"True<bool, true>",				L"bool $PR",				pa);
-}
-
 TEST_CASE(TestParserValueAlias_SimpleReplace)
 {
 	auto input = LR"(
