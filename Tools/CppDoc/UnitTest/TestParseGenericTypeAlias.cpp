@@ -21,8 +21,8 @@ using RRef = T &&;
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	AssertType(L"LRef",				L"LRef",				L"<::LRef::[T]> ::LRef::[T] &",				pa);
-	AssertType(L"RRef",				L"RRef",				L"<::RRef::[T]> ::RRef::[T] &&",			pa);
+	AssertType(pa, L"LRef",				L"LRef",				L"<::LRef::[T]> ::LRef::[T] &"	);
+	AssertType(pa, L"RRef",				L"RRef",				L"<::RRef::[T]> ::RRef::[T] &&"	);
 }
 
 TEST_CASE(TestParseTypeAlias_SimpleReplace)
@@ -61,16 +61,16 @@ using ComplexType = Member<Function<RRef<Array<Null<char>>>, LRef<Ptr<CV<Int<boo
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertType(L"Null<bool>",				L"Null<bool>",						L"nullptr_t",																pa);
-	AssertType(L"Int<bool>",				L"Int<bool>",						L"__int32",																	pa);
-	AssertType(L"LRef<bool>",				L"LRef<bool>",						L"bool &",																	pa);
-	AssertType(L"RRef<bool>",				L"RRef<bool>",						L"bool &&",																	pa);
-	AssertType(L"Ptr<bool>",				L"Ptr<bool>",						L"bool *",																	pa);
-	AssertType(L"Array<bool>",				L"Array<bool>",						L"bool []",																	pa);
-	AssertType(L"Function<bool, char>",		L"Function<bool, char>",			L"bool __cdecl(char) *",													pa);
-	AssertType(L"Member<bool, char>",		L"Member<bool, char>",				L"bool (char ::) *",														pa);
-	AssertType(L"CV<bool>",					L"CV<bool>",						L"bool const volatile",														pa);
-	AssertType(L"ComplexType<S>",			L"ComplexType<S>",					L"nullptr_t [] && __cdecl(__int32 const volatile * &) * (::S ::) *",		pa);
+	AssertType(pa, L"Null<bool>",				L"Null<bool>",						L"nullptr_t"														);
+	AssertType(pa, L"Int<bool>",				L"Int<bool>",						L"__int32"															);
+	AssertType(pa, L"LRef<bool>",				L"LRef<bool>",						L"bool &"															);
+	AssertType(pa, L"RRef<bool>",				L"RRef<bool>",						L"bool &&"															);
+	AssertType(pa, L"Ptr<bool>",				L"Ptr<bool>",						L"bool *"															);
+	AssertType(pa, L"Array<bool>",				L"Array<bool>",						L"bool []"															);
+	AssertType(pa, L"Function<bool, char>",		L"Function<bool, char>",			L"bool __cdecl(char) *"												);
+	AssertType(pa, L"Member<bool, char>",		L"Member<bool, char>",				L"bool (char ::) *"													);
+	AssertType(pa, L"CV<bool>",					L"CV<bool>",						L"bool const volatile"												);
+	AssertType(pa, L"ComplexType<S>",			L"ComplexType<S>",					L"nullptr_t [] && __cdecl(__int32 const volatile * &) * (::S ::) *"	);
 }
 
 TEST_CASE(TestParseTypeAlias_HighLevelArgument)
@@ -87,9 +87,9 @@ using Impl2 = T(*)(decltype(Value), int);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertType(L"Container",				L"Container",						L"<::Container::[T], <::Container::[U]::[U], *> any_t> any_t",			pa);
-	AssertType(L"Impl",						L"Impl",							L"<::Impl::[T], *> ::Impl::[T] __cdecl(::Impl::[T], __int32) *",		pa);
-	AssertType(L"Impl2",					L"Impl2",							L"<::Impl2::[T], *> ::Impl2::[T] __cdecl(::Impl2::[T], __int32) *",		pa);
-	AssertType(L"Container<double, Impl>",	L"Container<double, Impl>",			L"double __cdecl(double, __int32) *",									pa);
-	AssertType(L"Container<double, Impl2>",	L"Container<double, Impl2>",		L"double __cdecl(double, __int32) *",									pa);
+	AssertType(pa, L"Container",				L"Container",						L"<::Container::[T], <::Container::[U]::[U], *> any_t> any_t"		);
+	AssertType(pa, L"Impl",						L"Impl",							L"<::Impl::[T], *> ::Impl::[T] __cdecl(::Impl::[T], __int32) *"		);
+	AssertType(pa, L"Impl2",					L"Impl2",							L"<::Impl2::[T], *> ::Impl2::[T] __cdecl(::Impl2::[T], __int32) *"	);
+	AssertType(pa, L"Container<double, Impl>",	L"Container<double, Impl>",			L"double __cdecl(double, __int32) *"								);
+	AssertType(pa, L"Container<double, Impl2>",	L"Container<double, Impl2>",		L"double __cdecl(double, __int32) *"								);
 }

@@ -13,14 +13,40 @@ extern void					Log(ITsys* tsys, StreamWriter& writer);
 
 extern void					RefineInput(wchar_t* input);
 extern void					AssertMultilines(const WString& output, const WString& log);
-extern void					AssertType(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys);
-extern void					AssertType(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys, ParsingArguments& pa);
-extern void					AssertExpr(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys);
-extern void					AssertExpr(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys, ParsingArguments& pa);
+extern void					AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t** logTsys, vint count, ParsingArguments& pa);
+extern void					AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t** logTsys, vint count, ParsingArguments& pa);
 extern void					AssertStat(const wchar_t* input, const wchar_t* log);
-extern void					AssertStat(const wchar_t* input, const wchar_t* log, ParsingArguments& pa);
+extern void					AssertStat(ParsingArguments& pa, const wchar_t* input, const wchar_t* log);
 extern void					AssertProgram(const wchar_t* input, const wchar_t* log, Ptr<IIndexRecorder> recorder = nullptr);
 extern void					AssertProgram(Ptr<Program> program, const wchar_t* log);
+
+template<typename... T>
+void AssertType(ParsingArguments& pa, const wchar_t* input, const wchar_t* log, T... logTsys)
+{
+	const wchar_t* tsys[] = { logTsys...,L"" };
+	AssertTypeInternal(input, log, tsys, (vint)(sizeof...(logTsys)), pa);
+}
+
+template<typename... T>
+void AssertType(const wchar_t* input, const wchar_t* log, T... logTsys)
+{
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+	AssertType(pa, input, log, logTsys...);
+}
+
+template<typename... T>
+void AssertExpr(ParsingArguments& pa, const wchar_t* input, const wchar_t* log, T... logTsys)
+{
+	const wchar_t* tsys[] = { logTsys...,L"" };
+	AssertExprInternal(input, log, tsys, (vint)(sizeof...(logTsys)), pa);
+}
+
+template<typename... T>
+void AssertExpr(const wchar_t* input, const wchar_t* log, T... logTsys)
+{
+	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+	AssertExpr(pa, input, log, logTsys...);
+}
 
 #define TEST_DECL(SOMETHING) SOMETHING wchar_t input[] = L#SOMETHING; RefineInput(input)
 
@@ -125,6 +151,6 @@ void RunOverloading()
 
 #define ASSERT_OVERLOADING(INPUT, OUTPUT, TYPE)\
 	RunOverloading<TYPE, decltype(INPUT)>, \
-	AssertExpr(L#INPUT, OUTPUT, L#TYPE " $PR", pa)\
+	AssertExpr(pa, L#INPUT, OUTPUT, L#TYPE " $PR")\
 
 #endif

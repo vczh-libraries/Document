@@ -8,35 +8,42 @@ TEST_CASE(TestParseType_Primitive)
 	AssertType(L"signed " L#TYPE, L"signed " L#TYPE, LOGS);\
 	AssertType(L"unsigned " L#TYPE, L"unsigned " L#TYPE, LOGU);\
 
-	TEST_PRIMITIVE_TYPE(auto,			L"",			L"",					L""					);
-	TEST_PRIMITIVE_TYPE(void,			L"void",		L"",					L""					);
-	TEST_PRIMITIVE_TYPE(bool,			L"bool",		L"",					L""					);
-	TEST_PRIMITIVE_TYPE(char,			L"char",		L"__int8",				L"unsigned __int8"	);
-	TEST_PRIMITIVE_TYPE(wchar_t,		L"wchar_t",		L"",					L""					);
-	TEST_PRIMITIVE_TYPE(char16_t,		L"char16_t",	L"",					L""					);
-	TEST_PRIMITIVE_TYPE(char32_t,		L"char32_t",	L"",					L""					);
-	TEST_PRIMITIVE_TYPE(short,			L"__int16",		L"__int16",				L"unsigned __int16"	);
-	TEST_PRIMITIVE_TYPE(int,			L"__int32",		L"__int32",				L"unsigned __int32"	);
-	TEST_PRIMITIVE_TYPE(__int8,			L"__int8",		L"__int8",				L"unsigned __int8"	);
-	TEST_PRIMITIVE_TYPE(__int16,		L"__int16",		L"__int16",				L"unsigned __int16"	);
-	TEST_PRIMITIVE_TYPE(__int32,		L"__int32",		L"__int32",				L"unsigned __int32"	);
-	TEST_PRIMITIVE_TYPE(__int64,		L"__int64",		L"__int64",				L"unsigned __int64"	);
-	TEST_PRIMITIVE_TYPE(long,			L"__int32",		L"__int32",				L"unsigned __int32"	);
-	TEST_PRIMITIVE_TYPE(long int,		L"__int32",		L"__int32",				L"unsigned __int32"	);
-	TEST_PRIMITIVE_TYPE(long long,		L"__int64",		L"__int64",				L"unsigned __int64"	);
-	TEST_PRIMITIVE_TYPE(float,			L"float",		L"",					L""					);
-	TEST_PRIMITIVE_TYPE(double,			L"double",		L"",					L""					);
-	TEST_PRIMITIVE_TYPE(long double,	L"double",		L"",					L""					);
+#define TEST_PRIMITIVE_TYPE_NOSIGN(TYPE, LOG)\
+	AssertType(L#TYPE, L#TYPE, LOG);\
+	AssertType(L"signed " L#TYPE, L"signed " L#TYPE);\
+	AssertType(L"unsigned " L#TYPE, L"unsigned " L#TYPE);\
 
+	TEST_PRIMITIVE_TYPE_NOSIGN	(void,			L"void"		);
+	TEST_PRIMITIVE_TYPE_NOSIGN	(bool,			L"bool"		);
+	TEST_PRIMITIVE_TYPE_NOSIGN	(wchar_t,		L"wchar_t"	);
+	TEST_PRIMITIVE_TYPE_NOSIGN	(char16_t,		L"char16_t"	);
+	TEST_PRIMITIVE_TYPE_NOSIGN	(char32_t,		L"char32_t"	);
+	TEST_PRIMITIVE_TYPE_NOSIGN	(float,			L"float"	);
+	TEST_PRIMITIVE_TYPE_NOSIGN	(double,		L"double"	);
+	TEST_PRIMITIVE_TYPE_NOSIGN	(long double,	L"double"	);
+
+	TEST_PRIMITIVE_TYPE			(char,			L"char",		L"__int8",				L"unsigned __int8"	);
+	TEST_PRIMITIVE_TYPE			(short,			L"__int16",		L"__int16",				L"unsigned __int16"	);
+	TEST_PRIMITIVE_TYPE			(int,			L"__int32",		L"__int32",				L"unsigned __int32"	);
+	TEST_PRIMITIVE_TYPE			(__int8,		L"__int8",		L"__int8",				L"unsigned __int8"	);
+	TEST_PRIMITIVE_TYPE			(__int16,		L"__int16",		L"__int16",				L"unsigned __int16"	);
+	TEST_PRIMITIVE_TYPE			(__int32,		L"__int32",		L"__int32",				L"unsigned __int32"	);
+	TEST_PRIMITIVE_TYPE			(__int64,		L"__int64",		L"__int64",				L"unsigned __int64"	);
+	TEST_PRIMITIVE_TYPE			(long,			L"__int32",		L"__int32",				L"unsigned __int32"	);
+	TEST_PRIMITIVE_TYPE			(long int,		L"__int32",		L"__int32",				L"unsigned __int32"	);
+	TEST_PRIMITIVE_TYPE			(long long,		L"__int64",		L"__int64",				L"unsigned __int64"	);
+
+	AssertType(L"auto",					L"auto"														);
 	AssertType(L"signed",				L"signed int",							L"__int32"			);
 	AssertType(L"unsigned",				L"unsigned int",						L"unsigned __int32"	);
 
 #undef TEST_PRIMITIVE_TYPE
+#undef TEST_PRIMITIVE_TYPE_NOSIGN
 }
 
 TEST_CASE(TestParseType_Short)
 {
-	AssertType(L"decltype(auto)",					L"decltype(auto)",						L""							);
+	AssertType(L"decltype(auto)",					L"decltype(auto)"													);
 	AssertType(L"decltype(0)",						L"decltype(0)",							L"__int32"					);
 	AssertType(L"constexpr int",					L"int constexpr",						L"__int32 const"			);
 	AssertType(L"const int",						L"int const",							L"__int32 const"			);
@@ -125,11 +132,10 @@ namespace a::b
 			ASSERT_SYMBOL(3, L"X", 0, 9, ForwardEnumDeclaration, 5, 7)
 		END_ASSERT_SYMBOL;
 
-		AssertType(
+		AssertType(pa,
 			L"a::b::S::X",
 			L"a :: b :: S :: X",
-			L"::a::b::S::X",
-			pa);
+			L"::a::b::S::X");
 		TEST_ASSERT(accessed.Count() == 4);
 	}
 	{
@@ -139,11 +145,10 @@ namespace a::b
 			ASSERT_SYMBOL(1, L"b", 0, 14, NamespaceDeclaration, 1, 13)
 		END_ASSERT_SYMBOL;
 
-		AssertType(
+		AssertType(pa,
 			L"typename ::a::b::X::Y::Z",
 			L"__root :: a :: typename b :: typename X :: typename Y :: typename Z",
-			L"any_t",
-			pa);
+			L"any_t");
 		TEST_ASSERT(accessed.Count() == 2);
 	}
 	{
@@ -158,11 +163,10 @@ namespace a::b
 			ASSERT_SYMBOL(6, L"S", 0, 34, ClassDeclaration, 3, 8)
 		END_ASSERT_SYMBOL;
 
-		AssertType(
+		AssertType(pa,
 			L"a::b::S::X(__cdecl typename a::b::S::*)()",
 			L"a :: b :: S :: X () __cdecl (a :: typename b :: typename S ::) *",
-			L"::a::b::S::X __cdecl() (::a::b::S ::) *",
-			pa);
+			L"::a::b::S::X __cdecl() (::a::b::S ::) *");
 		TEST_ASSERT(accessed.Count() == 7);
 	}
 }
@@ -198,11 +202,10 @@ namespace c::d
 			ASSERT_SYMBOL(4, L"Y", 0, 12, ForwardEnumDeclaration, 5, 7)
 		END_ASSERT_SYMBOL;
 
-		AssertType(
+		AssertType(pa,
 			L"c::d::Y::Z::Y",
 			L"c :: d :: Y :: Z :: Y",
-			L"::a::b::X::Y",
-			pa);
+			L"::a::b::X::Y");
 		TEST_ASSERT(accessed.Count() == 5);
 	}
 }

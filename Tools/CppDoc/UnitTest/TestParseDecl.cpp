@@ -756,13 +756,13 @@ namespace c
 
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(L"a::b::X()",				L"a :: b :: X()",				L"::a::b::X $PR",			pa);
-	AssertExpr(L"c::X()",					L"c :: X()",					L"::a::b::X $PR",			pa);
-	AssertExpr(L"c::b::X()",				L"c :: b :: X()",				L"::a::b::X $PR",			pa);
+	AssertExpr(pa, L"a::b::X()",				L"a :: b :: X()",				L"::a::b::X $PR");
+	AssertExpr(pa, L"c::X()",					L"c :: X()",					L"::a::b::X $PR");
+	AssertExpr(pa, L"c::b::X()",				L"c :: b :: X()",				L"::a::b::X $PR");
 
-	AssertExpr(L"a::b::Y()",				L"a :: b :: Y()",				L"::a::b::Y $PR",			pa);
-	AssertExpr(L"c::Y()",					L"c :: Y()",					L"::a::b::Y $PR",			pa);
-	AssertExpr(L"c::b::Y()",				L"c :: b :: Y()",				L"::a::b::Y $PR",			pa);
+	AssertExpr(pa, L"a::b::Y()",				L"a :: b :: Y()",				L"::a::b::Y $PR");
+	AssertExpr(pa, L"c::Y()",					L"c :: Y()",					L"::a::b::Y $PR");
+	AssertExpr(pa, L"c::b::Y()",				L"c :: b :: Y()",				L"::a::b::Y $PR");
 }
 
 TEST_CASE(TestParseDecl_Using_Type)
@@ -836,11 +836,11 @@ namespace c
 
 	COMPILE_PROGRAM(program, pa, input);
 	
-	AssertExpr(L"a::b::X()",				L"a :: b :: X()",				L"::a::b::X $PR",			pa);
-	AssertExpr(L"c::X()",					L"c :: X()",					L"::a::b::X $PR",			pa);
+	AssertExpr(pa, L"a::b::X()",				L"a :: b :: X()",				L"::a::b::X $PR");
+	AssertExpr(pa, L"c::X()",					L"c :: X()",					L"::a::b::X $PR");
 	
-	AssertExpr(L"a::b::Y()",				L"a :: b :: Y()",				L"::a::b::Y $PR",			pa);
-	AssertExpr(L"c::Y()",					L"c :: Y()",					L"::a::b::Y $PR",			pa);
+	AssertExpr(pa, L"a::b::Y()",				L"a :: b :: Y()",				L"::a::b::Y $PR");
+	AssertExpr(pa, L"c::Y()",					L"c :: Y()",					L"::a::b::Y $PR");
 }
 
 TEST_CASE(TestParseDecl_Using_Value_InNamespace)
@@ -856,8 +856,8 @@ using a::y;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(L"x",			L"x",			L"__int32 $L",				pa);
-	AssertExpr(L"y",			L"y",			L"void __cdecl() * $PR",	pa);
+	AssertExpr(pa, L"x",			L"x",			L"__int32 $L"			);
+	AssertExpr(pa, L"y",			L"y",			L"void __cdecl() * $PR"	);
 }
 
 TEST_CASE(TestParseDecl_Using_Value_InClass)
@@ -882,8 +882,8 @@ struct C : A
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertExpr(L"B().f('a')",			L"B().f('a')",			L"__int32 $PR",			pa);
-		AssertExpr(L"C().f('a')",			L"C().f('a')",			L"char $PR",			pa);
+		AssertExpr(pa, L"B().f('a')",			L"B().f('a')",			L"__int32 $PR"	);
+		AssertExpr(pa, L"C().f('a')",			L"C().f('a')",			L"char $PR"		);
 	}
 	{
 		auto input = LR"(
@@ -905,8 +905,8 @@ struct C : A
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertExpr(L"B::f('a')",			L"B :: f('a')",			L"__int32 $PR",			pa);
-		AssertExpr(L"C::f('a')",			L"C :: f('a')",			L"char $PR",			pa);
+		AssertExpr(pa, L"B::f('a')",			L"B :: f('a')",			L"__int32 $PR"	);
+		AssertExpr(pa, L"C::f('a')",			L"C :: f('a')",			L"char $PR"		);
 	}
 }
 
@@ -958,10 +958,10 @@ _d: d;
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);
 
-		AssertExpr(L"_a",				L"_a",					L"__int32 $L",																pa);
-		AssertExpr(L"_b",				L"_b",					L"__int32 $L",																pa);
-		AssertExpr(L"_c",				L"_c",					L"__int32 $L",																pa);
-		AssertExpr(L"_d",				L"_d",					L"::S_::T __cdecl(__int32, __int32 __cdecl(__int32) *, ::S_ *) * $L",		pa);
+		AssertExpr(pa, L"_a",				L"_a",					L"__int32 $L"														);
+		AssertExpr(pa, L"_b",				L"_b",					L"__int32 $L"														);
+		AssertExpr(pa, L"_c",				L"_c",					L"__int32 $L"														);
+		AssertExpr(pa, L"_d",				L"_d",					L"::S_::T __cdecl(__int32, __int32 __cdecl(__int32) *, ::S_ *) * $L");
 	}
 }
 
@@ -999,11 +999,11 @@ struct Color
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	AssertExpr(L"Color().r",				L"Color().r",				L"unsigned __int8 $PR",			pa);
-	AssertExpr(L"Color().g",				L"Color().g",				L"unsigned __int8 $PR",			pa);
-	AssertExpr(L"Color().b",				L"Color().b",				L"unsigned __int8 $PR",			pa);
-	AssertExpr(L"Color().a",				L"Color().a",				L"unsigned __int8 $PR",			pa);
-	AssertExpr(L"Color().value",			L"Color().value",			L"unsigned __int32 $PR",		pa);
+	AssertExpr(pa, L"Color().r",				L"Color().r",				L"unsigned __int8 $PR"	);
+	AssertExpr(pa, L"Color().g",				L"Color().g",				L"unsigned __int8 $PR"	);
+	AssertExpr(pa, L"Color().b",				L"Color().b",				L"unsigned __int8 $PR"	);
+	AssertExpr(pa, L"Color().a",				L"Color().a",				L"unsigned __int8 $PR"	);
+	AssertExpr(pa, L"Color().value",			L"Color().value",			L"unsigned __int32 $PR"	);
 }
 
 TEST_CASE(TestParseDecl_ClassFollowedVariables)
@@ -1025,10 +1025,10 @@ px: X *;
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	AssertExpr(L"x",						L"x",						L"::X $L",						pa);
-	AssertExpr(L"x.x",						L"x.x",						L"__int32 $L",					pa);
-	AssertExpr(L"px",						L"px",						L"::X * $L",					pa);
-	AssertExpr(L"px->x",					L"px->x",					L"__int32 $L",					pa);
+	AssertExpr(pa, L"x",						L"x",						L"::X $L"		);
+	AssertExpr(pa, L"x.x",						L"x.x",						L"__int32 $L"	);
+	AssertExpr(pa, L"px",						L"px",						L"::X * $L"		);
+	AssertExpr(pa, L"px->x",					L"px->x",					L"__int32 $L"	);
 }
 
 TEST_CASE(TestParseDecl_AnonymousClassFollowedVariables)
@@ -1050,10 +1050,10 @@ px: <anonymous>0 *;
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	AssertExpr(L"x",						L"x",						L"::<anonymous>0 $L",			pa);
-	AssertExpr(L"x.x",						L"x.x",						L"__int32 $L",					pa);
-	AssertExpr(L"px",						L"px",						L"::<anonymous>0 * $L",			pa);
-	AssertExpr(L"px->x",					L"px->x",					L"__int32 $L",					pa);
+	AssertExpr(pa, L"x",						L"x",						L"::<anonymous>0 $L"	);
+	AssertExpr(pa, L"x.x",						L"x.x",						L"__int32 $L"			);
+	AssertExpr(pa, L"px",						L"px",						L"::<anonymous>0 * $L"	);
+	AssertExpr(pa, L"px->x",					L"px->x",					L"__int32 $L"			);
 }
 
 TEST_CASE(TestParseDecl_NestedAnonymousEnum)
@@ -1081,8 +1081,8 @@ enum <anonymous>1 : int
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	AssertExpr(L"X",						L"X",						L"::<anonymous>0 $PR",			pa);
-	AssertExpr(L"Y",						L"Y",						L"::<anonymous>1 $PR",			pa);
+	AssertExpr(pa, L"X",						L"X",						L"::<anonymous>0 $PR");
+	AssertExpr(pa, L"Y",						L"Y",						L"::<anonymous>1 $PR");
 }
 
 TEST_CASE(TestParseDecl_EnumFollowedVariables)
@@ -1102,8 +1102,8 @@ px: X *;
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	AssertExpr(L"x",						L"x",						L"::X $L",						pa);
-	AssertExpr(L"px",						L"px",						L"::X * $L",					pa);
+	AssertExpr(pa, L"x",						L"x",						L"::X $L"	);
+	AssertExpr(pa, L"px",						L"px",						L"::X * $L"	);
 }
 
 TEST_CASE(TestParseDecl_AnonymousEnumFollowedVariables)
@@ -1123,8 +1123,8 @@ px: <anonymous>0 *;
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	AssertExpr(L"x",						L"x",						L"::<anonymous>0 $L",			pa);
-	AssertExpr(L"px",						L"px",						L"::<anonymous>0 * $L",			pa);
+	AssertExpr(pa, L"x",						L"x",						L"::<anonymous>0 $L"	);
+	AssertExpr(pa, L"px",						L"px",						L"::<anonymous>0 * $L"	);
 }
 
 TEST_CASE(TestParseDecl_TypedefWithAnonymousClass)
@@ -1158,8 +1158,8 @@ using Y = <anonymous>1;
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	AssertExpr(L"Y().x.x",					L"Y().x.x",					L"__int32 $PR",					pa);
-	AssertExpr(L"Y().px->x",				L"Y().px->x",				L"__int32 $L",					pa);
+	AssertExpr(pa, L"Y().x.x",					L"Y().x.x",					L"__int32 $PR"	);
+	AssertExpr(pa, L"Y().px->x",				L"Y().px->x",				L"__int32 $L"	);
 }
 
 TEST_CASE(TestParseDecl_TypedefWithAnonymousEnum)
@@ -1214,8 +1214,8 @@ using pD = D_ *;
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
 
-	AssertExpr(L"A",						L"A",						L"::<anonymous>0 $PR",				pa);
-	AssertExpr(L"B",						L"B",						L"::<anonymous>1 $PR",				pa);
-	AssertExpr(L"C",						L"C",						L"::C_ $PR",						pa);
-	AssertExpr(L"_D::D",					L"_D :: D",					L"::D_ $PR",						pa);
+	AssertExpr(pa, L"A",						L"A",						L"::<anonymous>0 $PR"	);
+	AssertExpr(pa, L"B",						L"B",						L"::<anonymous>1 $PR"	);
+	AssertExpr(pa, L"C",						L"C",						L"::C_ $PR"				);
+	AssertExpr(pa, L"_D::D",					L"_D :: D",					L"::D_ $PR"				);
 }

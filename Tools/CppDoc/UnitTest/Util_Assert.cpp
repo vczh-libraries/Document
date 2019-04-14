@@ -40,13 +40,7 @@ void AssertMultilines(const WString& output, const WString& log)
 AssertType
 ***********************************************************************/
 
-void AssertType(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys)
-{
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
-	AssertType(input, log, logTsys, pa);
-}
-
-void AssertType(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys, ParsingArguments& pa)
+void AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t** logTsys, vint count, ParsingArguments& pa)
 {
 	TOKEN_READER(input);
 	auto cursor = reader.GetFirstToken();
@@ -60,41 +54,37 @@ void AssertType(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys
 	});
 	TEST_ASSERT(output == log);
 
+	TypeTsysList tsys;
 	try
 	{
-		TypeTsysList tsys;
 		TypeToTsys(pa, type, tsys, nullptr);
-		if (tsys.Count() == 0)
-		{
-			TEST_ASSERT(L"" == logTsys);
-		}
-		else
-		{
-			TEST_ASSERT(tsys.Count() == 1);
-			auto outputTsys = GenerateToStream([&](StreamWriter& writer)
-			{
-				Log(tsys[0], writer);
-			});
-			TEST_ASSERT(outputTsys == logTsys);
-		}
 	}
 	catch (const NotConvertableException&)
 	{
-		TEST_ASSERT(L"" == logTsys);
+		TEST_ASSERT(count == 0);
+		return;
 	}
+
+	TEST_ASSERT(tsys.Count() == count);
+
+	SortedList<WString> expects, actuals;
+	for (vint i = 0; i < count; i++)
+	{
+		expects.Add(logTsys[i]);
+		actuals.Add(GenerateToStream([&](StreamWriter& writer)
+		{
+			Log(tsys[0], writer);
+		}));
+	}
+
+	TEST_ASSERT(CompareEnumerable(expects, actuals) == 0);
 }
 
 /***********************************************************************
 AssertExpr
 ***********************************************************************/
 
-void AssertExpr(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys)
-{
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
-	AssertExpr(input, log, logTsys, pa);
-}
-
-void AssertExpr(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys, ParsingArguments& pa)
+void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t** logTsys, vint count, ParsingArguments& pa)
 {
 	TOKEN_READER(input);
 	auto cursor = reader.GetFirstToken();
@@ -115,18 +105,17 @@ void AssertExpr(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys
 	}
 	catch (const IllegalExprException&)
 	{
-		TEST_ASSERT(L"" == logTsys);
+		TEST_ASSERT(count == 0);
 		return;
 	}
 
-	if (L"" == logTsys)
+	TEST_ASSERT(tsys.Count() == count);
+
+	SortedList<WString> expects, actuals;
+	for (vint i = 0; i < count; i++)
 	{
-		TEST_ASSERT(tsys.Count() == 0);
-	}
-	else
-	{
-		TEST_ASSERT(tsys.Count() == 1);
-		auto outputTsys = GenerateToStream([&](StreamWriter& writer)
+		expects.Add(logTsys[i]);
+		actuals.Add(GenerateToStream([&](StreamWriter& writer)
 		{
 			Log(tsys[0].tsys, writer);
 			switch (tsys[0].type)
@@ -141,9 +130,10 @@ void AssertExpr(const wchar_t* input, const wchar_t* log, const wchar_t* logTsys
 				writer.WriteString(L" $X");
 				break;
 			}
-		});
-		TEST_ASSERT(outputTsys == logTsys);
+		}));
 	}
+
+	TEST_ASSERT(CompareEnumerable(expects, actuals) == 0);
 }
 
 /***********************************************************************
@@ -153,10 +143,10 @@ AssertStat
 void AssertStat(const wchar_t* input, const wchar_t* log)
 {
 	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
-	AssertStat(input, log, pa);
+	AssertStat(pa, input, log);
 }
 
-void AssertStat(const wchar_t* input, const wchar_t* log, ParsingArguments& pa)
+void AssertStat(ParsingArguments& pa, const wchar_t* input, const wchar_t* log)
 {
 	TOKEN_READER(input);
 	auto cursor = reader.GetFirstToken();
