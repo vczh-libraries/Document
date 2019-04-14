@@ -47,6 +47,7 @@ namespace symbol_type_resolving
 	extern void				VisitSymbol(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result);
 
 	extern TsysConv			FindMinConv(ArrayBase<TsysConv>& funcChoices);
+	extern bool				IsFunctionAcceptableByMinConv(TsysConv functionConv, TsysConv minConv);
 	extern void				FilterFunctionByConv(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices);
 	extern void				FilterFieldsAndBestQualifiedFunctions(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes);
 	extern void				FindQualifiedFunctors(const ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp);

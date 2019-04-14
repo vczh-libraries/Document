@@ -37,6 +37,7 @@
   - [ ] `template` or `typename` in types or expressions.
   - [ ] Child type calculation, outer class either have all template argument specified, or some of them are still `TsysType::GenericArgument`.
   - [ ] Member type calculation, outer class either have all template argument specified, or some of them are still `TsysType::GenericArgument`.
+  - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
 - [ ] Template specialization.
 - [ ] Variadic template argument.
 - [ ] Initialization list.

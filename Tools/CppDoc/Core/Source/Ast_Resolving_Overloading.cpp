@@ -92,14 +92,9 @@ namespace symbol_type_resolving
 			}
 
 			auto min = FindMinConv(funcChoices);
-			if (min == TsysConv::Illegal)
-			{
-				return;
-			}
-
 			for (vint j = 0; j < validFuncTypes.Count(); j++)
 			{
-				if (funcChoices[j] != min)
+				if (!IsFunctionAcceptableByMinConv(funcChoices[j], min))
 				{
 					selectedIndices[j] = false;
 				}

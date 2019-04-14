@@ -490,7 +490,7 @@ namespace symbol_type_resolving
 		for (vint i = 0; i < funcChoices.Count(); i++)
 		{
 			auto candidate = funcChoices[i];
-			if (target > candidate)
+			if (candidate != TsysConv::Any && target > candidate)
 			{
 				target = candidate;
 			}
@@ -498,18 +498,22 @@ namespace symbol_type_resolving
 		return target;
 	}
 
+	bool IsFunctionAcceptableByMinConv(TsysConv functionConv, TsysConv minConv)
+	{
+		switch (functionConv)
+		{
+		case TsysConv::Any:			return true;
+		case TsysConv::Illegal:		return false;
+		default:					return functionConv == minConv;
+		}
+	}
+
 	void FilterFunctionByConv(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices)
 	{
 		auto target = FindMinConv(funcChoices);
-		if (target == TsysConv::Illegal)
-		{
-			funcTypes.Clear();
-			return;
-		}
-
 		for (vint i = funcTypes.Count() - 1; i >= 0; i--)
 		{
-			if (funcChoices[i] != target)
+			if (!IsFunctionAcceptableByMinConv(funcChoices[i], target))
 			{
 				funcTypes.RemoveAt(i);
 			}
