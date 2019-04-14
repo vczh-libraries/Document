@@ -26,6 +26,7 @@
     - [ ] `...` expression will be converted to multiple nullptr when applying on template declarations.
     - [ ] `...` type will be unchanged when it appear in other places.
     - [ ] Add test cases to `TestTypeConvertGeneric`.
+- [ ] Refactor to allow multiple implementations found for the same symbol.
 - [ ] `template` on functions.
   - [ ] Connect function with forward declarations
   - [ ] Overload functions with all template argument (except defaults) specified.
