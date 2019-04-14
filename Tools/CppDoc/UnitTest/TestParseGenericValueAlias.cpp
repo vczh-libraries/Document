@@ -168,3 +168,23 @@ struct S
 	AssertExpr(pa, L"Binary4<int, double, 0, 0>",						L"Binary4<int, double, 0, 0>",								L"double $PR"											);
 	AssertExpr(pa, L"If<S, S()>",										L"If<S, S()>",												L"::S $PR"												);
 }
+
+TEST_CASE(TestParserValueAlias_Overloading)
+{
+	auto input = LR"(
+int* F(int*);
+double* F(double*);
+void F(...);
+char(&F(char(&)[10]))[10];
+
+template<typename T, T* Value>
+using C = F(Value);
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(pa, L"C",						L"C",							L"<::C::[T], *> __int32 * $PR",	L"<::C::[T], *> double * $PR",	L"<::C::[T], *> void $PR");
+
+	AssertExpr(pa, L"C<int, nullptr>",			L"C<int, nullptr>",				L"__int32 * $PR"			);
+	AssertExpr(pa, L"C<double, nullptr>",		L"C<double, nullptr>",			L"double * $PR"				);
+	AssertExpr(pa, L"C<char, nullptr>",			L"C<char, nullptr>",			L"void $PR"					);
+}

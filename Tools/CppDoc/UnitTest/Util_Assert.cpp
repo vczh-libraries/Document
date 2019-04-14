@@ -73,7 +73,7 @@ void AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 		expects.Add(logTsys[i]);
 		actuals.Add(GenerateToStream([&](StreamWriter& writer)
 		{
-			Log(tsys[0], writer);
+			Log(tsys[i], writer);
 		}));
 	}
 
@@ -117,8 +117,8 @@ void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 		expects.Add(logTsys[i]);
 		actuals.Add(GenerateToStream([&](StreamWriter& writer)
 		{
-			Log(tsys[0].tsys, writer);
-			switch (tsys[0].type)
+			Log(tsys[i].tsys, writer);
+			switch (tsys[i].type)
 			{
 			case ExprTsysType::LValue:
 				writer.WriteString(L" $L");
