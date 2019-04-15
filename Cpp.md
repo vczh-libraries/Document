@@ -27,6 +27,7 @@
     - [ ] `...` type will be unchanged when it appear in other places.
     - [ ] Add test cases to `TestTypeConvertGeneric`.
 - [ ] Refactor to allow multiple implementations found for the same symbol.
+- [ ] Don't throw exception when instantiating any generic declaration.
 - [ ] `template` on functions.
   - [ ] Connect function with forward declarations
   - [ ] Overload functions with all template argument (except defaults) specified.
