@@ -18,21 +18,22 @@
   - [x] Write a lot of test cases for `decltype` inside `using`, with `TsysType::Any` to represent unknown type.
     - [x] Test cases for all kind of expressions of which types contain generic arguments.
     - [x] Test cases for all operators on expressions of which types contain generic arguments.
-    - [ ] Test cases for overloadings on arguments of which types contain generic arguments.
+    - [x] Test cases for overloadings on arguments of which types contain generic arguments.
     - [ ] Test `typename` and `template` keywords in types and expressions.
   - [ ] Default template argument.
-  - [ ] `...` type and expression AST, only one `...` argument is allowed to appear in one type or expression.
+  - [ ] `...` type and expression AST, only one `...` argument is allowed to appear in `<>` of one generic type or generic expression.
     - [ ] `...` type will be converted to multiple `any_t` when applying on template declarations.
     - [ ] `...` expression will be converted to multiple nullptr when applying on template declarations.
-    - [ ] `...` type will be unchanged when it appear in other places.
-    - [ ] Add test cases to `TestTypeConvertGeneric`.
 - [ ] Refactor to allow multiple implementations found for the same symbol.
-- [ ] Don't throw exception when instantiating any generic declaration.
+  - [ ] Functions with incomplete types always create new symbols.
+  - [ ] Allow many-to-many definition-to-declaration mapping.
+  - [ ] `EvaluateSymbol` doesn't crash if no type is evaluated with `gaContext`
 - [ ] `template` on functions.
   - [ ] Connect function with forward declarations
   - [ ] Overload functions with all template argument (except defaults) specified.
   - [ ] Call a function with type inference.
   - [ ] Overload functions with type inference.
+  - [ ] When evaluating a function with incomplete types, local variable types are cached in `gaContext`
 - [ ] `template` on classes.
   - [ ] Nested template declaration.
   - [ ] Connect method with forward declarations inside multiple levels of template classes.
