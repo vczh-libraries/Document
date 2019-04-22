@@ -93,3 +93,28 @@ using Impl2 = T(*)(decltype(Value), int);
 	AssertType(pa, L"Container<double, Impl>",	L"Container<double, Impl>",			L"double __cdecl(double, __int32) *"								);
 	AssertType(pa, L"Container<double, Impl2>",	L"Container<double, Impl2>",		L"double __cdecl(double, __int32) *"								);
 }
+
+TEST_CASE(TestParseTypeAlias_TypenameTemplate)
+{
+	auto input = LR"(
+struct S
+{
+	using X = int;
+
+	template<typename T>
+	using Y = T*;
+};
+
+template<typename T>
+using X = typename T::X;
+
+template<typename T>
+using Y = typename T::template Y<T>;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertType(pa, L"X",						L"X",								L"<::X::[T]> any_t"			);
+	AssertType(pa, L"Y",						L"Y",								L"<::Y::[T]> any_t"			);
+	AssertType(pa, L"X<S>",						L"X<S>",							L"__int32"					);
+	AssertType(pa, L"Y<S>",						L"Y<S>",							L"::S *"					);
+}

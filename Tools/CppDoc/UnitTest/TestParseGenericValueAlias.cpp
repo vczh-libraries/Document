@@ -188,3 +188,28 @@ using C = F(Value);
 	AssertExpr(pa, L"C<double, nullptr>",		L"C<double, nullptr>",			L"double * $PR"				);
 	AssertExpr(pa, L"C<char, nullptr>",			L"C<char, nullptr>",			L"void $PR"					);
 }
+
+TEST_CASE(TestParseValueAlias_Template)
+{
+	auto input = LR"(
+struct S
+{
+	using X = 0;
+
+	template<typename T>
+	using Y = static_cast<T*>(nullptr);
+};
+
+template<typename T>
+using X = T::X;
+
+template<typename T>
+using Y = T::template Y<T>;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(pa, L"X",						L"X",								L"<::X::[T]> any_t $PR"			);
+	AssertExpr(pa, L"Y",						L"Y",								L"<::Y::[T]> any_t $PR"			);
+	AssertExpr(pa, L"X<S>",						L"X<S>",							L"__int32 $PR"					);
+	AssertExpr(pa, L"Y<S>",						L"Y<S>",							L"::S * $PR"					);
+}
