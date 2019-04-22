@@ -179,8 +179,16 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 TryParseChildType
 ***********************************************************************/
 
-Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Type> classType, bool typenameType, Ptr<CppTokenCursor>& cursor)
+Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Type> classType, bool typenameType, bool& templateKeyword, Ptr<CppTokenCursor>& cursor)
 {
+	if ((templateKeyword = TestToken(cursor, CppTokens::DECL_TEMPLATE)))
+	{
+		if (!typenameType)
+		{
+			return nullptr;
+		}
+	}
+
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
@@ -208,11 +216,12 @@ ParseNameType
 
 Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTokenCursor>& cursor)
 {
+	bool templateKeyword = false;
 	Ptr<Type> typeResult;
 	if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 	{
 		// :: NAME
-		if (auto type = TryParseChildType(pa, MakePtr<RootType>(), false, cursor))
+		if (auto type = TryParseChildType(pa, MakePtr<RootType>(), false, templateKeyword, cursor))
 		{
 			typeResult = type;
 		}
@@ -260,7 +269,11 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 			auto oldCursor = cursor;
 			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 			{
-				if (auto type = TryParseChildType(pa, typeResult, typenameType, cursor))
+				if (templateKeyword)
+				{
+					throw StopParsingException(cursor);
+				}
+				if (auto type = TryParseChildType(pa, typeResult, typenameType, templateKeyword, cursor))
 				{
 					typeResult = type;
 					continue;
