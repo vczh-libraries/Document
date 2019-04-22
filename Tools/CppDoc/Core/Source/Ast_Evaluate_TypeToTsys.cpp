@@ -362,37 +362,48 @@ public:
 		for (vint i = 0; i < genericTypes.Count(); i++)
 		{
 			auto genericFunction = genericTypes[i];
-			auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
-			if (!declSymbol)
+			if (genericFunction->GetType() == TsysType::GenericFunction)
 			{
-				throw NotConvertableException();
-			}
-
-			symbol_type_resolving::EvaluateSymbolContext esContext;
-			if (!symbol_type_resolving::ResolveGenericParameters(genericFunction, argumentTypes, &esContext.gaContext))
-			{
-				throw NotConvertableException();
-			}
-
-			switch (declSymbol->kind)
-			{
-			case symbol_component::SymbolKind::GenericTypeArgument:
-				genericFunction->GetElement()->ReplaceGenericArgs(esContext.gaContext, esContext.evaluatedTypes);
-				break;
-			case symbol_component::SymbolKind::TypeAlias:
+				auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
+				if (!declSymbol)
 				{
-					auto decl = declSymbol->definition.Cast<UsingDeclaration>();
-					if (!decl->templateSpec) throw NotConvertableException();
-					symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
+					throw NotConvertableException();
 				}
-				break;
-			default:
-				throw NotConvertableException();
-			}
 
-			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
+				symbol_type_resolving::EvaluateSymbolContext esContext;
+				if (!symbol_type_resolving::ResolveGenericParameters(genericFunction, argumentTypes, &esContext.gaContext))
+				{
+					throw NotConvertableException();
+				}
+
+				switch (declSymbol->kind)
+				{
+				case symbol_component::SymbolKind::GenericTypeArgument:
+					genericFunction->GetElement()->ReplaceGenericArgs(esContext.gaContext, esContext.evaluatedTypes);
+					break;
+				case symbol_component::SymbolKind::TypeAlias:
+					{
+						auto decl = declSymbol->definition.Cast<UsingDeclaration>();
+						if (!decl->templateSpec) throw NotConvertableException();
+						symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
+					}
+					break;
+				default:
+					throw NotConvertableException();
+				}
+
+				for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
+				{
+					AddResult(esContext.evaluatedTypes[j]);
+				}
+			}
+			else if (genericFunction->GetType() == TsysType::Any)
 			{
-				AddResult(esContext.evaluatedTypes[j]);
+				AddResult(pa.tsys->Any());
+			}
+			else
+			{
+				throw NotConvertableException();
 			}
 		}
 	}
