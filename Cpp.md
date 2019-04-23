@@ -23,6 +23,7 @@
   - [ ] `...` type and expression AST, only one `...` argument is allowed to appear in `<>` of one generic type or generic expression.
     - [ ] `...` type will be converted to multiple `any_t` when applying on template declarations.
     - [ ] `...` expression will be converted to multiple nullptr when applying on template declarations.
+    - [ ] When a unbounded type is passed to a `...` argument, it becomes `any_t`. When an `any_t` applied to multiple arguments, they all become `any_t`.
 - [ ] Refactor to allow multiple implementations found for the same symbol.
   - [ ] Functions with incomplete types always create new symbols.
   - [ ] Allow many-to-many definition-to-declaration mapping.
