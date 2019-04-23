@@ -110,11 +110,16 @@ using X = typename T::X;
 
 template<typename T>
 using Y = typename T::template Y<T>;
+
+template<template<typename> class T, typename U>
+using Z = T<U>;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertType(pa, L"X",						L"X",								L"<::X::[T]> any_t"			);
-	AssertType(pa, L"Y",						L"Y",								L"<::Y::[T]> any_t"			);
-	AssertType(pa, L"X<S>",						L"X<S>",							L"__int32"					);
-	AssertType(pa, L"Y<S>",						L"Y<S>",							L"::S *"					);
+	AssertType(pa, L"X",						L"X",								L"<::X::[T]> any_t"							);
+	AssertType(pa, L"Y",						L"Y",								L"<::Y::[T]> any_t"							);
+	AssertType(pa, L"Z",						L"Z",								L"<<::Z::[T]::[]> any_t, ::Z::[U]> any_t"	);
+	AssertType(pa, L"X<S>",						L"X<S>",							L"__int32"									);
+	AssertType(pa, L"Y<S>",						L"Y<S>",							L"::S *"									);
+	AssertType(pa, L"Z<S::Y, bool>",			L"Z<S :: Y, bool>",					L"bool *"									);
 }

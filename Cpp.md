@@ -22,6 +22,7 @@
   - [ ] Default template argument.
   - [ ] `...` argument
     - `...` type argument is only allowed to appear as the last argument in a generic declaration.
+    - `...` types or expressions are only allowed in a place where we need a type list or an expression list
     - Only one `...` argument is allowed to appear in a `...` type or expression.
       - Type AST for `...` type, and expression AST for `...` expression.
     - When a `...` type argument is evaluated to `any_t`, it means we don't know how many types are bounded to this argument. Otherwise, it is evaluated to `{T, U, V}`.
@@ -29,10 +30,10 @@
     - When a `...` type argument is used to create `...` types or `...` expressions, if it is evaluated to `any_t`, then the result is also evaluated to `any_t`.
     - When `...` type arguments are applied to parameters
       - If we know how many types are bounded to this `...` argument, dispatch them
-      - If we don't know, dispatch `any_t` to either known or unknown number of parameters
+      - If we don't know, the whole type is evaluated to `any_t`
     - When calculating `...` expression
       - If we know how many types are bounded to this `...` argument, dispatch them
-      - If we don't know, dispatch `any_t` to either known or unknown number of parameters
+      - If we don't know, the whole expression is evaluated to `any_t`
 - [ ] Refactor to allow multiple implementations found for the same symbol.
   - [ ] Functions with incomplete types always create new symbols.
   - [ ] Allow many-to-many definition-to-declaration mapping.
