@@ -20,10 +20,19 @@
     - [x] Test cases for overloadings on arguments of which types contain generic arguments.
     - [x] Test `typename` and `template` keywords in types and expressions.
   - [ ] Default template argument.
-  - [ ] `...` type and expression AST, only one `...` argument is allowed to appear in `<>` of one generic type or generic expression.
-    - [ ] `...` type will be converted to multiple `any_t` when applying on template declarations.
-    - [ ] `...` expression will be converted to multiple nullptr when applying on template declarations.
-    - [ ] When a unbounded type is passed to a `...` argument, it becomes `any_t`. When an `any_t` applied to multiple arguments, they all become `any_t`.
+  - [ ] `...` argument
+    - `...` type argument is only allowed to appear as the last argument in a generic declaration.
+    - Only one `...` argument is allowed to appear in a `...` type or expression.
+      - Type AST for `...` type, and expression AST for `...` expression.
+    - When a `...` type argument is evaluated to `any_t`, it means we don't know how many types are bounded to this argument. Otherwise, it is evaluated to `{T, U, V}`.
+    - When a `...` expression is evaluated to `any_t`, it means we don't know how many types are bounded to this argument. Otherwise, it is evaluated to `{T, U, V}`.
+    - When a `...` type argument is used to create `...` types or `...` expressions, if it is evaluated to `any_t`, then the result is also evaluated to `any_t`.
+    - When `...` type arguments are applied to parameters
+      - If we know how many types are bounded to this `...` argument, dispatch them
+      - If we don't know, dispatch `any_t` to either known or unknown number of parameters
+    - When calculating `...` expression
+      - If we know how many types are bounded to this `...` argument, dispatch them
+      - If we don't know, dispatch `any_t` to either known or unknown number of parameters
 - [ ] Refactor to allow multiple implementations found for the same symbol.
   - [ ] Functions with incomplete types always create new symbols.
   - [ ] Allow many-to-many definition-to-declaration mapping.
@@ -34,6 +43,7 @@
   - [ ] Call a function with type inference.
   - [ ] Overload functions with type inference.
   - [ ] When evaluating a function with incomplete types, local variable types are cached in `gaContext`
+  - [ ] `...` arguments
   - [ ] Specialization
 - [ ] `template` on classes.
   - [ ] Nested template declaration.
