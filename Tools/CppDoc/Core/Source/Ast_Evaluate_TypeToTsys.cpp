@@ -346,9 +346,55 @@ public:
 		CreateIdReferenceType(self->resolving, false);
 	}
 
+	Ptr<Resolving> ResolveChildTypeWithGenericArguments(ChildType* self)
+	{
+		Ptr<Resolving> resolving;
+
+		TypeTsysList types;
+		TypeToTsys(pa, self->classType, types, gaContext);
+		for (vint i = 0; i < types.Count(); i++)
+		{
+			auto type = types[i];
+			if (type->GetType() == TsysType::Decl)
+			{
+				auto newPa = pa.WithContext(type->GetDecl());
+				auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
+				if (rsr.types)
+				{
+					if (!resolving)
+					{
+						resolving = rsr.types;
+					}
+					else
+					{
+						for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
+						{
+							if (!resolving->resolvedSymbols.Contains(rsr.types->resolvedSymbols[i]))
+							{
+								resolving->resolvedSymbols.Add(rsr.types->resolvedSymbols[i]);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return resolving;
+	}
+
 	void Visit(ChildType* self)override
 	{
-		CreateIdReferenceType(self->resolving, true);
+		if (gaContext && !self->resolving)
+		{
+			if (auto resolving = ResolveChildTypeWithGenericArguments(self))
+			{
+				CreateIdReferenceType(resolving, false);
+			}
+		}
+		else
+		{
+			CreateIdReferenceType(self->resolving, true);
+		}
 	}
 
 	void Visit(GenericType* self)override

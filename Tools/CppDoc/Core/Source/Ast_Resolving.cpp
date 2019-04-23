@@ -303,7 +303,15 @@ namespace symbol_type_resolving
 			ExprToTsys(newPa, usingDecl->expr, tsys, (esContext ? &esContext->gaContext : nullptr));
 			for (vint i = 0; i < tsys.Count(); i++)
 			{
-				types.Add(tsys[i].tsys);
+				auto entityType = tsys[i].tsys;
+				if (entityType->GetType() == TsysType::Zero)
+				{
+					entityType = pa.tsys->Int();
+				}
+				if (!types.Contains(entityType))
+				{
+					types.Add(entityType);
+				}
 			}
 		}
 

@@ -19,7 +19,7 @@
     - [x] Test cases for all kind of expressions of which types contain generic arguments.
     - [x] Test cases for all operators on expressions of which types contain generic arguments.
     - [x] Test cases for overloadings on arguments of which types contain generic arguments.
-    - [ ] Test `typename` and `template` keywords in types and expressions.
+    - [x] Test `typename` and `template` keywords in types and expressions.
   - [ ] Default template argument.
   - [ ] `...` type and expression AST, only one `...` argument is allowed to appear in `<>` of one generic type or generic expression.
     - [ ] `...` type will be converted to multiple `any_t` when applying on template declarations.

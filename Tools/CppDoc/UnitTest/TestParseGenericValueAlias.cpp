@@ -151,7 +151,7 @@ struct S
 	AssertExpr(pa, L"Throw<int, 0>",									L"Throw<int, 0>",											L"void $PR"												);
 	AssertExpr(pa, L"New<S, S()>",										L"New<S, S()>",												L"::S * $PR"											);
 	AssertExpr(pa, L"Delete<S*, nullptr>",								L"Delete<S *, nullptr>",									L"void $PR"												);
-	AssertExpr(pa, L"Child<S>",											L"Child<S>",												L"0 $PR"												);
+	AssertExpr(pa, L"Child<S>",											L"Child<S>",												L"__int32 $PR"											);
 	AssertExpr(pa, L"Field1<S, S()>",									L"Field1<S, S()>",											L"double $PR"											);
 	AssertExpr(pa, L"Field2<S, S()>",									L"Field2<S, S()>",											L"double $PR"											);
 	AssertExpr(pa, L"PtrField1<S, nullptr>",							L"PtrField1<S, nullptr>",									L"double $PR"											);
