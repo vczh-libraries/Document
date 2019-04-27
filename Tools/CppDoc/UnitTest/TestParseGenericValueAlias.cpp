@@ -213,3 +213,31 @@ using Y = T::template Y<T>;
 	AssertExpr(pa, L"X<S>",						L"X<S>",							L"__int32 $PR"					);
 	AssertExpr(pa, L"Y<S>",						L"Y<S>",							L"::S * $PR"					);
 }
+
+TEST_CASE(TestParseValueAlias_DefaultValue)
+{
+	auto input = LR"(
+
+char F(int, int);
+float F(bool, bool);
+
+template<typename T, typename U>
+using Func = T(*)(U);
+
+template<typename U, typename T>
+using ReverseFunc = T(*)(U);
+
+template<typename T, T TValue = T(), typename U = decltype(F(T(), TValue)), template<typename, typename> class V = Func>
+using X = {T{}, TValue, U{}, V<T, U>{}};
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(pa, L"X<int>",							L"X<int>",								L"{__int32 $PR, __int32 $PR, char $PR, __int32 __cdecl(char) * $PR} $PR"		);
+	AssertExpr(pa, L"X<bool>",							L"X<bool>",								L"{bool $PR, bool $PR, float $PR, bool __cdecl(float) * $PR} $PR"				);
+	AssertExpr(pa, L"X<int, {}>",						L"X<int, {}>",							L"{__int32 $PR, __int32 $PR, char $PR, __int32 __cdecl(char) * $PR} $PR"		);
+	AssertExpr(pa, L"X<bool, {}>",						L"X<bool, {}>",							L"{bool $PR, bool $PR, float $PR, bool __cdecl(float) * $PR} $PR"				);
+	AssertExpr(pa, L"X<int, {}, void*>",				L"X<int, {}, void *>",					L"{__int32 $PR, __int32 $PR, void * $PR, __int32 __cdecl(void *) * $PR} $PR"	);
+	AssertExpr(pa, L"X<bool, {}, void*>",				L"X<bool, {}, void *>",					L"{bool $PR, bool $PR, void * $PR, bool __cdecl(void *) * $PR} $PR"				);
+	AssertExpr(pa, L"X<int, {}, void*, ReverseFunc>",	L"X<int, {}, void *, ReverseFunc>",		L"{__int32 $PR, __int32 $PR, void * $PR, void * __cdecl(__int32) * $PR} $PR"	);
+	AssertExpr(pa, L"X<bool, {}, void*, ReverseFunc>",	L"X<bool, {}, void *, ReverseFunc>",	L"{bool $PR, bool $PR, void * $PR, void * __cdecl(bool) * $PR} $PR"				);
+}

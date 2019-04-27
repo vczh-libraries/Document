@@ -123,3 +123,31 @@ using Z = T<U>;
 	AssertType(pa, L"Y<S>",						L"Y<S>",							L"::S *"									);
 	AssertType(pa, L"Z<S::Y, bool>",			L"Z<S :: Y, bool>",					L"bool *"									);
 }
+
+TEST_CASE(TestParseTypeAlias_DefaultValue)
+{
+	auto input = LR"(
+
+char F(int, int);
+float F(bool, bool);
+
+template<typename T, typename U>
+using Func = T(*)(U);
+
+template<typename U, typename T>
+using ReverseFunc = T(*)(U);
+
+template<typename T, T TValue = T(), typename U = decltype(F(T(), TValue)), template<typename, typename> class V = Func>
+using X = decltype({T{}, TValue, U{}, V<T, U>{}});
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertType(pa, L"X<int>",							L"X<int>",								L"{__int32 $PR, __int32 $PR, char $PR, __int32 __cdecl(char) * $PR}"		);
+	AssertType(pa, L"X<bool>",							L"X<bool>",								L"{bool $PR, bool $PR, float $PR, bool __cdecl(float) * $PR}"				);
+	AssertType(pa, L"X<int, {}>",						L"X<int, {}>",							L"{__int32 $PR, __int32 $PR, char $PR, __int32 __cdecl(char) * $PR}"		);
+	AssertType(pa, L"X<bool, {}>",						L"X<bool, {}>",							L"{bool $PR, bool $PR, float $PR, bool __cdecl(float) * $PR}"				);
+	AssertType(pa, L"X<int, {}, void*>",				L"X<int, {}, void *>",					L"{__int32 $PR, __int32 $PR, void * $PR, __int32 __cdecl(void *) * $PR}"	);
+	AssertType(pa, L"X<bool, {}, void*>",				L"X<bool, {}, void *>",					L"{bool $PR, bool $PR, void * $PR, bool __cdecl(void *) * $PR}"				);
+	AssertType(pa, L"X<int, {}, void*, ReverseFunc>",	L"X<int, {}, void *, ReverseFunc>",		L"{__int32 $PR, __int32 $PR, void * $PR, void * __cdecl(__int32) * $PR}"	);
+	AssertType(pa, L"X<bool, {}, void*, ReverseFunc>",	L"X<bool, {}, void *, ReverseFunc>",	L"{bool $PR, bool $PR, void * $PR, void * __cdecl(bool) * $PR}"				);
+}
