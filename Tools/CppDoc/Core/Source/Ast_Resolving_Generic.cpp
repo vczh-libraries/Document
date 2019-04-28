@@ -85,59 +85,109 @@ namespace symbol_type_resolving
 		}
 	}
 
-	bool ResolveGenericParameters(ITsys* genericFunction, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* newGaContext)
+	bool ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* newGaContext)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
 		{
 			return false;
 		}
-		if (genericFunction->GetParamCount() != argumentTypes.Count())
+
+		Ptr<TemplateSpec> spec;
+		auto genericSymbol = genericFunction->GetGenericFunction().declSymbol;
+		if (genericSymbol)
+		{
+			if (auto usingDecl = genericSymbol->GetAnyForwardDecl<UsingDeclaration>())
+			{
+				spec = usingDecl->templateSpec;
+			}
+		}
+
+		if (genericFunction->GetParamCount() < argumentTypes.Count())
 		{
 			return false;
+		}
+		else if (genericFunction->GetParamCount() > argumentTypes.Count())
+		{
+			if (spec)
+			{
+				for (vint i = argumentTypes.Count(); i < spec->arguments.Count(); i++)
+				{
+					auto& argument = spec->arguments[i];
+					switch (argument.argumentType)
+					{
+					case CppTemplateArgumentType::Value:
+						if (!argument.expr) return false;
+						break;
+					default:
+						if (!argument.type) return false;
+					}
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 		{
 			auto pattern = genericFunction->GetParam(i);
-			if ((pattern == nullptr) ^ (argumentTypes[i] == nullptr))
+			bool useDefault = argumentTypes.Count() <= i;
+			if (!useDefault)
 			{
-				return false;
+				if ((pattern == nullptr) ^ (argumentTypes[i] == nullptr))
+				{
+					return false;
+				}
 			}
 
 			if (pattern != nullptr)
 			{
-				auto& argTypes = *argumentTypes[i].Obj();
-				switch (pattern->GetType())
+				if (useDefault)
 				{
-				case TsysType::GenericArg:
-					for (vint j = 0; j < argTypes.Count(); j++)
-					{
-						auto tsys = argTypes[j];
-						if (tsys->GetType() == TsysType::GenericFunction)
-						{
-							throw NotConvertableException();
-						}
-					}
-					break;
-				case TsysType::GenericFunction:
-					for (vint j = 0; j < argTypes.Count(); j++)
-					{
-						auto tsys = argTypes[j];
-						if (tsys->GetType() != TsysType::GenericFunction)
-						{
-							throw NotConvertableException();
-						}
-						EnsureGenericParameterAndArgumentMatched(pattern, tsys);
-					}
-					break;
-				default:
-					// until class specialization begins to develop, this should always not happen
-					throw NotConvertableException();
-				}
+					TypeTsysList argTypes;
+					TypeToTsys(pa.WithContext(genericSymbol), spec->arguments[i].type, argTypes, newGaContext);
 
-				for (vint j = 0; j < argTypes.Count(); j++)
+					for (vint j = 0; j < argTypes.Count(); j++)
+					{
+						newGaContext->arguments.Add(pattern, argTypes[j]);
+					}
+				}
+				else
 				{
-					newGaContext->arguments.Add(pattern, argTypes[j]);
+					auto& argTypes = *argumentTypes[i].Obj();
+					switch (pattern->GetType())
+					{
+					case TsysType::GenericArg:
+						for (vint j = 0; j < argTypes.Count(); j++)
+						{
+							auto tsys = argTypes[j];
+							if (tsys->GetType() == TsysType::GenericFunction)
+							{
+								throw NotConvertableException();
+							}
+						}
+						break;
+					case TsysType::GenericFunction:
+						for (vint j = 0; j < argTypes.Count(); j++)
+						{
+							auto tsys = argTypes[j];
+							if (tsys->GetType() != TsysType::GenericFunction)
+							{
+								throw NotConvertableException();
+							}
+							EnsureGenericParameterAndArgumentMatched(pattern, tsys);
+						}
+						break;
+					default:
+						// until class specialization begins to develop, this should always not happen
+						throw NotConvertableException();
+					}
+
+					for (vint j = 0; j < argTypes.Count(); j++)
+					{
+						newGaContext->arguments.Add(pattern, argTypes[j]);
+					}
 				}
 			}
 		}

@@ -417,7 +417,7 @@ public:
 				}
 
 				symbol_type_resolving::EvaluateSymbolContext esContext;
-				if (!symbol_type_resolving::ResolveGenericParameters(genericFunction, argumentTypes, &esContext.gaContext))
+				if (!symbol_type_resolving::ResolveGenericParameters(pa, genericFunction, argumentTypes, &esContext.gaContext))
 				{
 					throw NotConvertableException();
 				}

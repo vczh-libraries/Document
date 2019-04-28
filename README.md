@@ -31,8 +31,7 @@ All **the compiler** here means the compiler created by this project.
 ### Semantic
 
 - The compiler doesn't do `const` or `constexpr` constant folding, the compiler treats all values identical.
-  - This usually means the compiler assumes `int[1]` and `int[2]` are the same type, which will cause the compiler fail to compile the input file in some very limited cases.
-  - This also applies to `T<1>` and `T<2>`.
+  - This usually means sometimes multiple types will be returned due to overloadings or specializations.
 - All members are treated as public.
 - Implicitly generated members doesn't care if any base class is virtual.
 - C style type reference is allowed to refer to a unexisting type. In this case, a forward declaration with the symbol is created in the root namespace.
