@@ -151,3 +151,81 @@ using X = decltype({T{}, TValue, U{}, V<T, U>{}});
 	AssertType(pa, L"X<int, {}, void*, ReverseFunc>",	L"X<int, {}, void *, ReverseFunc>",		L"{__int32 $PR, __int32 $PR, void * $PR, void * __cdecl(__int32) * $PR}"	);
 	AssertType(pa, L"X<bool, {}, void*, ReverseFunc>",	L"X<bool, {}, void *, ReverseFunc>",	L"{bool $PR, bool $PR, void * $PR, void * __cdecl(bool) * $PR}"				);
 }
+
+TEST_CASE(TestParseTypeAlias_VTA_Apply)
+{
+	auto input = LR"(
+
+template<typename... TTypes>
+using SizeOfTypes = decltype(sizeof...(TTypes));
+
+template<int... Numbers>
+using SizeOfExprs = decltype(sizeof...Numbers);
+
+template<typename R, typename... TArgs>
+using Func = R(*)(TArgs...);
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	
+	AssertType(pa, L"SizeOfTypes<>",								L"SizeOfTypes<>",								L"unsigned __int32"											);
+	AssertType(pa, L"SizeOfTypes<int>",								L"SizeOfTypes<int>",							L"unsigned __int32"											);
+	AssertType(pa, L"SizeOfTypes<int, bool, char, double>",			L"SizeOfTypes<int, bool, char, double>",		L"unsigned __int32"											);
+	AssertType(pa, L"SizeOfExprs<>",								L"SizeOfTypes<>",								L"unsigned __int32"											);
+	AssertType(pa, L"SizeOfExprs<0>",								L"SizeOfTypes<0>",								L"unsigned __int32"											);
+	AssertType(pa, L"SizeOfExprs<0, 1, 2, 3>",						L"SizeOfTypes<0, 1, 2, 3>",						L"unsigned __int32"											);
+	AssertType(pa, L"Func<bool>",									L"Func<bool>",									L"bool () *"												);
+	AssertType(pa, L"Func<bool, int>",								L"Func<bool, int>",								L"bool (int) *"												);
+	AssertType(pa, L"Func<bool, int, bool, char, double>",			L"Func<bool, int, bool, char, double>",			L"bool (int, bool, char, double) *"							);
+}
+
+TEST_CASE(TestParseTypeAlias_VTA_Types)
+{
+	auto input = LR"(
+template<typename T>
+using Ptr = T*;
+
+template<typename R, typename... TArgs>
+using Func = R(*)(Ptr<TArgs>&&...);
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	
+	AssertType(pa, L"Func<bool>",									L"Func<bool>",									L"bool () *"												);
+	AssertType(pa, L"Func<bool, int>",								L"Func<bool, int>",								L"bool (int * &&) *"										);
+	AssertType(pa, L"Func<bool, int, bool, char, double>",			L"Func<bool, int, bool, char, double>",			L"bool (int * &&, bool * &&, char * &&, double * &&) *"		);
+}
+
+TEST_CASE(TestParseTypeAlias_VTA_Exprs)
+{
+	auto input = LR"(
+template<typename T>
+using Ptr = T*;
+
+template<typename R, typename... TArgs>
+using Init = R(*)(decltype({Ptr<TArgs>&&...}));
+
+char F(char, bool);
+bool F(bool, char);
+int F(int, float, double);
+int* F(int*, float*, double*);
+double F();
+void F(...);
+
+template<typename... TArgs>
+using FOf = decltype(F(TArgs()...););
+)";
+	COMPILE_PROGRAM(program, pa, input);
+	
+	AssertType(pa, L"Init<bool>",									L"Init<bool>",									L"bool ({}) *"												);
+	AssertType(pa, L"Init<bool, int>",								L"Init<bool, int>",								L"bool ({int * &&}) *"										);
+	AssertType(pa, L"Init<bool, int, bool, char, double>",			L"Init<bool, int, bool, char, double>",			L"bool ({int * &&, bool * &&, char * &&, double * &&}) *"	);
+	AssertType(pa, L"FOf<>",										L"FOf<>",										L"double"													);
+	AssertType(pa, L"FOf<int>",										L"FOf<int>",									L"void"														);
+	AssertType(pa, L"FOf<char, bool>",								L"FOf<char, bool>",								L"char"														);
+	AssertType(pa, L"FOf<bool, char>",								L"FOf<bool, char>",								L"bool"														);
+	AssertType(pa, L"FOf<int, float, double>",						L"FOf<int, float, double>",						L"int"														);
+	AssertType(pa, L"FOf<int*, float*, double*>",					L"FOf<int *, float *, double *>",				L"int *"													);
+}
+
+TEST_CASE(TestParseTypeAlias_VTA_ApplyOn_VTA_Default)
+{
+}
