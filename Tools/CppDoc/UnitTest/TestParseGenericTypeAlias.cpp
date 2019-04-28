@@ -215,11 +215,11 @@ using FOf = decltype(F(TArgs()...););
 	COMPILE_PROGRAM(program, pa, input);
 
 #define TYPE_LIST_STRING(A, B, C, D, E, F)		\
-	L"<::FOf::[...TArgs]> " L ## #A				\
-	L"<::FOf::[...TArgs]> " L ## #B				\
-	L"<::FOf::[...TArgs]> " L ## #C				\
-	L"<::FOf::[...TArgs]> " L ## #D				\
-	L"<::FOf::[...TArgs]> " L ## #E				\
+	L"<::FOf::[...TArgs]> " L ## #A,			\
+	L"<::FOf::[...TArgs]> " L ## #B,			\
+	L"<::FOf::[...TArgs]> " L ## #C,			\
+	L"<::FOf::[...TArgs]> " L ## #D,			\
+	L"<::FOf::[...TArgs]> " L ## #E,			\
 	L"<::FOf::[...TArgs]> " L ## #F				\
 
 	
