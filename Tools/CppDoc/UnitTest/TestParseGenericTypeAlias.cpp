@@ -159,17 +159,13 @@ TEST_CASE(TestParseTypeAlias_VTA_Apply)
 template<typename... TTypes>
 using SizeOfTypes = decltype(sizeof...(TTypes));
 
-template<int... Numbers>
+template<int(*... Numbers)()>
 using SizeOfExprs = decltype(sizeof...Numbers);
-
-template<typename R, typename... TArgs>
-using Func = R(*)(TArgs...);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	
 	AssertType(pa, L"SizeOfTypes",									L"SizeOfTypes",									L"<::SizeOfTypes::[...TTypes]> unsigned __int32"			);
 	AssertType(pa, L"SizeOfExprs",									L"SizeOfExprs",									L"<::SizeOfExprs::[...TTypes]> unsigned __int32"			);
-	AssertType(pa, L"Func",											L"Func",										L"<::Func::[R], ::Func::[...TArgs]> any_t"					);
 	
 	AssertType(pa, L"SizeOfTypes<>",								L"SizeOfTypes<>",								L"unsigned __int32"											);
 	AssertType(pa, L"SizeOfTypes<int>",								L"SizeOfTypes<int>",							L"unsigned __int32"											);
@@ -177,9 +173,6 @@ using Func = R(*)(TArgs...);
 	AssertType(pa, L"SizeOfExprs<>",								L"SizeOfTypes<>",								L"unsigned __int32"											);
 	AssertType(pa, L"SizeOfExprs<0>",								L"SizeOfTypes<0>",								L"unsigned __int32"											);
 	AssertType(pa, L"SizeOfExprs<0, 1, 2, 3>",						L"SizeOfTypes<0, 1, 2, 3>",						L"unsigned __int32"											);
-	AssertType(pa, L"Func<bool>",									L"Func<bool>",									L"bool () *"												);
-	AssertType(pa, L"Func<bool, int>",								L"Func<bool, int>",								L"bool (int) *"												);
-	AssertType(pa, L"Func<bool, int, bool, char, double>",			L"Func<bool, int, bool, char, double>",			L"bool (int, bool, char, double) *"							);
 }
 
 TEST_CASE(TestParseTypeAlias_VTA_Types)
