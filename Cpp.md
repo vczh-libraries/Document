@@ -19,7 +19,7 @@
     - [x] Test cases for all operators on expressions of which types contain generic arguments.
     - [x] Test cases for overloadings on arguments of which types contain generic arguments.
     - [x] Test `typename` and `template` keywords in types and expressions.
-  - [ ] Default template argument.
+  - [x] Default template argument.
   - [ ] `...` argument
     - `...` type argument is only allowed to appear as the last argument in a generic declaration.
     - `...` types or expressions are only allowed in a place where we need a type list or an expression list
