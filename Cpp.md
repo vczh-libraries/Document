@@ -249,39 +249,40 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ## EXPR (Expression)
 
-- [x] LITERAL
-- [x] `{` ... `}`
-- [x] `this`
-- [x] `nullptr`
-- [x] IDENTIFIER
-- [x] `::` IDENTIFIER
-- [x] TYPE `::` IDENTIFIER
-- [x] `(` EXPR-WITH-COMMA `)`
-- [x] OPERATOR EXPR
-  - [x] predefined operators
-- [x] EXPR OPERATOR
-  - [x] EXPR `(` {EXPR `,` ...} `)`
-  - [x] EXPR `[` EXPR `]`
-  - [x] EXPR `<` {TYPE `,` ...} `>`
-  - [x] predefined operators
+- LITERAL
+- `{` ... `}`
+- `this`
+- `nullptr`
+- IDENTIFIER
+- `::` IDENTIFIER
+- TYPE `::` IDENTIFIER
+- `(` EXPR-WITH-COMMA `)`
+- OPERATOR EXPR
+  - predefined operators
+- EXPR OPERATOR
+  - EXPR `(` {EXPR `,` ...} `)`
+  - EXPR `[` EXPR `]`
+  - EXPR `<` {TYPE `,` ...} `>`
+  - predefined operators
+- EXPR OPERATOR EXPR
+  - EXPR (`.` | `->`) IDENTIFIER
+  - EXPR (`.*` | `->*`) EXPR
+  - predefined operators
+- EXPR `?` EXPR `:` EXPR
+- (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
+- `typeid` `(` (TYPE | EXPR) `)`
+- `sizeof` [`...`] EXPR
+  - `...`
+- `sizeof` [`...`] `(` TYPE `)`
+  - `...`
+- `(` TYPE `)` EXPR
+- [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
+- [`::`] `delete` [`[` `]`] EXPR
+- `throw` EXPR
+
 - [ ] EXPR `...`
-- [x] EXPR OPERATOR EXPR
-  - [x] EXPR (`.` | `->`) IDENTIFIER
-  - [x] EXPR (`.*` | `->*`) EXPR
-  - [x] predefined operators
-- [x] EXPR `?` EXPR `:` EXPR
-- [x] (`dynamic_cast` | `static_cast` | `const_cast` | `reinterpret_cast` | `safe_cast`) `<` TYPE `>` `(` EXPR `)`
-- [x] `typeid` `(` (TYPE | EXPR) `)`
-- [x] `sizeof` [`...`] EXPR
-  - [ ] `...`
-- [x] `sizeof` [`...`] `(` TYPE `)`
-  - [ ] `...`
-- [x] `(` TYPE `)` EXPR
-- [x] [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
-  - [ ] `::`
-- [x] [`::`] `delete` [`[` `]`] EXPR
-  - [ ] `::`
-- [x] `throw` EXPR
+- [ ] `::new`
+- [ ] `::delete`
 - [ ] `[` {`&` | `=` | [IDENTIFIER `=`] EXPR | } `]` FUNCTION-TAIL STAT
 
 ### Operators

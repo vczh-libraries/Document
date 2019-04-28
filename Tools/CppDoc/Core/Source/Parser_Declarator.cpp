@@ -113,6 +113,7 @@ struct ParseDeclaratorContext
 	DeclaratorRestriction	dr;
 	InitializerRestriction	ir;
 	bool					allowBitField;
+	bool					allowEllipsis;
 	bool					forceSpecialMethod;
 
 	ParseDeclaratorContext(const ParsingDeclaratorArguments& pda, bool _forceSpecialMethod)
@@ -121,6 +122,7 @@ struct ParseDeclaratorContext
 		, dr(pda.dr)
 		, ir(pda.ir)
 		, allowBitField(pda.allowBitField)
+		, allowEllipsis(pda.allowEllipsis)
 		, forceSpecialMethod(_forceSpecialMethod)
 	{
 	}
@@ -633,9 +635,11 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 
 	// a long declarator begins with more type decorations
 	auto targetType = ParseTypeBeforeDeclarator(pa, baselineType, pdc, cursor);
+	bool ellipsis = pdc.allowEllipsis ? TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT) : false;
 
 	if (pdc.dr != DeclaratorRestriction::Zero)
 	{
+
 		while (SkipSpecifiers(cursor));
 
 		// there may be a declarator name
@@ -644,6 +648,7 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 		{
 			declarator = new Declarator;
 			declarator->type = targetType;
+			declarator->ellipsis = ellipsis;
 			declarator->name = cppName;
 		}
 	}
@@ -697,6 +702,7 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	{
 		declarator = new Declarator;
 		declarator->type = targetType;
+		declarator->ellipsis = ellipsis;
 	}
 
 	// check if we have already done with the declarator name

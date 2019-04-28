@@ -130,6 +130,7 @@ class SizeofExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
+	bool						ellipsis = false;
 	Ptr<Type>					type;
 	Ptr<Expr>					expr;
 };

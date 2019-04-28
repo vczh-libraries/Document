@@ -112,6 +112,7 @@ class Declarator : public Object
 public:
 	Symbol*					containingClassSymbol = nullptr;
 	Ptr<Type>				type;
+	bool					ellipsis = false;
 	CppName					name;
 	Ptr<Initializer>		initializer;
 };

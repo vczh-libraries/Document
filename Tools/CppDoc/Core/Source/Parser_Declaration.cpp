@@ -76,6 +76,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 		if (TestToken(cursor, CppTokens::TYPENAME) || TestToken(cursor, CppTokens::DECL_CLASS))
 		{
 			argument.argumentType = CppTemplateArgumentType::Type;
+			argument.ellipsis = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
 			if (ParseCppName(argument.name, cursor))
 			{
 				if (symbol->children.Keys().Contains(argument.name.name))
@@ -88,6 +89,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			argument.argumentSymbol = argumentSymbol.Obj();
 
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
+			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;
 			argumentSymbol->evaluation.Allocate();
 
@@ -130,7 +132,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				throw StopParsingException(cursor);
 			}
 
-			auto declarator = ParseNonMemberDeclarator(newPa, pda_Param(false), cursor);
+			auto declarator = ParseNonMemberDeclarator(newPa, pda_TemplateParam(), cursor);
 			argument.argumentType = CppTemplateArgumentType::Value;
 			argument.name = declarator->name;
 			argument.type = declarator->type;
@@ -153,6 +155,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			auto argumentSymbol = MakePtr<Symbol>();
 			argument.argumentSymbol = argumentSymbol.Obj();
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
+			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;
 			argumentSymbol->evaluation.Allocate();
 			TypeToTsys(newPa, argument.type, argumentSymbol->evaluation.Get(), nullptr);

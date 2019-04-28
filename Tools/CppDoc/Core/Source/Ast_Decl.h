@@ -57,6 +57,7 @@ class TemplateSpec : public Object
 public:
 	struct Argument
 	{
+		bool										ellipsis = false;
 		CppName										name;
 		Symbol*										argumentSymbol;
 		CppTemplateArgumentType						argumentType;

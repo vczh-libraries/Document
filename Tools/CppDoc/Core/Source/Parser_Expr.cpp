@@ -521,6 +521,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	if (TestToken(cursor, CppTokens::EXPR_SIZEOF))
 	{
 		auto newExpr = MakePtr<SizeofExpr>();
+		newExpr->ellipsis = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
 		auto oldCursor = cursor;
 		try
 		{

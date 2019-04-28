@@ -413,11 +413,6 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			type->isVolatile = true;
 			typeResult = type;
 		}
-		else if (TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
-		{
-			// TYPE ...
-			throw StopParsingException(cursor);
-		}
 		else
 		{
 			break;

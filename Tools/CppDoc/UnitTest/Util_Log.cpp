@@ -170,7 +170,9 @@ public:
 
 	void Visit(SizeofExpr* self)override
 	{
-		writer.WriteString(L"sizeof(");
+		writer.WriteString(L"sizeof");
+		if (self->ellipsis) writer.WriteString(L"...");
+		writer.WriteString(L"(");
 		if (self->type) Log(self->type, writer);
 		if (self->expr) Log(self->expr, writer);
 		writer.WriteString(L")");
@@ -1457,7 +1459,7 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			{
 				if (symbol->kind == symbol_component::SymbolKind::GenericTypeArgument)
 				{
-					name = L"::[" + symbol->name + L"]" + name;
+					name = (symbol->ellipsis ? L"::[..." : L"::[") + symbol->name + L"]" + name;
 				}
 				else
 				{
