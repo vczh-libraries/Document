@@ -1499,6 +1499,10 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			for (vint i = 0; i < tsys->GetParamCount(); i++)
 			{
 				if (i > 0) writer.WriteString(L", ");
+				if (i == tsys->GetParamCount() - 1 && tsys->GetGenericFunction().lastArgumentIsVariadic)
+				{
+					writer.WriteString(L"...");
+				}
 				if (auto param = tsys->GetParam(i))
 				{
 					Log(param, writer);
@@ -1514,9 +1518,10 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		return;
 	case TsysType::GenericArg:
 		{
+			auto genericArg = tsys->GetGenericArg();
 			Log(tsys->GetElement(), writer);
 			writer.WriteString(L"::[");
-			writer.WriteString(tsys->GetGenericArg().argSymbol->name);
+			writer.WriteString(genericArg.argSymbol->name);
 			writer.WriteChar(L']');
 		}
 		return;

@@ -184,7 +184,7 @@ TEST_CASE(TestTypeSystem_GenericFunction)
 	auto tsys = ITsysAlloc::Create();
 	auto tdecl = tsys->DeclOf(n.Obj());
 
-	TsysGenericArg arg = { 0,nullptr,false };
+	TsysGenericArg arg = { 0,nullptr };
 	auto targ = tsys->DeclOf(n.Obj())->GenericArgOf(arg);
 
 	TsysGenericFunction gf;
@@ -205,9 +205,11 @@ TEST_CASE(TestTypeSystem_GenericFunction)
 TEST_CASE(TestTypeSystem_GenericArg)
 {
 	auto n = MakePtr<Symbol>();
+	auto narg1 = MakePtr<Symbol>();
+	auto narg2 = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
-	TsysGenericArg arg1 = { 0,nullptr,false };
-	TsysGenericArg arg2 = { 0,nullptr,true };
+	TsysGenericArg arg1 = { 0,narg1.Obj() };
+	TsysGenericArg arg2 = { 0,narg2.Obj() };
 	auto targ1 = tsys->DeclOf(n.Obj())->GenericArgOf(arg1);
 	auto targ2 = tsys->DeclOf(n.Obj())->GenericArgOf(arg2);
 

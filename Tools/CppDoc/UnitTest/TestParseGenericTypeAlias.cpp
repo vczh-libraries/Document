@@ -164,8 +164,8 @@ using SizeOfExprs = decltype(sizeof...Numbers);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	
-	AssertType(pa, L"SizeOfTypes",									L"SizeOfTypes",									L"<::SizeOfTypes::[...TTypes]> unsigned __int32"			);
-	AssertType(pa, L"SizeOfExprs",									L"SizeOfExprs",									L"<::SizeOfExprs::[...TTypes]> unsigned __int32"			);
+	AssertType(pa, L"SizeOfTypes",									L"SizeOfTypes",									L"<...::SizeOfTypes::[TTypes]> unsigned __int32"			);
+	AssertType(pa, L"SizeOfExprs",									L"SizeOfExprs",									L"<...*> unsigned __int32"									);
 	
 	AssertType(pa, L"SizeOfTypes<>",								L"SizeOfTypes<>",								L"unsigned __int32"											);
 	AssertType(pa, L"SizeOfTypes<int>",								L"SizeOfTypes<int>",							L"unsigned __int32"											);

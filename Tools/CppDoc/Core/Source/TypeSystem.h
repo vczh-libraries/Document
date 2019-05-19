@@ -153,13 +153,15 @@ struct TsysInit
 
 struct TsysGenericFunction
 {
+	bool						lastArgumentIsVariadic = false;
 	List<Symbol*>				arguments;
 	Symbol*						declSymbol = nullptr;
 
 	TsysGenericFunction() = default;
 
 	TsysGenericFunction(const TsysGenericFunction& genericFunction)
-		:declSymbol(genericFunction.declSymbol)
+		:lastArgumentIsVariadic(genericFunction.lastArgumentIsVariadic)
+		, declSymbol(genericFunction.declSymbol)
 	{
 		CopyFrom(arguments, genericFunction.arguments);
 	}
@@ -173,6 +175,8 @@ struct TsysGenericFunction
 
 	static vint Compare(const TsysGenericFunction& a, const TsysGenericFunction& b)
 	{
+		if (a.lastArgumentIsVariadic < b.lastArgumentIsVariadic) return -1;
+		if (a.lastArgumentIsVariadic > b.lastArgumentIsVariadic) return 1;
 		if (a.declSymbol < b.declSymbol) return -1;
 		if (a.declSymbol > b.declSymbol) return 1;
 		return CompareEnumerable(a.arguments, b.arguments);
@@ -183,7 +187,6 @@ struct TsysGenericArg
 {
 	vint						argIndex = -1;
 	Symbol*						argSymbol = nullptr;
-	bool						isVariadic = false;
 
 	static vint Compare(const TsysGenericArg& a, const TsysGenericArg& b)
 	{
@@ -191,8 +194,6 @@ struct TsysGenericArg
 		if (a.argIndex > b.argIndex) return 1;
 		if (a.argSymbol < b.argSymbol) return -1;
 		if (a.argSymbol > b.argSymbol) return 1;
-		if (a.isVariadic < b.isVariadic) return -1;
-		if (a.isVariadic > b.isVariadic) return 1;
 		return 0;
 	}
 

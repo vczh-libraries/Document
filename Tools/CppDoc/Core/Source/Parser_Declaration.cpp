@@ -96,7 +96,6 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			TsysGenericArg arg;
 			arg.argIndex = spec->arguments.Count();
 			arg.argSymbol = argumentSymbol.Obj();
-			arg.isVariadic = false;
 
 			if (argument.templateSpec)
 			{
@@ -136,6 +135,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			argument.argumentType = CppTemplateArgumentType::Value;
 			argument.name = declarator->name;
 			argument.type = declarator->type;
+			argument.ellipsis = declarator->ellipsis;
 			if (declarator->initializer)
 			{
 				if (declarator->initializer->initializerType != CppInitializerType::Equal)
@@ -179,6 +179,15 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 		{
 			RequireToken(cursor, CppTokens::GT);
 			break;
+		}
+	}
+
+	for (vint i = 0; i < spec->arguments.Count() - 1; i++)
+	{
+		if (spec->arguments[i].ellipsis)
+		{
+			// there is no specialization, so only the last parameter can be variadic
+			throw StopParsingException(cursor);
 		}
 	}
 

@@ -21,6 +21,8 @@ namespace symbol_type_resolving
 				params.Add(argument.argumentSymbol->evaluation.Get()[0]);
 			}
 		}
+
+		genericFunction.lastArgumentIsVariadic = spec->arguments.Count() > 0 && spec->arguments[spec->arguments.Count() - 1].ellipsis;
 	}
 
 	/***********************************************************************
