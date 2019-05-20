@@ -47,7 +47,7 @@ namespace symbol_type_resolving
 					if (argument.type) throw NotConvertableException();
 					break;
 				case CppTemplateArgumentType::Value:
-					if (!argument.expr) throw NotConvertableException();
+					if (argument.expr) throw NotConvertableException();
 					break;
 				}
 			}
@@ -139,20 +139,23 @@ namespace symbol_type_resolving
 		if (variadicArgumentIndex == -1)
 		{
 			vint defaultCount = 0;
-			for (vint i = spec->arguments.Count() - 1; i >= 0; i--)
+			if (spec)
 			{
-				auto argument = spec->arguments[i];
-				switch (argument.argumentType)
+				for (vint i = spec->arguments.Count() - 1; i >= 0; i--)
 				{
-				case CppTemplateArgumentType::HighLevelType:
-				case CppTemplateArgumentType::Type:
-					if (!argument.type) goto STOP_COUNTING_DEFAULT;
-					defaultCount++;
-					break;
-				case CppTemplateArgumentType::Value:
-					if (!argument.expr) goto STOP_COUNTING_DEFAULT;
-					defaultCount++;
-					break;
+					auto argument = spec->arguments[i];
+					switch (argument.argumentType)
+					{
+					case CppTemplateArgumentType::HighLevelType:
+					case CppTemplateArgumentType::Type:
+						if (!argument.type) goto STOP_COUNTING_DEFAULT;
+						defaultCount++;
+						break;
+					case CppTemplateArgumentType::Value:
+						if (!argument.expr) goto STOP_COUNTING_DEFAULT;
+						defaultCount++;
+						break;
+					}
 				}
 			}
 		STOP_COUNTING_DEFAULT:
@@ -165,58 +168,51 @@ namespace symbol_type_resolving
 			minCount = genericFunction->GetParamCount() - 1;
 		}
 
-		if (argumentTypes.Count() < minCount || argumentTypes.Count() > maxCount)
+		if (argumentTypes.Count() < minCount || (maxCount != -1 && argumentTypes.Count() > maxCount))
 		{
 			return false;
 		}
 
 		// -1, -1: default value
 		// X, X: map to one argument
-		// X, Y: map to multiple arguments;
+		// X, X-1: map to no arguments (variadic)
+		// X, Y: map to multiple arguments (variadic)
 		List<Tuple<vint, vint>> parameterToArgumentMappings;
-
-		if (genericFunction->GetParamCount() < argumentTypes.Count())
+		if (variadicArgumentIndex == -1)
 		{
-			return false;
-		}
-		else if (genericFunction->GetParamCount() > argumentTypes.Count())
-		{
-			if (spec)
+			for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 			{
-				for (vint i = argumentTypes.Count(); i < spec->arguments.Count(); i++)
+				if (i < argumentTypes.Count())
 				{
-					auto& argument = spec->arguments[i];
-					switch (argument.argumentType)
-					{
-					case CppTemplateArgumentType::Value:
-						if (!argument.expr) return false;
-						break;
-					default:
-						if (!argument.type) return false;
-					}
+					parameterToArgumentMappings.Add({ i,i });
+				}
+				else
+				{
+					parameterToArgumentMappings.Add({ -1,-1 });
 				}
 			}
-			else
+		}
+		else
+		{
+			vint delta = argumentTypes.Count() - genericFunction->GetParamCount();
+			for (vint i = 0; i < variadicArgumentIndex; i++)
 			{
-				return false;
+				parameterToArgumentMappings.Add({ i,i });
+			}
+			parameterToArgumentMappings.Add({ variadicArgumentIndex,variadicArgumentIndex + delta });
+			for (vint i = variadicArgumentIndex + 1; i < genericFunction->GetParamCount(); i++)
+			{
+				parameterToArgumentMappings.Add({ i + delta,i + delta });
 			}
 		}
 
 		for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 		{
+			auto mappings = parameterToArgumentMappings[i];
 			auto pattern = genericFunction->GetParam(i);
-			bool useDefault = argumentTypes.Count() <= i;
-			if (!useDefault)
+			if (mappings.f0 == -1)
 			{
-				if ((pattern == nullptr) ^ (argumentTypes[i] == nullptr))
-				{
-					return false;
-				}
-			}
-
-			if (pattern != nullptr)
-			{
-				if (useDefault)
+				if (pattern != nullptr)
 				{
 					TypeTsysList argTypes;
 					TypeToTsys(pa.WithContext(genericSymbol), spec->arguments[i].type, argTypes, newGaContext);
@@ -226,7 +222,10 @@ namespace symbol_type_resolving
 						newGaContext->arguments.Add(pattern, argTypes[j]);
 					}
 				}
-				else
+			}
+			else if (mappings.f0 == mappings.f1)
+			{
+				if (pattern != nullptr)
 				{
 					auto& argTypes = *argumentTypes[i].Obj();
 					switch (pattern->GetType())
@@ -261,6 +260,23 @@ namespace symbol_type_resolving
 					{
 						newGaContext->arguments.Add(pattern, argTypes[j]);
 					}
+				}
+			}
+			else if (mappings.f0 == mappings.f1 + 1)
+			{
+				if (pattern != nullptr)
+				{
+					Array<ExprTsysItem> items;
+					auto init = pa.tsys->InitOf(items);
+					newGaContext->arguments.Add(pattern, init);
+				}
+			}
+			else
+			{
+				if (pattern != nullptr)
+				{
+					// TODO: convert multiple types to {types...}
+					throw NotConvertableException();
 				}
 			}
 		}

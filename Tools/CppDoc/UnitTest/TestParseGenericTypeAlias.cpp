@@ -170,9 +170,9 @@ using SizeOfExprs = decltype(sizeof...Numbers);
 	AssertType(pa, L"SizeOfTypes<>",								L"SizeOfTypes<>",								L"unsigned __int32"											);
 	AssertType(pa, L"SizeOfTypes<int>",								L"SizeOfTypes<int>",							L"unsigned __int32"											);
 	AssertType(pa, L"SizeOfTypes<int, bool, char, double>",			L"SizeOfTypes<int, bool, char, double>",		L"unsigned __int32"											);
-	AssertType(pa, L"SizeOfExprs<>",								L"SizeOfTypes<>",								L"unsigned __int32"											);
-	AssertType(pa, L"SizeOfExprs<0>",								L"SizeOfTypes<0>",								L"unsigned __int32"											);
-	AssertType(pa, L"SizeOfExprs<0, 1, 2, 3>",						L"SizeOfTypes<0, 1, 2, 3>",						L"unsigned __int32"											);
+	AssertType(pa, L"SizeOfExprs<>",								L"SizeOfExprs<>",								L"unsigned __int32"											);
+	AssertType(pa, L"SizeOfExprs<0>",								L"SizeOfExprs<0>",								L"unsigned __int32"											);
+	AssertType(pa, L"SizeOfExprs<0, 1, 2, 3>",						L"SizeOfExprs<0, 1, 2, 3>",						L"unsigned __int32"											);
 }
 
 TEST_CASE(TestParseTypeAlias_VTA_Types)
