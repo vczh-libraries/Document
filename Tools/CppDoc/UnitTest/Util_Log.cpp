@@ -1496,10 +1496,11 @@ void Log(ITsys* tsys, StreamWriter& writer)
 	case TsysType::GenericFunction:
 		{
 			writer.WriteChar(L'<');
+			auto genericFunction = tsys->GetGenericFunction();
 			for (vint i = 0; i < tsys->GetParamCount(); i++)
 			{
 				if (i > 0) writer.WriteString(L", ");
-				if (i == tsys->GetParamCount() - 1 && tsys->GetGenericFunction().lastArgumentIsVariadic)
+				if (i == genericFunction.variadicArgumentIndex)
 				{
 					writer.WriteString(L"...");
 				}

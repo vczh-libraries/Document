@@ -8,6 +8,7 @@ namespace symbol_type_resolving
 
 	void CreateGenericFunctionHeader(Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction)
 	{
+		genericFunction.variadicArgumentIndex = -1;
 		for (vint i = 0; i < spec->arguments.Count(); i++)
 		{
 			auto argument = spec->arguments[i];
@@ -20,9 +21,37 @@ namespace symbol_type_resolving
 				genericFunction.arguments.Add(argument.argumentSymbol);
 				params.Add(argument.argumentSymbol->evaluation.Get()[0]);
 			}
+
+			if (argument.ellipsis)
+			{
+				if (genericFunction.variadicArgumentIndex == -1)
+				{
+					genericFunction.variadicArgumentIndex = i;
+				}
+				else
+				{
+					throw NotConvertableException();
+				}
+			}
 		}
 
-		genericFunction.lastArgumentIsVariadic = spec->arguments.Count() > 0 && spec->arguments[spec->arguments.Count() - 1].ellipsis;
+		if (genericFunction.variadicArgumentIndex != -1)
+		{
+			for (vint i = 0; i < spec->arguments.Count(); i++)
+			{
+				auto argument = spec->arguments[i];
+				switch (argument.argumentType)
+				{
+				case CppTemplateArgumentType::HighLevelType:
+				case CppTemplateArgumentType::Type:
+					if (argument.type) throw NotConvertableException();
+					break;
+				case CppTemplateArgumentType::Value:
+					if (!argument.expr) throw NotConvertableException();
+					break;
+				}
+			}
+		}
 	}
 
 	/***********************************************************************
@@ -103,6 +132,48 @@ namespace symbol_type_resolving
 				spec = usingDecl->templateSpec;
 			}
 		}
+
+		vint minCount = -1;
+		vint maxCount = -1;
+		vint variadicArgumentIndex = genericFunction->GetGenericFunction().variadicArgumentIndex;
+		if (variadicArgumentIndex == -1)
+		{
+			vint defaultCount = 0;
+			for (vint i = spec->arguments.Count() - 1; i >= 0; i--)
+			{
+				auto argument = spec->arguments[i];
+				switch (argument.argumentType)
+				{
+				case CppTemplateArgumentType::HighLevelType:
+				case CppTemplateArgumentType::Type:
+					if (!argument.type) goto STOP_COUNTING_DEFAULT;
+					defaultCount++;
+					break;
+				case CppTemplateArgumentType::Value:
+					if (!argument.expr) goto STOP_COUNTING_DEFAULT;
+					defaultCount++;
+					break;
+				}
+			}
+		STOP_COUNTING_DEFAULT:
+			maxCount = genericFunction->GetParamCount();
+			minCount = maxCount - defaultCount;
+		}
+		else
+		{
+			// default values and variadic template arguments are not allowed to mix together
+			minCount = genericFunction->GetParamCount() - 1;
+		}
+
+		if (argumentTypes.Count() < minCount || argumentTypes.Count() > maxCount)
+		{
+			return false;
+		}
+
+		// -1, -1: default value
+		// X, X: map to one argument
+		// X, Y: map to multiple arguments;
+		List<Tuple<vint, vint>> parameterToArgumentMappings;
 
 		if (genericFunction->GetParamCount() < argumentTypes.Count())
 		{
