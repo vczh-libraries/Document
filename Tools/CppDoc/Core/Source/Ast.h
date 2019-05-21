@@ -128,6 +128,16 @@ struct NotResolvableException {};
 using TypeTsysList = List<ITsys*>;
 using ExprTsysList = List<ExprTsysItem>;
 
+template<typename T>
+struct VariadicItem
+{
+	T						item;
+	bool					isVariadic;
+};
+
+template<typename T>
+using VariadicList = List<VariadicItem<T>>;
+
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
 extern bool					IsPendingType(Type* type);
 extern bool					IsPendingType(Ptr<Type> type);

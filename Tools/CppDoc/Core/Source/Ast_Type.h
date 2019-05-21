@@ -73,8 +73,8 @@ class PrimitiveType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	CppPrimitivePrefix		prefix = CppPrimitivePrefix::_none;
-	CppPrimitiveType		primitive = CppPrimitiveType::_auto;
+	CppPrimitivePrefix							prefix = CppPrimitivePrefix::_none;
+	CppPrimitiveType							primitive = CppPrimitiveType::_auto;
 
 	PrimitiveType() {}
 	PrimitiveType(CppPrimitivePrefix _prefix, CppPrimitiveType _primitive) :prefix(_prefix), primitive(_primitive) {}
@@ -92,8 +92,8 @@ class ReferenceType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	CppReferenceType		reference = CppReferenceType::Ptr;
-	Ptr<Type>				type;
+	CppReferenceType							reference = CppReferenceType::Ptr;
+	Ptr<Type>									type;
 };
 
 class ArrayType : public Type
@@ -101,8 +101,8 @@ class ArrayType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<Type>				type;
-	Ptr<Expr>				expr;
+	Ptr<Type>									type;
+	Ptr<Expr>									expr;
 };
 
 class CallingConventionType : public Type
@@ -110,8 +110,8 @@ class CallingConventionType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	TsysCallingConvention	callingConvention = TsysCallingConvention::None;
-	Ptr<Type>				type;
+	TsysCallingConvention						callingConvention = TsysCallingConvention::None;
+	Ptr<Type>									type;
 };
 
 class FunctionType : public Type
@@ -119,21 +119,21 @@ class FunctionType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<Type>						returnType;
-	List<Ptr<VariableDeclaration>>	parameters;
-	bool							ellipsis = false;
+	Ptr<Type>									returnType;
+	VariadicList<Ptr<VariableDeclaration>>		parameters;
+	bool										ellipsis = false;
 
-	bool							qualifierConstExpr = false;
-	bool							qualifierConst = false;
-	bool							qualifierVolatile = false;
-	bool							qualifierLRef = false;
-	bool							qualifierRRef = false;
+	bool										qualifierConstExpr = false;
+	bool										qualifierConst = false;
+	bool										qualifierVolatile = false;
+	bool										qualifierLRef = false;
+	bool										qualifierRRef = false;
 
-	bool							decoratorOverride = false;
-	bool							decoratorNoExcept = false;
-	bool							decoratorThrow = false;
-	List<Ptr<Type>>					exceptions;
-	Ptr<Type>						decoratorReturnType;
+	bool										decoratorOverride = false;
+	bool										decoratorNoExcept = false;
+	bool										decoratorThrow = false;
+	List<Ptr<Type>>								exceptions;
+	Ptr<Type>									decoratorReturnType;
 };
 
 class MemberType : public Type
@@ -141,8 +141,8 @@ class MemberType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<Type>				classType;
-	Ptr<Type>				type;
+	Ptr<Type>									classType;
+	Ptr<Type>									type;
 };
 
 class DeclType : public Type
@@ -150,7 +150,7 @@ class DeclType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<Expr>				expr;
+	Ptr<Expr>									expr;
 };
 
 class DecorateType : public Type
@@ -158,10 +158,10 @@ class DecorateType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<Type>				type;
-	bool					isConstExpr = false;
-	bool					isConst = false;
-	bool					isVolatile = false;
+	Ptr<Type>									type;
+	bool										isConstExpr = false;
+	bool										isConst = false;
+	bool										isVolatile = false;
 };
 
 class RootType : public Type
@@ -175,8 +175,8 @@ class IdType : public ResolvableType
 public:
 	ITypeVisitor_ACCEPT;
 
-	bool					cStyleTypeReference = false;	// e.g. struct something
-	CppName					name;
+	bool										cStyleTypeReference = false;	// e.g. struct something
+	CppName										name;
 };
 
 class ChildType : public ResolvableType
@@ -184,9 +184,9 @@ class ChildType : public ResolvableType
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<Type>				classType;
-	bool					typenameType = false;
-	CppName					name;
+	Ptr<Type>									classType;
+	bool										typenameType = false;
+	CppName										name;
 };
 
 class GenericType : public Type
@@ -194,8 +194,8 @@ class GenericType : public Type
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<ResolvableType>		type;
-	List<GenericArgument>	arguments;
+	Ptr<ResolvableType>							type;
+	VariadicList<GenericArgument>				arguments;
 };
 
 #endif
