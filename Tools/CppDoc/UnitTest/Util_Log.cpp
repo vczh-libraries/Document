@@ -463,7 +463,12 @@ public:
 			{
 				writer.WriteString(L", ");
 			}
-			Log(self->parameters[i], writer, 0, false);;
+
+			Log(self->parameters[i].item, writer, 0, false);
+			if (self->parameters[i].isVariadic)
+			{
+				writer.WriteString(L"...");
+			}
 		}
 		writer.WriteChar(L')');
 
@@ -549,9 +554,13 @@ public:
 				writer.WriteString(L", ");
 			}
 
-			auto arg = self->arguments[i];
+			auto arg = self->arguments[i].item;
 			if (arg.expr) Log(arg.expr, writer);
 			if (arg.type) Log(arg.type, writer);
+			if (self->arguments[i].isVariadic)
+			{
+				writer.WriteString(L"...");
+			}
 		}
 		writer.WriteString(L">");
 	}

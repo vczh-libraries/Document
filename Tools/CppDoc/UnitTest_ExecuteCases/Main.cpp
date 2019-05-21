@@ -994,7 +994,11 @@ public:
 		{
 			if (i != 0) result += L", ";
 			GetDisplayNameInHtmlTypeVisitor visitor;
-			self->parameters[i]->type->Accept(&visitor);
+			self->parameters[i].item->type->Accept(&visitor);
+			if (self->parameters[i].isVariadic)
+			{
+				result += L"...";
+			}
 			result += visitor.result;
 		}
 		if (self->ellipsis)
@@ -1122,8 +1126,12 @@ WString GetDisplayNameInHtml(Symbol* symbol)
 			{
 				if (i != 0) displayNameInHtml += L", ";
 				GetDisplayNameInHtmlTypeVisitor visitor;
-				funcType->parameters[i]->type->Accept(&visitor);
+				funcType->parameters[i].item->type->Accept(&visitor);
 				displayNameInHtml += visitor.result;
+				if (funcType->parameters[i].isVariadic)
+				{
+					displayNameInHtml += L"...";
+				}
 			}
 			if (funcType->ellipsis)
 			{
