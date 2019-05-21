@@ -253,7 +253,8 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 			{
 				GenericArgument argument;
 				ParseTypeOrExpr(pa, pea_GenericArgument(), cursor, argument.type, argument.expr);
-				type->arguments.Add(argument);
+				bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+				type->arguments.Add({ argument,isVariadic });
 
 				if (!TestToken(cursor, CppTokens::COMMA))
 				{

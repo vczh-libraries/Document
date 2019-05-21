@@ -48,7 +48,7 @@ public:
 
 		for (vint i = 0; i < self->parameters.Count(); i++)
 		{
-			self->parameters[i]->type->Accept(this);
+			self->parameters[i].item->type->Accept(this);
 		}
 	}
 
@@ -89,7 +89,7 @@ public:
 		self->type->Accept(this);
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
-			if (auto type = self->arguments[i].type)
+			if (auto type = self->arguments[i].item.type)
 			{
 				type->Accept(this);
 			}
@@ -349,7 +349,7 @@ public:
 	{
 		for (vint i = 0; i < self->parameters.Count(); i++)
 		{
-			if (IsPendingType(self->parameters[i]->type))
+			if (IsPendingType(self->parameters[i].item->type))
 			{
 				throw NotResolvableException();
 			}
@@ -380,7 +380,7 @@ public:
 		}
 		for (vint i = 0; i < self->parameters.Count(); i++)
 		{
-			Execute(pa, self->parameters[i]->type.Obj(), entity->GetParam(i), PendingMatching::Exact);
+			Execute(pa, self->parameters[i].item->type.Obj(), entity->GetParam(i), PendingMatching::Exact);
 		}
 
 		if (self->decoratorReturnType)
