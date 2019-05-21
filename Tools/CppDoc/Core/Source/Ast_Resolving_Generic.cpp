@@ -76,7 +76,42 @@ namespace symbol_type_resolving
 	ResolveGenericParameters: Calculate generic parameter types by matching arguments to patterens
 	***********************************************************************/
 
-	void EnsureGenericParameterAndArgumentMatched(ITsys* parameter, ITsys* argument)
+	void EnsureGenericNormalParameterAndArgumentMatched(ITsys* parameter, TypeTsysList& arguments);
+	void EnsureGenericNormalParameterAndArgumentMatched(ITsys* parameter, TypeTsysList& arguments);
+	void EnsureGenericFunctionParameterAndArgumentMatched(ITsys* parameter, ITsys* argument);
+
+	void EnsureGenericNormalParameterAndArgumentMatched(ITsys* parameter, ITsys* argument)
+	{
+		switch (parameter->GetType())
+		{
+		case TsysType::GenericArg:
+			if (argument->GetType() == TsysType::GenericFunction)
+			{
+				throw NotConvertableException();
+			}
+			break;
+		case TsysType::GenericFunction:
+			if (argument->GetType() != TsysType::GenericFunction)
+			{
+				throw NotConvertableException();
+			}
+			EnsureGenericFunctionParameterAndArgumentMatched(parameter, argument);
+			break;
+		default:
+			// until class specialization begins to develop, this should always not happen
+			throw NotConvertableException();
+		}
+	}
+
+	void EnsureGenericNormalParameterAndArgumentMatched(ITsys* parameter, TypeTsysList& arguments)
+	{
+		for (vint i = 0; i < arguments.Count(); i++)
+		{
+			EnsureGenericNormalParameterAndArgumentMatched(parameter, arguments[i]);
+		}
+	}
+
+	void EnsureGenericFunctionParameterAndArgumentMatched(ITsys* parameter, ITsys* argument)
 	{
 		if (parameter->GetParamCount() != argument->GetParamCount())
 		{
@@ -93,25 +128,7 @@ namespace symbol_type_resolving
 
 			if (nestedParameter)
 			{
-				switch (nestedParameter->GetType())
-				{
-				case TsysType::GenericArg:
-					if (nestedArgument->GetType() == TsysType::GenericFunction)
-					{
-						throw NotConvertableException();
-					}
-					break;
-				case TsysType::GenericFunction:
-					if (nestedArgument->GetType() != TsysType::GenericFunction)
-					{
-						throw NotConvertableException();
-					}
-					EnsureGenericParameterAndArgumentMatched(nestedParameter, nestedArgument);
-					break;
-				default:
-					// there is not specialization for high-level template argument
-					throw NotConvertableException();
-				}
+				EnsureGenericNormalParameterAndArgumentMatched(nestedParameter, nestedArgument);
 			}
 		}
 	}
@@ -214,6 +231,10 @@ namespace symbol_type_resolving
 			{
 				if (pattern != nullptr)
 				{
+					if (spec->arguments[i].argumentType == CppTemplateArgumentType::Value)
+					{
+						throw NotConvertableException();
+					}
 					TypeTsysList argTypes;
 					TypeToTsys(pa.WithContext(genericSymbol), spec->arguments[i].type, argTypes, newGaContext);
 
@@ -222,39 +243,25 @@ namespace symbol_type_resolving
 						newGaContext->arguments.Add(pattern, argTypes[j]);
 					}
 				}
+				else
+				{
+					if (spec->arguments[i].argumentType != CppTemplateArgumentType::Value)
+					{
+						throw NotConvertableException();
+					}
+				}
 			}
-			else if (mappings.f0 == mappings.f1)
+			else if (mappings.f0 == mappings.f1 && (variadicArgumentIndex == -1 || variadicArgumentIndex != mappings.f0))
 			{
+				if ((pattern != nullptr) != argumentTypes[i])
+				{
+					throw NotConvertableException();
+				}
+
 				if (pattern != nullptr)
 				{
 					auto& argTypes = *argumentTypes[i].Obj();
-					switch (pattern->GetType())
-					{
-					case TsysType::GenericArg:
-						for (vint j = 0; j < argTypes.Count(); j++)
-						{
-							auto tsys = argTypes[j];
-							if (tsys->GetType() == TsysType::GenericFunction)
-							{
-								throw NotConvertableException();
-							}
-						}
-						break;
-					case TsysType::GenericFunction:
-						for (vint j = 0; j < argTypes.Count(); j++)
-						{
-							auto tsys = argTypes[j];
-							if (tsys->GetType() != TsysType::GenericFunction)
-							{
-								throw NotConvertableException();
-							}
-							EnsureGenericParameterAndArgumentMatched(pattern, tsys);
-						}
-						break;
-					default:
-						// until class specialization begins to develop, this should always not happen
-						throw NotConvertableException();
-					}
+					EnsureGenericNormalParameterAndArgumentMatched(pattern, argTypes);
 
 					for (vint j = 0; j < argTypes.Count(); j++)
 					{
@@ -273,10 +280,41 @@ namespace symbol_type_resolving
 			}
 			else
 			{
+				for (vint j = mappings.f0; j <= mappings.f1; j++)
+				{
+					if ((pattern != nullptr) != argumentTypes[j])
+					{
+						throw NotConvertableException();
+					}
+				}
+
 				if (pattern != nullptr)
 				{
-					// TODO: convert multiple types to {types...}
-					throw NotConvertableException();
+					List<Ptr<ExprTsysList>> argTypesList;
+					ExprTsysList result;
+
+					for (vint j = mappings.f0; j <= mappings.f1; j++)
+					{
+						auto target = MakePtr<ExprTsysList>();
+						argTypesList.Add(target);
+
+						auto& argTypes = *argumentTypes[j].Obj();
+						EnsureGenericNormalParameterAndArgumentMatched(pattern, argTypes);
+
+						for (vint j = 0; j < argTypes.Count(); j++)
+						{
+							target->Add({ nullptr,ExprTsysType::PRValue,argTypes[j] });
+						}
+					}
+
+					CreateUniversalInitializerType(pa, argTypesList, result);
+					for (vint j = 0; j < result.Count(); j++)
+					{
+						if (!newGaContext->arguments.Contains(pattern, result[j].tsys))
+						{
+							newGaContext->arguments.Add(pattern, result[j].tsys);
+						}
+					}
 				}
 			}
 		}

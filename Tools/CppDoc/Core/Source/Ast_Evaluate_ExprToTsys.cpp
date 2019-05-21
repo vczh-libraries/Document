@@ -717,27 +717,6 @@ public:
 		}
 	}
 
-	void CreateUniversalInitializerType(List<Ptr<ExprTsysList>>& argTypesList, Array<vint>& indices, vint index)
-	{
-		if (index == argTypesList.Count())
-		{
-			Array<ExprTsysItem> params(index);
-			for (vint i = 0; i < index; i++)
-			{
-				params[i] = argTypesList[i]->Get(indices[i]);
-			}
-			AddInternal(result, { nullptr,ExprTsysType::PRValue,pa.tsys->InitOf(params) });
-		}
-		else
-		{
-			for (vint i = 0; i < argTypesList[index]->Count(); i++)
-			{
-				indices[index] = i;
-				CreateUniversalInitializerType(argTypesList, indices, index + 1);
-			}
-		}
-	}
-
 	void Visit(UniversalInitializerExpr* self)override
 	{
 		List<Ptr<ExprTsysList>> argTypesList;
@@ -748,8 +727,7 @@ public:
 			argTypesList.Add(argTypes);
 		}
 
-		Array<vint> indices(argTypesList.Count());
-		CreateUniversalInitializerType(argTypesList, indices, 0);
+		CreateUniversalInitializerType(pa, argTypesList, result);
 	}
 
 	bool VisitOperator(ExprTsysItem* leftType, ExprTsysItem* rightType, const WString& name, CppName& resolvableName, Ptr<Resolving>& resolving)
