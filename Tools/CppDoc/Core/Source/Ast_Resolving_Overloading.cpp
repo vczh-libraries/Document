@@ -21,7 +21,12 @@ namespace symbol_type_resolving
 					{
 						for (vint j = 0; j < type->parameters.Count(); j++)
 						{
-							if (type->parameters[j]->initializer)
+							if (type->parameters[j].isVariadic)
+							{
+								// TODO: Support selecting overloading functions with variadic template arguments in the future
+								throw NotConvertableException();
+							}
+							if (type->parameters[j].item->initializer)
 							{
 								funcDPs[i] = type->parameters.Count() - j;
 								goto EXAMINE_NEXT_FUNCTION;

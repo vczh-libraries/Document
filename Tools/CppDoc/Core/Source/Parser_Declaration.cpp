@@ -1344,18 +1344,32 @@ void BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclara
 BuildSymbols
 ***********************************************************************/
 
+void BuildSymbol(const ParsingArguments& pa, Ptr<VariableDeclaration> varDecl, bool isVariadic, Ptr<CppTokenCursor>& cursor)
+{
+	if (varDecl->name)
+	{
+		auto symbol = pa.context->AddDeclToSymbol(varDecl, symbol_component::SymbolKind::Variable);
+		if (!symbol)
+		{
+			throw StopParsingException(cursor);
+		}
+		symbol->ellipsis = isVariadic;
+	}
+}
+
 void BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor)
 {
 	for (vint i = 0; i < varDecls.Count(); i++)
 	{
-		auto varDecl = varDecls[i];
-		if (varDecl->name)
-		{
-			if (!pa.context->AddDeclToSymbol(varDecl, symbol_component::SymbolKind::Variable))
-			{
-				throw StopParsingException(cursor);
-			}
-		}
+		BuildSymbol(pa, varDecls[i], false, cursor);
+	}
+}
+
+void BuildSymbols(const ParsingArguments& pa, VariadicList<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor)
+{
+	for (vint i = 0; i < varDecls.Count(); i++)
+	{
+		BuildSymbol(pa, varDecls[i].item, varDecls[i].isVariadic, cursor);
 	}
 }
 

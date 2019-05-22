@@ -306,7 +306,7 @@ Ptr<ForwardFunctionDeclaration> GenerateCtor(Symbol* classSymbol, bool deleted, 
 		decl->type = funcType;
 		if (parameter)
 		{
-			funcType->parameters.Add(parameter);
+			funcType->parameters.Add({ parameter,false });
 		}
 	}
 	if (!deleted) decl->decoratorDefault = true;
@@ -325,7 +325,7 @@ Ptr<ForwardFunctionDeclaration> GenerateAssignOp(Symbol* classSymbol, bool delet
 		decl->type = funcType;
 		
 		funcType->returnType = GenerateRefType(classSymbol, CppReferenceType::LRef);
-		funcType->parameters.Add(parameter);
+		funcType->parameters.Add({ parameter,false });
 	}
 	if (!deleted) decl->decoratorDefault = true;
 	if (deleted) decl->decoratorDelete = true;

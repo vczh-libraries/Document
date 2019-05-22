@@ -524,10 +524,17 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 					{
 						List<Ptr<Declarator>> declarators;
 						while (SkipSpecifiers(cursor));
-						ParseNonMemberDeclarator(functionArgsPa, pda_Param(true), cursor, declarators);
+						declarators.Add(ParseNonMemberDeclarator(functionArgsPa, pda_Param(true), cursor));
+
 						List<Ptr<VariableDeclaration>> varDecls;
 						BuildVariables(declarators, varDecls);
-						type->parameters.Add(varDecls[0]);
+
+						bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+						if (isVariadic && varDecls[0]->initializer)
+						{
+							throw StopParsingException(cursor);
+						}
+						type->parameters.Add({ varDecls[0],isVariadic });
 					}
 
 					if (!TestToken(cursor, CppTokens::COMMA))

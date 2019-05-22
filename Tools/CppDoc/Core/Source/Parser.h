@@ -80,7 +80,7 @@ class Symbol : public Object
 public:
 	Symbol*											parent = nullptr;
 	symbol_component::SymbolKind					kind = symbol_component::SymbolKind::Root;
-	bool											ellipsis = false;		// for variant template argument
+	bool											ellipsis = false;		// for variant template argument and function argument
 	WString											name;
 	WString											uniqueId;
 
@@ -274,6 +274,7 @@ extern Ptr<Type>					ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 extern void							ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
 extern void							BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls);
 extern void							BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor);
+extern void							BuildSymbols(const ParsingArguments& pa, VariadicList<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor);
 extern void							BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor);
 extern Ptr<VariableDeclaration>		BuildVariableAndSymbol(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<CppTokenCursor>& cursor);
 

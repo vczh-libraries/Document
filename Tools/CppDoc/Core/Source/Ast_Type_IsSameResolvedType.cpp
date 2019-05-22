@@ -70,7 +70,8 @@ public:
 
 			for (vint i = 0; i < self->parameters.Count(); i++)
 			{
-				if (!IsSameResolvedType(self->parameters[i]->type, type->parameters[i]->type)) return;
+				if (self->parameters[i].isVariadic != type->parameters[i].isVariadic) return;
+				if (!IsSameResolvedType(self->parameters[i].item->type, type->parameters[i].item->type)) return;
 			}
 			result = true;
 		}
@@ -144,8 +145,9 @@ public:
 
 			for (vint i = 0; i < self->arguments.Count(); i++)
 			{
-				auto ga1 = self->arguments[i];
-				auto ga2 = type->arguments[i];
+				if (self->arguments[i].isVariadic != type->arguments[i].isVariadic) return;
+				auto ga1 = self->arguments[i].item;
+				auto ga2 = type->arguments[i].item;
 				if ((ga1.type == nullptr) != (ga2.type == nullptr)) return;
 
 				if (ga1.type && ga2.type)

@@ -132,7 +132,7 @@ template<typename T>
 struct VariadicItem
 {
 	T						item;
-	bool					isVariadic;
+	bool					isVariadic = false;
 
 	VariadicItem() = default;
 	VariadicItem(T _item, bool _isVariadic) :item(_item), isVariadic(_isVariadic) {}
