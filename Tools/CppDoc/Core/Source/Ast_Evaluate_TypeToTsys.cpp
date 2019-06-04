@@ -9,6 +9,8 @@ class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
 {
 public:
 	TypeTsysList&				result;
+	bool						isVta = false;
+
 	const ParsingArguments&		pa;
 	TypeTsysList*				returnTypes;
 	GenericArgContext*			gaContext = nullptr;
@@ -32,6 +34,10 @@ public:
 			result.Add(tsys);
 		}
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// PrimitiveType
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	void Visit(PrimitiveType* self)override
 	{
@@ -94,27 +100,51 @@ public:
 		throw NotConvertableException();
 	}
 
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ReferenceType
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	ITsys* ProcessReferenceType(ReferenceType* self, ITsys* tsys)
+	{
+		switch (self->reference)
+		{
+		case CppReferenceType::LRef:
+			return tsys->LRefOf();
+		case CppReferenceType::RRef:
+			return tsys->RRefOf();
+		default:
+			return tsys->PtrOf();
+		}
+	}
+
 	void Visit(ReferenceType* self)override
 	{
 		self->type->Accept(this);
 		for (vint i = 0; i < result.Count(); i++)
 		{
 			auto tsys = result[i];
-			switch (self->reference)
+			if (isVta)
 			{
-			case CppReferenceType::LRef:
-				tsys = tsys->LRefOf();
-				break;
-			case CppReferenceType::RRef:
-				tsys = tsys->RRefOf();
-				break;
-			case CppReferenceType::Ptr:
-				tsys = tsys->PtrOf();
-				break;
+				if (tsys->GetType() == TsysType::Init)
+				{
+					Array<ExprTsysItem> params(tsys->GetParamCount());
+					for (vint j = 0; j < params.Count(); j++)
+					{
+						params[j] = { nullptr,ExprTsysType::PRValue,ProcessReferenceType(self,tsys->GetParam(j)) };
+					}
+					result[i] = pa.tsys->InitOf(params);
+				}
 			}
-			result[i] = tsys;
+			else
+			{
+				result[i] = ProcessReferenceType(self, tsys);
+			}
 		}
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ArrayType
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	void Visit(ArrayType* self)override
 	{
@@ -134,6 +164,10 @@ public:
 		}
 	}
 
+	//////////////////////////////////////////////////////////////////////////////////////
+	// CallingConventionType
+	//////////////////////////////////////////////////////////////////////////////////////
+
 	void Visit(CallingConventionType* self)override
 	{
 		auto oldCc = cc;
@@ -142,6 +176,10 @@ public:
 		self->type->Accept(this);
 		cc = oldCc;
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// FunctionType
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	void CreateFunctionType(TypeTsysList* tsyses, vint* tsysIndex, vint level, vint count, const TsysFunc& func)
 	{
@@ -220,6 +258,10 @@ public:
 		}
 	}
 
+	//////////////////////////////////////////////////////////////////////////////////////
+	// MemberType
+	//////////////////////////////////////////////////////////////////////////////////////
+
 	void Visit(MemberType* self)override
 	{
 		auto oldMemberOf = memberOf;
@@ -240,6 +282,10 @@ public:
 		memberOf = oldMemberOf;
 	}
 
+	//////////////////////////////////////////////////////////////////////////////////////
+	// DeclType
+	//////////////////////////////////////////////////////////////////////////////////////
+
 	void Visit(DeclType* self)override
 	{
 		if (self->expr)
@@ -258,6 +304,10 @@ public:
 		}
 	}
 
+	//////////////////////////////////////////////////////////////////////////////////////
+	// DecorateType
+	//////////////////////////////////////////////////////////////////////////////////////
+
 	void Visit(DecorateType* self)override
 	{
 		self->type->Accept(this);
@@ -267,10 +317,18 @@ public:
 		}
 	}
 
+	//////////////////////////////////////////////////////////////////////////////////////
+	// RootType
+	//////////////////////////////////////////////////////////////////////////////////////
+
 	void Visit(RootType* self)override
 	{
 		throw NotConvertableException();
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// IdType
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	void CreateIdReferenceType(Ptr<Resolving> resolving, bool allowAny)
 	{
@@ -346,6 +404,10 @@ public:
 		CreateIdReferenceType(self->resolving, false);
 	}
 
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ChildType
+	//////////////////////////////////////////////////////////////////////////////////////
+
 	Ptr<Resolving> ResolveChildTypeWithGenericArguments(ChildType* self)
 	{
 		Ptr<Resolving> resolving;
@@ -396,6 +458,10 @@ public:
 			CreateIdReferenceType(self->resolving, true);
 		}
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// GenericType
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	void Visit(GenericType* self)override
 	{
@@ -456,16 +522,27 @@ public:
 };
 
 // Convert type AST to type system object
-void TypeToTsys(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf, TsysCallingConvention cc)
+void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool& isVta, bool memberOf, TsysCallingConvention cc)
 {
 	if (!t) throw NotConvertableException();
 	TypeToTsysVisitor visitor(pa, tsys, nullptr, gaContext, memberOf, cc);
+	isVta = visitor.isVta;
 	t->Accept(&visitor);
 }
 
-void TypeToTsys(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf, TsysCallingConvention cc)
+void TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf, TsysCallingConvention cc)
 {
-	TypeToTsys(pa, t.Obj(), tsys, gaContext, memberOf, cc);
+	bool isVta = false;
+	TypeToTsysInternal(pa, t, tsys, gaContext, isVta, memberOf, cc);
+	if (isVta)
+	{
+		throw NotConvertableException();
+	}
+}
+
+void TypeToTsysNoVta(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf, TsysCallingConvention cc)
+{
+	TypeToTsysNoVta(pa, t.Obj(), tsys, gaContext, memberOf, cc);
 }
 
 void TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf)

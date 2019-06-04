@@ -57,7 +57,7 @@ void AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 	TypeTsysList tsys;
 	try
 	{
-		TypeToTsys(pa, type, tsys, nullptr);
+		TypeToTsysNoVta(pa, type, tsys, nullptr);
 	}
 	catch (const NotConvertableException&)
 	{

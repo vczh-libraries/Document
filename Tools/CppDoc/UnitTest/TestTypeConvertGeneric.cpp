@@ -277,7 +277,7 @@ using Context = T;
 			TEST_ASSERT(!cursor);
 
 			TypeTsysList tsys;
-			TypeToTsys(spa, type, tsys, nullptr);
+			TypeToTsysNoVta(spa, type, tsys, nullptr);
 			TEST_ASSERT(tsys.Count() == 1);
 			genericTypes[i] = tsys[0];
 		}

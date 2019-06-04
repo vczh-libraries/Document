@@ -248,7 +248,7 @@ public:
 		}
 		{
 			TypeTsysList types;
-			TypeToTsys(pa, self->type, types, gaContext);
+			TypeToTsysNoVta(pa, self->type, types, gaContext);
 			AddTemp(result, types);
 		}
 	}
@@ -258,7 +258,7 @@ public:
 		if (self->type)
 		{
 			TypeTsysList types;
-			TypeToTsys(pa, self->type, types, gaContext);
+			TypeToTsysNoVta(pa, self->type, types, gaContext);
 		}
 		if (self->expr)
 		{
@@ -293,7 +293,7 @@ public:
 		if (self->type)
 		{
 			TypeTsysList types;
-			TypeToTsys(pa, self->type, types, gaContext);
+			TypeToTsysNoVta(pa, self->type, types, gaContext);
 		}
 		if (self->expr)
 		{
@@ -381,7 +381,7 @@ public:
 		Ptr<Resolving> resolving;
 
 		TypeTsysList types;
-		TypeToTsys(pa, self->classType, types, gaContext);
+		TypeToTsysNoVta(pa, self->classType, types, gaContext);
 		for (vint i = 0; i < types.Count(); i++)
 		{
 			auto type = types[i];
@@ -672,7 +672,7 @@ public:
 
 		{
 			TypeTsysList types;
-			TypeToTsys(pa, self->type, types, gaContext);
+			TypeToTsysNoVta(pa, self->type, types, gaContext);
 			AddTemp(result, types);
 		}
 	}
@@ -695,7 +695,7 @@ public:
 		}
 
 		TypeTsysList types;
-		TypeToTsys(pa, self->type, types, gaContext);
+		TypeToTsysNoVta(pa, self->type, types, gaContext);
 		for (vint i = 0; i < types.Count(); i++)
 		{
 			auto type = types[i];

@@ -181,7 +181,7 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			TypeToTsys(newPa, varDecl->type, ev.Get(), nullptr);
+			TypeToTsysNoVta(newPa, varDecl->type, ev.Get(), nullptr);
 		}
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;
 	}
@@ -269,7 +269,7 @@ namespace symbol_type_resolving
 		{
 			auto newPa = pa.WithContext(symbol->parent);
 			ev.Allocate();
-			TypeToTsys(newPa, funcDecl->type, ev.Get(), nullptr, IsMemberFunction(pa, funcDecl));
+			TypeToTsysNoVta(newPa, funcDecl->type, ev.Get(), nullptr, IsMemberFunction(pa, funcDecl));
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		}
 	}
@@ -295,7 +295,7 @@ namespace symbol_type_resolving
 			auto newPa = pa.WithContext(symbol);
 			for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 			{
-				TypeToTsys(newPa, classDecl->baseTypes[i].f1, ev.Get(i), nullptr);
+				TypeToTsysNoVta(newPa, classDecl->baseTypes[i].f1, ev.Get(i), nullptr);
 			}
 		}
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;
@@ -326,7 +326,7 @@ namespace symbol_type_resolving
 		TypeTsysList types;
 		if (usingDecl->type)
 		{
-			TypeToTsys(newPa, usingDecl->type, types, (esContext ? &esContext->gaContext : nullptr));
+			TypeToTsysNoVta(newPa, usingDecl->type, types, (esContext ? &esContext->gaContext : nullptr));
 		}
 		else
 		{
