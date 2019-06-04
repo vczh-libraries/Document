@@ -35,6 +35,32 @@ public:
 		}
 	}
 
+	template<typename TSelf>
+	void ProcessSingleArgumentType(TSelf* self, ITsys* (TypeToTsysVisitor::*process)(TSelf*, ITsys*))
+	{
+		self->type->Accept(this);
+		for (vint i = 0; i < result.Count(); i++)
+		{
+			auto tsys = result[i];
+			if (isVta)
+			{
+				if (tsys->GetType() == TsysType::Init)
+				{
+					Array<ExprTsysItem> params(tsys->GetParamCount());
+					for (vint j = 0; j < params.Count(); j++)
+					{
+						params[j] = { nullptr,ExprTsysType::PRValue,process(self, tsys->GetParam(j)) };
+					}
+					result[i] = pa.tsys->InitOf(params);
+				}
+			}
+			else
+			{
+				result[i] = process(self, tsys);
+			}
+		}
+	}
+
 	//////////////////////////////////////////////////////////////////////////////////////
 	// PrimitiveType
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -119,49 +145,28 @@ public:
 
 	void Visit(ReferenceType* self)override
 	{
-		self->type->Accept(this);
-		for (vint i = 0; i < result.Count(); i++)
-		{
-			auto tsys = result[i];
-			if (isVta)
-			{
-				if (tsys->GetType() == TsysType::Init)
-				{
-					Array<ExprTsysItem> params(tsys->GetParamCount());
-					for (vint j = 0; j < params.Count(); j++)
-					{
-						params[j] = { nullptr,ExprTsysType::PRValue,ProcessReferenceType(self,tsys->GetParam(j)) };
-					}
-					result[i] = pa.tsys->InitOf(params);
-				}
-			}
-			else
-			{
-				result[i] = ProcessReferenceType(self, tsys);
-			}
-		}
+		ProcessSingleArgumentType(self, &TypeToTsysVisitor::ProcessReferenceType);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// ArrayType
 	//////////////////////////////////////////////////////////////////////////////////////
 
+	ITsys* ProcessArrayType(ArrayType* self, ITsys* tsys)
+	{
+		if (tsys->GetType() == TsysType::Array)
+		{
+			return tsys->GetElement()->ArrayOf(tsys->GetParamCount() + 1);
+		}
+		else
+		{
+			return tsys->ArrayOf(1);
+		}
+	}
+
 	void Visit(ArrayType* self)override
 	{
-		self->type->Accept(this);
-		for (vint i = 0; i < result.Count(); i++)
-		{
-			auto tsys = result[i];
-			if (tsys->GetType() == TsysType::Array)
-			{
-				tsys = tsys->GetElement()->ArrayOf(tsys->GetParamCount() + 1);
-			}
-			else
-			{
-				tsys = tsys->ArrayOf(1);
-			}
-			result[i] = tsys;
-		}
+		ProcessSingleArgumentType(self, &TypeToTsysVisitor::ProcessArrayType);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -268,14 +273,60 @@ public:
 		memberOf = true;
 
 		TypeTsysList types, classTypes;
-		TypeToTsys(pa, self->type, types, gaContext, memberOf, cc);
-		TypeToTsys(pa, self->classType, classTypes, gaContext);
+		bool typesVta = false;
+		bool classTypesVta = false;
+		TypeToTsysInternal(pa, self->type.Obj(), types, gaContext, typesVta, memberOf, cc);
+		TypeToTsysInternal(pa, self->classType.Obj(), classTypes, gaContext, classTypesVta);
+		isVta = typesVta || classTypesVta;
 
 		for (vint i = 0; i < types.Count(); i++)
 		{
 			for (vint j = 0; j < classTypes.Count(); j++)
 			{
-				AddResult(types[i]->MemberOf(classTypes[j]));
+				auto type = types[i];
+				auto classType = classTypes[j];
+				if (typesVta && type->GetType() == TsysType::Init)
+				{
+					if (classTypesVta && classType->GetType() == TsysType::Init)
+					{
+						if (type->GetParamCount() != classType->GetParamCount())
+						{
+							throw NotConvertableException();
+						}
+
+						Array<ExprTsysItem> params(type->GetParamCount());
+						for (vint k = 0; k < params.Count(); k++)
+						{
+							params[k] = { nullptr,ExprTsysType::PRValue,type->GetParam(k)->MemberOf(classType->GetParam(k)) };
+						}
+						AddResult(pa.tsys->InitOf(params));
+					}
+					else
+					{
+						Array<ExprTsysItem> params(type->GetParamCount());
+						for (vint k = 0; k < params.Count(); k++)
+						{
+							params[k] = { nullptr,ExprTsysType::PRValue,type->GetParam(k)->MemberOf(classType) };
+						}
+						AddResult(pa.tsys->InitOf(params));
+					}
+				}
+				else
+				{
+					if (classTypesVta && classType->GetType() == TsysType::Init)
+					{
+						Array<ExprTsysItem> params(classType->GetParamCount());
+						for (vint k = 0; k < params.Count(); k++)
+						{
+							params[k] = { nullptr,ExprTsysType::PRValue,type->MemberOf(classType) };
+						}
+						AddResult(pa.tsys->InitOf(params));
+					}
+					else
+					{
+						AddResult(types[i]->MemberOf(classTypes[j]));
+					}
+				}
 			}
 		}
 
@@ -308,13 +359,14 @@ public:
 	// DecorateType
 	//////////////////////////////////////////////////////////////////////////////////////
 
+	ITsys* ProcessDecorateType(DecorateType* self, ITsys* tsys)
+	{
+		return tsys->CVOf({ (self->isConstExpr || self->isConst), self->isVolatile });
+	}
+
 	void Visit(DecorateType* self)override
 	{
-		self->type->Accept(this);
-		for (vint i = 0; i < result.Count(); i++)
-		{
-			result[i] = result[i]->CVOf({ (self->isConstExpr || self->isConst), self->isVolatile });
-		}
+		ProcessSingleArgumentType(self, &TypeToTsysVisitor::ProcessDecorateType);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
