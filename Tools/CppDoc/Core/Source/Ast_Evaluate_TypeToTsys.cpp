@@ -27,12 +27,17 @@ public:
 	{
 	}
 
-	void AddResult(ITsys* tsys)
+	static void AddResult(TypeTsysList& result, ITsys* tsys)
 	{
 		if (!result.Contains(tsys))
 		{
 			result.Add(tsys);
 		}
+	}
+
+	void AddResult(ITsys* tsys)
+	{
+		AddResult(result, tsys);
 	}
 
 	template<typename TSelf>
@@ -382,13 +387,13 @@ public:
 	// IdType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void CreateIdReferenceType(Ptr<Resolving> resolving, bool allowAny, bool allowVariadic)
+	static void CreateIdReferenceType(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta)
 	{
 		if (!resolving)
 		{
 			if (allowAny)
 			{
-				AddResult(pa.tsys->Any());
+				AddResult(result, pa.tsys->Any());
 				return;
 			}
 			else
@@ -412,7 +417,7 @@ public:
 			case symbol_component::SymbolKind::Class:
 			case symbol_component::SymbolKind::Struct:
 			case symbol_component::SymbolKind::Union:
-				AddResult(pa.tsys->DeclOf(symbol));
+				AddResult(result, pa.tsys->DeclOf(symbol));
 				hasNonVariadic = true;
 				continue;
 			case symbol_component::SymbolKind::TypeAlias:
@@ -422,7 +427,7 @@ public:
 					auto& types = symbol->evaluation.Get();
 					for (vint j = 0; j < types.Count(); j++)
 					{
-						AddResult(types[j]);
+						AddResult(result, types[j]);
 					}
 					hasNonVariadic = true;
 				}
@@ -450,8 +455,7 @@ public:
 										auto replacedType = replacedTypes[k];
 										if (replacedType->GetType() == TsysType::Any || replacedType->GetType() == TsysType::Init)
 										{
-											AddResult(replacedTypes[k]);
-											isVta = true;
+											AddResult(result, replacedTypes[k]);
 											hasVariadic = true;
 										}
 										else
@@ -461,7 +465,7 @@ public:
 									}
 									else
 									{
-										AddResult(replacedTypes[k]);
+										AddResult(result, replacedTypes[k]);
 										hasNonVariadic = true;
 									}
 								}
@@ -475,13 +479,12 @@ public:
 							{
 								throw NotConvertableException();
 							}
-							AddResult(pa.tsys->Any());
-							isVta = true;
+							AddResult(result, pa.tsys->Any());
 							hasVariadic = true;
 						}
 						else
 						{
-							AddResult(types[j]);
+							AddResult(result, types[j]);
 							hasNonVariadic = true;
 						}
 					}
@@ -495,48 +498,51 @@ public:
 		{
 			throw NotConvertableException();
 		}
+		isVta = hasVariadic;
 	}
 
 	void Visit(IdType* self)override
 	{
-		CreateIdReferenceType(self->resolving, false, true);
+		CreateIdReferenceType(pa, gaContext, self->resolving, false, true, result, isVta);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// ChildType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	Ptr<Resolving> ResolveChildTypeWithGenericArguments(ChildType* self)
+	void ResolveChildTypeWithGenericArguments(ChildType* self, ITsys* type, Ptr<Resolving>& resolving)
 	{
-		Ptr<Resolving> resolving;
-
-		TypeTsysList types;
-		TypeToTsys(pa, self->classType, types, gaContext);
-		for (vint i = 0; i < types.Count(); i++)
+		if (type->GetType() == TsysType::Decl)
 		{
-			auto type = types[i];
-			if (type->GetType() == TsysType::Decl)
+			auto newPa = pa.WithContext(type->GetDecl());
+			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
+			if (rsr.types)
 			{
-				auto newPa = pa.WithContext(type->GetDecl());
-				auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
-				if (rsr.types)
+				if (!resolving)
 				{
-					if (!resolving)
+					resolving = rsr.types;
+				}
+				else
+				{
+					for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
 					{
-						resolving = rsr.types;
-					}
-					else
-					{
-						for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
+						if (!resolving->resolvedSymbols.Contains(rsr.types->resolvedSymbols[i]))
 						{
-							if (!resolving->resolvedSymbols.Contains(rsr.types->resolvedSymbols[i]))
-							{
-								resolving->resolvedSymbols.Add(rsr.types->resolvedSymbols[i]);
-							}
+							resolving->resolvedSymbols.Add(rsr.types->resolvedSymbols[i]);
 						}
 					}
 				}
 			}
+		}
+	}
+
+	Ptr<Resolving> ResolveChildTypeWithGenericArguments(ChildType* self, TypeTsysList& types)
+	{
+		Ptr<Resolving> resolving;
+
+		for (vint i = 0; i < types.Count(); i++)
+		{
+			ResolveChildTypeWithGenericArguments(self, types[i], resolving);
 		}
 
 		return resolving;
@@ -544,16 +550,60 @@ public:
 
 	void Visit(ChildType* self)override
 	{
-		if (gaContext && !self->resolving)
+		TypeTsysList types;
+		bool parentIsVta = false;
+		TypeToTsysInternal(pa, self->classType.Obj(), types, gaContext, parentIsVta);
+
+		if (parentIsVta)
 		{
-			if (auto resolving = ResolveChildTypeWithGenericArguments(self))
+			for (vint i = 0; i < types.Count(); i++)
 			{
-				CreateIdReferenceType(resolving, false, false);
+				auto parentType = types[i];
+				if (parentType->GetType() == TsysType::Any)
+				{
+					AddResult(pa.tsys->Any());
+				}
+				else if (parentType->GetType() == TsysType::Init)
+				{
+					List<Ptr<ExprTsysList>> argTypesList;
+					for (vint j = 0; j < parentType->GetParamCount(); j++)
+					{
+						TypeTsysList childTypes;
+						Ptr<Resolving> resolving;
+						ResolveChildTypeWithGenericArguments(self, parentType->GetParam(j), resolving);
+						CreateIdReferenceType(pa, gaContext, resolving, true, false, childTypes, isVta);
+
+						argTypesList.Add(MakePtr<ExprTsysList>());
+						symbol_type_resolving::AddTemp(*argTypesList[j].Obj(), childTypes);
+					}
+
+					ExprTsysList initTypes;
+					symbol_type_resolving::CreateUniversalInitializerType(pa, argTypesList, initTypes);
+					for (vint j = 0; j < initTypes.Count(); j++)
+					{
+						AddResult(initTypes[j].tsys);
+					}
+				}
+				else
+				{
+					throw NotConvertableException();
+				}
 			}
+			isVta = true;
 		}
 		else
 		{
-			CreateIdReferenceType(self->resolving, true, false);
+			if (gaContext && !self->resolving)
+			{
+				if (auto resolving = ResolveChildTypeWithGenericArguments(self, types))
+				{
+					CreateIdReferenceType(pa, gaContext, resolving, true, false, result, isVta);
+				}
+			}
+			else
+			{
+				CreateIdReferenceType(pa, gaContext, self->resolving, true, false, result, isVta);
+			}
 		}
 	}
 
