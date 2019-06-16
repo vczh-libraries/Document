@@ -382,7 +382,7 @@ public:
 	// IdType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void CreateIdReferenceType(Ptr<Resolving> resolving, bool allowAny)
+	void CreateIdReferenceType(Ptr<Resolving> resolving, bool allowAny, bool allowVariadic)
 	{
 		if (!resolving)
 		{
@@ -401,6 +401,8 @@ public:
 			throw NotConvertableException();
 		}
 
+		bool hasVariadic = false;
+		bool hasNonVariadic = false;
 		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 		{
 			auto symbol = resolving->resolvedSymbols[i];
@@ -411,6 +413,7 @@ public:
 			case symbol_component::SymbolKind::Struct:
 			case symbol_component::SymbolKind::Union:
 				AddResult(pa.tsys->DeclOf(symbol));
+				hasNonVariadic = true;
 				continue;
 			case symbol_component::SymbolKind::TypeAlias:
 				{
@@ -421,6 +424,7 @@ public:
 					{
 						AddResult(types[j]);
 					}
+					hasNonVariadic = true;
 				}
 				continue;
 			case symbol_component::SymbolKind::GenericTypeArgument:
@@ -437,23 +441,65 @@ public:
 								auto& replacedTypes = gaContext->arguments.GetByIndex(index);
 								for (vint k = 0; k < replacedTypes.Count(); k++)
 								{
-									AddResult(replacedTypes[k]);
+									if (symbol->ellipsis)
+									{
+										if (!allowVariadic)
+										{
+											throw NotConvertableException();
+										}
+										auto replacedType = replacedTypes[k];
+										if (replacedType->GetType() == TsysType::Any || replacedType->GetType() == TsysType::Init)
+										{
+											AddResult(replacedTypes[k]);
+											isVta = true;
+											hasVariadic = true;
+										}
+										else
+										{
+											throw NotConvertableException();
+										}
+									}
+									else
+									{
+										AddResult(replacedTypes[k]);
+										hasNonVariadic = true;
+									}
 								}
 								continue;
 							}
 						}
-						AddResult(types[j]);
+
+						if (symbol->ellipsis)
+						{
+							if (!allowVariadic)
+							{
+								throw NotConvertableException();
+							}
+							AddResult(pa.tsys->Any());
+							isVta = true;
+							hasVariadic = true;
+						}
+						else
+						{
+							AddResult(types[j]);
+							hasNonVariadic = true;
+						}
 					}
 				}
 				continue;
 			}
 			throw NotConvertableException();
 		}
+
+		if (hasVariadic && hasNonVariadic)
+		{
+			throw NotConvertableException();
+		}
 	}
 
 	void Visit(IdType* self)override
 	{
-		CreateIdReferenceType(self->resolving, false);
+		CreateIdReferenceType(self->resolving, false, true);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -502,12 +548,12 @@ public:
 		{
 			if (auto resolving = ResolveChildTypeWithGenericArguments(self))
 			{
-				CreateIdReferenceType(resolving, false);
+				CreateIdReferenceType(resolving, false, false);
 			}
 		}
 		else
 		{
-			CreateIdReferenceType(self->resolving, true);
+			CreateIdReferenceType(self->resolving, true, false);
 		}
 	}
 
