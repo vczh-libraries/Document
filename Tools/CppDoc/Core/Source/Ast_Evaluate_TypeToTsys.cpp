@@ -58,6 +58,10 @@ public:
 					}
 					result[i] = pa.tsys->InitOf(params);
 				}
+				else
+				{
+					result[i] = pa.tsys->Any();
+				}
 			}
 			else
 			{
@@ -191,16 +195,60 @@ public:
 	// FunctionType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void CreateFunctionType(TypeTsysList* tsyses, vint* tsysIndex, vint level, vint count, const TsysFunc& func)
+	static ITsys* CreateUnboundedFunctionType(TypeTsysList* tsyses, bool* isVtas, vint* tsysIndex, vint count, vint unboundedVtaIndex, const TsysFunc& func)
 	{
-		if (level == count)
+		Array<ITsys*> params(count - 1);
+		for (vint i = 0; i < count - 1; i++)
 		{
-			Array<ITsys*> params(count - 1);
-			for (vint i = 0; i < count - 1; i++)
+			if (isVtas[i + 1])
+			{
+				params[i] = tsyses[i + 1][tsysIndex[i + 1]]->GetParam(unboundedVtaIndex);
+			}
+			else
 			{
 				params[i] = tsyses[i + 1][tsysIndex[i + 1]];
 			}
-			AddResult(tsyses[0][tsysIndex[0]]->FunctionOf(params, func));
+		}
+		return tsyses[0][tsysIndex[0]]->FunctionOf(params, func);
+	}
+
+	void CreateFunctionType(TypeTsysList* tsyses, bool* isVtas, bool isBoundedVta, vint* tsysIndex, vint level, vint count, vint unboundedVtaCount, const TsysFunc& func)
+	{
+		if (level == count)
+		{
+			if (isBoundedVta)
+			{
+				vint paramCount = 0;
+				for (vint i = 1; i < count; i++)
+				{
+					if (isVtas[i])
+					{
+						// every vtaCount should equal, which is ensured in Visit(FunctionType*)
+						paramCount += tsyses[i][tsysIndex[i]]->GetParamCount();
+					}
+					else
+					{
+						paramCount++;
+					}
+				}
+				throw 0;
+			}
+			else
+			{
+				if (unboundedVtaCount == -1)
+				{
+					AddResult(CreateUnboundedFunctionType(tsyses, isVtas, tsysIndex, count, -1, func));
+				}
+				else
+				{
+					Array<ExprTsysItem> params(unboundedVtaCount);
+					for (vint v = 0; v < unboundedVtaCount; v++)
+					{
+						params[v] = { nullptr,ExprTsysType::PRValue,CreateUnboundedFunctionType(tsyses, isVtas, tsysIndex, count, v, func) };
+					}
+					AddResult(pa.tsys->InitOf(params));
+				}
+			}
 		}
 		else
 		{
@@ -208,7 +256,7 @@ public:
 			for (vint i = 0; i < levelCount; i++)
 			{
 				tsysIndex[level] = i;
-				CreateFunctionType(tsyses, tsysIndex, level + 1, count, func);
+				CreateFunctionType(tsyses, isVtas, isBoundedVta, tsysIndex, level + 1, count, unboundedVtaCount, func);
 			}
 		}
 	}
@@ -216,53 +264,122 @@ public:
 	void Visit(FunctionType* self)override
 	{
 		TypeTsysList* tsyses = nullptr;
+		bool* isVtas = nullptr;
 		vint* tsysIndex = nullptr;
 		try
 		{
 			vint count = self->parameters.Count() + 1;
 			tsyses = new TypeTsysList[count];
+			isVtas = new bool[count];
+			isVtas[0] = false;
+
 			if (returnTypes)
 			{
 				CopyFrom(tsyses[0], *returnTypes);
 			}
 			else if (self->decoratorReturnType)
 			{
-				TypeToTsys(pa, self->decoratorReturnType, tsyses[0], gaContext);
+				TypeToTsysNoVta(pa, self->decoratorReturnType, tsyses[0], gaContext);
 			}
 			else if (self->returnType)
 			{
-				TypeToTsys(pa, self->returnType, tsyses[0], gaContext);
+				TypeToTsysNoVta(pa, self->returnType, tsyses[0], gaContext);
 			}
 			else
 			{
 				tsyses[0].Add(pa.tsys->Void());
 			}
 
-			for (vint i = 0; i < self->parameters.Count(); i++)
+			for (vint i = 1; i < count; i++)
 			{
-				TypeToTsys(pa, self->parameters[i]->type, tsyses[i + 1], gaContext);
+				TypeToTsysInternal(pa, self->parameters[i - 1].item->type.Obj(), tsyses[i], gaContext, isVtas[i]);
 			}
 
-			tsysIndex = new vint[count];
-			memset(tsysIndex, 0, sizeof(vint) * count);
-
-			TsysFunc func(cc, self->ellipsis);
-			if (func.callingConvention == TsysCallingConvention::None)
+			bool hasBoundedVta = false;
+			bool hasUnboundedVta = false;
+			vint unboundedVtaCount = -1;
+			for (vint i = 1; i < count; i++)
 			{
-				func.callingConvention =
-					memberOf && !func.ellipsis
-					? TsysCallingConvention::ThisCall
-					: TsysCallingConvention::CDecl
-					;
+				if (isVtas[i])
+				{
+					if (self->parameters[i - 1].isVariadic)
+					{
+						hasBoundedVta = true;
+					}
+					else
+					{
+						hasUnboundedVta = true;
+					}
+				}
 			}
-			CreateFunctionType(tsyses, tsysIndex, 0, count, func);
 
+			if (hasBoundedVta && hasUnboundedVta)
+			{
+				throw NotConvertableException();
+			}
+
+			for (vint i = 1; 1 < count; i++)
+			{
+				if (isVtas[i])
+				{
+					for (vint j = 0; j < tsyses[i].Count(); j++)
+					{
+						if (tsyses[i][j]->GetType() != TsysType::Init)
+						{
+							AddResult(pa.tsys->Any());
+							goto FINISH_FUNCTION_TYPE;
+						}
+					}
+				}
+			}
+
+			if (hasUnboundedVta)
+			{
+				for (vint i = 1; 1 < count; i++)
+				{
+					if (isVtas[i])
+					{
+						for (vint j = 0; j < tsyses[i].Count(); j++)
+						{
+							vint currentVtaCount = tsyses[i][j]->GetParamCount();
+							if (unboundedVtaCount == -1)
+							{
+								unboundedVtaCount = currentVtaCount;
+							}
+							else if (unboundedVtaCount != currentVtaCount)
+							{
+								throw NotConvertableException();
+							}
+						}
+					}
+				}
+			}
+
+			{
+				tsysIndex = new vint[count];
+				memset(tsysIndex, 0, sizeof(vint) * count);
+
+				TsysFunc func(cc, self->ellipsis);
+				if (func.callingConvention == TsysCallingConvention::None)
+				{
+					func.callingConvention =
+						memberOf && !func.ellipsis
+						? TsysCallingConvention::ThisCall
+						: TsysCallingConvention::CDecl
+						;
+				}
+				CreateFunctionType(tsyses, isVtas, hasBoundedVta, tsysIndex, 0, count, unboundedVtaCount, func);
+			}
+
+		FINISH_FUNCTION_TYPE:
 			delete[] tsyses;
+			delete[] isVtas;
 			delete[] tsysIndex;
 		}
 		catch (...)
 		{
 			delete[] tsyses;
+			delete[] isVtas;
 			delete[] tsysIndex;
 			throw;
 		}
@@ -292,19 +409,26 @@ public:
 				auto classType = classTypes[j];
 				if (typesVta && type->GetType() == TsysType::Init)
 				{
-					if (classTypesVta && classType->GetType() == TsysType::Init)
+					if (classTypesVta)
 					{
-						if (type->GetParamCount() != classType->GetParamCount())
+						if (classType->GetType() == TsysType::Init)
 						{
-							throw NotConvertableException();
-						}
+							if (type->GetParamCount() != classType->GetParamCount())
+							{
+								throw NotConvertableException();
+							}
 
-						Array<ExprTsysItem> params(type->GetParamCount());
-						for (vint k = 0; k < params.Count(); k++)
-						{
-							params[k] = { nullptr,ExprTsysType::PRValue,type->GetParam(k)->MemberOf(classType->GetParam(k)) };
+							Array<ExprTsysItem> params(type->GetParamCount());
+							for (vint k = 0; k < params.Count(); k++)
+							{
+								params[k] = { nullptr,ExprTsysType::PRValue,type->GetParam(k)->MemberOf(classType->GetParam(k)) };
+							}
+							AddResult(pa.tsys->InitOf(params));
 						}
-						AddResult(pa.tsys->InitOf(params));
+						else
+						{
+							AddResult(pa.tsys->Any());
+						}
 					}
 					else
 					{
