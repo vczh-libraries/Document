@@ -192,7 +192,7 @@ using Func = R(*)(Ptr<TArgs>&&...);
 	AssertType(pa, L"Func<bool, int>",								L"Func<bool, int>",								L"bool (int * &&) *"										);
 	AssertType(pa, L"Func<bool, int, bool, char, double>",			L"Func<bool, int, bool, char, double>",			L"bool (int * &&, bool * &&, char * &&, double * &&) *"		);
 }
-
+/*
 TEST_CASE(TestParseTypeAlias_VTA_Exprs)
 {
 	auto input = LR"(
@@ -316,3 +316,4 @@ template<typename T, typename... Ts>								using ApplyTwoVta_1 =	TwoVta<T, Ts..
 	AssertType(pa, L"ApplyTwoVta_1<int, char>",					L"ApplyTwoVta_1<int, char>",					L"{int $PR, char $PR}"															);
 	AssertType(pa, L"ApplyTwoVta_1<int, char, bool>",			L"ApplyTwoVta_1<int, char, bool>",				L"{int $PR, char $PR, bool $PR}"												);
 }
+*/

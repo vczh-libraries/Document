@@ -231,7 +231,25 @@ public:
 						paramCount++;
 					}
 				}
-				throw 0;
+
+				Array<ExprTsysItem> params(paramCount);
+				vint currentParam = 0;
+				for (vint i = 1; i < count; i++)
+				{
+					if (isVtas[i])
+					{
+						auto tsysVta = tsyses[i][tsysIndex[i]];
+						vint paramVtaCount = tsysVta->GetParamCount();
+						for (vint j = 0; j < paramVtaCount; j++)
+						{
+							params[currentParam++] = { nullptr,ExprTsysType::PRValue,tsysVta->GetParam(j) };
+						}
+					}
+					else
+					{
+						params[currentParam++] = { nullptr,ExprTsysType::PRValue,tsyses[i][tsysIndex[i]] };
+					}
+				}
 			}
 			else
 			{
