@@ -158,7 +158,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;
 			argumentSymbol->evaluation.Allocate();
-			TypeToTsys(newPa, argument.type, argumentSymbol->evaluation.Get(), nullptr);
+			TypeToTsysNoVta(newPa, argument.type, argumentSymbol->evaluation.Get(), nullptr);
 			if (argumentSymbol->evaluation.Get().Count() == 0)
 			{
 				throw StopParsingException(cursor);
