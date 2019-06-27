@@ -178,18 +178,64 @@ using SizeOfExprs = decltype(sizeof...Numbers);
 TEST_CASE(TestParseTypeAlias_VTA_Types)
 {
 	auto input = LR"(
+struct A{ typedef int X; };
+struct B{ typedef bool X; };
+struct C{ typedef char X; };
+struct D{ typedef double X; };
+struct X{};
+struct Y{};
+
 template<typename R, typename... TArgs>
-using Func = R(*)(TArgs*&&...);
+using Ref = R(*)(TArgs*&&...);
+
+template<typename R, typename... TArgs>
+using Array = R(*)(TArgs[10]...);
+
+template<typename R, typename... TArgs>
+using Member1 = R(*)(X TArgs::*...);
+
+template<typename R, typename... TArgs>
+using Member2 = R(*)(TArgs Y::*...);
+
+template<typename R, typename... TArgs>
+using Member3 = R(*)(TArgs TArgs::*...);
+
+template<typename R, typename... TArgs>
+using Child = R(*)(const volatile typename TArgs::X...);
 )";
-	// TODO: Test all types here, including GenericType
 	// TODO: Test type passings by function types, unlike TestParseTypeAlias_VTA_ApplyOn_VTA_Default by init expression
 	COMPILE_PROGRAM(program, pa, input);
 	
-	AssertType(pa, L"Func",											L"Func",										L"<::Func::[R], ...::Func::[TArgs]> any_t"					);
+	AssertType(pa, L"Ref",											L"Ref",											L"<::Ref::[R], ...::Ref::[TArgs]> any_t"						);
+	AssertType(pa, L"Array",										L"Array",										L"<::Array::[R], ...::Array::[TArgs]> any_t"					);
+	AssertType(pa, L"Member1",										L"Member1",										L"<::Member1::[R], ...::Member1::[TArgs]> any_t"				);
+	AssertType(pa, L"Member2",										L"Member2",										L"<::Member2::[R], ...::Member2::[TArgs]> any_t"				);
+	AssertType(pa, L"Member3",										L"Member3",										L"<::Member3::[R], ...::Member3::[TArgs]> any_t"				);
+	AssertType(pa, L"Child",										L"Child",										L"<::Child::[R], ...::Child::[TArgs]> any_t"					);
 
-	AssertType(pa, L"Func<bool>",									L"Func<bool>",									L"bool () *"												);
-	AssertType(pa, L"Func<bool, int>",								L"Func<bool, int>",								L"bool (int * &&) *"										);
-	AssertType(pa, L"Func<bool, int, bool, char, double>",			L"Func<bool, int, bool, char, double>",			L"bool (int * &&, bool * &&, char * &&, double * &&) *"		);
+	AssertType(pa, L"Ref<bool>",									L"Ref<bool>",									L"bool () *"													);
+	AssertType(pa, L"Ref<bool, int>",								L"Ref<bool, int>",								L"bool (int * &&) *"											);
+	AssertType(pa, L"Ref<bool, int, bool, char, double>",			L"Ref<bool, int, bool, char, double>",			L"bool (int * &&, bool * &&, char * &&, double * &&) *"			);
+
+	AssertType(pa, L"Array<bool>",									L"Array<bool>",									L"bool () *"													);
+	AssertType(pa, L"Array<bool, int>",								L"Array<bool, int>",							L"bool (int []) *"												);
+	AssertType(pa, L"Array<bool, int, bool, char, double>",			L"Array<bool, int, bool, char, double>",		L"bool (int [], bool [], char [], double []) *"					);
+
+	AssertType(pa, L"Member1<bool>",								L"Member1<bool>",								L"bool () *"																	);
+	AssertType(pa, L"Member1<bool, A>",								L"Member1<bool, A>",							L"bool (::X (::A ::) *) *"														);
+	AssertType(pa, L"Member1<bool, A, B, C, D>",					L"Member1<bool, A, B, C, D>",					L"bool (::X (::A ::) *, ::X (::B ::) *, ::X (::C ::) *, ::X (::D ::) *) *"		);
+
+	AssertType(pa, L"Member2<bool>",								L"Member2<bool>",								L"bool () *"																	);
+	AssertType(pa, L"Member2<bool, A>",								L"Member2<bool, A>",							L"bool (::A (::Y ::) *) *"														);
+	AssertType(pa, L"Member2<bool, A, B, C, D>",					L"Member2<bool, A, B, C, D>",					L"bool (::A (::Y ::) *, ::B (::Y ::) *, ::C (::Y ::) *, ::D (::Y ::) *) *"		);
+
+	AssertType(pa, L"Member3<bool>",								L"Member3<bool>",								L"bool () *"																	);
+	AssertType(pa, L"Member3<bool, A>",								L"Member3<bool, A>",							L"bool (::A (::A ::) *) *"														);
+	AssertType(pa, L"Member3<bool, A, B, C, D>",					L"Member3<bool, A, B, C, D>",					L"bool (::A (::A ::) *, ::B (::B ::) *, ::C (::C ::) *, ::D (::D ::) *) *"		);
+
+	AssertType(pa, L"Child<bool>",									L"Child<bool>",									L"bool () *"																						);
+	AssertType(pa, L"Child<bool, A>",								L"Child<bool, A>",								L"bool (int const volatile) *"																		);
+	AssertType(pa, L"Child<bool, A, B, C, D>",						L"Child<bool, A, B, C, D>",						L"bool (int const volatile, bool const volatile, char const volatile, double const volatile) *"		);
 }
 /*
 TEST_CASE(TestParseTypeAlias_VTA_Exprs)

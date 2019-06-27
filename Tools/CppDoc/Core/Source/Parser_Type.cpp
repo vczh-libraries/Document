@@ -355,6 +355,10 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, bool typenameType, Ptr<CppT
 		dt->isVolatile = true;
 		return dt;
 	}
+	else if (TestToken(cursor, CppTokens::TYPENAME))
+	{
+		return ParseShortType(pa, true, cursor);
+	}
 	else
 	{
 		{
@@ -373,8 +377,11 @@ ParseLongType
 
 Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	bool typenameType = TestToken(cursor, CppTokens::TYPENAME);
-	Ptr<Type> typeResult = ParseShortType(pa, typenameType, cursor);
+	Ptr<Type> typeResult;
+	{
+		bool typenameType = TestToken(cursor, CppTokens::TYPENAME);
+		typeResult = ParseShortType(pa, typenameType, cursor);
+	}
 
 	while (true)
 	{
