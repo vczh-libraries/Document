@@ -232,7 +232,7 @@ public:
 					}
 				}
 
-				Array<ExprTsysItem> params(paramCount);
+				Array<ITsys*> params(paramCount);
 				vint currentParam = 0;
 				for (vint i = 1; i < count; i++)
 				{
@@ -242,14 +242,15 @@ public:
 						vint paramVtaCount = tsysVta->GetParamCount();
 						for (vint j = 0; j < paramVtaCount; j++)
 						{
-							params[currentParam++] = { nullptr,ExprTsysType::PRValue,tsysVta->GetParam(j) };
+							params[currentParam++] = tsysVta->GetParam(j);
 						}
 					}
 					else
 					{
-						params[currentParam++] = { nullptr,ExprTsysType::PRValue,tsyses[i][tsysIndex[i]] };
+						params[currentParam++] = tsyses[i][tsysIndex[i]];
 					}
 				}
+				AddResult(tsyses[0][tsysIndex[0]]->FunctionOf(params, func));
 			}
 			else
 			{
@@ -460,18 +461,25 @@ public:
 				}
 				else
 				{
-					if (classTypesVta && classType->GetType() == TsysType::Init)
+					if (classTypesVta)
 					{
-						Array<ExprTsysItem> params(classType->GetParamCount());
-						for (vint k = 0; k < params.Count(); k++)
+						if (classType->GetType() == TsysType::Init)
 						{
-							params[k] = { nullptr,ExprTsysType::PRValue,type->MemberOf(classType) };
+							Array<ExprTsysItem> params(classType->GetParamCount());
+							for (vint k = 0; k < params.Count(); k++)
+							{
+								params[k] = { nullptr,ExprTsysType::PRValue,type->MemberOf(classType->GetParam(k)) };
+							}
+							AddResult(pa.tsys->InitOf(params));
 						}
-						AddResult(pa.tsys->InitOf(params));
+						else
+						{
+							AddResult(pa.tsys->Any());
+						}
 					}
 					else
 					{
-						AddResult(types[i]->MemberOf(classTypes[j]));
+						AddResult(type->MemberOf(classType));
 					}
 				}
 			}
