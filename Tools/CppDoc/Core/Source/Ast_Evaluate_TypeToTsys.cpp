@@ -54,7 +54,7 @@ public:
 					Array<ExprTsysItem> params(tsys->GetParamCount());
 					for (vint j = 0; j < params.Count(); j++)
 					{
-						params[j] = { nullptr,ExprTsysType::PRValue,process(self, tsys->GetParam(j)) };
+						params[j] = { nullptr,ExprTsysType::PRValue,(this->*process)(self, tsys->GetParam(j)) };
 					}
 					result[i] = pa.tsys->InitOf(params);
 				}
@@ -65,7 +65,7 @@ public:
 			}
 			else
 			{
-				result[i] = process(self, tsys);
+				result[i] = (this->*process)(self, tsys);
 			}
 		}
 	}
@@ -758,7 +758,7 @@ public:
 		TypeTsysList genericTypes;
 		Array<Ptr<TypeTsysList>> argumentTypes;
 
-		TypeToTsys(pa, self->type, genericTypes, gaContext);
+		TypeToTsysNoVta(pa, self->type, genericTypes, gaContext);
 		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, argumentTypes, gaContext);
 
 		for (vint i = 0; i < genericTypes.Count(); i++)

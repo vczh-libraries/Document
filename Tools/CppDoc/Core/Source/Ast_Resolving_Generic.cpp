@@ -58,6 +58,7 @@ namespace symbol_type_resolving
 	ResolveGenericArguments: Calculate types from generic arguments
 	***********************************************************************/
 
+	// TODO: This function will be replaced by the below one
 	void ResolveGenericArguments(const ParsingArguments& pa, List<GenericArgument>& arguments, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* gaContext)
 	{
 		argumentTypes.Resize(arguments.Count());
@@ -67,7 +68,30 @@ namespace symbol_type_resolving
 			if (argument.type)
 			{
 				argumentTypes[i] = MakePtr<TypeTsysList>();
-				TypeToTsys(pa, argument.type, *argumentTypes[i].Obj(), gaContext);
+				TypeToTsysNoVta(pa, argument.type, *argumentTypes[i].Obj(), gaContext);
+			}
+		}
+	}
+
+	void ResolveGenericArguments(const ParsingArguments& pa, VariadicList<GenericArgument>& arguments, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* gaContext)
+	{
+		// TODO: Implement variadic template argument passing
+		for (vint i = 0; i < arguments.Count(); i++)
+		{
+			if (arguments[i].isVariadic)
+			{
+				throw NotConvertableException();
+			}
+		}
+
+		argumentTypes.Resize(arguments.Count());
+		for (vint i = 0; i < arguments.Count(); i++)
+		{
+			auto argument = arguments[i];
+			if (argument.item.type)
+			{
+				argumentTypes[i] = MakePtr<TypeTsysList>();
+				TypeToTsysNoVta(pa, argument.item.type, *argumentTypes[i].Obj(), gaContext);
 			}
 		}
 	}
@@ -236,7 +260,7 @@ namespace symbol_type_resolving
 						throw NotConvertableException();
 					}
 					TypeTsysList argTypes;
-					TypeToTsys(pa.WithContext(genericSymbol), spec->arguments[i].type, argTypes, newGaContext);
+					TypeToTsysNoVta(pa.WithContext(genericSymbol), spec->arguments[i].type, argTypes, newGaContext);
 
 					for (vint j = 0; j < argTypes.Count(); j++)
 					{

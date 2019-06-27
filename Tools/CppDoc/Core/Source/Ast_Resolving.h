@@ -69,5 +69,6 @@ namespace symbol_type_resolving
 
 	extern void				CreateGenericFunctionHeader(Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction);
 	extern void				ResolveGenericArguments(const ParsingArguments& pa, List<GenericArgument>& arguments, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* gaContext);
+	extern void				ResolveGenericArguments(const ParsingArguments& pa, VariadicList<GenericArgument>& arguments, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* gaContext);
 	extern bool				ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* newGaContext);
 }
