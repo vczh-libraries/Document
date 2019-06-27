@@ -87,6 +87,9 @@
     <ClCompile Include="TestTypeConvertGeneric.cpp">
       <Filter>Source Files\TestParserGeneric</Filter>
     </ClCompile>
+    <ClCompile Include="TestParseVariadicTemplateArgument.cpp">
+      <Filter>Source Files\TestParserGeneric</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">
