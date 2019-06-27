@@ -185,7 +185,7 @@ using Func = R(*)(TArgs*&&...);
 	// TODO: Test type passings by function types, unlike TestParseTypeAlias_VTA_ApplyOn_VTA_Default by init expression
 	COMPILE_PROGRAM(program, pa, input);
 	
-	AssertType(pa, L"Func",											L"Func",										L"<::Func::[R], ...::Func::[TArgs]> any_t"				);
+	AssertType(pa, L"Func",											L"Func",										L"<::Func::[R], ...::Func::[TArgs]> any_t"					);
 
 	AssertType(pa, L"Func<bool>",									L"Func<bool>",									L"bool () *"												);
 	AssertType(pa, L"Func<bool, int>",								L"Func<bool, int>",								L"bool (int * &&) *"										);
