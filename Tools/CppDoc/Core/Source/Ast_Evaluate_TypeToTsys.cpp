@@ -336,7 +336,7 @@ public:
 				throw NotConvertableException();
 			}
 
-			for (vint i = 1; 1 < count; i++)
+			for (vint i = 1; i < count; i++)
 			{
 				if (isVtas[i])
 				{
@@ -694,7 +694,28 @@ public:
 	{
 		TypeTsysList types;
 		bool parentIsVta = false;
-		TypeToTsysInternal(pa, self->classType.Obj(), types, gaContext, parentIsVta);
+		{
+			bool allNamespaces = true;
+			if (auto resolvableType = self->classType.Cast<ResolvableType>())
+			{
+				if (auto resolving = resolvableType->resolving)
+				{
+					for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+					{
+						if (resolving->resolvedSymbols[i]->kind != symbol_component::SymbolKind::Namespace)
+						{
+							allNamespaces = false;
+							break;
+						}
+					}
+				}
+			}
+
+			if (!allNamespaces)
+			{
+				TypeToTsysInternal(pa, self->classType.Obj(), types, gaContext, parentIsVta);
+			}
+		}
 
 		if (parentIsVta)
 		{
@@ -816,8 +837,8 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 {
 	if (!t) throw NotConvertableException();
 	TypeToTsysVisitor visitor(pa, tsys, nullptr, gaContext, memberOf, cc);
-	isVta = visitor.isVta;
 	t->Accept(&visitor);
+	isVta = visitor.isVta;
 }
 
 void TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf, TsysCallingConvention cc)

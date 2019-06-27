@@ -293,7 +293,8 @@ public:
 		if (self->type)
 		{
 			TypeTsysList types;
-			TypeToTsysNoVta(pa, self->type, types, gaContext);
+			bool typeIsVta = false;
+			TypeToTsysInternal(pa, self->type.Obj(), types, gaContext, typeIsVta);
 		}
 		if (self->expr)
 		{
