@@ -209,7 +209,15 @@ public:
 				params[i] = tsyses[i + 1][tsysIndex[i + 1]];
 			}
 		}
-		return tsyses[0][tsysIndex[0]]->FunctionOf(params, func);
+
+		if (isVtas[0])
+		{
+			return tsyses[0][tsysIndex[0]]->GetParam(unboundedVtaIndex)->FunctionOf(params, func);
+		}
+		else
+		{
+			return tsyses[0][tsysIndex[0]]->FunctionOf(params, func);
+		}
 	}
 
 	void CreateFunctionType(TypeTsysList* tsyses, bool* isVtas, bool isBoundedVta, vint* tsysIndex, vint level, vint count, vint unboundedVtaCount, const TsysFunc& func)
@@ -298,11 +306,11 @@ public:
 			}
 			else if (self->decoratorReturnType)
 			{
-				TypeToTsysNoVta(pa, self->decoratorReturnType, tsyses[0], gaContext);
+				TypeToTsysInternal(pa, self->decoratorReturnType.Obj(), tsyses[0], gaContext, isVtas[0]);
 			}
 			else if (self->returnType)
 			{
-				TypeToTsysNoVta(pa, self->returnType, tsyses[0], gaContext);
+				TypeToTsysInternal(pa, self->returnType.Obj(), tsyses[0], gaContext, isVtas[0]);
 			}
 			else
 			{
@@ -315,7 +323,7 @@ public:
 			}
 
 			bool hasBoundedVta = false;
-			bool hasUnboundedVta = false;
+			bool hasUnboundedVta = isVtas[0];
 			vint unboundedVtaCount = -1;
 			for (vint i = 1; i < count; i++)
 			{
@@ -336,8 +344,9 @@ public:
 			{
 				throw NotConvertableException();
 			}
+			isVta = hasUnboundedVta;
 
-			for (vint i = 1; i < count; i++)
+			for (vint i = 0; i < count; i++)
 			{
 				if (isVtas[i])
 				{
@@ -354,7 +363,7 @@ public:
 
 			if (hasUnboundedVta)
 			{
-				for (vint i = 1; 1 < count; i++)
+				for (vint i = 0; i < count; i++)
 				{
 					if (isVtas[i])
 					{
