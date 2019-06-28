@@ -195,7 +195,7 @@ public:
 	// FunctionType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	static ITsys* CreateUnboundedFunctionType(TypeTsysList* tsyses, bool* isVtas, vint* tsysIndex, vint count, vint unboundedVtaIndex, const TsysFunc& func)
+	static ITsys* CreateUnboundedFunctionType(Array<TypeTsysList>& tsyses, Array<bool>& isVtas, Array<vint>& tsysIndex, vint count, vint unboundedVtaIndex, const TsysFunc& func)
 	{
 		Array<ITsys*> params(count - 1);
 		for (vint i = 0; i < count - 1; i++)
@@ -220,7 +220,7 @@ public:
 		}
 	}
 
-	void CreateFunctionType(TypeTsysList* tsyses, bool* isVtas, bool isBoundedVta, vint* tsysIndex, vint level, vint count, vint unboundedVtaCount, const TsysFunc& func)
+	void CreateFunctionType(Array<TypeTsysList>& tsyses, Array<bool>& isVtas, bool isBoundedVta, Array<vint>& tsysIndex, vint level, vint count, vint unboundedVtaCount, const TsysFunc& func)
 	{
 		if (level == count)
 		{
@@ -290,126 +290,108 @@ public:
 
 	void Visit(FunctionType* self)override
 	{
-		TypeTsysList* tsyses = nullptr;
-		bool* isVtas = nullptr;
-		vint* tsysIndex = nullptr;
-		try
+		vint count = self->parameters.Count() + 1;
+		Array<TypeTsysList> tsyses(count);
+		Array<bool> isVtas(count);
+		isVtas[0] = false;
+
+		if (returnTypes)
 		{
-			vint count = self->parameters.Count() + 1;
-			tsyses = new TypeTsysList[count];
-			isVtas = new bool[count];
-			isVtas[0] = false;
+			CopyFrom(tsyses[0], *returnTypes);
+		}
+		else if (self->decoratorReturnType)
+		{
+			TypeToTsysInternal(pa, self->decoratorReturnType, tsyses[0], gaContext, isVtas[0]);
+		}
+		else if (self->returnType)
+		{
+			TypeToTsysInternal(pa, self->returnType, tsyses[0], gaContext, isVtas[0]);
+		}
+		else
+		{
+			tsyses[0].Add(pa.tsys->Void());
+		}
 
-			if (returnTypes)
-			{
-				CopyFrom(tsyses[0], *returnTypes);
-			}
-			else if (self->decoratorReturnType)
-			{
-				TypeToTsysInternal(pa, self->decoratorReturnType, tsyses[0], gaContext, isVtas[0]);
-			}
-			else if (self->returnType)
-			{
-				TypeToTsysInternal(pa, self->returnType, tsyses[0], gaContext, isVtas[0]);
-			}
-			else
-			{
-				tsyses[0].Add(pa.tsys->Void());
-			}
+		for (vint i = 1; i < count; i++)
+		{
+			TypeToTsysInternal(pa, self->parameters[i - 1].item->type, tsyses[i], gaContext, isVtas[i]);
+		}
 
-			for (vint i = 1; i < count; i++)
+		bool hasBoundedVta = false;
+		bool hasUnboundedVta = isVtas[0];
+		vint unboundedVtaCount = -1;
+		for (vint i = 1; i < count; i++)
+		{
+			if (isVtas[i])
 			{
-				TypeToTsysInternal(pa, self->parameters[i - 1].item->type, tsyses[i], gaContext, isVtas[i]);
-			}
-
-			bool hasBoundedVta = false;
-			bool hasUnboundedVta = isVtas[0];
-			vint unboundedVtaCount = -1;
-			for (vint i = 1; i < count; i++)
-			{
-				if (isVtas[i])
+				if (self->parameters[i - 1].isVariadic)
 				{
-					if (self->parameters[i - 1].isVariadic)
+					hasBoundedVta = true;
+				}
+				else
+				{
+					hasUnboundedVta = true;
+				}
+			}
+		}
+
+		if (hasBoundedVta && hasUnboundedVta)
+		{
+			throw NotConvertableException();
+		}
+		isVta = hasUnboundedVta;
+
+		for (vint i = 0; i < count; i++)
+		{
+			if (isVtas[i])
+			{
+				for (vint j = 0; j < tsyses[i].Count(); j++)
+				{
+					if (tsyses[i][j]->GetType() != TsysType::Init)
 					{
-						hasBoundedVta = true;
-					}
-					else
-					{
-						hasUnboundedVta = true;
+						AddResult(pa.tsys->Any());
+						return;
 					}
 				}
 			}
+		}
 
-			if (hasBoundedVta && hasUnboundedVta)
-			{
-				throw NotConvertableException();
-			}
-			isVta = hasUnboundedVta;
-
+		if (hasUnboundedVta)
+		{
 			for (vint i = 0; i < count; i++)
 			{
 				if (isVtas[i])
 				{
 					for (vint j = 0; j < tsyses[i].Count(); j++)
 					{
-						if (tsyses[i][j]->GetType() != TsysType::Init)
+						vint currentVtaCount = tsyses[i][j]->GetParamCount();
+						if (unboundedVtaCount == -1)
 						{
-							AddResult(pa.tsys->Any());
-							goto FINISH_FUNCTION_TYPE;
+							unboundedVtaCount = currentVtaCount;
+						}
+						else if (unboundedVtaCount != currentVtaCount)
+						{
+							throw NotConvertableException();
 						}
 					}
 				}
 			}
-
-			if (hasUnboundedVta)
-			{
-				for (vint i = 0; i < count; i++)
-				{
-					if (isVtas[i])
-					{
-						for (vint j = 0; j < tsyses[i].Count(); j++)
-						{
-							vint currentVtaCount = tsyses[i][j]->GetParamCount();
-							if (unboundedVtaCount == -1)
-							{
-								unboundedVtaCount = currentVtaCount;
-							}
-							else if (unboundedVtaCount != currentVtaCount)
-							{
-								throw NotConvertableException();
-							}
-						}
-					}
-				}
-			}
-
-			{
-				tsysIndex = new vint[count];
-				memset(tsysIndex, 0, sizeof(vint) * count);
-
-				TsysFunc func(cc, self->ellipsis);
-				if (func.callingConvention == TsysCallingConvention::None)
-				{
-					func.callingConvention =
-						memberOf && !func.ellipsis
-						? TsysCallingConvention::ThisCall
-						: TsysCallingConvention::CDecl
-						;
-				}
-				CreateFunctionType(tsyses, isVtas, hasBoundedVta, tsysIndex, 0, count, unboundedVtaCount, func);
-			}
-
-		FINISH_FUNCTION_TYPE:
-			delete[] tsyses;
-			delete[] isVtas;
-			delete[] tsysIndex;
 		}
-		catch (...)
+
 		{
-			delete[] tsyses;
-			delete[] isVtas;
-			delete[] tsysIndex;
-			throw;
+			Array<vint> tsysIndex(count);
+			memset(&tsysIndex[0], 0, sizeof(vint) * count);
+
+			TsysFunc func(cc, self->ellipsis);
+			if (func.callingConvention == TsysCallingConvention::None)
+			{
+				func.callingConvention =
+					memberOf && !func.ellipsis
+					? TsysCallingConvention::ThisCall
+					: TsysCallingConvention::CDecl
+					;
+			}
+			CreateFunctionType(tsyses, isVtas, hasBoundedVta, tsysIndex, 0, count, unboundedVtaCount, func);
 		}
 	}
 

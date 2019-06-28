@@ -34,8 +34,14 @@ struct D{ typedef double X; };
 struct X{};
 struct Y{};
 
+template<typename T>
+using PtrLRef = T*&&;
+
 template<typename R, typename... TArgs>
 using Ref = R(*)(TArgs*&&...);
+
+template<typename R, typename... TArgs>
+using Ref2 = R(*)(PtrLRef<TArgs>...);
 
 template<typename R, typename... TArgs>
 using Array = R(*)(TArgs[10]...);
@@ -65,6 +71,7 @@ using Func3 = R(*)(TArgs(*)(TArgs)...);
 	COMPILE_PROGRAM(program, pa, input);
 	
 	AssertType(pa, L"Ref",											L"Ref",											L"<::Ref::[R], ...::Ref::[TArgs]> any_t"																					);
+	AssertType(pa, L"Ref2",											L"Ref2",										L"<::Ref2::[R], ...::Ref2::[TArgs]> any_t"																					);
 	AssertType(pa, L"Array",										L"Array",										L"<::Array::[R], ...::Array::[TArgs]> any_t"																				);
 	AssertType(pa, L"Child",										L"Child",										L"<::Child::[R], ...::Child::[TArgs]> any_t"																				);
 	AssertType(pa, L"Member1",										L"Member1",										L"<::Member1::[R], ...::Member1::[TArgs]> any_t"																			);
@@ -77,6 +84,10 @@ using Func3 = R(*)(TArgs(*)(TArgs)...);
 	AssertType(pa, L"Ref<bool>",									L"Ref<bool>",									L"bool __cdecl() *"																											);
 	AssertType(pa, L"Ref<bool, int>",								L"Ref<bool, int>",								L"bool __cdecl(__int32 * &&) *"																								);
 	AssertType(pa, L"Ref<bool, int, bool, char, double>",			L"Ref<bool, int, bool, char, double>",			L"bool __cdecl(__int32 * &&, bool * &&, char * &&, double * &&) *"															);
+
+	AssertType(pa, L"Ref2<bool>",									L"Ref2<bool>",									L"bool __cdecl() *"																											);
+	AssertType(pa, L"Ref2<bool, int>",								L"Ref2<bool, int>",								L"bool __cdecl(__int32 * &&) *"																								);
+	AssertType(pa, L"Ref2<bool, int, bool, char, double>",			L"Ref2<bool, int, bool, char, double>",			L"bool __cdecl(__int32 * &&, bool * &&, char * &&, double * &&) *"															);
 
 	AssertType(pa, L"Array<bool>",									L"Array<bool>",									L"bool __cdecl() *"																											);
 	AssertType(pa, L"Array<bool, int>",								L"Array<bool, int>",							L"bool __cdecl(__int32 []) *"																								);
