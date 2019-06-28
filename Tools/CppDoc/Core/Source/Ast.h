@@ -147,6 +147,7 @@ extern bool					IsPendingType(Ptr<Type> type);
 extern ITsys*				ResolvePendingType(const ParsingArguments& pa, Ptr<Type> type, ExprTsysItem target);
 
 extern void					TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool& isVta, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
+extern void					TypeToTsysInternal(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool& isVta, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
 extern void					TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
 extern void					TypeToTsysNoVta(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
 extern void					TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf);

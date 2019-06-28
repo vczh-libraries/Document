@@ -306,11 +306,11 @@ public:
 			}
 			else if (self->decoratorReturnType)
 			{
-				TypeToTsysInternal(pa, self->decoratorReturnType.Obj(), tsyses[0], gaContext, isVtas[0]);
+				TypeToTsysInternal(pa, self->decoratorReturnType, tsyses[0], gaContext, isVtas[0]);
 			}
 			else if (self->returnType)
 			{
-				TypeToTsysInternal(pa, self->returnType.Obj(), tsyses[0], gaContext, isVtas[0]);
+				TypeToTsysInternal(pa, self->returnType, tsyses[0], gaContext, isVtas[0]);
 			}
 			else
 			{
@@ -319,7 +319,7 @@ public:
 
 			for (vint i = 1; i < count; i++)
 			{
-				TypeToTsysInternal(pa, self->parameters[i - 1].item->type.Obj(), tsyses[i], gaContext, isVtas[i]);
+				TypeToTsysInternal(pa, self->parameters[i - 1].item->type, tsyses[i], gaContext, isVtas[i]);
 			}
 
 			bool hasBoundedVta = false;
@@ -425,8 +425,8 @@ public:
 		TypeTsysList types, classTypes;
 		bool typesVta = false;
 		bool classTypesVta = false;
-		TypeToTsysInternal(pa, self->type.Obj(), types, gaContext, typesVta, memberOf, cc);
-		TypeToTsysInternal(pa, self->classType.Obj(), classTypes, gaContext, classTypesVta);
+		TypeToTsysInternal(pa, self->type, types, gaContext, typesVta, memberOf, cc);
+		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classTypesVta);
 		isVta = typesVta || classTypesVta;
 
 		for (vint i = 0; i < types.Count(); i++)
@@ -730,7 +730,7 @@ public:
 
 			if (!allNamespaces)
 			{
-				TypeToTsysInternal(pa, self->classType.Obj(), types, gaContext, parentIsVta);
+				TypeToTsysInternal(pa, self->classType, types, gaContext, parentIsVta);
 			}
 		}
 
@@ -850,12 +850,17 @@ public:
 };
 
 // Convert type AST to type system object
+
 void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool& isVta, bool memberOf, TsysCallingConvention cc)
 {
 	if (!t) throw NotConvertableException();
 	TypeToTsysVisitor visitor(pa, tsys, nullptr, gaContext, memberOf, cc);
 	t->Accept(&visitor);
 	isVta = visitor.isVta;
+}
+void TypeToTsysInternal(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool& isVta, bool memberOf, TsysCallingConvention cc)
+{
+	TypeToTsysInternal(pa, t.Obj(), tsys, gaContext, isVta, memberOf, cc);
 }
 
 void TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf, TsysCallingConvention cc)
@@ -878,4 +883,8 @@ void TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type
 	if (!t) throw NotConvertableException();
 	TypeToTsysVisitor visitor(pa, tsys, &returnTypes, gaContext, memberOf, TsysCallingConvention::None);
 	t->Accept(&visitor);
+	if (visitor.isVta)
+	{
+		throw NotConvertableException();
+	}
 }
