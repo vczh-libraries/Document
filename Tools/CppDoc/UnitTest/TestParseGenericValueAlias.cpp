@@ -5,16 +5,16 @@ TEST_CASE(TestParseValueAlias)
 {
 	auto input = LR"(
 template<typename T>
-using Size = sizeof(T);
+auto Size = sizeof(T);
 
 template<typename T>
-using Ctor = T();
+auto Ctor = T();
 
 template<typename T, T Value>
-using Id = Value;
+auto Id = Value;
 
 template<typename, bool>
-using True = true;
+auto True = true;
 )";
 
 	auto output = LR"(
@@ -41,70 +41,70 @@ TEST_CASE(TestParserValueAlias_SimpleReplace)
 {
 	auto input = LR"(
 template<typename T, T Value>
-using Id = Value;
+auto Id = Value;
 
 template<typename T, T Value>
-using Parenthesis = (Value);
+auto Parenthesis = (Value);
 
 template<typename T, typename U, T Value>
-using Cast = (U)Value;
+auto Cast = (U)Value;
 
 template<typename T, T Value>
-using Throw = throw Value;
+auto Throw = throw Value;
 
 template<typename T, T Value>
-using New = new T(Value);
+auto New = new T(Value);
 
 template<typename T, T Value>
-using Delete = delete Value;
+auto Delete = delete Value;
 
 template<typename T>
-using Child = T::Value;
+auto Child = T::Value;
 
 template<typename T, T Value>
-using Field1 = Value.field;
+auto Field1 = Value.field;
 
 template<typename T, T Value>
-using Field2 = Value.T::field;
+auto Field2 = Value.T::field;
 
 template<typename T, T* Value>
-using PtrField1 = Value->field;
+auto PtrField1 = Value->field;
 
 template<typename T, T* Value>
-using PtrField2 = Value->T::field;
+auto PtrField2 = Value->T::field;
 
 template<typename T, T Value>
-using Array = Value[0];
+auto Array = Value[0];
 
 template<typename T, T Value>
-using Func = Value(0);
+auto Func = Value(0);
 
 template<typename T, T Value>
-using Ctor = T(Value);
+auto Ctor = T(Value);
 
 template<typename T, T Value>
-using Init = {nullptr, Value, 0};
+auto Init = {nullptr, Value, 0};
 
 template<typename T, T Value>
-using Postfix = {Value++, Value--};
+auto Postfix = {Value++, Value--};
 
 template<typename T, T Value>
-using Prefix = {++Value, --Value, &Value, *Value};
+auto Prefix = {++Value, --Value, &Value, *Value};
 
 template<typename T, typename U, T ValueT, U ValueU>
-using Binary1 = ValueT.*ValueU;
+auto Binary1 = ValueT.*ValueU;
 
 template<typename T, typename U, T ValueT, U ValueU>
-using Binary2 = ValueT->*ValueU;
+auto Binary2 = ValueT->*ValueU;
 
 template<typename T, typename U, T ValueT, U ValueU>
-using Binary3 = ValueT+ValueU;
+auto Binary3 = ValueT+ValueU;
 
 template<typename T, typename U, T ValueT, U ValueU>
-using Binary4 = ValueT, ValueU;
+auto Binary4 = ValueT, ValueU;
 
 template<typename T, T Value>
-using If = Value ? Value : Value;
+auto If = Value ? Value : Value;
 
 struct S
 {
@@ -178,7 +178,7 @@ void F(...);
 char(&F(char(&)[10]))[10];
 
 template<typename T, T* Value>
-using C = F(Value);
+auto C = F(Value);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
@@ -194,17 +194,17 @@ TEST_CASE(TestParseValueAlias_Template)
 	auto input = LR"(
 struct S
 {
-	using X = 0;
+	static auto X = 0;
 
 	template<typename T>
-	using Y = static_cast<T*>(nullptr);
+	static auto Y = static_cast<T*>(nullptr);
 };
 
 template<typename T>
-using X = T::X;
+auto X = T::X;
 
 template<typename T>
-using Y = T::template Y<T>;
+auto Y = T::template Y<T>;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
@@ -222,13 +222,13 @@ char F(int, int);
 float F(bool, bool);
 
 template<typename T, typename U>
-using Func = T(*)(U);
+auto Func = T(*)(U);
 
 template<typename U, typename T>
-using ReverseFunc = T(*)(U);
+auto ReverseFunc = T(*)(U);
 
 template<typename T, T TValue = T(), typename U = decltype(F(T(), TValue)), template<typename, typename> class V = Func>
-using X = {T{}, TValue, U{}, V<T, U>{}};
+auto X = {T{}, TValue, U{}, V<T, U>{}};
 )";
 	COMPILE_PROGRAM(program, pa, input);
 

@@ -889,6 +889,9 @@ private:
 		if (self->decoratorRegister) writer.WriteString(L"register ");
 		if (self->decoratorStatic) writer.WriteString(L"static ");
 		if (self->decoratorThreadLocal) writer.WriteString(L"thread_local ");
+		if (self->decoratorInline) writer.WriteString(L"inline ");
+		if (self->decorator__Inline) writer.WriteString(L"__inline ");
+		if (self->decorator__ForceInline) writer.WriteString(L"__forceinline ");
 		if (self->name)
 		{
 			writer.WriteString(self->name.name);
@@ -1248,16 +1251,10 @@ public:
 
 		writer.WriteString(L"using_value ");
 		writer.WriteString(self->name.name);
-		if (self->type)
-		{
-			writer.WriteString(L": ");
-			Log(self->type, writer);
-		}
-		if (self->expr)
-		{
-			writer.WriteString(L" = ");
-			Log(self->expr, writer);
-		}
+		writer.WriteString(L": ");
+		Log(self->type, writer);
+		writer.WriteString(L" = ");
+		Log(self->expr, writer);
 		if (semicolon) writer.WriteLine(L";");
 	}
 

@@ -94,6 +94,9 @@ public:
 	bool											decoratorMutable = false;
 	bool											decoratorThreadLocal = false;
 	bool											decoratorRegister = false;
+	bool											decoratorInline = false;
+	bool											decorator__Inline = false;
+	bool											decorator__ForceInline = false;
 	bool											needResolveTypeFromInitializer = false;
 };
 
@@ -264,6 +267,7 @@ public:
 	Ptr<TemplateSpec>								templateSpec;
 	Ptr<Type>										type;
 	Ptr<Expr>										expr;
+	bool											needResolveTypeFromInitializer = false;
 };
 
 class NamespaceDeclaration : public Declaration

@@ -638,45 +638,18 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 				goto SKIP_TYPE_ALIAS;
 			}
 
-			Ptr<Type> usingType;
-			Ptr<Expr> usingExpr;
 			auto newPa = spec.f1 ? pa.WithContext(spec.f0.Obj()) : pa;
-			auto kind = ParseTypeOrExpr(newPa, pea_Full(), cursor, usingType, usingExpr)
-				? symbol_component::SymbolKind::TypeAlias
-				: symbol_component::SymbolKind::ValueAlias
-				;
+
+			auto decl = MakePtr<TypeAliasDeclaration>();
+			decl->templateSpec = spec.f1;
+			decl->name = cppName;
+			decl->type = ParseType(newPa, cursor);
 			RequireToken(cursor, CppTokens::SEMICOLON);
 
-			switch (kind)
+			output.Add(decl);
+			if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias, spec.f0))
 			{
-			case symbol_component::SymbolKind::TypeAlias:
-				{
-					auto decl = MakePtr<TypeAliasDeclaration>();
-					decl->templateSpec = spec.f1;
-					decl->name = cppName;
-					decl->type = usingType;
-					output.Add(decl);
-
-					if (!pa.context->AddDeclToSymbol(decl, kind, spec.f0))
-					{
-						throw StopParsingException(cursor);
-					}
-				}
-				break;
-			case symbol_component::SymbolKind::ValueAlias:
-				{
-					auto decl = MakePtr<ValueAliasDeclaration>();
-					decl->templateSpec = spec.f1;
-					decl->name = cppName;
-					decl->expr = usingExpr;
-					output.Add(decl);
-
-					if (!pa.context->AddDeclToSymbol(decl, kind, spec.f0))
-					{
-						throw StopParsingException(cursor);
-					}
-				}
-				break;
+				throw StopParsingException(cursor);
 			}
 
 			return;
@@ -866,6 +839,9 @@ ParseDeclaration_FuncVar
 	F(Mutable)\
 	F(ThreadLocal)\
 	F(Register)\
+	F(Inline)\
+	F(__Inline)\
+	F(__ForceInline)\
 
 #define FUNCVAR_PARAMETER(NAME) bool decorator##NAME,
 #define FUNCVAR_ARGUMENT(NAME) decorator##NAME,
@@ -995,6 +971,7 @@ void ParseDeclaration_Function(
 
 void ParseDeclaration_Variable(
 	const ParsingArguments& pa,
+	const TemplateSpecResult& spec,
 	Ptr<Declarator> declarator,
 	FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_PARAMETER)
 	ClassDeclaration* containingClassForMember,
@@ -1008,50 +985,72 @@ void ParseDeclaration_Variable(
 		throw StopParsingException(cursor);
 	}
 
-#define FILL_VARIABLE\
-	decl->name = declarator->name;\
-	decl->type = declarator->type;\
-	FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_FILL_DECLARATOR)\
-	decl->needResolveTypeFromInitializer = needResolveTypeFromInitializer\
-
-	bool needResolveTypeFromInitializer = IsPendingType(declarator->type);
-	if (needResolveTypeFromInitializer && (!declarator->initializer || declarator->initializer->initializerType != CppInitializerType::Equal))
+	if (spec.f1)
 	{
-		throw StopParsingException(cursor);
-	}
-
-	auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
-	if (decoratorExtern || (decoratorStatic && !declarator->initializer))
-	{
-		// if there is extern, or static without an initializer, then it is a forward variable declaration
-		if (containingClassForMember)
+		if (!declarator->initializer || declarator->initializer->initializerType != CppInitializerType::Equal)
 		{
 			throw StopParsingException(cursor);
 		}
 
-		auto decl = MakePtr<ForwardVariableDeclaration>();
-		FILL_VARIABLE;
+		auto decl = MakePtr<ValueAliasDeclaration>();
+		decl->name = declarator->name;
+		decl->type = declarator->type;
+		decl->expr = declarator->initializer->arguments[0];
+		decl->needResolveTypeFromInitializer = IsPendingType(declarator->type);
 		output.Add(decl);
 
-		if (!context->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
+		if (!pa.context->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::ValueAlias))
 		{
 			throw StopParsingException(cursor);
 		}
 	}
 	else
 	{
-		// it is a variable declaration
-		auto decl = MakePtr<VariableDeclaration>();
-		FILL_VARIABLE;
-		decl->initializer = declarator->initializer;
-		output.Add(decl);
+#define FILL_VARIABLE\
+	decl->name = declarator->name;\
+	decl->type = declarator->type;\
+	FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_FILL_DECLARATOR)\
+	decl->needResolveTypeFromInitializer = needResolveTypeFromInitializer\
 
-		if (!context->AddDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
+		bool needResolveTypeFromInitializer = IsPendingType(declarator->type);
+		if (needResolveTypeFromInitializer && (!declarator->initializer || declarator->initializer->initializerType != CppInitializerType::Equal))
 		{
 			throw StopParsingException(cursor);
 		}
-	}
+
+		auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
+		if (decoratorExtern || (decoratorStatic && !declarator->initializer))
+		{
+			// if there is extern, or static without an initializer, then it is a forward variable declaration
+			if (containingClassForMember)
+			{
+				throw StopParsingException(cursor);
+			}
+
+			auto decl = MakePtr<ForwardVariableDeclaration>();
+			FILL_VARIABLE;
+			output.Add(decl);
+
+			if (!context->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
+			{
+				throw StopParsingException(cursor);
+			}
+		}
+		else
+		{
+			// it is a variable declaration
+			auto decl = MakePtr<VariableDeclaration>();
+			FILL_VARIABLE;
+			decl->initializer = declarator->initializer;
+			output.Add(decl);
+
+			if (!context->AddDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
+			{
+				throw StopParsingException(cursor);
+			}
+		}
 #undef FILL_VARIABLE
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -1179,14 +1178,11 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 	}
 	else
 	{
-		if (spec.f1)
-		{
-			throw StopParsingException(cursor);
-		}
 		for (vint i = 0; i < declarators.Count(); i++)
 		{
 			ParseDeclaration_Variable(
 				pa,
+				spec,
 				declarators[i],
 				FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_ARGUMENT)
 				containingClassForMember,
@@ -1223,8 +1219,9 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 	{
 		ParseDeclaration_Variable(
 			pa,
+			{ nullptr,nullptr },
 			declarators[i],
-			false, false, false, false, false,
+			false, false, false, false, false, false, false, false,
 			nullptr,
 			cursor,
 			output
