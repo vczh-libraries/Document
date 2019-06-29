@@ -80,6 +80,11 @@ namespace symbol_type_resolving
 			{
 				TypeToTsysInternal(pa, argument.item.type, argumentTypes[i], gaContext, isVtas[i]);
 			}
+			else
+			{
+				// TODO: Need to evaluate expression types to see if it is vta
+				isVtas[i] = false;
+			}
 		}
 	}
 

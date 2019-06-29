@@ -842,7 +842,7 @@ public:
 		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, argumentTypes, isTypes, isVtas, gaContext);
 
 		bool hasBoundedVta = false;
-		bool hasUnboundedVta = isVtas[0];
+		bool hasUnboundedVta = false;
 		vint unboundedVtaCount = -1;
 		CheckVta(self->arguments, argumentTypes, isVtas, 1, count, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 		isVta = hasUnboundedVta;
