@@ -108,7 +108,7 @@ auto If = Value ? Value : Value;
 
 struct S
 {
-	using Value = 0;
+	static auto Value = 0;
 	double field;
 
 	__int8 operator++();
@@ -222,10 +222,10 @@ char F(int, int);
 float F(bool, bool);
 
 template<typename T, typename U>
-auto Func = T(*)(U);
+using Func = T(*)(U);
 
 template<typename U, typename T>
-auto ReverseFunc = T(*)(U);
+using ReverseFunc = T(*)(U);
 
 template<typename T, T TValue = T(), typename U = decltype(F(T(), TValue)), template<typename, typename> class V = Func>
 auto X = {T{}, TValue, U{}, V<T, U>{}};

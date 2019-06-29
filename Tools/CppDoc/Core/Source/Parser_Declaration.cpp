@@ -1082,7 +1082,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 
 	// get all declarators
 	{
-		auto pda = pda_Decls(pa.context->definition.Cast<ClassDeclaration>());
+		auto pda = pda_Decls(pa.context->definition.Cast<ClassDeclaration>(), spec.f1);
 		pda.containingClass = containingClass;
 
 		auto newPa = spec.f1 ? pa.WithContext(spec.f0.Obj()) : pa;

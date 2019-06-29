@@ -114,6 +114,7 @@ struct ParseDeclaratorContext
 	InitializerRestriction	ir;
 	bool					allowBitField;
 	bool					allowEllipsis;
+	bool					allowComma;
 	bool					forceSpecialMethod;
 
 	ParseDeclaratorContext(const ParsingDeclaratorArguments& pda, bool _forceSpecialMethod)
@@ -123,6 +124,7 @@ struct ParseDeclaratorContext
 		, ir(pda.ir)
 		, allowBitField(pda.allowBitField)
 		, allowEllipsis(pda.allowEllipsis)
+		, allowComma(pda.allowComma)
 		, forceSpecialMethod(_forceSpecialMethod)
 	{
 	}
@@ -746,7 +748,7 @@ READY_FOR_ARRAY_OR_FUNCTION:
 ParseInitializer
 ***********************************************************************/
 
-Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, bool allowComma)
 {
 	// = EXPRESSION
 	// { { EXPRESSION , ...} }
@@ -772,7 +774,7 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 
 	while (true)
 	{
-		initializer->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
+		initializer->arguments.Add(ParseExpr(pa, (allowComma ? pea_Full() : pea_Argument()), cursor));
 
 		if (initializer->initializerType == CppInitializerType::Equal)
 		{
@@ -822,11 +824,11 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 		{
 			if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))
 			{
-				declarator->initializer = ParseInitializer(initializerPa, cursor);
+				declarator->initializer = ParseInitializer(initializerPa, cursor, pdc.allowComma);
 			}
 			else if (TestToken(cursor, CppTokens::LBRACE, false))
 			{
-				declarator->initializer = ParseInitializer(initializerPa, cursor);
+				declarator->initializer = ParseInitializer(initializerPa, cursor, pdc.allowComma);
 			}
 		}
 		declarators.Add(declarator);

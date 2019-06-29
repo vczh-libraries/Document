@@ -154,7 +154,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				List<Ptr<Declarator>> declarators;
 				try
 				{
-					ParseNonMemberDeclarator(newPa, pda_Decls(false), cursor, declarators);
+					ParseNonMemberDeclarator(newPa, pda_Decls(false, false), cursor, declarators);
 				}
 				catch (const StopParsingException&)
 				{
@@ -197,7 +197,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			List<Ptr<Declarator>> declarators;
 			try
 			{
-				ParseNonMemberDeclarator(newPa, pda_Decls(false), cursor, declarators);
+				ParseNonMemberDeclarator(newPa, pda_Decls(false, false), cursor, declarators);
 				RequireToken(cursor, CppTokens::SEMICOLON);
 				BuildVariablesAndSymbols(newPa, declarators, stat->varDecls, cursor);
 			}
