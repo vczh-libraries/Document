@@ -70,6 +70,56 @@ public:
 		}
 	}
 
+	template<typename T>
+	static void CheckVta(VariadicList<T>& arguments, Array<TypeTsysList>& tsyses, Array<bool>& isVtas, vint offset, vint count, bool& hasBoundedVta, bool& hasUnboundedVta, vint& unboundedVtaCount)
+	{
+		for (vint i = offset; i < count; i++)
+		{
+			if (isVtas[i])
+			{
+				if (arguments[i - offset].isVariadic)
+				{
+					hasBoundedVta = true;
+				}
+				else
+				{
+					hasUnboundedVta = true;
+				}
+			}
+		}
+
+		if (hasBoundedVta && hasUnboundedVta)
+		{
+			throw NotConvertableException();
+		}
+
+		if (hasUnboundedVta)
+		{
+			for (vint i = 0; i < count; i++)
+			{
+				if (isVtas[i])
+				{
+					for (vint j = 0; j < tsyses[i].Count(); j++)
+					{
+						auto tsys = tsyses[i][j];
+						if (tsys->GetType() == TsysType::Init)
+						{
+							vint currentVtaCount = tsyses[i][j]->GetParamCount();
+							if (unboundedVtaCount == -1)
+							{
+								unboundedVtaCount = currentVtaCount;
+							}
+							else if (unboundedVtaCount != currentVtaCount)
+							{
+								throw NotConvertableException();
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	//////////////////////////////////////////////////////////////////////////////////////
 	// PrimitiveType
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -320,25 +370,7 @@ public:
 		bool hasBoundedVta = false;
 		bool hasUnboundedVta = isVtas[0];
 		vint unboundedVtaCount = -1;
-		for (vint i = 1; i < count; i++)
-		{
-			if (isVtas[i])
-			{
-				if (self->parameters[i - 1].isVariadic)
-				{
-					hasBoundedVta = true;
-				}
-				else
-				{
-					hasUnboundedVta = true;
-				}
-			}
-		}
-
-		if (hasBoundedVta && hasUnboundedVta)
-		{
-			throw NotConvertableException();
-		}
+		CheckVta(self->parameters, tsyses, isVtas, 1, count, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 		isVta = hasUnboundedVta;
 
 		for (vint i = 0; i < count; i++)
@@ -351,28 +383,6 @@ public:
 					{
 						AddResult(pa.tsys->Any());
 						return;
-					}
-				}
-			}
-		}
-
-		if (hasUnboundedVta)
-		{
-			for (vint i = 0; i < count; i++)
-			{
-				if (isVtas[i])
-				{
-					for (vint j = 0; j < tsyses[i].Count(); j++)
-					{
-						vint currentVtaCount = tsyses[i][j]->GetParamCount();
-						if (unboundedVtaCount == -1)
-						{
-							unboundedVtaCount = currentVtaCount;
-						}
-						else if (unboundedVtaCount != currentVtaCount)
-						{
-							throw NotConvertableException();
-						}
 					}
 				}
 			}
@@ -773,59 +783,131 @@ public:
 	// GenericType
 	//////////////////////////////////////////////////////////////////////////////////////
 
+	void CreateGenericType(ITsys* genericFunction, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, Array<bool>& isVtas, vint count)
+	{
+		if (genericFunction->GetType() == TsysType::GenericFunction)
+		{
+			auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
+			if (!declSymbol)
+			{
+				throw NotConvertableException();
+			}
+
+			symbol_type_resolving::EvaluateSymbolContext esContext;
+			if (!symbol_type_resolving::ResolveGenericParameters(pa, genericFunction, argumentTypes, isTypes, &esContext.gaContext))
+			{
+				throw NotConvertableException();
+			}
+
+			switch (declSymbol->kind)
+			{
+			case symbol_component::SymbolKind::GenericTypeArgument:
+				genericFunction->GetElement()->ReplaceGenericArgs(esContext.gaContext, esContext.evaluatedTypes);
+				break;
+			case symbol_component::SymbolKind::TypeAlias:
+				{
+					auto decl = declSymbol->definition.Cast<UsingDeclaration>();
+					if (!decl->templateSpec) throw NotConvertableException();
+					symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
+				}
+				break;
+			default:
+				throw NotConvertableException();
+			}
+
+			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
+			{
+				AddResult(esContext.evaluatedTypes[j]);
+			}
+		}
+		else if (genericFunction->GetType() == TsysType::Any)
+		{
+			AddResult(pa.tsys->Any());
+		}
+		else
+		{
+			throw NotConvertableException();
+		}
+	}
+
 	void Visit(GenericType* self)override
 	{
 		TypeTsysList genericTypes;
-		Array<Ptr<TypeTsysList>> argumentTypes;
+		vint count = self->arguments.Count();
+		Array<TypeTsysList> argumentTypes(count);
+		Array<bool> isTypes(count);
+		Array<bool> isVtas(count);
 
 		TypeToTsysNoVta(pa, self->type, genericTypes, gaContext);
-		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, argumentTypes, gaContext);
+		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, argumentTypes, isTypes, isVtas, gaContext);
 
-		for (vint i = 0; i < genericTypes.Count(); i++)
+		bool hasBoundedVta = false;
+		bool hasUnboundedVta = isVtas[0];
+		vint unboundedVtaCount = -1;
+		CheckVta(self->arguments, argumentTypes, isVtas, 1, count, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
+		isVta = hasUnboundedVta;
+
+		// TODO: Implement variadic template argument passing
+		if (hasBoundedVta)
 		{
-			auto genericFunction = genericTypes[i];
-			if (genericFunction->GetType() == TsysType::GenericFunction)
+			throw NotConvertableException();
+		}
+
+		for (vint i = 0; i < count; i++)
+		{
+			if (isVtas[i])
 			{
-				auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
-				if (!declSymbol)
+				for (vint j = 0; j < argumentTypes[i].Count(); j++)
 				{
-					throw NotConvertableException();
-				}
-
-				symbol_type_resolving::EvaluateSymbolContext esContext;
-				if (!symbol_type_resolving::ResolveGenericParameters(pa, genericFunction, argumentTypes, &esContext.gaContext))
-				{
-					throw NotConvertableException();
-				}
-
-				switch (declSymbol->kind)
-				{
-				case symbol_component::SymbolKind::GenericTypeArgument:
-					genericFunction->GetElement()->ReplaceGenericArgs(esContext.gaContext, esContext.evaluatedTypes);
-					break;
-				case symbol_component::SymbolKind::TypeAlias:
+					if (argumentTypes[i][j]->GetType() != TsysType::Init)
 					{
-						auto decl = declSymbol->definition.Cast<UsingDeclaration>();
-						if (!decl->templateSpec) throw NotConvertableException();
-						symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
+						// TODO: Solve this in ResolveGenericParameters for unknown-amount variant template argument passing
+						AddResult(pa.tsys->Any());
+						return;
 					}
-					break;
-				default:
-					throw NotConvertableException();
 				}
+			}
+		}
 
-				for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
+		if (hasUnboundedVta)
+		{
+			Array<TypeTsysList> unboundedVtaTypes(count);
+			for (vint i = 0; i < count; i++)
+			{
+				if (isVtas[i])
 				{
-					AddResult(esContext.evaluatedTypes[j]);
+					CopyFrom(unboundedVtaTypes[i], argumentTypes[i]);
 				}
 			}
-			else if (genericFunction->GetType() == TsysType::Any)
+
+			for (vint i = 0; i < unboundedVtaCount; i++)
 			{
-				AddResult(pa.tsys->Any());
+				for (vint j = 0; j < count; j++)
+				{
+					if (isVtas[j])
+					{
+						auto& fromTypes = unboundedVtaTypes[j];
+						auto& toTypes = argumentTypes[j];
+						for (vint k = 0; k < fromTypes.Count(); k++)
+						{
+							toTypes[k] = fromTypes[k]->GetParam(i);
+						}
+					}
+				}
 			}
-			else
+
+			for (vint i = 0; i < genericTypes.Count(); i++)
 			{
-				throw NotConvertableException();
+				auto genericFunction = genericTypes[i];
+				CreateGenericType(genericFunction, argumentTypes, isTypes, isVtas, count);
+			}
+		}
+		else
+		{
+			for (vint i = 0; i < genericTypes.Count(); i++)
+			{
+				auto genericFunction = genericTypes[i];
+				CreateGenericType(genericFunction, argumentTypes, isTypes, isVtas, count);
 			}
 		}
 	}

@@ -1218,10 +1218,12 @@ public:
 	void Visit(GenericExpr* self)override
 	{
 		ExprTsysList genericTypes;
-		Array<Ptr<TypeTsysList>> argumentTypes;
+		vint count = self->arguments.Count();
+		Array<TypeTsysList> argumentTypes(count);
+		Array<bool> isTypes(count);
 
 		ExprToTsys(pa, self->expr, genericTypes, gaContext);
-		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, argumentTypes, gaContext);
+		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, argumentTypes, isTypes, gaContext);
 
 		for (vint i = 0; i < genericTypes.Count(); i++)
 		{
@@ -1235,7 +1237,7 @@ public:
 				}
 
 				symbol_type_resolving::EvaluateSymbolContext esContext;
-				if (!symbol_type_resolving::ResolveGenericParameters(pa, genericFunction, argumentTypes, &esContext.gaContext))
+				if (!symbol_type_resolving::ResolveGenericParameters(pa, genericFunction, argumentTypes, isTypes, &esContext.gaContext))
 				{
 					throw NotConvertableException();
 				}

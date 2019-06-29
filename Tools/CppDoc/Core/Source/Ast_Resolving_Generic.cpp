@@ -59,39 +59,26 @@ namespace symbol_type_resolving
 	***********************************************************************/
 
 	// TODO: This function will be replaced by the below one
-	void ResolveGenericArguments(const ParsingArguments& pa, List<GenericArgument>& arguments, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* gaContext)
+	void ResolveGenericArguments(const ParsingArguments& pa, List<GenericArgument>& arguments, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, GenericArgContext* gaContext)
 	{
-		argumentTypes.Resize(arguments.Count());
 		for (vint i = 0; i < arguments.Count(); i++)
 		{
 			auto argument = arguments[i];
-			if (argument.type)
+			if ((isTypes[i] = argument.type))
 			{
-				argumentTypes[i] = MakePtr<TypeTsysList>();
-				TypeToTsysNoVta(pa, argument.type, *argumentTypes[i].Obj(), gaContext);
+				TypeToTsysNoVta(pa, argument.type, argumentTypes[i], gaContext);
 			}
 		}
 	}
 
-	void ResolveGenericArguments(const ParsingArguments& pa, VariadicList<GenericArgument>& arguments, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* gaContext)
+	void ResolveGenericArguments(const ParsingArguments& pa, VariadicList<GenericArgument>& arguments, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, Array<bool>& isVtas, GenericArgContext* gaContext)
 	{
-		// TODO: Implement variadic template argument passing
-		for (vint i = 0; i < arguments.Count(); i++)
-		{
-			if (arguments[i].isVariadic)
-			{
-				throw NotConvertableException();
-			}
-		}
-
-		argumentTypes.Resize(arguments.Count());
 		for (vint i = 0; i < arguments.Count(); i++)
 		{
 			auto argument = arguments[i];
-			if (argument.item.type)
+			if ((isTypes[i] = argument.item.type))
 			{
-				argumentTypes[i] = MakePtr<TypeTsysList>();
-				TypeToTsysNoVta(pa, argument.item.type, *argumentTypes[i].Obj(), gaContext);
+				TypeToTsysInternal(pa, argument.item.type, argumentTypes[i], gaContext, isVtas[i]);
 			}
 		}
 	}
@@ -157,7 +144,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	bool ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<Ptr<TypeTsysList>>& argumentTypes, GenericArgContext* newGaContext)
+	bool ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, GenericArgContext* newGaContext)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
 		{
@@ -277,14 +264,14 @@ namespace symbol_type_resolving
 			}
 			else if (mappings.f0 == mappings.f1 && (variadicArgumentIndex == -1 || variadicArgumentIndex != mappings.f0))
 			{
-				if ((pattern != nullptr) != argumentTypes[i])
+				if ((pattern != nullptr) != isTypes[i])
 				{
 					throw NotConvertableException();
 				}
 
 				if (pattern != nullptr)
 				{
-					auto& argTypes = *argumentTypes[i].Obj();
+					auto& argTypes = argumentTypes[i];
 					EnsureGenericNormalParameterAndArgumentMatched(pattern, argTypes);
 
 					for (vint j = 0; j < argTypes.Count(); j++)
@@ -306,7 +293,7 @@ namespace symbol_type_resolving
 			{
 				for (vint j = mappings.f0; j <= mappings.f1; j++)
 				{
-					if ((pattern != nullptr) != argumentTypes[j])
+					if ((pattern != nullptr) != isTypes[j])
 					{
 						throw NotConvertableException();
 					}
@@ -322,7 +309,7 @@ namespace symbol_type_resolving
 						auto target = MakePtr<ExprTsysList>();
 						argTypesList.Add(target);
 
-						auto& argTypes = *argumentTypes[j].Obj();
+						auto& argTypes = argumentTypes[j];
 						EnsureGenericNormalParameterAndArgumentMatched(pattern, argTypes);
 
 						for (vint j = 0; j < argTypes.Count(); j++)
