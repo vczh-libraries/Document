@@ -34,7 +34,7 @@
     - When calculating `...` expression
       - If we know how many types are bounded to this `...` argument, dispatch them
       - If we don't know, the whole expression is evaluated to `any_t`
-  - [ ] Fix bug: There is no `template<typename T> using Size = sizeof(T);`, there is `template<typename T> /*inline const constexpr*/ size_t Size = sizeof(T);`.
+  - [x] Fix bug: There is no `template<typename T> using Size = sizeof(T);`, there is `template<typename T> /*inline const constexpr*/ size_t Size = sizeof(T);`.
 - [ ] Refactor to allow multiple implementations found for the same symbol.
   - Functions with incomplete types always create new symbols.
   - Functions' symbols are only created to store information of function ASTs, all ASTs have their own symbols for scopes.

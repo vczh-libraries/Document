@@ -993,13 +993,14 @@ void ParseDeclaration_Variable(
 		}
 
 		auto decl = MakePtr<ValueAliasDeclaration>();
+		decl->templateSpec = spec.f1;
 		decl->name = declarator->name;
 		decl->type = declarator->type;
 		decl->expr = declarator->initializer->arguments[0];
 		decl->needResolveTypeFromInitializer = IsPendingType(declarator->type);
 		output.Add(decl);
 
-		if (!pa.context->AddForwardDeclToSymbol(decl, symbol_component::SymbolKind::ValueAlias))
+		if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::ValueAlias, spec.f0))
 		{
 			throw StopParsingException(cursor);
 		}
@@ -1083,7 +1084,9 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 	{
 		auto pda = pda_Decls(pa.context->definition.Cast<ClassDeclaration>());
 		pda.containingClass = containingClass;
-		ParseMemberDeclarator(pa, pda, cursor, declarators);
+
+		auto newPa = spec.f1 ? pa.WithContext(spec.f0.Obj()) : pa;
+		ParseMemberDeclarator(newPa, pda, cursor, declarators);
 	}
 
 	Ptr<FunctionType> funcType;
@@ -1178,6 +1181,10 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 	}
 	else
 	{
+		if (spec.f1 && declarators.Count() > 1)
+		{
+			throw StopParsingException(cursor);
+		}
 		for (vint i = 0; i < declarators.Count(); i++)
 		{
 			ParseDeclaration_Variable(

@@ -19,13 +19,13 @@ auto True = true;
 
 	auto output = LR"(
 template<typename T>
-using_value Size = sizeof(T);
+using_value Size: auto = sizeof(T);
 template<typename T>
-using_value Ctor = T();
+using_value Ctor: auto = T();
 template<typename T, T Value>
-using_value Id = Value;
+using_value Id: auto = Value;
 template<typename, bool>
-using_value True = true;
+using_value True: auto = true;
 )";
 
 	COMPILE_PROGRAM(program, pa, input);
