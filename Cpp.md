@@ -186,11 +186,11 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 ### OBJECT
 
 - [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
-  - [ ] TEMPLATE-SPEC: Not allowed when the class is defined after `typedef`, or is anonymous followed by no variable declaration.
+  - [ ] TEMPLATE-SPEC: Not allowed when the class is defined after `typedef`, or is anonymous followed by variable declaration.
   - [ ] SPECIALIZATION-SPEC
 - `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}`
 - [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}`
-  - [ ] TEMPLATE-SPEC: Not allowed when the class is defined after `typedef`, or is anonymous followed by no variable declaration.
+  - [ ] TEMPLATE-SPEC: Not allowed when the class is defined after `typedef`, or is anonymous followed by variable declaration.
   - [ ] SPECIALIZATION-SPEC
 
 ### DECL (Declaration)
@@ -203,9 +203,10 @@ Specifiers can be put before any declaration, it will be ignored by the tool
   - `typedef` TYPE-MULTIPLE-INITIALIZER `;` (**no template**)
     - TEMPLATE-SPEC and SPECIALIZATION-SPEC are disallowed here
 - **Type definition**: [TEMPLATE-SPEC] `using` IDENTIFIER `=` TYPE `;` (**no specialization**)
-  - [ ] TEMPLATE-SPEC
+  - TEMPLATE-SPEC
 - **Import**: `using` { [`typename`] [TYPE `::` IDENTIFIER] `,` ...} `;`
 - **Variable**: {`register` | `static` | `thread_local` | `mutable`} TYPE-MULTIPLE-INITIALIZER `;`
+  - TEMPLATE-SPEC: for value aliases
 - **Namespace** `namespace` {IDENTIFIER `::` ...}+ `{` {DECLARATION} `}`
 - **Ctor, Dtor**: [`~`] IDENTIFIER ({TYPE [DECLARATOR] [INITIALIZER] `,` ...}) [EXCEPTION-SPEC] STAT
 - FUNCTION
@@ -280,7 +281,6 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - [`::`] `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
 - [`::`] `delete` [`[` `]`] EXPR
 - `throw` EXPR
-
 - [ ] EXPR `...`
 - [ ] `::new`
 - [ ] `::delete`
