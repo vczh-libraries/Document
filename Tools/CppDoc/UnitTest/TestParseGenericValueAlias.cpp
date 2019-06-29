@@ -37,6 +37,30 @@ using_value True: auto = true;
 	AssertExpr(pa, L"True",				L"True",				L"<::True::[], *> bool $PR"				);
 }
 
+TEST_CASE(TestParseValueAlias_IncompleteType)
+{
+	auto input = LR"(
+template<typename T>
+inline const __int8 A = sizeof(T);
+
+template<typename T>
+inline const __int16 B = sizeof(T);
+
+template<typename T>
+inline const __int32 C = sizeof(T);
+
+template<typename T>
+inline const __int64 D = sizeof(T);
+)";
+
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(pa, L"A<int>",			L"A<int>",				L"__int8 const $PR"						);
+	AssertExpr(pa, L"B<int>",			L"B<int>",				L"__int16 const $PR"					);
+	AssertExpr(pa, L"C<int>",			L"C<int>",				L"__int32 const $PR"					);
+	AssertExpr(pa, L"D<int>",			L"D<int>",				L"__int64 const $PR"					);
+}
+
 TEST_CASE(TestParserValueAlias_SimpleReplace)
 {
 	auto input = LR"(

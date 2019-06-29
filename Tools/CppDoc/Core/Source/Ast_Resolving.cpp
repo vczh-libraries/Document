@@ -379,6 +379,7 @@ namespace symbol_type_resolving
 		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->evaluation.Get();
 
 		TypeTsysList types;
+		if (usingDecl->needResolveTypeFromInitializer)
 		{
 			ExprTsysList tsys;
 			ExprToTsys(newPa, usingDecl->expr, tsys, (esContext ? &esContext->gaContext : nullptr));
@@ -394,6 +395,10 @@ namespace symbol_type_resolving
 					types.Add(entityType);
 				}
 			}
+		}
+		else
+		{
+			TypeToTsysNoVta(newPa, usingDecl->type, types, (esContext ? &esContext->gaContext : nullptr));
 		}
 
 		if (usingDecl->templateSpec && !esContext)

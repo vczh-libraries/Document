@@ -1000,6 +1000,13 @@ void ParseDeclaration_Variable(
 		decl->needResolveTypeFromInitializer = IsPendingType(declarator->type);
 		output.Add(decl);
 
+		if (decl->needResolveTypeFromInitializer)
+		{
+			auto primitiveType = decl->type.Cast<PrimitiveType>();
+			if (!primitiveType) throw StopParsingException(cursor);
+			if (primitiveType->primitive != CppPrimitiveType::_auto) throw StopParsingException(cursor);
+		}
+
 		if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::ValueAlias, spec.f0))
 		{
 			throw StopParsingException(cursor);
