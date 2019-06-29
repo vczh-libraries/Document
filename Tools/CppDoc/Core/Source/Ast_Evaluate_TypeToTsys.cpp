@@ -844,7 +844,7 @@ public:
 		bool hasBoundedVta = false;
 		bool hasUnboundedVta = false;
 		vint unboundedVtaCount = -1;
-		CheckVta(self->arguments, argumentTypes, isVtas, 1, count, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
+		CheckVta(self->arguments, argumentTypes, isVtas, 0, count, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 		isVta = hasUnboundedVta;
 
 		// TODO: Implement variadic template argument passing
