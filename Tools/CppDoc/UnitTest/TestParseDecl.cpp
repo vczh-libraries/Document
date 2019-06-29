@@ -933,23 +933,23 @@ c _c;
 d _d;
 )";
 		auto output = LR"(
-using A = int;
-using B = A (A) *;
+using_type A: int;
+using_type B: A (A) *;
 struct S_
 {
 	public struct T
 	{
 	};
 };
-using S = S_;
-using pS = S_ *;
-using C = S;
-using D = C :: T;
-using a = int;
-using b = int;
-using c = int;
-using d = C :: T (A, B, pS) *;
-using S__ = S_;
+using_type S: S_;
+using_type pS: S_ *;
+using_type C: S;
+using_type D: C :: T;
+using_type a: int;
+using_type b: int;
+using_type c: int;
+using_type d: C :: T (A, B, pS) *;
+using_type S__: S_;
 _a: a;
 _b: b;
 _c: c;
@@ -1146,14 +1146,14 @@ struct <anonymous>0
 {
 	public x: int;
 };
-using X = <anonymous>0;
-using pX = <anonymous>0 *;
+using_type X: <anonymous>0;
+using_type pX: <anonymous>0 *;
 struct <anonymous>1
 {
 	public x: X;
 	public px: pX;
 };
-using Y = <anonymous>1;
+using_type Y: <anonymous>1;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
@@ -1190,26 +1190,26 @@ enum <anonymous>0
 {
 	A,
 };
-using _A = <anonymous>0;
-using pA = <anonymous>0 *;
+using_type _A: <anonymous>0;
+using_type pA: <anonymous>0 *;
 enum <anonymous>1 : int
 {
 	B,
 };
-using _B = <anonymous>1;
-using pB = <anonymous>1 *;
+using_type _B: <anonymous>1;
+using_type pB: <anonymous>1 *;
 enum C_
 {
 	C,
 };
-using _C = C_;
-using pC = C_ *;
+using_type _C: C_;
+using_type pC: C_ *;
 enum class D_
 {
 	D,
 };
-using _D = D_;
-using pD = D_ *;
+using_type _D: D_;
+using_type pD: D_ *;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);

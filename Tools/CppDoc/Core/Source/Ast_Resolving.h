@@ -44,7 +44,8 @@ namespace symbol_type_resolving
 	extern void				FinishEvaluatingSymbol(const ParsingArguments& pa, FunctionDeclaration* funcDecl);
 	extern void				EvaluateSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
 	extern void				EvaluateSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl);
-	extern void				EvaluateSymbol(const ParsingArguments& pa, UsingDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
+	extern void				EvaluateSymbol(const ParsingArguments& pa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
+	extern void				EvaluateSymbol(const ParsingArguments& pa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
 	extern void				VisitSymbol(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result);
 
 	extern TsysConv			FindMinConv(ArrayBase<TsysConv>& funcChoices);

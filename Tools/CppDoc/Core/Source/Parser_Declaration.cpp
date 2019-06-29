@@ -638,21 +638,45 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 				goto SKIP_TYPE_ALIAS;
 			}
 
-			auto decl = MakePtr<UsingDeclaration>();
-			decl->templateSpec = spec.f1;
-			decl->name = cppName;
-			output.Add(decl);
-
+			Ptr<Type> usingType;
+			Ptr<Expr> usingExpr;
 			auto newPa = spec.f1 ? pa.WithContext(spec.f0.Obj()) : pa;
-			auto kind = ParseTypeOrExpr(newPa, pea_Full(), cursor, decl->type, decl->expr)
+			auto kind = ParseTypeOrExpr(newPa, pea_Full(), cursor, usingType, usingExpr)
 				? symbol_component::SymbolKind::TypeAlias
 				: symbol_component::SymbolKind::ValueAlias
 				;
 			RequireToken(cursor, CppTokens::SEMICOLON);
 
-			if (!pa.context->AddDeclToSymbol(decl, kind, spec.f0))
+			switch (kind)
 			{
-				throw StopParsingException(cursor);
+			case symbol_component::SymbolKind::TypeAlias:
+				{
+					auto decl = MakePtr<TypeAliasDeclaration>();
+					decl->templateSpec = spec.f1;
+					decl->name = cppName;
+					decl->type = usingType;
+					output.Add(decl);
+
+					if (!pa.context->AddDeclToSymbol(decl, kind, spec.f0))
+					{
+						throw StopParsingException(cursor);
+					}
+				}
+				break;
+			case symbol_component::SymbolKind::ValueAlias:
+				{
+					auto decl = MakePtr<ValueAliasDeclaration>();
+					decl->templateSpec = spec.f1;
+					decl->name = cppName;
+					decl->expr = usingExpr;
+					output.Add(decl);
+
+					if (!pa.context->AddDeclToSymbol(decl, kind, spec.f0))
+					{
+						throw StopParsingException(cursor);
+					}
+				}
+				break;
 			}
 
 			return;
@@ -795,7 +819,7 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		{
 			continue;
 		}
-		auto decl = MakePtr<UsingDeclaration>();
+		auto decl = MakePtr<TypeAliasDeclaration>();
 		decl->name = declarators[i]->name;
 		decl->type = declarators[i]->type;
 		output.Add(decl);

@@ -160,9 +160,13 @@ namespace symbol_type_resolving
 		auto genericSymbol = genericFunction->GetGenericFunction().declSymbol;
 		if (genericSymbol)
 		{
-			if (auto usingDecl = genericSymbol->GetAnyForwardDecl<UsingDeclaration>())
+			if (auto typeAliasDecl = genericSymbol->GetAnyForwardDecl<TypeAliasDeclaration>())
 			{
-				spec = usingDecl->templateSpec;
+				spec = typeAliasDecl->templateSpec;
+			}
+			else if (auto valueAliasDecl = genericSymbol->GetAnyForwardDecl<ValueAliasDeclaration>())
+			{
+				spec = valueAliasDecl->templateSpec;
 			}
 		}
 

@@ -179,7 +179,7 @@ Ptr<Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 			switch (symbol->kind)
 			{
 			case symbol_component::SymbolKind::ValueAlias:
-				if (auto usingDecl = symbol->definition.Cast<UsingDeclaration>())
+				if (auto usingDecl = symbol->definition.Cast<ValueAliasDeclaration>())
 				{
 					if (usingDecl->templateSpec)
 					{

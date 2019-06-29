@@ -13,9 +13,9 @@ using RRef = T&&;
 
 	auto output = LR"(
 template<typename T>
-using LRef = T &;
+using_type LRef: T &;
 template<typename T>
-using RRef = T &&;
+using_type RRef: T &&;
 )";
 
 	COMPILE_PROGRAM(program, pa, input);

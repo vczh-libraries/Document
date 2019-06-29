@@ -22,7 +22,8 @@ Visitor
 	F(NestedAnonymousClassDeclaration)\
 	F(UsingNamespaceDeclaration)\
 	F(UsingSymbolDeclaration)\
-	F(UsingDeclaration)\
+	F(TypeAliasDeclaration)\
+	F(ValueAliasDeclaration)\
 	F(NamespaceDeclaration)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
@@ -246,7 +247,16 @@ public:
 	Ptr<Expr>										expr;
 };
 
-class UsingDeclaration : public Declaration
+class TypeAliasDeclaration : public Declaration
+{
+public:
+	IDeclarationVisitor_ACCEPT;
+
+	Ptr<TemplateSpec>								templateSpec;
+	Ptr<Type>										type;
+};
+
+class ValueAliasDeclaration : public Declaration
 {
 public:
 	IDeclarationVisitor_ACCEPT;

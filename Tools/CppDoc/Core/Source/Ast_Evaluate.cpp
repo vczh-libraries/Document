@@ -489,7 +489,12 @@ public:
 	{
 	}
 
-	void Visit(UsingDeclaration* self) override
+	void Visit(TypeAliasDeclaration* self) override
+	{
+		symbol_type_resolving::EvaluateSymbol(pa, self);
+	}
+
+	void Visit(ValueAliasDeclaration* self) override
 	{
 		symbol_type_resolving::EvaluateSymbol(pa, self);
 	}

@@ -283,7 +283,11 @@ public:
 	{
 	}
 
-	void Visit(UsingDeclaration* self) override
+	void Visit(TypeAliasDeclaration* self) override
+	{
+	}
+
+	void Visit(ValueAliasDeclaration* self) override
 	{
 	}
 

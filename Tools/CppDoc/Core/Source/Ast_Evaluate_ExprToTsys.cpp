@@ -1244,7 +1244,7 @@ public:
 				{
 				case symbol_component::SymbolKind::ValueAlias:
 					{
-						auto decl = declSymbol->definition.Cast<UsingDeclaration>();
+						auto decl = declSymbol->definition.Cast<ValueAliasDeclaration>();
 						if (!decl->templateSpec) throw NotConvertableException();
 						symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
 					}

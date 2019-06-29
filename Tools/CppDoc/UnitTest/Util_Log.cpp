@@ -1222,7 +1222,7 @@ public:
 		if (semicolon) writer.WriteLine(L";");
 	}
 
-	void Visit(UsingDeclaration* self)override
+	void Visit(TypeAliasDeclaration* self)override
 	{
 		if (self->templateSpec)
 		{
@@ -1230,11 +1230,34 @@ public:
 			writer.WriteLine(L"");
 			WriteIndentation();
 		}
-		writer.WriteString(L"using ");
+		writer.WriteString(L"using_type ");
 		writer.WriteString(self->name.name);
-		writer.WriteString(L" = ");
-		if (self->type) Log(self->type, writer);
-		if (self->expr) Log(self->expr, writer);
+		writer.WriteString(L": ");
+		Log(self->type, writer);
+		if (semicolon) writer.WriteLine(L";");
+	}
+
+	void Visit(ValueAliasDeclaration* self)override
+	{
+		if (self->templateSpec)
+		{
+			WriteTemplateSpec(self->templateSpec.Obj());
+			writer.WriteLine(L"");
+			WriteIndentation();
+		}
+
+		writer.WriteString(L"using_value ");
+		writer.WriteString(self->name.name);
+		if (self->type)
+		{
+			writer.WriteString(L": ");
+			Log(self->type, writer);
+		}
+		if (self->expr)
+		{
+			writer.WriteString(L" = ");
+			Log(self->expr, writer);
+		}
 		if (semicolon) writer.WriteLine(L";");
 	}
 

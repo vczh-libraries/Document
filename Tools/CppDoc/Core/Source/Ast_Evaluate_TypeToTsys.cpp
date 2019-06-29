@@ -573,7 +573,7 @@ public:
 				continue;
 			case symbol_component::SymbolKind::TypeAlias:
 				{
-					auto usingDecl = symbol->definition.Cast<UsingDeclaration>();
+					auto usingDecl = symbol->definition.Cast<TypeAliasDeclaration>();
 					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
 					auto& types = symbol->evaluation.Get();
 					for (vint j = 0; j < types.Count(); j++)
@@ -805,7 +805,7 @@ public:
 				break;
 			case symbol_component::SymbolKind::TypeAlias:
 				{
-					auto decl = declSymbol->definition.Cast<UsingDeclaration>();
+					auto decl = declSymbol->definition.Cast<TypeAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
 					symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
 				}

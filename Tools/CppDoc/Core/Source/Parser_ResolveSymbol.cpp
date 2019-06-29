@@ -201,7 +201,7 @@ public:
 			for (vint i = 0; i < symbols.Count(); i++)
 			{
 				auto symbol = symbols[i];
-				if (auto usingDecl = symbol->definition.Cast<UsingDeclaration>())
+				if (auto usingDecl = symbol->definition.Cast<TypeAliasDeclaration>())
 				{
 					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
 					auto& types = symbol->evaluation.Get();
