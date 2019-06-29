@@ -37,7 +37,7 @@ namespace symbol_type_resolving
 		TypeTsysList		evaluatedTypes;
 	};
 
-	extern void				CreateUniversalInitializerType(const ParsingArguments& pa, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result);
+	extern void				CreateUniversalInitializerType(const ParsingArguments& pa, Array<ExprTsysList>& argTypesList, ExprTsysList& result);
 	extern void				CalculateValueFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, bool forFieldDeref, ExprTsysList& result);
 	extern void				EvaluateSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl);
 	extern bool				IsMemberFunction(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);

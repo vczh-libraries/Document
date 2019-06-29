@@ -737,7 +737,7 @@ public:
 				}
 				else if (parentType->GetType() == TsysType::Init)
 				{
-					List<Ptr<ExprTsysList>> argTypesList;
+					Array<ExprTsysList> argTypesList(parentType->GetParamCount());
 					for (vint j = 0; j < parentType->GetParamCount(); j++)
 					{
 						TypeTsysList childTypes;
@@ -745,8 +745,7 @@ public:
 						ResolveChildTypeWithGenericArguments(self, parentType->GetParam(j), resolving);
 						CreateIdReferenceType(pa, gaContext, resolving, true, false, childTypes, isVta);
 
-						argTypesList.Add(MakePtr<ExprTsysList>());
-						symbol_type_resolving::AddTemp(*argTypesList[j].Obj(), childTypes);
+						symbol_type_resolving::AddTemp(argTypesList[j], childTypes);
 					}
 
 					ExprTsysList initTypes;
@@ -783,7 +782,7 @@ public:
 	// GenericType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void CreateGenericType(ITsys* genericFunction, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, Array<bool>& isVtas, vint count)
+	void CreateGenericType(ITsys* genericFunction, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, Array<bool>& isVtas, vint count, TypeTsysList& genericTypes)
 	{
 		if (genericFunction->GetType() == TsysType::GenericFunction)
 		{
@@ -817,12 +816,12 @@ public:
 
 			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
 			{
-				AddResult(esContext.evaluatedTypes[j]);
+				AddResult(genericTypes, esContext.evaluatedTypes[j]);
 			}
 		}
 		else if (genericFunction->GetType() == TsysType::Any)
 		{
-			AddResult(pa.tsys->Any());
+			AddResult(genericTypes, pa.tsys->Any());
 		}
 		else
 		{
@@ -880,8 +879,10 @@ public:
 				}
 			}
 
+			Array<ExprTsysList> unboundedGenericTypes(unboundedVtaCount);
 			for (vint i = 0; i < unboundedVtaCount; i++)
 			{
+				TypeTsysList unboundedGenericTypesItem;
 				for (vint j = 0; j < count; j++)
 				{
 					if (isVtas[j])
@@ -894,12 +895,25 @@ public:
 						}
 					}
 				}
+
+				for (vint j = 0; j < genericTypes.Count(); j++)
+				{
+					auto genericFunction = genericTypes[j];
+					CreateGenericType(genericFunction, argumentTypes, isTypes, isVtas, count, unboundedGenericTypesItem);
+				}
+
+				for (vint j = 0; j < unboundedGenericTypesItem.Count(); j++)
+				{
+					unboundedGenericTypes[i].Add({ nullptr,ExprTsysType::PRValue,unboundedGenericTypesItem[j] });
+				}
 			}
 
-			for (vint i = 0; i < genericTypes.Count(); i++)
+			ExprTsysList initTypes;
+			symbol_type_resolving::CreateUniversalInitializerType(pa, unboundedGenericTypes, initTypes);
+
+			for (vint i = 0; i < initTypes.Count(); i++)
 			{
-				auto genericFunction = genericTypes[i];
-				CreateGenericType(genericFunction, argumentTypes, isTypes, isVtas, count);
+				AddResult(initTypes[i].tsys);
 			}
 		}
 		else
@@ -907,7 +921,7 @@ public:
 			for (vint i = 0; i < genericTypes.Count(); i++)
 			{
 				auto genericFunction = genericTypes[i];
-				CreateGenericType(genericFunction, argumentTypes, isTypes, isVtas, count);
+				CreateGenericType(genericFunction, argumentTypes, isTypes, isVtas, count, result);
 			}
 		}
 	}

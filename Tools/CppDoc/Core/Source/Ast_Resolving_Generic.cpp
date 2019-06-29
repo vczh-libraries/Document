@@ -306,20 +306,18 @@ namespace symbol_type_resolving
 
 				if (pattern != nullptr)
 				{
-					List<Ptr<ExprTsysList>> argTypesList;
+					Array<ExprTsysList> argTypesList(mappings.f1 - mappings.f0 + 1);
 					ExprTsysList result;
 
 					for (vint j = mappings.f0; j <= mappings.f1; j++)
 					{
-						auto target = MakePtr<ExprTsysList>();
-						argTypesList.Add(target);
-
 						auto& argTypes = argumentTypes[j];
 						EnsureGenericNormalParameterAndArgumentMatched(pattern, argTypes);
 
+						auto& target = argTypesList[j - mappings.f0];
 						for (vint j = 0; j < argTypes.Count(); j++)
 						{
-							target->Add({ nullptr,ExprTsysType::PRValue,argTypes[j] });
+							target.Add({ nullptr,ExprTsysType::PRValue,argTypes[j] });
 						}
 					}
 

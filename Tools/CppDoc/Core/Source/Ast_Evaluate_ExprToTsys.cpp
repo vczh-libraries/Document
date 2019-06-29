@@ -720,12 +720,10 @@ public:
 
 	void Visit(UniversalInitializerExpr* self)override
 	{
-		List<Ptr<ExprTsysList>> argTypesList;
+		Array<ExprTsysList> argTypesList(self->arguments.Count());
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
-			auto argTypes = MakePtr<ExprTsysList>();
-			ExprToTsys(pa, self->arguments[i], *argTypes.Obj(), gaContext);
-			argTypesList.Add(argTypes);
+			ExprToTsys(pa, self->arguments[i], argTypesList[i], gaContext);
 		}
 
 		CreateUniversalInitializerType(pa, argTypesList, result);

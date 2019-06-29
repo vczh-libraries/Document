@@ -67,20 +67,20 @@ namespace symbol_type_resolving
 	CreateUniversalInitializerType: Create init types from element types
 	***********************************************************************/
 
-	void CreateUniversalInitializerType(const ParsingArguments& pa, List<Ptr<ExprTsysList>>& argTypesList, Array<vint>& indices, vint index, ExprTsysList& result)
+	void CreateUniversalInitializerType(const ParsingArguments& pa, Array<ExprTsysList>& argTypesList, Array<vint>& indices, vint index, ExprTsysList& result)
 	{
 		if (index == argTypesList.Count())
 		{
 			Array<ExprTsysItem> params(index);
 			for (vint i = 0; i < index; i++)
 			{
-				params[i] = argTypesList[i]->Get(indices[i]);
+				params[i] = argTypesList[i][indices[i]];
 			}
 			AddInternal(result, { nullptr,ExprTsysType::PRValue,pa.tsys->InitOf(params) });
 		}
 		else
 		{
-			for (vint i = 0; i < argTypesList[index]->Count(); i++)
+			for (vint i = 0; i < argTypesList[index].Count(); i++)
 			{
 				indices[index] = i;
 				CreateUniversalInitializerType(pa, argTypesList, indices, index + 1, result);
@@ -88,7 +88,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void CreateUniversalInitializerType(const ParsingArguments& pa, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result)
+	void CreateUniversalInitializerType(const ParsingArguments& pa, Array<ExprTsysList>& argTypesList, ExprTsysList& result)
 	{
 		Array<vint> indices(argTypesList.Count());
 		CreateUniversalInitializerType(pa, argTypesList, indices, 0, result);
