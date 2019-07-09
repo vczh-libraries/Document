@@ -99,7 +99,7 @@ namespace TestConvert_Helpers
 				for (vint i = 0; i < fromEntity->GetParamCount(); i++)
 				{
 					argTypesList.Add(MakePtr<ExprTsysList>());
-					argTypesList[i]->Add({ nullptr,init.types[i],fromEntity->GetParam(i) });
+					argTypesList[i]->Add({ init.headers[i],fromEntity->GetParam(i) });
 				}
 
 				ExprTsysList result;
@@ -135,7 +135,7 @@ namespace TestConvert_Helpers
 				return TsysConv::Illegal;
 			}
 		}
-		type = ApplyExprTsysType(type, init.types[0]);
+		type = ApplyExprTsysType(type, init.headers[0].type);
 
 		if (tested.Contains({ toType,type }))
 		{

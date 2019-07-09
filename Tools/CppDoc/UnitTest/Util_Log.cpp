@@ -1506,7 +1506,7 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			{
 				if (i > 0) writer.WriteString(L", ");
 				Log(tsys->GetParam(i), writer);
-				switch (tsys->GetInit().types[i])
+				switch (tsys->GetInit().headers[i].type)
 				{
 				case ExprTsysType::LValue:
 					writer.WriteString(L" $L");

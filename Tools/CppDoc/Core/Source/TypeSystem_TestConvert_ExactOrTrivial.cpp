@@ -206,8 +206,8 @@ namespace TestConvert_Helpers
 				}
 				for (vint i = 0; i < toType->GetParamCount(); i++)
 				{
-					auto toParam = ApplyExprTsysType(toType->GetParam(i), toType->GetInit().types[i]);
-					auto fromParam = ApplyExprTsysType(fromType->GetParam(i), fromType->GetInit().types[i]);
+					auto toParam = ApplyExprTsysType(toType->GetParam(i), toType->GetInit().headers[i].type);
+					auto fromParam = ApplyExprTsysType(fromType->GetParam(i), fromType->GetInit().headers[i].type);
 
 					if (!IsExactMatch(toParam, fromParam, isAny))
 					{

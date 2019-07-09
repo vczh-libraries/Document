@@ -22,18 +22,55 @@ enum class ExprTsysType
 	PRValue,
 };
 
-struct ExprTsysItem
+struct ExprHeader
 {
 	Symbol*					symbol = nullptr;
 	ExprTsysType			type = ExprTsysType::PRValue;
+
+	ExprHeader() = default;
+	ExprHeader(const ExprHeader&) = default;
+	ExprHeader(ExprHeader&&) = default;
+
+	ExprHeader(Symbol* _symbol, ExprTsysType _type)
+		:symbol(_symbol), type(_type)
+	{
+	}
+
+	ExprHeader& operator=(const ExprHeader&) = default;
+	ExprHeader& operator=(ExprHeader&&) = default;
+
+	static vint Compare(const ExprHeader& a, const ExprHeader& b)
+	{
+		if (a.symbol < b.symbol) return -1;
+		if (a.symbol > b.symbol) return 1;
+		if (a.type < b.type) return -1;
+		if (a.type > b.type) return 1;
+		return 0;
+	}
+
+	bool operator==	(const ExprHeader& item)const { return Compare(*this, item) == 0; }
+	bool operator!=	(const ExprHeader& item)const { return Compare(*this, item) != 0; }
+	bool operator<	(const ExprHeader& item)const { return Compare(*this, item) < 0; }
+	bool operator<=	(const ExprHeader& item)const { return Compare(*this, item) <= 0; }
+	bool operator>	(const ExprHeader& item)const { return Compare(*this, item) > 0; }
+	bool operator>=	(const ExprHeader& item)const { return Compare(*this, item) >= 0; }
+};
+
+struct ExprTsysItem : ExprHeader
+{
 	ITsys*					tsys = nullptr;
 
 	ExprTsysItem() = default;
 	ExprTsysItem(const ExprTsysItem&) = default;
 	ExprTsysItem(ExprTsysItem&&) = default;
 
+	ExprTsysItem(ExprHeader _header, ITsys* _tsys)
+		:ExprHeader(_header), tsys(_tsys)
+	{
+	}
+
 	ExprTsysItem(Symbol* _symbol, ExprTsysType _type, ITsys* _tsys)
-		:symbol(_symbol), type(_type), tsys(_tsys)
+		:ExprHeader(_symbol, _type), tsys(_tsys)
 	{
 	}
 
@@ -139,15 +176,15 @@ struct TsysFunc
 
 struct TsysInit
 {
-	List<ExprTsysType>			types;
+	List<ExprHeader>			headers;
 
 	TsysInit() = default;
-	TsysInit(const TsysInit& init) { CopyFrom(types, init.types); }
-	TsysInit& operator=(const TsysInit& init) { CopyFrom(types, init.types); return *this; }
+	TsysInit(const TsysInit& init) { CopyFrom(headers, init.headers); }
+	TsysInit& operator=(const TsysInit& init) { CopyFrom(headers, init.headers); return *this; }
 
 	static vint Compare(const TsysInit& a, const TsysInit& b)
 	{
-		return CompareEnumerable(a.types, b.types);
+		return CompareEnumerable(a.headers, b.headers);
 	}
 };
 

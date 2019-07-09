@@ -830,7 +830,7 @@ public:
 		for (vint i = 0; i < params.Count(); i++)
 		{
 			tsys.Add(params[i].tsys);
-			data.types.Add(params[i].type);
+			data.headers.Add(params[i]);
 		}
 		return ParamsOf(tsys, data, initOf, nullptr, this, &TsysAlloc::_init);
 	}
@@ -947,7 +947,7 @@ ITsys* ITsys_Init::ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& par
 	Array<ExprTsysItem> items(params.Count());
 	for (vint i = 0; i < params.Count(); i++)
 	{
-		items[i] = { nullptr,data.types[i],params[i] };
+		items[i] = { data.headers[i],params[i] };
 	}
 	return tsys->InitOf(items);
 }
