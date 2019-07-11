@@ -1,0 +1,48 @@
+#include "Ast_Expr.h"
+#include "Ast_Resolving.h"
+
+namespace symbol_typetotsys_impl
+{
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ReferenceType
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	ITsys* ProcessReferenceType(ReferenceType* self, ITsys* tsys)
+	{
+		switch (self->reference)
+		{
+		case CppReferenceType::LRef:
+			return tsys->LRefOf();
+		case CppReferenceType::RRef:
+			return tsys->RRefOf();
+		default:
+			return tsys->PtrOf();
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ArrayType
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	ITsys* ProcessArrayType(ArrayType* self, ITsys* tsys)
+	{
+		if (tsys->GetType() == TsysType::Array)
+		{
+			return tsys->GetElement()->ArrayOf(tsys->GetParamCount() + 1);
+		}
+		else
+		{
+			return tsys->ArrayOf(1);
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// DecorateType
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	ITsys* ProcessDecorateType(DecorateType* self, ITsys* tsys)
+	{
+		return tsys->CVOf({ (self->isConstExpr || self->isConst), self->isVolatile });
+	}
+}

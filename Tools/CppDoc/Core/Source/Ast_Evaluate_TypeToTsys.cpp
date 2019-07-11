@@ -3,7 +3,25 @@
 
 /***********************************************************************
 TypeToTsys
+  PrimitiveType				: literal
+  ReferenceType				: unbounded
+  ArrayType					: unbounded
+  FunctionType				: variant
+  MemberType				: unbounded
+  DeclType					: unbounded
+  DecorateType				: unbounded
+  RootType					: literal
+  IdType					: unbounded
+  ChildType					: unbounded
+  GenericType				: variant
 ***********************************************************************/
+
+namespace symbol_typetotsys_impl
+{
+	ITsys*					ProcessReferenceType(ReferenceType* self, ITsys* tsys);
+	ITsys*					ProcessArrayType(ArrayType* self, ITsys* tsys);
+	ITsys*					ProcessDecorateType(DecorateType* self, ITsys* tsys);
+}
 
 class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
 {
@@ -41,7 +59,7 @@ public:
 	}
 
 	template<typename TSelf>
-	void ProcessSingleArgumentType(TSelf* self, ITsys* (TypeToTsysVisitor::*process)(TSelf*, ITsys*))
+	void ProcessSingleArgumentType(TSelf* self, ITsys* (*process)(TSelf*, ITsys*))
 	{
 		self->type->Accept(this);
 		for (vint i = 0; i < result.Count(); i++)
@@ -54,7 +72,7 @@ public:
 					Array<ExprTsysItem> params(tsys->GetParamCount());
 					for (vint j = 0; j < params.Count(); j++)
 					{
-						params[j] = { nullptr,ExprTsysType::PRValue,(this->*process)(self, tsys->GetParam(j)) };
+						params[j] = { nullptr,ExprTsysType::PRValue,process(self, tsys->GetParam(j)) };
 					}
 					result[i] = pa.tsys->InitOf(params);
 				}
@@ -65,7 +83,7 @@ public:
 			}
 			else
 			{
-				result[i] = (this->*process)(self, tsys);
+				result[i] = process(self, tsys);
 			}
 		}
 	}
@@ -189,43 +207,18 @@ public:
 	// ReferenceType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	ITsys* ProcessReferenceType(ReferenceType* self, ITsys* tsys)
-	{
-		switch (self->reference)
-		{
-		case CppReferenceType::LRef:
-			return tsys->LRefOf();
-		case CppReferenceType::RRef:
-			return tsys->RRefOf();
-		default:
-			return tsys->PtrOf();
-		}
-	}
-
 	void Visit(ReferenceType* self)override
 	{
-		ProcessSingleArgumentType(self, &TypeToTsysVisitor::ProcessReferenceType);
+		ProcessSingleArgumentType(self, &symbol_typetotsys_impl::ProcessReferenceType);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// ArrayType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	ITsys* ProcessArrayType(ArrayType* self, ITsys* tsys)
-	{
-		if (tsys->GetType() == TsysType::Array)
-		{
-			return tsys->GetElement()->ArrayOf(tsys->GetParamCount() + 1);
-		}
-		else
-		{
-			return tsys->ArrayOf(1);
-		}
-	}
-
 	void Visit(ArrayType* self)override
 	{
-		ProcessSingleArgumentType(self, &TypeToTsysVisitor::ProcessArrayType);
+		ProcessSingleArgumentType(self, &symbol_typetotsys_impl::ProcessArrayType);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -515,14 +508,9 @@ public:
 	// DecorateType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	ITsys* ProcessDecorateType(DecorateType* self, ITsys* tsys)
-	{
-		return tsys->CVOf({ (self->isConstExpr || self->isConst), self->isVolatile });
-	}
-
 	void Visit(DecorateType* self)override
 	{
-		ProcessSingleArgumentType(self, &TypeToTsysVisitor::ProcessDecorateType);
+		ProcessSingleArgumentType(self, &symbol_typetotsys_impl::ProcessDecorateType);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////

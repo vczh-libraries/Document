@@ -152,5 +152,8 @@
     <ClCompile Include="Source\TypeSystem_TestConvert_ExactOrTrivial.cpp">
       <Filter>Source Files\TypeSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Ast_Evaluate_TypeToTsys_Impl.cpp">
+      <Filter>Source Files\Ast\Evaluation</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
