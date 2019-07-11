@@ -45,37 +45,6 @@ namespace symbol_totsys_impl
 		return { _items,_isVta };
 	}
 
-	//template<typename TResult, typename T1, typename TProcess>
-	//bool ExpandPotentialVta(const ParsingArguments& pa, List<TResult>& result, TProcess&& process, VtaInput<T1> input1)
-	//{
-	//	for (vint i = 0; i < input1.items.Count(); i++)
-	//	{
-	//		auto item1 = GetExprTsysItem(input1.items[i]);
-	//		if (input1.isVta)
-	//		{
-	//			if (item1.tsys->GetType() == TsysType::Init)
-	//			{
-	//				const auto& init = item1.tsys->GetInit();
-	//				Array<ExprTsysItem> params(item1.tsys->GetParamCount());
-	//				for (vint j = 0; j < params.Count(); j++)
-	//				{
-	//					params[j] = GetExprTsysItem(process(ExprTsysItem(init.headers[j], item1.tsys->GetParam(j))));
-	//				}
-	//				AddExprTsysItemToResult(result, GetExprTsysItem(pa.tsys->InitOf(params)));
-	//			}
-	//			else
-	//			{
-	//				AddExprTsysItemToResult(result, GetExprTsysItem(pa.tsys->Any()));
-	//			}
-	//		}
-	//		else
-	//		{
-	//			AddExprTsysItemToResult(result, GetExprTsysItem(process(item1)));
-	//		}
-	//	}
-	//	return input1.isVta;
-	//}
-
 	namespace impl
 	{
 		template<typename T, typename ...Ts>
