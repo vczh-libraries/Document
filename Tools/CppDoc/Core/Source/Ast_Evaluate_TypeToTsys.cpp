@@ -1,11 +1,12 @@
 #include "Ast_Expr.h"
-#include "Ast_Resolving.h"
+#include "Ast_Resolving_ExpandPotentialVta.h"
 
 /***********************************************************************
 TypeToTsys
   PrimitiveType				: literal
   ReferenceType				: unbounded
   ArrayType					: unbounded
+  CallingConventionType		: unbounded
   FunctionType				: variant
   MemberType				: unbounded
   DeclType					: unbounded
@@ -15,62 +16,6 @@ TypeToTsys
   ChildType					: unbounded
   GenericType				: variant
 ***********************************************************************/
-
-namespace symbol_totsys_impl
-{
-	ITsys*					ProcessReferenceType(ReferenceType* self, ExprTsysItem arg);
-	ITsys*					ProcessArrayType(ArrayType* self, ExprTsysItem arg);
-	ITsys*					ProcessDecorateType(DecorateType* self, ExprTsysItem arg);
-
-	inline ExprTsysItem GetExprTsysItem(ITsys* arg)
-	{
-		return { nullptr,ExprTsysType::PRValue,arg };
-	}
-
-	inline ExprTsysItem GetExprTsysItem(ExprTsysItem arg)
-	{
-		return arg;
-	}
-
-	inline void AddResult(TypeTsysList& result, ExprTsysItem arg)
-	{
-		if (!result.Contains(arg.tsys))
-		{
-			result.Add(arg.tsys);
-		}
-	}
-
-	template<typename TResult, typename T1, typename TProcess>
-	bool ExpandPotentialVta(const ParsingArguments& pa, List<TResult>& result, List<T1>& items1, bool isVta1, TProcess&& process)
-	{
-		for (vint i = 0; i < items1.Count(); i++)
-		{
-			auto item1 = GetExprTsysItem(items1[i]);
-			if (isVta1)
-			{
-				if (item1.tsys->GetType() == TsysType::Init)
-				{
-					const auto& init = item1.tsys->GetInit();
-					Array<ExprTsysItem> params(item1.tsys->GetParamCount());
-					for (vint j = 0; j < params.Count(); j++)
-					{
-						params[j] = GetExprTsysItem(process(ExprTsysItem(init.headers[j], item1.tsys->GetParam(j))));
-					}
-					AddResult(result, GetExprTsysItem(pa.tsys->InitOf(params)));
-				}
-				else
-				{
-					AddResult(result, GetExprTsysItem(pa.tsys->Any()));
-				}
-			}
-			else
-			{
-				AddResult(result, GetExprTsysItem(process(item1)));
-			}
-		}
-		return isVta1;
-	}
-}
 
 class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
 {
@@ -163,63 +108,7 @@ public:
 
 	void Visit(PrimitiveType* self)override
 	{
-		switch (self->prefix)
-		{
-		case CppPrimitivePrefix::_none:
-			switch (self->primitive)
-			{
-			case CppPrimitiveType::_void:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Void,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::_bool:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::_char:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SChar,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::_wchar_t:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UWChar,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::_char16_t:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UChar,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::_char32_t:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UChar,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_short:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::_int:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int8:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::___int16:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::___int32:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int64:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
-			case CppPrimitiveType::_long:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_int:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_long:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
-			case CppPrimitiveType::_float:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_double:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float,		TsysBytes::_8 })); return;
-			case CppPrimitiveType::_long_double:	AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float,		TsysBytes::_8 })); return;
-			}
-			break;
-		case CppPrimitivePrefix::_signed:
-			switch (self->primitive)
-			{
-			case CppPrimitiveType::_char:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::_short:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::_int:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int8:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::___int16:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::___int32:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int64:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
-			case CppPrimitiveType::_long:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_int:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_long:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,		TsysBytes::_8 })); return;
-			}
-			break;
-		case CppPrimitivePrefix::_unsigned:
-			switch (self->primitive)
-			{
-			case CppPrimitiveType::_char:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::_short:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::_int:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int8:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_1 })); return;
-			case CppPrimitiveType::___int16:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_2 })); return;
-			case CppPrimitiveType::___int32:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::___int64:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_8 })); return;
-			case CppPrimitiveType::_long:			AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_int:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_4 })); return;
-			case CppPrimitiveType::_long_long:		AddResult(pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,		TsysBytes::_8 })); return;
-			}
-			break;
-		}
-		throw NotConvertableException();
+		AddResult(symbol_totsys_impl::ProcessPrimitiveType(pa, self));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -233,7 +122,7 @@ public:
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
 		isVta = symbol_totsys_impl::ExpandPotentialVta(pa, result, items1, isVta1, [=](ExprTsysItem arg1)
 		{
-			return symbol_totsys_impl::ProcessReferenceType(self, arg1);
+			return symbol_totsys_impl::ProcessReferenceType(pa, self, arg1);
 		});
 	}
 
@@ -248,7 +137,7 @@ public:
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
 		isVta = symbol_totsys_impl::ExpandPotentialVta(pa, result, items1, isVta1, [=](ExprTsysItem arg1)
 		{
-			return symbol_totsys_impl::ProcessArrayType(self, arg1);
+			return symbol_totsys_impl::ProcessArrayType(pa, self, arg1);
 		});
 	}
 
@@ -546,7 +435,7 @@ public:
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
 		isVta = symbol_totsys_impl::ExpandPotentialVta(pa, result, items1, isVta1, [=](ExprTsysItem arg1)
 		{
-			return symbol_totsys_impl::ProcessDecorateType(self, arg1);
+			return symbol_totsys_impl::ProcessDecorateType(pa, self, arg1);
 		});
 	}
 

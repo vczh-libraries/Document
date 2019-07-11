@@ -78,6 +78,9 @@
     <ClInclude Include="Source\Ast_Resolving.h">
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Ast_Resolving_ExpandPotentialVta.h">
+      <Filter>Source Files\Ast\Resolving</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Import\Vlpp.cpp">
