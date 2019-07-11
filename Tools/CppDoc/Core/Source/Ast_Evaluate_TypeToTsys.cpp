@@ -1,6 +1,8 @@
 #include "Ast_Expr.h"
 #include "Ast_Resolving_ExpandPotentialVta.h"
 
+using namespace symbol_totsys_impl;
+
 /***********************************************************************
 TypeToTsys
   PrimitiveType				: literal		*
@@ -108,7 +110,7 @@ public:
 
 	void Visit(PrimitiveType* self)override
 	{
-		AddResult(symbol_totsys_impl::ProcessPrimitiveType(pa, self));
+		AddResult(ProcessPrimitiveType(pa, self));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -120,9 +122,9 @@ public:
 		TypeTsysList items1;
 		bool isVta1;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
-		isVta = symbol_totsys_impl::ExpandPotentialVta(pa, result, items1, isVta1, [=](ExprTsysItem arg1)
+		isVta = ExpandPotentialVta(pa, result, Input(items1, isVta1), [=](ExprTsysItem arg1)
 		{
-			return symbol_totsys_impl::ProcessReferenceType(pa, self, arg1);
+			return ProcessReferenceType(pa, self, arg1);
 		});
 	}
 
@@ -135,9 +137,9 @@ public:
 		TypeTsysList items1;
 		bool isVta1;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
-		isVta = symbol_totsys_impl::ExpandPotentialVta(pa, result, items1, isVta1, [=](ExprTsysItem arg1)
+		isVta = ExpandPotentialVta(pa, result, Input(items1, isVta1), [=](ExprTsysItem arg1)
 		{
-			return symbol_totsys_impl::ProcessArrayType(pa, self, arg1);
+			return ProcessArrayType(pa, self, arg1);
 		});
 	}
 
@@ -354,7 +356,7 @@ public:
 							Array<ExprTsysItem> params(type->GetParamCount());
 							for (vint k = 0; k < params.Count(); k++)
 							{
-								params[k] = symbol_totsys_impl::GetExprTsysItem(symbol_totsys_impl::ProcessMemberType(
+								params[k] = GetExprTsysItem(ProcessMemberType(
 									pa,
 									self,
 									{ type->GetInit().headers[k],type->GetParam(k) },
@@ -373,11 +375,11 @@ public:
 						Array<ExprTsysItem> params(type->GetParamCount());
 						for (vint k = 0; k < params.Count(); k++)
 						{
-							params[k] = symbol_totsys_impl::GetExprTsysItem(symbol_totsys_impl::ProcessMemberType(
+							params[k] = GetExprTsysItem(ProcessMemberType(
 								pa,
 								self,
 								{ type->GetInit().headers[k],type->GetParam(k) },
-								symbol_totsys_impl::GetExprTsysItem(classType)
+								GetExprTsysItem(classType)
 							));
 						}
 						AddResult(pa.tsys->InitOf(params));
@@ -392,10 +394,10 @@ public:
 							Array<ExprTsysItem> params(classType->GetParamCount());
 							for (vint k = 0; k < params.Count(); k++)
 							{
-								params[k] = symbol_totsys_impl::GetExprTsysItem(symbol_totsys_impl::ProcessMemberType(
+								params[k] = GetExprTsysItem(ProcessMemberType(
 									pa,
 									self,
-									symbol_totsys_impl::GetExprTsysItem(type),
+									GetExprTsysItem(type),
 									{ classType->GetInit().headers[k],classType->GetParam(k) }
 								));
 							}
@@ -408,11 +410,11 @@ public:
 					}
 					else
 					{
-						AddResult(symbol_totsys_impl::ProcessMemberType(
+						AddResult(ProcessMemberType(
 							pa,
 							self,
-							symbol_totsys_impl::GetExprTsysItem(type),
-							symbol_totsys_impl::GetExprTsysItem(classType)
+							GetExprTsysItem(type),
+							GetExprTsysItem(classType)
 						));
 					}
 				}
@@ -453,9 +455,9 @@ public:
 		TypeTsysList items1;
 		bool isVta1;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
-		isVta = symbol_totsys_impl::ExpandPotentialVta(pa, result, items1, isVta1, [=](ExprTsysItem arg1)
+		isVta = ExpandPotentialVta(pa, result, Input(items1, isVta1), [=](ExprTsysItem arg1)
 		{
-			return symbol_totsys_impl::ProcessDecorateType(pa, self, arg1);
+			return ProcessDecorateType(pa, self, arg1);
 		});
 	}
 

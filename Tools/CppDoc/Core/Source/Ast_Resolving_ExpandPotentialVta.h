@@ -18,7 +18,7 @@ namespace symbol_totsys_impl
 		return arg;
 	}
 
-	inline void AddResult(TypeTsysList& result, ExprTsysItem arg)
+	inline void AddExprTsysItemToResult(TypeTsysList& result, ExprTsysItem arg)
 	{
 		if (!result.Contains(arg.tsys))
 		{
@@ -26,13 +26,32 @@ namespace symbol_totsys_impl
 		}
 	}
 
-	template<typename TResult, typename T1, typename TProcess>
-	bool ExpandPotentialVta(const ParsingArguments& pa, List<TResult>& result, List<T1>& items1, bool isVta1, TProcess&& process)
+	template<typename T>
+	struct VtaInput
 	{
-		for (vint i = 0; i < items1.Count(); i++)
+		List<T>&				items;
+		bool					isVta;
+
+		VtaInput(List<T>& _items, bool _isVta)
+			:items(_items)
+			, isVta(_isVta)
 		{
-			auto item1 = GetExprTsysItem(items1[i]);
-			if (isVta1)
+		}
+	};
+
+	template<typename T>
+	VtaInput<T> Input(List<T>& _items, bool _isVta)
+	{
+		return { _items,_isVta };
+	}
+
+	template<typename TResult, typename T1, typename TProcess>
+	bool ExpandPotentialVta(const ParsingArguments& pa, List<TResult>& result, VtaInput<T1> input1, TProcess&& process)
+	{
+		for (vint i = 0; i < input1.items.Count(); i++)
+		{
+			auto item1 = GetExprTsysItem(input1.items[i]);
+			if (input1.isVta)
 			{
 				if (item1.tsys->GetType() == TsysType::Init)
 				{
@@ -42,18 +61,18 @@ namespace symbol_totsys_impl
 					{
 						params[j] = GetExprTsysItem(process(ExprTsysItem(init.headers[j], item1.tsys->GetParam(j))));
 					}
-					AddResult(result, GetExprTsysItem(pa.tsys->InitOf(params)));
+					AddExprTsysItemToResult(result, GetExprTsysItem(pa.tsys->InitOf(params)));
 				}
 				else
 				{
-					AddResult(result, GetExprTsysItem(pa.tsys->Any()));
+					AddExprTsysItemToResult(result, GetExprTsysItem(pa.tsys->Any()));
 				}
 			}
 			else
 			{
-				AddResult(result, GetExprTsysItem(process(item1)));
+				AddExprTsysItemToResult(result, GetExprTsysItem(process(item1)));
 			}
 		}
-		return isVta1;
+		return input1.isVta;
 	}
 }
