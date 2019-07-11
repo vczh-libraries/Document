@@ -31,6 +31,7 @@ namespace symbol_totsys_impl
 	{
 		List<T>&				items;
 		bool					isVta;
+		vint					selectedIndex = -1;
 
 		VtaInput(List<T>& _items, bool _isVta)
 			:items(_items)
@@ -53,17 +54,17 @@ namespace symbol_totsys_impl
 			template<vint Index>
 			struct Impl
 			{
-				static inline auto Do(T&& t, Ts&& ...ts)
+				static inline auto& Do(T& t, Ts& ...ts)
 				{
 					using TImpl = typename SelectImpl<Ts...>::template Impl<Index - 1>;
-					return TImpl::Do(ForwardValue<Ts&&>(ts)...);
+					return TImpl::Do(ts...);
 				}
 			};
 
 			template<>
 			struct Impl<0>
 			{
-				static inline T Do(T&& t, Ts&& ...ts)
+				static inline T& Do(T& t, Ts& ...ts)
 				{
 					return t;
 				}
@@ -71,51 +72,25 @@ namespace symbol_totsys_impl
 		};
 
 		template<vint Index, typename T, typename ...Ts>
-		auto Select(T&& t, Ts&& ...ts)
+		auto& Select(T& t, Ts& ...ts)
 		{
 			using TImpl = typename SelectImpl<T, Ts...>::template Impl<Index>;
-			return TImpl::Do(ForwardValue<T&&>(t), ForwardValue<Ts&&>(ts)...);
+			return TImpl::Do(t, ts...);
 		}
 
 		template<typename TInput>
-		ExprTsysItem SelectInput(VtaInput<TInput> input, vint inputIndex, vint unboundedVtaIndex)
+		ExprTsysItem SelectInput(VtaInput<TInput> input, vint unboundedVtaIndex)
 		{
 			if (input.isVta)
 			{
-				auto tsys = GetExprTsysItem(input.items[inputIndex]).tsys;
+				auto tsys = GetExprTsysItem(input.items[input.selectedIndex]).tsys;
 				return { tsys->GetInit().headers[unboundedVtaIndex],tsys->GetParam(unboundedVtaIndex) };
 			}
 			else
 			{
-				return GetExprTsysItem(input.items[inputIndex]);
+				return GetExprTsysItem(input.items[input.selectedIndex]);
 			}
 		}
-
-		template<typename TResult, typename TProcess, typename ...TInputs>
-		struct ExpandPotentialVtaFinal;
-
-		template<typename TResult, typename TProcess, typename TInput1>
-		struct ExpandPotentialVtaFinal<TResult, TProcess, TInput1>
-		{
-			static ExprTsysItem Do(List<TResult>& result, vint(&inputIndex)[1], vint unboundedVtaIndex, TProcess&& process, VtaInput<TInput1> input1)
-			{
-				return GetExprTsysItem(process(
-					SelectInput(input1, inputIndex[0], unboundedVtaIndex)
-				));
-			}
-		};
-
-		template<typename TResult, typename TProcess, typename TInput1, typename TInput2>
-		struct ExpandPotentialVtaFinal<TResult, TProcess, TInput1, TInput2>
-		{
-			static ExprTsysItem Do(List<TResult>& result, vint(&inputIndex)[2], vint unboundedVtaIndex, TProcess&& process, VtaInput<TInput1> input1, VtaInput<TInput2> input2)
-			{
-				return GetExprTsysItem(process(
-					SelectInput(input1, inputIndex[0], unboundedVtaIndex),
-					SelectInput(input2, inputIndex[1], unboundedVtaIndex)
-				));
-			}
-		};
 
 		template<typename TResult, typename TProcess, typename ...TInputs>
 		struct ExpandPotentialVtaStep
@@ -123,9 +98,9 @@ namespace symbol_totsys_impl
 			template<vint Index>
 			struct Step
 			{
-				static void Do(const ParsingArguments& pa, List<TResult>& result, vint(&inputIndex)[sizeof...(TInputs)], vint unboundedVtaCount, TProcess&& process, VtaInput<TInputs> ...inputs)
+				static void Do(const ParsingArguments& pa, List<TResult>& result, vint unboundedVtaCount, TProcess&& process, VtaInput<TInputs>& ...inputs)
 				{
-					auto input = Select<Index>(inputs...);
+					auto& input = Select<Index>(inputs...);
 					for (vint i = 0; i < input.items.Count(); i++)
 					{
 						auto item = GetExprTsysItem(input.items[i]);
@@ -150,8 +125,8 @@ namespace symbol_totsys_impl
 							}
 						}
 
-						inputIndex[Index] = i;
-						Step<Index + 1>::Do(pa, result, inputIndex, unboundedVtaCount, ForwardValue<TProcess&&>(process), inputs...);
+						input.selectedIndex = i;
+						Step<Index + 1>::Do(pa, result, unboundedVtaCount, ForwardValue<TProcess&&>(process), inputs...);
 					}
 				}
 			};
@@ -159,27 +134,27 @@ namespace symbol_totsys_impl
 			template<>
 			struct Step<sizeof...(TInputs)>
 			{
-				static void Do(const ParsingArguments& pa, List<TResult>& result, vint(&inputIndex)[sizeof...(TInputs)], vint unboundedVtaCount, TProcess&& process, VtaInput<TInputs> ...inputs)
+				static void Do(const ParsingArguments& pa, List<TResult>& result, vint unboundedVtaCount, TProcess&& process, VtaInput<TInputs>& ...inputs)
 				{
 					if (unboundedVtaCount == -1)
 					{
-						AddExprTsysItemToResult(result, ExpandPotentialVtaFinal<TResult, TProcess, TInputs...>::Do(result, inputIndex, -1, ForwardValue<TProcess&&>(process), inputs...));
+						AddExprTsysItemToResult(result, GetExprTsysItem(process(SelectInput(inputs, -1)...)));
 					}
 					else
 					{
 						Array<ExprTsysItem> params(unboundedVtaCount);
 						for (vint i = 0; i < unboundedVtaCount; i++)
 						{
-							params[i] = ExpandPotentialVtaFinal<TResult, TProcess, TInputs...>::Do(result, inputIndex, i, ForwardValue<TProcess&&>(process), inputs...);
+							params[i] = GetExprTsysItem(process(SelectInput(inputs, i)...));
 						}
 						AddExprTsysItemToResult(result, GetExprTsysItem(pa.tsys->InitOf(params)));
 					}
 				}
 			};
 
-			static void Execute(const ParsingArguments& pa, List<TResult>& result, vint(&inputIndex)[sizeof...(TInputs)], vint unboundedVtaCount, TProcess&& process, VtaInput<TInputs> ...inputs)
+			static void Execute(const ParsingArguments& pa, List<TResult>& result, vint unboundedVtaCount, TProcess&& process, VtaInput<TInputs>& ...inputs)
 			{
-				Step<0>::Do(pa, result, inputIndex, unboundedVtaCount, ForwardValue<TProcess&&>(process), inputs...);
+				Step<0>::Do(pa, result, unboundedVtaCount, ForwardValue<TProcess&&>(process), inputs...);
 			}
 		};
 	}
@@ -187,8 +162,7 @@ namespace symbol_totsys_impl
 	template<typename TResult, typename TProcess, typename ...TInputs>
 	bool ExpandPotentialVta(const ParsingArguments& pa, List<TResult>& result, TProcess&& process, VtaInput<TInputs> ...inputs)
 	{
-		vint inputIndex[sizeof...(TInputs)];
-		impl::ExpandPotentialVtaStep<TResult, TProcess, TInputs...>::Execute(pa, result, inputIndex, -1, ForwardValue<TProcess&&>(process), inputs...);
+		impl::ExpandPotentialVtaStep<TResult, TProcess, TInputs...>::Execute(pa, result, -1, ForwardValue<TProcess&&>(process), inputs...);
 		return (inputs.isVta || ...);
 	}
 }
