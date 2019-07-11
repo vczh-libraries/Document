@@ -11,16 +11,16 @@ TypeToTsys
   DeclType					: unbounded
   DecorateType				: unbounded
   RootType					: literal
-  IdType					: unbounded
+  IdType					: identifier
   ChildType					: unbounded
   GenericType				: variant
 ***********************************************************************/
 
 namespace symbol_typetotsys_impl
 {
-	ITsys*					ProcessReferenceType(ReferenceType* self, ITsys* tsys);
-	ITsys*					ProcessArrayType(ArrayType* self, ITsys* tsys);
-	ITsys*					ProcessDecorateType(DecorateType* self, ITsys* tsys);
+	ITsys*					ProcessReferenceType(ReferenceType* self, ExprTsysItem arg);
+	ITsys*					ProcessArrayType(ArrayType* self, ExprTsysItem arg);
+	ITsys*					ProcessDecorateType(DecorateType* self, ExprTsysItem arg);
 }
 
 class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
@@ -59,7 +59,7 @@ public:
 	}
 
 	template<typename TSelf>
-	void ProcessSingleArgumentType(TSelf* self, ITsys* (*process)(TSelf*, ITsys*))
+	void ProcessSingleArgumentType(TSelf* self, ITsys* (*process)(TSelf*, ExprTsysItem))
 	{
 		self->type->Accept(this);
 		for (vint i = 0; i < result.Count(); i++)
@@ -72,7 +72,7 @@ public:
 					Array<ExprTsysItem> params(tsys->GetParamCount());
 					for (vint j = 0; j < params.Count(); j++)
 					{
-						params[j] = { nullptr,ExprTsysType::PRValue,process(self, tsys->GetParam(j)) };
+						params[j] = { nullptr,ExprTsysType::PRValue,process(self, { nullptr,ExprTsysType::PRValue,tsys->GetParam(j) }) };
 					}
 					result[i] = pa.tsys->InitOf(params);
 				}
@@ -83,7 +83,7 @@ public:
 			}
 			else
 			{
-				result[i] = process(self, tsys);
+				result[i] = process(self, { nullptr,ExprTsysType::PRValue,tsys });
 			}
 		}
 	}

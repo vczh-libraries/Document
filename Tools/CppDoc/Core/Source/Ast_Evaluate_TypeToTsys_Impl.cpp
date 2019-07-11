@@ -8,16 +8,16 @@ namespace symbol_typetotsys_impl
 	// ReferenceType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	ITsys* ProcessReferenceType(ReferenceType* self, ITsys* tsys)
+	ITsys* ProcessReferenceType(ReferenceType* self, ExprTsysItem arg)
 	{
 		switch (self->reference)
 		{
 		case CppReferenceType::LRef:
-			return tsys->LRefOf();
+			return arg.tsys->LRefOf();
 		case CppReferenceType::RRef:
-			return tsys->RRefOf();
+			return arg.tsys->RRefOf();
 		default:
-			return tsys->PtrOf();
+			return arg.tsys->PtrOf();
 		}
 	}
 
@@ -25,15 +25,15 @@ namespace symbol_typetotsys_impl
 	// ArrayType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	ITsys* ProcessArrayType(ArrayType* self, ITsys* tsys)
+	ITsys* ProcessArrayType(ArrayType* self, ExprTsysItem arg)
 	{
-		if (tsys->GetType() == TsysType::Array)
+		if (arg.tsys->GetType() == TsysType::Array)
 		{
-			return tsys->GetElement()->ArrayOf(tsys->GetParamCount() + 1);
+			return arg.tsys->GetElement()->ArrayOf(arg.tsys->GetParamCount() + 1);
 		}
 		else
 		{
-			return tsys->ArrayOf(1);
+			return arg.tsys->ArrayOf(1);
 		}
 	}
 
@@ -41,8 +41,8 @@ namespace symbol_typetotsys_impl
 	// DecorateType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	ITsys* ProcessDecorateType(DecorateType* self, ITsys* tsys)
+	ITsys* ProcessDecorateType(DecorateType* self, ExprTsysItem arg)
 	{
-		return tsys->CVOf({ (self->isConstExpr || self->isConst), self->isVolatile });
+		return arg.tsys->CVOf({ (self->isConstExpr || self->isConst), self->isVolatile });
 	}
 }
