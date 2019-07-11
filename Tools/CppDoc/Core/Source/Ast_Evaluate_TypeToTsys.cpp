@@ -16,11 +16,60 @@ TypeToTsys
   GenericType				: variant
 ***********************************************************************/
 
-namespace symbol_typetotsys_impl
+namespace symbol_totsys_impl
 {
 	ITsys*					ProcessReferenceType(ReferenceType* self, ExprTsysItem arg);
 	ITsys*					ProcessArrayType(ArrayType* self, ExprTsysItem arg);
 	ITsys*					ProcessDecorateType(DecorateType* self, ExprTsysItem arg);
+
+	inline ExprTsysItem GetExprTsysItem(ITsys* arg)
+	{
+		return { nullptr,ExprTsysType::PRValue,arg };
+	}
+
+	inline ExprTsysItem GetExprTsysItem(ExprTsysItem arg)
+	{
+		return arg;
+	}
+
+	inline void AddResult(TypeTsysList& result, ExprTsysItem arg)
+	{
+		if (!result.Contains(arg.tsys))
+		{
+			result.Add(arg.tsys);
+		}
+	}
+
+	template<typename TResult, typename T1, typename TProcess>
+	bool ExpandPotentialVta(const ParsingArguments& pa, List<TResult>& result, List<T1>& items1, bool isVta1, TProcess&& process)
+	{
+		for (vint i = 0; i < items1.Count(); i++)
+		{
+			auto item1 = GetExprTsysItem(items1[i]);
+			if (isVta1)
+			{
+				if (item1.tsys->GetType() == TsysType::Init)
+				{
+					const auto& init = item1.tsys->GetInit();
+					Array<ExprTsysItem> params(item1.tsys->GetParamCount());
+					for (vint j = 0; j < params.Count(); j++)
+					{
+						params[j] = GetExprTsysItem(process(ExprTsysItem(init.headers[j], item1.tsys->GetParam(j))));
+					}
+					AddResult(result, GetExprTsysItem(pa.tsys->InitOf(params)));
+				}
+				else
+				{
+					AddResult(result, GetExprTsysItem(pa.tsys->Any()));
+				}
+			}
+			else
+			{
+				AddResult(result, GetExprTsysItem(process(item1)));
+			}
+		}
+		return isVta1;
+	}
 }
 
 class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
@@ -56,36 +105,6 @@ public:
 	void AddResult(ITsys* tsys)
 	{
 		AddResult(result, tsys);
-	}
-
-	template<typename TSelf>
-	void ProcessSingleArgumentType(TSelf* self, ITsys* (*process)(TSelf*, ExprTsysItem))
-	{
-		self->type->Accept(this);
-		for (vint i = 0; i < result.Count(); i++)
-		{
-			auto tsys = result[i];
-			if (isVta)
-			{
-				if (tsys->GetType() == TsysType::Init)
-				{
-					Array<ExprTsysItem> params(tsys->GetParamCount());
-					for (vint j = 0; j < params.Count(); j++)
-					{
-						params[j] = { nullptr,ExprTsysType::PRValue,process(self, { nullptr,ExprTsysType::PRValue,tsys->GetParam(j) }) };
-					}
-					result[i] = pa.tsys->InitOf(params);
-				}
-				else
-				{
-					result[i] = pa.tsys->Any();
-				}
-			}
-			else
-			{
-				result[i] = process(self, { nullptr,ExprTsysType::PRValue,tsys });
-			}
-		}
 	}
 
 	template<typename T>
@@ -209,7 +228,13 @@ public:
 
 	void Visit(ReferenceType* self)override
 	{
-		ProcessSingleArgumentType(self, &symbol_typetotsys_impl::ProcessReferenceType);
+		TypeTsysList items1;
+		bool isVta1;
+		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
+		isVta = symbol_totsys_impl::ExpandPotentialVta(pa, result, items1, isVta1, [=](ExprTsysItem arg1)
+		{
+			return symbol_totsys_impl::ProcessReferenceType(self, arg1);
+		});
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -218,7 +243,13 @@ public:
 
 	void Visit(ArrayType* self)override
 	{
-		ProcessSingleArgumentType(self, &symbol_typetotsys_impl::ProcessArrayType);
+		TypeTsysList items1;
+		bool isVta1;
+		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
+		isVta = symbol_totsys_impl::ExpandPotentialVta(pa, result, items1, isVta1, [=](ExprTsysItem arg1)
+		{
+			return symbol_totsys_impl::ProcessArrayType(self, arg1);
+		});
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -510,7 +541,13 @@ public:
 
 	void Visit(DecorateType* self)override
 	{
-		ProcessSingleArgumentType(self, &symbol_typetotsys_impl::ProcessDecorateType);
+		TypeTsysList items1;
+		bool isVta1;
+		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
+		isVta = symbol_totsys_impl::ExpandPotentialVta(pa, result, items1, isVta1, [=](ExprTsysItem arg1)
+		{
+			return symbol_totsys_impl::ProcessDecorateType(self, arg1);
+		});
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////

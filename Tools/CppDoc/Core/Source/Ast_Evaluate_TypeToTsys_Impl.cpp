@@ -1,7 +1,7 @@
 #include "Ast_Expr.h"
 #include "Ast_Resolving.h"
 
-namespace symbol_typetotsys_impl
+namespace symbol_totsys_impl
 {
 
 	//////////////////////////////////////////////////////////////////////////////////////
