@@ -3,14 +3,14 @@
 
 /***********************************************************************
 TypeToTsys
-  PrimitiveType				: literal
-  ReferenceType				: unbounded
-  ArrayType					: unbounded
+  PrimitiveType				: literal		*
+  ReferenceType				: unbounded		*
+  ArrayType					: unbounded		*
   CallingConventionType		: unbounded
   FunctionType				: variant
-  MemberType				: unbounded
+  MemberType				: unbounded		*
   DeclType					: unbounded
-  DecorateType				: unbounded
+  DecorateType				: unbounded		*
   RootType					: literal
   IdType					: identifier
   ChildType					: unbounded
@@ -354,7 +354,12 @@ public:
 							Array<ExprTsysItem> params(type->GetParamCount());
 							for (vint k = 0; k < params.Count(); k++)
 							{
-								params[k] = { nullptr,ExprTsysType::PRValue,type->GetParam(k)->MemberOf(classType->GetParam(k)) };
+								params[k] = symbol_totsys_impl::GetExprTsysItem(symbol_totsys_impl::ProcessMemberType(
+									pa,
+									self,
+									{ type->GetInit().headers[k],type->GetParam(k) },
+									{ classType->GetInit().headers[k],classType->GetParam(k) }
+								));
 							}
 							AddResult(pa.tsys->InitOf(params));
 						}
@@ -368,7 +373,12 @@ public:
 						Array<ExprTsysItem> params(type->GetParamCount());
 						for (vint k = 0; k < params.Count(); k++)
 						{
-							params[k] = { nullptr,ExprTsysType::PRValue,type->GetParam(k)->MemberOf(classType) };
+							params[k] = symbol_totsys_impl::GetExprTsysItem(symbol_totsys_impl::ProcessMemberType(
+								pa,
+								self,
+								{ type->GetInit().headers[k],type->GetParam(k) },
+								symbol_totsys_impl::GetExprTsysItem(classType)
+							));
 						}
 						AddResult(pa.tsys->InitOf(params));
 					}
@@ -382,7 +392,12 @@ public:
 							Array<ExprTsysItem> params(classType->GetParamCount());
 							for (vint k = 0; k < params.Count(); k++)
 							{
-								params[k] = { nullptr,ExprTsysType::PRValue,type->MemberOf(classType->GetParam(k)) };
+								params[k] = symbol_totsys_impl::GetExprTsysItem(symbol_totsys_impl::ProcessMemberType(
+									pa,
+									self,
+									symbol_totsys_impl::GetExprTsysItem(type),
+									{ classType->GetInit().headers[k],classType->GetParam(k) }
+								));
 							}
 							AddResult(pa.tsys->InitOf(params));
 						}
@@ -393,7 +408,12 @@ public:
 					}
 					else
 					{
-						AddResult(type->MemberOf(classType));
+						AddResult(symbol_totsys_impl::ProcessMemberType(
+							pa,
+							self,
+							symbol_totsys_impl::GetExprTsysItem(type),
+							symbol_totsys_impl::GetExprTsysItem(classType)
+						));
 					}
 				}
 			}

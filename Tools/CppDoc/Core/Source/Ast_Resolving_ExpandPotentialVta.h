@@ -5,6 +5,7 @@ namespace symbol_totsys_impl
 	ITsys*					ProcessPrimitiveType(const ParsingArguments& pa, PrimitiveType* self);
 	ITsys*					ProcessReferenceType(const ParsingArguments& pa, ReferenceType* self, ExprTsysItem arg);
 	ITsys*					ProcessArrayType(const ParsingArguments& pa, ArrayType* self, ExprTsysItem arg);
+	ITsys*					ProcessMemberType(const ParsingArguments& pa, MemberType* self, ExprTsysItem argType, ExprTsysItem argClass);
 	ITsys*					ProcessDecorateType(const ParsingArguments& pa, DecorateType* self, ExprTsysItem arg);
 
 	inline ExprTsysItem GetExprTsysItem(ITsys* arg)
