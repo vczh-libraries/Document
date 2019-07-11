@@ -326,102 +326,15 @@ public:
 
 	void Visit(MemberType* self)override
 	{
-		auto oldMemberOf = memberOf;
-		memberOf = true;
-
 		TypeTsysList types, classTypes;
 		bool typesVta = false;
 		bool classTypesVta = false;
-		TypeToTsysInternal(pa, self->type, types, gaContext, typesVta, memberOf, cc);
+		TypeToTsysInternal(pa, self->type, types, gaContext, typesVta, true, cc);
 		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classTypesVta);
-		isVta = typesVta || classTypesVta;
-
-		for (vint i = 0; i < types.Count(); i++)
+		isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem argType, ExprTsysItem argClass)
 		{
-			for (vint j = 0; j < classTypes.Count(); j++)
-			{
-				auto type = types[i];
-				auto classType = classTypes[j];
-				if (typesVta && type->GetType() == TsysType::Init)
-				{
-					if (classTypesVta)
-					{
-						if (classType->GetType() == TsysType::Init)
-						{
-							if (type->GetParamCount() != classType->GetParamCount())
-							{
-								throw NotConvertableException();
-							}
-
-							Array<ExprTsysItem> params(type->GetParamCount());
-							for (vint k = 0; k < params.Count(); k++)
-							{
-								params[k] = GetExprTsysItem(ProcessMemberType(
-									pa,
-									self,
-									{ type->GetInit().headers[k],type->GetParam(k) },
-									{ classType->GetInit().headers[k],classType->GetParam(k) }
-								));
-							}
-							AddResult(pa.tsys->InitOf(params));
-						}
-						else
-						{
-							AddResult(pa.tsys->Any());
-						}
-					}
-					else
-					{
-						Array<ExprTsysItem> params(type->GetParamCount());
-						for (vint k = 0; k < params.Count(); k++)
-						{
-							params[k] = GetExprTsysItem(ProcessMemberType(
-								pa,
-								self,
-								{ type->GetInit().headers[k],type->GetParam(k) },
-								GetExprTsysItem(classType)
-							));
-						}
-						AddResult(pa.tsys->InitOf(params));
-					}
-				}
-				else
-				{
-					if (classTypesVta)
-					{
-						if (classType->GetType() == TsysType::Init)
-						{
-							Array<ExprTsysItem> params(classType->GetParamCount());
-							for (vint k = 0; k < params.Count(); k++)
-							{
-								params[k] = GetExprTsysItem(ProcessMemberType(
-									pa,
-									self,
-									GetExprTsysItem(type),
-									{ classType->GetInit().headers[k],classType->GetParam(k) }
-								));
-							}
-							AddResult(pa.tsys->InitOf(params));
-						}
-						else
-						{
-							AddResult(pa.tsys->Any());
-						}
-					}
-					else
-					{
-						AddResult(ProcessMemberType(
-							pa,
-							self,
-							GetExprTsysItem(type),
-							GetExprTsysItem(classType)
-						));
-					}
-				}
-			}
-		}
-
-		memberOf = oldMemberOf;
+			return ProcessMemberType(pa, self, argType, argClass);
+		}, Input(types, typesVta), Input(classTypes, classTypesVta));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////

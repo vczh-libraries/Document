@@ -136,6 +136,18 @@ namespace symbol_totsys_impl
 			}
 		};
 
+		template<typename TResult, typename TProcess, typename TInput1, typename TInput2>
+		struct ExpandPotentialVtaFinal<TResult, TProcess, TInput1, TInput2>
+		{
+			static ExprTsysItem Do(List<TResult>& result, vint(&inputIndex)[2], vint unboundedVtaIndex, TProcess&& process, VtaInput<TInput1> input1, VtaInput<TInput2> input2)
+			{
+				return GetExprTsysItem(process(
+					SelectInput(input1, inputIndex[0], unboundedVtaIndex),
+					SelectInput(input2, inputIndex[1], unboundedVtaIndex)
+				));
+			}
+		};
+
 		template<typename TResult, typename TProcess, typename ...TInputs>
 		struct ExpandPotentialVtaStep
 		{
