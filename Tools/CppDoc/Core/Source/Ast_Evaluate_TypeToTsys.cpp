@@ -120,7 +120,7 @@ public:
 	void Visit(ReferenceType* self)override
 	{
 		TypeTsysList items1;
-		bool isVta1;
+		bool isVta1 = false;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
 		isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem arg1)
 		{
@@ -135,7 +135,7 @@ public:
 	void Visit(ArrayType* self)override
 	{
 		TypeTsysList items1;
-		bool isVta1;
+		bool isVta1 = false;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
 		isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem arg1)
 		{
@@ -453,7 +453,7 @@ public:
 	void Visit(DecorateType* self)override
 	{
 		TypeTsysList items1;
-		bool isVta1;
+		bool isVta1 = false;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
 		isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem arg1)
 		{
