@@ -51,7 +51,7 @@ namespace symbol_totsys_impl
 		template<vint Index, typename T, typename ...Ts>
 		struct SelectImpl
 		{
-			static inline auto& Do(T& t, Ts& ...ts)
+			static __forceinline auto& Do(T& t, Ts& ...ts)
 			{
 				return SelectImpl<Index - 1, Ts...>::Do(ts...);
 			}
@@ -60,14 +60,14 @@ namespace symbol_totsys_impl
 		template<typename T, typename ...Ts>
 		struct SelectImpl<0, T, Ts...>
 		{
-			static inline T& Do(T& t, Ts& ...ts)
+			static __forceinline T& Do(T& t, Ts& ...ts)
 			{
 				return t;
 			}
 		};
 
 		template<vint Index, typename ...Ts>
-		auto& Select(Ts& ...ts)
+		__forceinline auto& Select(Ts& ...ts)
 		{
 			return SelectImpl<Index, Ts...>::Do(ts...);
 		}
