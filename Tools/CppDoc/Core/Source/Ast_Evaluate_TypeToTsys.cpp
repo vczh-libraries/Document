@@ -122,10 +122,10 @@ public:
 		TypeTsysList items1;
 		bool isVta1;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
-		isVta = ExpandPotentialVta(pa, result, Input(items1, isVta1), [=](ExprTsysItem arg1)
+		isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem arg1)
 		{
 			return ProcessReferenceType(pa, self, arg1);
-		});
+		}, Input(items1, isVta1));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -137,10 +137,10 @@ public:
 		TypeTsysList items1;
 		bool isVta1;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
-		isVta = ExpandPotentialVta(pa, result, Input(items1, isVta1), [=](ExprTsysItem arg1)
+		isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem arg1)
 		{
 			return ProcessArrayType(pa, self, arg1);
-		});
+		}, Input(items1, isVta1));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -455,10 +455,10 @@ public:
 		TypeTsysList items1;
 		bool isVta1;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
-		isVta = ExpandPotentialVta(pa, result, Input(items1, isVta1), [=](ExprTsysItem arg1)
+		isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem arg1)
 		{
 			return ProcessDecorateType(pa, self, arg1);
-		});
+		}, Input(items1, isVta1));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
