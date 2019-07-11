@@ -48,34 +48,28 @@ namespace symbol_totsys_impl
 
 	namespace impl
 	{
-		template<typename T, typename ...Ts>
+		template<vint Index, typename T, typename ...Ts>
 		struct SelectImpl
 		{
-			template<vint Index>
-			struct Impl
+			static inline auto& Do(T& t, Ts& ...ts)
 			{
-				static inline auto& Do(T& t, Ts& ...ts)
-				{
-					using TImpl = typename SelectImpl<Ts...>::template Impl<Index - 1>;
-					return TImpl::Do(ts...);
-				}
-			};
-
-			template<>
-			struct Impl<0>
-			{
-				static inline T& Do(T& t, Ts& ...ts)
-				{
-					return t;
-				}
-			};
+				return SelectImpl<Index - 1, Ts...>::Do(ts...);
+			}
 		};
 
-		template<vint Index, typename T, typename ...Ts>
-		auto& Select(T& t, Ts& ...ts)
+		template<typename T, typename ...Ts>
+		struct SelectImpl<0, T, Ts...>
 		{
-			using TImpl = typename SelectImpl<T, Ts...>::template Impl<Index>;
-			return TImpl::Do(t, ts...);
+			static inline T& Do(T& t, Ts& ...ts)
+			{
+				return t;
+			}
+		};
+
+		template<vint Index, typename ...Ts>
+		auto& Select(Ts& ...ts)
+		{
+			return SelectImpl<Index, Ts...>::Do(ts...);
 		}
 
 		template<typename TInput>
@@ -151,18 +145,14 @@ namespace symbol_totsys_impl
 					}
 				}
 			};
-
-			static void Execute(const ParsingArguments& pa, List<TResult>& result, vint unboundedVtaCount, TProcess&& process, VtaInput<TInputs>& ...inputs)
-			{
-				Step<0>::Do(pa, result, unboundedVtaCount, ForwardValue<TProcess&&>(process), inputs...);
-			}
 		};
 	}
 
 	template<typename TResult, typename TProcess, typename ...TInputs>
 	bool ExpandPotentialVta(const ParsingArguments& pa, List<TResult>& result, TProcess&& process, VtaInput<TInputs> ...inputs)
 	{
-		impl::ExpandPotentialVtaStep<TResult, TProcess, TInputs...>::Execute(pa, result, -1, ForwardValue<TProcess&&>(process), inputs...);
+		using Step = typename impl::ExpandPotentialVtaStep<TResult, TProcess, TInputs...>::template Step<0>;
+		Step::Do(pa, result, -1, ForwardValue<TProcess&&>(process), inputs...);
 		return (inputs.isVta || ...);
 	}
 }
