@@ -457,7 +457,15 @@ public:
 
 	void Visit(ChildType* self)override
 	{
+		// TODO:
+		//		Change ExpandPotentialVta to accept a processor returning a list of results instead of a single result
+		//		Use ExpandPotentialVta in if(parentIsVta){here}
 		TypeTsysList types;
+
+		// parentIsVta == true only if allNamespaces is false
+		// consider about calculting allNamespaces first
+		// call ExpandPotentialVta when allNamespaces is false
+		// call TypeToTsysInternal when allnamespaces is true
 		bool parentIsVta = false;
 		{
 			bool allNamespaces = true;
