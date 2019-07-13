@@ -379,6 +379,22 @@ public:
 	// IdType
 	//////////////////////////////////////////////////////////////////////////////////////
 
+	static bool SymbolListToTsys(const ParsingArguments& pa, TypeTsysList& result, GenericArgContext* gaContext, List<Symbol*>& resolvedSymbols, bool allowVariadic)
+	{
+		bool hasVariadic = false;
+		bool hasNonVariadic = false;
+		for (vint i = 0; i < resolvedSymbols.Count(); i++)
+		{
+			TypeSymbolToTsys(pa, result, gaContext, resolvedSymbols[i], allowVariadic, hasVariadic, hasNonVariadic);
+		}
+
+		if (hasVariadic && hasNonVariadic)
+		{
+			throw NotConvertableException();
+		}
+		return hasVariadic;
+	}
+
 	static void CreateIdReferenceType(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta)
 	{
 		if (!resolving)
@@ -398,18 +414,7 @@ public:
 			throw NotConvertableException();
 		}
 
-		bool hasVariadic = false;
-		bool hasNonVariadic = false;
-		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
-		{
-			TypeSymbolToTsys(pa, result, gaContext, resolving->resolvedSymbols[i], allowVariadic, hasVariadic, hasNonVariadic);
-		}
-
-		if (hasVariadic && hasNonVariadic)
-		{
-			throw NotConvertableException();
-		}
-		isVta = hasVariadic;
+		isVta = SymbolListToTsys(pa, result, gaContext, resolving->resolvedSymbols, allowVariadic);
 	}
 
 	void Visit(IdType* self)override
