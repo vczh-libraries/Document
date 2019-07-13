@@ -452,18 +452,6 @@ public:
 		}
 	}
 
-	Ptr<Resolving> ResolveChildTypeWithGenericArguments(ChildType* self, TypeTsysList& types)
-	{
-		Ptr<Resolving> resolving;
-
-		for (vint i = 0; i < types.Count(); i++)
-		{
-			ResolveChildTypeWithGenericArguments(self, types[i], resolving);
-		}
-
-		return resolving;
-	}
-
 	void Visit(ChildType* self)override
 	{
 		TypeTsysList types;
@@ -531,7 +519,13 @@ public:
 		{
 			if (gaContext && !self->resolving)
 			{
-				if (auto resolving = ResolveChildTypeWithGenericArguments(self, types))
+				Ptr<Resolving> resolving;
+				for (vint i = 0; i < types.Count(); i++)
+				{
+					ResolveChildTypeWithGenericArguments(self, types[i], resolving);
+				}
+
+				if (resolving)
 				{
 					CreateIdReferenceType(pa, gaContext, resolving, true, false, result, isVta);
 				}
