@@ -68,11 +68,11 @@ public:
 
 		if (!firstName && name)
 		{
-			pa.recorder->IndexOverloadingResolution(*name, *nameResolving);
+			pa.recorder->IndexOverloadingResolution(*name, (*nameResolving)->resolvedSymbols);
 		}
 		if (!firstOp && op)
 		{
-			pa.recorder->IndexOverloadingResolution(*op, *opResolving);
+			pa.recorder->IndexOverloadingResolution(*op, (*opResolving)->resolvedSymbols);
 		}
 	}
 
@@ -517,11 +517,11 @@ public:
 			{
 				if (totalRar.values)
 				{
-					pa.recorder->Index(idExpr->name, totalRar.values);
+					pa.recorder->Index(idExpr->name, totalRar.values->resolvedSymbols);
 				}
 				if (totalRar.types)
 				{
-					pa.recorder->ExpectValueButType(idExpr->name, totalRar.types);
+					pa.recorder->ExpectValueButType(idExpr->name, totalRar.types->resolvedSymbols);
 				}
 			}
 		}

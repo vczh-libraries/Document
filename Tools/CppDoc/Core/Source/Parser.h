@@ -132,9 +132,9 @@ Parser Objects
 class IIndexRecorder : public virtual Interface
 {
 public:
-	virtual void			Index(CppName& name, Ptr<Resolving> resolving) = 0;
-	virtual void			IndexOverloadingResolution(CppName& name, Ptr<Resolving> resolving) = 0;
-	virtual void			ExpectValueButType(CppName& name, Ptr<Resolving> resolving) = 0;
+	virtual void			Index(CppName& name, List<Symbol*>& resolvedSymbols) = 0;
+	virtual void			IndexOverloadingResolution(CppName& name, List<Symbol*>& resolvedSymbols) = 0;
+	virtual void			ExpectValueButType(CppName& name, List<Symbol*>& resolvedSymbols) = 0;
 };
 
 struct ParsingArguments

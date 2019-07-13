@@ -232,14 +232,14 @@ public:
 	{
 	}
 
-	void IndexInternal(CppName& name, Ptr<Resolving> resolving, IndexReason reason)
+	void IndexInternal(CppName& name, List<Symbol*>& resolvedSymbols, IndexReason reason)
 	{
 		auto key = IndexToken::GetToken(name);
 		if (name.tokenCount > 0)
 		{
-			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+			for (vint i = 0; i < resolvedSymbols.Count(); i++)
 			{
-				auto symbol = resolving->resolvedSymbols[i];
+				auto symbol = resolvedSymbols[i];
 				if (!result.index[(vint)reason].Contains(key, symbol))
 				{
 					result.index[(vint)reason].Add(key, symbol);
@@ -249,19 +249,19 @@ public:
 		}
 	}
 
-	void Index(CppName& name, Ptr<Resolving> resolving)override
+	void Index(CppName& name, List<Symbol*>& resolvedSymbols)override
 	{
-		IndexInternal(name, resolving, IndexReason::Resolved);
+		IndexInternal(name, resolvedSymbols, IndexReason::Resolved);
 	}
 
-	void IndexOverloadingResolution(CppName& name, Ptr<Resolving> resolving)override
+	void IndexOverloadingResolution(CppName& name, List<Symbol*>& resolvedSymbols)override
 	{
-		IndexInternal(name, resolving, IndexReason::OverloadedResolution);
+		IndexInternal(name, resolvedSymbols, IndexReason::OverloadedResolution);
 	}
 
-	void ExpectValueButType(CppName& name, Ptr<Resolving> resolving)override
+	void ExpectValueButType(CppName& name, List<Symbol*>& resolvedSymbols)override
 	{
-		IndexInternal(name, resolving, IndexReason::NeedValueButType);
+		IndexInternal(name, resolvedSymbols, IndexReason::NeedValueButType);
 	}
 };
 

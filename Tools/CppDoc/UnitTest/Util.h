@@ -80,17 +80,17 @@ public:
 	{
 	}
 
-	void Index(CppName& name, Ptr<Resolving> resolving)
+	void Index(CppName& name, List<Symbol*>& resolvedSymbols)
 	{
-		callback(name, resolving, false);
+		callback(name, (List<Symbol*>&)resolvedSymbols, false);
 	}
 
-	void IndexOverloadingResolution(CppName& name, Ptr<Resolving> resolving)
+	void IndexOverloadingResolution(CppName& name, List<Symbol*>& resolvedSymbols)
 	{
-		callback(name, resolving, true);
+		callback(name, (List<Symbol*>&)resolvedSymbols, true);
 	}
 
-	void ExpectValueButType(CppName& name, Ptr<Resolving> resolving)
+	void ExpectValueButType(CppName& name, List<Symbol*>& resolvedSymbols)
 	{
 		TEST_ASSERT(false);
 	}
@@ -103,7 +103,7 @@ Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
 }
 
 #define BEGIN_ASSERT_SYMBOL \
-	CreateTestIndexRecorder([&](CppName& name, Ptr<Resolving> resolving, bool reIndex)\
+	CreateTestIndexRecorder([&](CppName& name, List<Symbol*>& resolvedSymbols, bool reIndex)\
 	{\
 		TEST_ASSERT(name.tokenCount > 0);\
 
@@ -115,8 +115,8 @@ Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
 		if (reIndex == REINDEX && name.nameTokens[0].rowStart == TROW && name.nameTokens[0].columnStart == TCOL)\
 		{\
 			TEST_ASSERT(name.name == NAME);\
-			TEST_ASSERT(resolving->resolvedSymbols.Count() == 1);\
-			auto symbol = resolving->resolvedSymbols[0];\
+			TEST_ASSERT(resolvedSymbols.Count() == 1);\
+			auto symbol = resolvedSymbols[0];\
 			auto decl = symbol->GetAnyForwardDecl<TYPE>();\
 			TEST_ASSERT(decl);\
 			TEST_ASSERT(decl->name.name == NAME || decl->name.name == L"operator " NAME);\

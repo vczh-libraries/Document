@@ -71,7 +71,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			type->resolving = resolving;
 			if (pa.recorder)
 			{
-				pa.recorder->Index(type->name, type->resolving);
+				pa.recorder->Index(type->name, type->resolving->resolvedSymbols);
 			}
 
 			if (type->cStyleTypeReference)
@@ -202,7 +202,7 @@ Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Type> classType
 			type->resolving = resolving;
 			if (pa.recorder && type->resolving)
 			{
-				pa.recorder->Index(type->name, type->resolving);
+				pa.recorder->Index(type->name, type->resolving->resolvedSymbols);
 			}
 			return type;
 		}
