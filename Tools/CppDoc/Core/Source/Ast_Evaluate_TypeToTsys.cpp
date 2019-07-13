@@ -379,14 +379,15 @@ public:
 	// IdType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	static bool SymbolListToTsys(const ParsingArguments& pa, TypeTsysList& result, GenericArgContext* gaContext, List<Symbol*>& resolvedSymbols, bool allowVariadic)
+	template<typename TGenerator>
+	static bool SymbolListToTsys(const ParsingArguments& pa, TypeTsysList& result, GenericArgContext* gaContext, bool allowVariadic, TGenerator&& symbolGenerator)
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		for (vint i = 0; i < resolvedSymbols.Count(); i++)
+		symbolGenerator([&](Symbol* symbol)
 		{
-			TypeSymbolToTsys(pa, result, gaContext, resolvedSymbols[i], allowVariadic, hasVariadic, hasNonVariadic);
-		}
+			TypeSymbolToTsys(pa, result, gaContext, symbol, allowVariadic, hasVariadic, hasNonVariadic);
+		});
 
 		if (hasVariadic && hasNonVariadic)
 		{
@@ -414,7 +415,13 @@ public:
 			throw NotConvertableException();
 		}
 
-		isVta = SymbolListToTsys(pa, result, gaContext, resolving->resolvedSymbols, allowVariadic);
+		isVta = SymbolListToTsys(pa, result, gaContext, allowVariadic, [&](auto receiver)
+		{
+			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+			{
+				receiver(resolving->resolvedSymbols[i]);
+			}
+		});
 	}
 
 	void Visit(IdType* self)override
@@ -426,7 +433,8 @@ public:
 	// ChildType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void ResolveChildTypeWithGenericArguments(ChildType* self, ITsys* type, Ptr<Resolving>& resolving)
+	template<typename TReceiver>
+	void ResolveChildTypeWithGenericArguments(ChildType* self, ITsys* type, SortedList<Symbol*>& visited, TReceiver&& receiver)
 	{
 		if (type->GetType() == TsysType::Decl)
 		{
@@ -434,18 +442,13 @@ public:
 			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
 			if (rsr.types)
 			{
-				if (!resolving)
+				for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
 				{
-					resolving = rsr.types;
-				}
-				else
-				{
-					for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
+					auto symbol = rsr.types->resolvedSymbols[i];
+					if (!visited.Contains(symbol))
 					{
-						if (!resolving->resolvedSymbols.Contains(rsr.types->resolvedSymbols[i]))
-						{
-							resolving->resolvedSymbols.Add(rsr.types->resolvedSymbols[i]);
-						}
+						visited.Add(symbol);
+						receiver(symbol);
 					}
 				}
 			}
@@ -494,10 +497,11 @@ public:
 					for (vint j = 0; j < parentType->GetParamCount(); j++)
 					{
 						TypeTsysList childTypes;
-						Ptr<Resolving> resolving;
-						ResolveChildTypeWithGenericArguments(self, parentType->GetParam(j), resolving);
-						CreateIdReferenceType(pa, gaContext, resolving, true, false, childTypes, isVta);
-
+						SortedList<Symbol*> visited;
+						SymbolListToTsys(pa, childTypes, gaContext, false, [&](auto receiver)
+						{
+							ResolveChildTypeWithGenericArguments(self, parentType->GetParam(j), visited, receiver);
+						});
 						symbol_type_resolving::AddTemp(argTypesList[j], childTypes);
 					}
 
@@ -519,16 +523,14 @@ public:
 		{
 			if (gaContext && !self->resolving)
 			{
-				Ptr<Resolving> resolving;
-				for (vint i = 0; i < types.Count(); i++)
+				SortedList<Symbol*> visited;
+				SymbolListToTsys(pa, result, gaContext, false, [&](auto receiver)
 				{
-					ResolveChildTypeWithGenericArguments(self, types[i], resolving);
-				}
-
-				if (resolving)
-				{
-					CreateIdReferenceType(pa, gaContext, resolving, true, false, result, isVta);
-				}
+					for (vint i = 0; i < types.Count(); i++)
+					{
+						ResolveChildTypeWithGenericArguments(self, types[i], visited, receiver);
+					}
+				});
 			}
 			else
 			{
