@@ -2,6 +2,8 @@
 
 namespace symbol_totsys_impl
 {
+	void					TypeSymbolToTsys(const ParsingArguments& pa, TypeTsysList& result, GenericArgContext* gaContext, Symbol* symbol, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic);
+
 	ITsys*					ProcessPrimitiveType(const ParsingArguments& pa, PrimitiveType* self);
 	ITsys*					ProcessReferenceType(const ParsingArguments& pa, ReferenceType* self, ExprTsysItem arg);
 	ITsys*					ProcessArrayType(const ParsingArguments& pa, ArrayType* self, ExprTsysItem arg);
@@ -18,12 +20,17 @@ namespace symbol_totsys_impl
 		return arg;
 	}
 
+	inline void AddTsysToResult(TypeTsysList& result, ITsys* tsys)
+	{
+		if (!result.Contains(tsys))
+		{
+			result.Add(tsys);
+		}
+	}
+
 	inline void AddExprTsysItemToResult(TypeTsysList& result, ExprTsysItem arg)
 	{
-		if (!result.Contains(arg.tsys))
-		{
-			result.Add(arg.tsys);
-		}
+		AddTsysToResult(result, arg.tsys);
 	}
 
 	template<typename T>

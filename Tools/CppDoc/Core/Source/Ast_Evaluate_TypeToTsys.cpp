@@ -14,7 +14,7 @@ TypeToTsys
   DeclType					: unbounded
   DecorateType				: unbounded		*
   RootType					: literal
-  IdType					: identifier
+  IdType					: identifier	*
   ChildType					: unbounded
   GenericType				: variant
 ***********************************************************************/
@@ -41,17 +41,9 @@ public:
 	{
 	}
 
-	static void AddResult(TypeTsysList& result, ITsys* tsys)
-	{
-		if (!result.Contains(tsys))
-		{
-			result.Add(tsys);
-		}
-	}
-
 	void AddResult(ITsys* tsys)
 	{
-		AddResult(result, tsys);
+		AddTsysToResult(result, tsys);
 	}
 
 	template<typename T>
@@ -393,7 +385,7 @@ public:
 		{
 			if (allowAny)
 			{
-				AddResult(result, pa.tsys->Any());
+				AddTsysToResult(result, pa.tsys->Any());
 				return;
 			}
 			else
@@ -410,88 +402,7 @@ public:
 		bool hasNonVariadic = false;
 		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 		{
-			auto symbol = resolving->resolvedSymbols[i];
-			switch (symbol->kind)
-			{
-			case symbol_component::SymbolKind::Enum:
-			case symbol_component::SymbolKind::Class:
-			case symbol_component::SymbolKind::Struct:
-			case symbol_component::SymbolKind::Union:
-				AddResult(result, pa.tsys->DeclOf(symbol));
-				hasNonVariadic = true;
-				continue;
-			case symbol_component::SymbolKind::TypeAlias:
-				{
-					auto usingDecl = symbol->definition.Cast<TypeAliasDeclaration>();
-					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
-					auto& types = symbol->evaluation.Get();
-					for (vint j = 0; j < types.Count(); j++)
-					{
-						AddResult(result, types[j]);
-					}
-					hasNonVariadic = true;
-				}
-				continue;
-			case symbol_component::SymbolKind::GenericTypeArgument:
-				{
-					auto& types = symbol->evaluation.Get();
-					for (vint j = 0; j < types.Count(); j++)
-					{
-						if (gaContext)
-						{
-							auto type = types[j];
-							vint index = gaContext->arguments.Keys().IndexOf(type);
-							if (index != -1)
-							{
-								auto& replacedTypes = gaContext->arguments.GetByIndex(index);
-								for (vint k = 0; k < replacedTypes.Count(); k++)
-								{
-									if (symbol->ellipsis)
-									{
-										if (!allowVariadic)
-										{
-											throw NotConvertableException();
-										}
-										auto replacedType = replacedTypes[k];
-										if (replacedType->GetType() == TsysType::Any || replacedType->GetType() == TsysType::Init)
-										{
-											AddResult(result, replacedTypes[k]);
-											hasVariadic = true;
-										}
-										else
-										{
-											throw NotConvertableException();
-										}
-									}
-									else
-									{
-										AddResult(result, replacedTypes[k]);
-										hasNonVariadic = true;
-									}
-								}
-								continue;
-							}
-						}
-
-						if (symbol->ellipsis)
-						{
-							if (!allowVariadic)
-							{
-								throw NotConvertableException();
-							}
-							AddResult(result, pa.tsys->Any());
-							hasVariadic = true;
-						}
-						else
-						{
-							AddResult(result, types[j]);
-							hasNonVariadic = true;
-						}
-					}
-				}
-				continue;
-			}
-			throw NotConvertableException();
+			TypeSymbolToTsys(pa, result, gaContext, resolving->resolvedSymbols[i], allowVariadic, hasVariadic, hasNonVariadic);
 		}
 
 		if (hasVariadic && hasNonVariadic)
@@ -665,12 +576,12 @@ public:
 
 			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
 			{
-				AddResult(genericTypes, esContext.evaluatedTypes[j]);
+				AddTsysToResult(genericTypes, esContext.evaluatedTypes[j]);
 			}
 		}
 		else if (genericFunction->GetType() == TsysType::Any)
 		{
-			AddResult(genericTypes, pa.tsys->Any());
+			AddTsysToResult(genericTypes, pa.tsys->Any());
 		}
 		else
 		{
