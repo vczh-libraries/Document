@@ -15,7 +15,7 @@ TypeToTsys
   DecorateType				: unbounded		*
   RootType					: literal
   IdType					: identifier	*
-  ChildType					: unbounded
+  ChildType					: unbounded		*
   GenericType				: variant
 ***********************************************************************/
 
@@ -455,96 +455,53 @@ public:
 		}
 	}
 
+	static bool IsResolvingAllNamespaces(Ptr<Resolving> resolving)
+	{
+		if (resolving)
+		{
+			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+			{
+				if (resolving->resolvedSymbols[i]->kind != symbol_component::SymbolKind::Namespace)
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	void Visit(ChildType* self)override
 	{
-		// TODO:
-		//		Change ExpandPotentialVta to accept a processor returning a list of results instead of a single result
-		//		Use ExpandPotentialVta in if(parentIsVta){here}
-		TypeTsysList types;
-
-		// parentIsVta == true only if allNamespaces is false
-		// consider about calculting allNamespaces first
-		// call ExpandPotentialVta when allNamespaces is false
-		// call TypeToTsysInternal when allnamespaces is true
-		bool parentIsVta = false;
+		if (auto resolvableType = self->classType.Cast<ResolvableType>())
 		{
-			bool allNamespaces = true;
-			if (auto resolvableType = self->classType.Cast<ResolvableType>())
+			if (IsResolvingAllNamespaces(resolvableType->resolving))
 			{
-				if (auto resolving = resolvableType->resolving)
-				{
-					for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
-					{
-						if (resolving->resolvedSymbols[i]->kind != symbol_component::SymbolKind::Namespace)
-						{
-							allNamespaces = false;
-							break;
-						}
-					}
-				}
-			}
-
-			if (!allNamespaces)
-			{
-				TypeToTsysInternal(pa, self->classType, types, gaContext, parentIsVta);
+				CreateIdReferenceType(pa, gaContext, self->resolving, true, false, result, isVta);
+				return;
 			}
 		}
 
-		if (parentIsVta)
-		{
-			for (vint i = 0; i < types.Count(); i++)
-			{
-				auto parentType = types[i];
-				if (parentType->GetType() == TsysType::Any)
-				{
-					AddResult(pa.tsys->Any());
-				}
-				else if (parentType->GetType() == TsysType::Init)
-				{
-					Array<ExprTsysList> argTypesList(parentType->GetParamCount());
-					for (vint j = 0; j < parentType->GetParamCount(); j++)
-					{
-						TypeTsysList childTypes;
-						SortedList<Symbol*> visited;
-						SymbolListToTsys(pa, childTypes, gaContext, false, [&](auto receiver)
-						{
-							ResolveChildTypeWithGenericArguments(self, parentType->GetParam(j), visited, receiver);
-						});
-						symbol_type_resolving::AddTemp(argTypesList[j], childTypes);
-					}
+		TypeTsysList classTypes;
+		bool classIsVta = false;
+		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classIsVta);
 
-					ExprTsysList initTypes;
-					symbol_type_resolving::CreateUniversalInitializerType(pa, argTypesList, initTypes);
-					for (vint j = 0; j < initTypes.Count(); j++)
-					{
-						AddResult(initTypes[j].tsys);
-					}
-				}
-				else
-				{
-					throw NotConvertableException();
-				}
-			}
-			isVta = true;
-		}
-		else
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem classTypeArg)
 		{
-			if (gaContext && !self->resolving)
+			if (classTypeArg.tsys->IsUnknownType())
 			{
-				SortedList<Symbol*> visited;
-				SymbolListToTsys(pa, result, gaContext, false, [&](auto receiver)
-				{
-					for (vint i = 0; i < types.Count(); i++)
-					{
-						ResolveChildTypeWithGenericArguments(self, types[i], visited, receiver);
-					}
-				});
+				processResult.Add(GetExprTsysItem(pa.tsys->Any()));
 			}
 			else
 			{
-				CreateIdReferenceType(pa, gaContext, self->resolving, true, false, result, isVta);
+				TypeTsysList childTypes;
+				SortedList<Symbol*> visited;
+				SymbolListToTsys(pa, childTypes, gaContext, false, [&](auto receiver)
+				{
+					ResolveChildTypeWithGenericArguments(self, classTypeArg.tsys, visited, receiver);
+				});
+				symbol_type_resolving::AddTemp(processResult, childTypes);
 			}
-		}
+		}, Input(classTypes, classIsVta));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
