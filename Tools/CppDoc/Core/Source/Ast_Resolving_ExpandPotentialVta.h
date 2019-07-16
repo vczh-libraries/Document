@@ -33,6 +33,30 @@ namespace symbol_totsys_impl
 		AddTsysToResult(result, arg.tsys);
 	}
 
+	inline void AddExprTsysListToResult(TypeTsysList& result, ExprTsysList& args)
+	{
+		for (vint i = 0; i < args.Count(); i++)
+		{
+			AddExprTsysItemToResult(result, args[i]);
+		}
+	}
+
+	inline void AddExprTsysItemToResult(ExprTsysList& result, ExprTsysItem arg)
+	{
+		if (!result.Contains(arg))
+		{
+			result.Add(arg);
+		}
+	}
+
+	inline void AddExprTsysListToResult(ExprTsysList& result, ExprTsysList& args)
+	{
+		for (vint i = 0; i < args.Count(); i++)
+		{
+			AddExprTsysItemToResult(result, args[i]);
+		}
+	}
+
 	template<typename T>
 	struct VtaInput
 	{
@@ -139,16 +163,21 @@ namespace symbol_totsys_impl
 				{
 					if (unboundedVtaCount == -1)
 					{
-						AddExprTsysItemToResult(result, GetExprTsysItem(process(SelectInput(inputs, -1)...)));
+						ExprTsysList processResult;
+						process(processResult, SelectInput(inputs, -1)...);
+						AddExprTsysListToResult(result, processResult);
 					}
 					else
 					{
-						Array<ExprTsysItem> params(unboundedVtaCount);
+						Array<ExprTsysList> params(unboundedVtaCount);
 						for (vint i = 0; i < unboundedVtaCount; i++)
 						{
-							params[i] = GetExprTsysItem(process(SelectInput(inputs, i)...));
+							process((ExprTsysList&)params[i], SelectInput(inputs, i)...);
 						}
-						AddExprTsysItemToResult(result, GetExprTsysItem(pa.tsys->InitOf(params)));
+
+						ExprTsysList initTypes;
+						symbol_type_resolving::CreateUniversalInitializerType(pa, params, initTypes);
+						AddExprTsysListToResult(result, initTypes);
 					}
 				}
 			};
@@ -156,10 +185,19 @@ namespace symbol_totsys_impl
 	}
 
 	template<typename TResult, typename TProcess, typename ...TInputs>
-	bool ExpandPotentialVta(const ParsingArguments& pa, List<TResult>& result, TProcess&& process, VtaInput<TInputs> ...inputs)
+	bool ExpandPotentialVtaMultiResult(const ParsingArguments& pa, List<TResult>& result, TProcess&& process, VtaInput<TInputs> ...inputs)
 	{
 		using Step = typename impl::ExpandPotentialVtaStep<TResult, TProcess, TInputs...>::template Step<0>;
 		Step::Do(pa, result, -1, ForwardValue<TProcess&&>(process), inputs...);
 		return (inputs.isVta || ...);
+	}
+
+	template<typename TResult, typename TProcess, typename ...TInputs>
+	bool ExpandPotentialVta(const ParsingArguments& pa, List<TResult>& result, TProcess&& process, VtaInput<TInputs> ...inputs)
+	{
+		return ExpandPotentialVtaMultiResult(pa, result, [&](ExprTsysList& processResult, auto ...args)
+		{
+			processResult.Add(GetExprTsysItem(process(args...)));
+		}, inputs...);
 	}
 }
