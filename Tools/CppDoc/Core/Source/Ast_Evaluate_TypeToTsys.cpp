@@ -379,51 +379,6 @@ public:
 	// IdType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	template<typename TGenerator>
-	static bool SymbolListToTsys(const ParsingArguments& pa, TypeTsysList& result, GenericArgContext* gaContext, bool allowVariadic, TGenerator&& symbolGenerator)
-	{
-		bool hasVariadic = false;
-		bool hasNonVariadic = false;
-		symbolGenerator([&](Symbol* symbol)
-		{
-			TypeSymbolToTsys(pa, result, gaContext, symbol, allowVariadic, hasVariadic, hasNonVariadic);
-		});
-
-		if (hasVariadic && hasNonVariadic)
-		{
-			throw NotConvertableException();
-		}
-		return hasVariadic;
-	}
-
-	static void CreateIdReferenceType(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta)
-	{
-		if (!resolving)
-		{
-			if (allowAny)
-			{
-				AddTsysToResult(result, pa.tsys->Any());
-				return;
-			}
-			else
-			{
-				throw NotConvertableException();
-			}
-		}
-		else if (resolving->resolvedSymbols.Count() == 0)
-		{
-			throw NotConvertableException();
-		}
-
-		isVta = SymbolListToTsys(pa, result, gaContext, allowVariadic, [&](auto receiver)
-		{
-			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
-			{
-				receiver(resolving->resolvedSymbols[i]);
-			}
-		});
-	}
-
 	void Visit(IdType* self)override
 	{
 		CreateIdReferenceType(pa, gaContext, self->resolving, false, true, result, isVta);
@@ -432,28 +387,6 @@ public:
 	//////////////////////////////////////////////////////////////////////////////////////
 	// ChildType
 	//////////////////////////////////////////////////////////////////////////////////////
-
-	template<typename TReceiver>
-	void ResolveChildTypeWithGenericArguments(ChildType* self, ITsys* type, SortedList<Symbol*>& visited, TReceiver&& receiver)
-	{
-		if (type->GetType() == TsysType::Decl)
-		{
-			auto newPa = pa.WithContext(type->GetDecl());
-			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
-			if (rsr.types)
-			{
-				for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
-				{
-					auto symbol = rsr.types->resolvedSymbols[i];
-					if (!visited.Contains(symbol))
-					{
-						visited.Add(symbol);
-						receiver(symbol);
-					}
-				}
-			}
-		}
-	}
 
 	static bool IsResolvingAllNamespaces(Ptr<Resolving> resolving)
 	{
@@ -485,22 +418,9 @@ public:
 		bool classIsVta = false;
 		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classIsVta);
 
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem classTypeArg)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem argClass)
 		{
-			if (classTypeArg.tsys->IsUnknownType())
-			{
-				processResult.Add(GetExprTsysItem(pa.tsys->Any()));
-			}
-			else
-			{
-				TypeTsysList childTypes;
-				SortedList<Symbol*> visited;
-				SymbolListToTsys(pa, childTypes, gaContext, false, [&](auto receiver)
-				{
-					ResolveChildTypeWithGenericArguments(self, classTypeArg.tsys, visited, receiver);
-				});
-				symbol_type_resolving::AddTemp(processResult, childTypes);
-			}
+			ProcessChildType(pa, gaContext, self, argClass, processResult);
 		}, Input(classTypes, classIsVta));
 	}
 
