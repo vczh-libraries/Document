@@ -2,6 +2,11 @@
 
 namespace symbol_totsys_impl
 {
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// Types
+	//////////////////////////////////////////////////////////////////////////////////////
+
 	void					CreateIdReferenceType(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta);
 	void					ProcessChildType(const ParsingArguments& pa, GenericArgContext* gaContext, ChildType* self, ExprTsysItem argClass, ExprTsysList& result);
 
@@ -10,6 +15,10 @@ namespace symbol_totsys_impl
 	ITsys*					ProcessArrayType(const ParsingArguments& pa, ArrayType* self, ExprTsysItem arg);
 	ITsys*					ProcessMemberType(const ParsingArguments& pa, MemberType* self, ExprTsysItem argType, ExprTsysItem argClass);
 	ITsys*					ProcessDecorateType(const ParsingArguments& pa, DecorateType* self, ExprTsysItem arg);
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// Utilities
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	inline ExprTsysItem GetExprTsysItem(ITsys* arg)
 	{
@@ -77,6 +86,10 @@ namespace symbol_totsys_impl
 	{
 		return { _items,_isVta };
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ExpandPotentialVta(MultiResult)
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	namespace impl
 	{
@@ -200,5 +213,59 @@ namespace symbol_totsys_impl
 		{
 			processResult.Add(GetExprTsysItem(process(args...)));
 		}, inputs...);
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ExpandPotentialVtaList
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	template<typename TExpr, typename TInput>
+	static void CheckVta(VariadicList<TExpr>& arguments, Array<List<TInput>>& tsyses, Array<bool>& isVtas, vint offset, vint count, bool& hasBoundedVta, bool& hasUnboundedVta, vint& unboundedVtaCount)
+	{
+		for (vint i = offset; i < count; i++)
+		{
+			if (isVtas[i])
+			{
+				if (arguments[i - offset].isVariadic)
+				{
+					hasBoundedVta = true;
+				}
+				else
+				{
+					hasUnboundedVta = true;
+				}
+			}
+		}
+
+		if (hasBoundedVta && hasUnboundedVta)
+		{
+			throw NotConvertableException();
+		}
+
+		if (hasUnboundedVta)
+		{
+			for (vint i = 0; i < count; i++)
+			{
+				if (isVtas[i])
+				{
+					for (vint j = 0; j < tsyses[i].Count(); j++)
+					{
+						auto tsys = GetExprTsysItem(tsyses[i][j]).tsys;
+						if (tsys->GetType() == TsysType::Init)
+						{
+							vint currentVtaCount = GetExprTsysItem(tsyses[i][j]).tsys->GetParamCount();
+							if (unboundedVtaCount == -1)
+							{
+								unboundedVtaCount = currentVtaCount;
+							}
+							else if (unboundedVtaCount != currentVtaCount)
+							{
+								throw NotConvertableException();
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }

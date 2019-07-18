@@ -46,56 +46,6 @@ public:
 		AddTsysToResult(result, tsys);
 	}
 
-	template<typename T>
-	static void CheckVta(VariadicList<T>& arguments, Array<TypeTsysList>& tsyses, Array<bool>& isVtas, vint offset, vint count, bool& hasBoundedVta, bool& hasUnboundedVta, vint& unboundedVtaCount)
-	{
-		for (vint i = offset; i < count; i++)
-		{
-			if (isVtas[i])
-			{
-				if (arguments[i - offset].isVariadic)
-				{
-					hasBoundedVta = true;
-				}
-				else
-				{
-					hasUnboundedVta = true;
-				}
-			}
-		}
-
-		if (hasBoundedVta && hasUnboundedVta)
-		{
-			throw NotConvertableException();
-		}
-
-		if (hasUnboundedVta)
-		{
-			for (vint i = 0; i < count; i++)
-			{
-				if (isVtas[i])
-				{
-					for (vint j = 0; j < tsyses[i].Count(); j++)
-					{
-						auto tsys = tsyses[i][j];
-						if (tsys->GetType() == TsysType::Init)
-						{
-							vint currentVtaCount = tsyses[i][j]->GetParamCount();
-							if (unboundedVtaCount == -1)
-							{
-								unboundedVtaCount = currentVtaCount;
-							}
-							else if (unboundedVtaCount != currentVtaCount)
-							{
-								throw NotConvertableException();
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
 	//////////////////////////////////////////////////////////////////////////////////////
 	// PrimitiveType
 	//////////////////////////////////////////////////////////////////////////////////////
