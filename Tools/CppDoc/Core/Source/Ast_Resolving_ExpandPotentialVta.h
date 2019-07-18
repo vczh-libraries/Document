@@ -383,6 +383,24 @@ namespace symbol_totsys_impl
 	template<typename TResult, typename TInput, typename TProcess>
 	static void ExpandPotentialVtaList(const ParsingArguments& pa, List<TResult>& result, Array<List<TInput>>& inputs, Array<bool>& isVtas, bool isBoundedVta, vint unboundedVtaCount, TProcess&& process)
 	{
+		if (!isBoundedVta)
+		{
+			for (vint i = 0; i < inputs.Count(); i++)
+			{
+				if (isVtas[i])
+				{
+					for (vint j = 0; j < inputs[i].Count(); j++)
+					{
+						if (GetExprTsysItem(inputs[i][j]).tsys->GetType() != TsysType::Init)
+						{
+							AddExprTsysItemToResult(result, GetExprTsysItem(pa.tsys->Any()));
+							return;
+						}
+					}
+				}
+			}
+		}
+
 		Array<vint> tsysIndex(inputs.Count());
 		memset(&tsysIndex[0], 0, sizeof(vint) * inputs.Count());
 		impl::ExpandPotentialVtaList(pa, result, inputs, isVtas, isBoundedVta, unboundedVtaCount, tsysIndex, 0, process);

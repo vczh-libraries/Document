@@ -102,99 +102,6 @@ public:
 	// FunctionType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	static ITsys* CreateUnboundedFunctionType(Array<TypeTsysList>& tsyses, Array<bool>& isVtas, Array<vint>& tsysIndex, vint count, vint unboundedVtaIndex, const TsysFunc& func)
-	{
-		Array<ITsys*> params(count - 1);
-		for (vint i = 0; i < count - 1; i++)
-		{
-			if (isVtas[i + 1])
-			{
-				params[i] = tsyses[i + 1][tsysIndex[i + 1]]->GetParam(unboundedVtaIndex);
-			}
-			else
-			{
-				params[i] = tsyses[i + 1][tsysIndex[i + 1]];
-			}
-		}
-
-		if (isVtas[0])
-		{
-			return tsyses[0][tsysIndex[0]]->GetParam(unboundedVtaIndex)->FunctionOf(params, func);
-		}
-		else
-		{
-			return tsyses[0][tsysIndex[0]]->FunctionOf(params, func);
-		}
-	}
-
-	void CreateFunctionType(Array<TypeTsysList>& tsyses, Array<bool>& isVtas, bool isBoundedVta, Array<vint>& tsysIndex, vint level, vint count, vint unboundedVtaCount, const TsysFunc& func)
-	{
-		if (level == count)
-		{
-			if (isBoundedVta)
-			{
-				vint paramCount = 0;
-				for (vint i = 1; i < count; i++)
-				{
-					if (isVtas[i])
-					{
-						// every vtaCount should equal, which is ensured in Visit(FunctionType*)
-						paramCount += tsyses[i][tsysIndex[i]]->GetParamCount();
-					}
-					else
-					{
-						paramCount++;
-					}
-				}
-
-				Array<ITsys*> params(paramCount);
-				vint currentParam = 0;
-				for (vint i = 1; i < count; i++)
-				{
-					if (isVtas[i])
-					{
-						auto tsysVta = tsyses[i][tsysIndex[i]];
-						vint paramVtaCount = tsysVta->GetParamCount();
-						for (vint j = 0; j < paramVtaCount; j++)
-						{
-							params[currentParam++] = tsysVta->GetParam(j);
-						}
-					}
-					else
-					{
-						params[currentParam++] = tsyses[i][tsysIndex[i]];
-					}
-				}
-				AddResult(tsyses[0][tsysIndex[0]]->FunctionOf(params, func));
-			}
-			else
-			{
-				if (unboundedVtaCount == -1)
-				{
-					AddResult(CreateUnboundedFunctionType(tsyses, isVtas, tsysIndex, count, -1, func));
-				}
-				else
-				{
-					Array<ExprTsysItem> params(unboundedVtaCount);
-					for (vint v = 0; v < unboundedVtaCount; v++)
-					{
-						params[v] = { nullptr,ExprTsysType::PRValue,CreateUnboundedFunctionType(tsyses, isVtas, tsysIndex, count, v, func) };
-					}
-					AddResult(pa.tsys->InitOf(params));
-				}
-			}
-		}
-		else
-		{
-			vint levelCount = tsyses[level].Count();
-			for (vint i = 0; i < levelCount; i++)
-			{
-				tsysIndex[level] = i;
-				CreateFunctionType(tsyses, isVtas, isBoundedVta, tsysIndex, level + 1, count, unboundedVtaCount, func);
-			}
-		}
-	}
-
 	void Visit(FunctionType* self)override
 	{
 		vint count = self->parameters.Count() + 1;
@@ -230,36 +137,35 @@ public:
 		CheckVta(self->parameters, tsyses, isVtas, 1, count, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 		isVta = hasUnboundedVta;
 
-		for (vint i = 0; i < count; i++)
+		TsysFunc func(cc, self->ellipsis);
+		if (func.callingConvention == TsysCallingConvention::None)
 		{
-			if (isVtas[i])
+			func.callingConvention =
+				memberOf && !func.ellipsis
+				? TsysCallingConvention::ThisCall
+				: TsysCallingConvention::CDecl
+				;
+		}
+
+		ExpandPotentialVtaList(pa, result, tsyses, isVtas, hasBoundedVta, unboundedVtaCount,
+			[=](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
-				for (vint j = 0; j < tsyses[i].Count(); j++)
+				if (boundedAnys.Count())
 				{
-					if (tsyses[i][j]->GetType() != TsysType::Init)
-					{
-						AddResult(pa.tsys->Any());
-						return;
-					}
+					AddExprTsysItemToResult(processResult, GetExprTsysItem(pa.tsys->Any()));
 				}
-			}
-		}
+				else
+				{
+					Array<ITsys*> params(args.Count() - 1);
+					for (vint i = 1; i < args.Count(); i++)
+					{
+						params[i - 1] = args[i].tsys;
+					}
 
-		{
-			Array<vint> tsysIndex(count);
-			memset(&tsysIndex[0], 0, sizeof(vint) * count);
-
-			TsysFunc func(cc, self->ellipsis);
-			if (func.callingConvention == TsysCallingConvention::None)
-			{
-				func.callingConvention =
-					memberOf && !func.ellipsis
-					? TsysCallingConvention::ThisCall
-					: TsysCallingConvention::CDecl
-					;
-			}
-			CreateFunctionType(tsyses, isVtas, hasBoundedVta, tsysIndex, 0, count, unboundedVtaCount, func);
-		}
+					auto funcTsys = args[0].tsys->FunctionOf(params, func);
+					AddExprTsysItemToResult(processResult, GetExprTsysItem(funcTsys));
+				}
+			});
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
