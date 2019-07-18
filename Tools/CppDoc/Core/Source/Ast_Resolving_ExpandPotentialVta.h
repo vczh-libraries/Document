@@ -183,14 +183,14 @@ namespace symbol_totsys_impl
 					}
 					else
 					{
-						Array<ExprTsysList> params(unboundedVtaCount);
+						Array<ExprTsysList> initParams(unboundedVtaCount);
 						for (vint i = 0; i < unboundedVtaCount; i++)
 						{
-							process((ExprTsysList&)params[i], SelectInput(inputs, i)...);
+							process((ExprTsysList&)initParams[i], SelectInput(inputs, i)...);
 						}
 
 						ExprTsysList initTypes;
-						symbol_type_resolving::CreateUniversalInitializerType(pa, params, initTypes);
+						symbol_type_resolving::CreateUniversalInitializerType(pa, initParams, initTypes);
 						AddExprTsysListToResult(result, initTypes);
 					}
 				}
@@ -216,11 +216,11 @@ namespace symbol_totsys_impl
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// ExpandPotentialVtaList
+	// CheckVta
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	template<typename TExpr, typename TInput>
-	static void CheckVta(VariadicList<TExpr>& arguments, Array<List<TInput>>& tsyses, Array<bool>& isVtas, vint offset, vint count, bool& hasBoundedVta, bool& hasUnboundedVta, vint& unboundedVtaCount)
+	static void CheckVta(VariadicList<TExpr>& arguments, Array<List<TInput>>& inputs, Array<bool>& isVtas, vint offset, vint count, bool& hasBoundedVta, bool& hasUnboundedVta, vint& unboundedVtaCount)
 	{
 		for (vint i = offset; i < count; i++)
 		{
@@ -248,12 +248,12 @@ namespace symbol_totsys_impl
 			{
 				if (isVtas[i])
 				{
-					for (vint j = 0; j < tsyses[i].Count(); j++)
+					for (vint j = 0; j < inputs[i].Count(); j++)
 					{
-						auto tsys = GetExprTsysItem(tsyses[i][j]).tsys;
+						auto tsys = GetExprTsysItem(inputs[i][j]).tsys;
 						if (tsys->GetType() == TsysType::Init)
 						{
-							vint currentVtaCount = GetExprTsysItem(tsyses[i][j]).tsys->GetParamCount();
+							vint currentVtaCount = tsys->GetParamCount();
 							if (unboundedVtaCount == -1)
 							{
 								unboundedVtaCount = currentVtaCount;
@@ -267,5 +267,124 @@ namespace symbol_totsys_impl
 				}
 			}
 		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ExpandPotentialVtaList
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	namespace impl
+	{
+		template<typename TResult, typename TInput, typename TProcess>
+		static void ExpandPotentialVtaList(const ParsingArguments& pa, List<TResult>& result, Array<List<TInput>>& inputs, Array<bool>& isVtas, bool isBoundedVta, vint unboundedVtaCount, Array<vint>& tsysIndex, vint level, TProcess&& process)
+		{
+			if (level == inputs.Count())
+			{
+				SortedList<vint> boundedAnys;
+				if (isBoundedVta)
+				{
+					vint paramCount = 0;
+					for (vint i = 0; i < inputs.Count(); i++)
+					{
+						if (isVtas[i])
+						{
+							auto tsysVta = GetExprTsysItem(inputs[i][tsysIndex[i]]).tsys;
+							if (tsysVta->GetType() == TsysType::Any)
+							{
+								boundedAnys.Add(paramCount++);
+							}
+							else
+							{
+								paramCount += tsysVta->GetParamCount();
+							}
+						}
+						else
+						{
+							paramCount++;
+						}
+					}
+
+					Array<ExprTsysItem> params(paramCount);
+					vint currentParam = 0;
+					for (vint i = 0; i < inputs.Count(); i++)
+					{
+						auto tsysItem = GetExprTsysItem(inputs[i][tsysIndex[i]]);
+						if (isVtas[i] && tsysItem.tsys->GetType() != TsysType::Any)
+						{
+							vint paramVtaCount = tsysItem.tsys->GetParamCount();
+							for (vint j = 0; j < paramVtaCount; j++)
+							{
+								params[currentParam++] = { tsysItem.tsys->GetInit().headers[j], tsysItem.tsys->GetParam(j) };
+							}
+						}
+						else
+						{
+							params[currentParam++] = tsysItem;
+						}
+					}
+
+					ExprTsysList processResult;
+					process(processResult, params, boundedAnys);
+					AddExprTsysListToResult(result, processResult);
+				}
+				else
+				{
+					if (unboundedVtaCount == -1)
+					{
+						Array<ExprTsysItem> params(inputs.Count());
+						for (vint j = 0; j < inputs.Count(); j++)
+						{
+							params[j] = GetExprTsysItem(inputs[j][tsysIndex[j]]);
+						}
+
+						ExprTsysList processResult;
+						process(processResult, params, boundedAnys);
+						AddExprTsysListToResult(result, processResult);
+					}
+					else
+					{
+						Array<ExprTsysList> initParams(unboundedVtaCount);
+						for (vint i = 0; i < unboundedVtaCount; i++)
+						{
+							Array<ExprTsysItem> params(inputs.Count());
+							for (vint j = 0; j < inputs.Count(); j++)
+							{
+								auto tsysItem = GetExprTsysItem(inputs[j][tsysIndex[j]]);
+								if (isVtas[j])
+								{
+									params[j] = { tsysItem.tsys->GetInit().headers[i], tsysItem.tsys->GetParam(i) };
+								}
+								else
+								{
+									params[j] = tsysItem;
+								}
+							}
+							process(initParams[i], params, boundedAnys);
+						}
+
+						ExprTsysList processResult;
+						symbol_type_resolving::CreateUniversalInitializerType(pa, initParams, processResult);
+						AddExprTsysListToResult(result, processResult);
+					}
+				}
+			}
+			else
+			{
+				vint levelCount = inputs[level].Count();
+				for (vint i = 0; i < levelCount; i++)
+				{
+					tsysIndex[level] = i;
+					ExpandPotentialVtaList<TResult, TInput, TProcess>(pa, result, inputs, isVtas, isBoundedVta, unboundedVtaCount, tsysIndex, level + 1, process);
+				}
+			}
+		}
+	}
+
+	template<typename TResult, typename TInput, typename TProcess>
+	static void ExpandPotentialVtaList(const ParsingArguments& pa, List<TResult>& result, Array<List<TInput>>& inputs, Array<bool>& isVtas, bool isBoundedVta, vint unboundedVtaCount, TProcess&& process)
+	{
+		Array<vint> tsysIndex(inputs.Count());
+		memset(&tsysIndex[0], 0, sizeof(vint) * inputs.Count());
+		impl::ExpandPotentialVtaList(pa, result, inputs, isVtas, isBoundedVta, unboundedVtaCount, tsysIndex, 0, process);
 	}
 }
