@@ -34,7 +34,7 @@
     - When calculating `...` expression
       - If we know how many types are bounded to this `...` argument, dispatch them
       - If we don't know, the whole expression is evaluated to `any_t`
-  - [ ] Refactor `TypeToTsysInternal` before `ExprToTsysInternal` to extract following functions:
+  - [x] Refactor `TypeToTsysInternal` before `ExprToTsysInternal` to extract following functions:
     - Expanding a type/expr list for both bounded VTA or unbounded VTA
     - Expanding a fixed number of types/expr for unbounded VTA
   - [x] Fix bug: There is no `template<typename T> using Size = sizeof(T);`, there is `template<typename T> /*inline const constexpr*/ size_t Size = sizeof(T);`.

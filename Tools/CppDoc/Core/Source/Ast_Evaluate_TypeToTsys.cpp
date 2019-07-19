@@ -286,12 +286,11 @@ public:
 
 	void Visit(GenericType* self)override
 	{
-		vint count = self->arguments.Count() + 1;
-		Array<TypeTsysList> tsyses(count);
+		vint count = self->arguments.Count();
+		Array<TypeTsysList> tsyses(count + 1);
 		Array<bool> isTypes(count);
-		Array<bool> isVtas(count);
+		Array<bool> isVtas(count + 1);
 
-		isTypes[0] = true;
 		TypeToTsysInternal(pa, self->type, tsyses[0], gaContext, isVtas[0]);
 		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, tsyses, isTypes, isVtas, 1, gaContext);
 
@@ -307,7 +306,7 @@ public:
 			throw NotConvertableException();
 		}
 
-		ExpandPotentialVtaList(pa,result,tsyses,isVtas,hasBoundedVta,unboundedVtaCount,
+		ExpandPotentialVtaList(pa, result, tsyses, isVtas, hasBoundedVta, unboundedVtaCount,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
 				auto genericFunction = args[0].tsys;

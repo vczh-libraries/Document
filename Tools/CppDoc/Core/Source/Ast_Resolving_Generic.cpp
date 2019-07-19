@@ -76,13 +76,14 @@ namespace symbol_type_resolving
 		for (vint i = 0; i < arguments.Count(); i++)
 		{
 			auto argument = arguments[i];
-			if ((isTypes[i + offset] = argument.item.type))
+			if ((isTypes[i] = argument.item.type))
 			{
 				TypeToTsysInternal(pa, argument.item.type, argumentTypes[i + offset], gaContext, isVtas[i + offset]);
 			}
 			else
 			{
 				// TODO: Need to evaluate expression types to see if it is vta
+				argumentTypes[i + offset].Add(nullptr);
 				isVtas[i + offset] = false;
 			}
 		}
