@@ -132,9 +132,9 @@ public:
 		}
 
 		bool hasBoundedVta = false;
-		bool hasUnboundedVta = isVtas[0];
+		bool hasUnboundedVta = false;
 		vint unboundedVtaCount = -1;
-		CheckVta(self->parameters, tsyses, isVtas, 1, count, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
+		CheckVta(self->parameters, tsyses, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 		isVta = hasUnboundedVta;
 
 		TsysFunc func(cc, self->ellipsis);
@@ -284,68 +284,21 @@ public:
 	// GenericType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void CreateGenericType(ITsys* genericFunction, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, Array<bool>& isVtas, vint count, TypeTsysList& genericTypes)
-	{
-		if (genericFunction->GetType() == TsysType::GenericFunction)
-		{
-			auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
-			if (!declSymbol)
-			{
-				throw NotConvertableException();
-			}
-
-			symbol_type_resolving::EvaluateSymbolContext esContext;
-			if (!symbol_type_resolving::ResolveGenericParameters(pa, genericFunction, argumentTypes, isTypes, &esContext.gaContext))
-			{
-				throw NotConvertableException();
-			}
-
-			switch (declSymbol->kind)
-			{
-			case symbol_component::SymbolKind::GenericTypeArgument:
-				genericFunction->GetElement()->ReplaceGenericArgs(esContext.gaContext, esContext.evaluatedTypes);
-				break;
-			case symbol_component::SymbolKind::TypeAlias:
-				{
-					auto decl = declSymbol->definition.Cast<TypeAliasDeclaration>();
-					if (!decl->templateSpec) throw NotConvertableException();
-					symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
-				}
-				break;
-			default:
-				throw NotConvertableException();
-			}
-
-			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
-			{
-				AddTsysToResult(genericTypes, esContext.evaluatedTypes[j]);
-			}
-		}
-		else if (genericFunction->GetType() == TsysType::Any)
-		{
-			AddTsysToResult(genericTypes, pa.tsys->Any());
-		}
-		else
-		{
-			throw NotConvertableException();
-		}
-	}
-
 	void Visit(GenericType* self)override
 	{
-		TypeTsysList genericTypes;
-		vint count = self->arguments.Count();
-		Array<TypeTsysList> argumentTypes(count);
+		vint count = self->arguments.Count() + 1;
+		Array<TypeTsysList> tsyses(count);
 		Array<bool> isTypes(count);
 		Array<bool> isVtas(count);
 
-		TypeToTsysNoVta(pa, self->type, genericTypes, gaContext);
-		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, argumentTypes, isTypes, isVtas, gaContext);
+		isTypes[0] = true;
+		TypeToTsysInternal(pa, self->type, tsyses[0], gaContext, isVtas[0]);
+		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, tsyses, isTypes, isVtas, 1, gaContext);
 
 		bool hasBoundedVta = false;
 		bool hasUnboundedVta = false;
 		vint unboundedVtaCount = -1;
-		CheckVta(self->arguments, argumentTypes, isVtas, 0, count, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
+		CheckVta(self->arguments, tsyses, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 		isVta = hasUnboundedVta;
 
 		// TODO: Implement variadic template argument passing
@@ -354,78 +307,60 @@ public:
 			throw NotConvertableException();
 		}
 
-		for (vint i = 0; i < count; i++)
-		{
-			if (isVtas[i])
+		ExpandPotentialVtaList(pa,result,tsyses,isVtas,hasBoundedVta,unboundedVtaCount,
+			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
-				for (vint j = 0; j < argumentTypes[i].Count(); j++)
+				auto genericFunction = args[0].tsys;
+				if (genericFunction->GetType() == TsysType::GenericFunction)
 				{
-					if (argumentTypes[i][j]->GetType() != TsysType::Init)
+					auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
+					if (!declSymbol)
 					{
-						// TODO: Solve this in ResolveGenericParameters for unknown-amount variant template argument passing
-						AddResult(pa.tsys->Any());
-						return;
+						throw NotConvertableException();
 					}
-				}
-			}
-		}
 
-		if (hasUnboundedVta)
-		{
-			Array<TypeTsysList> unboundedVtaTypes(count);
-			for (vint i = 0; i < count; i++)
-			{
-				if (isVtas[i])
-				{
-					CopyFrom(unboundedVtaTypes[i], argumentTypes[i]);
-				}
-			}
-
-			Array<ExprTsysList> unboundedGenericTypes(unboundedVtaCount);
-			for (vint i = 0; i < unboundedVtaCount; i++)
-			{
-				TypeTsysList unboundedGenericTypesItem;
-				for (vint j = 0; j < count; j++)
-				{
-					if (isVtas[j])
+					symbol_type_resolving::EvaluateSymbolContext esContext;
+					Array<TypeTsysList> argumentTypes(args.Count() - 1);
+					for (vint i = 1; i < args.Count(); i++)
 					{
-						auto& fromTypes = unboundedVtaTypes[j];
-						auto& toTypes = argumentTypes[j];
-						for (vint k = 0; k < fromTypes.Count(); k++)
+						argumentTypes[i - 1].Add(args[i].tsys);
+					}
+					// TODO: Receive Array<TypeTsysItem> instead of Array<TypeTsysList> in ResolveGenericParameters
+					if (!symbol_type_resolving::ResolveGenericParameters(pa, genericFunction, argumentTypes, isTypes, &esContext.gaContext))
+					{
+						throw NotConvertableException();
+					}
+
+					switch (declSymbol->kind)
+					{
+					case symbol_component::SymbolKind::GenericTypeArgument:
+						genericFunction->GetElement()->ReplaceGenericArgs(esContext.gaContext, esContext.evaluatedTypes);
+						break;
+					case symbol_component::SymbolKind::TypeAlias:
 						{
-							toTypes[k] = fromTypes[k]->GetParam(i);
+							auto decl = declSymbol->definition.Cast<TypeAliasDeclaration>();
+							if (!decl->templateSpec) throw NotConvertableException();
+							symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
 						}
+						break;
+					default:
+						throw NotConvertableException();
+					}
+
+					for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
+					{
+						AddExprTsysItemToResult(processResult, GetExprTsysItem(esContext.evaluatedTypes[j]));
 					}
 				}
-
-				for (vint j = 0; j < genericTypes.Count(); j++)
+				else if (genericFunction->GetType() == TsysType::Any)
 				{
-					auto genericFunction = genericTypes[j];
-					CreateGenericType(genericFunction, argumentTypes, isTypes, isVtas, count, unboundedGenericTypesItem);
+					AddExprTsysItemToResult(processResult, GetExprTsysItem(pa.tsys->Any()));
 				}
-
-				for (vint j = 0; j < unboundedGenericTypesItem.Count(); j++)
+				else
 				{
-					unboundedGenericTypes[i].Add({ nullptr,ExprTsysType::PRValue,unboundedGenericTypesItem[j] });
+					throw NotConvertableException();
 				}
-			}
-
-			ExprTsysList initTypes;
-			symbol_type_resolving::CreateUniversalInitializerType(pa, unboundedGenericTypes, initTypes);
-
-			for (vint i = 0; i < initTypes.Count(); i++)
-			{
-				AddResult(initTypes[i].tsys);
-			}
-		}
-		else
-		{
-			for (vint i = 0; i < genericTypes.Count(); i++)
-			{
-				auto genericFunction = genericTypes[i];
-				CreateGenericType(genericFunction, argumentTypes, isTypes, isVtas, count, result);
-			}
-		}
+			});
 	}
 };
 

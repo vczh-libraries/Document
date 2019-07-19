@@ -219,9 +219,9 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	template<typename TExpr, typename TInput>
-	static void CheckVta(VariadicList<TExpr>& arguments, Array<List<TInput>>& inputs, Array<bool>& isVtas, vint offset, vint count, bool& hasBoundedVta, bool& hasUnboundedVta, vint& unboundedVtaCount)
+	static void CheckVta(VariadicList<TExpr>& arguments, Array<List<TInput>>& inputs, Array<bool>& isVtas, vint offset, bool& hasBoundedVta, bool& hasUnboundedVta, vint& unboundedVtaCount)
 	{
-		for (vint i = offset; i < count; i++)
+		for (vint i = offset; i < inputs.Count(); i++)
 		{
 			if (isVtas[i])
 			{
@@ -243,7 +243,7 @@ namespace symbol_totsys_impl
 
 		if (hasUnboundedVta)
 		{
-			for (vint i = 0; i < count; i++)
+			for (vint i = 0; i < inputs.Count(); i++)
 			{
 				if (isVtas[i])
 				{

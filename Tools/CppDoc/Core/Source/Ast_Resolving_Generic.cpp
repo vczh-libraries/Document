@@ -71,19 +71,19 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void ResolveGenericArguments(const ParsingArguments& pa, VariadicList<GenericArgument>& arguments, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, Array<bool>& isVtas, GenericArgContext* gaContext)
+	void ResolveGenericArguments(const ParsingArguments& pa, VariadicList<GenericArgument>& arguments, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, Array<bool>& isVtas, vint offset, GenericArgContext* gaContext)
 	{
 		for (vint i = 0; i < arguments.Count(); i++)
 		{
 			auto argument = arguments[i];
-			if ((isTypes[i] = argument.item.type))
+			if ((isTypes[i + offset] = argument.item.type))
 			{
-				TypeToTsysInternal(pa, argument.item.type, argumentTypes[i], gaContext, isVtas[i]);
+				TypeToTsysInternal(pa, argument.item.type, argumentTypes[i + offset], gaContext, isVtas[i + offset]);
 			}
 			else
 			{
 				// TODO: Need to evaluate expression types to see if it is vta
-				isVtas[i] = false;
+				isVtas[i + offset] = false;
 			}
 		}
 	}
