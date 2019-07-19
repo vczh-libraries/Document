@@ -132,7 +132,7 @@ public:
 		}
 
 		bool hasBoundedVta = false;
-		bool hasUnboundedVta = false;
+		bool hasUnboundedVta = isVtas[0];
 		vint unboundedVtaCount = -1;
 		CheckVta(self->parameters, tsyses, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 		isVta = hasUnboundedVta;
@@ -295,7 +295,7 @@ public:
 		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, tsyses, isTypes, isVtas, 1, gaContext);
 
 		bool hasBoundedVta = false;
-		bool hasUnboundedVta = false;
+		bool hasUnboundedVta = isVtas[0];
 		vint unboundedVtaCount = -1;
 		CheckVta(self->arguments, tsyses, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 		isVta = hasUnboundedVta;
