@@ -6,14 +6,20 @@ namespace symbol_totsys_impl
 	// Types
 	//////////////////////////////////////////////////////////////////////////////////////
 
+	// Ast_Evaluate_ToTsys_IdImpl.cpp
 	void					CreateIdReferenceType(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta);
 	void					ProcessChildType(const ParsingArguments& pa, GenericArgContext* gaContext, ChildType* self, ExprTsysItem argClass, ExprTsysList& result);
 
+	// Ast_Evaluate_ToTsys_TypeImpl.cpp
 	ITsys*					ProcessPrimitiveType(const ParsingArguments& pa, PrimitiveType* self);
 	ITsys*					ProcessReferenceType(const ParsingArguments& pa, ReferenceType* self, ExprTsysItem arg);
 	ITsys*					ProcessArrayType(const ParsingArguments& pa, ArrayType* self, ExprTsysItem arg);
 	ITsys*					ProcessMemberType(const ParsingArguments& pa, MemberType* self, ExprTsysItem argType, ExprTsysItem argClass);
 	ITsys*					ProcessDecorateType(const ParsingArguments& pa, DecorateType* self, ExprTsysItem arg);
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// Exprs
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Utilities

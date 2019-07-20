@@ -1,6 +1,7 @@
 #include "Ast_Expr.h"
 #include "Ast_Resolving_ExpandPotentialVta.h"
 
+using namespace symbol_type_resolving;
 using namespace symbol_totsys_impl;
 
 /***********************************************************************
@@ -9,14 +10,14 @@ TypeToTsys
   ReferenceType				: unbounded		*
   ArrayType					: unbounded		*
   CallingConventionType		: unbounded
-  FunctionType				: variant
+  FunctionType				: variant		+
   MemberType				: unbounded		*
   DeclType					: unbounded
   DecorateType				: unbounded		*
   RootType					: literal
   IdType					: identifier	*
   ChildType					: unbounded		*
-  GenericType				: variant
+  GenericType				: variant		+
 ***********************************************************************/
 
 class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
@@ -292,7 +293,7 @@ public:
 		Array<bool> isVtas(count + 1);
 
 		TypeToTsysInternal(pa, self->type, tsyses[0], gaContext, isVtas[0]);
-		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, tsyses, isTypes, isVtas, 1, gaContext);
+		ResolveGenericArguments(pa, self->arguments, tsyses, isTypes, isVtas, 1, gaContext);
 
 		bool hasBoundedVta = false;
 		bool hasUnboundedVta = isVtas[0];
@@ -318,14 +319,14 @@ public:
 						throw NotConvertableException();
 					}
 
-					symbol_type_resolving::EvaluateSymbolContext esContext;
+					EvaluateSymbolContext esContext;
 					Array<TypeTsysList> argumentTypes(args.Count() - 1);
 					for (vint i = 1; i < args.Count(); i++)
 					{
 						argumentTypes[i - 1].Add(args[i].tsys);
 					}
 					// TODO: Receive Array<TypeTsysItem> instead of Array<TypeTsysList> in ResolveGenericParameters
-					if (!symbol_type_resolving::ResolveGenericParameters(pa, genericFunction, argumentTypes, isTypes, &esContext.gaContext))
+					if (!ResolveGenericParameters(pa, genericFunction, argumentTypes, isTypes, &esContext.gaContext))
 					{
 						throw NotConvertableException();
 					}
@@ -339,7 +340,7 @@ public:
 						{
 							auto decl = declSymbol->definition.Cast<TypeAliasDeclaration>();
 							if (!decl->templateSpec) throw NotConvertableException();
-							symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
+							EvaluateSymbol(pa, decl.Obj(), &esContext);
 						}
 						break;
 					default:
