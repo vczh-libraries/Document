@@ -242,4 +242,29 @@ namespace symbol_totsys_impl
 
 		AddTemp(result, pa.tsys->Void());
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ProcessParenthesisExpr
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	void ProcessParenthesisExpr(const ParsingArguments& pa, ExprTsysList& result, ParenthesisExpr* self, ExprTsysItem arg)
+	{
+		if (arg.type == ExprTsysType::LValue)
+		{
+			AddTemp(result, arg.tsys->LRefOf());
+		}
+		else
+		{
+			AddTemp(result, arg.tsys);
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ProcessParenthesisExpr
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	void ProcessCastExpr(const ParsingArguments& pa, ExprTsysList& result, CastExpr* self, ExprTsysItem argType, ExprTsysItem argExpr)
+	{
+		AddTemp(result, argType.tsys);
+	}
 }

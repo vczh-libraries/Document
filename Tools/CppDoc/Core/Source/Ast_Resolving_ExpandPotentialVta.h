@@ -11,8 +11,10 @@ namespace symbol_totsys_impl
 	void					CreateIdReferenceType(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta);
 	void					ProcessChildType(const ParsingArguments& pa, GenericArgContext* gaContext, ChildType* self, ExprTsysItem argClass, ExprTsysList& result);
 
-	// Ast_Evaluate_ToTsys_TypeImpl.cpp
+	// Ast_Evaluate_ToTsys_TypeImpl.cpp (literal)
 	ITsys*					ProcessPrimitiveType(const ParsingArguments& pa, PrimitiveType* self);
+
+	// Ast_Evaluate_ToTsys_TypeImpl.cpp (unbounded)
 	ITsys*					ProcessReferenceType(const ParsingArguments& pa, ReferenceType* self, ExprTsysItem arg);
 	ITsys*					ProcessArrayType(const ParsingArguments& pa, ArrayType* self, ExprTsysItem arg);
 	ITsys*					ProcessMemberType(const ParsingArguments& pa, MemberType* self, ExprTsysItem argType, ExprTsysItem argClass);
@@ -23,7 +25,7 @@ namespace symbol_totsys_impl
 	// Exprs
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	// Ast_Evaluate_ToTsys_ExprImpl.cpp
+	// Ast_Evaluate_ToTsys_ExprImpl.cpp (literal)
 	void					ProcessLiteralExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, LiteralExpr* self);
 	void					ProcessThisExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ThisExpr* self);
 	void					ProcessNullptrExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, NullptrExpr* self);
@@ -31,6 +33,10 @@ namespace symbol_totsys_impl
 	void					ProcessSizeofExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, SizeofExpr* self);
 	void					ProcessThrowExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ThrowExpr* self);
 	void					ProcessDeleteExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, DeleteExpr* self);
+
+	// Ast_Evaluate_ToTsys_ExprImpl.cpp (unbounded)
+	void					ProcessParenthesisExpr(const ParsingArguments& pa, ExprTsysList& result, ParenthesisExpr* self, ExprTsysItem arg);
+	void					ProcessCastExpr(const ParsingArguments& pa, ExprTsysList& result, CastExpr* self, ExprTsysItem argType, ExprTsysItem argExpr);
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Utilities

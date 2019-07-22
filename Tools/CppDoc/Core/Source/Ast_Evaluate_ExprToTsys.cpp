@@ -9,8 +9,8 @@ ExprToTsys
 	LiteralExpr					: literal		*
 	ThisExpr					: literal		*
 	NullptrExpr					: literal		*
-	ParenthesisExpr				: *unbounded
-	CastExpr					: *unbounded
+	ParenthesisExpr				: unbounded		*
+	CastExpr					: unbounded		*
 	TypeidExpr					: literal		*
 	SizeofExpr					: literal		*
 	ThrowExpr					: literal		*
@@ -144,18 +144,12 @@ public:
 	void Visit(ParenthesisExpr* self)override
 	{
 		ExprTsysList types;
-		ExprToTsys(pa, self->expr, types, gaContext);
-		for (vint i = 0; i < types.Count(); i++)
+		bool typesVta = false;
+		ExprToTsysInternal(pa, self->expr, types, typesVta, gaContext);
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem arg1)
 		{
-			if (types[i].type == ExprTsysType::LValue)
-			{
-				AddTemp(result, types[i].tsys->LRefOf());
-			}
-			else
-			{
-				AddTemp(result, types[i].tsys);
-			}
-		}
+			ProcessParenthesisExpr(pa, processResult, self, arg1);
+		}, Input(types, typesVta));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -164,15 +158,18 @@ public:
 
 	void Visit(CastExpr* self)override
 	{
+		TypeTsysList types;
+		bool typesVta = false;
+		TypeToTsysInternal(pa, self->type, types, gaContext, typesVta);
+
+		ExprTsysList exprTypes;
+		bool exprTypesVta = false;
+		ExprToTsysInternal(pa, self->expr, exprTypes, exprTypesVta, gaContext);
+
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem argType, ExprTsysItem argExpr)
 		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types, gaContext);
-		}
-		{
-			TypeTsysList types;
-			TypeToTsysNoVta(pa, self->type, types, gaContext);
-			AddTemp(result, types);
-		}
+			ProcessCastExpr(pa, processResult, self, argType, argExpr);
+		}, Input(types, typesVta), Input(exprTypes, exprTypesVta));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
