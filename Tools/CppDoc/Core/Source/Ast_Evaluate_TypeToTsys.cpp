@@ -12,7 +12,7 @@ TypeToTsys
   CallingConventionType		: unbounded
   FunctionType				: variant		+
   MemberType				: unbounded		*
-  DeclType					: unbounded
+  DeclType					: unbounded		*
   DecorateType				: unbounded		*
   RootType					: literal
   IdType					: identifier	*
@@ -195,16 +195,12 @@ public:
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types, gaContext);
-			for (vint i = 0; i < types.Count(); i++)
+			bool typesVta = false;
+			ExprToTsysInternal(pa, self->expr, types, typesVta, gaContext);
+			isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem arg1)
 			{
-				auto exprTsys = types[i].tsys;
-				if (exprTsys->GetType() == TsysType::Zero)
-				{
-					exprTsys = pa.tsys->Int();
-				}
-				AddResult(exprTsys);
-			}
+				return ProcessDeclType(pa, self, arg1);
+			}, Input(types, typesVta));
 		}
 	}
 
