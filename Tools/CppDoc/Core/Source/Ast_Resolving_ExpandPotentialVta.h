@@ -1,4 +1,5 @@
 #include "Ast_Resolving.h"
+#include "Ast_Expr.h"
 
 namespace symbol_totsys_impl
 {
@@ -21,6 +22,15 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Exprs
 	//////////////////////////////////////////////////////////////////////////////////////
+
+	// Ast_Evaluate_ToTsys_ExprImpl.cpp
+	void					ProcessLiteralExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, LiteralExpr* self);
+	void					ProcessThisExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ThisExpr* self);
+	void					ProcessNullptrExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, NullptrExpr* self);
+	void					ProcessTypeidExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, TypeidExpr* self);
+	void					ProcessSizeofExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, SizeofExpr* self);
+	void					ProcessThrowExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ThrowExpr* self);
+	void					ProcessDeleteExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, DeleteExpr* self);
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Utilities

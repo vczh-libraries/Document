@@ -1,4 +1,3 @@
-#include "Ast_Expr.h"
 #include "Ast_Resolving_ExpandPotentialVta.h"
 
 using namespace symbol_type_resolving;

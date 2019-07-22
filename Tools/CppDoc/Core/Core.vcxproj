@@ -176,6 +176,7 @@
     <ClCompile Include="Source\Ast.cpp" />
     <ClCompile Include="Source\Ast_Evaluate.cpp" />
     <ClCompile Include="Source\Ast_Evaluate_ExprToTsys.cpp" />
+    <ClCompile Include="Source\Ast_Evaluate_ToTsys_ExprImpl.cpp" />
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_IdImpl.cpp" />
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_TypeImpl.cpp" />
     <ClCompile Include="Source\Ast_Resolving.cpp" />

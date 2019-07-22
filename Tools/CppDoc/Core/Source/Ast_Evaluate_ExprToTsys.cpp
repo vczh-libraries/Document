@@ -1,4 +1,3 @@
-#include "Ast_Expr.h"
 #include "Ast_Resolving_ExpandPotentialVta.h"
 
 using namespace symbol_type_resolving;
@@ -7,15 +6,15 @@ using namespace symbol_totsys_impl;
 /***********************************************************************
 ExprToTsys
 	PlaceholderExpr				: *literal
-	LiteralExpr					: *literal
-	ThisExpr					: *literal
-	NullptrExpr					: *literal
+	LiteralExpr					: literal		*
+	ThisExpr					: literal		*
+	NullptrExpr					: literal		*
 	ParenthesisExpr				: *unbounded
 	CastExpr					: *unbounded
-	TypeidExpr					: *literal
-	SizeofExpr					: *literal
-	ThrowExpr					: *literal
-	DeleteExpr					: *literal
+	TypeidExpr					: literal		*
+	SizeofExpr					: literal		*
+	ThrowExpr					: literal		*
+	DeleteExpr					: literal		*
 	IdExpr						: *identifier
 	ChildExpr					: *unbounded
 	FieldAccessExpr				: *unbounded
@@ -117,119 +116,7 @@ public:
 
 	void Visit(LiteralExpr* self)override
 	{
-		switch ((CppTokens)self->tokens[0].token)
-		{
-		case CppTokens::INT:
-		case CppTokens::HEX:
-		case CppTokens::BIN:
-			{
-				auto& token = self->tokens[0];
-				{
-					auto reading = token.reading;
-					auto end = token.reading + token.length;
-					if (reading[0] == L'0')
-					{
-						switch (reading[1])
-						{
-						case L'x':
-						case L'X':
-						case L'b':
-						case L'B':
-							reading += 2;
-						}
-					}
-
-					while (reading < end)
-					{
-						if (L'1' <= *reading && *reading <= L'9')
-						{
-							goto NOT_ZERO;
-						}
-						reading++;
-					}
-
-					AddTemp(result, pa.tsys->Zero());
-					return;
-				}
-			NOT_ZERO:
-#define COUNT_CHAR(NUM, UC, LC) ((_##NUM == UC || _##NUM == LC) ? 1 : 0)
-#define COUNT_U(NUM) COUNT_CHAR(NUM, L'u', L'U')
-#define COUNT_L(NUM) COUNT_CHAR(NUM, L'l', L'L')
-				wchar_t _1 = token.length > 2 ? token.reading[token.length - 3] : 0;
-				wchar_t _2 = token.length > 1 ? token.reading[token.length - 2] : 0;
-				wchar_t _3 = token.reading[token.length - 1];
-				vint us = COUNT_U(1) + COUNT_U(2) + COUNT_U(3);
-				vint ls = COUNT_L(1) + COUNT_L(2) + COUNT_L(3);
-				AddTemp(result, pa.tsys->PrimitiveOf({ (us > 0 ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{ls > 1 ? TsysBytes::_8 : TsysBytes::_4} }));
-#undef COUNT_CHAR
-#undef COUNT_U
-#undef COUNT_L
-			}
-			return;
-		case CppTokens::FLOAT:
-			{
-				auto& token = self->tokens[0];
-				wchar_t _1 = token.reading[token.length - 1];
-				if (_1 == L'f' || _1 == L'F')
-				{
-					AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_4 }));
-				}
-				else
-				{
-					AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_8 }));
-				}
-			}
-			return;
-		case CppTokens::STRING:
-		case CppTokens::CHAR:
-			{
-				ITsys* tsysChar = nullptr;
-				auto reading = self->tokens[0].reading;
-				if (reading[0] == L'\"' || reading[0]==L'\'')
-				{
-					tsysChar = pa.tsys->PrimitiveOf({ TsysPrimitiveType::SChar,TsysBytes::_1 });
-				}
-				else if (reading[0] == L'L')
-				{
-					tsysChar = pa.tsys->PrimitiveOf({ TsysPrimitiveType::UWChar,TsysBytes::_2 });
-				}
-				else if (reading[0] == L'U')
-				{
-					tsysChar = pa.tsys->PrimitiveOf({ TsysPrimitiveType::UChar,TsysBytes::_4 });
-				}
-				else if (reading[0] == L'u')
-				{
-					if (reading[1] == L'8')
-					{
-						tsysChar = pa.tsys->PrimitiveOf({ TsysPrimitiveType::SChar,TsysBytes::_1 });
-					}
-					else
-					{
-						tsysChar = pa.tsys->PrimitiveOf({ TsysPrimitiveType::UChar,TsysBytes::_2 });
-					}
-				}
-
-				if (!tsysChar)
-				{
-					throw IllegalExprException();
-				}
-
-				if ((CppTokens)self->tokens[0].token == CppTokens::CHAR)
-				{
-					AddTemp(result, tsysChar);
-				}
-				else
-				{
-					AddTemp(result, tsysChar->CVOf({ true,false })->ArrayOf(1)->LRefOf());
-				}
-			}
-			return;
-		case CppTokens::EXPR_TRUE:
-		case CppTokens::EXPR_FALSE:
-			AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }));
-			return;
-		}
-		throw IllegalExprException();
+		ProcessLiteralExpr(pa, result, gaContext, self);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -238,18 +125,7 @@ public:
 
 	void Visit(ThisExpr* self)override
 	{
-		if (auto funcSymbol = pa.funcSymbol)
-		{
-			if (auto methodCache = funcSymbol->methodCache)
-			{
-				if (auto thisType = methodCache->thisType)
-				{
-					AddTemp(result, thisType);
-					return;
-				}
-			}
-		}
-		throw IllegalExprException();
+		ProcessThisExpr(pa, result, gaContext, self);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -258,7 +134,7 @@ public:
 
 	void Visit(NullptrExpr* self)override
 	{
-		AddTemp(result, pa.tsys->Nullptr());
+		ProcessNullptrExpr(pa, result, gaContext, self);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -305,37 +181,7 @@ public:
 
 	void Visit(TypeidExpr* self)override
 	{
-		if (self->type)
-		{
-			TypeTsysList types;
-			TypeToTsysNoVta(pa, self->type, types, gaContext);
-		}
-		if (self->expr)
-		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types, gaContext);
-		}
-
-		auto global = pa.root.Obj();
-		vint index = global->children.Keys().IndexOf(L"std");
-		if (index == -1) return;
-		auto& stds = global->children.GetByIndex(index);
-		if (stds.Count() != 1) return;
-		index = stds[0]->children.Keys().IndexOf(L"type_info");
-		if (index == -1) return;
-		auto& tis = stds[0]->children.GetByIndex(index);
-
-		for (vint i = 0; i < tis.Count(); i++)
-		{
-			auto ti = tis[i];
-			switch (ti->kind)
-			{
-			case symbol_component::SymbolKind::Class:
-			case symbol_component::SymbolKind::Struct:
-				AddInternal(result, { nullptr,ExprTsysType::LValue,pa.tsys->DeclOf(ti.Obj()) });
-				return;
-			}
-		}
+		ProcessTypeidExpr(pa, result, gaContext, self);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -344,19 +190,7 @@ public:
 
 	void Visit(SizeofExpr* self)override
 	{
-		if (self->type)
-		{
-			TypeTsysList types;
-			bool typeIsVta = false;
-			TypeToTsysInternal(pa, self->type, types, gaContext, typeIsVta);
-		}
-		if (self->expr)
-		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types, gaContext);
-		}
-
-		AddTemp(result, pa.tsys->Size());
+		ProcessSizeofExpr(pa, result, gaContext, self);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -365,13 +199,7 @@ public:
 
 	void Visit(ThrowExpr* self)override
 	{
-		if (self->expr)
-		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types, gaContext);
-		}
-
-		AddTemp(result, pa.tsys->Void());
+		ProcessThrowExpr(pa, result, gaContext, self);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -380,12 +208,7 @@ public:
 
 	void Visit(DeleteExpr* self)override
 	{
-		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types, gaContext);
-		}
-
-		AddTemp(result, pa.tsys->Void());
+		ProcessDeleteExpr(pa, result, gaContext, self);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////

@@ -161,5 +161,8 @@
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_IdImpl.cpp">
       <Filter>Source Files\Ast\Evaluation</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Ast_Evaluate_ToTsys_ExprImpl.cpp">
+      <Filter>Source Files\Ast\Evaluation</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
