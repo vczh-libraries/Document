@@ -39,6 +39,14 @@ namespace symbol_totsys_impl
 	void					ProcessCastExpr(const ParsingArguments& pa, ExprTsysList& result, CastExpr* self, ExprTsysItem argType, ExprTsysItem argExpr);
 
 	//////////////////////////////////////////////////////////////////////////////////////
+	// Indexing
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	bool					AddSymbolToNameResolving(CppName* name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first);
+	bool					AddSymbolToOperatorResolving(CppName* name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first);
+	void					AddSymbolsToResolvings(GenericArgContext* gaContext, CppName* name, Ptr<Resolving>* nameResolving, CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp);
+
+	//////////////////////////////////////////////////////////////////////////////////////
 	// Utilities
 	//////////////////////////////////////////////////////////////////////////////////////
 

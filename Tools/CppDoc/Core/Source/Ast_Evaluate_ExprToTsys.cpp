@@ -48,54 +48,14 @@ public:
 
 	void ReIndex(CppName* name, Ptr<Resolving>* nameResolving, CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols)
 	{
-		if (gaContext) return;
-		bool firstName = true;
-		bool firstOp = true;
-
-		for (vint i = 0; i < symbols.Count(); i++)
-		{
-			if (auto symbol = symbols[i].symbol)
-			{
-				bool isOperator = false;
-				if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
-				{
-					isOperator = funcDecl->name.type == CppNameType::Operator;
-				}
-
-				if (name)
-				{
-					if (!isOperator || name->type == CppNameType::Operator)
-					{
-						if (firstName)
-						{
-							*nameResolving = MakePtr<Resolving>();
-						}
-						(*nameResolving)->resolvedSymbols.Add(symbol);
-						firstName = false;
-						continue;
-					}
-				}
-
-				if (op)
-				{
-					if (isOperator)
-					{
-						if (firstOp)
-						{
-							*opResolving = MakePtr<Resolving>();
-						}
-						(*opResolving)->resolvedSymbols.Add(symbol);
-						firstOp = false;
-					}
-				}
-			}
-		}
-
-		if (!firstName && name)
+		bool addedName = false;
+		bool addedOp = false;
+		AddSymbolsToResolvings(gaContext, name, nameResolving, op, opResolving, symbols, addedName, addedOp);
+		if (addedName)
 		{
 			pa.recorder->IndexOverloadingResolution(*name, (*nameResolving)->resolvedSymbols);
 		}
-		if (!firstOp && op)
+		if (addedOp)
 		{
 			pa.recorder->IndexOverloadingResolution(*op, (*opResolving)->resolvedSymbols);
 		}

@@ -267,4 +267,78 @@ namespace symbol_totsys_impl
 	{
 		AddTemp(result, argType.tsys);
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// Indexing
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	bool IsOperator(Symbol* symbol)
+	{
+		if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+		{
+			return funcDecl->name.type == CppNameType::Operator;
+		}
+		return false;
+	}
+
+	void AddSymbolToResolving(Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
+	{
+		if (first)
+		{
+			*resolving = MakePtr<Resolving>();
+		}
+		first = false;
+
+		auto& resolvedSymbols = (*resolving)->resolvedSymbols;
+		if (!resolvedSymbols.Contains(symbol))
+		{
+			resolvedSymbols.Add(symbol);
+		}
+	}
+
+	bool AddSymbolToNameResolving(CppName* name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
+	{
+		bool isOperator = IsOperator(symbol);
+		if (!isOperator || name->type == CppNameType::Operator)
+		{
+			AddSymbolToResolving(resolving, symbol, first);
+			return true;
+		}
+		return false;
+	}
+
+	bool AddSymbolToOperatorResolving(CppName* name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
+	{
+		bool isOperator = IsOperator(symbol);
+		if (isOperator)
+		{
+			AddSymbolToResolving(resolving, symbol, first);
+			return true;
+		}
+		return false;
+	}
+
+	void AddSymbolsToResolvings(GenericArgContext* gaContext, CppName* name, Ptr<Resolving>* nameResolving, CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp)
+	{
+		if (gaContext) return;
+		bool firstName = true;
+		bool firstOp = true;
+
+		for (vint i = 0; i < symbols.Count(); i++)
+		{
+			if (auto symbol = symbols[i].symbol)
+			{
+				if (name && AddSymbolToNameResolving(name, nameResolving, symbol, firstName))
+				{
+					addedName = true;
+					continue;
+				}
+
+				if (op && AddSymbolToOperatorResolving(op, opResolving, symbol, firstOp))
+				{
+					addedOp = true;
+				}
+			}
+		}
+	}
 }
