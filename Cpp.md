@@ -44,6 +44,8 @@
   - If an member implementation does not match to a declaration, scopes are created for analyzing the body, error is ignored.
   - Allow many-to-many definition-to-declaration mapping.
   - `EvaluateSymbol` doesn't crash if no type is evaluated with `gaContext`
+- [ ] More refactorings
+  - `ResolveGenericParameters`: Receive `Array<TypeTsysItem>` instead of `Array<TypeTsysList>` for `argumentTypes`
 - [ ] `template` on functions.
   - [ ] Connect function with forward declarations
   - [ ] Overload functions with all template argument (except defaults) specified.
