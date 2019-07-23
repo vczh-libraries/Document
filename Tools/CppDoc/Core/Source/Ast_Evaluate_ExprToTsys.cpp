@@ -607,7 +607,7 @@ public:
 	// PostfixUnaryExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	bool VisitOperator(ExprTsysItem* leftType, ExprTsysItem* rightType, const WString& name, CppName& resolvableName, Ptr<Resolving>& resolving)
+	bool VisitOperator(ExprTsysItem* leftType, ExprTsysItem* rightType, CppName& resolvableName, Ptr<Resolving>& resolving, bool& indexed)
 	{
 		TsysCV leftCV, rightCV;
 		TsysRefType leftRef, rightRef;
@@ -627,7 +627,7 @@ public:
 
 		CppName opName;
 		opName.type = CppNameType::Operator;
-		opName.name = L"operator " + name;
+		opName.name = L"operator " + resolvableName.name;
 
 		if (leftEntity->GetType() == TsysType::Decl)
 		{
@@ -655,7 +655,7 @@ public:
 				VisitOverloadedFunction(pa, opTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
 				if (pa.recorder && !gaContext)
 				{
-					ReIndex(nullptr, nullptr, &resolvableName, &resolving, selectedFunctions);
+					AddSymbolsToOperatorResolving(gaContext, resolvableName, resolving, selectedFunctions, indexed);
 				}
 				return true;
 			}
@@ -700,7 +700,7 @@ public:
 				VisitOverloadedFunction(pa, opTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
 				if (pa.recorder && !gaContext)
 				{
-					ReIndex(nullptr, nullptr, &resolvableName, &resolving, selectedFunctions);
+					AddSymbolsToOperatorResolving(gaContext, resolvableName, resolving, selectedFunctions, indexed);
 				}
 				if (result.Count() > 0)
 				{
@@ -713,10 +713,10 @@ public:
 
 	void Visit(PostfixUnaryExpr* self)override
 	{
-		ExprTsysItem extraParam(nullptr, ExprTsysType::PRValue, pa.tsys->Int());
-
 		ExprTsysList types;
 		ExprToTsys(pa, self->operand, types, gaContext);
+		bool indexed = false;
+
 		for (vint i = 0; i < types.Count(); i++)
 		{
 			auto type = types[i].tsys;
@@ -730,7 +730,8 @@ public:
 			}
 			else if (entity->GetType() == TsysType::Decl)
 			{
-				VisitOperator(&types[i], &extraParam, self->opName.name, self->opName, self->opResolving);
+				ExprTsysItem extraParam(nullptr, ExprTsysType::PRValue, pa.tsys->Int());
+				VisitOperator(&types[i], &extraParam, self->opName, self->opResolving, indexed);
 			}
 			else if (entity->GetType()==TsysType::Primitive)
 			{
@@ -748,6 +749,11 @@ public:
 			{
 				AddTemp(result, entity);
 			}
+		}
+
+		if (indexed)
+		{
+			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
 		}
 	}
 
@@ -775,6 +781,8 @@ public:
 		ExprToTsys(pa, self->operand, types, gaContext);
 
 	SKIP_RESOLVING_OPERAND:
+		bool indexed = false;
+
 		for (vint i = 0; i < types.Count(); i++)
 		{
 			auto type = types[i].tsys;
@@ -789,7 +797,7 @@ public:
 			}
 			else if (entity->GetType() == TsysType::Decl)
 			{
-				if (VisitOperator(&types[i], nullptr, self->opName.name, self->opName, self->opResolving))
+				if (VisitOperator(&types[i], nullptr, self->opName, self->opResolving, indexed))
 				{
 					break;
 				}
@@ -858,6 +866,11 @@ public:
 				break;
 			}
 		}
+
+		if (indexed)
+		{
+			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -869,6 +882,7 @@ public:
 		ExprTsysList leftTypes, rightTypes;
 		ExprToTsys(pa, self->left, leftTypes, gaContext);
 		ExprToTsys(pa, self->right, rightTypes, gaContext);
+		bool indexed = false;
 
 		for (vint i = 0; i < leftTypes.Count(); i++)
 		{
@@ -910,7 +924,7 @@ public:
 					continue;
 				}
 
-				if (VisitOperator(&leftTypes[i], &rightTypes[i], self->opName.name, self->opName, self->opResolving))
+				if (VisitOperator(&leftTypes[i], &rightTypes[i], self->opName, self->opResolving, indexed))
 				{
 					break;
 				}
@@ -987,6 +1001,11 @@ public:
 					AddTemp(result, pa.tsys->IntPtr());
 				}
 			}
+		}
+
+		if (indexed)
+		{
+			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
 		}
 	}
 
