@@ -42,9 +42,8 @@ namespace symbol_totsys_impl
 	// Indexing
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	bool					AddSymbolToNameResolving(CppName* name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first);
-	bool					AddSymbolToOperatorResolving(CppName* name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first);
-	void					AddSymbolsToResolvings(GenericArgContext* gaContext, CppName* name, Ptr<Resolving>* nameResolving, CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp);
+	void					AddSymbolsToResolvings(GenericArgContext* gaContext, const CppName* name, Ptr<Resolving>* nameResolving, const CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp);
+	void					AddSymbolsToOperatorResolving(GenericArgContext* gaContext, const CppName& op, Ptr<Resolving>& opResolving, ExprTsysList& symbols, bool& addedOp);
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Utilities

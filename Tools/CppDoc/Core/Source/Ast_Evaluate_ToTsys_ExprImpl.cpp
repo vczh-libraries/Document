@@ -296,10 +296,10 @@ namespace symbol_totsys_impl
 		}
 	}
 
-	bool AddSymbolToNameResolving(CppName* name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
+	bool AddSymbolToNameResolving(const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
 	{
 		bool isOperator = IsOperator(symbol);
-		if (!isOperator || name->type == CppNameType::Operator)
+		if (!isOperator || name.type == CppNameType::Operator)
 		{
 			AddSymbolToResolving(resolving, symbol, first);
 			return true;
@@ -307,7 +307,7 @@ namespace symbol_totsys_impl
 		return false;
 	}
 
-	bool AddSymbolToOperatorResolving(CppName* name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
+	bool AddSymbolToOperatorResolving(const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
 	{
 		bool isOperator = IsOperator(symbol);
 		if (isOperator)
@@ -318,7 +318,7 @@ namespace symbol_totsys_impl
 		return false;
 	}
 
-	void AddSymbolsToResolvings(GenericArgContext* gaContext, CppName* name, Ptr<Resolving>* nameResolving, CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp)
+	void AddSymbolsToResolvings(GenericArgContext* gaContext, const CppName* name, Ptr<Resolving>* nameResolving, const CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp)
 	{
 		if (gaContext) return;
 		bool firstName = true;
@@ -328,17 +328,23 @@ namespace symbol_totsys_impl
 		{
 			if (auto symbol = symbols[i].symbol)
 			{
-				if (name && AddSymbolToNameResolving(name, nameResolving, symbol, firstName))
+				if (name && AddSymbolToNameResolving(*name, nameResolving, symbol, firstName))
 				{
 					addedName = true;
 					continue;
 				}
 
-				if (op && AddSymbolToOperatorResolving(op, opResolving, symbol, firstOp))
+				if (op && AddSymbolToOperatorResolving(*op, opResolving, symbol, firstOp))
 				{
 					addedOp = true;
 				}
 			}
 		}
+	}
+
+	void AddSymbolsToOperatorResolving(GenericArgContext* gaContext, const CppName& op, Ptr<Resolving>& opResolving, ExprTsysList& symbols, bool& addedOp)
+	{
+		bool addedName = false;
+		AddSymbolsToResolvings(gaContext, nullptr, nullptr, &op, &opResolving, symbols, addedName, addedOp);
 	}
 }
