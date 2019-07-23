@@ -409,6 +409,117 @@ namespace symbol_totsys_impl
 		}
 	}
 
+	void ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, bool& indexed)
+	{
+		TsysCV leftCV, rightCV;
+		TsysRefType leftRefType, rightRefType;
+		auto leftEntity = argLeft.tsys->GetEntity(leftCV, leftRefType);
+		auto rightEntity = argRight.tsys->GetEntity(rightCV, rightRefType);
+
+		if (self->op == CppBinaryOp::ValueFieldDeref || self->op == CppBinaryOp::PtrFieldDeref)
+		{
+			if (rightEntity->GetType() == TsysType::Ptr && rightEntity->GetElement()->GetType() == TsysType::Member)
+			{
+				auto fieldEntity = rightEntity->GetElement()->GetElement();
+				if (fieldEntity->GetType() == TsysType::Function)
+				{
+					AddInternal(result, { nullptr,ExprTsysType::PRValue,fieldEntity->PtrOf() });
+				}
+				else
+				{
+					ExprTsysItem parentItem = argLeft;
+					if (self->op == CppBinaryOp::PtrFieldDeref && leftEntity->GetType() == TsysType::Ptr)
+					{
+						parentItem = { nullptr,ExprTsysType::LValue,leftEntity->GetElement()->LRefOf() };
+					}
+					CalculateValueFieldType(&parentItem, nullptr, fieldEntity, true, result);
+				}
+			}
+			else if (rightEntity->IsUnknownType())
+			{
+				AddTemp(result, pa.tsys->Any());
+			}
+			return;
+		}
+
+		if (VisitOperator(pa, gaContext, result, &argLeft, &argRight, self->opName, self->opResolving, indexed))
+		{
+			return;
+		}
+
+		if (self->op == CppBinaryOp::Comma)
+		{
+			AddInternal(result, argRight);
+			return;
+		}
+
+		auto leftPrim = leftEntity->GetType() == TsysType::Primitive;
+		auto rightPrim = rightEntity->GetType() == TsysType::Primitive;
+		auto leftPtrArr = leftEntity->GetType() == TsysType::Ptr || leftEntity->GetType() == TsysType::Array;
+		auto rightPtrArr = rightEntity->GetType() == TsysType::Ptr || rightEntity->GetType() == TsysType::Array;
+
+		if (leftPrim && rightPrim)
+		{
+			switch (self->op)
+			{
+			case CppBinaryOp::LT:
+			case CppBinaryOp::GT:
+			case CppBinaryOp::LE:
+			case CppBinaryOp::GE:
+			case CppBinaryOp::EQ:
+			case CppBinaryOp::NE:
+			case CppBinaryOp::And:
+			case CppBinaryOp::Or:
+				AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }));
+				break;
+			case CppBinaryOp::Assign:
+			case CppBinaryOp::MulAssign:
+			case CppBinaryOp::DivAssign:
+			case CppBinaryOp::ModAssign:
+			case CppBinaryOp::AddAssign:
+			case CppBinaryOp::SubAddisn:
+			case CppBinaryOp::ShlAssign:
+			case CppBinaryOp::ShrAssign:
+			case CppBinaryOp::AndAssign:
+			case CppBinaryOp::OrAssign:
+			case CppBinaryOp::XorAssign:
+				AddTemp(result, argLeft.tsys->LRefOf());
+				break;
+			case CppBinaryOp::Shl:
+			case CppBinaryOp::Shr:
+				{
+					auto primitive = leftEntity->GetPrimitive();
+					Promote(primitive);
+					if (primitive.type == TsysPrimitiveType::UChar)
+					{
+						primitive.type = TsysPrimitiveType::UInt;
+					}
+					AddTemp(result, pa.tsys->PrimitiveOf(primitive));
+				}
+				break;
+			default:
+				{
+					auto leftP = leftEntity->GetPrimitive();
+					auto rightP = rightEntity->GetPrimitive();
+					auto primitive = ArithmeticConversion(leftP, rightP);
+					AddTemp(result, pa.tsys->PrimitiveOf(primitive));
+				}
+			}
+		}
+		else if (leftPrim && rightPtrArr)
+		{
+			AddTemp(result, rightEntity->GetElement()->PtrOf());
+		}
+		else if (leftPtrArr && rightPrim)
+		{
+			AddTemp(result, leftEntity->GetElement()->PtrOf());
+		}
+		else if (leftPtrArr && rightPtrArr)
+		{
+			AddTemp(result, pa.tsys->IntPtr());
+		}
+	}
+
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Indexing
 	//////////////////////////////////////////////////////////////////////////////////////

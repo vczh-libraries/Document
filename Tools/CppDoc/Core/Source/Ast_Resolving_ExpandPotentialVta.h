@@ -41,6 +41,7 @@ namespace symbol_totsys_impl
 	// Ast_Evaluate_ToTsys_ExprImpl.cpp (unbounded)
 	bool					VisitOperator(const ParsingArguments& pa, GenericArgContext* gaContext, ExprTsysList& result, ExprTsysItem* leftType, ExprTsysItem* rightType, CppName& resolvableName, Ptr<Resolving>& resolving, bool& indexed);
 	void					ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, PostfixUnaryExpr* self, ExprTsysItem arg, bool& indexed);
+	void					ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, bool& indexed);
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Indexing
