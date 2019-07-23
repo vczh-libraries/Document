@@ -26,7 +26,7 @@ ExprToTsys
 	PostfixUnaryExpr			: unbounded		*
 	PrefixUnaryExpr				: *unbounded
 	BinaryExpr					: unbounded		*
-	IfExpr						: *unbounded
+	IfExpr						: unbounded		*
 	GenericExpr					: *variant
 ***********************************************************************/
 
@@ -772,110 +772,17 @@ public:
 	void Visit(IfExpr* self)override
 	{
 		ExprTsysList conditionTypes, leftTypes, rightTypes;
-		ExprToTsys(pa, self->condition, conditionTypes, gaContext);
-		ExprToTsys(pa, self->left, leftTypes, gaContext);
-		ExprToTsys(pa, self->right, rightTypes, gaContext);
+		bool conditionVta = false;
+		bool leftVta = false;
+		bool rightVta = false;
+		ExprToTsysInternal(pa, self->condition, conditionTypes, conditionVta, gaContext);
+		ExprToTsysInternal(pa, self->left, leftTypes, leftVta, gaContext);
+		ExprToTsysInternal(pa, self->right, rightTypes, rightVta, gaContext);
 
-		if (leftTypes.Count() == 0 && rightTypes.Count()!=0)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem argCond, ExprTsysItem argLeft, ExprTsysItem argRight)
 		{
-			AddInternal(result, rightTypes);
-		}
-		else if (leftTypes.Count() != 0 && rightTypes.Count() == 0)
-		{
-			AddInternal(result, leftTypes);
-		}
-		else
-		{
-			for (vint i = 0; i < leftTypes.Count(); i++)
-			{
-				auto left = leftTypes[i];
-				auto leftType = left.type == ExprTsysType::LValue ? left.tsys->LRefOf() : left.tsys;
-				TsysCV leftCV;
-				TsysRefType leftRefType;
-				auto leftEntity = leftType->GetEntity(leftCV, leftRefType);
-
-				for (vint j = 0; j < rightTypes.Count(); j++)
-				{
-					auto right = rightTypes[j];
-					auto rightType = right.type == ExprTsysType::LValue ? right.tsys->LRefOf() : right.tsys;
-					TsysCV rightCV;
-					TsysRefType rightRefType;
-					auto rightEntity = rightType->GetEntity(rightCV, rightRefType);
-
-					if (leftType == rightType)
-					{
-						AddTemp(result, leftType);
-					}
-					else if (leftEntity == rightEntity)
-					{
-						auto cv = leftCV;
-						cv.isGeneralConst |= rightCV.isGeneralConst;
-						cv.isVolatile |= rightCV.isVolatile;
-
-						auto refType = leftRefType == rightRefType ? leftRefType : TsysRefType::None;
-
-						switch (refType)
-						{
-						case TsysRefType::LRef:
-							AddTemp(result, leftEntity->CVOf(cv)->LRefOf());
-							break;
-						case TsysRefType::RRef:
-							AddTemp(result, leftEntity->CVOf(cv)->RRefOf());
-							break;
-						default:
-							AddTemp(result, leftEntity->CVOf(cv));
-							break;
-						}
-					}
-					else
-					{
-						auto l2r = TestConvert(pa, rightType, left);
-						auto r2l = TestConvert(pa, leftType, right);
-						if (l2r < r2l)
-						{
-							AddTemp(result, rightType);
-						}
-						else if (l2r > r2l)
-						{
-							AddTemp(result, leftType);
-						}
-						else
-						{
-							auto leftPrim = leftEntity->GetType() == TsysType::Primitive;
-							auto rightPrim = rightEntity->GetType() == TsysType::Primitive;
-							auto leftPtrArr = leftEntity->GetType() == TsysType::Ptr || leftEntity->GetType() == TsysType::Array;
-							auto rightPtrArr = rightEntity->GetType() == TsysType::Ptr || rightEntity->GetType() == TsysType::Array;
-							auto leftNull = leftEntity->GetType() == TsysType::Zero || leftEntity->GetType() == TsysType::Nullptr;
-							auto rightNull = rightEntity->GetType() == TsysType::Zero || rightEntity->GetType() == TsysType::Nullptr;
-
-							if (l2r == TsysConv::StandardConversion && leftPrim && rightPrim)
-							{
-								auto leftP = leftEntity->GetPrimitive();
-								auto rightP = rightEntity->GetPrimitive();
-								auto primitive = ArithmeticConversion(leftP, rightP);
-								AddTemp(result, pa.tsys->PrimitiveOf(primitive));
-								continue;
-							}
-
-							if (leftPtrArr && rightNull)
-							{
-								AddTemp(result, leftEntity->GetElement()->PtrOf());
-								continue;
-							}
-
-							if (leftNull && rightPtrArr)
-							{
-								AddTemp(result, rightEntity->GetElement()->PtrOf());
-								continue;
-							}
-
-							AddInternal(result, left);
-							AddInternal(result, right);
-						}
-					}
-				}
-			}
-		}
+			ProcessIfExpr(pa, processResult, gaContext, self, argCond, argLeft, argRight);
+		}, Input(conditionTypes, conditionVta), Input(leftTypes, leftVta), Input(rightTypes, rightVta));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////

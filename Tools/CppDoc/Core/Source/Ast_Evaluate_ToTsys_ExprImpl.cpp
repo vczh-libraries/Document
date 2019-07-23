@@ -521,6 +521,93 @@ namespace symbol_totsys_impl
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
+	// ProcessIfExpr
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	void ProcessIfExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, IfExpr* self, ExprTsysItem argCond, ExprTsysItem argLeft, ExprTsysItem argRight)
+	{
+		auto leftType = argLeft.type == ExprTsysType::LValue ? argLeft.tsys->LRefOf() : argLeft.tsys;
+		auto rightType = argRight.type == ExprTsysType::LValue ? argRight.tsys->LRefOf() : argRight.tsys;
+
+		TsysCV leftCV, rightCV;
+		TsysRefType leftRefType, rightRefType;
+
+		auto leftEntity = leftType->GetEntity(leftCV, leftRefType);
+		auto rightEntity = rightType->GetEntity(rightCV, rightRefType);
+		if (leftType == rightType)
+		{
+			AddTemp(result, leftType);
+		}
+		else if (leftEntity == rightEntity)
+		{
+			auto cv = leftCV;
+			cv.isGeneralConst |= rightCV.isGeneralConst;
+			cv.isVolatile |= rightCV.isVolatile;
+
+			auto refType = leftRefType == rightRefType ? leftRefType : TsysRefType::None;
+
+			switch (refType)
+			{
+			case TsysRefType::LRef:
+				AddTemp(result, leftEntity->CVOf(cv)->LRefOf());
+				break;
+			case TsysRefType::RRef:
+				AddTemp(result, leftEntity->CVOf(cv)->RRefOf());
+				break;
+			default:
+				AddTemp(result, leftEntity->CVOf(cv));
+				break;
+			}
+		}
+		else
+		{
+			auto l2r = TestConvert(pa, rightType, argLeft);
+			auto r2l = TestConvert(pa, leftType, argRight);
+			if (l2r < r2l)
+			{
+				AddTemp(result, rightType);
+			}
+			else if (l2r > r2l)
+			{
+				AddTemp(result, leftType);
+			}
+			else
+			{
+				auto leftPrim = leftEntity->GetType() == TsysType::Primitive;
+				auto rightPrim = rightEntity->GetType() == TsysType::Primitive;
+				auto leftPtrArr = leftEntity->GetType() == TsysType::Ptr || leftEntity->GetType() == TsysType::Array;
+				auto rightPtrArr = rightEntity->GetType() == TsysType::Ptr || rightEntity->GetType() == TsysType::Array;
+				auto leftNull = leftEntity->GetType() == TsysType::Zero || leftEntity->GetType() == TsysType::Nullptr;
+				auto rightNull = rightEntity->GetType() == TsysType::Zero || rightEntity->GetType() == TsysType::Nullptr;
+
+				if (l2r == TsysConv::StandardConversion && leftPrim && rightPrim)
+				{
+					auto leftP = leftEntity->GetPrimitive();
+					auto rightP = rightEntity->GetPrimitive();
+					auto primitive = ArithmeticConversion(leftP, rightP);
+					AddTemp(result, pa.tsys->PrimitiveOf(primitive));
+					return;
+				}
+
+				if (leftPtrArr && rightNull)
+				{
+					AddTemp(result, leftEntity->GetElement()->PtrOf());
+					return;
+				}
+
+				if (leftNull && rightPtrArr)
+				{
+					AddTemp(result, rightEntity->GetElement()->PtrOf());
+					return;
+				}
+
+				AddInternal(result, argLeft);
+				AddInternal(result, argRight);
+			}
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
 	// Indexing
 	//////////////////////////////////////////////////////////////////////////////////////
 
