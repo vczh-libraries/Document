@@ -38,6 +38,10 @@ namespace symbol_totsys_impl
 	void					ProcessParenthesisExpr(const ParsingArguments& pa, ExprTsysList& result, ParenthesisExpr* self, ExprTsysItem arg);
 	void					ProcessCastExpr(const ParsingArguments& pa, ExprTsysList& result, CastExpr* self, ExprTsysItem argType, ExprTsysItem argExpr);
 
+	// Ast_Evaluate_ToTsys_ExprImpl.cpp (unbounded)
+	bool					VisitOperator(const ParsingArguments& pa, GenericArgContext* gaContext, ExprTsysList& result, ExprTsysItem* leftType, ExprTsysItem* rightType, CppName& resolvableName, Ptr<Resolving>& resolving, bool& indexed);
+	void					ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, PostfixUnaryExpr* self, ExprTsysItem arg, bool& indexed);
+
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Indexing
 	//////////////////////////////////////////////////////////////////////////////////////

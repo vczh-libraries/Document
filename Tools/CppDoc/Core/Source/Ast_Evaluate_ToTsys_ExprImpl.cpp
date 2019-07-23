@@ -269,6 +269,147 @@ namespace symbol_totsys_impl
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
+	// Process(Operator)Expr
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	bool VisitOperator(const ParsingArguments& pa, GenericArgContext* gaContext, ExprTsysList& result, ExprTsysItem* leftType, ExprTsysItem* rightType, CppName& resolvableName, Ptr<Resolving>& resolving, bool& indexed)
+	{
+		TsysCV leftCV, rightCV;
+		TsysRefType leftRef, rightRef;
+		auto leftEntity = leftType->tsys->GetEntity(leftCV, leftRef);
+		auto rightEntity = rightType ? rightType->tsys->GetEntity(rightCV, rightRef) : nullptr;
+
+		if (leftEntity->IsUnknownType())
+		{
+			AddTemp(result, pa.tsys->Any());
+			return true;
+		}
+		if (rightEntity && rightEntity->IsUnknownType())
+		{
+			AddTemp(result, pa.tsys->Any());
+			return true;
+		}
+
+		CppName opName;
+		opName.type = CppNameType::Operator;
+		opName.name = L"operator " + resolvableName.name;
+
+		if (leftEntity->GetType() == TsysType::Decl)
+		{
+			auto newPa = pa.WithContext(leftEntity->GetDecl());
+			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbol);
+
+			if (opMethods.values)
+			{
+				ExprTsysList opTypes;
+				for (vint j = 0; j < opMethods.values->resolvedSymbols.Count(); j++)
+				{
+					VisitSymbol(pa, leftType, opMethods.values->resolvedSymbols[j], false, opTypes);
+				}
+				FilterFieldsAndBestQualifiedFunctions(leftCV, leftRef, opTypes);
+
+				List<Ptr<ExprTsysList>> argTypesList;
+				if (rightType)
+				{
+					argTypesList.Add(MakePtr<ExprTsysList>());
+					AddInternal(*argTypesList[0].Obj(), *rightType);
+				}
+				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
+
+				ExprTsysList selectedFunctions;
+				VisitOverloadedFunction(pa, opTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
+				if (pa.recorder && !gaContext)
+				{
+					AddSymbolsToOperatorResolving(gaContext, resolvableName, resolving, selectedFunctions, indexed);
+				}
+				return true;
+			}
+		}
+		{
+			ExprTsysList opTypes;
+
+			auto opFuncs = ResolveSymbol(pa, opName, SearchPolicy::SymbolAccessableInScope);
+			if (opFuncs.values)
+			{
+				for (vint j = 0; j < opFuncs.values->resolvedSymbols.Count(); j++)
+				{
+					VisitSymbol(pa, leftType, opFuncs.values->resolvedSymbols[j], false, opTypes);
+				}
+			}
+			if (!opFuncs.values || IsAdlEnabled(pa, opFuncs.values))
+			{
+				SortedList<Symbol*> nss, classes;
+				SearchAdlClassesAndNamespaces(pa, leftEntity, nss, classes);
+				if (rightEntity)
+				{
+					SearchAdlClassesAndNamespaces(pa, rightEntity, nss, classes);
+				}
+				SerachAdlFunction(pa, nss, opName.name, opTypes);
+			}
+
+			if (opTypes.Count() > 0)
+			{
+				List<Ptr<ExprTsysList>> argTypesList;
+				{
+					argTypesList.Add(MakePtr<ExprTsysList>());
+					AddInternal(*argTypesList[0].Obj(), *leftType);
+				}
+				if (rightType)
+				{
+					argTypesList.Add(MakePtr<ExprTsysList>());
+					AddInternal(*argTypesList[1].Obj(), *rightType);
+				}
+				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
+
+				ExprTsysList selectedFunctions;
+				VisitOverloadedFunction(pa, opTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
+				if (pa.recorder && !gaContext)
+				{
+					AddSymbolsToOperatorResolving(gaContext, resolvableName, resolving, selectedFunctions, indexed);
+				}
+				if (result.Count() > 0)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	void ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, PostfixUnaryExpr* self, ExprTsysItem arg, bool& indexed)
+	{
+		TsysCV cv;
+		TsysRefType refType;
+		auto entity = arg.tsys->GetEntity(cv, refType);
+
+		if (entity->IsUnknownType())
+		{
+			AddTemp(result, pa.tsys->Any());
+		}
+		else if (entity->GetType() == TsysType::Decl)
+		{
+			ExprTsysItem extraParam(nullptr, ExprTsysType::PRValue, pa.tsys->Int());
+			VisitOperator(pa, gaContext, result, &arg, &extraParam, self->opName, self->opResolving, indexed);
+		}
+		else if (entity->GetType() == TsysType::Primitive)
+		{
+			auto primitive = entity->GetPrimitive();
+			switch (primitive.type)
+			{
+			case TsysPrimitiveType::Bool:
+				AddTemp(result, arg.tsys->LRefOf());
+				break;
+			default:
+				AddTemp(result, arg.tsys);
+			}
+		}
+		else if (entity->GetType() == TsysType::Ptr)
+		{
+			AddTemp(result, entity);
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
 	// Indexing
 	//////////////////////////////////////////////////////////////////////////////////////
 
