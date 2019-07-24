@@ -409,6 +409,89 @@ namespace symbol_totsys_impl
 		}
 	}
 
+	void ProcessPrefixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, PrefixUnaryExpr* self, ExprTsysItem arg, bool& indexed)
+	{
+		TsysCV cv;
+		TsysRefType refType;
+		auto entity = arg.tsys->GetEntity(cv, refType);
+
+		if (entity->IsUnknownType())
+		{
+			AddTemp(result, pa.tsys->Any());
+			return;
+		}
+		else if (entity->GetType() == TsysType::Decl)
+		{
+			if (VisitOperator(pa, gaContext, result, &arg, nullptr, self->opName, self->opResolving, indexed))
+			{
+				return;
+			}
+		}
+
+		switch (self->op)
+		{
+		case CppPrefixUnaryOp::Increase:
+		case CppPrefixUnaryOp::Decrease:
+			AddTemp(result, arg.tsys->LRefOf());
+			break;
+		case CppPrefixUnaryOp::Revert:
+		case CppPrefixUnaryOp::Positive:
+		case CppPrefixUnaryOp::Negative:
+			if (entity->GetType() == TsysType::Primitive)
+			{
+				auto primitive = entity->GetPrimitive();
+				Promote(primitive);
+
+				auto promotedEntity = pa.tsys->PrimitiveOf(primitive);
+				if (promotedEntity == entity && primitive.type != TsysPrimitiveType::Float)
+				{
+					AddTemp(result, pa.tsys->PrimitiveOf(primitive)->CVOf(cv));
+				}
+				else
+				{
+					AddTemp(result, pa.tsys->PrimitiveOf(primitive));
+				}
+			}
+			break;
+		case CppPrefixUnaryOp::Not:
+			AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool, TsysBytes::_1 }));
+			break;
+		case CppPrefixUnaryOp::AddressOf:
+			if (entity->GetType() == TsysType::Ptr && arg.type == ExprTsysType::PRValue)
+			{
+				if (entity->GetElement()->GetType() == TsysType::Member)
+				{
+					if (self->operand.Cast<ChildExpr>())
+					{
+						AddTemp(result, arg.tsys);
+					}
+				}
+				else if (entity->GetElement()->GetType() == TsysType::Function)
+				{
+					if (self->operand.Cast<ChildExpr>() || self->operand.Cast<IdExpr>())
+					{
+						AddTemp(result, arg.tsys);
+					}
+				}
+			}
+			else if (arg.tsys->GetType() == TsysType::LRef || arg.tsys->GetType() == TsysType::RRef)
+			{
+				AddTemp(result, arg.tsys->GetElement()->PtrOf());
+			}
+			else
+			{
+				AddTemp(result, arg.tsys->PtrOf());
+			}
+			break;
+		case CppPrefixUnaryOp::Dereference:
+			if (entity->GetType() == TsysType::Ptr || entity->GetType() == TsysType::Array)
+			{
+				AddTemp(result, entity->GetElement()->LRefOf());
+			}
+			break;
+		}
+	}
+
 	void ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, bool& indexed)
 	{
 		TsysCV leftCV, rightCV;

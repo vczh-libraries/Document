@@ -24,7 +24,7 @@ ExprToTsys
 	NewExpr						: *variant
 	UniversalInitializerExpr	: *variant
 	PostfixUnaryExpr			: unbounded		*
-	PrefixUnaryExpr				: *unbounded
+	PrefixUnaryExpr				: unbounded		*
 	BinaryExpr					: unbounded		*
 	IfExpr						: unbounded		*
 	GenericExpr					: *variant
@@ -229,6 +229,7 @@ public:
 
 	Ptr<Resolving> ResolveChildExprWithGenericArguments(ChildExpr* self)
 	{
+		// TODO: Read void Visit(PrefixUnaryExpr* self) before refactoring
 		Ptr<Resolving> resolving;
 
 		TypeTsysList types;
@@ -279,7 +280,7 @@ public:
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// FiledAccessExpr
+	// FieldAccessExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	void ResolveField(ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr)
@@ -632,108 +633,47 @@ public:
 	void Visit(PrefixUnaryExpr* self)override
 	{
 		ExprTsysList types;
+		bool typesVta = false;
 		if (self->op == CppPrefixUnaryOp::AddressOf)
 		{
 			if (auto childExpr = self->operand.Cast<ChildExpr>())
 			{
-				if (childExpr->resolving)
+				if (IsResolvedToType(childExpr->classType))
 				{
-					for (vint i = 0; i < childExpr->resolving->resolvedSymbols.Count(); i++)
+					TypeTsysList classTypes;
+					TypeToTsysInternal(pa, childExpr->classType, classTypes, gaContext, typesVta);
+					ExpandPotentialVtaMultiResult(pa, types, [=](ExprTsysList& processResult, ExprTsysItem arg1)
 					{
-						VisitSymbol(pa, nullptr, childExpr->resolving->resolvedSymbols[i], true, types);
-					}
+						if (arg1.tsys->IsUnknownType())
+						{
+							AddTemp(processResult, pa.tsys->Any());
+						}
+						else if (arg1.tsys->GetType() == TsysType::Decl)
+						{
+							auto newPa = pa.WithContext(arg1.tsys->GetDecl());
+							auto rsr = ResolveSymbol(newPa, childExpr->name, SearchPolicy::ChildSymbol);
+							if (rsr.values)
+							{
+								for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
+								{
+									VisitSymbol(newPa, nullptr, rsr.values->resolvedSymbols[i], true, processResult);
+								}
+							}
+						}
+					}, Input(classTypes, typesVta));
+					goto SKIP_RESOLVING_OPERAND;
 				}
-				goto SKIP_RESOLVING_OPERAND;
 			}
 		}
-		ExprToTsys(pa, self->operand, types, gaContext);
 
+		ExprToTsysInternal(pa, self->operand, types, typesVta, gaContext);
 	SKIP_RESOLVING_OPERAND:
 		bool indexed = false;
 
-		for (vint i = 0; i < types.Count(); i++)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [&](ExprTsysList& processResult, ExprTsysItem arg1)
 		{
-			auto type = types[i].tsys;
-			TsysCV cv;
-			TsysRefType refType;
-			auto entity = type->GetEntity(cv, refType);
-
-			if (entity->IsUnknownType())
-			{
-				AddTemp(result, pa.tsys->Any());
-				continue;
-			}
-			else if (entity->GetType() == TsysType::Decl)
-			{
-				if (VisitOperator(pa, gaContext, result, &types[i], nullptr, self->opName, self->opResolving, indexed))
-				{
-					break;
-				}
-			}
-
-			switch (self->op)
-			{
-			case CppPrefixUnaryOp::Increase:
-			case CppPrefixUnaryOp::Decrease:
-				AddTemp(result, type->LRefOf());
-				break;
-			case CppPrefixUnaryOp::Revert:
-			case CppPrefixUnaryOp::Positive:
-			case CppPrefixUnaryOp::Negative:
-				if (entity->GetType() == TsysType::Primitive)
-				{
-					auto primitive = entity->GetPrimitive();
-					Promote(primitive);
-
-					auto promotedEntity = pa.tsys->PrimitiveOf(primitive);
-					if (promotedEntity == entity && primitive.type != TsysPrimitiveType::Float)
-					{
-						AddTemp(result, pa.tsys->PrimitiveOf(primitive)->CVOf(cv));
-					}
-					else
-					{
-						AddTemp(result, pa.tsys->PrimitiveOf(primitive));
-					}
-				}
-				break;
-			case CppPrefixUnaryOp::Not:
-				AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool, TsysBytes::_1 }));
-				break;
-			case CppPrefixUnaryOp::AddressOf:
-				if (entity->GetType() == TsysType::Ptr && types[i].type == ExprTsysType::PRValue)
-				{
-					if (entity->GetElement()->GetType() == TsysType::Member)
-					{
-						if (self->operand.Cast<ChildExpr>())
-						{
-							AddTemp(result, type);
-						}
-					}
-					else if(entity->GetElement()->GetType() == TsysType::Function)
-					{
-						if (self->operand.Cast<ChildExpr>() || self->operand.Cast<IdExpr>())
-						{
-							AddTemp(result, type);
-						}
-					}
-				}
-				else if (type->GetType() == TsysType::LRef || type->GetType() == TsysType::RRef)
-				{
-					AddTemp(result, type->GetElement()->PtrOf());
-				}
-				else
-				{
-					AddTemp(result, type->PtrOf());
-				}
-				break;
-			case CppPrefixUnaryOp::Dereference:
-				if (entity->GetType() == TsysType::Ptr || entity->GetType() == TsysType::Array)
-				{
-					AddTemp(result, entity->GetElement()->LRefOf());
-				}
-				break;
-			}
-		}
+			ProcessPrefixUnaryExpr(pa, processResult, gaContext, self, arg1, indexed);
+		}, Input(types, typesVta));
 
 		if (indexed)
 		{

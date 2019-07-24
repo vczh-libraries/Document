@@ -37,8 +37,8 @@ namespace symbol_totsys_impl
 	// Ast_Evaluate_ToTsys_ExprImpl.cpp (unbounded)
 	void					ProcessParenthesisExpr(const ParsingArguments& pa, ExprTsysList& result, ParenthesisExpr* self, ExprTsysItem arg);
 	void					ProcessCastExpr(const ParsingArguments& pa, ExprTsysList& result, CastExpr* self, ExprTsysItem argType, ExprTsysItem argExpr);
-	bool					VisitOperator(const ParsingArguments& pa, GenericArgContext* gaContext, ExprTsysList& result, ExprTsysItem* leftType, ExprTsysItem* rightType, CppName& resolvableName, Ptr<Resolving>& resolving, bool& indexed);
 	void					ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, PostfixUnaryExpr* self, ExprTsysItem arg, bool& indexed);
+	void					ProcessPrefixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, PrefixUnaryExpr* self, ExprTsysItem arg, bool& indexed);
 	void					ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, bool& indexed);
 	void					ProcessIfExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, IfExpr* self, ExprTsysItem argCond, ExprTsysItem argLeft, ExprTsysItem argRight);
 
@@ -52,6 +52,32 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Utilities
 	//////////////////////////////////////////////////////////////////////////////////////
+
+	inline bool IsResolvedToType(Ptr<Type> type)
+	{
+		if (type.Cast<RootType>())
+		{
+			return false;
+		}
+
+		if (auto resolvableType = type.Cast<ResolvableType>())
+		{
+			if (resolvableType->resolving)
+			{
+				auto& symbols = resolvableType->resolving->resolvedSymbols;
+				for (vint i = 0; i < symbols.Count(); i++)
+				{
+					if (symbols[i]->kind != symbol_component::SymbolKind::Namespace)
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	inline ExprTsysItem GetExprTsysItem(ITsys* arg)
 	{

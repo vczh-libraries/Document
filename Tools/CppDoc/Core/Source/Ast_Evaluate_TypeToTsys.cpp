@@ -240,30 +240,12 @@ public:
 	// ChildType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	static bool IsResolvingAllNamespaces(Ptr<Resolving> resolving)
-	{
-		if (resolving)
-		{
-			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
-			{
-				if (resolving->resolvedSymbols[i]->kind != symbol_component::SymbolKind::Namespace)
-				{
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
 	void Visit(ChildType* self)override
 	{
-		if (auto resolvableType = self->classType.Cast<ResolvableType>())
+		if (!IsResolvedToType(self->classType))
 		{
-			if (IsResolvingAllNamespaces(resolvableType->resolving))
-			{
-				CreateIdReferenceType(pa, gaContext, self->resolving, true, false, result, isVta);
-				return;
-			}
+			CreateIdReferenceType(pa, gaContext, self->resolving, true, false, result, isVta);
+			return;
 		}
 
 		TypeTsysList classTypes;
