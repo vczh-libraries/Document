@@ -125,16 +125,73 @@ using Func3 = R(*)(TArgs(*)(TArgs)...);
 TEST_CASE(TestParseVariadicTemplateArgument_Exprs_Unbounded)
 {
 	auto input = LR"(
+
+struct A
+{
+	void*	operator++();
+	A		operator++(int);
+	float	operator+(int);
+	double	operator,(int);
+};
+
+struct B
+{
+	char*	operator++();
+	B		operator++(int);
+	int*	operator+(int);
+	bool*	operator,(int);
+};
+
 template<typename ...TArgs>
 using Cast = void(*)(decltype((TArgs)nullptr)...);
+
+template<typename ...TArgs>
+using Parenthesis = void(*)(decltype(((TArgs)nullptr))...);
+
+template<typename ...TArgs>
+using PrefixUnary = void(*)(decltype(++(TArgs)nullptr)...);
+
+template<typename ...TArgs>
+using PostfixUnary = void(*)(decltype(((TArgs)nullptr)++)...);
+
+template<typename ...TArgs>
+using Binary1 = void(*)(decltype(((TArgs)nullptr)+1)...);
+
+template<typename ...TArgs>
+using Binary2 = void(*)(decltype(((TArgs)nullptr),1)...);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	
 	AssertType(pa, L"Cast",											L"Cast",										L"<...::Cast::[TArgs]> any_t"																								);
+	AssertType(pa, L"Parenthesis",									L"Parenthesis",									L"<...::Parenthesis::[TArgs]> any_t"																						);
+	AssertType(pa, L"PrefixUnary",									L"PrefixUnary",									L"<...::PrefixUnary::[TArgs]> any_t"																						);
+	AssertType(pa, L"PostfixUnary",									L"PostfixUnary",								L"<...::PostfixUnary::[TArgs]> any_t"																						);
+	AssertType(pa, L"Binary1",										L"Binary1",										L"<...::Binary1::[TArgs]> any_t"																							);
+	AssertType(pa, L"Binary2",										L"Binary2",										L"<...::Binary2::[TArgs]> any_t"																							);
 	
 	AssertType(pa, L"Cast<>",										L"Cast<>",										L"void __cdecl() *"																											);
 	AssertType(pa, L"Cast<int>",									L"Cast<int>",									L"void __cdecl(__int32) *"																									);
 	AssertType(pa, L"Cast<int, bool, char, double>",				L"Cast<int, bool, char, double>",				L"void __cdecl(__int32, bool, char, double) *"																				);
+	
+	AssertType(pa, L"Parenthesis<>",								L"Parenthesis<>",								L"void __cdecl() *"																											);
+	AssertType(pa, L"Parenthesis<int>",								L"Parenthesis<int>",							L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"Parenthesis<int, bool, char, double>",			L"Parenthesis<int, bool, char, double>",		L"void __cdecl(__int32, bool, char, double) *"																				);
+	
+	AssertType(pa, L"PrefixUnary<>",								L"PrefixUnary<>",								L"void __cdecl() *"																											);
+	AssertType(pa, L"PrefixUnary<int>",								L"PrefixUnary<int>",							L"void __cdecl(__int32 &) *"																								);
+	AssertType(pa, L"PrefixUnary<int, char, A, B>",					L"PrefixUnary<int, char, A, B>",				L"void __cdecl(__int32 &, char &, void *, char *) *"																		);
+	
+	AssertType(pa, L"PostfixUnary<>",								L"PostfixUnary<>",								L"void __cdecl() *"																											);
+	AssertType(pa, L"PostfixUnary<int>",							L"PostfixUnary<int>",							L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"PostfixUnary<int, char, A, B>",				L"PostfixUnary<int, char, A, B>",				L"void __cdecl(__int32, char, ::A, ::B) *"																					);
+	
+	AssertType(pa, L"Binary1<>",									L"Binary1<>",									L"void __cdecl() *"																											);
+	AssertType(pa, L"Binary1<int>",									L"Binary1<int>",								L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"Binary1<int, char, A, B>",						L"Binary1<int, char, A, B>",					L"void __cdecl(__int32, __int32, float, __int32 *) *"																		);
+	
+	AssertType(pa, L"Binary2<>",									L"Binary2<>",									L"void __cdecl() *"																											);
+	AssertType(pa, L"Binary2<int>",									L"Binary2<int>",								L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"Binary2<int, char, A, B>",						L"Binary2<int, char, A, B>",					L"void __cdecl(__int32, __int32, double, bool *) *"																			);
 }
 
 /*
