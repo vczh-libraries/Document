@@ -121,53 +121,23 @@ using Func3 = R(*)(TArgs(*)(TArgs)...);
 	AssertType(pa, L"Func3<bool, int>",								L"Func3<bool, int>",							L"bool __cdecl(__int32 __cdecl(__int32) *) *"																				);
 	AssertType(pa, L"Func3<bool, int, bool, char, double>",			L"Func3<bool, int, bool, char, double>",		L"bool __cdecl(__int32 __cdecl(__int32) *, bool __cdecl(bool) *, char __cdecl(char) *, double __cdecl(double) *) *"			);
 }
-/*
-TEST_CASE(TestParseVariadicTemplateArgument_Exprs)
+
+TEST_CASE(TestParseVariadicTemplateArgument_Exprs_Unbounded)
 {
 	auto input = LR"(
-template<typename T>
-using Ptr = T*;
-
-template<typename R, typename... TArgs>
-using Init = R(*)(decltype({Ptr<TArgs>*{}...}));
-
-char F(char, bool);
-bool F(bool, char);
-int F(int, float, double);
-int* F(int*, float*, double*);
-double F();
-void F(...);
-
-template<typename... TArgs>
-using FOf = decltype(F(TArgs()...););
+template<typename ...TArgs>
+using Cast = void(*)(decltype((TArgs)nullptr)...);
 )";
 	COMPILE_PROGRAM(program, pa, input);
-
-#define TYPE_LIST_STRING(A, B, C, D, E, F)		\
-	L"<::FOf::[...TArgs]> " L ## #A,			\
-	L"<::FOf::[...TArgs]> " L ## #B,			\
-	L"<::FOf::[...TArgs]> " L ## #C,			\
-	L"<::FOf::[...TArgs]> " L ## #D,			\
-	L"<::FOf::[...TArgs]> " L ## #E,			\
-	L"<::FOf::[...TArgs]> " L ## #F				\
-
 	
-	AssertType(pa, L"Init",											L"Init",										L"<::Init::[R], ::Init::[...TArgs]> any_t"									);
-	AssertType(pa, L"FOf",											L"FOf",											TYPE_LIST_STRING(char, bool, int, int *, double, void)						);
-
-	AssertType(pa, L"Init<bool>",									L"Init<bool>",									L"bool ({}) *"																);
-	AssertType(pa, L"Init<bool, int>",								L"Init<bool, int>",								L"bool ({int * * $PR}) *"													);
-	AssertType(pa, L"Init<bool, int, bool, char, double>",			L"Init<bool, int, bool, char, double>",			L"bool ({int * * $PR, bool * * $PR, char * * $PR, double * * $PR}) *"		);
-	AssertType(pa, L"FOf<>",										L"FOf<>",										L"double"																	);
-	AssertType(pa, L"FOf<int>",										L"FOf<int>",									L"void"																		);
-	AssertType(pa, L"FOf<char, bool>",								L"FOf<char, bool>",								L"char"																		);
-	AssertType(pa, L"FOf<bool, char>",								L"FOf<bool, char>",								L"bool"																		);
-	AssertType(pa, L"FOf<int, float, double>",						L"FOf<int, float, double>",						L"int"																		);
-	AssertType(pa, L"FOf<int*, float*, double*>",					L"FOf<int *, float *, double *>",				L"int *"																	);
-
-#undef TYPE_LIST_STRING
+	AssertType(pa, L"Cast",											L"Cast",										L"<...::Cast::[TArgs]> any_t"																								);
+	
+	AssertType(pa, L"Cast<>",										L"Cast<>",										L"void __cdecl() *"																											);
+	AssertType(pa, L"Cast<int>",									L"Cast<int>",									L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"Cast<int, bool, char, double>",				L"Cast<int, bool, char, double>",				L"void __cdecl(__int32, bool, char, double) *"																				);
 }
 
+/*
 TEST_CASE(TestParseVariadicTemplateArgument_ApplyOn_VTA_Default)
 {
 	auto input = LR"(
