@@ -7,7 +7,7 @@ namespace symbol_totsys_impl
 	// Types
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	// Ast_Evaluate_ToTsys_IdImpl.cpp
+	// Ast_Evaluate_ToTsys_IdImpl.cpp (identifier)
 	void					CreateIdReferenceType(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta);
 	void					ProcessChildType(const ParsingArguments& pa, GenericArgContext* gaContext, ChildType* self, ExprTsysItem argClass, ExprTsysList& result);
 

@@ -18,7 +18,7 @@ ExprToTsys
 	IdExpr						: *identifier
 	ChildExpr					: *unbounded
 	FieldAccessExpr				: *unbounded
-	ArrayAccessExpr				: *unbounded
+	ArrayAccessExpr				: unbounded		*
 	FuncAccessExpr				: *variant
 	CtorAccessExpr				: *variant
 	NewExpr						: *variant
