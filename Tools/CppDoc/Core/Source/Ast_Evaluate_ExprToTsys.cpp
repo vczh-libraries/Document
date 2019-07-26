@@ -388,68 +388,21 @@ public:
 
 	void Visit(ArrayAccessExpr* self)override
 	{
-		List<Ptr<ExprTsysList>> argTypesList;
+		ExprTsysList arrayTypes, indexTypes;
+		bool arrayVta = false;
+		bool indexVta = false;
+		ExprToTsysInternal(pa, self->expr, arrayTypes, arrayVta, gaContext);
+		ExprToTsysInternal(pa, self->index, indexTypes, indexVta, gaContext);
+
+		bool indexed = false;
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [&](ExprTsysList& processResult, ExprTsysItem argArray, ExprTsysItem argIndex)
 		{
-			auto argTypes = MakePtr<ExprTsysList>();
-			ExprToTsys(pa, self->index, *argTypes.Obj(), gaContext);
-			argTypesList.Add(argTypes);
-		}
+			ProcessArrayAccessExpr(pa, processResult, gaContext, self, argArray, argIndex, indexed);
+		}, Input(arrayTypes, arrayVta), Input(indexTypes, indexVta));
 
-		ExprTsysList arrayTypes, funcTypes;
-		ExprToTsys(pa, self->expr, arrayTypes, gaContext);
-
-		for (vint i = 0; i < arrayTypes.Count(); i++)
+		if (indexed)
 		{
-			auto arrayType = arrayTypes[i];
-
-			TsysCV cv;
-			TsysRefType refType;
-			auto entityType = arrayType.tsys->GetEntity(cv, refType);
-
-			if (entityType->IsUnknownType())
-			{
-				AddTemp(result, pa.tsys->Any());
-			}
-			else if (entityType->GetType() == TsysType::Decl)
-			{
-				ExprTsysList opResult;
-				VisitFunctors(pa, arrayType, L"operator []", opResult);
-				AddNonVar(funcTypes, opResult);
-			}
-			else if (entityType->GetType() == TsysType::Array)
-			{
-				auto tsys = entityType->GetElement();
-				if (refType == TsysRefType::LRef)
-				{
-					AddInternal(result, { nullptr,ExprTsysType::LValue,tsys->CVOf(cv)->LRefOf() });
-				}
-				else if (refType == TsysRefType::RRef)
-				{
-					if (arrayType.type == ExprTsysType::LValue)
-					{
-						AddInternal(result, { nullptr,ExprTsysType::LValue,tsys->CVOf(cv)->LRefOf() });
-					}
-					else
-					{
-						AddInternal(result, { nullptr,ExprTsysType::XValue,tsys->CVOf(cv)->RRefOf() });
-					}
-				}
-				else
-				{
-					AddInternal(result, { nullptr,arrayType.type,tsys->CVOf(cv)->LRefOf() });
-				}
-			}
-			else if (entityType->GetType() == TsysType::Ptr)
-			{
-				AddTemp(result, entityType->GetElement()->LRefOf());
-			}
-		}
-
-		ExprTsysList selectedFunctions;
-		VisitOverloadedFunction(pa, funcTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
-		if (pa.recorder && !gaContext)
-		{
-			ReIndex(nullptr, nullptr, &self->opName, &self->opResolving, selectedFunctions);
+			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
 		}
 	}
 

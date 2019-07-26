@@ -269,6 +269,67 @@ namespace symbol_totsys_impl
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
+	// ProcessArrayAccessExpr
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	void ProcessArrayAccessExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ArrayAccessExpr* self, ExprTsysItem argArray, ExprTsysItem argIndex, bool& indexed)
+	{
+		TsysCV cv;
+		TsysRefType refType;
+		auto entityType = argArray.tsys->GetEntity(cv, refType);
+
+		if (entityType->IsUnknownType())
+		{
+			AddTemp(result, pa.tsys->Any());
+		}
+		else if (entityType->GetType() == TsysType::Decl)
+		{
+			ExprTsysList funcTypes;
+			VisitFunctors(pa, argArray, L"operator []", funcTypes);
+
+			List<Ptr<ExprTsysList>> argTypesList;
+			argTypesList.Add(MakePtr<ExprTsysList>());
+			AddInternal(*argTypesList[0].Obj(), argIndex);
+
+			bool needIndex = pa.recorder && !gaContext;
+			ExprTsysList selectedFunctions;
+			VisitOverloadedFunction(pa, funcTypes, argTypesList, result, (needIndex ? &selectedFunctions : nullptr));
+
+			if (needIndex && selectedFunctions.Count() > 0)
+			{
+				AddSymbolsToOperatorResolving(gaContext, self->opName, self->opResolving, selectedFunctions, indexed);
+			}
+		}
+		else if (entityType->GetType() == TsysType::Array)
+		{
+			auto tsys = entityType->GetElement();
+			if (refType == TsysRefType::LRef)
+			{
+				AddInternal(result, { nullptr,ExprTsysType::LValue,tsys->CVOf(cv)->LRefOf() });
+			}
+			else if (refType == TsysRefType::RRef)
+			{
+				if (argArray.type == ExprTsysType::LValue)
+				{
+					AddInternal(result, { nullptr,ExprTsysType::LValue,tsys->CVOf(cv)->LRefOf() });
+				}
+				else
+				{
+					AddInternal(result, { nullptr,ExprTsysType::XValue,tsys->CVOf(cv)->RRefOf() });
+				}
+			}
+			else
+			{
+				AddInternal(result, { nullptr,argArray.type,tsys->CVOf(cv)->LRefOf() });
+			}
+		}
+		else if (entityType->GetType() == TsysType::Ptr)
+		{
+			AddTemp(result, entityType->GetElement()->LRefOf());
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
 	// Process(Operator)Expr
 	//////////////////////////////////////////////////////////////////////////////////////
 
