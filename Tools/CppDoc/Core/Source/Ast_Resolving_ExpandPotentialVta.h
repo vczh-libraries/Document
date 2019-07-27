@@ -25,6 +25,9 @@ namespace symbol_totsys_impl
 	// Exprs
 	//////////////////////////////////////////////////////////////////////////////////////
 
+	// Ast_Evaluate_ToTsys_IdImpl.cpp (identifier)
+	void					CreateIdReferenceExpr(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, ExprTsysList& result, bool allowAny);
+
 	// Ast_Evaluate_ToTsys_ExprImpl.cpp (literal)
 	void					ProcessLiteralExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, LiteralExpr* self);
 	void					ProcessThisExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ThisExpr* self);

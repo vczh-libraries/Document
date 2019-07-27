@@ -15,7 +15,7 @@ ExprToTsys
 	SizeofExpr					: literal		*
 	ThrowExpr					: literal		*
 	DeleteExpr					: literal		*
-	IdExpr						: *identifier
+	IdExpr						: *identifier	*
 	ChildExpr					: *unbounded
 	FieldAccessExpr				: *unbounded
 	ArrayAccessExpr				: unbounded		*
@@ -172,55 +172,9 @@ public:
 	// IdExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void VisitResolvableExpr(Ptr<Resolving> resolving, bool allowAny)
-	{
-		if (!resolving)
-		{
-			if (allowAny)
-			{
-				AddTemp(result, pa.tsys->Any());
-			}
-			return;
-		}
-		else if (resolving->resolvedSymbols.Count() == 0)
-		{
-			throw NotConvertableException();
-		}
-
-		ExprTsysList resolvableResult;
-		auto& outputTarget = gaContext ? resolvableResult : result;
-
-		if (pa.funcSymbol && pa.funcSymbol->methodCache)
-		{
-			TsysCV thisCv;
-			TsysRefType thisRef;
-			auto thisType = pa.funcSymbol->methodCache->thisType->GetEntity(thisCv, thisRef);
-			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
-			VisitResolvedMember(pa, &thisItem, resolving, outputTarget);
-		}
-		else
-		{
-			VisitResolvedMember(pa, nullptr, resolving, outputTarget);
-		}
-
-		if (gaContext)
-		{
-			for (vint i = 0; i < resolvableResult.Count(); i++)
-			{
-				auto item = resolvableResult[i];
-				TypeTsysList types;
-				item.tsys->ReplaceGenericArgs(*gaContext, types);
-				for (vint j = 0; j < types.Count(); j++)
-				{
-					AddInternal(result, { item.symbol,item.type,types[j] });
-				}
-			}
-		}
-	}
-
 	void Visit(IdExpr* self)override
 	{
-		VisitResolvableExpr(self->resolving, false);
+		CreateIdReferenceExpr(pa, gaContext, self->resolving, result, false);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -270,12 +224,12 @@ public:
 		{
 			if (auto resolving = ResolveChildExprWithGenericArguments(self))
 			{
-				VisitResolvableExpr(resolving, false);
+				CreateIdReferenceExpr(pa, gaContext, resolving, result, false);
 			}
 		}
 		else
 		{
-			VisitResolvableExpr(self->resolving, true);
+			CreateIdReferenceExpr(pa, gaContext, self->resolving, result, true);
 		}
 	}
 

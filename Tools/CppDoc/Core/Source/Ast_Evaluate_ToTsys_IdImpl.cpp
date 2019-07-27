@@ -191,4 +191,54 @@ namespace symbol_totsys_impl
 			symbol_type_resolving::AddTemp(result, childTypes);
 		}
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// CreateIdReferenceExpr
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	void CreateIdReferenceExpr(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, ExprTsysList& result, bool allowAny)
+	{
+		if (!resolving)
+		{
+			if (allowAny)
+			{
+				symbol_type_resolving::AddTemp(result, pa.tsys->Any());
+			}
+			return;
+		}
+		else if (resolving->resolvedSymbols.Count() == 0)
+		{
+			throw NotConvertableException();
+		}
+
+		ExprTsysList resolvableResult;
+		auto& outputTarget = gaContext ? resolvableResult : result;
+
+		if (pa.funcSymbol && pa.funcSymbol->methodCache)
+		{
+			TsysCV thisCv;
+			TsysRefType thisRef;
+			auto thisType = pa.funcSymbol->methodCache->thisType->GetEntity(thisCv, thisRef);
+			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
+			symbol_type_resolving::VisitResolvedMember(pa, &thisItem, resolving, outputTarget);
+		}
+		else
+		{
+			symbol_type_resolving::VisitResolvedMember(pa, nullptr, resolving, outputTarget);
+		}
+
+		if (gaContext)
+		{
+			for (vint i = 0; i < resolvableResult.Count(); i++)
+			{
+				auto item = resolvableResult[i];
+				TypeTsysList types;
+				item.tsys->ReplaceGenericArgs(*gaContext, types);
+				for (vint j = 0; j < types.Count(); j++)
+				{
+					symbol_type_resolving::AddInternal(result, { item.symbol,item.type,types[j] });
+				}
+			}
+		}
+	}
 }
