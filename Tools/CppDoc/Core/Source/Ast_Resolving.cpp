@@ -613,22 +613,6 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	VisitDirectField: Find variables or qualified functions
-	***********************************************************************/
-
-	void VisitDirectField(const ParsingArguments& pa, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, CppName& name, ExprTsysList& result)
-	{
-		TsysCV cv;
-		TsysRefType refType;
-		auto entity = parentItem.tsys->GetEntity(cv, refType);
-
-		if (auto resolving = FindMembersByName(pa, name, &totalRar, parentItem))
-		{
-			VisitResolvedMember(pa, &parentItem, resolving, result);
-		}
-	}
-
-	/***********************************************************************
 	VisitFunctors: Find qualified functors (including functions and operator())
 	***********************************************************************/
 

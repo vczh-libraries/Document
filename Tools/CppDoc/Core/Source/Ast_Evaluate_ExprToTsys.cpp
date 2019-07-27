@@ -293,7 +293,10 @@ public:
 			}
 			else
 			{
-				VisitDirectField(pa, totalRar, parentItem, idExpr->name, result);
+				if (auto resolving = FindMembersByName(pa, idExpr->name, &totalRar, parentItem))
+				{
+					VisitResolvedMember(pa, &parentItem, resolving, result);
+				}
 			}
 		}
 		else
