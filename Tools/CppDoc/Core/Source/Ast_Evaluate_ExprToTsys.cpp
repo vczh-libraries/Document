@@ -16,7 +16,7 @@ ExprToTsys
 	ThrowExpr					: literal		*
 	DeleteExpr					: literal		*
 	IdExpr						: *identifier	*
-	ChildExpr					: *unbounded
+	ChildExpr					: unbounded
 	FieldAccessExpr				: *unbounded
 	ArrayAccessExpr				: unbounded		*
 	FuncAccessExpr				: *variant
@@ -181,56 +181,66 @@ public:
 	// ChildExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	Ptr<Resolving> ResolveChildExprWithGenericArguments(ChildExpr* self)
+	template<typename TReceiver>
+	static void ResolveChildExprWithGenericArguments(const ParsingArguments& pa, ChildExpr* self, ITsys* classType, SortedList<Symbol*>& visited, TReceiver&& receiver)
 	{
-		// TODO: Read void Visit(PrefixUnaryExpr* self) before refactoring
-		Ptr<Resolving> resolving;
-
-		TypeTsysList types;
-		TypeToTsysNoVta(pa, self->classType, types, gaContext);
-		for (vint i = 0; i < types.Count(); i++)
+		if (classType->GetType() == TsysType::Decl)
 		{
-			auto type = types[i];
-			if (type->GetType() == TsysType::Decl)
+			auto newPa = pa.WithContext(classType->GetDecl());
+			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
+			if (rsr.values)
 			{
-				auto newPa = pa.WithContext(type->GetDecl());
-				auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
-				if (rsr.values)
+				for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
 				{
-					if (!resolving)
+					auto symbol = rsr.values->resolvedSymbols[i];
+					if (!visited.Contains(symbol))
 					{
-						resolving = rsr.values;
-					}
-					else
-					{
-						for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
-						{
-							if (!resolving->resolvedSymbols.Contains(rsr.values->resolvedSymbols[i]))
-							{
-								resolving->resolvedSymbols.Add(rsr.values->resolvedSymbols[i]);
-							}
-						}
+						visited.Add(symbol);
+						receiver(symbol);
 					}
 				}
 			}
 		}
-
-		return resolving;
 	}
 
 	void Visit(ChildExpr* self)override
 	{
-		if (gaContext && !self->resolving)
-		{
-			if (auto resolving = ResolveChildExprWithGenericArguments(self))
-			{
-				CreateIdReferenceExpr(pa, gaContext, resolving, result, false);
-			}
-		}
-		else
+		if (!IsResolvedToType(self->classType))
 		{
 			CreateIdReferenceExpr(pa, gaContext, self->resolving, result, true);
+			return;
 		}
+
+		TypeTsysList classTypes;
+		bool classVta = false;
+		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classVta);
+
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem argClass)
+		{
+			// TODO: Read ResolveField before refactoring
+			if (argClass.tsys->IsUnknownType())
+			{
+				AddTemp(processResult, pa.tsys->Any());
+			}
+			else
+			{
+				Ptr<Resolving> resolving;
+				SortedList<Symbol*> visited;
+				ResolveChildExprWithGenericArguments(pa, self, argClass.tsys, visited, [&](Symbol* symbol)
+				{
+					if (!resolving)
+					{
+						resolving = MakePtr<Resolving>();
+					}
+					resolving->resolvedSymbols.Add(symbol);
+				});
+
+				if (resolving)
+				{
+					CreateIdReferenceExpr(pa, gaContext, resolving, processResult, false);
+				}
+			}
+		}, Input(classTypes, classVta));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -255,20 +265,40 @@ public:
 		}
 		else
 		{
-			if (childExpr->resolving)
+			if (!IsResolvedToType(childExpr->classType))
 			{
 				VisitResolvedMember(pa, &parentItem, childExpr->resolving, result);
 			}
-			else if (gaContext)
-			{
-				if (auto resolving = ResolveChildExprWithGenericArguments(childExpr.Obj()))
-				{
-					VisitResolvedMember(pa, &parentItem, resolving, result);
-				}
-			}
 			else
 			{
-				AddTemp(result, pa.tsys->Any());
+				TypeTsysList classTypes;
+				TypeToTsysNoVta(pa, childExpr->classType, classTypes, gaContext);
+
+				for (vint i = 0; i < classTypes.Count(); i++)
+				{
+					if (classTypes[i]->IsUnknownType())
+					{
+						AddTemp(result, pa.tsys->Any());
+					}
+					else
+					{
+						Ptr<Resolving> resolving;
+						SortedList<Symbol*> visited;
+						ResolveChildExprWithGenericArguments(pa, childExpr.Obj(), classTypes[i], visited, [&](Symbol* symbol)
+						{
+							if (!resolving)
+							{
+								resolving = MakePtr<Resolving>();
+							}
+							resolving->resolvedSymbols.Add(symbol);
+						});
+
+						if (resolving)
+						{
+							VisitResolvedMember(pa, &parentItem, resolving, result);
+						}
+					}
+				}
 			}
 		}
 	}

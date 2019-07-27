@@ -249,13 +249,13 @@ public:
 		}
 
 		TypeTsysList classTypes;
-		bool classIsVta = false;
-		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classIsVta);
+		bool classVta = false;
+		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classVta);
 
 		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem argClass)
 		{
 			ProcessChildType(pa, gaContext, self, argClass, processResult);
-		}, Input(classTypes, classIsVta));
+		}, Input(classTypes, classVta));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
