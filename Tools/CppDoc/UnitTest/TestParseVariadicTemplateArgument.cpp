@@ -132,6 +132,7 @@ struct A
 	A		operator++(int);
 	float	operator+(int);
 	double	operator,(int);
+	A*		operator*(A);
 };
 
 struct B
@@ -140,6 +141,7 @@ struct B
 	B		operator++(int);
 	int*	operator+(int);
 	bool*	operator,(int);
+	B*		operator*(B);
 };
 
 template<typename ...TArgs>
@@ -159,6 +161,9 @@ using Binary1 = void(*)(decltype(((TArgs)nullptr)+1)...);
 
 template<typename ...TArgs>
 using Binary2 = void(*)(decltype(((TArgs)nullptr),1)...);
+
+template<typename ...TArgs>
+using Binary3 = void(*)(decltype(((TArgs)nullptr)*((TArgs)nullptr))...);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	
@@ -168,6 +173,7 @@ using Binary2 = void(*)(decltype(((TArgs)nullptr),1)...);
 	AssertType(pa, L"PostfixUnary",									L"PostfixUnary",								L"<...::PostfixUnary::[TArgs]> any_t"																						);
 	AssertType(pa, L"Binary1",										L"Binary1",										L"<...::Binary1::[TArgs]> any_t"																							);
 	AssertType(pa, L"Binary2",										L"Binary2",										L"<...::Binary2::[TArgs]> any_t"																							);
+	AssertType(pa, L"Binary3",										L"Binary3",										L"<...::Binary3::[TArgs]> any_t"																							);
 	
 	AssertType(pa, L"Cast<>",										L"Cast<>",										L"void __cdecl() *"																											);
 	AssertType(pa, L"Cast<int>",									L"Cast<int>",									L"void __cdecl(__int32) *"																									);
@@ -192,6 +198,12 @@ using Binary2 = void(*)(decltype(((TArgs)nullptr),1)...);
 	AssertType(pa, L"Binary2<>",									L"Binary2<>",									L"void __cdecl() *"																											);
 	AssertType(pa, L"Binary2<int>",									L"Binary2<int>",								L"void __cdecl(__int32) *"																									);
 	AssertType(pa, L"Binary2<int, char, A, B>",						L"Binary2<int, char, A, B>",					L"void __cdecl(__int32, __int32, double, bool *) *"																			);
+	
+	AssertType(pa, L"Binary3<>",									L"Binary3<>",									L"void __cdecl() *"																											);
+	AssertType(pa, L"Binary3<int>",									L"Binary3<int>",								L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"Binary3<int, char, A, B>",						L"Binary3<int, char, A, B>",					L"void __cdecl(__int32, __int32, ::A *, ::B *) *"																			);
+
+	// TODO: Test ChildExpr, FieldAccessExpr, ArrayAccessExpr
 }
 
 /*
