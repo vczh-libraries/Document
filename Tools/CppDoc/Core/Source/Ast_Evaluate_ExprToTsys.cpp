@@ -17,7 +17,7 @@ ExprToTsys
 	DeleteExpr					: literal		*
 	IdExpr						: *identifier	*
 	ChildExpr					: unbounded
-	FieldAccessExpr				: *unbounded
+	FieldAccessExpr				: unbounded
 	ArrayAccessExpr				: unbounded		*
 	FuncAccessExpr				: *variant
 	CtorAccessExpr				: *variant
@@ -247,7 +247,7 @@ public:
 	// FieldAccessExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void ResolveField(ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr)
+	static void ResolveField(const ParsingArguments& pa, GenericArgContext* gaContext, ExprTsysList& result, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, ITsys* classType, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr)
 	{
 		if (idExpr)
 		{
@@ -265,92 +265,99 @@ public:
 		}
 		else
 		{
-			if (!IsResolvedToType(childExpr->classType))
+			if (classType)
 			{
-				VisitResolvedMember(pa, &parentItem, childExpr->resolving, result);
+				if (classType->IsUnknownType())
+				{
+					AddTemp(result, pa.tsys->Any());
+				}
+				else
+				{
+					Ptr<Resolving> resolving;
+					SortedList<Symbol*> visited;
+					ResolveChildExprWithGenericArguments(pa, childExpr.Obj(), classType, visited, [&](Symbol* symbol)
+					{
+						if (!resolving)
+						{
+							resolving = MakePtr<Resolving>();
+						}
+						resolving->resolvedSymbols.Add(symbol);
+					});
+
+					if (resolving)
+					{
+						VisitResolvedMember(pa, &parentItem, resolving, result);
+					}
+				}
 			}
 			else
 			{
-				TypeTsysList classTypes;
-				TypeToTsysNoVta(pa, childExpr->classType, classTypes, gaContext);
-
-				for (vint i = 0; i < classTypes.Count(); i++)
-				{
-					if (classTypes[i]->IsUnknownType())
-					{
-						AddTemp(result, pa.tsys->Any());
-					}
-					else
-					{
-						Ptr<Resolving> resolving;
-						SortedList<Symbol*> visited;
-						ResolveChildExprWithGenericArguments(pa, childExpr.Obj(), classTypes[i], visited, [&](Symbol* symbol)
-						{
-							if (!resolving)
-							{
-								resolving = MakePtr<Resolving>();
-							}
-							resolving->resolvedSymbols.Add(symbol);
-						});
-
-						if (resolving)
-						{
-							VisitResolvedMember(pa, &parentItem, resolving, result);
-						}
-					}
-				}
+				VisitResolvedMember(pa, &parentItem, childExpr->resolving, result);
 			}
 		}
 	}
 
 	void Visit(FieldAccessExpr* self)override
 	{
-		ResolveSymbolResult totalRar;
-		ExprTsysList parentItems;
-		ExprToTsys(pa, self->expr, parentItems, gaContext);
+		ExprTsysList parentTypes;
+		TypeTsysList classTypes;
+		bool parentVta = false;
+		bool classVta = false;
+		ExprToTsysInternal(pa, self->expr, parentTypes, parentVta, gaContext);
 
 		auto childExpr = self->name.Cast<ChildExpr>();
 		auto idExpr = self->name.Cast<IdExpr>();
-
-		if (self->type == CppFieldAccessType::Dot)
+		if (childExpr && IsResolvedToType(childExpr->classType))
 		{
-			for (vint i = 0; i < parentItems.Count(); i++)
-			{
-				ResolveField(totalRar, parentItems[i], idExpr, childExpr);
-			}
+			TypeToTsysInternal(pa, childExpr->classType, classTypes, gaContext, classVta);
 		}
 		else
 		{
-			SortedList<ITsys*> visitedDecls;
-			for (vint i = 0; i < parentItems.Count(); i++)
+			classTypes.Add(nullptr);
+		}
+
+		ResolveSymbolResult totalRar;
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [&](ExprTsysList& processResult, ExprTsysItem argParent, ExprTsysItem argClass)
+		{
+			switch (self->type)
 			{
-				TsysCV cv;
-				TsysRefType refType;
-				auto entityType = parentItems[i].tsys->GetEntity(cv, refType);
-
-				if (entityType->GetType() == TsysType::Ptr)
+			case CppFieldAccessType::Dot:
 				{
-					ExprTsysItem parentItem(nullptr, ExprTsysType::LValue, entityType->GetElement());
-					ResolveField(totalRar, parentItem, idExpr, childExpr);
+					ResolveField(pa, gaContext, processResult, totalRar, argParent, argClass.tsys, idExpr, childExpr);
 				}
-				else if (entityType->GetType() == TsysType::Decl)
+				break;
+			case CppFieldAccessType::Arrow:
 				{
-					if (!visitedDecls.Contains(entityType))
-					{
-						visitedDecls.Add(entityType);
+					ExprTsysList indirectionItems;
+					indirectionItems.Add(argParent);
 
-						ExprTsysList opResult;
-						VisitFunctors(pa, parentItems[i], L"operator ->", opResult);
-						for (vint j = 0; j < opResult.Count(); j++)
+					for (vint i = 0; i < indirectionItems.Count(); i++)
+					{
+						TsysCV cv;
+						TsysRefType refType;
+						auto entityType = indirectionItems[i].tsys->GetEntity(cv, refType);
+
+						if (entityType->GetType() == TsysType::Ptr)
 						{
-							auto item = opResult[j];
-							item.tsys = item.tsys->GetElement();
-							AddNonVar(parentItems, item);
+							ExprTsysItem parentItem(nullptr, ExprTsysType::LValue, entityType->GetElement());
+							ResolveField(pa, gaContext, processResult, totalRar, parentItem, argClass.tsys, idExpr, childExpr);
+						}
+						else if (entityType->GetType() == TsysType::Decl)
+						{
+							ExprTsysList opResult;
+							VisitFunctors(pa, indirectionItems[i], L"operator ->", opResult);
+							for (vint j = 0; j < opResult.Count(); j++)
+							{
+								auto item = opResult[j];
+								item.tsys = item.tsys->GetElement();
+								AddNonVar(indirectionItems, item);
+							}
 						}
 					}
 				}
+				break;
 			}
-		}
+		}, Input(parentTypes, parentVta), Input(classTypes, classVta));
 
 		if (idExpr && !gaContext)
 		{
