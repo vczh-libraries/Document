@@ -446,9 +446,18 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			newExpr->name = ParseIdOrChildExprAfterFieldAccess(pa, cursor);
 			expr = newExpr;
 		}
-		else if (!TestToken(cursor, CppTokens::SUB, CppTokens::GT, CppTokens::MUL, false) && TestToken(cursor, CppTokens::SUB, CppTokens::GT))
+		else if (!TestToken(cursor, CppTokens::SUB, CppTokens::GT, CppTokens::MUL, false) && TestToken(cursor, CppTokens::SUB, CppTokens::GT, false))
 		{
 			auto newExpr = MakePtr<FieldAccessExpr>();
+			{
+				newExpr->opName.type = CppNameType::Operator;
+				newExpr->opName.name = L"->";
+				newExpr->opName.tokenCount = 2;
+				newExpr->opName.nameTokens[0] = cursor->token;
+				SkipToken(cursor);
+				newExpr->opName.nameTokens[1] = cursor->token;
+				SkipToken(cursor);
+			}
 			newExpr->type = CppFieldAccessType::Arrow;
 			newExpr->expr = expr;
 			newExpr->name = ParseIdOrChildExprAfterFieldAccess(pa, cursor);

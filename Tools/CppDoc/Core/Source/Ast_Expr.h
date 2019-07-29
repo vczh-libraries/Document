@@ -180,6 +180,9 @@ class FieldAccessExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
+	CppName					opName;
+	Ptr<Resolving>			opResolving;
+
 	CppFieldAccessType		type;
 	Ptr<Expr>				expr;
 	Ptr<ResolvableExpr>		name;	// IdExpr or ChildExpr

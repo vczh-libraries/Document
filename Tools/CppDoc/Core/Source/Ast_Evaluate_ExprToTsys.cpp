@@ -317,6 +317,7 @@ public:
 		}
 
 		ResolveSymbolResult totalRar;
+		bool operatorIndexed = false;
 		isVta = ExpandPotentialVtaMultiResult(pa, result, [&](ExprTsysList& processResult, ExprTsysItem argParent, ExprTsysItem argClass)
 		{
 			switch (self->type)
@@ -352,6 +353,11 @@ public:
 								item.tsys = item.tsys->GetElement();
 								AddNonVar(indirectionItems, item);
 							}
+
+							if (pa.recorder && !gaContext)
+							{
+								AddSymbolsToOperatorResolving(gaContext, self->opName, self->opResolving, opResult, operatorIndexed);
+							}
 						}
 					}
 				}
@@ -373,6 +379,11 @@ public:
 					pa.recorder->ExpectValueButType(idExpr->name, totalRar.types->resolvedSymbols);
 				}
 			}
+		}
+
+		if (operatorIndexed)
+		{
+			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
 		}
 	}
 
