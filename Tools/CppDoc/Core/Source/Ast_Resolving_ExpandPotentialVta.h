@@ -27,6 +27,8 @@ namespace symbol_totsys_impl
 
 	// Ast_Evaluate_ToTsys_IdImpl.cpp (identifier)
 	void					CreateIdReferenceExpr(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, ExprTsysList& result, bool allowAny);
+	void					ProcessChildExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ChildExpr* self, ExprTsysItem argClass);
+	void					ProcessFieldAccessExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed);
 
 	// Ast_Evaluate_ToTsys_ExprImpl.cpp (literal)
 	void					ProcessLiteralExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, LiteralExpr* self);

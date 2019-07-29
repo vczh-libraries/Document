@@ -1,5 +1,7 @@
 #include "Ast_Resolving_ExpandPotentialVta.h"
 
+using namespace symbol_type_resolving;
+
 namespace symbol_totsys_impl
 {
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +22,7 @@ namespace symbol_totsys_impl
 		case symbol_component::SymbolKind::TypeAlias:
 			{
 				auto usingDecl = symbol->definition.Cast<TypeAliasDeclaration>();
-				symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
+				EvaluateSymbol(pa, usingDecl.Obj());
 				auto& types = symbol->evaluation.Get();
 				for (vint j = 0; j < types.Count(); j++)
 				{
@@ -188,7 +190,7 @@ namespace symbol_totsys_impl
 			{
 				ResolveChildTypeWithGenericArguments(pa, self, argClass.tsys, visited, receiver);
 			});
-			symbol_type_resolving::AddTemp(result, childTypes);
+			AddTemp(result, childTypes);
 		}
 	}
 
@@ -202,7 +204,7 @@ namespace symbol_totsys_impl
 		{
 			if (allowAny)
 			{
-				symbol_type_resolving::AddTemp(result, pa.tsys->Any());
+				AddTemp(result, pa.tsys->Any());
 			}
 			return;
 		}
@@ -220,11 +222,11 @@ namespace symbol_totsys_impl
 			TsysRefType thisRef;
 			auto thisType = pa.funcSymbol->methodCache->thisType->GetEntity(thisCv, thisRef);
 			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
-			symbol_type_resolving::VisitResolvedMember(pa, &thisItem, resolving, outputTarget);
+			VisitResolvedMember(pa, &thisItem, resolving, outputTarget);
 		}
 		else
 		{
-			symbol_type_resolving::VisitResolvedMember(pa, nullptr, resolving, outputTarget);
+			VisitResolvedMember(pa, nullptr, resolving, outputTarget);
 		}
 
 		if (gaContext)
@@ -236,9 +238,163 @@ namespace symbol_totsys_impl
 				item.tsys->ReplaceGenericArgs(*gaContext, types);
 				for (vint j = 0; j < types.Count(); j++)
 				{
-					symbol_type_resolving::AddInternal(result, { item.symbol,item.type,types[j] });
+					AddInternal(result, { item.symbol,item.type,types[j] });
 				}
 			}
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ResolveChildExprWithGenericArguments
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	template<typename TReceiver>
+	void ResolveChildExprWithGenericArguments(const ParsingArguments& pa, ChildExpr* self, ITsys* classType, SortedList<Symbol*>& visited, TReceiver&& receiver)
+	{
+		if (classType->GetType() == TsysType::Decl)
+		{
+			auto newPa = pa.WithContext(classType->GetDecl());
+			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
+			if (rsr.values)
+			{
+				for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
+				{
+					auto symbol = rsr.values->resolvedSymbols[i];
+					if (!visited.Contains(symbol))
+					{
+						visited.Add(symbol);
+						receiver(symbol);
+					}
+				}
+			}
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ProcessChildExpr
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	void ProcessChildExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ChildExpr* self, ExprTsysItem argClass)
+	{
+		Ptr<Resolving> resolving;
+		SortedList<Symbol*> visited;
+		ResolveChildExprWithGenericArguments(pa, self, argClass.tsys, visited, [&](Symbol* symbol)
+		{
+			if (!resolving)
+			{
+				resolving = MakePtr<Resolving>();
+			}
+			resolving->resolvedSymbols.Add(symbol);
+		});
+
+		if (resolving)
+		{
+			CreateIdReferenceExpr(pa, gaContext, resolving, result, false);
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ResolveField
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	void ResolveField(const ParsingArguments& pa, GenericArgContext* gaContext, ExprTsysList& result, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, ITsys* classType, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr)
+	{
+		if (idExpr)
+		{
+			if (parentItem.tsys->IsUnknownType())
+			{
+				AddTemp(result, pa.tsys->Any());
+			}
+			else
+			{
+				if (auto resolving = FindMembersByName(pa, idExpr->name, &totalRar, parentItem))
+				{
+					VisitResolvedMember(pa, &parentItem, resolving, result);
+				}
+			}
+		}
+		else
+		{
+			if (classType)
+			{
+				if (classType->IsUnknownType())
+				{
+					AddTemp(result, pa.tsys->Any());
+				}
+				else
+				{
+					Ptr<Resolving> resolving;
+					SortedList<Symbol*> visited;
+					ResolveChildExprWithGenericArguments(pa, childExpr.Obj(), classType, visited, [&](Symbol* symbol)
+					{
+						if (!resolving)
+						{
+							resolving = MakePtr<Resolving>();
+						}
+						resolving->resolvedSymbols.Add(symbol);
+					});
+
+					if (resolving)
+					{
+						VisitResolvedMember(pa, &parentItem, resolving, result);
+					}
+				}
+			}
+			else
+			{
+				VisitResolvedMember(pa, &parentItem, childExpr->resolving, result);
+			}
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ProcessFieldAccessExpr
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	void ProcessFieldAccessExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed)
+	{
+		switch (self->type)
+		{
+		case CppFieldAccessType::Dot:
+			{
+				ResolveField(pa, gaContext, result, totalRar, argParent, argClass.tsys, idExpr, childExpr);
+			}
+			break;
+		case CppFieldAccessType::Arrow:
+			{
+				ExprTsysList indirectionItems;
+				indirectionItems.Add(argParent);
+
+				for (vint i = 0; i < indirectionItems.Count(); i++)
+				{
+					TsysCV cv;
+					TsysRefType refType;
+					auto entityType = indirectionItems[i].tsys->GetEntity(cv, refType);
+
+					if (entityType->GetType() == TsysType::Ptr)
+					{
+						ExprTsysItem parentItem(nullptr, ExprTsysType::LValue, entityType->GetElement());
+						ResolveField(pa, gaContext, result, totalRar, parentItem, argClass.tsys, idExpr, childExpr);
+					}
+					else if (entityType->GetType() == TsysType::Decl)
+					{
+						ExprTsysList opResult;
+						VisitFunctors(pa, indirectionItems[i], L"operator ->", opResult);
+						for (vint j = 0; j < opResult.Count(); j++)
+						{
+							auto item = opResult[j];
+							item.tsys = item.tsys->GetElement();
+							AddNonVar(indirectionItems, item);
+						}
+
+						if (pa.recorder && !gaContext)
+						{
+							AddSymbolsToOperatorResolving(gaContext, self->opName, self->opResolving, opResult, operatorIndexed);
+						}
+					}
+				}
+			}
+			break;
 		}
 	}
 }
