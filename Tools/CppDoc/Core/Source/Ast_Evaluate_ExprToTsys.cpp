@@ -22,7 +22,7 @@ ExprToTsys
 	FuncAccessExpr				: *variant
 	CtorAccessExpr				: *variant
 	NewExpr						: *variant
-	UniversalInitializerExpr	: *variant
+	UniversalInitializerExpr	: variant
 	PostfixUnaryExpr			: unbounded		*
 	PrefixUnaryExpr				: unbounded		*
 	BinaryExpr					: unbounded		*
@@ -384,7 +384,8 @@ public:
 		for (vint i = 0; i < self->placementArguments.Count(); i++)
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->placementArguments[i], types, gaContext);
+			bool typesVta = false;
+			ExprToTsysInternal(pa, self->placementArguments[i].item, types, typesVta, gaContext);
 		}
 
 		if (self->initializer)
@@ -425,13 +426,32 @@ public:
 
 	void Visit(UniversalInitializerExpr* self)override
 	{
-		Array<ExprTsysList> argTypesList(self->arguments.Count());
+		vint count = self->arguments.Count();
+		Array<ExprTsysList> argTypesList(count);
+		Array<bool> isVtas(count);
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
-			ExprToTsys(pa, self->arguments[i], argTypesList[i], gaContext);
+			ExprToTsysInternal(pa, self->arguments[i].item, argTypesList[i], isVtas[i], gaContext);
 		}
 
-		CreateUniversalInitializerType(pa, argTypesList, result);
+		bool hasBoundedVta = false;
+		bool hasUnboundedVta = false;
+		vint unboundedVtaCount = -1;
+		CheckVta(self->arguments, argTypesList, isVtas, 0, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
+		isVta = hasUnboundedVta;
+
+		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, hasBoundedVta, unboundedVtaCount,
+			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+			{
+				if (boundedAnys.Count() > 0)
+				{
+					AddTemp(processResult, pa.tsys->Any());
+				}
+				else
+				{
+					AddTemp(processResult, pa.tsys->InitOf(args));
+				}
+			});
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////

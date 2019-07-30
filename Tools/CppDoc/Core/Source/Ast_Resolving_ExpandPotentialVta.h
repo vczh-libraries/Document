@@ -467,7 +467,10 @@ namespace symbol_totsys_impl
 		}
 
 		Array<vint> tsysIndex(inputs.Count());
-		memset(&tsysIndex[0], 0, sizeof(vint) * inputs.Count());
+		if (inputs.Count() > 0)
+		{
+			memset(&tsysIndex[0], 0, sizeof(vint) * inputs.Count());
+		}
 		impl::ExpandPotentialVtaList(pa, result, inputs, isVtas, isBoundedVta, unboundedVtaCount, tsysIndex, 0, process);
 	}
 }

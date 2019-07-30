@@ -326,8 +326,16 @@ using FieldChild3 = void(*)(decltype(Value<TArgs*>->TArgs::x)...);
 TEST_CASE(TestParseVariadicTemplateArgument_Exprs_Variant)
 {
 	auto input = LR"(
+template<typename ...TArgs>
+auto Init = {(TArgs)nullptr...};
 )";
 	COMPILE_PROGRAM(program, pa, input);
+	
+	AssertExpr(pa, L"Init",											L"Init",										L"<...::Init::[TArgs]> any_t $PR"																							);
+	
+	AssertExpr(pa, L"Init<>",										L"Init<>",										L"{} $PR"																													);
+	AssertExpr(pa, L"Init<int>",									L"Init<int>",									L"{__int32 $PR} $PR"																										);
+	AssertExpr(pa, L"Init<int, bool, char, double>",				L"Init<int, bool, char, double>",				L"{__int32 $PR, bool $PR, char $PR, double $PR} $PR"																		);
 }
 
 /*

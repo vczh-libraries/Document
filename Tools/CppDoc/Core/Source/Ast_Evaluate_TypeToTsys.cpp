@@ -150,7 +150,7 @@ public:
 		ExpandPotentialVtaList(pa, result, tsyses, isVtas, hasBoundedVta, unboundedVtaCount,
 			[=](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
-				if (boundedAnys.Count())
+				if (boundedAnys.Count() > 0)
 				{
 					AddExprTsysItemToResult(processResult, GetExprTsysItem(pa.tsys->Any()));
 				}

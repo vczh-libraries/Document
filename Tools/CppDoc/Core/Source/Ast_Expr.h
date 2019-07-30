@@ -226,7 +226,7 @@ class NewExpr : public CtorAccessExpr
 public:
 	IExprVisitor_ACCEPT;
 
-	List<Ptr<Expr>>					placementArguments;
+	VariadicList<Ptr<Expr>>			placementArguments;
 };
 
 class UniversalInitializerExpr : public Expr
@@ -234,7 +234,7 @@ class UniversalInitializerExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	List<Ptr<Expr>>					arguments;
+	VariadicList<Ptr<Expr>>			arguments;
 };
 
 enum class CppPostfixUnaryOp

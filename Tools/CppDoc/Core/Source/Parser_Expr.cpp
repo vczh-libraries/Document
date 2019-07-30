@@ -348,7 +348,9 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				auto expr = MakePtr<UniversalInitializerExpr>();
 				while (!TestToken(cursor, CppTokens::RBRACE))
 				{
-					expr->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
+					auto argument = ParseExpr(pa, pea_Argument(), cursor);
+					bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+					expr->arguments.Add({ argument,isVariadic });
 					if (TestToken(cursor, CppTokens::RBRACE))
 					{
 						break;
@@ -439,7 +441,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 	auto expr = ParsePrimitiveExpr(pa, cursor);
 	while (true)
 	{
-		if (!TestToken(cursor, CppTokens::DOT, CppTokens::MUL, false) && TestToken(cursor, CppTokens::DOT))
+		if (!TestToken(cursor, CppTokens::DOT, CppTokens::MUL, false) && !TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT, false) && TestToken(cursor, CppTokens::DOT))
 		{
 			auto newExpr = MakePtr<FieldAccessExpr>();
 			newExpr->type = CppFieldAccessType::Dot;
@@ -576,7 +578,9 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 		{
 			while (true)
 			{
-				newExpr->placementArguments.Add(ParseExpr(pa, pea_Argument(), cursor));
+				auto argument = ParseExpr(pa, pea_Argument(), cursor);
+				bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+				newExpr->placementArguments.Add({ argument,isVariadic });
 				if (TestToken(cursor, CppTokens::RPARENTHESIS))
 				{
 					break;
