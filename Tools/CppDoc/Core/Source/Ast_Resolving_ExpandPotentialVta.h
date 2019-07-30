@@ -499,11 +499,11 @@ namespace symbol_totsys_impl
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// VariantInput
+	// VariadicInput
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	template<typename TInput>
-	class VariantInput
+	class VariadicInput
 	{
 	private:
 		const ParsingArguments&		pa;
@@ -538,7 +538,7 @@ namespace symbol_totsys_impl
 		}
 
 	public:
-		VariantInput(vint count, const ParsingArguments& _pa, GenericArgContext* _gaContext)
+		VariadicInput(vint count, const ParsingArguments& _pa, GenericArgContext* _gaContext)
 			:pa(_pa)
 			, gaContext(_gaContext)
 			, argItems(count)

@@ -104,28 +104,28 @@ public:
 
 	void Visit(FunctionType* self)override
 	{
-		VariantInput<ITsys*> variantInput(self->parameters.Count() + 1, pa, gaContext);
+		VariadicInput<ITsys*> variadicInput(self->parameters.Count() + 1, pa, gaContext);
 		if (returnTypes)
 		{
-			variantInput.ApplyTypes(0, *returnTypes);
+			variadicInput.ApplyTypes(0, *returnTypes);
 		}
 		else if (self->decoratorReturnType)
 		{
-			variantInput.ApplySingle(0, self->decoratorReturnType);
+			variadicInput.ApplySingle(0, self->decoratorReturnType);
 		}
 		else if (self->returnType)
 		{
-			variantInput.ApplySingle(0, self->returnType);
+			variadicInput.ApplySingle(0, self->returnType);
 		}
 		else
 		{
 			TypeTsysList types;
 			types.Add(pa.tsys->Void());
-			variantInput.ApplyTypes(0, types);
+			variadicInput.ApplyTypes(0, types);
 		}
-		variantInput.ApplyVariadicList(1, self->parameters);
+		variadicInput.ApplyVariadicList(1, self->parameters);
 
-		isVta = variantInput.Expand(&self->parameters, result,
+		isVta = variadicInput.Expand(&self->parameters, result,
 			[=](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
 				ProcessFunctionType(pa, processResult, self, cc, memberOf, args, boundedAnys);
@@ -229,23 +229,13 @@ public:
 	void Visit(GenericType* self)override
 	{
 		vint count = self->arguments.Count() + 1;
-		Array<ExprTsysList> argItems(count);
 		Array<bool> isTypes(count);
-		Array<bool> isVtas(count);
+		isTypes[0] = false;
 
-		{
-			TypeTsysList tsyses;
-			TypeToTsysInternal(pa, self->type, tsyses, gaContext, isVtas[0]);
-			AddTemp(argItems[0], tsyses);
-		}
-		ResolveGenericArguments(pa, self->arguments, argItems, isTypes, isVtas, 1, gaContext);
-
-		bool hasBoundedVta = false;
-		bool hasUnboundedVta = false;
-		vint unboundedVtaCount = -1;
-		isVta = CheckVta(self->arguments, argItems, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
-
-		ExpandPotentialVtaList(pa, result, argItems, isVtas, hasBoundedVta, unboundedVtaCount,
+		VariadicInput<ExprTsysItem> variadicInput(count, pa, gaContext);
+		variadicInput.ApplySingle<Type>(0, self->type);
+		variadicInput.ApplyGenericArguments(1, isTypes, self->arguments);
+		isVta = variadicInput.Expand(&self->arguments, result,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
 				ProcessGenericType(pa, processResult, self, isTypes, args, boundedAnys);

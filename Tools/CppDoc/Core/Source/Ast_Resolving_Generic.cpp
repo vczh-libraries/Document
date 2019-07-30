@@ -55,28 +55,6 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	ResolveGenericArguments: Calculate types from generic arguments
-	***********************************************************************/
-
-	void ResolveGenericArguments(const ParsingArguments& pa, VariadicList<GenericArgument>& arguments, Array<ExprTsysList>& argumentTypes, Array<bool>& isTypes, Array<bool>& isVtas, vint offset, GenericArgContext* gaContext)
-	{
-		for (vint i = 0; i < arguments.Count(); i++)
-		{
-			auto argument = arguments[i];
-			if ((isTypes[i + offset] = argument.item.type))
-			{
-				TypeTsysList tsyses;
-				TypeToTsysInternal(pa, argument.item.type, tsyses, gaContext, isVtas[i + offset]);
-				AddTemp(argumentTypes[i + offset], tsyses);
-			}
-			else
-			{
-				ExprToTsysInternal(pa, argument.item.expr, argumentTypes[i + offset], isVtas[i + offset]);
-			}
-		}
-	}
-
-	/***********************************************************************
 	ResolveGenericParameters: Calculate generic parameter types by matching arguments to patterens
 	***********************************************************************/
 
