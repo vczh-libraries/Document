@@ -501,19 +501,19 @@ namespace symbol_totsys_impl
 		bool						hasUnboundedVta = false;
 		vint						unboundedVtaCount = -1;
 
-		static void Apply(TypeTsysList& result, bool& isVta, const Ptr<Type>& type)
+		void Apply(TypeTsysList& result, bool& isVta, const Ptr<Type>& type)
 		{
 			TypeToTsysInternal(pa, type, result, gaContext, isVta);
 		}
 
-		static void Apply(ExprTsysList& result, bool& isVta, const Ptr<Type>& type)
+		void Apply(ExprTsysList& result, bool& isVta, const Ptr<Type>& type)
 		{
 			TypeTsysList tsyses;
 			TypeToTsysInternal(pa, type, tsyses, gaContext, isVta);
 			symbol_type_resolving::AddTemp(result, tsyses);
 		}
 
-		static void Apply(ExprTsysList& result, bool& isVta, const Ptr<Expr>& expr)
+		void Apply(ExprTsysList& result, bool& isVta, const Ptr<Expr>& expr)
 		{
 			ExprToTsysInternal(pa, expr, result, isVta, gaContext);
 		}
@@ -568,29 +568,13 @@ namespace symbol_totsys_impl
 		}
 
 		template<typename TItem, typename TResult, typename TProcess>
-		bool Expand(const VariadicList<TItem>& variadicList, List<TResult>& result, TProcess&& process)
+		bool Expand(const VariadicList<TItem>* variadicList, List<TResult>& result, TProcess&& process)
 		{
 			bool isVta = CheckVta(
-				variadicList,
+				*variadicList,
 				argItems,
 				isVtas,
-				(argItems.Count() - variadicList.Count()),
-				hasBoundedVta,
-				hasUnboundedVta,
-				unboundedVtaCount
-			);
-			ExpandPotentialVtaList(pa, result, argItems, isVtas, hasBoundedVta, unboundedVtaCount, process);
-			return isVta;
-		}
-
-		template<typename TResult, typename TProcess>
-		bool Expand(List<TResult>& result, TProcess&& process)
-		{
-			bool isVta = CheckVta(
-				VariadicList<nullptr_t>(),
-				argItems,
-				isVtas,
-				argItems.Count(),
+				argItems.Count() - (variadicList ? variadicList->Count() : 0),
 				hasBoundedVta,
 				hasUnboundedVta,
 				unboundedVtaCount

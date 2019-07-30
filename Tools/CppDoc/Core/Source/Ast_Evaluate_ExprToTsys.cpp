@@ -360,33 +360,13 @@ public:
 
 	void Visit(CtorAccessExpr* self)override
 	{
-		vint count = self->initializer ? self->initializer->arguments.Count() + 1 : 1;
-		Array<ExprTsysList> argTypesList(count);
-		Array<bool> isVtas(count);
-
-		{
-			TypeTsysList types;
-			TypeToTsysInternal(pa, self->type, types, gaContext, isVtas[0]);
-			AddTemp(argTypesList[0], types);
-		}
-
+		VariantInput<ExprTsysItem> variantInput(self->initializer ? self->initializer->arguments.Count() + 1 : 1, pa, gaContext);
+		variantInput.ApplySingle(0, self->type);
 		if (self->initializer)
 		{
-			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
-			{
-				ExprToTsysInternal(pa, self->initializer->arguments[i].item, argTypesList[i + 1], isVtas[i + 1], gaContext);
-			}
+			variantInput.ApplyVariadicList(1, self->initializer->arguments);
 		}
-
-		bool hasBoundedVta = false;
-		bool hasUnboundedVta = false;
-		vint unboundedVtaCount = -1;
-		isVta = CheckVta(
-			*(self->initializer ? &self->initializer->arguments : (VariadicList<Ptr<Expr>>*)nullptr),
-			argTypesList, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount
-			);
-
-		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, hasBoundedVta, unboundedVtaCount,
+		isVta = variantInput.Expand((self->initializer ? &self->initializer->arguments : nullptr), result,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
 				AddInternal(processResult, args[0]);
@@ -410,33 +390,13 @@ public:
 			ExprToTsys(pa, self->placementArguments[i].item, types, gaContext);
 		}
 
-		vint count = self->initializer ? self->initializer->arguments.Count() + 1 : 1;
-		Array<ExprTsysList> argTypesList(count);
-		Array<bool> isVtas(count);
-
-		{
-			TypeTsysList types;
-			TypeToTsysInternal(pa, self->type, types, gaContext, isVtas[0]);
-			AddTemp(argTypesList[0], types);
-		}
-
+		VariantInput<ExprTsysItem> variantInput(self->initializer ? self->initializer->arguments.Count() + 1 : 1, pa, gaContext);
+		variantInput.ApplySingle(0, self->type);
 		if (self->initializer)
 		{
-			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
-			{
-				ExprToTsysInternal(pa, self->initializer->arguments[i].item, argTypesList[i + 1], isVtas[i + 1], gaContext);
-			}
+			variantInput.ApplyVariadicList(1, self->initializer->arguments);
 		}
-
-		bool hasBoundedVta = false;
-		bool hasUnboundedVta = false;
-		vint unboundedVtaCount = -1;
-		isVta = CheckVta(
-			*(self->initializer ? &self->initializer->arguments : (VariadicList<Ptr<Expr>>*)nullptr),
-			argTypesList, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount
-			);
-
-		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, hasBoundedVta, unboundedVtaCount,
+		isVta = variantInput.Expand((self->initializer ? &self->initializer->arguments : nullptr), result,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
 				auto type = args[0].tsys;
@@ -464,20 +424,9 @@ public:
 
 	void Visit(UniversalInitializerExpr* self)override
 	{
-		vint count = self->arguments.Count();
-		Array<ExprTsysList> argTypesList(count);
-		Array<bool> isVtas(count);
-		for (vint i = 0; i < self->arguments.Count(); i++)
-		{
-			ExprToTsysInternal(pa, self->arguments[i].item, argTypesList[i], isVtas[i], gaContext);
-		}
-
-		bool hasBoundedVta = false;
-		bool hasUnboundedVta = false;
-		vint unboundedVtaCount = -1;
-		isVta = CheckVta(self->arguments, argTypesList, isVtas, 0, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
-
-		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, hasBoundedVta, unboundedVtaCount,
+		VariantInput<ExprTsysItem> variantInput(self->arguments.Count(), pa, gaContext);
+		variantInput.ApplyVariadicList(0, self->arguments);
+		isVta = variantInput.Expand(&self->arguments, result,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
 				if (boundedAnys.Count() > 0)
