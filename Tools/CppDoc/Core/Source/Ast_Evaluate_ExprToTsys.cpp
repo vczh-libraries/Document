@@ -379,13 +379,12 @@ public:
 		}
 
 		bool hasBoundedVta = false;
-		bool hasUnboundedVta = isVtas[0];
+		bool hasUnboundedVta = false;
 		vint unboundedVtaCount = -1;
-		CheckVta(
+		isVta = CheckVta(
 			*(self->initializer ? &self->initializer->arguments : (VariadicList<Ptr<Expr>>*)nullptr),
 			argTypesList, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount
 			);
-		isVta = hasUnboundedVta;
 
 		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, hasBoundedVta, unboundedVtaCount,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
@@ -430,13 +429,12 @@ public:
 		}
 
 		bool hasBoundedVta = false;
-		bool hasUnboundedVta = isVtas[0];
+		bool hasUnboundedVta = false;
 		vint unboundedVtaCount = -1;
-		CheckVta(
+		isVta = CheckVta(
 			*(self->initializer ? &self->initializer->arguments : (VariadicList<Ptr<Expr>>*)nullptr),
 			argTypesList, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount
 			);
-		isVta = hasUnboundedVta;
 
 		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, hasBoundedVta, unboundedVtaCount,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
@@ -477,8 +475,7 @@ public:
 		bool hasBoundedVta = false;
 		bool hasUnboundedVta = false;
 		vint unboundedVtaCount = -1;
-		CheckVta(self->arguments, argTypesList, isVtas, 0, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
-		isVta = hasUnboundedVta;
+		isVta = CheckVta(self->arguments, argTypesList, isVtas, 0, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 
 		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, hasBoundedVta, unboundedVtaCount,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
@@ -630,10 +627,9 @@ public:
 		ResolveGenericArguments(pa, self->arguments, argItems, isTypes, isVtas, 1, gaContext);
 
 		bool hasBoundedVta = false;
-		bool hasUnboundedVta = isVtas[0];
+		bool hasUnboundedVta = false;
 		vint unboundedVtaCount = -1;
-		CheckVta(self->arguments, argItems, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
-		isVta = hasUnboundedVta;
+		isVta = CheckVta(self->arguments, argItems, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 
 		// TODO: Implement variadic template argument passing
 		if (hasBoundedVta)
