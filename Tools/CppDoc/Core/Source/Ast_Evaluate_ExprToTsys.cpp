@@ -5,7 +5,7 @@ using namespace symbol_totsys_impl;
 
 /***********************************************************************
 ExprToTsys
-	PlaceholderExpr				: *literal
+	PlaceholderExpr				: literal
 	LiteralExpr					: literal		*
 	ThisExpr					: literal		*
 	NullptrExpr					: literal		*
@@ -20,14 +20,14 @@ ExprToTsys
 	FieldAccessExpr				: unbounded		*
 	ArrayAccessExpr				: unbounded		*
 	FuncAccessExpr				: *variant
-	CtorAccessExpr				: variant
-	NewExpr						: variant
-	UniversalInitializerExpr	: variant
+	CtorAccessExpr				: variant		+
+	NewExpr						: variant		+
+	UniversalInitializerExpr	: variant		+
 	PostfixUnaryExpr			: unbounded		*
 	PrefixUnaryExpr				: unbounded		*
 	BinaryExpr					: unbounded		*
 	IfExpr						: unbounded		*
-	GenericExpr					: variant
+	GenericExpr					: variant		+
 ***********************************************************************/
 
 class ExprToTsysVisitor : public Object, public virtual IExprVisitor
