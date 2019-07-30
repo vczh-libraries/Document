@@ -58,33 +58,20 @@ namespace symbol_type_resolving
 	ResolveGenericArguments: Calculate types from generic arguments
 	***********************************************************************/
 
-	// TODO: This function will be replaced by the below one
-	void ResolveGenericArguments(const ParsingArguments& pa, List<GenericArgument>& arguments, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, GenericArgContext* gaContext)
+	void ResolveGenericArguments(const ParsingArguments& pa, VariadicList<GenericArgument>& arguments, Array<ExprTsysList>& argumentTypes, Array<bool>& isTypes, Array<bool>& isVtas, vint offset, GenericArgContext* gaContext)
 	{
 		for (vint i = 0; i < arguments.Count(); i++)
 		{
 			auto argument = arguments[i];
-			if ((isTypes[i] = argument.type))
+			if ((isTypes[i + offset] = argument.item.type))
 			{
-				TypeToTsysNoVta(pa, argument.type, argumentTypes[i], gaContext);
-			}
-		}
-	}
-
-	void ResolveGenericArguments(const ParsingArguments& pa, VariadicList<GenericArgument>& arguments, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, Array<bool>& isVtas, vint offset, GenericArgContext* gaContext)
-	{
-		for (vint i = 0; i < arguments.Count(); i++)
-		{
-			auto argument = arguments[i];
-			if ((isTypes[i] = argument.item.type))
-			{
-				TypeToTsysInternal(pa, argument.item.type, argumentTypes[i + offset], gaContext, isVtas[i + offset]);
+				TypeTsysList tsyses;
+				TypeToTsysInternal(pa, argument.item.type, tsyses, gaContext, isVtas[i + offset]);
+				AddTemp(argumentTypes[i + offset], tsyses);
 			}
 			else
 			{
-				// TODO: Need to evaluate expression types to see if it is vta
-				argumentTypes[i + offset].Add(nullptr);
-				isVtas[i + offset] = false;
+				ExprToTsysInternal(pa, argument.item.expr, argumentTypes[i + offset], isVtas[i + offset]);
 			}
 		}
 	}
@@ -93,8 +80,7 @@ namespace symbol_type_resolving
 	ResolveGenericParameters: Calculate generic parameter types by matching arguments to patterens
 	***********************************************************************/
 
-	void EnsureGenericNormalParameterAndArgumentMatched(ITsys* parameter, TypeTsysList& arguments);
-	void EnsureGenericNormalParameterAndArgumentMatched(ITsys* parameter, TypeTsysList& arguments);
+	void EnsureGenericNormalParameterAndArgumentMatched(ITsys* parameter, ITsys* argument);
 	void EnsureGenericFunctionParameterAndArgumentMatched(ITsys* parameter, ITsys* argument);
 
 	void EnsureGenericNormalParameterAndArgumentMatched(ITsys* parameter, ITsys* argument)
@@ -120,14 +106,6 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void EnsureGenericNormalParameterAndArgumentMatched(ITsys* parameter, TypeTsysList& arguments)
-	{
-		for (vint i = 0; i < arguments.Count(); i++)
-		{
-			EnsureGenericNormalParameterAndArgumentMatched(parameter, arguments[i]);
-		}
-	}
-
 	void EnsureGenericFunctionParameterAndArgumentMatched(ITsys* parameter, ITsys* argument)
 	{
 		if (parameter->GetParamCount() != argument->GetParamCount())
@@ -150,7 +128,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	bool ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<TypeTsysList>& argumentTypes, Array<bool>& isTypes, GenericArgContext* newGaContext)
+	bool ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, vint offset, GenericArgContext* newGaContext)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
 		{
@@ -206,7 +184,8 @@ namespace symbol_type_resolving
 			minCount = genericFunction->GetParamCount() - 1;
 		}
 
-		if (argumentTypes.Count() < minCount || (maxCount != -1 && argumentTypes.Count() > maxCount))
+		vint inputArgumentCount = argumentTypes.Count() - offset;
+		if (inputArgumentCount < minCount || (maxCount != -1 && inputArgumentCount > maxCount))
 		{
 			return false;
 		}
@@ -220,7 +199,7 @@ namespace symbol_type_resolving
 		{
 			for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 			{
-				if (i < argumentTypes.Count())
+				if (i < inputArgumentCount)
 				{
 					parameterToArgumentMappings.Add({ i,i });
 				}
@@ -232,7 +211,7 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			vint delta = argumentTypes.Count() - genericFunction->GetParamCount();
+			vint delta = inputArgumentCount - genericFunction->GetParamCount();
 			for (vint i = 0; i < variadicArgumentIndex; i++)
 			{
 				parameterToArgumentMappings.Add({ i,i });
@@ -250,6 +229,7 @@ namespace symbol_type_resolving
 			auto pattern = genericFunction->GetParam(i);
 			if (mappings.f0 == -1)
 			{
+				// -1, -1: default value
 				if (pattern != nullptr)
 				{
 					if (spec->arguments[i].argumentType == CppTemplateArgumentType::Value)
@@ -274,24 +254,22 @@ namespace symbol_type_resolving
 			}
 			else if (mappings.f0 == mappings.f1 && (variadicArgumentIndex == -1 || variadicArgumentIndex != mappings.f0))
 			{
-				if ((pattern != nullptr) != isTypes[i])
+				// X, X: map to one argument
+				if ((pattern != nullptr) != isTypes[i + offset])
 				{
 					throw NotConvertableException();
 				}
 
 				if (pattern != nullptr)
 				{
-					auto& argTypes = argumentTypes[i];
-					EnsureGenericNormalParameterAndArgumentMatched(pattern, argTypes);
-
-					for (vint j = 0; j < argTypes.Count(); j++)
-					{
-						newGaContext->arguments.Add(pattern, argTypes[j]);
-					}
+					auto item = argumentTypes[i + offset];
+					EnsureGenericNormalParameterAndArgumentMatched(pattern, item.tsys);
+					newGaContext->arguments.Add(pattern, item.tsys);
 				}
 			}
 			else if (mappings.f0 == mappings.f1 + 1)
 			{
+				// X, X-1: map to no arguments (variadic)
 				if (pattern != nullptr)
 				{
 					Array<ExprTsysItem> items;
@@ -301,9 +279,10 @@ namespace symbol_type_resolving
 			}
 			else
 			{
+				// X, Y: map to multiple arguments (variadic)
 				for (vint j = mappings.f0; j <= mappings.f1; j++)
 				{
-					if ((pattern != nullptr) != isTypes[j])
+					if ((pattern != nullptr) != isTypes[j + offset])
 					{
 						throw NotConvertableException();
 					}
@@ -311,29 +290,17 @@ namespace symbol_type_resolving
 
 				if (pattern != nullptr)
 				{
-					Array<ExprTsysList> argTypesList(mappings.f1 - mappings.f0 + 1);
-					ExprTsysList result;
+					Array<ExprTsysItem> items(mappings.f1 - mappings.f0 + 1);
 
 					for (vint j = mappings.f0; j <= mappings.f1; j++)
 					{
-						auto& argTypes = argumentTypes[j];
-						EnsureGenericNormalParameterAndArgumentMatched(pattern, argTypes);
-
-						auto& target = argTypesList[j - mappings.f0];
-						for (vint j = 0; j < argTypes.Count(); j++)
-						{
-							target.Add({ nullptr,ExprTsysType::PRValue,argTypes[j] });
-						}
+						auto item = argumentTypes[j + offset];
+						EnsureGenericNormalParameterAndArgumentMatched(pattern, item.tsys);
+						items[j - mappings.f0] = item;
 					}
 
-					CreateUniversalInitializerType(pa, argTypesList, result);
-					for (vint j = 0; j < result.Count(); j++)
-					{
-						if (!newGaContext->arguments.Contains(pattern, result[j].tsys))
-						{
-							newGaContext->arguments.Add(pattern, result[j].tsys);
-						}
-					}
+					auto init = pa.tsys->InitOf(items);
+					newGaContext->arguments.Add(pattern, init);
 				}
 			}
 		}

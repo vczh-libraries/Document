@@ -27,7 +27,7 @@ ExprToTsys
 	PrefixUnaryExpr				: unbounded		*
 	BinaryExpr					: unbounded		*
 	IfExpr						: unbounded		*
-	GenericExpr					: *variant
+	GenericExpr					: variant
 ***********************************************************************/
 
 class ExprToTsysVisitor : public Object, public virtual IExprVisitor
@@ -561,58 +561,71 @@ public:
 
 	void Visit(GenericExpr* self)override
 	{
-		ExprTsysList genericTypes;
-		vint count = self->arguments.Count();
-		Array<TypeTsysList> argumentTypes(count);
+		vint count = self->arguments.Count() + 1;
+		Array<ExprTsysList> argItems(count);
 		Array<bool> isTypes(count);
+		Array<bool> isVtas(count);
 
-		ExprToTsys(pa, self->expr, genericTypes, gaContext);
-		symbol_type_resolving::ResolveGenericArguments(pa, self->arguments, argumentTypes, isTypes, gaContext);
+		ExprToTsysInternal(pa, self->expr, argItems[0], isVtas[0], gaContext);
+		ResolveGenericArguments(pa, self->arguments, argItems, isTypes, isVtas, 1, gaContext);
 
-		for (vint i = 0; i < genericTypes.Count(); i++)
+		bool hasBoundedVta = false;
+		bool hasUnboundedVta = isVtas[0];
+		vint unboundedVtaCount = -1;
+		CheckVta(self->arguments, argItems, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
+		isVta = hasUnboundedVta;
+
+		// TODO: Implement variadic template argument passing
+		if (hasBoundedVta)
 		{
-			auto genericFunction = genericTypes[i].tsys;
-			if (genericFunction->GetType() == TsysType::GenericFunction)
-			{
-				auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
-				if (!declSymbol)
-				{
-					throw NotConvertableException();
-				}
-
-				symbol_type_resolving::EvaluateSymbolContext esContext;
-				if (!symbol_type_resolving::ResolveGenericParameters(pa, genericFunction, argumentTypes, isTypes, &esContext.gaContext))
-				{
-					throw NotConvertableException();
-				}
-
-				switch (declSymbol->kind)
-				{
-				case symbol_component::SymbolKind::ValueAlias:
-					{
-						auto decl = declSymbol->definition.Cast<ValueAliasDeclaration>();
-						if (!decl->templateSpec) throw NotConvertableException();
-						symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
-					}
-					break;
-				default:
-					throw NotConvertableException();
-				}
-
-				for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
-				{
-					AddInternal(result, { nullptr,ExprTsysType::PRValue,esContext.evaluatedTypes[j] });
-				}
-			}
-			else if (genericFunction->GetType() == TsysType::Any)
-			{
-				AddTemp(result, pa.tsys->Any());
-			}
-			else
-			{
-				throw NotConvertableException();
-			}
+			throw NotConvertableException();
 		}
+
+		ExpandPotentialVtaList(pa, result, argItems, isVtas, hasBoundedVta, unboundedVtaCount,
+			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+			{
+				auto genericFunction = args[0].tsys;
+				if (genericFunction->GetType() == TsysType::GenericFunction)
+				{
+					auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
+					if (!declSymbol)
+					{
+						throw NotConvertableException();
+					}
+
+					symbol_type_resolving::EvaluateSymbolContext esContext;
+					if (!symbol_type_resolving::ResolveGenericParameters(pa, genericFunction, args, isTypes, 1, &esContext.gaContext))
+					{
+						throw NotConvertableException();
+					}
+
+					switch (declSymbol->kind)
+					{
+					case symbol_component::SymbolKind::ValueAlias:
+						{
+							auto decl = declSymbol->definition.Cast<ValueAliasDeclaration>();
+							if (!decl->templateSpec) throw NotConvertableException();
+							symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
+						}
+						break;
+					default:
+						throw NotConvertableException();
+					}
+
+					for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
+					{
+						AddInternal(processResult, { nullptr,ExprTsysType::PRValue,esContext.evaluatedTypes[j] });
+					}
+				}
+				else if (genericFunction->GetType() == TsysType::Any)
+				{
+					AddTemp(processResult, pa.tsys->Any());
+				}
+				else
+				{
+					throw NotConvertableException();
+				}
+			});
 	}
 };
 

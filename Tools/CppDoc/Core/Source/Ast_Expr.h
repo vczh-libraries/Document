@@ -53,7 +53,7 @@ Preparation
 class ResolvableExpr : public Expr
 {
 public:
-	Ptr<Resolving>				resolving;
+	Ptr<Resolving>					resolving;
 };
 
 class PlaceholderExpr : public Expr
@@ -61,7 +61,7 @@ class PlaceholderExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	ExprTsysList*				types = nullptr;
+	ExprTsysList*					types = nullptr;
 };
 
 /***********************************************************************
@@ -73,7 +73,7 @@ class LiteralExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	List<RegexToken>			tokens;
+	List<RegexToken>				tokens;
 };
 
 class ThisExpr : public Expr
@@ -93,7 +93,7 @@ class ParenthesisExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<Expr>					expr;
+	Ptr<Expr>						expr;
 };
 
 enum class CppCastType
@@ -111,9 +111,9 @@ class CastExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	CppCastType					castType;
-	Ptr<Type>					type;
-	Ptr<Expr>					expr;
+	CppCastType						castType;
+	Ptr<Type>						type;
+	Ptr<Expr>						expr;
 };
 
 class TypeidExpr : public Expr
@@ -121,8 +121,8 @@ class TypeidExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<Type>					type;
-	Ptr<Expr>					expr;
+	Ptr<Type>						type;
+	Ptr<Expr>						expr;
 };
 
 class SizeofExpr : public Expr
@@ -130,9 +130,9 @@ class SizeofExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	bool						ellipsis = false;
-	Ptr<Type>					type;
-	Ptr<Expr>					expr;
+	bool							ellipsis = false;
+	Ptr<Type>						type;
+	Ptr<Expr>						expr;
 };
 
 class ThrowExpr : public Expr
@@ -140,7 +140,7 @@ class ThrowExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<Expr>					expr;
+	Ptr<Expr>						expr;
 };
 
 class DeleteExpr : public Expr
@@ -148,8 +148,8 @@ class DeleteExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	bool						arrayDelete = false;
-	Ptr<Expr>					expr;
+	bool							arrayDelete = false;
+	Ptr<Expr>						expr;
 };
 
 class IdExpr : public ResolvableExpr
@@ -157,7 +157,7 @@ class IdExpr : public ResolvableExpr
 public:
 	IExprVisitor_ACCEPT;
 
-	CppName					name;
+	CppName							name;
 };
 
 class ChildExpr : public ResolvableExpr
@@ -165,8 +165,8 @@ class ChildExpr : public ResolvableExpr
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<Type>				classType;
-	CppName					name;
+	Ptr<Type>						classType;
+	CppName							name;
 };
 
 enum class CppFieldAccessType
@@ -180,12 +180,12 @@ class FieldAccessExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	CppName					opName;
-	Ptr<Resolving>			opResolving;
+	CppName							opName;
+	Ptr<Resolving>					opResolving;
 
-	CppFieldAccessType		type;
-	Ptr<Expr>				expr;
-	Ptr<ResolvableExpr>		name;	// IdExpr or ChildExpr
+	CppFieldAccessType				type;
+	Ptr<Expr>						expr;
+	Ptr<ResolvableExpr>				name;	// IdExpr or ChildExpr
 };
 
 class ArrayAccessExpr : public Expr
@@ -193,11 +193,11 @@ class ArrayAccessExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	CppName					opName;
-	Ptr<Resolving>			opResolving;
+	CppName							opName;
+	Ptr<Resolving>					opResolving;
 
-	Ptr<Expr>				expr;
-	Ptr<Expr>				index;
+	Ptr<Expr>						expr;
+	Ptr<Expr>						index;
 };
 
 class FuncAccessExpr : public Expr
@@ -205,11 +205,11 @@ class FuncAccessExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	CppName					opName;
-	Ptr<Resolving>			opResolving;
+	CppName							opName;
+	Ptr<Resolving>					opResolving;
 
-	Ptr<Expr>				expr;
-	List<Ptr<Expr>>			arguments;
+	Ptr<Expr>						expr;
+	List<Ptr<Expr>>					arguments;
 };
 
 class CtorAccessExpr : public Expr
@@ -217,8 +217,8 @@ class CtorAccessExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<Type>				type;
-	Ptr<Initializer>		initializer;
+	Ptr<Type>						type;
+	Ptr<Initializer>				initializer;
 };
 
 class NewExpr : public CtorAccessExpr
@@ -226,7 +226,7 @@ class NewExpr : public CtorAccessExpr
 public:
 	IExprVisitor_ACCEPT;
 
-	List<Ptr<Expr>>				placementArguments;
+	List<Ptr<Expr>>					placementArguments;
 };
 
 class UniversalInitializerExpr : public Expr
@@ -234,7 +234,7 @@ class UniversalInitializerExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	List<Ptr<Expr>>			arguments;
+	List<Ptr<Expr>>					arguments;
 };
 
 enum class CppPostfixUnaryOp
@@ -248,10 +248,10 @@ class PostfixUnaryExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<Resolving>			opResolving;
-	CppPostfixUnaryOp		op;
-	CppName					opName;
-	Ptr<Expr>				operand;
+	Ptr<Resolving>					opResolving;
+	CppPostfixUnaryOp				op;
+	CppName							opName;
+	Ptr<Expr>						operand;
 };
 
 enum class CppPrefixUnaryOp
@@ -271,10 +271,10 @@ class PrefixUnaryExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<Resolving>			opResolving;
-	CppPrefixUnaryOp		op;
-	CppName					opName;
-	Ptr<Expr>				operand;
+	Ptr<Resolving>					opResolving;
+	CppPrefixUnaryOp				op;
+	CppName							opName;
+	Ptr<Expr>						operand;
 };
 
 enum class CppBinaryOp
@@ -292,12 +292,12 @@ class BinaryExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<Resolving>			opResolving;
-	vint					precedence = -1;
-	CppBinaryOp				op;
-	CppName					opName;
-	Ptr<Expr>				left;
-	Ptr<Expr>				right;
+	Ptr<Resolving>					opResolving;
+	vint							precedence = -1;
+	CppBinaryOp						op;
+	CppName							opName;
+	Ptr<Expr>						left;
+	Ptr<Expr>						right;
 };
 
 class IfExpr : public Expr
@@ -305,9 +305,9 @@ class IfExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<Expr>				condition;
-	Ptr<Expr>				left;
-	Ptr<Expr>				right;
+	Ptr<Expr>						condition;
+	Ptr<Expr>						left;
+	Ptr<Expr>						right;
 };
 
 class GenericExpr : public Expr
@@ -315,8 +315,8 @@ class GenericExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<ResolvableExpr>		expr;
-	List<GenericArgument>	arguments;
+	Ptr<ResolvableExpr>				expr;
+	VariadicList<GenericArgument>	arguments;
 };
 
 #endif

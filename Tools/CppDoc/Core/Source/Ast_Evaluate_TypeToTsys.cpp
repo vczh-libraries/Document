@@ -264,18 +264,22 @@ public:
 
 	void Visit(GenericType* self)override
 	{
-		vint count = self->arguments.Count();
-		Array<TypeTsysList> tsyses(count + 1);
+		vint count = self->arguments.Count() + 1;
+		Array<ExprTsysList> argItems(count);
 		Array<bool> isTypes(count);
-		Array<bool> isVtas(count + 1);
+		Array<bool> isVtas(count);
 
-		TypeToTsysInternal(pa, self->type, tsyses[0], gaContext, isVtas[0]);
-		ResolveGenericArguments(pa, self->arguments, tsyses, isTypes, isVtas, 1, gaContext);
+		{
+			TypeTsysList tsyses;
+			TypeToTsysInternal(pa, self->type, tsyses, gaContext, isVtas[0]);
+			AddTemp(argItems[0], tsyses);
+		}
+		ResolveGenericArguments(pa, self->arguments, argItems, isTypes, isVtas, 1, gaContext);
 
 		bool hasBoundedVta = false;
 		bool hasUnboundedVta = isVtas[0];
 		vint unboundedVtaCount = -1;
-		CheckVta(self->arguments, tsyses, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
+		CheckVta(self->arguments, argItems, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 		isVta = hasUnboundedVta;
 
 		// TODO: Implement variadic template argument passing
@@ -284,7 +288,7 @@ public:
 			throw NotConvertableException();
 		}
 
-		ExpandPotentialVtaList(pa, result, tsyses, isVtas, hasBoundedVta, unboundedVtaCount,
+		ExpandPotentialVtaList(pa, result, argItems, isVtas, hasBoundedVta, unboundedVtaCount,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
 				auto genericFunction = args[0].tsys;
@@ -297,13 +301,7 @@ public:
 					}
 
 					EvaluateSymbolContext esContext;
-					Array<TypeTsysList> argumentTypes(args.Count() - 1);
-					for (vint i = 1; i < args.Count(); i++)
-					{
-						argumentTypes[i - 1].Add(args[i].tsys);
-					}
-					// TODO: Receive Array<TypeTsysItem> instead of Array<TypeTsysList> in ResolveGenericParameters
-					if (!ResolveGenericParameters(pa, genericFunction, argumentTypes, isTypes, &esContext.gaContext))
+					if (!ResolveGenericParameters(pa, genericFunction, args, isTypes, 1, &esContext.gaContext))
 					{
 						throw NotConvertableException();
 					}

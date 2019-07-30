@@ -201,7 +201,8 @@ Ptr<Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 	{
 		GenericArgument argument;
 		ParseTypeOrExpr(pa, pea_GenericArgument(), cursor, argument.type, argument.expr);
-		expr->arguments.Add(argument);
+		bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+		expr->arguments.Add({ argument,isVariadic });
 
 		if (!TestToken(cursor, CppTokens::COMMA))
 		{

@@ -144,26 +144,29 @@ struct B
 	B*		operator*(B);
 };
 
-template<typename ...TArgs>
-using Cast = void(*)(decltype((TArgs)nullptr)...);
+template<typename T>
+T Value = T{};
 
 template<typename ...TArgs>
-using Parenthesis = void(*)(decltype(((TArgs)nullptr))...);
+using Cast = void(*)(decltype(Value<TArgs>)...);
 
 template<typename ...TArgs>
-using PrefixUnary = void(*)(decltype(++(TArgs)nullptr)...);
+using Parenthesis = void(*)(decltype((Value<TArgs>))...);
 
 template<typename ...TArgs>
-using PostfixUnary = void(*)(decltype(((TArgs)nullptr)++)...);
+using PrefixUnary = void(*)(decltype(++Value<TArgs>)...);
 
 template<typename ...TArgs>
-using Binary1 = void(*)(decltype(((TArgs)nullptr)+1)...);
+using PostfixUnary = void(*)(decltype(Value<TArgs>++)...);
 
 template<typename ...TArgs>
-using Binary2 = void(*)(decltype(((TArgs)nullptr),1)...);
+using Binary1 = void(*)(decltype(Value<TArgs>+1)...);
 
 template<typename ...TArgs>
-using Binary3 = void(*)(decltype(((TArgs)nullptr)*((TArgs)nullptr))...);
+using Binary2 = void(*)(decltype(Value<TArgs>,1)...);
+
+template<typename ...TArgs>
+using Binary3 = void(*)(decltype(Value<TArgs>*Value<TArgs>)...);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	
