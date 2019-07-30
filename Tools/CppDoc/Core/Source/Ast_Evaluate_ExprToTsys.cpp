@@ -360,19 +360,38 @@ public:
 
 	void Visit(CtorAccessExpr* self)override
 	{
-		List<Ptr<ExprTsysList>> argTypesList;
-		for (vint i = 0; i < self->initializer->arguments.Count(); i++)
-		{
-			auto argTypes = MakePtr<ExprTsysList>();
-			ExprToTsys(pa, self->initializer->arguments[i], *argTypes.Obj(), gaContext);
-			argTypesList.Add(argTypes);
-		}
+		vint count = self->initializer ? self->initializer->arguments.Count() + 1 : 1;
+		Array<ExprTsysList> argTypesList(count);
+		Array<bool> isVtas(count);
 
 		{
 			TypeTsysList types;
-			TypeToTsysNoVta(pa, self->type, types, gaContext);
-			AddTemp(result, types);
+			TypeToTsysInternal(pa, self->type, types, gaContext, isVtas[0]);
+			AddTemp(argTypesList[0], types);
 		}
+
+		if (self->initializer)
+		{
+			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
+			{
+				ExprToTsysInternal(pa, self->initializer->arguments[i].item, argTypesList[i + 1], isVtas[i + 1], gaContext);
+			}
+		}
+
+		bool hasBoundedVta = false;
+		bool hasUnboundedVta = false;
+		vint unboundedVtaCount = -1;
+		CheckVta(
+			*(self->initializer ? &self->initializer->arguments : (VariadicList<Ptr<Expr>>*)nullptr),
+			argTypesList, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount
+			);
+		isVta = hasUnboundedVta;
+
+		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, hasBoundedVta, unboundedVtaCount,
+			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+			{
+				AddInternal(processResult, args[0]);
+			});
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -381,43 +400,64 @@ public:
 
 	void Visit(NewExpr* self)override
 	{
+		// TODO: Enable variadic template argument in placement arguments
 		for (vint i = 0; i < self->placementArguments.Count(); i++)
 		{
+			if (self->placementArguments[i].isVariadic)
+			{
+				throw NotConvertableException();
+			}
 			ExprTsysList types;
-			bool typesVta = false;
-			ExprToTsysInternal(pa, self->placementArguments[i].item, types, typesVta, gaContext);
+			ExprToTsys(pa, self->placementArguments[i].item, types, gaContext);
+		}
+
+		vint count = self->initializer ? self->initializer->arguments.Count() + 1 : 1;
+		Array<ExprTsysList> argTypesList(count);
+		Array<bool> isVtas(count);
+
+		{
+			TypeTsysList types;
+			TypeToTsysInternal(pa, self->type, types, gaContext, isVtas[0]);
+			AddTemp(argTypesList[0], types);
 		}
 
 		if (self->initializer)
 		{
 			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
 			{
-				ExprTsysList types;
-				ExprToTsys(pa, self->initializer->arguments[i], types, gaContext);
+				ExprToTsysInternal(pa, self->initializer->arguments[i].item, argTypesList[i + 1], isVtas[i + 1], gaContext);
 			}
 		}
 
-		TypeTsysList types;
-		TypeToTsysNoVta(pa, self->type, types, gaContext);
-		for (vint i = 0; i < types.Count(); i++)
-		{
-			auto type = types[i];
-			if (type->GetType() == TsysType::Array)
+		bool hasBoundedVta = false;
+		bool hasUnboundedVta = false;
+		vint unboundedVtaCount = -1;
+		CheckVta(
+			*(self->initializer ? &self->initializer->arguments : (VariadicList<Ptr<Expr>>*)nullptr),
+			argTypesList, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount
+			);
+		isVta = hasUnboundedVta;
+
+		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, hasBoundedVta, unboundedVtaCount,
+			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
-				if (type->GetParamCount() == 1)
+				auto type = args[0].tsys;
+				if (type->GetType() == TsysType::Array)
 				{
-					AddTemp(result, types[i]->GetElement()->PtrOf());
+					if (type->GetParamCount() == 1)
+					{
+						AddTemp(processResult, type->GetElement()->PtrOf());
+					}
+					else
+					{
+						AddTemp(processResult, type->GetElement()->ArrayOf(type->GetParamCount() - 1)->PtrOf());
+					}
 				}
 				else
 				{
-					AddTemp(result, types[i]->GetElement()->ArrayOf(type->GetParamCount() - 1)->PtrOf());
+					AddTemp(processResult, type->PtrOf());
 				}
-			}
-			else
-			{
-				AddTemp(result, types[i]->PtrOf());
-			}
-		}
+			});
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
