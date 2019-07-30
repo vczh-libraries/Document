@@ -167,5 +167,8 @@
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_VariadicImpl.cpp">
       <Filter>Source Files\Ast\Evaluation</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Ast_Evaluate_ToTsys_GenericImpl.cpp">
+      <Filter>Source Files\Ast\Evaluation</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

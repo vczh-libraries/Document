@@ -24,6 +24,9 @@ namespace symbol_totsys_impl
 	// Ast_Evaluate_ToTsys_VariadicImpl.cpp (variadic)
 	void					ProcessFunctionType(const ParsingArguments& pa, ExprTsysList& result, FunctionType* self, TsysCallingConvention cc, bool memberOf, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
 
+	// Ast_Evaluate_ToTsys_GenericImpl.cpp (variadic)
+	void					ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, GenericType* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
+
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Exprs
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -55,6 +58,9 @@ namespace symbol_totsys_impl
 	void					ProcessCtorAccessExpr(const ParsingArguments& pa, ExprTsysList& result, CtorAccessExpr* self, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
 	void					ProcessNewExpr(const ParsingArguments& pa, ExprTsysList& result, NewExpr* self, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
 	void					ProcessUniversalInitializerExpr(const ParsingArguments& pa, ExprTsysList& result, UniversalInitializerExpr* self, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
+
+	// Ast_Evaluate_ToTsys_GenericImpl.cpp (variadic)
+	void					ProcessGenericExpr(const ParsingArguments& pa, ExprTsysList& result, GenericExpr* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Indexing

@@ -27,7 +27,7 @@ ExprToTsys
 	PrefixUnaryExpr				: unbounded
 	BinaryExpr					: unbounded
 	IfExpr						: unbounded
-	GenericExpr					: variant		+
+	GenericExpr					: variant
 ***********************************************************************/
 
 class ExprToTsysVisitor : public Object, public virtual IExprVisitor
@@ -561,53 +561,7 @@ public:
 		ExpandPotentialVtaList(pa, result, argItems, isVtas, hasBoundedVta, unboundedVtaCount,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
-				if (boundedAnys.Count() > 0)
-				{
-					// TODO: Implement variadic template argument passing
-					throw NotConvertableException();
-				}
-
-				auto genericFunction = args[0].tsys;
-				if (genericFunction->GetType() == TsysType::GenericFunction)
-				{
-					auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
-					if (!declSymbol)
-					{
-						throw NotConvertableException();
-					}
-
-					symbol_type_resolving::EvaluateSymbolContext esContext;
-					if (!symbol_type_resolving::ResolveGenericParameters(pa, genericFunction, args, isTypes, 1, &esContext.gaContext))
-					{
-						throw NotConvertableException();
-					}
-
-					switch (declSymbol->kind)
-					{
-					case symbol_component::SymbolKind::ValueAlias:
-						{
-							auto decl = declSymbol->definition.Cast<ValueAliasDeclaration>();
-							if (!decl->templateSpec) throw NotConvertableException();
-							symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
-						}
-						break;
-					default:
-						throw NotConvertableException();
-					}
-
-					for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
-					{
-						AddInternal(processResult, { nullptr,ExprTsysType::PRValue,esContext.evaluatedTypes[j] });
-					}
-				}
-				else if (genericFunction->GetType() == TsysType::Any)
-				{
-					AddTemp(processResult, pa.tsys->Any());
-				}
-				else
-				{
-					throw NotConvertableException();
-				}
+				ProcessGenericExpr(pa, processResult, self, isTypes, args, boundedAnys);
 			});
 	}
 };

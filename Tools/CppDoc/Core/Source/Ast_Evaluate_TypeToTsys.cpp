@@ -16,7 +16,7 @@ TypeToTsys
   RootType					: literal		*
   IdType					: identifier
   ChildType					: unbounded
-  GenericType				: variant		+
+  GenericType				: variant
 ***********************************************************************/
 
 class TypeToTsysVisitor : public Object, public virtual ITypeVisitor
@@ -248,56 +248,7 @@ public:
 		ExpandPotentialVtaList(pa, result, argItems, isVtas, hasBoundedVta, unboundedVtaCount,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
-				if (boundedAnys.Count() > 0)
-				{
-					// TODO: Implement variadic template argument passing
-					throw NotConvertableException();
-				}
-
-				auto genericFunction = args[0].tsys;
-				if (genericFunction->GetType() == TsysType::GenericFunction)
-				{
-					auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
-					if (!declSymbol)
-					{
-						throw NotConvertableException();
-					}
-
-					EvaluateSymbolContext esContext;
-					if (!ResolveGenericParameters(pa, genericFunction, args, isTypes, 1, &esContext.gaContext))
-					{
-						throw NotConvertableException();
-					}
-
-					switch (declSymbol->kind)
-					{
-					case symbol_component::SymbolKind::GenericTypeArgument:
-						genericFunction->GetElement()->ReplaceGenericArgs(esContext.gaContext, esContext.evaluatedTypes);
-						break;
-					case symbol_component::SymbolKind::TypeAlias:
-						{
-							auto decl = declSymbol->definition.Cast<TypeAliasDeclaration>();
-							if (!decl->templateSpec) throw NotConvertableException();
-							EvaluateSymbol(pa, decl.Obj(), &esContext);
-						}
-						break;
-					default:
-						throw NotConvertableException();
-					}
-
-					for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
-					{
-						AddExprTsysItemToResult(processResult, GetExprTsysItem(esContext.evaluatedTypes[j]));
-					}
-				}
-				else if (genericFunction->GetType() == TsysType::Any)
-				{
-					AddExprTsysItemToResult(processResult, GetExprTsysItem(pa.tsys->Any()));
-				}
-				else
-				{
-					throw NotConvertableException();
-				}
+				ProcessGenericType(pa, processResult, self, isTypes, args, boundedAnys);
 			});
 	}
 };
