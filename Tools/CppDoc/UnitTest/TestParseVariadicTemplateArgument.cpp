@@ -125,7 +125,6 @@ using Func3 = R(*)(TArgs(*)(TArgs)...);
 TEST_CASE(TestParseVariadicTemplateArgument_Exprs_Unbounded)
 {
 	auto input = LR"(
-
 struct A
 {
 	void*			operator++();
@@ -326,16 +325,97 @@ using FieldChild3 = void(*)(decltype(Value<TArgs*>->TArgs::x)...);
 TEST_CASE(TestParseVariadicTemplateArgument_Exprs_Variant)
 {
 	auto input = LR"(
+struct A{};
+struct B{};
+struct C{};
+struct D{};
+
 template<typename ...TArgs>
-auto Init = {(TArgs)nullptr...};
+auto Init1 = {(TArgs)nullptr...};
+
+template<typename ...TArgs>
+auto Init2 = {{(TArgs)nullptr}...};
+
+template<typename ...TArgs>
+auto Ctor1 = {TArgs{1,2,3}...};
+
+template<typename ...TArgs>
+auto Ctor2 = {A(TArgs{}...)};
+
+template<typename ...TArgs>
+auto Ctor3 = {A(TArgs{})...};
+
+template<typename ...TArgs>
+auto Ctor4 = {TArgs(TArgs{})...};
+
+template<typename ...TArgs>
+auto New1 = {new TArgs{1,2,3}...};
+
+template<typename ...TArgs>
+auto New2 = {new A(TArgs{}...)};
+
+template<typename ...TArgs>
+auto New3 = {new A(TArgs{})...};
+
+template<typename ...TArgs>
+auto New4 = {new TArgs(TArgs{})...};
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	
-	AssertExpr(pa, L"Init",											L"Init",										L"<...::Init::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"Init1",										L"Init1",										L"<...::Init1::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"Init2",										L"Init2",										L"<...::Init2::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"Ctor1",										L"Ctor1",										L"<...::Ctor1::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"Ctor2",										L"Ctor2",										L"<...::Ctor2::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"Ctor3",										L"Ctor3",										L"<...::Ctor3::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"Ctor4",										L"Ctor4",										L"<...::Ctor4::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"New1",											L"New1",										L"<...::New1::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"New2",											L"New2",										L"<...::New2::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"New3",											L"New3",										L"<...::New3::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"New4",											L"New4",										L"<...::New4::[TArgs]> any_t $PR"																							);
 	
-	AssertExpr(pa, L"Init<>",										L"Init<>",										L"{} $PR"																													);
-	AssertExpr(pa, L"Init<int>",									L"Init<int>",									L"{__int32 $PR} $PR"																										);
-	AssertExpr(pa, L"Init<int, bool, char, double>",				L"Init<int, bool, char, double>",				L"{__int32 $PR, bool $PR, char $PR, double $PR} $PR"																		);
+	AssertExpr(pa, L"Init1<>",										L"Init1<>",										L"{} $PR"																													);
+	AssertExpr(pa, L"Init1<int>",									L"Init1<int>",									L"{__int32 $PR} $PR"																										);
+	AssertExpr(pa, L"Init1<int, bool, char, double>",				L"Init1<int, bool, char, double>",				L"{__int32 $PR, bool $PR, char $PR, double $PR} $PR"																		);
+	
+	AssertExpr(pa, L"Init2<>",										L"Init2<>",										L"{} $PR"																													);
+	AssertExpr(pa, L"Init2<int>",									L"Init2<int>",									L"{{__int32 $PR} $PR} $PR"																									);
+	AssertExpr(pa, L"Init2<int, bool, char, double>",				L"Init2<int, bool, char, double>",				L"{{__int32 $PR} $PR, {bool $PR} $PR, {char $PR} $PR, {double $PR} $PR} $PR"												);
+	
+	AssertExpr(pa, L"Ctor1<>",										L"Ctor1<>",										L"{} $PR"																													);
+	AssertExpr(pa, L"Ctor1<A>",										L"Ctor1<A>",									L"{::A $PR} $PR"																											);
+	AssertExpr(pa, L"Ctor1<A, B, C, D>",							L"Ctor1<A, B, C, D>",							L"{::A $PR, ::B $PR, ::C $PR, ::D $PR} $PR"																					);
+	
+	AssertExpr(pa, L"Ctor2<>",										L"Ctor2<>",										L"{::A $PR} $PR"																											);
+	AssertExpr(pa, L"Ctor2<A>",										L"Ctor2<A>",									L"{::A $PR} $PR"																											);
+	AssertExpr(pa, L"Ctor2<A, B, C, D>",							L"Ctor2<A, B, C, D>",							L"{::A $PR} $PR"																											);
+	
+	AssertExpr(pa, L"Ctor3<>",										L"Ctor3<>",										L"{} $PR"																													);
+	AssertExpr(pa, L"Ctor3<A>",										L"Ctor3<A>",									L"{::A $PR} $PR"																											);
+	AssertExpr(pa, L"Ctor3<A, B, C, D>",							L"Ctor3<A, B, C, D>",							L"{::A $PR, ::A $PR, ::A $PR, ::A $PR} $PR"																					);
+	
+	AssertExpr(pa, L"Ctor4<>",										L"Ctor4<>",										L"{} $PR"																													);
+	AssertExpr(pa, L"Ctor4<A>",										L"Ctor4<A>",									L"{::A $PR} $PR"																											);
+	AssertExpr(pa, L"Ctor4<A, B, C, D>",							L"Ctor4<A, B, C, D>",							L"{::A $PR, ::B $PR, ::C $PR, ::D $PR} $PR"																					);
+	
+	AssertExpr(pa, L"Init2<>",										L"Init2<>",										L"{} $PR"																													);
+	AssertExpr(pa, L"Init2<int>",									L"Init2<int>",									L"{{__int32 $PR} $PR} $PR"																									);
+	AssertExpr(pa, L"Init2<int, bool, char, double>",				L"Init2<int, bool, char, double>",				L"{{__int32 $PR} $PR, {bool $PR} $PR, {char $PR} $PR, {double $PR} $PR} $PR"												);
+	
+	AssertExpr(pa, L"New1<>",										L"New1<>",										L"{} $PR"																													);
+	AssertExpr(pa, L"New1<A>",										L"New1<A>",										L"{::A * $PR} $PR"																											);
+	AssertExpr(pa, L"New1<A, B, C, D>",								L"New1<A, B, C, D>",							L"{::A * $PR, ::B * $PR, ::C * $PR, ::D * $PR} $PR"																			);
+	
+	AssertExpr(pa, L"New2<>",										L"New2<>",										L"{::A * $PR} $PR"																											);
+	AssertExpr(pa, L"New2<A>",										L"New2<A>",										L"{::A * $PR} $PR"																											);
+	AssertExpr(pa, L"New2<A, B, C, D>",								L"New2<A, B, C, D>",							L"{::A * $PR} $PR"																											);
+	
+	AssertExpr(pa, L"New3<>",										L"New3<>",										L"{} $PR"																													);
+	AssertExpr(pa, L"New3<A>",										L"New3<A>",										L"{::A * $PR} $PR"																											);
+	AssertExpr(pa, L"New3<A, B, C, D>",								L"New3<A, B, C, D>",							L"{::A * $PR, ::A * $PR, ::A * $PR, ::A * $PR} $PR"																			);
+	
+	AssertExpr(pa, L"New4<>",										L"New4<>",										L"{} $PR"																													);
+	AssertExpr(pa, L"New4<A>",										L"New4<A>",										L"{::A * $PR} $PR"																											);
+	AssertExpr(pa, L"New4<A, B, C, D>",								L"New4<A, B, C, D>",							L"{::A * $PR, ::B * $PR, ::C * $PR, ::D * $PR} $PR"																			);
 }
 
 /*
