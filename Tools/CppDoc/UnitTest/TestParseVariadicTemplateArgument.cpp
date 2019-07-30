@@ -144,11 +144,35 @@ struct B
 	B*		operator*(B);
 };
 
+struct C1
+{
+	int*	operator[](int);
+	bool*	operator[](bool);
+	char*	operator[](char);
+	double*	operator[](double);
+	C1*		operator[](C1);
+};
+
+struct C2
+{
+	C2*		operator[](C2);
+};
+
+struct C3
+{
+	C3*		operator[](C3);
+};
+
+struct C4
+{
+	C4*		operator[](C4);
+};
+
 template<typename T>
 T Value = T{};
 
 template<typename ...TArgs>
-using Cast = void(*)(decltype(Value<TArgs>)...);
+using Cast = void(*)(decltype((TArgs)nullptr)...);
 
 template<typename ...TArgs>
 using Parenthesis = void(*)(decltype((Value<TArgs>))...);
@@ -167,6 +191,15 @@ using Binary2 = void(*)(decltype(Value<TArgs>,1)...);
 
 template<typename ...TArgs>
 using Binary3 = void(*)(decltype(Value<TArgs>*Value<TArgs>)...);
+
+template<typename ...TArgs>
+using Array1 = void(*)(decltype(Value<C1>[Value<TArgs>])...);
+
+template<typename ...TArgs>
+using Array2 = void(*)(decltype(Value<TArgs*>[0])...);
+
+template<typename ...TArgs>
+using Array3 = void(*)(decltype(Value<TArgs>[Value<TArgs>])...);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	
@@ -177,6 +210,9 @@ using Binary3 = void(*)(decltype(Value<TArgs>*Value<TArgs>)...);
 	AssertType(pa, L"Binary1",										L"Binary1",										L"<...::Binary1::[TArgs]> any_t"																							);
 	AssertType(pa, L"Binary2",										L"Binary2",										L"<...::Binary2::[TArgs]> any_t"																							);
 	AssertType(pa, L"Binary3",										L"Binary3",										L"<...::Binary3::[TArgs]> any_t"																							);
+	AssertType(pa, L"Array1",										L"Array1",										L"<...::Array1::[TArgs]> any_t"																								);
+	AssertType(pa, L"Array2",										L"Array2",										L"<...::Array2::[TArgs]> any_t"																								);
+	AssertType(pa, L"Array3",										L"Array3",										L"<...::Array3::[TArgs]> any_t"																								);
 	
 	AssertType(pa, L"Cast<>",										L"Cast<>",										L"void __cdecl() *"																											);
 	AssertType(pa, L"Cast<int>",									L"Cast<int>",									L"void __cdecl(__int32) *"																									);
@@ -205,8 +241,20 @@ using Binary3 = void(*)(decltype(Value<TArgs>*Value<TArgs>)...);
 	AssertType(pa, L"Binary3<>",									L"Binary3<>",									L"void __cdecl() *"																											);
 	AssertType(pa, L"Binary3<int>",									L"Binary3<int>",								L"void __cdecl(__int32) *"																									);
 	AssertType(pa, L"Binary3<int, char, A, B>",						L"Binary3<int, char, A, B>",					L"void __cdecl(__int32, __int32, ::A *, ::B *) *"																			);
+	
+	AssertType(pa, L"Array1<>",										L"Array1<>",									L"void __cdecl() *"																											);
+	AssertType(pa, L"Array1<int>",									L"Array1<int>",									L"void __cdecl(__int32 *) *"																								);
+	AssertType(pa, L"Array1<int, bool, char, double>",				L"Array1<int, bool, char, double>",				L"void __cdecl(__int32 *, bool *, char *, double *) *"																		);
+	
+	AssertType(pa, L"Array2<>",										L"Array2<>",									L"void __cdecl() *"																											);
+	AssertType(pa, L"Array2<int>",									L"Array2<int>",									L"void __cdecl(__int32 &) *"																								);
+	AssertType(pa, L"Array2<int, bool, char, double>",				L"Array2<int, bool, char, double>",				L"void __cdecl(__int32 &, bool &, char &, double &) *"																		);
+	
+	AssertType(pa, L"Array3<>",										L"Array3<>",									L"void __cdecl() *"																											);
+	AssertType(pa, L"Array3<C1>",									L"Array3<C1>",									L"void __cdecl(::C1 *) *"																									);
+	AssertType(pa, L"Array3<C1, C2, C3, C4>",						L"Array3<C1, C2, C3, C4>",						L"void __cdecl(::C1 *, ::C2 *, ::C3 *, ::C4 *) *"																			);
 
-	// TODO: Test ChildExpr, FieldAccessExpr, ArrayAccessExpr
+	// TODO: Test ChildExpr, FieldAccessExpr
 }
 
 /*
