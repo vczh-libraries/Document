@@ -506,6 +506,11 @@ namespace symbol_totsys_impl
 			TypeToTsysInternal(pa, type, result, gaContext, isVta);
 		}
 
+		void Apply(TypeTsysList& result, bool& isVta, const Ptr<VariableDeclaration>& varDecl)
+		{
+			TypeToTsysInternal(pa, varDecl->type, result, gaContext, isVta);
+		}
+
 		void Apply(ExprTsysList& result, bool& isVta, const Ptr<Type>& type)
 		{
 			TypeTsysList tsyses;
@@ -525,6 +530,15 @@ namespace symbol_totsys_impl
 			, argItems(count)
 			, isVtas(count)
 		{
+		}
+
+		void ApplyTypes(vint index, const TypeTsysList& types)
+		{
+			for (vint i = 0; i < types.Count(); i++)
+			{
+				AddExprTsysItemToResult(argItems[index], GetExprTsysItem(types[i]));
+			}
+			isVtas[index] = false;
 		}
 
 		template<typename TNode>

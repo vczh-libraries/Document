@@ -104,37 +104,26 @@ public:
 
 	void Visit(FunctionType* self)override
 	{
-		vint count = self->parameters.Count() + 1;
-		Array<TypeTsysList> tsyses(count);
-		Array<bool> isVtas(count);
-		isVtas[0] = false;
-
+		VariantInput<ITsys*> variantInput(self->parameters.Count() + 1, pa, gaContext);
 		if (returnTypes)
 		{
-			CopyFrom(tsyses[0], *returnTypes);
+			variantInput.ApplyTypes(0, *returnTypes);
 		}
 		else if (self->decoratorReturnType)
 		{
-			TypeToTsysInternal(pa, self->decoratorReturnType, tsyses[0], gaContext, isVtas[0]);
+			variantInput.ApplySingle(0, self->decoratorReturnType);
 		}
 		else if (self->returnType)
 		{
-			TypeToTsysInternal(pa, self->returnType, tsyses[0], gaContext, isVtas[0]);
+			variantInput.ApplySingle(0, self->returnType);
 		}
 		else
 		{
-			tsyses[0].Add(pa.tsys->Void());
+			TypeTsysList types;
+			types.Add(pa.tsys->Void());
+			variantInput.ApplyTypes(0, types);
 		}
-
-		for (vint i = 1; i < count; i++)
-		{
-			TypeToTsysInternal(pa, self->parameters[i - 1].item->type, tsyses[i], gaContext, isVtas[i]);
-		}
-
-		bool hasBoundedVta = false;
-		bool hasUnboundedVta = false;
-		vint unboundedVtaCount = -1;
-		isVta = CheckVta(self->parameters, tsyses, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
+		variantInput.ApplyVariadicList(1, self->parameters);
 
 		TsysFunc func(cc, self->ellipsis);
 		if (func.callingConvention == TsysCallingConvention::None)
@@ -146,7 +135,7 @@ public:
 				;
 		}
 
-		ExpandPotentialVtaList(pa, result, tsyses, isVtas, hasBoundedVta, unboundedVtaCount,
+		isVta = variantInput.Expand(&self->parameters, result,
 			[=](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
 				if (boundedAnys.Count() > 0)
