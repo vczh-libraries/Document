@@ -215,6 +215,24 @@ using Array3 = void(*)(decltype(Value<TArgs>[Value<TArgs>])...);
 
 template<typename ...TArgs>
 using Child = void(*)(decltype(&TArgs::x)..., decltype(TArgs::y)...);
+
+template<typename ...TArgs>
+using FieldId1 = void(*)(decltype(Value<TArgs>.x)...);
+
+template<typename ...TArgs>
+using FieldId2 = void(*)(decltype(Value<C1>.TArgs::x)...);
+
+template<typename ...TArgs>
+using FieldId3 = void(*)(decltype(Value<TArgs>.TArgs::x)...);
+
+template<typename ...TArgs>
+using FieldChild1 = void(*)(decltype(Value<TArgs*>->x)...);
+
+template<typename ...TArgs>
+using FieldChild2 = void(*)(decltype(Value<C1*>->TArgs::x)...);
+
+template<typename ...TArgs>
+using FieldChild3 = void(*)(decltype(Value<TArgs*>->TArgs::x)...);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	
@@ -229,6 +247,12 @@ using Child = void(*)(decltype(&TArgs::x)..., decltype(TArgs::y)...);
 	AssertType(pa, L"Array2",										L"Array2",										L"<...::Array2::[TArgs]> any_t"																								);
 	AssertType(pa, L"Array3",										L"Array3",										L"<...::Array3::[TArgs]> any_t"																								);
 	AssertType(pa, L"Child",										L"Child",										L"<...::Child::[TArgs]> any_t"																								);
+	AssertType(pa, L"FieldId1",										L"FieldId1",									L"<...::FieldId1::[TArgs]> any_t"																							);
+	AssertType(pa, L"FieldId2",										L"FieldId2",									L"<...::FieldId2::[TArgs]> any_t"																							);
+	AssertType(pa, L"FieldId3",										L"FieldId3",									L"<...::FieldId3::[TArgs]> any_t"																							);
+	AssertType(pa, L"FieldChild1",									L"FieldChild1",									L"<...::FieldChild1::[TArgs]> any_t"																						);
+	AssertType(pa, L"FieldChild2",									L"FieldChild2",									L"<...::FieldChild2::[TArgs]> any_t"																						);
+	AssertType(pa, L"FieldChild3",									L"FieldChild3",									L"<...::FieldChild3::[TArgs]> any_t"																						);
 	
 	AssertType(pa, L"Cast<>",										L"Cast<>",										L"void __cdecl() *"																											);
 	AssertType(pa, L"Cast<int>",									L"Cast<int>",									L"void __cdecl(__int32) *"																									);
@@ -273,8 +297,37 @@ using Child = void(*)(decltype(&TArgs::x)..., decltype(TArgs::y)...);
 	AssertType(pa, L"Child<>",										L"Child<>",										L"void __cdecl() *"																											);
 	AssertType(pa, L"Child<C1>",									L"Child<C1>",									L"void __cdecl(__int32 (::C1 ::) *, __int32) *"																				);
 	AssertType(pa, L"Child<C1, C2, C3, C4>",						L"Child<C1, C2, C3, C4>",						L"void __cdecl(__int32 (::C1 ::) *, bool (::C2 ::) *, char (::C3 ::) *, double (::C4 ::) *, __int32, bool, char, double) *"	);
+	
+	AssertType(pa, L"FieldId1<>",									L"FieldId1<>",									L"void __cdecl() *"																											);
+	AssertType(pa, L"FieldId1<C1>",									L"FieldId1<C1>",								L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"FieldId1<C1, C2, C3, C4>",						L"FieldId1<C1, C2, C3, C4>",					L"void __cdecl(__int32, bool, char, double) *"																				);
+	
+	AssertType(pa, L"FieldId2<>",									L"FieldId2<>",									L"void __cdecl() *"																											);
+	AssertType(pa, L"FieldId2<C1>",									L"FieldId2<C1>",								L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"FieldId2<C1, C2, C3, C4>",						L"FieldId2<C1, C2, C3, C4>",					L"void __cdecl(__int32, bool, char, double) *"																				);
+	
+	AssertType(pa, L"FieldId3<>",									L"FieldId3<>",									L"void __cdecl() *"																											);
+	AssertType(pa, L"FieldId3<C1>",									L"FieldId3<C1>",								L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"FieldId3<C1, C2, C3, C4>",						L"FieldId3<C1, C2, C3, C4>",					L"void __cdecl(__int32, bool, char, double) *"																				);
+	
+	AssertType(pa, L"FieldChild1<>",								L"FieldChild1<>",								L"void __cdecl() *"																											);
+	AssertType(pa, L"FieldChild1<C1>",								L"FieldChild1<C1>",								L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"FieldChild1<C1, C2, C3, C4>",					L"FieldChild1<C1, C2, C3, C4>",					L"void __cdecl(__int32, bool, char, double) *"																				);
+	
+	AssertType(pa, L"FieldChild2<>",								L"FieldChild2<>",								L"void __cdecl() *"																											);
+	AssertType(pa, L"FieldChild2<C1>",								L"FieldChild2<C1>",								L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"FieldChild2<C1, C2, C3, C4>",					L"FieldChild2<C1, C2, C3, C4>",					L"void __cdecl(__int32, bool, char, double) *"																				);
+	
+	AssertType(pa, L"FieldChild3<>",								L"FieldChild3<>",								L"void __cdecl() *"																											);
+	AssertType(pa, L"FieldChild3<C1>",								L"FieldChild3<C1>",								L"void __cdecl(__int32) *"																									);
+	AssertType(pa, L"FieldChild3<C1, C2, C3, C4>",					L"FieldChild3<C1, C2, C3, C4>",					L"void __cdecl(__int32, bool, char, double) *"																				);
+}
 
-	// TODO: Test FieldAccessExpr
+TEST_CASE(TestParseVariadicTemplateArgument_Exprs_Variant)
+{
+	auto input = LR"(
+)";
+	COMPILE_PROGRAM(program, pa, input);
 }
 
 /*
