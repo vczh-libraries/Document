@@ -163,7 +163,7 @@ namespace symbol_type_resolving
 				}
 
 				ExprTsysList types;
-				ExprToTsys(newPa, rootVarDecl->initializer->arguments[0], types);
+				ExprToTsys(newPa, rootVarDecl->initializer->arguments[0].item, types);
 
 				for (vint k = 0; k < types.Count(); k++)
 				{

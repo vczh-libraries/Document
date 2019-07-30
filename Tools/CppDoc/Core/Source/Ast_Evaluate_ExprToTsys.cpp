@@ -20,8 +20,8 @@ ExprToTsys
 	FieldAccessExpr				: unbounded		*
 	ArrayAccessExpr				: unbounded		*
 	FuncAccessExpr				: *variant
-	CtorAccessExpr				: *variant
-	NewExpr						: *variant
+	CtorAccessExpr				: variant
+	NewExpr						: variant
 	UniversalInitializerExpr	: variant
 	PostfixUnaryExpr			: unbounded		*
 	PrefixUnaryExpr				: unbounded		*

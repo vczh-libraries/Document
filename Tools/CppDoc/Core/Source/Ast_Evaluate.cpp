@@ -396,7 +396,12 @@ public:
 			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
 			{
 				ExprTsysList types;
-				ExprToTsys(pa, self->initializer->arguments[i], types);
+				bool typesVta = false;
+				ExprToTsysInternal(pa, self->initializer->arguments[i].item, types, typesVta);
+				if (typesVta != self->initializer->arguments[i].isVariadic)
+				{
+					throw NotResolvableException();
+				}
 			}
 		}
 	}

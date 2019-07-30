@@ -90,6 +90,23 @@ struct GenericArgument
 };
 
 /***********************************************************************
+Variadic
+***********************************************************************/
+
+template<typename T>
+struct VariadicItem
+{
+	T						item;
+	bool					isVariadic = false;
+
+	VariadicItem() = default;
+	VariadicItem(T _item, bool _isVariadic) :item(_item), isVariadic(_isVariadic) {}
+};
+
+template<typename T>
+using VariadicList = List<VariadicItem<T>>;
+
+/***********************************************************************
 Declarator
 ***********************************************************************/
 
@@ -104,7 +121,7 @@ class Initializer : public Object
 {
 public:
 	CppInitializerType		initializerType;
-	List<Ptr<Expr>>			arguments;
+	VariadicList<Ptr<Expr>>	arguments;
 };
 
 class Declarator : public Object
@@ -127,19 +144,6 @@ struct NotResolvableException {};
 
 using TypeTsysList = List<ITsys*>;
 using ExprTsysList = List<ExprTsysItem>;
-
-template<typename T>
-struct VariadicItem
-{
-	T						item;
-	bool					isVariadic = false;
-
-	VariadicItem() = default;
-	VariadicItem(T _item, bool _isVariadic) :item(_item), isVariadic(_isVariadic) {}
-};
-
-template<typename T>
-using VariadicList = List<VariadicItem<T>>;
 
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
 extern bool					IsPendingType(Type* type);

@@ -26,7 +26,11 @@ void Log(Ptr<Initializer> initializer, StreamWriter& writer)
 		{
 			writer.WriteString(L", ");
 		}
-		Log(initializer->arguments[i], writer);
+		Log(initializer->arguments[i].item, writer);
+		if (initializer->arguments[i].isVariadic)
+		{
+			writer.WriteString(L"...");
+		}
 	}
 
 	switch (initializer->initializerType)
@@ -244,7 +248,11 @@ public:
 			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
 			{
 				if (i > 0) writer.WriteString(L", ");
-				Log(self->initializer->arguments[i], writer);
+				Log(self->initializer->arguments[i].item, writer);
+				if (self->initializer->arguments[i].isVariadic)
+				{
+					writer.WriteString(L"...");
+				}
 			}
 			writer.WriteChar(self->initializer->initializerType == CppInitializerType::Constructor ? L')' : L'}');
 		}

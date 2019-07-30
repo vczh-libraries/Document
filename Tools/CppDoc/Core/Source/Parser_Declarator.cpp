@@ -774,7 +774,9 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 
 	while (true)
 	{
-		initializer->arguments.Add(ParseExpr(pa, (allowComma ? pea_Full() : pea_Argument()), cursor));
+		auto argument = ParseExpr(pa, (allowComma ? pea_Full() : pea_Argument()), cursor);
+		bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+		initializer->arguments.Add({ argument,isVariadic });
 
 		if (initializer->initializerType == CppInitializerType::Equal)
 		{

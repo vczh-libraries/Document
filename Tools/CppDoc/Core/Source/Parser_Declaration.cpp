@@ -142,7 +142,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				{
 					throw StopParsingException(cursor);
 				}
-				argument.expr = declarator->initializer->arguments[0];
+				argument.expr = declarator->initializer->arguments[0].item;
 			}
 			if (argument.name)
 			{
@@ -996,7 +996,7 @@ void ParseDeclaration_Variable(
 		decl->templateSpec = spec.f1;
 		decl->name = declarator->name;
 		decl->type = declarator->type;
-		decl->expr = declarator->initializer->arguments[0];
+		decl->expr = declarator->initializer->arguments[0].item;
 		decl->needResolveTypeFromInitializer = IsPendingType(declarator->type);
 		output.Add(decl);
 

@@ -244,7 +244,9 @@ Ptr<Expr> ParseNameOrCtorAccessExpr(const ParsingArguments& pa, Ptr<CppTokenCurs
 				{
 					while (true)
 					{
-						expr->initializer->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
+						auto argument = ParseExpr(pa, pea_Argument(), cursor);
+						bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+						expr->initializer->arguments.Add({ argument,isVariadic });
 						if (TestToken(cursor, closeToken))
 						{
 							break;
@@ -605,7 +607,9 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 			{
 				while (true)
 				{
-					newExpr->initializer->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
+					auto argument = ParseExpr(pa, pea_Argument(), cursor);
+					bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+					newExpr->initializer->arguments.Add({ argument,isVariadic });
 					if (TestToken(cursor, closeToken))
 					{
 						break;
