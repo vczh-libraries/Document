@@ -128,44 +128,56 @@ TEST_CASE(TestParseVariadicTemplateArgument_Exprs_Unbounded)
 
 struct A
 {
-	void*	operator++();
-	A		operator++(int);
-	float	operator+(int);
-	double	operator,(int);
-	A*		operator*(A);
+	void*			operator++();
+	A				operator++(int);
+	float			operator+(int);
+	double			operator,(int);
+	A*				operator*(A);
 };
 
 struct B
 {
-	char*	operator++();
-	B		operator++(int);
-	int*	operator+(int);
-	bool*	operator,(int);
-	B*		operator*(B);
+	char*			operator++();
+	B				operator++(int);
+	int*			operator+(int);
+	bool*			operator,(int);
+	B*				operator*(B);
 };
 
 struct C1
 {
-	int*	operator[](int);
-	bool*	operator[](bool);
-	char*	operator[](char);
-	double*	operator[](double);
-	C1*		operator[](C1);
+	int*			operator[](int);
+	bool*			operator[](bool);
+	char*			operator[](char);
+	double*			operator[](double);
+	C1*				operator[](C1);
+
+	int				x;
+	static int		y;
 };
 
 struct C2
 {
-	C2*		operator[](C2);
+	C2*				operator[](C2);
+
+	bool			x;
+	static bool		y;
 };
 
 struct C3
 {
-	C3*		operator[](C3);
+	C3*				operator[](C3);
+
+	char			x;
+	static char		y;
 };
 
 struct C4
 {
-	C4*		operator[](C4);
+	C4*				operator[](C4);
+
+	double			x;
+	static double	y;
 };
 
 template<typename T>
@@ -200,6 +212,9 @@ using Array2 = void(*)(decltype(Value<TArgs*>[0])...);
 
 template<typename ...TArgs>
 using Array3 = void(*)(decltype(Value<TArgs>[Value<TArgs>])...);
+
+template<typename ...TArgs>
+using Child = void(*)(decltype(&TArgs::x)..., decltype(TArgs::y)...);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	
@@ -213,6 +228,7 @@ using Array3 = void(*)(decltype(Value<TArgs>[Value<TArgs>])...);
 	AssertType(pa, L"Array1",										L"Array1",										L"<...::Array1::[TArgs]> any_t"																								);
 	AssertType(pa, L"Array2",										L"Array2",										L"<...::Array2::[TArgs]> any_t"																								);
 	AssertType(pa, L"Array3",										L"Array3",										L"<...::Array3::[TArgs]> any_t"																								);
+	AssertType(pa, L"Child",										L"Child",										L"<...::Child::[TArgs]> any_t"																								);
 	
 	AssertType(pa, L"Cast<>",										L"Cast<>",										L"void __cdecl() *"																											);
 	AssertType(pa, L"Cast<int>",									L"Cast<int>",									L"void __cdecl(__int32) *"																									);
@@ -253,8 +269,12 @@ using Array3 = void(*)(decltype(Value<TArgs>[Value<TArgs>])...);
 	AssertType(pa, L"Array3<>",										L"Array3<>",									L"void __cdecl() *"																											);
 	AssertType(pa, L"Array3<C1>",									L"Array3<C1>",									L"void __cdecl(::C1 *) *"																									);
 	AssertType(pa, L"Array3<C1, C2, C3, C4>",						L"Array3<C1, C2, C3, C4>",						L"void __cdecl(::C1 *, ::C2 *, ::C3 *, ::C4 *) *"																			);
+	
+	AssertType(pa, L"Child<>",										L"Child<>",										L"void __cdecl() *"																											);
+	AssertType(pa, L"Child<C1>",									L"Child<C1>",									L"void __cdecl(__int32 (::C1 ::) *, __int32) *"																				);
+	AssertType(pa, L"Child<C1, C2, C3, C4>",						L"Child<C1, C2, C3, C4>",						L"void __cdecl(__int32 (::C1 ::) *, bool (::C2 ::) *, char (::C3 ::) *, double (::C4 ::) *, __int32, bool, char, double) *"	);
 
-	// TODO: Test ChildExpr, FieldAccessExpr
+	// TODO: Test FieldAccessExpr
 }
 
 /*
