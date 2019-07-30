@@ -51,6 +51,11 @@ namespace symbol_totsys_impl
 	void					ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, bool& indexed);
 	void					ProcessIfExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, IfExpr* self, ExprTsysItem argCond, ExprTsysItem argLeft, ExprTsysItem argRight);
 
+	// Ast_Evaluate_ToTsys_VariadicImpl.cpp (variadic)
+	void					ProcessCtorAccessExpr(const ParsingArguments& pa, ExprTsysList& result, CtorAccessExpr* self, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
+	void					ProcessNewExpr(const ParsingArguments& pa, ExprTsysList& result, NewExpr* self, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
+	void					ProcessUniversalInitializerExpr(const ParsingArguments& pa, ExprTsysList& result, UniversalInitializerExpr* self, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
+
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Indexing
 	//////////////////////////////////////////////////////////////////////////////////////

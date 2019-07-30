@@ -38,14 +38,51 @@ namespace symbol_totsys_impl
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// TypeSymbolToTsys
+	// ProcessCtorAccessExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	//////////////////////////////////////////////////////////////////////////////////////
-	// TypeSymbolToTsys
-	//////////////////////////////////////////////////////////////////////////////////////
+	void ProcessCtorAccessExpr(const ParsingArguments& pa, ExprTsysList& result, CtorAccessExpr* self, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+	{
+		AddInternal(result, args[0]);
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// TypeSymbolToTsys
+	// ProcessNewExpr
 	//////////////////////////////////////////////////////////////////////////////////////
+
+	void ProcessNewExpr(const ParsingArguments& pa, ExprTsysList& result, NewExpr* self, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+	{
+		auto type = args[0].tsys;
+		if (type->GetType() == TsysType::Array)
+		{
+			if (type->GetParamCount() == 1)
+			{
+				AddTemp(result, type->GetElement()->PtrOf());
+			}
+			else
+			{
+				AddTemp(result, type->GetElement()->ArrayOf(type->GetParamCount() - 1)->PtrOf());
+			}
+		}
+		else
+		{
+			AddTemp(result, type->PtrOf());
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ProcessUniversalInitializerExpr
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	void ProcessUniversalInitializerExpr(const ParsingArguments& pa, ExprTsysList& result, UniversalInitializerExpr* self, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+	{
+		if (boundedAnys.Count() > 0)
+		{
+			AddTemp(result, pa.tsys->Any());
+		}
+		else
+		{
+			AddTemp(result, pa.tsys->InitOf(args));
+		}
+	}
 }

@@ -20,9 +20,9 @@ ExprToTsys
 	FieldAccessExpr				: unbounded
 	ArrayAccessExpr				: unbounded
 	FuncAccessExpr				: *variant
-	CtorAccessExpr				: variant		+
-	NewExpr						: variant		+
-	UniversalInitializerExpr	: variant		+
+	CtorAccessExpr				: variant
+	NewExpr						: variant
+	UniversalInitializerExpr	: variant
 	PostfixUnaryExpr			: unbounded
 	PrefixUnaryExpr				: unbounded
 	BinaryExpr					: unbounded
@@ -369,7 +369,7 @@ public:
 		isVta = variantInput.Expand((self->initializer ? &self->initializer->arguments : nullptr), result,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
-				AddInternal(processResult, args[0]);
+				ProcessCtorAccessExpr(pa, processResult, self, args, boundedAnys);
 			});
 	}
 
@@ -399,22 +399,7 @@ public:
 		isVta = variantInput.Expand((self->initializer ? &self->initializer->arguments : nullptr), result,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
-				auto type = args[0].tsys;
-				if (type->GetType() == TsysType::Array)
-				{
-					if (type->GetParamCount() == 1)
-					{
-						AddTemp(processResult, type->GetElement()->PtrOf());
-					}
-					else
-					{
-						AddTemp(processResult, type->GetElement()->ArrayOf(type->GetParamCount() - 1)->PtrOf());
-					}
-				}
-				else
-				{
-					AddTemp(processResult, type->PtrOf());
-				}
+				ProcessNewExpr(pa, processResult, self, args, boundedAnys);
 			});
 	}
 
@@ -429,14 +414,7 @@ public:
 		isVta = variantInput.Expand(&self->arguments, result,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
-				if (boundedAnys.Count() > 0)
-				{
-					AddTemp(processResult, pa.tsys->Any());
-				}
-				else
-				{
-					AddTemp(processResult, pa.tsys->InitOf(args));
-				}
+				ProcessUniversalInitializerExpr(pa, processResult, self, args, boundedAnys);
 			});
 	}
 
