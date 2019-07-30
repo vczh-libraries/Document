@@ -179,6 +179,7 @@
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_ExprImpl.cpp" />
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_IdImpl.cpp" />
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_TypeImpl.cpp" />
+    <ClCompile Include="Source\Ast_Evaluate_ToTsys_VariadicImpl.cpp" />
     <ClCompile Include="Source\Ast_Resolving.cpp" />
     <ClCompile Include="Source\Ast_Resolving_Generic.cpp" />
     <ClCompile Include="Source\Ast_Resolving_Overloading.cpp" />

@@ -21,6 +21,9 @@ namespace symbol_totsys_impl
 	ITsys*					ProcessDeclType(const ParsingArguments& pa, DeclType* self, ExprTsysItem arg);
 	ITsys*					ProcessDecorateType(const ParsingArguments& pa, DecorateType* self, ExprTsysItem arg);
 
+	// Ast_Evaluate_ToTsys_VariadicImpl.cpp (variadic)
+	void					ProcessFunctionType(const ParsingArguments& pa, ExprTsysList& result, FunctionType* self, TsysCallingConvention cc, bool memberOf, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
+
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Exprs
 	//////////////////////////////////////////////////////////////////////////////////////

@@ -5,28 +5,28 @@ using namespace symbol_totsys_impl;
 
 /***********************************************************************
 ExprToTsys
-	PlaceholderExpr				: literal
-	LiteralExpr					: literal		*
-	ThisExpr					: literal		*
-	NullptrExpr					: literal		*
-	ParenthesisExpr				: unbounded		*
-	CastExpr					: unbounded		*
-	TypeidExpr					: literal		*
-	SizeofExpr					: literal		*
-	ThrowExpr					: literal		*
-	DeleteExpr					: literal		*
-	IdExpr						: *identifier	*
-	ChildExpr					: unbounded		*
-	FieldAccessExpr				: unbounded		*
-	ArrayAccessExpr				: unbounded		*
+	PlaceholderExpr				: literal		*
+	LiteralExpr					: literal
+	ThisExpr					: literal
+	NullptrExpr					: literal
+	ParenthesisExpr				: unbounded
+	CastExpr					: unbounded
+	TypeidExpr					: literal
+	SizeofExpr					: literal
+	ThrowExpr					: literal
+	DeleteExpr					: literal
+	IdExpr						: *identifier
+	ChildExpr					: unbounded
+	FieldAccessExpr				: unbounded
+	ArrayAccessExpr				: unbounded
 	FuncAccessExpr				: *variant
 	CtorAccessExpr				: variant		+
 	NewExpr						: variant		+
 	UniversalInitializerExpr	: variant		+
-	PostfixUnaryExpr			: unbounded		*
-	PrefixUnaryExpr				: unbounded		*
-	BinaryExpr					: unbounded		*
-	IfExpr						: unbounded		*
+	PostfixUnaryExpr			: unbounded
+	PrefixUnaryExpr				: unbounded
+	BinaryExpr					: unbounded
+	IfExpr						: unbounded
 	GenericExpr					: variant		+
 ***********************************************************************/
 
