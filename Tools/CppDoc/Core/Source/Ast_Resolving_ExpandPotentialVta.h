@@ -281,77 +281,13 @@ namespace symbol_totsys_impl
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// CheckVta
-	//////////////////////////////////////////////////////////////////////////////////////
-
-	template<typename TExpr, typename TInput>
-	bool CheckVta(VariadicList<TExpr>& arguments, Array<List<TInput>>& inputs, Array<bool>& isVtas, vint offset, bool& hasBoundedVta, bool& hasUnboundedVta, vint& unboundedVtaCount)
-	{
-		for (vint i = 0; i < offset; i++)
-		{
-			if (isVtas[i])
-			{
-				hasUnboundedVta = true;
-			}
-		}
-
-		for (vint i = offset; i < inputs.Count(); i++)
-		{
-			if (isVtas[i])
-			{
-				if (arguments[i - offset].isVariadic)
-				{
-					hasBoundedVta = true;
-				}
-				else
-				{
-					hasUnboundedVta = true;
-				}
-			}
-		}
-
-		if (hasBoundedVta && hasUnboundedVta)
-		{
-			throw NotConvertableException();
-		}
-
-		if (hasUnboundedVta)
-		{
-			for (vint i = 0; i < inputs.Count(); i++)
-			{
-				if (isVtas[i])
-				{
-					for (vint j = 0; j < inputs[i].Count(); j++)
-					{
-						auto tsys = GetExprTsysItem(inputs[i][j]).tsys;
-						if (tsys->GetType() == TsysType::Init)
-						{
-							vint currentVtaCount = tsys->GetParamCount();
-							if (unboundedVtaCount == -1)
-							{
-								unboundedVtaCount = currentVtaCount;
-							}
-							else if (unboundedVtaCount != currentVtaCount)
-							{
-								throw NotConvertableException();
-							}
-						}
-					}
-				}
-			}
-		}
-
-		return hasUnboundedVta;
-	}
-
-	//////////////////////////////////////////////////////////////////////////////////////
 	// ExpandPotentialVtaList
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	namespace impl
 	{
 		template<typename TResult, typename TInput, typename TProcess>
-		static void ExpandPotentialVtaList(const ParsingArguments& pa, List<TResult>& result, Array<List<TInput>>& inputs, Array<bool>& isVtas, bool isBoundedVta, vint unboundedVtaCount, Array<vint>& tsysIndex, vint level, TProcess&& process)
+		void ExpandPotentialVtaList(const ParsingArguments& pa, List<TResult>& result, Array<List<TInput>>& inputs, Array<bool>& isVtas, bool isBoundedVta, vint unboundedVtaCount, Array<vint>& tsysIndex, vint level, TProcess&& process)
 		{
 			if (level == inputs.Count())
 			{
@@ -456,7 +392,7 @@ namespace symbol_totsys_impl
 	}
 
 	template<typename TResult, typename TInput, typename TProcess>
-	static void ExpandPotentialVtaList(const ParsingArguments& pa, List<TResult>& result, Array<List<TInput>>& inputs, Array<bool>& isVtas, bool isBoundedVta, vint unboundedVtaCount, TProcess&& process)
+	void ExpandPotentialVtaList(const ParsingArguments& pa, List<TResult>& result, Array<List<TInput>>& inputs, Array<bool>& isVtas, bool isBoundedVta, vint unboundedVtaCount, TProcess&& process)
 	{
 		if (!isBoundedVta)
 		{
@@ -483,4 +419,184 @@ namespace symbol_totsys_impl
 		}
 		impl::ExpandPotentialVtaList(pa, result, inputs, isVtas, isBoundedVta, unboundedVtaCount, tsysIndex, 0, process);
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// CheckVta
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	template<typename TExpr, typename TInput>
+	bool CheckVta(const VariadicList<TExpr>& arguments, Array<List<TInput>>& inputs, Array<bool>& isVtas, vint offset, bool& hasBoundedVta, bool& hasUnboundedVta, vint& unboundedVtaCount)
+	{
+		for (vint i = 0; i < offset; i++)
+		{
+			if (isVtas[i])
+			{
+				hasUnboundedVta = true;
+			}
+		}
+
+		for (vint i = offset; i < inputs.Count(); i++)
+		{
+			if (isVtas[i])
+			{
+				if (arguments[i - offset].isVariadic)
+				{
+					hasBoundedVta = true;
+				}
+				else
+				{
+					hasUnboundedVta = true;
+				}
+			}
+		}
+
+		if (hasBoundedVta && hasUnboundedVta)
+		{
+			throw NotConvertableException();
+		}
+
+		if (hasUnboundedVta)
+		{
+			for (vint i = 0; i < inputs.Count(); i++)
+			{
+				if (isVtas[i])
+				{
+					for (vint j = 0; j < inputs[i].Count(); j++)
+					{
+						auto tsys = GetExprTsysItem(inputs[i][j]).tsys;
+						if (tsys->GetType() == TsysType::Init)
+						{
+							vint currentVtaCount = tsys->GetParamCount();
+							if (unboundedVtaCount == -1)
+							{
+								unboundedVtaCount = currentVtaCount;
+							}
+							else if (unboundedVtaCount != currentVtaCount)
+							{
+								throw NotConvertableException();
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return hasUnboundedVta;
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// VariantInput
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	template<typename TInput>
+	class VariantInput
+	{
+	private:
+		const ParsingArguments&		pa;
+		GenericArgContext*			gaContext;
+
+		Array<List<TInput>>			argItems;
+		Array<bool>					isVtas;
+		bool						hasBoundedVta = false;
+		bool						hasUnboundedVta = false;
+		vint						unboundedVtaCount = -1;
+
+		static void Apply(TypeTsysList& result, bool& isVta, const Ptr<Type>& type)
+		{
+			TypeToTsysInternal(pa, type, result, gaContext, isVta);
+		}
+
+		static void Apply(ExprTsysList& result, bool& isVta, const Ptr<Type>& type)
+		{
+			TypeTsysList tsyses;
+			TypeToTsysInternal(pa, type, tsyses, gaContext, isVta);
+			symbol_type_resolving::AddTemp(result, tsyses);
+		}
+
+		static void Apply(ExprTsysList& result, bool& isVta, const Ptr<Expr>& expr)
+		{
+			ExprToTsysInternal(pa, expr, result, isVta, gaContext);
+		}
+
+	public:
+		VariantInput(vint count, const ParsingArguments& _pa, GenericArgContext* _gaContext)
+			:pa(_pa)
+			, gaContext(_gaContext)
+			, argItems(count)
+			, isVtas(count)
+		{
+		}
+
+		template<typename TNode>
+		void ApplySingle(vint index, const Ptr<TNode>& node)
+		{
+			Apply(argItems[index], isVtas[index], node);
+		}
+
+		template<typename TNode>
+		void ApplyList(vint index, const List<Ptr<TNode>>& nodes)
+		{
+			for (vint i = 0; i < nodes.Count(); i++)
+			{
+				ApplySingle<TNode>(i + index, nodes[i]);
+			}
+		}
+
+		template<typename TNode>
+		void ApplyVariadicList(vint index, const VariadicList<Ptr<TNode>>& nodes)
+		{
+			for (vint i = 0; i < nodes.Count(); i++)
+			{
+				ApplySingle<TNode>(i + index, nodes[i].item);
+			}
+		}
+
+		void ApplyGenericArguments(vint index, Array<bool>& isTypes, const VariadicList<GenericArgument>& arguments)
+		{
+			for (vint i = 0; i < arguments.Count(); i++)
+			{
+				auto argument = arguments[i];
+				if ((isTypes[i + index] = argument.item.type))
+				{
+					ApplySingle(i + index, argument.item.type);
+				}
+				else
+				{
+					ApplySingle(i + index, argument.item.expr);
+				}
+			}
+		}
+
+		template<typename TItem, typename TResult, typename TProcess>
+		bool Expand(const VariadicList<TItem>& variadicList, List<TResult>& result, TProcess&& process)
+		{
+			bool isVta = CheckVta(
+				variadicList,
+				argItems,
+				isVtas,
+				(argItems.Count() - variadicList.Count()),
+				hasBoundedVta,
+				hasUnboundedVta,
+				unboundedVtaCount
+			);
+			ExpandPotentialVtaList(pa, result, argItems, isVtas, hasBoundedVta, unboundedVtaCount, process);
+			return isVta;
+		}
+
+		template<typename TResult, typename TProcess>
+		bool Expand(List<TResult>& result, TProcess&& process)
+		{
+			bool isVta = CheckVta(
+				VariadicList<nullptr_t>(),
+				argItems,
+				isVtas,
+				argItems.Count(),
+				hasBoundedVta,
+				hasUnboundedVta,
+				unboundedVtaCount
+			);
+			ExpandPotentialVtaList(pa, result, argItems, isVtas, hasBoundedVta, unboundedVtaCount, process);
+			return isVta;
+		}
+	};
 }

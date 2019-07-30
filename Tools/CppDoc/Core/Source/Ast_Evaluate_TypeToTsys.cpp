@@ -280,15 +280,15 @@ public:
 		vint unboundedVtaCount = -1;
 		isVta = CheckVta(self->arguments, argItems, isVtas, 1, hasBoundedVta, hasUnboundedVta, unboundedVtaCount);
 
-		// TODO: Implement variadic template argument passing
-		if (hasBoundedVta)
-		{
-			throw NotConvertableException();
-		}
-
 		ExpandPotentialVtaList(pa, result, argItems, isVtas, hasBoundedVta, unboundedVtaCount,
 			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
 			{
+				if (boundedAnys.Count() > 0)
+				{
+					// TODO: Implement variadic template argument passing
+					throw NotConvertableException();
+				}
+
 				auto genericFunction = args[0].tsys;
 				if (genericFunction->GetType() == TsysType::GenericFunction)
 				{
