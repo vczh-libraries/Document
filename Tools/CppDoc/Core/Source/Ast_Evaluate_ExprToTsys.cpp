@@ -379,7 +379,7 @@ public:
 		}
 
 		bool hasBoundedVta = false;
-		bool hasUnboundedVta = false;
+		bool hasUnboundedVta = isVtas[0];
 		vint unboundedVtaCount = -1;
 		CheckVta(
 			*(self->initializer ? &self->initializer->arguments : (VariadicList<Ptr<Expr>>*)nullptr),
@@ -430,7 +430,7 @@ public:
 		}
 
 		bool hasBoundedVta = false;
-		bool hasUnboundedVta = false;
+		bool hasUnboundedVta = isVtas[0];
 		vint unboundedVtaCount = -1;
 		CheckVta(
 			*(self->initializer ? &self->initializer->arguments : (VariadicList<Ptr<Expr>>*)nullptr),

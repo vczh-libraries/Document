@@ -365,11 +365,11 @@ auto New4 = {new TArgs(TArgs{})...};
 	AssertExpr(pa, L"Init1",										L"Init1",										L"<...::Init1::[TArgs]> any_t $PR"																							);
 	AssertExpr(pa, L"Init2",										L"Init2",										L"<...::Init2::[TArgs]> any_t $PR"																							);
 	AssertExpr(pa, L"Ctor1",										L"Ctor1",										L"<...::Ctor1::[TArgs]> any_t $PR"																							);
-	AssertExpr(pa, L"Ctor2",										L"Ctor2",										L"<...::Ctor2::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"Ctor2",										L"Ctor2",										L"<...::Ctor2::[TArgs]> {::A $PR} $PR"																						);
 	AssertExpr(pa, L"Ctor3",										L"Ctor3",										L"<...::Ctor3::[TArgs]> any_t $PR"																							);
 	AssertExpr(pa, L"Ctor4",										L"Ctor4",										L"<...::Ctor4::[TArgs]> any_t $PR"																							);
 	AssertExpr(pa, L"New1",											L"New1",										L"<...::New1::[TArgs]> any_t $PR"																							);
-	AssertExpr(pa, L"New2",											L"New2",										L"<...::New2::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"New2",											L"New2",										L"<...::New2::[TArgs]> {::A * $PR} $PR"																						);
 	AssertExpr(pa, L"New3",											L"New3",										L"<...::New3::[TArgs]> any_t $PR"																							);
 	AssertExpr(pa, L"New4",											L"New4",										L"<...::New4::[TArgs]> any_t $PR"																							);
 	
