@@ -500,7 +500,9 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			{
 				while (true)
 				{
-					newExpr->arguments.Add(ParseExpr(pa, pea_Argument(), cursor));
+					auto argument = ParseExpr(pa, pea_Argument(), cursor);
+					bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+					newExpr->arguments.Add({ argument,isVariadic });
 					if (!TestToken(cursor, CppTokens::COMMA))
 					{
 						RequireToken(cursor, CppTokens::RPARENTHESIS);

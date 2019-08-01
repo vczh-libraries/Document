@@ -287,13 +287,12 @@ namespace symbol_totsys_impl
 			ExprTsysList funcTypes;
 			VisitFunctors(pa, argArray, L"operator []", funcTypes);
 
-			List<Ptr<ExprTsysList>> argTypesList;
-			argTypesList.Add(MakePtr<ExprTsysList>());
-			AddInternal(*argTypesList[0].Obj(), argIndex);
+			Array<ExprTsysItem> argTypes(1);
+			argTypes[0] = argIndex;
 
 			bool needIndex = pa.recorder && !gaContext;
 			ExprTsysList selectedFunctions;
-			VisitOverloadedFunction(pa, funcTypes, argTypesList, result, (needIndex ? &selectedFunctions : nullptr));
+			VisitOverloadedFunction(pa, funcTypes, argTypes, result, (needIndex ? &selectedFunctions : nullptr));
 
 			if (needIndex && selectedFunctions.Count() > 0)
 			{
@@ -369,16 +368,16 @@ namespace symbol_totsys_impl
 				}
 				FilterFieldsAndBestQualifiedFunctions(leftCV, leftRef, opTypes);
 
-				List<Ptr<ExprTsysList>> argTypesList;
+				Array<ExprTsysItem> argTypes;
 				if (rightType)
 				{
-					argTypesList.Add(MakePtr<ExprTsysList>());
-					AddInternal(*argTypesList[0].Obj(), *rightType);
+					argTypes.Resize(1);
+					argTypes[0] = *rightType;
 				}
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 
 				ExprTsysList selectedFunctions;
-				VisitOverloadedFunction(pa, opTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
+				VisitOverloadedFunction(pa, opTypes, argTypes, result, (pa.recorder ? &selectedFunctions : nullptr));
 				if (pa.recorder && !gaContext)
 				{
 					AddSymbolsToOperatorResolving(gaContext, resolvableName, resolving, selectedFunctions, indexed);
@@ -410,20 +409,18 @@ namespace symbol_totsys_impl
 
 			if (opTypes.Count() > 0)
 			{
-				List<Ptr<ExprTsysList>> argTypesList;
+				Array<ExprTsysItem> argTypes(rightType ? 2 : 1);
 				{
-					argTypesList.Add(MakePtr<ExprTsysList>());
-					AddInternal(*argTypesList[0].Obj(), *leftType);
+					argTypes[0] = *leftType;
 				}
 				if (rightType)
 				{
-					argTypesList.Add(MakePtr<ExprTsysList>());
-					AddInternal(*argTypesList[1].Obj(), *rightType);
+					argTypes[1] = *rightType;
 				}
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 
 				ExprTsysList selectedFunctions;
-				VisitOverloadedFunction(pa, opTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
+				VisitOverloadedFunction(pa, opTypes, argTypes, result, (pa.recorder ? &selectedFunctions : nullptr));
 				if (pa.recorder && !gaContext)
 				{
 					AddSymbolsToOperatorResolving(gaContext, resolvableName, resolving, selectedFunctions, indexed);

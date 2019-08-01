@@ -418,6 +418,10 @@ auto New4 = {new TArgs(TArgs{})...};
 	AssertExpr(pa, L"New4<A, B, C, D>",								L"New4<A, B, C, D>",							L"{::A * $PR, ::B * $PR, ::C * $PR, ::D * $PR} $PR"																			);
 }
 
+TEST_CASE(TestParseVariadicTemplateArgument_Exprs_Function)
+{
+}
+
 /*
 TEST_CASE(TestParseVariadicTemplateArgument_ApplyOn_VTA_Default)
 {

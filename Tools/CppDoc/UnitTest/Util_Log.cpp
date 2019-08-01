@@ -234,7 +234,11 @@ public:
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
 			if (i > 0) writer.WriteString(L", ");
-			Log(self->arguments[i], writer);
+			Log(self->arguments[i].item, writer);
+			if (self->arguments[i].isVariadic)
+			{
+				writer.WriteString(L"...");
+			}
 		}
 		writer.WriteChar(L')');
 	}

@@ -19,7 +19,7 @@ ExprToTsys
 	ChildExpr					: unbounded
 	FieldAccessExpr				: unbounded
 	ArrayAccessExpr				: unbounded
-	FuncAccessExpr				: *variant
+	FuncAccessExpr				: variant		*
 	CtorAccessExpr				: variant
 	NewExpr						: variant
 	UniversalInitializerExpr	: variant
@@ -289,44 +289,112 @@ public:
 
 	void Visit(FuncAccessExpr* self)override
 	{
-		List<Ptr<ExprTsysList>> argTypesList;
+		Array<ExprTsysList> argTypesList(self->arguments.Count());
+		Array<bool> isVtas(self->arguments.Count());
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
-			auto argTypes = MakePtr<ExprTsysList>();
-			ExprToTsys(pa, self->arguments[i], *argTypes.Obj(), gaContext);
-			argTypesList.Add(argTypes);
+			ExprToTsysInternal(pa, self->arguments[i].item, argTypesList[i], isVtas[i], gaContext);
 		}
 
-		ExprTsysList funcTypes;
-		ExprToTsys(pa, self->expr, funcTypes, gaContext);
+		bool argHasBoundedVta = false;
+		bool argHasUnboundedVta = false;
+		vint argUnboundedVtaCount = -1;
+		CheckVta(self->arguments, argTypesList, isVtas, 0, argHasBoundedVta, argHasUnboundedVta, argUnboundedVtaCount);
 
-		if (auto idExpr = self->expr.Cast<IdExpr>())
+		ExprTsysList funcExprTypes;
+		bool funcVta = false;
+		vint funcVtaCount = -1;
+		ExprToTsysInternal(pa, self->expr, funcExprTypes, funcVta, gaContext);
+
+		if (funcVta)
 		{
-			if (!idExpr->resolving || IsAdlEnabled(pa, idExpr->resolving))
+			if (argHasBoundedVta)
 			{
-				SortedList<Symbol*> nss, classes;
-				for (vint i = 0; i < argTypesList.Count(); i++)
+				throw NotConvertableException();
+			}
+
+			for (vint i = 0; i < funcExprTypes.Count(); i++)
+			{
+				auto funcTsys = funcExprTypes[i].tsys;
+				if (funcTsys->GetType() == TsysType::Init)
 				{
-					SearchAdlClassesAndNamespaces(pa, *argTypesList[i].Obj(), nss, classes);
+					if (funcVtaCount == -1)
+					{
+						funcVtaCount = funcTsys->GetParamCount();
+					}
+					else if (funcVtaCount != funcTsys->GetParamCount())
+					{
+						throw NotConvertableException();
+					}
+					if (argHasUnboundedVta && argUnboundedVtaCount != funcVtaCount)
+					{
+						throw NotConvertableException();
+					}
 				}
-				SerachAdlFunction(pa, nss, idExpr->name.name, funcTypes);
 			}
 		}
 
-		for (vint i = 0; i < funcTypes.Count(); i++)
-		{
-			TsysCV cv;
-			TsysRefType refType;
-			auto entityType = funcTypes[i].tsys->GetEntity(cv, refType);
-			if (entityType->IsUnknownType())
+		ExprTsysList totalSelectedFunctions;
+		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, argHasBoundedVta, argUnboundedVtaCount,
+			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& unboundedAnys)
 			{
-				AddTemp(result, pa.tsys->Any());
-			}
-		}
-		FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
+				// TODO: Implement this later
+				if (unboundedAnys.Count() > 0)
+				{
+					throw NotConvertableException();
+				}
 
-		ExprTsysList selectedFunctions;
-		VisitOverloadedFunction(pa, funcTypes, argTypesList, result, (pa.recorder ? &selectedFunctions : nullptr));
+				ExprTsysList funcTypes;
+				if (funcVta && unboundedVtaIndex != -1)
+				{
+					for (vint i = 0; i < funcExprTypes.Count(); i++)
+					{
+						auto funcItem = funcExprTypes[i];
+						if (funcItem.tsys->GetType() == TsysType::Init)
+						{
+							funcTypes.Add({ funcItem.tsys->GetInit().headers[unboundedVtaIndex],funcItem.tsys->GetParam(unboundedVtaIndex) });
+						}
+						else
+						{
+							funcTypes.Add(funcItem);
+						}
+					}
+				}
+				else
+				{
+					CopyFrom(funcTypes, funcExprTypes);
+				}
+
+				if (auto idExpr = self->expr.Cast<IdExpr>())
+				{
+					if (!idExpr->resolving || IsAdlEnabled(pa, idExpr->resolving))
+					{
+						SortedList<Symbol*> nss, classes;
+						for (vint i = 0; i < args.Count(); i++)
+						{
+							SearchAdlClassesAndNamespaces(pa, args[i].tsys, nss, classes);
+						}
+						SerachAdlFunction(pa, nss, idExpr->name.name, funcTypes);
+					}
+				}
+
+				for (vint i = 0; i < funcTypes.Count(); i++)
+				{
+					TsysCV cv;
+					TsysRefType refType;
+					auto entityType = funcTypes[i].tsys->GetEntity(cv, refType);
+					if (entityType->IsUnknownType())
+					{
+						AddTemp(result, pa.tsys->Any());
+					}
+				}
+				FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
+
+				ExprTsysList selectedFunctions;
+				VisitOverloadedFunction(pa, funcTypes, args, result, (pa.recorder ? &selectedFunctions : nullptr));
+				AddInternal(totalSelectedFunctions, selectedFunctions);
+			});
+
 		if (pa.recorder && !gaContext)
 		{
 			CppName* name = nullptr;
@@ -350,7 +418,7 @@ public:
 				}
 			}
 
-			ReIndex(name, nameResolving, &self->opName, &self->opResolving, selectedFunctions);
+			ReIndex(name, nameResolving, &self->opName, &self->opResolving, totalSelectedFunctions);
 		}
 	}
 
@@ -367,7 +435,7 @@ public:
 			variadicInput.ApplyVariadicList(1, self->initializer->arguments);
 		}
 		isVta = variadicInput.Expand((self->initializer ? &self->initializer->arguments : nullptr), result,
-			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
 				ProcessCtorAccessExpr(pa, processResult, self, args, boundedAnys);
 			});
@@ -397,7 +465,7 @@ public:
 			variadicInput.ApplyVariadicList(1, self->initializer->arguments);
 		}
 		isVta = variadicInput.Expand((self->initializer ? &self->initializer->arguments : nullptr), result,
-			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
 				ProcessNewExpr(pa, processResult, self, args, boundedAnys);
 			});
@@ -412,7 +480,7 @@ public:
 		VariadicInput<ExprTsysItem> variadicInput(self->arguments.Count(), pa, gaContext);
 		variadicInput.ApplyVariadicList(0, self->arguments);
 		isVta = variadicInput.Expand(&self->arguments, result,
-			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
 				ProcessUniversalInitializerExpr(pa, processResult, self, args, boundedAnys);
 			});
@@ -553,7 +621,7 @@ public:
 		variadicInput.ApplySingle<Expr>(0, self->expr);
 		variadicInput.ApplyGenericArguments(1, isTypes, self->arguments);
 		isVta = variadicInput.Expand(&self->arguments, result,
-			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
 				ProcessGenericExpr(pa, processResult, self, isTypes, args, boundedAnys);
 			});

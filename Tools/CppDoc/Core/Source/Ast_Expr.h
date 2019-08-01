@@ -209,7 +209,7 @@ public:
 	Ptr<Resolving>					opResolving;
 
 	Ptr<Expr>						expr;
-	List<Ptr<Expr>>					arguments;
+	VariadicList<Ptr<Expr>>			arguments;
 };
 
 class CtorAccessExpr : public Expr

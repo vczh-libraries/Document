@@ -145,7 +145,7 @@ public:
 
 						auto callExpr = MakePtr<FuncAccessExpr>();
 						callExpr->expr = beginExpr;
-						callExpr->arguments.Add(placeholderExpr);
+						callExpr->arguments.Add({ placeholderExpr,false });
 
 						auto derefExpr = MakePtr<PrefixUnaryExpr>();
 						derefExpr->op = CppPrefixUnaryOp::Dereference;

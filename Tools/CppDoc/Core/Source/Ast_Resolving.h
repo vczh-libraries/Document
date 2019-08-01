@@ -60,11 +60,10 @@ namespace symbol_type_resolving
 	extern void				FilterFieldsAndBestQualifiedFunctions(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes);
 	extern void				FindQualifiedFunctors(const ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp);
 
-	extern void				VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result, ExprTsysList* selectedFunctions);
+	extern void				VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, Array<ExprTsysItem>& argTypes, ExprTsysList& result, ExprTsysList* selectedFunctions);
 	extern bool				IsAdlEnabled(const ParsingArguments& pa, Ptr<Resolving> resolving);
 	extern void				SearchAdlClassesAndNamespaces(const ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
 	extern void				SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
-	extern void				SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ExprTsysList& types, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
 	extern void				SerachAdlFunction(const ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result);
 
 	// Generic

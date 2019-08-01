@@ -130,7 +130,7 @@ namespace symbol_type_resolving
 	VisitOverloadedFunction: Select good candidates from overloaded functions
 	***********************************************************************/
 
-	void VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, List<Ptr<ExprTsysList>>& argTypesList, ExprTsysList& result, ExprTsysList* selectedFunctions)
+	void VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, Array<ExprTsysItem>& argTypes, ExprTsysList& result, ExprTsysList* selectedFunctions)
 	{
 		Array<vint> funcDPs(funcTypes.Count());
 		for (vint i = 0; i < funcTypes.Count(); i++)
@@ -167,7 +167,7 @@ namespace symbol_type_resolving
 			auto funcType = funcTypes[i];
 
 			vint funcParamCount = funcType.tsys->GetParamCount();
-			vint missParamCount = funcParamCount - argTypesList.Count();
+			vint missParamCount = funcParamCount - argTypes.Count();
 			if (missParamCount > 0)
 			{
 				if (missParamCount > funcDPs[i])
@@ -192,7 +192,7 @@ namespace symbol_type_resolving
 			selectedIndices[i] = true;
 		}
 
-		for (vint i = 0; i < argTypesList.Count(); i++)
+		for (vint i = 0; i < argTypes.Count(); i++)
 		{
 			Array<TsysConv> funcChoices(validFuncTypes.Count());
 
@@ -208,15 +208,7 @@ namespace symbol_type_resolving
 				}
 
 				auto paramType = funcType.tsys->GetParam(i);
-				auto& argTypes = *argTypesList[i].Obj();
-
-				auto bestChoice = TsysConv::Illegal;
-				for (vint k = 0; k < argTypes.Count(); k++)
-				{
-					auto choice = TestConvert(pa, paramType, argTypes[k]);
-					if ((vint)bestChoice > (vint)choice) bestChoice = choice;
-				}
-				funcChoices[j] = bestChoice;
+				funcChoices[j] = TestConvert(pa, paramType, argTypes[i]);
 			}
 
 			auto min = FindMinConv(funcChoices);
@@ -416,14 +408,6 @@ namespace symbol_type_resolving
 		case TsysType::Decl:
 			SearchAdlClassesAndNamespaces(pa, type->GetDecl(), nss, classes);
 			break;
-		}
-	}
-
-	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ExprTsysList& types, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
-	{
-		for (vint i = 0; i < types.Count(); i++)
-		{
-			SearchAdlClassesAndNamespaces(pa, types[i].tsys, nss, classes);
 		}
 	}
 

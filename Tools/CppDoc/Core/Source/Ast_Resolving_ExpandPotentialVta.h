@@ -349,7 +349,7 @@ namespace symbol_totsys_impl
 					}
 
 					ExprTsysList processResult;
-					process(processResult, params, boundedAnys);
+					process(processResult, params, -1, boundedAnys);
 					AddExprTsysListToResult(result, processResult);
 				}
 				else
@@ -363,7 +363,7 @@ namespace symbol_totsys_impl
 						}
 
 						ExprTsysList processResult;
-						process(processResult, params, boundedAnys);
+						process(processResult, params, -1, boundedAnys);
 						AddExprTsysListToResult(result, processResult);
 					}
 					else
@@ -384,7 +384,7 @@ namespace symbol_totsys_impl
 									params[j] = tsysItem;
 								}
 							}
-							process(initParams[i], params, boundedAnys);
+							process(initParams[i], params, i, boundedAnys);
 						}
 
 						ExprTsysList processResult;
