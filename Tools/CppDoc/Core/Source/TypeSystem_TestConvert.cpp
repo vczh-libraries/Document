@@ -95,11 +95,10 @@ namespace TestConvert_Helpers
 					}
 				}
 
-				List<Ptr<ExprTsysList>> argTypesList;
+				Array<ExprTsysItem> argTypesList(fromEntity->GetParamCount());
 				for (vint i = 0; i < fromEntity->GetParamCount(); i++)
 				{
-					argTypesList.Add(MakePtr<ExprTsysList>());
-					argTypesList[i]->Add({ init.headers[i],fromEntity->GetParam(i) });
+					argTypesList[i] = { init.headers[i],fromEntity->GetParam(i) };
 				}
 
 				ExprTsysList result;
