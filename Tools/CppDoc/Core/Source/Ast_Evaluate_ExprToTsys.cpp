@@ -46,21 +46,6 @@ public:
 	{
 	}
 
-	void ReIndex(CppName* name, Ptr<Resolving>* nameResolving, CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols)
-	{
-		bool addedName = false;
-		bool addedOp = false;
-		AddSymbolsToResolvings(gaContext, name, nameResolving, op, opResolving, symbols, addedName, addedOp);
-		if (addedName)
-		{
-			pa.recorder->IndexOverloadingResolution(*name, (*nameResolving)->resolvedSymbols);
-		}
-		if (addedOp)
-		{
-			pa.recorder->IndexOverloadingResolution(*op, (*opResolving)->resolvedSymbols);
-		}
-	}
-
 	//////////////////////////////////////////////////////////////////////////////////////
 	// PlaceholderExpr
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -418,7 +403,17 @@ public:
 				}
 			}
 
-			ReIndex(name, nameResolving, &self->opName, &self->opResolving, totalSelectedFunctions);
+			bool addedName = false;
+			bool addedOp = false;
+			AddSymbolsToResolvings(gaContext, name, nameResolving, &self->opName, &self->opResolving, totalSelectedFunctions, addedName, addedOp);
+			if (addedName)
+			{
+				pa.recorder->IndexOverloadingResolution(*name, (*nameResolving)->resolvedSymbols);
+			}
+			if (addedOp)
+			{
+				pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
+			}
 		}
 	}
 

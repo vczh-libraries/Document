@@ -46,7 +46,7 @@
   - `EvaluateSymbol` doesn't crash if no type is evaluated with `gaContext`
 - More refactorings
   - [x] `ResolveGenericParameters`: Receive `Array<TypeTsysItem>` instead of `Array<TypeTsysList>` for `argumentTypes`
-  - [ ] `VisitOverloadedFunction`: Receive `Array<ExprTsysItem>` instead of `List<Ptr<ExprTsysList>>` for `argTypesList`
+  - [x] `VisitOverloadedFunction`: Receive `Array<ExprTsysItem>` instead of `List<Ptr<ExprTsysList>>` for `argTypesList`
   - [ ] `CreateIdReferenceExpr`: Remove dependency to `Ptr<Resolving>`
   - [ ] `FindMembersByName`: Remove dependency to `ResolveSymbolResult`
 - [ ] `template` on functions.
