@@ -12,9 +12,9 @@ ExprToTsys
 	ParenthesisExpr				: unbounded
 	CastExpr					: unbounded
 	TypeidExpr					: unbounded
-	SizeofExpr					: unbounded
+	SizeofExpr					: unbounded		*
 	ThrowExpr					: literal
-	DeleteExpr					: unbounded
+	DeleteExpr					: unbounded		*
 	IdExpr						: *identifier
 	ChildExpr					: unbounded
 	FieldAccessExpr				: unbounded
@@ -123,7 +123,24 @@ public:
 
 	void Visit(TypeidExpr* self)override
 	{
-		ProcessTypeidExpr(pa, result, gaContext, self);
+		ExprTsysList types;
+		bool typesVta = false;
+
+		if (self->type)
+		{
+			TypeTsysList tsyses;
+			TypeToTsysInternal(pa, self->type, tsyses, gaContext, typesVta);
+			AddTemp(types, tsyses);
+		}
+		if (self->expr)
+		{
+			ExprToTsysInternal(pa, self->expr, types, typesVta, gaContext);
+		}
+
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self](ExprTsysList& processResult, ExprTsysItem arg)
+		{
+			ProcessTypeidExpr(pa, processResult, self);
+		}, Input(types, typesVta));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -132,7 +149,31 @@ public:
 
 	void Visit(SizeofExpr* self)override
 	{
-		ProcessSizeofExpr(pa, result, gaContext, self);
+		ExprTsysList types;
+		bool typesVta = false;
+
+		if (self->type)
+		{
+			TypeTsysList tsyses;
+			TypeToTsysInternal(pa, self->type, tsyses, gaContext, typesVta);
+			AddTemp(types, tsyses);
+		}
+		if (self->expr)
+		{
+			ExprToTsysInternal(pa, self->expr, types, typesVta, gaContext);
+		}
+
+		if (self->ellipsis)
+		{
+			AddTemp(result, pa.tsys->Size());
+		}
+		else
+		{
+			isVta = ExpandPotentialVtaMultiResult(pa, result, [this](ExprTsysList& processResult, ExprTsysItem arg)
+			{
+				AddTemp(processResult, pa.tsys->Size());
+			}, Input(types, typesVta));
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -150,7 +191,13 @@ public:
 
 	void Visit(DeleteExpr* self)override
 	{
-		ProcessDeleteExpr(pa, result, gaContext, self);
+		ExprTsysList types;
+		bool typesVta = false;
+		ExprToTsysInternal(pa, self->expr, types, typesVta, gaContext);
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this](ExprTsysList& processResult, ExprTsysItem arg)
+		{
+			AddTemp(processResult, pa.tsys->Void());
+		}, Input(types, typesVta));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////

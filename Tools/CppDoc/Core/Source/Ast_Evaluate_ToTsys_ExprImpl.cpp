@@ -155,66 +155,6 @@ namespace symbol_totsys_impl
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// ProcessTypeidExpr
-	//////////////////////////////////////////////////////////////////////////////////////
-	
-	void ProcessTypeidExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, TypeidExpr* self)
-	{
-		if (self->type)
-		{
-			TypeTsysList types;
-			TypeToTsysNoVta(pa, self->type, types, gaContext);
-		}
-		if (self->expr)
-		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types, gaContext);
-		}
-
-		auto global = pa.root.Obj();
-		vint index = global->children.Keys().IndexOf(L"std");
-		if (index == -1) return;
-		auto& stds = global->children.GetByIndex(index);
-		if (stds.Count() != 1) return;
-		index = stds[0]->children.Keys().IndexOf(L"type_info");
-		if (index == -1) return;
-		auto& tis = stds[0]->children.GetByIndex(index);
-
-		for (vint i = 0; i < tis.Count(); i++)
-		{
-			auto ti = tis[i];
-			switch (ti->kind)
-			{
-			case symbol_component::SymbolKind::Class:
-			case symbol_component::SymbolKind::Struct:
-				AddInternal(result, { nullptr,ExprTsysType::LValue,pa.tsys->DeclOf(ti.Obj()) });
-				return;
-			}
-		}
-	}
-
-	//////////////////////////////////////////////////////////////////////////////////////
-	// ProcessSizeofExpr
-	//////////////////////////////////////////////////////////////////////////////////////
-	
-	void ProcessSizeofExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, SizeofExpr* self)
-	{
-		if (self->type)
-		{
-			TypeTsysList types;
-			bool typeIsVta = false;
-			TypeToTsysInternal(pa, self->type, types, gaContext, typeIsVta);
-		}
-		if (self->expr)
-		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types, gaContext);
-		}
-
-		AddTemp(result, pa.tsys->Size());
-	}
-
-	//////////////////////////////////////////////////////////////////////////////////////
 	// ProcessThrowExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 	
@@ -224,20 +164,6 @@ namespace symbol_totsys_impl
 		{
 			ExprTsysList types;
 			ExprToTsysNoVta(pa, self->expr, types, gaContext);
-		}
-
-		AddTemp(result, pa.tsys->Void());
-	}
-
-	//////////////////////////////////////////////////////////////////////////////////////
-	// ProcessDeleteExpr
-	//////////////////////////////////////////////////////////////////////////////////////
-	
-	void ProcessDeleteExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, DeleteExpr* self)
-	{
-		{
-			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types, gaContext);
 		}
 
 		AddTemp(result, pa.tsys->Void());
@@ -260,12 +186,40 @@ namespace symbol_totsys_impl
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// ProcessParenthesisExpr
+	// ProcessCastExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	void ProcessCastExpr(const ParsingArguments& pa, ExprTsysList& result, CastExpr* self, ExprTsysItem argType, ExprTsysItem argExpr)
 	{
 		AddTemp(result, argType.tsys);
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// ProcessTypeidExpr
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	void ProcessTypeidExpr(const ParsingArguments& pa, ExprTsysList& result, TypeidExpr* self)
+	{
+		auto global = pa.root.Obj();
+		vint index = global->children.Keys().IndexOf(L"std");
+		if (index == -1) return;
+		auto& stds = global->children.GetByIndex(index);
+		if (stds.Count() != 1) return;
+		index = stds[0]->children.Keys().IndexOf(L"type_info");
+		if (index == -1) return;
+		auto& tis = stds[0]->children.GetByIndex(index);
+
+		for (vint i = 0; i < tis.Count(); i++)
+		{
+			auto ti = tis[i];
+			switch (ti->kind)
+			{
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+				AddInternal(result, { nullptr,ExprTsysType::LValue,pa.tsys->DeclOf(ti.Obj()) });
+				return;
+			}
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
