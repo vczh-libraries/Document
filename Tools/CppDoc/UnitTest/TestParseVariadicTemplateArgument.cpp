@@ -434,12 +434,22 @@ auto Func2 = {TArgs::G(nullptr)...};
 
 template<typename ...TArgs>
 auto Func3 = {TArgs::G(TArgs{})...};
+
+int H(void);
+bool H(int);
+char H(int, int);
+double H(int, int, int);
+void H(...);
+
+template<int ...Args>
+auto Func4 = H(-Args...);
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	
 	AssertExpr(pa, L"Func1",										L"Func1",										L"<...::Func1::[TArgs]> any_t $PR"																							);
 	AssertExpr(pa, L"Func2",										L"Func2",										L"<...::Func2::[TArgs]> any_t $PR"																							);
 	AssertExpr(pa, L"Func3",										L"Func3",										L"<...::Func3::[TArgs]> any_t $PR"																							);
+	AssertExpr(pa, L"Func4",										L"Func4",										L"<...*> __int32 $PR", L"<...*> bool $PR", L"<...*> char $PR", L"<...*> double $PR", L"<...*> void $PR"						);
 	
 	AssertExpr(pa, L"Func1<>",										L"Func1<>",										L"{} $PR"																													);
 	AssertExpr(pa, L"Func1<a::A>",									L"Func1<a :: A>",								L"{__int32 $PR} $PR"																										);
@@ -452,6 +462,12 @@ auto Func3 = {TArgs::G(TArgs{})...};
 	AssertExpr(pa, L"Func3<>",										L"Func3<>",										L"{} $PR"																													);
 	AssertExpr(pa, L"Func3<a::A>",									L"Func3<a :: A>",								L"{__int32 * $PR} $PR"																										);
 	AssertExpr(pa, L"Func3<a::A, b::B, c::C, d::D>",				L"Func3<a :: A, b :: B, c :: C, d :: D>",		L"{__int32 * $PR, bool * $PR, char * $PR, double * $PR} $PR"																);
+	
+	AssertExpr(pa, L"Func4<>",										L"Func4<>",										L"__int32 $PR"																												);
+	AssertExpr(pa, L"Func4<1>",										L"Func4<1>",									L"bool $PR"																													);
+	AssertExpr(pa, L"Func4<1,2>",									L"Func4<1, 2>",									L"char $PR"																													);
+	AssertExpr(pa, L"Func4<1,2,3>",									L"Func4<1, 2, 3>",								L"double $PR"																												);
+	AssertExpr(pa, L"Func4<1,2,3,4>",								L"Func4<1, 2, 3, 4>",							L"void $PR"																													);
 }
 
 /*
