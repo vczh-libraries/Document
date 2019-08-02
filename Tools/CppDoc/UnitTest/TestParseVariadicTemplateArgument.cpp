@@ -443,16 +443,16 @@ auto Func3 = {TArgs::G(TArgs{})...};
 	AssertExpr(pa, L"Func3",										L"Func3",										L"<...::Func3::[TArgs]> any_t $PR"																							);
 	
 	AssertExpr(pa, L"Func1<>",										L"Func1<>",										L"{} $PR"																													);
-	AssertExpr(pa, L"Func1<a::A>",									L"Func1<a::A>",									L"{__int32 $PR} $PR"																										);
-	AssertExpr(pa, L"Func1<a::A, b::B, c::C, d::D>",				L"Func1<a::A, b::B, c::C, d::D>",				L"{__int32 $PR, bool $PR, char $PR, double $PR} $PR"																		);
+	AssertExpr(pa, L"Func1<a::A>",									L"Func1<a :: A>",								L"{__int32 $PR} $PR"																										);
+	AssertExpr(pa, L"Func1<a::A, b::B, c::C, d::D>",				L"Func1<a :: A, b :: B, c :: C, d :: D>",		L"{__int32 $PR, bool $PR, char $PR, double $PR} $PR"																		);
 	
 	AssertExpr(pa, L"Func2<>",										L"Func2<>",										L"{} $PR"																													);
-	AssertExpr(pa, L"Func2<a::A>",									L"Func2<a::A>",									L"{__int32 * $PR} $PR"																										);
-	AssertExpr(pa, L"Func2<a::A, b::B, c::C, d::D>",				L"Func2<a::A, b::B, c::C, d::D>",				L"{__int32 * $PR, bool * $PR, char * $PR, double * $PR} $PR"																);
+	AssertExpr(pa, L"Func2<a::A>",									L"Func2<a :: A>",								L"{__int32 * $PR} $PR"																										);
+	AssertExpr(pa, L"Func2<a::A, b::B, c::C, d::D>",				L"Func2<a :: A, b :: B, c :: C, d :: D>",		L"{__int32 * $PR, bool * $PR, char * $PR, double * $PR} $PR"																);
 	
 	AssertExpr(pa, L"Func3<>",										L"Func3<>",										L"{} $PR"																													);
-	AssertExpr(pa, L"Func3<a::A>",									L"Func3<a::A>",									L"{__int32 * $PR} $PR"																										);
-	AssertExpr(pa, L"Func3<a::A, b::B, c::C, d::D>",				L"Func3<a::A, b::B, c::C, d::D>",				L"{__int32 * $PR, bool * $PR, char * $PR, double * $PR} $PR"																);
+	AssertExpr(pa, L"Func3<a::A>",									L"Func3<a :: A>",								L"{__int32 * $PR} $PR"																										);
+	AssertExpr(pa, L"Func3<a::A, b::B, c::C, d::D>",				L"Func3<a :: A, b :: B, c :: C, d :: D>",		L"{__int32 * $PR, bool * $PR, char * $PR, double * $PR} $PR"																);
 }
 
 /*

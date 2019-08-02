@@ -284,7 +284,7 @@ public:
 		bool argHasBoundedVta = false;
 		bool argHasUnboundedVta = false;
 		vint argUnboundedVtaCount = -1;
-		CheckVta(self->arguments, argTypesList, isVtas, 0, argHasBoundedVta, argHasUnboundedVta, argUnboundedVtaCount);
+		isVta = CheckVta(self->arguments, argTypesList, isVtas, 0, argHasBoundedVta, argHasUnboundedVta, argUnboundedVtaCount);
 
 		ExprTsysList funcExprTypes;
 		bool funcVta = false;
@@ -297,6 +297,7 @@ public:
 			{
 				throw NotConvertableException();
 			}
+			isVta = true;
 
 			for (vint i = 0; i < funcExprTypes.Count(); i++)
 			{
@@ -306,11 +307,17 @@ public:
 					if (funcVtaCount == -1)
 					{
 						funcVtaCount = funcTsys->GetParamCount();
+						if (!argHasUnboundedVta)
+						{
+							argHasUnboundedVta = true;
+							argUnboundedVtaCount = funcVtaCount;
+						}
 					}
 					else if (funcVtaCount != funcTsys->GetParamCount())
 					{
 						throw NotConvertableException();
 					}
+
 					if (argHasUnboundedVta && argUnboundedVtaCount != funcVtaCount)
 					{
 						throw NotConvertableException();

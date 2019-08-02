@@ -66,7 +66,6 @@ ParseCppName
 ***********************************************************************/
 
 // operator PREDEFINED-OPERATOR
-// operator
 // ~IDENTIFIER
 // IDENTIFIER
 bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialMethod)
@@ -79,11 +78,6 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		name.name = L"operator ";
 		name.nameTokens[0] = token;
 		SkipToken(cursor);
-
-		if (forceSpecialMethod)
-		{
-			return true;
-		}
 
 		auto nameCursor = cursor;
 

@@ -177,21 +177,8 @@ bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>
 				}
 				break;
 			case CppNameType::Operator:
-				// operator TYPE is the only valid form of special method if the first token is operator
-				if (cppName.tokenCount == 1)
-				{
-					cppName.name = L"$__type";
-					auto type = ParseLongType(pa, cursor);
-					if (ReplaceTypeInMemberAndCC(targetType, type))
-					{
-						throw StopParsingException(cursor);
-					}
-				}
-				else
-				{
-					throw StopParsingException(cursor);
-				}
-				break;
+				// operator TYPE is assembled in ParseDeclaratorWithInitializer
+				throw StopParsingException(cursor);
 			case CppNameType::Destructor:
 				// ~IDENTIFIER should be a destructor name for a special method
 				if (cppName.name != L"~" + containingClass->name.name)
@@ -648,7 +635,6 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 
 	if (pdc.dr != DeclaratorRestriction::Zero)
 	{
-
 		while (SkipSpecifiers(cursor));
 
 		// there may be a declarator name
@@ -806,13 +792,38 @@ ParseDeclaratorWithInitializer
 
 void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeResult, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
-	// if we have already recognize a type, we can parse multiple declarators with initializers
-	auto newPdc = pdc;
-	newPdc.dr = pdc.dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : pdc.dr;
-
 	while (true)
 	{
-		auto declarator = ParseSingleDeclarator(pa, typeResult, newPdc, cursor);
+		Ptr<Declarator> declarator;
+		if (pdc.forceSpecialMethod && TestToken(cursor, CppTokens::OPERATOR, false))
+		{
+			if (declarators.Count() > 0)
+			{
+				throw StopParsingException(cursor);
+			}
+
+			CppName cppName;
+			cppName.type = CppNameType::Operator;
+			cppName.name = L"$__type";
+			cppName.tokenCount = 1;
+			cppName.nameTokens[0] = cursor->token;
+			SkipToken(cursor);
+
+			auto opPdc = pda_Decls(false, false);
+			opPdc.containingClass = pdc.containingClass;
+			opPdc.dr = DeclaratorRestriction::Zero;
+
+			typeResult = ParseLongType(pa, cursor);
+			declarator = ParseSingleDeclarator(pa, typeResult, { opPdc,false }, cursor);
+			declarator->name = cppName;
+		}
+		else
+		{
+			// if we have already recognize a type, we can parse multiple declarators with initializers
+			auto newPdc = pdc;
+			newPdc.dr = pdc.dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : pdc.dr;
+			declarator = ParseSingleDeclarator(pa, typeResult, newPdc, cursor);
+		}
 
 		ParsingArguments initializerPa = pa;
 		if (declarator->type.Cast<MemberType>() && declarator->containingClassSymbol)
@@ -822,6 +833,11 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 
 		// function doesn't have initializer
 		bool isFunction = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>();
+		if (!isFunction && declarator->name.type == CppNameType::Operator && declarator->name.tokenCount == 1)
+		{
+			throw StopParsingException(cursor);
+		}
+
 		if (pdc.ir == InitializerRestriction::Optional && !isFunction)
 		{
 			if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))
@@ -834,6 +850,12 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			}
 		}
 		declarators.Add(declarator);
+
+		// operator TYPE declarator could not be DeclaratorRestriction::Many
+		if (declarator->name.type == CppNameType::Operator && declarator->name.tokenCount == 1)
+		{
+			break;
+		}
 
 		if (pdc.dr != DeclaratorRestriction::Many)
 		{
