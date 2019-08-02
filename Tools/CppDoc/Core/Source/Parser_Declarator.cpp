@@ -795,6 +795,26 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 	while (true)
 	{
 		Ptr<Declarator> declarator;
+
+		// try (TYPE::)operator TYPE
+		Ptr<MemberType> typeOpMemberType;
+		auto typeOpCursor = cursor;
+
+		if (pdc.forceSpecialMethod)
+		{
+			try
+			{
+				auto type = ParseLongType(pa, cursor);
+				RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
+				typeOpMemberType = MakePtr<MemberType>();
+				typeOpMemberType->classType = type;
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = typeOpCursor;
+			}
+		}
+
 		if (pdc.forceSpecialMethod && TestToken(cursor, CppTokens::OPERATOR, false))
 		{
 			if (declarators.Count() > 0)
@@ -811,14 +831,29 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 
 			auto opPdc = pda_Decls(false, false);
 			opPdc.containingClass = pdc.containingClass;
+			if (typeOpMemberType && !opPdc.containingClass)
+			{
+				opPdc.containingClass = EnsureMemberTypeResolved(typeOpMemberType, cursor);
+			}
 			opPdc.dr = DeclaratorRestriction::Zero;
 
 			typeResult = ParseLongType(pa, cursor);
 			declarator = ParseSingleDeclarator(pa, typeResult, { opPdc,false }, cursor);
 			declarator->name = cppName;
+			if (typeOpMemberType)
+			{
+				typeOpMemberType->type = declarator->type;
+				declarator->type = typeOpMemberType;
+			}
 		}
 		else
 		{
+			if (typeOpMemberType)
+			{
+				typeOpMemberType = nullptr;
+				cursor = typeOpCursor;
+			}
+
 			// if we have already recognize a type, we can parse multiple declarators with initializers
 			auto newPdc = pdc;
 			newPdc.dr = pdc.dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : pdc.dr;

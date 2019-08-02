@@ -21,19 +21,19 @@
     - [x] Test `typename` and `template` keywords in types and expressions.
   - [x] Default template argument.
   - [ ] `...` argument
-    - `...` type argument is only allowed to appear as the last argument in a generic declaration.
-    - `...` types or expressions are only allowed in a place where we need a type list or an expression list
-    - Only one `...` argument is allowed to appear in a `...` type or expression.
+    - [x] `...` type argument is only allowed to appear as the last argument in a generic declaration.
+    - [x] `...` types or expressions are only allowed in a place where we need a type list or an expression list
+    - [x] Only one `...` argument is allowed to appear in a `...` type or expression.
       - Type AST for `...` type, and expression AST for `...` expression.
-    - When a `...` type argument is evaluated to `any_t`, it means we don't know how many types are bounded to this argument. Otherwise, it is evaluated to `{T, U, V}`.
-    - When a `...` expression is evaluated to `any_t`, it means we don't know how many types are bounded to this argument. Otherwise, it is evaluated to `{T, U, V}`.
-    - When a `...` type argument is used to create `...` types or `...` expressions, if it is evaluated to `any_t`, then the result is also evaluated to `any_t`.
+    - [x] When a `...` type argument is evaluated to `any_t`, it means we don't know how many types are bounded to this argument. Otherwise, it is evaluated to `{T, U, V}`.
+    - [x] When a `...` expression is evaluated to `any_t`, it means we don't know how many types are bounded to this argument. Otherwise, it is evaluated to `{T, U, V}`.
+    - [x] When a `...` type argument is used to create `...` types or `...` expressions, if it is evaluated to `any_t`, then the result is also evaluated to `any_t`.
     - When `...` type arguments are applied to parameters
-      - If we know how many types are bounded to this `...` argument, dispatch them
-      - If we don't know, the whole type is evaluated to `any_t`
+      - [ ] If we know how many types are bounded to this `...` argument, dispatch them
+      - [ ] If we don't know, the whole type is evaluated to `any_t`
     - When calculating `...` expression
-      - If we know how many types are bounded to this `...` argument, dispatch them
-      - If we don't know, the whole expression is evaluated to `any_t`
+      - [ ] If we know how many types are bounded to this `...` argument, dispatch them
+      - [ ] If we don't know, the whole expression is evaluated to `any_t`
   - [x] Refactor `TypeToTsysInternal` before `ExprToTsysInternal` to extract following functions:
     - Expanding a type/expr list for both bounded VTA or unbounded VTA
     - Expanding a fixed number of types/expr for unbounded VTA
