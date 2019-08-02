@@ -44,7 +44,7 @@
   - If an member implementation does not match to a declaration, scopes are created for analyzing the body, error is ignored.
   - Allow many-to-many definition-to-declaration mapping.
   - `EvaluateSymbol` doesn't crash if no type is evaluated with `gaContext`
-- More refactorings
+- [ ] More refactorings
   - [x] `ResolveGenericParameters`: Receive `Array<TypeTsysItem>` instead of `Array<TypeTsysList>` for `argumentTypes`
   - [x] `VisitOverloadedFunction`: Receive `Array<ExprTsysItem>` instead of `List<Ptr<ExprTsysList>>` for `argTypesList`
   - [ ] `CreateIdReferenceExpr`: Remove dependency to `Ptr<Resolving>`
