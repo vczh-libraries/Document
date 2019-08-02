@@ -438,7 +438,7 @@ namespace symbol_type_resolving
 			it could be null if it is initiated by IdExpr
 	***********************************************************************/
 
-	void VisitSymbol(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result)
+	void VisitSymbolInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
 		ITsys* classScope = nullptr;
 		if (symbol->parent && symbol->parent->definition.Cast<ClassDeclaration>())
@@ -485,6 +485,7 @@ namespace symbol_type_resolving
 						}
 					}
 				}
+				hasNonVariadic = true;
 			}
 			break;
 		case symbol_component::SymbolKind::Function:
@@ -509,12 +510,14 @@ namespace symbol_type_resolving
 
 					AddInternal(result, { symbol,ExprTsysType::PRValue,tsys });
 				}
+				hasNonVariadic = true;
 			}
 			break;
 		case symbol_component::SymbolKind::EnumItem:
 			{
 				auto tsys = pa.tsys->DeclOf(symbol->parent);
 				AddInternal(result, { symbol,ExprTsysType::PRValue,tsys });
+				hasNonVariadic = true;
 			}
 			break;
 		case symbol_component::SymbolKind::ValueAlias:
@@ -522,16 +525,39 @@ namespace symbol_type_resolving
 				auto usingDecl = symbol->definition.Cast<ValueAliasDeclaration>();
 				EvaluateSymbol(pa, usingDecl.Obj());
 				AddTemp(result, symbol->evaluation.Get());
+				hasNonVariadic = true;
 			}
 			break;
 		case symbol_component::SymbolKind::GenericValueArgument:
 			{
 				AddTemp(result, symbol->evaluation.Get());
+				hasNonVariadic = true;
 			}
 			break;
 		default:
 			throw IllegalExprException();
 		}
+	}
+
+	void VisitSymbol(const ParsingArguments& pa, Symbol* symbol, ExprTsysList& result)
+	{
+		bool hasVariadic = false;
+		bool hasNonVariadic = false;
+		VisitSymbolInternal(pa, nullptr, symbol, false, result, false, hasVariadic, hasNonVariadic);
+	}
+
+	void VisitSymbolForScope(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result)
+	{
+		bool hasVariadic = false;
+		bool hasNonVariadic = false;
+		VisitSymbolInternal(pa, thisItem, symbol, true, result, false, hasVariadic, hasNonVariadic);
+	}
+
+	void VisitSymbolForField(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result)
+	{
+		bool hasVariadic = false;
+		bool hasNonVariadic = false;
+		VisitSymbolInternal(pa, thisItem, symbol, false, result, false, hasVariadic, hasNonVariadic);
 	}
 
 	/***********************************************************************
@@ -558,7 +584,7 @@ namespace symbol_type_resolving
 	VisitResolvedMember: Fill all resolved member symbol to ExprTsysList
 	***********************************************************************/
 
-	void VisitResolvedMember(const ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result)
+	void VisitResolvedMemberInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
 		ExprTsysList varTypes, funcTypes;
 		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
@@ -592,7 +618,7 @@ namespace symbol_type_resolving
 				}
 			}
 
-			VisitSymbol(pa, (targetTypeList == &result ? nullptr : thisItem), resolving->resolvedSymbols[i], false, *targetTypeList);
+			VisitSymbolInternal(pa, (targetTypeList == &result ? nullptr : thisItem), resolving->resolvedSymbols[i], false, *targetTypeList, allowVariadic, hasVariadic, hasNonVariadic);
 		}
 
 		if (thisItem)
@@ -612,6 +638,18 @@ namespace symbol_type_resolving
 		}
 	}
 
+	void VisitResolvedMember(const ParsingArguments& pa, Ptr<Resolving> resolving, ExprTsysList& result, bool& hasVariadic, bool& hasNonVariadic)
+	{
+		VisitResolvedMemberInternal(pa, nullptr, resolving, result, true, hasVariadic, hasNonVariadic);
+	}
+
+	void VisitResolvedMember(const ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result)
+	{
+		bool hasVariadic = false;
+		bool hasNonVariadic = false;
+		VisitResolvedMemberInternal(pa, thisItem, resolving, result, false, hasVariadic, hasNonVariadic);
+	}
+
 	/***********************************************************************
 	VisitFunctors: Find qualified functors (including functions and operator())
 	***********************************************************************/
@@ -629,7 +667,7 @@ namespace symbol_type_resolving
 			for (vint j = 0; j < resolving->resolvedSymbols.Count(); j++)
 			{
 				auto symbol = resolving->resolvedSymbols[j];
-				VisitSymbol(pa, &parentItem, symbol, false, result);
+				VisitSymbolForField(pa, &parentItem, symbol, result);
 			}
 			FindQualifiedFunctors(pa, cv, refType, result, false);
 		}

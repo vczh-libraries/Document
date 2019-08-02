@@ -411,7 +411,7 @@ public:
 						{
 							SearchAdlClassesAndNamespaces(pa, args[i].tsys, nss, classes);
 						}
-						SerachAdlFunction(pa, nss, idExpr->name.name, funcTypes);
+						SearchAdlFunction(pa, nss, idExpr->name.name, funcTypes);
 					}
 				}
 
@@ -585,7 +585,7 @@ public:
 							{
 								for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
 								{
-									VisitSymbol(newPa, nullptr, rsr.values->resolvedSymbols[i], true, processResult);
+									VisitSymbolForScope(newPa, nullptr, rsr.values->resolvedSymbols[i], processResult);
 								}
 							}
 						}

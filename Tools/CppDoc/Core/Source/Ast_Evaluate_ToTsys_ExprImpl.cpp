@@ -318,7 +318,7 @@ namespace symbol_totsys_impl
 				ExprTsysList opTypes;
 				for (vint j = 0; j < opMethods.values->resolvedSymbols.Count(); j++)
 				{
-					VisitSymbol(pa, leftType, opMethods.values->resolvedSymbols[j], false, opTypes);
+					VisitSymbolForField(pa, leftType, opMethods.values->resolvedSymbols[j], opTypes);
 				}
 				FilterFieldsAndBestQualifiedFunctions(leftCV, leftRef, opTypes);
 
@@ -347,7 +347,7 @@ namespace symbol_totsys_impl
 			{
 				for (vint j = 0; j < opFuncs.values->resolvedSymbols.Count(); j++)
 				{
-					VisitSymbol(pa, leftType, opFuncs.values->resolvedSymbols[j], false, opTypes);
+					VisitSymbolForField(pa, leftType, opFuncs.values->resolvedSymbols[j], opTypes);
 				}
 			}
 			if (!opFuncs.values || IsAdlEnabled(pa, opFuncs.values))
@@ -358,7 +358,7 @@ namespace symbol_totsys_impl
 				{
 					SearchAdlClassesAndNamespaces(pa, rightEntity, nss, classes);
 				}
-				SerachAdlFunction(pa, nss, opName.name, opTypes);
+				SearchAdlFunction(pa, nss, opName.name, opTypes);
 			}
 
 			if (opTypes.Count() > 0)

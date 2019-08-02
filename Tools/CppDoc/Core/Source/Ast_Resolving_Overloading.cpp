@@ -412,10 +412,10 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	SerachAdlFunction: Find functions in namespaces
+	SearchAdlFunction: Find functions in namespaces
 	***********************************************************************/
 
-	void SerachAdlFunction(const ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result)
+	void SearchAdlFunction(const ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result)
 	{
 		for (vint i = 0; i < nss.Count(); i++)
 		{
@@ -429,7 +429,7 @@ namespace symbol_type_resolving
 					auto child = children[j].Obj();
 					if (child->kind == symbol_component::SymbolKind::Function)
 					{
-						VisitSymbol(pa, nullptr, child, false, result);
+						VisitSymbol(pa, child, result);
 					}
 				}
 			}

@@ -226,7 +226,15 @@ namespace symbol_totsys_impl
 		}
 		else
 		{
-			VisitResolvedMember(pa, nullptr, resolving, outputTarget);
+			bool hasVariadic = false;
+			bool hasNonVariadic = false;
+			VisitResolvedMember(pa, resolving, outputTarget, hasVariadic, hasNonVariadic);
+
+			if (hasVariadic && hasNonVariadic)
+			{
+				throw NotConvertableException();
+			}
+			isVta = hasVariadic;
 		}
 
 		if (gaContext)
