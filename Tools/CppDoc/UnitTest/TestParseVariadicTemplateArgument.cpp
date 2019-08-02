@@ -67,7 +67,6 @@ using Func2 = R(*)(int(*)(TArgs)...);
 template<typename R, typename... TArgs>
 using Func3 = R(*)(TArgs(*)(TArgs)...);
 )";
-	// TODO: Test type passings by function types, unlike TestParseVariadicTemplateArgument_ApplyOn_VTA_Default by init expression
 	COMPILE_PROGRAM(program, pa, input);
 	
 	AssertType(pa, L"Ref",											L"Ref",											L"<::Ref::[R], ...::Ref::[TArgs]> any_t"																					);

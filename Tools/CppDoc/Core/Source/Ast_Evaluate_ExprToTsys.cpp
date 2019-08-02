@@ -180,7 +180,6 @@ public:
 
 		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self](ExprTsysList& processResult, ExprTsysItem argClass)
 		{
-			// TODO: Read ResolveField before refactoring
 			if (argClass.tsys->IsUnknownType())
 			{
 				AddTemp(processResult, pa.tsys->Any());
@@ -328,7 +327,7 @@ public:
 		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, argHasBoundedVta, argUnboundedVtaCount,
 			[this, self, funcVta, &funcExprTypes, &totalSelectedFunctions](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& unboundedAnys)
 			{
-				// TODO: Implement this later
+				// TODO: Implement variadic template argument passing
 				if (unboundedAnys.Count() > 0)
 				{
 					throw NotConvertableException();
