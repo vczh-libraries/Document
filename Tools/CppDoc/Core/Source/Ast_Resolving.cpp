@@ -163,7 +163,7 @@ namespace symbol_type_resolving
 				}
 
 				ExprTsysList types;
-				ExprToTsys(newPa, rootVarDecl->initializer->arguments[0].item, types);
+				ExprToTsysNoVta(newPa, rootVarDecl->initializer->arguments[0].item, types);
 
 				for (vint k = 0; k < types.Count(); k++)
 				{
@@ -382,7 +382,7 @@ namespace symbol_type_resolving
 		if (usingDecl->needResolveTypeFromInitializer)
 		{
 			ExprTsysList tsys;
-			ExprToTsys(newPa, usingDecl->expr, tsys, (esContext ? &esContext->gaContext : nullptr));
+			ExprToTsysNoVta(newPa, usingDecl->expr, tsys, (esContext ? &esContext->gaContext : nullptr));
 			for (vint i = 0; i < tsys.Count(); i++)
 			{
 				auto entityType = tsys[i].tsys;

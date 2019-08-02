@@ -40,7 +40,7 @@ public:
 	void Visit(ExprStat* self) override
 	{
 		ExprTsysList types;
-		ExprToTsys(pa, self->expr, types);
+		ExprToTsysNoVta(pa, self->expr, types);
 	}
 
 	void Visit(LabelStat* self) override
@@ -56,7 +56,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 		self->stat->Accept(this);
 	}
@@ -83,7 +83,7 @@ public:
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsys(spa, self->expr, types);
+			ExprToTsysNoVta(spa, self->expr, types);
 		}
 		EvaluateStat(spa, self->stat);
 	}
@@ -92,7 +92,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 		EvaluateStat(pa, self->stat);
 	}
@@ -100,7 +100,7 @@ public:
 	void Visit(ForEachStat* self) override
 	{
 		ExprTsysList types;
-		ExprToTsys(pa, self->expr, types);
+		ExprToTsysNoVta(pa, self->expr, types);
 
 		if (self->varDecl->needResolveTypeFromInitializer)
 		{
@@ -153,7 +153,7 @@ public:
 						derefExpr->opName.type = CppNameType::Operator;
 						derefExpr->operand = callExpr;
 
-						ExprToTsys(pa, derefExpr, virtualExprTypes);
+						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes);
 					}
 					{
 						// *container.begin()
@@ -179,7 +179,7 @@ public:
 						derefExpr->opName.type = CppNameType::Operator;
 						derefExpr->operand = callExpr;
 
-						ExprToTsys(pa, derefExpr, virtualExprTypes);
+						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes);
 					}
 
 					for (vint i = 0; i < virtualExprTypes.Count(); i++)
@@ -218,17 +218,17 @@ public:
 		if (self->init)
 		{
 			ExprTsysList types;
-			ExprToTsys(spa, self->init, types);
+			ExprToTsysNoVta(spa, self->init, types);
 		}
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsys(spa, self->expr, types);
+			ExprToTsysNoVta(spa, self->expr, types);
 		}
 		if (self->effect)
 		{
 			ExprTsysList types;
-			ExprToTsys(spa, self->effect, types);
+			ExprToTsysNoVta(spa, self->effect, types);
 		}
 		EvaluateStat(spa, self->stat);
 	}
@@ -247,7 +247,7 @@ public:
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsys(spa, self->expr, types);
+			ExprToTsysNoVta(spa, self->expr, types);
 		}
 		EvaluateStat(spa, self->trueStat);
 		if (self->falseStat)
@@ -266,7 +266,7 @@ public:
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsys(spa, self->expr, types);
+			ExprToTsysNoVta(spa, self->expr, types);
 		}
 		EvaluateStat(spa, self->stat);
 	}
@@ -287,7 +287,7 @@ public:
 		ExprTsysList types;
 		if (self->expr)
 		{
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 
 		if (pa.funcSymbol)
@@ -323,7 +323,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 		self->tryStat->Accept(this);
 		self->exceptStat->Accept(this);
@@ -343,7 +343,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 		self->stat->Accept(this);
 	}
@@ -352,7 +352,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 		self->stat->Accept(this);
 	}
@@ -440,7 +440,7 @@ public:
 				}
 			SKIP_RESOLVING_FIELD:;
 				ExprTsysList types;
-				ExprToTsys(newPa, item.f1, types);
+				ExprToTsysNoVta(newPa, item.f1, types);
 			}
 		}
 
@@ -456,7 +456,7 @@ public:
 		if (self->value)
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->value, types);
+			ExprToTsysNoVta(pa, self->value, types);
 		}
 	}
 

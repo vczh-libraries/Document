@@ -156,7 +156,7 @@ extern void					TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysLis
 extern void					TypeToTsysNoVta(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
 extern void					TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf);
 extern void					ExprToTsysInternal(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, bool& isVta, GenericArgContext* gaContext = nullptr);
-extern void					ExprToTsys(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, GenericArgContext* gaContext = nullptr);
+extern void					ExprToTsysNoVta(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, GenericArgContext* gaContext = nullptr);
 
 extern void					EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s);
 extern void					EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s);

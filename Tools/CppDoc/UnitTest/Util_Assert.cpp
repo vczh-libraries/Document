@@ -101,7 +101,7 @@ void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 	ExprTsysList tsys;
 	try
 	{
-		ExprToTsys(pa, expr, tsys);
+		ExprToTsysNoVta(pa, expr, tsys);
 	}
 	catch (const IllegalExprException&)
 	{

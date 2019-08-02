@@ -223,7 +223,7 @@ namespace symbol_totsys_impl
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsys(pa, self->expr, types, gaContext);
+			ExprToTsysNoVta(pa, self->expr, types, gaContext);
 		}
 
 		AddTemp(result, pa.tsys->Void());

@@ -198,7 +198,7 @@ namespace symbol_totsys_impl
 	// CreateIdReferenceExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void CreateIdReferenceExpr(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, ExprTsysList& result, bool allowAny)
+	void CreateIdReferenceExpr(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, ExprTsysList& result, bool allowAny, bool allowVariadic, bool& isVta)
 	{
 		if (!resolving)
 		{
@@ -289,7 +289,8 @@ namespace symbol_totsys_impl
 
 		if (resolving)
 		{
-			CreateIdReferenceExpr(pa, gaContext, resolving, result, false);
+			bool childIsVta = false;
+			CreateIdReferenceExpr(pa, gaContext, resolving, result, false, false, childIsVta);
 		}
 	}
 

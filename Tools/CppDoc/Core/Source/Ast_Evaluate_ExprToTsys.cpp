@@ -11,10 +11,10 @@ ExprToTsys
 	NullptrExpr					: literal
 	ParenthesisExpr				: unbounded
 	CastExpr					: unbounded
-	TypeidExpr					: literal
-	SizeofExpr					: literal
+	TypeidExpr					: unbounded
+	SizeofExpr					: unbounded
 	ThrowExpr					: literal
-	DeleteExpr					: literal
+	DeleteExpr					: unbounded
 	IdExpr						: *identifier
 	ChildExpr					: unbounded
 	FieldAccessExpr				: unbounded
@@ -159,7 +159,7 @@ public:
 
 	void Visit(IdExpr* self)override
 	{
-		CreateIdReferenceExpr(pa, gaContext, self->resolving, result, false);
+		CreateIdReferenceExpr(pa, gaContext, self->resolving, result, false, true, isVta);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -170,7 +170,8 @@ public:
 	{
 		if (!IsResolvedToType(self->classType))
 		{
-			CreateIdReferenceExpr(pa, gaContext, self->resolving, result, true);
+			bool childIsVta = false;
+			CreateIdReferenceExpr(pa, gaContext, self->resolving, result, true, false, childIsVta);
 			return;
 		}
 
@@ -454,7 +455,7 @@ public:
 				throw NotConvertableException();
 			}
 			ExprTsysList types;
-			ExprToTsys(pa, self->placementArguments[i].item, types, gaContext);
+			ExprToTsysNoVta(pa, self->placementArguments[i].item, types, gaContext);
 		}
 
 		VariadicInput<ExprTsysItem> variadicInput(self->initializer ? self->initializer->arguments.Count() + 1 : 1, pa, gaContext);
@@ -637,7 +638,7 @@ void ExprToTsysInternal(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& t
 	isVta = visitor.isVta;
 }
 
-void ExprToTsys(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, GenericArgContext* gaContext)
+void ExprToTsysNoVta(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, GenericArgContext* gaContext)
 {
 	bool isVta = false;
 	ExprToTsysInternal(pa, e, tsys, isVta, gaContext);
