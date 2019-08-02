@@ -64,7 +64,7 @@ public:
 		TypeTsysList items1;
 		bool isVta1 = false;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
-		isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem arg1)
+		isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem arg1)
 		{
 			return ProcessReferenceType(pa, self, arg1);
 		}, Input(items1, isVta1));
@@ -79,7 +79,7 @@ public:
 		TypeTsysList items1;
 		bool isVta1 = false;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
-		isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem arg1)
+		isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem arg1)
 		{
 			return ProcessArrayType(pa, self, arg1);
 		}, Input(items1, isVta1));
@@ -126,7 +126,7 @@ public:
 		variadicInput.ApplyVariadicList(1, self->parameters);
 
 		isVta = variadicInput.Expand(&self->parameters, result,
-			[=](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
 				ProcessFunctionType(pa, processResult, self, cc, memberOf, args, boundedAnys);
 			});
@@ -143,7 +143,7 @@ public:
 		bool classTypesVta = false;
 		TypeToTsysInternal(pa, self->type, types, gaContext, typesVta, true, cc);
 		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classTypesVta);
-		isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem argType, ExprTsysItem argClass)
+		isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem argType, ExprTsysItem argClass)
 		{
 			return ProcessMemberType(pa, self, argType, argClass);
 		}, Input(types, typesVta), Input(classTypes, classTypesVta));
@@ -160,7 +160,7 @@ public:
 			ExprTsysList types;
 			bool typesVta = false;
 			ExprToTsysInternal(pa, self->expr, types, typesVta, gaContext);
-			isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem arg1)
+			isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem arg1)
 			{
 				return ProcessDeclType(pa, self, arg1);
 			}, Input(types, typesVta));
@@ -176,7 +176,7 @@ public:
 		TypeTsysList items1;
 		bool isVta1 = false;
 		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
-		isVta = ExpandPotentialVta(pa, result, [=](ExprTsysItem arg1)
+		isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem arg1)
 		{
 			return ProcessDecorateType(pa, self, arg1);
 		}, Input(items1, isVta1));
@@ -216,7 +216,7 @@ public:
 		bool classVta = false;
 		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classVta);
 
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem argClass)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self](ExprTsysList& processResult, ExprTsysItem argClass)
 		{
 			ProcessChildType(pa, gaContext, self, argClass, processResult);
 		}, Input(classTypes, classVta));
@@ -236,7 +236,7 @@ public:
 		variadicInput.ApplySingle<Type>(0, self->type);
 		variadicInput.ApplyGenericArguments(1, isTypes, self->arguments);
 		isVta = variadicInput.Expand(&self->arguments, result,
-			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self, &isTypes](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
 				ProcessGenericType(pa, processResult, self, isTypes, args, boundedAnys);
 			});

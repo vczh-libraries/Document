@@ -422,9 +422,9 @@ TEST_CASE(TestParseVariadicTemplateArgument_Exprs_Function)
 {
 	auto input = LR"(
 namespace a { struct A{ static int*		G(void*); operator void*(); }; int		F(A); }
-namespace b { struct B{ static bool*	G(void*); operator void*(); }; bool		F(A); }
-namespace c { struct C{ static char*	G(void*); operator void*(); }; char		F(A); }
-namespace d { struct D{ static double*	G(void*); operator void*(); }; double	F(A); }
+namespace b { struct B{ static bool*	G(void*); operator void*(); }; bool		F(B); }
+namespace c { struct C{ static char*	G(void*); operator void*(); }; char		F(C); }
+namespace d { struct D{ static double*	G(void*); operator void*(); }; double	F(D); }
 void* F(...);
 
 template<typename ...TArgs>

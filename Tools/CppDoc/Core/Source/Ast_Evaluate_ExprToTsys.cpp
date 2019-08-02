@@ -91,7 +91,7 @@ public:
 		ExprTsysList types;
 		bool typesVta = false;
 		ExprToTsysInternal(pa, self->expr, types, typesVta, gaContext);
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem arg1)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self](ExprTsysList& processResult, ExprTsysItem arg1)
 		{
 			ProcessParenthesisExpr(pa, processResult, self, arg1);
 		}, Input(types, typesVta));
@@ -111,7 +111,7 @@ public:
 		bool exprTypesVta = false;
 		ExprToTsysInternal(pa, self->expr, exprTypes, exprTypesVta, gaContext);
 
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem argType, ExprTsysItem argExpr)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self](ExprTsysList& processResult, ExprTsysItem argType, ExprTsysItem argExpr)
 		{
 			ProcessCastExpr(pa, processResult, self, argType, argExpr);
 		}, Input(types, typesVta), Input(exprTypes, exprTypesVta));
@@ -178,7 +178,7 @@ public:
 		bool classVta = false;
 		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classVta);
 
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem argClass)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self](ExprTsysList& processResult, ExprTsysItem argClass)
 		{
 			// TODO: Read ResolveField before refactoring
 			if (argClass.tsys->IsUnknownType())
@@ -217,7 +217,7 @@ public:
 
 		ResolveSymbolResult totalRar;
 		bool operatorIndexed = false;
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [&](ExprTsysList& processResult, ExprTsysItem argParent, ExprTsysItem argClass)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, idExpr, childExpr, &totalRar, &operatorIndexed](ExprTsysList& processResult, ExprTsysItem argParent, ExprTsysItem argClass)
 		{
 			ProcessFieldAccessExpr(pa, processResult, gaContext, self, argParent, argClass, idExpr, childExpr, totalRar, operatorIndexed);
 		}, Input(parentTypes, parentVta), Input(classTypes, classVta));
@@ -257,7 +257,7 @@ public:
 		ExprToTsysInternal(pa, self->index, indexTypes, indexVta, gaContext);
 
 		bool indexed = false;
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [&](ExprTsysList& processResult, ExprTsysItem argArray, ExprTsysItem argIndex)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &indexed](ExprTsysList& processResult, ExprTsysItem argArray, ExprTsysItem argIndex)
 		{
 			ProcessArrayAccessExpr(pa, processResult, gaContext, self, argArray, argIndex, indexed);
 		}, Input(arrayTypes, arrayVta), Input(indexTypes, indexVta));
@@ -282,9 +282,8 @@ public:
 		}
 
 		bool argHasBoundedVta = false;
-		bool argHasUnboundedVta = false;
 		vint argUnboundedVtaCount = -1;
-		isVta = CheckVta(self->arguments, argTypesList, isVtas, 0, argHasBoundedVta, argHasUnboundedVta, argUnboundedVtaCount);
+		isVta = CheckVta(self->arguments, argTypesList, isVtas, 0, argHasBoundedVta, argUnboundedVtaCount);
 
 		ExprTsysList funcExprTypes;
 		bool funcVta = false;
@@ -304,21 +303,21 @@ public:
 				auto funcTsys = funcExprTypes[i].tsys;
 				if (funcTsys->GetType() == TsysType::Init)
 				{
+					if (argUnboundedVtaCount == -1)
+					{
+						argUnboundedVtaCount = funcVtaCount;
+					}
+
 					if (funcVtaCount == -1)
 					{
 						funcVtaCount = funcTsys->GetParamCount();
-						if (!argHasUnboundedVta)
-						{
-							argHasUnboundedVta = true;
-							argUnboundedVtaCount = funcVtaCount;
-						}
 					}
 					else if (funcVtaCount != funcTsys->GetParamCount())
 					{
 						throw NotConvertableException();
 					}
 
-					if (argHasUnboundedVta && argUnboundedVtaCount != funcVtaCount)
+					if (argUnboundedVtaCount != -1 && argUnboundedVtaCount != funcVtaCount)
 					{
 						throw NotConvertableException();
 					}
@@ -328,7 +327,7 @@ public:
 
 		ExprTsysList totalSelectedFunctions;
 		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, argHasBoundedVta, argUnboundedVtaCount,
-			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& unboundedAnys)
+			[this, self, funcVta, &funcExprTypes, &totalSelectedFunctions](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& unboundedAnys)
 			{
 				// TODO: Implement this later
 				if (unboundedAnys.Count() > 0)
@@ -377,13 +376,13 @@ public:
 					auto entityType = funcTypes[i].tsys->GetEntity(cv, refType);
 					if (entityType->IsUnknownType())
 					{
-						AddTemp(result, pa.tsys->Any());
+						AddTemp(processResult, pa.tsys->Any());
 					}
 				}
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
 
 				ExprTsysList selectedFunctions;
-				VisitOverloadedFunction(pa, funcTypes, args, result, (pa.recorder ? &selectedFunctions : nullptr));
+				VisitOverloadedFunction(pa, funcTypes, args, processResult, (pa.recorder ? &selectedFunctions : nullptr));
 				AddInternal(totalSelectedFunctions, selectedFunctions);
 			});
 
@@ -437,7 +436,7 @@ public:
 			variadicInput.ApplyVariadicList(1, self->initializer->arguments);
 		}
 		isVta = variadicInput.Expand((self->initializer ? &self->initializer->arguments : nullptr), result,
-			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
 				ProcessCtorAccessExpr(pa, processResult, self, args, boundedAnys);
 			});
@@ -467,7 +466,7 @@ public:
 			variadicInput.ApplyVariadicList(1, self->initializer->arguments);
 		}
 		isVta = variadicInput.Expand((self->initializer ? &self->initializer->arguments : nullptr), result,
-			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
 				ProcessNewExpr(pa, processResult, self, args, boundedAnys);
 			});
@@ -482,7 +481,7 @@ public:
 		VariadicInput<ExprTsysItem> variadicInput(self->arguments.Count(), pa, gaContext);
 		variadicInput.ApplyVariadicList(0, self->arguments);
 		isVta = variadicInput.Expand(&self->arguments, result,
-			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
 				ProcessUniversalInitializerExpr(pa, processResult, self, args, boundedAnys);
 			});
@@ -499,7 +498,7 @@ public:
 		ExprToTsysInternal(pa, self->operand, types, typesVta, gaContext);
 
 		bool indexed = false;
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [&](ExprTsysList& processResult, ExprTsysItem arg1)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &indexed](ExprTsysList& processResult, ExprTsysItem arg1)
 		{
 			ProcessPostfixUnaryExpr(pa, processResult, gaContext, self, arg1, indexed);
 		}, Input(types, typesVta));
@@ -526,7 +525,7 @@ public:
 				{
 					TypeTsysList classTypes;
 					TypeToTsysInternal(pa, childExpr->classType, classTypes, gaContext, typesVta);
-					ExpandPotentialVtaMultiResult(pa, types, [=](ExprTsysList& processResult, ExprTsysItem arg1)
+					ExpandPotentialVtaMultiResult(pa, types, [this, self, childExpr](ExprTsysList& processResult, ExprTsysItem arg1)
 					{
 						if (arg1.tsys->IsUnknownType())
 						{
@@ -554,7 +553,7 @@ public:
 	SKIP_RESOLVING_OPERAND:
 		bool indexed = false;
 
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [&](ExprTsysList& processResult, ExprTsysItem arg1)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &indexed](ExprTsysList& processResult, ExprTsysItem arg1)
 		{
 			ProcessPrefixUnaryExpr(pa, processResult, gaContext, self, arg1, indexed);
 		}, Input(types, typesVta));
@@ -578,7 +577,7 @@ public:
 		ExprToTsysInternal(pa, self->right, rightTypes, rightVta, gaContext);
 		bool indexed = false;
 
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [&](ExprTsysList& processResult, ExprTsysItem argLeft, ExprTsysItem argRight)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &indexed](ExprTsysList& processResult, ExprTsysItem argLeft, ExprTsysItem argRight)
 		{
 			ProcessBinaryExpr(pa, processResult, gaContext, self, argLeft, argRight, indexed);
 		}, Input(leftTypes, leftVta), Input(rightTypes, rightVta));
@@ -603,7 +602,7 @@ public:
 		ExprToTsysInternal(pa, self->left, leftTypes, leftVta, gaContext);
 		ExprToTsysInternal(pa, self->right, rightTypes, rightVta, gaContext);
 
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [=](ExprTsysList& processResult, ExprTsysItem argCond, ExprTsysItem argLeft, ExprTsysItem argRight)
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self](ExprTsysList& processResult, ExprTsysItem argCond, ExprTsysItem argLeft, ExprTsysItem argRight)
 		{
 			ProcessIfExpr(pa, processResult, gaContext, self, argCond, argLeft, argRight);
 		}, Input(conditionTypes, conditionVta), Input(leftTypes, leftVta), Input(rightTypes, rightVta));
@@ -623,7 +622,7 @@ public:
 		variadicInput.ApplySingle<Expr>(0, self->expr);
 		variadicInput.ApplyGenericArguments(1, isTypes, self->arguments);
 		isVta = variadicInput.Expand(&self->arguments, result,
-			[&](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self, &isTypes](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
 				ProcessGenericExpr(pa, processResult, self, isTypes, args, boundedAnys);
 			});

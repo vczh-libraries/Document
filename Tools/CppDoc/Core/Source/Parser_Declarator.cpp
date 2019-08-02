@@ -134,7 +134,7 @@ struct ParseDeclaratorContext
 ParseDeclaratorName
 ***********************************************************************/
 
-bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>& targetType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
+bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type> targetType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
 {
 	// forceSpecialMethod means this function is expected to accept only
 	//   constructor declarators

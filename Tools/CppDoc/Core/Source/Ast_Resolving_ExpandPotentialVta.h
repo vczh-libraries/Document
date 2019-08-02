@@ -439,8 +439,9 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	template<typename TExpr, typename TInput>
-	bool CheckVta(const VariadicList<TExpr>& arguments, Array<List<TInput>>& inputs, Array<bool>& isVtas, vint offset, bool& hasBoundedVta, bool& hasUnboundedVta, vint& unboundedVtaCount)
+	bool CheckVta(const VariadicList<TExpr>& arguments, Array<List<TInput>>& inputs, Array<bool>& isVtas, vint offset, bool& hasBoundedVta, vint& unboundedVtaCount)
 	{
+		bool hasUnboundedVta = false;
 		for (vint i = 0; i < offset; i++)
 		{
 			if (isVtas[i])
@@ -512,7 +513,6 @@ namespace symbol_totsys_impl
 		Array<List<TInput>>			argItems;
 		Array<bool>					isVtas;
 		bool						hasBoundedVta = false;
-		bool						hasUnboundedVta = false;
 		vint						unboundedVtaCount = -1;
 
 		void Apply(TypeTsysList& result, bool& isVta, const Ptr<Type>& type)
@@ -604,7 +604,6 @@ namespace symbol_totsys_impl
 				isVtas,
 				argItems.Count() - (variadicList ? variadicList->Count() : 0),
 				hasBoundedVta,
-				hasUnboundedVta,
 				unboundedVtaCount
 			);
 			ExpandPotentialVtaList(pa, result, argItems, isVtas, hasBoundedVta, unboundedVtaCount, process);
