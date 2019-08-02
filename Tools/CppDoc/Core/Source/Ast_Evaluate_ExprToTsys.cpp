@@ -303,11 +303,6 @@ public:
 				auto funcTsys = funcExprTypes[i].tsys;
 				if (funcTsys->GetType() == TsysType::Init)
 				{
-					if (argUnboundedVtaCount == -1)
-					{
-						argUnboundedVtaCount = funcVtaCount;
-					}
-
 					if (funcVtaCount == -1)
 					{
 						funcVtaCount = funcTsys->GetParamCount();
@@ -317,7 +312,11 @@ public:
 						throw NotConvertableException();
 					}
 
-					if (argUnboundedVtaCount != -1 && argUnboundedVtaCount != funcVtaCount)
+					if (argUnboundedVtaCount == -1)
+					{
+						argUnboundedVtaCount = funcVtaCount;
+					}
+					if (argUnboundedVtaCount != funcVtaCount)
 					{
 						throw NotConvertableException();
 					}
