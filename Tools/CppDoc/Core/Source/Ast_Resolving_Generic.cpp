@@ -59,10 +59,9 @@ namespace symbol_type_resolving
 	ResolveGenericParameters: Calculate generic parameter types by matching arguments to patterens
 	***********************************************************************/
 
-	void EnsureGenericNormalParameterAndArgumentMatched(ITsys* parameter, ITsys* argument);
 	void EnsureGenericFunctionParameterAndArgumentMatched(ITsys* parameter, ITsys* argument);
 
-	void EnsureGenericNormalParameterAndArgumentMatched(ITsys* parameter, ITsys* argument)
+	void EnsureGenericTypeParameterAndArgumentMatched(ITsys* parameter, ITsys* argument)
 	{
 		switch (parameter->GetType())
 		{
@@ -94,15 +93,18 @@ namespace symbol_type_resolving
 		for (vint i = 0; i < parameter->GetParamCount(); i++)
 		{
 			auto nestedParameter = parameter->GetParam(i);
-			auto nestedArgument = parameter->GetParam(i);
-			if ((nestedParameter == nullptr) ^ (nestedArgument == nullptr))
+			auto nestedArgument = argument->GetParam(i);
+
+			bool acceptType = parameter->GetGenericFunction().acceptTypes[i];
+			bool isType = argument->GetGenericFunction().acceptTypes[i];
+			if (acceptType != isType)
 			{
 				throw NotConvertableException();
 			}
 
-			if (nestedParameter)
+			if (acceptType)
 			{
-				EnsureGenericNormalParameterAndArgumentMatched(nestedParameter, nestedArgument);
+				EnsureGenericTypeParameterAndArgumentMatched(nestedParameter, nestedArgument);
 			}
 		}
 	}
@@ -233,6 +235,7 @@ namespace symbol_type_resolving
 					{
 						throw NotConvertableException();
 					}
+					newGaContext->arguments.Add(pattern, nullptr);
 				}
 			}
 			else if (mappings.f0 == mappings.f1 && (variadicArgumentIndex == -1 || variadicArgumentIndex != mappings.f0))
@@ -246,19 +249,20 @@ namespace symbol_type_resolving
 				if (acceptType)
 				{
 					auto item = argumentTypes[i + offset];
-					EnsureGenericNormalParameterAndArgumentMatched(pattern, item.tsys);
+					EnsureGenericTypeParameterAndArgumentMatched(pattern, item.tsys);
 					newGaContext->arguments.Add(pattern, item.tsys);
+				}
+				else
+				{
+					newGaContext->arguments.Add(pattern, nullptr);
 				}
 			}
 			else if (mappings.f0 == mappings.f1 + 1)
 			{
 				// X, X-1: map to no arguments (variadic)
-				if (acceptType)
-				{
-					Array<ExprTsysItem> items;
-					auto init = pa.tsys->InitOf(items);
-					newGaContext->arguments.Add(pattern, init);
-				}
+				Array<ExprTsysItem> items;
+				auto init = pa.tsys->InitOf(items);
+				newGaContext->arguments.Add(pattern, init);
 			}
 			else
 			{
@@ -271,20 +275,23 @@ namespace symbol_type_resolving
 					}
 				}
 
-				if (acceptType)
-				{
-					Array<ExprTsysItem> items(mappings.f1 - mappings.f0 + 1);
+				Array<ExprTsysItem> items(mappings.f1 - mappings.f0 + 1);
 
-					for (vint j = mappings.f0; j <= mappings.f1; j++)
+				for (vint j = mappings.f0; j <= mappings.f1; j++)
+				{
+					if (acceptType)
 					{
 						auto item = argumentTypes[j + offset];
-						EnsureGenericNormalParameterAndArgumentMatched(pattern, item.tsys);
+						EnsureGenericTypeParameterAndArgumentMatched(pattern, item.tsys);
 						items[j - mappings.f0] = item;
 					}
-
-					auto init = pa.tsys->InitOf(items);
-					newGaContext->arguments.Add(pattern, init);
+					else
+					{
+						items[j - mappings.f0] = { nullptr,ExprTsysType::PRValue,nullptr };
+					}
 				}
+				auto init = pa.tsys->InitOf(items);
+				newGaContext->arguments.Add(pattern, init);
 			}
 		}
 		return true;

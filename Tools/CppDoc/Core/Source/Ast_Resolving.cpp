@@ -536,40 +536,46 @@ namespace symbol_type_resolving
 					{
 						throw NotConvertableException();
 					}
+					hasVariadic = true;
 
-					auto argumentKey = pa.tsys->DeclOf(symbol);
-					vint index = gaContext->arguments.Keys().IndexOf(argumentKey);
-					if (index == -1)
+					if (gaContext)
 					{
-						auto& replacedTypes = gaContext->arguments.GetByIndex(index);
-						for (vint i = 0; i < replacedTypes.Count(); i++)
+						auto argumentKey = pa.tsys->DeclOf(symbol);
+						vint index = gaContext->arguments.Keys().IndexOf(argumentKey);
+						if (index == -1)
 						{
-							auto replacedType = replacedTypes[i];
-							switch (replacedType->GetType())
+							auto& replacedTypes = gaContext->arguments.GetByIndex(index);
+							for (vint i = 0; i < replacedTypes.Count(); i++)
 							{
-							case TsysType::Init:
+								auto replacedType = replacedTypes[i];
+								if (!replacedType)
 								{
-									Array<ExprTsysList> initArgs(replacedType->GetParamCount());
-									for (vint j = 0; j < initArgs.Count(); j++)
-									{
-										AddTemp(initArgs[j], symbol->evaluation.Get());
-									}
-									CreateUniversalInitializerType(pa, initArgs, result);
+									throw NotConvertableException();
 								}
-								break;
-							case TsysType::Any:
-								AddTemp(result, pa.tsys->Any());
-								break;
-							default:
-								throw NotConvertableException();
+								switch (replacedType->GetType())
+								{
+								case TsysType::Init:
+									{
+										Array<ExprTsysList> initArgs(replacedType->GetParamCount());
+										for (vint j = 0; j < initArgs.Count(); j++)
+										{
+											AddTemp(initArgs[j], symbol->evaluation.Get());
+										}
+										CreateUniversalInitializerType(pa, initArgs, result);
+									}
+									break;
+								case TsysType::Any:
+									AddTemp(result, pa.tsys->Any());
+									break;
+								default:
+									throw NotConvertableException();
+								}
 							}
+							return;
 						}
 					}
-					else
-					{
-						AddTemp(result, pa.tsys->Any());
-					}
-					hasVariadic = true;
+
+					AddTemp(result, pa.tsys->Any());
 				}
 				else
 				{

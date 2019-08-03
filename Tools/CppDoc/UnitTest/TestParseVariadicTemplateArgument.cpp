@@ -419,7 +419,6 @@ auto New4 = {new TArgs(TArgs{})...};
 
 TEST_CASE(TestParseVariadicTemplateArgument_Exprs_Function)
 {
-	return;
 	auto input = LR"(
 namespace a { struct A{ static int*		G(void*); operator void*(); }; int		F(A); }
 namespace b { struct B{ static bool*	G(void*); operator void*(); }; bool		F(B); }

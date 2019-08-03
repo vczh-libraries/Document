@@ -98,6 +98,10 @@ struct ExprTsysItem : ExprHeader
 
 struct GenericArgContext
 {
+	// if a key is mapped to a value (not type), the value will be stored as:
+	//	nullptr	: a value
+	//	any		: unknown ammount of values
+	//	init	: known ammount of values
 	Group<ITsys*, ITsys*>	arguments;
 };
 
@@ -302,7 +306,7 @@ namespace vl
 	Init:				{Params}
 	GenericFunction:	<Params>->Element, GenericFunction contains all type arguments
 							For example: <T&&, U*>->Tuple<T, U>, GenericFunction contains T and U.
-							Null pattern means that argument accepts a constant value instead of a type.
+							If a pattern accepts a value, the pattern is the declaration of the argument symbol
 	GenericArg:			The GenericArg.argIndex-th type argument in Element
 */
 

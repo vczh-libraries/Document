@@ -15,7 +15,7 @@ ExprToTsys
 	SizeofExpr					: unbounded		*
 	ThrowExpr					: literal
 	DeleteExpr					: unbounded		*
-	IdExpr						: *identifier
+	IdExpr						: identifier
 	ChildExpr					: unbounded
 	FieldAccessExpr				: unbounded
 	ArrayAccessExpr				: unbounded
