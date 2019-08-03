@@ -43,55 +43,52 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 		if (symbol_type_resolving::IsStaticSymbol<ForwardFunctionDeclaration>(member)) continue;
 
 		symbol_type_resolving::EvaluateSymbol(pa, forwardFunc.Obj());
-		if (member->evaluation.Count() == 1)
+		auto& types = member->evaluation.Get();
+		for (vint j = 0; j < types.Count(); j++)
 		{
-			auto& types = member->evaluation.Get();
-			for (vint j = 0; j < types.Count(); j++)
+			auto funcType = types[j];
+			if (funcType->GetType() != TsysType::Function)
 			{
-				auto funcType = types[j];
-				if (funcType->GetType() != TsysType::Function)
-				{
-					throw NotResolvableException();
-				}
+				throw NotResolvableException();
+			}
 
-				switch (kind)
+			switch (kind)
+			{
+			case SpecialMemberKind::DefaultCtor:
+			case SpecialMemberKind::Dtor:
+				if (funcType->GetParamCount() == 0)
 				{
-				case SpecialMemberKind::DefaultCtor:
-				case SpecialMemberKind::Dtor:
-					if (funcType->GetParamCount() == 0)
+					return member;
+				}
+				break;
+			case SpecialMemberKind::CopyCtor:
+			case SpecialMemberKind::CopyAssignOp:
+				if (funcType->GetParamCount() == 1)
+				{
+					auto paramType = funcType->GetParam(0);
+					TsysCV cv;
+					TsysRefType refType;
+					auto entity = paramType->GetEntity(cv, refType);
+					if (refType == TsysRefType::LRef && entity->GetType() == TsysType::Decl && entity->GetDecl() == classSymbol)
 					{
 						return member;
 					}
-					break;
-				case SpecialMemberKind::CopyCtor:
-				case SpecialMemberKind::CopyAssignOp:
-					if (funcType->GetParamCount() == 1)
-					{
-						auto paramType = funcType->GetParam(0);
-						TsysCV cv;
-						TsysRefType refType;
-						auto entity = paramType->GetEntity(cv, refType);
-						if (refType == TsysRefType::LRef && entity->GetType() == TsysType::Decl && entity->GetDecl() == classSymbol)
-						{
-							return member;
-						}
-					}
-					break;
-				case SpecialMemberKind::MoveCtor:
-				case SpecialMemberKind::MoveAssignOp:
-					if (funcType->GetParamCount() == 1)
-					{
-						auto paramType = funcType->GetParam(0);
-						TsysCV cv;
-						TsysRefType refType;
-						auto entity = paramType->GetEntity(cv, refType);
-						if (refType == TsysRefType::RRef && entity->GetType() == TsysType::Decl && entity->GetDecl() == classSymbol)
-						{
-							return member;
-						}
-					}
-					break;
 				}
+				break;
+			case SpecialMemberKind::MoveCtor:
+			case SpecialMemberKind::MoveAssignOp:
+				if (funcType->GetParamCount() == 1)
+				{
+					auto paramType = funcType->GetParam(0);
+					TsysCV cv;
+					TsysRefType refType;
+					auto entity = paramType->GetEntity(cv, refType);
+					if (refType == TsysRefType::RRef && entity->GetType() == TsysType::Decl && entity->GetDecl() == classSymbol)
+					{
+						return member;
+					}
+				}
+				break;
 			}
 		}
 	}
@@ -237,15 +234,12 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 			}
 
 			symbol_type_resolving::EvaluateSymbol(pa, varDecl.Obj());
-			if (varDecl->symbol->evaluation.Count() == 1)
+			auto& types = varDecl->symbol->evaluation.Get();
+			for (vint j = 0; j < types.Count(); j++)
 			{
-				auto& types = varDecl->symbol->evaluation.Get();
-				for (vint j = 0; j < types.Count(); j++)
+				if (!IsSpecialMemberEnabledForType(pa, types[j], kind))
 				{
-					if (!IsSpecialMemberEnabledForType(pa, types[j], kind))
-					{
-						return true;
-					}
+					return true;
 				}
 			}
 		}

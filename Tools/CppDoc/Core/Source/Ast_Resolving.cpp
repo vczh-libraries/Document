@@ -207,33 +207,26 @@ namespace symbol_type_resolving
 	{
 		auto symbol = funcDecl->symbol;
 		auto& ev = symbol->evaluation;
-		if (ev.Get().Count() == 0)
-		{
-			throw NotResolvableException();
-		}
-		else
-		{
-			auto newPa = pa.WithContext(symbol->parent);
-			TypeTsysList returnTypes;
-			CopyFrom(returnTypes, ev.Get());
-			ev.Get().Clear();
+		auto newPa = pa.WithContext(symbol->parent);
+		TypeTsysList returnTypes;
+		CopyFrom(returnTypes, ev.Get());
+		ev.Get().Clear();
 
-			TypeTsysList processedReturnTypes;
+		TypeTsysList processedReturnTypes;
+		{
+			auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>();
+			auto pendingType = funcType->decoratorReturnType ? funcType->decoratorReturnType : funcType->returnType;
+			for (vint i = 0; i < returnTypes.Count(); i++)
 			{
-				auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>();
-				auto pendingType = funcType->decoratorReturnType ? funcType->decoratorReturnType : funcType->returnType;
-				for (vint i = 0; i < returnTypes.Count(); i++)
+				auto tsys = ResolvePendingType(newPa, pendingType, { nullptr,ExprTsysType::PRValue,returnTypes[i] });
+				if (!processedReturnTypes.Contains(tsys))
 				{
-					auto tsys = ResolvePendingType(newPa, pendingType, { nullptr,ExprTsysType::PRValue,returnTypes[i] });
-					if (!processedReturnTypes.Contains(tsys))
-					{
-						processedReturnTypes.Add(tsys);
-					}
+					processedReturnTypes.Add(tsys);
 				}
 			}
-			TypeToTsysAndReplaceFunctionReturnType(newPa, funcDecl->type, processedReturnTypes, ev.Get(), nullptr, IsMemberFunction(pa, funcDecl));
-			ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		}
+		TypeToTsysAndReplaceFunctionReturnType(newPa, funcDecl->type, processedReturnTypes, ev.Get(), nullptr, IsMemberFunction(pa, funcDecl));
+		ev.progress = symbol_component::EvaluationProgress::Evaluated;
 	}
 
 	void EvaluateSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl)
@@ -344,11 +337,6 @@ namespace symbol_type_resolving
 			CopyFrom(evaluatedTypes, types);
 		}
 
-		if (evaluatedTypes.Count() == 0)
-		{
-			throw NotResolvableException();
-		}
-
 		if (!esContext)
 		{
 			auto& ev = symbol->evaluation;
@@ -417,11 +405,6 @@ namespace symbol_type_resolving
 		else
 		{
 			CopyFrom(evaluatedTypes, types);
-		}
-
-		if (evaluatedTypes.Count() == 0)
-		{
-			throw NotResolvableException();
 		}
 
 		if (!esContext)
