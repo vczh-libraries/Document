@@ -375,13 +375,6 @@ public:
 		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, argHasBoundedVta, argUnboundedVtaCount,
 			[this, self, funcVta, &funcExprTypes, &totalSelectedFunctions](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
-				// TODO: Implement variadic template argument passing
-				if (boundedAnys.Count() > 0)
-				{
-					AddTemp(processResult, pa.tsys->Any());
-					return;
-				}
-
 				ExprTsysList funcTypes;
 				if (funcVta && unboundedVtaIndex != -1)
 				{
@@ -429,7 +422,7 @@ public:
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
 
 				ExprTsysList selectedFunctions;
-				VisitOverloadedFunction(pa, funcTypes, args, processResult, (pa.recorder ? &selectedFunctions : nullptr));
+				VisitOverloadedFunction(pa, funcTypes, args, boundedAnys, processResult, (pa.recorder ? &selectedFunctions : nullptr));
 				AddInternal(totalSelectedFunctions, selectedFunctions);
 			});
 

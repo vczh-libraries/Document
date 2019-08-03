@@ -245,8 +245,9 @@ namespace symbol_totsys_impl
 			argTypes[0] = argIndex;
 
 			bool needIndex = pa.recorder && !gaContext;
+			SortedList<vint> boundedAnys;
 			ExprTsysList selectedFunctions;
-			VisitOverloadedFunction(pa, funcTypes, argTypes, result, (needIndex ? &selectedFunctions : nullptr));
+			VisitOverloadedFunction(pa, funcTypes, argTypes, boundedAnys, result, (needIndex ? &selectedFunctions : nullptr));
 
 			if (needIndex && selectedFunctions.Count() > 0)
 			{
@@ -330,8 +331,9 @@ namespace symbol_totsys_impl
 				}
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 
+				SortedList<vint> boundedAnys;
 				ExprTsysList selectedFunctions;
-				VisitOverloadedFunction(pa, opTypes, argTypes, result, (pa.recorder ? &selectedFunctions : nullptr));
+				VisitOverloadedFunction(pa, opTypes, argTypes, boundedAnys, result, (pa.recorder ? &selectedFunctions : nullptr));
 				if (pa.recorder && !gaContext)
 				{
 					AddSymbolsToOperatorResolving(gaContext, resolvableName, resolving, selectedFunctions, indexed);
@@ -373,8 +375,9 @@ namespace symbol_totsys_impl
 				}
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 
+				SortedList<vint> boundedAnys;
 				ExprTsysList selectedFunctions;
-				VisitOverloadedFunction(pa, opTypes, argTypes, result, (pa.recorder ? &selectedFunctions : nullptr));
+				VisitOverloadedFunction(pa, opTypes, argTypes, boundedAnys, result, (pa.recorder ? &selectedFunctions : nullptr));
 				if (pa.recorder && !gaContext)
 				{
 					AddSymbolsToOperatorResolving(gaContext, resolvableName, resolving, selectedFunctions, indexed);

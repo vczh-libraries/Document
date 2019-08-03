@@ -130,7 +130,7 @@ namespace symbol_type_resolving
 	VisitOverloadedFunction: Select good candidates from overloaded functions
 	***********************************************************************/
 
-	void VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, Array<ExprTsysItem>& argTypes, ExprTsysList& result, ExprTsysList* selectedFunctions)
+	void VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys, ExprTsysList& result, ExprTsysList* selectedFunctions)
 	{
 		Array<vint> funcDPs(funcTypes.Count());
 		for (vint i = 0; i < funcTypes.Count(); i++)

@@ -101,8 +101,9 @@ namespace TestConvert_Helpers
 					argTypesList[i] = { init.headers[i],fromEntity->GetParam(i) };
 				}
 
+				SortedList<vint> boundedAnys;
 				ExprTsysList result;
-				symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, result, nullptr);
+				symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, boundedAnys, result, nullptr);
 				if (result.Count() > 0)
 				{
 					return TsysConv::UserDefinedConversion;
