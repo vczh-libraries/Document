@@ -228,7 +228,7 @@ namespace symbol_totsys_impl
 		{
 			bool hasVariadic = false;
 			bool hasNonVariadic = false;
-			VisitResolvedMember(pa, resolving, outputTarget, gaContext, hasVariadic, hasNonVariadic);
+			VisitResolvedMember(pa, resolving, outputTarget, hasVariadic, hasNonVariadic);
 
 			if (hasVariadic && hasNonVariadic)
 			{
