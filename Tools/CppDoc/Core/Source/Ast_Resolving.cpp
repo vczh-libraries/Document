@@ -542,7 +542,7 @@ namespace symbol_type_resolving
 					{
 						auto argumentKey = pa.tsys->DeclOf(symbol);
 						vint index = gaContext->arguments.Keys().IndexOf(argumentKey);
-						if (index == -1)
+						if (index != -1)
 						{
 							auto& replacedTypes = gaContext->arguments.GetByIndex(index);
 							for (vint i = 0; i < replacedTypes.Count(); i++)

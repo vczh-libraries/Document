@@ -192,23 +192,33 @@ namespace symbol_type_resolving
 			selectedIndices[i] = true;
 		}
 
-		for (vint i = 0; i < argTypes.Count(); i++)
+		vint minLoopCount = argTypes.Count();
+		if (minLoopCount < 1) minLoopCount = 1;
+
+		for (vint i = 0; i < minLoopCount; i++)
 		{
 			Array<TsysConv> funcChoices(validFuncTypes.Count());
 
 			for (vint j = 0; j < validFuncTypes.Count(); j++)
 			{
 				auto funcType = validFuncTypes[j];
-
-				vint funcParamCount = funcType.tsys->GetParamCount();
-				if (funcParamCount <= i)
+				
+				if (i < argTypes.Count())
 				{
-					funcChoices[j] = TsysConv::Ellipsis;
-					continue;
-				}
+					vint funcParamCount = funcType.tsys->GetParamCount();
+					if (funcParamCount <= i)
+					{
+						funcChoices[j] = TsysConv::Ellipsis;
+						continue;
+					}
 
-				auto paramType = funcType.tsys->GetParam(i);
-				funcChoices[j] = TestConvert(pa, paramType, argTypes[i]);
+					auto paramType = funcType.tsys->GetParam(i);
+					funcChoices[j] = TestConvert(pa, paramType, argTypes[i]);
+				}
+				else
+				{
+					funcChoices[j] = funcType.tsys->GetFunc().ellipsis ? TsysConv::Ellipsis : TsysConv::Exact;
+				}
 			}
 
 			auto min = FindMinConv(funcChoices);
