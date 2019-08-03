@@ -130,8 +130,16 @@ namespace symbol_type_resolving
 	VisitOverloadedFunction: Select good candidates from overloaded functions
 	***********************************************************************/
 
+	bool IsAcceptableWithVariadicInput(const ParsingArguments& pa, ExprTsysItem funcItem, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
+	{
+		return true;
+	}
+
 	void VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys, ExprTsysList& result, ExprTsysList* selectedFunctions)
 	{
+		bool withVariadicInput = boundedAnys.Count() > 0;
+
+		// funcDPs: functionIndex(funcTypes) -> number of parameters with default value
 		Array<vint> funcDPs(funcTypes.Count());
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
@@ -152,81 +160,117 @@ namespace symbol_type_resolving
 							if (type->parameters[j].item->initializer)
 							{
 								funcDPs[i] = type->parameters.Count() - j;
-								goto EXAMINE_NEXT_FUNCTION;
+								break;
 							}
 						}
-					EXAMINE_NEXT_FUNCTION:;
 					}
 				}
 			}
 		}
 
 		ExprTsysList validFuncTypes;
-		for (vint i = 0; i < funcTypes.Count(); i++)
+		if (withVariadicInput)
 		{
-			auto funcType = funcTypes[i];
-
-			vint funcParamCount = funcType.tsys->GetParamCount();
-			vint missParamCount = funcParamCount - argTypes.Count();
-			if (missParamCount > 0)
+			// if number of arguments is unknown, we only check if a function has too few parameters.
+			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
-				if (missParamCount > funcDPs[i])
+				auto funcType = funcTypes[i];
+				if (funcType.tsys->GetParamCount() < argTypes.Count() - boundedAnys.Count())
 				{
-					continue;
+					if (!funcType.tsys->GetFunc().ellipsis)
+					{
+						continue;
+					}
 				}
+				validFuncTypes.Add(funcType);
 			}
-			else if (missParamCount < 0)
+		}
+		else
+		{
+			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
-				if (!funcType.tsys->GetFunc().ellipsis)
-				{
-					continue;
-				}
-			}
+				auto funcType = funcTypes[i];
 
-			validFuncTypes.Add(funcType);
+				vint funcParamCount = funcType.tsys->GetParamCount();
+				vint missParamCount = funcParamCount - argTypes.Count();
+				if (missParamCount > 0)
+				{
+					// if arguments are not enough, we check about parameters with default value
+					if (missParamCount > funcDPs[i])
+					{
+						continue;
+					}
+				}
+				else if (missParamCount < 0)
+				{
+					// if arguments is too many, we check about ellipsis
+					if (!funcType.tsys->GetFunc().ellipsis)
+					{
+						continue;
+					}
+				}
+
+				validFuncTypes.Add(funcType);
+			}
 		}
 
 		Array<bool> selectedIndices(validFuncTypes.Count());
-		for (vint i = 0; i < validFuncTypes.Count(); i++)
+
+		if (withVariadicInput)
 		{
-			selectedIndices[i] = true;
-		}
-
-		vint minLoopCount = argTypes.Count();
-		if (minLoopCount < 1) minLoopCount = 1;
-
-		for (vint i = 0; i < minLoopCount; i++)
-		{
-			Array<TsysConv> funcChoices(validFuncTypes.Count());
-
-			for (vint j = 0; j < validFuncTypes.Count(); j++)
+			// if number of arguments is unknown, we perform an inaccurate test, only filtering away a few inappropriate candidates
+			for (vint i = 0; i < validFuncTypes.Count(); i++)
 			{
-				auto funcType = validFuncTypes[j];
-				
-				if (i < argTypes.Count())
-				{
-					vint funcParamCount = funcType.tsys->GetParamCount();
-					if (funcParamCount <= i)
-					{
-						funcChoices[j] = TsysConv::Ellipsis;
-						continue;
-					}
-
-					auto paramType = funcType.tsys->GetParam(i);
-					funcChoices[j] = TestConvert(pa, paramType, argTypes[i]);
-				}
-				else
-				{
-					funcChoices[j] = funcType.tsys->GetFunc().ellipsis ? TsysConv::Ellipsis : TsysConv::Exact;
-				}
+				selectedIndices[i] = IsAcceptableWithVariadicInput(pa, validFuncTypes[i], argTypes, boundedAnys);
+			}
+		}
+		else
+		{
+			// if number of arguments is known, we need to pick the best candidate
+			for (vint i = 0; i < validFuncTypes.Count(); i++)
+			{
+				selectedIndices[i] = true;
 			}
 
-			auto min = FindMinConv(funcChoices);
-			for (vint j = 0; j < validFuncTypes.Count(); j++)
+			vint minLoopCount = argTypes.Count();
+			if (minLoopCount < 1) minLoopCount = 1;
+
+			for (vint i = 0; i < minLoopCount; i++)
 			{
-				if (!IsFunctionAcceptableByMinConv(funcChoices[j], min))
+				Array<TsysConv> funcChoices(validFuncTypes.Count());
+
+				for (vint j = 0; j < validFuncTypes.Count(); j++)
 				{
-					selectedIndices[j] = false;
+					auto funcType = validFuncTypes[j];
+
+					// best candidates for this arguments are chosen
+					if (i < argTypes.Count())
+					{
+						vint funcParamCount = funcType.tsys->GetParamCount();
+						if (funcParamCount <= i)
+						{
+							funcChoices[j] = TsysConv::Ellipsis;
+							continue;
+						}
+
+						auto paramType = funcType.tsys->GetParam(i);
+						funcChoices[j] = TestConvert(pa, paramType, argTypes[i]);
+					}
+					else
+					{
+						// if there is not argument, we say functions without ellipsis are better
+						funcChoices[j] = funcType.tsys->GetFunc().ellipsis ? TsysConv::Ellipsis : TsysConv::Exact;
+					}
+				}
+
+				// the best candidate should be the best in for all arguments at the same time
+				auto min = FindMinConv(funcChoices);
+				for (vint j = 0; j < validFuncTypes.Count(); j++)
+				{
+					if (!IsFunctionAcceptableByMinConv(funcChoices[j], min))
+					{
+						selectedIndices[j] = false;
+					}
 				}
 			}
 		}
