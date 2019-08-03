@@ -1557,9 +1557,9 @@ void Log(ITsys* tsys, StreamWriter& writer)
 				{
 					writer.WriteString(L"...");
 				}
-				if (auto param = tsys->GetParam(i))
+				if (genericFunction.acceptTypes[i])
 				{
-					Log(param, writer);
+					Log(tsys->GetParam(i), writer);
 				}
 				else
 				{

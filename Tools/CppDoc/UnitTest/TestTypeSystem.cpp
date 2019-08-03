@@ -188,7 +188,6 @@ TEST_CASE(TestTypeSystem_GenericFunction)
 	auto targ = tsys->DeclOf(n.Obj())->GenericArgOf(arg);
 
 	TsysGenericFunction gf;
-	gf.arguments.Add(narg.Obj());
 
 	List<ITsys*> types1;
 	types1.Add(targ->LRefOf());

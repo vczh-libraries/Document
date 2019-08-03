@@ -6,20 +6,21 @@ namespace symbol_type_resolving
 	CreateGenericFunctionHeader: Calculate enough information to create a generic function type
 	***********************************************************************/
 
-	void CreateGenericFunctionHeader(Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction)
+	void CreateGenericFunctionHeader(const ParsingArguments& pa, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction)
 	{
 		genericFunction.variadicArgumentIndex = -1;
+		genericFunction.acceptTypes.Resize(spec->arguments.Count());
+
 		for (vint i = 0; i < spec->arguments.Count(); i++)
 		{
 			auto argument = spec->arguments[i];
-			if (argument.argumentType == CppTemplateArgumentType::Value)
+			if ((genericFunction.acceptTypes[i] = (argument.argumentType == CppTemplateArgumentType::Type)))
 			{
-				params.Add(nullptr);
+				params.Add(argument.argumentSymbol->evaluation.Get()[0]);
 			}
 			else
 			{
-				genericFunction.arguments.Add(argument.argumentSymbol);
-				params.Add(argument.argumentSymbol->evaluation.Get()[0]);
+				params.Add(pa.tsys->DeclOf(argument.argumentSymbol));
 			}
 
 			if (argument.ellipsis)
@@ -115,6 +116,8 @@ namespace symbol_type_resolving
 
 		Ptr<TemplateSpec> spec;
 		auto genericSymbol = genericFunction->GetGenericFunction().declSymbol;
+		auto& acceptTypes = genericFunction->GetGenericFunction().acceptTypes;
+
 		if (genericSymbol)
 		{
 			if (auto typeAliasDecl = genericSymbol->GetAnyForwardDecl<TypeAliasDeclaration>())
@@ -205,10 +208,12 @@ namespace symbol_type_resolving
 		{
 			auto mappings = parameterToArgumentMappings[i];
 			auto pattern = genericFunction->GetParam(i);
+			bool acceptType = acceptTypes[i];
+
 			if (mappings.f0 == -1)
 			{
 				// -1, -1: default value
-				if (pattern != nullptr)
+				if (acceptType)
 				{
 					if (spec->arguments[i].argumentType == CppTemplateArgumentType::Value)
 					{
@@ -233,12 +238,12 @@ namespace symbol_type_resolving
 			else if (mappings.f0 == mappings.f1 && (variadicArgumentIndex == -1 || variadicArgumentIndex != mappings.f0))
 			{
 				// X, X: map to one argument
-				if ((pattern != nullptr) != isTypes[i + offset])
+				if (acceptType != isTypes[i + offset])
 				{
 					throw NotConvertableException();
 				}
 
-				if (pattern != nullptr)
+				if (acceptType)
 				{
 					auto item = argumentTypes[i + offset];
 					EnsureGenericNormalParameterAndArgumentMatched(pattern, item.tsys);
@@ -248,7 +253,7 @@ namespace symbol_type_resolving
 			else if (mappings.f0 == mappings.f1 + 1)
 			{
 				// X, X-1: map to no arguments (variadic)
-				if (pattern != nullptr)
+				if (acceptType)
 				{
 					Array<ExprTsysItem> items;
 					auto init = pa.tsys->InitOf(items);
@@ -260,13 +265,13 @@ namespace symbol_type_resolving
 				// X, Y: map to multiple arguments (variadic)
 				for (vint j = mappings.f0; j <= mappings.f1; j++)
 				{
-					if ((pattern != nullptr) != isTypes[j + offset])
+					if (acceptType != isTypes[j + offset])
 					{
 						throw NotConvertableException();
 					}
 				}
 
-				if (pattern != nullptr)
+				if (acceptType)
 				{
 					Array<ExprTsysItem> items(mappings.f1 - mappings.f0 + 1);
 

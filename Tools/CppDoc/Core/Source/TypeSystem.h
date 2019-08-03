@@ -191,8 +191,8 @@ struct TsysInit
 struct TsysGenericFunction
 {
 	vint						variadicArgumentIndex = -1;
-	List<Symbol*>				arguments;
 	Symbol*						declSymbol = nullptr;
+	Array<bool>					acceptTypes;
 
 	TsysGenericFunction() = default;
 
@@ -200,13 +200,13 @@ struct TsysGenericFunction
 		:variadicArgumentIndex(genericFunction.variadicArgumentIndex)
 		, declSymbol(genericFunction.declSymbol)
 	{
-		CopyFrom(arguments, genericFunction.arguments);
+		CopyFrom(acceptTypes, genericFunction.acceptTypes);
 	}
 
 	TsysGenericFunction& operator=(const TsysGenericFunction& genericFunction)
 	{
 		declSymbol = genericFunction.declSymbol;
-		CopyFrom(arguments, genericFunction.arguments);
+		CopyFrom(acceptTypes, genericFunction.acceptTypes);
 		return *this;
 	}
 
@@ -216,7 +216,7 @@ struct TsysGenericFunction
 		if (a.variadicArgumentIndex > b.variadicArgumentIndex) return 1;
 		if (a.declSymbol < b.declSymbol) return -1;
 		if (a.declSymbol > b.declSymbol) return 1;
-		return CompareEnumerable(a.arguments, b.arguments);
+		return CompareEnumerable(a.acceptTypes, b.acceptTypes);
 	}
 };
 

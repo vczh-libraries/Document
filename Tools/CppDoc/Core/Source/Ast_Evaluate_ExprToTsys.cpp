@@ -373,12 +373,13 @@ public:
 
 		ExprTsysList totalSelectedFunctions;
 		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, argHasBoundedVta, argUnboundedVtaCount,
-			[this, self, funcVta, &funcExprTypes, &totalSelectedFunctions](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& unboundedAnys)
+			[this, self, funcVta, &funcExprTypes, &totalSelectedFunctions](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
 			{
 				// TODO: Implement variadic template argument passing
-				if (unboundedAnys.Count() > 0)
+				if (boundedAnys.Count() > 0)
 				{
-					throw NotConvertableException();
+					AddTemp(processResult, pa.tsys->Any());
+					return;
 				}
 
 				ExprTsysList funcTypes;

@@ -33,59 +33,55 @@ namespace symbol_totsys_impl
 			return;
 		case symbol_component::SymbolKind::GenericTypeArgument:
 			{
-				auto& types = symbol->evaluation.Get();
-				for (vint j = 0; j < types.Count(); j++)
+				auto argumentKey = symbol->evaluation.Get()[0];
+				if (gaContext)
 				{
-					if (gaContext)
+					vint index = gaContext->arguments.Keys().IndexOf(argumentKey);
+					if (index != -1)
 					{
-						auto type = types[j];
-						vint index = gaContext->arguments.Keys().IndexOf(type);
-						if (index != -1)
+						auto& replacedTypes = gaContext->arguments.GetByIndex(index);
+						for (vint k = 0; k < replacedTypes.Count(); k++)
 						{
-							auto& replacedTypes = gaContext->arguments.GetByIndex(index);
-							for (vint k = 0; k < replacedTypes.Count(); k++)
+							if (symbol->ellipsis)
 							{
-								if (symbol->ellipsis)
+								if (!allowVariadic)
 								{
-									if (!allowVariadic)
-									{
-										throw NotConvertableException();
-									}
-									auto replacedType = replacedTypes[k];
-									if (replacedType->GetType() == TsysType::Any || replacedType->GetType() == TsysType::Init)
-									{
-										AddTsysToResult(result, replacedTypes[k]);
-										hasVariadic = true;
-									}
-									else
-									{
-										throw NotConvertableException();
-									}
+									throw NotConvertableException();
+								}
+								auto replacedType = replacedTypes[k];
+								if (replacedType->GetType() == TsysType::Any || replacedType->GetType() == TsysType::Init)
+								{
+									AddTsysToResult(result, replacedTypes[k]);
+									hasVariadic = true;
 								}
 								else
 								{
-									AddTsysToResult(result, replacedTypes[k]);
-									hasNonVariadic = true;
+									throw NotConvertableException();
 								}
 							}
-							continue;
+							else
+							{
+								AddTsysToResult(result, replacedTypes[k]);
+								hasNonVariadic = true;
+							}
 						}
+						return;
 					}
+				}
 
-					if (symbol->ellipsis)
+				if (symbol->ellipsis)
+				{
+					if (!allowVariadic)
 					{
-						if (!allowVariadic)
-						{
-							throw NotConvertableException();
-						}
-						AddTsysToResult(result, pa.tsys->Any());
-						hasVariadic = true;
+						throw NotConvertableException();
 					}
-					else
-					{
-						AddTsysToResult(result, types[j]);
-						hasNonVariadic = true;
-					}
+					AddTsysToResult(result, pa.tsys->Any());
+					hasVariadic = true;
+				}
+				else
+				{
+					AddTsysToResult(result, argumentKey);
+					hasNonVariadic = true;
 				}
 			}
 			return;
@@ -228,7 +224,7 @@ namespace symbol_totsys_impl
 		{
 			bool hasVariadic = false;
 			bool hasNonVariadic = false;
-			VisitResolvedMember(pa, resolving, outputTarget, hasVariadic, hasNonVariadic);
+			VisitResolvedMember(pa, gaContext, resolving, outputTarget, hasVariadic, hasNonVariadic);
 
 			if (hasVariadic && hasNonVariadic)
 			{
