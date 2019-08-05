@@ -50,7 +50,7 @@ enum class CppTemplateArgumentType
 {
 	HighLevelType,		// templateSpec(declaration), type(default value)
 	Type,				// type(default value)
-	Value,				// type(value, type), expr(default value)
+	Value,				// type(value type), expr(default value)
 };
 
 class TemplateSpec : public Object

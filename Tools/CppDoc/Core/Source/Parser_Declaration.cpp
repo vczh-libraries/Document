@@ -121,6 +121,10 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 
 			if (TestToken(cursor, CppTokens::EQ))
 			{
+				if (argument.ellipsis)
+				{
+					throw StopParsingException(cursor);
+				}
 				argument.type = ParseType(newPa, cursor);
 			}
 		}
@@ -139,6 +143,10 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			if (declarator->initializer)
 			{
 				if (declarator->initializer->initializerType != CppInitializerType::Equal)
+				{
+					throw StopParsingException(cursor);
+				}
+				if (argument.ellipsis)
 				{
 					throw StopParsingException(cursor);
 				}

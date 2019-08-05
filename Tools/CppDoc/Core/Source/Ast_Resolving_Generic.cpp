@@ -35,24 +35,6 @@ namespace symbol_type_resolving
 				}
 			}
 		}
-
-		if (genericFunction.variadicArgumentIndex != -1)
-		{
-			for (vint i = 0; i < spec->arguments.Count(); i++)
-			{
-				auto argument = spec->arguments[i];
-				switch (argument.argumentType)
-				{
-				case CppTemplateArgumentType::HighLevelType:
-				case CppTemplateArgumentType::Type:
-					if (argument.type) throw NotConvertableException();
-					break;
-				case CppTemplateArgumentType::Value:
-					if (argument.expr) throw NotConvertableException();
-					break;
-				}
-			}
-		}
 	}
 
 	/***********************************************************************
