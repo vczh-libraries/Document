@@ -91,11 +91,11 @@ namespace symbol_type_resolving
 		}
 	}
 
-	bool ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, vint offset, GenericArgContext* newGaContext)
+	void ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, vint offset, GenericArgContext* newGaContext)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
 		{
-			return false;
+			throw NotConvertableException();
 		}
 
 		Ptr<TemplateSpec> spec;
@@ -152,7 +152,7 @@ namespace symbol_type_resolving
 		vint inputArgumentCount = argumentTypes.Count() - offset;
 		if (inputArgumentCount < minCount || (maxCount != -1 && inputArgumentCount > maxCount))
 		{
-			return false;
+			throw NotConvertableException();
 		}
 
 		// -1, -1: default value
@@ -276,6 +276,5 @@ namespace symbol_type_resolving
 				newGaContext->arguments.Add(pattern, init);
 			}
 		}
-		return true;
 	}
 }

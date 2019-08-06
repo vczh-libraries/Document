@@ -11,12 +11,6 @@ namespace symbol_totsys_impl
 	template<typename TProcess>
 	void ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, Array<bool>& isTypes, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys, TProcess&& process)
 	{
-		if (boundedAnys.Count() > 0)
-		{
-			// TODO: Implement variadic template argument passing
-			throw NotConvertableException();
-		}
-
 		auto genericFunction = args[0].tsys;
 		if (genericFunction->GetType() == TsysType::GenericFunction)
 		{
@@ -27,11 +21,7 @@ namespace symbol_totsys_impl
 			}
 
 			EvaluateSymbolContext esContext;
-			if (!ResolveGenericParameters(pa, genericFunction, args, isTypes, 1, &esContext.gaContext))
-			{
-				throw NotConvertableException();
-			}
-
+			ResolveGenericParameters(pa, genericFunction, args, isTypes, 1, &esContext.gaContext);
 			process(genericFunction, declSymbol, esContext);
 
 			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
