@@ -108,6 +108,11 @@ void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 		TEST_ASSERT(count == 0);
 		return;
 	}
+	catch (const NotConvertableException&)
+	{
+		TEST_ASSERT(count == 0);
+		return;
+	}
 
 	TEST_ASSERT(tsys.Count() == count);
 
