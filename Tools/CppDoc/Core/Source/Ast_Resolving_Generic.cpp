@@ -8,7 +8,7 @@ namespace symbol_type_resolving
 
 	void CreateGenericFunctionHeader(const ParsingArguments& pa, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction)
 	{
-		genericFunction.variadicArgumentIndex = -1;
+		genericFunction.isLastParameterVta = false;
 		genericFunction.acceptTypes.Resize(spec->arguments.Count());
 
 		for (vint i = 0; i < spec->arguments.Count(); i++)
@@ -25,9 +25,9 @@ namespace symbol_type_resolving
 
 			if (argument.ellipsis)
 			{
-				if (genericFunction.variadicArgumentIndex == -1)
+				if (!genericFunction.isLastParameterVta)
 				{
-					genericFunction.variadicArgumentIndex = i;
+					genericFunction.isLastParameterVta = true;
 				}
 				else
 				{
@@ -109,7 +109,7 @@ namespace symbol_type_resolving
 
 	void GetArgumentCountRange(ITsys* genericFunction, Ptr<TemplateSpec> spec, const TsysGenericFunction& genericFuncInfo, vint& minCount, vint& maxCount)
 	{
-		maxCount = genericFuncInfo.variadicArgumentIndex == -1 ? genericFunction->GetParamCount() : -1;
+		maxCount = genericFuncInfo.isLastParameterVta ? -1 : genericFunction->GetParamCount();
 
 		vint defaultCount = 0;
 		if (spec)
@@ -132,15 +132,15 @@ namespace symbol_type_resolving
 			}
 		}
 
-		if (genericFuncInfo.variadicArgumentIndex == -1)
-		{
-			minCount = genericFunction->GetParamCount() - defaultCount;
-			maxCount = genericFunction->GetParamCount();
-		}
-		else
+		if (genericFuncInfo.isLastParameterVta)
 		{
 			minCount = genericFunction->GetParamCount() - (defaultCount == 0 ? 1 : defaultCount);
 			maxCount = -1;
+		}
+		else
+		{
+			minCount = genericFunction->GetParamCount() - defaultCount;
+			maxCount = genericFunction->GetParamCount();
 		}
 	}
 
@@ -197,7 +197,40 @@ namespace symbol_type_resolving
 
 	void CalculateGpa(GpaList& gpaMappings, ITsys* genericFunction, const TsysGenericFunction& genericFuncInfo, vint inputArgumentCount, SortedList<vint>& boundedAnys, vint offset)
 	{
-		if (genericFuncInfo.variadicArgumentIndex == -1)
+		if (boundedAnys.Count() > 0)
+		{
+			throw NotConvertableException();
+		}
+
+		if (genericFuncInfo.isLastParameterVta)
+		{
+			for (vint i = 0; i < genericFunction->GetParamCount(); i++)
+			{
+				if (i < inputArgumentCount)
+				{
+					if (i == genericFunction->GetParamCount() - 1)
+					{
+						gpaMappings.Add(GenericParameterAssignment::MultipleVta(i + offset, inputArgumentCount - i));
+					}
+					else
+					{
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
+					}
+				}
+				else
+				{
+					if (i == genericFunction->GetParamCount() - 1)
+					{
+						gpaMappings.Add(GenericParameterAssignment::EmptyVta());
+					}
+					else
+					{
+						gpaMappings.Add(GenericParameterAssignment::DefaultValue());
+					}
+				}
+			}
+		}
+		else
 		{
 			for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 			{
@@ -209,19 +242,6 @@ namespace symbol_type_resolving
 				{
 					gpaMappings.Add(GenericParameterAssignment::DefaultValue());
 				}
-			}
-		}
-		else
-		{
-			vint delta = inputArgumentCount - genericFunction->GetParamCount();
-			for (vint i = 0; i < genericFuncInfo.variadicArgumentIndex; i++)
-			{
-				gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
-			}
-			gpaMappings.Add(GenericParameterAssignment::MultipleVta(genericFuncInfo.variadicArgumentIndex + offset, delta + 1));
-			for (vint i = genericFuncInfo.variadicArgumentIndex + 1; i < genericFunction->GetParamCount(); i++)
-			{
-				gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset + delta));
 			}
 		}
 	}
