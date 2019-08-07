@@ -557,7 +557,7 @@ template<typename T, typename... Ts>								using ApplyTwoVta_1 =	TwoVta<T, Ts..
 	AssertType(pa, L"ApplyOneVta_1<int, char, bool>",			L"ApplyOneVta_1<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR}"											);
 
 	AssertType(pa, L"ApplyTwoVta_1<>",							L"ApplyTwoVta_1<>"																												);
-	AssertType(pa, L"ApplyTwoVta_1<int>",						L"ApplyTwoVta_1<int>",							L"{__int32 $PR, char * $PR}"														);
+	AssertType(pa, L"ApplyTwoVta_1<int>",						L"ApplyTwoVta_1<int>",							L"{__int32 $PR, char * $PR}"													);
 	AssertType(pa, L"ApplyTwoVta_1<int, char>",					L"ApplyTwoVta_1<int, char>",					L"{__int32 $PR, char $PR}"														);
 	AssertType(pa, L"ApplyTwoVta_1<int, char, bool>",			L"ApplyTwoVta_1<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR}"											);
 }
