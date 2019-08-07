@@ -195,7 +195,7 @@ namespace symbol_type_resolving
 
 	using GpaList = List<GenericParameterAssignment>;
 
-	void CalculateGpa(GpaList& gpaMappings, ITsys* genericFunction, const TsysGenericFunction& genericFuncInfo, vint inputArgumentCount)
+	void CalculateGpa(GpaList& gpaMappings, ITsys* genericFunction, const TsysGenericFunction& genericFuncInfo, vint inputArgumentCount, SortedList<vint>& boundedAnys, vint offset)
 	{
 		if (genericFuncInfo.variadicArgumentIndex == -1)
 		{
@@ -203,7 +203,7 @@ namespace symbol_type_resolving
 			{
 				if (i < inputArgumentCount)
 				{
-					gpaMappings.Add(GenericParameterAssignment::OneArgument(i));
+					gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
 				}
 				else
 				{
@@ -216,17 +216,17 @@ namespace symbol_type_resolving
 			vint delta = inputArgumentCount - genericFunction->GetParamCount();
 			for (vint i = 0; i < genericFuncInfo.variadicArgumentIndex; i++)
 			{
-				gpaMappings.Add(GenericParameterAssignment::OneArgument(i));
+				gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
 			}
-			gpaMappings.Add(GenericParameterAssignment::MultipleVta(genericFuncInfo.variadicArgumentIndex, delta + 1));
+			gpaMappings.Add(GenericParameterAssignment::MultipleVta(genericFuncInfo.variadicArgumentIndex + offset, delta + 1));
 			for (vint i = genericFuncInfo.variadicArgumentIndex + 1; i < genericFunction->GetParamCount(); i++)
 			{
-				gpaMappings.Add(GenericParameterAssignment::OneArgument(i + delta));
+				gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset + delta));
 			}
 		}
 	}
 
-	void ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, vint offset, GenericArgContext* newGaContext)
+	void ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, SortedList<vint>& boundedAnys, vint offset, GenericArgContext* newGaContext)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
 		{
@@ -247,7 +247,7 @@ namespace symbol_type_resolving
 		}
 
 		GpaList gpaMappings;
-		CalculateGpa(gpaMappings, genericFunction, genericFuncInfo, inputArgumentCount);
+		CalculateGpa(gpaMappings, genericFunction, genericFuncInfo, inputArgumentCount, boundedAnys, offset);
 
 		for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 		{
@@ -285,14 +285,14 @@ namespace symbol_type_resolving
 				break;
 			case GenericParameterAssignmentKind::OneArgument:
 				{
-					if (acceptType != isTypes[gpa.index + offset])
+					if (acceptType != isTypes[gpa.index])
 					{
 						throw NotConvertableException();
 					}
 
 					if (acceptType)
 					{
-						auto item = argumentTypes[gpa.index + offset];
+						auto item = argumentTypes[gpa.index];
 						EnsureGenericTypeParameterAndArgumentMatched(pattern, item.tsys);
 						newGaContext->arguments.Add(pattern, item.tsys);
 					}
@@ -313,7 +313,7 @@ namespace symbol_type_resolving
 				{
 					for (vint j = 0; j < gpa.count; j++)
 					{
-						if (acceptType != isTypes[gpa.index + j + offset])
+						if (acceptType != isTypes[gpa.index + j])
 						{
 							throw NotConvertableException();
 						}
@@ -325,7 +325,7 @@ namespace symbol_type_resolving
 					{
 						if (acceptType)
 						{
-							auto item = argumentTypes[gpa.index + j + offset];
+							auto item = argumentTypes[gpa.index + j];
 							EnsureGenericTypeParameterAndArgumentMatched(pattern, item.tsys);
 							items[j] = item;
 						}

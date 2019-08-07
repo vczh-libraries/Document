@@ -21,7 +21,7 @@ namespace symbol_totsys_impl
 			}
 
 			EvaluateSymbolContext esContext;
-			ResolveGenericParameters(pa, genericFunction, args, isTypes, 1, &esContext.gaContext);
+			ResolveGenericParameters(pa, genericFunction, args, isTypes, boundedAnys, 1, &esContext.gaContext);
 			process(genericFunction, declSymbol, esContext);
 
 			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
