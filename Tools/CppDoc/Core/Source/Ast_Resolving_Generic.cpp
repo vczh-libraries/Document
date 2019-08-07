@@ -197,15 +197,16 @@ namespace symbol_type_resolving
 
 	void CalculateGpa(GpaList& gpaMappings, ITsys* genericFunction, const TsysGenericFunction& genericFuncInfo, vint inputArgumentCount, SortedList<vint>& boundedAnys, vint offset)
 	{
+		vint parameterCount = genericFunction->GetParamCount();
 		if (genericFuncInfo.isLastParameterVta)
 		{
 			if (boundedAnys.Count() == 0)
 			{
-				for (vint i = 0; i < genericFunction->GetParamCount(); i++)
+				for (vint i = 0; i < parameterCount; i++)
 				{
 					if (i < inputArgumentCount)
 					{
-						if (i == genericFunction->GetParamCount() - 1)
+						if (i == parameterCount - 1)
 						{
 							gpaMappings.Add(GenericParameterAssignment::MultipleVta(i + offset, inputArgumentCount - i));
 						}
@@ -216,7 +217,7 @@ namespace symbol_type_resolving
 					}
 					else
 					{
-						if (i == genericFunction->GetParamCount() - 1)
+						if (i == parameterCount - 1)
 						{
 							gpaMappings.Add(GenericParameterAssignment::EmptyVta());
 						}
@@ -230,11 +231,11 @@ namespace symbol_type_resolving
 			else
 			{
 				vint headCount = boundedAnys[0] - offset;
-				for (vint i = 0; i < genericFunction->GetParamCount(); i++)
+				for (vint i = 0; i < parameterCount; i++)
 				{
 					if (i < headCount)
 					{
-						if (i == genericFunction->GetParamCount() - 1)
+						if (i == parameterCount - 1)
 						{
 							gpaMappings.Add(GenericParameterAssignment::Any());
 						}
@@ -254,7 +255,7 @@ namespace symbol_type_resolving
 		{
 			if (boundedAnys.Count() == 0)
 			{
-				for (vint i = 0; i < genericFunction->GetParamCount(); i++)
+				for (vint i = 0; i < parameterCount; i++)
 				{
 					if (i < inputArgumentCount)
 					{
@@ -270,9 +271,9 @@ namespace symbol_type_resolving
 			{
 				vint headCount = boundedAnys[0] - offset;
 				vint tailCount = inputArgumentCount - (boundedAnys[boundedAnys.Count() - 1] - offset) - 1;
-				vint anyCount = inputArgumentCount - headCount - tailCount;
+				vint anyCount = parameterCount - headCount - tailCount;
 
-				for (vint i = 0; i < genericFunction->GetParamCount(); i++)
+				for (vint i = 0; i < parameterCount; i++)
 				{
 					if (i < headCount)
 					{
