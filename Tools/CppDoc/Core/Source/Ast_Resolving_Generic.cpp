@@ -144,6 +144,88 @@ namespace symbol_type_resolving
 		}
 	}
 
+	enum class GenericParameterAssignmentKind
+	{
+		DefaultValue,
+		OneArgument,
+		EmptyVta,
+		MultipleVta,
+		Any,
+	};
+
+	struct GenericParameterAssignment
+	{
+		GenericParameterAssignmentKind		kind;
+		vint								index;
+		vint								count;
+
+		GenericParameterAssignment() = default;
+		GenericParameterAssignment(GenericParameterAssignmentKind _kind, vint _index, vint _count)
+			:kind(_kind)
+			, index(_index)
+			, count(_count)
+		{
+		}
+
+		static GenericParameterAssignment DefaultValue()
+		{
+			return { GenericParameterAssignmentKind::DefaultValue,-1,-1 };
+		}
+
+		static GenericParameterAssignment OneArgument(vint index)
+		{
+			return { GenericParameterAssignmentKind::OneArgument,index,-1 };
+		}
+
+		static GenericParameterAssignment EmptyVta()
+		{
+			return { GenericParameterAssignmentKind::EmptyVta,-1,-1 };
+		}
+
+		static GenericParameterAssignment MultipleVta(vint index, vint count)
+		{
+			return { GenericParameterAssignmentKind::MultipleVta,index,count };
+		}
+
+		static GenericParameterAssignment Any()
+		{
+			return { GenericParameterAssignmentKind::Any,-1,-1 };
+		}
+	};
+
+	using GpaList = List<GenericParameterAssignment>;
+
+	void CalculateGpa(GpaList& gpaMappings, ITsys* genericFunction, const TsysGenericFunction& genericFuncInfo, vint inputArgumentCount)
+	{
+		if (genericFuncInfo.variadicArgumentIndex == -1)
+		{
+			for (vint i = 0; i < genericFunction->GetParamCount(); i++)
+			{
+				if (i < inputArgumentCount)
+				{
+					gpaMappings.Add(GenericParameterAssignment::OneArgument(i));
+				}
+				else
+				{
+					gpaMappings.Add(GenericParameterAssignment::DefaultValue());
+				}
+			}
+		}
+		else
+		{
+			vint delta = inputArgumentCount - genericFunction->GetParamCount();
+			for (vint i = 0; i < genericFuncInfo.variadicArgumentIndex; i++)
+			{
+				gpaMappings.Add(GenericParameterAssignment::OneArgument(i));
+			}
+			gpaMappings.Add(GenericParameterAssignment::MultipleVta(genericFuncInfo.variadicArgumentIndex, delta + 1));
+			for (vint i = genericFuncInfo.variadicArgumentIndex + 1; i < genericFunction->GetParamCount(); i++)
+			{
+				gpaMappings.Add(GenericParameterAssignment::OneArgument(i + delta));
+			}
+		}
+	}
+
 	void ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, vint offset, GenericArgContext* newGaContext)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
@@ -164,125 +246,98 @@ namespace symbol_type_resolving
 			throw NotConvertableException();
 		}
 
-		// -1, -1: default value
-		// X, X: map to one argument
-		// X, X-1: map to no arguments (variadic)
-		// X, Y: map to multiple arguments (variadic)
-		List<Tuple<vint, vint>> parameterToArgumentMappings;
-		if (genericFuncInfo.variadicArgumentIndex == -1)
-		{
-			for (vint i = 0; i < genericFunction->GetParamCount(); i++)
-			{
-				if (i < inputArgumentCount)
-				{
-					parameterToArgumentMappings.Add({ i,i });
-				}
-				else
-				{
-					parameterToArgumentMappings.Add({ -1,-1 });
-				}
-			}
-		}
-		else
-		{
-			vint delta = inputArgumentCount - genericFunction->GetParamCount();
-			for (vint i = 0; i < genericFuncInfo.variadicArgumentIndex; i++)
-			{
-				parameterToArgumentMappings.Add({ i,i });
-			}
-			parameterToArgumentMappings.Add({ genericFuncInfo.variadicArgumentIndex,genericFuncInfo.variadicArgumentIndex + delta });
-			for (vint i = genericFuncInfo.variadicArgumentIndex + 1; i < genericFunction->GetParamCount(); i++)
-			{
-				parameterToArgumentMappings.Add({ i + delta,i + delta });
-			}
-		}
+		GpaList gpaMappings;
+		CalculateGpa(gpaMappings, genericFunction, genericFuncInfo, inputArgumentCount);
 
 		for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 		{
-			auto mappings = parameterToArgumentMappings[i];
+			auto gpa = gpaMappings[i];
 			auto pattern = genericFunction->GetParam(i);
 			bool acceptType = genericFuncInfo.acceptTypes[i];
 
-			if (mappings.f0 == -1)
+			switch (gpa.kind)
 			{
-				// -1, -1: default value
-				if (acceptType)
-				{
-					if (spec->arguments[i].argumentType == CppTemplateArgumentType::Value)
-					{
-						throw NotConvertableException();
-					}
-					TypeTsysList argTypes;
-					TypeToTsysNoVta(pa.WithContext(genericFuncInfo.declSymbol), spec->arguments[i].type, argTypes, newGaContext);
-
-					for (vint j = 0; j < argTypes.Count(); j++)
-					{
-						newGaContext->arguments.Add(pattern, argTypes[j]);
-					}
-				}
-				else
-				{
-					if (spec->arguments[i].argumentType != CppTemplateArgumentType::Value)
-					{
-						throw NotConvertableException();
-					}
-					newGaContext->arguments.Add(pattern, nullptr);
-				}
-			}
-			else if (mappings.f0 == mappings.f1 && (genericFuncInfo.variadicArgumentIndex == -1 || genericFuncInfo.variadicArgumentIndex != mappings.f0))
-			{
-				// X, X: map to one argument
-				if (acceptType != isTypes[i + offset])
-				{
-					throw NotConvertableException();
-				}
-
-				if (acceptType)
-				{
-					auto item = argumentTypes[i + offset];
-					EnsureGenericTypeParameterAndArgumentMatched(pattern, item.tsys);
-					newGaContext->arguments.Add(pattern, item.tsys);
-				}
-				else
-				{
-					newGaContext->arguments.Add(pattern, nullptr);
-				}
-			}
-			else if (mappings.f0 == mappings.f1 + 1)
-			{
-				// X, X-1: map to no arguments (variadic)
-				Array<ExprTsysItem> items;
-				auto init = pa.tsys->InitOf(items);
-				newGaContext->arguments.Add(pattern, init);
-			}
-			else
-			{
-				// X, Y: map to multiple arguments (variadic)
-				for (vint j = mappings.f0; j <= mappings.f1; j++)
-				{
-					if (acceptType != isTypes[j + offset])
-					{
-						throw NotConvertableException();
-					}
-				}
-
-				Array<ExprTsysItem> items(mappings.f1 - mappings.f0 + 1);
-
-				for (vint j = mappings.f0; j <= mappings.f1; j++)
+			case GenericParameterAssignmentKind::DefaultValue:
 				{
 					if (acceptType)
 					{
-						auto item = argumentTypes[j + offset];
-						EnsureGenericTypeParameterAndArgumentMatched(pattern, item.tsys);
-						items[j - mappings.f0] = item;
+						if (spec->arguments[i].argumentType == CppTemplateArgumentType::Value)
+						{
+							throw NotConvertableException();
+						}
+						TypeTsysList argTypes;
+						TypeToTsysNoVta(pa.WithContext(genericFuncInfo.declSymbol), spec->arguments[i].type, argTypes, newGaContext);
+
+						for (vint j = 0; j < argTypes.Count(); j++)
+						{
+							newGaContext->arguments.Add(pattern, argTypes[j]);
+						}
 					}
 					else
 					{
-						items[j - mappings.f0] = { nullptr,ExprTsysType::PRValue,nullptr };
+						if (spec->arguments[i].argumentType != CppTemplateArgumentType::Value)
+						{
+							throw NotConvertableException();
+						}
+						newGaContext->arguments.Add(pattern, nullptr);
 					}
 				}
-				auto init = pa.tsys->InitOf(items);
-				newGaContext->arguments.Add(pattern, init);
+				break;
+			case GenericParameterAssignmentKind::OneArgument:
+				{
+					if (acceptType != isTypes[gpa.index + offset])
+					{
+						throw NotConvertableException();
+					}
+
+					if (acceptType)
+					{
+						auto item = argumentTypes[gpa.index + offset];
+						EnsureGenericTypeParameterAndArgumentMatched(pattern, item.tsys);
+						newGaContext->arguments.Add(pattern, item.tsys);
+					}
+					else
+					{
+						newGaContext->arguments.Add(pattern, nullptr);
+					}
+				}
+				break;
+			case GenericParameterAssignmentKind::EmptyVta:
+				{
+					Array<ExprTsysItem> items;
+					auto init = pa.tsys->InitOf(items);
+					newGaContext->arguments.Add(pattern, init);
+				}
+				break;
+			case GenericParameterAssignmentKind::MultipleVta:
+				{
+					for (vint j = 0; j < gpa.count; j++)
+					{
+						if (acceptType != isTypes[gpa.index + j + offset])
+						{
+							throw NotConvertableException();
+						}
+					}
+
+					Array<ExprTsysItem> items(gpa.count);
+
+					for (vint j = 0; j < gpa.count; j++)
+					{
+						if (acceptType)
+						{
+							auto item = argumentTypes[gpa.index + j + offset];
+							EnsureGenericTypeParameterAndArgumentMatched(pattern, item.tsys);
+							items[j] = item;
+						}
+						else
+						{
+							items[j] = { nullptr,ExprTsysType::PRValue,nullptr };
+						}
+					}
+					auto init = pa.tsys->InitOf(items);
+					newGaContext->arguments.Add(pattern, init);
+				}
+				break;
 			}
 		}
 	}
