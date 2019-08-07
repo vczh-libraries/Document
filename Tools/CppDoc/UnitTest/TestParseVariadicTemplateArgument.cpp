@@ -472,7 +472,6 @@ auto Func4 = H(-Args...);
 
 TEST_CASE(TestParseVariadicTemplateArgument_ApplyOn_VTA_Default)
 {
-	return;
 	auto input = LR"(
 template<typename T = int*>											using One =				decltype({T{}});
 template<typename T = int*, typename U = char*>						using Two =				decltype({T{}, U{}});

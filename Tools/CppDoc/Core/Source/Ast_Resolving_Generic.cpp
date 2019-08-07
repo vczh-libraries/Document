@@ -197,31 +197,68 @@ namespace symbol_type_resolving
 
 	void CalculateGpa(GpaList& gpaMappings, ITsys* genericFunction, const TsysGenericFunction& genericFuncInfo, vint inputArgumentCount, SortedList<vint>& boundedAnys, vint offset)
 	{
-		if (boundedAnys.Count() > 0)
-		{
-			throw NotConvertableException();
-		}
-
 		if (genericFuncInfo.isLastParameterVta)
 		{
-			for (vint i = 0; i < genericFunction->GetParamCount(); i++)
+			if (boundedAnys.Count() == 0)
 			{
-				if (i < inputArgumentCount)
+				for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 				{
-					if (i == genericFunction->GetParamCount() - 1)
+					if (i < inputArgumentCount)
 					{
-						gpaMappings.Add(GenericParameterAssignment::MultipleVta(i + offset, inputArgumentCount - i));
+						if (i == genericFunction->GetParamCount() - 1)
+						{
+							gpaMappings.Add(GenericParameterAssignment::MultipleVta(i + offset, inputArgumentCount - i));
+						}
+						else
+						{
+							gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
+						}
 					}
 					else
 					{
-						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
+						if (i == genericFunction->GetParamCount() - 1)
+						{
+							gpaMappings.Add(GenericParameterAssignment::EmptyVta());
+						}
+						else
+						{
+							gpaMappings.Add(GenericParameterAssignment::DefaultValue());
+						}
 					}
 				}
-				else
+			}
+			else
+			{
+				vint headCount = boundedAnys[0] - offset;
+				for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 				{
-					if (i == genericFunction->GetParamCount() - 1)
+					if (i < headCount)
 					{
-						gpaMappings.Add(GenericParameterAssignment::EmptyVta());
+						if (i == genericFunction->GetParamCount() - 1)
+						{
+							gpaMappings.Add(GenericParameterAssignment::Any());
+						}
+						else
+						{
+							gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
+						}
+					}
+					else
+					{
+						gpaMappings.Add(GenericParameterAssignment::Any());
+					}
+				}
+			}
+		}
+		else
+		{
+			if (boundedAnys.Count() == 0)
+			{
+				for (vint i = 0; i < genericFunction->GetParamCount(); i++)
+				{
+					if (i < inputArgumentCount)
+					{
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
 					}
 					else
 					{
@@ -229,18 +266,26 @@ namespace symbol_type_resolving
 					}
 				}
 			}
-		}
-		else
-		{
-			for (vint i = 0; i < genericFunction->GetParamCount(); i++)
+			else
 			{
-				if (i < inputArgumentCount)
+				vint headCount = boundedAnys[0] - offset;
+				vint tailCount = inputArgumentCount - (boundedAnys[boundedAnys.Count() - 1] - offset) - 1;
+				vint anyCount = inputArgumentCount - headCount - tailCount;
+
+				for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 				{
-					gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
-				}
-				else
-				{
-					gpaMappings.Add(GenericParameterAssignment::DefaultValue());
+					if (i < headCount)
+					{
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
+					}
+					else if (i < headCount + anyCount)
+					{
+						gpaMappings.Add(GenericParameterAssignment::Any());
+					}
+					else
+					{
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(i - (anyCount - 1) + offset));
+					}
 				}
 			}
 		}
@@ -261,9 +306,23 @@ namespace symbol_type_resolving
 		GetArgumentCountRange(genericFunction, spec, genericFuncInfo, minCount, maxCount);
 
 		vint inputArgumentCount = argumentTypes.Count() - offset;
-		if (inputArgumentCount < minCount || (maxCount != -1 && inputArgumentCount > maxCount))
+		if (boundedAnys.Count() == 0)
 		{
-			throw NotConvertableException();
+			if (inputArgumentCount < minCount)
+			{
+				throw NotConvertableException();
+			}
+			if (maxCount != -1 && inputArgumentCount > maxCount)
+			{
+				throw NotConvertableException();
+			}
+		}
+		else
+		{
+			if (maxCount != -1 && inputArgumentCount - boundedAnys.Count() > maxCount)
+			{
+				throw NotConvertableException();
+			}
 		}
 
 		GpaList gpaMappings;
