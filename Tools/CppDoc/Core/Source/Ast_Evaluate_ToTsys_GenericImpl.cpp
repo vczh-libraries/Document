@@ -9,7 +9,7 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 	
 	template<typename TProcess>
-	void ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, Array<bool>& isTypes, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys, TProcess&& process)
+	void ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys, TProcess&& process)
 	{
 		auto genericFunction = args[0].tsys;
 		if (genericFunction->GetType() == TsysType::GenericFunction)
@@ -21,7 +21,7 @@ namespace symbol_totsys_impl
 			}
 
 			EvaluateSymbolContext esContext;
-			ResolveGenericParameters(pa, genericFunction, args, isTypes, boundedAnys, 1, &esContext.gaContext);
+			ResolveGenericParameters(pa, genericFunction, args, isTypes, argSource, boundedAnys, 1, &esContext.gaContext);
 			process(genericFunction, declSymbol, esContext);
 
 			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
@@ -43,9 +43,9 @@ namespace symbol_totsys_impl
 	// ProcessGenericType
 	//////////////////////////////////////////////////////////////////////////////////////
 	
-	void ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, GenericType* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+	void ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, GenericType* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 	{
-		ProcessGenericType(pa, result, isTypes, args, boundedAnys, [&](ITsys* genericFunction, Symbol* declSymbol, EvaluateSymbolContext& esContext)
+		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&](ITsys* genericFunction, Symbol* declSymbol, EvaluateSymbolContext& esContext)
 		{
 			switch (declSymbol->kind)
 			{
@@ -69,9 +69,9 @@ namespace symbol_totsys_impl
 	// ProcessGenericExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void ProcessGenericExpr(const ParsingArguments& pa, ExprTsysList& result, GenericExpr* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys)
+	void ProcessGenericExpr(const ParsingArguments& pa, ExprTsysList& result, GenericExpr* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 	{
-		ProcessGenericType(pa, result, isTypes, args, boundedAnys, [&](ITsys* genericFunction, Symbol* declSymbol, EvaluateSymbolContext& esContext)
+		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&](ITsys* genericFunction, Symbol* declSymbol, EvaluateSymbolContext& esContext)
 		{
 			switch (declSymbol->kind)
 			{

@@ -292,7 +292,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, SortedList<vint>& boundedAnys, vint offset, GenericArgContext* newGaContext)
+	void ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, Array<vint>& argSource, SortedList<vint>& boundedAnys, vint offset, GenericArgContext* newGaContext)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
 		{
@@ -365,7 +365,7 @@ namespace symbol_type_resolving
 				break;
 			case GenericParameterAssignmentKind::OneArgument:
 				{
-					if (acceptType != isTypes[gpa.index])
+					if (acceptType != isTypes[argSource[gpa.index]])
 					{
 						throw NotConvertableException();
 					}
@@ -393,7 +393,7 @@ namespace symbol_type_resolving
 				{
 					for (vint j = 0; j < gpa.count; j++)
 					{
-						if (acceptType != isTypes[gpa.index + j])
+						if (acceptType != isTypes[argSource[gpa.index + j]])
 						{
 							throw NotConvertableException();
 						}

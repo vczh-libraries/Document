@@ -25,7 +25,7 @@ namespace symbol_totsys_impl
 	void					ProcessFunctionType(const ParsingArguments& pa, ExprTsysList& result, FunctionType* self, TsysCallingConvention cc, bool memberOf, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
 
 	// Ast_Evaluate_ToTsys_GenericImpl.cpp (variadic)
-	void					ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, GenericType* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
+	void					ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, GenericType* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys);
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Exprs
@@ -58,7 +58,7 @@ namespace symbol_totsys_impl
 	void					ProcessUniversalInitializerExpr(const ParsingArguments& pa, ExprTsysList& result, UniversalInitializerExpr* self, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
 
 	// Ast_Evaluate_ToTsys_GenericImpl.cpp (variadic)
-	void					ProcessGenericExpr(const ParsingArguments& pa, ExprTsysList& result, GenericExpr* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
+	void					ProcessGenericExpr(const ParsingArguments& pa, ExprTsysList& result, GenericExpr* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys);
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Indexing
@@ -328,7 +328,9 @@ namespace symbol_totsys_impl
 					}
 
 					Array<ExprTsysItem> params(paramCount);
+					Array<vint> argSource(paramCount);
 					vint currentParam = 0;
+
 					for (vint i = 0; i < inputs.Count(); i++)
 					{
 						auto tsysItem = GetExprTsysItem(inputs[i][tsysIndex[i]]);
@@ -337,21 +339,31 @@ namespace symbol_totsys_impl
 							vint paramVtaCount = tsysItem.tsys->GetParamCount();
 							for (vint j = 0; j < paramVtaCount; j++)
 							{
-								params[currentParam++] = { tsysItem.tsys->GetInit().headers[j], tsysItem.tsys->GetParam(j) };
+								params[currentParam] = { tsysItem.tsys->GetInit().headers[j], tsysItem.tsys->GetParam(j) };
+								argSource[currentParam] = i;
+								currentParam++;
 							}
 						}
 						else
 						{
-							params[currentParam++] = tsysItem;
+							params[currentParam] = tsysItem;
+							argSource[currentParam] = i;
+							currentParam++;
 						}
 					}
 
 					ExprTsysList processResult;
-					process(processResult, params, -1, boundedAnys);
+					process(processResult, params, -1, argSource, boundedAnys);
 					AddExprTsysListToResult(result, processResult);
 				}
 				else
 				{
+					Array<vint> argSource(inputs.Count());
+					for (vint i = 0; i < inputs.Count(); i++)
+					{
+						argSource[i] = i;
+					}
+
 					if (unboundedVtaCount == -1)
 					{
 						Array<ExprTsysItem> params(inputs.Count());
@@ -361,7 +373,7 @@ namespace symbol_totsys_impl
 						}
 
 						ExprTsysList processResult;
-						process(processResult, params, -1, boundedAnys);
+						process(processResult, params, -1, argSource, boundedAnys);
 						AddExprTsysListToResult(result, processResult);
 					}
 					else
@@ -382,7 +394,7 @@ namespace symbol_totsys_impl
 									params[j] = tsysItem;
 								}
 							}
-							process(initParams[i], params, i, boundedAnys);
+							process(initParams[i], params, i, argSource, boundedAnys);
 						}
 
 						ExprTsysList processResult;

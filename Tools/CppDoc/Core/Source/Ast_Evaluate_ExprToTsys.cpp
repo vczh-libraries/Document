@@ -373,7 +373,7 @@ public:
 
 		ExprTsysList totalSelectedFunctions;
 		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, argHasBoundedVta, argUnboundedVtaCount,
-			[this, self, funcVta, &funcExprTypes, &totalSelectedFunctions](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self, funcVta, &funcExprTypes, &totalSelectedFunctions](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 			{
 				ExprTsysList funcTypes;
 				if (funcVta && unboundedVtaIndex != -1)
@@ -476,7 +476,7 @@ public:
 			variadicInput.ApplyVariadicList(1, self->initializer->arguments);
 		}
 		isVta = variadicInput.Expand((self->initializer ? &self->initializer->arguments : nullptr), result,
-			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 			{
 				ProcessCtorAccessExpr(pa, processResult, self, args, boundedAnys);
 			});
@@ -506,7 +506,7 @@ public:
 			variadicInput.ApplyVariadicList(1, self->initializer->arguments);
 		}
 		isVta = variadicInput.Expand((self->initializer ? &self->initializer->arguments : nullptr), result,
-			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 			{
 				ProcessNewExpr(pa, processResult, self, args, boundedAnys);
 			});
@@ -521,7 +521,7 @@ public:
 		VariadicInput<ExprTsysItem> variadicInput(self->arguments.Count(), pa, gaContext);
 		variadicInput.ApplyVariadicList(0, self->arguments);
 		isVta = variadicInput.Expand(&self->arguments, result,
-			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 			{
 				ProcessUniversalInitializerExpr(pa, processResult, self, args, boundedAnys);
 			});
@@ -662,9 +662,9 @@ public:
 		variadicInput.ApplySingle<Expr>(0, self->expr);
 		variadicInput.ApplyGenericArguments(1, isTypes, self->arguments);
 		isVta = variadicInput.Expand(&self->arguments, result,
-			[this, self, &isTypes](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self, &isTypes](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 			{
-				ProcessGenericExpr(pa, processResult, self, isTypes, args, boundedAnys);
+				ProcessGenericExpr(pa, processResult, self, isTypes, args, argSource, boundedAnys);
 			});
 	}
 };

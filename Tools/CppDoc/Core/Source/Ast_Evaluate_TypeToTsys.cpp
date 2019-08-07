@@ -126,7 +126,7 @@ public:
 		variadicInput.ApplyVariadicList(1, self->parameters);
 
 		isVta = variadicInput.Expand(&self->parameters, result,
-			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 			{
 				ProcessFunctionType(pa, processResult, self, cc, memberOf, args, boundedAnys);
 			});
@@ -236,9 +236,9 @@ public:
 		variadicInput.ApplySingle<Type>(0, self->type);
 		variadicInput.ApplyGenericArguments(1, isTypes, self->arguments);
 		isVta = variadicInput.Expand(&self->arguments, result,
-			[this, self, &isTypes](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, SortedList<vint>& boundedAnys)
+			[this, self, &isTypes](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 			{
-				ProcessGenericType(pa, processResult, self, isTypes, args, boundedAnys);
+				ProcessGenericType(pa, processResult, self, isTypes, args, argSource, boundedAnys);
 			});
 	}
 };
