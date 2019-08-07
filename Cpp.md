@@ -13,31 +13,6 @@
 
 ## Template short-term tasks
 
-- [x] `template` on `using` type alias declaration.
-  - [x] Write a lot of test cases for `decltype` inside `using`, with `TsysType::Any` to represent unknown type.
-    - [x] Test cases for all kind of expressions of which types contain generic arguments.
-    - [x] Test cases for all operators on expressions of which types contain generic arguments.
-    - [x] Test cases for overloadings on arguments of which types contain generic arguments.
-    - [x] Test `typename` and `template` keywords in types and expressions.
-  - [x] Default template argument.
-  - [ ] `...` argument
-    - [x] `...` type argument is only allowed to appear as the last argument in a generic declaration.
-    - [x] `...` types or expressions are only allowed in a place where we need a type list or an expression list
-    - [x] Only one `...` argument is allowed to appear in a `...` type or expression.
-      - Type AST for `...` type, and expression AST for `...` expression.
-    - [x] When a `...` type argument is evaluated to `any_t`, it means we don't know how many types are bounded to this argument. Otherwise, it is evaluated to `{T, U, V}`.
-    - [x] When a `...` expression is evaluated to `any_t`, it means we don't know how many types are bounded to this argument. Otherwise, it is evaluated to `{T, U, V}`.
-    - [x] When a `...` type argument is used to create `...` types or `...` expressions, if it is evaluated to `any_t`, then the result is also evaluated to `any_t`.
-    - When `...` type arguments are applied to parameters
-      - [x] If we know how many types are bounded to this `...` argument, dispatch them
-      - [x] If we don't know, the whole type is evaluated to `any_t`
-    - When calculating `...` expression
-      - [ ] If we know how many types are bounded to this `...` argument, dispatch them
-      - [ ] If we don't know, the whole expression is evaluated to `any_t`
-  - [x] Refactor `TypeToTsysInternal` before `ExprToTsysInternal` to extract following functions:
-    - Expanding a type/expr list for both bounded VTA or unbounded VTA
-    - Expanding a fixed number of types/expr for unbounded VTA
-  - [x] Fix bug: There is no `template<typename T> using Size = sizeof(T);`, there is `template<typename T> /*inline const constexpr*/ size_t Size = sizeof(T);`.
 - [ ] Refactor to allow multiple implementations found for the same symbol.
   - Functions with incomplete types always create new symbols.
   - Functions' symbols are only created to store information of function ASTs, all ASTs have their own symbols for scopes.
