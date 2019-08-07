@@ -111,35 +111,58 @@ namespace symbol_type_resolving
 	{
 		maxCount = genericFuncInfo.isLastParameterVta ? -1 : genericFunction->GetParamCount();
 
-		vint defaultCount = 0;
+		vint firstDefaultIndex = -1;
 		if (spec)
 		{
-			for (vint i = spec->arguments.Count() - 1; i >= 0; i--)
+			for (vint i = 0; i < spec->arguments.Count(); i++)
 			{
 				auto argument = spec->arguments[i];
-				switch (argument.argumentType)
+				if (argument.ellipsis)
 				{
-				case CppTemplateArgumentType::HighLevelType:
-				case CppTemplateArgumentType::Type:
-					if (!argument.type) break;
-					defaultCount++;
-					break;
-				case CppTemplateArgumentType::Value:
-					if (!argument.expr) break;
-					defaultCount++;
-					break;
+					firstDefaultIndex = i;
+					goto FINISH_FINDING_DEFAULT;
+				}
+				else
+				{
+					switch (argument.argumentType)
+					{
+					case CppTemplateArgumentType::HighLevelType:
+					case CppTemplateArgumentType::Type:
+						if (argument.type)
+						{
+							firstDefaultIndex = i;
+							goto FINISH_FINDING_DEFAULT;
+						}
+						break;
+					case CppTemplateArgumentType::Value:
+						if (argument.expr)
+						{
+							firstDefaultIndex = i;
+							goto FINISH_FINDING_DEFAULT;
+						}
+						break;
+					}
 				}
 			}
 		}
+	FINISH_FINDING_DEFAULT:
 
 		if (genericFuncInfo.isLastParameterVta)
 		{
-			minCount = genericFunction->GetParamCount() - (defaultCount == 0 ? 1 : defaultCount);
+			// last_argument.ellipsis == -1, so firstDefaultIndex will not be -1
+			minCount = firstDefaultIndex;
 			maxCount = -1;
 		}
 		else
 		{
-			minCount = genericFunction->GetParamCount() - defaultCount;
+			if (firstDefaultIndex == -1)
+			{
+				minCount = genericFunction->GetParamCount();
+			}
+			else
+			{
+				minCount = firstDefaultIndex;
+			}
 			maxCount = genericFunction->GetParamCount();
 		}
 	}

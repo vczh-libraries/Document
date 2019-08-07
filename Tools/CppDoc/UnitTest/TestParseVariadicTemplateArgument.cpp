@@ -542,7 +542,7 @@ template<typename T, typename... Ts>								using ApplyTwoVta_1 =	TwoVta<T, Ts..
 	AssertType(pa, L"ApplyOne_1<int, char, bool>",				L"ApplyOne_1<int, char, bool>"																									);
 
 	AssertType(pa, L"ApplyTwo_1<>",								L"ApplyTwo_1<>"																													);
-	AssertType(pa, L"ApplyTwo_1<int>",							L"ApplyTwo_1<int>"								L"{__int32 $PR, char * $PR}"													);
+	AssertType(pa, L"ApplyTwo_1<int>",							L"ApplyTwo_1<int>",								L"{__int32 $PR, char * $PR}"													);
 	AssertType(pa, L"ApplyTwo_1<int, char>",					L"ApplyTwo_1<int, char>",						L"{__int32 $PR, char $PR}"														);
 	AssertType(pa, L"ApplyTwo_1<int, char, bool>",				L"ApplyTwo_1<int, char, bool>"																									);
 
@@ -557,7 +557,7 @@ template<typename T, typename... Ts>								using ApplyTwoVta_1 =	TwoVta<T, Ts..
 	AssertType(pa, L"ApplyOneVta_1<int, char, bool>",			L"ApplyOneVta_1<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR}"											);
 
 	AssertType(pa, L"ApplyTwoVta_1<>",							L"ApplyTwoVta_1<>"																												);
-	AssertType(pa, L"ApplyTwoVta_1<int>",						L"ApplyTwoVta_1<int>",							L"{__int32 $PR, char* $PR}"														);
+	AssertType(pa, L"ApplyTwoVta_1<int>",						L"ApplyTwoVta_1<int>",							L"{__int32 $PR, char * $PR}"														);
 	AssertType(pa, L"ApplyTwoVta_1<int, char>",					L"ApplyTwoVta_1<int, char>",					L"{__int32 $PR, char $PR}"														);
 	AssertType(pa, L"ApplyTwoVta_1<int, char, bool>",			L"ApplyTwoVta_1<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR}"											);
 }
