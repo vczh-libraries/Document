@@ -91,6 +91,59 @@ namespace symbol_type_resolving
 		}
 	}
 
+	Ptr<TemplateSpec> GetTemplateSpec(const TsysGenericFunction& genericFuncInfo)
+	{
+		if (genericFuncInfo.declSymbol)
+		{
+			if (auto typeAliasDecl = genericFuncInfo.declSymbol->GetAnyForwardDecl<TypeAliasDeclaration>())
+			{
+				return typeAliasDecl->templateSpec;
+			}
+			else if (auto valueAliasDecl = genericFuncInfo.declSymbol->GetAnyForwardDecl<ValueAliasDeclaration>())
+			{
+				return valueAliasDecl->templateSpec;
+			}
+		}
+		return nullptr;
+	}
+
+	void GetArgumentCountRange(ITsys* genericFunction, Ptr<TemplateSpec> spec, const TsysGenericFunction& genericFuncInfo, vint& minCount, vint& maxCount)
+	{
+		maxCount = genericFuncInfo.variadicArgumentIndex == -1 ? genericFunction->GetParamCount() : -1;
+
+		vint defaultCount = 0;
+		if (spec)
+		{
+			for (vint i = spec->arguments.Count() - 1; i >= 0; i--)
+			{
+				auto argument = spec->arguments[i];
+				switch (argument.argumentType)
+				{
+				case CppTemplateArgumentType::HighLevelType:
+				case CppTemplateArgumentType::Type:
+					if (!argument.type) break;
+					defaultCount++;
+					break;
+				case CppTemplateArgumentType::Value:
+					if (!argument.expr) break;
+					defaultCount++;
+					break;
+				}
+			}
+		}
+
+		if (genericFuncInfo.variadicArgumentIndex == -1)
+		{
+			minCount = genericFunction->GetParamCount() - defaultCount;
+			maxCount = genericFunction->GetParamCount();
+		}
+		else
+		{
+			minCount = genericFunction->GetParamCount() - (defaultCount == 0 ? 1 : defaultCount);
+			maxCount = -1;
+		}
+	}
+
 	void ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, vint offset, GenericArgContext* newGaContext)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
@@ -98,56 +151,12 @@ namespace symbol_type_resolving
 			throw NotConvertableException();
 		}
 
-		Ptr<TemplateSpec> spec;
-		auto genericSymbol = genericFunction->GetGenericFunction().declSymbol;
-		auto& acceptTypes = genericFunction->GetGenericFunction().acceptTypes;
-
-		if (genericSymbol)
-		{
-			if (auto typeAliasDecl = genericSymbol->GetAnyForwardDecl<TypeAliasDeclaration>())
-			{
-				spec = typeAliasDecl->templateSpec;
-			}
-			else if (auto valueAliasDecl = genericSymbol->GetAnyForwardDecl<ValueAliasDeclaration>())
-			{
-				spec = valueAliasDecl->templateSpec;
-			}
-		}
+		const auto& genericFuncInfo = genericFunction->GetGenericFunction();
+		auto spec = GetTemplateSpec(genericFuncInfo);
 
 		vint minCount = -1;
 		vint maxCount = -1;
-		vint variadicArgumentIndex = genericFunction->GetGenericFunction().variadicArgumentIndex;
-		if (variadicArgumentIndex == -1)
-		{
-			vint defaultCount = 0;
-			if (spec)
-			{
-				for (vint i = spec->arguments.Count() - 1; i >= 0; i--)
-				{
-					auto argument = spec->arguments[i];
-					switch (argument.argumentType)
-					{
-					case CppTemplateArgumentType::HighLevelType:
-					case CppTemplateArgumentType::Type:
-						if (!argument.type) goto STOP_COUNTING_DEFAULT;
-						defaultCount++;
-						break;
-					case CppTemplateArgumentType::Value:
-						if (!argument.expr) goto STOP_COUNTING_DEFAULT;
-						defaultCount++;
-						break;
-					}
-				}
-			}
-		STOP_COUNTING_DEFAULT:
-			maxCount = genericFunction->GetParamCount();
-			minCount = maxCount - defaultCount;
-		}
-		else
-		{
-			// default values and variadic template arguments are not allowed to mix together
-			minCount = genericFunction->GetParamCount() - 1;
-		}
+		GetArgumentCountRange(genericFunction, spec, genericFuncInfo, minCount, maxCount);
 
 		vint inputArgumentCount = argumentTypes.Count() - offset;
 		if (inputArgumentCount < minCount || (maxCount != -1 && inputArgumentCount > maxCount))
@@ -160,7 +169,7 @@ namespace symbol_type_resolving
 		// X, X-1: map to no arguments (variadic)
 		// X, Y: map to multiple arguments (variadic)
 		List<Tuple<vint, vint>> parameterToArgumentMappings;
-		if (variadicArgumentIndex == -1)
+		if (genericFuncInfo.variadicArgumentIndex == -1)
 		{
 			for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 			{
@@ -177,12 +186,12 @@ namespace symbol_type_resolving
 		else
 		{
 			vint delta = inputArgumentCount - genericFunction->GetParamCount();
-			for (vint i = 0; i < variadicArgumentIndex; i++)
+			for (vint i = 0; i < genericFuncInfo.variadicArgumentIndex; i++)
 			{
 				parameterToArgumentMappings.Add({ i,i });
 			}
-			parameterToArgumentMappings.Add({ variadicArgumentIndex,variadicArgumentIndex + delta });
-			for (vint i = variadicArgumentIndex + 1; i < genericFunction->GetParamCount(); i++)
+			parameterToArgumentMappings.Add({ genericFuncInfo.variadicArgumentIndex,genericFuncInfo.variadicArgumentIndex + delta });
+			for (vint i = genericFuncInfo.variadicArgumentIndex + 1; i < genericFunction->GetParamCount(); i++)
 			{
 				parameterToArgumentMappings.Add({ i + delta,i + delta });
 			}
@@ -192,7 +201,7 @@ namespace symbol_type_resolving
 		{
 			auto mappings = parameterToArgumentMappings[i];
 			auto pattern = genericFunction->GetParam(i);
-			bool acceptType = acceptTypes[i];
+			bool acceptType = genericFuncInfo.acceptTypes[i];
 
 			if (mappings.f0 == -1)
 			{
@@ -204,7 +213,7 @@ namespace symbol_type_resolving
 						throw NotConvertableException();
 					}
 					TypeTsysList argTypes;
-					TypeToTsysNoVta(pa.WithContext(genericSymbol), spec->arguments[i].type, argTypes, newGaContext);
+					TypeToTsysNoVta(pa.WithContext(genericFuncInfo.declSymbol), spec->arguments[i].type, argTypes, newGaContext);
 
 					for (vint j = 0; j < argTypes.Count(); j++)
 					{
@@ -220,7 +229,7 @@ namespace symbol_type_resolving
 					newGaContext->arguments.Add(pattern, nullptr);
 				}
 			}
-			else if (mappings.f0 == mappings.f1 && (variadicArgumentIndex == -1 || variadicArgumentIndex != mappings.f0))
+			else if (mappings.f0 == mappings.f1 && (genericFuncInfo.variadicArgumentIndex == -1 || genericFuncInfo.variadicArgumentIndex != mappings.f0))
 			{
 				// X, X: map to one argument
 				if (acceptType != isTypes[i + offset])
