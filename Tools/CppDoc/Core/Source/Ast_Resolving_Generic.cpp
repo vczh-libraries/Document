@@ -271,7 +271,6 @@ namespace symbol_type_resolving
 			{
 				vint headCount = boundedAnys[0] - offset;
 				vint tailCount = inputArgumentCount - (boundedAnys[boundedAnys.Count() - 1] - offset) - 1;
-				vint anyArgumentCount = inputArgumentCount - headCount - tailCount;
 				vint anyParameterCount = parameterCount - headCount - tailCount;
 
 				for (vint i = 0; i < parameterCount; i++)
@@ -286,7 +285,7 @@ namespace symbol_type_resolving
 					}
 					else
 					{
-						gpaMappings.Add(GenericParameterAssignment::OneArgument(i - (anyArgumentCount - 1) + offset));
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(inputArgumentCount - (parameterCount - i) + offset));
 					}
 				}
 			}
