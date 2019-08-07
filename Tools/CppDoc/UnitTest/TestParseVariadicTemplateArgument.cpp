@@ -505,59 +505,59 @@ template<typename T, typename... Ts>								using ApplyTwoVta_1 =	TwoVta<T, Ts..
 	AssertType(pa, L"ApplyOneVta",								L"ApplyOneVta",									L"<...::ApplyOneVta::[Ts]> any_t"												);
 	AssertType(pa, L"ApplyTwoVta",								L"ApplyTwoVta",									L"<...::ApplyTwoVta::[Ts]> any_t"												);
 	
-	AssertType(pa, L"ApplyOne_1",								L"ApplyOne_1",									L"<::ApplyOne_1::[T], ::...ApplyOne_1::[Ts]> {any_t $PR}"						);
-	AssertType(pa, L"ApplyTwo_1",								L"ApplyTwo_1",									L"<::ApplyTwo_1::[T], ::...ApplyTwo_1::[Ts]> {any_t $PR, any_t $PR}"			);
-	AssertType(pa, L"ApplyVta_1",								L"ApplyVta_1",									L"<::ApplyVta_1::[T], ::...ApplyVta_1::[Ts]> any_t"								);
-	AssertType(pa, L"ApplyOneVta_1",							L"ApplyOneVta_1",								L"<::ApplyOneVta_1::[T], ::...ApplyOneVta_1::[Ts]> any_t"						);
-	AssertType(pa, L"ApplyTwoVta_1",							L"ApplyTwoVta_1",								L"<::ApplyTwoVta_1::[T], ::...ApplyTwoVta_1::[Ts]> any_t"						);
+	AssertType(pa, L"ApplyOne_1",								L"ApplyOne_1",									L"<::ApplyOne_1::[T], ...::ApplyOne_1::[Ts]> {::ApplyOne_1::[T] $PR}"			);
+	AssertType(pa, L"ApplyTwo_1",								L"ApplyTwo_1",									L"<::ApplyTwo_1::[T], ...::ApplyTwo_1::[Ts]> {::ApplyTwo_1::[T] $PR, any_t $PR}");
+	AssertType(pa, L"ApplyVta_1",								L"ApplyVta_1",									L"<::ApplyVta_1::[T], ...::ApplyVta_1::[Ts]> any_t"								);
+	AssertType(pa, L"ApplyOneVta_1",							L"ApplyOneVta_1",								L"<::ApplyOneVta_1::[T], ...::ApplyOneVta_1::[Ts]> any_t"						);
+	AssertType(pa, L"ApplyTwoVta_1",							L"ApplyTwoVta_1",								L"<::ApplyTwoVta_1::[T], ...::ApplyTwoVta_1::[Ts]> any_t"						);
 	
-	AssertType(pa, L"ApplyOne<>",								L"ApplyOne<>",									L"{int * $PR}"																	);
-	AssertType(pa, L"ApplyOne<int>",							L"ApplyOne<int>",								L"{int $PR}"																	);
+	AssertType(pa, L"ApplyOne<>",								L"ApplyOne<>",									L"{__int32 * $PR}"																);
+	AssertType(pa, L"ApplyOne<int>",							L"ApplyOne<int>",								L"{__int32 $PR}"																);
 	AssertType(pa, L"ApplyOne<int, char>",						L"ApplyOne<int, char>"																											);
 	AssertType(pa, L"ApplyOne<int, char, bool>",				L"ApplyOne<int, char, bool>"																									);
 
-	AssertType(pa, L"ApplyTwo<>",								L"ApplyTwo<>",									L"{int * $PR, char * $PR}"														);
-	AssertType(pa, L"ApplyTwo<int>",							L"ApplyTwo<int>",								L"{int $PR, char * $PR}"														);
-	AssertType(pa, L"ApplyTwo<int, char>",						L"ApplyTwo<int, char>"							L"{int $PR, char $PR}"															);
+	AssertType(pa, L"ApplyTwo<>",								L"ApplyTwo<>",									L"{__int32 * $PR, char * $PR}"													);
+	AssertType(pa, L"ApplyTwo<int>",							L"ApplyTwo<int>",								L"{__int32 $PR, char * $PR}"													);
+	AssertType(pa, L"ApplyTwo<int, char>",						L"ApplyTwo<int, char>",							L"{__int32 $PR, char $PR}"														);
 	AssertType(pa, L"ApplyTwo<int, char, bool>",				L"ApplyTwo<int, char, bool>"																									);
 
 	AssertType(pa, L"ApplyVta<>",								L"ApplyVta<>",									L"{}"																			);
-	AssertType(pa, L"ApplyVta<int>",							L"ApplyVta<int>",								L"{int $PR}"																	);
-	AssertType(pa, L"ApplyVta<int, char>",						L"ApplyVta<int, char>",							L"{int $PR, char $PR}"															);
-	AssertType(pa, L"ApplyVta<int, char, bool>",				L"ApplyVta<int, char, bool>",					L"{int $PR, char $PR, bool $PR}"												);
+	AssertType(pa, L"ApplyVta<int>",							L"ApplyVta<int>",								L"{__int32 $PR}"																);
+	AssertType(pa, L"ApplyVta<int, char>",						L"ApplyVta<int, char>",							L"{__int32 $PR, char $PR}"														);
+	AssertType(pa, L"ApplyVta<int, char, bool>",				L"ApplyVta<int, char, bool>",					L"{__int32 $PR, char $PR, bool $PR}"											);
 
-	AssertType(pa, L"ApplyOneVta<>",							L"ApplyOneVta<>",								L"{int * $PR}"																	);
-	AssertType(pa, L"ApplyOneVta<int>",							L"ApplyOneVta<int>",							L"{int $PR}"																	);
-	AssertType(pa, L"ApplyOneVta<int, char>",					L"ApplyOneVta<int, char>",						L"{int $PR, char $PR}"															);
-	AssertType(pa, L"ApplyOneVta<int, char, bool>",				L"ApplyOneVta<int, char, bool>",				L"{int $PR, char $PR, bool $PR}"												);
+	AssertType(pa, L"ApplyOneVta<>",							L"ApplyOneVta<>",								L"{__int32 * $PR}"																);
+	AssertType(pa, L"ApplyOneVta<int>",							L"ApplyOneVta<int>",							L"{__int32 $PR}"																);
+	AssertType(pa, L"ApplyOneVta<int, char>",					L"ApplyOneVta<int, char>",						L"{__int32 $PR, char $PR}"														);
+	AssertType(pa, L"ApplyOneVta<int, char, bool>",				L"ApplyOneVta<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR}"											);
 
-	AssertType(pa, L"ApplyTwoVta<>",							L"ApplyTwoVta<>",								L"{int * $PR, char * $PR}"														);
-	AssertType(pa, L"ApplyTwoVta<int>",							L"ApplyTwoVta<int>",							L"{int $PR, char * $PR}"														);
-	AssertType(pa, L"ApplyTwoVta<int, char>",					L"ApplyTwoVta<int, char>",						L"{int $PR, char $PR}"															);
-	AssertType(pa, L"ApplyTwoVta<int, char, bool>",				L"ApplyTwoVta<int, char, bool>",				L"{int $PR, char $PR, bool $PR}"												);
+	AssertType(pa, L"ApplyTwoVta<>",							L"ApplyTwoVta<>",								L"{__int32 * $PR, char * $PR}"													);
+	AssertType(pa, L"ApplyTwoVta<int>",							L"ApplyTwoVta<int>",							L"{__int32 $PR, char * $PR}"													);
+	AssertType(pa, L"ApplyTwoVta<int, char>",					L"ApplyTwoVta<int, char>",						L"{__int32 $PR, char $PR}"														);
+	AssertType(pa, L"ApplyTwoVta<int, char, bool>",				L"ApplyTwoVta<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR}"											);
 	
 	AssertType(pa, L"ApplyOne_1<>",								L"ApplyOne_1<>"																													);
-	AssertType(pa, L"ApplyOne_1<int>",							L"ApplyOne_1<int>",								L"{int $PR}"																	);
+	AssertType(pa, L"ApplyOne_1<int>",							L"ApplyOne_1<int>",								L"{__int32 $PR}"																);
 	AssertType(pa, L"ApplyOne_1<int, char>",					L"ApplyOne_1<int, char>"																										);
 	AssertType(pa, L"ApplyOne_1<int, char, bool>",				L"ApplyOne_1<int, char, bool>"																									);
 
 	AssertType(pa, L"ApplyTwo_1<>",								L"ApplyTwo_1<>"																													);
-	AssertType(pa, L"ApplyTwo_1<int>",							L"ApplyTwo_1<int>"								L"{int $PR, char * $PR}"														);
-	AssertType(pa, L"ApplyTwo_1<int, char>",					L"ApplyTwo_1<int, char>"						L"{int $PR, char $PR}"															);
+	AssertType(pa, L"ApplyTwo_1<int>",							L"ApplyTwo_1<int>"								L"{__int32 $PR, char * $PR}"													);
+	AssertType(pa, L"ApplyTwo_1<int, char>",					L"ApplyTwo_1<int, char>",						L"{__int32 $PR, char $PR}"														);
 	AssertType(pa, L"ApplyTwo_1<int, char, bool>",				L"ApplyTwo_1<int, char, bool>"																									);
 
 	AssertType(pa, L"ApplyVta_1<>",								L"ApplyVta_1<>"																													);
-	AssertType(pa, L"ApplyVta_1<int>",							L"ApplyVta_1<int>",								L"{int $PR}"																	);
-	AssertType(pa, L"ApplyVta_1<int, char>",					L"ApplyVta_1<int, char>",						L"{int $PR, char $PR}"															);
-	AssertType(pa, L"ApplyVta_1<int, char, bool>",				L"ApplyVta_1<int, char, bool>",					L"{int $PR, char $PR, bool $PR}"												);
+	AssertType(pa, L"ApplyVta_1<int>",							L"ApplyVta_1<int>",								L"{__int32 $PR}"																);
+	AssertType(pa, L"ApplyVta_1<int, char>",					L"ApplyVta_1<int, char>",						L"{__int32 $PR, char $PR}"														);
+	AssertType(pa, L"ApplyVta_1<int, char, bool>",				L"ApplyVta_1<int, char, bool>",					L"{__int32 $PR, char $PR, bool $PR}"											);
 
 	AssertType(pa, L"ApplyOneVta_1<>",							L"ApplyOneVta_1<>"																												);
-	AssertType(pa, L"ApplyOneVta_1<int>",						L"ApplyOneVta_1<int>",							L"{int $PR}"																	);
-	AssertType(pa, L"ApplyOneVta_1<int, char>",					L"ApplyOneVta_1<int, char>",					L"{int $PR, char $PR}"															);
-	AssertType(pa, L"ApplyOneVta_1<int, char, bool>",			L"ApplyOneVta_1<int, char, bool>",				L"{int $PR, char $PR, bool $PR}"												);
+	AssertType(pa, L"ApplyOneVta_1<int>",						L"ApplyOneVta_1<int>",							L"{__int32 $PR}"																);
+	AssertType(pa, L"ApplyOneVta_1<int, char>",					L"ApplyOneVta_1<int, char>",					L"{__int32 $PR, char $PR}"														);
+	AssertType(pa, L"ApplyOneVta_1<int, char, bool>",			L"ApplyOneVta_1<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR}"											);
 
 	AssertType(pa, L"ApplyTwoVta_1<>",							L"ApplyTwoVta_1<>"																												);
-	AssertType(pa, L"ApplyTwoVta_1<int>",						L"ApplyTwoVta_1<int>",							L"{int $PR, char* $PR}"															);
-	AssertType(pa, L"ApplyTwoVta_1<int, char>",					L"ApplyTwoVta_1<int, char>",					L"{int $PR, char $PR}"															);
-	AssertType(pa, L"ApplyTwoVta_1<int, char, bool>",			L"ApplyTwoVta_1<int, char, bool>",				L"{int $PR, char $PR, bool $PR}"												);
+	AssertType(pa, L"ApplyTwoVta_1<int>",						L"ApplyTwoVta_1<int>",							L"{__int32 $PR, char* $PR}"														);
+	AssertType(pa, L"ApplyTwoVta_1<int, char>",					L"ApplyTwoVta_1<int, char>",					L"{__int32 $PR, char $PR}"														);
+	AssertType(pa, L"ApplyTwoVta_1<int, char, bool>",			L"ApplyTwoVta_1<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR}"											);
 }

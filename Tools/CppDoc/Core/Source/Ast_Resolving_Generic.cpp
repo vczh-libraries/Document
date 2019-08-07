@@ -271,7 +271,8 @@ namespace symbol_type_resolving
 			{
 				vint headCount = boundedAnys[0] - offset;
 				vint tailCount = inputArgumentCount - (boundedAnys[boundedAnys.Count() - 1] - offset) - 1;
-				vint anyCount = parameterCount - headCount - tailCount;
+				vint anyArgumentCount = inputArgumentCount - headCount - tailCount;
+				vint anyParameterCount = parameterCount - headCount - tailCount;
 
 				for (vint i = 0; i < parameterCount; i++)
 				{
@@ -279,13 +280,13 @@ namespace symbol_type_resolving
 					{
 						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
 					}
-					else if (i < headCount + anyCount)
+					else if (i < headCount + anyParameterCount)
 					{
 						gpaMappings.Add(GenericParameterAssignment::Any());
 					}
 					else
 					{
-						gpaMappings.Add(GenericParameterAssignment::OneArgument(i - (anyCount - 1) + offset));
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(i - (anyArgumentCount - 1) + offset));
 					}
 				}
 			}
@@ -416,6 +417,11 @@ namespace symbol_type_resolving
 					}
 					auto init = pa.tsys->InitOf(items);
 					newGaContext->arguments.Add(pattern, init);
+				}
+				break;
+			case GenericParameterAssignmentKind::Any:
+				{
+					newGaContext->arguments.Add(pattern, pa.tsys->Any());
 				}
 				break;
 			}
