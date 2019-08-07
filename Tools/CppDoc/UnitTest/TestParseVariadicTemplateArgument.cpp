@@ -493,11 +493,11 @@ template<typename T, typename... Ts>								using ApplyTwoVta_1 =	TwoVta<T, Ts..
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	
-	AssertType(pa, L"One",										L"One",											L"<...::One::[Ts]> {any_t $PR}"													);
-	AssertType(pa, L"Two",										L"Two",											L"<...::Two::[Ts]> {any_t $PR, any_t $PR}"										);
-	AssertType(pa, L"Vta",										L"Vta",											L"<...::Vta::[Ts]> any_t"														);
-	AssertType(pa, L"OneVta",									L"OneVta",										L"<...::OneVta::[Ts]> any_t"													);
-	AssertType(pa, L"TwoVta",									L"TwoVta",										L"<...::TwoVta::[Ts]> any_t"													);
+	AssertType(pa, L"One",										L"One",											L"<::One::[T]> {::One::[T] $PR}"												);
+	AssertType(pa, L"Two",										L"Two",											L"<::Two::[T], ::Two::[U]> {::Two::[T] $PR, ::Two::[U] $PR}"					);
+	AssertType(pa, L"Vta",										L"Vta",											L"<...::Vta::[TArgs]> any_t"													);
+	AssertType(pa, L"OneVta",									L"OneVta",										L"<::OneVta::[T], ...::OneVta::[TArgs]> any_t"									);
+	AssertType(pa, L"TwoVta",									L"TwoVta",										L"<::TwoVta::[T], ::TwoVta::[U], ...::TwoVta::[TArgs]> any_t"					);
 	
 	AssertType(pa, L"ApplyOne",									L"ApplyOne",									L"<...::ApplyOne::[Ts]> {any_t $PR}"											);
 	AssertType(pa, L"ApplyTwo",									L"ApplyTwo",									L"<...::ApplyTwo::[Ts]> {any_t $PR, any_t $PR}"									);

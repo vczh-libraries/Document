@@ -29,8 +29,8 @@
     - [x] When a `...` expression is evaluated to `any_t`, it means we don't know how many types are bounded to this argument. Otherwise, it is evaluated to `{T, U, V}`.
     - [x] When a `...` type argument is used to create `...` types or `...` expressions, if it is evaluated to `any_t`, then the result is also evaluated to `any_t`.
     - When `...` type arguments are applied to parameters
-      - [ ] If we know how many types are bounded to this `...` argument, dispatch them
-      - [ ] If we don't know, the whole type is evaluated to `any_t`
+      - [x] If we know how many types are bounded to this `...` argument, dispatch them
+      - [x] If we don't know, the whole type is evaluated to `any_t`
     - When calculating `...` expression
       - [ ] If we know how many types are bounded to this `...` argument, dispatch them
       - [ ] If we don't know, the whole expression is evaluated to `any_t`
