@@ -19,6 +19,12 @@
   - If an member implementation does not match to a declaration, scopes are created for analyzing the body, error is ignored.
   - Allow many-to-many definition-to-declaration mapping.
   - `EvaluateSymbol` doesn't crash if no type is evaluated with `gaContext`
+  - `Symbol` class:
+    - `children` -> `members` + `overloadings` + `mainCandidateForType`
+      - `members` and `overloadings` cannot be non-empty at the same time
+      - a overloading symbol's parent is its scope parent, not the symbol that contains overloadings
+    - `definition` + `declarations` -> `declaration` + `isForwardDecl`
+    - `name` -> delete
 - [ ] More refactorings
   - [x] `ResolveGenericParameters`: Receive `Array<TypeTsysItem>` instead of `Array<TypeTsysList>` for `argumentTypes`
   - [x] `VisitOverloadedFunction`: Receive `Array<ExprTsysItem>` instead of `List<Ptr<ExprTsysList>>` for `argTypesList`
