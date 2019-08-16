@@ -20,11 +20,16 @@
   - Allow many-to-many definition-to-declaration mapping.
   - `EvaluateSymbol` doesn't crash if no type is evaluated with `gaContext`
   - `Symbol` class:
-    - `children` -> `members` + `overloadings` + `mainCandidateForType`
-      - `members` and `overloadings` cannot be non-empty at the same time
-      - a overloading symbol's parent is its scope parent, not the symbol that contains overloadings
-    - `definition` + `declarations` -> `declaration` + `isForwardDecl`
-    - `name` -> delete
+    - Hide all fields, add accessors
+    - Split to union of
+      - Common              : `kind`, `ellipsis`, `name`, `uniqueId`, `usingNss`
+      - Function symbol     : `parent`, `declSymbols`, `implSymbols`
+      - Top function scope  : `parentSymbols`, `definition`, `evaluation`, `methodCache`, `children`
+      - Others              : `parent`, `declarations`, `definition`, `statement`, `children`, `evaluation`
+      - Relationships:
+        - `parent` <--> `children`(owner)
+        - `parentSymbols` <--> `declSymbols`(owner), `implSymbols`(owner)
+        - all symbols in `parentSymbols` have the same `parent`
 - [ ] More refactorings
   - [x] `ResolveGenericParameters`: Receive `Array<TypeTsysItem>` instead of `Array<TypeTsysList>` for `argumentTypes`
   - [x] `VisitOverloadedFunction`: Receive `Array<ExprTsysItem>` instead of `List<Ptr<ExprTsysList>>` for `argTypesList`
