@@ -82,11 +82,11 @@ namespace TestConvert_Helpers
 					auto ctorSymbol = pCtors->Get(i);
 					auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (ctorDecl->decoratorDelete) continue;
-					symbol_type_resolving::EvaluateSymbol(pa, ctorDecl.Obj());
+					auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj());
 
-					for (vint j = 0; j < ctorSymbol->evaluation.Get().Count(); j++)
+					for (vint j = 0; j < evTypes.Count(); j++)
 					{
-						auto tsys = ctorSymbol->evaluation.Get()[j];
+						auto tsys = evTypes[j];
 						funcTypes.Add({ ctorSymbol.Obj(),ExprTsysType::PRValue,tsys });
 					}
 				}
@@ -224,10 +224,10 @@ namespace TestConvert_Helpers
 			if (currentType == toType) return true;
 			if (auto currentClass = TryGetDeclFromType<ClassDeclaration>(currentType))
 			{
-				symbol_type_resolving::EvaluateSymbol(pa, currentClass.Obj());
-				for (vint j = 0; j < currentClass->symbol->evaluation.Count(); j++)
+				auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, currentClass.Obj());
+				for (vint j = 0; j < ev.Count(); j++)
 				{
-					auto& baseTypes = currentClass->symbol->evaluation.Get(j);
+					auto& baseTypes = ev.Get(j);
 					for (vint k = 0; k < baseTypes.Count(); k++)
 					{
 						if (!searched.Contains(baseTypes[k]))
@@ -317,11 +317,11 @@ namespace TestConvert_Helpers
 				if (typeOpType->parameters.Count() != 0) continue;
 				if (TestFunctionQualifier(fromCV, fromRef, typeOpType) == TsysConv::Illegal) continue;
 			}
-			symbol_type_resolving::EvaluateSymbol(pa, typeOpDecl.Obj());
+			auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, typeOpDecl.Obj());
 
-			for (vint j = 0; j < typeOpSymbol->evaluation.Get().Count(); j++)
+			for (vint j = 0; j < evTypes.Count(); j++)
 			{
-				auto tsys = typeOpSymbol->evaluation.Get()[j];
+				auto tsys = evTypes[j];
 				{
 					auto newFromType = tsys->GetElement()->RRefOf();
 					if (!tested.Contains({ toType,newFromType }))
@@ -375,11 +375,11 @@ namespace TestConvert_Helpers
 				if (!ctorType) continue;
 				if (ctorType->parameters.Count() != 1) continue;
 			}
-			symbol_type_resolving::EvaluateSymbol(pa, ctorDecl.Obj());
+			auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj());
 
-			for (vint j = 0; j < ctorSymbol->evaluation.Get().Count(); j++)
+			for (vint j = 0; j < evTypes.Count(); j++)
 			{
-				auto tsys = ctorSymbol->evaluation.Get()[j];
+				auto tsys = evTypes[j];
 				{
 					auto newToType = tsys->GetParam(0);
 					if (!tested.Contains({ newToType,fromType }))

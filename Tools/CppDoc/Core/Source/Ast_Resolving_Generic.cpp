@@ -16,7 +16,7 @@ namespace symbol_type_resolving
 			auto argument = spec->arguments[i];
 			if ((genericFunction.acceptTypes[i] = (argument.argumentType == CppTemplateArgumentType::Type)))
 			{
-				params.Add(argument.argumentSymbol->evaluation.Get()[0]);
+				params.Add(EvaluateGenericArgumentSymbol(argument.argumentSymbol));
 			}
 			else
 			{

@@ -24,7 +24,7 @@
     - Split to union of
       - Common              : `kind`, `ellipsis`, `name`, `uniqueId`, `usingNss`
       - Function symbol     : `parent`, `declSymbols`, `implSymbols`
-      - Top function scope  : `parentSymbols`, `definition`, `evaluation`, `methodCache`, `children`
+      - Function body scope : `parentSymbols`, `definition`, `evaluation`, `methodCache`, `children`
       - Others              : `parent`, `declarations`, `definition`, `statement`, `children`, `evaluation`
       - Relationships:
         - `parent` <--> `children`(owner)

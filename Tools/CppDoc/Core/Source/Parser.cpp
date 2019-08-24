@@ -120,14 +120,19 @@ const Ptr<Stat>& Symbol::GetStat()
 	return statement;
 }
 
-const Symbol::SymbolGroup& Symbol::GetChildren()
-{
-	return children;
-}
-
 Ptr<symbol_component::MethodCache> Symbol::GetMethodCache()
 {
 	return methodCache;
+}
+
+symbol_component::Evaluation& Symbol::GetEvaluationForUpdating()
+{
+	return evaluation;
+}
+
+const Symbol::SymbolGroup& Symbol::GetChildren()
+{
+	return children;
 }
 
 const List<Ptr<Symbol>>* Symbol::TryGetChildren(const WString& name)

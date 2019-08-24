@@ -22,18 +22,17 @@ namespace symbol_totsys_impl
 		case symbol_component::SymbolKind::TypeAlias:
 			{
 				auto usingDecl = symbol->GetImplDecl<TypeAliasDeclaration>();
-				EvaluateSymbol(pa, usingDecl.Obj());
-				auto& types = symbol->evaluation.Get();
-				for (vint j = 0; j < types.Count(); j++)
+				auto& evTypes = EvaluateTypeAliasSymbol(pa, usingDecl.Obj());
+				for (vint j = 0; j < evTypes.Count(); j++)
 				{
-					AddTsysToResult(result, types[j]);
+					AddTsysToResult(result, evTypes[j]);
 				}
 				hasNonVariadic = true;
 			}
 			return;
 		case symbol_component::SymbolKind::GenericTypeArgument:
 			{
-				auto argumentKey = symbol->evaluation.Get()[0];
+				auto argumentKey = EvaluateGenericArgumentSymbol(symbol);
 				if (gaContext)
 				{
 					vint index = gaContext->arguments.Keys().IndexOf(argumentKey);

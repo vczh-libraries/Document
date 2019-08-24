@@ -135,16 +135,16 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	EvaluateSymbol: Evaluate the declared type for a variable
+	EvaluateVarSymbol: Evaluate the declared type for a variable
 	***********************************************************************/
 
-	void EvaluateSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl)
+	TypeTsysList& EvaluateVarSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl)
 	{
 		auto symbol = varDecl->symbol;
-		auto& ev = symbol->evaluation;
+		auto& ev = symbol->GetEvaluationForUpdating();
 		switch (ev.progress)
 		{
-		case symbol_component::EvaluationProgress::Evaluated: return;
+		case symbol_component::EvaluationProgress::Evaluated: return ev.Get();
 		case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
 		}
 
@@ -184,10 +184,11 @@ namespace symbol_type_resolving
 			TypeToTsysNoVta(newPa, varDecl->type, ev.Get(), nullptr);
 		}
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;
+		return ev.Get();
 	}
 
 	/***********************************************************************
-	EvaluateSymbol: Evaluate the declared type for a function
+	EvaluateFuncSymbol: Evaluate the declared type for a function
 	***********************************************************************/
 
 	bool IsMemberFunction(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl)
@@ -209,7 +210,7 @@ namespace symbol_type_resolving
 	void FinishEvaluatingSymbol(const ParsingArguments& pa, FunctionDeclaration* funcDecl)
 	{
 		auto symbol = funcDecl->symbol;
-		auto& ev = symbol->evaluation;
+		auto& ev = symbol->GetEvaluationForUpdating();
 		auto newPa = pa.WithContext(symbol->GetParentScope());
 		TypeTsysList returnTypes;
 		CopyFrom(returnTypes, ev.Get());
@@ -232,13 +233,13 @@ namespace symbol_type_resolving
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;
 	}
 
-	void EvaluateSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl)
+	TypeTsysList& EvaluateFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl)
 	{
 		auto symbol = funcDecl->symbol;
-		auto& ev = symbol->evaluation;
+		auto& ev = symbol->GetEvaluationForUpdating();
 		switch (ev.progress)
 		{
-		case symbol_component::EvaluationProgress::Evaluated: return;
+		case symbol_component::EvaluationProgress::Evaluated: return ev.Get();
 		case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
 		}
 
@@ -268,19 +269,20 @@ namespace symbol_type_resolving
 			TypeToTsysNoVta(newPa, funcDecl->type, ev.Get(), nullptr, IsMemberFunction(pa, funcDecl));
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		}
+		return ev.Get();
 	}
 
 	/***********************************************************************
-	EvaluateSymbol: Evaluate base types for a class
+	EvaluateClassSymbol: Evaluate base types for a class
 	***********************************************************************/
 
-	void EvaluateSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl)
+	symbol_component::Evaluation& EvaluateClassSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl)
 	{
 		auto symbol = classDecl->symbol;
-		auto& ev = symbol->evaluation;
+		auto& ev = symbol->GetEvaluationForUpdating();
 		switch (ev.progress)
 		{
-		case symbol_component::EvaluationProgress::Evaluated: return;
+		case symbol_component::EvaluationProgress::Evaluated: return ev;
 		case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
 		}
 
@@ -295,21 +297,22 @@ namespace symbol_type_resolving
 			}
 		}
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;
+		return ev;
 	}
 
 	/***********************************************************************
-	EvaluateSymbol: Evaluate the declared type for an alias
+	EvaluateTypeAliasSymbol: Evaluate the declared type for an alias
 	***********************************************************************/
 
-	void EvaluateSymbol(const ParsingArguments& pa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
+	TypeTsysList& EvaluateTypeAliasSymbol(const ParsingArguments& pa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = usingDecl->symbol;
 		if (!esContext)
 		{
-			auto& ev = symbol->evaluation;
+			auto& ev = symbol->GetEvaluationForUpdating();
 			switch (ev.progress)
 			{
-			case symbol_component::EvaluationProgress::Evaluated: return;
+			case symbol_component::EvaluationProgress::Evaluated: return ev.Get();
 			case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
 			}
 			ev.progress = symbol_component::EvaluationProgress::Evaluating;
@@ -317,7 +320,7 @@ namespace symbol_type_resolving
 		}
 
 		auto newPa = pa.WithContext(symbol->GetParentScope());
-		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->evaluation.Get();
+		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating().Get();
 
 		TypeTsysList types;
 		TypeToTsysNoVta(newPa, usingDecl->type, types, (esContext ? &esContext->gaContext : nullptr));
@@ -342,24 +345,25 @@ namespace symbol_type_resolving
 
 		if (!esContext)
 		{
-			auto& ev = symbol->evaluation;
+			auto& ev = symbol->GetEvaluationForUpdating();
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		}
+		return evaluatedTypes;
 	}
 
 	/***********************************************************************
-	EvaluateSymbol: Evaluate the declared value for an alias
+	EvaluateValueAliasSymbol: Evaluate the declared value for an alias
 	***********************************************************************/
 
-	void EvaluateSymbol(const ParsingArguments& pa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
+	TypeTsysList& EvaluateValueAliasSymbol(const ParsingArguments& pa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = usingDecl->symbol;
 		if (!esContext)
 		{
-			auto& ev = symbol->evaluation;
+			auto& ev = symbol->GetEvaluationForUpdating();
 			switch (ev.progress)
 			{
-			case symbol_component::EvaluationProgress::Evaluated: return;
+			case symbol_component::EvaluationProgress::Evaluated: return ev.Get();
 			case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
 			}
 			ev.progress = symbol_component::EvaluationProgress::Evaluating;
@@ -367,7 +371,7 @@ namespace symbol_type_resolving
 		}
 
 		auto newPa = pa.WithContext(symbol->GetParentScope());
-		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->evaluation.Get();
+		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating().Get();
 
 		TypeTsysList types;
 		if (usingDecl->needResolveTypeFromInitializer)
@@ -412,8 +416,25 @@ namespace symbol_type_resolving
 
 		if (!esContext)
 		{
-			auto& ev = symbol->evaluation;
+			auto& ev = symbol->GetEvaluationForUpdating();
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
+		}
+		return evaluatedTypes;
+	}
+
+	/***********************************************************************
+	EvaluateGenericArgumentSymbol: Evaluate the declared value for a generic argument
+	***********************************************************************/
+
+	ITsys* EvaluateGenericArgumentSymbol(Symbol* symbol)
+	{
+		switch (symbol->kind)
+		{
+		case symbol_component::SymbolKind::GenericTypeArgument:
+		case symbol_component::SymbolKind::GenericValueArgument:
+			return symbol->GetEvaluationForUpdating().Get()[0];
+		default:
+			throw NotResolvableException();
 		}
 	}
 
@@ -440,12 +461,12 @@ namespace symbol_type_resolving
 		case symbol_component::SymbolKind::Variable:
 			{
 				auto varDecl = symbol->GetAnyForwardDecl<ForwardVariableDeclaration>();
-				EvaluateSymbol(pa, varDecl.Obj());
+				auto& evTypes = EvaluateVarSymbol(pa, varDecl.Obj());
 				bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol);
 
-				for (vint k = 0; k < symbol->evaluation.Get().Count(); k++)
+				for (vint k = 0; k < evTypes.Count(); k++)
 				{
-					auto tsys = symbol->evaluation.Get()[k];
+					auto tsys = evTypes[k];
 
 					if (isStaticSymbol)
 					{
@@ -480,13 +501,13 @@ namespace symbol_type_resolving
 		case symbol_component::SymbolKind::Function:
 			{
 				auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-				EvaluateSymbol(pa, funcDecl.Obj());
+				auto& evTypes = EvaluateFuncSymbol(pa, funcDecl.Obj());
 				bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol);
 				bool isMember = classScope && !isStaticSymbol;
 
-				for (vint k = 0; k < symbol->evaluation.Get().Count(); k++)
+				for (vint k = 0; k < evTypes.Count(); k++)
 				{
-					auto tsys = symbol->evaluation.Get()[k];
+					auto tsys = evTypes[k];
 
 					if (isMember && afterScope)
 					{
@@ -512,8 +533,8 @@ namespace symbol_type_resolving
 		case symbol_component::SymbolKind::ValueAlias:
 			{
 				auto usingDecl = symbol->GetImplDecl<ValueAliasDeclaration>();
-				EvaluateSymbol(pa, usingDecl.Obj());
-				AddTemp(result, symbol->evaluation.Get());
+				auto& evTypes = EvaluateValueAliasSymbol(pa, usingDecl.Obj());
+				AddTemp(result, evTypes);
 				hasNonVariadic = true;
 			}
 			return;
@@ -548,7 +569,7 @@ namespace symbol_type_resolving
 										Array<ExprTsysList> initArgs(replacedType->GetParamCount());
 										for (vint j = 0; j < initArgs.Count(); j++)
 										{
-											AddTemp(initArgs[j], symbol->evaluation.Get());
+											AddTemp(initArgs[j], EvaluateGenericArgumentSymbol(symbol));
 										}
 										CreateUniversalInitializerType(pa, initArgs, result);
 									}
@@ -568,7 +589,7 @@ namespace symbol_type_resolving
 				}
 				else
 				{
-					AddTemp(result, symbol->evaluation.Get());
+					AddTemp(result, EvaluateGenericArgumentSymbol(symbol));
 					hasNonVariadic = true;
 				}
 			}

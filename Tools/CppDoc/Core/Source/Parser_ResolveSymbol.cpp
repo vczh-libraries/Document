@@ -201,8 +201,7 @@ public:
 				auto symbol = symbols[i];
 				if (auto usingDecl = symbol->GetImplDecl<TypeAliasDeclaration>())
 				{
-					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
-					auto& types = symbol->evaluation.Get();
+					auto& types = symbol_type_resolving::EvaluateTypeAliasSymbol(pa, usingDecl.Obj());
 					for (vint i = 0; i < types.Count(); i++)
 					{
 						auto tsys = types[i];

@@ -88,7 +88,8 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
 			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;
-			argumentSymbol->evaluation.Allocate();
+			auto& ev = argumentSymbol->GetEvaluationForUpdating();
+			ev.Allocate();
 
 			TsysGenericArg arg;
 			arg.argIndex = spec->arguments.Count();
@@ -100,11 +101,11 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				TypeTsysList params;
 				genericFunction.declSymbol = argumentSymbol.Obj();
 				symbol_type_resolving::CreateGenericFunctionHeader(pa, argument.templateSpec, params, genericFunction);
-				argumentSymbol->evaluation.Get().Add(pa.tsys->Any()->GenericFunctionOf(params, genericFunction));
+				ev.Get().Add(pa.tsys->Any()->GenericFunctionOf(params, genericFunction));
 			}
 			else
 			{
-				argumentSymbol->evaluation.Get().Add(pa.tsys->DeclOf(symbol.Obj())->GenericArgOf(arg));
+				ev.Get().Add(pa.tsys->DeclOf(symbol.Obj())->GenericArgOf(arg));
 			}
 
 			if (argument.name)
@@ -162,9 +163,10 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
 			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;
-			argumentSymbol->evaluation.Allocate();
-			TypeToTsysNoVta(newPa, argument.type, argumentSymbol->evaluation.Get(), nullptr);
-			if (argumentSymbol->evaluation.Get().Count() == 0)
+			auto& ev = argumentSymbol->GetEvaluationForUpdating();
+			ev.Allocate();
+			TypeToTsysNoVta(newPa, argument.type, ev.Get(), nullptr);
+			if (ev.Get().Count() == 0)
 			{
 				throw StopParsingException(cursor);
 			}

@@ -40,8 +40,7 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 		if (!forwardFunc) continue;
 		if (symbol_type_resolving::IsStaticSymbol<ForwardFunctionDeclaration>(member)) continue;
 
-		symbol_type_resolving::EvaluateSymbol(pa, forwardFunc.Obj());
-		auto& types = member->evaluation.Get();
+		auto& types = symbol_type_resolving::EvaluateFuncSymbol(pa, forwardFunc.Obj());
 		for (vint j = 0; j < types.Count(); j++)
 		{
 			auto funcType = types[j];
@@ -207,11 +206,11 @@ GenerateMembers
 
 bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclaration* classDecl, SpecialMemberKind kind, bool passIfFieldHasInitializer)
 {
-	symbol_type_resolving::EvaluateSymbol(pa, classDecl);
+	auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, classDecl);
 	auto classSymbol = classDecl->symbol;
-	for (vint i = 0; i < classSymbol->evaluation.Count(); i++)
+	for (vint i = 0; i < ev.Count(); i++)
 	{
-		auto& types = classSymbol->evaluation.Get(i);
+		auto& types = ev.Get(i);
 		for (vint j = 0; j < types.Count(); j++)
 		{
 			if (!IsSpecialMemberEnabledForType(pa, types[j], kind))
@@ -230,8 +229,7 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 				continue;
 			}
 
-			symbol_type_resolving::EvaluateSymbol(pa, varDecl.Obj());
-			auto& types = varDecl->symbol->evaluation.Get();
+			auto& types = symbol_type_resolving::EvaluateVarSymbol(pa, varDecl.Obj());
 			for (vint j = 0; j < types.Count(); j++)
 			{
 				if (!IsSpecialMemberEnabledForType(pa, types[j], kind))

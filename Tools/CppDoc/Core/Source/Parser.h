@@ -69,6 +69,14 @@ namespace symbol_component
 	};
 }
 
+enum class SymbolCategory
+{
+	Normal,
+	FunctionBody,
+	Function,
+	Undecided,
+};
+
 class Symbol : public Object
 {
 	using SymbolGroup = Group<WString, Ptr<Symbol>>;
@@ -81,6 +89,7 @@ private:
 	Ptr<Stat>										statement;				// for statement
 	SymbolGroup										children;
 	Ptr<symbol_component::MethodCache>				methodCache;			// for function declaration
+	symbol_component::Evaluation					evaluation;
 
 	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
 	Symbol*											AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol);
@@ -92,18 +101,19 @@ public:
 	WString											name;
 	WString											uniqueId;
 	SymbolPtrList									usingNss;
-	symbol_component::Evaluation					evaluation;
 
 public:
 	Symbol(Symbol* _parent = nullptr);
 	~Symbol();
 
-	Symbol*											GetParentScope();
-	const Ptr<Declaration>&							GetImplDecl();
-	const List<Ptr<Declaration>>&					GetForwardDecls();
-	const Ptr<Stat>&								GetStat();
-	const SymbolGroup&								GetChildren();
-	Ptr<symbol_component::MethodCache>				GetMethodCache();
+	Symbol*											GetParentScope();			// Normal	FunctionBody	Function	Undecided
+	const Ptr<Declaration>&							GetImplDecl();				// Normal	FunctionBody
+	const List<Ptr<Declaration>>&					GetForwardDecls();			// Normal	FunctionBody
+	const Ptr<Stat>&								GetStat();					// Normal
+	Ptr<symbol_component::MethodCache>				GetMethodCache();			//			FunctionBody
+	symbol_component::Evaluation&					GetEvaluationForUpdating();	// Normal	FunctionBody
+	const SymbolGroup&								GetChildren();				// Normal	FunctionBody
+
 	const List<Ptr<Symbol>>*						TryGetChildren(const WString& name);
 	void											AddChild(const WString& name, const Ptr<Symbol>& child);
 	void											AddChildAndSetParent(const WString& name, const Ptr<Symbol>& child);

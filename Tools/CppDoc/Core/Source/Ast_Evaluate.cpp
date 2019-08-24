@@ -105,7 +105,7 @@ public:
 		if (self->varDecl->needResolveTypeFromInitializer)
 		{
 			auto symbol = self->varDecl->symbol;
-			auto& ev = symbol->evaluation;
+			auto& ev = symbol->GetEvaluationForUpdating();
 			if (ev.progress == symbol_component::EvaluationProgress::NotEvaluated)
 			{
 				ev.progress = symbol_component::EvaluationProgress::Evaluating;
@@ -292,7 +292,7 @@ public:
 
 		if (pa.funcSymbol)
 		{
-			auto& ev = pa.funcSymbol->evaluation;
+			auto& ev = pa.funcSymbol->GetEvaluationForUpdating();
 			if (ev.progress == symbol_component::EvaluationProgress::Evaluating)
 			{
 				if (ev.Count() == 0)
@@ -390,7 +390,7 @@ public:
 
 	void Visit(VariableDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateSymbol(pa, self);
+		symbol_type_resolving::EvaluateVarSymbol(pa, self);
 		if (!self->needResolveTypeFromInitializer && self->initializer)
 		{
 			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
@@ -409,7 +409,7 @@ public:
 	void Visit(FunctionDeclaration* self) override
 	{
 		EnsureFunctionBodyParsed(self);
-		symbol_type_resolving::EvaluateSymbol(pa, self);
+		symbol_type_resolving::EvaluateFuncSymbol(pa, self);
 
 		if(self->initList.Count() > 0)
 		{
@@ -469,7 +469,7 @@ public:
 
 	void Visit(ClassDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateSymbol(pa, self);
+		symbol_type_resolving::EvaluateClassSymbol(pa, self);
 		auto dpa = pa.WithContext(self->symbol);
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
@@ -495,12 +495,12 @@ public:
 
 	void Visit(TypeAliasDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateSymbol(pa, self);
+		symbol_type_resolving::EvaluateTypeAliasSymbol(pa, self);
 	}
 
 	void Visit(ValueAliasDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateSymbol(pa, self);
+		symbol_type_resolving::EvaluateValueAliasSymbol(pa, self);
 	}
 
 	void Visit(NamespaceDeclaration* self) override
