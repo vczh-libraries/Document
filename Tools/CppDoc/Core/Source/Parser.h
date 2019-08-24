@@ -80,6 +80,7 @@ private:
 	List<Ptr<Declaration>>							declarations;			// for forward declarations and namespaces
 	Ptr<Stat>										statement;				// for statement
 	SymbolGroup										children;
+	Ptr<symbol_component::MethodCache>				methodCache;			// for function declaration
 
 	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
 	Symbol*											AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol);
@@ -91,20 +92,18 @@ public:
 	WString											name;
 	WString											uniqueId;
 	SymbolPtrList									usingNss;
-
-	Ptr<symbol_component::MethodCache>				methodCache;			// for function declaration
 	symbol_component::Evaluation					evaluation;
 
 public:
 	Symbol(Symbol* _parent = nullptr);
 	~Symbol();
-	
 
 	Symbol*											GetParentScope();
 	const Ptr<Declaration>&							GetImplDecl();
 	const List<Ptr<Declaration>>&					GetForwardDecls();
 	const Ptr<Stat>&								GetStat();
 	const SymbolGroup&								GetChildren();
+	Ptr<symbol_component::MethodCache>				GetMethodCache();
 	const List<Ptr<Symbol>>*						TryGetChildren(const WString& name);
 	void											AddChild(const WString& name, const Ptr<Symbol>& child);
 	void											AddChildAndSetParent(const WString& name, const Ptr<Symbol>& child);
@@ -116,10 +115,10 @@ public:
 		return definition.Cast<T>();
 	}
 
-	Symbol*											CreateForwardDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
-	Symbol*											CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
+	Symbol*											CreateFunctionForwardSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
+	Symbol*											CreateFunctionImplSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache);
 	Symbol*											AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind);
-	Symbol*											AddDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol = nullptr);
+	Symbol*											AddImplDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol = nullptr);
 	Symbol*											CreateStatSymbol(Ptr<Stat> _stat);
 
 	template<typename T>

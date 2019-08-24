@@ -212,11 +212,11 @@ namespace symbol_totsys_impl
 		ExprTsysList resolvableResult;
 		auto& outputTarget = gaContext ? resolvableResult : result;
 
-		if (pa.funcSymbol && pa.funcSymbol->methodCache)
+		if (pa.funcSymbol && pa.funcSymbol->GetMethodCache())
 		{
 			TsysCV thisCv;
 			TsysRefType thisRef;
-			auto thisType = pa.funcSymbol->methodCache->thisType->GetEntity(thisCv, thisRef);
+			auto thisType = pa.funcSymbol->GetMethodCache()->thisType->GetEntity(thisCv, thisRef);
 			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
 			VisitResolvedMember(pa, &thisItem, resolving, outputTarget);
 		}

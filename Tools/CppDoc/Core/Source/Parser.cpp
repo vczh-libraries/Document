@@ -125,6 +125,11 @@ const Symbol::SymbolGroup& Symbol::GetChildren()
 	return children;
 }
 
+Ptr<symbol_component::MethodCache> Symbol::GetMethodCache()
+{
+	return methodCache;
+}
+
 const List<Ptr<Symbol>>* Symbol::TryGetChildren(const WString& name)
 {
 	vint index = children.Keys().IndexOf(name);
@@ -149,17 +154,22 @@ void Symbol::RemoveChildAndResetParent(const WString& name, Symbol* child)
 	child->parent = nullptr;
 }
 
-Symbol* Symbol::CreateForwardDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
+Symbol* Symbol::CreateFunctionForwardSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
 {
 	existingSymbol = CreateSymbolInternal(_decl, existingSymbol, kind);
 	existingSymbol->declarations.Add(_decl);
 	return existingSymbol;
 }
 
-Symbol* Symbol::CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
+Symbol* Symbol::CreateFunctionImplSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache)
 {
 	existingSymbol = CreateSymbolInternal(_decl, existingSymbol, kind);
 	existingSymbol->definition = _decl;
+	existingSymbol->methodCache = methodCache;
+	if (methodCache)
+	{
+		methodCache->funcSymbol = existingSymbol;
+	}
 	return existingSymbol;
 }
 
@@ -171,7 +181,7 @@ Symbol* Symbol::AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component:
 	return symbol;
 }
 
-Symbol* Symbol::AddDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol)
+Symbol* Symbol::AddImplDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol)
 {
 	auto symbol = AddToSymbolInternal(_decl, kind, reusedSymbol);
 	if (!symbol) return nullptr;
@@ -430,7 +440,7 @@ void PredefineType(Ptr<Program> program, const ParsingArguments& pa, const wchar
 	}
 	else
 	{
-		pa.root->AddDeclToSymbol(decl, symbolKind);
+		pa.root->AddImplDeclToSymbol(decl, symbolKind);
 	}
 }
 

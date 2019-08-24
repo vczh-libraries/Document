@@ -133,7 +133,7 @@ namespace symbol_totsys_impl
 	{
 		if (auto funcSymbol = pa.funcSymbol)
 		{
-			if (auto methodCache = funcSymbol->methodCache)
+			if (auto methodCache = funcSymbol->GetMethodCache())
 			{
 				if (auto thisType = methodCache->thisType)
 				{

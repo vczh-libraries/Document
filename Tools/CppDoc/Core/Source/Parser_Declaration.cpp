@@ -331,7 +331,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 		decl->name = cppName;
 		decl->baseType = baseType;
 
-		auto contextSymbol = pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::Enum);
+		auto contextSymbol = pa.context->AddImplDeclToSymbol(decl, symbol_component::SymbolKind::Enum);
 		if (!contextSymbol)
 		{
 			throw StopParsingException(cursor);
@@ -345,7 +345,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 			auto enumItem = MakePtr<EnumItemDeclaration>();
 			if (!ParseCppName(enumItem->name, cursor)) throw StopParsingException(cursor);
 			decl->items.Add(enumItem);
-			if (!contextSymbol->AddDeclToSymbol(enumItem, symbol_component::SymbolKind::EnumItem))
+			if (!contextSymbol->AddImplDeclToSymbol(enumItem, symbol_component::SymbolKind::EnumItem))
 			{
 				throw StopParsingException(cursor);
 			}
@@ -449,7 +449,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		decl->name = cppName;
 		vint declIndex = output.Add(decl);
 
-		auto contextSymbol = pa.context->AddDeclToSymbol(decl, symbolKind);
+		auto contextSymbol = pa.context->AddImplDeclToSymbol(decl, symbolKind);
 		if (!contextSymbol)
 		{
 			throw StopParsingException(cursor);
@@ -651,7 +651,7 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 			RequireToken(cursor, CppTokens::SEMICOLON);
 
 			output.Add(decl);
-			if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias, spec.f0))
+			if (!pa.context->AddImplDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias, spec.f0))
 			{
 				throw StopParsingException(cursor);
 			}
@@ -803,7 +803,7 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		decl->type = declarators[i]->type;
 		output.Add(decl);
 
-		if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias))
+		if (!pa.context->AddImplDeclToSymbol(decl, symbol_component::SymbolKind::TypeAlias))
 		{
 			throw StopParsingException(cursor);
 		}
@@ -895,15 +895,12 @@ void ParseDeclaration_Function(
 		FILL_FUNCTION;
 		output.Add(decl);
 
-		auto contextSymbol = context->CreateDeclSymbol(decl, SearchForFunctionWithSameSignature(context, decl, cursor), symbol_component::SymbolKind::Function);
-
+		Ptr<symbol_component::MethodCache> methodCache;
 		if (containingClass || containingClassForMember)
 		{
-			auto methodCache = MakePtr<symbol_component::MethodCache>();
-			contextSymbol->methodCache = methodCache;
+			methodCache = MakePtr<symbol_component::MethodCache>();
 
 			methodCache->classSymbol = containingClass ? containingClass->symbol : containingClassForMember->symbol;
-			methodCache->funcSymbol = contextSymbol;
 			methodCache->classDecl = methodCache->classSymbol->GetImplDecl<ClassDeclaration>();
 			methodCache->funcDecl = decl;
 
@@ -912,6 +909,10 @@ void ParseDeclaration_Function(
 			cv.isVolatile = funcType->qualifierVolatile;
 			methodCache->thisType = pa.tsys->DeclOf(methodCache->classSymbol)->CVOf(cv)->PtrOf();
 		}
+
+		auto existingSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
+		auto contextSymbol = context->CreateFunctionImplSymbol(decl, existingSymbol, symbol_component::SymbolKind::Function, methodCache);
+
 		{
 			auto newPa = pa.WithContext(contextSymbol);
 			BuildSymbols(newPa, funcType->parameters, cursor);
@@ -968,7 +969,7 @@ void ParseDeclaration_Function(
 		FILL_FUNCTION;
 		output.Add(decl);
 		RequireToken(cursor, CppTokens::SEMICOLON);
-		context->CreateForwardDeclSymbol(decl, SearchForFunctionWithSameSignature(context, decl, cursor), symbol_component::SymbolKind::Function);
+		context->CreateFunctionForwardSymbol(decl, SearchForFunctionWithSameSignature(context, decl, cursor), symbol_component::SymbolKind::Function);
 	}
 #undef FILL_FUNCTION
 }
@@ -1013,7 +1014,7 @@ void ParseDeclaration_Variable(
 			if (primitiveType->primitive != CppPrimitiveType::_auto) throw StopParsingException(cursor);
 		}
 
-		if (!pa.context->AddDeclToSymbol(decl, symbol_component::SymbolKind::ValueAlias, spec.f0))
+		if (!pa.context->AddImplDeclToSymbol(decl, symbol_component::SymbolKind::ValueAlias, spec.f0))
 		{
 			throw StopParsingException(cursor);
 		}
@@ -1058,7 +1059,7 @@ void ParseDeclaration_Variable(
 			decl->initializer = declarator->initializer;
 			output.Add(decl);
 
-			if (!context->AddDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
+			if (!context->AddImplDeclToSymbol(decl, symbol_component::SymbolKind::Variable))
 			{
 				throw StopParsingException(cursor);
 			}
@@ -1389,7 +1390,7 @@ void BuildSymbol(const ParsingArguments& pa, Ptr<VariableDeclaration> varDecl, b
 {
 	if (varDecl->name)
 	{
-		auto symbol = pa.context->AddDeclToSymbol(varDecl, symbol_component::SymbolKind::Variable);
+		auto symbol = pa.context->AddImplDeclToSymbol(varDecl, symbol_component::SymbolKind::Variable);
 		if (!symbol)
 		{
 			throw StopParsingException(cursor);

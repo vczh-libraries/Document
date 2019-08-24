@@ -444,7 +444,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 				auto decl = generatedMembers[i];
 				decl->implicitlyGeneratedMember = true;
 				classDecl->decls.Add({ CppClassAccessor::Public,decl });
-				classSymbol->CreateForwardDeclSymbol(decl, nullptr, symbol_component::SymbolKind::Function);
+				classSymbol->CreateFunctionForwardSymbol(decl, nullptr, symbol_component::SymbolKind::Function);
 			}
 		}
 	}
