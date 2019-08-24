@@ -151,7 +151,7 @@ namespace symbol_type_resolving
 		ev.progress = symbol_component::EvaluationProgress::Evaluating;
 		ev.Allocate();
 
-		auto newPa = pa.WithContext(symbol->parent);
+		auto newPa = pa.WithContext(symbol->GetParentScope());
 
 		if (varDecl->needResolveTypeFromInitializer)
 		{
@@ -194,9 +194,12 @@ namespace symbol_type_resolving
 	{
 		auto symbol = funcDecl->symbol;
 		ITsys* classScope = nullptr;
-		if (symbol->parent && symbol->parent->definition.Cast<ClassDeclaration>())
+		if (auto parent = symbol->GetParentScope())
 		{
-			classScope = pa.tsys->DeclOf(symbol->parent);
+			if (parent->GetImplDecl<ClassDeclaration>())
+			{
+				classScope = pa.tsys->DeclOf(parent);
+			}
 		}
 
 		bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol);
@@ -207,7 +210,7 @@ namespace symbol_type_resolving
 	{
 		auto symbol = funcDecl->symbol;
 		auto& ev = symbol->evaluation;
-		auto newPa = pa.WithContext(symbol->parent);
+		auto newPa = pa.WithContext(symbol->GetParentScope());
 		TypeTsysList returnTypes;
 		CopyFrom(returnTypes, ev.Get());
 		ev.Get().Clear();
@@ -260,7 +263,7 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			auto newPa = pa.WithContext(symbol->parent);
+			auto newPa = pa.WithContext(symbol->GetParentScope());
 			ev.Allocate();
 			TypeToTsysNoVta(newPa, funcDecl->type, ev.Get(), nullptr, IsMemberFunction(pa, funcDecl));
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
@@ -313,7 +316,7 @@ namespace symbol_type_resolving
 			ev.Allocate();
 		}
 
-		auto newPa = pa.WithContext(symbol->parent);
+		auto newPa = pa.WithContext(symbol->GetParentScope());
 		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->evaluation.Get();
 
 		TypeTsysList types;
@@ -363,7 +366,7 @@ namespace symbol_type_resolving
 			ev.Allocate();
 		}
 
-		auto newPa = pa.WithContext(symbol->parent);
+		auto newPa = pa.WithContext(symbol->GetParentScope());
 		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->evaluation.Get();
 
 		TypeTsysList types;
@@ -424,9 +427,12 @@ namespace symbol_type_resolving
 	void VisitSymbolInternal(const ParsingArguments& pa, GenericArgContext* gaContext, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
 		ITsys* classScope = nullptr;
-		if (symbol->parent && symbol->parent->definition.Cast<ClassDeclaration>())
+		if (auto parent = symbol->GetParentScope())
 		{
-			classScope = pa.tsys->DeclOf(symbol->parent);
+			if (parent->GetImplDecl<ClassDeclaration>())
+			{
+				classScope = pa.tsys->DeclOf(parent);
+			}
 		}
 
 		switch (symbol->kind)
@@ -498,14 +504,14 @@ namespace symbol_type_resolving
 			return;
 		case symbol_component::SymbolKind::EnumItem:
 			{
-				auto tsys = pa.tsys->DeclOf(symbol->parent);
+				auto tsys = pa.tsys->DeclOf(symbol->GetParentScope());
 				AddInternal(result, { symbol,ExprTsysType::PRValue,tsys });
 				hasNonVariadic = true;
 			}
 			return;
 		case symbol_component::SymbolKind::ValueAlias:
 			{
-				auto usingDecl = symbol->definition.Cast<ValueAliasDeclaration>();
+				auto usingDecl = symbol->GetImplDecl<ValueAliasDeclaration>();
 				EvaluateSymbol(pa, usingDecl.Obj());
 				AddTemp(result, symbol->evaluation.Get());
 				hasNonVariadic = true;
@@ -624,9 +630,9 @@ namespace symbol_type_resolving
 			auto targetTypeList = &result;
 			auto symbol = resolving->resolvedSymbols[i];
 			
-			if (symbol->parent)
+			if (auto parent = symbol->GetParentScope())
 			{
-				switch (symbol->parent->kind)
+				switch (parent->kind)
 				{
 				case symbol_component::SymbolKind::Class:
 				case symbol_component::SymbolKind::Struct:

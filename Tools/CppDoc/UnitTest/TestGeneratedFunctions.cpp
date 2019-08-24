@@ -37,37 +37,37 @@ struct TestGC_Helper
 {
 	static void DefaultCtor(const WString& name, ParsingArguments& pa)
 	{
-		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
+		auto classSymbol = pa.context->TryGetChildren(L"test_generated_functions")->Get(0)->TryGetChildren(name)->Get(0).Obj();
 		TEST_ASSERT(Ability == IsSpecialMemberFeatureEnabled(pa, classSymbol, SpecialMemberKind::DefaultCtor));
 	}
 
 	static void CopyCtor(const WString& name, ParsingArguments& pa)
 	{
-		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
+		auto classSymbol = pa.context->TryGetChildren(L"test_generated_functions")->Get(0)->TryGetChildren(name)->Get(0).Obj();
 		TEST_ASSERT(Ability == IsSpecialMemberFeatureEnabled(pa, classSymbol, SpecialMemberKind::CopyCtor));
 	}
 
 	static void MoveCtor(const WString& name, ParsingArguments& pa)
 	{
-		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
+		auto classSymbol = pa.context->TryGetChildren(L"test_generated_functions")->Get(0)->TryGetChildren(name)->Get(0).Obj();
 		TEST_ASSERT(Ability == IsSpecialMemberFeatureEnabled(pa, classSymbol, SpecialMemberKind::MoveCtor));
 	}
 
 	static void CopyAssignOp(const WString& name, ParsingArguments& pa)
 	{
-		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
+		auto classSymbol = pa.context->TryGetChildren(L"test_generated_functions")->Get(0)->TryGetChildren(name)->Get(0).Obj();
 		TEST_ASSERT(Ability == IsSpecialMemberFeatureEnabled(pa, classSymbol, SpecialMemberKind::CopyAssignOp));
 	}
 
 	static void MoveAssignOp(const WString& name, ParsingArguments& pa)
 	{
-		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
+		auto classSymbol = pa.context->TryGetChildren(L"test_generated_functions")->Get(0)->TryGetChildren(name)->Get(0).Obj();
 		TEST_ASSERT(Ability == IsSpecialMemberFeatureEnabled(pa, classSymbol, SpecialMemberKind::MoveAssignOp));
 	}
 
 	static void Dtor(const WString& name, ParsingArguments& pa)
 	{
-		auto classSymbol = pa.context->children[L"test_generated_functions"][0]->children[name][0].Obj();
+		auto classSymbol = pa.context->TryGetChildren(L"test_generated_functions")->Get(0)->TryGetChildren(name)->Get(0).Obj();
 		TEST_ASSERT(Ability == IsSpecialMemberFeatureEnabled(pa, classSymbol, SpecialMemberKind::Dtor));
 	}
 };
@@ -120,8 +120,8 @@ struct B
 };
 )";
 		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::DefaultCtor) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::DefaultCtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"A")->Get(0).Obj(), SpecialMemberKind::DefaultCtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"B")->Get(0).Obj(), SpecialMemberKind::DefaultCtor) == false);
 	}
 	{
 		auto input = LR"(
@@ -140,8 +140,8 @@ struct B
 };
 )";
 		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::CopyCtor) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::CopyCtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"A")->Get(0).Obj(), SpecialMemberKind::CopyCtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"B")->Get(0).Obj(), SpecialMemberKind::CopyCtor) == false);
 	}
 	{
 		auto input = LR"(
@@ -160,8 +160,8 @@ struct B
 };
 )";
 		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::MoveCtor) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::MoveCtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"A")->Get(0).Obj(), SpecialMemberKind::MoveCtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"B")->Get(0).Obj(), SpecialMemberKind::MoveCtor) == false);
 	}
 	{
 		auto input = LR"(
@@ -180,8 +180,8 @@ struct B
 };
 )";
 		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::CopyAssignOp) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::CopyAssignOp) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"A")->Get(0).Obj(), SpecialMemberKind::CopyAssignOp) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"B")->Get(0).Obj(), SpecialMemberKind::CopyAssignOp) == false);
 	}
 	{
 		auto input = LR"(
@@ -200,8 +200,8 @@ struct B
 };
 )";
 		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::MoveAssignOp) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::MoveAssignOp) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"A")->Get(0).Obj(), SpecialMemberKind::MoveAssignOp) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"B")->Get(0).Obj(), SpecialMemberKind::MoveAssignOp) == false);
 	}
 	{
 		auto input = LR"(
@@ -220,7 +220,7 @@ struct B
 };
 )";
 		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"A"][0].Obj(), SpecialMemberKind::Dtor) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->children[L"B"][0].Obj(), SpecialMemberKind::Dtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"A")->Get(0).Obj(), SpecialMemberKind::Dtor) == false);
+		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.context->TryGetChildren(L"B")->Get(0).Obj(), SpecialMemberKind::Dtor) == false);
 	}
 }

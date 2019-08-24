@@ -91,6 +91,64 @@ void Symbol::Add(Ptr<Symbol> child)
 	children.Add(child->name, child);
 }
 
+Symbol::Symbol(Symbol* _parent)
+	:parent(_parent)
+{
+}
+
+Symbol::~Symbol()
+{
+}
+
+Symbol* Symbol::GetParentScope()
+{
+	return parent;
+}
+
+const Ptr<Declaration>& Symbol::GetImplDecl()
+{
+	return definition;
+}
+
+const List<Ptr<Declaration>>& Symbol::GetForwardDecls()
+{
+	return declarations;
+}
+
+const Ptr<Stat>& Symbol::GetStat()
+{
+	return statement;
+}
+
+const Symbol::SymbolGroup& Symbol::GetChildren()
+{
+	return children;
+}
+
+const List<Ptr<Symbol>>* Symbol::TryGetChildren(const WString& name)
+{
+	vint index = children.Keys().IndexOf(name);
+	if (index == -1) return nullptr;
+	return &children.GetByIndex(index);
+}
+
+void Symbol::AddChild(const WString& name, const Ptr<Symbol>& child)
+{
+	children.Add(name, child);
+}
+
+void Symbol::AddChildAndSetParent(const WString& name, const Ptr<Symbol>& child)
+{
+	AddChild(name, child);
+	child->parent = this;
+}
+
+void Symbol::RemoveChildAndResetParent(const WString& name, Symbol* child)
+{
+	children.Remove(name, child);
+	child->parent = nullptr;
+}
+
 Symbol* Symbol::CreateForwardDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
 {
 	existingSymbol = CreateSymbolInternal(_decl, existingSymbol, kind);
@@ -212,7 +270,7 @@ ParsingArguments ParsingArguments::WithContext(Symbol* _context)const
 		}
 		else
 		{
-			_context = _context->parent;
+			_context = _context->GetParentScope();
 		}
 	}
 

@@ -1508,7 +1508,7 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		{
 			auto symbol = tsys->GetDecl();
 			WString name;
-			while (symbol && symbol->parent)
+			while (symbol && symbol->GetParentScope())
 			{
 				if (symbol->kind == symbol_component::SymbolKind::GenericTypeArgument)
 				{
@@ -1518,7 +1518,7 @@ void Log(ITsys* tsys, StreamWriter& writer)
 				{
 					name = L"::" + symbol->name + name;
 				}
-				symbol = symbol->parent;
+				symbol = symbol->GetParentScope();
 			}
 			writer.WriteString(name);
 		}

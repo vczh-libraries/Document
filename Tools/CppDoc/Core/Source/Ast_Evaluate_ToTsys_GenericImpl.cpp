@@ -54,7 +54,7 @@ namespace symbol_totsys_impl
 				break;
 			case symbol_component::SymbolKind::TypeAlias:
 				{
-					auto decl = declSymbol->definition.Cast<TypeAliasDeclaration>();
+					auto decl = declSymbol->GetImplDecl<TypeAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
 					EvaluateSymbol(pa, decl.Obj(), &esContext);
 				}
@@ -77,7 +77,7 @@ namespace symbol_totsys_impl
 			{
 			case symbol_component::SymbolKind::ValueAlias:
 				{
-					auto decl = declSymbol->definition.Cast<ValueAliasDeclaration>();
+					auto decl = declSymbol->GetImplDecl<ValueAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
 					symbol_type_resolving::EvaluateSymbol(pa, decl.Obj(), &esContext);
 				}

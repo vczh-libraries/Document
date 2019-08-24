@@ -97,7 +97,7 @@ ClassDeclaration* EnsureMemberTypeResolved(Ptr<MemberType> memberType, Ptr<CppTo
 	if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
 
 	auto symbol = resolvableType->resolving->resolvedSymbols[0];
-	auto containingClass = symbol->definition.Cast<ClassDeclaration>().Obj();
+	auto containingClass = symbol->GetImplDecl<ClassDeclaration>().Obj();
 	if (!containingClass) throw StopParsingException(cursor);
 	return containingClass;
 }

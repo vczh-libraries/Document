@@ -10,7 +10,7 @@ GetSpecialMember
 
 Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, SpecialMemberKind kind)
 {
-	auto classDecl = classSymbol->definition.Cast<ClassDeclaration>();
+	auto classDecl = classSymbol->GetImplDecl<ClassDeclaration>();
 	if (!classDecl) return nullptr;
 	if (classDecl->classType == CppClassType::Union) return nullptr;
 
@@ -31,13 +31,11 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 		break;
 	}
 
-	vint index = classSymbol->children.Keys().IndexOf(memberName);
-	if (index == -1) return nullptr;
-
-	auto& members = classSymbol->children.GetByIndex(index);
-	for (vint i = 0; i < members.Count(); i++)
+	auto pMembers = classSymbol->TryGetChildren(memberName);
+	if (!pMembers) return nullptr;
+	for (vint i = 0; i < pMembers->Count(); i++)
 	{
-		auto member = members[i].Obj();
+		auto member = pMembers->Get(i).Obj();
 		auto forwardFunc = member->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 		if (!forwardFunc) continue;
 		if (symbol_type_resolving::IsStaticSymbol<ForwardFunctionDeclaration>(member)) continue;
@@ -180,8 +178,7 @@ bool IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, Spec
 		break;
 	case TsysType::Decl:
 		{
-			if (!type->GetDecl()->definition) return false;
-			auto classDecl = type->GetDecl()->definition.Cast<ClassDeclaration>();
+			auto classDecl = type->GetDecl()->GetImplDecl<ClassDeclaration>();
 			if (!classDecl) return true;
 			if (classDecl->classType == CppClassType::Union) return true;
 			return IsSpecialMemberFeatureEnabled(pa, classDecl->symbol, kind);
@@ -328,7 +325,7 @@ Ptr<ForwardFunctionDeclaration> GenerateAssignOp(Symbol* classSymbol, bool delet
 
 void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 {
-	if (auto classDecl = classSymbol->definition.Cast<ClassDeclaration>())
+	if (auto classDecl = classSymbol->GetImplDecl<ClassDeclaration>())
 	{
 		if (classDecl->classType != CppClassType::Union)
 		{
@@ -355,7 +352,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::DefaultCtor, true))
 				{
-					if (!classSymbol->children.Keys().Contains(L"$__ctor"))
+					if (!classSymbol->TryGetChildren(L"$__ctor"))
 					{
 						deleted = false;
 					}

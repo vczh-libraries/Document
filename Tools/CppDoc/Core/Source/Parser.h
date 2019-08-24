@@ -73,26 +73,48 @@ class Symbol : public Object
 {
 	using SymbolGroup = Group<WString, Ptr<Symbol>>;
 	using SymbolPtrList = List<Symbol*>;
-
-	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
-	Symbol*											AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol);
-	void											Add(Ptr<Symbol> child);
-public:
+private:
 	Symbol*											parent = nullptr;
-	symbol_component::SymbolKind					kind = symbol_component::SymbolKind::Root;
-	bool											ellipsis = false;		// for variant template argument and function argument
-	WString											name;
-	WString											uniqueId;
 
 	Ptr<Declaration>								definition;				// for declaration root (class, struct, union, enum, function, variable)
 	List<Ptr<Declaration>>							declarations;			// for forward declarations and namespaces
 	Ptr<Stat>										statement;				// for statement
+	SymbolGroup										children;
+
+	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
+	Symbol*											AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol);
+	void											Add(Ptr<Symbol> child);
+
+public:
+	symbol_component::SymbolKind					kind = symbol_component::SymbolKind::Root;
+	bool											ellipsis = false;		// for variant template argument and function argument
+	WString											name;
+	WString											uniqueId;
+	SymbolPtrList									usingNss;
 
 	Ptr<symbol_component::MethodCache>				methodCache;			// for function declaration
 	symbol_component::Evaluation					evaluation;
 
-	SymbolPtrList									usingNss;
-	SymbolGroup										children;
+public:
+	Symbol(Symbol* _parent = nullptr);
+	~Symbol();
+	
+
+	Symbol*											GetParentScope();
+	const Ptr<Declaration>&							GetImplDecl();
+	const List<Ptr<Declaration>>&					GetForwardDecls();
+	const Ptr<Stat>&								GetStat();
+	const SymbolGroup&								GetChildren();
+	const List<Ptr<Symbol>>*						TryGetChildren(const WString& name);
+	void											AddChild(const WString& name, const Ptr<Symbol>& child);
+	void											AddChildAndSetParent(const WString& name, const Ptr<Symbol>& child);
+	void											RemoveChildAndResetParent(const WString& name, Symbol* child);
+
+	template<typename T>
+	const Ptr<T> GetImplDecl()
+	{
+		return definition.Cast<T>();
+	}
 
 	Symbol*											CreateForwardDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
 	Symbol*											CreateDeclSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
@@ -115,7 +137,7 @@ template<typename T>
 Ptr<T> TryGetDeclFromType(ITsys* type)
 {
 	if (type->GetType() != TsysType::Decl) return false;
-	return type->GetDecl()->definition.Cast<T>();
+	return type->GetDecl()->GetImplDecl<T>();
 }
 
 template<typename T>

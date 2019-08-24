@@ -96,19 +96,19 @@ namespace a::b
 }
 )";
 	COMPILE_PROGRAM(program, pa, input);
-	TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
-	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
-	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"A"].Count() == 1);
-	auto symbol = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"A"][0].Obj();
+	TEST_ASSERT(pa.root->TryGetChildren(L"a")->Count() == 1);
+	TEST_ASSERT(pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Count() == 1);
+	TEST_ASSERT(pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Get(0)->TryGetChildren(L"A")->Count() == 1);
+	auto symbol = pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Get(0)->TryGetChildren(L"A")->Get(0).Obj();
 
 	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Enum);
-	TEST_ASSERT(symbol->definition.Cast<EnumDeclaration>());
-	TEST_ASSERT(symbol->declarations.Count() == 4);
-	TEST_ASSERT(From(symbol->declarations).Distinct().Count() == 4);
+	TEST_ASSERT(symbol->GetImplDecl<EnumDeclaration>());
+	TEST_ASSERT(symbol->GetForwardDecls().Count() == 4);
+	TEST_ASSERT(From(symbol->GetForwardDecls()).Distinct().Count() == 4);
 	for (vint i = 0; i < 4; i++)
 	{
-		TEST_ASSERT(symbol->declarations[i].Cast<ForwardEnumDeclaration>());
-		TEST_ASSERT(!symbol->declarations[i].Cast<EnumDeclaration>());
+		TEST_ASSERT(symbol->GetForwardDecls()[i].Cast<ForwardEnumDeclaration>());
+		TEST_ASSERT(!symbol->GetForwardDecls()[i].Cast<EnumDeclaration>());
 	}
 }
 
@@ -149,19 +149,19 @@ namespace a::b
 }
 )";
 	COMPILE_PROGRAM(program, pa, input);
-	TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
-	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
-	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"x"].Count() == 1);
-	auto symbol = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"x"][0].Obj();
+	TEST_ASSERT(pa.root->TryGetChildren(L"a")->Count() == 1);
+	TEST_ASSERT(pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Count() == 1);
+	TEST_ASSERT(pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Get(0)->TryGetChildren(L"x")->Count() == 1);
+	auto symbol = pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Get(0)->TryGetChildren(L"x")->Get(0).Obj();
 
 	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
-	TEST_ASSERT(symbol->definition.Cast<VariableDeclaration>());
-	TEST_ASSERT(symbol->declarations.Count() == 4);
-	TEST_ASSERT(From(symbol->declarations).Distinct().Count() == 4);
+	TEST_ASSERT(symbol->GetImplDecl<VariableDeclaration>());
+	TEST_ASSERT(symbol->GetForwardDecls().Count() == 4);
+	TEST_ASSERT(From(symbol->GetForwardDecls()).Distinct().Count() == 4);
 	for (vint i = 0; i < 4; i++)
 	{
-		TEST_ASSERT(symbol->declarations[i].Cast<ForwardVariableDeclaration>());
-		TEST_ASSERT(!symbol->declarations[i].Cast<VariableDeclaration>());
+		TEST_ASSERT(symbol->GetForwardDecls()[i].Cast<ForwardVariableDeclaration>());
+		TEST_ASSERT(!symbol->GetForwardDecls()[i].Cast<VariableDeclaration>());
 	}
 }
 
@@ -231,19 +231,19 @@ namespace a::b
 }
 )";
 	COMPILE_PROGRAM(program, pa, input);
-	TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
-	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
-	TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Add"].Count() == 1);
-	auto symbol = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Add"][0].Obj();
+	TEST_ASSERT(pa.root->TryGetChildren(L"a")->Count() == 1);
+	TEST_ASSERT(pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Count() == 1);
+	TEST_ASSERT(pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Get(0)->TryGetChildren(L"Add")->Count() == 1);
+	auto symbol = pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Get(0)->TryGetChildren(L"Add")->Get(0).Obj();
 
 	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Function);
-	TEST_ASSERT(symbol->definition.Cast<FunctionDeclaration>());
-	TEST_ASSERT(symbol->declarations.Count() == 4);
-	TEST_ASSERT(From(symbol->declarations).Distinct().Count() == 4);
+	TEST_ASSERT(symbol->GetImplDecl<FunctionDeclaration>());
+	TEST_ASSERT(symbol->GetForwardDecls().Count() == 4);
+	TEST_ASSERT(From(symbol->GetForwardDecls()).Distinct().Count() == 4);
 	for (vint i = 0; i < 4; i++)
 	{
-		TEST_ASSERT(symbol->declarations[i].Cast<ForwardFunctionDeclaration>());
-		TEST_ASSERT(!symbol->declarations[i].Cast<FunctionDeclaration>());
+		TEST_ASSERT(symbol->GetForwardDecls()[i].Cast<ForwardFunctionDeclaration>());
+		TEST_ASSERT(!symbol->GetForwardDecls()[i].Cast<FunctionDeclaration>());
 	}
 }
 
@@ -352,10 +352,10 @@ namespace a::b
 	for (vint i = 0; i < 3; i++)
 	{
 		COMPILE_PROGRAM(program, pa, inputs[i]);
-		TEST_ASSERT(pa.root->children[L"a"].Count() == 1);
-		TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"].Count() == 1);
-		TEST_ASSERT(pa.root->children[L"a"][0]->children[L"b"][0]->children[L"X"].Count() == 1);
-		auto symbol = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"X"][0].Obj();
+		TEST_ASSERT(pa.root->TryGetChildren(L"a")->Count() == 1);
+		TEST_ASSERT(pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Count() == 1);
+		TEST_ASSERT(pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Get(0)->TryGetChildren(L"X")->Count() == 1);
+		auto symbol = pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Get(0)->TryGetChildren(L"X")->Get(0).Obj();
 
 		switch (i)
 		{
@@ -363,13 +363,13 @@ namespace a::b
 		case 1: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Struct); break;
 		case 2: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Union); break;
 		}
-		TEST_ASSERT(symbol->definition.Cast<ClassDeclaration>());
-		TEST_ASSERT(symbol->declarations.Count() == 4);
-		TEST_ASSERT(From(symbol->declarations).Distinct().Count() == 4);
+		TEST_ASSERT(symbol->GetImplDecl<ClassDeclaration>());
+		TEST_ASSERT(symbol->GetForwardDecls().Count() == 4);
+		TEST_ASSERT(From(symbol->GetForwardDecls()).Distinct().Count() == 4);
 		for (vint i = 0; i < 4; i++)
 		{
-			TEST_ASSERT(symbol->declarations[i].Cast<ForwardClassDeclaration>());
-			TEST_ASSERT(!symbol->declarations[i].Cast<ClassDeclaration>());
+			TEST_ASSERT(symbol->GetForwardDecls()[i].Cast<ForwardClassDeclaration>());
+			TEST_ASSERT(!symbol->GetForwardDecls()[i].Cast<ClassDeclaration>());
 		}
 	}
 }
@@ -527,11 +527,11 @@ namespace a
 
 	using Item = Tuple<CppClassAccessor, Ptr<Declaration>>;
 	List<Ptr<Declaration>> inClassMembers;
-	auto& inClassMembersUnfiltered = pa.root->children[L"a"][0]->children[L"b"][0]->children[L"Something"][0]->definition.Cast<ClassDeclaration>()->decls;
+	auto& inClassMembersUnfiltered = pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Get(0)->TryGetChildren(L"Something")->Get(0)->GetImplDecl<ClassDeclaration>()->decls;
 	CopyFrom(inClassMembers, From(inClassMembersUnfiltered).Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; }));
 	TEST_ASSERT(inClassMembers.Count() == 13);
 
-	auto& outClassMembers = pa.root->children[L"a"][0]->children[L"b"][0]->declarations[1].Cast<NamespaceDeclaration>()->decls;
+	auto& outClassMembers = pa.root->TryGetChildren(L"a")->Get(0)->TryGetChildren(L"b")->Get(0)->GetForwardDecls()[1].Cast<NamespaceDeclaration>()->decls;
 	TEST_ASSERT(outClassMembers.Count() == 12);
 
 	for (vint i = 0; i < 12; i++)
@@ -549,9 +549,9 @@ namespace a
 		{
 			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Function);
 		}
-		TEST_ASSERT(symbol->definition == outClassDecl);
-		TEST_ASSERT(symbol->declarations.Count() == 1);
-		TEST_ASSERT(symbol->declarations[0] == inClassDecl);
+		TEST_ASSERT(symbol->GetImplDecl() == outClassDecl);
+		TEST_ASSERT(symbol->GetForwardDecls().Count() == 1);
+		TEST_ASSERT(symbol->GetForwardDecls()[0] == inClassDecl);
 	}
 }
 

@@ -299,14 +299,14 @@ namespace symbol_type_resolving
 			auto symbol = resolving->resolvedSymbols[i];
 			if (symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 			{
-				auto parent = symbol->parent;
+				auto parent = symbol->GetParentScope();
 				while (parent)
 				{
 					switch (parent->kind)
 					{
 					case symbol_component::SymbolKind::Root:
 					case symbol_component::SymbolKind::Namespace:
-						parent = parent->parent;
+						parent = parent->GetParentScope();
 						break;
 					default:
 						return false;
@@ -411,7 +411,7 @@ namespace symbol_type_resolving
 					nss.Add(symbol);
 				}
 			}
-			else if (auto classDecl = symbol->definition.Cast<ClassDeclaration>())
+			else if (auto classDecl = symbol->GetImplDecl<ClassDeclaration>())
 			{
 				if (!classes.Contains(symbol))
 				{
@@ -433,7 +433,7 @@ namespace symbol_type_resolving
 			{
 				break;
 			}
-			symbol = symbol->parent;
+			symbol = symbol->GetParentScope();
 		}
 	}
 
@@ -474,13 +474,11 @@ namespace symbol_type_resolving
 		for (vint i = 0; i < nss.Count(); i++)
 		{
 			auto ns = nss[i];
-			vint index = ns->children.Keys().IndexOf(name);
-			if (index != -1)
+			if (auto pChildren = ns->TryGetChildren(name))
 			{
-				auto& children = ns->children.GetByIndex(index);
-				for (vint j = 0; j < children.Count(); j++)
+				for (vint j = 0; j < pChildren->Count(); j++)
 				{
-					auto child = children[j].Obj();
+					auto child = pChildren->Get(j).Obj();
 					if (child->kind == symbol_component::SymbolKind::Function)
 					{
 						VisitSymbol(pa, child, result);

@@ -480,8 +480,8 @@ struct Z
 	COMPILE_PROGRAM(program, pa, input);
 
 	{
-		auto funcSymbol = pa.context->children[L"Z"][0]->children[L"M"][0].Obj();
-		auto spa = pa.WithContext(funcSymbol->children[L"$"][0].Obj());
+		auto funcSymbol = pa.context->TryGetChildren(L"Z")->Get(0)->TryGetChildren(L"M")->Get(0).Obj();
+		auto spa = pa.WithContext(funcSymbol->TryGetChildren(L"$")->Get(0).Obj());
 
 		AssertExpr(spa, L"operator->()",			L"operator ->()",				L"::Y const * $PR"			);
 		AssertExpr(spa, L"operator()(0)",			L"operator ()(0)",				L"::Y $PR"					);
@@ -491,8 +491,8 @@ struct Z
 		AssertExpr(spa, L"(*this)[0]",				L"((* this))[0]",				L"::Y $PR"					);
 	}
 	{
-		auto funcSymbol = pa.context->children[L"Z"][0]->children[L"C"][0].Obj();
-		auto spa = pa.WithContext(funcSymbol->children[L"$"][0].Obj());
+		auto funcSymbol = pa.context->TryGetChildren(L"Z")->Get(0)->TryGetChildren(L"C")->Get(0).Obj();
+		auto spa = pa.WithContext(funcSymbol->TryGetChildren(L"$")->Get(0).Obj());
 
 		AssertExpr(spa, L"operator->()",			L"operator ->()",				L"::X * $PR"				);
 		AssertExpr(spa, L"operator()(0)",			L"operator ()(0)",				L"::X $PR"					);
@@ -675,8 +675,8 @@ void S::F2(double p){}
 	COMPILE_PROGRAM(program, pa, input);
 	for (vint i = 1; i <= 2; i++)
 	{
-		auto funcSymbol = pa.context->children[L"S"][0]->children[L"M" + itow(i)][0].Obj();
-		auto spa = pa.WithContext(funcSymbol->children[L"$"][0].Obj());
+		auto funcSymbol = pa.context->TryGetChildren(L"S")->Get(0)->TryGetChildren(L"M" + itow(i))->Get(0).Obj();
+		auto spa = pa.WithContext(funcSymbol->TryGetChildren(L"$")->Get(0).Obj());
 
 		AssertExpr(spa, L"this",					L"this",						L"::S * $PR"								);
 		AssertExpr(spa, L"p",						L"p",							L"double $L"								);
@@ -719,8 +719,8 @@ void S::F2(double p){}
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
-		auto funcSymbol = pa.context->children[L"S"][0]->children[L"C" + itow(i)][0].Obj();
-		auto spa = pa.WithContext(funcSymbol->children[L"$"][0].Obj());
+		auto funcSymbol = pa.context->TryGetChildren(L"S")->Get(0)->TryGetChildren(L"C" + itow(i))->Get(0).Obj();
+		auto spa = pa.WithContext(funcSymbol->TryGetChildren(L"$")->Get(0).Obj());
 
 		AssertExpr(spa, L"this",					L"this",						L"::S const * $PR"							);
 		AssertExpr(spa, L"p",						L"p",							L"double $L"								);
@@ -763,8 +763,8 @@ void S::F2(double p){}
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
-		auto funcSymbol = pa.context->children[L"S"][0]->children[L"V" + itow(i)][0].Obj();
-		auto spa = pa.WithContext(funcSymbol->children[L"$"][0].Obj());
+		auto funcSymbol = pa.context->TryGetChildren(L"S")->Get(0)->TryGetChildren(L"V" + itow(i))->Get(0).Obj();
+		auto spa = pa.WithContext(funcSymbol->TryGetChildren(L"$")->Get(0).Obj());
 
 		AssertExpr(spa, L"this",					L"this",						L"::S volatile * $PR"						);
 		AssertExpr(spa, L"p",						L"p",							L"double $L"								);
@@ -807,8 +807,8 @@ void S::F2(double p){}
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
-		auto funcSymbol = pa.context->children[L"S"][0]->children[L"CV" + itow(i)][0].Obj();
-		auto spa = pa.WithContext(funcSymbol->children[L"$"][0].Obj());
+		auto funcSymbol = pa.context->TryGetChildren(L"S")->Get(0)->TryGetChildren(L"CV" + itow(i))->Get(0).Obj();
+		auto spa = pa.WithContext(funcSymbol->TryGetChildren(L"$")->Get(0).Obj());
 
 		AssertExpr(spa, L"this",					L"this",						L"::S const volatile * $PR"					);
 		AssertExpr(spa, L"p",						L"p",							L"double $L"								);
@@ -851,8 +851,8 @@ void S::F2(double p){}
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
-		auto funcSymbol = pa.context->children[L"S"][0]->children[L"F" + itow(i)][0].Obj();
-		auto spa = pa.WithContext(funcSymbol->children[L"$"][0].Obj());
+		auto funcSymbol = pa.context->TryGetChildren(L"S")->Get(0)->TryGetChildren(L"F" + itow(i))->Get(0).Obj();
+		auto spa = pa.WithContext(funcSymbol->TryGetChildren(L"$")->Get(0).Obj());
 
 		AssertExpr(spa, L"this",					L"this",						L"::S * $PR"								);
 		AssertExpr(spa, L"p",						L"p",							L"double $L"								);

@@ -283,17 +283,17 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 	for (vint i = 0; i < result.ids.Count(); i++)
 	{
 		auto symbol = result.ids.Values()[i];
-		if (symbol->definition)
+		if (auto decl = symbol->GetImplDecl())
 		{
-			auto& name = symbol->definition->name;
+			auto& name = decl->name;
 			if (name.tokenCount > 0)
 			{
-				result.decls.Add(IndexToken::GetToken(name), symbol->definition);
+				result.decls.Add(IndexToken::GetToken(name), decl);
 			}
 		}
-		for (vint i = 0; i < symbol->declarations.Count(); i++)
+		for (vint i = 0; i < symbol->GetForwardDecls().Count(); i++)
 		{
-			auto decl = symbol->declarations[i];
+			auto decl = symbol->GetForwardDecls()[i];
 			auto& name = decl->name;
 			if (name.tokenCount > 0)
 			{
@@ -479,13 +479,13 @@ const wchar_t* GetSymbolDivClass(Symbol* symbol)
 	case symbol_component::SymbolKind::EnumItem:
 		return L"cpp_enum";
 	case symbol_component::SymbolKind::Variable:
-		if (symbol->parent)
+		if (auto parent = symbol->GetParentScope())
 		{
-			if (symbol->parent->definition.Cast<FunctionDeclaration>())
+			if (parent->GetImplDecl<FunctionDeclaration>())
 			{
 				return L"cpp_argument";
 			}
-			else if (symbol->parent->definition.Cast<ClassDeclaration>())
+			else if (parent->GetImplDecl<ClassDeclaration>())
 			{
 				return L"cpp_field";
 			}
@@ -662,18 +662,18 @@ void GenerateHtmlLine(
 			}
 
 			Use(html).WriteString(L"<div class=\"def\" id=\"");
-			if (decl == decl->symbol->definition)
+			if (decl == decl->symbol->GetImplDecl())
 			{
 				Use(html).WriteString(L"Decl$");
 			}
 			else
 			{
-				Use(html).WriteString(L"Forward[" + itow(decl->symbol->declarations.IndexOf(decl.Obj())) + L"]$");
+				Use(html).WriteString(L"Forward[" + itow(decl->symbol->GetForwardDecls().IndexOf(decl.Obj())) + L"]$");
 			}
 			Use(html).WriteString(decl->symbol->uniqueId);
 			Use(html).WriteString(L"\">");
 
-			if ((decl->symbol->definition ? 1 : 0) + decl->symbol->declarations.Count() > 1)
+			if ((decl->symbol->GetImplDecl() ? 1 : 0) + decl->symbol->GetForwardDecls().Count() > 1)
 			{
 				if (!flr->refSymbols.Contains(decl->symbol))
 				{
@@ -1092,10 +1092,10 @@ WString GetDisplayNameInHtml(Symbol* symbol)
 		{
 			if (current != symbol) displayNameInHtml = L"::" + displayNameInHtml;
 			displayNameInHtml = current->name + displayNameInHtml;
-			current = current->parent;
+			current = current->GetParentScope();
 		}
 	}
-	else if (symbol->kind == symbol_component::SymbolKind::Variable && (symbol->parent && !symbol->parent->definition.Cast<ClassDeclaration>()))
+	else if (symbol->kind == symbol_component::SymbolKind::Variable && (symbol->GetParentScope() && !symbol->GetParentScope()->GetImplDecl<ClassDeclaration>()))
 	{
 		displayNameInHtml = symbol->name;
 	}
@@ -1113,7 +1113,7 @@ WString GetDisplayNameInHtml(Symbol* symbol)
 			{
 				displayNameInHtml = current->name + displayNameInHtml;
 			}
-			current = current->parent;
+			current = current->GetParentScope();
 		}
 	}
 
@@ -1319,9 +1319,9 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 			writer.WriteString(GetDisplayNameInHtml(symbol));
 		}
 		writer.WriteString(L"\', \'definition\': ");
-		writer.WriteString(symbol->definition ? L"true" : L"false");
+		writer.WriteString(symbol->GetImplDecl() ? L"true" : L"false");
 		writer.WriteString(L", \'declarations\': ");
-		writer.WriteString(itow(symbol->declarations.Count()));
+		writer.WriteString(itow(symbol->GetForwardDecls().Count()));
 		if (i == flr->refSymbols.Count() - 1)
 		{
 			writer.WriteLine(L"}");
@@ -1372,14 +1372,13 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	for (vint i = 0; i < flr->refSymbols.Count(); i++)
 	{
 		auto symbol = flr->refSymbols[i];
-		if (symbol->definition)
+		if (auto decl = symbol->GetImplDecl())
 		{
-			auto decl = symbol->definition;
 			writeFileMapping(L"Decl$", decl);
 		}
-		for (vint j = 0; j < symbol->declarations.Count(); j++)
+		for (vint j = 0; j < symbol->GetForwardDecls().Count(); j++)
 		{
-			auto decl = symbol->declarations[j];
+			auto decl = symbol->GetForwardDecls()[j];
 			writeFileMapping(L"Forward[" + itow(j) + L"]$", decl);
 		}
 	}
@@ -1470,9 +1469,9 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 	if (context->kind != symbol_component::SymbolKind::Root)
 	{
 		bool definedInThisFileGroup = false;
-		if (context->definition)
+		if (auto decl = context->GetImplDecl())
 		{
-			vint index = global->declToFiles.Keys().IndexOf(context->definition.Obj());
+			vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
 			if (index != -1)
 			{
 				if (INVLOC.StartsWith(wupper(global->declToFiles.Values()[index].GetFullPath()), fileGroupPrefix, Locale::Normalization::None))
@@ -1481,9 +1480,9 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 				}
 			}
 		}
-		for (vint i = 0; !definedInThisFileGroup && i < context->declarations.Count(); i++)
+		for (vint i = 0; !definedInThisFileGroup && i < context->GetForwardDecls().Count(); i++)
 		{
-			vint index = global->declToFiles.Keys().IndexOf(context->declarations[i].Obj());
+			vint index = global->declToFiles.Keys().IndexOf(context->GetForwardDecls()[i].Obj());
 			if (index != -1)
 			{
 				if (INVLOC.StartsWith(wupper(global->declToFiles.Values()[index].GetFullPath()), fileGroupPrefix, Locale::Normalization::None))
@@ -1556,9 +1555,12 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 		break;
 	case symbol_component::SymbolKind::Variable:
 		keyword = L"variable";
-		if (context->parent && context->parent->definition.Cast<ClassDeclaration>())
+		if (auto parent = context->GetParentScope())
 		{
-			tokenClass = L"cpp_field";
+			if (parent->GetImplDecl<ClassDeclaration>())
+			{
+				tokenClass = L"cpp_field";
+			}
 		}
 		break;
 	case symbol_component::SymbolKind::Namespace:
@@ -1606,7 +1608,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 			writer.WriteString(L"</div>");
 		}
 
-		if (auto decl = context->definition)
+		if (auto decl = context->GetImplDecl())
 		{
 			vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
 			if (index != -1)
@@ -1622,9 +1624,9 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 				writer.WriteString(L"</a>");
 			}
 		}
-		for (vint i = 0; i < context->declarations.Count(); i++)
+		for (vint i = 0; i < context->GetForwardDecls().Count(); i++)
 		{
-			auto decl = context->declarations[i];
+			auto decl = context->GetForwardDecls()[i];
 			vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
 			if (index != -1)
 			{
@@ -1648,9 +1650,9 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 	if (searchForChild)
 	{
 		bool printedChildNextLevel = false;
-		for (vint i = 0; i < context->children.Count(); i++)
+		for (vint i = 0; i < context->GetChildren().Count(); i++)
 		{
-			auto& children = context->children.GetByIndex(i);
+			auto& children = context->GetChildren().GetByIndex(i);
 			for (vint j = 0; j < children.Count(); j++)
 			{
 				GenerateSymbolIndex(global, writer, fileGroupPrefix, indentation + 1, children[j].Obj(), !isRoot, printedChildNextLevel);

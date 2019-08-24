@@ -73,17 +73,13 @@ namespace TestConvert_Helpers
 			if (auto toDecl = TryGetDeclFromType<ClassDeclaration>(toEntity))
 			{
 				auto toSymbol = toDecl->symbol;
-				vint index = toSymbol->children.Keys().IndexOf(L"$__ctor");
-				if (index == -1)
-				{
-					return TsysConv::Illegal;
-				}
+				auto pCtors = toSymbol->TryGetChildren(L"$__ctor");
+				if (!pCtors) return TsysConv::Illegal;
 
-				const auto& ctors = toSymbol->children.GetByIndex(index);
 				ExprTsysList funcTypes;
-				for (vint i = 0; i < ctors.Count(); i++)
+				for (vint i = 0; i < pCtors->Count(); i++)
 				{
-					auto ctorSymbol = ctors[i];
+					auto ctorSymbol = pCtors->Get(i);
 					auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (ctorDecl->decoratorDelete) continue;
 					symbol_type_resolving::EvaluateSymbol(pa, ctorDecl.Obj());
@@ -305,14 +301,13 @@ namespace TestConvert_Helpers
 		if (!fromClass) return false;
 
 		auto fromSymbol = fromClass->symbol;
-		vint index = fromSymbol->children.Keys().IndexOf(L"$__type");
-		if (index == -1) return false;
-		const auto& typeOps = fromSymbol->children.GetByIndex(index);
+		auto pTypeOps = fromSymbol->TryGetChildren(L"$__type");
+		if (!pTypeOps) return false;
 
 		auto newPa = pa.WithContext(fromSymbol);
-		for (vint i = 0; i < typeOps.Count(); i++)
+		for (vint i = 0; i < pTypeOps->Count(); i++)
 		{
-			auto typeOpSymbol = typeOps[i];
+			auto typeOpSymbol = pTypeOps->Get(i);
 			auto typeOpDecl = typeOpSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 			{
 				if (typeOpDecl->decoratorExplicit) continue;
@@ -365,14 +360,13 @@ namespace TestConvert_Helpers
 			}
 		}
 
-		vint index = toSymbol->children.Keys().IndexOf(L"$__ctor");
-		if (index == -1) return false;
-		const auto& ctors = toSymbol->children.GetByIndex(index);
+		auto pCtors = toSymbol->TryGetChildren(L"$__ctor");
+		if (!pCtors) return false;
 
 		auto newPa = pa.WithContext(toSymbol);
-		for (vint i = 0; i < ctors.Count(); i++)
+		for (vint i = 0; i < pCtors->Count(); i++)
 		{
-			auto ctorSymbol = ctors[i];
+			auto ctorSymbol = pCtors->Get(i);
 			auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 			{
 				if (ctorDecl->decoratorExplicit) continue;

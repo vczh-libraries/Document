@@ -91,13 +91,11 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 	while (scope)
 	{
-		vint index = scope->children.Keys().IndexOf(rsa.name.name);
-		if (index != -1)
+		if (auto pSymbols = scope->TryGetChildren(rsa.name.name))
 		{
-			const auto& symbols = scope->children.GetByIndex(index);
-			for (vint i = 0; i < symbols.Count(); i++)
+			for (vint i = 0; i < pSymbols->Count(); i++)
 			{
-				auto symbol = symbols[i].Obj();
+				auto symbol = pSymbols->Get(i).Obj();
 				switch (symbol->kind)
 				{
 				case symbol_component::SymbolKind::Enum:
@@ -134,7 +132,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 		if (rsa.found) break;
 
-		if (auto decl = scope->definition.Cast<ClassDeclaration>())
+		if (auto decl = scope->GetImplDecl<ClassDeclaration>())
 		{
 			if (decl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbol)
 			{
@@ -157,7 +155,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 		if (rsa.found) break;
 
 		if (policy != SearchPolicy::SymbolAccessableInScope) break;
-		scope = scope->parent;
+		scope = scope->GetParentScope();
 	}
 
 #undef FOUND
@@ -201,7 +199,7 @@ public:
 			for (vint i = 0; i < symbols.Count(); i++)
 			{
 				auto symbol = symbols[i];
-				if (auto usingDecl = symbol->definition.Cast<TypeAliasDeclaration>())
+				if (auto usingDecl = symbol->GetImplDecl<TypeAliasDeclaration>())
 				{
 					symbol_type_resolving::EvaluateSymbol(pa, usingDecl.Obj());
 					auto& types = symbol->evaluation.Get();

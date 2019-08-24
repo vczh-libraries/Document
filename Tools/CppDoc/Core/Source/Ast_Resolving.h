@@ -9,13 +9,13 @@ namespace symbol_type_resolving
 	bool IsStaticSymbol(Symbol* symbol)
 	{
 		bool isStatic = false;
-		if (auto decl = symbol->definition.Cast<TForward>())
+		if (auto decl = symbol->GetImplDecl<TForward>())
 		{
 			isStatic |= decl->decoratorStatic;
 		}
-		for (vint i = 0; i < symbol->declarations.Count(); i++)
+		for (vint i = 0; i < symbol->GetForwardDecls().Count(); i++)
 		{
-			if (auto decl = symbol->declarations[i].Cast<TForward>())
+			if (auto decl = symbol->GetForwardDecls()[i].Cast<TForward>())
 			{
 				isStatic |= decl->decoratorStatic;
 			}

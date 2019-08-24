@@ -8,40 +8,38 @@ FindForward
 
 Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
 {
-	bool inClass = context->definition.Cast<ClassDeclaration>();
-
-	vint index = context->children.Keys().IndexOf(decl->name.name);
-	if (index == -1) return nullptr;
-
-	auto& symbols = context->children.GetByIndex(index);
-	for (vint i = 0; i < symbols.Count(); i++)
+	bool inClass = context->GetImplDecl<ClassDeclaration>();
+	if (auto pSymbols = context->TryGetChildren(decl->name.name))
 	{
-		auto symbol = symbols[i].Obj();
-		if (symbol->kind == symbol_component::SymbolKind::Function)
+		for (vint i = 0; i < pSymbols->Count(); i++)
 		{
-			auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+			auto symbol = pSymbols->Get(i).Obj();
+			if (symbol->kind == symbol_component::SymbolKind::Function)
+			{
+				auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 
-			auto t1 = decl->type;
-			auto t2 = declToCompare->type;
-			if (inClass)
-			{
-				if (auto mt = t1.Cast<MemberType>())
+				auto t1 = decl->type;
+				auto t2 = declToCompare->type;
+				if (inClass)
 				{
-					t1 = mt->type;
+					if (auto mt = t1.Cast<MemberType>())
+					{
+						t1 = mt->type;
+					}
+					if (auto mt = t2.Cast<MemberType>())
+					{
+						t2 = mt->type;
+					}
 				}
-				if (auto mt = t2.Cast<MemberType>())
+				if (IsSameResolvedType(t1, t2))
 				{
-					t2 = mt->type;
+					return symbol;
 				}
 			}
-			if (IsSameResolvedType(t1, t2))
+			else
 			{
-				return symbol;
+				throw StopParsingException(cursor);
 			}
-		}
-		else
-		{
-			throw StopParsingException(cursor);
 		}
 	}
 	return nullptr;
@@ -58,8 +56,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 	RequireToken(cursor, CppTokens::DECL_TEMPLATE);
 	RequireToken(cursor, CppTokens::LT);
 
-	auto symbol = MakePtr<Symbol>();
-	symbol->parent = pa.context;
+	auto symbol = MakePtr<Symbol>(pa.context);
 	auto newPa = pa.WithContext(symbol.Obj());
 
 	auto spec = MakePtr<TemplateSpec>();
@@ -79,13 +76,13 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			argument.ellipsis = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
 			if (ParseCppName(argument.name, cursor))
 			{
-				if (symbol->children.Keys().Contains(argument.name.name))
+				if (symbol->TryGetChildren(argument.name.name))
 				{
 					throw StopParsingException(cursor);
 				}
 			}
 
-			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : MakePtr<Symbol>();
+			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : MakePtr<Symbol>(symbol.Obj());
 			argument.argumentSymbol = argumentSymbol.Obj();
 
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
@@ -112,11 +109,11 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 
 			if (argument.name)
 			{
-				symbol->children.Add(argumentSymbol->name, argumentSymbol);
+				symbol->AddChild(argumentSymbol->name, argumentSymbol);
 			}
 			else
 			{
-				symbol->children.Add(L"$", argumentSymbol);
+				symbol->AddChild(L"$", argumentSymbol);
 			}
 
 			if (TestToken(cursor, CppTokens::EQ))
@@ -154,13 +151,13 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			}
 			if (argument.name)
 			{
-				if (symbol->children.Keys().Contains(argument.name.name))
+				if (symbol->TryGetChildren(argument.name.name))
 				{
 					throw StopParsingException(cursor);
 				}
 			}
 
-			auto argumentSymbol = MakePtr<Symbol>();
+			auto argumentSymbol = MakePtr<Symbol>(symbol.Obj());
 			argument.argumentSymbol = argumentSymbol.Obj();
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
 			argumentSymbol->ellipsis = argument.ellipsis;
@@ -174,11 +171,11 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 
 			if (argument.name)
 			{
-				symbol->children.Add(argumentSymbol->name, argumentSymbol);
+				symbol->AddChild(argumentSymbol->name, argumentSymbol);
 			}
 			else
 			{
-				symbol->children.Add(L"$", argumentSymbol);
+				symbol->AddChild(L"$", argumentSymbol);
 			}
 		}
 		spec->arguments.Add(argument);
@@ -355,11 +352,11 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 
 			if (!enumClass)
 			{
-				if (pa.context->children.Keys().Contains(enumItem->name.name))
+				if (auto pEnumItems = pa.context->TryGetChildren(enumItem->name.name))
 				{
 					throw StopParsingException(cursor);
 				}
-				pa.context->children.Add(enumItem->name.name, contextSymbol->children[enumItem->name.name][0]);
+				pa.context->AddChild(enumItem->name.name, contextSymbol->TryGetChildren(enumItem->name.name)->Get(0));
 			}
 
 			if (TestToken(cursor, CppTokens::EQ))
@@ -536,7 +533,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 			// and all members should be either variables or nested anonymous classes
 			// so a NestedAnonymousClassDeclaration is created, copy all members to it, and move all symbols to pa.context, which is the parent class declaration
 
-			if (!pa.context->definition.Cast<ClassDeclaration>())
+			if (!pa.context->GetImplDecl<ClassDeclaration>())
 			{
 				throw StopParsingException(cursor);
 			}
@@ -565,18 +562,17 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 				nestedDecl->decls.Add(pair.f1);
 			}
 
-			for (vint i = 0; i < contextSymbol->children.Count(); i++)
+			for (vint i = 0; i < contextSymbol->GetChildren().Count(); i++)
 			{
 				// variable doesn't override, so here just look at the first symbol
-				auto child = contextSymbol->children.GetByIndex(i)[0];
-				if (pa.context->children.Keys().Contains(child->name))
+				auto child = contextSymbol->GetChildren().GetByIndex(i)[0];
+				if (pa.context->TryGetChildren(child->name))
 				{
 					throw StopParsingException(cursor);
 				}
-				child->parent = pa.context;
-				pa.context->children.Add(child->name, child);
+				pa.context->AddChildAndSetParent(child->name, child);
 			}
-			pa.context->children.Remove(contextSymbol->name, contextSymbol);
+			pa.context->RemoveChildAndResetParent(contextSymbol->name, contextSymbol);
 
 			return nullptr;
 		}
@@ -695,8 +691,8 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 			{
 				auto rawSymbolPtr = resolving->resolvedSymbols[i];
-				auto& siblings = rawSymbolPtr->parent->children[rawSymbolPtr->name];
-				auto symbol = siblings[siblings.IndexOf(rawSymbolPtr)];
+				auto pSiblings = rawSymbolPtr->GetParentScope()->TryGetChildren(rawSymbolPtr->name);
+				auto symbol = pSiblings->Get(pSiblings->IndexOf(rawSymbolPtr));
 
 				switch (symbol->kind)
 				{
@@ -709,21 +705,23 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 				case symbol_component::SymbolKind::Variable:
 				case symbol_component::SymbolKind::ValueAlias:
 					{
-						if (pa.context->children.Keys().Contains(symbol->name))
+						if (pa.context->TryGetChildren(symbol->name))
 						{
 							throw StopParsingException(cursor);
 						}
-						pa.context->children.Add(symbol->name, symbol);
+						pa.context->AddChild(symbol->name, symbol);
 					}
 					break;
 				case symbol_component::SymbolKind::Function:
 					{
-						vint index = pa.context->children.Keys().IndexOf(symbol->name);
-						if (index != -1 && pa.context->children.GetByIndex(index)[0]->kind != symbol_component::SymbolKind::Function)
+						if (auto pChildren = pa.context->TryGetChildren(symbol->name))
 						{
-							throw StopParsingException(cursor);
+							if (pChildren->Get(0)->kind != symbol_component::SymbolKind::Function)
+							{
+								throw StopParsingException(cursor);
+							}
 						}
-						pa.context->children.Add(symbol->name, symbol);
+						pa.context->AddChild(symbol->name, symbol);
 					}
 					break;
 				default:
@@ -906,7 +904,7 @@ void ParseDeclaration_Function(
 
 			methodCache->classSymbol = containingClass ? containingClass->symbol : containingClassForMember->symbol;
 			methodCache->funcSymbol = contextSymbol;
-			methodCache->classDecl = methodCache->classSymbol->definition.Cast<ClassDeclaration>();
+			methodCache->classDecl = methodCache->classSymbol->GetImplDecl<ClassDeclaration>();
 			methodCache->funcDecl = decl;
 
 			TsysCV cv;
@@ -1092,12 +1090,12 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 	// non-null containingClassForMember means this declaration is a class member defined out of the class
 	List<Ptr<Declarator>> declarators;
 	auto methodType = CppMethodType::Function;
-	ClassDeclaration* containingClass = pa.context->definition.Cast<ClassDeclaration>().Obj();
+	ClassDeclaration* containingClass = pa.context->GetImplDecl<ClassDeclaration>().Obj();
 	ClassDeclaration* containingClassForMember = nullptr;
 
 	// get all declarators
 	{
-		auto pda = pda_Decls(pa.context->definition.Cast<ClassDeclaration>(), spec.f1);
+		auto pda = pda_Decls(pa.context->GetImplDecl<ClassDeclaration>(), spec.f1);
 		pda.containingClass = containingClass;
 
 		auto newPa = spec.f1 ? pa.WithContext(spec.f0.Obj()) : pa;
@@ -1123,7 +1121,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 		{
 			if (declarator->containingClassSymbol)
 			{
-				containingClassForMember = declarator->containingClassSymbol->definition.Cast<ClassDeclaration>().Obj();
+				containingClassForMember = declarator->containingClassSymbol->GetImplDecl<ClassDeclaration>().Obj();
 			}
 		}
 

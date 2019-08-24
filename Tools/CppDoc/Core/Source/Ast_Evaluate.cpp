@@ -313,7 +313,7 @@ public:
 					{
 						ev.Get().Add(pa.tsys->Void());
 					}
-					symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.funcSymbol->definition.Cast<FunctionDeclaration>().Obj());
+					symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.funcSymbol->GetImplDecl<FunctionDeclaration>().Obj());
 				}
 			}
 		}
@@ -413,7 +413,7 @@ public:
 
 		if(self->initList.Count() > 0)
 		{
-			auto classDecl = self->symbol->parent->definition.Cast<ClassDeclaration>();
+			auto classDecl = self->symbol->GetParentScope()->GetImplDecl<ClassDeclaration>();
 			if (!classDecl)
 			{
 				throw NotResolvableException();
@@ -428,11 +428,10 @@ public:
 			{
 				auto& item = self->initList[i];
 				{
-					vint index = classDecl->symbol->children.Keys().IndexOf(item.f0->name.name);
-					if (index == -1) goto SKIP_RESOLVING_FIELD;
-					auto& vars = classDecl->symbol->children.GetByIndex(index);
-					if (vars.Count() != 1) goto SKIP_RESOLVING_FIELD;
-					auto varSymbol = vars[0].Obj();
+					auto pVars = classDecl->symbol->TryGetChildren(item.f0->name.name);
+					if (!pVars) goto SKIP_RESOLVING_FIELD;
+					if (pVars->Count() != 1) goto SKIP_RESOLVING_FIELD;
+					auto varSymbol = pVars->Get(0).Obj();
 					if (varSymbol->kind != symbol_component::SymbolKind::Variable) goto SKIP_RESOLVING_FIELD;
 
 					item.f0->resolving = MakePtr<Resolving>();

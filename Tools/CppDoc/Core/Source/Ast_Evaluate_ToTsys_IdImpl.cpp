@@ -21,7 +21,7 @@ namespace symbol_totsys_impl
 			return;
 		case symbol_component::SymbolKind::TypeAlias:
 			{
-				auto usingDecl = symbol->definition.Cast<TypeAliasDeclaration>();
+				auto usingDecl = symbol->GetImplDecl<TypeAliasDeclaration>();
 				EvaluateSymbol(pa, usingDecl.Obj());
 				auto& types = symbol->evaluation.Get();
 				for (vint j = 0; j < types.Count(); j++)

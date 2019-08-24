@@ -201,17 +201,17 @@ namespace symbol_totsys_impl
 	void ProcessTypeidExpr(const ParsingArguments& pa, ExprTsysList& result, TypeidExpr* self)
 	{
 		auto global = pa.root.Obj();
-		vint index = global->children.Keys().IndexOf(L"std");
-		if (index == -1) return;
-		auto& stds = global->children.GetByIndex(index);
-		if (stds.Count() != 1) return;
-		index = stds[0]->children.Keys().IndexOf(L"type_info");
-		if (index == -1) return;
-		auto& tis = stds[0]->children.GetByIndex(index);
 
-		for (vint i = 0; i < tis.Count(); i++)
+		auto pStds = global->TryGetChildren(L"std");
+		if (!pStds) return;
+		if (pStds->Count() != 1) return;
+
+		auto pTis = pStds->Get(0)->TryGetChildren(L"type_info");
+		if (!pTis) return;
+
+		for (vint i = 0; i < pTis->Count(); i++)
 		{
-			auto ti = tis[i];
+			auto ti = pTis->Get(i);
 			switch (ti->kind)
 			{
 			case symbol_component::SymbolKind::Class:

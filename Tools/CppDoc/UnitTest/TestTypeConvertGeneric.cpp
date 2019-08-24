@@ -266,7 +266,7 @@ using Context = T;
 	ITsys* intTypes[TypeCount];
 	ITsys* structTypes[TypeCount];
 
-	auto contextSymbol = pa.context->children[L"Context"][0].Obj();
+	auto contextSymbol = pa.context->TryGetChildren(L"Context")->Get(0).Obj();
 	auto spa = pa.WithContext(contextSymbol);
 	{
 		for (vint i = 0; i < TypeCount; i++)
@@ -296,7 +296,7 @@ using Context = T;
 		{
 			TypeTsysList tsys;
 			GenericArgContext gaContext;
-			gaContext.arguments.Add(genericTypes[0], pa.tsys->DeclOf(pa.context->children[L"S"][0].Obj()));
+			gaContext.arguments.Add(genericTypes[0], pa.tsys->DeclOf(pa.context->TryGetChildren(L"S")->Get(0).Obj()));
 			genericTypes[i]->ReplaceGenericArgs(gaContext, tsys);
 			TEST_ASSERT(tsys.Count() == 1);
 			structTypes[i] = tsys[0];
