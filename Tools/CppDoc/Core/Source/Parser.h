@@ -30,6 +30,7 @@ namespace symbol_component
 		NotEvaluated,
 		Evaluating,
 		Evaluated,
+		Undecided,
 	};
 
 	enum class SymbolKind
@@ -42,8 +43,8 @@ namespace symbol_component
 		GenericTypeArgument,
 
 		EnumItem,
-		FunctionSymbol,
-		FunctionBodySymbol,
+		FunctionSymbol,			// FunctionSymbol contains multiple FunctionBodySymbol of the same type. FunctionSymbol is a non-scope child for functions under their scopes.
+		FunctionBodySymbol,		// FunctionBodySymbol associates a declaration with type information.
 		Variable,
 		ValueAlias,
 		GenericValueArgument,

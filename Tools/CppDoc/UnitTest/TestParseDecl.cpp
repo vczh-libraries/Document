@@ -538,11 +538,11 @@ namespace a
 	{
 		auto inClassDecl = inClassMembers[i + 1];
 		auto outClassDecl = outClassMembers[i];
-		TEST_ASSERT(inClassDecl->symbol == outClassDecl->symbol);
 
-		auto symbol = inClassDecl->symbol;
 		if (i == 0)
 		{
+			auto symbol = inClassDecl->symbol;
+			TEST_ASSERT(symbol == outClassDecl->symbol);
 			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
 
 			TEST_ASSERT(symbol->GetImplDecl_NFb() == outClassDecl);
@@ -551,6 +551,7 @@ namespace a
 		}
 		else
 		{
+			auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
 			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
 
 			TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);

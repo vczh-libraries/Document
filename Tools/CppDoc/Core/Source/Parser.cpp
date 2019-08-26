@@ -61,6 +61,8 @@ SC_Data
 		case symbol_component::SymbolCategory::FunctionBody:
 			new(&functionBody) SC_FunctionBody();
 			break;
+		default:
+			throw UnexpectedSymbolCategoryException();
 		}
 #ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
 #define new VCZH_CHECK_MEMORY_LEAKS_NEW
@@ -80,6 +82,8 @@ SC_Data
 		case symbol_component::SymbolCategory::FunctionBody:
 			functionBody.~SC_FunctionBody();
 			break;
+		default:
+			throw UnexpectedSymbolCategoryException();
 		}
 	}
 }
@@ -328,7 +332,7 @@ Symbol* Symbol::GetFunctionSymbol_Fb()
 {
 	switch (category)
 	{
-	case symbol_component::SymbolCategory::Function:
+	case symbol_component::SymbolCategory::FunctionBody:
 		return categoryData.functionBody.functionSymbol;
 	default:
 		throw UnexpectedSymbolCategoryException();
@@ -380,8 +384,8 @@ void Symbol::AddChildAndSetParent_NFb(const WString& name, const Ptr<Symbol>& ch
 void Symbol::RemoveChildAndResetParent_NFb(const WString& name, Symbol* child)
 {
 	auto& children = const_cast<symbol_component::SymbolGroup&>(GetChildren_NFb());
-	children.Remove(name, child);
 	child->SetParent(nullptr);
+	children.Remove(name, child);
 }
 
 Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
