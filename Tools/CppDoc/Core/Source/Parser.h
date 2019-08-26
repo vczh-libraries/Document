@@ -11,6 +11,8 @@ Symbol
 
 class ClassDeclaration;
 class FunctionDeclaration;
+class ForwardFunctionDeclaration;
+class Symbol;
 
 namespace symbol_component
 {
@@ -67,52 +69,96 @@ namespace symbol_component
 		vint										Count();
 		TypeTsysList&								Get(vint index = 0);
 	};
-}
 
-enum class SymbolCategory
-{
-	Normal,
-	FunctionBody,
-	Function,
-	Undecided,
-};
+	enum class SymbolCategory
+	{
+		Normal,
+		FunctionBody,
+		Function,
+		Undecided,
+	};
+
+	using SymbolGroup = Group<WString, Ptr<Symbol>>;
+
+	struct SC_Normal
+	{
+		Symbol*										parent = nullptr;
+		Ptr<Declaration>							implDecl;
+		List<Ptr<Declaration>>						forwardDecls;
+		Ptr<Stat>									statement;
+		SymbolGroup									children;
+		Evaluation									evaluation;
+	};
+
+	struct SC_FunctionBody
+	{
+		Symbol*										functionSymbol;
+		Ptr<FunctionDeclaration>					implDecl;
+		Ptr<ForwardFunctionDeclaration>				forwardDecl;
+		Ptr<MethodCache>							methodCache;
+		SymbolGroup									children;
+		Evaluation									evaluation;
+	};
+
+	struct SC_Function
+	{
+		Symbol*										parent = nullptr;
+		List<Ptr<Symbol>>							implSymbols;
+		List<Ptr<Symbol>>							declSymbols;
+	};
+
+	struct SC_Undecided
+	{
+		Symbol*										parent = nullptr;
+	};
+
+	union SC_Data
+	{
+		SC_Normal									normal;
+		SC_FunctionBody								functionBody;
+		SC_Function									function;
+		SC_Undecided								undecided;
+
+		SC_Data(SymbolCategory category);
+		~SC_Data();
+
+		void										Alloc(SymbolCategory category);
+		void										Free(SymbolCategory category);
+	};
+}
 
 class Symbol : public Object
 {
-	using SymbolGroup = Group<WString, Ptr<Symbol>>;
-	using SymbolPtrList = List<Symbol*>;
 private:
-	Symbol*											parent = nullptr;
+	symbol_component::SymbolCategory				category;
+	symbol_component::SC_Data						categoryData;
 
-	Ptr<Declaration>								definition;				// for declaration root (class, struct, union, enum, function, variable)
-	List<Ptr<Declaration>>							declarations;			// for forward declarations and namespaces
-	Ptr<Stat>										statement;				// for statement
-	SymbolGroup										children;
-	Ptr<symbol_component::MethodCache>				methodCache;			// for function declaration
-	symbol_component::Evaluation					evaluation;
-
-	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
-	Symbol*											AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol);
-	void											Add(Ptr<Symbol> child);
+	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category);
+	Symbol*											AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category);
+	void											SetParent(Symbol* parent);
 
 public:
 	symbol_component::SymbolKind					kind = symbol_component::SymbolKind::Root;
 	bool											ellipsis = false;		// for variant template argument and function argument
 	WString											name;
 	WString											uniqueId;
-	SymbolPtrList									usingNss;
+	List<Symbol*>									usingNss;
 
 public:
-	Symbol(Symbol* _parent = nullptr);
+	Symbol(symbol_component::SymbolCategory _category, Symbol* _parent = nullptr);
 	~Symbol();
 
-	Symbol*											GetParentScope();			// Normal	FunctionBody	Function	Undecided
-	const Ptr<Declaration>&							GetImplDecl();				// Normal	FunctionBody
-	const List<Ptr<Declaration>>&					GetForwardDecls();			// Normal	FunctionBody
-	const Ptr<Stat>&								GetStat();					// Normal
+	symbol_component::SymbolCategory				GetCategory();
+	void											SetCategory(symbol_component::SymbolCategory _category);
+
+	Symbol*											GetParentScope();			//	Normal	FunctionBody	Function	Undecided
+	Ptr<Declaration>								GetImplDecl();				//	Normal	FunctionBody
+	Ptr<Declaration>								GetForwardDecl();			//			FunctionBody
+	const List<Ptr<Declaration>>&					GetForwardDecls();			//	Normal
+	const Ptr<Stat>&								GetStat();					//	Normal
 	Ptr<symbol_component::MethodCache>				GetMethodCache();			//			FunctionBody
-	symbol_component::Evaluation&					GetEvaluationForUpdating();	// Normal	FunctionBody
-	const SymbolGroup&								GetChildren();				// Normal	FunctionBody
+	symbol_component::Evaluation&					GetEvaluationForUpdating();	//	Normal	FunctionBody
+	const symbol_component::SymbolGroup&			GetChildren();				//	Normal	FunctionBody
 
 	const List<Ptr<Symbol>>*						TryGetChildren(const WString& name);
 	void											AddChild(const WString& name, const Ptr<Symbol>& child);
@@ -122,21 +168,60 @@ public:
 	template<typename T>
 	const Ptr<T> GetImplDecl()
 	{
-		return definition.Cast<T>();
+		return GetImplDecl().Cast<T>();
 	}
 
-	Symbol*											CreateFunctionForwardSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind);
-	Symbol*											CreateFunctionImplSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache);
+	Symbol*											CreateFunctionForwardSymbol(Ptr<ForwardFunctionDeclaration> _decl, symbol_component::SymbolKind kind);
+	Symbol*											CreateFunctionImplSymbol(Ptr<FunctionDeclaration> _decl, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache);
 	Symbol*											AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind);
-	Symbol*											AddImplDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol = nullptr);
+	Symbol*											AddImplDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol = nullptr);
 	Symbol*											CreateStatSymbol(Ptr<Stat> _stat);
 
 	template<typename T>
 	Ptr<T> GetAnyForwardDecl()
 	{
-		if (auto decl = definition.Cast<T>()) return decl;
-		if (declarations.Count() == 0) return nullptr;
-		return declarations[0].Cast<T>();
+		switch (category)
+		{
+		case symbol_component::SC_Normal:
+			{
+				auto decl = categoryData.normal.implDecl.Cast<T>();
+				if (decl) return decl;
+				for (vint i = 0; i < categoryData.normal.forwardDecls.Count(); i++)
+				{
+					if ((decl = categoryData.normal.forwardDecls[i].Cast<T>))
+					{
+						return decl;
+					}
+				}
+				return nullptr;
+			}
+		case symbol_component::SC_FunctionBody:
+			{
+				auto decl = categoryData.functionBody.implDecl.Cast<T>();
+				return decl ? decl : categoryData.functionBody.forwardDecl.Cast<T>();
+			}
+		case symbol_component::SC_Function:
+			{
+				Ptr<T> decl;
+				for (vint i = 0; i < categoryData.function.declSymbols.Count(); i++)
+				{
+					if ((decl = categoryData.function.declSymbols[i]->GetAnyForwardDecl<T>))
+					{
+						return decl;
+					}
+				}
+				for (vint i = 0; i < categoryData.function.implSymbols.Count(); i++)
+				{
+					if ((decl = categoryData.function.implSymbols[i]->GetAnyForwardDecl<T>))
+					{
+						return decl;
+					}
+				}
+				return nullptr;
+			}
+		default:
+			throw UnexpectedSymbolCategoryException();
+		}
 	}
 
 	void											GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& prefix);

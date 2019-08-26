@@ -31,112 +31,278 @@ Evaluation
 	{
 		return *typeList[index].Obj();
 	}
+
+/***********************************************************************
+SC_Data
+***********************************************************************/
+
+	SC_Data::SC_Data(SymbolCategory category)
+	{
+	}
+
+	SC_Data::~SC_Data()
+	{
+	}
+
+	void SC_Data::Alloc(SymbolCategory category)
+	{
+#ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
+#undef new
+#endif
+		switch (category)
+		{
+		case symbol_component::SymbolCategory::Normal:
+			new(&normal) SC_Normal();
+			break;
+		case symbol_component::SymbolCategory::Function:
+			new(&function) SC_Function();
+			break;
+		case symbol_component::SymbolCategory::FunctionBody:
+			new(&functionBody) SC_FunctionBody();
+			break;
+		case symbol_component::SymbolCategory::Undecided:
+			new(&undecided) SC_Undecided();
+			break;
+		}
+#ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
+#define new VCZH_CHECK_MEMORY_LEAKS_NEW
+#endif
+	}
+
+	void SC_Data::Free(SymbolCategory category)
+	{
+		switch (category)
+		{
+		case symbol_component::SymbolCategory::Normal:
+			normal.~SC_Normal();
+			break;
+		case symbol_component::SymbolCategory::Function:
+			function.~SC_Function();
+			break;
+		case symbol_component::SymbolCategory::FunctionBody:
+			functionBody.~SC_FunctionBody();
+			break;
+		case symbol_component::SymbolCategory::Undecided:
+			undecided.~SC_Undecided();
+			break;
+		}
+	}
 }
 
 /***********************************************************************
 Symbol
 ***********************************************************************/
 
-Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
+Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category)
 {
-	if (!existingSymbol)
+	switch (_category)
 	{
-		auto symbol = MakePtr<Symbol>();
-		symbol->name = _decl->name.name;
-		symbol->kind = kind;
-		Add(symbol);
-		existingSymbol = symbol.Obj();
+	case symbol_component::SymbolCategory::Normal:
+	case symbol_component::SymbolCategory::Function:
+	case symbol_component::SymbolCategory::Undecided:
+		if (category != symbol_component::SymbolCategory::Normal && category != symbol_component::SymbolCategory::FunctionBody)
+		{
+			throw UnexpectedSymbolCategoryException();
+		}
+		break;
+	case symbol_component::SymbolCategory::FunctionBody:
+		if (category != symbol_component::SymbolCategory::Function)
+		{
+			throw UnexpectedSymbolCategoryException();
+		}
+		break;
 	}
 
-	_decl->symbol = existingSymbol;
-	return existingSymbol;
+	auto symbol = MakePtr<Symbol>(_category);
+	symbol->name = _decl->name.name;
+	symbol->kind = kind;
+	AddChildAndSetParent(symbol->name, symbol);
+
+	_decl->symbol = symbol.Obj();
+	return symbol.Obj();
 }
 
-Symbol* Symbol::AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol)
+Symbol* Symbol::AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category)
 {
-	vint index = children.Keys().IndexOf(_decl->name.name);
-	if (index == -1)
+	if (auto pChildren = TryGetChildren(_decl->name.name))
 	{
-		if (reusedSymbol)
-		{
-			reusedSymbol->name = _decl->name.name;
-			reusedSymbol->kind = kind;
-			Add(reusedSymbol);
-			_decl->symbol = reusedSymbol.Obj();
-			return reusedSymbol.Obj();
-		}
-		else
-		{
-			return CreateSymbolInternal(_decl, nullptr, kind);
-		}
-	}
-	else
-	{
-		if (reusedSymbol)
+		if (templateSpecSymbol)
 		{
 			return nullptr;
 		}
-		auto& symbols = children.GetByIndex(index);
-		if (symbols.Count() != 1) return nullptr;
-		auto symbol = symbols[0].Obj();
+
+		if (pChildren->Count() != 1) return nullptr;
+		auto symbol = pChildren->Get(0).Obj();
 		if (symbol->kind != kind) return nullptr;
 		_decl->symbol = symbol;
 		return symbol;
 	}
+	else
+	{
+		if (templateSpecSymbol)
+		{
+			templateSpecSymbol->SetCategory(_category);
+			templateSpecSymbol->name = _decl->name.name;
+			templateSpecSymbol->kind = kind;
+			AddChildAndSetParent(templateSpecSymbol->name, templateSpecSymbol);
+			_decl->symbol = templateSpecSymbol.Obj();
+			return templateSpecSymbol.Obj();
+		}
+		else
+		{
+			return CreateSymbolInternal(_decl, kind, symbol_component::SymbolCategory::Normal);
+		}
+	}
 }
 
-void Symbol::Add(Ptr<Symbol> child)
+void Symbol::SetParent(Symbol* parent)
 {
-	child->parent = this;
-	children.Add(child->name, child);
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Normal:
+		categoryData.normal.parent = parent;
+		break;
+	case symbol_component::SymbolCategory::Function:
+		categoryData.function.parent = parent;
+		break;
+	case symbol_component::SymbolCategory::Undecided:
+		categoryData.undecided.parent = parent;
+		break;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
 }
 
-Symbol::Symbol(Symbol* _parent)
-	:parent(_parent)
+Symbol::Symbol(symbol_component::SymbolCategory _category, Symbol* _parent)
+	:category(_category)
+	, categoryData(_category)
 {
+	if (_parent)
+	{
+		SetParent(_parent);
+	}
 }
 
 Symbol::~Symbol()
 {
+	categoryData.Free(category);
+}
+
+symbol_component::SymbolCategory Symbol::GetCategory()
+{
+	return category;
+}
+
+void Symbol::SetCategory(symbol_component::SymbolCategory _category)
+{
+	categoryData.Free(category);
+	category = _category;
+	categoryData.Alloc(category);
 }
 
 Symbol* Symbol::GetParentScope()
 {
-	return parent;
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Normal:
+		return categoryData.normal.parent;
+	case symbol_component::SymbolCategory::Function:
+		return categoryData.function.parent;
+	case symbol_component::SymbolCategory::FunctionBody:
+		return categoryData.functionBody.functionSymbol->GetParentScope();
+	case symbol_component::SymbolCategory::Undecided:
+		return categoryData.undecided.parent;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
 }
 
-const Ptr<Declaration>& Symbol::GetImplDecl()
+Ptr<Declaration> Symbol::GetImplDecl()
 {
-	return definition;
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Normal:
+		return categoryData.normal.implDecl;
+	case symbol_component::SymbolCategory::FunctionBody:
+		return categoryData.functionBody.implDecl;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
+}
+
+Ptr<Declaration> Symbol::GetForwardDecl()
+{
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::FunctionBody:
+		return categoryData.functionBody.forwardDecl;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
 }
 
 const List<Ptr<Declaration>>& Symbol::GetForwardDecls()
 {
-	return declarations;
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Normal:
+		return categoryData.normal.forwardDecls;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
 }
 
 const Ptr<Stat>& Symbol::GetStat()
 {
-	return statement;
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Normal:
+		return categoryData.normal.statement;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
 }
 
 Ptr<symbol_component::MethodCache> Symbol::GetMethodCache()
 {
-	return methodCache;
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::FunctionBody:
+		return categoryData.functionBody.methodCache;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
 }
 
 symbol_component::Evaluation& Symbol::GetEvaluationForUpdating()
 {
-	return evaluation;
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Normal:
+		return categoryData.normal.evaluation;
+	case symbol_component::SymbolCategory::FunctionBody:
+		return categoryData.functionBody.evaluation;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
 }
 
-const Symbol::SymbolGroup& Symbol::GetChildren()
+const symbol_component::SymbolGroup& Symbol::GetChildren()
 {
-	return children;
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Normal:
+		return categoryData.normal.children;
+	case symbol_component::SymbolCategory::FunctionBody:
+		return categoryData.functionBody.children;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
 }
 
 const List<Ptr<Symbol>>* Symbol::TryGetChildren(const WString& name)
 {
+	const auto& children = GetChildren();
 	vint index = children.Keys().IndexOf(name);
 	if (index == -1) return nullptr;
 	return &children.GetByIndex(index);
@@ -144,64 +310,69 @@ const List<Ptr<Symbol>>* Symbol::TryGetChildren(const WString& name)
 
 void Symbol::AddChild(const WString& name, const Ptr<Symbol>& child)
 {
+	auto& children = const_cast<symbol_component::SymbolGroup&>(GetChildren());
 	children.Add(name, child);
 }
 
 void Symbol::AddChildAndSetParent(const WString& name, const Ptr<Symbol>& child)
 {
 	AddChild(name, child);
-	child->parent = this;
+	child->SetParent(this);
 }
 
 void Symbol::RemoveChildAndResetParent(const WString& name, Symbol* child)
 {
+	auto& children = const_cast<symbol_component::SymbolGroup&>(GetChildren());
 	children.Remove(name, child);
-	child->parent = nullptr;
+	child->SetParent(nullptr);
 }
 
-Symbol* Symbol::CreateFunctionForwardSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind)
+Symbol* Symbol::CreateFunctionForwardSymbol(Ptr<ForwardFunctionDeclaration> _decl, symbol_component::SymbolKind kind)
 {
-	existingSymbol = CreateSymbolInternal(_decl, existingSymbol, kind);
-	existingSymbol->declarations.Add(_decl);
-	return existingSymbol;
+	auto symbol = CreateSymbolInternal(_decl, kind, symbol_component::SymbolCategory::FunctionBody);
+	symbol->categoryData.functionBody.forwardDecl = _decl;
+	return symbol;
 }
 
-Symbol* Symbol::CreateFunctionImplSymbol(Ptr<Declaration> _decl, Symbol* existingSymbol, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache)
+Symbol* Symbol::CreateFunctionImplSymbol(Ptr<FunctionDeclaration> _decl, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache)
 {
-	existingSymbol = CreateSymbolInternal(_decl, existingSymbol, kind);
-	existingSymbol->definition = _decl;
-	existingSymbol->methodCache = methodCache;
+	auto symbol = CreateSymbolInternal(_decl, kind, symbol_component::SymbolCategory::FunctionBody);
+	symbol->categoryData.functionBody.implDecl = _decl;
 	if (methodCache)
 	{
-		methodCache->funcSymbol = existingSymbol;
+		symbol->categoryData.functionBody.methodCache = methodCache;
+		methodCache->funcSymbol = symbol;
 	}
-	return existingSymbol;
+	return symbol;
 }
 
 Symbol* Symbol::AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind)
 {
-	auto symbol = AddToSymbolInternal(_decl, kind, nullptr);
+	auto symbol = AddToSymbolInternal(_decl, kind, nullptr, symbol_component::SymbolCategory::Normal);
 	if (!symbol) return nullptr;
-	symbol->declarations.Add(_decl);
+	if (symbol->categoryData.normal.implDecl) return nullptr;
+	if (symbol->categoryData.normal.forwardDecls.Count() > 0) return nullptr;
+	symbol->categoryData.normal.forwardDecls.Add(_decl);
 	return symbol;
 }
 
-Symbol* Symbol::AddImplDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> reusedSymbol)
+Symbol* Symbol::AddImplDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol)
 {
-	auto symbol = AddToSymbolInternal(_decl, kind, reusedSymbol);
+	auto symbol = AddToSymbolInternal(_decl, kind, templateSpecSymbol, symbol_component::SymbolCategory::Normal);
 	if (!symbol) return nullptr;
-	if (symbol->definition) return nullptr;
-	symbol->definition = _decl;
+	if (symbol->categoryData.normal.implDecl) return nullptr;
+	if (symbol->categoryData.normal.forwardDecls.Count() > 0) return nullptr;
+	symbol->categoryData.normal.implDecl = _decl;
 	return symbol;
 }
 
 Symbol* Symbol::CreateStatSymbol(Ptr<Stat> _stat)
 {
-	auto symbol = MakePtr<Symbol>();
+	auto symbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
 	symbol->name = L"$";
 	symbol->kind = symbol_component::SymbolKind::Statement;
-	symbol->statement = _stat;
-	Add(symbol);
+	symbol->categoryData.normal.statement = _stat;
+	AddChildAndSetParent(symbol->name, symbol);
 
 	_stat->symbol = symbol.Obj();
 	return symbol.Obj();
@@ -209,43 +380,79 @@ Symbol* Symbol::CreateStatSymbol(Ptr<Stat> _stat)
 
 void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& prefix)
 {
-	WString nextPrefix;
-	switch (kind)
+	if (uniqueId != L"")
 	{
-	case symbol_component::SymbolKind::Root:
-	case symbol_component::SymbolKind::Statement:
-		nextPrefix = prefix;
-		break;
-	default:
+		throw UnexpectedSymbolCategoryException();
+	}
+
+	WString nextPrefix;
+
+	if (category == symbol_component::SymbolCategory::FunctionBody)
+	{
+		uniqueId = prefix;
+		nextPrefix = prefix + L"::";
+	}
+	else
+	{
+		switch (kind)
 		{
-			vint counter = 1;
-			while (true)
+		case symbol_component::SymbolKind::Root:
+		case symbol_component::SymbolKind::Statement:
+			nextPrefix = prefix;
+			break;
+		default:
 			{
-				WString id = prefix + name + (counter == 1 ? WString::Empty : itow(counter));
-				if (!ids.Keys().Contains(id))
+				vint counter = 1;
+				while (true)
 				{
-					uniqueId = id;
-					ids.Add(id, this);
-					nextPrefix = id + L"::";
-					break;
+					WString id = prefix + name + (counter == 1 ? WString::Empty : itow(counter));
+					if (!ids.Keys().Contains(id))
+					{
+						uniqueId = id;
+						ids.Add(id, this);
+						nextPrefix = id + L"::";
+						break;
+					}
+					counter++;
 				}
-				counter++;
 			}
 		}
 	}
 
-	for (vint i = 0; i < children.Count(); i++)
+	switch (category)
 	{
-		auto& symbols = children.GetByIndex(i);
-		for (vint j = 0; j < symbols.Count(); j++)
+	case symbol_component::SymbolCategory::Normal:
+	case symbol_component::SymbolCategory::FunctionBody:
 		{
-			auto symbol = symbols[j];
-			// skip some copied enum item symbols
-			if (symbol->parent == this)
+			const auto& children = GetChildren();
+			for (vint i = 0; i < children.Count(); i++)
 			{
-				symbol->GenerateUniqueId(ids, nextPrefix);
+				auto& symbols = children.GetByIndex(i);
+				for (vint j = 0; j < symbols.Count(); j++)
+				{
+					auto symbol = symbols[j];
+					// skip some copied enum item symbols
+					if (symbol->GetParentScope() == this)
+					{
+						symbol->GenerateUniqueId(ids, nextPrefix);
+					}
+				}
 			}
 		}
+		break;
+	case symbol_component::SymbolCategory::Function:
+		for (vint i = 0; i < categoryData.function.declSymbols.Count(); i++)
+		{
+			categoryData.function.declSymbols[i]->uniqueId = uniqueId;
+		}
+		for (vint i = 0; i < categoryData.function.implSymbols.Count(); i++)
+		{
+			auto symbol = categoryData.function.implSymbols[i].Obj();
+			symbol->GenerateUniqueId(ids, uniqueId + L"[decl" + itow(i) + L"]");
+		}
+		return;
+	default:
+		throw UnexpectedSymbolCategoryException();
 	}
 }
 

@@ -141,6 +141,7 @@ Helpers
 struct NotConvertableException {};
 struct IllegalExprException {};
 struct NotResolvableException {};
+struct UnexpectedSymbolCategoryException {};
 
 using TypeTsysList = List<ITsys*>;
 using ExprTsysList = List<ExprTsysItem>;
