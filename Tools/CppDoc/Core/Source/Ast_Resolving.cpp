@@ -666,7 +666,7 @@ namespace symbol_type_resolving
 							targetTypeList = &varTypes;
 						}
 						break;
-					case symbol_component::SymbolKind::FunctionBodySymbol:
+					case symbol_component::SymbolKind::FunctionSymbol:
 						if (!IsStaticSymbol<ForwardFunctionDeclaration>(symbol))
 						{
 							targetTypeList = &funcTypes;

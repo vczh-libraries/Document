@@ -365,7 +365,6 @@ const int* cpx;
 
 TEST_CASE(TestParseExpr_FFA_Qualifier)
 {
-	return;
 	auto input = LR"(
 struct X
 {
@@ -462,7 +461,6 @@ Symbol* GetFunctionBodyStatementSymbol(const ParsingArguments& pa, const WString
 
 TEST_CASE(TestParseExpr_FFA_Qualifier_OfExplicitOrImplicitThisExpr)
 {
-	return;
 	auto input = LR"(
 struct X
 {
@@ -985,7 +983,6 @@ enum class SeasonClass
 
 TEST_CASE(TestParseExpr_FieldReference)
 {
-	return;
 	auto input = LR"(
 struct A
 {
