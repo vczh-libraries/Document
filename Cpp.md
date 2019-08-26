@@ -13,23 +13,6 @@
 
 ## Template short-term tasks
 
-- [ ] Refactor to allow multiple implementations found for the same symbol.
-  - Functions with incomplete types always create new symbols.
-  - Functions' symbols are only created to store information of function ASTs, all ASTs have their own symbols for scopes.
-  - If an member implementation does not match to a declaration, scopes are created for analyzing the body, error is ignored.
-  - Allow many-to-many definition-to-declaration mapping.
-  - `EvaluateSymbol` doesn't crash if no type is evaluated with `gaContext`
-  - `Symbol` class:
-    - Hide all fields, add accessors
-    - Split to union of
-      - Common              : `kind`, `ellipsis`, `name`, `uniqueId`, `usingNss`
-      - Function symbol     : `parent`, `declSymbols`, `implSymbols`
-      - Function body scope : `parentSymbols`, `definition`, `evaluation`, `methodCache`, `children`
-      - Others              : `parent`, `declarations`, `definition`, `statement`, `children`, `evaluation`
-      - Relationships:
-        - `parent` <--> `children`(owner)
-        - `parentSymbols` <--> `declSymbols`(owner), `implSymbols`(owner)
-        - all symbols in `parentSymbols` have the same `parent`
 - [ ] More refactorings
   - [x] `ResolveGenericParameters`: Receive `Array<TypeTsysItem>` instead of `Array<TypeTsysList>` for `argumentTypes`
   - [x] `VisitOverloadedFunction`: Receive `Array<ExprTsysItem>` instead of `List<Ptr<ExprTsysList>>` for `argTypesList`
