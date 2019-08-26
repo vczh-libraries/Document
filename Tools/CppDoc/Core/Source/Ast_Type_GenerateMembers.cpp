@@ -36,7 +36,7 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 	for (vint i = 0; i < pMembers->Count(); i++)
 	{
 		auto member = pMembers->Get(i).Obj();
-		auto forwardFunc = member->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>();
+		auto forwardFunc = member->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 		if (!forwardFunc) continue;
 		if (symbol_type_resolving::IsStaticSymbol<ForwardFunctionDeclaration>(member)) continue;
 
@@ -99,7 +99,7 @@ IsSpecialMemberFeatureEnabled
 bool IsSpecialMemberEnabled(Symbol* member)
 {
 	if (!member) return false;
-	auto forwardFunc = member->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>();
+	auto forwardFunc = member->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 	if (!forwardFunc) return false;
 	if (forwardFunc->decoratorDefault) return true;
 	if (forwardFunc->decoratorDelete) return false;
@@ -117,7 +117,7 @@ bool IsSpecialMemberFeatureEnabled(const ParsingArguments& pa, Symbol* classSymb
 
 #define SYMBOL(KIND) (symbol##KIND ? symbol##KIND : (symbol##KIND = GetSpecialMember(pa, classSymbol, SpecialMemberKind::KIND)))
 #define DEFINED(KIND) (SYMBOL(KIND) != nullptr)
-#define DELETED(KIND) (SYMBOL(KIND) && symbol##KIND->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>()->decoratorDelete)
+#define DELETED(KIND) (SYMBOL(KIND) && symbol##KIND->GetAnyForwardDecl<ForwardFunctionDeclaration>()->decoratorDelete)
 #define ENABLED(KIND) IsSpecialMemberEnabled(SYMBOL(KIND))
 
 	switch (kind)

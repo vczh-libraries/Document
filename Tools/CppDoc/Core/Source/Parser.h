@@ -76,7 +76,6 @@ namespace symbol_component
 		Normal,
 		FunctionBody,
 		Function,
-		Undecided,
 	};
 
 	using SymbolGroup = Group<WString, Ptr<Symbol>>;
@@ -108,17 +107,11 @@ namespace symbol_component
 		List<Ptr<Symbol>>							declSymbols;
 	};
 
-	struct SC_Undecided
-	{
-		Symbol*										parent = nullptr;
-	};
-
 	union SC_Data
 	{
 		SC_Normal									normal;
 		SC_FunctionBody								functionBody;
 		SC_Function									function;
-		SC_Undecided								undecided;
 
 		SC_Data(SymbolCategory category);
 		~SC_Data();
@@ -134,7 +127,7 @@ private:
 	symbol_component::SymbolCategory				category;
 	symbol_component::SC_Data						categoryData;
 
-	Symbol*											CreateSymbolInternal_NFFb(Ptr<Declaration> _decl, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category);
+	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category);
 	Symbol*											AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category);
 	void											SetParent(Symbol* parent);
 
@@ -152,7 +145,7 @@ public:
 	symbol_component::SymbolCategory				GetCategory();
 	void											SetCategory(symbol_component::SymbolCategory _category);
 
-	Symbol*											GetParentScope();				//	Normal	FunctionBody	Function	Undecided
+	Symbol*											GetParentScope();				//	Normal	FunctionBody	Function
 	const List<Ptr<Symbol>>&						GetImplSymbols_F();				//							Function
 	const List<Ptr<Symbol>>&						GetDeclSymbols_F();				//							Function
 	Ptr<Declaration>								GetImplDecl_NFb();				//	Normal	FunctionBody
@@ -183,7 +176,7 @@ public:
 	Symbol*											CreateStatSymbol_NFb(Ptr<Stat> _stat);
 
 	template<typename T>
-	Ptr<T> GetAnyForwardDecl_NFFb()
+	Ptr<T> GetAnyForwardDecl()
 	{
 		switch (category)
 		{
@@ -210,14 +203,14 @@ public:
 				Ptr<T> decl;
 				for (vint i = 0; i < categoryData.function.declSymbols.Count(); i++)
 				{
-					if ((decl = categoryData.function.declSymbols[i]->GetAnyForwardDecl_NFFb<T>()))
+					if ((decl = categoryData.function.declSymbols[i]->GetAnyForwardDecl<T>()))
 					{
 						return decl;
 					}
 				}
 				for (vint i = 0; i < categoryData.function.implSymbols.Count(); i++)
 				{
-					if ((decl = categoryData.function.implSymbols[i]->GetAnyForwardDecl_NFFb<T>()))
+					if ((decl = categoryData.function.implSymbols[i]->GetAnyForwardDecl<T>()))
 					{
 						return decl;
 					}
@@ -243,7 +236,7 @@ template<typename T>
 Ptr<T> TryGetForwardDeclFromType(ITsys* type)
 {
 	if (type->GetType() != TsysType::Decl) return false;
-	return type->GetDecl()->GetAnyForwardDecl_NFFb<T>();
+	return type->GetDecl()->GetAnyForwardDecl<T>();
 }
 
 /***********************************************************************

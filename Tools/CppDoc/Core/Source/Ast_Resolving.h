@@ -28,7 +28,7 @@ namespace symbol_type_resolving
 			}
 			break;
 		case symbol_component::SymbolCategory::FunctionBody:
-			if (auto decl = symbol->GetAnyForwardDecl_NFFb<TForward>())
+			if (auto decl = symbol->GetAnyForwardDecl<TForward>())
 			{
 				isStatic |= decl->decoratorStatic;
 			}

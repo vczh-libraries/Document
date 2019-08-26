@@ -711,7 +711,7 @@ namespace symbol_totsys_impl
 
 	bool IsOperator(Symbol* symbol)
 	{
-		if (auto funcDecl = symbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>())
+		if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 		{
 			return funcDecl->name.type == CppNameType::Operator;
 		}

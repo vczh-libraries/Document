@@ -8,13 +8,13 @@ FindForward
 
 Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
 {
-	bool inClass = context->GetImplDecl<ClassDeclaration>();
-	if (auto pSymbols = context->TryGetChildren(decl->name.name))
+	bool inClass = context->GetImplDecl_NFb<ClassDeclaration>();
+	if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
 	{
 		for (vint i = 0; i < pSymbols->Count(); i++)
 		{
 			auto symbol = pSymbols->Get(i).Obj();
-			if (symbol->kind == symbol_component::SymbolKind::Function)
+			if (symbol->kind == symbol_component::SymbolKind::FunctionSymbol)
 			{
 				auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 
@@ -42,7 +42,7 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 			}
 		}
 	}
-	return nullptr;
+	return context->CreateFunctionSymbol_NFb(decl);
 }
 
 /***********************************************************************
@@ -56,7 +56,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 	RequireToken(cursor, CppTokens::DECL_TEMPLATE);
 	RequireToken(cursor, CppTokens::LT);
 
-	auto symbol = MakePtr<Symbol>(pa.context);
+	auto symbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal, pa.context);
 	auto newPa = pa.WithContext(symbol.Obj());
 
 	auto spec = MakePtr<TemplateSpec>();
@@ -76,19 +76,19 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			argument.ellipsis = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
 			if (ParseCppName(argument.name, cursor))
 			{
-				if (symbol->TryGetChildren(argument.name.name))
+				if (symbol->TryGetChildren_NFb(argument.name.name))
 				{
 					throw StopParsingException(cursor);
 				}
 			}
 
-			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : MakePtr<Symbol>(symbol.Obj());
+			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : MakePtr<Symbol>(symbol_component::SymbolCategory::Normal, symbol.Obj());
 			argument.argumentSymbol = argumentSymbol.Obj();
 
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
 			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;
-			auto& ev = argumentSymbol->GetEvaluationForUpdating();
+			auto& ev = argumentSymbol->GetEvaluationForUpdating_NFb();
 			ev.Allocate();
 
 			TsysGenericArg arg;
@@ -110,11 +110,11 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 
 			if (argument.name)
 			{
-				symbol->AddChild(argumentSymbol->name, argumentSymbol);
+				symbol->AddChild_NFb(argumentSymbol->name, argumentSymbol);
 			}
 			else
 			{
-				symbol->AddChild(L"$", argumentSymbol);
+				symbol->AddChild_NFb(L"$", argumentSymbol);
 			}
 
 			if (TestToken(cursor, CppTokens::EQ))
@@ -152,18 +152,18 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			}
 			if (argument.name)
 			{
-				if (symbol->TryGetChildren(argument.name.name))
+				if (symbol->TryGetChildren_NFb(argument.name.name))
 				{
 					throw StopParsingException(cursor);
 				}
 			}
 
-			auto argumentSymbol = MakePtr<Symbol>(symbol.Obj());
+			auto argumentSymbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal, symbol.Obj());
 			argument.argumentSymbol = argumentSymbol.Obj();
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
 			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;
-			auto& ev = argumentSymbol->GetEvaluationForUpdating();
+			auto& ev = argumentSymbol->GetEvaluationForUpdating_NFb();
 			ev.Allocate();
 			TypeToTsysNoVta(newPa, argument.type, ev.Get(), nullptr);
 			if (ev.Get().Count() == 0)
@@ -173,11 +173,11 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 
 			if (argument.name)
 			{
-				symbol->AddChild(argumentSymbol->name, argumentSymbol);
+				symbol->AddChild_NFb(argumentSymbol->name, argumentSymbol);
 			}
 			else
 			{
-				symbol->AddChild(L"$", argumentSymbol);
+				symbol->AddChild_NFb(L"$", argumentSymbol);
 			}
 		}
 		spec->arguments.Add(argument);

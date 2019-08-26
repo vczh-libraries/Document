@@ -60,9 +60,6 @@ SC_Data
 		case symbol_component::SymbolCategory::FunctionBody:
 			new(&functionBody) SC_FunctionBody();
 			break;
-		case symbol_component::SymbolCategory::Undecided:
-			new(&undecided) SC_Undecided();
-			break;
 		}
 #ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
 #define new VCZH_CHECK_MEMORY_LEAKS_NEW
@@ -82,9 +79,6 @@ SC_Data
 		case symbol_component::SymbolCategory::FunctionBody:
 			functionBody.~SC_FunctionBody();
 			break;
-		case symbol_component::SymbolCategory::Undecided:
-			undecided.~SC_Undecided();
-			break;
 		}
 	}
 }
@@ -93,13 +87,12 @@ SC_Data
 Symbol
 ***********************************************************************/
 
-Symbol* Symbol::CreateSymbolInternal_NFFb(Ptr<Declaration> _decl, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category)
+Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category)
 {
 	switch (_category)
 	{
 	case symbol_component::SymbolCategory::Normal:
 	case symbol_component::SymbolCategory::Function:
-	case symbol_component::SymbolCategory::Undecided:
 		if (category != symbol_component::SymbolCategory::Normal && category != symbol_component::SymbolCategory::FunctionBody)
 		{
 			throw UnexpectedSymbolCategoryException();
@@ -157,7 +150,23 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 	{
 		if (templateSpecSymbol)
 		{
-			templateSpecSymbol->SetCategory(_category);
+			List<Ptr<Symbol>> existingChildren;
+			if (_category != symbol_component::SymbolCategory::Normal)
+			{
+				{
+					const auto& children = templateSpecSymbol->GetChildren_NFb();
+					for (vint i = 0; i < children.Count(); i++)
+					{
+						CopyFrom(existingChildren, children.GetByIndex(i), true);
+					}
+				}
+				templateSpecSymbol->SetCategory(_category);
+				for (vint i = 0; i < existingChildren.Count(); i++)
+				{
+					auto child = existingChildren[i];
+					templateSpecSymbol->AddChildAndSetParent_NFb(child->name, child);
+				}
+			}
 			templateSpecSymbol->name = _decl->name.name;
 			templateSpecSymbol->kind = kind;
 			AddChildAndSetParent_NFb(templateSpecSymbol->name, templateSpecSymbol);
@@ -166,7 +175,7 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 		}
 		else
 		{
-			return CreateSymbolInternal_NFFb(_decl, kind, symbol_component::SymbolCategory::Normal);
+			return CreateSymbolInternal(_decl, kind, symbol_component::SymbolCategory::Normal);
 		}
 	}
 }
@@ -180,9 +189,6 @@ void Symbol::SetParent(Symbol* parent)
 		break;
 	case symbol_component::SymbolCategory::Function:
 		categoryData.function.parent = parent;
-		break;
-	case symbol_component::SymbolCategory::Undecided:
-		categoryData.undecided.parent = parent;
 		break;
 	default:
 		throw UnexpectedSymbolCategoryException();
@@ -211,6 +217,10 @@ symbol_component::SymbolCategory Symbol::GetCategory()
 
 void Symbol::SetCategory(symbol_component::SymbolCategory _category)
 {
+	if (category == _category)
+	{
+		throw UnexpectedSymbolCategoryException();
+	}
 	categoryData.Free(category);
 	category = _category;
 	categoryData.Alloc(category);
@@ -226,8 +236,6 @@ Symbol* Symbol::GetParentScope()
 		return categoryData.function.parent;
 	case symbol_component::SymbolCategory::FunctionBody:
 		return categoryData.functionBody.functionSymbol->GetParentScope();
-	case symbol_component::SymbolCategory::Undecided:
-		return categoryData.undecided.parent;
 	default:
 		throw UnexpectedSymbolCategoryException();
 	}
@@ -386,14 +394,14 @@ Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
 
 Symbol* Symbol::CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl)
 {
-	auto symbol = CreateSymbolInternal_NFFb(_decl, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
+	auto symbol = CreateSymbolInternal(_decl, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
 	symbol->categoryData.functionBody.forwardDecl = _decl;
 	return symbol;
 }
 
 Symbol* Symbol::CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<symbol_component::MethodCache> methodCache)
 {
-	auto symbol = CreateSymbolInternal_NFFb(_decl, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
+	auto symbol = CreateSymbolInternal(_decl, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
 	symbol->categoryData.functionBody.implDecl = _decl;
 	if (methodCache)
 	{

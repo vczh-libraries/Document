@@ -460,7 +460,7 @@ namespace symbol_type_resolving
 		{
 		case symbol_component::SymbolKind::Variable:
 			{
-				auto varDecl = symbol->GetAnyForwardDecl_NFFb<ForwardVariableDeclaration>();
+				auto varDecl = symbol->GetAnyForwardDecl<ForwardVariableDeclaration>();
 				auto& evTypes = EvaluateVarSymbol(pa, varDecl.Obj());
 				bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol);
 
@@ -500,7 +500,7 @@ namespace symbol_type_resolving
 			return;
 		case symbol_component::SymbolKind::Function:
 			{
-				auto funcDecl = symbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>();
+				auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 				auto& evTypes = EvaluateFuncSymbol(pa, funcDecl.Obj());
 				bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol);
 				bool isMember = classScope && !isStaticSymbol;

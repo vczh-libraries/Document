@@ -11,7 +11,7 @@ namespace symbol_type_resolving
 	{
 		if (funcType.symbol)
 		{
-			if (auto decl = funcType.symbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>())
+			if (auto decl = funcType.symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 			{
 				if (auto declType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 				{
@@ -146,7 +146,7 @@ namespace symbol_type_resolving
 			funcDPs[i] = 0;
 			if (auto symbol = funcTypes[i].symbol)
 			{
-				if (auto decl = symbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>())
+				if (auto decl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 				{
 					if (auto type = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 					{
@@ -297,7 +297,7 @@ namespace symbol_type_resolving
 		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 		{
 			auto symbol = resolving->resolvedSymbols[i];
-			if (symbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>())
+			if (symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 			{
 				auto parent = symbol->GetParentScope();
 				while (parent)

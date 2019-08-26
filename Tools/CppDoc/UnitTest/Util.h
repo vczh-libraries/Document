@@ -117,7 +117,7 @@ Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
 			TEST_ASSERT(name.name == NAME);\
 			TEST_ASSERT(resolvedSymbols.Count() == 1);\
 			auto symbol = resolvedSymbols[0];\
-			auto decl = symbol->GetAnyForwardDecl_NFFb<TYPE>();\
+			auto decl = symbol->GetAnyForwardDecl<TYPE>();\
 			TEST_ASSERT(decl);\
 			TEST_ASSERT(decl->name.name == NAME || decl->name.name == L"operator " NAME);\
 			TEST_ASSERT(decl->name.nameTokens[0].rowStart == PROW);\

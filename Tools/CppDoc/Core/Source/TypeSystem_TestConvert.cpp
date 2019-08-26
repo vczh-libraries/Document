@@ -80,7 +80,7 @@ namespace TestConvert_Helpers
 				for (vint i = 0; i < pCtors->Count(); i++)
 				{
 					auto ctorSymbol = pCtors->Get(i);
-					auto ctorDecl = ctorSymbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>();
+					auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (ctorDecl->decoratorDelete) continue;
 					auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj());
 
@@ -308,7 +308,7 @@ namespace TestConvert_Helpers
 		for (vint i = 0; i < pTypeOps->Count(); i++)
 		{
 			auto typeOpSymbol = pTypeOps->Get(i);
-			auto typeOpDecl = typeOpSymbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>();
+			auto typeOpDecl = typeOpSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 			{
 				if (typeOpDecl->decoratorExplicit) continue;
 				if (typeOpDecl->decoratorDelete) continue;
@@ -367,7 +367,7 @@ namespace TestConvert_Helpers
 		for (vint i = 0; i < pCtors->Count(); i++)
 		{
 			auto ctorSymbol = pCtors->Get(i);
-			auto ctorDecl = ctorSymbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>();
+			auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 			{
 				if (ctorDecl->decoratorExplicit) continue;
 				if (ctorDecl->decoratorDelete) continue;
