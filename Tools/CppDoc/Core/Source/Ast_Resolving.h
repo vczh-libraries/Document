@@ -9,16 +9,48 @@ namespace symbol_type_resolving
 	bool IsStaticSymbol(Symbol* symbol)
 	{
 		bool isStatic = false;
-		if (auto decl = symbol->GetImplDecl<TForward>())
+		switch (symbol->GetCategory())
 		{
-			isStatic |= decl->decoratorStatic;
-		}
-		for (vint i = 0; i < symbol->GetForwardDecls().Count(); i++)
-		{
-			if (auto decl = symbol->GetForwardDecls()[i].Cast<TForward>())
+		case symbol_component::SymbolCategory::Normal:
+			if (auto decl = symbol->GetImplDecl_NFb<TForward>())
 			{
 				isStatic |= decl->decoratorStatic;
 			}
+			{
+				const auto& decls = symbol->GetForwardDecls_N();
+				for (vint i = 0; i < decls.Count(); i++)
+				{
+					if (auto decl = decls[i].Cast<TForward>())
+					{
+						isStatic |= decl->decoratorStatic;
+					}
+				}
+			}
+			break;
+		case symbol_component::SymbolCategory::FunctionBody:
+			if (auto decl = symbol->GetAnyForwardDecl_NFFb<TForward>())
+			{
+				isStatic |= decl->decoratorStatic;
+			}
+			break;
+		case symbol_component::SymbolCategory::Function:
+			{
+				const auto& symbols = symbol->GetDeclSymbols_F();
+				for (vint i = 0; i < symbols.Count(); i++)
+				{
+					isStatic |= IsStaticSymbol(symbols[i]);
+				}
+			}
+			{
+				const auto& symbols = symbol->GetImplSymbols_F();
+				for (vint i = 0; i < symbols.Count(); i++)
+				{
+					isStatic |= IsStaticSymbol(symbols[i]);
+				}
+			}
+			break;
+		default:
+			throw UnexpectedSymbolCategoryException();
 		}
 		return isStatic;
 	}

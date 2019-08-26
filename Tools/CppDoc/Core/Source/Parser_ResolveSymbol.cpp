@@ -91,7 +91,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 	while (scope)
 	{
-		if (auto pSymbols = scope->TryGetChildren(rsa.name.name))
+		if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 		{
 			for (vint i = 0; i < pSymbols->Count(); i++)
 			{
@@ -132,7 +132,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 		if (rsa.found) break;
 
-		if (auto decl = scope->GetImplDecl<ClassDeclaration>())
+		if (auto decl = scope->GetImplDecl_NFb<ClassDeclaration>())
 		{
 			if (decl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbol)
 			{
@@ -199,16 +199,19 @@ public:
 			for (vint i = 0; i < symbols.Count(); i++)
 			{
 				auto symbol = symbols[i];
-				if (auto usingDecl = symbol->GetImplDecl<TypeAliasDeclaration>())
+				if (symbol->GetCategory() == symbol_component::SymbolCategory::Normal)
 				{
-					auto& types = symbol_type_resolving::EvaluateTypeAliasSymbol(pa, usingDecl.Obj());
-					for (vint i = 0; i < types.Count(); i++)
+					if (auto usingDecl = symbol->GetImplDecl_NFb<TypeAliasDeclaration>())
 					{
-						auto tsys = types[i];
-						if (tsys->GetType() == TsysType::Decl)
+						auto& types = symbol_type_resolving::EvaluateTypeAliasSymbol(pa, usingDecl.Obj());
+						for (vint i = 0; i < types.Count(); i++)
 						{
-							symbol = tsys->GetDecl();
-							continue;
+							auto tsys = types[i];
+							if (tsys->GetType() == TsysType::Decl)
+							{
+								symbol = tsys->GetDecl();
+								continue;
+							}
 						}
 					}
 				}

@@ -159,7 +159,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				{
 					pa.program->decls.Insert(pa.program->createdForwardDeclByCStyleTypeReference++, forwardDecl);
 				}
-				if (auto contextSymbol = pa.root->AddForwardDeclToSymbol(forwardDecl, symbolKind))
+				if (auto contextSymbol = pa.root->AddForwardDeclToSymbol_NFb(forwardDecl, symbolKind))
 				{
 					type->resolving = MakePtr<Resolving>();
 					type->resolving->resolvedSymbols.Add(contextSymbol);
