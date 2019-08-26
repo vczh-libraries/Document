@@ -197,7 +197,7 @@ namespace symbol_type_resolving
 		ITsys* classScope = nullptr;
 		if (auto parent = symbol->GetParentScope())
 		{
-			if (parent->GetImplDecl<ClassDeclaration>())
+			if (parent->GetImplDecl_NFb<ClassDeclaration>())
 			{
 				classScope = pa.tsys->DeclOf(parent);
 			}
@@ -210,7 +210,7 @@ namespace symbol_type_resolving
 	void FinishEvaluatingSymbol(const ParsingArguments& pa, FunctionDeclaration* funcDecl)
 	{
 		auto symbol = funcDecl->symbol;
-		auto& ev = symbol->GetEvaluationForUpdating();
+		auto& ev = symbol->GetEvaluationForUpdating_NFb();
 		auto newPa = pa.WithContext(symbol->GetParentScope());
 		TypeTsysList returnTypes;
 		CopyFrom(returnTypes, ev.Get());
@@ -236,7 +236,7 @@ namespace symbol_type_resolving
 	TypeTsysList& EvaluateFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl)
 	{
 		auto symbol = funcDecl->symbol;
-		auto& ev = symbol->GetEvaluationForUpdating();
+		auto& ev = symbol->GetEvaluationForUpdating_NFb();
 		switch (ev.progress)
 		{
 		case symbol_component::EvaluationProgress::Evaluated: return ev.Get();

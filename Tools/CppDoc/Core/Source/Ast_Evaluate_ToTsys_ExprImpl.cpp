@@ -131,9 +131,9 @@ namespace symbol_totsys_impl
 
 	void ProcessThisExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ThisExpr* self)
 	{
-		if (auto funcSymbol = pa.funcSymbol)
+		if (auto functionBodySymbol = pa.functionBodySymbol)
 		{
-			if (auto methodCache = funcSymbol->GetMethodCache())
+			if (auto methodCache = functionBodySymbol->GetMethodCache_Fb())
 			{
 				if (auto thisType = methodCache->thisType)
 				{
@@ -202,11 +202,11 @@ namespace symbol_totsys_impl
 	{
 		auto global = pa.root.Obj();
 
-		auto pStds = global->TryGetChildren(L"std");
+		auto pStds = global->TryGetChildren_NFb(L"std");
 		if (!pStds) return;
 		if (pStds->Count() != 1) return;
 
-		auto pTis = pStds->Get(0)->TryGetChildren(L"type_info");
+		auto pTis = pStds->Get(0)->TryGetChildren_NFb(L"type_info");
 		if (!pTis) return;
 
 		for (vint i = 0; i < pTis->Count(); i++)
@@ -711,7 +711,7 @@ namespace symbol_totsys_impl
 
 	bool IsOperator(Symbol* symbol)
 	{
-		if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+		if (auto funcDecl = symbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>())
 		{
 			return funcDecl->name.type == CppNameType::Operator;
 		}

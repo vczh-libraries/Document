@@ -236,14 +236,14 @@ namespace a::b
 	TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"Add")->Count() == 1);
 	auto symbol = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"Add")->Get(0).Obj();
 
-	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Function);
-	TEST_ASSERT(symbol->GetImplDecl_NFb<FunctionDeclaration>());
-	TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 4);
-	TEST_ASSERT(From(symbol->GetForwardDecls_N()).Distinct().Count() == 4);
+	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
+	TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
+	TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb<FunctionDeclaration>());
+	TEST_ASSERT(symbol->GetDeclSymbols_F().Count() == 4);
 	for (vint i = 0; i < 4; i++)
 	{
-		TEST_ASSERT(symbol->GetForwardDecls_N()[i].Cast<ForwardFunctionDeclaration>());
-		TEST_ASSERT(!symbol->GetForwardDecls_N()[i].Cast<FunctionDeclaration>());
+		TEST_ASSERT(symbol->GetDeclSymbols_F()[i]->GetForwardDecl_Fb().Cast<ForwardFunctionDeclaration>());
+		TEST_ASSERT(!symbol->GetDeclSymbols_F()[i]->GetImplDecl_NFb<FunctionDeclaration>());
 	}
 }
 
@@ -544,14 +544,21 @@ namespace a
 		if (i == 0)
 		{
 			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
+
+			TEST_ASSERT(symbol->GetImplDecl_NFb() == outClassDecl);
+			TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 1);
+			TEST_ASSERT(symbol->GetForwardDecls_N()[0] == inClassDecl);
 		}
 		else
 		{
-			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Function);
+			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
+
+			TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
+			TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
+
+			TEST_ASSERT(symbol->GetDeclSymbols_F().Count() == 1);
+			TEST_ASSERT(symbol->GetDeclSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
 		}
-		TEST_ASSERT(symbol->GetImplDecl_NFb() == outClassDecl);
-		TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 1);
-		TEST_ASSERT(symbol->GetForwardDecls_N()[0] == inClassDecl);
 	}
 }
 

@@ -105,7 +105,7 @@ public:
 		if (self->varDecl->needResolveTypeFromInitializer)
 		{
 			auto symbol = self->varDecl->symbol;
-			auto& ev = symbol->GetEvaluationForUpdating();
+			auto& ev = symbol->GetEvaluationForUpdating_NFb();
 			if (ev.progress == symbol_component::EvaluationProgress::NotEvaluated)
 			{
 				ev.progress = symbol_component::EvaluationProgress::Evaluating;
@@ -290,9 +290,9 @@ public:
 			ExprToTsysNoVta(pa, self->expr, types);
 		}
 
-		if (pa.funcSymbol)
+		if (pa.functionBodySymbol)
 		{
-			auto& ev = pa.funcSymbol->GetEvaluationForUpdating();
+			auto& ev = pa.functionBodySymbol->GetEvaluationForUpdating_NFb();
 			if (ev.progress == symbol_component::EvaluationProgress::Evaluating)
 			{
 				if (ev.Count() == 0)
@@ -313,7 +313,7 @@ public:
 					{
 						ev.Get().Add(pa.tsys->Void());
 					}
-					symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.funcSymbol->GetImplDecl<FunctionDeclaration>().Obj());
+					symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>().Obj());
 				}
 			}
 		}
@@ -413,7 +413,7 @@ public:
 
 		if(self->initList.Count() > 0)
 		{
-			auto classDecl = self->symbol->GetParentScope()->GetImplDecl<ClassDeclaration>();
+			auto classDecl = self->symbol->GetParentScope()->GetImplDecl_NFb<ClassDeclaration>();
 			if (!classDecl)
 			{
 				throw NotResolvableException();
@@ -428,7 +428,7 @@ public:
 			{
 				auto& item = self->initList[i];
 				{
-					auto pVars = classDecl->symbol->TryGetChildren(item.f0->name.name);
+					auto pVars = classDecl->symbol->TryGetChildren_NFb(item.f0->name.name);
 					if (!pVars) goto SKIP_RESOLVING_FIELD;
 					if (pVars->Count() != 1) goto SKIP_RESOLVING_FIELD;
 					auto varSymbol = pVars->Get(0).Obj();

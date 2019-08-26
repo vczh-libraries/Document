@@ -21,7 +21,7 @@ namespace symbol_totsys_impl
 			return;
 		case symbol_component::SymbolKind::TypeAlias:
 			{
-				auto usingDecl = symbol->GetImplDecl<TypeAliasDeclaration>();
+				auto usingDecl = symbol->GetImplDecl_NFb<TypeAliasDeclaration>();
 				auto& evTypes = EvaluateTypeAliasSymbol(pa, usingDecl.Obj());
 				for (vint j = 0; j < evTypes.Count(); j++)
 				{
@@ -211,11 +211,11 @@ namespace symbol_totsys_impl
 		ExprTsysList resolvableResult;
 		auto& outputTarget = gaContext ? resolvableResult : result;
 
-		if (pa.funcSymbol && pa.funcSymbol->GetMethodCache())
+		if (pa.functionBodySymbol && pa.functionBodySymbol->GetMethodCache_Fb())
 		{
 			TsysCV thisCv;
 			TsysRefType thisRef;
-			auto thisType = pa.funcSymbol->GetMethodCache()->thisType->GetEntity(thisCv, thisRef);
+			auto thisType = pa.functionBodySymbol->GetMethodCache_Fb()->thisType->GetEntity(thisCv, thisRef);
 			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
 			VisitResolvedMember(pa, &thisItem, resolving, outputTarget);
 		}
