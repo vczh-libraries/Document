@@ -498,7 +498,7 @@ namespace symbol_type_resolving
 				hasNonVariadic = true;
 			}
 			return;
-		case symbol_component::SymbolKind::Function:
+		case symbol_component::SymbolKind::FunctionSymbol:
 			{
 				auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 				auto& evTypes = EvaluateFuncSymbol(pa, funcDecl.Obj());
