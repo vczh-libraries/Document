@@ -30,7 +30,7 @@ void AssertType(ParsingArguments& pa, const wchar_t* input, const wchar_t* log, 
 template<typename... T>
 void AssertType(const wchar_t* input, const wchar_t* log, T... logTsys)
 {
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
 	AssertType(pa, input, log, logTsys...);
 }
 
@@ -44,7 +44,7 @@ void AssertExpr(ParsingArguments& pa, const wchar_t* input, const wchar_t* log, 
 template<typename... T>
 void AssertExpr(const wchar_t* input, const wchar_t* log, T... logTsys)
 {
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
 	AssertExpr(pa, input, log, logTsys...);
 }
 
@@ -60,7 +60,7 @@ void AssertExpr(const wchar_t* input, const wchar_t* log, T... logTsys)
 #define COMPILE_PROGRAM_WITH_RECORDER(PROGRAM, PA, INPUT, RECORDER)\
 	TOKEN_READER(INPUT);\
 	auto cursor = reader.GetFirstToken();\
-	ParsingArguments PA(new Symbol, ITsysAlloc::Create(), RECORDER);\
+	ParsingArguments PA(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), RECORDER);\
 	auto PROGRAM = ParseProgram(PA, cursor);\
 	TEST_ASSERT(!cursor);\
 	TEST_ASSERT(PROGRAM);\
@@ -117,7 +117,7 @@ Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
 			TEST_ASSERT(name.name == NAME);\
 			TEST_ASSERT(resolvedSymbols.Count() == 1);\
 			auto symbol = resolvedSymbols[0];\
-			auto decl = symbol->GetAnyForwardDecl<TYPE>();\
+			auto decl = symbol->GetAnyForwardDecl_NFFb<TYPE>();\
 			TEST_ASSERT(decl);\
 			TEST_ASSERT(decl->name.name == NAME || decl->name.name == L"operator " NAME);\
 			TEST_ASSERT(decl->name.nameTokens[0].rowStart == PROW);\

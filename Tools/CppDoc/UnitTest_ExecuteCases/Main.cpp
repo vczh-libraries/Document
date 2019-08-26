@@ -275,7 +275,7 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 	CppTokenReader reader(lexer, input);
 	auto cursor = reader.GetFirstToken();
 
-	result.pa = { new Symbol, ITsysAlloc::Create(), new IndexRecorder(result) };
+	result.pa = { new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), new IndexRecorder(result) };
 	auto program = ParseProgram(result.pa, cursor);
 	EvaluateProgram(result.pa, program);
 

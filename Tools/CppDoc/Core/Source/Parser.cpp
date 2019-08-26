@@ -233,6 +233,27 @@ Symbol* Symbol::GetParentScope()
 	}
 }
 
+const List<Ptr<Symbol>>& Symbol::GetImplSymbols_F()
+{
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Function:
+		return categoryData.function.implSymbols;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
+}
+const List<Ptr<Symbol>>& Symbol::GetDeclSymbols_F()
+{
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Function:
+		return categoryData.function.declSymbols;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
+}
+
 Ptr<Declaration> Symbol::GetImplDecl_NFb()
 {
 	switch (category)

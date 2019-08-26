@@ -153,6 +153,8 @@ public:
 	void											SetCategory(symbol_component::SymbolCategory _category);
 
 	Symbol*											GetParentScope();				//	Normal	FunctionBody	Function	Undecided
+	const List<Ptr<Symbol>>&						GetImplSymbols_F();				//							Function
+	const List<Ptr<Symbol>>&						GetDeclSymbols_F();				//							Function
 	Ptr<Declaration>								GetImplDecl_NFb();				//	Normal	FunctionBody
 	Ptr<Declaration>								GetForwardDecl_Fb();			//			FunctionBody
 	const List<Ptr<Declaration>>&					GetForwardDecls_N();			//	Normal
@@ -167,9 +169,9 @@ public:
 	void											RemoveChildAndResetParent_NFb(const WString& name, Symbol* child);
 
 	template<typename T>
-	const Ptr<T> GetImplDecl()
+	const Ptr<T> GetImplDecl_NFb()
 	{
-		return GetImplDecl().Cast<T>();
+		return GetImplDecl_NFb().Cast<T>();
 	}
 
 	Symbol*											CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl);
@@ -180,7 +182,7 @@ public:
 	Symbol*											CreateStatSymbol_NFb(Ptr<Stat> _stat);
 
 	template<typename T>
-	Ptr<T> GetAnyForwardDecl()
+	Ptr<T> GetAnyForwardDecl_NFFb()
 	{
 		switch (category)
 		{
@@ -207,14 +209,14 @@ public:
 				Ptr<T> decl;
 				for (vint i = 0; i < categoryData.function.declSymbols.Count(); i++)
 				{
-					if ((decl = categoryData.function.declSymbols[i]->GetAnyForwardDecl<T>()))
+					if ((decl = categoryData.function.declSymbols[i]->GetAnyForwardDecl_NFFb<T>()))
 					{
 						return decl;
 					}
 				}
 				for (vint i = 0; i < categoryData.function.implSymbols.Count(); i++)
 				{
-					if ((decl = categoryData.function.implSymbols[i]->GetAnyForwardDecl<T>()))
+					if ((decl = categoryData.function.implSymbols[i]->GetAnyForwardDecl_NFFb<T>()))
 					{
 						return decl;
 					}
@@ -233,14 +235,14 @@ template<typename T>
 Ptr<T> TryGetDeclFromType(ITsys* type)
 {
 	if (type->GetType() != TsysType::Decl) return false;
-	return type->GetDecl()->GetImplDecl<T>();
+	return type->GetDecl()->GetImplDecl_NFb<T>();
 }
 
 template<typename T>
 Ptr<T> TryGetForwardDeclFromType(ITsys* type)
 {
 	if (type->GetType() != TsysType::Decl) return false;
-	return type->GetDecl()->GetAnyForwardDecl<T>();
+	return type->GetDecl()->GetAnyForwardDecl_NFFb<T>();
 }
 
 /***********************************************************************

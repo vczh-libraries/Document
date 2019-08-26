@@ -83,7 +83,7 @@ struct RunTypeConvertFromTemp
 
 TEST_CASE(TestTypeConvert_Exact)
 {
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
 #define S Exact
 	TEST_CONV_TYPE(int,						int,									S,	S);
 	TEST_CONV_TYPE(int,						const int,								S,	S);
@@ -111,7 +111,7 @@ TEST_CASE(TestTypeConvert_Exact)
 
 TEST_CASE(TestTypeConvert_TrivalConversion)
 {
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
 #define S TrivialConversion
 #define F Illegal
 	TEST_CONV_TYPE(int*,					const int*,								S,	S);
@@ -216,7 +216,7 @@ enum class C{};
 
 TEST_CASE(TestTypeConvert_StandardConversion)
 {
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
 #define S StandardConversion
 #define F Illegal
 	TEST_CONV_TYPE(signed int,				unsigned int,							S,	S);
@@ -244,7 +244,7 @@ TEST_CASE(TestTypeConvert_StandardConversion)
 
 TEST_CASE(TestTypeConvert_Illegal)
 {
-	ParsingArguments pa(new Symbol, ITsysAlloc::Create(), nullptr);
+	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
 #define F Illegal
 	TEST_CONV_TYPE(const int&,				int&,									F,	F);
 	TEST_CONV_TYPE(volatile int&,			int&,									F,	F);
