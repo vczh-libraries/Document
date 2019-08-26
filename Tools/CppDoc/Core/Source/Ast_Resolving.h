@@ -38,14 +38,14 @@ namespace symbol_type_resolving
 				const auto& symbols = symbol->GetDeclSymbols_F();
 				for (vint i = 0; i < symbols.Count(); i++)
 				{
-					isStatic |= IsStaticSymbol(symbols[i]);
+					isStatic |= IsStaticSymbol<TForward>(symbols[i].Obj());
 				}
 			}
 			{
 				const auto& symbols = symbol->GetImplSymbols_F();
 				for (vint i = 0; i < symbols.Count(); i++)
 				{
-					isStatic |= IsStaticSymbol(symbols[i]);
+					isStatic |= IsStaticSymbol<TForward>(symbols[i].Obj());
 				}
 			}
 			break;

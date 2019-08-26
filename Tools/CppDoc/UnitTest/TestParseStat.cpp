@@ -171,7 +171,7 @@ void F8()
 	{
 		auto funcSymbol = pa.context->TryGetChildren_NFb(L"F" + itow(i))->Get(0).Obj();
 		auto spa = pa.WithContext(funcSymbol->TryGetChildren_NFb(L"$")->Get(0).Obj()->TryGetChildren_NFb(L"$")->Get(0).Obj()->TryGetChildren_NFb(L"$")->Get(0).Obj());
-		TEST_ASSERT(spa.funcSymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
+		TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
 		AssertExpr(spa, L"a", L"a", L"__int32 $L");
 	}
 }
@@ -215,7 +215,7 @@ void F4()
 	{
 		auto funcSymbol = pa.context->TryGetChildren_NFb(L"F" + itow(i))->Get(0).Obj();
 		auto spa = pa.WithContext(funcSymbol->TryGetChildren_NFb(L"$")->Get(0).Obj()->TryGetChildren_NFb(L"$")->Get(0).Obj()->TryGetChildren_NFb(L"$")->Get(0).Obj());
-		TEST_ASSERT(spa.funcSymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
+		TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
 		AssertExpr(spa, L"a", L"a", L"__int32 $L");
 		AssertExpr(spa, L"b", L"b", L"__int32 $L");
 		AssertExpr(spa, L"c", L"c", L"__int32 $L");
@@ -277,7 +277,7 @@ void F3()
 	{
 		auto funcSymbol = pa.context->TryGetChildren_NFb(L"F" + itow(i))->Get(0).Obj();
 		auto spa = pa.WithContext(funcSymbol->TryGetChildren_NFb(L"$")->Get(0).Obj()->TryGetChildren_NFb(L"$")->Get(0).Obj()->TryGetChildren_NFb(L"$")->Get(0).Obj());
-		TEST_ASSERT(spa.funcSymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
+		TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
 		AssertExpr(spa, L"a", L"a", expectedTypes[i - 1]);
 	}
 }
