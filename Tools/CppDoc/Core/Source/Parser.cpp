@@ -38,6 +38,7 @@ SC_Data
 
 	SC_Data::SC_Data(SymbolCategory category)
 	{
+		Alloc(category);
 	}
 
 	SC_Data::~SC_Data()
@@ -108,7 +109,7 @@ Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, symbol_component::S
 
 	auto symbol = MakePtr<Symbol>(_category);
 	symbol->name = _decl->name.name;
-	symbol->kind = kind;
+	symbol->kind = _kind;
 
 	if (category == symbol_component::SymbolCategory::Function)
 	{
@@ -415,8 +416,6 @@ Symbol* Symbol::AddForwardDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_compon
 {
 	auto symbol = AddToSymbolInternal_NFb(_decl, kind, nullptr, symbol_component::SymbolCategory::Normal);
 	if (!symbol) return nullptr;
-	if (symbol->categoryData.normal.implDecl) return nullptr;
-	if (symbol->categoryData.normal.forwardDecls.Count() > 0) return nullptr;
 	symbol->categoryData.normal.forwardDecls.Add(_decl);
 	return symbol;
 }
@@ -426,7 +425,6 @@ Symbol* Symbol::AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component
 	auto symbol = AddToSymbolInternal_NFb(_decl, kind, templateSpecSymbol, symbol_component::SymbolCategory::Normal);
 	if (!symbol) return nullptr;
 	if (symbol->categoryData.normal.implDecl) return nullptr;
-	if (symbol->categoryData.normal.forwardDecls.Count() > 0) return nullptr;
 	symbol->categoryData.normal.implDecl = _decl;
 	return symbol;
 }
