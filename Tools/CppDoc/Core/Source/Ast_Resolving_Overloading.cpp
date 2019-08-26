@@ -11,7 +11,7 @@ namespace symbol_type_resolving
 	{
 		if (funcType.symbol)
 		{
-			if (auto decl = funcType.symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+			if (auto decl = funcType.symbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>())
 			{
 				if (auto declType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 				{
@@ -146,7 +146,7 @@ namespace symbol_type_resolving
 			funcDPs[i] = 0;
 			if (auto symbol = funcTypes[i].symbol)
 			{
-				if (auto decl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+				if (auto decl = symbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>())
 				{
 					if (auto type = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 					{
@@ -297,7 +297,7 @@ namespace symbol_type_resolving
 		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 		{
 			auto symbol = resolving->resolvedSymbols[i];
-			if (symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+			if (symbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>())
 			{
 				auto parent = symbol->GetParentScope();
 				while (parent)
@@ -411,7 +411,7 @@ namespace symbol_type_resolving
 					nss.Add(symbol);
 				}
 			}
-			else if (auto classDecl = symbol->GetImplDecl<ClassDeclaration>())
+			else if (auto classDecl = symbol->GetCategory() == symbol_component::SymbolCategory::Normal ? symbol->GetImplDecl_NFb<ClassDeclaration>() : nullptr)
 			{
 				if (!classes.Contains(symbol))
 				{
@@ -474,7 +474,7 @@ namespace symbol_type_resolving
 		for (vint i = 0; i < nss.Count(); i++)
 		{
 			auto ns = nss[i];
-			if (auto pChildren = ns->TryGetChildren(name))
+			if (auto pChildren = ns->TryGetChildren_NFb(name))
 			{
 				for (vint j = 0; j < pChildren->Count(); j++)
 				{

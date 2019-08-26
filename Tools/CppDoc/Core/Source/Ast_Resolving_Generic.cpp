@@ -95,11 +95,11 @@ namespace symbol_type_resolving
 	{
 		if (genericFuncInfo.declSymbol)
 		{
-			if (auto typeAliasDecl = genericFuncInfo.declSymbol->GetAnyForwardDecl<TypeAliasDeclaration>())
+			if (auto typeAliasDecl = genericFuncInfo.declSymbol->GetAnyForwardDecl_NFFb<TypeAliasDeclaration>())
 			{
 				return typeAliasDecl->templateSpec;
 			}
-			else if (auto valueAliasDecl = genericFuncInfo.declSymbol->GetAnyForwardDecl<ValueAliasDeclaration>())
+			else if (auto valueAliasDecl = genericFuncInfo.declSymbol->GetAnyForwardDecl_NFFb<ValueAliasDeclaration>())
 			{
 				return valueAliasDecl->templateSpec;
 			}

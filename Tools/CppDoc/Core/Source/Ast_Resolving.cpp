@@ -141,7 +141,7 @@ namespace symbol_type_resolving
 	TypeTsysList& EvaluateVarSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl)
 	{
 		auto symbol = varDecl->symbol;
-		auto& ev = symbol->GetEvaluationForUpdating();
+		auto& ev = symbol->GetEvaluationForUpdating_NFb();
 		switch (ev.progress)
 		{
 		case symbol_component::EvaluationProgress::Evaluated: return ev.Get();
@@ -279,7 +279,7 @@ namespace symbol_type_resolving
 	symbol_component::Evaluation& EvaluateClassSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl)
 	{
 		auto symbol = classDecl->symbol;
-		auto& ev = symbol->GetEvaluationForUpdating();
+		auto& ev = symbol->GetEvaluationForUpdating_NFb();
 		switch (ev.progress)
 		{
 		case symbol_component::EvaluationProgress::Evaluated: return ev;
@@ -309,7 +309,7 @@ namespace symbol_type_resolving
 		auto symbol = usingDecl->symbol;
 		if (!esContext)
 		{
-			auto& ev = symbol->GetEvaluationForUpdating();
+			auto& ev = symbol->GetEvaluationForUpdating_NFb();
 			switch (ev.progress)
 			{
 			case symbol_component::EvaluationProgress::Evaluated: return ev.Get();
@@ -320,7 +320,7 @@ namespace symbol_type_resolving
 		}
 
 		auto newPa = pa.WithContext(symbol->GetParentScope());
-		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating().Get();
+		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating_NFb().Get();
 
 		TypeTsysList types;
 		TypeToTsysNoVta(newPa, usingDecl->type, types, (esContext ? &esContext->gaContext : nullptr));
@@ -345,7 +345,7 @@ namespace symbol_type_resolving
 
 		if (!esContext)
 		{
-			auto& ev = symbol->GetEvaluationForUpdating();
+			auto& ev = symbol->GetEvaluationForUpdating_NFb();
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		}
 		return evaluatedTypes;
@@ -360,7 +360,7 @@ namespace symbol_type_resolving
 		auto symbol = usingDecl->symbol;
 		if (!esContext)
 		{
-			auto& ev = symbol->GetEvaluationForUpdating();
+			auto& ev = symbol->GetEvaluationForUpdating_NFb();
 			switch (ev.progress)
 			{
 			case symbol_component::EvaluationProgress::Evaluated: return ev.Get();
@@ -371,7 +371,7 @@ namespace symbol_type_resolving
 		}
 
 		auto newPa = pa.WithContext(symbol->GetParentScope());
-		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating().Get();
+		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating_NFb().Get();
 
 		TypeTsysList types;
 		if (usingDecl->needResolveTypeFromInitializer)
@@ -416,7 +416,7 @@ namespace symbol_type_resolving
 
 		if (!esContext)
 		{
-			auto& ev = symbol->GetEvaluationForUpdating();
+			auto& ev = symbol->GetEvaluationForUpdating_NFb();
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		}
 		return evaluatedTypes;
@@ -432,7 +432,7 @@ namespace symbol_type_resolving
 		{
 		case symbol_component::SymbolKind::GenericTypeArgument:
 		case symbol_component::SymbolKind::GenericValueArgument:
-			return symbol->GetEvaluationForUpdating().Get()[0];
+			return symbol->GetEvaluationForUpdating_NFb().Get()[0];
 		default:
 			throw NotResolvableException();
 		}
@@ -450,7 +450,7 @@ namespace symbol_type_resolving
 		ITsys* classScope = nullptr;
 		if (auto parent = symbol->GetParentScope())
 		{
-			if (parent->GetImplDecl<ClassDeclaration>())
+			if (parent->GetImplDecl_NFb<ClassDeclaration>())
 			{
 				classScope = pa.tsys->DeclOf(parent);
 			}
@@ -460,7 +460,7 @@ namespace symbol_type_resolving
 		{
 		case symbol_component::SymbolKind::Variable:
 			{
-				auto varDecl = symbol->GetAnyForwardDecl<ForwardVariableDeclaration>();
+				auto varDecl = symbol->GetAnyForwardDecl_NFFb<ForwardVariableDeclaration>();
 				auto& evTypes = EvaluateVarSymbol(pa, varDecl.Obj());
 				bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol);
 
@@ -500,7 +500,7 @@ namespace symbol_type_resolving
 			return;
 		case symbol_component::SymbolKind::Function:
 			{
-				auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+				auto funcDecl = symbol->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>();
 				auto& evTypes = EvaluateFuncSymbol(pa, funcDecl.Obj());
 				bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol);
 				bool isMember = classScope && !isStaticSymbol;
@@ -532,7 +532,7 @@ namespace symbol_type_resolving
 			return;
 		case symbol_component::SymbolKind::ValueAlias:
 			{
-				auto usingDecl = symbol->GetImplDecl<ValueAliasDeclaration>();
+				auto usingDecl = symbol->GetImplDecl_NFb<ValueAliasDeclaration>();
 				auto& evTypes = EvaluateValueAliasSymbol(pa, usingDecl.Obj());
 				AddTemp(result, evTypes);
 				hasNonVariadic = true;
@@ -666,7 +666,7 @@ namespace symbol_type_resolving
 							targetTypeList = &varTypes;
 						}
 						break;
-					case symbol_component::SymbolKind::Function:
+					case symbol_component::SymbolKind::FunctionBodySymbol:
 						if (!IsStaticSymbol<ForwardFunctionDeclaration>(symbol))
 						{
 							targetTypeList = &funcTypes;

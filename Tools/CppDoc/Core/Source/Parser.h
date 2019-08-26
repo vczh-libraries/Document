@@ -42,7 +42,8 @@ namespace symbol_component
 		GenericTypeArgument,
 
 		EnumItem,
-		Function,
+		FunctionSymbol,
+		FunctionBodySymbol,
 		Variable,
 		ValueAlias,
 		GenericValueArgument,
@@ -50,7 +51,6 @@ namespace symbol_component
 		Namespace,
 		Statement,
 		Root,
-		FunctionSymbol,
 	};
 
 	struct Evaluation
@@ -156,12 +156,13 @@ public:
 	const List<Ptr<Symbol>>&						GetImplSymbols_F();				//							Function
 	const List<Ptr<Symbol>>&						GetDeclSymbols_F();				//							Function
 	Ptr<Declaration>								GetImplDecl_NFb();				//	Normal	FunctionBody
-	Ptr<Declaration>								GetForwardDecl_Fb();			//			FunctionBody
-	const List<Ptr<Declaration>>&					GetForwardDecls_N();			//	Normal
-	const Ptr<Stat>&								GetStat_N();					//	Normal
-	Ptr<symbol_component::MethodCache>				GetMethodCache_Fb();			//			FunctionBody
 	symbol_component::Evaluation&					GetEvaluationForUpdating_NFb();	//	Normal	FunctionBody
 	const symbol_component::SymbolGroup&			GetChildren_NFb();				//	Normal	FunctionBody
+	const List<Ptr<Declaration>>&					GetForwardDecls_N();			//	Normal
+	const Ptr<Stat>&								GetStat_N();					//	Normal
+	Symbol*											GetFunctionSymbol_Fb();			//			FunctionBody
+	Ptr<Declaration>								GetForwardDecl_Fb();			//			FunctionBody
+	Ptr<symbol_component::MethodCache>				GetMethodCache_Fb();			//			FunctionBody
 
 	const List<Ptr<Symbol>>*						TryGetChildren_NFb(const WString& name);
 	void											AddChild_NFb(const WString& name, const Ptr<Symbol>& child);
@@ -175,8 +176,8 @@ public:
 	}
 
 	Symbol*											CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl);
-	Symbol*											CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl, symbol_component::SymbolKind kind);
-	Symbol*											CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache);
+	Symbol*											CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl);
+	Symbol*											CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<symbol_component::MethodCache> methodCache);
 	Symbol*											AddForwardDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind);
 	Symbol*											AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol = nullptr);
 	Symbol*											CreateStatSymbol_NFb(Ptr<Stat> _stat);
@@ -263,7 +264,7 @@ struct ParsingArguments
 	Ptr<Program>			program;
 
 	Symbol*					context = nullptr;
-	Symbol*					funcSymbol = nullptr;
+	Symbol*					functionBodySymbol = nullptr;
 	Ptr<ITsysAlloc>			tsys;
 	Ptr<IIndexRecorder>		recorder;
 

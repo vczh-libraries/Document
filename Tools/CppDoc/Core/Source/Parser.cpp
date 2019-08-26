@@ -267,12 +267,27 @@ Ptr<Declaration> Symbol::GetImplDecl_NFb()
 	}
 }
 
-Ptr<Declaration> Symbol::GetForwardDecl_Fb()
+symbol_component::Evaluation& Symbol::GetEvaluationForUpdating_NFb()
 {
 	switch (category)
 	{
+	case symbol_component::SymbolCategory::Normal:
+		return categoryData.normal.evaluation;
 	case symbol_component::SymbolCategory::FunctionBody:
-		return categoryData.functionBody.forwardDecl;
+		return categoryData.functionBody.evaluation;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
+}
+
+const symbol_component::SymbolGroup& Symbol::GetChildren_NFb()
+{
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Normal:
+		return categoryData.normal.children;
+	case symbol_component::SymbolCategory::FunctionBody:
+		return categoryData.functionBody.children;
 	default:
 		throw UnexpectedSymbolCategoryException();
 	}
@@ -300,38 +315,34 @@ const Ptr<Stat>& Symbol::GetStat_N()
 	}
 }
 
+Symbol* Symbol::GetFunctionSymbol_Fb()
+{
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Function:
+		return categoryData.functionBody.functionSymbol;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
+}
+
+Ptr<Declaration> Symbol::GetForwardDecl_Fb()
+{
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::FunctionBody:
+		return categoryData.functionBody.forwardDecl;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
+}
+
 Ptr<symbol_component::MethodCache> Symbol::GetMethodCache_Fb()
 {
 	switch (category)
 	{
 	case symbol_component::SymbolCategory::FunctionBody:
 		return categoryData.functionBody.methodCache;
-	default:
-		throw UnexpectedSymbolCategoryException();
-	}
-}
-
-symbol_component::Evaluation& Symbol::GetEvaluationForUpdating_NFb()
-{
-	switch (category)
-	{
-	case symbol_component::SymbolCategory::Normal:
-		return categoryData.normal.evaluation;
-	case symbol_component::SymbolCategory::FunctionBody:
-		return categoryData.functionBody.evaluation;
-	default:
-		throw UnexpectedSymbolCategoryException();
-	}
-}
-
-const symbol_component::SymbolGroup& Symbol::GetChildren_NFb()
-{
-	switch (category)
-	{
-	case symbol_component::SymbolCategory::Normal:
-		return categoryData.normal.children;
-	case symbol_component::SymbolCategory::FunctionBody:
-		return categoryData.functionBody.children;
 	default:
 		throw UnexpectedSymbolCategoryException();
 	}
@@ -373,16 +384,16 @@ Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
 	return symbol.Obj();
 }
 
-Symbol* Symbol::CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl, symbol_component::SymbolKind kind)
+Symbol* Symbol::CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl)
 {
-	auto symbol = CreateSymbolInternal_NFFb(_decl, kind, symbol_component::SymbolCategory::FunctionBody);
+	auto symbol = CreateSymbolInternal_NFFb(_decl, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
 	symbol->categoryData.functionBody.forwardDecl = _decl;
 	return symbol;
 }
 
-Symbol* Symbol::CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache)
+Symbol* Symbol::CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<symbol_component::MethodCache> methodCache)
 {
-	auto symbol = CreateSymbolInternal_NFFb(_decl, kind, symbol_component::SymbolCategory::FunctionBody);
+	auto symbol = CreateSymbolInternal_NFFb(_decl, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
 	symbol->categoryData.functionBody.implDecl = _decl;
 	if (methodCache)
 	{
@@ -528,12 +539,12 @@ ParsingArguments ParsingArguments::WithContext(Symbol* _context)const
 	{
 		if (_context == context)
 		{
-			pa.funcSymbol = funcSymbol;
+			pa.functionBodySymbol = functionBodySymbol;
 			break;
 		}
-		else if (_context->kind == symbol_component::SymbolKind::Function)
+		else if (_context->kind == symbol_component::SymbolKind::FunctionBodySymbol)
 		{
-			pa.funcSymbol = _context;
+			pa.functionBodySymbol = _context;
 			break;
 		}
 		else

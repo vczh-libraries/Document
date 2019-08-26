@@ -10,7 +10,7 @@ GetSpecialMember
 
 Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, SpecialMemberKind kind)
 {
-	auto classDecl = classSymbol->GetImplDecl<ClassDeclaration>();
+	auto classDecl = classSymbol->GetImplDecl_NFb<ClassDeclaration>();
 	if (!classDecl) return nullptr;
 	if (classDecl->classType == CppClassType::Union) return nullptr;
 
@@ -31,12 +31,12 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 		break;
 	}
 
-	auto pMembers = classSymbol->TryGetChildren(memberName);
+	auto pMembers = classSymbol->TryGetChildren_NFb(memberName);
 	if (!pMembers) return nullptr;
 	for (vint i = 0; i < pMembers->Count(); i++)
 	{
 		auto member = pMembers->Get(i).Obj();
-		auto forwardFunc = member->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+		auto forwardFunc = member->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>();
 		if (!forwardFunc) continue;
 		if (symbol_type_resolving::IsStaticSymbol<ForwardFunctionDeclaration>(member)) continue;
 
@@ -99,7 +99,7 @@ IsSpecialMemberFeatureEnabled
 bool IsSpecialMemberEnabled(Symbol* member)
 {
 	if (!member) return false;
-	auto forwardFunc = member->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+	auto forwardFunc = member->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>();
 	if (!forwardFunc) return false;
 	if (forwardFunc->decoratorDefault) return true;
 	if (forwardFunc->decoratorDelete) return false;
@@ -117,7 +117,7 @@ bool IsSpecialMemberFeatureEnabled(const ParsingArguments& pa, Symbol* classSymb
 
 #define SYMBOL(KIND) (symbol##KIND ? symbol##KIND : (symbol##KIND = GetSpecialMember(pa, classSymbol, SpecialMemberKind::KIND)))
 #define DEFINED(KIND) (SYMBOL(KIND) != nullptr)
-#define DELETED(KIND) (SYMBOL(KIND) && symbol##KIND->GetAnyForwardDecl<ForwardFunctionDeclaration>()->decoratorDelete)
+#define DELETED(KIND) (SYMBOL(KIND) && symbol##KIND->GetAnyForwardDecl_NFFb<ForwardFunctionDeclaration>()->decoratorDelete)
 #define ENABLED(KIND) IsSpecialMemberEnabled(SYMBOL(KIND))
 
 	switch (kind)
@@ -177,7 +177,7 @@ bool IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, Spec
 		break;
 	case TsysType::Decl:
 		{
-			auto classDecl = type->GetDecl()->GetImplDecl<ClassDeclaration>();
+			auto classDecl = type->GetDecl()->GetImplDecl_NFb<ClassDeclaration>();
 			if (!classDecl) return true;
 			if (classDecl->classType == CppClassType::Union) return true;
 			return IsSpecialMemberFeatureEnabled(pa, classDecl->symbol, kind);
@@ -323,7 +323,7 @@ Ptr<ForwardFunctionDeclaration> GenerateAssignOp(Symbol* classSymbol, bool delet
 
 void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 {
-	if (auto classDecl = classSymbol->GetImplDecl<ClassDeclaration>())
+	if (auto classDecl = classSymbol->GetImplDecl_NFb<ClassDeclaration>())
 	{
 		if (classDecl->classType != CppClassType::Union)
 		{
@@ -350,7 +350,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 				bool deleted = true;
 				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::DefaultCtor, true))
 				{
-					if (!classSymbol->TryGetChildren(L"$__ctor"))
+					if (!classSymbol->TryGetChildren_NFb(L"$__ctor"))
 					{
 						deleted = false;
 					}
