@@ -93,7 +93,7 @@ SC_Data
 Symbol
 ***********************************************************************/
 
-Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category)
+Symbol* Symbol::CreateSymbolInternal_NFFb(Ptr<Declaration> _decl, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category)
 {
 	switch (_category)
 	{
@@ -116,15 +116,31 @@ Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, symbol_component::S
 	auto symbol = MakePtr<Symbol>(_category);
 	symbol->name = _decl->name.name;
 	symbol->kind = kind;
-	AddChildAndSetParent(symbol->name, symbol);
+
+	if (category == symbol_component::SymbolCategory::Function)
+	{
+		if (_decl.Cast<FunctionDeclaration>())
+		{
+			categoryData.function.implSymbols.Add(symbol);
+		}
+		else
+		{
+			categoryData.function.declSymbols.Add(symbol);
+		}
+		symbol->categoryData.functionBody.functionSymbol = this;
+	}
+	else
+	{
+		AddChildAndSetParent_NFb(symbol->name, symbol);
+	}
 
 	_decl->symbol = symbol.Obj();
 	return symbol.Obj();
 }
 
-Symbol* Symbol::AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category)
+Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category)
 {
-	if (auto pChildren = TryGetChildren(_decl->name.name))
+	if (auto pChildren = TryGetChildren_NFb(_decl->name.name))
 	{
 		if (templateSpecSymbol)
 		{
@@ -144,13 +160,13 @@ Symbol* Symbol::AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::Sy
 			templateSpecSymbol->SetCategory(_category);
 			templateSpecSymbol->name = _decl->name.name;
 			templateSpecSymbol->kind = kind;
-			AddChildAndSetParent(templateSpecSymbol->name, templateSpecSymbol);
+			AddChildAndSetParent_NFb(templateSpecSymbol->name, templateSpecSymbol);
 			_decl->symbol = templateSpecSymbol.Obj();
 			return templateSpecSymbol.Obj();
 		}
 		else
 		{
-			return CreateSymbolInternal(_decl, kind, symbol_component::SymbolCategory::Normal);
+			return CreateSymbolInternal_NFFb(_decl, kind, symbol_component::SymbolCategory::Normal);
 		}
 	}
 }
@@ -217,7 +233,7 @@ Symbol* Symbol::GetParentScope()
 	}
 }
 
-Ptr<Declaration> Symbol::GetImplDecl()
+Ptr<Declaration> Symbol::GetImplDecl_NFb()
 {
 	switch (category)
 	{
@@ -230,7 +246,7 @@ Ptr<Declaration> Symbol::GetImplDecl()
 	}
 }
 
-Ptr<Declaration> Symbol::GetForwardDecl()
+Ptr<Declaration> Symbol::GetForwardDecl_Fb()
 {
 	switch (category)
 	{
@@ -241,7 +257,7 @@ Ptr<Declaration> Symbol::GetForwardDecl()
 	}
 }
 
-const List<Ptr<Declaration>>& Symbol::GetForwardDecls()
+const List<Ptr<Declaration>>& Symbol::GetForwardDecls_N()
 {
 	switch (category)
 	{
@@ -252,7 +268,7 @@ const List<Ptr<Declaration>>& Symbol::GetForwardDecls()
 	}
 }
 
-const Ptr<Stat>& Symbol::GetStat()
+const Ptr<Stat>& Symbol::GetStat_N()
 {
 	switch (category)
 	{
@@ -263,7 +279,7 @@ const Ptr<Stat>& Symbol::GetStat()
 	}
 }
 
-Ptr<symbol_component::MethodCache> Symbol::GetMethodCache()
+Ptr<symbol_component::MethodCache> Symbol::GetMethodCache_Fb()
 {
 	switch (category)
 	{
@@ -274,7 +290,7 @@ Ptr<symbol_component::MethodCache> Symbol::GetMethodCache()
 	}
 }
 
-symbol_component::Evaluation& Symbol::GetEvaluationForUpdating()
+symbol_component::Evaluation& Symbol::GetEvaluationForUpdating_NFb()
 {
 	switch (category)
 	{
@@ -287,7 +303,7 @@ symbol_component::Evaluation& Symbol::GetEvaluationForUpdating()
 	}
 }
 
-const symbol_component::SymbolGroup& Symbol::GetChildren()
+const symbol_component::SymbolGroup& Symbol::GetChildren_NFb()
 {
 	switch (category)
 	{
@@ -300,43 +316,52 @@ const symbol_component::SymbolGroup& Symbol::GetChildren()
 	}
 }
 
-const List<Ptr<Symbol>>* Symbol::TryGetChildren(const WString& name)
+const List<Ptr<Symbol>>* Symbol::TryGetChildren_NFb(const WString& name)
 {
-	const auto& children = GetChildren();
+	const auto& children = GetChildren_NFb();
 	vint index = children.Keys().IndexOf(name);
 	if (index == -1) return nullptr;
 	return &children.GetByIndex(index);
 }
 
-void Symbol::AddChild(const WString& name, const Ptr<Symbol>& child)
+void Symbol::AddChild_NFb(const WString& name, const Ptr<Symbol>& child)
 {
-	auto& children = const_cast<symbol_component::SymbolGroup&>(GetChildren());
+	auto& children = const_cast<symbol_component::SymbolGroup&>(GetChildren_NFb());
 	children.Add(name, child);
 }
 
-void Symbol::AddChildAndSetParent(const WString& name, const Ptr<Symbol>& child)
+void Symbol::AddChildAndSetParent_NFb(const WString& name, const Ptr<Symbol>& child)
 {
-	AddChild(name, child);
+	AddChild_NFb(name, child);
 	child->SetParent(this);
 }
 
-void Symbol::RemoveChildAndResetParent(const WString& name, Symbol* child)
+void Symbol::RemoveChildAndResetParent_NFb(const WString& name, Symbol* child)
 {
-	auto& children = const_cast<symbol_component::SymbolGroup&>(GetChildren());
+	auto& children = const_cast<symbol_component::SymbolGroup&>(GetChildren_NFb());
 	children.Remove(name, child);
 	child->SetParent(nullptr);
 }
 
-Symbol* Symbol::CreateFunctionForwardSymbol(Ptr<ForwardFunctionDeclaration> _decl, symbol_component::SymbolKind kind)
+Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
 {
-	auto symbol = CreateSymbolInternal(_decl, kind, symbol_component::SymbolCategory::FunctionBody);
+	auto symbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Function);
+	symbol->kind = symbol_component::SymbolKind::FunctionSymbol;
+	symbol->name = _decl->name.name;
+	AddChildAndSetParent_NFb(symbol->name, symbol);
+	return symbol.Obj();
+}
+
+Symbol* Symbol::CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl, symbol_component::SymbolKind kind)
+{
+	auto symbol = CreateSymbolInternal_NFFb(_decl, kind, symbol_component::SymbolCategory::FunctionBody);
 	symbol->categoryData.functionBody.forwardDecl = _decl;
 	return symbol;
 }
 
-Symbol* Symbol::CreateFunctionImplSymbol(Ptr<FunctionDeclaration> _decl, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache)
+Symbol* Symbol::CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache)
 {
-	auto symbol = CreateSymbolInternal(_decl, kind, symbol_component::SymbolCategory::FunctionBody);
+	auto symbol = CreateSymbolInternal_NFFb(_decl, kind, symbol_component::SymbolCategory::FunctionBody);
 	symbol->categoryData.functionBody.implDecl = _decl;
 	if (methodCache)
 	{
@@ -346,9 +371,9 @@ Symbol* Symbol::CreateFunctionImplSymbol(Ptr<FunctionDeclaration> _decl, symbol_
 	return symbol;
 }
 
-Symbol* Symbol::AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind)
+Symbol* Symbol::AddForwardDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind)
 {
-	auto symbol = AddToSymbolInternal(_decl, kind, nullptr, symbol_component::SymbolCategory::Normal);
+	auto symbol = AddToSymbolInternal_NFb(_decl, kind, nullptr, symbol_component::SymbolCategory::Normal);
 	if (!symbol) return nullptr;
 	if (symbol->categoryData.normal.implDecl) return nullptr;
 	if (symbol->categoryData.normal.forwardDecls.Count() > 0) return nullptr;
@@ -356,9 +381,9 @@ Symbol* Symbol::AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component:
 	return symbol;
 }
 
-Symbol* Symbol::AddImplDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol)
+Symbol* Symbol::AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol)
 {
-	auto symbol = AddToSymbolInternal(_decl, kind, templateSpecSymbol, symbol_component::SymbolCategory::Normal);
+	auto symbol = AddToSymbolInternal_NFb(_decl, kind, templateSpecSymbol, symbol_component::SymbolCategory::Normal);
 	if (!symbol) return nullptr;
 	if (symbol->categoryData.normal.implDecl) return nullptr;
 	if (symbol->categoryData.normal.forwardDecls.Count() > 0) return nullptr;
@@ -366,13 +391,13 @@ Symbol* Symbol::AddImplDeclToSymbol(Ptr<Declaration> _decl, symbol_component::Sy
 	return symbol;
 }
 
-Symbol* Symbol::CreateStatSymbol(Ptr<Stat> _stat)
+Symbol* Symbol::CreateStatSymbol_NFb(Ptr<Stat> _stat)
 {
 	auto symbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
 	symbol->name = L"$";
 	symbol->kind = symbol_component::SymbolKind::Statement;
 	symbol->categoryData.normal.statement = _stat;
-	AddChildAndSetParent(symbol->name, symbol);
+	AddChildAndSetParent_NFb(symbol->name, symbol);
 
 	_stat->symbol = symbol.Obj();
 	return symbol.Obj();
@@ -424,7 +449,7 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 	case symbol_component::SymbolCategory::Normal:
 	case symbol_component::SymbolCategory::FunctionBody:
 		{
-			const auto& children = GetChildren();
+			const auto& children = GetChildren_NFb();
 			for (vint i = 0; i < children.Count(); i++)
 			{
 				auto& symbols = children.GetByIndex(i);
@@ -648,11 +673,11 @@ void PredefineType(Ptr<Program> program, const ParsingArguments& pa, const wchar
 	program->decls.Insert(program->createdForwardDeclByCStyleTypeReference++, decl);
 	if (isForwardDeclaration)
 	{
-		pa.root->AddForwardDeclToSymbol(decl, symbolKind);
+		pa.root->AddForwardDeclToSymbol_NFb(decl, symbolKind);
 	}
 	else
 	{
-		pa.root->AddImplDeclToSymbol(decl, symbolKind);
+		pa.root->AddImplDeclToSymbol_NFb(decl, symbolKind);
 	}
 }
 

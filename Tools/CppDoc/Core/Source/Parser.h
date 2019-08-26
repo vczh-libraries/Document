@@ -50,6 +50,7 @@ namespace symbol_component
 		Namespace,
 		Statement,
 		Root,
+		FunctionSymbol,
 	};
 
 	struct Evaluation
@@ -133,8 +134,8 @@ private:
 	symbol_component::SymbolCategory				category;
 	symbol_component::SC_Data						categoryData;
 
-	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category);
-	Symbol*											AddToSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category);
+	Symbol*											CreateSymbolInternal_NFFb(Ptr<Declaration> _decl, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category);
+	Symbol*											AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category);
 	void											SetParent(Symbol* parent);
 
 public:
@@ -151,19 +152,19 @@ public:
 	symbol_component::SymbolCategory				GetCategory();
 	void											SetCategory(symbol_component::SymbolCategory _category);
 
-	Symbol*											GetParentScope();			//	Normal	FunctionBody	Function	Undecided
-	Ptr<Declaration>								GetImplDecl();				//	Normal	FunctionBody
-	Ptr<Declaration>								GetForwardDecl();			//			FunctionBody
-	const List<Ptr<Declaration>>&					GetForwardDecls();			//	Normal
-	const Ptr<Stat>&								GetStat();					//	Normal
-	Ptr<symbol_component::MethodCache>				GetMethodCache();			//			FunctionBody
-	symbol_component::Evaluation&					GetEvaluationForUpdating();	//	Normal	FunctionBody
-	const symbol_component::SymbolGroup&			GetChildren();				//	Normal	FunctionBody
+	Symbol*											GetParentScope();				//	Normal	FunctionBody	Function	Undecided
+	Ptr<Declaration>								GetImplDecl_NFb();				//	Normal	FunctionBody
+	Ptr<Declaration>								GetForwardDecl_Fb();			//			FunctionBody
+	const List<Ptr<Declaration>>&					GetForwardDecls_N();			//	Normal
+	const Ptr<Stat>&								GetStat_N();					//	Normal
+	Ptr<symbol_component::MethodCache>				GetMethodCache_Fb();			//			FunctionBody
+	symbol_component::Evaluation&					GetEvaluationForUpdating_NFb();	//	Normal	FunctionBody
+	const symbol_component::SymbolGroup&			GetChildren_NFb();				//	Normal	FunctionBody
 
-	const List<Ptr<Symbol>>*						TryGetChildren(const WString& name);
-	void											AddChild(const WString& name, const Ptr<Symbol>& child);
-	void											AddChildAndSetParent(const WString& name, const Ptr<Symbol>& child);
-	void											RemoveChildAndResetParent(const WString& name, Symbol* child);
+	const List<Ptr<Symbol>>*						TryGetChildren_NFb(const WString& name);
+	void											AddChild_NFb(const WString& name, const Ptr<Symbol>& child);
+	void											AddChildAndSetParent_NFb(const WString& name, const Ptr<Symbol>& child);
+	void											RemoveChildAndResetParent_NFb(const WString& name, Symbol* child);
 
 	template<typename T>
 	const Ptr<T> GetImplDecl()
@@ -171,48 +172,49 @@ public:
 		return GetImplDecl().Cast<T>();
 	}
 
-	Symbol*											CreateFunctionForwardSymbol(Ptr<ForwardFunctionDeclaration> _decl, symbol_component::SymbolKind kind);
-	Symbol*											CreateFunctionImplSymbol(Ptr<FunctionDeclaration> _decl, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache);
-	Symbol*											AddForwardDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind);
-	Symbol*											AddImplDeclToSymbol(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol = nullptr);
-	Symbol*											CreateStatSymbol(Ptr<Stat> _stat);
+	Symbol*											CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl);
+	Symbol*											CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl, symbol_component::SymbolKind kind);
+	Symbol*											CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, symbol_component::SymbolKind kind, Ptr<symbol_component::MethodCache> methodCache);
+	Symbol*											AddForwardDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind);
+	Symbol*											AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol = nullptr);
+	Symbol*											CreateStatSymbol_NFb(Ptr<Stat> _stat);
 
 	template<typename T>
 	Ptr<T> GetAnyForwardDecl()
 	{
 		switch (category)
 		{
-		case symbol_component::SC_Normal:
+		case symbol_component::SymbolCategory::Normal:
 			{
 				auto decl = categoryData.normal.implDecl.Cast<T>();
 				if (decl) return decl;
 				for (vint i = 0; i < categoryData.normal.forwardDecls.Count(); i++)
 				{
-					if ((decl = categoryData.normal.forwardDecls[i].Cast<T>))
+					if ((decl = categoryData.normal.forwardDecls[i].Cast<T>()))
 					{
 						return decl;
 					}
 				}
 				return nullptr;
 			}
-		case symbol_component::SC_FunctionBody:
+		case symbol_component::SymbolCategory::FunctionBody:
 			{
 				auto decl = categoryData.functionBody.implDecl.Cast<T>();
 				return decl ? decl : categoryData.functionBody.forwardDecl.Cast<T>();
 			}
-		case symbol_component::SC_Function:
+		case symbol_component::SymbolCategory::Function:
 			{
 				Ptr<T> decl;
 				for (vint i = 0; i < categoryData.function.declSymbols.Count(); i++)
 				{
-					if ((decl = categoryData.function.declSymbols[i]->GetAnyForwardDecl<T>))
+					if ((decl = categoryData.function.declSymbols[i]->GetAnyForwardDecl<T>()))
 					{
 						return decl;
 					}
 				}
 				for (vint i = 0; i < categoryData.function.implSymbols.Count(); i++)
 				{
-					if ((decl = categoryData.function.implSymbols[i]->GetAnyForwardDecl<T>))
+					if ((decl = categoryData.function.implSymbols[i]->GetAnyForwardDecl<T>()))
 					{
 						return decl;
 					}
