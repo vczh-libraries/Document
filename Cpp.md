@@ -18,14 +18,15 @@
     - [ ] Connect function with forward declarations
     - [ ] Instantiate functions with all non-default template arguments specified.
     - [ ] When evaluating a function with incomplete types, local variable types are cached in `gaContext`
+    - [ ] Specialization recognized but not used
   - [ ] `template` on classes.
-    - [ ] Nested template declaration.
     - [ ] Instantiate classes with all non-default template arguments specified.
     - [ ] Child type evaluation.
       - [ ] `v::t`
     - [ ] Member type evaluation.
       - [ ] `v.f`, `v->f`, `v.*f`, `v->*f`, `v::f`
     - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
+    - [ ] Specialization recognized but not used
   - [ ] Make generic `Expr::Ptr` in `Calculator` case.
   - [ ] Generate HTML and check.
 - [ ] More refactorings
@@ -33,15 +34,18 @@
   - [x] `VisitOverloadedFunction`: Receive `Array<ExprTsysItem>` instead of `List<Ptr<ExprTsysList>>` for `argTypesList`
   - [ ] `CreateIdReferenceExpr`: Remove dependency to `Ptr<Resolving>`
   - [ ] `FindMembersByName`: Remove dependency to `ResolveSymbolResult`
-- [ ] `template` on functions.
+- [ ] `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
   - [ ] Call a function with some or all template arguments unspecified.
   - [ ] Overload functions with some or all template arguments unspecified.
   - [ ] `...` arguments
   - [ ] Specialization
+    - [ ] When overloading, specialized functions are not considered. When a template function wins, then choose among the primiary and its specializations.
 - [ ] `template` on classes.
+  - [ ] Nested template declaration.
   - [ ] Allow `template` on members.
   - [ ] Connect method with forward declarations inside multiple levels of template classes.
   - [ ] Specialization
+    - [ ] When representing an instantiated class type, specialized classes are not considered. When child symbols are required, then choose among the primary and its specializations.
 - [ ] `std::initialization_list`.
 - [ ] Lambda expressions.
 - [ ] `nullptr` failed to convert to `const function_type*&`.
