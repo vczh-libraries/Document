@@ -156,6 +156,7 @@
     <ClCompile Include="TestOverloading.cpp" />
     <ClCompile Include="TestOverloadingAdl.cpp" />
     <ClCompile Include="TestOverloadingOperator.cpp" />
+    <ClCompile Include="TestParseGenericFunction.cpp" />
     <ClCompile Include="TestParseGenericTypeAlias.cpp" />
     <ClCompile Include="TestParseGenericValueAlias.cpp" />
     <ClCompile Include="TestParseVariadicTemplateArgument.cpp" />
