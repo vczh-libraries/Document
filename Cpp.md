@@ -39,6 +39,7 @@
   - [ ] Connect method with forward declarations inside multiple levels of template classes.
   - [ ] Specialization
     - [ ] When representing an instantiated class type, specialized classes are not considered. When child symbols are required, then choose among the primary and its specializations.
+  - [ ] SFINAE
 - [ ] `std::initialization_list`.
 - [ ] Lambda expressions.
 - [ ] `nullptr` failed to convert to `const function_type*&`.
