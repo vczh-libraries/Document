@@ -3,49 +3,6 @@
 #include "Ast_Resolving.h"
 
 /***********************************************************************
-FindForward
-***********************************************************************/
-
-Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
-{
-	bool inClass = context->GetImplDecl_NFb<ClassDeclaration>();
-	if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
-	{
-		for (vint i = 0; i < pSymbols->Count(); i++)
-		{
-			auto symbol = pSymbols->Get(i).Obj();
-			if (symbol->kind == symbol_component::SymbolKind::FunctionSymbol)
-			{
-				auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-
-				auto t1 = decl->type;
-				auto t2 = declToCompare->type;
-				if (inClass)
-				{
-					if (auto mt = t1.Cast<MemberType>())
-					{
-						t1 = mt->type;
-					}
-					if (auto mt = t2.Cast<MemberType>())
-					{
-						t2 = mt->type;
-					}
-				}
-				if (IsSameResolvedType(t1, t2))
-				{
-					return symbol;
-				}
-			}
-			else
-			{
-				throw StopParsingException(cursor);
-			}
-		}
-	}
-	return context->CreateFunctionSymbol_NFb(decl);
-}
-
-/***********************************************************************
 ParseTemplateSpec
 ***********************************************************************/
 
@@ -811,6 +768,52 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 			throw StopParsingException(cursor);
 		}
 	}
+}
+
+/***********************************************************************
+SearchForFunctionWithSameSignature
+***********************************************************************/
+
+Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
+{
+	if (!decl->needResolveTypeFromStatement)
+	{
+		bool inClass = context->GetImplDecl_NFb<ClassDeclaration>();
+		if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
+		{
+			for (vint i = 0; i < pSymbols->Count(); i++)
+			{
+				auto symbol = pSymbols->Get(i).Obj();
+				if (symbol->kind == symbol_component::SymbolKind::FunctionSymbol)
+				{
+					auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+
+					auto t1 = decl->type;
+					auto t2 = declToCompare->type;
+					if (inClass)
+					{
+						if (auto mt = t1.Cast<MemberType>())
+						{
+							t1 = mt->type;
+						}
+						if (auto mt = t2.Cast<MemberType>())
+						{
+							t2 = mt->type;
+						}
+					}
+					if (IsSameResolvedType(t1, t2))
+					{
+						return symbol;
+					}
+				}
+				else
+				{
+					throw StopParsingException(cursor);
+				}
+			}
+		}
+	}
+	return context->CreateFunctionSymbol_NFb(decl);
 }
 
 /***********************************************************************
