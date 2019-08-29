@@ -787,21 +787,7 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 				if (symbol->kind == symbol_component::SymbolKind::FunctionSymbol)
 				{
 					auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-
-					auto t1 = decl->type;
-					auto t2 = declToCompare->type;
-					if (inClass)
-					{
-						if (auto mt = t1.Cast<MemberType>())
-						{
-							t1 = mt->type;
-						}
-						if (auto mt = t2.Cast<MemberType>())
-						{
-							t2 = mt->type;
-						}
-					}
-					if (IsSameResolvedType(t1, t2))
+					if (IsCompatibleFunctionDeclInSameScope(decl, declToCompare))
 					{
 						return symbol;
 					}

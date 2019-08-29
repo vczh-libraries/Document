@@ -7,6 +7,7 @@ using namespace vl::regex;
 
 struct ParsingArguments;
 class ITsys;
+class ForwardFunctionDeclaration;
 
 /***********************************************************************
 Symbol
@@ -146,7 +147,8 @@ struct UnexpectedSymbolCategoryException {};
 using TypeTsysList = List<ITsys*>;
 using ExprTsysList = List<ExprTsysItem>;
 
-extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2);
+extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2, Dictionary<WString, WString>& equivalentNames);
+extern bool					IsCompatibleFunctionDeclInSameScope(Ptr<ForwardFunctionDeclaration> declNew, Ptr<ForwardFunctionDeclaration> declOld);
 extern bool					IsPendingType(Type* type);
 extern bool					IsPendingType(Ptr<Type> type);
 extern ITsys*				ResolvePendingType(const ParsingArguments& pa, Ptr<Type> type, ExprTsysItem target);
