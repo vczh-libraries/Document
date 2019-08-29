@@ -140,9 +140,6 @@
     <ClCompile Include="Source\Ast_Evaluate_TypeToTsys.cpp">
       <Filter>Source Files\Ast\Evaluation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving.cpp">
-      <Filter>Source Files\Ast\Resolving</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_Overloading.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
@@ -169,6 +166,12 @@
     </ClCompile>
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_GenericImpl.cpp">
       <Filter>Source Files\Ast\Evaluation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_Resolving_EvaluateSymbol.cpp">
+      <Filter>Source Files\Ast\Resolving</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_Resolving.cpp">
+      <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

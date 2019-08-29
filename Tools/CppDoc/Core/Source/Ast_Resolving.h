@@ -71,14 +71,6 @@ namespace symbol_type_resolving
 
 	extern void									CreateUniversalInitializerType(const ParsingArguments& pa, Array<ExprTsysList>& argTypesList, ExprTsysList& result);
 	extern void									CalculateValueFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, bool forFieldDeref, ExprTsysList& result);
-	extern TypeTsysList&						EvaluateVarSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl);
-	extern bool									IsMemberFunction(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
-	extern void									FinishEvaluatingSymbol(const ParsingArguments& pa, FunctionDeclaration* funcDecl);
-	extern TypeTsysList&						EvaluateFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
-	extern symbol_component::Evaluation&		EvaluateClassSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl);
-	extern TypeTsysList&						EvaluateTypeAliasSymbol(const ParsingArguments& pa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
-	extern TypeTsysList&						EvaluateValueAliasSymbol(const ParsingArguments& pa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
-	extern ITsys*								EvaluateGenericArgumentSymbol(Symbol* symbol);
 	extern void									VisitSymbol(const ParsingArguments& pa, Symbol* symbol, ExprTsysList& result);
 	extern void									VisitSymbolForScope(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result);
 	extern void									VisitSymbolForField(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result);
@@ -90,6 +82,17 @@ namespace symbol_type_resolving
 
 	extern void									Promote(TsysPrimitive& primitive);
 	extern TsysPrimitive						ArithmeticConversion(TsysPrimitive leftP, TsysPrimitive rightP);
+
+	// EvaluateSymbol
+
+	extern TypeTsysList&						EvaluateVarSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl);
+	extern bool									IsMemberFunction(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
+	extern void									FinishEvaluatingSymbol(const ParsingArguments& pa, FunctionDeclaration* funcDecl);
+	extern TypeTsysList&						EvaluateFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
+	extern symbol_component::Evaluation&		EvaluateClassSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl);
+	extern TypeTsysList&						EvaluateTypeAliasSymbol(const ParsingArguments& pa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
+	extern TypeTsysList&						EvaluateValueAliasSymbol(const ParsingArguments& pa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
+	extern ITsys*								EvaluateGenericArgumentSymbol(Symbol* symbol);
 
 	// Overloading
 
