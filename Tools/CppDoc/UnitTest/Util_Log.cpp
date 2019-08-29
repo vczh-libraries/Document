@@ -1008,6 +1008,10 @@ private:
 				if (arg.name)
 				{
 					writer.WriteChar(L' ');
+					if (arg.ellipsis)
+					{
+						writer.WriteString(L"...");
+					}
 					writer.WriteString(arg.name.name);
 				}
 				if (arg.type)
@@ -1021,6 +1025,10 @@ private:
 				if (arg.name)
 				{
 					writer.WriteChar(L' ');
+					if (arg.ellipsis)
+					{
+						writer.WriteString(L"...");
+					}
 					writer.WriteString(arg.name.name);
 				}
 				if (arg.expr)
@@ -1032,6 +1040,16 @@ private:
 			}
 		}
 		writer.WriteString(L">");
+	}
+
+	void WriteTemplateSpecIfExists(Ptr<TemplateSpec> spec)
+	{
+		if (spec)
+		{
+			WriteTemplateSpec(spec.Obj());
+			writer.WriteLine(L"");
+			WriteIndentation();
+		}
 	}
 
 public:
@@ -1050,12 +1068,7 @@ public:
 
 	void Visit(ForwardFunctionDeclaration* self)override
 	{
-		if (self->templateSpec)
-		{
-			WriteTemplateSpec(self->templateSpec.Obj());
-			writer.WriteLine(L"");
-			WriteIndentation();
-		}
+		WriteTemplateSpecIfExists(self->templateSpec);
 		writer.WriteString(L"__forward ");
 		WriteHeader(self);
 		if (semicolon) writer.WriteLine(L";");
@@ -1070,12 +1083,7 @@ public:
 
 	void Visit(ForwardClassDeclaration* self)override
 	{
-		if (self->templateSpec)
-		{
-			WriteTemplateSpec(self->templateSpec.Obj());
-			writer.WriteLine(L"");
-			WriteIndentation();
-		}
+		WriteTemplateSpecIfExists(self->templateSpec);
 		writer.WriteString(L"__forward ");
 		WriteHeader(self);
 		if (semicolon) writer.WriteLine(L";");
@@ -1093,6 +1101,7 @@ public:
 
 	void Visit(FunctionDeclaration* self)override
 	{
+		WriteTemplateSpecIfExists(self->templateSpec);
 		WriteHeader(self);
 		writer.WriteLine(L"");
 		for (vint i = 0; i < self->initList.Count(); i++)
@@ -1143,6 +1152,7 @@ public:
 
 	void Visit(ClassDeclaration* self)override
 	{
+		WriteTemplateSpecIfExists(self->templateSpec);
 		WriteHeader(self);
 		for (vint i = 0; i < self->baseTypes.Count(); i++)
 		{
@@ -1251,12 +1261,7 @@ public:
 
 	void Visit(TypeAliasDeclaration* self)override
 	{
-		if (self->templateSpec)
-		{
-			WriteTemplateSpec(self->templateSpec.Obj());
-			writer.WriteLine(L"");
-			WriteIndentation();
-		}
+		WriteTemplateSpecIfExists(self->templateSpec);
 		writer.WriteString(L"using_type ");
 		writer.WriteString(self->name.name);
 		writer.WriteString(L": ");
@@ -1266,13 +1271,7 @@ public:
 
 	void Visit(ValueAliasDeclaration* self)override
 	{
-		if (self->templateSpec)
-		{
-			WriteTemplateSpec(self->templateSpec.Obj());
-			writer.WriteLine(L"");
-			WriteIndentation();
-		}
-
+		WriteTemplateSpecIfExists(self->templateSpec);
 		writer.WriteString(L"using_value ");
 		writer.WriteString(self->name.name);
 		writer.WriteString(L": ");

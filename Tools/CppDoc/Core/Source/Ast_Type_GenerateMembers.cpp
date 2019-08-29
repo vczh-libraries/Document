@@ -442,7 +442,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 				auto decl = generatedMembers[i];
 				decl->implicitlyGeneratedMember = true;
 				classDecl->decls.Add({ CppClassAccessor::Public,decl });
-				classSymbol->CreateFunctionSymbol_NFb(decl)->CreateFunctionForwardSymbol_F(decl);
+				classSymbol->CreateFunctionSymbol_NFb(decl)->CreateFunctionForwardSymbol_F(decl, nullptr);
 			}
 		}
 	}

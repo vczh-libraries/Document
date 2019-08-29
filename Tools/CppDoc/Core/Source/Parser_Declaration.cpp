@@ -881,11 +881,6 @@ void ParseDeclaration_Function(
 	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_FILL_DECLARATOR)\
 	decl->needResolveTypeFromStatement = needResolveTypeFromStatement\
 
-	if (spec.f1)
-	{
-		throw StopParsingException(cursor);
-	}
-
 	bool hasStat = TestToken(cursor, CppTokens::COLON, false) || TestToken(cursor, CppTokens::LBRACE, false);
 	bool needResolveTypeFromStatement = IsPendingType(funcType->returnType) && (!funcType->decoratorReturnType || IsPendingType(funcType->decoratorReturnType));
 	if (needResolveTypeFromStatement && !hasStat)
@@ -898,6 +893,7 @@ void ParseDeclaration_Function(
 	{
 		// if there is a statement, then it is a function declaration
 		auto decl = MakePtr<FunctionDeclaration>();
+		decl->templateSpec = spec.f1;
 		FILL_FUNCTION;
 		output.Add(decl);
 
@@ -917,7 +913,7 @@ void ParseDeclaration_Function(
 		}
 
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
-		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, methodCache);
+		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, (spec.f1 ? spec.f0 : nullptr), methodCache);
 
 		{
 			auto newPa = pa.WithContext(functionBodySymbol);
@@ -971,12 +967,13 @@ void ParseDeclaration_Function(
 		}
 
 		auto decl = MakePtr<ForwardFunctionDeclaration>();
+		decl->templateSpec = spec.f1;
 		FILL_FUNCTION;
 		output.Add(decl);
 		RequireToken(cursor, CppTokens::SEMICOLON);
 
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
-		functionSymbol->CreateFunctionForwardSymbol_F(decl);
+		functionSymbol->CreateFunctionForwardSymbol_F(decl, (spec.f1 ? spec.f0 : nullptr));
 	}
 #undef FILL_FUNCTION
 }

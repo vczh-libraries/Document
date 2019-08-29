@@ -92,7 +92,28 @@ SC_Data
 Symbol
 ***********************************************************************/
 
-Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category)
+void Symbol::ReuseTemplateSpecSymbol(Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category)
+{
+	List<Ptr<Symbol>> existingChildren;
+	if (_category != symbol_component::SymbolCategory::Normal)
+	{
+		{
+			const auto& children = templateSpecSymbol->GetChildren_NFb();
+			for (vint i = 0; i < children.Count(); i++)
+			{
+				CopyFrom(existingChildren, children.GetByIndex(i), true);
+			}
+		}
+		templateSpecSymbol->SetCategory(_category);
+		for (vint i = 0; i < existingChildren.Count(); i++)
+		{
+			auto child = existingChildren[i];
+			templateSpecSymbol->AddChildAndSetParent_NFb(child->name, child);
+		}
+	}
+}
+
+Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category)
 {
 	switch (_category)
 	{
@@ -111,7 +132,15 @@ Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, symbol_component::S
 		break;
 	}
 
-	auto symbol = MakePtr<Symbol>(_category);
+	auto symbol = templateSpecSymbol;
+	if (symbol)
+	{
+		ReuseTemplateSpecSymbol(symbol, _category);
+	}
+	else
+	{
+		symbol = MakePtr<Symbol>(_category);
+	}
 	symbol->name = _decl->name.name;
 	symbol->kind = _kind;
 
@@ -155,23 +184,7 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 	{
 		if (templateSpecSymbol)
 		{
-			List<Ptr<Symbol>> existingChildren;
-			if (_category != symbol_component::SymbolCategory::Normal)
-			{
-				{
-					const auto& children = templateSpecSymbol->GetChildren_NFb();
-					for (vint i = 0; i < children.Count(); i++)
-					{
-						CopyFrom(existingChildren, children.GetByIndex(i), true);
-					}
-				}
-				templateSpecSymbol->SetCategory(_category);
-				for (vint i = 0; i < existingChildren.Count(); i++)
-				{
-					auto child = existingChildren[i];
-					templateSpecSymbol->AddChildAndSetParent_NFb(child->name, child);
-				}
-			}
+			ReuseTemplateSpecSymbol(templateSpecSymbol, _category);
 			templateSpecSymbol->name = _decl->name.name;
 			templateSpecSymbol->kind = kind;
 			AddChildAndSetParent_NFb(templateSpecSymbol->name, templateSpecSymbol);
@@ -180,7 +193,7 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 		}
 		else
 		{
-			return CreateSymbolInternal(_decl, kind, symbol_component::SymbolCategory::Normal);
+			return CreateSymbolInternal(_decl, nullptr, kind, symbol_component::SymbolCategory::Normal);
 		}
 	}
 }
@@ -397,16 +410,16 @@ Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
 	return symbol.Obj();
 }
 
-Symbol* Symbol::CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl)
+Symbol* Symbol::CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl, Ptr<Symbol> templateSpecSymbol)
 {
-	auto symbol = CreateSymbolInternal(_decl, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
+	auto symbol = CreateSymbolInternal(_decl, templateSpecSymbol, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
 	symbol->categoryData.functionBody.forwardDecl = _decl;
 	return symbol;
 }
 
-Symbol* Symbol::CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<symbol_component::MethodCache> methodCache)
+Symbol* Symbol::CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<Symbol> templateSpecSymbol, Ptr<symbol_component::MethodCache> methodCache)
 {
-	auto symbol = CreateSymbolInternal(_decl, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
+	auto symbol = CreateSymbolInternal(_decl, templateSpecSymbol, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
 	symbol->categoryData.functionBody.implDecl = _decl;
 	if (methodCache)
 	{
