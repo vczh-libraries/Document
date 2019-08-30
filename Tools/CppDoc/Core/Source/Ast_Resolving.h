@@ -100,6 +100,7 @@ namespace symbol_type_resolving
 
 	// Generic
 
+	extern Ptr<TemplateSpec>					GetTemplateSpecFromSymbol(Symbol* symbol);
 	extern void									CreateGenericFunctionHeader(const ParsingArguments& pa, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction);
 	extern void									ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, Array<vint>& argSource, SortedList<vint>& boundedAnys, vint offset, GenericArgContext* newGaContext);
 }

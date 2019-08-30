@@ -1,7 +1,5 @@
-#include "Parser.h"
 #include "Ast_Expr.h"
-#include "Ast_Type.h"
-#include "Ast_Decl.h"
+#include "Ast_Resolving.h"
 
 /***********************************************************************
 FillOperatorAndSkip
@@ -176,26 +174,9 @@ Ptr<Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		for (vint i = 0; i < resolvableExpr->resolving->resolvedSymbols.Count(); i++)
 		{
 			auto symbol = resolvableExpr->resolving->resolvedSymbols[i];
-			switch (symbol->kind)
+			if (symbol_type_resolving::GetTemplateSpecFromSymbol(symbol))
 			{
-			case symbol_component::SymbolKind::FunctionSymbol:
-				if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
-				{
-					if (funcDecl->templateSpec)
-					{
-						genericSymbols.Add(symbol);
-					}
-				}
-				break;
-			case symbol_component::SymbolKind::ValueAlias:
-				if (auto usingDecl = symbol->GetAnyForwardDecl<ValueAliasDeclaration>())
-				{
-					if (usingDecl->templateSpec)
-					{
-						genericSymbols.Add(symbol);
-					}
-				}
-				break;
+				genericSymbols.Add(symbol);
 			}
 		}
 

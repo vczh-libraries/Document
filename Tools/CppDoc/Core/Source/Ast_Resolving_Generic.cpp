@@ -3,6 +3,30 @@
 namespace symbol_type_resolving
 {
 	/***********************************************************************
+	GetTemplateSpecFromSymbol: Get TempalteSpec from a symbol if it is a generic declaration
+	***********************************************************************/
+
+	Ptr<TemplateSpec> GetTemplateSpecFromSymbol(Symbol* symbol)
+	{
+		if (symbol)
+		{
+			if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+			{
+				return funcDecl->templateSpec;
+			}
+			else if (auto typeAliasDecl = symbol->GetAnyForwardDecl<TypeAliasDeclaration>())
+			{
+				return typeAliasDecl->templateSpec;
+			}
+			else if (auto valueAliasDecl = symbol->GetAnyForwardDecl<ValueAliasDeclaration>())
+			{
+				return valueAliasDecl->templateSpec;
+			}
+		}
+		return nullptr;
+	}
+
+	/***********************************************************************
 	CreateGenericFunctionHeader: Calculate enough information to create a generic function type
 	***********************************************************************/
 
@@ -89,22 +113,6 @@ namespace symbol_type_resolving
 				EnsureGenericTypeParameterAndArgumentMatched(nestedParameter, nestedArgument);
 			}
 		}
-	}
-
-	Ptr<TemplateSpec> GetTemplateSpec(const TsysGenericFunction& genericFuncInfo)
-	{
-		if (genericFuncInfo.declSymbol)
-		{
-			if (auto typeAliasDecl = genericFuncInfo.declSymbol->GetAnyForwardDecl<TypeAliasDeclaration>())
-			{
-				return typeAliasDecl->templateSpec;
-			}
-			else if (auto valueAliasDecl = genericFuncInfo.declSymbol->GetAnyForwardDecl<ValueAliasDeclaration>())
-			{
-				return valueAliasDecl->templateSpec;
-			}
-		}
-		return nullptr;
 	}
 
 	void GetArgumentCountRange(ITsys* genericFunction, Ptr<TemplateSpec> spec, const TsysGenericFunction& genericFuncInfo, vint& minCount, vint& maxCount)
@@ -323,7 +331,7 @@ namespace symbol_type_resolving
 		}
 
 		const auto& genericFuncInfo = genericFunction->GetGenericFunction();
-		auto spec = GetTemplateSpec(genericFuncInfo);
+		auto spec = GetTemplateSpecFromSymbol(genericFuncInfo.declSymbol);
 
 		vint minCount = -1;
 		vint maxCount = -1;
