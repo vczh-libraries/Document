@@ -88,7 +88,7 @@ namespace symbol_type_resolving
 	extern TypeTsysList&						EvaluateVarSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl);
 	extern bool									IsMemberFunction(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
 	extern void									FinishEvaluatingSymbol(const ParsingArguments& pa, FunctionDeclaration* funcDecl);
-	extern TypeTsysList&						EvaluateFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl);
+	extern TypeTsysList&						EvaluateFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl, EvaluateSymbolContext* esContext = nullptr);
 	extern symbol_component::Evaluation&		EvaluateClassSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl);
 	extern TypeTsysList&						EvaluateTypeAliasSymbol(const ParsingArguments& pa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
 	extern TypeTsysList&						EvaluateValueAliasSymbol(const ParsingArguments& pa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);

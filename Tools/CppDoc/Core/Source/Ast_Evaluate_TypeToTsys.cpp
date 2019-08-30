@@ -252,6 +252,7 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 	t->Accept(&visitor);
 	isVta = visitor.isVta;
 }
+
 void TypeToTsysInternal(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool& isVta, bool memberOf, TsysCallingConvention cc)
 {
 	TypeToTsysInternal(pa, t.Obj(), tsys, gaContext, isVta, memberOf, cc);

@@ -280,7 +280,6 @@ public:
 	ITsys* RRefOf()																						override { return this; }
 	ITsys* PtrOf()																						override { return this; }
 	ITsys* ArrayOf(vint dimensions)																		override { return this; }
-	ITsys* FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)										override { return this; }
 	ITsys* MemberOf(ITsys* classType)																	override { return this; }
 	ITsys* CVOf(TsysCV cv)																				override { return this; }
 	ITsys* GenericArgOf(TsysGenericArg genericArg)														override { return this; }

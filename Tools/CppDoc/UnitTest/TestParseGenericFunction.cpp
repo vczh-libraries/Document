@@ -26,6 +26,9 @@ F: auto (t: T)
 
 	COMPILE_PROGRAM(program, pa, input);
 	AssertProgram(program, output);
+
+	AssertExpr(pa, L"P",		L"P",		L"<::P::[T], ::P::[U]> any_t __cdecl(::P::[T], ::P::[U]) * $PR"		);
+	AssertExpr(pa, L"F",		L"F",		L"<::F::[T], ...*> any_t __cdecl(::F::[T]) * $PR"					);
 }
 
 TEST_CASE(TestParseGenericFunction_ConnectForward)

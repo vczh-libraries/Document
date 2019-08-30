@@ -101,7 +101,7 @@ namespace symbol_type_resolving
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;
 	}
 
-	TypeTsysList& EvaluateFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl)
+	TypeTsysList& EvaluateFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = funcDecl->symbol;
 		auto& ev = symbol->GetEvaluationForUpdating_NFb();
@@ -136,6 +136,20 @@ namespace symbol_type_resolving
 			ev.Allocate();
 			TypeToTsysNoVta(newPa, funcDecl->type, ev.Get(), nullptr, IsMemberFunction(pa, funcDecl));
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
+		}
+
+		if (funcDecl->templateSpec && !esContext)
+		{
+			TsysGenericFunction genericFunction;
+			TypeTsysList params;
+
+			genericFunction.declSymbol = symbol;
+			CreateGenericFunctionHeader(pa, funcDecl->templateSpec, params, genericFunction);
+
+			for (vint i = 0; i < ev.Get().Count(); i++)
+			{
+				ev.Get()[i] = ev.Get()[i]->GenericFunctionOf(params, genericFunction);
+			}
 		}
 		return ev.Get();
 	}
