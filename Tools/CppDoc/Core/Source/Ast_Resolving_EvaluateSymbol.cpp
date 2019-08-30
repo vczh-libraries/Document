@@ -2,6 +2,11 @@
 
 namespace symbol_type_resolving
 {
+	TypeTsysList& GetEvaluatingResultStorage(Symbol* symbol, EvaluateSymbolContext* esContext)
+	{
+		return esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating_NFb().Get();
+	}
+
 	/***********************************************************************
 	EvaluateVarSymbol: Evaluate the declared type for a variable
 	***********************************************************************/
@@ -9,17 +14,20 @@ namespace symbol_type_resolving
 	TypeTsysList& EvaluateVarSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl)
 	{
 		auto symbol = varDecl->symbol;
-		auto& ev = symbol->GetEvaluationForUpdating_NFb();
-		switch (ev.progress)
 		{
-		case symbol_component::EvaluationProgress::Evaluated: return ev.Get();
-		case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
+			auto& ev = symbol->GetEvaluationForUpdating_NFb();
+			switch (ev.progress)
+			{
+			case symbol_component::EvaluationProgress::Evaluated: return ev.Get();
+			case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
+			}
+
+			ev.progress = symbol_component::EvaluationProgress::Evaluating;
+			ev.Allocate();
 		}
 
-		ev.progress = symbol_component::EvaluationProgress::Evaluating;
-		ev.Allocate();
-
 		auto newPa = pa.WithContext(symbol->GetParentScope());
+		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, nullptr);
 
 		if (varDecl->needResolveTypeFromInitializer)
 		{
@@ -36,9 +44,9 @@ namespace symbol_type_resolving
 				for (vint k = 0; k < types.Count(); k++)
 				{
 					auto type = ResolvePendingType(pa, rootVarDecl->type, types[k]);
-					if (!ev.Get().Contains(type))
+					if (!evaluatedTypes.Contains(type))
 					{
-						ev.Get().Add(type);
+						evaluatedTypes.Add(type);
 					}
 				}
 			}
@@ -49,10 +57,14 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			TypeToTsysNoVta(newPa, varDecl->type, ev.Get(), nullptr);
+			TypeToTsysNoVta(newPa, varDecl->type, evaluatedTypes, nullptr);
 		}
-		ev.progress = symbol_component::EvaluationProgress::Evaluated;
-		return ev.Get();
+
+		{
+			auto& ev = symbol->GetEvaluationForUpdating_NFb();
+			ev.progress = symbol_component::EvaluationProgress::Evaluated;
+		}
+		return evaluatedTypes;
 	}
 
 	/***********************************************************************
@@ -78,7 +90,7 @@ namespace symbol_type_resolving
 	void FinishEvaluatingFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = funcDecl->symbol;
-		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating_NFb().Get();
+		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, esContext);
 
 		if (funcDecl->templateSpec && !esContext)
 		{
@@ -114,7 +126,7 @@ namespace symbol_type_resolving
 		}
 
 		auto newPa = pa.WithContext(symbol->GetParentScope());
-		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating_NFb().Get();
+		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, esContext);
 
 		TypeTsysList processedReturnTypes;
 		{
@@ -155,7 +167,7 @@ namespace symbol_type_resolving
 			ev.Allocate();
 		}
 
-		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating_NFb().Get();
+		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, esContext);
 		
 		if (funcDecl->needResolveTypeFromStatement)
 		{
@@ -202,13 +214,12 @@ namespace symbol_type_resolving
 		ev.progress = symbol_component::EvaluationProgress::Evaluating;
 		ev.Allocate(classDecl->baseTypes.Count());
 
+		auto newPa = pa.WithContext(symbol);
+		for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 		{
-			auto newPa = pa.WithContext(symbol);
-			for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
-			{
-				TypeToTsysNoVta(newPa, classDecl->baseTypes[i].f1, ev.Get(i), nullptr);
-			}
+			TypeToTsysNoVta(newPa, classDecl->baseTypes[i].f1, ev.Get(i), nullptr);
 		}
+
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		return ev;
 	}
@@ -233,7 +244,7 @@ namespace symbol_type_resolving
 		}
 
 		auto newPa = pa.WithContext(symbol->GetParentScope());
-		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating_NFb().Get();
+		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, esContext);
 
 		TypeTsysList types;
 		TypeToTsysNoVta(newPa, usingDecl->type, types, (esContext ? &esContext->gaContext : nullptr));
@@ -284,7 +295,7 @@ namespace symbol_type_resolving
 		}
 
 		auto newPa = pa.WithContext(symbol->GetParentScope());
-		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating_NFb().Get();
+		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, esContext);
 
 		TypeTsysList types;
 		if (usingDecl->needResolveTypeFromInitializer)
