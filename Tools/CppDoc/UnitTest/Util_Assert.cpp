@@ -55,14 +55,17 @@ void AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 	TEST_ASSERT(output == log);
 
 	TypeTsysList tsys;
-	try
+	if (count > 0)
 	{
 		TypeToTsysNoVta(pa, type, tsys, nullptr);
 	}
-	catch (const NotConvertableException&)
+	else
 	{
-		TEST_ASSERT(count == 0);
-		return;
+		try
+		{
+			TypeToTsysNoVta(pa, type, tsys, nullptr);
+		}
+		catch (const NotConvertableException&) {}
 	}
 
 	TEST_ASSERT(tsys.Count() == count);
@@ -99,19 +102,18 @@ void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 	TEST_ASSERT(output == log);
 
 	ExprTsysList tsys;
-	try
+	if (count > 0)
 	{
 		ExprToTsysNoVta(pa, expr, tsys);
 	}
-	catch (const IllegalExprException&)
+	else
 	{
-		TEST_ASSERT(count == 0);
-		return;
-	}
-	catch (const NotConvertableException&)
-	{
-		TEST_ASSERT(count == 0);
-		return;
+		try
+		{
+			ExprToTsysNoVta(pa, expr, tsys);
+		}
+		catch (const IllegalExprException&) {}
+		catch (const NotConvertableException&) {}
 	}
 
 	TEST_ASSERT(tsys.Count() == count);

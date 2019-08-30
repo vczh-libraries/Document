@@ -12,12 +12,17 @@ public:
 	const ParsingArguments&			pa;
 	bool&							resolvingFunctionType;
 	EvaluateSymbolContext*			esContext;
+	GenericArgContext*				gaContext;
 
 	EvaluateStatVisitor(const ParsingArguments& _pa, bool& _resolvingFunctionType, EvaluateSymbolContext* _esContext)
 		:pa(_pa)
 		, resolvingFunctionType(_resolvingFunctionType)
 		, esContext(_esContext)
 	{
+		if (esContext)
+		{
+			gaContext = &esContext->gaContext;
+		}
 	}
 
 	void Evaluate(const ParsingArguments& spa, Ptr<Stat> stat)
@@ -43,14 +48,14 @@ public:
 	{
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
-			EvaluateDeclaration(pa, self->decls[i]);
+			EvaluateDeclaration(pa, self->decls[i], gaContext);
 		}
 	}
 
 	void Visit(ExprStat* self) override
 	{
 		ExprTsysList types;
-		ExprToTsysNoVta(pa, self->expr, types);
+		ExprToTsysNoVta(pa, self->expr, types, gaContext);
 	}
 
 	void Visit(LabelStat* self) override
@@ -66,7 +71,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types, gaContext);
 		}
 		self->stat->Accept(this);
 	}
@@ -88,12 +93,12 @@ public:
 		auto spa = pa.WithContext(self->symbol);
 		if (self->varExpr)
 		{
-			EvaluateDeclaration(spa, self->varExpr);
+			EvaluateDeclaration(spa, self->varExpr, gaContext);
 		}
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types);
+			ExprToTsysNoVta(spa, self->expr, types, gaContext);
 		}
 		Evaluate(spa, self->stat);
 	}
@@ -102,7 +107,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types, gaContext);
 		}
 		Evaluate(pa, self->stat);
 	}
@@ -110,7 +115,7 @@ public:
 	void Visit(ForEachStat* self) override
 	{
 		ExprTsysList types;
-		ExprToTsysNoVta(pa, self->expr, types);
+		ExprToTsysNoVta(pa, self->expr, types, gaContext);
 
 		if (self->varDecl->needResolveTypeFromInitializer)
 		{
@@ -163,7 +168,7 @@ public:
 						derefExpr->opName.type = CppNameType::Operator;
 						derefExpr->operand = callExpr;
 
-						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes);
+						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes, gaContext);
 					}
 					{
 						// *container.begin()
@@ -189,7 +194,7 @@ public:
 						derefExpr->opName.type = CppNameType::Operator;
 						derefExpr->operand = callExpr;
 
-						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes);
+						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes, gaContext);
 					}
 
 					for (vint i = 0; i < virtualExprTypes.Count(); i++)
@@ -211,7 +216,7 @@ public:
 		}
 		else
 		{
-			EvaluateDeclaration(pa, self->varDecl);
+			EvaluateDeclaration(pa, self->varDecl, gaContext);
 		}
 
 		auto spa = pa.WithContext(self->symbol);
@@ -223,22 +228,22 @@ public:
 		auto spa = pa.WithContext(self->symbol);
 		for (vint i = 0; i < self->varDecls.Count(); i++)
 		{
-			EvaluateDeclaration(spa, self->varDecls[i]);
+			EvaluateDeclaration(spa, self->varDecls[i], gaContext);
 		}
 		if (self->init)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->init, types);
+			ExprToTsysNoVta(spa, self->init, types, gaContext);
 		}
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types);
+			ExprToTsysNoVta(spa, self->expr, types, gaContext);
 		}
 		if (self->effect)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->effect, types);
+			ExprToTsysNoVta(spa, self->effect, types, gaContext);
 		}
 		Evaluate(spa, self->stat);
 	}
@@ -248,16 +253,16 @@ public:
 		auto spa = pa.WithContext(self->symbol);
 		for (vint i = 0; i < self->varDecls.Count(); i++)
 		{
-			EvaluateDeclaration(spa, self->varDecls[i]);
+			EvaluateDeclaration(spa, self->varDecls[i], gaContext);
 		}
 		if (self->varExpr)
 		{
-			EvaluateDeclaration(spa, self->varExpr);
+			EvaluateDeclaration(spa, self->varExpr, gaContext);
 		}
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types);
+			ExprToTsysNoVta(spa, self->expr, types, gaContext);
 		}
 		Evaluate(spa, self->trueStat);
 		if (self->falseStat)
@@ -271,12 +276,12 @@ public:
 		auto spa = pa.WithContext(self->symbol);
 		if (self->varExpr)
 		{
-			EvaluateDeclaration(spa, self->varExpr);
+			EvaluateDeclaration(spa, self->varExpr, gaContext);
 		}
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types);
+			ExprToTsysNoVta(spa, self->expr, types, gaContext);
 		}
 		Evaluate(spa, self->stat);
 	}
@@ -287,7 +292,7 @@ public:
 		auto spa = pa.WithContext(self->symbol);
 		if (self->exception)
 		{
-			EvaluateDeclaration(spa, self->exception);
+			EvaluateDeclaration(spa, self->exception, gaContext);
 		}
 		Evaluate(spa, self->catchStat);
 	}
@@ -297,7 +302,7 @@ public:
 		ExprTsysList types;
 		if (self->expr)
 		{
-			ExprToTsysNoVta(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types, gaContext);
 		}
 
 		if (pa.functionBodySymbol && resolvingFunctionType)
@@ -327,7 +332,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types, gaContext);
 		}
 		self->tryStat->Accept(this);
 		self->exceptStat->Accept(this);
@@ -347,7 +352,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types, gaContext);
 		}
 		self->stat->Accept(this);
 	}
@@ -356,7 +361,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(pa, self->expr, types);
+			ExprToTsysNoVta(pa, self->expr, types, gaContext);
 		}
 		self->stat->Accept(this);
 	}
@@ -527,7 +532,7 @@ void EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctio
 	s->Accept(&visitor);
 }
 
-void EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s)
+void EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s, GenericArgContext* gaContext)
 {
 	auto dpa = pa.WithContext(s->symbol);
 	EvaluateDeclarationVisitor visitor(dpa);

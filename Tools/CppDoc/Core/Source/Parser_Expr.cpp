@@ -178,8 +178,17 @@ Ptr<Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 			auto symbol = resolvableExpr->resolving->resolvedSymbols[i];
 			switch (symbol->kind)
 			{
+			case symbol_component::SymbolKind::FunctionSymbol:
+				if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+				{
+					if (funcDecl->templateSpec)
+					{
+						genericSymbols.Add(symbol);
+					}
+				}
+				break;
 			case symbol_component::SymbolKind::ValueAlias:
-				if (auto usingDecl = symbol->GetImplDecl_NFb<ValueAliasDeclaration>())
+				if (auto usingDecl = symbol->GetAnyForwardDecl<ValueAliasDeclaration>())
 				{
 					if (usingDecl->templateSpec)
 					{

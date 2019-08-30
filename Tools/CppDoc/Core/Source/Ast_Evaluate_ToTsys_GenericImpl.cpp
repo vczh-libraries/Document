@@ -12,6 +12,15 @@ namespace symbol_totsys_impl
 	void ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys, TProcess&& process)
 	{
 		auto genericFunction = args[0].tsys;
+		if (
+			genericFunction->GetType() == TsysType::Ptr &&
+			genericFunction->GetElement()->GetType() == TsysType::GenericFunction &&
+			genericFunction->GetElement()->GetElement()->GetType() == TsysType::Function
+			)
+		{
+			genericFunction = genericFunction->GetElement();
+		}
+
 		if (genericFunction->GetType() == TsysType::GenericFunction)
 		{
 			auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
@@ -75,6 +84,17 @@ namespace symbol_totsys_impl
 		{
 			switch (declSymbol->kind)
 			{
+			case symbol_component::SymbolKind::FunctionBodySymbol:
+				{
+					auto decl = declSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+					if (!decl->templateSpec) throw NotConvertableException();
+					symbol_type_resolving::EvaluateFuncSymbol(pa, decl.Obj(), &esContext);
+					for (vint i = 0; i < esContext.evaluatedTypes.Count(); i++)
+					{
+						esContext.evaluatedTypes[i] = esContext.evaluatedTypes[i]->PtrOf();
+					}
+				}
+				break;
 			case symbol_component::SymbolKind::ValueAlias:
 				{
 					auto decl = declSymbol->GetImplDecl_NFb<ValueAliasDeclaration>();

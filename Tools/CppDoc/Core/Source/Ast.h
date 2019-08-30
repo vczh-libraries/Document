@@ -159,7 +159,7 @@ extern void					ExprToTsysInternal(const ParsingArguments& pa, Ptr<Expr> e, Expr
 extern void					ExprToTsysNoVta(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, GenericArgContext* gaContext = nullptr);
 
 extern void					EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctionType, EvaluateSymbolContext* esContext);
-extern void					EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s);
+extern void					EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s, GenericArgContext* gaContext = nullptr);
 extern void					EvaluateProgram(const ParsingArguments& pa, Ptr<Program> program);
 
 enum class SpecialMemberKind
