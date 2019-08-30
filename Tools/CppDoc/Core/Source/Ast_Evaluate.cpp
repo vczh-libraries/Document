@@ -10,10 +10,20 @@ class EvaluateStatVisitor : public Object, public IStatVisitor
 {
 public:
 	const ParsingArguments&			pa;
+	bool&							resolvingFunctionType;
+	EvaluateSymbolContext*			esContext;
 
-	EvaluateStatVisitor(const ParsingArguments& _pa)
+	EvaluateStatVisitor(const ParsingArguments& _pa, bool& _resolvingFunctionType, EvaluateSymbolContext* _esContext)
 		:pa(_pa)
+		, resolvingFunctionType(_resolvingFunctionType)
+		, esContext(_esContext)
 	{
+	}
+
+	void Evaluate(const ParsingArguments& spa, Ptr<Stat> stat)
+	{
+		EvaluateStatVisitor visitor(spa, resolvingFunctionType, esContext);
+		stat->Accept(&visitor);
 	}
 
 	void Visit(EmptyStat* self) override
@@ -25,7 +35,7 @@ public:
 		auto spa = pa.WithContext(self->symbol);
 		for (vint i = 0; i < self->stats.Count(); i++)
 		{
-			EvaluateStat(spa, self->stats[i]);
+			Evaluate(spa, self->stats[i]);
 		}
 	}
 
@@ -85,7 +95,7 @@ public:
 			ExprTsysList types;
 			ExprToTsysNoVta(spa, self->expr, types);
 		}
-		EvaluateStat(spa, self->stat);
+		Evaluate(spa, self->stat);
 	}
 
 	void Visit(DoWhileStat* self) override
@@ -94,7 +104,7 @@ public:
 			ExprTsysList types;
 			ExprToTsysNoVta(pa, self->expr, types);
 		}
-		EvaluateStat(pa, self->stat);
+		Evaluate(pa, self->stat);
 	}
 
 	void Visit(ForEachStat* self) override
@@ -205,7 +215,7 @@ public:
 		}
 
 		auto spa = pa.WithContext(self->symbol);
-		EvaluateStat(spa, self->stat);
+		Evaluate(spa, self->stat);
 	}
 
 	void Visit(ForStat* self) override
@@ -230,7 +240,7 @@ public:
 			ExprTsysList types;
 			ExprToTsysNoVta(spa, self->effect, types);
 		}
-		EvaluateStat(spa, self->stat);
+		Evaluate(spa, self->stat);
 	}
 
 	void Visit(IfElseStat* self) override
@@ -249,10 +259,10 @@ public:
 			ExprTsysList types;
 			ExprToTsysNoVta(spa, self->expr, types);
 		}
-		EvaluateStat(spa, self->trueStat);
+		Evaluate(spa, self->trueStat);
 		if (self->falseStat)
 		{
-			EvaluateStat(spa, self->falseStat);
+			Evaluate(spa, self->falseStat);
 		}
 	}
 
@@ -268,7 +278,7 @@ public:
 			ExprTsysList types;
 			ExprToTsysNoVta(spa, self->expr, types);
 		}
-		EvaluateStat(spa, self->stat);
+		Evaluate(spa, self->stat);
 	}
 
 	void Visit(TryCatchStat* self) override
@@ -279,7 +289,7 @@ public:
 		{
 			EvaluateDeclaration(spa, self->exception);
 		}
-		EvaluateStat(spa, self->catchStat);
+		Evaluate(spa, self->catchStat);
 	}
 
 	void Visit(ReturnStat* self) override
@@ -290,32 +300,26 @@ public:
 			ExprToTsysNoVta(pa, self->expr, types);
 		}
 
-		if (pa.functionBodySymbol)
+		if (pa.functionBodySymbol && resolvingFunctionType)
 		{
-			auto& ev = pa.functionBodySymbol->GetEvaluationForUpdating_NFb();
-			if (ev.progress == symbol_component::EvaluationProgress::Evaluating)
+			resolvingFunctionType = false;
+			TypeTsysList tsyses;
+			if (self->expr)
 			{
-				if (ev.Count() == 0)
+				for (vint i = 0; i < types.Count(); i++)
 				{
-					ev.Allocate();
-					if (self->expr)
+					auto tsys = types[i].tsys;
+					if (!tsyses.Contains(tsys))
 					{
-						for (vint i = 0; i < types.Count(); i++)
-						{
-							auto tsys = types[i].tsys;
-							if (!ev.Get().Contains(tsys))
-							{
-								ev.Get().Add(tsys);
-							}
-						}
+						tsyses.Add(tsys);
 					}
-					else
-					{
-						ev.Get().Add(pa.tsys->Void());
-					}
-					symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>().Obj());
 				}
 			}
+			else
+			{
+				tsyses.Add(pa.tsys->Void());
+			}
+			symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>().Obj(), tsyses, esContext);
 		}
 	}
 
@@ -446,7 +450,7 @@ public:
 		if (!self->needResolveTypeFromStatement)
 		{
 			auto fpa = pa.WithContext(self->symbol);
-			EvaluateStat(fpa, self->statement);
+			EvaluateStat(fpa, self->statement, false, nullptr);
 		}
 	}
 
@@ -517,9 +521,9 @@ public:
 Evaluate
 ***********************************************************************/
 
-void EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s)
+void EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctionType, EvaluateSymbolContext* esContext)
 {
-	EvaluateStatVisitor visitor(pa);
+	EvaluateStatVisitor visitor(pa, resolvingFunctionType, esContext);
 	s->Accept(&visitor);
 }
 

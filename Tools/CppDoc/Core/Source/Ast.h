@@ -144,9 +144,6 @@ struct IllegalExprException {};
 struct NotResolvableException {};
 struct UnexpectedSymbolCategoryException {};
 
-using TypeTsysList = List<ITsys*>;
-using ExprTsysList = List<ExprTsysItem>;
-
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2, Dictionary<WString, WString>& equivalentNames);
 extern bool					IsCompatibleFunctionDeclInSameScope(Ptr<ForwardFunctionDeclaration> declNew, Ptr<ForwardFunctionDeclaration> declOld);
 extern bool					IsPendingType(Type* type);
@@ -161,7 +158,7 @@ extern void					TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& p
 extern void					ExprToTsysInternal(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, bool& isVta, GenericArgContext* gaContext = nullptr);
 extern void					ExprToTsysNoVta(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, GenericArgContext* gaContext = nullptr);
 
-extern void					EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s);
+extern void					EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctionType, EvaluateSymbolContext* esContext);
 extern void					EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s);
 extern void					EvaluateProgram(const ParsingArguments& pa, Ptr<Program> program);
 

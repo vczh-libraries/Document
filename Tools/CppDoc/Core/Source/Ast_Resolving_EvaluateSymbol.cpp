@@ -75,14 +75,21 @@ namespace symbol_type_resolving
 		return classScope && !isStaticSymbol;
 	}
 
-	void FinishEvaluatingSymbol(const ParsingArguments& pa, FunctionDeclaration* funcDecl)
+	void FinishEvaluatingSymbol(const ParsingArguments& pa, FunctionDeclaration* funcDecl, TypeTsysList& returnTypes, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = funcDecl->symbol;
-		auto& ev = symbol->GetEvaluationForUpdating_NFb();
+		if(!esContext)
+		{
+			auto& ev = symbol->GetEvaluationForUpdating_NFb();
+			if (ev.progress != symbol_component::EvaluationProgress::Evaluating)
+			{
+				throw NotResolvableException();
+			}
+			ev.progress = symbol_component::EvaluationProgress::Evaluated;
+		}
+
 		auto newPa = pa.WithContext(symbol->GetParentScope());
-		TypeTsysList returnTypes;
-		CopyFrom(returnTypes, ev.Get());
-		ev.Get().Clear();
+		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating_NFb().Get();
 
 		TypeTsysList processedReturnTypes;
 		{
@@ -97,21 +104,32 @@ namespace symbol_type_resolving
 				}
 			}
 		}
-		TypeToTsysAndReplaceFunctionReturnType(newPa, funcDecl->type, processedReturnTypes, ev.Get(), nullptr, IsMemberFunction(pa, funcDecl));
-		ev.progress = symbol_component::EvaluationProgress::Evaluated;
+		TypeToTsysAndReplaceFunctionReturnType(
+			newPa,
+			funcDecl->type,
+			processedReturnTypes,
+			evaluatedTypes,
+			(esContext ? &esContext->gaContext : nullptr),
+			IsMemberFunction(pa, funcDecl)
+		);
 	}
 
 	TypeTsysList& EvaluateFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = funcDecl->symbol;
-		auto& ev = symbol->GetEvaluationForUpdating_NFb();
-		switch (ev.progress)
+		if (!esContext)
 		{
-		case symbol_component::EvaluationProgress::Evaluated: return ev.Get();
-		case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
+			auto& ev = symbol->GetEvaluationForUpdating_NFb();
+			switch (ev.progress)
+			{
+			case symbol_component::EvaluationProgress::Evaluated: return ev.Get();
+			case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
+			}
+			ev.progress = symbol_component::EvaluationProgress::Evaluating;
+			ev.Allocate();
 		}
 
-		ev.progress = symbol_component::EvaluationProgress::Evaluating;
+		auto& evaluatedTypes = esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating_NFb().Get();
 		
 		if (funcDecl->needResolveTypeFromStatement)
 		{
@@ -119,11 +137,7 @@ namespace symbol_type_resolving
 			{
 				EnsureFunctionBodyParsed(rootFuncDecl);
 				auto funcPa = pa.WithContext(symbol);
-				EvaluateStat(funcPa, rootFuncDecl->statement);
-				if (ev.Count() == 0)
-				{
-					throw NotResolvableException();
-				}
+				EvaluateStat(funcPa, rootFuncDecl->statement, true, esContext);
 			}
 			else
 			{
@@ -133,9 +147,7 @@ namespace symbol_type_resolving
 		else
 		{
 			auto newPa = pa.WithContext(symbol->GetParentScope());
-			ev.Allocate();
-			TypeToTsysNoVta(newPa, funcDecl->type, ev.Get(), nullptr, IsMemberFunction(pa, funcDecl));
-			ev.progress = symbol_component::EvaluationProgress::Evaluated;
+			TypeToTsysNoVta(newPa, funcDecl->type, evaluatedTypes, nullptr, IsMemberFunction(pa, funcDecl));
 		}
 
 		if (funcDecl->templateSpec && !esContext)
@@ -146,12 +158,18 @@ namespace symbol_type_resolving
 			genericFunction.declSymbol = symbol;
 			CreateGenericFunctionHeader(pa, funcDecl->templateSpec, params, genericFunction);
 
-			for (vint i = 0; i < ev.Get().Count(); i++)
+			for (vint i = 0; i < evaluatedTypes.Count(); i++)
 			{
-				ev.Get()[i] = ev.Get()[i]->GenericFunctionOf(params, genericFunction);
+				evaluatedTypes[i] = evaluatedTypes[i]->GenericFunctionOf(params, genericFunction);
 			}
 		}
-		return ev.Get();
+
+		if (!esContext)
+		{
+			auto& ev = symbol->GetEvaluationForUpdating_NFb();
+			ev.progress = symbol_component::EvaluationProgress::Evaluated;
+		}
+		return evaluatedTypes;
 	}
 
 	/***********************************************************************

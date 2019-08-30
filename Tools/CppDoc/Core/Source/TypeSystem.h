@@ -96,6 +96,9 @@ struct ExprTsysItem : ExprHeader
 	bool operator>=	(const ExprTsysItem& item)const { return Compare(*this, item) >= 0; }
 };
 
+using TypeTsysList = List<ITsys*>;
+using ExprTsysList = List<ExprTsysItem>;
+
 struct GenericArgContext
 {
 	// if a key is mapped to a value (not type), the value will be stored as:
@@ -103,6 +106,12 @@ struct GenericArgContext
 	//	any		: unknown ammount of values
 	//	init	: known ammount of values
 	Group<ITsys*, ITsys*>	arguments;
+};
+
+struct EvaluateSymbolContext
+{
+	GenericArgContext	gaContext;
+	TypeTsysList		evaluatedTypes;
 };
 
 /***********************************************************************
