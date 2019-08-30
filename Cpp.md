@@ -14,7 +14,7 @@
 - [ ] Next Demo!
   - [ ] `template` on functions.
     - [ ] Connect function with forward declarations
-    - [ ] Instantiate functions with all non-default template arguments specified.
+    - [x] Instantiate functions with all non-default template arguments specified.
     - [ ] When evaluating a function with incomplete types, local variable types are cached in `gaContext`
     - [ ] Specialization recognized but not used
   - [ ] `template` on classes.
