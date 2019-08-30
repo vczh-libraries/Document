@@ -319,7 +319,7 @@ public:
 			{
 				tsyses.Add(pa.tsys->Void());
 			}
-			symbol_type_resolving::FinishEvaluatingSymbol(pa, pa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>().Obj(), tsyses, esContext);
+			symbol_type_resolving::SetFuncTypeByReturnStat(pa, pa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>().Obj(), tsyses, esContext);
 		}
 	}
 
