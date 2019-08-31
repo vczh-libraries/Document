@@ -101,10 +101,13 @@ using ExprTsysList = List<ExprTsysItem>;
 
 struct GenericArgContext
 {
-	// if a key is mapped to a value (not type), the value will be stored as:
-	//	nullptr	: a value
-	//	any		: unknown ammount of values
-	//	init	: known ammount of values
+	//	Keys:
+	//		Type							:	GenericArg(Decl(TemplateArgument))
+	//		Value							:	Decl(TemplateArgument)
+	//	Value:
+	//		Single							:	Anything
+	//		MultipleValues					:	{Values ...}
+	//		UnknownAmountOfMultipleValues	:	any_t
 	Group<ITsys*, ITsys*>	arguments;
 };
 

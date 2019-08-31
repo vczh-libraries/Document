@@ -8,6 +8,7 @@ using namespace vl::regex;
 struct ParsingArguments;
 class ITsys;
 class ForwardFunctionDeclaration;
+class VariableDeclaration;
 
 /***********************************************************************
 Symbol
@@ -159,7 +160,8 @@ extern void					ExprToTsysInternal(const ParsingArguments& pa, Ptr<Expr> e, Expr
 extern void					ExprToTsysNoVta(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, GenericArgContext* gaContext = nullptr);
 
 extern void					EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctionType, EvaluateSymbolContext* esContext);
-extern void					EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s, GenericArgContext* gaContext = nullptr);
+extern void					EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration* decl, GenericArgContext* gaContext);
+extern void					EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s);
 extern void					EvaluateProgram(const ParsingArguments& pa, Ptr<Program> program);
 
 enum class SpecialMemberKind
