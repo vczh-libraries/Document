@@ -16,6 +16,10 @@
     - [ ] Connect function with forward declarations
     - [x] Instantiate functions with all non-default template arguments specified.
     - [ ] When evaluating a function with incomplete types, local variable types are cached in `gaContext`
+      - When a `gaContext` is passed to `EvaluateXSymbol`, there should be a way to tell
+        - Get the type of the symbol
+        - Get the type with template arguments provided
+        - Doing the above things, when the parent context is being evaluated by only the symbol, or with template arguments provided
     - [ ] Specialization recognized but not used
   - [ ] `template` on classes.
     - [ ] Instantiate classes with all non-default template arguments specified.
