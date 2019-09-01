@@ -16,10 +16,24 @@
     - [ ] Connect function with forward declarations
     - [x] Instantiate functions with all non-default template arguments specified.
     - [ ] When evaluating a function with incomplete types, local variable types are cached in `gaContext`
-      - When a `gaContext` is passed to `EvaluateXSymbol`, there should be a way to tell
-        - Get the type of the symbol
-        - Get the type with template arguments provided
-        - Doing the above things, when the parent context is being evaluated by only the symbol, or with template arguments provided
+      - General evaluation(no template argument provided) will be applied on the root scope after parsing, provided a `gaContext` without template arguments
+      - General evaluation of generic sub symbols are only needed when the parent scope is being general evaluated.
+      - Only general evaluation creates hyper links.
+      - Evaluation of sub symbols will access parent scope's template argument.
+        - e.g. accessing `decltype(involves anything in parent scope)`
+        - e.g. accessing template argument directly.
+      - When instantiated evaluating a generic object, the nearest common ancestry of the current position and the generic object will be calculated, only template arguments that are accessable by that ancestry will be passed into the evaluation.
+        - e.g. `template<typename T>class{ DECL1; template<typename U>class {Decl2;}}`. When `Decl2` calls `Decl1<A,B,C>`, only `T` will be passed, `U` will not.
+      - A `GenericArgContext`(gaContext) linked list should be contained by `ParsingArguments`(pa).
+        - `pa` has a flag to indicate whether this is a general evaluation or a instantiated evaluation.
+        - `pa` has the most recently created `gaContext` when recursively evaluating into scopes.
+        - A `gaContext` will see its parent `gaContext`.
+        - A `gaContext` is associated with a symbol as a scope, so that to calculate the nearest common ancestry.
+      - Delete `EvaluateStatContext`
+      - `EvaluateSymbolContext` will be replaced by `TypeTsysList*` (default nullptr), since `gaContext` is now integrated into `pa`.
+      - General evaluation result to a declarations will be stored directly inside the associated symbol.
+      - Evaluation (can only be general) result of a non-generic declaration under a `gaContext`, will be stored in this `gaContext`.
+      - Instantiated evaluation result of a generic declaration will not be cached (this could be improved).
     - [ ] Specialization recognized but not used
   - [ ] `template` on classes.
     - [ ] Instantiate classes with all non-default template arguments specified.
