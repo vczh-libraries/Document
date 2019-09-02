@@ -141,7 +141,7 @@ namespace symbol_type_resolving
 			it could be null if it is initiated by IdExpr
 	***********************************************************************/
 
-	void VisitSymbolInternal(const ParsingArguments& pa, GenericArgContext* gaContext, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
+	void VisitSymbolInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
 		ITsys* classScope = nullptr;
 		if (auto parent = symbol->GetParentScope())
@@ -244,41 +244,36 @@ namespace symbol_type_resolving
 					}
 					hasVariadic = true;
 
-					if (gaContext)
+					auto argumentKey = pa.tsys->DeclOf(symbol);
+					if (auto pReplacedTypes = pa.ReplaceGenericArg(argumentKey))
 					{
-						auto argumentKey = pa.tsys->DeclOf(symbol);
-						vint index = gaContext->arguments.Keys().IndexOf(argumentKey);
-						if (index != -1)
+						for (vint i = 0; i < pReplacedTypes->Count(); i++)
 						{
-							auto& replacedTypes = gaContext->arguments.GetByIndex(index);
-							for (vint i = 0; i < replacedTypes.Count(); i++)
+							auto replacedType = pReplacedTypes->Get(i);
+							if (!replacedType)
 							{
-								auto replacedType = replacedTypes[i];
-								if (!replacedType)
-								{
-									throw NotConvertableException();
-								}
-								switch (replacedType->GetType())
-								{
-								case TsysType::Init:
-									{
-										Array<ExprTsysList> initArgs(replacedType->GetParamCount());
-										for (vint j = 0; j < initArgs.Count(); j++)
-										{
-											AddTemp(initArgs[j], EvaluateGenericArgumentSymbol(symbol));
-										}
-										CreateUniversalInitializerType(pa, initArgs, result);
-									}
-									break;
-								case TsysType::Any:
-									AddTemp(result, pa.tsys->Any());
-									break;
-								default:
-									throw NotConvertableException();
-								}
+								throw NotConvertableException();
 							}
-							return;
+							switch (replacedType->GetType())
+							{
+							case TsysType::Init:
+								{
+									Array<ExprTsysList> initArgs(replacedType->GetParamCount());
+									for (vint j = 0; j < initArgs.Count(); j++)
+									{
+										AddTemp(initArgs[j], EvaluateGenericArgumentSymbol(symbol));
+									}
+									CreateUniversalInitializerType(pa, initArgs, result);
+								}
+								break;
+							case TsysType::Any:
+								AddTemp(result, pa.tsys->Any());
+								break;
+							default:
+								throw NotConvertableException();
+							}
 						}
+						return;
 					}
 
 					AddTemp(result, pa.tsys->Any());
@@ -298,21 +293,21 @@ namespace symbol_type_resolving
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		VisitSymbolInternal(pa, nullptr, nullptr, symbol, false, result, false, hasVariadic, hasNonVariadic);
+		VisitSymbolInternal(pa, nullptr, symbol, false, result, false, hasVariadic, hasNonVariadic);
 	}
 
 	void VisitSymbolForScope(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result)
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		VisitSymbolInternal(pa, nullptr, thisItem, symbol, true, result, false, hasVariadic, hasNonVariadic);
+		VisitSymbolInternal(pa, thisItem, symbol, true, result, false, hasVariadic, hasNonVariadic);
 	}
 
 	void VisitSymbolForField(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result)
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		VisitSymbolInternal(pa, nullptr, thisItem, symbol, false, result, false, hasVariadic, hasNonVariadic);
+		VisitSymbolInternal(pa, thisItem, symbol, false, result, false, hasVariadic, hasNonVariadic);
 	}
 
 	/***********************************************************************
@@ -327,7 +322,7 @@ namespace symbol_type_resolving
 		if (entity->GetType() == TsysType::Decl)
 		{
 			auto symbol = entity->GetDecl();
-			auto fieldPa = pa.WithContext(symbol);
+			auto fieldPa = pa.WithScope(symbol);
 			auto rar = ResolveSymbol(fieldPa, name, SearchPolicy::ChildSymbol);
 			if (totalRar) totalRar->Merge(rar);
 			return rar.values;
@@ -339,7 +334,7 @@ namespace symbol_type_resolving
 	VisitResolvedMember: Fill all resolved member symbol to ExprTsysList
 	***********************************************************************/
 
-	void VisitResolvedMemberInternal(const ParsingArguments& pa, GenericArgContext* gaContext, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
+	void VisitResolvedMemberInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
 		ExprTsysList varTypes, funcTypes;
 		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
@@ -373,7 +368,7 @@ namespace symbol_type_resolving
 				}
 			}
 
-			VisitSymbolInternal(pa, gaContext, (targetTypeList == &result ? nullptr : thisItem), resolving->resolvedSymbols[i], false, *targetTypeList, allowVariadic, hasVariadic, hasNonVariadic);
+			VisitSymbolInternal(pa, (targetTypeList == &result ? nullptr : thisItem), resolving->resolvedSymbols[i], false, *targetTypeList, allowVariadic, hasVariadic, hasNonVariadic);
 		}
 
 		if (thisItem)
@@ -393,16 +388,16 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void VisitResolvedMember(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, ExprTsysList& result, bool& hasVariadic, bool& hasNonVariadic)
+	void VisitResolvedMember(const ParsingArguments& pa, Ptr<Resolving> resolving, ExprTsysList& result, bool& hasVariadic, bool& hasNonVariadic)
 	{
-		VisitResolvedMemberInternal(pa, gaContext, nullptr, resolving, result, true, hasVariadic, hasNonVariadic);
+		VisitResolvedMemberInternal(pa, nullptr, resolving, result, true, hasVariadic, hasNonVariadic);
 	}
 
 	void VisitResolvedMember(const ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result)
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		VisitResolvedMemberInternal(pa, nullptr, thisItem, resolving, result, false, hasVariadic, hasNonVariadic);
+		VisitResolvedMemberInternal(pa, thisItem, resolving, result, false, hasVariadic, hasNonVariadic);
 	}
 
 	/***********************************************************************

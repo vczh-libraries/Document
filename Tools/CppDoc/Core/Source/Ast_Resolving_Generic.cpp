@@ -323,7 +323,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, Array<vint>& argSource, SortedList<vint>& boundedAnys, vint offset, GenericArgContext* newGaContext)
+	void ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, Array<vint>& argSource, SortedList<vint>& boundedAnys, vint offset)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
 		{
@@ -360,6 +360,7 @@ namespace symbol_type_resolving
 		GpaList gpaMappings;
 		CalculateGpa(gpaMappings, genericFunction, genericFuncInfo, inputArgumentCount, boundedAnys, offset);
 
+		auto newGaContext = pa.taContext;
 		for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 		{
 			auto gpa = gpaMappings[i];
@@ -377,7 +378,7 @@ namespace symbol_type_resolving
 							throw NotConvertableException();
 						}
 						TypeTsysList argTypes;
-						TypeToTsysNoVta(pa.WithContext(genericFuncInfo.declSymbol), spec->arguments[i].type, argTypes, newGaContext);
+						TypeToTsysNoVta(pa.WithScope(genericFuncInfo.declSymbol), spec->arguments[i].type, argTypes);
 
 						for (vint j = 0; j < argTypes.Count(); j++)
 						{

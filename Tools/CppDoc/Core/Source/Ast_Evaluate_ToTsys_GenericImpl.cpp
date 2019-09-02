@@ -29,8 +29,10 @@ namespace symbol_totsys_impl
 				throw NotConvertableException();
 			}
 
+			TemplateArgumentContext taContext;
+			ResolveGenericParameters(pa.WithArgs(taContext), genericFunction, args, isTypes, argSource, boundedAnys, 1);
+
 			EvaluateSymbolContext esContext;
-			ResolveGenericParameters(pa, genericFunction, args, isTypes, argSource, boundedAnys, 1);
 			process(genericFunction, declSymbol, esContext);
 
 			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
