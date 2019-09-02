@@ -304,7 +304,7 @@ namespace TestConvert_Helpers
 		auto pTypeOps = fromSymbol->TryGetChildren_NFb(L"$__type");
 		if (!pTypeOps) return false;
 
-		auto newPa = pa.WithContext(fromSymbol);
+		auto newPa = pa.WithScope(fromSymbol);
 		for (vint i = 0; i < pTypeOps->Count(); i++)
 		{
 			auto typeOpSymbol = pTypeOps->Get(i);
@@ -363,7 +363,7 @@ namespace TestConvert_Helpers
 		auto pCtors = toSymbol->TryGetChildren_NFb(L"$__ctor");
 		if (!pCtors) return false;
 
-		auto newPa = pa.WithContext(toSymbol);
+		auto newPa = pa.WithScope(toSymbol);
 		for (vint i = 0; i < pCtors->Count(); i++)
 		{
 			auto ctorSymbol = pCtors->Get(i);

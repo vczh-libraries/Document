@@ -42,6 +42,14 @@ TEST_CASE(TestParseGenericFunction_ResolveTypeWithLocalVariables)
 	COMPILE_PROGRAM(program, pa, input);
 }
 
+TEST_CASE(TestParseGenericFunction_ResolveTypeWithGenericAliases)
+{
+	auto input = LR"(
+)";
+
+	COMPILE_PROGRAM(program, pa, input);
+}
+
 TEST_CASE(TestParseGenericFunction_ConnectForward)
 {
 	auto input = LR"(

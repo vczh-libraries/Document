@@ -360,9 +360,9 @@ public:
 
 	virtual ITsys*						GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
 	virtual bool						IsUnknownType() = 0;
-	virtual bool						HasGenericArg(const SortedList<ITsys*>* includedTypes) = 0;
+	virtual bool						HasGenericArg(const ParsingArguments& pa) = 0;
 	virtual bool						HasUnknownType() = 0;
-	virtual void						ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output) = 0;
+	virtual void						ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output) = 0;
 };
 
 /***********************************************************************

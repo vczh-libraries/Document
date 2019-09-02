@@ -301,6 +301,11 @@ struct ParsingArguments
 	EvaluationKind									GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const;
 };
 
+struct EvaluateSymbolContext
+{
+	TypeTsysList									result;
+};
+
 class DelayParse : public Object
 {
 public:
