@@ -1,4 +1,4 @@
-#include "Ast_Resolving_ExpandPotentialVta.h"
+#include "Ast_Evaluate_ExpandPotentialVta.h"
 
 namespace symbol_totsys_impl
 {
