@@ -546,41 +546,62 @@ ParsingArguments::ParsingArguments()
 
 ParsingArguments::ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr<IIndexRecorder> _recorder)
 	:root(_root)
-	, context(_root.Obj())
+	, scopeSymbol(_root.Obj())
 	, tsys(_tsys)
 	, recorder(_recorder)
 {
 }
 
-ParsingArguments ParsingArguments::WithContext(Symbol* _context)const
+ParsingArguments ParsingArguments::WithScope(Symbol* _scopeSymbol)const
 {
 	ParsingArguments pa(root, tsys, recorder);
 	pa.program = program;
-	pa.context = _context;
+	pa.scopeSymbol = _scopeSymbol;
+	pa.taContext = taContext;
 
-	while (_context)
+	while (_scopeSymbol)
 	{
-		if (_context == context)
+		if (_scopeSymbol == scopeSymbol)
 		{
 			pa.functionBodySymbol = functionBodySymbol;
 			break;
 		}
-		else if (_context->kind == symbol_component::SymbolKind::FunctionBodySymbol)
+		else if (_scopeSymbol->kind == symbol_component::SymbolKind::FunctionBodySymbol)
 		{
-			pa.functionBodySymbol = _context;
+			pa.functionBodySymbol = _scopeSymbol;
 			break;
 		}
 		else
 		{
-			_context = _context->GetParentScope();
+			_scopeSymbol = _scopeSymbol->GetParentScope();
 		}
 	}
 
 	return pa;
 }
 
+ParsingArguments ParsingArguments::WithArgs(TemplateArgumentContext& taContext)const
+{
+	ParsingArguments pa = *this;
+	taContext.parent = pa.taContext;
+	pa.taContext = &taContext;
+	return pa;
+}
+
+EvaluationKind ParsingArguments::GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const
+{
+	if (spec && taContext && decl->symbol == taContext->symbolToApply)
+	{
+		return EvaluationKind::Instantiated;
+	}
+	else
+	{
+		return taContext ? EvaluationKind::GeneralUnderInstantiated : EvaluationKind::General;
+	}
+}
+
 /***********************************************************************
-ParsingArguments
+EnsureFunctionBodyParsed
 ***********************************************************************/
 
 class ProcessDelayParseDeclarationVisitor : public Object, public IDeclarationVisitor

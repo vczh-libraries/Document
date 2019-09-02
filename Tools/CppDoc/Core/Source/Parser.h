@@ -9,6 +9,7 @@
 Symbol
 ***********************************************************************/
 
+class TemplateSpec;
 class ClassDeclaration;
 class FunctionDeclaration;
 class ForwardFunctionDeclaration;
@@ -248,30 +249,56 @@ Parser Objects
 class IIndexRecorder : public virtual Interface
 {
 public:
-	virtual void			Index(CppName& name, List<Symbol*>& resolvedSymbols) = 0;
-	virtual void			IndexOverloadingResolution(CppName& name, List<Symbol*>& resolvedSymbols) = 0;
-	virtual void			ExpectValueButType(CppName& name, List<Symbol*>& resolvedSymbols) = 0;
+	virtual void									Index(CppName& name, List<Symbol*>& resolvedSymbols) = 0;
+	virtual void									IndexOverloadingResolution(CppName& name, List<Symbol*>& resolvedSymbols) = 0;
+	virtual void									ExpectValueButType(CppName& name, List<Symbol*>& resolvedSymbols) = 0;
+};
+
+enum class EvaluationKind
+{
+	General,
+	Instantiated,
+	GeneralUnderInstantiated,
+};
+
+struct TemplateArgumentContext
+{
+	TemplateArgumentContext*						parent = nullptr;
+	Symbol*											symbolToApply = nullptr;
+
+	//	Keys:
+	//		Type									:	GenericArg(Decl(TemplateArgument))
+	//		Value									:	Decl(TemplateArgument)
+	//	Value:
+	//		Single									:	Anything
+	//		MultipleValues							:	{Values ...}
+	//		UnknownAmountOfMultipleValues			:	any_t
+	Group<ITsys*, ITsys*>							arguments;
 };
 
 struct ParsingArguments
 {
-	Ptr<Symbol>				root;
-	Ptr<Program>			program;
+	Ptr<Symbol>										root;
+	Ptr<Program>									program;
 
-	Symbol*					context = nullptr;
-	Symbol*					functionBodySymbol = nullptr;
-	Ptr<ITsysAlloc>			tsys;
-	Ptr<IIndexRecorder>		recorder;
+	Symbol*											scopeSymbol = nullptr;
+	Symbol*											functionBodySymbol = nullptr;
+	TemplateArgumentContext*						taContext = nullptr;
+	Ptr<ITsysAlloc>									tsys;
+	Ptr<IIndexRecorder>								recorder;
 
 	ParsingArguments();
 	ParsingArguments(const ParsingArguments&) = default;
 	ParsingArguments(ParsingArguments&&) = default;
 	ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr<IIndexRecorder> _recorder);
 
-	ParsingArguments& operator=(const ParsingArguments&) = default;
-	ParsingArguments& operator=(ParsingArguments&&) = default;
+	ParsingArguments&								operator=(const ParsingArguments&) = default;
+	ParsingArguments&								operator=(ParsingArguments&&) = default;
 
-	ParsingArguments WithContext(Symbol* _context)const;
+	ParsingArguments								WithScope(Symbol* _scopeSymbol)const;
+	ParsingArguments								WithArgs(TemplateArgumentContext& taContext)const;
+
+	EvaluationKind									GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const;
 };
 
 class DelayParse : public Object
@@ -285,7 +312,7 @@ public:
 
 struct StopParsingException
 {
-	Ptr<CppTokenCursor>		position;
+	Ptr<CppTokenCursor>								position;
 
 	StopParsingException(Ptr<CppTokenCursor> _position) :position(_position) {}
 };
@@ -322,36 +349,36 @@ enum class SearchPolicy
 
 struct ResolveSymbolResult
 {
-	Ptr<Resolving>					values;
-	Ptr<Resolving>					types;
+	Ptr<Resolving>									values;
+	Ptr<Resolving>									types;
 
-	void							Merge(Ptr<Resolving>& to, Ptr<Resolving> from);
-	void							Merge(const ResolveSymbolResult& rar);
+	void											Merge(Ptr<Resolving>& to, Ptr<Resolving> from);
+	void											Merge(const ResolveSymbolResult& rar);
 };
-extern ResolveSymbolResult			ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy, ResolveSymbolResult input = {});
-extern ResolveSymbolResult			ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, ResolveSymbolResult input = {});
+extern ResolveSymbolResult							ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy, ResolveSymbolResult input = {});
+extern ResolveSymbolResult							ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, ResolveSymbolResult input = {});
 
 // Parser_Misc.cpp
-extern bool							SkipSpecifiers(Ptr<CppTokenCursor>& cursor);
-extern bool							ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialMethod = false);
-extern Ptr<Type>					GetTypeWithoutMemberAndCC(Ptr<Type> type);
-extern Ptr<Type>					ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToReplace);
-extern Ptr<Type>					AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType);
-extern bool							ParseCallingConvention(TsysCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
+extern bool											SkipSpecifiers(Ptr<CppTokenCursor>& cursor);
+extern bool											ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialMethod = false);
+extern Ptr<Type>									GetTypeWithoutMemberAndCC(Ptr<Type> type);
+extern Ptr<Type>									ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToReplace);
+extern Ptr<Type>									AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType);
+extern bool											ParseCallingConvention(TsysCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
 
 // Parser_Type.cpp
-extern Ptr<Type>					ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Type>									ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 // Parser_Declarator.cpp
 struct ParsingDeclaratorArguments
 {
-	ClassDeclaration*				containingClass;
-	bool							forParameter;
-	DeclaratorRestriction			dr;
-	InitializerRestriction			ir;
-	bool							allowBitField;
-	bool							allowEllipsis;
-	bool							allowComma;
+	ClassDeclaration*								containingClass;
+	bool											forParameter;
+	DeclaratorRestriction							dr;
+	InitializerRestriction							ir;
+	bool											allowBitField;
+	bool											allowEllipsis;
+	bool											allowComma;
 
 	ParsingDeclaratorArguments(ClassDeclaration* _containingClass, bool _forParameter, DeclaratorRestriction _dr, InitializerRestriction _ir, bool _allowBitField, bool _allowEllipsis, bool _allowComma)
 		:containingClass(_containingClass)
@@ -365,60 +392,60 @@ struct ParsingDeclaratorArguments
 	}
 };
 
-inline ParsingDeclaratorArguments	pda_Type()
+inline ParsingDeclaratorArguments					pda_Type()
 	{	return { nullptr,	false,			DeclaratorRestriction::Zero,		InitializerRestriction::Zero,		false,			false,	false		}; } // Type
-inline ParsingDeclaratorArguments	pda_VarType()
+inline ParsingDeclaratorArguments					pda_VarType()
 	{	return { nullptr,	false,			DeclaratorRestriction::Optional,	InitializerRestriction::Zero,		false,			false,	false		}; } // Type or Variable without Initializer
-inline ParsingDeclaratorArguments	pda_VarInit()
+inline ParsingDeclaratorArguments					pda_VarInit()
 	{	return { nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Optional,	false,			false,	false		}; } // Variable with Initializer
-inline ParsingDeclaratorArguments	pda_VarNoInit()
+inline ParsingDeclaratorArguments					pda_VarNoInit()
 	{	return { nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Zero,		false,			false,	false		}; } // Variable without Initializer
-inline ParsingDeclaratorArguments	pda_Param(bool forParameter)
+inline ParsingDeclaratorArguments					pda_Param(bool forParameter)
 	{	return { nullptr,	forParameter,	DeclaratorRestriction::Optional,	InitializerRestriction::Optional,	false,			false,	false		}; } // Parameter
-inline ParsingDeclaratorArguments	pda_TemplateParam()
+inline ParsingDeclaratorArguments					pda_TemplateParam()
 	{	return { nullptr,	false,			DeclaratorRestriction::Optional,	InitializerRestriction::Optional,	false,			true,	false		}; } // Parameter
-inline ParsingDeclaratorArguments	pda_Decls(bool allowBitField, bool allowComma)	
+inline ParsingDeclaratorArguments					pda_Decls(bool allowBitField, bool allowComma)	
 	{	return { nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Optional,	allowBitField,	false,	allowComma	}; } // Declarations
-inline ParsingDeclaratorArguments	pda_Typedefs()	
+inline ParsingDeclaratorArguments					pda_Typedefs()	
 	{	return { nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Zero,		false,			false,	false		}; } // Declarations after typedef keyword
 
-extern void							ParseMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
-extern void							ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<Type> type, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
-extern void							ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
-extern Ptr<Declarator>				ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor);
-extern Ptr<Type>					ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern void											ParseMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<Type> type, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern Ptr<Declarator>								ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Type>									ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 // Parser_Declaration.cpp
-extern void							ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
-extern void							BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls);
-extern void							BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor);
-extern void							BuildSymbols(const ParsingArguments& pa, VariadicList<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor);
-extern void							BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor);
-extern Ptr<VariableDeclaration>		BuildVariableAndSymbol(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<CppTokenCursor>& cursor);
+extern void											ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
+extern void											BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls);
+extern void											BuildSymbols(const ParsingArguments& pa, List<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor);
+extern void											BuildSymbols(const ParsingArguments& pa, VariadicList<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor);
+extern void											BuildVariablesAndSymbols(const ParsingArguments& pa, List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclaration>>& varDecls, Ptr<CppTokenCursor>& cursor);
+extern Ptr<VariableDeclaration>						BuildVariableAndSymbol(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<CppTokenCursor>& cursor);
 
 // Parser_Expr.cpp
 struct ParsingExprArguments
 {
-	bool							allowComma;
-	bool							allowGt;
+	bool											allowComma;
+	bool											allowGt;
 };
 
-inline ParsingExprArguments			pea_Full()
+inline ParsingExprArguments							pea_Full()
 	{	return { true, true }; }
-inline ParsingExprArguments			pea_Argument()
+inline ParsingExprArguments							pea_Argument()
 	{	return { false, true }; }
-inline ParsingExprArguments			pea_GenericArgument()
+inline ParsingExprArguments							pea_GenericArgument()
 	{	return { false, false }; }
 
-extern Ptr<Expr>					ParseExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Expr>									ParseExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor);
 
 // Parser_Stat.cpp
-extern Ptr<Stat>					ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<Stat>									ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 // Parser.cpp
-extern void							EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl);
-extern bool							ParseTypeOrExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor, Ptr<Type>& type, Ptr<Expr>& expr);
-extern Ptr<Program>					ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern void											EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl);
+extern bool											ParseTypeOrExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor, Ptr<Type>& type, Ptr<Expr>& expr);
+extern Ptr<Program>									ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 /***********************************************************************
 Helpers

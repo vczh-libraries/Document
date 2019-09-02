@@ -99,24 +99,6 @@ struct ExprTsysItem : ExprHeader
 using TypeTsysList = List<ITsys*>;
 using ExprTsysList = List<ExprTsysItem>;
 
-struct GenericArgContext
-{
-	//	Keys:
-	//		Type							:	GenericArg(Decl(TemplateArgument))
-	//		Value							:	Decl(TemplateArgument)
-	//	Value:
-	//		Single							:	Anything
-	//		MultipleValues					:	{Values ...}
-	//		UnknownAmountOfMultipleValues	:	any_t
-	Group<ITsys*, ITsys*>	arguments;
-};
-
-struct EvaluateSymbolContext
-{
-	GenericArgContext	gaContext;
-	TypeTsysList		evaluatedTypes;
-};
-
 /***********************************************************************
 Interface
 ***********************************************************************/
