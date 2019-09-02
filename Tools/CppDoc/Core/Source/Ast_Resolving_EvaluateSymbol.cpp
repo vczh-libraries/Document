@@ -2,19 +2,14 @@
 
 namespace symbol_type_resolving
 {
-	TypeTsysList& GetEvaluatingResultStorage(Symbol* symbol, EvaluateSymbolContext* esContext)
+	TypeTsysList& GetEvaluatingResultStorage(const ParsingArguments& pa, Symbol* symbol, EvaluateSymbolContext* esContext)
 	{
-		return esContext ? esContext->evaluatedTypes : symbol->GetEvaluationForUpdating_NFb().Get();
-	}
-
-	GenericArgContext* GetGAContext(EvaluateSymbolContext* esContext)
-	{
-		return esContext ? &esContext->gaContext : nullptr;
+		return pa.IsGeneralEvaluation() ? symbol->GetEvaluationForUpdating_NFb().Get() : esContext->evaluatedTypes;
 	}
 
 	TypeTsysList& FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& pa, Symbol* symbol, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)
 	{
-		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, esContext);
+		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, symbol, esContext);
 
 		if (spec && !esContext)
 		{
@@ -60,8 +55,8 @@ namespace symbol_type_resolving
 		auto symbol = varDecl->symbol;
 		SETUP_EV_OR_RETURN;
 
-		auto newPa = pa.WithContext(symbol->GetParentScope());
-		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, nullptr);
+		auto newPa = pa.WithScope(symbol->GetParentScope());
+		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, symbol, nullptr);
 
 		if (varDecl->needResolveTypeFromInitializer)
 		{
@@ -91,7 +86,7 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			TypeToTsysNoVta(newPa, varDecl->type, evaluatedTypes, nullptr);
+			TypeToTsysNoVta(newPa, varDecl->type, evaluatedTypes);
 		}
 
 		{
@@ -133,8 +128,8 @@ namespace symbol_type_resolving
 			}
 		}
 
-		auto newPa = pa.WithContext(symbol->GetParentScope());
-		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, esContext);
+		auto newPa = pa.WithScope(symbol->GetParentScope());
+		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, symbol, esContext);
 
 		TypeTsysList processedReturnTypes;
 		{
@@ -154,7 +149,6 @@ namespace symbol_type_resolving
 			funcDecl->type,
 			processedReturnTypes,
 			evaluatedTypes,
-			GetGAContext(esContext),
 			IsMemberFunction(pa, funcDecl)
 		);
 
@@ -166,14 +160,14 @@ namespace symbol_type_resolving
 		auto symbol = funcDecl->symbol;
 		if (!esContext) SETUP_EV_OR_RETURN;
 
-		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, esContext);
+		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, symbol, esContext);
 
 		if (funcDecl->needResolveTypeFromStatement)
 		{
 			if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))
 			{
 				EnsureFunctionBodyParsed(rootFuncDecl);
-				auto funcPa = pa.WithContext(symbol);
+				auto funcPa = pa.WithScope(symbol);
 				EvaluateStat(funcPa, rootFuncDecl->statement, true, esContext);
 
 				if (evaluatedTypes.Count() == 0)
@@ -193,8 +187,8 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			auto newPa = pa.WithContext(symbol->GetParentScope());
-			TypeToTsysNoVta(newPa, funcDecl->type, evaluatedTypes, GetGAContext(esContext), IsMemberFunction(pa, funcDecl));
+			auto newPa = pa.WithScope(symbol->GetParentScope());
+			TypeToTsysNoVta(newPa, funcDecl->type, evaluatedTypes, IsMemberFunction(pa, funcDecl));
 			return FinishEvaluatingPotentialGenericSymbol(pa, symbol, funcDecl->templateSpec, esContext);
 		}
 	}
@@ -216,10 +210,10 @@ namespace symbol_type_resolving
 		ev.progress = symbol_component::EvaluationProgress::Evaluating;
 		ev.Allocate(classDecl->baseTypes.Count());
 
-		auto newPa = pa.WithContext(symbol);
+		auto newPa = pa.WithScope(symbol);
 		for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 		{
-			TypeToTsysNoVta(newPa, classDecl->baseTypes[i].f1, ev.Get(i), nullptr);
+			TypeToTsysNoVta(newPa, classDecl->baseTypes[i].f1, ev.Get(i));
 		}
 
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;
@@ -235,10 +229,10 @@ namespace symbol_type_resolving
 		auto symbol = usingDecl->symbol;
 		if (!esContext) SETUP_EV_OR_RETURN;
 
-		auto newPa = pa.WithContext(symbol->GetParentScope());
-		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, esContext);
+		auto newPa = pa.WithScope(symbol->GetParentScope());
+		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, symbol, esContext);
 
-		TypeToTsysNoVta(newPa, usingDecl->type, evaluatedTypes, GetGAContext(esContext));
+		TypeToTsysNoVta(newPa, usingDecl->type, evaluatedTypes);
 		return FinishEvaluatingPotentialGenericSymbol(pa, symbol, usingDecl->templateSpec, esContext);
 	}
 
@@ -251,13 +245,13 @@ namespace symbol_type_resolving
 		auto symbol = usingDecl->symbol;
 		if (!esContext) SETUP_EV_OR_RETURN;
 
-		auto newPa = pa.WithContext(symbol->GetParentScope());
-		auto& evaluatedTypes = GetEvaluatingResultStorage(symbol, esContext);
+		auto newPa = pa.WithScope(symbol->GetParentScope());
+		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, symbol, esContext);
 
 		if (usingDecl->needResolveTypeFromInitializer)
 		{
 			ExprTsysList tsys;
-			ExprToTsysNoVta(newPa, usingDecl->expr, tsys, GetGAContext(esContext));
+			ExprToTsysNoVta(newPa, usingDecl->expr, tsys);
 			for (vint i = 0; i < tsys.Count(); i++)
 			{
 				auto entityType = tsys[i].tsys;
@@ -273,7 +267,7 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			TypeToTsysNoVta(newPa, usingDecl->type, evaluatedTypes, GetGAContext(esContext));
+			TypeToTsysNoVta(newPa, usingDecl->type, evaluatedTypes);
 		}
 
 		return FinishEvaluatingPotentialGenericSymbol(pa, symbol, usingDecl->templateSpec, esContext);

@@ -30,6 +30,7 @@
         - A `gaContext` will see its parent `gaContext`.
         - A `gaContext` is associated with a symbol as a scope, so that to calculate the nearest common ancestry.
       - Delete `EvaluateStatContext`
+        - When evaluating a statement for getting function return type, only the first `return` statement will be examined, everything else are ignored.
       - `EvaluateSymbolContext` will be replaced by `TypeTsysList*` (default nullptr), since `gaContext` is now integrated into `pa`.
       - General evaluation result to a declarations will be stored directly inside the associated symbol.
       - Evaluation (can only be general) result of a non-generic declaration under a `gaContext`, will be stored in this `gaContext`.
