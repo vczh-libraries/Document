@@ -33,17 +33,18 @@
       - `EvaluateSymbolContext` will be replaced by `TypeTsysList*` (default nullptr), since `gaContext` is now integrated into `pa`.
       - General evaluation result to a declarations will be stored directly inside the associated symbol.
       - Evaluation (can only be general) result of a non-generic declaration under a `gaContext`, will be stored in this `gaContext`.
-      - Instantiated evaluation result of a generic declaration will not be cached (this could be improved).
+      - Instantiated evaluation result of a generic declaration will not be cached (for this moment).
     - [ ] Specialization recognized but not used
   - [ ] `template` on classes.
+    - [ ] Caching `gaContext`
+      - When a generic declaration is instantiated, the created gaContext will be cached in the symbol(key = template arguments).
+        - for `TsysType::Decl`, a `gaContext` property will be added.
+      - We references a instantiated class like `(currentScope::)A<T1>::B<T2>` so all levels of `gaContext` will be created.
     - [ ] Instantiate classes with all non-default template arguments specified.
     - [ ] Child type evaluation.
       - [ ] `v::t`
     - [ ] Member type evaluation.
       - [ ] `v.f`, `v->f`, `v.*f`, `v->*f`, `v::f`
-    - [ ] Caching `gaContext`
-      - When a generic declaration is instantiated, the created gaContext will be cached in the symbol(key = template arguments).
-      - We references a instantiated class like `(currentScope::)A<T1>::B<T2>` so all levels of `gaContext` will be created.
     - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
     - [ ] Specialization recognized but not used
   - [ ] Make generic `Expr::Ptr` in `Calculator` case.
