@@ -8,7 +8,7 @@ namespace symbol_totsys_impl
 	// ProcessLiteralExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 	
-	void ProcessLiteralExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, LiteralExpr* self)
+	void ProcessLiteralExpr(const ParsingArguments& pa, ExprTsysList& result, LiteralExpr* self)
 	{
 		switch ((CppTokens)self->tokens[0].token)
 		{
@@ -129,7 +129,7 @@ namespace symbol_totsys_impl
 	// ProcessThisExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void ProcessThisExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ThisExpr* self)
+	void ProcessThisExpr(const ParsingArguments& pa, ExprTsysList& result, ThisExpr* self)
 	{
 		if (auto functionBodySymbol = pa.functionBodySymbol)
 		{
@@ -149,7 +149,7 @@ namespace symbol_totsys_impl
 	// ProcessNullptrExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 	
-	void ProcessNullptrExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, NullptrExpr* self)
+	void ProcessNullptrExpr(const ParsingArguments& pa, ExprTsysList& result, NullptrExpr* self)
 	{
 		AddTemp(result, pa.tsys->Nullptr());
 	}
@@ -158,12 +158,12 @@ namespace symbol_totsys_impl
 	// ProcessThrowExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 	
-	void ProcessThrowExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ThrowExpr* self)
+	void ProcessThrowExpr(const ParsingArguments& pa, ExprTsysList& result, ThrowExpr* self)
 	{
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(pa, self->expr, types, gaContext);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 
 		AddTemp(result, pa.tsys->Void());
@@ -226,7 +226,7 @@ namespace symbol_totsys_impl
 	// ProcessArrayAccessExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void ProcessArrayAccessExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ArrayAccessExpr* self, ExprTsysItem argArray, ExprTsysItem argIndex, bool& indexed)
+	void ProcessArrayAccessExpr(const ParsingArguments& pa, ExprTsysList& result, ArrayAccessExpr* self, ExprTsysItem argArray, ExprTsysItem argIndex, bool& indexed)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -244,14 +244,14 @@ namespace symbol_totsys_impl
 			Array<ExprTsysItem> argTypes(1);
 			argTypes[0] = argIndex;
 
-			bool needIndex = pa.recorder && !gaContext;
+			bool needIndex = pa.recorder && pa.IsGeneralEvaluation();
 			SortedList<vint> boundedAnys;
 			ExprTsysList selectedFunctions;
 			VisitOverloadedFunction(pa, funcTypes, argTypes, boundedAnys, result, (needIndex ? &selectedFunctions : nullptr));
 
 			if (needIndex && selectedFunctions.Count() > 0)
 			{
-				AddSymbolsToOperatorResolving(gaContext, self->opName, self->opResolving, selectedFunctions, indexed);
+				AddSymbolsToOperatorResolving(pa, self->opName, self->opResolving, selectedFunctions, indexed);
 			}
 		}
 		else if (entityType->GetType() == TsysType::Array)
@@ -287,7 +287,7 @@ namespace symbol_totsys_impl
 	// Process(Operator)Expr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	bool VisitOperator(const ParsingArguments& pa, GenericArgContext* gaContext, ExprTsysList& result, ExprTsysItem* leftType, ExprTsysItem* rightType, CppName& resolvableName, Ptr<Resolving>& resolving, bool& indexed)
+	bool VisitOperator(const ParsingArguments& pa, ExprTsysList& result, ExprTsysItem* leftType, ExprTsysItem* rightType, CppName& resolvableName, Ptr<Resolving>& resolving, bool& indexed)
 	{
 		TsysCV leftCV, rightCV;
 		TsysRefType leftRef, rightRef;
@@ -311,7 +311,7 @@ namespace symbol_totsys_impl
 
 		if (leftEntity->GetType() == TsysType::Decl)
 		{
-			auto newPa = pa.WithContext(leftEntity->GetDecl());
+			auto newPa = pa.WithScope(leftEntity->GetDecl());
 			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbol);
 
 			if (opMethods.values)
@@ -334,9 +334,9 @@ namespace symbol_totsys_impl
 				SortedList<vint> boundedAnys;
 				ExprTsysList selectedFunctions;
 				VisitOverloadedFunction(pa, opTypes, argTypes, boundedAnys, result, (pa.recorder ? &selectedFunctions : nullptr));
-				if (pa.recorder && !gaContext)
+				if (pa.recorder && pa.IsGeneralEvaluation())
 				{
-					AddSymbolsToOperatorResolving(gaContext, resolvableName, resolving, selectedFunctions, indexed);
+					AddSymbolsToOperatorResolving(pa, resolvableName, resolving, selectedFunctions, indexed);
 				}
 				return true;
 			}
@@ -378,9 +378,9 @@ namespace symbol_totsys_impl
 				SortedList<vint> boundedAnys;
 				ExprTsysList selectedFunctions;
 				VisitOverloadedFunction(pa, opTypes, argTypes, boundedAnys, result, (pa.recorder ? &selectedFunctions : nullptr));
-				if (pa.recorder && !gaContext)
+				if (pa.recorder && pa.IsGeneralEvaluation())
 				{
-					AddSymbolsToOperatorResolving(gaContext, resolvableName, resolving, selectedFunctions, indexed);
+					AddSymbolsToOperatorResolving(pa, resolvableName, resolving, selectedFunctions, indexed);
 				}
 				if (result.Count() > 0)
 				{
@@ -391,7 +391,7 @@ namespace symbol_totsys_impl
 		return false;
 	}
 
-	void ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, PostfixUnaryExpr* self, ExprTsysItem arg, bool& indexed)
+	void ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PostfixUnaryExpr* self, ExprTsysItem arg, bool& indexed)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -404,7 +404,7 @@ namespace symbol_totsys_impl
 		else if (entity->GetType() == TsysType::Decl)
 		{
 			ExprTsysItem extraParam(nullptr, ExprTsysType::PRValue, pa.tsys->Int());
-			VisitOperator(pa, gaContext, result, &arg, &extraParam, self->opName, self->opResolving, indexed);
+			VisitOperator(pa, result, &arg, &extraParam, self->opName, self->opResolving, indexed);
 		}
 		else if (entity->GetType() == TsysType::Primitive)
 		{
@@ -424,7 +424,7 @@ namespace symbol_totsys_impl
 		}
 	}
 
-	void ProcessPrefixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, PrefixUnaryExpr* self, ExprTsysItem arg, bool& indexed)
+	void ProcessPrefixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PrefixUnaryExpr* self, ExprTsysItem arg, bool& indexed)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -437,7 +437,7 @@ namespace symbol_totsys_impl
 		}
 		else if (entity->GetType() == TsysType::Decl)
 		{
-			if (VisitOperator(pa, gaContext, result, &arg, nullptr, self->opName, self->opResolving, indexed))
+			if (VisitOperator(pa, result, &arg, nullptr, self->opName, self->opResolving, indexed))
 			{
 				return;
 			}
@@ -507,7 +507,7 @@ namespace symbol_totsys_impl
 		}
 	}
 
-	void ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, bool& indexed)
+	void ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, bool& indexed)
 	{
 		TsysCV leftCV, rightCV;
 		TsysRefType leftRefType, rightRefType;
@@ -540,7 +540,7 @@ namespace symbol_totsys_impl
 			return;
 		}
 
-		if (VisitOperator(pa, gaContext, result, &argLeft, &argRight, self->opName, self->opResolving, indexed))
+		if (VisitOperator(pa, result, &argLeft, &argRight, self->opName, self->opResolving, indexed))
 		{
 			return;
 		}
@@ -622,7 +622,7 @@ namespace symbol_totsys_impl
 	// ProcessIfExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void ProcessIfExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, IfExpr* self, ExprTsysItem argCond, ExprTsysItem argLeft, ExprTsysItem argRight)
+	void ProcessIfExpr(const ParsingArguments& pa, ExprTsysList& result, IfExpr* self, ExprTsysItem argCond, ExprTsysItem argLeft, ExprTsysItem argRight)
 	{
 		auto leftType = argLeft.type == ExprTsysType::LValue ? argLeft.tsys->LRefOf() : argLeft.tsys;
 		auto rightType = argRight.type == ExprTsysType::LValue ? argRight.tsys->LRefOf() : argRight.tsys;
@@ -755,9 +755,9 @@ namespace symbol_totsys_impl
 		return false;
 	}
 
-	void AddSymbolsToResolvings(GenericArgContext* gaContext, const CppName* name, Ptr<Resolving>* nameResolving, const CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp)
+	void AddSymbolsToResolvings(const ParsingArguments& pa, const CppName* name, Ptr<Resolving>* nameResolving, const CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp)
 	{
-		if (gaContext) return;
+		if (!pa.IsGeneralEvaluation()) return;
 		bool firstName = true;
 		bool firstOp = true;
 
@@ -779,9 +779,9 @@ namespace symbol_totsys_impl
 		}
 	}
 
-	void AddSymbolsToOperatorResolving(GenericArgContext* gaContext, const CppName& op, Ptr<Resolving>& opResolving, ExprTsysList& symbols, bool& addedOp)
+	void AddSymbolsToOperatorResolving(const ParsingArguments& pa, const CppName& op, Ptr<Resolving>& opResolving, ExprTsysList& symbols, bool& addedOp)
 	{
 		bool addedName = false;
-		AddSymbolsToResolvings(gaContext, nullptr, nullptr, &op, &opResolving, symbols, addedName, addedOp);
+		AddSymbolsToResolvings(pa, nullptr, nullptr, &op, &opResolving, symbols, addedName, addedOp);
 	}
 }

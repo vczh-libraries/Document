@@ -596,8 +596,28 @@ EvaluationKind ParsingArguments::GetEvaluationKind(Declaration* decl, Ptr<Templa
 	}
 	else
 	{
-		return taContext ? EvaluationKind::GeneralUnderInstantiated : EvaluationKind::General;
+		return IsGeneralEvaluation() ? EvaluationKind::General : EvaluationKind::GeneralUnderInstantiated;
 	}
+}
+
+bool ParsingArguments::IsGeneralEvaluation()const
+{
+	return taContext == nullptr;
+}
+
+const List<ITsys*>* ParsingArguments::ReplaceGenericArg(ITsys* arg)const
+{
+	auto current = taContext;
+	while (current)
+	{
+		vint index = current->arguments.Keys().IndexOf(arg);
+		if (index != -1)
+		{
+			return &current->arguments.GetByIndex(index);
+		}
+		current = current->parent;
+	}
+	return nullptr;
 }
 
 /***********************************************************************

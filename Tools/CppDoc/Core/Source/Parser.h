@@ -299,11 +299,13 @@ struct ParsingArguments
 	ParsingArguments								WithArgs(TemplateArgumentContext& taContext)const;
 
 	EvaluationKind									GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const;
+	bool											IsGeneralEvaluation()const;
+	const List<ITsys*>*								ReplaceGenericArg(ITsys* arg)const;
 };
 
 struct EvaluateSymbolContext
 {
-	TypeTsysList									result;
+	TypeTsysList									evaluatedTypes;
 };
 
 class DelayParse : public Object

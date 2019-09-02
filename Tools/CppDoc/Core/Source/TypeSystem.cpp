@@ -131,15 +131,7 @@ public:
 
 bool IsGenericArgInContext(const ParsingArguments& pa, ITsys* key)
 {
-	auto taContext = pa.taContext;
-	while (taContext)
-	{
-		if (taContext->arguments.Keys().Contains(key))
-		{
-			return true;
-		}
-	}
-	return false;
+	return pa.ReplaceGenericArg(key) != nullptr;
 }
 
 /***********************************************************************
@@ -261,16 +253,10 @@ Concrete Tsys (GenericArgs)
 	}																								\
 	void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override				\
 	{																								\
-		auto taContext = pa.taContext;																\
-		while (taContext)																			\
+		if (auto pReplacedTypes = pa.ReplaceGenericArg(this))										\
 		{																							\
-			vint index = taContext->arguments.Keys().IndexOf(this);									\
-			if (index != -1)																		\
-			{																						\
-				CopyFrom(output, taContext->arguments.GetByIndex(index));							\
-				return;																				\
-			}																						\
-			taContext = taContext->parent;															\
+			CopyFrom(output, *pReplacedTypes);														\
+			return;																					\
 		}																							\
 		output.Add(this);																			\
 	}																								\

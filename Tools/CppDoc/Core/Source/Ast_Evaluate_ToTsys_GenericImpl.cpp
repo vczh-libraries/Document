@@ -30,7 +30,7 @@ namespace symbol_totsys_impl
 			}
 
 			EvaluateSymbolContext esContext;
-			ResolveGenericParameters(pa, genericFunction, args, isTypes, argSource, boundedAnys, 1, &esContext.gaContext);
+			ResolveGenericParameters(pa, genericFunction, args, isTypes, argSource, boundedAnys, 1);
 			process(genericFunction, declSymbol, esContext);
 
 			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
@@ -59,7 +59,7 @@ namespace symbol_totsys_impl
 			switch (declSymbol->kind)
 			{
 			case symbol_component::SymbolKind::GenericTypeArgument:
-				genericFunction->GetElement()->ReplaceGenericArgs(esContext.gaContext, esContext.evaluatedTypes);
+				genericFunction->GetElement()->ReplaceGenericArgs(pa, esContext.evaluatedTypes);
 				break;
 			case symbol_component::SymbolKind::TypeAlias:
 				{

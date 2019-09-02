@@ -79,7 +79,7 @@
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClInclude>
     <ClInclude Include="Source\Ast_Resolving_ExpandPotentialVta.h">
-      <Filter>Source Files\Ast\Resolving</Filter>
+      <Filter>Source Files\Ast\Evaluation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
