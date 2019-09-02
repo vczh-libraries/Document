@@ -13,8 +13,8 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 	RequireToken(cursor, CppTokens::DECL_TEMPLATE);
 	RequireToken(cursor, CppTokens::LT);
 
-	auto symbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal, pa.context);
-	auto newPa = pa.WithContext(symbol.Obj());
+	auto symbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal, pa.scopeSymbol);
+	auto newPa = pa.WithScope(symbol.Obj());
 
 	auto spec = MakePtr<TemplateSpec>();
 	while (!TestToken(cursor, CppTokens::GT))
@@ -122,7 +122,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			argumentSymbol->name = argument.name.name;
 			auto& ev = argumentSymbol->GetEvaluationForUpdating_NFb();
 			ev.Allocate();
-			TypeToTsysNoVta(newPa, argument.type, ev.Get(), nullptr);
+			TypeToTsysNoVta(newPa, argument.type, ev.Get());
 			if (ev.Get().Count() == 0)
 			{
 				throw StopParsingException(cursor);
@@ -177,7 +177,7 @@ void ParseDeclaration_Namespace(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 	else
 	{
 		// namespace NAME { :: NAME ...} { DECLARATION ...}
-		auto contextSymbol = pa.context;
+		auto contextSymbol = pa.scopeSymbol;
 		Ptr<NamespaceDeclaration> topDecl;
 		Ptr<NamespaceDeclaration> contextDecl;
 
@@ -219,7 +219,7 @@ void ParseDeclaration_Namespace(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			}
 		}
 
-		auto newPa = pa.WithContext(contextSymbol);
+		auto newPa = pa.WithScope(contextSymbol);
 		while (!TestToken(cursor, CppTokens::RBRACE))
 		{
 			ParseDeclaration(newPa, cursor, contextDecl->decls);
@@ -276,7 +276,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 		decl->baseType = baseType;
 		output.Add(decl);
 
-		if (!pa.context->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Enum))
+		if (!pa.scopeSymbol->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Enum))
 		{
 			throw StopParsingException(cursor);
 		}
@@ -290,12 +290,12 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 		decl->name = cppName;
 		decl->baseType = baseType;
 
-		auto contextSymbol = pa.context->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Enum);
+		auto contextSymbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Enum);
 		if (!contextSymbol)
 		{
 			throw StopParsingException(cursor);
 		}
-		auto newPa = pa.WithContext(contextSymbol);
+		auto newPa = pa.WithScope(contextSymbol);
 
 		RequireToken(cursor, CppTokens::LBRACE);
 		while (!TestToken(cursor, CppTokens::RBRACE))
@@ -311,11 +311,11 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 
 			if (!enumClass)
 			{
-				if (auto pEnumItems = pa.context->TryGetChildren_NFb(enumItem->name.name))
+				if (auto pEnumItems = pa.scopeSymbol->TryGetChildren_NFb(enumItem->name.name))
 				{
 					throw StopParsingException(cursor);
 				}
-				pa.context->AddChild_NFb(enumItem->name.name, contextSymbol->TryGetChildren_NFb(enumItem->name.name)->Get(0));
+				pa.scopeSymbol->AddChild_NFb(enumItem->name.name, contextSymbol->TryGetChildren_NFb(enumItem->name.name)->Get(0));
 			}
 
 			if (TestToken(cursor, CppTokens::EQ))
@@ -394,7 +394,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		decl->name = cppName;
 		output.Add(decl);
 
-		if (!pa.context->AddForwardDeclToSymbol_NFb(decl, symbolKind))
+		if (!pa.scopeSymbol->AddForwardDeclToSymbol_NFb(decl, symbolKind))
 		{
 			throw StopParsingException(cursor);
 		}
@@ -408,13 +408,13 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		decl->name = cppName;
 		vint declIndex = output.Add(decl);
 
-		auto classContextSymbol = pa.context->AddImplDeclToSymbol_NFb(decl, symbolKind);
+		auto classContextSymbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbolKind);
 		if (!classContextSymbol)
 		{
 			throw StopParsingException(cursor);
 		}
 
-		auto declPa = pa.WithContext(classContextSymbol);
+		auto declPa = pa.WithScope(classContextSymbol);
 
 		if (TestToken(cursor, CppTokens::COLON))
 		{
@@ -490,9 +490,9 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 			// then this should be a nested anonymous class inside another class
 			// in this case, this class should not have base types and non-public members
 			// and all members should be either variables or nested anonymous classes
-			// so a NestedAnonymousClassDeclaration is created, copy all members to it, and move all symbols to pa.context, which is the parent class declaration
+			// so a NestedAnonymousClassDeclaration is created, copy all members to it, and move all symbols to pa.scopeSymbol, which is the parent class declaration
 
-			if (!pa.context->GetImplDecl_NFb<ClassDeclaration>())
+			if (!pa.scopeSymbol->GetImplDecl_NFb<ClassDeclaration>())
 			{
 				throw StopParsingException(cursor);
 			}
@@ -526,13 +526,13 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 			{
 				// variable doesn't override, so here just look at the first symbol
 				auto child = contextChildren.GetByIndex(i)[0];
-				if (pa.context->TryGetChildren_NFb(child->name))
+				if (pa.scopeSymbol->TryGetChildren_NFb(child->name))
 				{
 					throw StopParsingException(cursor);
 				}
-				pa.context->AddChildAndSetParent_NFb(child->name, child);
+				pa.scopeSymbol->AddChildAndSetParent_NFb(child->name, child);
 			}
-			pa.context->RemoveChildAndResetParent_NFb(classContextSymbol->name, classContextSymbol);
+			pa.scopeSymbol->RemoveChildAndResetParent_NFb(classContextSymbol->name, classContextSymbol);
 
 			return nullptr;
 		}
@@ -575,9 +575,9 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 			{
 			case symbol_component::SymbolKind::Namespace:
 				{
-					if (pa.context && !(pa.context->usingNss.Contains(symbol)))
+					if (pa.scopeSymbol && !(pa.scopeSymbol->usingNss.Contains(symbol)))
 					{
-						pa.context->usingNss.Add(symbol);
+						pa.scopeSymbol->usingNss.Add(symbol);
 					}
 				}
 				break;
@@ -602,7 +602,7 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 				goto SKIP_TYPE_ALIAS;
 			}
 
-			auto newPa = spec.f1 ? pa.WithContext(spec.f0.Obj()) : pa;
+			auto newPa = spec.f1 ? pa.WithScope(spec.f0.Obj()) : pa;
 
 			auto decl = MakePtr<TypeAliasDeclaration>();
 			decl->templateSpec = spec.f1;
@@ -611,7 +611,7 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 			RequireToken(cursor, CppTokens::SEMICOLON);
 
 			output.Add(decl);
-			if (!pa.context->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias, spec.f0))
+			if (!pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias, spec.f0))
 			{
 				throw StopParsingException(cursor);
 			}
@@ -665,23 +665,23 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 				case symbol_component::SymbolKind::Variable:
 				case symbol_component::SymbolKind::ValueAlias:
 					{
-						if (pa.context->TryGetChildren_NFb(symbol->name))
+						if (pa.scopeSymbol->TryGetChildren_NFb(symbol->name))
 						{
 							throw StopParsingException(cursor);
 						}
-						pa.context->AddChild_NFb(symbol->name, symbol);
+						pa.scopeSymbol->AddChild_NFb(symbol->name, symbol);
 					}
 					break;
 				case symbol_component::SymbolKind::FunctionSymbol:
 					{
-						if (auto pChildren = pa.context->TryGetChildren_NFb(symbol->name))
+						if (auto pChildren = pa.scopeSymbol->TryGetChildren_NFb(symbol->name))
 						{
 							if (pChildren->Get(0)->kind != symbol_component::SymbolKind::FunctionSymbol)
 							{
 								throw StopParsingException(cursor);
 							}
 						}
-						pa.context->AddChild_NFb(symbol->name, symbol);
+						pa.scopeSymbol->AddChild_NFb(symbol->name, symbol);
 					}
 					break;
 				default:
@@ -763,7 +763,7 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		decl->type = declarators[i]->type;
 		output.Add(decl);
 
-		if (!pa.context->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias))
+		if (!pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias))
 		{
 			throw StopParsingException(cursor);
 		}
@@ -874,7 +874,7 @@ void ParseDeclaration_Function(
 		throw StopParsingException(cursor);
 	}
 
-	auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
+	auto context = containingClassForMember ? containingClassForMember->symbol : pa.scopeSymbol;
 	if (hasStat)
 	{
 		// if there is a statement, then it is a function declaration
@@ -902,7 +902,7 @@ void ParseDeclaration_Function(
 		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, (spec.f1 ? spec.f0 : nullptr), methodCache);
 
 		{
-			auto newPa = pa.WithContext(functionBodySymbol);
+			auto newPa = pa.WithScope(functionBodySymbol);
 			BuildSymbols(newPa, funcType->parameters, cursor);
 
 			// delay parse the statement
@@ -1004,7 +1004,7 @@ void ParseDeclaration_Variable(
 			if (primitiveType->primitive != CppPrimitiveType::_auto) throw StopParsingException(cursor);
 		}
 
-		if (!pa.context->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::ValueAlias, spec.f0))
+		if (!pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::ValueAlias, spec.f0))
 		{
 			throw StopParsingException(cursor);
 		}
@@ -1023,7 +1023,7 @@ void ParseDeclaration_Variable(
 			throw StopParsingException(cursor);
 		}
 
-		auto context = containingClassForMember ? containingClassForMember->symbol : pa.context;
+		auto context = containingClassForMember ? containingClassForMember->symbol : pa.scopeSymbol;
 		if (decoratorExtern || (decoratorStatic && !declarator->initializer))
 		{
 			// if there is extern, or static without an initializer, then it is a forward variable declaration
@@ -1081,15 +1081,15 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 	// non-null containingClassForMember means this declaration is a class member defined out of the class
 	List<Ptr<Declarator>> declarators;
 	auto methodType = CppMethodType::Function;
-	ClassDeclaration* containingClass = pa.context->GetImplDecl_NFb<ClassDeclaration>().Obj();
+	ClassDeclaration* containingClass = pa.scopeSymbol->GetImplDecl_NFb<ClassDeclaration>().Obj();
 	ClassDeclaration* containingClassForMember = nullptr;
 
 	// get all declarators
 	{
-		auto pda = pda_Decls(pa.context->GetImplDecl_NFb<ClassDeclaration>(), spec.f1);
+		auto pda = pda_Decls(pa.scopeSymbol->GetImplDecl_NFb<ClassDeclaration>(), spec.f1);
 		pda.containingClass = containingClass;
 
-		auto newPa = spec.f1 ? pa.WithContext(spec.f0.Obj()) : pa;
+		auto newPa = spec.f1 ? pa.WithScope(spec.f0.Obj()) : pa;
 		ParseMemberDeclarator(newPa, pda, cursor, declarators);
 	}
 
@@ -1380,7 +1380,7 @@ void BuildSymbol(const ParsingArguments& pa, Ptr<VariableDeclaration> varDecl, b
 {
 	if (varDecl->name)
 	{
-		auto symbol = pa.context->AddImplDeclToSymbol_NFb(varDecl, symbol_component::SymbolKind::Variable);
+		auto symbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(varDecl, symbol_component::SymbolKind::Variable);
 		if (!symbol)
 		{
 			throw StopParsingException(cursor);

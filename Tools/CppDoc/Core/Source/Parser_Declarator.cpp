@@ -495,11 +495,11 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 
 		{
 			// if there is CLASS::, then we should regonize parameter types under the scope of CLASS
-			ParsingArguments functionArgsPa = pa;
-			if (declarator->type.Cast<MemberType>() && declarator->containingClassSymbol)
-			{
-				functionArgsPa.context = declarator->containingClassSymbol;
-			}
+			ParsingArguments functionArgsPa
+				= declarator->type.Cast<MemberType>() && declarator->containingClassSymbol
+				? pa.WithScope(declarator->containingClassSymbol)
+				: pa
+				;
 
 			// recognize parameters
 			if (!TestToken(cursor, CppTokens::RPARENTHESIS))
@@ -721,7 +721,7 @@ READY_FOR_ARRAY_OR_FUNCTION:
 
 	// if there is [, we see an array declarator
 	// an array could be multiple dimension
-	auto newPa = declarator->containingClassSymbol ? pa.WithContext(declarator->containingClassSymbol) : pa;
+	auto newPa = declarator->containingClassSymbol ? pa.WithScope(declarator->containingClassSymbol) : pa;
 	if (TestToken(cursor, CppTokens::LBRACKET, false))
 	{
 		while (ParseSingleDeclarator_Array(newPa, declarator, targetType, pdc.forParameter, cursor));
@@ -863,11 +863,11 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			declarator = ParseSingleDeclarator(pa, typeResult, newPdc, cursor);
 		}
 
-		ParsingArguments initializerPa = pa;
-		if (declarator->type.Cast<MemberType>() && declarator->containingClassSymbol)
-		{
-			initializerPa.context = declarator->containingClassSymbol;
-		}
+		ParsingArguments initializerPa
+			= declarator->type.Cast<MemberType>() && declarator->containingClassSymbol
+			? pa.WithScope(declarator->containingClassSymbol)
+			: pa
+			;
 
 		// function doesn't have initializer
 		bool isFunction = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>();

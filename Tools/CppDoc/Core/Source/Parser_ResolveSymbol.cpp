@@ -79,7 +79,7 @@ ResolveSymbolInternal
 
 void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, ResolveSymbolArguments& rsa)
 {
-	auto scope = pa.context;
+	auto scope = pa.scopeSymbol;
 	if (rsa.searchedScopes.Contains(scope))
 	{
 		return;
@@ -125,7 +125,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			for (vint i = 0; i < scope->usingNss.Count(); i++)
 			{
 				auto usingNs = scope->usingNss[i];
-				auto newPa = pa.WithContext(usingNs);
+				auto newPa = pa.WithScope(usingNs);
 				ResolveSymbolInternal(newPa, SearchPolicy::ChildSymbol, rsa);
 			}
 		}
@@ -215,7 +215,7 @@ public:
 						}
 					}
 				}
-				ResolveSymbolInternal(pa.WithContext(symbol), policy, rsa);
+				ResolveSymbolInternal(pa.WithScope(symbol), policy, rsa);
 			}
 		}
 	}
@@ -260,7 +260,7 @@ public:
 
 	void Visit(RootType* self)override
 	{
-		ResolveSymbolInternal(pa.WithContext(pa.root.Obj()), SearchPolicy::ChildSymbol, rsa);
+		ResolveSymbolInternal(pa.WithScope(pa.root.Obj()), SearchPolicy::ChildSymbol, rsa);
 	}
 
 	void Visit(IdType* self)override
