@@ -31,7 +31,7 @@ namespace symbol_totsys_impl
 
 			EvaluateSymbolContext esContext;
 			esContext.additionalArguments.symbolToApply = genericFunction->GetGenericFunction().declSymbol;
-			ResolveGenericParameters(pa, &esContext.additionalArguments, genericFunction, args, isTypes, argSource, boundedAnys, 1);
+			ResolveGenericParameters(pa, esContext.additionalArguments, genericFunction, args, isTypes, argSource, boundedAnys, 1);
 			process(genericFunction, declSymbol, esContext);
 
 			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
@@ -89,7 +89,7 @@ namespace symbol_totsys_impl
 				{
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					symbol_type_resolving::EvaluateFuncSymbol(pa, decl.Obj(), &esContext);
+					EvaluateFuncSymbol(pa, decl.Obj(), &esContext);
 					for (vint i = 0; i < esContext.evaluatedTypes.Count(); i++)
 					{
 						esContext.evaluatedTypes[i] = esContext.evaluatedTypes[i]->PtrOf();
@@ -100,7 +100,7 @@ namespace symbol_totsys_impl
 				{
 					auto decl = declSymbol->GetImplDecl_NFb<ValueAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					symbol_type_resolving::EvaluateValueAliasSymbol(pa, decl.Obj(), &esContext);
+					EvaluateValueAliasSymbol(pa, decl.Obj(), &esContext);
 				}
 				break;
 			default:

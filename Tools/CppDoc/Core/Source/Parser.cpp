@@ -590,25 +590,26 @@ ParsingArguments ParsingArguments::WithArgs(TemplateArgumentContext& taContext)c
 
 ParsingArguments ParsingArguments::AdjustForDecl(Symbol* declSymbol)const
 {
-	if (!taContext) return *this;
-	auto scope = declSymbol;
-	while (scope)
+	auto newPa = WithScope(declSymbol);
+	if (taContext)
 	{
-		auto ta = taContext;
-		while (ta)
+		auto scope = declSymbol;
+		while (scope)
 		{
-			if (ta->symbolToApply == scope)
+			auto ta = taContext;
+			while (ta)
 			{
-				ParsingArguments newPa = *this;
-				newPa.taContext = ta;
-				return newPa;
+				if (ta->symbolToApply == scope)
+				{
+					newPa.taContext = ta;
+					return newPa;
+				}
+				ta = ta->parent;
 			}
-			ta = ta->parent;
+			scope = scope->GetParentScope();
 		}
-		scope = scope->GetParentScope();
 	}
 
-	ParsingArguments newPa = *this;
 	newPa.taContext = nullptr;
 	return newPa;
 }
