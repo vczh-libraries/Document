@@ -297,6 +297,7 @@ struct ParsingArguments
 
 	ParsingArguments								WithScope(Symbol* _scopeSymbol)const;
 	ParsingArguments								WithArgs(TemplateArgumentContext& taContext)const;
+	ParsingArguments								AdjustForDecl(Symbol* declSymbol)const;
 
 	EvaluationKind									GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const;
 	bool											IsGeneralEvaluation()const;
@@ -305,6 +306,7 @@ struct ParsingArguments
 
 struct EvaluateSymbolContext
 {
+	TemplateArgumentContext							additionalArguments;
 	TypeTsysList									evaluatedTypes;
 };
 

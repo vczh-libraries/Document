@@ -588,6 +588,31 @@ ParsingArguments ParsingArguments::WithArgs(TemplateArgumentContext& taContext)c
 	return pa;
 }
 
+ParsingArguments ParsingArguments::AdjustForDecl(Symbol* declSymbol)const
+{
+	if (!taContext) return *this;
+	auto scope = declSymbol;
+	while (scope)
+	{
+		auto ta = taContext;
+		while (ta)
+		{
+			if (ta->symbolToApply == scope)
+			{
+				ParsingArguments newPa = *this;
+				newPa.taContext = ta;
+				return newPa;
+			}
+			ta = ta->parent;
+		}
+		scope = scope->GetParentScope();
+	}
+
+	ParsingArguments newPa = *this;
+	newPa.taContext = nullptr;
+	return newPa;
+}
+
 EvaluationKind ParsingArguments::GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const
 {
 	if (spec && taContext && decl->symbol == taContext->symbolToApply)

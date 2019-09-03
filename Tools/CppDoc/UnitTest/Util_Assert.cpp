@@ -57,23 +57,26 @@ void AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 	TypeTsysList tsys;
 	if (count > 0)
 	{
-		TypeToTsysNoVta(pa, type, tsys, nullptr);
+		TypeToTsysNoVta(pa, type, tsys);
 	}
 	else
 	{
 		try
 		{
-			TypeToTsysNoVta(pa, type, tsys, nullptr);
+			TypeToTsysNoVta(pa, type, tsys);
 		}
 		catch (const NotConvertableException&) {}
 	}
 
-	TEST_ASSERT(tsys.Count() == count);
-
-	SortedList<WString> expects, actuals;
+	SortedList<WString> expects;
 	for (vint i = 0; i < count; i++)
 	{
 		expects.Add(logTsys[i]);
+	}
+
+	SortedList<WString> actuals;
+	for (vint i = 0; i < tsys.Count(); i++)
+	{
 		actuals.Add(GenerateToStream([&](StreamWriter& writer)
 		{
 			Log(tsys[i], writer);
@@ -116,12 +119,15 @@ void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 		catch (const NotConvertableException&) {}
 	}
 
-	TEST_ASSERT(tsys.Count() == count);
-
-	SortedList<WString> expects, actuals;
+	SortedList<WString> expects;
 	for (vint i = 0; i < count; i++)
 	{
 		expects.Add(logTsys[i]);
+	}
+
+	SortedList<WString> actuals;
+	for (vint i = 0; i < tsys.Count(); i++)
+	{
 		actuals.Add(GenerateToStream([&](StreamWriter& writer)
 		{
 			Log(tsys[i].tsys, writer);

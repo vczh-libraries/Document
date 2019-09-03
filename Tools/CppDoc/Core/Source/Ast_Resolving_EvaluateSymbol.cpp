@@ -16,6 +16,12 @@ namespace symbol_type_resolving
 		}
 	}
 
+	ParsingArguments GetPaFromInvokerPa(const ParsingArguments& pa, Symbol* declSymbol, EvaluateSymbolContext* esContext)
+	{
+		auto newPa = pa.AdjustForDecl(declSymbol);
+		return esContext ? newPa.WithArgs(esContext->additionalArguments) : newPa;
+	}
+
 	TypeTsysList& FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& pa, Declaration* decl, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)
 	{
 		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, decl, spec, esContext);
@@ -59,11 +65,12 @@ namespace symbol_type_resolving
 	EvaluateVarSymbol: Evaluate the declared type for a variable
 	***********************************************************************/
 
-	TypeTsysList& EvaluateVarSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl)
+	TypeTsysList& EvaluateVarSymbol(const ParsingArguments& invokerPa, ForwardVariableDeclaration* varDecl)
 	{
 		auto symbol = varDecl->symbol;
 		SETUP_EV_OR_RETURN;
 
+		auto pa = GetPaFromInvokerPa(invokerPa, varDecl->symbol, nullptr);
 		auto newPa = pa.WithScope(symbol->GetParentScope());
 		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, varDecl, nullptr, nullptr);
 
@@ -164,11 +171,12 @@ namespace symbol_type_resolving
 		FinishEvaluatingPotentialGenericSymbol(pa, funcDecl, funcDecl->templateSpec, esContext);
 	}
 
-	TypeTsysList& EvaluateFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl, EvaluateSymbolContext* esContext)
+	TypeTsysList& EvaluateFuncSymbol(const ParsingArguments& invokerPa, ForwardFunctionDeclaration* funcDecl, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = funcDecl->symbol;
 		if (!esContext) SETUP_EV_OR_RETURN;
 
+		auto pa = GetPaFromInvokerPa(invokerPa, funcDecl->symbol, esContext);
 		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, funcDecl, funcDecl->templateSpec, esContext);
 
 		if (funcDecl->needResolveTypeFromStatement)
@@ -206,7 +214,7 @@ namespace symbol_type_resolving
 	EvaluateClassSymbol: Evaluate base types for a class
 	***********************************************************************/
 
-	symbol_component::Evaluation& EvaluateClassSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl)
+	symbol_component::Evaluation& EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl)
 	{
 		auto symbol = classDecl->symbol;
 		auto& ev = symbol->GetEvaluationForUpdating_NFb();
@@ -219,6 +227,7 @@ namespace symbol_type_resolving
 		ev.progress = symbol_component::EvaluationProgress::Evaluating;
 		ev.Allocate(classDecl->baseTypes.Count());
 
+		auto pa = GetPaFromInvokerPa(invokerPa, classDecl->symbol, nullptr);
 		auto newPa = pa.WithScope(symbol);
 		for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 		{
@@ -233,11 +242,12 @@ namespace symbol_type_resolving
 	EvaluateTypeAliasSymbol: Evaluate the declared type for an alias
 	***********************************************************************/
 
-	TypeTsysList& EvaluateTypeAliasSymbol(const ParsingArguments& pa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
+	TypeTsysList& EvaluateTypeAliasSymbol(const ParsingArguments& invokerPa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = usingDecl->symbol;
 		if (!esContext) SETUP_EV_OR_RETURN;
 
+		auto pa = GetPaFromInvokerPa(invokerPa, usingDecl->symbol, esContext);
 		auto newPa = pa.WithScope(symbol->GetParentScope());
 		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, usingDecl, usingDecl->templateSpec, esContext);
 
@@ -249,11 +259,12 @@ namespace symbol_type_resolving
 	EvaluateValueAliasSymbol: Evaluate the declared value for an alias
 	***********************************************************************/
 
-	TypeTsysList& EvaluateValueAliasSymbol(const ParsingArguments& pa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
+	TypeTsysList& EvaluateValueAliasSymbol(const ParsingArguments& invokerPa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = usingDecl->symbol;
 		if (!esContext) SETUP_EV_OR_RETURN;
 
+		auto pa = GetPaFromInvokerPa(invokerPa, usingDecl->symbol, esContext);
 		auto newPa = pa.WithScope(symbol->GetParentScope());
 		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, usingDecl, usingDecl->templateSpec, esContext);
 

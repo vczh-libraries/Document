@@ -323,7 +323,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, Array<vint>& argSource, SortedList<vint>& boundedAnys, vint offset)
+	void ResolveGenericParameters(const ParsingArguments& pa, TemplateArgumentContext* newTaContext, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, Array<vint>& argSource, SortedList<vint>& boundedAnys, vint offset)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
 		{
@@ -360,7 +360,6 @@ namespace symbol_type_resolving
 		GpaList gpaMappings;
 		CalculateGpa(gpaMappings, genericFunction, genericFuncInfo, inputArgumentCount, boundedAnys, offset);
 
-		auto newGaContext = pa.taContext;
 		for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 		{
 			auto gpa = gpaMappings[i];
@@ -382,7 +381,7 @@ namespace symbol_type_resolving
 
 						for (vint j = 0; j < argTypes.Count(); j++)
 						{
-							newGaContext->arguments.Add(pattern, argTypes[j]);
+							newTaContext->arguments.Add(pattern, argTypes[j]);
 						}
 					}
 					else
@@ -391,7 +390,7 @@ namespace symbol_type_resolving
 						{
 							throw NotConvertableException();
 						}
-						newGaContext->arguments.Add(pattern, nullptr);
+						newTaContext->arguments.Add(pattern, nullptr);
 					}
 				}
 				break;
@@ -406,11 +405,11 @@ namespace symbol_type_resolving
 					{
 						auto item = argumentTypes[gpa.index];
 						EnsureGenericTypeParameterAndArgumentMatched(pattern, item.tsys);
-						newGaContext->arguments.Add(pattern, item.tsys);
+						newTaContext->arguments.Add(pattern, item.tsys);
 					}
 					else
 					{
-						newGaContext->arguments.Add(pattern, nullptr);
+						newTaContext->arguments.Add(pattern, nullptr);
 					}
 				}
 				break;
@@ -418,7 +417,7 @@ namespace symbol_type_resolving
 				{
 					Array<ExprTsysItem> items;
 					auto init = pa.tsys->InitOf(items);
-					newGaContext->arguments.Add(pattern, init);
+					newTaContext->arguments.Add(pattern, init);
 				}
 				break;
 			case GenericParameterAssignmentKind::MultipleVta:
@@ -447,12 +446,12 @@ namespace symbol_type_resolving
 						}
 					}
 					auto init = pa.tsys->InitOf(items);
-					newGaContext->arguments.Add(pattern, init);
+					newTaContext->arguments.Add(pattern, init);
 				}
 				break;
 			case GenericParameterAssignmentKind::Any:
 				{
-					newGaContext->arguments.Add(pattern, pa.tsys->Any());
+					newTaContext->arguments.Add(pattern, pa.tsys->Any());
 				}
 				break;
 			}
