@@ -145,6 +145,7 @@ struct NotConvertableException {};
 struct IllegalExprException {};
 struct NotResolvableException {};
 struct UnexpectedSymbolCategoryException {};
+struct FinishEvaluatingReturnType {};
 
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2, Dictionary<WString, WString>& equivalentNames);
 extern bool					IsCompatibleFunctionDeclInSameScope(Ptr<ForwardFunctionDeclaration> declNew, Ptr<ForwardFunctionDeclaration> declOld);

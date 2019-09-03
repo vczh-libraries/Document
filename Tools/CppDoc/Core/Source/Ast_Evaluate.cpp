@@ -10,10 +10,10 @@ class EvaluateStatVisitor : public Object, public IStatVisitor
 {
 public:
 	const ParsingArguments&			pa;
-	bool&							resolvingFunctionType;
+	bool							resolvingFunctionType;
 	EvaluateSymbolContext*			esContext;
 
-	EvaluateStatVisitor(const ParsingArguments& _pa, bool& _resolvingFunctionType, EvaluateSymbolContext* _esContext)
+	EvaluateStatVisitor(const ParsingArguments& _pa, bool _resolvingFunctionType, EvaluateSymbolContext* _esContext)
 		:pa(_pa)
 		, resolvingFunctionType(_resolvingFunctionType)
 		, esContext(_esContext)
@@ -41,24 +41,23 @@ public:
 
 	void Visit(DeclStat* self) override
 	{
-		for (vint i = 0; i < self->decls.Count(); i++)
+		if (!resolvingFunctionType)
 		{
-			auto decl = self->decls[i];
-			if (auto varDecl = decl.Cast<VariableDeclaration>())
+			for (vint i = 0; i < self->decls.Count(); i++)
 			{
-				EvaluateVariableDeclaration(pa, varDecl.Obj());
-			}
-			else
-			{
-				throw NotResolvableException();
+				auto decl = self->decls[i];
+				EvaluateDeclaration(pa, decl.Obj());
 			}
 		}
 	}
 
 	void Visit(ExprStat* self) override
 	{
-		ExprTsysList types;
-		ExprToTsysNoVta(pa, self->expr, types);
+		if (!resolvingFunctionType)
+		{
+			ExprTsysList types;
+			ExprToTsysNoVta(pa, self->expr, types);
+		}
 	}
 
 	void Visit(LabelStat* self) override
@@ -67,16 +66,17 @@ public:
 
 	void Visit(DefaultStat* self) override
 	{
-		self->stat->Accept(this);
+		Evaluate(pa, self->stat);
 	}
 
 	void Visit(CaseStat* self) override
 	{
+		if (!resolvingFunctionType)
 		{
 			ExprTsysList types;
 			ExprToTsysNoVta(pa, self->expr, types);
 		}
-		self->stat->Accept(this);
+		Evaluate(pa, self->stat);
 	}
 
 	void Visit(GotoStat* self) override
@@ -94,20 +94,24 @@ public:
 	void Visit(WhileStat* self) override
 	{
 		auto spa = pa.WithScope(self->symbol);
-		if (self->varExpr)
+		if (!resolvingFunctionType)
 		{
-			EvaluateVariableDeclaration(spa, self->varExpr.Obj());
-		}
-		if (self->expr)
-		{
-			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types);
+			if (self->varExpr)
+			{
+				EvaluateVariableDeclaration(spa, self->varExpr.Obj());
+			}
+			if (self->expr)
+			{
+				ExprTsysList types;
+				ExprToTsysNoVta(spa, self->expr, types);
+			}
 		}
 		Evaluate(spa, self->stat);
 	}
 
 	void Visit(DoWhileStat* self) override
 	{
+		if (!resolvingFunctionType)
 		{
 			ExprTsysList types;
 			ExprToTsysNoVta(pa, self->expr, types);
@@ -117,109 +121,112 @@ public:
 
 	void Visit(ForEachStat* self) override
 	{
-		ExprTsysList types;
-		ExprToTsysNoVta(pa, self->expr, types);
-
-		if (self->varDecl->needResolveTypeFromInitializer)
+		if (!resolvingFunctionType)
 		{
-			auto symbol = self->varDecl->symbol;
-			auto& ev = symbol->GetEvaluationForUpdating_NFb();
-			if (ev.progress == symbol_component::EvaluationProgress::NotEvaluated)
-			{
-				ev.progress = symbol_component::EvaluationProgress::Evaluating;
-				ev.Allocate();
+			ExprTsysList types;
+			ExprToTsysNoVta(pa, self->expr, types);
 
-				for (vint i = 0; i < types.Count(); i++)
+			if (self->varDecl->needResolveTypeFromInitializer)
+			{
+				auto symbol = self->varDecl->symbol;
+				auto& ev = symbol->GetEvaluationForUpdating_NFb();
+				if (ev.progress == symbol_component::EvaluationProgress::NotEvaluated)
 				{
-					auto tsys = types[i].tsys;
+					ev.progress = symbol_component::EvaluationProgress::Evaluating;
+					ev.Allocate();
+
+					for (vint i = 0; i < types.Count(); i++)
 					{
-						TsysCV cv;
-						TsysRefType refType;
-						auto entity = tsys->GetEntity(cv, refType);
-						if (entity->GetType() == TsysType::Array)
+						auto tsys = types[i].tsys;
 						{
-							auto resolved = ResolvePendingType(pa, self->varDecl->type, { nullptr,ExprTsysType::LValue,entity->GetElement()->LRefOf() });
+							TsysCV cv;
+							TsysRefType refType;
+							auto entity = tsys->GetEntity(cv, refType);
+							if (entity->GetType() == TsysType::Array)
+							{
+								auto resolved = ResolvePendingType(pa, self->varDecl->type, { nullptr,ExprTsysType::LValue,entity->GetElement()->LRefOf() });
+								if (!ev.Get().Contains(resolved))
+								{
+									ev.Get().Add(resolved);
+								}
+								types.RemoveAt(i--);
+							}
+						}
+					}
+
+					if (types.Count() > 0)
+					{
+						ExprTsysList virtualExprTypes;
+						{
+							// *begin(container)
+
+							auto placeholderExpr = MakePtr<PlaceholderExpr>();
+							placeholderExpr->types = &types;
+
+							auto beginExpr = MakePtr<IdExpr>();
+							beginExpr->name.name = L"begin";
+							beginExpr->name.type = CppNameType::Normal;
+
+							auto callExpr = MakePtr<FuncAccessExpr>();
+							callExpr->expr = beginExpr;
+							callExpr->arguments.Add({ placeholderExpr,false });
+
+							auto derefExpr = MakePtr<PrefixUnaryExpr>();
+							derefExpr->op = CppPrefixUnaryOp::Dereference;
+							derefExpr->opName.name = L"*";
+							derefExpr->opName.type = CppNameType::Operator;
+							derefExpr->operand = callExpr;
+
+							ExprToTsysNoVta(pa, derefExpr, virtualExprTypes);
+						}
+						{
+							// *container.begin()
+
+							auto placeholderExpr = MakePtr<PlaceholderExpr>();
+							placeholderExpr->types = &types;
+
+							auto beginExpr = MakePtr<IdExpr>();
+							beginExpr->name.name = L"begin";
+							beginExpr->name.type = CppNameType::Normal;
+
+							auto fieldExpr = MakePtr<FieldAccessExpr>();
+							fieldExpr->expr = placeholderExpr;
+							fieldExpr->name = beginExpr;
+							fieldExpr->type = CppFieldAccessType::Dot;
+
+							auto callExpr = MakePtr<FuncAccessExpr>();
+							callExpr->expr = fieldExpr;
+
+							auto derefExpr = MakePtr<PrefixUnaryExpr>();
+							derefExpr->op = CppPrefixUnaryOp::Dereference;
+							derefExpr->opName.name = L"*";
+							derefExpr->opName.type = CppNameType::Operator;
+							derefExpr->operand = callExpr;
+
+							ExprToTsysNoVta(pa, derefExpr, virtualExprTypes);
+						}
+
+						for (vint i = 0; i < virtualExprTypes.Count(); i++)
+						{
+							auto resolved = ResolvePendingType(pa, self->varDecl->type, virtualExprTypes[i]);
 							if (!ev.Get().Contains(resolved))
 							{
 								ev.Get().Add(resolved);
 							}
-							types.RemoveAt(i--);
 						}
 					}
-				}
 
-				if (types.Count() > 0)
-				{
-					ExprTsysList virtualExprTypes;
+					if (ev.Get().Count() == 0)
 					{
-						// *begin(container)
-
-						auto placeholderExpr = MakePtr<PlaceholderExpr>();
-						placeholderExpr->types = &types;
-
-						auto beginExpr = MakePtr<IdExpr>();
-						beginExpr->name.name = L"begin";
-						beginExpr->name.type = CppNameType::Normal;
-
-						auto callExpr = MakePtr<FuncAccessExpr>();
-						callExpr->expr = beginExpr;
-						callExpr->arguments.Add({ placeholderExpr,false });
-
-						auto derefExpr = MakePtr<PrefixUnaryExpr>();
-						derefExpr->op = CppPrefixUnaryOp::Dereference;
-						derefExpr->opName.name = L"*";
-						derefExpr->opName.type = CppNameType::Operator;
-						derefExpr->operand = callExpr;
-
-						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes);
+						throw NotResolvableException();
 					}
-					{
-						// *container.begin()
-
-						auto placeholderExpr = MakePtr<PlaceholderExpr>();
-						placeholderExpr->types = &types;
-
-						auto beginExpr = MakePtr<IdExpr>();
-						beginExpr->name.name = L"begin";
-						beginExpr->name.type = CppNameType::Normal;
-
-						auto fieldExpr = MakePtr<FieldAccessExpr>();
-						fieldExpr->expr = placeholderExpr;
-						fieldExpr->name = beginExpr;
-						fieldExpr->type = CppFieldAccessType::Dot;
-
-						auto callExpr = MakePtr<FuncAccessExpr>();
-						callExpr->expr = fieldExpr;
-
-						auto derefExpr = MakePtr<PrefixUnaryExpr>();
-						derefExpr->op = CppPrefixUnaryOp::Dereference;
-						derefExpr->opName.name = L"*";
-						derefExpr->opName.type = CppNameType::Operator;
-						derefExpr->operand = callExpr;
-
-						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes);
-					}
-
-					for (vint i = 0; i < virtualExprTypes.Count(); i++)
-					{
-						auto resolved = ResolvePendingType(pa, self->varDecl->type, virtualExprTypes[i]);
-						if (!ev.Get().Contains(resolved))
-						{
-							ev.Get().Add(resolved);
-						}
-					}
+					ev.progress = symbol_component::EvaluationProgress::Evaluated;
 				}
-
-				if (ev.Get().Count() == 0)
-				{
-					throw NotResolvableException();
-				}
-				ev.progress = symbol_component::EvaluationProgress::Evaluated;
 			}
-		}
-		else
-		{
-			EvaluateVariableDeclaration(pa, self->varDecl.Obj());
+			else
+			{
+				EvaluateVariableDeclaration(pa, self->varDecl.Obj());
+			}
 		}
 
 		auto spa = pa.WithScope(self->symbol);
@@ -229,24 +236,27 @@ public:
 	void Visit(ForStat* self) override
 	{
 		auto spa = pa.WithScope(self->symbol);
-		for (vint i = 0; i < self->varDecls.Count(); i++)
+		if (!resolvingFunctionType)
 		{
-			EvaluateVariableDeclaration(spa, self->varDecls[i].Obj());
-		}
-		if (self->init)
-		{
-			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->init, types);
-		}
-		if (self->expr)
-		{
-			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types);
-		}
-		if (self->effect)
-		{
-			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->effect, types);
+			for (vint i = 0; i < self->varDecls.Count(); i++)
+			{
+				EvaluateVariableDeclaration(spa, self->varDecls[i].Obj());
+			}
+			if (self->init)
+			{
+				ExprTsysList types;
+				ExprToTsysNoVta(spa, self->init, types);
+			}
+			if (self->expr)
+			{
+				ExprTsysList types;
+				ExprToTsysNoVta(spa, self->expr, types);
+			}
+			if (self->effect)
+			{
+				ExprTsysList types;
+				ExprToTsysNoVta(spa, self->effect, types);
+			}
 		}
 		Evaluate(spa, self->stat);
 	}
@@ -254,18 +264,21 @@ public:
 	void Visit(IfElseStat* self) override
 	{
 		auto spa = pa.WithScope(self->symbol);
-		for (vint i = 0; i < self->varDecls.Count(); i++)
+		if (!resolvingFunctionType)
 		{
-			EvaluateVariableDeclaration(spa, self->varDecls[i].Obj());
-		}
-		if (self->varExpr)
-		{
-			EvaluateVariableDeclaration(spa, self->varExpr.Obj());
-		}
-		if (self->expr)
-		{
-			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types);
+			for (vint i = 0; i < self->varDecls.Count(); i++)
+			{
+				EvaluateVariableDeclaration(spa, self->varDecls[i].Obj());
+			}
+			if (self->varExpr)
+			{
+				EvaluateVariableDeclaration(spa, self->varExpr.Obj());
+			}
+			if (self->expr)
+			{
+				ExprTsysList types;
+				ExprToTsysNoVta(spa, self->expr, types);
+			}
 		}
 		Evaluate(spa, self->trueStat);
 		if (self->falseStat)
@@ -277,23 +290,26 @@ public:
 	void Visit(SwitchStat* self) override
 	{
 		auto spa = pa.WithScope(self->symbol);
-		if (self->varExpr)
+		if (!resolvingFunctionType)
 		{
-			EvaluateVariableDeclaration(spa, self->varExpr.Obj());
-		}
-		if (self->expr)
-		{
-			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types);
+			if (self->varExpr)
+			{
+				EvaluateVariableDeclaration(spa, self->varExpr.Obj());
+			}
+			if (self->expr)
+			{
+				ExprTsysList types;
+				ExprToTsysNoVta(spa, self->expr, types);
+			}
 		}
 		Evaluate(spa, self->stat);
 	}
 
 	void Visit(TryCatchStat* self) override
 	{
-		self->tryStat->Accept(this);
+		Evaluate(pa, self->tryStat);
 		auto spa = pa.WithScope(self->symbol);
-		if (self->exception)
+		if (!resolvingFunctionType && self->exception)
 		{
 			EvaluateVariableDeclaration(spa, self->exception.Obj());
 		}
@@ -310,7 +326,6 @@ public:
 
 		if (pa.functionBodySymbol && resolvingFunctionType)
 		{
-			resolvingFunctionType = false;
 			TypeTsysList tsyses;
 			if (self->expr)
 			{
@@ -328,23 +343,25 @@ public:
 				tsyses.Add(pa.tsys->Void());
 			}
 			symbol_type_resolving::SetFuncTypeByReturnStat(pa, pa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>().Obj(), tsyses, esContext);
+			throw FinishEvaluatingReturnType();
 		}
 	}
 
 	void Visit(__Try__ExceptStat* self) override
 	{
+		if (!resolvingFunctionType)
 		{
 			ExprTsysList types;
 			ExprToTsysNoVta(pa, self->expr, types);
 		}
-		self->tryStat->Accept(this);
-		self->exceptStat->Accept(this);
+		Evaluate(pa, self->tryStat);
+		Evaluate(pa, self->exceptStat);
 	}
 
 	void Visit(__Try__FinallyStat* self) override
 	{
-		self->tryStat->Accept(this);
-		self->finallyStat->Accept(this);
+		Evaluate(pa, self->tryStat);
+		Evaluate(pa, self->finallyStat);
 	}
 
 	void Visit(__LeaveStat* self) override
@@ -353,20 +370,22 @@ public:
 
 	void Visit(__IfExistsStat* self) override
 	{
+		if (!resolvingFunctionType)
 		{
 			ExprTsysList types;
 			ExprToTsysNoVta(pa, self->expr, types);
 		}
-		self->stat->Accept(this);
+		Evaluate(pa, self->stat);
 	}
 
 	void Visit(__IfNotExistsStat* self) override
 	{
+		if (!resolvingFunctionType)
 		{
 			ExprTsysList types;
 			ExprToTsysNoVta(pa, self->expr, types);
 		}
-		self->stat->Accept(this);
+		Evaluate(pa, self->stat);
 	}
 };
 
@@ -442,11 +461,9 @@ public:
 			}
 		}
 
-		if (!self->needResolveTypeFromStatement)
-		{
-			auto fpa = pa.WithScope(self->symbol);
-			EvaluateStat(fpa, self->statement, false, nullptr);
-		}
+		// when the third parameter is true, only return statement is analyzed. So here we do a full analyzing.
+		auto fpa = pa.WithScope(self->symbol);
+		EvaluateStat(fpa, self->statement, false, nullptr);
 	}
 
 	void Visit(EnumItemDeclaration* self) override
@@ -519,7 +536,11 @@ Evaluate
 void EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctionType, EvaluateSymbolContext* esContext)
 {
 	EvaluateStatVisitor visitor(pa, resolvingFunctionType, esContext);
-	s->Accept(&visitor);
+	try
+	{
+		s->Accept(&visitor);
+	}
+	catch (const FinishEvaluatingReturnType&) {}
 }
 
 void EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration* decl)
