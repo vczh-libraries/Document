@@ -46,7 +46,7 @@ public:
 			for (vint i = 0; i < self->decls.Count(); i++)
 			{
 				auto decl = self->decls[i];
-				EvaluateDeclaration(pa, decl.Obj());
+				EvaluateDeclaration(pa, decl);
 			}
 		}
 	}
