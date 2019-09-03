@@ -1,4 +1,4 @@
-#include "Ast_Resolving_ExpandPotentialVta.h"
+#include "Ast_Evaluate_ExpandPotentialVta.h"
 
 using namespace symbol_type_resolving;
 
@@ -8,7 +8,7 @@ namespace symbol_totsys_impl
 	// TypeSymbolToTsys
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void TypeSymbolToTsys(const ParsingArguments& pa, TypeTsysList& result, GenericArgContext* gaContext, Symbol* symbol, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
+	void TypeSymbolToTsys(const ParsingArguments& pa, TypeTsysList& result, Symbol* symbol, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
 		switch (symbol->kind)
 		{
@@ -33,39 +33,34 @@ namespace symbol_totsys_impl
 		case symbol_component::SymbolKind::GenericTypeArgument:
 			{
 				auto argumentKey = EvaluateGenericArgumentSymbol(symbol);
-				if (gaContext)
+				if(auto pReplacedTypes = pa.ReplaceGenericArg(argumentKey))
 				{
-					vint index = gaContext->arguments.Keys().IndexOf(argumentKey);
-					if (index != -1)
+					for (vint k = 0; k < pReplacedTypes->Count(); k++)
 					{
-						auto& replacedTypes = gaContext->arguments.GetByIndex(index);
-						for (vint k = 0; k < replacedTypes.Count(); k++)
+						if (symbol->ellipsis)
 						{
-							if (symbol->ellipsis)
+							if (!allowVariadic)
 							{
-								if (!allowVariadic)
-								{
-									throw NotConvertableException();
-								}
-								auto replacedType = replacedTypes[k];
-								if (replacedType->GetType() == TsysType::Any || replacedType->GetType() == TsysType::Init)
-								{
-									AddTsysToResult(result, replacedTypes[k]);
-									hasVariadic = true;
-								}
-								else
-								{
-									throw NotConvertableException();
-								}
+								throw NotConvertableException();
+							}
+							auto replacedType = pReplacedTypes->Get(k);
+							if (replacedType->GetType() == TsysType::Any || replacedType->GetType() == TsysType::Init)
+							{
+								AddTsysToResult(result, pReplacedTypes->Get(k));
+								hasVariadic = true;
 							}
 							else
 							{
-								AddTsysToResult(result, replacedTypes[k]);
-								hasNonVariadic = true;
+								throw NotConvertableException();
 							}
 						}
-						return;
+						else
+						{
+							AddTsysToResult(result, pReplacedTypes->Get(k));
+							hasNonVariadic = true;
+						}
 					}
+					return;
 				}
 
 				if (symbol->ellipsis)
@@ -93,13 +88,13 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	template<typename TGenerator>
-	static bool SymbolListToTsys(const ParsingArguments& pa, TypeTsysList& result, GenericArgContext* gaContext, bool allowVariadic, TGenerator&& symbolGenerator)
+	static bool SymbolListToTsys(const ParsingArguments& pa, TypeTsysList& result, bool allowVariadic, TGenerator&& symbolGenerator)
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
 		symbolGenerator([&](Symbol* symbol)
 		{
-			TypeSymbolToTsys(pa, result, gaContext, symbol, allowVariadic, hasVariadic, hasNonVariadic);
+			TypeSymbolToTsys(pa, result, symbol, allowVariadic, hasVariadic, hasNonVariadic);
 		});
 
 		if (hasVariadic && hasNonVariadic)
@@ -113,7 +108,7 @@ namespace symbol_totsys_impl
 	// CreateIdReferenceType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void CreateIdReferenceType(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta)
+	void CreateIdReferenceType(const ParsingArguments& pa, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta)
 	{
 		if (!resolving)
 		{
@@ -132,7 +127,7 @@ namespace symbol_totsys_impl
 			throw NotConvertableException();
 		}
 
-		isVta = SymbolListToTsys(pa, result, gaContext, allowVariadic, [&](auto receiver)
+		isVta = SymbolListToTsys(pa, result, allowVariadic, [&](auto receiver)
 		{
 			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 			{
@@ -150,7 +145,7 @@ namespace symbol_totsys_impl
 	{
 		if (classType->GetType() == TsysType::Decl)
 		{
-			auto newPa = pa.WithContext(classType->GetDecl());
+			auto newPa = pa.WithScope(classType->GetDecl());
 			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
 			if (rsr.types)
 			{
@@ -171,7 +166,7 @@ namespace symbol_totsys_impl
 	// ProcessChildType
 	//////////////////////////////////////////////////////////////////////////////////////
 	
-	void ProcessChildType(const ParsingArguments& pa, GenericArgContext* gaContext, ChildType* self, ExprTsysItem argClass, ExprTsysList& result)
+	void ProcessChildType(const ParsingArguments& pa, ChildType* self, ExprTsysItem argClass, ExprTsysList& result)
 	{
 		if (argClass.tsys->IsUnknownType())
 		{
@@ -181,7 +176,7 @@ namespace symbol_totsys_impl
 		{
 			TypeTsysList childTypes;
 			SortedList<Symbol*> visited;
-			SymbolListToTsys(pa, childTypes, gaContext, false, [&](auto receiver)
+			SymbolListToTsys(pa, childTypes, false, [&](auto receiver)
 			{
 				ResolveChildTypeWithGenericArguments(pa, self, argClass.tsys, visited, receiver);
 			});
@@ -193,7 +188,7 @@ namespace symbol_totsys_impl
 	// CreateIdReferenceExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void CreateIdReferenceExpr(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, ExprTsysList& result, bool allowAny, bool allowVariadic, bool& isVta)
+	void CreateIdReferenceExpr(const ParsingArguments& pa, Ptr<Resolving> resolving, ExprTsysList& result, bool allowAny, bool allowVariadic, bool& isVta)
 	{
 		if (!resolving)
 		{
@@ -209,7 +204,7 @@ namespace symbol_totsys_impl
 		}
 
 		ExprTsysList resolvableResult;
-		auto& outputTarget = gaContext ? resolvableResult : result;
+		auto& outputTarget = pa.IsGeneralEvaluation() ? result : resolvableResult;
 
 		if (pa.functionBodySymbol && pa.functionBodySymbol->GetMethodCache_Fb())
 		{
@@ -223,7 +218,7 @@ namespace symbol_totsys_impl
 		{
 			bool hasVariadic = false;
 			bool hasNonVariadic = false;
-			VisitResolvedMember(pa, gaContext, resolving, outputTarget, hasVariadic, hasNonVariadic);
+			VisitResolvedMember(pa, resolving, outputTarget, hasVariadic, hasNonVariadic);
 
 			if (hasVariadic && hasNonVariadic)
 			{
@@ -232,13 +227,13 @@ namespace symbol_totsys_impl
 			isVta = hasVariadic;
 		}
 
-		if (gaContext)
+		if (!pa.IsGeneralEvaluation())
 		{
 			for (vint i = 0; i < resolvableResult.Count(); i++)
 			{
 				auto item = resolvableResult[i];
 				TypeTsysList types;
-				item.tsys->ReplaceGenericArgs(*gaContext, types);
+				item.tsys->ReplaceGenericArgs(pa, types);
 				for (vint j = 0; j < types.Count(); j++)
 				{
 					AddInternal(result, { item.symbol,item.type,types[j] });
@@ -256,7 +251,7 @@ namespace symbol_totsys_impl
 	{
 		if (classType->GetType() == TsysType::Decl)
 		{
-			auto newPa = pa.WithContext(classType->GetDecl());
+			auto newPa = pa.WithScope(classType->GetDecl());
 			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
 			if (rsr.values)
 			{
@@ -277,7 +272,7 @@ namespace symbol_totsys_impl
 	// ProcessChildExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void ProcessChildExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ChildExpr* self, ExprTsysItem argClass)
+	void ProcessChildExpr(const ParsingArguments& pa, ExprTsysList& result, ChildExpr* self, ExprTsysItem argClass)
 	{
 		Ptr<Resolving> resolving;
 		SortedList<Symbol*> visited;
@@ -293,7 +288,7 @@ namespace symbol_totsys_impl
 		if (resolving)
 		{
 			bool childIsVta = false;
-			CreateIdReferenceExpr(pa, gaContext, resolving, result, false, false, childIsVta);
+			CreateIdReferenceExpr(pa, resolving, result, false, false, childIsVta);
 		}
 	}
 
@@ -301,7 +296,7 @@ namespace symbol_totsys_impl
 	// ResolveField
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void ResolveField(const ParsingArguments& pa, GenericArgContext* gaContext, ExprTsysList& result, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, ITsys* classType, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr)
+	void ResolveField(const ParsingArguments& pa, ExprTsysList& result, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, ITsys* classType, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr)
 	{
 		if (idExpr)
 		{
@@ -355,13 +350,13 @@ namespace symbol_totsys_impl
 	// ProcessFieldAccessExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void ProcessFieldAccessExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed)
+	void ProcessFieldAccessExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed)
 	{
 		switch (self->type)
 		{
 		case CppFieldAccessType::Dot:
 			{
-				ResolveField(pa, gaContext, result, totalRar, argParent, argClass.tsys, idExpr, childExpr);
+				ResolveField(pa, result, totalRar, argParent, argClass.tsys, idExpr, childExpr);
 			}
 			break;
 		case CppFieldAccessType::Arrow:
@@ -378,7 +373,7 @@ namespace symbol_totsys_impl
 					if (entityType->GetType() == TsysType::Ptr)
 					{
 						ExprTsysItem parentItem(nullptr, ExprTsysType::LValue, entityType->GetElement());
-						ResolveField(pa, gaContext, result, totalRar, parentItem, argClass.tsys, idExpr, childExpr);
+						ResolveField(pa, result, totalRar, parentItem, argClass.tsys, idExpr, childExpr);
 					}
 					else if (entityType->GetType() == TsysType::Decl)
 					{
@@ -391,9 +386,9 @@ namespace symbol_totsys_impl
 							AddNonVar(indirectionItems, item);
 						}
 
-						if (pa.recorder && !gaContext)
+						if (pa.recorder && pa.IsGeneralEvaluation())
 						{
-							AddSymbolsToOperatorResolving(gaContext, self->opName, self->opResolving, opResult, operatorIndexed);
+							AddSymbolsToOperatorResolving(pa, self->opName, self->opResolving, opResult, operatorIndexed);
 						}
 					}
 				}

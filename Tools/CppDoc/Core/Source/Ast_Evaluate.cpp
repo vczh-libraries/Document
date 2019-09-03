@@ -12,17 +12,12 @@ public:
 	const ParsingArguments&			pa;
 	bool&							resolvingFunctionType;
 	EvaluateSymbolContext*			esContext;
-	GenericArgContext*				gaContext;
 
 	EvaluateStatVisitor(const ParsingArguments& _pa, bool& _resolvingFunctionType, EvaluateSymbolContext* _esContext)
 		:pa(_pa)
 		, resolvingFunctionType(_resolvingFunctionType)
 		, esContext(_esContext)
 	{
-		if (esContext)
-		{
-			gaContext = &esContext->gaContext;
-		}
 	}
 
 	void Evaluate(const ParsingArguments& spa, Ptr<Stat> stat)
@@ -37,7 +32,7 @@ public:
 
 	void Visit(BlockStat* self) override
 	{
-		auto spa = pa.WithContext(self->symbol);
+		auto spa = pa.WithScope(self->symbol);
 		for (vint i = 0; i < self->stats.Count(); i++)
 		{
 			Evaluate(spa, self->stats[i]);
@@ -51,7 +46,7 @@ public:
 			auto decl = self->decls[i];
 			if (auto varDecl = decl.Cast<VariableDeclaration>())
 			{
-				EvaluateVariableDeclaration(pa, varDecl.Obj(), gaContext);
+				EvaluateVariableDeclaration(pa, varDecl.Obj());
 			}
 			else
 			{
@@ -63,7 +58,7 @@ public:
 	void Visit(ExprStat* self) override
 	{
 		ExprTsysList types;
-		ExprToTsysNoVta(pa, self->expr, types, gaContext);
+		ExprToTsysNoVta(pa, self->expr, types);
 	}
 
 	void Visit(LabelStat* self) override
@@ -79,7 +74,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(pa, self->expr, types, gaContext);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 		self->stat->Accept(this);
 	}
@@ -98,15 +93,15 @@ public:
 
 	void Visit(WhileStat* self) override
 	{
-		auto spa = pa.WithContext(self->symbol);
+		auto spa = pa.WithScope(self->symbol);
 		if (self->varExpr)
 		{
-			EvaluateVariableDeclaration(spa, self->varExpr.Obj(), gaContext);
+			EvaluateVariableDeclaration(spa, self->varExpr.Obj());
 		}
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types, gaContext);
+			ExprToTsysNoVta(spa, self->expr, types);
 		}
 		Evaluate(spa, self->stat);
 	}
@@ -115,7 +110,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(pa, self->expr, types, gaContext);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 		Evaluate(pa, self->stat);
 	}
@@ -123,7 +118,7 @@ public:
 	void Visit(ForEachStat* self) override
 	{
 		ExprTsysList types;
-		ExprToTsysNoVta(pa, self->expr, types, gaContext);
+		ExprToTsysNoVta(pa, self->expr, types);
 
 		if (self->varDecl->needResolveTypeFromInitializer)
 		{
@@ -176,7 +171,7 @@ public:
 						derefExpr->opName.type = CppNameType::Operator;
 						derefExpr->operand = callExpr;
 
-						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes, gaContext);
+						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes);
 					}
 					{
 						// *container.begin()
@@ -202,7 +197,7 @@ public:
 						derefExpr->opName.type = CppNameType::Operator;
 						derefExpr->operand = callExpr;
 
-						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes, gaContext);
+						ExprToTsysNoVta(pa, derefExpr, virtualExprTypes);
 					}
 
 					for (vint i = 0; i < virtualExprTypes.Count(); i++)
@@ -224,53 +219,53 @@ public:
 		}
 		else
 		{
-			EvaluateVariableDeclaration(pa, self->varDecl.Obj(), gaContext);
+			EvaluateVariableDeclaration(pa, self->varDecl.Obj());
 		}
 
-		auto spa = pa.WithContext(self->symbol);
+		auto spa = pa.WithScope(self->symbol);
 		Evaluate(spa, self->stat);
 	}
 
 	void Visit(ForStat* self) override
 	{
-		auto spa = pa.WithContext(self->symbol);
+		auto spa = pa.WithScope(self->symbol);
 		for (vint i = 0; i < self->varDecls.Count(); i++)
 		{
-			EvaluateVariableDeclaration(spa, self->varDecls[i].Obj(), gaContext);
+			EvaluateVariableDeclaration(spa, self->varDecls[i].Obj());
 		}
 		if (self->init)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->init, types, gaContext);
+			ExprToTsysNoVta(spa, self->init, types);
 		}
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types, gaContext);
+			ExprToTsysNoVta(spa, self->expr, types);
 		}
 		if (self->effect)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->effect, types, gaContext);
+			ExprToTsysNoVta(spa, self->effect, types);
 		}
 		Evaluate(spa, self->stat);
 	}
 
 	void Visit(IfElseStat* self) override
 	{
-		auto spa = pa.WithContext(self->symbol);
+		auto spa = pa.WithScope(self->symbol);
 		for (vint i = 0; i < self->varDecls.Count(); i++)
 		{
-			EvaluateVariableDeclaration(spa, self->varDecls[i].Obj(), gaContext);
+			EvaluateVariableDeclaration(spa, self->varDecls[i].Obj());
 		}
 		if (self->varExpr)
 		{
-			EvaluateVariableDeclaration(spa, self->varExpr.Obj(), gaContext);
+			EvaluateVariableDeclaration(spa, self->varExpr.Obj());
 		}
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types, gaContext);
+			ExprToTsysNoVta(spa, self->expr, types);
 		}
 		Evaluate(spa, self->trueStat);
 		if (self->falseStat)
@@ -281,15 +276,15 @@ public:
 
 	void Visit(SwitchStat* self) override
 	{
-		auto spa = pa.WithContext(self->symbol);
+		auto spa = pa.WithScope(self->symbol);
 		if (self->varExpr)
 		{
-			EvaluateVariableDeclaration(spa, self->varExpr.Obj(), gaContext);
+			EvaluateVariableDeclaration(spa, self->varExpr.Obj());
 		}
 		if (self->expr)
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(spa, self->expr, types, gaContext);
+			ExprToTsysNoVta(spa, self->expr, types);
 		}
 		Evaluate(spa, self->stat);
 	}
@@ -297,10 +292,10 @@ public:
 	void Visit(TryCatchStat* self) override
 	{
 		self->tryStat->Accept(this);
-		auto spa = pa.WithContext(self->symbol);
+		auto spa = pa.WithScope(self->symbol);
 		if (self->exception)
 		{
-			EvaluateVariableDeclaration(spa, self->exception.Obj(), gaContext);
+			EvaluateVariableDeclaration(spa, self->exception.Obj());
 		}
 		Evaluate(spa, self->catchStat);
 	}
@@ -310,7 +305,7 @@ public:
 		ExprTsysList types;
 		if (self->expr)
 		{
-			ExprToTsysNoVta(pa, self->expr, types, gaContext);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 
 		if (pa.functionBodySymbol && resolvingFunctionType)
@@ -340,7 +335,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(pa, self->expr, types, gaContext);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 		self->tryStat->Accept(this);
 		self->exceptStat->Accept(this);
@@ -360,7 +355,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(pa, self->expr, types, gaContext);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 		self->stat->Accept(this);
 	}
@@ -369,7 +364,7 @@ public:
 	{
 		{
 			ExprTsysList types;
-			ExprToTsysNoVta(pa, self->expr, types, gaContext);
+			ExprToTsysNoVta(pa, self->expr, types);
 		}
 		self->stat->Accept(this);
 	}
@@ -407,7 +402,7 @@ public:
 
 	void Visit(VariableDeclaration* self) override
 	{
-		EvaluateVariableDeclaration(pa, self, nullptr);
+		EvaluateVariableDeclaration(pa, self);
 	}
 
 	void Visit(FunctionDeclaration* self) override
@@ -427,7 +422,7 @@ public:
 				throw NotResolvableException();
 			}
 
-			auto newPa = pa.WithContext(self->symbol);
+			auto newPa = pa.WithScope(self->symbol);
 			for (vint i = 0; i < self->initList.Count(); i++)
 			{
 				auto& item = self->initList[i];
@@ -449,7 +444,7 @@ public:
 
 		if (!self->needResolveTypeFromStatement)
 		{
-			auto fpa = pa.WithContext(self->symbol);
+			auto fpa = pa.WithScope(self->symbol);
 			EvaluateStat(fpa, self->statement, false, nullptr);
 		}
 	}
@@ -474,7 +469,7 @@ public:
 	void Visit(ClassDeclaration* self) override
 	{
 		symbol_type_resolving::EvaluateClassSymbol(pa, self);
-		auto dpa = pa.WithContext(self->symbol);
+		auto dpa = pa.WithScope(self->symbol);
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
 			EvaluateDeclaration(dpa, self->decls[i].f1);
@@ -509,7 +504,7 @@ public:
 
 	void Visit(NamespaceDeclaration* self) override
 	{
-		auto dpa = pa.WithContext(self->symbol);
+		auto dpa = pa.WithScope(self->symbol);
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
 			EvaluateDeclaration(dpa, self->decls[i]);
@@ -527,7 +522,7 @@ void EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctio
 	s->Accept(&visitor);
 }
 
-void EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration* decl, GenericArgContext* gaContext)
+void EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration* decl)
 {
 	symbol_type_resolving::EvaluateVarSymbol(pa, decl);
 	if (!decl->needResolveTypeFromInitializer && decl->initializer)
@@ -547,7 +542,7 @@ void EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration
 
 void EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> decl)
 {
-	auto dpa = pa.WithContext(decl->symbol);
+	auto dpa = pa.WithScope(decl->symbol);
 	EvaluateDeclarationVisitor visitor(dpa);
 	decl->Accept(&visitor);
 }

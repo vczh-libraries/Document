@@ -70,7 +70,7 @@ namespace symbol_type_resolving
 	extern void									VisitSymbolForField(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result);
 
 	extern Ptr<Resolving>						FindMembersByName(const ParsingArguments& pa, CppName& name, ResolveSymbolResult* totalRar, const ExprTsysItem& parentItem);
-	extern void									VisitResolvedMember(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, ExprTsysList& result, bool& hasVariadic, bool& hasNonVariadic);
+	extern void									VisitResolvedMember(const ParsingArguments& pa, Ptr<Resolving> resolving, ExprTsysList& result, bool& hasVariadic, bool& hasNonVariadic);
 	extern void									VisitResolvedMember(const ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result);
 	extern void									VisitFunctors(const ParsingArguments& pa, const ExprTsysItem& parentItem, const WString& name, ExprTsysList& result);
 
@@ -79,12 +79,12 @@ namespace symbol_type_resolving
 
 	// EvaluateSymbol
 
-	extern TypeTsysList&						EvaluateVarSymbol(const ParsingArguments& pa, ForwardVariableDeclaration* varDecl);
+	extern TypeTsysList&						EvaluateVarSymbol(const ParsingArguments& invokerPa, ForwardVariableDeclaration* varDecl);
 	extern void									SetFuncTypeByReturnStat(const ParsingArguments& pa, FunctionDeclaration* funcDecl, TypeTsysList& returnTypes, EvaluateSymbolContext* esContext);
-	extern TypeTsysList&						EvaluateFuncSymbol(const ParsingArguments& pa, ForwardFunctionDeclaration* funcDecl, EvaluateSymbolContext* esContext = nullptr);
-	extern symbol_component::Evaluation&		EvaluateClassSymbol(const ParsingArguments& pa, ClassDeclaration* classDecl);
-	extern TypeTsysList&						EvaluateTypeAliasSymbol(const ParsingArguments& pa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
-	extern TypeTsysList&						EvaluateValueAliasSymbol(const ParsingArguments& pa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
+	extern TypeTsysList&						EvaluateFuncSymbol(const ParsingArguments& invokerPa, ForwardFunctionDeclaration* funcDecl, EvaluateSymbolContext* esContext = nullptr);
+	extern symbol_component::Evaluation&		EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl);
+	extern TypeTsysList&						EvaluateTypeAliasSymbol(const ParsingArguments& invokerPa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
+	extern TypeTsysList&						EvaluateValueAliasSymbol(const ParsingArguments& invokerPa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext = nullptr);
 	extern ITsys*								EvaluateGenericArgumentSymbol(Symbol* symbol);
 
 	// Overloading
@@ -102,5 +102,5 @@ namespace symbol_type_resolving
 
 	extern Ptr<TemplateSpec>					GetTemplateSpecFromSymbol(Symbol* symbol);
 	extern void									CreateGenericFunctionHeader(const ParsingArguments& pa, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction);
-	extern void									ResolveGenericParameters(const ParsingArguments& pa, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, Array<vint>& argSource, SortedList<vint>& boundedAnys, vint offset, GenericArgContext* newGaContext);
+	extern void									ResolveGenericParameters(const ParsingArguments& invokerPa, TemplateArgumentContext& newTaContext, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, Array<vint>& argSource, SortedList<vint>& boundedAnys, vint offset);
 }

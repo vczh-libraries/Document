@@ -420,7 +420,7 @@ namespace symbol_type_resolving
 
 				if (symbol == firstSymbol)
 				{
-					auto classPa = pa.WithContext(symbol);
+					auto classPa = pa.WithScope(symbol);
 
 					SearchBaseTypeAdlClassesAndNamespacesVisitor visitor(classPa, nss, classes);
 					for (vint i = 0; i < classDecl->baseTypes.Count(); i++)

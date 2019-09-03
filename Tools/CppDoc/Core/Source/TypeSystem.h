@@ -99,24 +99,6 @@ struct ExprTsysItem : ExprHeader
 using TypeTsysList = List<ITsys*>;
 using ExprTsysList = List<ExprTsysItem>;
 
-struct GenericArgContext
-{
-	//	Keys:
-	//		Type							:	GenericArg(Decl(TemplateArgument))
-	//		Value							:	Decl(TemplateArgument)
-	//	Value:
-	//		Single							:	Anything
-	//		MultipleValues					:	{Values ...}
-	//		UnknownAmountOfMultipleValues	:	any_t
-	Group<ITsys*, ITsys*>	arguments;
-};
-
-struct EvaluateSymbolContext
-{
-	GenericArgContext	gaContext;
-	TypeTsysList		evaluatedTypes;
-};
-
 /***********************************************************************
 Interface
 ***********************************************************************/
@@ -378,9 +360,9 @@ public:
 
 	virtual ITsys*						GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
 	virtual bool						IsUnknownType() = 0;
-	virtual bool						HasGenericArg(const SortedList<ITsys*>* includedTypes) = 0;
+	virtual bool						HasGenericArg(const ParsingArguments& pa) = 0;
 	virtual bool						HasUnknownType() = 0;
-	virtual void						ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output) = 0;
+	virtual void						ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output) = 0;
 };
 
 /***********************************************************************

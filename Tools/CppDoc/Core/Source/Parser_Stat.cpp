@@ -41,7 +41,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		// { { STATEMENT ...} }
 		auto stat = MakePtr<BlockStat>();
-		auto newPa = pa.WithContext(pa.context->CreateStatSymbol_NFb(stat));
+		auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 		while (!TestToken(cursor, CppTokens::RBRACE))
 		{
 			stat->stats.Add(ParseStat(newPa, cursor));
@@ -93,7 +93,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		// while (EXPRESSION) STATEMENT
 		// while (VARIABLE-DECLARATION-WITH-INITIALIZER) STATEMENT
 		auto stat = MakePtr<WhileStat>();
-		auto newPa = pa.WithContext(pa.context->CreateStatSymbol_NFb(stat));
+		auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		ParseVariableOrExpression(newPa, cursor, stat);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
@@ -132,7 +132,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			}
 
 			auto stat = MakePtr<ForEachStat>();
-			auto newPa = pa.WithContext(pa.context->CreateStatSymbol_NFb(stat));
+			auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 			{
 				stat->varDecl = BuildVariableAndSymbol(newPa, declarator, cursor);
 			}
@@ -147,7 +147,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			// for ([VARIABLE-DECLARATION-S]; [EXPRESSION]; [EXPRESSION]) STATEMENT
 			// for ([EXPRESSION]; [EXPRESSION]; [EXPRESSION]) STATEMENT
 			auto stat = MakePtr<ForStat>();
-			auto newPa = pa.WithContext(pa.context->CreateStatSymbol_NFb(stat));
+			auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 			if (!TestToken(cursor, CppTokens::SEMICOLON))
 			{
 				auto oldCursor = cursor;
@@ -190,7 +190,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		// if ([VARIABLE-DECLARATION-S;] EXPRESSION) STATEMENT [else STATEMENT]
 		// if ([VARIABLE-DECLARATION-S;] VARIABLE-DECLARATION-WITH-INITIALIZER) STATEMENT [else STATEMENT]
 		auto stat = MakePtr<IfElseStat>();
-		auto newPa = pa.WithContext(pa.context->CreateStatSymbol_NFb(stat));
+		auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		{
 			auto oldCursor = cursor;
@@ -221,7 +221,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		// switch (EXPRESSION) STATEMENT
 		// switch (VARIABLE-DECLARATION-WITH-INITIALIZER) STATEMENT
 		auto stat = MakePtr<SwitchStat>();
-		auto newPa = pa.WithContext(pa.context->CreateStatSymbol_NFb(stat));
+		auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		ParseVariableOrExpression(newPa, cursor, stat);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
@@ -237,7 +237,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		RequireToken(cursor, CppTokens::STAT_CATCH);
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 
-		auto newPa = pa.WithContext(pa.context->CreateStatSymbol_NFb(stat));
+		auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 		if (!TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
 		{
 			auto declarator = ParseNonMemberDeclarator(newPa, pda_VarType(), cursor);

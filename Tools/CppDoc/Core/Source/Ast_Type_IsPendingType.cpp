@@ -164,7 +164,7 @@ public:
 		auto target = targetType ? targetType : targetExpr.tsys;
 
 		TypeTsysList types;
-		TypeToTsysNoVta(pa, self, types, nullptr);
+		TypeToTsysNoVta(pa, self, types);
 		for (vint i = 0; i < types.Count(); i++)
 		{
 			if (types[i] == target)

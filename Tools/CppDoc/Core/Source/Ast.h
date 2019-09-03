@@ -6,6 +6,7 @@
 using namespace vl::regex;
 
 struct ParsingArguments;
+struct EvaluateSymbolContext;
 class ITsys;
 class ForwardFunctionDeclaration;
 class VariableDeclaration;
@@ -151,16 +152,16 @@ extern bool					IsPendingType(Type* type);
 extern bool					IsPendingType(Ptr<Type> type);
 extern ITsys*				ResolvePendingType(const ParsingArguments& pa, Ptr<Type> type, ExprTsysItem target);
 
-extern void					TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool& isVta, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
-extern void					TypeToTsysInternal(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool& isVta, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
-extern void					TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
-extern void					TypeToTsysNoVta(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
-extern void					TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf);
-extern void					ExprToTsysInternal(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, bool& isVta, GenericArgContext* gaContext = nullptr);
-extern void					ExprToTsysNoVta(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, GenericArgContext* gaContext = nullptr);
+extern void					TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool& isVta, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
+extern void					TypeToTsysInternal(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool& isVta, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
+extern void					TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
+extern void					TypeToTsysNoVta(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
+extern void					TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf);
+extern void					ExprToTsysInternal(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, bool& isVta);
+extern void					ExprToTsysNoVta(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys);
 
 extern void					EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctionType, EvaluateSymbolContext* esContext);
-extern void					EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration* decl, GenericArgContext* gaContext);
+extern void					EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration* decl);
 extern void					EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> s);
 extern void					EvaluateProgram(const ParsingArguments& pa, Ptr<Program> program);
 

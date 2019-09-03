@@ -1,4 +1,5 @@
 #include "TypeSystem.h"
+#include "Parser.h"
 
 class TsysAlloc;
 
@@ -113,7 +114,7 @@ public:
 		return false;
 	}
 
-	void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override
+	void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override
 	{
 		output.Add(this);
 	}
@@ -128,13 +129,18 @@ public:
 	TsysType GetType()override { return Type; }
 };
 
+bool IsGenericArgInContext(const ParsingArguments& pa, ITsys* key)
+{
+	return pa.ReplaceGenericArg(key) != nullptr;
+}
+
 /***********************************************************************
 Concrete Tsys (Commons Members)
 ***********************************************************************/
 
 #define ITSYS_CLASS(TYPE) ITsys_##TYPE : public TsysBase_<TsysType::TYPE>
 
-#define ITSYS_HAS_GENERIC_TYPE(VALUE)	public: bool HasGenericArg(const SortedList<ITsys*>* includedTypes)override { return VALUE; }
+#define ITSYS_HAS_GENERIC_TYPE(VALUE)	public: bool HasGenericArg(const ParsingArguments& pa)override { return VALUE; }
 #define ITSYS_HAS_UNKNOWN_TYPE(VALUE)	public: bool HasUnknownType()override { return VALUE; }
 
 #define ITSYS_MEMBERS_WITHELEMENT_SHARED															\
@@ -202,62 +208,58 @@ Concrete Tsys (Members)
 Concrete Tsys (ReplaceGenericArgs for type with element)
 ***********************************************************************/
 
-#define ITSYS_REPLACE_GENERIC_ARGS_WITH_ELEMENT(NAME, DATA)\
-	public:\
-		bool HasGenericArg(const SortedList<ITsys*>* includedTypes)override\
-		{\
-			return element->HasGenericArg(includedTypes);\
-		}\
-		bool HasUnknownType()override\
-		{\
-			return element->HasUnknownType();\
-		}\
-		void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override\
-		{\
-			element->ReplaceGenericArgs(context, output);\
-			if (output.Count() == 1 && output[0] == element)\
-			{\
-				output[0] = this;\
-			}\
-			else\
-			{\
-				for (vint i = 0; i < output.Count(); i++)\
-				{\
-					output[i] = output[i]->NAME(DATA);\
-				}\
-			}\
-		}\
+#define ITSYS_REPLACE_GENERIC_ARGS_WITH_ELEMENT(NAME, DATA)											\
+	public:																							\
+		bool HasGenericArg(const ParsingArguments& pa)override										\
+		{																							\
+			return element->HasGenericArg(pa);														\
+		}																							\
+		bool HasUnknownType()override																\
+		{																							\
+			return element->HasUnknownType();														\
+		}																							\
+		void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override			\
+		{																							\
+			element->ReplaceGenericArgs(pa, output);												\
+			if (output.Count() == 1 && output[0] == element)										\
+			{																						\
+				output[0] = this;																	\
+			}																						\
+			else																					\
+			{																						\
+				for (vint i = 0; i < output.Count(); i++)											\
+				{																					\
+					output[i] = output[i]->NAME(DATA);												\
+				}																					\
+			}																						\
+		}																							\
 
 /***********************************************************************
 Concrete Tsys (GenericArgs)
 ***********************************************************************/
 
-#define ITSYS_GENERIC_ARG_CONFIGURATION\
-	bool IsUnknownType()override\
-	{\
-		return true;\
-	}\
-	bool HasGenericArg(const SortedList<ITsys*>* includedTypes)override\
-	{\
-		if (!includedTypes) return false;\
-		return includedTypes->Contains(this);\
-	}\
-	bool HasUnknownType()override\
-	{\
-		return true;\
-	}\
-	void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override\
-	{\
-		vint index = context.arguments.Keys().IndexOf(this);\
-		if (index == -1)\
-		{\
-			output.Add(this);\
-		}\
-		else\
-		{\
-			CopyFrom(output, context.arguments.GetByIndex(index));\
-		}\
-	}\
+#define ITSYS_GENERIC_ARG_CONFIGURATION																\
+	bool IsUnknownType()override																	\
+	{																								\
+		return true;																				\
+	}																								\
+	bool HasGenericArg(const ParsingArguments& pa)override											\
+	{																								\
+		return IsGenericArgInContext(pa, this);														\
+	}																								\
+	bool HasUnknownType()override																	\
+	{																								\
+		return true;																				\
+	}																								\
+	void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override				\
+	{																								\
+		if (auto pReplacedTypes = pa.ReplaceGenericArg(this))										\
+		{																							\
+			CopyFrom(output, *pReplacedTypes);														\
+			return;																					\
+		}																							\
+		output.Add(this);																			\
+	}																								\
 
 /***********************************************************************
 Concrete Tsys (Singleton)
@@ -465,9 +467,9 @@ class ITSYS_CLASS(Member)
 {
 	ITSYS_MEMBERS_DATA_WITHELEMENT(Member, ITsys*, Class)
 
-	bool HasGenericArg(const SortedList<ITsys*>* includedTypes)override
+	bool HasGenericArg(const ParsingArguments& pa)override
 	{
-		return element->HasGenericArg(includedTypes) || data->HasGenericArg(includedTypes);
+		return element->HasGenericArg(pa) || data->HasGenericArg(pa);
 	}
 
 	bool HasUnknownType()override
@@ -475,17 +477,17 @@ class ITSYS_CLASS(Member)
 		return element->HasUnknownType() || data->HasUnknownType();
 	}
 
-	void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override
+	void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override
 	{
-		if (!HasGenericArg(&context.arguments.Keys()) || context.arguments.Count() == 0)
+		if (!HasGenericArg(pa))
 		{
 			output.Add(this);
 		}
 		else
 		{
 			List<ITsys*> classTypes, elementTypes;
-			data->ReplaceGenericArgs(context, classTypes);
-			element->ReplaceGenericArgs(context, elementTypes);
+			data->ReplaceGenericArgs(pa, classTypes);
+			element->ReplaceGenericArgs(pa, elementTypes);
 			for (vint i = 0; i < elementTypes.Count(); i++)
 			{
 				for (vint j = 0; j < classTypes.Count(); j++)
@@ -519,18 +521,18 @@ ITsys* ParamsOf(IEnumerable<ITsys*>& params, const TData& data, WithParamsList<T
 	return itsys;
 }
 
-bool HasGenericArgWithParams(List<ITsys*>& params, ITsys* element, const SortedList<ITsys*>* includedTypes)
+bool HasGenericArgWithParams(List<ITsys*>& params, ITsys* element, const ParsingArguments& pa)
 {
 	if (element)
 	{
-		if (element->HasGenericArg(includedTypes))
+		if (element->HasGenericArg(pa))
 		{
 			return true;
 		}
 	}
 	for (vint i = 0; i < params.Count(); i++)
 	{
-		if (params[i]->HasGenericArg(includedTypes))
+		if (params[i]->HasGenericArg(pa))
 		{
 			return true;
 		}
@@ -580,7 +582,7 @@ void ReplaceGenericArgsWithParamsPartial(ITsys* element, Array<vint>& indices, A
 }
 
 template<typename TITsys>
-void ReplaceGenericArgsWithParams(const GenericArgContext& context, List<ITsys*>& params, ITsys* element, List<ITsys*>& output, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
+void ReplaceGenericArgsWithParams(const ParsingArguments& pa, List<ITsys*>& params, ITsys* element, List<ITsys*>& output, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
 {
 	List<ITsys*> replacedElement;
 	Array<vint> indices(params.Count());
@@ -589,7 +591,7 @@ void ReplaceGenericArgsWithParams(const GenericArgContext& context, List<ITsys*>
 
 	if (element)
 	{
-		element->ReplaceGenericArgs(context, replacedElement);
+		element->ReplaceGenericArgs(pa, replacedElement);
 	}
 	else
 	{
@@ -598,7 +600,7 @@ void ReplaceGenericArgsWithParams(const GenericArgContext& context, List<ITsys*>
 
 	for (vint i = 0; i < params.Count(); i++)
 	{
-		params[i]->ReplaceGenericArgs(context, replacedParams[i]);
+		params[i]->ReplaceGenericArgs(pa, replacedParams[i]);
 	}
 
 	for (vint i = 0; i < replacedElement.Count(); i++)
@@ -609,19 +611,19 @@ void ReplaceGenericArgsWithParams(const GenericArgContext& context, List<ITsys*>
 
 #define ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(ELEMENT) \
 public:\
-	bool HasGenericArg(const SortedList<ITsys*>* includedTypes)override\
+	bool HasGenericArg(const ParsingArguments& pa)override\
 	{\
-		return HasGenericArgWithParams(params, ELEMENT, includedTypes);\
+		return HasGenericArgWithParams(params, ELEMENT, pa);\
 	}\
 	bool HasUnknownType()override\
 	{\
 		return HasUnknownTypeWithParams(params, ELEMENT);\
 	}\
-	void ReplaceGenericArgs(const GenericArgContext& context, List<ITsys*>& output)override\
+	void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override\
 	{\
-		if (context.arguments.Count() != 0 && HasGenericArg(&context.arguments.Keys()))\
+		if (HasGenericArg(pa))\
 		{\
-			ReplaceGenericArgsWithParams(context, params, ELEMENT, output, this, &RemoveReference<decltype(*this)>::Type::ReplaceGenericArgsCallback);\
+			ReplaceGenericArgsWithParams(pa, params, ELEMENT, output, this, &RemoveReference<decltype(*this)>::Type::ReplaceGenericArgsCallback);\
 		}\
 		else\
 		{\

@@ -266,8 +266,8 @@ using Context = T;
 	ITsys* intTypes[TypeCount];
 	ITsys* structTypes[TypeCount];
 
-	auto contextSymbol = pa.context->TryGetChildren_NFb(L"Context")->Get(0).Obj();
-	auto spa = pa.WithContext(contextSymbol);
+	auto contextSymbol = pa.scopeSymbol->TryGetChildren_NFb(L"Context")->Get(0).Obj();
+	auto spa = pa.WithScope(contextSymbol);
 	{
 		for (vint i = 0; i < TypeCount; i++)
 		{
@@ -277,7 +277,7 @@ using Context = T;
 			TEST_ASSERT(!cursor);
 
 			TypeTsysList tsys;
-			TypeToTsysNoVta(spa, type, tsys, nullptr);
+			TypeToTsysNoVta(spa, type, tsys);
 			TEST_ASSERT(tsys.Count() == 1);
 			genericTypes[i] = tsys[0];
 		}
@@ -285,9 +285,9 @@ using Context = T;
 		for (vint i = 0; i < TypeCount; i++)
 		{
 			TypeTsysList tsys;
-			GenericArgContext gaContext;
-			gaContext.arguments.Add(genericTypes[0], pa.tsys->Int());
-			genericTypes[i]->ReplaceGenericArgs(gaContext, tsys);
+			TemplateArgumentContext taContext;
+			taContext.arguments.Add(genericTypes[0], pa.tsys->Int());
+			genericTypes[i]->ReplaceGenericArgs(pa.WithArgs(taContext), tsys);
 			TEST_ASSERT(tsys.Count() == 1);
 			intTypes[i] = tsys[0];
 		}
@@ -295,9 +295,9 @@ using Context = T;
 		for (vint i = 0; i < TypeCount; i++)
 		{
 			TypeTsysList tsys;
-			GenericArgContext gaContext;
-			gaContext.arguments.Add(genericTypes[0], pa.tsys->DeclOf(pa.context->TryGetChildren_NFb(L"S")->Get(0).Obj()));
-			genericTypes[i]->ReplaceGenericArgs(gaContext, tsys);
+			TemplateArgumentContext taContext;
+			taContext.arguments.Add(genericTypes[0], pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"S")->Get(0).Obj()));
+			genericTypes[i]->ReplaceGenericArgs(pa.WithArgs(taContext), tsys);
 			TEST_ASSERT(tsys.Count() == 1);
 			structTypes[i] = tsys[0];
 		}

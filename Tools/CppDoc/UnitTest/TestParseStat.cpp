@@ -105,7 +105,7 @@ __except (0)
 
 Symbol* GetStatementSymbol(const ParsingArguments& pa, const WString& functionName)
 {
-	auto functionSymbol = pa.context->TryGetChildren_NFb(functionName)->Get(0);
+	auto functionSymbol = pa.scopeSymbol->TryGetChildren_NFb(functionName)->Get(0);
 	auto functionBodySymbol = functionSymbol->GetImplSymbols_F()[0];
 	auto bodyStat = functionBodySymbol->TryGetChildren_NFb(L"$")->Get(0);
 	auto controlFlowStat = bodyStat->TryGetChildren_NFb(L"$")->Get(0);
@@ -179,7 +179,7 @@ void F8()
 	COMPILE_PROGRAM(program, pa, input);
 	for (vint i = 1; i <= 8; i++)
 	{
-		auto spa = pa.WithContext(GetStatementSymbol(pa, L"F" + itow(i)));
+		auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
 		TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
 		AssertExpr(spa, L"a", L"a", L"__int32 $L");
 	}
@@ -222,7 +222,7 @@ void F4()
 	COMPILE_PROGRAM(program, pa, input);
 	for (vint i = 1; i <= 4; i++)
 	{
-		auto spa = pa.WithContext(GetStatementSymbol(pa, L"F" + itow(i)));
+		auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
 		TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
 		AssertExpr(spa, L"a", L"a", L"__int32 $L");
 		AssertExpr(spa, L"b", L"b", L"__int32 $L");
@@ -283,7 +283,7 @@ void F3()
 	const wchar_t* expectedTypes[] = { L"__int32 & $L", L"__int32 const & $L", L"__int32 & $L" };
 	for (vint i = 1; i <= 3; i++)
 	{
-		auto spa = pa.WithContext(GetStatementSymbol(pa, L"F" + itow(i)));
+		auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
 		TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
 		AssertExpr(spa, L"a", L"a", expectedTypes[i - 1]);
 	}

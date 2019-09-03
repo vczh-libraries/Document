@@ -1,4 +1,4 @@
-#include "Ast_Resolving_ExpandPotentialVta.h"
+#include "Ast_Evaluate_ExpandPotentialVta.h"
 
 using namespace symbol_type_resolving;
 using namespace symbol_totsys_impl;
@@ -27,15 +27,13 @@ public:
 
 	const ParsingArguments&		pa;
 	TypeTsysList*				returnTypes;
-	GenericArgContext*			gaContext = nullptr;
 	bool						memberOf = false;
 	TsysCallingConvention		cc = TsysCallingConvention::None;
 
-	TypeToTsysVisitor(const ParsingArguments& _pa, TypeTsysList& _result, TypeTsysList* _returnTypes, GenericArgContext* _gaContext, bool _memberOf, TsysCallingConvention _cc)
+	TypeToTsysVisitor(const ParsingArguments& _pa, TypeTsysList& _result, TypeTsysList* _returnTypes, bool _memberOf, TsysCallingConvention _cc)
 		:pa(_pa)
 		, result(_result)
 		, returnTypes(_returnTypes)
-		, gaContext(_gaContext)
 		, cc(_cc)
 		, memberOf(_memberOf)
 	{
@@ -63,7 +61,7 @@ public:
 	{
 		TypeTsysList items1;
 		bool isVta1 = false;
-		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
+		TypeToTsysInternal(pa, self->type, items1, isVta1);
 		isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem arg1)
 		{
 			return ProcessReferenceType(pa, self, arg1);
@@ -78,7 +76,7 @@ public:
 	{
 		TypeTsysList items1;
 		bool isVta1 = false;
-		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
+		TypeToTsysInternal(pa, self->type, items1, isVta1);
 		isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem arg1)
 		{
 			return ProcessArrayType(pa, self, arg1);
@@ -104,7 +102,7 @@ public:
 
 	void Visit(FunctionType* self)override
 	{
-		VariadicInput<ITsys*> variadicInput(self->parameters.Count() + 1, pa, gaContext);
+		VariadicInput<ITsys*> variadicInput(self->parameters.Count() + 1, pa);
 		if (returnTypes)
 		{
 			variadicInput.ApplyTypes(0, *returnTypes);
@@ -141,8 +139,8 @@ public:
 		TypeTsysList types, classTypes;
 		bool typesVta = false;
 		bool classTypesVta = false;
-		TypeToTsysInternal(pa, self->type, types, gaContext, typesVta, true, cc);
-		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classTypesVta);
+		TypeToTsysInternal(pa, self->type, types, typesVta, true, cc);
+		TypeToTsysInternal(pa, self->classType, classTypes, classTypesVta);
 		isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem argType, ExprTsysItem argClass)
 		{
 			return ProcessMemberType(pa, self, argType, argClass);
@@ -159,7 +157,7 @@ public:
 		{
 			ExprTsysList types;
 			bool typesVta = false;
-			ExprToTsysInternal(pa, self->expr, types, typesVta, gaContext);
+			ExprToTsysInternal(pa, self->expr, types, typesVta);
 			isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem arg1)
 			{
 				return ProcessDeclType(pa, self, arg1);
@@ -175,7 +173,7 @@ public:
 	{
 		TypeTsysList items1;
 		bool isVta1 = false;
-		TypeToTsysInternal(pa, self->type, items1, gaContext, isVta1);
+		TypeToTsysInternal(pa, self->type, items1, isVta1);
 		isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem arg1)
 		{
 			return ProcessDecorateType(pa, self, arg1);
@@ -197,7 +195,7 @@ public:
 
 	void Visit(IdType* self)override
 	{
-		CreateIdReferenceType(pa, gaContext, self->resolving, false, true, result, isVta);
+		CreateIdReferenceType(pa, self->resolving, false, true, result, isVta);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -208,17 +206,17 @@ public:
 	{
 		if (!IsResolvedToType(self->classType))
 		{
-			CreateIdReferenceType(pa, gaContext, self->resolving, true, false, result, isVta);
+			CreateIdReferenceType(pa, self->resolving, true, false, result, isVta);
 			return;
 		}
 
 		TypeTsysList classTypes;
 		bool classVta = false;
-		TypeToTsysInternal(pa, self->classType, classTypes, gaContext, classVta);
+		TypeToTsysInternal(pa, self->classType, classTypes, classVta);
 
 		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self](ExprTsysList& processResult, ExprTsysItem argClass)
 		{
-			ProcessChildType(pa, gaContext, self, argClass, processResult);
+			ProcessChildType(pa, self, argClass, processResult);
 		}, Input(classTypes, classVta));
 	}
 
@@ -232,7 +230,7 @@ public:
 		Array<bool> isTypes(count);
 		isTypes[0] = false;
 
-		VariadicInput<ExprTsysItem> variadicInput(count, pa, gaContext);
+		VariadicInput<ExprTsysItem> variadicInput(count, pa);
 		variadicInput.ApplySingle<Type>(0, self->type);
 		variadicInput.ApplyGenericArguments(1, isTypes, self->arguments);
 		isVta = variadicInput.Expand(&self->arguments, result,
@@ -245,38 +243,38 @@ public:
 
 // Convert type AST to type system object
 
-void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool& isVta, bool memberOf, TsysCallingConvention cc)
+void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool& isVta, bool memberOf, TsysCallingConvention cc)
 {
 	if (!t) throw NotConvertableException();
-	TypeToTsysVisitor visitor(pa, tsys, nullptr, gaContext, memberOf, cc);
+	TypeToTsysVisitor visitor(pa, tsys, nullptr, memberOf, cc);
 	t->Accept(&visitor);
 	isVta = visitor.isVta;
 }
 
-void TypeToTsysInternal(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool& isVta, bool memberOf, TsysCallingConvention cc)
+void TypeToTsysInternal(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool& isVta, bool memberOf, TsysCallingConvention cc)
 {
-	TypeToTsysInternal(pa, t.Obj(), tsys, gaContext, isVta, memberOf, cc);
+	TypeToTsysInternal(pa, t.Obj(), tsys, isVta, memberOf, cc);
 }
 
-void TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf, TsysCallingConvention cc)
+void TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool memberOf, TsysCallingConvention cc)
 {
 	bool isVta = false;
-	TypeToTsysInternal(pa, t, tsys, gaContext, isVta, memberOf, cc);
+	TypeToTsysInternal(pa, t, tsys, isVta, memberOf, cc);
 	if (isVta)
 	{
 		throw NotConvertableException();
 	}
 }
 
-void TypeToTsysNoVta(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf, TsysCallingConvention cc)
+void TypeToTsysNoVta(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool memberOf, TsysCallingConvention cc)
 {
-	TypeToTsysNoVta(pa, t.Obj(), tsys, gaContext, memberOf, cc);
+	TypeToTsysNoVta(pa, t.Obj(), tsys, memberOf, cc);
 }
 
-void TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, GenericArgContext* gaContext, bool memberOf)
+void TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf)
 {
 	if (!t) throw NotConvertableException();
-	TypeToTsysVisitor visitor(pa, tsys, &returnTypes, gaContext, memberOf, TsysCallingConvention::None);
+	TypeToTsysVisitor visitor(pa, tsys, &returnTypes, memberOf, TsysCallingConvention::None);
 	t->Accept(&visitor);
 	if (visitor.isVta)
 	{

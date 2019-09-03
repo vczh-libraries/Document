@@ -8,8 +8,8 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	// Ast_Evaluate_ToTsys_IdImpl.cpp (identifier)
-	void					CreateIdReferenceType(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta);
-	void					ProcessChildType(const ParsingArguments& pa, GenericArgContext* gaContext, ChildType* self, ExprTsysItem argClass, ExprTsysList& result);
+	void					CreateIdReferenceType(const ParsingArguments& pa, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta);
+	void					ProcessChildType(const ParsingArguments& pa, ChildType* self, ExprTsysItem argClass, ExprTsysList& result);
 
 	// Ast_Evaluate_ToTsys_TypeImpl.cpp (literal)
 	ITsys*					ProcessPrimitiveType(const ParsingArguments& pa, PrimitiveType* self);
@@ -32,25 +32,25 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	// Ast_Evaluate_ToTsys_IdImpl.cpp (identifier)
-	void					CreateIdReferenceExpr(const ParsingArguments& pa, GenericArgContext* gaContext, Ptr<Resolving> resolving, ExprTsysList& result, bool allowAny, bool allowVariadic, bool& isVta);
-	void					ProcessChildExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ChildExpr* self, ExprTsysItem argClass);
-	void					ProcessFieldAccessExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed);
+	void					CreateIdReferenceExpr(const ParsingArguments& pa, Ptr<Resolving> resolving, ExprTsysList& result, bool allowAny, bool allowVariadic, bool& isVta);
+	void					ProcessChildExpr(const ParsingArguments& pa, ExprTsysList& result, ChildExpr* self, ExprTsysItem argClass);
+	void					ProcessFieldAccessExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed);
 
 	// Ast_Evaluate_ToTsys_ExprImpl.cpp (literal)
-	void					ProcessLiteralExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, LiteralExpr* self);
-	void					ProcessThisExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ThisExpr* self);
-	void					ProcessNullptrExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, NullptrExpr* self);
-	void					ProcessThrowExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ThrowExpr* self);
+	void					ProcessLiteralExpr(const ParsingArguments& pa, ExprTsysList& result, LiteralExpr* self);
+	void					ProcessThisExpr(const ParsingArguments& pa, ExprTsysList& result, ThisExpr* self);
+	void					ProcessNullptrExpr(const ParsingArguments& pa, ExprTsysList& result, NullptrExpr* self);
+	void					ProcessThrowExpr(const ParsingArguments& pa, ExprTsysList& result, ThrowExpr* self);
 
 	// Ast_Evaluate_ToTsys_ExprImpl.cpp (unbounded)
 	void					ProcessParenthesisExpr(const ParsingArguments& pa, ExprTsysList& result, ParenthesisExpr* self, ExprTsysItem arg);
 	void					ProcessCastExpr(const ParsingArguments& pa, ExprTsysList& result, CastExpr* self, ExprTsysItem argType, ExprTsysItem argExpr);
 	void					ProcessTypeidExpr(const ParsingArguments& pa, ExprTsysList& result, TypeidExpr* self);
-	void					ProcessArrayAccessExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, ArrayAccessExpr* self, ExprTsysItem argArray, ExprTsysItem argIndex, bool& indexed);
-	void					ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, PostfixUnaryExpr* self, ExprTsysItem arg, bool& indexed);
-	void					ProcessPrefixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, PrefixUnaryExpr* self, ExprTsysItem arg, bool& indexed);
-	void					ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, bool& indexed);
-	void					ProcessIfExpr(const ParsingArguments& pa, ExprTsysList& result, GenericArgContext* gaContext, IfExpr* self, ExprTsysItem argCond, ExprTsysItem argLeft, ExprTsysItem argRight);
+	void					ProcessArrayAccessExpr(const ParsingArguments& pa, ExprTsysList& result, ArrayAccessExpr* self, ExprTsysItem argArray, ExprTsysItem argIndex, bool& indexed);
+	void					ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PostfixUnaryExpr* self, ExprTsysItem arg, bool& indexed);
+	void					ProcessPrefixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PrefixUnaryExpr* self, ExprTsysItem arg, bool& indexed);
+	void					ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, bool& indexed);
+	void					ProcessIfExpr(const ParsingArguments& pa, ExprTsysList& result, IfExpr* self, ExprTsysItem argCond, ExprTsysItem argLeft, ExprTsysItem argRight);
 
 	// Ast_Evaluate_ToTsys_VariadicImpl.cpp (variadic)
 	void					ProcessCtorAccessExpr(const ParsingArguments& pa, ExprTsysList& result, CtorAccessExpr* self, Array<ExprTsysItem>& args, SortedList<vint>& boundedAnys);
@@ -64,8 +64,8 @@ namespace symbol_totsys_impl
 	// Indexing
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void					AddSymbolsToResolvings(GenericArgContext* gaContext, const CppName* name, Ptr<Resolving>* nameResolving, const CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp);
-	void					AddSymbolsToOperatorResolving(GenericArgContext* gaContext, const CppName& op, Ptr<Resolving>& opResolving, ExprTsysList& symbols, bool& addedOp);
+	void					AddSymbolsToResolvings(const ParsingArguments& pa, const CppName* name, Ptr<Resolving>* nameResolving, const CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp);
+	void					AddSymbolsToOperatorResolving(const ParsingArguments& pa, const CppName& op, Ptr<Resolving>& opResolving, ExprTsysList& symbols, bool& addedOp);
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// Utilities
@@ -518,7 +518,6 @@ namespace symbol_totsys_impl
 	{
 	private:
 		const ParsingArguments&		pa;
-		GenericArgContext*			gaContext;
 
 		Array<List<TInput>>			argItems;
 		Array<bool>					isVtas;
@@ -527,30 +526,29 @@ namespace symbol_totsys_impl
 
 		void Apply(TypeTsysList& result, bool& isVta, const Ptr<Type>& type)
 		{
-			TypeToTsysInternal(pa, type, result, gaContext, isVta);
+			TypeToTsysInternal(pa, type, result, isVta);
 		}
 
 		void Apply(TypeTsysList& result, bool& isVta, const Ptr<VariableDeclaration>& varDecl)
 		{
-			TypeToTsysInternal(pa, varDecl->type, result, gaContext, isVta);
+			TypeToTsysInternal(pa, varDecl->type, result, isVta);
 		}
 
 		void Apply(ExprTsysList& result, bool& isVta, const Ptr<Type>& type)
 		{
 			TypeTsysList tsyses;
-			TypeToTsysInternal(pa, type, tsyses, gaContext, isVta);
+			TypeToTsysInternal(pa, type, tsyses, isVta);
 			symbol_type_resolving::AddTemp(result, tsyses);
 		}
 
 		void Apply(ExprTsysList& result, bool& isVta, const Ptr<Expr>& expr)
 		{
-			ExprToTsysInternal(pa, expr, result, isVta, gaContext);
+			ExprToTsysInternal(pa, expr, result, isVta);
 		}
 
 	public:
-		VariadicInput(vint count, const ParsingArguments& _pa, GenericArgContext* _gaContext)
+		VariadicInput(vint count, const ParsingArguments& _pa)
 			:pa(_pa)
-			, gaContext(_gaContext)
 			, argItems(count)
 			, isVtas(count)
 		{
