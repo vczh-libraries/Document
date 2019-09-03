@@ -22,9 +22,9 @@ namespace symbol_type_resolving
 		return esContext ? newPa.WithArgs(esContext->additionalArguments) : newPa;
 	}
 
-	TypeTsysList& FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& pa, Declaration* decl, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)
+	TypeTsysList& FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& declPa, Declaration* decl, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)
 	{
-		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, decl, spec, esContext);
+		auto& evaluatedTypes = GetEvaluatingResultStorage(declPa, decl, spec, esContext);
 
 		if (spec && !esContext)
 		{
@@ -32,7 +32,7 @@ namespace symbol_type_resolving
 			TypeTsysList params;
 
 			genericFunction.declSymbol = decl->symbol;
-			CreateGenericFunctionHeader(pa, spec, params, genericFunction);
+			CreateGenericFunctionHeader(declPa, spec, params, genericFunction);
 
 			for (vint i = 0; i < evaluatedTypes.Count(); i++)
 			{
@@ -40,7 +40,7 @@ namespace symbol_type_resolving
 			}
 		}
 
-		if (!esContext)
+		if (declPa.IsGeneralEvaluation())
 		{
 			auto& ev = decl->symbol->GetEvaluationForUpdating_NFb();
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
@@ -48,7 +48,10 @@ namespace symbol_type_resolving
 		return evaluatedTypes;
 	}
 
-#define SETUP_EV_OR_RETURN																					\
+#define SETUP_EV_OR_RETURN(DECL, SPEC, ESCONTEXT)															\
+	auto symbol = DECL->symbol;																				\
+	auto declPa = GetPaFromInvokerPa(invokerPa, DECL->symbol, ESCONTEXT);									\
+	if (declPa.IsGeneralEvaluation())																		\
 	{																										\
 		auto& ev = symbol->GetEvaluationForUpdating_NFb();													\
 		switch (ev.progress)																				\
@@ -59,7 +62,8 @@ namespace symbol_type_resolving
 																											\
 		ev.progress = symbol_component::EvaluationProgress::Evaluating;										\
 		ev.Allocate();																						\
-	}
+	}																										\
+	auto& evaluatedTypes = GetEvaluatingResultStorage(declPa, DECL, SPEC, ESCONTEXT)						\
 
 	/***********************************************************************
 	EvaluateVarSymbol: Evaluate the declared type for a variable
@@ -67,12 +71,7 @@ namespace symbol_type_resolving
 
 	TypeTsysList& EvaluateVarSymbol(const ParsingArguments& invokerPa, ForwardVariableDeclaration* varDecl)
 	{
-		auto symbol = varDecl->symbol;
-		SETUP_EV_OR_RETURN;
-
-		auto pa = GetPaFromInvokerPa(invokerPa, varDecl->symbol, nullptr);
-		auto newPa = pa.WithScope(symbol->GetParentScope());
-		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, varDecl, nullptr, nullptr);
+		SETUP_EV_OR_RETURN(varDecl, nullptr, nullptr);
 
 		if (varDecl->needResolveTypeFromInitializer)
 		{
@@ -84,11 +83,11 @@ namespace symbol_type_resolving
 				}
 
 				ExprTsysList types;
-				ExprToTsysNoVta(newPa, rootVarDecl->initializer->arguments[0].item, types);
+				ExprToTsysNoVta(declPa, rootVarDecl->initializer->arguments[0].item, types);
 
 				for (vint k = 0; k < types.Count(); k++)
 				{
-					auto type = ResolvePendingType(pa, rootVarDecl->type, types[k]);
+					auto type = ResolvePendingType(declPa, rootVarDecl->type, types[k]);
 					if (!evaluatedTypes.Contains(type))
 					{
 						evaluatedTypes.Add(type);
@@ -102,9 +101,10 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			TypeToTsysNoVta(newPa, varDecl->type, evaluatedTypes);
+			TypeToTsysNoVta(declPa, varDecl->type, evaluatedTypes);
 		}
 
+		if (declPa.IsGeneralEvaluation())
 		{
 			auto& ev = symbol->GetEvaluationForUpdating_NFb();
 			ev.progress = symbol_component::EvaluationProgress::Evaluated;
@@ -138,7 +138,7 @@ namespace symbol_type_resolving
 	void SetFuncTypeByReturnStat(const ParsingArguments& pa, FunctionDeclaration* funcDecl, TypeTsysList& returnTypes, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = funcDecl->symbol;
-		if(!esContext)
+		if(pa.IsGeneralEvaluation())
 		{
 			auto& ev = symbol->GetEvaluationForUpdating_NFb();
 			if (ev.progress != symbol_component::EvaluationProgress::Evaluating)
@@ -176,23 +176,19 @@ namespace symbol_type_resolving
 
 	TypeTsysList& EvaluateFuncSymbol(const ParsingArguments& invokerPa, ForwardFunctionDeclaration* funcDecl, EvaluateSymbolContext* esContext)
 	{
-		auto symbol = funcDecl->symbol;
-		if (!esContext) SETUP_EV_OR_RETURN;
-
-		auto newPa = GetPaFromInvokerPa(invokerPa, symbol, esContext);
-		auto& evaluatedTypes = GetEvaluatingResultStorage(newPa, funcDecl, funcDecl->templateSpec, esContext);
+		SETUP_EV_OR_RETURN(funcDecl, funcDecl->templateSpec, esContext);
 
 		if (funcDecl->needResolveTypeFromStatement)
 		{
 			if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))
 			{
 				EnsureFunctionBodyParsed(rootFuncDecl);
-				EvaluateStat(newPa, rootFuncDecl->statement, true, esContext);
+				EvaluateStat(declPa, rootFuncDecl->statement, true, esContext);
 
 				if (evaluatedTypes.Count() == 0)
 				{
-					evaluatedTypes.Add(newPa.tsys->Void());
-					return FinishEvaluatingPotentialGenericSymbol(newPa, funcDecl, funcDecl->templateSpec, esContext);
+					evaluatedTypes.Add(declPa.tsys->Void());
+					return FinishEvaluatingPotentialGenericSymbol(declPa, funcDecl, funcDecl->templateSpec, esContext);
 				}
 				else
 				{
@@ -206,8 +202,8 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			TypeToTsysNoVta(newPa.WithScope(symbol->GetParentScope()), funcDecl->type, evaluatedTypes, IsMemberFunction(funcDecl));
-			return FinishEvaluatingPotentialGenericSymbol(newPa, funcDecl, funcDecl->templateSpec, esContext);
+			TypeToTsysNoVta(declPa.WithScope(symbol->GetParentScope()), funcDecl->type, evaluatedTypes, IsMemberFunction(funcDecl));
+			return FinishEvaluatingPotentialGenericSymbol(declPa, funcDecl, funcDecl->templateSpec, esContext);
 		}
 	}
 
@@ -245,15 +241,10 @@ namespace symbol_type_resolving
 
 	TypeTsysList& EvaluateTypeAliasSymbol(const ParsingArguments& invokerPa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
 	{
-		auto symbol = usingDecl->symbol;
-		if (!esContext) SETUP_EV_OR_RETURN;
+		SETUP_EV_OR_RETURN(usingDecl, usingDecl->templateSpec, esContext);
 
-		auto newPa = GetPaFromInvokerPa(invokerPa, symbol, esContext)
-			.WithScope(symbol->GetParentScope());
-		auto& evaluatedTypes = GetEvaluatingResultStorage(newPa, usingDecl, usingDecl->templateSpec, esContext);
-
-		TypeToTsysNoVta(newPa, usingDecl->type, evaluatedTypes);
-		return FinishEvaluatingPotentialGenericSymbol(newPa, usingDecl, usingDecl->templateSpec, esContext);
+		TypeToTsysNoVta(declPa, usingDecl->type, evaluatedTypes);
+		return FinishEvaluatingPotentialGenericSymbol(declPa, usingDecl, usingDecl->templateSpec, esContext);
 	}
 
 	/***********************************************************************
@@ -262,23 +253,18 @@ namespace symbol_type_resolving
 
 	TypeTsysList& EvaluateValueAliasSymbol(const ParsingArguments& invokerPa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
 	{
-		auto symbol = usingDecl->symbol;
-		if (!esContext) SETUP_EV_OR_RETURN;
-
-		auto newPa = GetPaFromInvokerPa(invokerPa, symbol, esContext)
-			.WithScope(symbol->GetParentScope());
-		auto& evaluatedTypes = GetEvaluatingResultStorage(newPa, usingDecl, usingDecl->templateSpec, esContext);
+		SETUP_EV_OR_RETURN(usingDecl, usingDecl->templateSpec, esContext);
 
 		if (usingDecl->needResolveTypeFromInitializer)
 		{
 			ExprTsysList tsys;
-			ExprToTsysNoVta(newPa, usingDecl->expr, tsys);
+			ExprToTsysNoVta(declPa, usingDecl->expr, tsys);
 			for (vint i = 0; i < tsys.Count(); i++)
 			{
 				auto entityType = tsys[i].tsys;
 				if (entityType->GetType() == TsysType::Zero)
 				{
-					entityType = newPa.tsys->Int();
+					entityType = declPa.tsys->Int();
 				}
 				if (!evaluatedTypes.Contains(entityType))
 				{
@@ -288,10 +274,10 @@ namespace symbol_type_resolving
 		}
 		else
 		{
-			TypeToTsysNoVta(newPa, usingDecl->type, evaluatedTypes);
+			TypeToTsysNoVta(declPa, usingDecl->type, evaluatedTypes);
 		}
 
-		return FinishEvaluatingPotentialGenericSymbol(newPa, usingDecl, usingDecl->templateSpec, esContext);
+		return FinishEvaluatingPotentialGenericSymbol(declPa, usingDecl, usingDecl->templateSpec, esContext);
 	}
 
 	/***********************************************************************

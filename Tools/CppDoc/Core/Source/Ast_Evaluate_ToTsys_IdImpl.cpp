@@ -203,42 +203,25 @@ namespace symbol_totsys_impl
 			throw NotConvertableException();
 		}
 
-		ExprTsysList resolvableResult;
-		auto& outputTarget = pa.IsGeneralEvaluation() ? result : resolvableResult;
-
 		if (pa.functionBodySymbol && pa.functionBodySymbol->GetMethodCache_Fb())
 		{
 			TsysCV thisCv;
 			TsysRefType thisRef;
 			auto thisType = pa.functionBodySymbol->GetMethodCache_Fb()->thisType->GetEntity(thisCv, thisRef);
 			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
-			VisitResolvedMember(pa, &thisItem, resolving, outputTarget);
+			VisitResolvedMember(pa, &thisItem, resolving, result);
 		}
 		else
 		{
 			bool hasVariadic = false;
 			bool hasNonVariadic = false;
-			VisitResolvedMember(pa, resolving, outputTarget, hasVariadic, hasNonVariadic);
+			VisitResolvedMember(pa, resolving, result, hasVariadic, hasNonVariadic);
 
 			if (hasVariadic && hasNonVariadic)
 			{
 				throw NotConvertableException();
 			}
 			isVta = hasVariadic;
-		}
-
-		if (!pa.IsGeneralEvaluation())
-		{
-			for (vint i = 0; i < resolvableResult.Count(); i++)
-			{
-				auto item = resolvableResult[i];
-				TypeTsysList types;
-				item.tsys->ReplaceGenericArgs(pa, types);
-				for (vint j = 0; j < types.Count(); j++)
-				{
-					AddInternal(result, { item.symbol,item.type,types[j] });
-				}
-			}
 		}
 	}
 
