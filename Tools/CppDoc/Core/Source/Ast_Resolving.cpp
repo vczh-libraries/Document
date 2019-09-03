@@ -236,24 +236,20 @@ namespace symbol_type_resolving
 			return;
 		case symbol_component::SymbolKind::GenericValueArgument:
 			{
-				if (symbol->ellipsis)
+				auto argumentKey = pa.tsys->DeclOf(symbol);
+				if (auto pReplacedTypes = pa.TryGetReplacedGenericArgs(argumentKey))
 				{
-					if (!allowVariadic)
+					for (vint i = 0; i < pReplacedTypes->Count(); i++)
 					{
-						throw NotConvertableException();
-					}
-					hasVariadic = true;
-
-					auto argumentKey = pa.tsys->DeclOf(symbol);
-					if (auto pReplacedTypes = pa.ReplaceGenericArg(argumentKey))
-					{
-						for (vint i = 0; i < pReplacedTypes->Count(); i++)
+						auto replacedType = pReplacedTypes->Get(i);
+						if (symbol->ellipsis)
 						{
-							auto replacedType = pReplacedTypes->Get(i);
-							if (!replacedType)
+							if (!allowVariadic)
 							{
 								throw NotConvertableException();
 							}
+							hasVariadic = true;
+
 							switch (replacedType->GetType())
 							{
 							case TsysType::Init:
@@ -273,9 +269,20 @@ namespace symbol_type_resolving
 								throw NotConvertableException();
 							}
 						}
-						return;
+						else
+						{
+							AddTemp(result, replacedType);
+							hasNonVariadic = true;
+						}
 					}
-
+				}
+				else if (symbol->ellipsis)
+				{
+					if (!allowVariadic)
+					{
+						throw NotConvertableException();
+					}
+					hasVariadic = true;
 					AddTemp(result, pa.tsys->Any());
 				}
 				else

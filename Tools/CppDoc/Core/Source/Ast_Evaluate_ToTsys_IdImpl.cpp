@@ -33,24 +33,26 @@ namespace symbol_totsys_impl
 		case symbol_component::SymbolKind::GenericTypeArgument:
 			{
 				auto argumentKey = EvaluateGenericArgumentSymbol(symbol);
-				if(auto pReplacedTypes = pa.ReplaceGenericArg(argumentKey))
+				if(auto pReplacedTypes = pa.TryGetReplacedGenericArgs(argumentKey))
 				{
 					for (vint k = 0; k < pReplacedTypes->Count(); k++)
 					{
+						auto replacedType = pReplacedTypes->Get(k);
 						if (symbol->ellipsis)
 						{
 							if (!allowVariadic)
 							{
 								throw NotConvertableException();
 							}
-							auto replacedType = pReplacedTypes->Get(k);
-							if (replacedType->GetType() == TsysType::Any || replacedType->GetType() == TsysType::Init)
+							hasVariadic = true;
+
+							switch (replacedType->GetType())
 							{
+							case TsysType::Init:
+							case TsysType::Any:
 								AddTsysToResult(result, pReplacedTypes->Get(k));
-								hasVariadic = true;
-							}
-							else
-							{
+								break;
+							default:
 								throw NotConvertableException();
 							}
 						}
@@ -60,10 +62,8 @@ namespace symbol_totsys_impl
 							hasNonVariadic = true;
 						}
 					}
-					return;
 				}
-
-				if (symbol->ellipsis)
+				else if (symbol->ellipsis)
 				{
 					if (!allowVariadic)
 					{

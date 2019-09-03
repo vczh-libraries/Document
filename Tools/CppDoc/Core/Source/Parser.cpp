@@ -631,7 +631,7 @@ bool ParsingArguments::IsGeneralEvaluation()const
 	return taContext == nullptr;
 }
 
-const List<ITsys*>* ParsingArguments::ReplaceGenericArg(ITsys* arg)const
+const List<ITsys*>* ParsingArguments::TryGetReplacedGenericArgs(ITsys* arg)const
 {
 	auto current = taContext;
 	while (current)

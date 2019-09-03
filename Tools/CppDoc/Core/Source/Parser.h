@@ -305,7 +305,7 @@ struct ParsingArguments
 
 	EvaluationKind									GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const;
 	bool											IsGeneralEvaluation()const;
-	const List<ITsys*>*								ReplaceGenericArg(ITsys* arg)const;
+	const List<ITsys*>*								TryGetReplacedGenericArgs(ITsys* arg)const;
 };
 
 struct EvaluateSymbolContext

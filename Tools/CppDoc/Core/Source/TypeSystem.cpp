@@ -131,7 +131,7 @@ public:
 
 bool IsGenericArgInContext(const ParsingArguments& pa, ITsys* key)
 {
-	return pa.ReplaceGenericArg(key) != nullptr;
+	return pa.TryGetReplacedGenericArgs(key) != nullptr;
 }
 
 /***********************************************************************
@@ -253,7 +253,7 @@ Concrete Tsys (GenericArgs)
 	}																								\
 	void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override				\
 	{																								\
-		if (auto pReplacedTypes = pa.ReplaceGenericArg(this))										\
+		if (auto pReplacedTypes = pa.TryGetReplacedGenericArgs(this))								\
 		{																							\
 			CopyFrom(output, *pReplacedTypes);														\
 			return;																					\
