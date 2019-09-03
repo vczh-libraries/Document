@@ -11,7 +11,7 @@ namespace symbol_type_resolving
 		case EvaluationKind::Instantiated:
 			return esContext->evaluatedTypes;
 		default:
-			// GeneralUnderInstantiated will be stored in pa.taContext
+			// TODO: GeneralUnderInstantiated will be stored in pa.taContext
 			throw 0;
 		}
 	}
