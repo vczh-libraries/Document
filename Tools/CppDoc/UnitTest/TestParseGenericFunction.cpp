@@ -37,17 +37,47 @@ F: auto (t: T)
 TEST_CASE(TestParseGenericFunction_ResolveTypeWithLocalVariables)
 {
 	auto input = LR"(
+template<typename T>
+auto F()
+{
+	T t;
+	return t;
+}
 )";
 
 	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(pa, L"F",					L"F",					L"<::F::[T]> ::F::[T] __cdecl() * $PR"						);
+	AssertExpr(pa, L"F<int>",				L"F<int>",				L"__int32 __cdecl() * $PR"									);
 }
 
 TEST_CASE(TestParseGenericFunction_ResolveTypeWithGenericAliases)
 {
 	auto input = LR"(
+char G(char);
+int G(int);
+void* G(...);
+
+template<typename T>
+auto F(T t)
+{
+	template<typename U>
+	using H = decltype(G((U){}));
+
+	H<T> h;
+	return {t, h};
+}
 )";
 
 	COMPILE_PROGRAM(program, pa, input);
+
+	AssertExpr(pa, L"F",					L"F",					L"<::F::[T]> {::F::[T] $L, char $L} __cdecl(::F::[T]) * $PR",
+																	L"<::F::[T]> {::F::[T] $L, __int32 $L} __cdecl(::F::[T]) * $PR",
+																	L"<::F::[T]> {::F::[T] $L, void * $L} __cdecl(::F::[T]) * $PR"		);
+
+	AssertExpr(pa, L"F<char>",				L"F<char>",				L"{char $L, char $L} __cdecl(char) * $PR"							);
+	AssertExpr(pa, L"F<int>",				L"F<int>",				L"{__int32 $L, __int32 $L} __cdecl(__int32) * $PR"					);
+	AssertExpr(pa, L"F<double>",			L"F<double>",			L"{double $L, void * $L} __cdecl(double) * $PR"						);
 }
 
 TEST_CASE(TestParseGenericFunction_ConnectForward)
