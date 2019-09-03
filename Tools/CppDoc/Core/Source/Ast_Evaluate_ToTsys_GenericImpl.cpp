@@ -34,9 +34,9 @@ namespace symbol_totsys_impl
 			ResolveGenericParameters(pa, esContext.additionalArguments, genericFunction, args, isTypes, argSource, boundedAnys, 1);
 			process(genericFunction, declSymbol, esContext);
 
-			for (vint j = 0; j < esContext.evaluatedTypes.Count(); j++)
+			for (vint j = 0; j < esContext.evaluation.Get().Count(); j++)
 			{
-				AddExprTsysItemToResult(result, GetExprTsysItem(esContext.evaluatedTypes[j]));
+				AddExprTsysItemToResult(result, GetExprTsysItem(esContext.evaluation.Get()[j]));
 			}
 		}
 		else if (genericFunction->GetType() == TsysType::Any)
@@ -60,7 +60,8 @@ namespace symbol_totsys_impl
 			switch (declSymbol->kind)
 			{
 			case symbol_component::SymbolKind::GenericTypeArgument:
-				genericFunction->GetElement()->ReplaceGenericArgs(pa, esContext.evaluatedTypes);
+				esContext.evaluation.Allocate();
+				genericFunction->GetElement()->ReplaceGenericArgs(pa, esContext.evaluation.Get());
 				break;
 			case symbol_component::SymbolKind::TypeAlias:
 				{
@@ -90,9 +91,9 @@ namespace symbol_totsys_impl
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
 					EvaluateFuncSymbol(pa, decl.Obj(), &esContext);
-					for (vint i = 0; i < esContext.evaluatedTypes.Count(); i++)
+					for (vint i = 0; i < esContext.evaluation.Get().Count(); i++)
 					{
-						esContext.evaluatedTypes[i] = esContext.evaluatedTypes[i]->PtrOf();
+						esContext.evaluation.Get()[i] = esContext.evaluation.Get()[i]->PtrOf();
 					}
 				}
 				break;

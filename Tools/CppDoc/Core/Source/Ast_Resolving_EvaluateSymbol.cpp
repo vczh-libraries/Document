@@ -2,17 +2,32 @@
 
 namespace symbol_type_resolving
 {
-	TypeTsysList& GetEvaluatingResultStorage(const ParsingArguments& pa, Declaration* decl, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)
+	symbol_component::Evaluation& GetCorrectEvaluation(const ParsingArguments& pa, Declaration* decl, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)
 	{
 		switch (pa.GetEvaluationKind(decl, spec))
 		{
 		case EvaluationKind::General:
-			return decl->symbol->GetEvaluationForUpdating_NFb().Get();
+			return decl->symbol->GetEvaluationForUpdating_NFb();
 		case EvaluationKind::Instantiated:
-			return esContext->evaluatedTypes;
+			return esContext->evaluation;
 		default:
-			// TODO: GeneralUnderInstantiated will be stored in pa.taContext
-			throw 0;
+			{
+				auto taContext = pa.taContext;
+				while (taContext)
+				{
+					vint index = taContext->symbolEvaluations.Keys().IndexOf(decl->symbol);
+					if (index != -1)
+					{
+						return *taContext->symbolEvaluations.Values()[index].Obj();
+					}
+					taContext = taContext->parent;
+				}
+
+				taContext = pa.taContext;
+				auto ev = MakePtr<symbol_component::Evaluation>();
+				taContext->symbolEvaluations.Add(decl->symbol, ev);
+				return *ev.Obj();
+			}
 		}
 	}
 
@@ -24,7 +39,8 @@ namespace symbol_type_resolving
 
 	TypeTsysList& FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& declPa, Declaration* decl, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)
 	{
-		auto& evaluatedTypes = GetEvaluatingResultStorage(declPa, decl, spec, esContext);
+		auto& ev = GetCorrectEvaluation(declPa, decl, spec, esContext);
+		auto& evaluatedTypes = ev.Get();
 
 		if (spec && !esContext)
 		{
@@ -40,30 +56,23 @@ namespace symbol_type_resolving
 			}
 		}
 
-		if (declPa.IsGeneralEvaluation())
-		{
-			auto& ev = decl->symbol->GetEvaluationForUpdating_NFb();
-			ev.progress = symbol_component::EvaluationProgress::Evaluated;
-		}
+		ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		return evaluatedTypes;
 	}
 
 #define SETUP_EV_OR_RETURN(DECL, SPEC, ESCONTEXT)															\
 	auto symbol = DECL->symbol;																				\
 	auto declPa = GetPaFromInvokerPa(invokerPa, DECL->symbol, ESCONTEXT);									\
-	if (declPa.IsGeneralEvaluation())																		\
+	auto& ev = GetCorrectEvaluation(declPa, DECL, SPEC, ESCONTEXT);											\
+	switch (ev.progress)																					\
 	{																										\
-		auto& ev = symbol->GetEvaluationForUpdating_NFb();													\
-		switch (ev.progress)																				\
-		{																									\
-		case symbol_component::EvaluationProgress::Evaluated: return ev.Get();								\
-		case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();				\
-		}																									\
-																											\
-		ev.progress = symbol_component::EvaluationProgress::Evaluating;										\
-		ev.Allocate();																						\
+	case symbol_component::EvaluationProgress::Evaluated: return ev.Get();									\
+	case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();					\
 	}																										\
-	auto& evaluatedTypes = GetEvaluatingResultStorage(declPa, DECL, SPEC, ESCONTEXT)						\
+																											\
+	ev.progress = symbol_component::EvaluationProgress::Evaluating;											\
+	ev.Allocate();																							\
+	auto& evaluatedTypes = ev.Get()																			\
 
 	/***********************************************************************
 	EvaluateVarSymbol: Evaluate the declared type for a variable
@@ -104,11 +113,7 @@ namespace symbol_type_resolving
 			TypeToTsysNoVta(declPa, varDecl->type, evaluatedTypes);
 		}
 
-		if (declPa.IsGeneralEvaluation())
-		{
-			auto& ev = symbol->GetEvaluationForUpdating_NFb();
-			ev.progress = symbol_component::EvaluationProgress::Evaluated;
-		}
+		ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		return evaluatedTypes;
 	}
 
@@ -138,17 +143,14 @@ namespace symbol_type_resolving
 	void SetFuncTypeByReturnStat(const ParsingArguments& pa, FunctionDeclaration* funcDecl, TypeTsysList& returnTypes, EvaluateSymbolContext* esContext)
 	{
 		auto symbol = funcDecl->symbol;
-		if(pa.IsGeneralEvaluation())
+		auto& ev = GetCorrectEvaluation(pa, funcDecl, funcDecl->templateSpec, esContext);
+		if (ev.progress != symbol_component::EvaluationProgress::Evaluating)
 		{
-			auto& ev = symbol->GetEvaluationForUpdating_NFb();
-			if (ev.progress != symbol_component::EvaluationProgress::Evaluating)
-			{
-				throw NotResolvableException();
-			}
+			throw NotResolvableException();
 		}
 
 		auto newPa = pa.WithScope(symbol->GetParentScope());
-		auto& evaluatedTypes = GetEvaluatingResultStorage(pa, funcDecl, funcDecl->templateSpec, esContext);
+		auto& evaluatedTypes = ev.Get();
 
 		TypeTsysList processedReturnTypes;
 		{
@@ -214,7 +216,8 @@ namespace symbol_type_resolving
 	symbol_component::Evaluation& EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl)
 	{
 		auto symbol = classDecl->symbol;
-		auto& ev = symbol->GetEvaluationForUpdating_NFb();
+		auto declPa = GetPaFromInvokerPa(invokerPa, classDecl->symbol, nullptr);
+		auto& ev = GetCorrectEvaluation(declPa, classDecl, nullptr, nullptr);
 		switch (ev.progress)
 		{
 		case symbol_component::EvaluationProgress::Evaluated: return ev;
@@ -224,11 +227,9 @@ namespace symbol_type_resolving
 		ev.progress = symbol_component::EvaluationProgress::Evaluating;
 		ev.Allocate(classDecl->baseTypes.Count());
 
-		auto newPa = GetPaFromInvokerPa(invokerPa, symbol, nullptr)
-			.WithScope(symbol);
 		for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 		{
-			TypeToTsysNoVta(newPa, classDecl->baseTypes[i].f1, ev.Get(i));
+			TypeToTsysNoVta(declPa, classDecl->baseTypes[i].f1, ev.Get(i));
 		}
 
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;

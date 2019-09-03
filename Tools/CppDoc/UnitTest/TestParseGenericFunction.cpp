@@ -77,7 +77,7 @@ auto F(T t)
 
 	AssertExpr(pa, L"F<char>",				L"F<char>",				L"{char $L, char $L} __cdecl(char) * $PR"							);
 	AssertExpr(pa, L"F<int>",				L"F<int>",				L"{__int32 $L, __int32 $L} __cdecl(__int32) * $PR"					);
-	AssertExpr(pa, L"F<double>",			L"F<double>",			L"{double $L, void * $L} __cdecl(double) * $PR"						);
+	AssertExpr(pa, L"F<char*>",				L"F<char *>",			L"{char * $L, void * $L} __cdecl(char *) * $PR"						);
 }
 
 TEST_CASE(TestParseGenericFunction_ConnectForward)

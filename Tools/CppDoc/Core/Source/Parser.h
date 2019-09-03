@@ -263,17 +263,21 @@ enum class EvaluationKind
 
 struct TemplateArgumentContext
 {
-	TemplateArgumentContext*						parent = nullptr;
-	Symbol*											symbolToApply = nullptr;
+	TemplateArgumentContext*									parent = nullptr;
+	Symbol*														symbolToApply = nullptr;
 
 	//	Keys:
-	//		Type									:	GenericArg(Decl(TemplateArgument))
-	//		Value									:	Decl(TemplateArgument)
-	//	Value:
-	//		Single									:	Anything
-	//		MultipleValues							:	{Values ...}
-	//		UnknownAmountOfMultipleValues			:	any_t
-	Group<ITsys*, ITsys*>							arguments;
+	//		Type												:	GenericArg(Decl(TemplateArgument))
+	//		Value												:	Decl(TemplateArgument)
+	//	Values:
+	//		Single												:	Anything
+	//		MultipleValues										:	{Values ...}
+	//		UnknownAmountOfMultipleValues						:	any_t
+	Group<ITsys*, ITsys*>										arguments;
+
+	//	Keys:		Symbols of non-generic declarations under a instantiated evaluation on parent scopes
+	//	Values:		Storages
+	Dictionary<Symbol*, Ptr<symbol_component::Evaluation>>		symbolEvaluations;
 };
 
 struct ParsingArguments
@@ -307,7 +311,7 @@ struct ParsingArguments
 struct EvaluateSymbolContext
 {
 	TemplateArgumentContext							additionalArguments;
-	TypeTsysList									evaluatedTypes;
+	symbol_component::Evaluation					evaluation;
 };
 
 class DelayParse : public Object
