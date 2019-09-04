@@ -15,11 +15,7 @@
   - [ ] `template` on functions.
     - [ ] Connect function with forward declarations
     - [x] Instantiate functions with all non-default template arguments specified.
-    - [ ] When evaluating a function with incomplete types, local variable types are cached in `pa.taContext`
-      - [ ] When evaluating a statement for getting function return type, only the first `return` statement will be examined, everything else are ignored.
-      - [x] General evaluation result to a declarations will be stored directly inside the associated symbol.
-      - [ ] Evaluation (can only be general) result of a non-generic declaration under a `gaContext`, will be stored in this `gaContext`.
-      - [x] Instantiated evaluation result of a generic declaration will not be cached (for this moment).
+    - [x] When evaluating a function with incomplete types, local variable types are cached in `pa.taContext`
     - [ ] Specialization recognized but not used
   - [ ] `template` on classes.
     - [ ] Caching `gaContext`

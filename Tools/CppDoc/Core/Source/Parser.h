@@ -270,7 +270,7 @@ struct TemplateArgumentContext
 	//		Type												:	GenericArg(Decl(TemplateArgument))
 	//		Value												:	Decl(TemplateArgument)
 	//	Values:
-	//		Single												:	Anything
+	//		Single												:	Anything (nullptr for value argument)
 	//		MultipleValues										:	{Values ...}
 	//		UnknownAmountOfMultipleValues						:	any_t
 	Group<ITsys*, ITsys*>										arguments;

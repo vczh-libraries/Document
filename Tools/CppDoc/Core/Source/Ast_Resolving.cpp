@@ -236,28 +236,38 @@ namespace symbol_type_resolving
 			return;
 		case symbol_component::SymbolKind::GenericValueArgument:
 			{
-				auto argumentKey = pa.tsys->DeclOf(symbol);
-				if (auto pReplacedTypes = pa.TryGetReplacedGenericArgs(argumentKey))
+				if (symbol->ellipsis)
 				{
-					for (vint i = 0; i < pReplacedTypes->Count(); i++)
+					if (!allowVariadic)
 					{
-						auto replacedType = pReplacedTypes->Get(i);
-						if (symbol->ellipsis)
+						throw NotConvertableException();
+					}
+					hasVariadic = true;
+
+					auto argumentKey = pa.tsys->DeclOf(symbol);
+					if (auto pReplacedTypes = pa.TryGetReplacedGenericArgs(argumentKey))
+					{
+						for (vint i = 0; i < pReplacedTypes->Count(); i++)
 						{
-							if (!allowVariadic)
+							auto replacedType = pReplacedTypes->Get(i);
+							if (!replacedType)
 							{
 								throw NotConvertableException();
 							}
-							hasVariadic = true;
 
 							switch (replacedType->GetType())
 							{
 							case TsysType::Init:
 								{
+									TypeTsysList tsys;
+									tsys.SetLessMemoryMode(false);
+
 									Array<ExprTsysList> initArgs(replacedType->GetParamCount());
 									for (vint j = 0; j < initArgs.Count(); j++)
 									{
-										AddTemp(initArgs[j], EvaluateGenericArgumentSymbol(symbol));
+										tsys.Clear();
+										EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa, tsys);
+										AddTemp(initArgs[j], tsys);
 									}
 									CreateUniversalInitializerType(pa, initArgs, result);
 								}
@@ -269,25 +279,17 @@ namespace symbol_type_resolving
 								throw NotConvertableException();
 							}
 						}
-						else
-						{
-							AddTemp(result, replacedType);
-							hasNonVariadic = true;
-						}
 					}
-				}
-				else if (symbol->ellipsis)
-				{
-					if (!allowVariadic)
+					else
 					{
-						throw NotConvertableException();
+						AddTemp(result, pa.tsys->Any());
 					}
-					hasVariadic = true;
-					AddTemp(result, pa.tsys->Any());
 				}
 				else
 				{
-					AddTemp(result, EvaluateGenericArgumentSymbol(symbol));
+					TypeTsysList tsys;
+					EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa, tsys);
+					AddTemp(result, tsys);
 					hasNonVariadic = true;
 				}
 			}
