@@ -83,9 +83,60 @@ auto F(T t)
 TEST_CASE(TestParseGenericFunction_ConnectForward)
 {
 	auto input = LR"(
+void F();
+void F(){}
+
+int F(...);
+int F(...){}
+
+template<typename T> T F(T);
+template<typename T> T F(T t){}
+
+template<typename T, typename U> T F(U*);
+template<typename T, typename U> T F(U* pu){}
+
+class C
+{
+	void F();
+	int F(...);
+	template<typename T> T F(T);
+	template<typename T, typename U> T F(U*);
+}
+
+void C::F(){}
+int C::F(...){}
+template<typename T> T C::F(T t){}
+template<typename T, typename U> T C::F(U* pu){}
 )";
 
 	COMPILE_PROGRAM(program, pa, input);
+
+	List<Ptr<Declaration>> fs;
+	CopyFrom(
+		fs,
+		From(program->decls)
+			.Where([](Ptr<Declaration> decl) {return decl->name.name == L"F"; })
+	);
+	CopyFrom(
+		fs,
+		From(pa.root->TryGetChildren_NFb(L"C")->Get(0)->GetImplDecl_NFb<ClassDeclaration>()->decls)
+			.Select([](Tuple<CppClassAccessor, Ptr<Declaration>> t) {return t.f1; }),
+		true
+	);
+	TEST_ASSERT(fs.Count() == 16);
+
+	for (vint i = 0; i < 8; i++)
+	{
+		vint forward = i < 4 ? i * 2 : i + 12;
+		vint impl = i < 4 ? i * 2 + 1 : i + 8;
+
+		auto forwardDecl = fs[forward];
+		auto implDecl = fs[impl];
+
+		TEST_ASSERT(forwardDecl->symbol->GetForwardDecl_Fb() == forwardDecl);
+		TEST_ASSERT(implDecl->symbol->GetImplDecl_NFb() == implDecl);
+		TEST_ASSERT(forwardDecl->symbol->GetFunctionSymbol_Fb() == implDecl->symbol->GetFunctionSymbol_Fb());
+	}
 }
 
 TEST_CASE(TestParseGenericFunction_ConnectForward_Overloading)
