@@ -49,7 +49,6 @@ namespace symbol_component
 		having the same implementation declaration with this EnumItem symbol
 		*/
 		EnumItem,
-		FunctionSymbol,			// FunctionSymbol contains multiple FunctionBodySymbol of the same type. FunctionSymbol is a non-scope child for functions under their scopes.
 		FunctionSymbol,			// Category == Function
 		FunctionBodySymbol,		// Category == FunctionBody
 		Variable,
