@@ -12,10 +12,6 @@
 ## TODO
 
 - [ ] Next Demo!
-  - [ ] `template` on functions.
-    - [ ] Connect function with forward declarations
-    - [x] Instantiate functions with all non-default template arguments specified.
-    - [x] When evaluating a function with incomplete types, local variable types are cached in `pa.taContext`
   - [ ] Refactor `ResolveSymbol`
     - [ ] Delete `Symbol::MoveTemplateSpecToClass_N`
     - [ ] Add fields to `MethodCache`

@@ -148,8 +148,8 @@ TEST_CASE(TestParseGenericFunction_ConnectForward_Ambiguity)
 /*  0 */void F(int(&)[1]);
 /*  1 */void F(int(&)[1]){}
 
-/*  2 */int F(int(&)[2]);
-/*  3 */int F(int(&)[2]){}
+/*  2 */void F(int(&)[2]);
+/*  3 */void F(int(&)[2]){}
 
 /*  4 */template<typename T> T F(T(&)[1]);
 /*  5 */template<typename T> T F(T(&)[1]){}
@@ -165,14 +165,14 @@ TEST_CASE(TestParseGenericFunction_ConnectForward_Ambiguity)
 			struct S{};
 
 /* 15 */	void F(S, int(&)[1]);
-/* 16 */	int F(S, int(&)[2]);
+/* 16 */	void F(S, int(&)[2]);
 /* 17 */	template<typename T> T F(S, T(&)[1]);
 /* 18 */	template<typename T> T F(S, T(&)[2]);
 /* 19 */	template<typename T, int U> T F(S, T(&)[U]);
 		};
 
 /* 10 */void C::F(S, int(&)[1]){}
-/* 11 */int C::F(S, int(&)[2]){}
+/* 11 */void C::F(S, int(&)[2]){}
 /* 12 */template<typename T> T C::F(S, T(&)[1]){}
 /* 13 */template<typename T> T C::F(S, T(&)[2]){}
 /* 14 */template<typename T, int U> T C::F(S, T(&)[U]){}
