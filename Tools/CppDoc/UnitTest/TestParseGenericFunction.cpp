@@ -122,15 +122,16 @@ template<typename T, typename U> T C::F(S, U* pu){}
 	CopyFrom(
 		fs,
 		From(pa.root->TryGetChildren_NFb(L"C")->Get(0)->GetImplDecl_NFb<ClassDeclaration>()->decls)
-			.Select([](Tuple<CppClassAccessor, Ptr<Declaration>> t) {return t.f1; }),
+			.Select([](Tuple<CppClassAccessor, Ptr<Declaration>> t) {return t.f1; })
+			.Where([](Ptr<Declaration> decl) {return decl->name.name == L"F"; }),
 		true
 	);
 	TEST_ASSERT(fs.Count() == 16);
 
 	for (vint i = 0; i < 8; i++)
 	{
-		vint forward = i < 4 ? i * 2 : i + 12;
-		vint impl = i < 4 ? i * 2 + 1 : i + 8;
+		vint forward = i < 4 ? i * 2 : i + 8;
+		vint impl = i < 4 ? i * 2 + 1 : i + 4;
 
 		auto forwardDecl = fs[forward];
 		auto implDecl = fs[impl];

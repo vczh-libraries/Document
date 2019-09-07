@@ -778,7 +778,6 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 {
 	if (!decl->needResolveTypeFromStatement)
 	{
-		bool inClass = context->GetImplDecl_NFb<ClassDeclaration>();
 		if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
 		{
 			for (vint i = 0; i < pSymbols->Count(); i++)

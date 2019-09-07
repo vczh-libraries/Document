@@ -43,9 +43,15 @@ namespace symbol_component
 		TypeAlias,
 		GenericTypeArgument,
 
+		/*
+		For any non-class enum,
+		there will be another symbol in the parent scope of the Enum symbol,
+		having the same implementation declaration with this EnumItem symbol
+		*/
 		EnumItem,
 		FunctionSymbol,			// FunctionSymbol contains multiple FunctionBodySymbol of the same type. FunctionSymbol is a non-scope child for functions under their scopes.
-		FunctionBodySymbol,		// FunctionBodySymbol associates a declaration with type information.
+		FunctionSymbol,			// Category == Function
+		FunctionBodySymbol,		// Category == FunctionBody
 		Variable,
 		ValueAlias,
 		GenericValueArgument,
@@ -75,8 +81,40 @@ namespace symbol_component
 
 	enum class SymbolCategory
 	{
+		/*
+		could be
+			Root
+			TemplateSpec(Kind is Root temporarily)
+				a scope created by TemplateSpec temporary,
+				before the actual type of the declaration is parsed,
+				and then convert to other Normal category kind or FunctionBody category kind
+			BlockStat
+				the name is always "$"
+			Namespace
+				all namespace declarations are forward declarations, there is no implementation declaration
+			Everything else
+				has one implementation declaration and multiple forward declarations
+		*/
 		Normal,
+
+		/*
+		A function. The symbol could be
+			the scope created by TemplateSpec if it is a generic function, symbols of both type arguments and function arguments are put in this scope
+			the scope created by (Forward)FunctionDeclaration, function arguments are put in this scope
+		Has either one implementation declaration or one forward declaration
+		Symbol name could be
+			"$__ctor" for constructors
+			"$__type" for type conversion operator
+			"~TYPE" for destructors
+			the function name itself
+		*/
 		FunctionBody,
+
+		/*
+		All FunctionBody that are the same function
+		There could be multiple implementation FunctionBody, if types cannot be distinguished by the compiler
+			e.g. overloadings on a dependency type, only constants are different. Constants are treated as identical to each other in the compiler.
+		*/
 		Function,
 	};
 
@@ -89,7 +127,7 @@ namespace symbol_component
 		List<Ptr<Declaration>>						forwardDecls;
 		Ptr<Stat>									statement;
 		SymbolGroup									children;
-		Evaluation									evaluation;
+		Evaluation									evaluation;			// type of this symbol, or type of base types of a class, when all template arguments are unassigned
 	};
 
 	struct SC_FunctionBody
@@ -99,7 +137,7 @@ namespace symbol_component
 		Ptr<ForwardFunctionDeclaration>				forwardDecl;
 		Ptr<MethodCache>							methodCache;
 		SymbolGroup									children;
-		Evaluation									evaluation;
+		Evaluation									evaluation;			// type of this symbol, when all template arguments are unassigned
 	};
 
 	struct SC_Function
@@ -276,8 +314,7 @@ struct TemplateArgumentContext
 	//		UnknownAmountOfMultipleValues						:	any_t
 	Group<ITsys*, ITsys*>										arguments;
 
-	//	Keys:		Symbols of non-generic declarations under a instantiated evaluation on parent scopes
-	//	Values:		Storages
+	//	evaluation result if template arguments of this symbol are unassigned, but template arguments of parent scopes are assigned
 	Dictionary<Symbol*, Ptr<symbol_component::Evaluation>>		symbolEvaluations;
 };
 
