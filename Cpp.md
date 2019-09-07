@@ -14,7 +14,7 @@
 - [ ] Next Demo!
   - [ ] Refactor `ResolveSymbol`
     - [ ] Delete `Symbol::MoveTemplateSpecToClass_N`
-    - [ ] Add fields to `MethodCache`
+    - [ ] Add fields to `MethodCache` (variable initializer will need to, consider changing name)
       - `classSymbols` from inner to outer
         - for `void A::B::F(){}` or `class A{class B{void F(){}};};`, `classSymbols` are `[B, A]`
       - `templateArgumentAccessible`
