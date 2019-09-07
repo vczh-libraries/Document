@@ -143,7 +143,7 @@ namespace symbol_component
 	{
 		Symbol*										parent = nullptr;
 		List<Ptr<Symbol>>							implSymbols;
-		List<Ptr<Symbol>>							declSymbols;
+		List<Ptr<Symbol>>							forwardSymbols;
 	};
 
 	union SC_Data
@@ -187,7 +187,7 @@ public:
 
 	Symbol*											GetParentScope();				//	Normal	FunctionBody	Function
 	const List<Ptr<Symbol>>&						GetImplSymbols_F();				//							Function
-	const List<Ptr<Symbol>>&						GetDeclSymbols_F();				//							Function
+	const List<Ptr<Symbol>>&						GetForwardSymbols_F();			//							Function
 	Ptr<Declaration>								GetImplDecl_NFb();				//	Normal	FunctionBody
 	symbol_component::Evaluation&					GetEvaluationForUpdating_NFb();	//	Normal	FunctionBody
 	const symbol_component::SymbolGroup&			GetChildren_NFb();				//	Normal	FunctionBody
@@ -242,9 +242,9 @@ public:
 		case symbol_component::SymbolCategory::Function:
 			{
 				Ptr<T> decl;
-				for (vint i = 0; i < categoryData.function.declSymbols.Count(); i++)
+				for (vint i = 0; i < categoryData.function.forwardSymbols.Count(); i++)
 				{
-					if ((decl = categoryData.function.declSymbols[i]->GetAnyForwardDecl<T>()))
+					if ((decl = categoryData.function.forwardSymbols[i]->GetAnyForwardDecl<T>()))
 					{
 						return decl;
 					}

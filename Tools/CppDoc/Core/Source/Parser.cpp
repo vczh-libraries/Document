@@ -152,7 +152,7 @@ Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, Ptr<Symbol> templat
 		}
 		else
 		{
-			categoryData.function.declSymbols.Add(symbol);
+			categoryData.function.forwardSymbols.Add(symbol);
 		}
 		symbol->categoryData.functionBody.functionSymbol = this;
 	}
@@ -269,12 +269,12 @@ const List<Ptr<Symbol>>& Symbol::GetImplSymbols_F()
 		throw UnexpectedSymbolCategoryException();
 	}
 }
-const List<Ptr<Symbol>>& Symbol::GetDeclSymbols_F()
+const List<Ptr<Symbol>>& Symbol::GetForwardSymbols_F()
 {
 	switch (category)
 	{
 	case symbol_component::SymbolCategory::Function:
-		return categoryData.function.declSymbols;
+		return categoryData.function.forwardSymbols;
 	default:
 		throw UnexpectedSymbolCategoryException();
 	}
@@ -549,9 +549,9 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 		}
 		break;
 	case symbol_component::SymbolCategory::Function:
-		for (vint i = 0; i < categoryData.function.declSymbols.Count(); i++)
+		for (vint i = 0; i < categoryData.function.forwardSymbols.Count(); i++)
 		{
-			categoryData.function.declSymbols[i]->uniqueId = uniqueId;
+			categoryData.function.forwardSymbols[i]->uniqueId = uniqueId;
 		}
 		for (vint i = 0; i < categoryData.function.implSymbols.Count(); i++)
 		{

@@ -239,11 +239,11 @@ namespace a::b
 	TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
 	TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
 	TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb<FunctionDeclaration>());
-	TEST_ASSERT(symbol->GetDeclSymbols_F().Count() == 4);
+	TEST_ASSERT(symbol->GetForwardSymbols_F().Count() == 4);
 	for (vint i = 0; i < 4; i++)
 	{
-		TEST_ASSERT(symbol->GetDeclSymbols_F()[i]->GetForwardDecl_Fb().Cast<ForwardFunctionDeclaration>());
-		TEST_ASSERT(!symbol->GetDeclSymbols_F()[i]->GetImplDecl_NFb<FunctionDeclaration>());
+		TEST_ASSERT(symbol->GetForwardSymbols_F()[i]->GetForwardDecl_Fb().Cast<ForwardFunctionDeclaration>());
+		TEST_ASSERT(!symbol->GetForwardSymbols_F()[i]->GetImplDecl_NFb<FunctionDeclaration>());
 	}
 }
 
@@ -557,8 +557,8 @@ namespace a
 			TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
 			TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
 
-			TEST_ASSERT(symbol->GetDeclSymbols_F().Count() == 1);
-			TEST_ASSERT(symbol->GetDeclSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
+			TEST_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
+			TEST_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
 		}
 	}
 }

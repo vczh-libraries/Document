@@ -35,7 +35,7 @@ namespace symbol_type_resolving
 			break;
 		case symbol_component::SymbolCategory::Function:
 			{
-				const auto& symbols = symbol->GetDeclSymbols_F();
+				const auto& symbols = symbol->GetForwardSymbols_F();
 				for (vint i = 0; i < symbols.Count(); i++)
 				{
 					isStatic |= IsStaticSymbol<TForward>(symbols[i].Obj());
