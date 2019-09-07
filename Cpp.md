@@ -16,11 +16,21 @@
     - [ ] Connect function with forward declarations
     - [x] Instantiate functions with all non-default template arguments specified.
     - [x] When evaluating a function with incomplete types, local variable types are cached in `pa.taContext`
-    - [ ] Specialization recognized but not used
-  - [ ] Refactor
-    - [ ] Delete symbol::MoveTemplateSpecToClass_N
-    - [ ] If there is classSymbol in MethodCache, symbols in class are visible, template arguments conditionally visible
-    - [ ] after visiting a scope that has classSymbol, bypass classSymbol and go directly to its parent scope
+  - [ ] Refactor `ResolveSymbol`
+    - [ ] Delete `Symbol::MoveTemplateSpecToClass_N`
+    - [ ] Add fields to `MethodCache`
+      - `classSymbols` from inner to outer
+        - for `void A::B::F(){}` or `class A{class B{void F(){}};};`, `classSymbols` are `[B, A]`
+      - `templateArgumentAccessible`
+        - false for `template<typename T>void A::B::F(){}`, because `T` of `A` is defined here and name may change.
+        - true for `template<typename U>class A{class B{void F(){}};};`
+      - `parentScope`
+        - the scope where this function is defined for `template<typename T>void A::B::F(){}`
+        - the scope outside of all nesting classes for `class A{class B{void F(){}};};`
+      - When searching to a scope that has `MethodCache`
+        - `classSymbols` will take place so that symbols inside these classes and their base classes are visited.
+        - `templateArgumentAccessible` controls whether template argument symbols for `classSymbols` are accessible. Arguments in their base classes are always not accessible.
+        - If searching need to continue, jump to `parentScope` directly, instead of calling `Symbol::GetParentScope`.
   - [ ] `template` on classes.
     - [ ] Caching `gaContext`
       - When a generic declaration is instantiated, the created gaContext will be cached in the symbol(key = template arguments).
@@ -32,7 +42,11 @@
     - [ ] Member type evaluation.
       - [ ] `v.f`, `v->f`, `v.*f`, `v->*f`, `v::f`
     - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
-    - [ ] Specialization recognized but not used
+  - [ ] More `template`
+    - [ ] Function specializations recognized but not used
+    - [ ] Class specializations recognized but not used
+    - [ ] Parse `template<typename T>template<typename U>template<typename V>void A<T*>::B<const U&>::F(){}`
+      - matthes `template<typename X>class A<X*>{ template<typename Y>class B<const Y&>{ void template<typename Z>F(); }; };`
   - [ ] Make generic `Expr::Ptr` in `Calculator` case.
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
 - [ ] `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
