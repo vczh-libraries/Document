@@ -17,6 +17,10 @@
     - [x] Instantiate functions with all non-default template arguments specified.
     - [x] When evaluating a function with incomplete types, local variable types are cached in `pa.taContext`
     - [ ] Specialization recognized but not used
+  - [ ] Refactor
+    - [ ] Delete symbol::MoveTemplateSpecToClass_N
+    - [ ] If there is classSymbol in MethodCache, symbols in class are visible, template arguments conditionally visible
+    - [ ] after visiting a scope that has classSymbol, bypass classSymbol and go directly to its parent scope
   - [ ] `template` on classes.
     - [ ] Caching `gaContext`
       - When a generic declaration is instantiated, the created gaContext will be cached in the symbol(key = template arguments).
