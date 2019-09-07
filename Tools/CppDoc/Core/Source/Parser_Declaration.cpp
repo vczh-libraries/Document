@@ -1090,7 +1090,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 		pda.containingClass = containingClass;
 
 		auto newPa = spec.f1 ? pa.WithScope(spec.f0.Obj()) : pa;
-		ParseMemberDeclarator(newPa, pda, cursor, declarators);
+		ParseMemberDeclarator(newPa, spec.f0.Obj(), pda, cursor, declarators);
 	}
 
 	Ptr<FunctionType> funcType;

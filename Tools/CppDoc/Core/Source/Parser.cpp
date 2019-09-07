@@ -401,6 +401,34 @@ void Symbol::RemoveChildAndResetParent_NFb(const WString& name, Symbol* child)
 	children.Remove(name, child);
 }
 
+void Symbol::MoveTemplateSpecToClass_N(Symbol* classSymbol)
+{
+	if (category != symbol_component::SymbolCategory::Normal)
+	{
+		throw UnexpectedSymbolCategoryException();
+	}
+	if (classSymbol->GetCategory() != symbol_component::SymbolCategory::Normal)
+	{
+		throw UnexpectedSymbolCategoryException();
+	}
+
+	if (categoryData.normal.implDecl || categoryData.normal.forwardDecls.Count() > 0)
+	{
+		throw UnexpectedSymbolCategoryException();
+	}
+
+	switch (classSymbol->kind)
+	{
+	case symbol_component::SymbolKind::Class:
+	case symbol_component::SymbolKind::Struct:
+	case symbol_component::SymbolKind::Union:
+		SetParent(classSymbol);
+		break;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
+}
+
 Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
 {
 	auto symbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Function);

@@ -97,16 +97,18 @@ template<typename T, typename U> T F(U* pu){}
 
 class C
 {
+	struct S{};
+
 	void F();
 	int F(...);
-	template<typename T> T F(T);
-	template<typename T, typename U> T F(U*);
-}
+	template<typename T> T F(S, T);
+	template<typename T, typename U> T F(S, U*);
+};
 
 void C::F(){}
 int C::F(...){}
-template<typename T> T C::F(T t){}
-template<typename T, typename U> T C::F(U* pu){}
+template<typename T> T C::F(S, T t){}
+template<typename T, typename U> T C::F(S, U* pu){}
 )";
 
 	COMPILE_PROGRAM(program, pa, input);
