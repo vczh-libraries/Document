@@ -2,6 +2,10 @@
 #define VCZH_DOCUMENT_CPPDOCTEST_TESTPARSE
 
 #include <Parser.h>
+#include <VlppOS.h>
+
+using namespace vl::stream;
+using namespace vl::filesystem;
 
 extern Ptr<RegexLexer>		GlobalCppLexer();
 extern void					Log(Ptr<Type> type, StreamWriter& writer);

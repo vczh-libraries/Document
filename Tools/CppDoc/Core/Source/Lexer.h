@@ -2,14 +2,11 @@
 #define VCZH_DOCUMENT_CPPDOC_LEXER
 
 #include <VlppRegex.h>
-#include <VlppOS.h>
 #include "LexerTokenDef.h"
 
 using namespace vl;
 using namespace vl::collections;
 using namespace vl::regex;
-using namespace vl::stream;
-using namespace vl::filesystem;
 
 /***********************************************************************
 Definition
