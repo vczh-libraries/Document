@@ -621,27 +621,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 ParseSingleDeclarator
 ***********************************************************************/
 
-ParsingArguments ParseInClass(const ParsingArguments& pa, Symbol* templateSpecSymbol, Symbol* containingClassSymbol)
-{
-	if (!containingClassSymbol)
-	{
-		return pa;
-	}
-	else if (!templateSpecSymbol)
-	{
-		return pa.WithScope(containingClassSymbol);
-	}
-	else
-	{
-		if (templateSpecSymbol->GetParentScope() != containingClassSymbol)
-		{
-			templateSpecSymbol->MoveTemplateSpecToClass_N(containingClassSymbol);
-		}
-		return pa;
-	}
-}
-
-Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Symbol* templateSpecSymbol, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
+Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
 {
 	Ptr<Declarator> declarator;
 
@@ -697,7 +677,7 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Symbol* templa
 		{
 			try
 			{
-				declarator = ParseSingleDeclarator(pa, templateSpecSymbol, targetType, pdc, cursor);
+				declarator = ParseSingleDeclarator(pa, targetType, pdc, cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 			}
 			catch (const StopParsingException&)
@@ -725,16 +705,21 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	// recognize a class member declaration
 	if (pdc.containingClass)
 	{
-		declarator->containingClassSymbol = pdc.containingClass->symbol;
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.containingClass->symbol, true);
 	}
 	else if (auto memberType = declarator->type.Cast<MemberType>())
 	{
-		declarator->containingClassSymbol = EnsureMemberTypeResolved(memberType, cursor)->symbol;
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, EnsureMemberTypeResolved(memberType, cursor)->symbol, false);
 	}
+
+	if (declarator->classMemberCache)
+	{
+		declarator->temporaryScopeForClassMemberCache = MakePtr<Symbol>(pa.scopeSymbol, declarator->classMemberCache);
+	}
+	auto newPa = declarator->classMemberCache ? pa.WithScope(declarator->temporaryScopeForClassMemberCache.Obj()) : pa;
 
 	// if there is [, we see an array declarator
 	// an array could be multiple dimension
-	auto newPa = ParseInClass(pa, templateSpecSymbol, declarator->containingClassSymbol);
 	if (TestToken(cursor, CppTokens::LBRACKET, false))
 	{
 		while (ParseSingleDeclarator_Array(newPa, declarator, targetType, pdc.forParameter, cursor));
@@ -806,7 +791,7 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 ParseDeclaratorWithInitializer
 ***********************************************************************/
 
-void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Symbol* templateSpecSymbol, Ptr<Type> typeResult, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeResult, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
 	while (true)
 	{
@@ -854,7 +839,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Symbol* template
 			opPdc.dr = DeclaratorRestriction::Zero;
 
 			typeResult = ParseLongType(pa, cursor);
-			declarator = ParseSingleDeclarator(pa, templateSpecSymbol, typeResult, { opPdc,false }, cursor);
+			declarator = ParseSingleDeclarator(pa, typeResult, { opPdc,false }, cursor);
 			declarator->name = cppName;
 			if (typeOpMemberType)
 			{
@@ -873,7 +858,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Symbol* template
 			// if we have already recognize a type, we can parse multiple declarators with initializers
 			auto newPdc = pdc;
 			newPdc.dr = pdc.dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : pdc.dr;
-			declarator = ParseSingleDeclarator(pa, templateSpecSymbol, typeResult, newPdc, cursor);
+			declarator = ParseSingleDeclarator(pa, typeResult, newPdc, cursor);
 		}
 
 		ParsingArguments initializerPa
@@ -923,7 +908,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Symbol* template
 ParseDeclarator
 ***********************************************************************/
 
-void ParseDeclarator(const ParsingArguments& pa, Symbol* templateSpecSymbol, const ParsingDeclaratorArguments& pda, bool trySpecialMember, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+void ParseDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, bool trySpecialMember, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
 	if (trySpecialMember && pda.dr == DeclaratorRestriction::Many)
 	{
@@ -933,7 +918,7 @@ void ParseDeclarator(const ParsingArguments& pa, Symbol* templateSpecSymbol, con
 			try
 			{
 				// try to parse a special method declarator
-				ParseDeclaratorWithInitializer(pa, templateSpecSymbol, nullptr, { pda,true }, cursor, declarators);
+				ParseDeclaratorWithInitializer(pa, nullptr, { pda,true }, cursor, declarators);
 			}
 			catch (const StopParsingException&)
 			{
@@ -964,26 +949,26 @@ void ParseDeclarator(const ParsingArguments& pa, Symbol* templateSpecSymbol, con
 	}
 
 	auto typeResult = ParseLongType(pa, cursor);
-	ParseDeclaratorWithInitializer(pa, templateSpecSymbol, typeResult, { pda,false }, cursor, declarators);
+	ParseDeclaratorWithInitializer(pa, typeResult, { pda,false }, cursor, declarators);
 }
 
 /***********************************************************************
 ParseDeclarator (Helpers)
 ***********************************************************************/
 
-void ParseMemberDeclarator(const ParsingArguments& pa, Symbol* templateSpecSymbol, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
+void ParseMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
-	ParseDeclarator(pa, templateSpecSymbol, pda, true, cursor, declarators);
+	ParseDeclarator(pa, pda, true, cursor, declarators);
 }
 
 void ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<Type> type, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
-	ParseDeclaratorWithInitializer(pa, nullptr, type, { pda,false }, cursor, declarators);
+	ParseDeclaratorWithInitializer(pa, type, { pda,false }, cursor, declarators);
 }
 
 void ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators)
 {
-	ParseDeclarator(pa, nullptr, pda, false, cursor, declarators);
+	ParseDeclarator(pa, pda, false, cursor, declarators);
 }
 
 Ptr<Declarator> ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor)
@@ -1002,7 +987,7 @@ Ptr<Type> ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, bool symbolDefinedInsideClass)
 {
 	auto cache = MakePtr<symbol_component::ClassMemberCache>();
-	cache->templateArgumentAccessible = symbolDefinedInsideClass;
+	cache->symbolDefinedInsideClass = symbolDefinedInsideClass;
 
 	cache->classSymbols.Add(classSymbol);
 	for (vint i = 0; i < cache->classSymbols.Count(); i++)
@@ -1019,5 +1004,15 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 			cache->parentScope = parentScope;
 		}
 	}
+
+	if (symbolDefinedInsideClass)
+	{
+		cache->parentScope = cache->classSymbols[cache->classSymbols.Count() - 1]->GetParentScope();
+	}
+	else
+	{
+		cache->parentScope = pa.scopeSymbol;
+	}
+
 	return cache;
 }

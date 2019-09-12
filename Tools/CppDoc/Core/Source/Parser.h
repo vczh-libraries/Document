@@ -28,7 +28,7 @@ namespace symbol_component
 		true for members defined inside a class, so that type arguments reachable in classSymbols are reachable here
 		false for outside
 		*/
-		bool						templateArgumentAccessible;
+		bool						symbolDefinedInsideClass;
 
 		/*
 		The scope to jump to after all symbols in classSymbols are scanned
@@ -141,6 +141,7 @@ namespace symbol_component
 		Symbol*										parent = nullptr;
 		Ptr<Declaration>							implDecl;
 		List<Ptr<Declaration>>						forwardDecls;
+		Ptr<ClassMemberCache>						classMemberCache;
 		Ptr<Stat>									statement;
 		SymbolGroup									children;
 		Evaluation									evaluation;			// type of this symbol, or type of base types of a class, when all template arguments are unassigned
@@ -197,6 +198,7 @@ public:
 
 public:
 	Symbol(symbol_component::SymbolCategory _category, Symbol* _parent = nullptr);
+	Symbol(Symbol* _parent = nullptr, Ptr<symbol_component::ClassMemberCache> classMemberCache = nullptr);
 	~Symbol();
 
 	symbol_component::SymbolCategory				GetCategory();
@@ -212,7 +214,7 @@ public:
 	const Ptr<Stat>&								GetStat_N();					//	Normal
 	Symbol*											GetFunctionSymbol_Fb();			//			FunctionBody
 	Ptr<Declaration>								GetForwardDecl_Fb();			//			FunctionBody
-	Ptr<symbol_component::ClassMemberCache>			GetClassMemberCache_Fb();		//			FunctionBody
+	Ptr<symbol_component::ClassMemberCache>			GetClassMemberCache_NFb();		//			FunctionBody
 
 	const List<Ptr<Symbol>>*						TryGetChildren_NFb(const WString& name);
 	void											AddChild_NFb(const WString& name, const Ptr<Symbol>& child);
@@ -475,7 +477,7 @@ inline ParsingDeclaratorArguments					pda_Decls(bool allowBitField, bool allowCo
 inline ParsingDeclaratorArguments					pda_Typedefs()	
 	{	return { nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Zero,		false,			false,	false		}; } // Declarations after typedef keyword
 
-extern void											ParseMemberDeclarator(const ParsingArguments& pa, Symbol* templateSpecSymbol, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
+extern void											ParseMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<Type> type, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern Ptr<Declarator>								ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor);

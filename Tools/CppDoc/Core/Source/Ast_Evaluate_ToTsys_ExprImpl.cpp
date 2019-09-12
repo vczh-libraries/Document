@@ -133,7 +133,7 @@ namespace symbol_totsys_impl
 	{
 		if (pa.functionBodySymbol)
 		{
-			if (auto cache = pa.functionBodySymbol->GetClassMemberCache_Fb())
+			if (auto cache = pa.functionBodySymbol->GetClassMemberCache_NFb())
 			{
 				if (cache->thisType)
 				{

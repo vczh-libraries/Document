@@ -223,6 +223,17 @@ Symbol::Symbol(symbol_component::SymbolCategory _category, Symbol* _parent)
 	}
 }
 
+Symbol::Symbol(Symbol* _parent, Ptr<symbol_component::ClassMemberCache> classMemberCache)
+	:category(symbol_component::SymbolCategory::Normal)
+	, categoryData(symbol_component::SymbolCategory::Normal)
+{
+	categoryData.normal.classMemberCache = classMemberCache;
+	if (_parent)
+	{
+		SetParent(_parent);
+	}
+}
+
 Symbol::~Symbol()
 {
 	categoryData.Free(category);
@@ -363,10 +374,12 @@ Ptr<Declaration> Symbol::GetForwardDecl_Fb()
 	}
 }
 
-Ptr<symbol_component::ClassMemberCache> Symbol::GetClassMemberCache_Fb()
+Ptr<symbol_component::ClassMemberCache> Symbol::GetClassMemberCache_NFb()
 {
 	switch (category)
 	{
+	case symbol_component::SymbolCategory::Normal:
+		return categoryData.normal.classMemberCache;
 	case symbol_component::SymbolCategory::FunctionBody:
 		return categoryData.functionBody.classMemberCache;
 	default:
@@ -449,7 +462,7 @@ Symbol* Symbol::AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component
 
 Symbol* Symbol::CreateStatSymbol_NFb(Ptr<Stat> _stat)
 {
-	auto symbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
+	auto symbol = MakePtr<Symbol>();
 	symbol->name = L"$";
 	symbol->kind = symbol_component::SymbolKind::Statement;
 	symbol->categoryData.normal.statement = _stat;

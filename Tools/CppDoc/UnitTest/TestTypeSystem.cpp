@@ -80,8 +80,8 @@ TEST_CASE(TestTypeSystem_Array)
 
 TEST_CASE(TestTypeSystem_Function)
 {
-	auto n1 = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
-	auto n2 = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
+	auto n1 = MakePtr<Symbol>();
+	auto n2 = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
 	auto tvoid = tsys->Void();
 	auto tdecl1 = tsys->DeclOf(n1.Obj());
@@ -138,8 +138,8 @@ TEST_CASE(TestTypeSystem_CV)
 
 TEST_CASE(TestTypeSystem_Decl)
 {
-	auto n1 = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
-	auto n2 = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
+	auto n1 = MakePtr<Symbol>();
+	auto n2 = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
 	TEST_ASSERT(tsys->DeclOf(n1.Obj()) == tsys->DeclOf(n1.Obj()));
 	TEST_ASSERT(tsys->DeclOf(n1.Obj()) != tsys->DeclOf(n2.Obj()));
@@ -179,8 +179,8 @@ TEST_CASE(TestTypeSystem_Init)
 
 TEST_CASE(TestTypeSystem_GenericFunction)
 {
-	auto n = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
-	auto narg = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
+	auto n = MakePtr<Symbol>();
+	auto narg = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
 	auto tdecl = tsys->DeclOf(n.Obj());
 
@@ -203,9 +203,9 @@ TEST_CASE(TestTypeSystem_GenericFunction)
 
 TEST_CASE(TestTypeSystem_GenericArg)
 {
-	auto n = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
-	auto narg1 = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
-	auto narg2 = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
+	auto n = MakePtr<Symbol>();
+	auto narg1 = MakePtr<Symbol>();
+	auto narg2 = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
 	TsysGenericArg arg1 = { 0,narg1.Obj() };
 	TsysGenericArg arg2 = { 0,narg2.Obj() };
@@ -221,8 +221,8 @@ TEST_CASE(TestTypeSystem_GenericArg)
 
 TEST_CASE(TestTypeSystem_Type)
 {
-	auto n1 = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
-	auto n2 = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal);
+	auto n1 = MakePtr<Symbol>();
+	auto n2 = MakePtr<Symbol>();
 	auto tsys = ITsysAlloc::Create();
 	auto tvoid = tsys->Void();
 	auto tdecl1 = tsys->DeclOf(n1.Obj());

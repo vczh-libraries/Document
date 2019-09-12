@@ -5,6 +5,11 @@
 
 using namespace vl::regex;
 
+namespace symbol_component
+{
+	struct ClassMemberCache;
+}
+
 struct ParsingArguments;
 struct EvaluateSymbolContext;
 class ITsys;
@@ -123,18 +128,20 @@ enum class CppInitializerType
 class Initializer : public Object
 {
 public:
-	CppInitializerType		initializerType;
-	VariadicList<Ptr<Expr>>	arguments;
+	CppInitializerType							initializerType;
+	VariadicList<Ptr<Expr>>						arguments;
 };
 
 class Declarator : public Object
 {
 public:
-	Symbol*					containingClassSymbol = nullptr;
-	Ptr<Type>				type;
-	bool					ellipsis = false;
-	CppName					name;
-	Ptr<Initializer>		initializer;
+	Ptr<symbol_component::ClassMemberCache>		classMemberCache;
+	Ptr<Symbol>									temporaryScopeForClassMemberCache;
+
+	Ptr<Type>									type;
+	bool										ellipsis = false;
+	CppName										name;
+	Ptr<Initializer>							initializer;
 };
 
 /***********************************************************************

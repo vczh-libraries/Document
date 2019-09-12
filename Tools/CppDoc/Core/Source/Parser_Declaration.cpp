@@ -13,7 +13,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 	RequireToken(cursor, CppTokens::DECL_TEMPLATE);
 	RequireToken(cursor, CppTokens::LT);
 
-	auto symbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal, pa.scopeSymbol);
+	auto symbol = MakePtr<Symbol>(pa.scopeSymbol);
 	auto newPa = pa.WithScope(symbol.Obj());
 
 	auto spec = MakePtr<TemplateSpec>();
@@ -39,7 +39,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				}
 			}
 
-			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : MakePtr<Symbol>(symbol_component::SymbolCategory::Normal, symbol.Obj());
+			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : MakePtr<Symbol>(symbol.Obj());
 			argument.argumentSymbol = argumentSymbol.Obj();
 
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
@@ -115,7 +115,7 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				}
 			}
 
-			auto argumentSymbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Normal, symbol.Obj());
+			auto argumentSymbol = MakePtr<Symbol>(symbol.Obj());
 			argument.argumentSymbol = argumentSymbol.Obj();
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
 			argumentSymbol->ellipsis = argument.ellipsis;
@@ -853,8 +853,6 @@ void ParseDeclaration_Function(
 	Ptr<FunctionType> funcType,
 	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_PARAMETER)
 	CppMethodType methodType,
-	ClassDeclaration* containingClass,
-	ClassDeclaration* containingClassForMember,
 	Ptr<CppTokenCursor>& cursor,
 	List<Ptr<Declaration>>& output
 )
@@ -873,7 +871,7 @@ void ParseDeclaration_Function(
 		throw StopParsingException(cursor);
 	}
 
-	auto context = containingClassForMember ? containingClassForMember->symbol : pa.scopeSymbol;
+	auto context = declarator->classMemberCache ? declarator->classMemberCache->classSymbols[0] : pa.scopeSymbol;
 	if (hasStat)
 	{
 		// if there is a statement, then it is a function declaration
@@ -882,19 +880,21 @@ void ParseDeclaration_Function(
 		FILL_FUNCTION;
 		output.Add(decl);
 
-		Ptr<symbol_component::ClassMemberCache> classMemberCache;
-		if (containingClass || containingClassForMember)
+		if (declarator->classMemberCache)
 		{
-			classMemberCache = CreatePartialClassMemberCache(pa, (containingClass ? containingClass->symbol : containingClassForMember->symbol), containingClass != nullptr);
-
 			TsysCV cv;
 			cv.isGeneralConst = funcType->qualifierConstExpr || funcType->qualifierConst;
 			cv.isVolatile = funcType->qualifierVolatile;
-			classMemberCache->thisType = pa.tsys->DeclOf(classMemberCache->classSymbols[0])->CVOf(cv)->PtrOf();
+			declarator->classMemberCache->thisType = pa.tsys->DeclOf(declarator->classMemberCache->classSymbols[0])->CVOf(cv)->PtrOf();
+
+			if (!declarator->classMemberCache->symbolDefinedInsideClass)
+			{
+				declarator->classMemberCache->parentScope = pa.scopeSymbol;
+			}
 		}
 
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
-		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, (spec.f1 ? spec.f0 : nullptr), classMemberCache);
+		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, (spec.f1 ? spec.f0 : nullptr), declarator->classMemberCache);
 
 		{
 			auto newPa = pa.WithScope(functionBodySymbol);
@@ -942,7 +942,7 @@ void ParseDeclaration_Function(
 	else
 	{
 		// if there is ;, then it is a forward function declaration
-		if (containingClassForMember)
+		if (declarator->classMemberCache && !declarator->classMemberCache->symbolDefinedInsideClass)
 		{
 			throw StopParsingException(cursor);
 		}
@@ -966,7 +966,6 @@ void ParseDeclaration_Variable(
 	const TemplateSpecResult& spec,
 	Ptr<Declarator> declarator,
 	FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_PARAMETER)
-	ClassDeclaration* containingClassForMember,
 	Ptr<CppTokenCursor>& cursor,
 	List<Ptr<Declaration>>& output
 )
@@ -1018,11 +1017,11 @@ void ParseDeclaration_Variable(
 			throw StopParsingException(cursor);
 		}
 
-		auto context = containingClassForMember ? containingClassForMember->symbol : pa.scopeSymbol;
+		auto context = declarator->classMemberCache ? declarator->classMemberCache->classSymbols[0] : pa.scopeSymbol;
 		if (decoratorExtern || (decoratorStatic && !declarator->initializer))
 		{
 			// if there is extern, or static without an initializer, then it is a forward variable declaration
-			if (containingClassForMember)
+			if (declarator->classMemberCache && !declarator->classMemberCache->symbolDefinedInsideClass)
 			{
 				throw StopParsingException(cursor);
 			}
@@ -1077,7 +1076,6 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 	List<Ptr<Declarator>> declarators;
 	auto methodType = CppMethodType::Function;
 	ClassDeclaration* containingClass = pa.scopeSymbol->GetImplDecl_NFb<ClassDeclaration>().Obj();
-	ClassDeclaration* containingClassForMember = nullptr;
 
 	// get all declarators
 	{
@@ -1085,7 +1083,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 		pda.containingClass = containingClass;
 
 		auto newPa = spec.f1 ? pa.WithScope(spec.f0.Obj()) : pa;
-		ParseMemberDeclarator(newPa, spec.f0.Obj(), pda, cursor, declarators);
+		ParseMemberDeclarator(newPa, pda, cursor, declarators);
 	}
 
 	Ptr<FunctionType> funcType;
@@ -1103,24 +1101,16 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 		}
 
 		// see if it is a class member declarator defined out of the class
-		if (!containingClass)
-		{
-			if (declarator->containingClassSymbol)
-			{
-				containingClassForMember = declarator->containingClassSymbol->GetImplDecl_NFb<ClassDeclaration>().Obj();
-			}
-		}
-
 		if (declarator->type.Cast<MemberType>())
 		{
-			if (containingClass || !containingClassForMember)
+			if (!declarator->classMemberCache || declarator->classMemberCache->symbolDefinedInsideClass)
 			{
 				throw StopParsingException(cursor);
 			}
 		}
 
 		// adjust name type
-		if (containingClass || containingClassForMember)
+		if (declarator->classMemberCache)
 		{
 			auto& cppName = declarators[0]->name;
 			switch (cppName.type)
@@ -1172,8 +1162,6 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 			funcType,
 			FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_ARGUMENT)
 			methodType,
-			containingClass,
-			containingClassForMember,
 			cursor,
 			output
 		);
@@ -1191,7 +1179,6 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 				spec,
 				declarators[i],
 				FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_ARGUMENT)
-				containingClassForMember,
 				cursor,
 				output
 			);
@@ -1228,7 +1215,6 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 			{ nullptr,nullptr },
 			declarators[i],
 			false, false, false, false, false, false, false, false,
-			nullptr,
 			cursor,
 			output
 		);
