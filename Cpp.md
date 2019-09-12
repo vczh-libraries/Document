@@ -13,8 +13,8 @@
 
 - [ ] Next Demo!
   - [ ] Refactor `ResolveSymbol`
-    - [ ] Delete `Symbol::MoveTemplateSpecToClass_N`
-    - [ ] Add fields to `MethodCache` (variable initializer will need to, consider changing name)
+    - [ ] Delete `Symbol::MoveTemplateSpecToClass_N`.
+    - [ ] Add fields to `MethodCache` (variable initializer will need to, consider changing name).
       - `classSymbols` from inner to outer
         - for `void A::B::F(){}` or `class A{class B{void F(){}};};`, `classSymbols` are `[B, A]`
       - `templateArgumentAccessible`
@@ -27,6 +27,7 @@
         - `classSymbols` will take place so that symbols inside these classes and their base classes are visited.
         - `templateArgumentAccessible` controls whether template argument symbols for `classSymbols` are accessible. Arguments in their base classes are always not accessible.
         - If searching need to continue, jump to `parentScope` directly, instead of calling `Symbol::GetParentScope`.
+    - [ ] Apply it to field initialization defined outside of a class.
   - [ ] `template` on classes.
     - [ ] Caching `gaContext`
       - When a generic declaration is instantiated, the created gaContext will be cached in the symbol(key = template arguments).

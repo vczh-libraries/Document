@@ -17,13 +17,30 @@ class Symbol;
 
 namespace symbol_component
 {
-	struct MethodCache
+	struct ClassMemberCache
 	{
-		Symbol*						classSymbol = nullptr;
-		Symbol*						funcSymbol = nullptr;
-		Ptr<ClassDeclaration>		classDecl;
-		Ptr<FunctionDeclaration>	funcDecl;
+		/*
+		for void A::B::C::F(){}, it will be [C, B, A]
+		*/
+		List<Symbol*>				classSymbols;
+
+		/*
+		true for members defined inside a class, so that type arguments reachable in classSymbols are reachable here
+		false for outside
+		*/
+		bool						templateArgumentAccessible;
+
+		/*
+		The scope to jump to after all symbols in classSymbols are scanned
+		for members defined inside a class, this is the parent scope of the most outside class
+		for members defined outside a class, this is the scope where the member is defined
+		*/
+		Symbol*						parentScope;
+
+		// applicable where this cache is in a function
 		ITsys*						thisType = nullptr;
+		Symbol*						funcSymbol = nullptr;
+		Ptr<FunctionDeclaration>	funcDecl;
 	};
 
 	enum class EvaluationProgress
@@ -134,7 +151,7 @@ namespace symbol_component
 		Symbol*										functionSymbol;
 		Ptr<FunctionDeclaration>					implDecl;
 		Ptr<ForwardFunctionDeclaration>				forwardDecl;
-		Ptr<MethodCache>							methodCache;
+		Ptr<ClassMemberCache>						classMemberCache;
 		SymbolGroup									children;
 		Evaluation									evaluation;			// type of this symbol, when all template arguments are unassigned
 	};
@@ -195,7 +212,7 @@ public:
 	const Ptr<Stat>&								GetStat_N();					//	Normal
 	Symbol*											GetFunctionSymbol_Fb();			//			FunctionBody
 	Ptr<Declaration>								GetForwardDecl_Fb();			//			FunctionBody
-	Ptr<symbol_component::MethodCache>				GetMethodCache_Fb();			//			FunctionBody
+	Ptr<symbol_component::ClassMemberCache>			GetClassMemberCache_Fb();		//			FunctionBody
 
 	const List<Ptr<Symbol>>*						TryGetChildren_NFb(const WString& name);
 	void											AddChild_NFb(const WString& name, const Ptr<Symbol>& child);
@@ -208,10 +225,9 @@ public:
 		return GetImplDecl_NFb().Cast<T>();
 	}
 
-	void											MoveTemplateSpecToClass_N(Symbol* classSymbol);
 	Symbol*											CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl);
 	Symbol*											CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl, Ptr<Symbol> templateSpecSymbol);
-	Symbol*											CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<Symbol> templateSpecSymbol, Ptr<symbol_component::MethodCache> methodCache);
+	Symbol*											CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<Symbol> templateSpecSymbol, Ptr<symbol_component::ClassMemberCache> classMemberCache);
 	Symbol*											AddForwardDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind);
 	Symbol*											AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol = nullptr);
 	Symbol*											CreateStatSymbol_NFb(Ptr<Stat> _stat);

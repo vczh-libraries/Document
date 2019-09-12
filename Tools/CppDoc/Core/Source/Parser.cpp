@@ -363,12 +363,12 @@ Ptr<Declaration> Symbol::GetForwardDecl_Fb()
 	}
 }
 
-Ptr<symbol_component::MethodCache> Symbol::GetMethodCache_Fb()
+Ptr<symbol_component::ClassMemberCache> Symbol::GetClassMemberCache_Fb()
 {
 	switch (category)
 	{
 	case symbol_component::SymbolCategory::FunctionBody:
-		return categoryData.functionBody.methodCache;
+		return categoryData.functionBody.classMemberCache;
 	default:
 		throw UnexpectedSymbolCategoryException();
 	}
@@ -401,34 +401,6 @@ void Symbol::RemoveChildAndResetParent_NFb(const WString& name, Symbol* child)
 	children.Remove(name, child);
 }
 
-void Symbol::MoveTemplateSpecToClass_N(Symbol* classSymbol)
-{
-	if (category != symbol_component::SymbolCategory::Normal)
-	{
-		throw UnexpectedSymbolCategoryException();
-	}
-	if (classSymbol->GetCategory() != symbol_component::SymbolCategory::Normal)
-	{
-		throw UnexpectedSymbolCategoryException();
-	}
-
-	if (categoryData.normal.implDecl || categoryData.normal.forwardDecls.Count() > 0)
-	{
-		throw UnexpectedSymbolCategoryException();
-	}
-
-	switch (classSymbol->kind)
-	{
-	case symbol_component::SymbolKind::Class:
-	case symbol_component::SymbolKind::Struct:
-	case symbol_component::SymbolKind::Union:
-		SetParent(classSymbol);
-		break;
-	default:
-		throw UnexpectedSymbolCategoryException();
-	}
-}
-
 Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
 {
 	auto symbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Function);
@@ -445,14 +417,15 @@ Symbol* Symbol::CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _d
 	return symbol;
 }
 
-Symbol* Symbol::CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<Symbol> templateSpecSymbol, Ptr<symbol_component::MethodCache> methodCache)
+Symbol* Symbol::CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<Symbol> templateSpecSymbol, Ptr<symbol_component::ClassMemberCache> classMemberCache)
 {
 	auto symbol = CreateSymbolInternal(_decl, templateSpecSymbol, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
 	symbol->categoryData.functionBody.implDecl = _decl;
-	if (methodCache)
+	if (classMemberCache)
 	{
-		symbol->categoryData.functionBody.methodCache = methodCache;
-		methodCache->funcSymbol = symbol;
+		symbol->categoryData.functionBody.classMemberCache = classMemberCache;
+		classMemberCache->funcSymbol = symbol;
+		classMemberCache->funcDecl = _decl;
 	}
 	return symbol;
 }
