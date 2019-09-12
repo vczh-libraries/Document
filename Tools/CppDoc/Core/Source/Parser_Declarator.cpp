@@ -998,3 +998,26 @@ Ptr<Type> ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	return ParseNonMemberDeclarator(pa, pda_Type(), cursor)->type;
 }
+
+Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, bool symbolDefinedInsideClass)
+{
+	auto cache = MakePtr<symbol_component::ClassMemberCache>();
+	cache->templateArgumentAccessible = symbolDefinedInsideClass;
+
+	cache->classSymbols.Add(classSymbol);
+	for (vint i = 0; i < cache->classSymbols.Count(); i++)
+	{
+		auto parentScope = cache->classSymbols[i]->GetParentScope();
+		switch (parentScope->kind)
+		{
+		case symbol_component::SymbolKind::Class:
+		case symbol_component::SymbolKind::Struct:
+		case symbol_component::SymbolKind::Union:
+			cache->classSymbols.Add(parentScope);
+			break;
+		default:
+			cache->parentScope = parentScope;
+		}
+	}
+	return cache;
+}

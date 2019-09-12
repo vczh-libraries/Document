@@ -131,13 +131,13 @@ namespace symbol_totsys_impl
 
 	void ProcessThisExpr(const ParsingArguments& pa, ExprTsysList& result, ThisExpr* self)
 	{
-		if (auto functionBodySymbol = pa.functionBodySymbol)
+		if (pa.functionBodySymbol)
 		{
-			if (auto methodCache = functionBodySymbol->GetMethodCache_Fb())
+			if (auto cache = pa.functionBodySymbol->GetClassMemberCache_Fb())
 			{
-				if (auto thisType = methodCache->thisType)
+				if (cache->thisType)
 				{
-					AddTemp(result, thisType);
+					AddTemp(result, cache->thisType);
 					return;
 				}
 			}

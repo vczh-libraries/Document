@@ -882,23 +882,19 @@ void ParseDeclaration_Function(
 		FILL_FUNCTION;
 		output.Add(decl);
 
-		Ptr<symbol_component::MethodCache> methodCache;
+		Ptr<symbol_component::ClassMemberCache> classMemberCache;
 		if (containingClass || containingClassForMember)
 		{
-			methodCache = MakePtr<symbol_component::MethodCache>();
-
-			methodCache->classSymbol = containingClass ? containingClass->symbol : containingClassForMember->symbol;
-			methodCache->classDecl = methodCache->classSymbol->GetImplDecl_NFb<ClassDeclaration>();
-			methodCache->funcDecl = decl;
+			classMemberCache = CreatePartialClassMemberCache(pa, (containingClass ? containingClass->symbol : containingClassForMember->symbol), containingClass != nullptr);
 
 			TsysCV cv;
 			cv.isGeneralConst = funcType->qualifierConstExpr || funcType->qualifierConst;
 			cv.isVolatile = funcType->qualifierVolatile;
-			methodCache->thisType = pa.tsys->DeclOf(methodCache->classSymbol)->CVOf(cv)->PtrOf();
+			classMemberCache->thisType = pa.tsys->DeclOf(classMemberCache->classSymbols[0])->CVOf(cv)->PtrOf();
 		}
 
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
-		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, (spec.f1 ? spec.f0 : nullptr), methodCache);
+		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, (spec.f1 ? spec.f0 : nullptr), classMemberCache);
 
 		{
 			auto newPa = pa.WithScope(functionBodySymbol);
