@@ -861,11 +861,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			declarator = ParseSingleDeclarator(pa, typeResult, newPdc, cursor);
 		}
 
-		ParsingArguments initializerPa
-			= declarator->type.Cast<MemberType>()
-			? ParseInClass(pa, templateSpecSymbol, declarator->containingClassSymbol)
-			: pa
-			;
+		auto initializerPa = declarator->classMemberCache ? pa.WithScope(declarator->temporaryScopeForClassMemberCache.Obj()) : pa;
 
 		// function doesn't have initializer
 		bool isFunction = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>();
