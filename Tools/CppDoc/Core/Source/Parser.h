@@ -411,8 +411,10 @@ class VariableDeclaration;
 enum class SearchPolicy
 {
 	SymbolAccessableInScope,
-	ChildSymbol,
-	ChildSymbolRequestedFromSubClass,
+	ChildSymbolFromOutside,
+	ChildSymbolFromSubClass,
+	ChildSymbolFromMemberInside,
+	ChildSymbolFromMemberOutside,
 };
 
 struct ResolveSymbolResult

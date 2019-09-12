@@ -146,7 +146,7 @@ namespace symbol_totsys_impl
 		if (classType->GetType() == TsysType::Decl)
 		{
 			auto newPa = pa.WithScope(classType->GetDecl());
-			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
+			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbolFromOutside);
 			if (rsr.types)
 			{
 				for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
@@ -203,11 +203,11 @@ namespace symbol_totsys_impl
 			throw NotConvertableException();
 		}
 
-		if (pa.functionBodySymbol && pa.functionBodySymbol->GetMethodCache_Fb())
+		if (pa.functionBodySymbol && pa.functionBodySymbol->GetClassMemberCache_NFb())
 		{
 			TsysCV thisCv;
 			TsysRefType thisRef;
-			auto thisType = pa.functionBodySymbol->GetMethodCache_Fb()->thisType->GetEntity(thisCv, thisRef);
+			auto thisType = pa.functionBodySymbol->GetClassMemberCache_NFb()->thisType->GetEntity(thisCv, thisRef);
 			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
 			VisitResolvedMember(pa, &thisItem, resolving, result);
 		}
@@ -235,7 +235,7 @@ namespace symbol_totsys_impl
 		if (classType->GetType() == TsysType::Decl)
 		{
 			auto newPa = pa.WithScope(classType->GetDecl());
-			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbol);
+			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbolFromOutside);
 			if (rsr.values)
 			{
 				for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)

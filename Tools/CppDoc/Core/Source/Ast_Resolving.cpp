@@ -332,7 +332,7 @@ namespace symbol_type_resolving
 		{
 			auto symbol = entity->GetDecl();
 			auto fieldPa = pa.WithScope(symbol);
-			auto rar = ResolveSymbol(fieldPa, name, SearchPolicy::ChildSymbol);
+			auto rar = ResolveSymbol(fieldPa, name, SearchPolicy::ChildSymbolFromOutside);
 			if (totalRar) totalRar->Merge(rar);
 			return rar.values;
 		}

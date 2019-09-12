@@ -572,7 +572,7 @@ public:
 						else if (arg1.tsys->GetType() == TsysType::Decl)
 						{
 							auto newPa = pa.WithScope(arg1.tsys->GetDecl());
-							auto rsr = ResolveSymbol(newPa, childExpr->name, SearchPolicy::ChildSymbol);
+							auto rsr = ResolveSymbol(newPa, childExpr->name, SearchPolicy::ChildSymbolFromOutside);
 							if (rsr.values)
 							{
 								for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)

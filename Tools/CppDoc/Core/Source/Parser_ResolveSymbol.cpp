@@ -98,23 +98,40 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 				auto symbol = pSymbols->Get(i).Obj();
 				switch (symbol->kind)
 				{
+				// type symbols
 				case symbol_component::SymbolKind::Enum:
 				case symbol_component::SymbolKind::Class:
 				case symbol_component::SymbolKind::Struct:
 				case symbol_component::SymbolKind::Union:
 				case symbol_component::SymbolKind::TypeAlias:
 				case symbol_component::SymbolKind::Namespace:
-				case symbol_component::SymbolKind::GenericTypeArgument:
 					rsa.found = true;
 					AddSymbolToResolve(rsa.result.types, symbol);
 					break;
+
+				// value symbols
 				case symbol_component::SymbolKind::EnumItem:
 				case symbol_component::SymbolKind::FunctionSymbol:
 				case symbol_component::SymbolKind::Variable:
 				case symbol_component::SymbolKind::ValueAlias:
-				case symbol_component::SymbolKind::GenericValueArgument:
 					rsa.found = true;
 					AddSymbolToResolve(rsa.result.values, symbol);
+					break;
+
+				case symbol_component::SymbolKind::GenericTypeArgument:
+					if (policy == SearchPolicy::ChildSymbolFromMemberInside)
+					{
+						rsa.found = true;
+						AddSymbolToResolve(rsa.result.types, symbol);
+					}
+					break;
+
+				case symbol_component::SymbolKind::GenericValueArgument:
+					if (policy == SearchPolicy::ChildSymbolFromMemberInside)
+					{
+						rsa.found = true;
+						AddSymbolToResolve(rsa.result.values, symbol);
+					}
 					break;
 				}
 			}
@@ -126,36 +143,72 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			{
 				auto usingNs = scope->usingNss[i];
 				auto newPa = pa.WithScope(usingNs);
-				ResolveSymbolInternal(newPa, SearchPolicy::ChildSymbol, rsa);
+				ResolveSymbolInternal(newPa, SearchPolicy::ChildSymbolFromOutside, rsa);
 			}
 		}
 
 		if (rsa.found) break;
 
-		if (auto decl = scope->GetImplDecl_NFb<ClassDeclaration>())
+		if (auto cache = scope->GetClassMemberCache_NFb())
 		{
-			if (decl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbol)
+			auto topClassDecl = cache->classSymbols[0]->GetImplDecl_NFb<ClassDeclaration>();
+			if (topClassDecl->name.name == rsa.name.name && policy == SearchPolicy::ChildSymbolFromOutside)
 			{
+				// constructor
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.types, decl->symbol);
+				AddSymbolToResolve(rsa.result.types, topClassDecl->symbol);
 			}
 			else
 			{
-				for (vint i = 0; i < decl->baseTypes.Count(); i++)
+				auto childPolicy
+					= cache->symbolDefinedInsideClass
+					? SearchPolicy::ChildSymbolFromMemberInside
+					: SearchPolicy::ChildSymbolFromMemberOutside
+					;
+				for (vint i = 0; i < cache->classSymbols.Count(); i++)
 				{
-					auto childPolicy =
-						policy == SearchPolicy::ChildSymbol
-						? SearchPolicy::ChildSymbol
-						: SearchPolicy::ChildSymbolRequestedFromSubClass;
-					ResolveChildSymbolInternal(pa, decl->baseTypes[i].f1, childPolicy, rsa);
+					auto newPa = pa.WithScope(cache->classSymbols[i]);
+					ResolveSymbolInternal(newPa, childPolicy, rsa);
 				}
 			}
 		}
 
 		if (rsa.found) break;
 
-		if (policy != SearchPolicy::SymbolAccessableInScope) break;
-		scope = scope->GetParentScope();
+		switch (policy)
+		{
+		case SearchPolicy::SymbolAccessableInScope:
+			if (auto cache = scope->GetClassMemberCache_NFb())
+			{
+				scope = cache->parentScope;
+			}
+			else
+			{
+				scope = scope->GetParentScope();
+			}
+			break;
+		case SearchPolicy::ChildSymbolFromOutside:
+			scope = nullptr;
+			break;
+		case SearchPolicy::ChildSymbolFromSubClass:
+		case SearchPolicy::ChildSymbolFromMemberInside:
+		case SearchPolicy::ChildSymbolFromMemberOutside:
+			{
+				auto decl = scope->GetImplDecl_NFb<ClassDeclaration>();
+				auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa.WithScope(decl->symbol), decl.Obj());
+				for (vint i = 0; i < ev.Count(); i++)
+				{
+					auto& baseTsys = ev.Get(i);
+					for (vint j = 0; j < baseTsys.Count(); j++)
+					{
+						auto baseClassSymbol = baseTsys[j]->GetDecl();
+						ResolveSymbolInternal(pa.WithScope(baseClassSymbol), SearchPolicy::ChildSymbolFromSubClass, rsa);
+					}
+				}
+			}
+			scope = nullptr;
+			break;
+		}
 	}
 
 #undef FOUND
@@ -260,7 +313,7 @@ public:
 
 	void Visit(RootType* self)override
 	{
-		ResolveSymbolInternal(pa.WithScope(pa.root.Obj()), SearchPolicy::ChildSymbol, rsa);
+		ResolveSymbolInternal(pa.WithScope(pa.root.Obj()), SearchPolicy::ChildSymbolFromOutside, rsa);
 	}
 
 	void Visit(IdType* self)override
@@ -292,6 +345,6 @@ ResolveChildSymbol
 ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, ResolveSymbolResult input)
 {
 	PREPARE_RSA;
-	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ChildSymbol, rsa);
+	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ChildSymbolFromOutside, rsa);
 	return rsa.result;
 }

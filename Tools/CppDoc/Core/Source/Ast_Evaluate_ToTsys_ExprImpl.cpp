@@ -312,7 +312,7 @@ namespace symbol_totsys_impl
 		if (leftEntity->GetType() == TsysType::Decl)
 		{
 			auto newPa = pa.WithScope(leftEntity->GetDecl());
-			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbol);
+			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbolFromOutside);
 
 			if (opMethods.values)
 			{
