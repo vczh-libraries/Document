@@ -1,7 +1,7 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_TYPESYSTEM
 #define VCZH_DOCUMENT_CPPDOC_TYPESYSTEM
 
-#include <Vlpp.h>
+#include <VlppRegex.h>
 
 using namespace vl;
 using namespace vl::collections;
