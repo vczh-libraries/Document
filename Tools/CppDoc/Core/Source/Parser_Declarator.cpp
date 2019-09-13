@@ -658,7 +658,7 @@ void InjectClassMemberCacheIfNecessary(const ParsingArguments& pa, Ptr<Declarato
 	}
 }
 
-Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
+Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, bool parsingTypeConversionOperatorOutsideOfClass, Ptr<CppTokenCursor>& cursor)
 {
 	Ptr<Declarator> declarator;
 
@@ -714,7 +714,7 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 		{
 			try
 			{
-				declarator = ParseSingleDeclarator(pa, targetType, pdc, cursor);
+				declarator = ParseSingleDeclarator(pa, targetType, pdc, false, cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 			}
 			catch (const StopParsingException&)
@@ -742,7 +742,7 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	// recognize a class member declaration
 	if (pdc.containingClass)
 	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.containingClass->symbol, true);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.containingClass->symbol, !parsingTypeConversionOperatorOutsideOfClass);
 	}
 	else if (auto memberType = declarator->type.Cast<MemberType>())
 	{
@@ -866,14 +866,16 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 
 			auto opPdc = pda_Decls(false, false);
 			opPdc.containingClass = pdc.containingClass;
+			bool outsideOfClass = false;
 			if (typeOpMemberType && !opPdc.containingClass)
 			{
 				opPdc.containingClass = EnsureMemberTypeResolved(typeOpMemberType, cursor);
+				outsideOfClass = true;
 			}
 			opPdc.dr = DeclaratorRestriction::Zero;
 
 			typeResult = ParseLongType(pa, cursor);
-			declarator = ParseSingleDeclarator(pa, typeResult, { opPdc,false }, cursor);
+			declarator = ParseSingleDeclarator(pa, typeResult, { opPdc,false }, outsideOfClass, cursor);
 			declarator->name = cppName;
 			if (typeOpMemberType)
 			{
@@ -892,7 +894,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			// if we have already recognize a type, we can parse multiple declarators with initializers
 			auto newPdc = pdc;
 			newPdc.dr = pdc.dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : pdc.dr;
-			declarator = ParseSingleDeclarator(pa, typeResult, newPdc, cursor);
+			declarator = ParseSingleDeclarator(pa, typeResult, newPdc, false, cursor);
 		}
 
 		InjectClassMemberCacheIfNecessary(pa, declarator, [&](const ParsingArguments& newPa)
