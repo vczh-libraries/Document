@@ -136,7 +136,6 @@ class Declarator : public Object
 {
 public:
 	Ptr<symbol_component::ClassMemberCache>		classMemberCache;
-	Ptr<Symbol>									temporaryScopeForClassMemberCache;
 
 	Ptr<Type>									type;
 	bool										ellipsis = false;

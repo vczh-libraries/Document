@@ -119,7 +119,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 					break;
 
 				case symbol_component::SymbolKind::GenericTypeArgument:
-					if (policy == SearchPolicy::ChildSymbolFromMemberInside)
+					if (policy == SearchPolicy::ChildSymbolFromMemberInside || policy == SearchPolicy::SymbolAccessableInScope)
 					{
 						rsa.found = true;
 						AddSymbolToResolve(rsa.result.types, symbol);
@@ -127,7 +127,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 					break;
 
 				case symbol_component::SymbolKind::GenericValueArgument:
-					if (policy == SearchPolicy::ChildSymbolFromMemberInside)
+					if (policy == SearchPolicy::ChildSymbolFromMemberInside || policy == SearchPolicy::SymbolAccessableInScope)
 					{
 						rsa.found = true;
 						AddSymbolToResolve(rsa.result.values, symbol);

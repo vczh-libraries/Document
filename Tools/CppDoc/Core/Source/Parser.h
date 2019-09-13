@@ -216,6 +216,7 @@ public:
 	Ptr<Declaration>								GetForwardDecl_Fb();			//			FunctionBody
 	Ptr<symbol_component::ClassMemberCache>			GetClassMemberCache_NFb();		//			FunctionBody
 
+	void											SetClassMemberCacheForTemplateSpecScope_N(Ptr<symbol_component::ClassMemberCache> classMemberCache);
 	const List<Ptr<Symbol>>*						TryGetChildren_NFb(const WString& name);
 	void											AddChild_NFb(const WString& name, const Ptr<Symbol>& child);
 	void											AddChildAndSetParent_NFb(const WString& name, const Ptr<Symbol>& child);

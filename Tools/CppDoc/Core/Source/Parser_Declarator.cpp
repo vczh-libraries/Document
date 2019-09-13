@@ -621,6 +621,43 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 ParseSingleDeclarator
 ***********************************************************************/
 
+bool IsInTemplateHeader(const ParsingArguments& pa)
+{
+	return pa.scopeSymbol->kind == symbol_component::SymbolKind::Root && pa.scopeSymbol->GetParentScope();
+}
+
+template<typename TCallback>
+void InjectClassMemberCacheIfNecessary(const ParsingArguments& pa, Ptr<Declarator> declarator, TCallback&& callback)
+{
+	Ptr<Symbol> temporarySymbolHolder;
+	Symbol* temporarySymbol = nullptr;
+	bool setClassMemberCacheToCurrentScope = false;
+
+	if (declarator->classMemberCache)
+	{
+		if (IsInTemplateHeader(pa))
+		{
+			// this scope is created from a template header
+			// if we create a new symbol inside this scope, its parentScope will skip this scope
+			pa.scopeSymbol->SetClassMemberCacheForTemplateSpecScope_N(declarator->classMemberCache);
+			setClassMemberCacheToCurrentScope = true;
+		}
+		else
+		{
+			temporarySymbolHolder = MakePtr<Symbol>(pa.scopeSymbol, declarator->classMemberCache);
+			temporarySymbol = temporarySymbolHolder.Obj();
+		}
+	}
+
+	auto newPa = temporarySymbol ? pa.WithScope(temporarySymbol) : pa;
+	callback(newPa);
+
+	if (setClassMemberCacheToCurrentScope)
+	{
+		pa.scopeSymbol->SetClassMemberCacheForTemplateSpecScope_N(nullptr);
+	}
+}
+
 Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
 {
 	Ptr<Declarator> declarator;
@@ -712,22 +749,19 @@ READY_FOR_ARRAY_OR_FUNCTION:
 		declarator->classMemberCache = CreatePartialClassMemberCache(pa, EnsureMemberTypeResolved(memberType, cursor)->symbol, false);
 	}
 
-	if (declarator->classMemberCache)
+	InjectClassMemberCacheIfNecessary(pa, declarator, [&](const ParsingArguments& newPa)
 	{
-		declarator->temporaryScopeForClassMemberCache = MakePtr<Symbol>(pa.scopeSymbol, declarator->classMemberCache);
-	}
-	auto newPa = declarator->classMemberCache ? pa.WithScope(declarator->temporaryScopeForClassMemberCache.Obj()) : pa;
-
-	// if there is [, we see an array declarator
-	// an array could be multiple dimension
-	if (TestToken(cursor, CppTokens::LBRACKET, false))
-	{
-		while (ParseSingleDeclarator_Array(newPa, declarator, targetType, pdc.forParameter, cursor));
-	}
-	else
-	{
-		ParseSingleDeclarator_Function(newPa, declarator, targetType, pdc.forceSpecialMethod, cursor);
-	}
+		// if there is [, we see an array declarator
+		// an array could be multiple dimension
+		if (TestToken(cursor, CppTokens::LBRACKET, false))
+		{
+			while (ParseSingleDeclarator_Array(newPa, declarator, targetType, pdc.forParameter, cursor));
+		}
+		else
+		{
+			ParseSingleDeclarator_Function(newPa, declarator, targetType, pdc.forceSpecialMethod, cursor);
+		}
+	});
 	return declarator;
 }
 
@@ -861,26 +895,27 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			declarator = ParseSingleDeclarator(pa, typeResult, newPdc, cursor);
 		}
 
-		auto initializerPa = declarator->classMemberCache ? pa.WithScope(declarator->temporaryScopeForClassMemberCache.Obj()) : pa;
-
-		// function doesn't have initializer
-		bool isFunction = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>();
-		if (!isFunction && declarator->name.type == CppNameType::Operator && declarator->name.tokenCount == 1)
+		InjectClassMemberCacheIfNecessary(pa, declarator, [&](const ParsingArguments& newPa)
 		{
-			throw StopParsingException(cursor);
-		}
+			// function doesn't have initializer
+			bool isFunction = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>();
+			if (!isFunction && declarator->name.type == CppNameType::Operator && declarator->name.tokenCount == 1)
+			{
+				throw StopParsingException(cursor);
+			}
 
-		if (pdc.ir == InitializerRestriction::Optional && !isFunction)
-		{
-			if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))
+			if (pdc.ir == InitializerRestriction::Optional && !isFunction)
 			{
-				declarator->initializer = ParseInitializer(initializerPa, cursor, pdc.allowComma);
+				if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))
+				{
+					declarator->initializer = ParseInitializer(newPa, cursor, pdc.allowComma);
+				}
+				else if (TestToken(cursor, CppTokens::LBRACE, false))
+				{
+					declarator->initializer = ParseInitializer(newPa, cursor, pdc.allowComma);
+				}
 			}
-			else if (TestToken(cursor, CppTokens::LBRACE, false))
-			{
-				declarator->initializer = ParseInitializer(initializerPa, cursor, pdc.allowComma);
-			}
-		}
+		});
 		declarators.Add(declarator);
 
 		// operator TYPE declarator could not be DeclaratorRestriction::Many
@@ -1004,6 +1039,12 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 	if (symbolDefinedInsideClass)
 	{
 		cache->parentScope = cache->classSymbols[cache->classSymbols.Count() - 1]->GetParentScope();
+	}
+	else if (IsInTemplateHeader(pa))
+	{
+		// in this case, the cache will be put in pa.scopeSymbol
+		// so we should point parentScope to its parent, to get rid of a dead loop
+		cache->parentScope = pa.scopeSymbol->GetParentScope();
 	}
 	else
 	{

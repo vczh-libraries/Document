@@ -387,6 +387,19 @@ Ptr<symbol_component::ClassMemberCache> Symbol::GetClassMemberCache_NFb()
 	}
 }
 
+void Symbol::SetClassMemberCacheForTemplateSpecScope_N(Ptr<symbol_component::ClassMemberCache> classMemberCache)
+{
+	if (category != symbol_component::SymbolCategory::Normal && kind != symbol_component::SymbolKind::Root && categoryData.normal.parent == nullptr)
+	{
+		throw UnexpectedSymbolCategoryException();
+	}
+	if ((categoryData.normal.classMemberCache == nullptr) == (classMemberCache == nullptr))
+	{
+		throw UnexpectedSymbolCategoryException();
+	}
+	categoryData.normal.classMemberCache = classMemberCache;
+}
+
 const List<Ptr<Symbol>>* Symbol::TryGetChildren_NFb(const WString& name)
 {
 	const auto& children = GetChildren_NFb();
