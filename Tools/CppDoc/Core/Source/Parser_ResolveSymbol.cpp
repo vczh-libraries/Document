@@ -91,6 +91,20 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 	while (scope)
 	{
+		auto currentClassDecl = scope->GetImplDecl_NFb<ClassDeclaration>();
+		bool switchFromSymbolAccessableInScope = false;
+		if (currentClassDecl && policy == SearchPolicy::SymbolAccessableInScope)
+		{
+			policy = SearchPolicy::ChildSymbolFromMemberInside;
+			switchFromSymbolAccessableInScope = true;
+		}
+
+		if (currentClassDecl && currentClassDecl->name.name == rsa.name.name)
+		{
+			rsa.found = true;
+			AddSymbolToResolve(rsa.result.types, currentClassDecl->symbol);
+		}
+
 		if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 		{
 			for (vint i = 0; i < pSymbols->Count(); i++)
@@ -98,7 +112,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 				auto symbol = pSymbols->Get(i).Obj();
 				switch (symbol->kind)
 				{
-				// type symbols
+					// type symbols
 				case symbol_component::SymbolKind::Enum:
 				case symbol_component::SymbolKind::Class:
 				case symbol_component::SymbolKind::Struct:
@@ -109,7 +123,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 					AddSymbolToResolve(rsa.result.types, symbol);
 					break;
 
-				// value symbols
+					// value symbols
 				case symbol_component::SymbolKind::EnumItem:
 				case symbol_component::SymbolKind::FunctionSymbol:
 				case symbol_component::SymbolKind::Variable:
@@ -151,25 +165,15 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 		if (auto cache = scope->GetClassMemberCache_NFb())
 		{
-			auto topClassDecl = cache->classSymbols[0]->GetImplDecl_NFb<ClassDeclaration>();
-			if (topClassDecl->name.name == rsa.name.name && policy == SearchPolicy::ChildSymbolFromOutside)
+			auto childPolicy
+				= cache->symbolDefinedInsideClass
+				? SearchPolicy::ChildSymbolFromMemberInside
+				: SearchPolicy::ChildSymbolFromMemberOutside
+				;
+			for (vint i = 0; i < cache->classSymbols.Count(); i++)
 			{
-				// constructor
-				rsa.found = true;
-				AddSymbolToResolve(rsa.result.types, topClassDecl->symbol);
-			}
-			else
-			{
-				auto childPolicy
-					= cache->symbolDefinedInsideClass
-					? SearchPolicy::ChildSymbolFromMemberInside
-					: SearchPolicy::ChildSymbolFromMemberOutside
-					;
-				for (vint i = 0; i < cache->classSymbols.Count(); i++)
-				{
-					auto newPa = pa.WithScope(cache->classSymbols[i]);
-					ResolveSymbolInternal(newPa, childPolicy, rsa);
-				}
+				auto newPa = pa.WithScope(cache->classSymbols[i]);
+				ResolveSymbolInternal(newPa, childPolicy, rsa);
 			}
 		}
 
@@ -194,19 +198,27 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 		case SearchPolicy::ChildSymbolFromMemberInside:
 		case SearchPolicy::ChildSymbolFromMemberOutside:
 			{
-				auto decl = scope->GetImplDecl_NFb<ClassDeclaration>();
-				auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa.WithScope(decl->symbol), decl.Obj());
-				for (vint i = 0; i < ev.Count(); i++)
+				// could be just a forward declaration
+				if (currentClassDecl)
 				{
-					auto& baseTsys = ev.Get(i);
-					for (vint j = 0; j < baseTsys.Count(); j++)
+					for (vint i = 0; i < currentClassDecl->baseTypes.Count(); i++)
 					{
-						auto baseClassSymbol = baseTsys[j]->GetDecl();
-						ResolveSymbolInternal(pa.WithScope(baseClassSymbol), SearchPolicy::ChildSymbolFromSubClass, rsa);
+						auto baseType = currentClassDecl->baseTypes[i].f1;
+						ResolveChildSymbolInternal(pa, baseType, SearchPolicy::ChildSymbolFromSubClass, rsa);
 					}
 				}
+
+				if (switchFromSymbolAccessableInScope)
+				{
+					// classMemberCache does not exist
+					policy = SearchPolicy::SymbolAccessableInScope;
+					scope = scope->GetParentScope();
+				}
+				else
+				{
+					scope = nullptr;
+				}
 			}
-			scope = nullptr;
 			break;
 		}
 	}
