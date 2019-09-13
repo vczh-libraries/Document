@@ -99,8 +99,10 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			switchFromSymbolAccessableInScope = true;
 		}
 
-		if (currentClassDecl && currentClassDecl->name.name == rsa.name.name)
+		if (currentClassDecl && currentClassDecl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbolFromOutside)
 		{
+			// A::A could never be the type A
+			// But searching A inside A will get the type A
 			rsa.found = true;
 			AddSymbolToResolve(rsa.result.types, currentClassDecl->symbol);
 		}
@@ -192,8 +194,6 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			}
 			break;
 		case SearchPolicy::ChildSymbolFromOutside:
-			scope = nullptr;
-			break;
 		case SearchPolicy::ChildSymbolFromSubClass:
 		case SearchPolicy::ChildSymbolFromMemberInside:
 		case SearchPolicy::ChildSymbolFromMemberOutside:
@@ -204,7 +204,12 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 					for (vint i = 0; i < currentClassDecl->baseTypes.Count(); i++)
 					{
 						auto baseType = currentClassDecl->baseTypes[i].f1;
-						ResolveChildSymbolInternal(pa, baseType, SearchPolicy::ChildSymbolFromSubClass, rsa);
+						ResolveChildSymbolInternal(
+							pa,
+							baseType,
+							(policy == SearchPolicy::ChildSymbolFromOutside ? SearchPolicy::ChildSymbolFromOutside : SearchPolicy::ChildSymbolFromSubClass),
+							rsa
+							);
 					}
 				}
 
