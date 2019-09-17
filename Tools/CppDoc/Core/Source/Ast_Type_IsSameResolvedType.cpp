@@ -228,8 +228,8 @@ bool IsCompatibleTemplateSpec(Ptr<TemplateSpec> specNew, Ptr<TemplateSpec> specO
 		if (specNew->arguments.Count() != specOld->arguments.Count()) return false;
 		for (vint i = 0; i < specNew->arguments.Count(); i++)
 		{
-			auto argNew = specNew->arguments[i];
-			auto argOld = specOld->arguments[i];
+			const auto& argNew = specNew->arguments[i];
+			const auto& argOld = specOld->arguments[i];
 			if (argNew.argumentType != argOld.argumentType) return false;
 			if (argNew.ellipsis != argOld.ellipsis) return false;
 

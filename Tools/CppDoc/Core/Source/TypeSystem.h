@@ -7,6 +7,7 @@ using namespace vl;
 using namespace vl::collections;
 
 class Symbol;
+struct TemplateArgumentContext;
 struct ParsingArguments;
 class FunctionType;
 class ITsys;
@@ -24,8 +25,8 @@ enum class ExprTsysType
 
 struct ExprHeader
 {
-	Symbol*					symbol = nullptr;
-	ExprTsysType			type = ExprTsysType::PRValue;
+	Symbol*							symbol = nullptr;
+	ExprTsysType					type = ExprTsysType::PRValue;
 
 	ExprHeader() = default;
 	ExprHeader(const ExprHeader&) = default;
@@ -58,7 +59,7 @@ struct ExprHeader
 
 struct ExprTsysItem : ExprHeader
 {
-	ITsys*					tsys = nullptr;
+	ITsys*							tsys = nullptr;
 
 	ExprTsysItem() = default;
 	ExprTsysItem(const ExprTsysItem&) = default;
@@ -138,8 +139,8 @@ enum class TsysCallingConvention
 
 struct TsysPrimitive
 {
-	TsysPrimitiveType			type = TsysPrimitiveType::Void;
-	TsysBytes					bytes = TsysBytes::_1;
+	TsysPrimitiveType				type = TsysPrimitiveType::Void;
+	TsysBytes						bytes = TsysBytes::_1;
 
 	TsysPrimitive() = default;
 	TsysPrimitive(TsysPrimitiveType _type, TsysBytes _bytes) :type(_type), bytes(_bytes) {}
@@ -147,8 +148,8 @@ struct TsysPrimitive
 
 struct TsysCV
 {
-	bool						isGeneralConst = false;
-	bool						isVolatile = false;
+	bool							isGeneralConst = false;
+	bool							isVolatile = false;
 
 	TsysCV() = default;
 	TsysCV(bool c, bool v) :isGeneralConst(c), isVolatile(v) {}
@@ -156,8 +157,8 @@ struct TsysCV
 
 struct TsysFunc
 {
-	TsysCallingConvention		callingConvention = TsysCallingConvention::CDecl;
-	bool						ellipsis = false;
+	TsysCallingConvention			callingConvention = TsysCallingConvention::CDecl;
+	bool							ellipsis = false;
 
 	TsysFunc() = default;
 	TsysFunc(TsysCallingConvention _callingConvention, bool _ellipsis) :callingConvention(_callingConvention), ellipsis(_ellipsis) {}
@@ -174,7 +175,7 @@ struct TsysFunc
 
 struct TsysInit
 {
-	List<ExprHeader>			headers;
+	List<ExprHeader>				headers;
 
 	TsysInit() = default;
 	TsysInit(const TsysInit& init) { CopyFrom(headers, init.headers); }
@@ -188,9 +189,9 @@ struct TsysInit
 
 struct TsysGenericFunction
 {
-	bool						isLastParameterVta = false;
-	Symbol*						declSymbol = nullptr;
-	Array<bool>					acceptTypes;
+	bool							isLastParameterVta = false;
+	Symbol*							declSymbol = nullptr;
+	Array<bool>						acceptTypes;
 
 	TsysGenericFunction() = default;
 
@@ -220,8 +221,8 @@ struct TsysGenericFunction
 
 struct TsysGenericArg
 {
-	vint						argIndex = -1;
-	Symbol*						argSymbol = nullptr;
+	vint							argIndex = -1;
+	Symbol*							argSymbol = nullptr;
 
 	static vint Compare(const TsysGenericArg& a, const TsysGenericArg& b)
 	{
@@ -240,30 +241,53 @@ struct TsysGenericArg
 	bool operator>=	(const TsysGenericArg& arg)const { return Compare(*this, arg) >= 0; }
 };
 
+struct TsysDeclInstant
+{
+	Symbol*							declSymbol;
+	ITsys*							parentDeclType;
+	Ptr<TemplateArgumentContext>	taContext;
+
+	static vint Compare(const TsysDeclInstant& a, const TsysDeclInstant& b)
+	{
+		if (a.declSymbol < b.declSymbol) return -1;
+		if (a.declSymbol > b.declSymbol) return 1;
+		if (a.parentDeclType < b.parentDeclType) return -1;
+		if (a.parentDeclType > b.parentDeclType) return 1;
+		return 0;
+	}
+
+	bool operator==	(const TsysDeclInstant& arg)const { return Compare(*this, arg) == 0; }
+	bool operator!=	(const TsysDeclInstant& arg)const { return Compare(*this, arg) != 0; }
+	bool operator<	(const TsysDeclInstant& arg)const { return Compare(*this, arg) < 0; }
+	bool operator<=	(const TsysDeclInstant& arg)const { return Compare(*this, arg) <= 0; }
+	bool operator>	(const TsysDeclInstant& arg)const { return Compare(*this, arg) > 0; }
+	bool operator>=	(const TsysDeclInstant& arg)const { return Compare(*this, arg) >= 0; }
+};
+
 namespace vl
 {
 	template<>
 	struct POD<TsysPrimitive>
 	{
-		static const bool Result = true;
+		static const bool			Result = true;
 	};
 
 	template<>
 	struct POD<TsysCV>
 	{
-		static const bool Result = true;
+		static const bool			Result = true;
 	};
 
 	template<>
 	struct POD<TsysFunc>
 	{
-		static const bool Result = true;
+		static const bool			Result = true;
 	};
 
 	template<>
 	struct POD<TsysGenericArg>
 	{
-		static const bool Result = true;
+		static const bool			Result = true;
 	};
 }
 
@@ -280,6 +304,7 @@ namespace vl
 	F(Member)			/* Element, Class										*/	\
 	F(CV)				/* CV													*/	\
 	F(Decl)				/* Decl													*/	\
+	F(DeclInstant)		/* Decl, DeclInstant, ParamCount, Param, Element		*/	\
 	F(Init)				/* ParamCount, Param, Init								*/	\
 	F(GenericFunction)	/* Element(Decl), ParamCount, Param, GenericFunction	*/	\
 	F(GenericArg)		/* Element(Decl), GenericArg							*/	\
@@ -297,6 +322,12 @@ namespace vl
 	Member:				Element Class::
 	CV:					Element const volatile
 	Decl:				Type symbol of a declaration
+	DeclInstant:		Instantiated template decl
+							Decl:declaration
+							Element:instantiated parent class
+							Params:template arguments.
+								If there is no template argument, which means, GetDataInstant().taContext == nullptr,
+								then this is a symbol with all template arguments not be replaced, e.g. decltype(*this) inside a template class
 	Init:				{Params}
 	GenericFunction:	<Params>->Element, GenericFunction contains all type arguments
 							For example: <T&&, U*>->Tuple<T, U>, GenericFunction contains T and U.
@@ -347,6 +378,7 @@ public:
 	virtual const TsysGenericFunction&	GetGenericFunction() = 0;
 	virtual TsysGenericArg				GetGenericArg() = 0;
 	virtual Symbol*						GetDecl() = 0;
+	virtual const TsysDeclInstant&		GetDeclInstant() = 0;
 
 	virtual ITsys*						LRefOf() = 0;
 	virtual ITsys*						RRefOf() = 0;
@@ -382,6 +414,7 @@ public:
 
 	virtual ITsys*				PrimitiveOf(TsysPrimitive primitive) = 0;
 	virtual ITsys*				DeclOf(Symbol* decl) = 0;
+	virtual ITsys*				DeclInstantOf(Symbol* decl, IEnumerable<ITsys*>* params, ITsys* parentDeclType) = 0;
 	virtual ITsys*				InitOf(Array<ExprTsysItem>& params) = 0;
 
 	virtual vint				AllocateAnonymousCounter() = 0;

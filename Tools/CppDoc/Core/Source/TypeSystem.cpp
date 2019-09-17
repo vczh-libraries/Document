@@ -1,5 +1,4 @@
-#include "TypeSystem.h"
-#include "Parser.h"
+#include "Ast_Resolving.h"
 
 class TsysAlloc;
 
@@ -91,6 +90,7 @@ public:
 	const TsysGenericFunction&										GetGenericFunction()		{ throw "Not Implemented!"; }
 	TsysGenericArg													GetGenericArg()				{ throw "Not Implemented!"; }
 	Symbol*															GetDecl()					{ throw "Not Implemented!"; }
+	const TsysDeclInstant&											GetDeclInstant()			{ throw "Not Implemented!"; }
 
 	ITsys* LRefOf()																						override;
 	ITsys* RRefOf()																						override;
@@ -655,6 +655,15 @@ class ITSYS_CLASS(GenericFunction)
 	ITSYS_GENERIC_ARG_CONFIGURATION
 };
 
+class ITSYS_CLASS(DeclInstant)
+{
+	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(DeclInstant, TsysDeclInstant, const TsysDeclInstant&, DeclInstant)
+	ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(element)
+
+private:
+	ITsys*					ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params);
+};
+
 #undef ITSYS_MEMBERS_DATA
 #undef ITSYS_MEMBERS_REF
 #undef ITSYS_MEMBERS_DECORATE
@@ -737,6 +746,7 @@ protected:
 	ITsys_Nullptr											tsysNullptr;
 	ITsys_Primitive*										primitives[(vint)TsysPrimitiveType::_COUNT * (vint)TsysBytes::_COUNT] = { 0 };
 	Dictionary<Symbol*, ITsys_Decl*>						decls;
+	WithParamsList<ITsys_DeclInstant, TsysDeclInstant>		declInstantOf;
 	WithParamsList<ITsys_Init, TsysInit>					initOf;
 	vint													anonymousCounter = 0;
 
@@ -750,6 +760,7 @@ public:
 	ITsys_Allocator<ITsys_Member,				1024>		_member;
 	ITsys_Allocator<ITsys_CV,					1024>		_cv;
 	ITsys_Allocator<ITsys_Decl,					1024>		_decl;
+	ITsys_Allocator<ITsys_DeclInstant,			1024>		_declInstant;
 	ITsys_Allocator<ITsys_Init,					1024>		_init;
 	ITsys_Allocator<ITsys_GenericFunction,		1024>		_genericFunction;
 	ITsys_Allocator<ITsys_GenericArg,			1024>		_genericArg;
@@ -821,6 +832,80 @@ public:
 		auto itsys = _decl.Alloc(this, decl);
 		decls.Add(decl, itsys);
 		return itsys;
+	}
+
+	ITsys* DeclInstantOf(Symbol* decl, IEnumerable<ITsys*>* params, ITsys* parentDeclType)override
+	{
+		auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(decl);
+		if (!spec) goto FAILED;
+
+		switch (decl->kind)
+		{
+		case symbol_component::SymbolKind::Class:
+		case symbol_component::SymbolKind::Struct:
+		case symbol_component::SymbolKind::Union:
+			break;
+		default:
+			goto FAILED;
+		}
+
+		switch (parentDeclType->GetType())
+		{
+		case TsysType::Decl:
+		case TsysType::DeclInstant:
+			break;
+		default:
+			goto FAILED;
+		}
+
+		switch (decl->kind)
+		{
+		case symbol_component::SymbolKind::Class:
+		case symbol_component::SymbolKind::Struct:
+		case symbol_component::SymbolKind::Union:
+			break;
+		default:
+			goto FAILED;
+		}
+
+		{
+			TsysDeclInstant data;
+			data.declSymbol = decl;
+			data.parentDeclType = parentDeclType;
+
+			Array<ITsys*> noParams;
+			auto itsys = ParamsOf((params ? *params : noParams), data, declInstantOf, dynamic_cast<TsysBase*>(parentDeclType), this, &TsysAlloc::_declInstant);
+
+			if (params)
+			{
+				const auto& declInstant = const_cast<TsysDeclInstant&>(itsys->GetDeclInstant());
+				if (!declInstant.taContext)
+				{
+					Ptr<TemplateArgumentContext> parentTaContext;
+					if (parentDeclType->GetType() == TsysType::DeclInstant)
+					{
+						parentTaContext = parentDeclType->GetDeclInstant().taContext;
+					}
+
+					auto taContext = MakePtr<TemplateArgumentContext>();
+					taContext->parent = parentTaContext.Obj();
+					taContext->symbolToApply = decl;
+					
+					FOREACH_INDEXER(ITsys*, param, index, *params)
+					{
+						if (index >= spec->arguments.Count()) goto FAILED;
+						taContext->arguments.Add(
+							symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[index], this),
+							param
+							);
+					}
+					if (taContext->arguments.Count() != spec->arguments.Count()) goto FAILED;
+				}
+			}
+			return itsys;
+		}
+	FAILED:
+		throw "DeclInstanceOf should be usedon class type, with no or correct amount of type parameters.";
 	}
 
 	ITsys* InitOf(Array<ExprTsysItem>& params)override
@@ -951,4 +1036,13 @@ ITsys* ITsys_Init::ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& par
 		items[i] = { data.headers[i],params[i] };
 	}
 	return tsys->InitOf(items);
+}
+
+/***********************************************************************
+ITsys_Init (DeclInstant)
+***********************************************************************/
+
+ITsys* ITsys_DeclInstant::ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params)
+{
+	return tsys->DeclInstantOf(data.declSymbol, (params.Count() == 0 ? nullptr : &params), element);
 }

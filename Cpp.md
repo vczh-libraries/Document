@@ -12,9 +12,10 @@
 ## TODO
 
 - [ ] Next Demo!
-  - [ ] Refactor `ResolveSymbol`
-    - [ ] Apply it to field initialization defined outside of a class.
   - [ ] `template` on classes.
+    - [x] Add `TsysType::DeclInstant`.
+    - [ ] Test `DeclInstantOf`.
+    - [ ] Search all `case TsysType::` or related if-else code and insert processing of `DeclInstant` with `throw 0;`.
     - [ ] Caching `gaContext`
       - When a generic declaration is instantiated, the created gaContext will be cached in the symbol(key = template arguments).
         - for `TsysType::Decl`, a `gaContext` property will be added.
@@ -29,7 +30,7 @@
     - [ ] Function specializations recognized but not used
     - [ ] Class specializations recognized but not used
     - [ ] Parse `template<typename T>template<typename U>template<typename V>void A<T*>::B<const U&>::F(){}`
-      - matthes `template<typename X>class A<X*>{ template<typename Y>class B<const Y&>{ void template<typename Z>F(); }; };`
+      - matches `template<typename X>class A<X*>{ template<typename Y>class B<const Y&>{ void template<typename Z>F(); }; };`
   - [ ] Make generic `Expr::Ptr` in `Calculator` case.
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
 - [ ] `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)

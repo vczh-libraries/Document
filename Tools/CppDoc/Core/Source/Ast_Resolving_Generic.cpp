@@ -14,6 +14,10 @@ namespace symbol_type_resolving
 			{
 				return funcDecl->templateSpec;
 			}
+			else if (auto classDecl = symbol->GetAnyForwardDecl<ForwardClassDeclaration>())
+			{
+				return classDecl->templateSpec;
+			}
 			else if (auto typeAliasDecl = symbol->GetAnyForwardDecl<TypeAliasDeclaration>())
 			{
 				return typeAliasDecl->templateSpec;
@@ -30,6 +34,18 @@ namespace symbol_type_resolving
 	CreateGenericFunctionHeader: Calculate enough information to create a generic function type
 	***********************************************************************/
 
+	ITsys* GetTemplateArgumentKey(const TemplateSpec::Argument& argument, ITsysAlloc* tsys)
+	{
+		if (argument.argumentType == CppTemplateArgumentType::Type)
+		{
+			return EvaluateGenericArgumentSymbol(argument.argumentSymbol);
+		}
+		else
+		{
+			return tsys->DeclOf(argument.argumentSymbol);
+		}
+	}
+
 	void CreateGenericFunctionHeader(const ParsingArguments& pa, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction)
 	{
 		genericFunction.isLastParameterVta = false;
@@ -37,15 +53,9 @@ namespace symbol_type_resolving
 
 		for (vint i = 0; i < spec->arguments.Count(); i++)
 		{
-			auto argument = spec->arguments[i];
-			if ((genericFunction.acceptTypes[i] = (argument.argumentType == CppTemplateArgumentType::Type)))
-			{
-				params.Add(EvaluateGenericArgumentSymbol(argument.argumentSymbol));
-			}
-			else
-			{
-				params.Add(pa.tsys->DeclOf(argument.argumentSymbol));
-			}
+			const auto& argument = spec->arguments[i];
+			genericFunction.acceptTypes[i] = (argument.argumentType == CppTemplateArgumentType::Type);
+			params.Add(GetTemplateArgumentKey(argument, pa.tsys.Obj()));
 
 			if (argument.ellipsis)
 			{
@@ -124,7 +134,7 @@ namespace symbol_type_resolving
 		{
 			for (vint i = 0; i < spec->arguments.Count(); i++)
 			{
-				auto argument = spec->arguments[i];
+				const auto& argument = spec->arguments[i];
 				if (argument.ellipsis)
 				{
 					firstDefaultIndex = i;

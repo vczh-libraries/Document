@@ -997,7 +997,7 @@ private:
 		for (vint i = 0; i < spec->arguments.Count(); i++)
 		{
 			if (i > 0) writer.WriteString(L", ");
-			auto arg = spec->arguments[i];
+			const auto& arg = spec->arguments[i];
 			switch (arg.argumentType)
 			{
 			case CppTemplateArgumentType::HighLevelType:
