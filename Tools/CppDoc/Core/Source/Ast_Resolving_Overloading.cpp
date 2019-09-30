@@ -462,6 +462,9 @@ namespace symbol_type_resolving
 		case TsysType::Decl:
 			SearchAdlClassesAndNamespaces(pa, type->GetDecl(), nss, classes);
 			break;
+		case TsysType::DeclInstant:
+			// TODO: [Cpp.md] Deal with DeclInstant here
+			throw 0;
 		}
 	}
 

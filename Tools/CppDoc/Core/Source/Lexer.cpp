@@ -6,8 +6,10 @@ CreateCppLexer
 
 Ptr<RegexLexer> CreateCppLexer()
 {
+	struct ThisShouldNotHappen {};
+
 	List<WString> tokens;
-#define DEFINE_REGEX_TOKEN(NAME, REGEX) if ((vint)CppTokens::NAME != tokens.Add(REGEX)) { throw 0; }
+#define DEFINE_REGEX_TOKEN(NAME, REGEX) if ((vint)CppTokens::NAME != tokens.Add(REGEX)) { throw ThisShouldNotHappen(); }
 #define DEFINE_KEYWORD_TOKEN(NAME, KEYWORD) DEFINE_REGEX_TOKEN(NAME, L#KEYWORD)
 	CPP_ALL_TOKENS(DEFINE_KEYWORD_TOKEN, DEFINE_REGEX_TOKEN)
 #undef DEFINE_KEYWORD_TOKEN

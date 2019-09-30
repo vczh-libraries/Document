@@ -15,7 +15,7 @@
   - [ ] `template` on classes.
     - [x] Add `TsysType::DeclInstant`.
     - [x] Test `DeclInstantOf`.
-    - [ ] Search all `case TsysType::` or related if-else code and insert processing of `DeclInstant` with `throw 0;`.
+    - [x] Search all `case TsysType::` or related if-else code and insert processing of `DeclInstant` with `throw 0;`.
     - [ ] Caching `gaContext`
       - When a generic declaration is instantiated, the created gaContext will be cached in the symbol(key = template arguments).
         - for `TsysType::Decl`, a `gaContext` property will be added.

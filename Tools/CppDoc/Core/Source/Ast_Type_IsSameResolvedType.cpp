@@ -115,6 +115,7 @@ public:
 		{
 			if (self->expr && declType->expr)
 			{
+				// TODO: [Cpp.md] Only compare shapes of these two expressions. ResolvableType only look into resolving.
 				throw 0;
 			}
 			else if (!self->expr && !declType->expr)

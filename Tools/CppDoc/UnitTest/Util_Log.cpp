@@ -1522,6 +1522,9 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			writer.WriteString(name);
 		}
 		return;
+	case TsysType::DeclInstant:
+		// TODO: [Cpp.md] Deal with DeclInstant here
+		throw 0;
 	case TsysType::Init:
 		{
 			writer.WriteChar(L'{');

@@ -182,6 +182,9 @@ bool IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, Spec
 			if (classDecl->classType == CppClassType::Union) return true;
 			return IsSpecialMemberFeatureEnabled(pa, classDecl->symbol, kind);
 		}
+	case TsysType::DeclInstant:
+		// TODO: [Cpp.md] Deal with DeclInstant here
+		throw 0;
 	case TsysType::Init:
 		for (vint i = 0; i < type->GetParamCount(); i++)
 		{

@@ -319,6 +319,7 @@ public:
 	{
 		if (self->expr)
 		{
+			// TODO: [Cpp.md] decltype(EXPR)::ChildType
 			throw 0;
 		}
 	}
