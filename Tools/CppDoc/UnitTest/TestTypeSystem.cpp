@@ -1,4 +1,4 @@
-#include <Parser.h>
+#include <Ast_Resolving.h>
 
 TEST_CASE(TestTypeSystem_Primitive)
 {
@@ -217,6 +217,112 @@ TEST_CASE(TestTypeSystem_GenericArg)
 	TEST_ASSERT(targ1->GetElement() == targ2->GetElement());
 	TEST_ASSERT(tsys->DeclOf(n.Obj())->GenericArgOf(arg1) == targ1);
 	TEST_ASSERT(tsys->DeclOf(n.Obj())->GenericArgOf(arg1) != targ2);
+}
+
+TEST_CASE(TestTypeSystem_DeclInstance)
+{
+	auto tsys = ITsysAlloc::Create();
+
+	auto sa1 = MakePtr<Symbol>();
+	sa1->kind = symbol_component::SymbolKind::GenericTypeArgument;
+	auto sa2 = MakePtr<Symbol>();
+	sa2->kind = symbol_component::SymbolKind::GenericTypeArgument;
+
+	auto spec = MakePtr<TemplateSpec>();
+	{
+		TemplateSpec::Argument arg;
+		arg.argumentSymbol = sa1.Obj();
+		arg.argumentType = CppTemplateArgumentType::Type;
+		spec->arguments.Add(arg);
+
+		TsysGenericArg tgArg;
+		tgArg.argIndex = 0;
+		tgArg.argSymbol = sa1.Obj();
+
+		sa1->GetEvaluationForUpdating_NFb().Allocate();
+		sa1->GetEvaluationForUpdating_NFb().Get().Add(tsys->DeclOf(sa1.Obj())->GenericArgOf(tgArg));
+	}
+	{
+		TemplateSpec::Argument arg;
+		arg.argumentSymbol = sa2.Obj();
+		arg.argumentType = CppTemplateArgumentType::Type;
+		spec->arguments.Add(arg);
+
+		TsysGenericArg tgArg;
+		tgArg.argIndex = 0;
+		tgArg.argSymbol = sa2.Obj();
+
+		sa2->GetEvaluationForUpdating_NFb().Allocate();
+		sa2->GetEvaluationForUpdating_NFb().Get().Add(tsys->DeclOf(sa2.Obj())->GenericArgOf(tgArg));
+	}
+
+	auto f1 = MakePtr<ClassDeclaration>();
+	f1->name.name = L"F1";
+	f1->templateSpec = spec;
+
+	auto f2 = MakePtr<ClassDeclaration>();
+	f2->name.name = L"F2";
+	f2->templateSpec = spec;
+
+	auto root = MakePtr<Symbol>();
+	auto n1 = root->AddImplDeclToSymbol_NFb(f1, symbol_component::SymbolKind::Class);
+	auto n2 = root->AddImplDeclToSymbol_NFb(f2, symbol_component::SymbolKind::Class);
+	auto pn1 = MakePtr<Symbol>();
+	auto pn2 = MakePtr<Symbol>();
+
+	auto b1 = tsys->DeclOf(pn1.Obj());
+	auto b2 = tsys->DeclOf(pn2.Obj());
+
+	List<ITsys*> p1, p2;
+	p1.Add(tsys->Void());
+	p1.Add(tsys->Nullptr());
+	p2.Add(tsys->Nullptr());
+	p2.Add(tsys->Void());
+
+	{
+		IEnumerable<ITsys*>* ps[] = { nullptr,&p1,&p2 };
+		for (vint i = 0; i < 3; i++)
+		{
+			for (vint j = 0; j < 3; j++)
+			{
+				if (i == j)
+				{
+					TEST_ASSERT(tsys->DeclInstantOf(n1, ps[i], b1) == tsys->DeclInstantOf(n1, ps[j], b1));
+				}
+				else
+				{
+					TEST_ASSERT(tsys->DeclInstantOf(n1, ps[i], b1) != tsys->DeclInstantOf(n1, ps[j], b1));
+				}
+			}
+		}
+	}
+
+	auto t1 = tsys->DeclInstantOf(n1, nullptr, nullptr);
+	TEST_ASSERT(t1->GetType() == TsysType::DeclInstant);
+	const auto& data1 = t1->GetDeclInstant();
+	TEST_ASSERT(data1.declSymbol == n1);
+	TEST_ASSERT(data1.parentDeclType == nullptr);
+	TEST_ASSERT(!data1.taContext);
+	TEST_ASSERT(t1->GetParamCount() == 0);
+
+	const_cast<TsysDeclInstant&>(data1).taContext = MakePtr<TemplateArgumentContext>();
+
+	auto t2 = tsys->DeclInstantOf(n2, &p2, t1);
+	TEST_ASSERT(t2->GetType() == TsysType::DeclInstant);
+	const auto& data2 = t2->GetDeclInstant();
+	TEST_ASSERT(data2.declSymbol == n2);
+	TEST_ASSERT(data2.parentDeclType == t1);
+	TEST_ASSERT(t2->GetParamCount() == 2);
+	TEST_ASSERT(t2->GetParam(0) == tsys->Nullptr());
+	TEST_ASSERT(t2->GetParam(1) == tsys->Void());
+	TEST_ASSERT(data2.taContext->arguments.Count() == 2);
+	TEST_ASSERT(data2.taContext->parent == data1.taContext.Obj());
+	TEST_ASSERT(data2.taContext->symbolToApply == n2);
+
+	auto k1 = symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[0], tsys.Obj());
+	auto k2 = symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[1], tsys.Obj());
+	TEST_ASSERT(data2.taContext->arguments[k1][0] == tsys->Nullptr());
+	TEST_ASSERT(data2.taContext->arguments[k2][0] == tsys->Void());
 }
 
 TEST_CASE(TestTypeSystem_Type)

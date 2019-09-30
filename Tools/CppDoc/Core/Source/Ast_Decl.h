@@ -60,7 +60,7 @@ public:
 	{
 		bool										ellipsis = false;
 		CppName										name;
-		Symbol*										argumentSymbol;
+		Symbol*										argumentSymbol = nullptr;
 		CppTemplateArgumentType						argumentType;
 		Ptr<Symbol>									templateSpecScope;
 		Ptr<TemplateSpec>							templateSpec;

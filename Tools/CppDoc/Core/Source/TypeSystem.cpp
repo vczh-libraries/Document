@@ -849,13 +849,16 @@ public:
 			goto FAILED;
 		}
 
-		switch (parentDeclType->GetType())
+		if (parentDeclType)
 		{
-		case TsysType::Decl:
-		case TsysType::DeclInstant:
-			break;
-		default:
-			goto FAILED;
+			switch (parentDeclType->GetType())
+			{
+			case TsysType::Decl:
+			case TsysType::DeclInstant:
+				break;
+			default:
+				goto FAILED;
+			}
 		}
 
 		switch (decl->kind)
@@ -874,15 +877,22 @@ public:
 			data.parentDeclType = parentDeclType;
 
 			Array<ITsys*> noParams;
-			auto itsys = ParamsOf((params ? *params : noParams), data, declInstantOf, dynamic_cast<TsysBase*>(parentDeclType), this, &TsysAlloc::_declInstant);
+			auto itsys = ParamsOf(
+				(params ? *params : noParams),
+				data,
+				declInstantOf,
+				dynamic_cast<TsysBase*>(parentDeclType),
+				this,
+				&TsysAlloc::_declInstant
+				);
 
 			if (params)
 			{
-				const auto& declInstant = const_cast<TsysDeclInstant&>(itsys->GetDeclInstant());
+				auto& declInstant = const_cast<TsysDeclInstant&>(itsys->GetDeclInstant());
 				if (!declInstant.taContext)
 				{
 					Ptr<TemplateArgumentContext> parentTaContext;
-					if (parentDeclType->GetType() == TsysType::DeclInstant)
+					if (parentDeclType && parentDeclType->GetType() == TsysType::DeclInstant)
 					{
 						parentTaContext = parentDeclType->GetDeclInstant().taContext;
 					}
@@ -900,6 +910,7 @@ public:
 							);
 					}
 					if (taContext->arguments.Count() != spec->arguments.Count()) goto FAILED;
+					declInstant.taContext = taContext;
 				}
 			}
 			return itsys;
