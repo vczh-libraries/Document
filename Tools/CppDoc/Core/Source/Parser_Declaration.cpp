@@ -341,11 +341,6 @@ ParseDeclaration_<CLASS / STRUCT / UNION>
 
 Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingArguments& pa, const TemplateSpecResult& spec, bool forTypeDef, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
-	if (spec.f1)
-	{
-		throw StopParsingException(cursor);
-	}
-
 	// [union | class | struct] NAME ...
 	auto classType = CppClassType::Union;
 	auto symbolKind = symbol_component::SymbolKind::Union;
@@ -404,11 +399,12 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 	{
 		// ... [: { [public|protected|private] TYPE , ...} ]
 		auto decl = MakePtr<ClassDeclaration>();
+		decl->templateSpec = spec.f1;
 		decl->classType = classType;
 		decl->name = cppName;
 		vint declIndex = output.Add(decl);
 
-		auto classContextSymbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbolKind);
+		auto classContextSymbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbolKind, spec.f0);
 		if (!classContextSymbol)
 		{
 			throw StopParsingException(cursor);
