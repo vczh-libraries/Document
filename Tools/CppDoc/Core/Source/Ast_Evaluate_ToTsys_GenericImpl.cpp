@@ -59,9 +59,12 @@ namespace symbol_totsys_impl
 		{
 			switch (declSymbol->kind)
 			{
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+			case symbol_component::SymbolKind::Union:
 			case symbol_component::SymbolKind::GenericTypeArgument:
 				esContext.evaluation.Allocate();
-				genericFunction->GetElement()->ReplaceGenericArgs(pa, esContext.evaluation.Get());
+				genericFunction->GetElement()->ReplaceGenericArgs(pa.WithArgs(esContext.additionalArguments), esContext.evaluation.Get());
 				break;
 			case symbol_component::SymbolKind::TypeAlias:
 				{

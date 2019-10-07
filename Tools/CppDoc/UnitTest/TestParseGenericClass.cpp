@@ -47,5 +47,5 @@ struct Ptr
 	AssertProgram(program, output);
 
 	AssertType(pa,		L"Ptr",			L"Ptr",			L"<::Ptr::[T]> ::Ptr<::Ptr::[T]>"	);
-	//AssertType(pa,		L"Ptr<int>",	L"Ptr<int>",	L"::Ptr<int>"						);
+	AssertType(pa,		L"Ptr<int>",	L"Ptr<int>",	L"::Ptr<__int32>"					);
 }
