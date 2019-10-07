@@ -13,11 +13,21 @@ namespace symbol_totsys_impl
 		switch (symbol->kind)
 		{
 		case symbol_component::SymbolKind::Enum:
+			AddTsysToResult(result, pa.tsys->DeclOf(symbol));
+			hasNonVariadic = true;
+			return;
 		case symbol_component::SymbolKind::Class:
 		case symbol_component::SymbolKind::Struct:
 		case symbol_component::SymbolKind::Union:
-			AddTsysToResult(result, pa.tsys->DeclOf(symbol));
-			hasNonVariadic = true;
+			{
+				auto classDecl = symbol->GetAnyForwardDecl<ForwardClassDeclaration>();
+				auto& evTypes = EvaluateForwardClassSymbol(pa, classDecl.Obj());
+				for (vint j = 0; j < evTypes.Count(); j++)
+				{
+					AddTsysToResult(result, evTypes[j]);
+				}
+				hasNonVariadic = true;
+			}
 			return;
 		case symbol_component::SymbolKind::TypeAlias:
 			{

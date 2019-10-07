@@ -213,15 +213,61 @@ namespace symbol_type_resolving
 	EvaluateClassSymbol: Evaluate base types for a class
 	***********************************************************************/
 
-	symbol_component::Evaluation& EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl)
+	TypeTsysList& EvaluateForwardClassSymbol(const ParsingArguments& invokerPa, ForwardClassDeclaration* classDecl, EvaluateSymbolContext* esContext)
 	{
+		if (esContext)
+		{
+			// not implemented
+			throw 0;
+		}
+		SETUP_EV_OR_RETURN(classDecl, classDecl->templateSpec, esContext);
+
+		if (classDecl->templateSpec)
+		{
+			switch (symbol->GetParentScope()->kind)
+			{
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+			case symbol_component::SymbolKind::Union:
+				// not implemented. this happens also when no templateSpec but one of its containing class has.
+				throw 0;
+			}
+
+			Array<ITsys*> params(classDecl->templateSpec->arguments.Count());
+			for (vint i = 0; i < classDecl->templateSpec->arguments.Count(); i++)
+			{
+				params[i] = GetTemplateArgumentKey(classDecl->templateSpec->arguments[i], declPa.tsys.Obj());
+			}
+			auto diTsys = declPa.tsys->DeclInstantOf(symbol, &params, nullptr);
+			evaluatedTypes.Add(diTsys);
+		}
+		else
+		{
+			evaluatedTypes.Add(declPa.tsys->DeclOf(symbol));
+		}
+		return FinishEvaluatingPotentialGenericSymbol(declPa, classDecl, classDecl->templateSpec, esContext);
+	}
+
+	symbol_component::Evaluation& EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl, EvaluateSymbolContext* esContext)
+	{
+		EvaluateForwardClassSymbol(invokerPa, classDecl, esContext);
+
 		auto symbol = classDecl->symbol;
 		auto declPa = GetPaFromInvokerPa(invokerPa, classDecl->symbol, nullptr);
 		auto& ev = GetCorrectEvaluation(declPa, classDecl, nullptr, nullptr);
 		switch (ev.progress)
 		{
-		case symbol_component::EvaluationProgress::Evaluated: return ev;
-		case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();
+		case symbol_component::EvaluationProgress::Evaluated:
+			if (ev.ExtraCount() == 0 && classDecl->baseTypes.Count() > 0)
+			{
+				break;
+			}
+			else
+			{
+				return ev;
+			}
+		case symbol_component::EvaluationProgress::Evaluating:
+			throw NotResolvableException();
 		}
 
 		ev.progress = symbol_component::EvaluationProgress::Evaluating;
@@ -229,7 +275,7 @@ namespace symbol_type_resolving
 
 		for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 		{
-			TypeToTsysNoVta(declPa, classDecl->baseTypes[i].f1, ev.Get(i));
+			TypeToTsysNoVta(declPa, classDecl->baseTypes[i].f1, ev.GetExtra(i));
 		}
 
 		ev.progress = symbol_component::EvaluationProgress::Evaluated;

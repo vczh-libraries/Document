@@ -225,9 +225,9 @@ namespace TestConvert_Helpers
 			if (auto currentClass = TryGetDeclFromType<ClassDeclaration>(currentType))
 			{
 				auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, currentClass.Obj());
-				for (vint j = 0; j < ev.Count(); j++)
+				for (vint j = 0; j < ev.ExtraCount(); j++)
 				{
-					auto& baseTypes = ev.Get(j);
+					auto& baseTypes = ev.GetExtra(j);
 					for (vint k = 0; k < baseTypes.Count(); k++)
 					{
 						if (!searched.Contains(baseTypes[k]))

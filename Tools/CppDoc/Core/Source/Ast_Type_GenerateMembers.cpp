@@ -211,9 +211,9 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 {
 	auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, classDecl);
 	auto classSymbol = classDecl->symbol;
-	for (vint i = 0; i < ev.Count(); i++)
+	for (vint i = 0; i < ev.ExtraCount(); i++)
 	{
-		auto& types = ev.Get(i);
+		auto& types = ev.GetExtra(i);
 		for (vint j = 0; j < types.Count(); j++)
 		{
 			if (!IsSpecialMemberEnabledForType(pa, types[j], kind))

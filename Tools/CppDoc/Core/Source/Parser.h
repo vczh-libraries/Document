@@ -80,7 +80,8 @@ namespace symbol_component
 	struct Evaluation
 	{
 	private:
-		List<Ptr<TypeTsysList>>						typeList;
+		Ptr<TypeTsysList>							mainTypeList;
+		List<Ptr<TypeTsysList>>						extraTypeLists;
 
 	public:
 		Evaluation() = default;
@@ -89,10 +90,11 @@ namespace symbol_component
 
 		EvaluationProgress							progress = EvaluationProgress::NotEvaluated;
 
-		void										Allocate(vint count = 1);
+		void										Allocate(vint extraCount = 0);
 		void										Clear();
-		vint										Count();
-		TypeTsysList&								Get(vint index = 0);
+		vint										ExtraCount();
+		TypeTsysList&								Get();
+		TypeTsysList&								GetExtra(vint index);
 	};
 
 	enum class SymbolCategory

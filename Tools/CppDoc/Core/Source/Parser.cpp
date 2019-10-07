@@ -10,26 +10,33 @@ Evaluation
 
 	void Evaluation::Allocate(vint count)
 	{
-		typeList.Clear();
+		mainTypeList = MakePtr<TypeTsysList>();
+		extraTypeLists.Clear();
 		for (vint i = 0; i < count; i++)
 		{
-			typeList.Add(MakePtr<TypeTsysList>());
+			extraTypeLists.Add(MakePtr<TypeTsysList>());
 		}
 	}
 
 	void Evaluation::Clear()
 	{
-		typeList.Clear();
+		mainTypeList = nullptr;
+		extraTypeLists.Clear();
 	}
 
-	vint Evaluation::Count()
+	vint Evaluation::ExtraCount()
 	{
-		return typeList.Count();
+		return extraTypeLists.Count();
 	}
 
-	TypeTsysList& Evaluation::Get(vint index)
+	TypeTsysList& Evaluation::Get()
 	{
-		return *typeList[index].Obj();
+		return *mainTypeList.Obj();
+	}
+
+	TypeTsysList& Evaluation::GetExtra(vint index)
+	{
+		return *extraTypeLists[index].Obj();
 	}
 
 /***********************************************************************
