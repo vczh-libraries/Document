@@ -10,9 +10,11 @@ GetSpecialMember
 
 Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, SpecialMemberKind kind)
 {
-	auto classDecl = classSymbol->GetImplDecl_NFb<ClassDeclaration>();
-	if (!classDecl) return nullptr;
-	if (classDecl->classType == CppClassType::Union) return nullptr;
+	{
+		auto classDecl = classSymbol->GetImplDecl_NFb<ClassDeclaration>();
+		if (!classDecl) return nullptr;
+		if (classDecl->classType == CppClassType::Union) return nullptr;
+	}
 
 	WString memberName;
 	switch (kind)

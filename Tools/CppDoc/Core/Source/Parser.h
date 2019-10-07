@@ -90,7 +90,8 @@ namespace symbol_component
 
 		EvaluationProgress							progress = EvaluationProgress::NotEvaluated;
 
-		void										Allocate(vint extraCount = 0);
+		void										Allocate();
+		void										AllocateExtra(vint extraCount);
 		void										Clear();
 		vint										ExtraCount();
 		TypeTsysList&								Get();

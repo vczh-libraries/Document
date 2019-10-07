@@ -8,9 +8,13 @@ namespace symbol_component
 Evaluation
 ***********************************************************************/
 
-	void Evaluation::Allocate(vint count)
+	void Evaluation::Allocate()
 	{
 		mainTypeList = MakePtr<TypeTsysList>();
+	}
+
+	void Evaluation::AllocateExtra(vint count)
+	{
 		extraTypeLists.Clear();
 		for (vint i = 0; i < count; i++)
 		{

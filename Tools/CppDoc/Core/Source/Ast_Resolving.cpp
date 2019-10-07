@@ -172,6 +172,11 @@ namespace symbol_type_resolving
 					{
 						if (classScope)
 						{
+							if (classScope->GetDecl()->GetImplDecl_NFb<ClassDeclaration>()->templateSpec)
+							{
+								// TODO: [Cpp.md] Deal with DeclInstant here
+								throw 0;
+							}
 							AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope) });
 						}
 						else

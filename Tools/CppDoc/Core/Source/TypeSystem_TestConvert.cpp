@@ -347,6 +347,11 @@ namespace TestConvert_Helpers
 
 		auto toClass = TryGetDeclFromType<ClassDeclaration>(toEntity);
 		if (!toClass) return false;
+		if (toClass->templateSpec)
+		{
+			// TODO: [Cpp.md] Deal with DeclInstant here
+			throw 0;
+		}
 
 		auto toSymbol = toClass->symbol;
 		{

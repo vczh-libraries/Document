@@ -271,7 +271,7 @@ namespace symbol_type_resolving
 		}
 
 		ev.progress = symbol_component::EvaluationProgress::Evaluating;
-		ev.Allocate(classDecl->baseTypes.Count());
+		ev.AllocateExtra(classDecl->baseTypes.Count());
 
 		for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 		{

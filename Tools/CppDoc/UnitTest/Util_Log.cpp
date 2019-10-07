@@ -1345,6 +1345,24 @@ void Log(Ptr<Program> program, StreamWriter& writer)
 	}
 }
 
+WString GetSymbolName(Symbol* symbol)
+{
+	WString name;
+	while (symbol && symbol->GetParentScope())
+	{
+		if (symbol->kind == symbol_component::SymbolKind::GenericTypeArgument)
+		{
+			name = (symbol->ellipsis ? L"::[..." : L"::[") + symbol->name + L"]" + name;
+		}
+		else
+		{
+			name = L"::" + symbol->name + name;
+		}
+		symbol = symbol->GetParentScope();
+	}
+	return name;
+}
+
 void Log(ITsys* tsys, StreamWriter& writer)
 {
 	switch (tsys->GetType())
@@ -1505,26 +1523,49 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		return;
 	case TsysType::Decl:
 		{
-			auto symbol = tsys->GetDecl();
-			WString name;
-			while (symbol && symbol->GetParentScope())
-			{
-				if (symbol->kind == symbol_component::SymbolKind::GenericTypeArgument)
-				{
-					name = (symbol->ellipsis ? L"::[..." : L"::[") + symbol->name + L"]" + name;
-				}
-				else
-				{
-					name = L"::" + symbol->name + name;
-				}
-				symbol = symbol->GetParentScope();
-			}
-			writer.WriteString(name);
+			writer.WriteString(GetSymbolName(tsys->GetDecl()));
 		}
 		return;
 	case TsysType::DeclInstant:
-		// TODO: [Cpp.md] Deal with DeclInstant here
-		throw 0;
+		{
+			const auto& di = tsys->GetDeclInstant();
+			if (auto parent = di.parentDeclType)
+			{
+				List<ITsys*> parents;
+				while (parent)
+				{
+					parents.Add(parent);
+					if (parent->GetType() == TsysType::DeclInstant)
+					{
+						parent = parent->GetDeclInstant().parentDeclType;
+					}
+				}
+
+				writer.WriteString(L"<");
+				for (vint i = parents.Count() - 1; i >= 0; i--)
+				{
+					Log(parents[i], writer);
+					if (i > 0)
+					{
+						writer.WriteString(L" -> ");
+					}
+				}
+				writer.WriteString(L"> ");
+			}
+			
+			writer.WriteString(GetSymbolName(di.declSymbol));
+			if (tsys->GetParamCount())
+			{
+				writer.WriteString(L"<");
+				for (vint i = 0; i < tsys->GetParamCount(); i++)
+				{
+					if (i > 0) writer.WriteString(L", ");
+					Log(tsys->GetParam(i), writer);
+				}
+				writer.WriteString(L">");
+			}
+		}
+		return;
 	case TsysType::Init:
 		{
 			writer.WriteChar(L'{');

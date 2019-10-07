@@ -881,7 +881,10 @@ void ParseDeclaration_Function(
 			TsysCV cv;
 			cv.isGeneralConst = funcType->qualifierConstExpr || funcType->qualifierConst;
 			cv.isVolatile = funcType->qualifierVolatile;
-			declarator->classMemberCache->thisType = pa.tsys->DeclOf(declarator->classMemberCache->classSymbols[0])->CVOf(cv)->PtrOf();
+
+			auto classDecl = declarator->classMemberCache->classSymbols[0]->GetAnyForwardDecl<ForwardClassDeclaration>();
+			auto& ev = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj());
+			declarator->classMemberCache->thisType = ev[0]->CVOf(cv)->PtrOf();
 
 			if (!declarator->classMemberCache->symbolDefinedInsideClass)
 			{

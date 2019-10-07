@@ -916,7 +916,7 @@ public:
 			return itsys;
 		}
 	FAILED:
-		throw "DeclInstanceOf should be usedon class type, with no or correct amount of type parameters.";
+		throw "DeclInstantOf should be usedon class type, with no or correct amount of type parameters.";
 	}
 
 	ITsys* InitOf(Array<ExprTsysItem>& params)override
