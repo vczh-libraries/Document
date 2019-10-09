@@ -1531,26 +1531,8 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			const auto& di = tsys->GetDeclInstant();
 			if (auto parent = di.parentDeclType)
 			{
-				List<ITsys*> parents;
-				while (parent)
-				{
-					parents.Add(parent);
-					if (parent->GetType() == TsysType::DeclInstant)
-					{
-						parent = parent->GetDeclInstant().parentDeclType;
-					}
-				}
-
-				writer.WriteString(L"<");
-				for (vint i = parents.Count() - 1; i >= 0; i--)
-				{
-					Log(parents[i], writer);
-					if (i > 0)
-					{
-						writer.WriteString(L" -> ");
-					}
-				}
-				writer.WriteString(L"> ");
+				Log(parent, writer);
+				writer.WriteString(L" => ");
 			}
 			
 			writer.WriteString(GetSymbolName(di.declSymbol));
