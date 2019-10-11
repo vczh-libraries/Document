@@ -20,13 +20,8 @@ namespace symbol_totsys_impl
 		case symbol_component::SymbolKind::Struct:
 		case symbol_component::SymbolKind::Union:
 			{
-				if (parentDeclType)
-				{
-					// TODO: [Cpp.md] Deal with DeclInstant here
-					throw 0;
-				}
 				auto classDecl = symbol->GetAnyForwardDecl<ForwardClassDeclaration>();
-				auto& evTypes = EvaluateForwardClassSymbol(pa, classDecl.Obj());
+				auto& evTypes = EvaluateForwardClassSymbol(pa, classDecl.Obj(), parentDeclType);
 				for (vint j = 0; j < evTypes.Count(); j++)
 				{
 					AddTsysToResult(result, evTypes[j]);
@@ -170,6 +165,21 @@ namespace symbol_totsys_impl
 			{
 				auto newPa = pa.WithScope(classType->GetDecl());
 				auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbolFromOutside);
+
+				ITsys* parentDeclType = nullptr;
+				if (classType->GetType() == TsysType::DeclInstant)
+				{
+					const auto& data = classType->GetDeclInstant();
+					if (data.taContext)
+					{
+						parentDeclType = classType;
+					}
+					else
+					{
+						parentDeclType = data.parentDeclType;
+					}
+				}
+
 				if (rsr.types)
 				{
 					for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
@@ -178,7 +188,7 @@ namespace symbol_totsys_impl
 						if (!visited.Contains(symbol))
 						{
 							visited.Add(symbol);
-							receiver((classType->GetType() == TsysType::DeclInstant ? classType : nullptr), symbol);
+							receiver(parentDeclType, symbol);
 						}
 					}
 				}

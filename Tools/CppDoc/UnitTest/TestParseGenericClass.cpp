@@ -86,7 +86,7 @@ struct GA
 
 	AssertType(pa,		L"GA",								L"GA",									L"<::GA::[TA]> ::GA<::GA::[TA]>"															);
 	AssertType(pa,		L"GA<int>::CB",						L"GA<int> :: CB",						L"::GA<__int32> => ::GA::CB"																);
-	AssertType(pa,		L"GA<int>::GB",						L"GA<int> :: GB",						L"<::GA::GB::[TB]> ::GA<__int32> => ::GA::GB"												);
+	AssertType(pa,		L"GA<int>::GB",						L"GA<int> :: GB",						L"<::GA::GB::[TB]> ::GA<__int32> => ::GA::GB<::GA::GB::[TB]>"								);
 	AssertType(pa,		L"GA<int>::GB<bool>",				L"GA<int> :: GB<bool>",					L"::GA<__int32> => ::GA::GB<bool>"															);
 	AssertType(pa,		L"GA<int>::CB::CC",					L"GA<int> :: CB :: CC",					L"::GA<__int32> => ::GA::CB::CC"															);
 	AssertType(pa,		L"GA<int>::CB::GC",					L"GA<int> :: CB :: GC",					L"<::GA::CB::GC::[TC]> ::GA<__int32> => ::GA::CB::GC<::GA::CB::GC::[TC]>"					);
