@@ -222,28 +222,51 @@ namespace symbol_type_resolving
 		}
 		SETUP_EV_OR_RETURN(classDecl, classDecl->templateSpec, esContext);
 
+		ITsys* parentTemplateClass = nullptr;
+		{
+			auto parent = symbol->GetParentScope();
+			while (parent)
+			{
+				switch (parent->kind)
+				{
+				case symbol_component::SymbolKind::Class:
+				case symbol_component::SymbolKind::Struct:
+				case symbol_component::SymbolKind::Union:
+					if (auto parentClassDecl = parent->GetAnyForwardDecl<ForwardClassDeclaration>())
+					{
+						if (parentClassDecl->templateSpec)
+						{
+							parentTemplateClass = EvaluateForwardClassSymbol(declPa, parentClassDecl.Obj())[0]->GetElement();
+							goto FINISH_PARENT_TEMPLATE;
+						}
+					}
+					break;
+				}
+				parent = parent->GetParentScope();
+			}
+		}
+		FINISH_PARENT_TEMPLATE:
+
 		if (classDecl->templateSpec)
 		{
-			switch (symbol->GetParentScope()->kind)
-			{
-			case symbol_component::SymbolKind::Class:
-			case symbol_component::SymbolKind::Struct:
-			case symbol_component::SymbolKind::Union:
-				// not implemented. this happens also when no templateSpec but one of its containing class has.
-				throw 0;
-			}
-
 			Array<ITsys*> params(classDecl->templateSpec->arguments.Count());
 			for (vint i = 0; i < classDecl->templateSpec->arguments.Count(); i++)
 			{
 				params[i] = GetTemplateArgumentKey(classDecl->templateSpec->arguments[i], declPa.tsys.Obj());
 			}
-			auto diTsys = declPa.tsys->DeclInstantOf(symbol, &params, nullptr);
+			auto diTsys = declPa.tsys->DeclInstantOf(symbol, &params, parentTemplateClass);
 			evaluatedTypes.Add(diTsys);
 		}
 		else
 		{
-			evaluatedTypes.Add(declPa.tsys->DeclOf(symbol));
+			if (parentTemplateClass)
+			{
+				evaluatedTypes.Add(declPa.tsys->DeclInstantOf(symbol, nullptr, parentTemplateClass));
+			}
+			else
+			{
+				evaluatedTypes.Add(declPa.tsys->DeclOf(symbol));
+			}
 		}
 		return FinishEvaluatingPotentialGenericSymbol(declPa, classDecl, classDecl->templateSpec, esContext);
 	}

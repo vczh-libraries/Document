@@ -256,6 +256,14 @@ TEST_CASE(TestTypeSystem_DeclInstance)
 		sa2->GetEvaluationForUpdating_NFb().Get().Add(tsys->DeclOf(sa2.Obj())->GenericArgOf(tgArg));
 	}
 
+	auto bf1 = MakePtr<ClassDeclaration>();
+	bf1->name.name = L"BF1";
+	bf1->templateSpec = spec;
+
+	auto bf2 = MakePtr<ClassDeclaration>();
+	bf2->name.name = L"BF2";
+	bf2->templateSpec = spec;
+
 	auto f1 = MakePtr<ClassDeclaration>();
 	f1->name.name = L"F1";
 	f1->templateSpec = spec;
@@ -264,14 +272,19 @@ TEST_CASE(TestTypeSystem_DeclInstance)
 	f2->name.name = L"F2";
 	f2->templateSpec = spec;
 
+	auto f3 = MakePtr<ClassDeclaration>();
+	f3->name.name = L"F3";
+
+	auto f4 = MakePtr<ClassDeclaration>();
+	f4->name.name = L"F4";
+
 	auto root = MakePtr<Symbol>();
+	auto bn1 = root->AddImplDeclToSymbol_NFb(bf1, symbol_component::SymbolKind::Class);
+	auto bn2 = root->AddImplDeclToSymbol_NFb(bf2, symbol_component::SymbolKind::Class);
 	auto n1 = root->AddImplDeclToSymbol_NFb(f1, symbol_component::SymbolKind::Class);
 	auto n2 = root->AddImplDeclToSymbol_NFb(f2, symbol_component::SymbolKind::Class);
-	auto pn1 = MakePtr<Symbol>();
-	auto pn2 = MakePtr<Symbol>();
-
-	auto b1 = tsys->DeclOf(pn1.Obj());
-	auto b2 = tsys->DeclOf(pn2.Obj());
+	auto n3 = root->AddImplDeclToSymbol_NFb(f3, symbol_component::SymbolKind::Class);
+	auto n4 = root->AddImplDeclToSymbol_NFb(f4, symbol_component::SymbolKind::Class);
 
 	List<ITsys*> p1, p2;
 	p1.Add(tsys->Void());
@@ -279,44 +292,31 @@ TEST_CASE(TestTypeSystem_DeclInstance)
 	p2.Add(tsys->Nullptr());
 	p2.Add(tsys->Void());
 
-	{
-		IEnumerable<ITsys*>* ps[] = { nullptr,&p1,&p2 };
-		for (vint i = 0; i < 3; i++)
-		{
-			for (vint j = 0; j < 3; j++)
-			{
-				if (i == j)
-				{
-					TEST_ASSERT(tsys->DeclInstantOf(n1, ps[i], b1) == tsys->DeclInstantOf(n1, ps[j], b1));
-				}
-				else
-				{
-					TEST_ASSERT(tsys->DeclInstantOf(n1, ps[i], b1) != tsys->DeclInstantOf(n1, ps[j], b1));
-				}
-			}
-		}
-	}
+	auto b1 = tsys->DeclInstantOf(bn1, &p1, nullptr);
+	auto b2 = tsys->DeclInstantOf(bn2, &p2, nullptr);
 
-	auto t1 = tsys->DeclInstantOf(n1, nullptr, nullptr);
-	TEST_ASSERT(t1->GetType() == TsysType::DeclInstant);
-	const auto& data1 = t1->GetDeclInstant();
-	TEST_ASSERT(data1.declSymbol == n1);
-	TEST_ASSERT(data1.parentDeclType == nullptr);
-	TEST_ASSERT(!data1.taContext);
-	TEST_ASSERT(t1->GetParamCount() == 0);
+	TEST_ASSERT(tsys->DeclInstantOf(n3, nullptr, b1) == tsys->DeclInstantOf(n3, nullptr, b1));
+	TEST_ASSERT(tsys->DeclInstantOf(n4, nullptr, b2) == tsys->DeclInstantOf(n4, nullptr, b2));
+	TEST_ASSERT(tsys->DeclInstantOf(n3, nullptr, b1) != tsys->DeclInstantOf(n4, nullptr, b2));
 
-	const_cast<TsysDeclInstant&>(data1).taContext = MakePtr<TemplateArgumentContext>();
+	TEST_ASSERT(tsys->DeclInstantOf(n1, &p1, nullptr) == tsys->DeclInstantOf(n1, &p1, nullptr));
+	TEST_ASSERT(tsys->DeclInstantOf(n2, &p2, nullptr) == tsys->DeclInstantOf(n2, &p2, nullptr));
+	TEST_ASSERT(tsys->DeclInstantOf(n1, &p1, nullptr) != tsys->DeclInstantOf(n1, &p2, nullptr));
 
-	auto t2 = tsys->DeclInstantOf(n2, &p2, t1);
+	TEST_ASSERT(tsys->DeclInstantOf(n1, &p1, b1) == tsys->DeclInstantOf(n1, &p1, b1));
+	TEST_ASSERT(tsys->DeclInstantOf(n2, &p2, b2) == tsys->DeclInstantOf(n2, &p2, b2));
+	TEST_ASSERT(tsys->DeclInstantOf(n1, &p1, b1) != tsys->DeclInstantOf(n1, &p2, b2));
+
+	auto t2 = tsys->DeclInstantOf(n2, &p2, b1);
 	TEST_ASSERT(t2->GetType() == TsysType::DeclInstant);
 	const auto& data2 = t2->GetDeclInstant();
 	TEST_ASSERT(data2.declSymbol == n2);
-	TEST_ASSERT(data2.parentDeclType == t1);
+	TEST_ASSERT(data2.parentDeclType == b1);
 	TEST_ASSERT(t2->GetParamCount() == 2);
 	TEST_ASSERT(t2->GetParam(0) == tsys->Nullptr());
 	TEST_ASSERT(t2->GetParam(1) == tsys->Void());
 	TEST_ASSERT(data2.taContext->arguments.Count() == 2);
-	TEST_ASSERT(data2.taContext->parent == data1.taContext.Obj());
+	TEST_ASSERT(data2.taContext->parent == b1->GetDeclInstant().taContext.Obj());
 	TEST_ASSERT(data2.taContext->symbolToApply == n2);
 
 	auto k1 = symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[0], tsys.Obj());

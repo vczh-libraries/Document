@@ -837,7 +837,15 @@ public:
 	ITsys* DeclInstantOf(Symbol* decl, IEnumerable<ITsys*>* params, ITsys* parentDeclType)override
 	{
 		auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(decl);
-		if (!spec) goto FAILED;
+		if (spec ^ (params != nullptr))
+		{
+			throw "Template class should have template argument provided.";
+		}
+
+		if (!params && !parentDeclType)
+		{
+			throw "DeclOf should be called instead if params and parentDeclType are both nullptr.";
+		}
 
 		switch (decl->kind)
 		{
@@ -846,29 +854,18 @@ public:
 		case symbol_component::SymbolKind::Union:
 			break;
 		default:
-			goto FAILED;
+			throw "Decl should be a class.";
 		}
 
 		if (parentDeclType)
 		{
 			switch (parentDeclType->GetType())
 			{
-			case TsysType::Decl:
 			case TsysType::DeclInstant:
 				break;
 			default:
-				goto FAILED;
+				throw "parentDeclType should be a template class or a class in a template class.";
 			}
-		}
-
-		switch (decl->kind)
-		{
-		case symbol_component::SymbolKind::Class:
-		case symbol_component::SymbolKind::Struct:
-		case symbol_component::SymbolKind::Union:
-			break;
-		default:
-			goto FAILED;
 		}
 
 		{
@@ -892,7 +889,7 @@ public:
 				if (!declInstant.taContext)
 				{
 					Ptr<TemplateArgumentContext> parentTaContext;
-					if (parentDeclType && parentDeclType->GetType() == TsysType::DeclInstant)
+					if (parentDeclType)
 					{
 						parentTaContext = parentDeclType->GetDeclInstant().taContext;
 					}
@@ -903,20 +900,24 @@ public:
 					
 					FOREACH_INDEXER(ITsys*, param, index, *params)
 					{
-						if (index >= spec->arguments.Count()) goto FAILED;
+						if (index >= spec->arguments.Count())
+						{
+							throw "The number of template argument should match the definition.";
+						}
 						taContext->arguments.Add(
 							symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[index], this),
 							param
 							);
 					}
-					if (taContext->arguments.Count() != spec->arguments.Count()) goto FAILED;
+					if (taContext->arguments.Count() != spec->arguments.Count())
+					{
+						throw "The number of template argument should match the definition.";
+					}
 					declInstant.taContext = taContext;
 				}
 			}
 			return itsys;
 		}
-	FAILED:
-		throw "DeclInstantOf should be usedon class type, with no or correct amount of type parameters.";
 	}
 
 	ITsys* InitOf(Array<ExprTsysItem>& params)override
