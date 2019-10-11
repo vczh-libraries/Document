@@ -8,7 +8,7 @@ namespace symbol_totsys_impl
 	// TypeSymbolToTsys
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void TypeSymbolToTsys(const ParsingArguments& pa, TypeTsysList& result, Symbol* symbol, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
+	void TypeSymbolToTsys(const ParsingArguments& pa, TypeTsysList& result, ITsys* parentDeclType, Symbol* symbol, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
 		switch (symbol->kind)
 		{
@@ -20,6 +20,11 @@ namespace symbol_totsys_impl
 		case symbol_component::SymbolKind::Struct:
 		case symbol_component::SymbolKind::Union:
 			{
+				if (parentDeclType)
+				{
+					// TODO: [Cpp.md] Deal with DeclInstant here
+					throw 0;
+				}
 				auto classDecl = symbol->GetAnyForwardDecl<ForwardClassDeclaration>();
 				auto& evTypes = EvaluateForwardClassSymbol(pa, classDecl.Obj());
 				for (vint j = 0; j < evTypes.Count(); j++)
@@ -31,6 +36,11 @@ namespace symbol_totsys_impl
 			return;
 		case symbol_component::SymbolKind::TypeAlias:
 			{
+				if (parentDeclType)
+				{
+					// TODO: [Cpp.md] Deal with DeclInstant here
+					throw 0;
+				}
 				auto usingDecl = symbol->GetImplDecl_NFb<TypeAliasDeclaration>();
 				auto& evTypes = EvaluateTypeAliasSymbol(pa, usingDecl.Obj());
 				for (vint j = 0; j < evTypes.Count(); j++)
@@ -102,9 +112,9 @@ namespace symbol_totsys_impl
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		symbolGenerator([&](Symbol* symbol)
+		symbolGenerator([&](ITsys* parentDeclType, Symbol* symbol)
 		{
-			TypeSymbolToTsys(pa, result, symbol, allowVariadic, hasVariadic, hasNonVariadic);
+			TypeSymbolToTsys(pa, result, parentDeclType, symbol, allowVariadic, hasVariadic, hasNonVariadic);
 		});
 
 		if (hasVariadic && hasNonVariadic)
@@ -141,7 +151,7 @@ namespace symbol_totsys_impl
 		{
 			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
 			{
-				receiver(resolving->resolvedSymbols[i]);
+				receiver(nullptr, resolving->resolvedSymbols[i]);
 			}
 		});
 	}
@@ -153,22 +163,27 @@ namespace symbol_totsys_impl
 	template<typename TReceiver>
 	void ResolveChildTypeWithGenericArguments(const ParsingArguments& pa, ChildType* self, ITsys* classType, SortedList<Symbol*>& visited, TReceiver&& receiver)
 	{
-		if (classType->GetType() == TsysType::Decl)
+		switch (classType->GetType())
 		{
-			auto newPa = pa.WithScope(classType->GetDecl());
-			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbolFromOutside);
-			if (rsr.types)
+		case TsysType::Decl:
+		case TsysType::DeclInstant:
 			{
-				for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
+				auto newPa = pa.WithScope(classType->GetDecl());
+				auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbolFromOutside);
+				if (rsr.types)
 				{
-					auto symbol = rsr.types->resolvedSymbols[i];
-					if (!visited.Contains(symbol))
+					for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
 					{
-						visited.Add(symbol);
-						receiver(symbol);
+						auto symbol = rsr.types->resolvedSymbols[i];
+						if (!visited.Contains(symbol))
+						{
+							visited.Add(symbol);
+							receiver((classType->GetType() == TsysType::DeclInstant ? classType : nullptr), symbol);
+						}
 					}
 				}
 			}
+			break;
 		}
 	}
 

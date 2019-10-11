@@ -660,6 +660,11 @@ class ITSYS_CLASS(DeclInstant)
 	ITSYS_MEMBERS_WITHPARAMS_WITH_ELEMENT(DeclInstant, TsysDeclInstant, const TsysDeclInstant&, DeclInstant)
 	ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(element)
 
+	Symbol* GetDecl()override
+	{
+		return data.declSymbol;
+	}
+
 private:
 	ITsys*					ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params);
 };

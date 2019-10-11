@@ -50,7 +50,7 @@ struct Ptr
 	AssertType(pa,		L"Ptr<int>",	L"Ptr<int>",	L"::Ptr<__int32>"					);
 }
 
-TEST_CASE(TestParseGenericClass_NestedUsedOutside)
+TEST_CASE(TestParseGenericClass_NestedStructUsedOutside)
 {
 	auto input = LR"(
 template<typename TA>
@@ -96,10 +96,18 @@ struct GA
 	AssertType(pa,		L"GA<int>::GB<bool>::GC<float>",	L"GA<int> :: GB<bool> :: GC<float>",	L"::GA<__int32> => ::GA::GB<bool> => ::GA::GB::GC<float>"									);
 }
 
-TEST_CASE(TestParseGenericClass_NestedTypeAlias)
+TEST_CASE(TestParseGenericClass_NestedTypeAliasUsedOutside)
 {
 }
 
 TEST_CASE(TestParseGenericClass_NestedThisType)
+{
+}
+
+TEST_CASE(TestParseGenericClass_NestedStructUsedInside)
+{
+}
+
+TEST_CASE(TestParseGenericClass_NestedTypeAliasUsedInside)
 {
 }
