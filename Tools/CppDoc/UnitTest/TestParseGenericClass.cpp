@@ -98,6 +98,57 @@ struct GA
 
 TEST_CASE(TestParseGenericClass_NestedTypeAliasUsedOutside)
 {
+	auto input = LR"(
+template<typename TA>
+struct GA
+{
+	struct CB
+	{
+		struct CC
+		{
+		};
+
+		template<typename TC>
+		struct GC
+		{
+		};
+
+		using _CC = CC;
+		template<typename TC> using _GC = GC<TB>;
+	};
+
+	template<typename TB>
+	struct GB
+	{
+		struct CC
+		{
+		};
+
+		template<typename TC>
+		struct GC
+		{
+		};
+
+		using _CC = CC;
+		template<typename TC> using _GC = GC<TB>;
+	};
+
+	using _CB = CB;
+	template<typename TB> using _GB = GB<TB>;
+};
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertType(pa,		L"GA",								L"GA",									L"<::GA::[TA]> ::GA<::GA::[TA]>"										);
+	AssertType(pa,		L"GA<int>::_CB",					L"GA<int> :: _CB",						L"::GA<__int32>::CB"													);
+	AssertType(pa,		L"GA<int>::_GB",					L"GA<int> :: _GB",						L"<::GA::GB::[TB]> ::GA<__int32>::GB<::GA::GB::[TB]>"					);
+	AssertType(pa,		L"GA<int>::_GB<bool>",				L"GA<int> :: _GB<bool>",				L"::GA<__int32>::GB<bool>"												);
+	AssertType(pa,		L"GA<int>::_CB::_CC",				L"GA<int> :: _CB :: _CC",				L"::GA<__int32>::CB::CC"												);
+	AssertType(pa,		L"GA<int>::_CB::_GC",				L"GA<int> :: _CB :: _GC",				L"<::GA::CB::GC::[TC]> ::GA<__int32>::CB::GC<::GA::CB::GC::[TC]>"		);
+	AssertType(pa,		L"GA<int>::_CB::_GC<float>",		L"GA<int> :: _CB :: _GC<float>",		L"::GA<__int32>::CB::GC<float>"											);
+	AssertType(pa,		L"GA<int>::_GB<bool>::_CC",			L"GA<int> :: _GB<bool> :: _CC",			L"::GA<__int32>::GB<bool>::CC"											);
+	AssertType(pa,		L"GA<int>::_GB<bool>::_GC",			L"GA<int> :: _GB<bool> :: _GC",			L"<::GA::GB::GC::[TC]> ::GA<__int32>::GB<bool>::GC<::GA::GB::GC::[TC]>"	);
+	AssertType(pa,		L"GA<int>::_GB<bool>::_GC<float>",	L"GA<int> :: _GB<bool> :: _GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"									);
 }
 
 TEST_CASE(TestParseGenericClass_NestedThisType)
@@ -109,5 +160,13 @@ TEST_CASE(TestParseGenericClass_NestedStructUsedInside)
 }
 
 TEST_CASE(TestParseGenericClass_NestedTypeAliasUsedInside)
+{
+}
+
+TEST_CASE(TestParseGenericClass_Overloading_BaseClass)
+{
+}
+
+TEST_CASE(TestParseGenericClass_Overloading_SpecialMember)
 {
 }
