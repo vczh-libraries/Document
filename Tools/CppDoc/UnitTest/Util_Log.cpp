@@ -1345,10 +1345,10 @@ void Log(Ptr<Program> program, StreamWriter& writer)
 	}
 }
 
-WString GetSymbolName(Symbol* symbol)
+WString GetSymbolName(Symbol* symbol, Symbol* stopAt)
 {
 	WString name;
-	while (symbol && symbol->GetParentScope())
+	while ((symbol != stopAt) && symbol->GetParentScope())
 	{
 		if (symbol->kind == symbol_component::SymbolKind::GenericTypeArgument)
 		{
@@ -1523,7 +1523,7 @@ void Log(ITsys* tsys, StreamWriter& writer)
 		return;
 	case TsysType::Decl:
 		{
-			writer.WriteString(GetSymbolName(tsys->GetDecl()));
+			writer.WriteString(GetSymbolName(tsys->GetDecl(), nullptr));
 		}
 		return;
 	case TsysType::DeclInstant:
@@ -1532,10 +1532,9 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			if (auto parent = di.parentDeclType)
 			{
 				Log(parent, writer);
-				writer.WriteString(L" => ");
 			}
 			
-			writer.WriteString(GetSymbolName(di.declSymbol));
+			writer.WriteString(GetSymbolName(di.declSymbol, (di.parentDeclType ? di.parentDeclType->GetDecl() : nullptr)));
 			if (tsys->GetParamCount())
 			{
 				writer.WriteString(L"<");
