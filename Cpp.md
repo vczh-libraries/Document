@@ -13,17 +13,7 @@
 
 - [ ] Next Demo!
   - [ ] `template` on classes.
-    - [x] Add `TsysType::DeclInstant`.
-    - [x] Test `DeclInstantOf`.
-    - [x] Search all `case TsysType::` or related if-else code and insert processing of `DeclInstant` with `throw 0;`.
     - [ ] Remove `nullptr` default values for `EvaluateXXXSymbol` arguments.
-    - [ ] Caching `gaContext`
-      - [x] When a generic declaration is instantiated, the created gaContext will be cached in the symbol(key = template arguments).
-        - for `TsysType::Decl`, a `gaContext` property will be added.
-        - We references a instantiated class like `(currentScope::)A<T1>::B<T2>` so all levels of `gaContext` will be created.
-      - [x] Refine `EvaluateXXXSymbol` functions to handle `ITsys* parentDeclType` properly.
-      - [ ] Child type evaluation: `v::t`.
-      - [x] Instantiate classes with all non-default template arguments specified.
     - [ ] Member type evaluation.
       - [ ] `GenericExpr` need to handle `parentDeclType` in `GenericFunction`
       - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
