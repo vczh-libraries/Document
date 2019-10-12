@@ -68,9 +68,19 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 					TsysCV cv;
 					TsysRefType refType;
 					auto entity = paramType->GetEntity(cv, refType);
-					if (refType == TsysRefType::LRef && entity->GetType() == TsysType::Decl && entity->GetDecl() == classSymbol)
+					if (refType == TsysRefType::LRef)
 					{
-						return member;
+						if (entity->GetType() == TsysType::Decl && entity->GetDecl() == classSymbol)
+						{
+							return member;
+						}
+						else if (entity->GetType() == TsysType::DeclInstant && entity->GetDecl() == classSymbol)
+						{
+							// TODO: [Cpp.md] Deal with DeclInstant here
+							// need to check if type arguments of entity are exactly the same as type parameters
+							// e.g., Ptr(const Ptr<T>&) is CopyCtor, but Ptr(const Ptr<T*>&) is not
+							throw 0;
+						}
 					}
 				}
 				break;
@@ -82,9 +92,18 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 					TsysCV cv;
 					TsysRefType refType;
 					auto entity = paramType->GetEntity(cv, refType);
-					if (refType == TsysRefType::RRef && entity->GetType() == TsysType::Decl && entity->GetDecl() == classSymbol)
+					if (refType == TsysRefType::RRef)
 					{
-						return member;
+						if (entity->GetType() == TsysType::Decl && entity->GetDecl() == classSymbol)
+						{
+							return member;
+						}
+						else if (entity->GetType() == TsysType::DeclInstant && entity->GetDecl() == classSymbol)
+						{
+							// TODO: [Cpp.md] Deal with DeclInstant here
+							// the same as above
+							throw 0;
+						}
 					}
 				}
 				break;
@@ -178,15 +197,13 @@ bool IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, Spec
 		}
 		break;
 	case TsysType::Decl:
+	case TsysType::DeclInstant:
 		{
 			auto classDecl = type->GetDecl()->GetImplDecl_NFb<ClassDeclaration>();
 			if (!classDecl) return true;
 			if (classDecl->classType == CppClassType::Union) return true;
 			return IsSpecialMemberFeatureEnabled(pa, classDecl->symbol, kind);
 		}
-	case TsysType::DeclInstant:
-		// TODO: [Cpp.md] Deal with DeclInstant here
-		throw 0;
 	case TsysType::Init:
 		for (vint i = 0; i < type->GetParamCount(); i++)
 		{

@@ -581,6 +581,12 @@ public:
 								}
 							}
 						}
+						else if (arg1.tsys->GetType() == TsysType::DeclInstant)
+						{
+							// TODO: [Cpp.md] Deal with DeclInstant here
+							// &Class<Arguments>::Member
+							throw 0;
+						}
 					}, Input(classTypes, typesVta));
 					goto SKIP_RESOLVING_OPERAND;
 				}

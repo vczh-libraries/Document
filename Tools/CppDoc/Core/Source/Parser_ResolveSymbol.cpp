@@ -277,7 +277,7 @@ public:
 						for (vint i = 0; i < types.Count(); i++)
 						{
 							auto tsys = types[i];
-							if (tsys->GetType() == TsysType::Decl)
+							if (tsys->GetType() == TsysType::Decl || tsys->GetType() == TsysType::DeclInstant)
 							{
 								symbol = tsys->GetDecl();
 								continue;

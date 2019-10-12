@@ -271,6 +271,11 @@ namespace symbol_totsys_impl
 				}
 			}
 		}
+		else if (classType->GetType() == TsysType::DeclInstant)
+		{
+			// TODO: [Cpp.md] Deal with DeclInstant here
+			throw 0;
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -395,6 +400,11 @@ namespace symbol_totsys_impl
 						{
 							AddSymbolsToOperatorResolving(pa, self->opName, self->opResolving, opResult, operatorIndexed);
 						}
+					}
+					else if (entityType->GetType() == TsysType::DeclInstant)
+					{
+						// TODO: [Cpp.md] Deal with DeclInstant here
+						throw 0;
 					}
 				}
 			}

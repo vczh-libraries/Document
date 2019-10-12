@@ -290,6 +290,11 @@ public:
 template<typename T>
 Ptr<T> TryGetDeclFromType(ITsys* type)
 {
+	if (type->GetType() == TsysType::DeclInstant)
+	{
+		// TODO: [Cpp.md] Deal with DeclInstant here
+		throw 0;
+	}
 	if (type->GetType() != TsysType::Decl) return false;
 	return type->GetDecl()->GetImplDecl_NFb<T>();
 }
@@ -297,6 +302,11 @@ Ptr<T> TryGetDeclFromType(ITsys* type)
 template<typename T>
 Ptr<T> TryGetForwardDeclFromType(ITsys* type)
 {
+	if (type->GetType() == TsysType::DeclInstant)
+	{
+		// TODO: [Cpp.md] Deal with DeclInstant here
+		throw 0;
+	}
 	if (type->GetType() != TsysType::Decl) return false;
 	return type->GetDecl()->GetAnyForwardDecl<T>();
 }

@@ -110,6 +110,11 @@ namespace TestConvert_Helpers
 				}
 			}
 		}
+		else if (toEntity->GetType() == TsysType::DeclInstant)
+		{
+			// TODO: [Cpp.md] Deal with DeclInstant here
+			throw 0;
+		}
 
 		if (fromEntity->GetParamCount() == 0)
 		{

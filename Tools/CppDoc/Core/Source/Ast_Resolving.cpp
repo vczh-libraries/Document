@@ -333,7 +333,7 @@ namespace symbol_type_resolving
 		TsysCV cv;
 		TsysRefType refType;
 		auto entity = parentItem.tsys->GetEntity(cv, refType);
-		if (entity->GetType() == TsysType::Decl)
+		if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
 		{
 			auto symbol = entity->GetDecl();
 			auto fieldPa = pa.WithScope(symbol);

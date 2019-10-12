@@ -108,6 +108,11 @@ namespace symbol_type_resolving
 						funcChoices.Add(TsysConv::Exact);
 					}
 				}
+				else if (entityType->GetType() == TsysType::DeclInstant && lookForOp)
+				{
+					// TODO: [Cpp.md] Deal with DeclInstant here
+					throw 0;
+				}
 				else if (entityType->GetType() == TsysType::Ptr)
 				{
 					entityType = entityType->GetElement();
@@ -463,8 +468,19 @@ namespace symbol_type_resolving
 			SearchAdlClassesAndNamespaces(pa, type->GetDecl(), nss, classes);
 			break;
 		case TsysType::DeclInstant:
-			// TODO: [Cpp.md] Deal with DeclInstant here
-			throw 0;
+			{
+				SearchAdlClassesAndNamespaces(pa, type->GetDecl(), nss, classes);
+				for (vint i = 0; i < type->GetParamCount(); i++)
+				{
+					SearchAdlClassesAndNamespaces(pa, type->GetParam(i), nss, classes);
+				}
+				const auto& di = type->GetDeclInstant();
+				if (di.parentDeclType)
+				{
+					SearchAdlClassesAndNamespaces(pa, di.parentDeclType, nss, classes);
+				}
+			}
+			break;
 		}
 	}
 
