@@ -199,13 +199,16 @@ struct TsysGenericFunction
 	TsysGenericFunction(const TsysGenericFunction& genericFunction)
 		:isLastParameterVta(genericFunction.isLastParameterVta)
 		, declSymbol(genericFunction.declSymbol)
+		, parentDeclType(genericFunction.parentDeclType)
 	{
 		CopyFrom(acceptTypes, genericFunction.acceptTypes);
 	}
 
 	TsysGenericFunction& operator=(const TsysGenericFunction& genericFunction)
 	{
+		isLastParameterVta = genericFunction.isLastParameterVta;
 		declSymbol = genericFunction.declSymbol;
+		parentDeclType = genericFunction.parentDeclType;
 		CopyFrom(acceptTypes, genericFunction.acceptTypes);
 		return *this;
 	}
