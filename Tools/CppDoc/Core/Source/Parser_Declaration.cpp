@@ -883,7 +883,7 @@ void ParseDeclaration_Function(
 			cv.isVolatile = funcType->qualifierVolatile;
 
 			auto classDecl = declarator->classMemberCache->classSymbols[0]->GetAnyForwardDecl<ForwardClassDeclaration>();
-			auto& ev = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj());
+			auto& ev = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
 			declarator->classMemberCache->thisType = ev[0]->CVOf(cv)->PtrOf();
 
 			if (!declarator->classMemberCache->symbolDefinedInsideClass)

@@ -82,9 +82,9 @@ namespace symbol_type_resolving
 	extern TypeTsysList&						EvaluateVarSymbol				(const ParsingArguments& invokerPa,	ForwardVariableDeclaration* varDecl,	ITsys* parentDeclType = nullptr													);
 	extern void									SetFuncTypeByReturnStat			(const ParsingArguments& pa,		FunctionDeclaration* funcDecl,			TypeTsysList& returnTypes,			EvaluateSymbolContext* esContext = nullptr	);
 	extern TypeTsysList&						EvaluateFuncSymbol				(const ParsingArguments& invokerPa,	ForwardFunctionDeclaration* funcDecl,	ITsys* parentDeclType = nullptr,	EvaluateSymbolContext* esContext = nullptr	);
-	extern TypeTsysList&						EvaluateForwardClassSymbol		(const ParsingArguments& invokerPa,	ForwardClassDeclaration* classDecl,		ITsys* parentDeclType = nullptr,	EvaluateSymbolContext* esContext = nullptr	);
-	extern symbol_component::Evaluation&		EvaluateClassSymbol				(const ParsingArguments& invokerPa,	ClassDeclaration* classDecl,			ITsys* parentDeclType = nullptr,	EvaluateSymbolContext* esContext = nullptr	);
-	extern TypeTsysList&						EvaluateTypeAliasSymbol			(const ParsingArguments& invokerPa,	TypeAliasDeclaration* usingDecl,		ITsys* parentDeclType = nullptr,	EvaluateSymbolContext* esContext = nullptr	);
+	extern TypeTsysList&						EvaluateForwardClassSymbol		(const ParsingArguments& invokerPa,	ForwardClassDeclaration* classDecl,		ITsys* parentDeclType,				EvaluateSymbolContext* esContext			);
+	extern symbol_component::Evaluation&		EvaluateClassSymbol				(const ParsingArguments& invokerPa,	ClassDeclaration* classDecl,			ITsys* parentDeclType,				EvaluateSymbolContext* esContext			);
+	extern TypeTsysList&						EvaluateTypeAliasSymbol			(const ParsingArguments& invokerPa,	TypeAliasDeclaration* usingDecl,		ITsys* parentDeclType,				EvaluateSymbolContext* esContext			);
 	extern TypeTsysList&						EvaluateValueAliasSymbol		(const ParsingArguments& invokerPa,	ValueAliasDeclaration* usingDecl,		ITsys* parentDeclType = nullptr,	EvaluateSymbolContext* esContext = nullptr	);
 	extern ITsys*								EvaluateGenericArgumentSymbol	(Symbol* symbol);
 

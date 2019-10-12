@@ -224,7 +224,7 @@ namespace TestConvert_Helpers
 			if (currentType == toType) return true;
 			if (auto currentClass = TryGetDeclFromType<ClassDeclaration>(currentType))
 			{
-				auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, currentClass.Obj());
+				auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, currentClass.Obj(), nullptr, nullptr);
 				for (vint j = 0; j < ev.ExtraCount(); j++)
 				{
 					auto& baseTypes = ev.GetExtra(j);

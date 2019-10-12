@@ -9,6 +9,10 @@ namespace symbol_type_resolving
 		case EvaluationKind::General:
 			return decl->symbol->GetEvaluationForUpdating_NFb();
 		case EvaluationKind::Instantiated:
+			if (!esContext)
+			{
+				throw "Missing esContext for EvaluationKind::Instantiated";
+			}
 			return esContext->evaluation;
 		default:
 			{
@@ -155,7 +159,7 @@ namespace symbol_type_resolving
 					{
 						if (parentClassDecl->templateSpec)
 						{
-							parentTemplateClass = EvaluateForwardClassSymbol(invokerPa, parentClassDecl.Obj())[0]->GetElement();
+							parentTemplateClass = EvaluateForwardClassSymbol(invokerPa, parentClassDecl.Obj(), parentDeclType, nullptr)[0]->GetElement();
 							goto FINISH_PARENT_TEMPLATE;
 						}
 					}

@@ -273,7 +273,7 @@ public:
 				{
 					if (auto usingDecl = symbol->GetImplDecl_NFb<TypeAliasDeclaration>())
 					{
-						auto& types = symbol_type_resolving::EvaluateTypeAliasSymbol(pa, usingDecl.Obj());
+						auto& types = symbol_type_resolving::EvaluateTypeAliasSymbol(pa, usingDecl.Obj(), nullptr, nullptr);
 						for (vint i = 0; i < types.Count(); i++)
 						{
 							auto tsys = types[i];

@@ -485,7 +485,7 @@ public:
 
 	void Visit(ClassDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateClassSymbol(pa, self);
+		symbol_type_resolving::EvaluateClassSymbol(pa, self, nullptr, nullptr);
 		auto dpa = pa.WithScope(self->symbol);
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
@@ -511,7 +511,7 @@ public:
 
 	void Visit(TypeAliasDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateTypeAliasSymbol(pa, self);
+		symbol_type_resolving::EvaluateTypeAliasSymbol(pa, self, nullptr, nullptr);
 	}
 
 	void Visit(ValueAliasDeclaration* self) override

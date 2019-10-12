@@ -578,10 +578,6 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 ParsingArguments
 ***********************************************************************/
 
-ParsingArguments::ParsingArguments()
-{
-}
-
 ParsingArguments::ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr<IIndexRecorder> _recorder)
 	:root(_root)
 	, scopeSymbol(_root.Obj())

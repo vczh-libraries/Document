@@ -211,7 +211,7 @@ GenerateMembers
 
 bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclaration* classDecl, SpecialMemberKind kind, bool passIfFieldHasInitializer)
 {
-	auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, classDecl);
+	auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, classDecl, nullptr, nullptr);
 	auto classSymbol = classDecl->symbol;
 	for (vint i = 0; i < ev.ExtraCount(); i++)
 	{

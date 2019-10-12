@@ -350,7 +350,7 @@ struct ParsingArguments
 	Ptr<ITsysAlloc>									tsys;
 	Ptr<IIndexRecorder>								recorder;
 
-	ParsingArguments();
+	ParsingArguments() = default;
 	ParsingArguments(const ParsingArguments&) = default;
 	ParsingArguments(ParsingArguments&&) = default;
 	ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr<IIndexRecorder> _recorder);

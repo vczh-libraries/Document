@@ -21,7 +21,7 @@ namespace symbol_totsys_impl
 		case symbol_component::SymbolKind::Union:
 			{
 				auto classDecl = symbol->GetAnyForwardDecl<ForwardClassDeclaration>();
-				auto& evTypes = EvaluateForwardClassSymbol(pa, classDecl.Obj(), parentDeclType);
+				auto& evTypes = EvaluateForwardClassSymbol(pa, classDecl.Obj(), parentDeclType, nullptr);
 				for (vint j = 0; j < evTypes.Count(); j++)
 				{
 					AddTsysToResult(result, evTypes[j]);
@@ -32,7 +32,7 @@ namespace symbol_totsys_impl
 		case symbol_component::SymbolKind::TypeAlias:
 			{
 				auto usingDecl = symbol->GetImplDecl_NFb<TypeAliasDeclaration>();
-				auto& evTypes = EvaluateTypeAliasSymbol(pa, usingDecl.Obj(), parentDeclType);
+				auto& evTypes = EvaluateTypeAliasSymbol(pa, usingDecl.Obj(), parentDeclType, nullptr);
 				for (vint j = 0; j < evTypes.Count(); j++)
 				{
 					AddTsysToResult(result, evTypes[j]);
