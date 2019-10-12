@@ -298,7 +298,7 @@ namespace symbol_type_resolving
 			throw NotResolvableException();
 		}
 
-		auto newPa = pa.WithScope(symbol->GetParentScope());
+		auto newPa = pa.WithScope(symbol);
 		auto& evaluatedTypes = ev.Get();
 
 		TypeTsysList processedReturnTypes;
@@ -359,7 +359,7 @@ namespace symbol_type_resolving
 			}
 			else
 			{
-				TypeToTsysNoVta(eval.declPa.WithScope(eval.symbol->GetParentScope()), funcDecl->type, eval.evaluatedTypes, IsMemberFunction(funcDecl));
+				TypeToTsysNoVta(eval.declPa, funcDecl->type, eval.evaluatedTypes, IsMemberFunction(funcDecl));
 				return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, esContext);
 			}
 		}
