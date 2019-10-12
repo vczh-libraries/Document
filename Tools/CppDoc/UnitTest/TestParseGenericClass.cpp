@@ -95,7 +95,7 @@ struct GA
 	AssertType(pa,		L"GA<int>::GB<bool>::GC",			L"GA<int> :: GB<bool> :: GC",			L"<::GA::GB::GC::[TC]> ::GA<__int32>::GB<bool>::GC<::GA::GB::GC::[TC]>"	);
 	AssertType(pa,		L"GA<int>::GB<bool>::GC<float>",	L"GA<int> :: GB<bool> :: GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"									);
 }
-
+/*
 TEST_CASE(TestParseGenericClass_NestedTypeAliasUsedOutside)
 {
 	auto input = LR"(
@@ -150,7 +150,7 @@ struct GA
 	AssertType(pa,		L"GA<int>::_GB<bool>::_GC",			L"GA<int> :: _GB<bool> :: _GC",			L"<::GA::GB::GC::[TC]> ::GA<__int32>::GB<bool>::GC<::GA::GB::GC::[TC]>"	);
 	AssertType(pa,		L"GA<int>::_GB<bool>::_GC<float>",	L"GA<int> :: _GB<bool> :: _GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"									);
 }
-
+*/
 TEST_CASE(TestParseGenericClass_NestedThisType)
 {
 }

@@ -169,15 +169,7 @@ namespace symbol_totsys_impl
 				ITsys* parentDeclType = nullptr;
 				if (classType->GetType() == TsysType::DeclInstant)
 				{
-					const auto& data = classType->GetDeclInstant();
-					if (data.taContext)
-					{
-						parentDeclType = classType;
-					}
-					else
-					{
-						parentDeclType = data.parentDeclType;
-					}
+					parentDeclType = classType;
 				}
 
 				if (rsr.types)

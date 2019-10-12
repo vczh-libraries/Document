@@ -76,186 +76,70 @@ namespace symbol_type_resolving
 		return evaluatedTypes;
 	}
 
-#define SETUP_EV_OR_RETURN(DECL, SPEC, PARENTTACONTEXT, ESCONTEXT)											\
-	auto symbol = DECL->symbol;																				\
-	auto declPa = GetPaFromInvokerPa(invokerPa, DECL->symbol, PARENTTACONTEXT, ESCONTEXT);					\
-	auto& ev = GetCorrectEvaluation(declPa, DECL, SPEC, ESCONTEXT);											\
-	switch (ev.progress)																					\
-	{																										\
-	case symbol_component::EvaluationProgress::Evaluated: return ev.Get();									\
-	case symbol_component::EvaluationProgress::Evaluating: throw NotResolvableException();					\
-	}																										\
-																											\
-	ev.progress = symbol_component::EvaluationProgress::Evaluating;											\
-	ev.Allocate();																							\
-	auto& evaluatedTypes = ev.Get()																			\
-
-	/***********************************************************************
-	EvaluateVarSymbol: Evaluate the declared type for a variable
-	***********************************************************************/
-
-	TypeTsysList& EvaluateVarSymbol(const ParsingArguments& invokerPa, ForwardVariableDeclaration* varDecl)
+	struct Eval
 	{
-		SETUP_EV_OR_RETURN(varDecl, nullptr, nullptr, nullptr);
+	private:
+		bool								notEvaluated;
 
-		if (varDecl->needResolveTypeFromInitializer)
+	public:
+		Symbol*								symbol;
+		ParsingArguments					declPa;
+		symbol_component::Evaluation&		ev;
+		TypeTsysList&						evaluatedTypes;
+		ITsys*								parentTemplateClass;
+
+		Eval(
+			bool							_notEvaluated,
+			Symbol*							_symbol,
+			ParsingArguments				_declPa,
+			symbol_component::Evaluation&	_ev,
+			TypeTsysList&					_evaluatedTypes,
+			ITsys*							_parentTemplateClass
+		)
+			: notEvaluated(_notEvaluated)
+			, symbol(_symbol)
+			, declPa(_declPa)
+			, ev(_ev)
+			, evaluatedTypes(_evaluatedTypes)
+			, parentTemplateClass(_parentTemplateClass)
 		{
-			if (auto rootVarDecl = dynamic_cast<VariableDeclaration*>(varDecl))
-			{
-				if (!rootVarDecl->initializer)
-				{
-					throw NotResolvableException();
-				}
-
-				ExprTsysList types;
-				ExprToTsysNoVta(declPa, rootVarDecl->initializer->arguments[0].item, types);
-
-				for (vint k = 0; k < types.Count(); k++)
-				{
-					auto type = ResolvePendingType(declPa, rootVarDecl->type, types[k]);
-					if (!evaluatedTypes.Contains(type))
-					{
-						evaluatedTypes.Add(type);
-					}
-				}
-			}
-			else
-			{
-				throw NotResolvableException();
-			}
-		}
-		else
-		{
-			TypeToTsysNoVta(declPa, varDecl->type, evaluatedTypes);
 		}
 
-		ev.progress = symbol_component::EvaluationProgress::Evaluated;
-		return evaluatedTypes;
-	}
+		operator bool()
+		{
+			return notEvaluated;
+		}
+	};
 
-	/***********************************************************************
-	EvaluateFuncSymbol: Evaluate the declared type for a function
-	***********************************************************************/
-
-	bool IsMemberFunction(ForwardFunctionDeclaration* funcDecl)
+	Eval ProcessArguments(const ParsingArguments& invokerPa, Declaration* decl, Ptr<TemplateSpec> spec, ITsys*& parentDeclType, EvaluateSymbolContext* esContext)
 	{
-		auto symbol = funcDecl->symbol;
-		if (IsStaticSymbol<ForwardFunctionDeclaration>(symbol))
+		if (parentDeclType)
 		{
-			return false;
-		}
-
-		if (auto parent = symbol->GetParentScope())
-		{
-			if (parent->GetImplDecl_NFb<ClassDeclaration>())
+			if (parentDeclType->GetType() != TsysType::DeclInstant)
 			{
-				return true;
+				throw "parentDeclType should be DeclInstant";
+			}
+
+			const auto& data = parentDeclType->GetDeclInstant();
+			if (!data.taContext)
+			{
+				parentDeclType = data.parentDeclType;
 			}
 		}
 
-		return false;
-	}
-
-	void SetFuncTypeByReturnStat(const ParsingArguments& pa, FunctionDeclaration* funcDecl, TypeTsysList& returnTypes, EvaluateSymbolContext* esContext)
-	{
-		auto symbol = funcDecl->symbol;
-		auto& ev = GetCorrectEvaluation(pa, funcDecl, funcDecl->templateSpec, esContext);
-		if (ev.progress != symbol_component::EvaluationProgress::Evaluating)
+		TemplateArgumentContext* parentTaContext = nullptr;
+		if (parentDeclType)
 		{
-			throw NotResolvableException();
-		}
-
-		auto newPa = pa.WithScope(symbol->GetParentScope());
-		auto& evaluatedTypes = ev.Get();
-
-		TypeTsysList processedReturnTypes;
-		{
-			auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>();
-			auto pendingType = funcType->decoratorReturnType ? funcType->decoratorReturnType : funcType->returnType;
-			for (vint i = 0; i < returnTypes.Count(); i++)
+			const auto& data = parentDeclType->GetDeclInstant();
+			if (!data.taContext)
 			{
-				auto tsys = ResolvePendingType(newPa, pendingType, { nullptr,ExprTsysType::PRValue,returnTypes[i] });
-				if (!processedReturnTypes.Contains(tsys))
-				{
-					processedReturnTypes.Add(tsys);
-				}
+				throw "Wrong parentDeclType";
 			}
-		}
-		TypeToTsysAndReplaceFunctionReturnType(
-			newPa,
-			funcDecl->type,
-			processedReturnTypes,
-			evaluatedTypes,
-			IsMemberFunction(funcDecl)
-		);
 
-		FinishEvaluatingPotentialGenericSymbol(pa, funcDecl, funcDecl->templateSpec, esContext);
-	}
-
-	TypeTsysList& EvaluateFuncSymbol(const ParsingArguments& invokerPa, ForwardFunctionDeclaration* funcDecl, EvaluateSymbolContext* esContext)
-	{
-		SETUP_EV_OR_RETURN(funcDecl, funcDecl->templateSpec, nullptr, esContext);
-
-		if (funcDecl->needResolveTypeFromStatement)
-		{
-			if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))
-			{
-				EnsureFunctionBodyParsed(rootFuncDecl);
-				EvaluateStat(declPa, rootFuncDecl->statement, true, esContext);
-
-				if (evaluatedTypes.Count() == 0)
-				{
-					evaluatedTypes.Add(declPa.tsys->Void());
-					return FinishEvaluatingPotentialGenericSymbol(declPa, funcDecl, funcDecl->templateSpec, esContext);
-				}
-				else
-				{
-					return evaluatedTypes;
-				}
-			}
-			else
-			{
-				throw NotResolvableException();
-			}
-		}
-		else
-		{
-			TypeToTsysNoVta(declPa.WithScope(symbol->GetParentScope()), funcDecl->type, evaluatedTypes, IsMemberFunction(funcDecl));
-			return FinishEvaluatingPotentialGenericSymbol(declPa, funcDecl, funcDecl->templateSpec, esContext);
-		}
-	}
-
-	/***********************************************************************
-	EvaluateClassSymbol: Evaluate base types for a class
-	***********************************************************************/
-
-	TemplateArgumentContext* GetTaContextFromDeclInstance(ITsys* parentDeclType)
-	{
-		if (!parentDeclType) return nullptr;
-		if (parentDeclType->GetType() != TsysType::DeclInstant)
-		{
-			throw "Wrong parentDeclType.";
+			parentTaContext = data.taContext.Obj();
 		}
 
-		const auto& data = parentDeclType->GetDeclInstant();
-		if (!data.taContext)
-		{
-			throw "Wrong parentDeclType";
-		}
-
-		return data.taContext.Obj();
-	}
-
-	TypeTsysList& EvaluateForwardClassSymbol(const ParsingArguments& invokerPa, ForwardClassDeclaration* classDecl, ITsys* parentDeclType, EvaluateSymbolContext* esContext)
-	{
-		if (esContext)
-		{
-			// not implemented
-			throw 0;
-		}
-		auto parentTaContext = GetTaContextFromDeclInstance(parentDeclType);
-		SETUP_EV_OR_RETURN(classDecl, classDecl->templateSpec, parentTaContext, esContext);
-
+		auto symbol = decl->symbol;
 		ITsys* parentTemplateClass = nullptr;
 		{
 			auto parent = symbol->GetParentScope();
@@ -297,113 +181,332 @@ namespace symbol_type_resolving
 			throw L"parentDeclType should be nullptr if classDecl is not contained by a template class.";
 		}
 
-		if (classDecl->templateSpec)
+		auto declPa = GetPaFromInvokerPa(invokerPa, symbol, parentTaContext, esContext);
+		auto& ev = GetCorrectEvaluation(declPa, decl, spec, esContext);
+
+		switch (ev.progress)
 		{
-			Array<ITsys*> params(classDecl->templateSpec->arguments.Count());
-			for (vint i = 0; i < classDecl->templateSpec->arguments.Count(); i++)
-			{
-				params[i] = GetTemplateArgumentKey(classDecl->templateSpec->arguments[i], declPa.tsys.Obj());
-			}
-			auto diTsys = declPa.tsys->DeclInstantOf(symbol, &params, parentTemplateClass);
-			evaluatedTypes.Add(diTsys);
+		case symbol_component::EvaluationProgress::Evaluating:
+			throw NotResolvableException();
+		case symbol_component::EvaluationProgress::Evaluated:
+			return Eval(false, symbol, declPa, ev, ev.Get(), parentTemplateClass);
+		default:
+			ev.progress = symbol_component::EvaluationProgress::Evaluating;
+			ev.Allocate();
+			return Eval(true, symbol, declPa, ev, ev.Get(), parentTemplateClass);
 		}
-		else
+	}
+
+	/***********************************************************************
+	EvaluateVarSymbol: Evaluate the declared type for a variable
+	***********************************************************************/
+
+	TypeTsysList& EvaluateVarSymbol(
+		const ParsingArguments& invokerPa,
+		ForwardVariableDeclaration* varDecl,
+		ITsys* parentDeclType
+	)
+	{
+		auto eval = ProcessArguments(invokerPa, varDecl, nullptr, parentDeclType, nullptr);
+		if(eval)
 		{
-			if (parentTemplateClass)
+			if (varDecl->needResolveTypeFromInitializer)
 			{
-				evaluatedTypes.Add(declPa.tsys->DeclInstantOf(symbol, nullptr, parentTemplateClass));
+				if (auto rootVarDecl = dynamic_cast<VariableDeclaration*>(varDecl))
+				{
+					if (!rootVarDecl->initializer)
+					{
+						throw NotResolvableException();
+					}
+
+					ExprTsysList types;
+					ExprToTsysNoVta(eval.declPa, rootVarDecl->initializer->arguments[0].item, types);
+
+					for (vint k = 0; k < types.Count(); k++)
+					{
+						auto type = ResolvePendingType(eval.declPa, rootVarDecl->type, types[k]);
+						if (!eval.evaluatedTypes.Contains(type))
+						{
+							eval.evaluatedTypes.Add(type);
+						}
+					}
+				}
+				else
+				{
+					throw NotResolvableException();
+				}
 			}
 			else
 			{
-				evaluatedTypes.Add(declPa.tsys->DeclOf(symbol));
+				TypeToTsysNoVta(eval.declPa, varDecl->type, eval.evaluatedTypes);
 			}
+
+			eval.ev.progress = symbol_component::EvaluationProgress::Evaluated;
+			return eval.evaluatedTypes;
 		}
-		return FinishEvaluatingPotentialGenericSymbol(declPa, classDecl, classDecl->templateSpec, esContext);
+		else
+		{
+			return eval.evaluatedTypes;
+		}
 	}
 
-	symbol_component::Evaluation& EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl, ITsys* parentDeclType, EvaluateSymbolContext* esContext)
+	/***********************************************************************
+	EvaluateFuncSymbol: Evaluate the declared type for a function
+	***********************************************************************/
+
+	bool IsMemberFunction(ForwardFunctionDeclaration* funcDecl)
+	{
+		auto symbol = funcDecl->symbol;
+		if (IsStaticSymbol<ForwardFunctionDeclaration>(symbol))
+		{
+			return false;
+		}
+
+		if (auto parent = symbol->GetParentScope())
+		{
+			if (parent->GetImplDecl_NFb<ClassDeclaration>())
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	void SetFuncTypeByReturnStat(
+		const ParsingArguments& pa,
+		FunctionDeclaration* funcDecl,
+		TypeTsysList& returnTypes,
+		EvaluateSymbolContext* esContext
+	)
+	{
+		auto symbol = funcDecl->symbol;
+		auto& ev = GetCorrectEvaluation(pa, funcDecl, funcDecl->templateSpec, esContext);
+		if (ev.progress != symbol_component::EvaluationProgress::Evaluating)
+		{
+			throw NotResolvableException();
+		}
+
+		auto newPa = pa.WithScope(symbol->GetParentScope());
+		auto& evaluatedTypes = ev.Get();
+
+		TypeTsysList processedReturnTypes;
+		{
+			auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>();
+			auto pendingType = funcType->decoratorReturnType ? funcType->decoratorReturnType : funcType->returnType;
+			for (vint i = 0; i < returnTypes.Count(); i++)
+			{
+				auto tsys = ResolvePendingType(newPa, pendingType, { nullptr,ExprTsysType::PRValue,returnTypes[i] });
+				if (!processedReturnTypes.Contains(tsys))
+				{
+					processedReturnTypes.Add(tsys);
+				}
+			}
+		}
+		TypeToTsysAndReplaceFunctionReturnType(
+			newPa,
+			funcDecl->type,
+			processedReturnTypes,
+			evaluatedTypes,
+			IsMemberFunction(funcDecl)
+		);
+
+		FinishEvaluatingPotentialGenericSymbol(pa, funcDecl, funcDecl->templateSpec, esContext);
+	}
+
+	TypeTsysList& EvaluateFuncSymbol(
+		const ParsingArguments& invokerPa,
+		ForwardFunctionDeclaration* funcDecl,
+		ITsys* parentDeclType,
+		EvaluateSymbolContext* esContext
+	)
+	{
+		auto eval = ProcessArguments(invokerPa, funcDecl, funcDecl->templateSpec, parentDeclType, esContext);
+		if (eval)
+		{
+			if (funcDecl->needResolveTypeFromStatement)
+			{
+				if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))
+				{
+					EnsureFunctionBodyParsed(rootFuncDecl);
+					EvaluateStat(eval.declPa, rootFuncDecl->statement, true, esContext);
+
+					if (eval.evaluatedTypes.Count() == 0)
+					{
+						eval.evaluatedTypes.Add(eval.declPa.tsys->Void());
+						return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, esContext);
+					}
+					else
+					{
+						return eval.evaluatedTypes;
+					}
+				}
+				else
+				{
+					throw NotResolvableException();
+				}
+			}
+			else
+			{
+				TypeToTsysNoVta(eval.declPa.WithScope(eval.symbol->GetParentScope()), funcDecl->type, eval.evaluatedTypes, IsMemberFunction(funcDecl));
+				return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, esContext);
+			}
+		}
+		else
+		{
+			return eval.evaluatedTypes;
+		}
+	}
+
+	/***********************************************************************
+	EvaluateClassSymbol: Evaluate base types for a class
+	***********************************************************************/
+
+	TypeTsysList& EvaluateForwardClassSymbol(
+		const ParsingArguments& invokerPa,
+		ForwardClassDeclaration* classDecl,
+		ITsys* parentDeclType,
+		EvaluateSymbolContext* esContext
+	)
 	{
 		if (esContext)
 		{
 			// not implemented
 			throw 0;
 		}
-		auto parentTaContext = GetTaContextFromDeclInstance(parentDeclType);
-		EvaluateForwardClassSymbol(invokerPa, classDecl, parentDeclType, esContext);
 
-		auto symbol = classDecl->symbol;
-		auto declPa = GetPaFromInvokerPa(invokerPa, classDecl->symbol, parentTaContext, esContext);
-		auto& ev = GetCorrectEvaluation(declPa, classDecl, classDecl->templateSpec, esContext);
-		switch (ev.progress)
+		auto eval = ProcessArguments(invokerPa, classDecl, classDecl->templateSpec, parentDeclType, esContext);
+		if (eval)
 		{
-		case symbol_component::EvaluationProgress::Evaluated:
-			if (ev.ExtraCount() == 0 && classDecl->baseTypes.Count() > 0)
+			if (classDecl->templateSpec)
 			{
-				break;
+				Array<ITsys*> params(classDecl->templateSpec->arguments.Count());
+				for (vint i = 0; i < classDecl->templateSpec->arguments.Count(); i++)
+				{
+					params[i] = GetTemplateArgumentKey(classDecl->templateSpec->arguments[i], eval.declPa.tsys.Obj());
+				}
+				auto diTsys = eval.declPa.tsys->DeclInstantOf(eval.symbol, &params, eval.parentTemplateClass);
+				eval.evaluatedTypes.Add(diTsys);
 			}
 			else
 			{
-				return ev;
+				if (eval.parentTemplateClass)
+				{
+					eval.evaluatedTypes.Add(eval.declPa.tsys->DeclInstantOf(eval.symbol, nullptr, eval.parentTemplateClass));
+				}
+				else
+				{
+					eval.evaluatedTypes.Add(eval.declPa.tsys->DeclOf(eval.symbol));
+				}
 			}
-		case symbol_component::EvaluationProgress::Evaluating:
-			throw NotResolvableException();
+			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, classDecl, classDecl->templateSpec, esContext);
+		}
+		else
+		{
+			return eval.evaluatedTypes;
+		}
+	}
+
+	symbol_component::Evaluation& EvaluateClassSymbol(
+		const ParsingArguments& invokerPa,
+		ClassDeclaration* classDecl,
+		ITsys* parentDeclType,
+		EvaluateSymbolContext* esContext
+	)
+	{
+		if (esContext)
+		{
+			// not implemented
+			throw 0;
 		}
 
-		ev.progress = symbol_component::EvaluationProgress::Evaluating;
-		ev.AllocateExtra(classDecl->baseTypes.Count());
+		EvaluateForwardClassSymbol(invokerPa, classDecl, parentDeclType, esContext);
+		auto eval = ProcessArguments(invokerPa, classDecl, classDecl->templateSpec, parentDeclType, esContext);
+		if (eval.ev.progress == symbol_component::EvaluationProgress::Evaluated)
+		{
+			if (eval.ev.ExtraCount() != 0 || classDecl->baseTypes.Count() == 0)
+			{
+				return eval.ev;
+			}
+		}
+
+		eval.ev.progress = symbol_component::EvaluationProgress::Evaluating;
+		eval.ev.AllocateExtra(classDecl->baseTypes.Count());
 
 		for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 		{
-			TypeToTsysNoVta(declPa, classDecl->baseTypes[i].f1, ev.GetExtra(i));
+			TypeToTsysNoVta(eval.declPa, classDecl->baseTypes[i].f1, eval.ev.GetExtra(i));
 		}
 
-		ev.progress = symbol_component::EvaluationProgress::Evaluated;
-		return ev;
+		eval.ev.progress = symbol_component::EvaluationProgress::Evaluated;
+		return eval.ev;
 	}
 
 	/***********************************************************************
 	EvaluateTypeAliasSymbol: Evaluate the declared type for an alias
 	***********************************************************************/
 
-	TypeTsysList& EvaluateTypeAliasSymbol(const ParsingArguments& invokerPa, TypeAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
+	TypeTsysList& EvaluateTypeAliasSymbol(
+		const ParsingArguments& invokerPa,
+		TypeAliasDeclaration* usingDecl,
+		ITsys* parentDeclType,
+		EvaluateSymbolContext* esContext
+	)
 	{
-		SETUP_EV_OR_RETURN(usingDecl, usingDecl->templateSpec, nullptr, esContext);
-
-		TypeToTsysNoVta(declPa, usingDecl->type, evaluatedTypes);
-		return FinishEvaluatingPotentialGenericSymbol(declPa, usingDecl, usingDecl->templateSpec, esContext);
+		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, esContext);
+		if (eval)
+		{
+			TypeToTsysNoVta(eval.declPa, usingDecl->type, eval.evaluatedTypes);
+			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, esContext);
+		}
+		else
+		{
+			return eval.evaluatedTypes;
+		}
 	}
 
 	/***********************************************************************
 	EvaluateValueAliasSymbol: Evaluate the declared value for an alias
 	***********************************************************************/
 
-	TypeTsysList& EvaluateValueAliasSymbol(const ParsingArguments& invokerPa, ValueAliasDeclaration* usingDecl, EvaluateSymbolContext* esContext)
+	TypeTsysList& EvaluateValueAliasSymbol(
+		const ParsingArguments& invokerPa,
+		ValueAliasDeclaration* usingDecl,
+		ITsys* parentDeclType,
+		EvaluateSymbolContext* esContext
+	)
 	{
-		SETUP_EV_OR_RETURN(usingDecl, usingDecl->templateSpec, nullptr, esContext);
-
-		if (usingDecl->needResolveTypeFromInitializer)
+		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, esContext);
+		if (eval)
 		{
-			ExprTsysList tsys;
-			ExprToTsysNoVta(declPa, usingDecl->expr, tsys);
-			for (vint i = 0; i < tsys.Count(); i++)
+			if (usingDecl->needResolveTypeFromInitializer)
 			{
-				auto entityType = tsys[i].tsys;
-				if (entityType->GetType() == TsysType::Zero)
+				ExprTsysList tsys;
+				ExprToTsysNoVta(eval.declPa, usingDecl->expr, tsys);
+				for (vint i = 0; i < tsys.Count(); i++)
 				{
-					entityType = declPa.tsys->Int();
-				}
-				if (!evaluatedTypes.Contains(entityType))
-				{
-					evaluatedTypes.Add(entityType);
+					auto entityType = tsys[i].tsys;
+					if (entityType->GetType() == TsysType::Zero)
+					{
+						entityType = eval.declPa.tsys->Int();
+					}
+					if (!eval.evaluatedTypes.Contains(entityType))
+					{
+						eval.evaluatedTypes.Add(entityType);
+					}
 				}
 			}
+			else
+			{
+				TypeToTsysNoVta(eval.declPa, usingDecl->type, eval.evaluatedTypes);
+			}
+
+			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, esContext);
 		}
 		else
 		{
-			TypeToTsysNoVta(declPa, usingDecl->type, evaluatedTypes);
+			return eval.evaluatedTypes;
 		}
-
-		return FinishEvaluatingPotentialGenericSymbol(declPa, usingDecl, usingDecl->templateSpec, esContext);
 	}
 
 	/***********************************************************************

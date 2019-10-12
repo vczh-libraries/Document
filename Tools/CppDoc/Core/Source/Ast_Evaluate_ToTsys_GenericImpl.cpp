@@ -70,7 +70,8 @@ namespace symbol_totsys_impl
 				{
 					auto decl = declSymbol->GetImplDecl_NFb<TypeAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					EvaluateTypeAliasSymbol(pa, decl.Obj(), &esContext);
+					// TODO: [Cpp.md] Deal with DeclInstant here
+					EvaluateTypeAliasSymbol(pa, decl.Obj(), nullptr, &esContext);
 				}
 				break;
 			default:
@@ -93,7 +94,8 @@ namespace symbol_totsys_impl
 				{
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					EvaluateFuncSymbol(pa, decl.Obj(), &esContext);
+					// TODO: [Cpp.md] Deal with DeclInstant here
+					EvaluateFuncSymbol(pa, decl.Obj(), nullptr, &esContext);
 					for (vint i = 0; i < esContext.evaluation.Get().Count(); i++)
 					{
 						esContext.evaluation.Get()[i] = esContext.evaluation.Get()[i]->PtrOf();
@@ -104,7 +106,8 @@ namespace symbol_totsys_impl
 				{
 					auto decl = declSymbol->GetImplDecl_NFb<ValueAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					EvaluateValueAliasSymbol(pa, decl.Obj(), &esContext);
+					// TODO: [Cpp.md] Deal with DeclInstant here
+					EvaluateValueAliasSymbol(pa, decl.Obj(), nullptr, &esContext);
 				}
 				break;
 			default:

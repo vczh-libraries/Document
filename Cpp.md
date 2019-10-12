@@ -20,7 +20,8 @@
       - [x] When a generic declaration is instantiated, the created gaContext will be cached in the symbol(key = template arguments).
         - for `TsysType::Decl`, a `gaContext` property will be added.
         - We references a instantiated class like `(currentScope::)A<T1>::B<T2>` so all levels of `gaContext` will be created.
-      - [ ] Refine `EvaluateXXXSymbol` functions to handle `ITsys* parentDeclType` properly.
+      - [x] Refine `EvaluateXXXSymbol` functions to handle `ITsys* parentDeclType` properly.
+      - [ ] Remove `nullptr` default values for `EvaluateXXXSymbol` arguments.
       - [ ] Child type evaluation: `v::t`.
       - [x] Instantiate classes with all non-default template arguments specified.
     - [ ] Member type evaluation.
