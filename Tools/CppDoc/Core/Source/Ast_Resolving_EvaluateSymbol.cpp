@@ -91,22 +91,19 @@ namespace symbol_type_resolving
 		ParsingArguments					declPa;
 		symbol_component::Evaluation&		ev;
 		TypeTsysList&						evaluatedTypes;
-		ITsys*								parentTemplateClass;
 
 		Eval(
 			bool							_notEvaluated,
 			Symbol*							_symbol,
 			ParsingArguments				_declPa,
 			symbol_component::Evaluation&	_ev,
-			TypeTsysList&					_evaluatedTypes,
-			ITsys*							_parentTemplateClass
+			TypeTsysList&					_evaluatedTypes
 		)
 			: notEvaluated(_notEvaluated)
 			, symbol(_symbol)
 			, declPa(_declPa)
 			, ev(_ev)
 			, evaluatedTypes(_evaluatedTypes)
-			, parentTemplateClass(_parentTemplateClass)
 		{
 		}
 
@@ -198,6 +195,7 @@ namespace symbol_type_resolving
 		}
 
 		auto declPa = GetPaFromInvokerPa(invokerPa, symbol, parentTaContext, esContext);
+		declPa.parentDeclType = parentTemplateClass;
 		auto& ev = GetCorrectEvaluation(declPa, decl, spec, esContext);
 
 		switch (ev.progress)
@@ -205,11 +203,11 @@ namespace symbol_type_resolving
 		case symbol_component::EvaluationProgress::Evaluating:
 			throw NotResolvableException();
 		case symbol_component::EvaluationProgress::Evaluated:
-			return Eval(false, symbol, declPa, ev, ev.Get(), parentTemplateClass);
+			return Eval(false, symbol, declPa, ev, ev.Get());
 		default:
 			ev.progress = symbol_component::EvaluationProgress::Evaluating;
 			ev.Allocate();
-			return Eval(true, symbol, declPa, ev, ev.Get(), parentTemplateClass);
+			return Eval(true, symbol, declPa, ev, ev.Get());
 		}
 	}
 
@@ -402,14 +400,14 @@ namespace symbol_type_resolving
 				{
 					params[i] = GetTemplateArgumentKey(classDecl->templateSpec->arguments[i], eval.declPa.tsys.Obj());
 				}
-				auto diTsys = eval.declPa.tsys->DeclInstantOf(eval.symbol, &params, eval.parentTemplateClass);
+				auto diTsys = eval.declPa.tsys->DeclInstantOf(eval.symbol, &params, eval.declPa.parentDeclType);
 				eval.evaluatedTypes.Add(diTsys);
 			}
 			else
 			{
-				if (eval.parentTemplateClass)
+				if (eval.declPa.parentDeclType)
 				{
-					eval.evaluatedTypes.Add(eval.declPa.tsys->DeclInstantOf(eval.symbol, nullptr, eval.parentTemplateClass));
+					eval.evaluatedTypes.Add(eval.declPa.tsys->DeclInstantOf(eval.symbol, nullptr, eval.declPa.parentDeclType));
 				}
 				else
 				{

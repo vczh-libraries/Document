@@ -139,16 +139,16 @@ struct GA
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertType(pa,		L"GA",								L"GA",									L"<::GA::[TA]> ::GA<::GA::[TA]>"										);
-	AssertType(pa,		L"GA<int>::_CB",					L"GA<int> :: _CB",						L"::GA<__int32>::CB"													);
-	AssertType(pa,		L"GA<int>::_GB",					L"GA<int> :: _GB",						L"<::GA::GB::[TB]> ::GA<__int32>::GB<::GA::GB::[TB]>"					);
-	AssertType(pa,		L"GA<int>::_GB<bool>",				L"GA<int> :: _GB<bool>",				L"::GA<__int32>::GB<bool>"												);
-	AssertType(pa,		L"GA<int>::_CB::_CC",				L"GA<int> :: _CB :: _CC",				L"::GA<__int32>::CB::CC"												);
-	AssertType(pa,		L"GA<int>::_CB::_GC",				L"GA<int> :: _CB :: _GC",				L"<::GA::CB::GC::[TC]> ::GA<__int32>::CB::GC<::GA::CB::GC::[TC]>"		);
-	AssertType(pa,		L"GA<int>::_CB::_GC<float>",		L"GA<int> :: _CB :: _GC<float>",		L"::GA<__int32>::CB::GC<float>"											);
-	AssertType(pa,		L"GA<int>::_GB<bool>::_CC",			L"GA<int> :: _GB<bool> :: _CC",			L"::GA<__int32>::GB<bool>::CC"											);
-	AssertType(pa,		L"GA<int>::_GB<bool>::_GC",			L"GA<int> :: _GB<bool> :: _GC",			L"<::GA::GB::GC::[TC]> ::GA<__int32>::GB<bool>::GC<::GA::GB::GC::[TC]>"	);
-	AssertType(pa,		L"GA<int>::_GB<bool>::_GC<float>",	L"GA<int> :: _GB<bool> :: _GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"									);
+	AssertType(pa,		L"GA",								L"GA",									L"<::GA::[TA]> ::GA<::GA::[TA]>"											);
+	AssertType(pa,		L"GA<int>::_CB",					L"GA<int> :: _CB",						L"::GA<__int32>::CB"														);
+	AssertType(pa,		L"GA<int>::_GB",					L"GA<int> :: _GB",						L"<::GA::_GB::[TB]> ::GA<__int32>::GB<::GA::_GB::[TB]>"						);
+	AssertType(pa,		L"GA<int>::_GB<bool>",				L"GA<int> :: _GB<bool>",				L"::GA<__int32>::GB<bool>"													);
+	AssertType(pa,		L"GA<int>::_CB::_CC",				L"GA<int> :: _CB :: _CC",				L"::GA<__int32>::CB::CC"													);
+	AssertType(pa,		L"GA<int>::_CB::_GC",				L"GA<int> :: _CB :: _GC",				L"<::GA::CB::_GC::[TC]> ::GA<__int32>::CB::GC<::GA::CB::_GC::[TC]>"			);
+	AssertType(pa,		L"GA<int>::_CB::_GC<float>",		L"GA<int> :: _CB :: _GC<float>",		L"::GA<__int32>::CB::GC<float>"												);
+	AssertType(pa,		L"GA<int>::_GB<bool>::_CC",			L"GA<int> :: _GB<bool> :: _CC",			L"::GA<__int32>::GB<bool>::CC"												);
+	AssertType(pa,		L"GA<int>::_GB<bool>::_GC",			L"GA<int> :: _GB<bool> :: _GC",			L"<::GA::GB::_GC::[TC]> ::GA<__int32>::GB<bool>::GC<::GA::GB::_GC::[TC]>"	);
+	AssertType(pa,		L"GA<int>::_GB<bool>::_GC<float>",	L"GA<int> :: _GB<bool> :: _GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"										);
 }
 
 TEST_CASE(TestParseGenericClass_NestedThisType)
