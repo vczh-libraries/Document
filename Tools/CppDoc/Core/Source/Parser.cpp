@@ -1,6 +1,7 @@
 #include "Parser.h"
 #include "Ast_Decl.h"
 #include "Ast_Expr.h"
+#include "Ast_Resolving.h"
 
 namespace symbol_component
 {
@@ -591,7 +592,8 @@ ParsingArguments ParsingArguments::WithScope(Symbol* _scopeSymbol)const
 	ParsingArguments pa(root, tsys, recorder);
 	pa.program = program;
 	pa.scopeSymbol = _scopeSymbol;
-	pa.taContext = taContext;
+	pa.parentDeclType = AdjustDeclInstantForScope(_scopeSymbol, parentDeclType);
+	pa.taContext = AdjustTaContextForScope(_scopeSymbol, taContext);
 
 	while (_scopeSymbol)
 	{
@@ -618,6 +620,7 @@ ParsingArguments ParsingArguments::WithArgs(TemplateArgumentContext& taContext)c
 {
 	ParsingArguments pa = *this;
 	taContext.parent = pa.taContext;
+	pa.parentDeclType = parentDeclType;
 	pa.taContext = &taContext;
 	return pa;
 }
@@ -646,6 +649,16 @@ ParsingArguments ParsingArguments::AdjustForDecl(Symbol* declSymbol)const
 
 	newPa.taContext = nullptr;
 	return newPa;
+}
+
+ParsingArguments ParsingArguments::AdjustForDecl(Symbol* declSymbol, ITsys* parentDeclType, bool forceOverrideForNull)const
+{
+	auto pa = AdjustForDecl(declSymbol);
+	if (forceOverrideForNull || parentDeclType)
+	{
+		pa.parentDeclType = AdjustDeclInstantForScope(pa.scopeSymbol, parentDeclType);
+	}
+	return pa;
 }
 
 EvaluationKind ParsingArguments::GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const
@@ -678,6 +691,76 @@ const List<ITsys*>* ParsingArguments::TryGetReplacedGenericArgs(ITsys* arg)const
 		current = current->parent;
 	}
 	return nullptr;
+}
+
+TemplateArgumentContext* ParsingArguments::AdjustTaContextForScope(Symbol* scopeSymbol, TemplateArgumentContext* taContext)
+{
+	auto scopeWithTemplateSpec = scopeSymbol;
+	while (scopeWithTemplateSpec)
+	{
+		if (symbol_type_resolving::GetTemplateSpecFromSymbol(scopeWithTemplateSpec))
+		{
+			break;
+		}
+		scopeWithTemplateSpec = scopeWithTemplateSpec->GetParentScope();
+	}
+
+	if (!scopeWithTemplateSpec)
+	{
+		return nullptr;
+	}
+
+	while (taContext && taContext->symbolToApply != scopeWithTemplateSpec)
+	{
+		taContext = taContext->parent;
+	}
+	return taContext;
+}
+
+ITsys* ParsingArguments::AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* parentDeclType)
+{
+	if (!parentDeclType)
+	{
+		return nullptr;
+	}
+	if (parentDeclType->GetType() != TsysType::DeclInstant)
+	{
+		throw L"Wrong parentDeclType";
+	}
+
+	auto scopeWithTemplateClass = scopeSymbol;
+	while (scopeWithTemplateClass)
+	{
+		if (symbol_type_resolving::GetTemplateSpecFromSymbol(scopeWithTemplateClass))
+		{
+			bool isClass = false;
+			switch (scopeWithTemplateClass->kind)
+			{
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+			case symbol_component::SymbolKind::Union:
+				isClass = true;
+				break;
+			}
+
+			if (isClass)
+			{
+				break;
+			}
+		}
+		scopeWithTemplateClass = scopeWithTemplateClass->GetParentScope();
+	}
+
+	while (parentDeclType)
+	{
+		const auto& di = parentDeclType->GetDeclInstant();
+		if (di.declSymbol == scopeWithTemplateClass)
+		{
+			break;
+		}
+		parentDeclType = di.parentDeclType;
+	}
+	return parentDeclType;
 }
 
 /***********************************************************************

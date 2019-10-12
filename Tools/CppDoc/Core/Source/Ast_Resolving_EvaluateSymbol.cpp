@@ -11,7 +11,7 @@ namespace symbol_type_resolving
 		case EvaluationKind::Instantiated:
 			if (!esContext)
 			{
-				throw "Missing esContext for EvaluationKind::Instantiated";
+				throw L"Missing esContext for EvaluationKind::Instantiated";
 			}
 			return esContext->evaluation;
 		default:
@@ -122,7 +122,7 @@ namespace symbol_type_resolving
 		{
 			if (parentDeclType->GetType() != TsysType::DeclInstant)
 			{
-				throw "parentDeclType should be DeclInstant";
+				throw L"parentDeclType should be DeclInstant";
 			}
 
 			const auto& data = parentDeclType->GetDeclInstant();
@@ -138,7 +138,7 @@ namespace symbol_type_resolving
 			const auto& data = parentDeclType->GetDeclInstant();
 			if (!data.taContext)
 			{
-				throw "Wrong parentDeclType";
+				throw L"Wrong parentDeclType";
 			}
 
 			parentTaContext = data.taContext.Obj();
@@ -159,7 +159,8 @@ namespace symbol_type_resolving
 					{
 						if (parentClassDecl->templateSpec)
 						{
-							parentTemplateClass = EvaluateForwardClassSymbol(invokerPa, parentClassDecl.Obj(), parentDeclType, nullptr)[0]->GetElement();
+							auto parentPa = invokerPa.AdjustForDecl(parent, parentDeclType, true);
+							parentTemplateClass = EvaluateForwardClassSymbol(parentPa, parentClassDecl.Obj(), nullptr, nullptr)[0]->GetElement();
 							goto FINISH_PARENT_TEMPLATE;
 						}
 					}

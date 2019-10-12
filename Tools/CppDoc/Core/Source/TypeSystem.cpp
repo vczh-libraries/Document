@@ -79,18 +79,18 @@ protected:
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
 
-	TsysPrimitive													GetPrimitive()				{ throw "Not Implemented!"; }
-	TsysCV															GetCV()						{ throw "Not Implemented!"; }
-	ITsys*															GetElement()				{ throw "Not Implemented!"; }
-	ITsys*															GetClass()					{ throw "Not Implemented!"; }
-	ITsys*															GetParam(vint index)		{ throw "Not Implemented!"; }
-	vint															GetParamCount()				{ throw "Not Implemented!"; }
-	TsysFunc														GetFunc()					{ throw "Not Implemented!"; }
-	const TsysInit&													GetInit()					{ throw "Not Implemented!"; }
-	const TsysGenericFunction&										GetGenericFunction()		{ throw "Not Implemented!"; }
-	TsysGenericArg													GetGenericArg()				{ throw "Not Implemented!"; }
-	Symbol*															GetDecl()					{ throw "Not Implemented!"; }
-	const TsysDeclInstant&											GetDeclInstant()			{ throw "Not Implemented!"; }
+	TsysPrimitive													GetPrimitive()				{ throw L"Not Implemented!"; }
+	TsysCV															GetCV()						{ throw L"Not Implemented!"; }
+	ITsys*															GetElement()				{ throw L"Not Implemented!"; }
+	ITsys*															GetClass()					{ throw L"Not Implemented!"; }
+	ITsys*															GetParam(vint index)		{ throw L"Not Implemented!"; }
+	vint															GetParamCount()				{ throw L"Not Implemented!"; }
+	TsysFunc														GetFunc()					{ throw L"Not Implemented!"; }
+	const TsysInit&													GetInit()					{ throw L"Not Implemented!"; }
+	const TsysGenericFunction&										GetGenericFunction()		{ throw L"Not Implemented!"; }
+	TsysGenericArg													GetGenericArg()				{ throw L"Not Implemented!"; }
+	Symbol*															GetDecl()					{ throw L"Not Implemented!"; }
+	const TsysDeclInstant&											GetDeclInstant()			{ throw L"Not Implemented!"; }
 
 	ITsys* LRefOf()																						override;
 	ITsys* RRefOf()																						override;
@@ -100,7 +100,7 @@ public:
 	ITsys* MemberOf(ITsys* classType)																	override;
 	ITsys* CVOf(TsysCV cv)																				override;
 	ITsys* GenericFunctionOf(IEnumerable<ITsys*>& params, const TsysGenericFunction& genericFunction)	override;
-	ITsys* GenericArgOf(TsysGenericArg genericArg)														override { throw "Not Implemented!"; }
+	ITsys* GenericArgOf(TsysGenericArg genericArg)														override { throw L"Not Implemented!"; }
 
 	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
 	{
@@ -820,7 +820,7 @@ public:
 		vint a = (vint)primitive.type;
 		vint b = (vint)primitive.bytes;
 		vint index = (vint)TsysBytes::_COUNT * a + b;
-		if (index > sizeof(primitives) / sizeof(*primitives)) throw "Not Implemented!";
+		if (index > sizeof(primitives) / sizeof(*primitives)) throw L"Not Implemented!";
 
 		auto& itsys = primitives[index];
 		if (!itsys)
@@ -844,12 +844,12 @@ public:
 		auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(decl);
 		if (spec ^ (params != nullptr))
 		{
-			throw "Template class should have template argument provided.";
+			throw L"Template class should have template argument provided.";
 		}
 
 		if (!params && !parentDeclType)
 		{
-			throw "DeclOf should be called instead if params and parentDeclType are both nullptr.";
+			throw L"DeclOf should be called instead if params and parentDeclType are both nullptr.";
 		}
 
 		switch (decl->kind)
@@ -859,7 +859,7 @@ public:
 		case symbol_component::SymbolKind::Union:
 			break;
 		default:
-			throw "Decl should be a class.";
+			throw L"Decl should be a class.";
 		}
 
 		if (parentDeclType)
@@ -869,7 +869,7 @@ public:
 			case TsysType::DeclInstant:
 				break;
 			default:
-				throw "parentDeclType should be a template class or a class in a template class.";
+				throw L"parentDeclType should be a template class or a class in a template class.";
 			}
 		}
 
@@ -907,7 +907,7 @@ public:
 					{
 						if (index >= spec->arguments.Count())
 						{
-							throw "The number of template argument should match the definition.";
+							throw L"The number of template argument should match the definition.";
 						}
 						taContext->arguments.Add(
 							symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[index], this),
@@ -916,7 +916,7 @@ public:
 					}
 					if (taContext->arguments.Count() != spec->arguments.Count())
 					{
-						throw "The number of template argument should match the definition.";
+						throw L"The number of template argument should match the definition.";
 					}
 					declInstant.taContext = taContext;
 				}
@@ -1007,7 +1007,7 @@ ITsys* TsysBase::CVOf(TsysCV cv)
 		index--;
 	}
 
-	if (index > sizeof(cvOf) / sizeof(*cvOf)) throw "Not Implemented!";
+	if (index > sizeof(cvOf) / sizeof(*cvOf)) throw L"Not Implemented!";
 	auto& itsys = cvOf[index];
 	if (!itsys) itsys = tsys->_cv.Alloc(tsys, this, cv);
 	return itsys;

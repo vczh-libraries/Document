@@ -3,7 +3,6 @@
 
 #include "Lexer.h"
 #include "Ast.h"
-#include "TypeSystem.h"
 
 /***********************************************************************
 Symbol
@@ -346,6 +345,7 @@ struct ParsingArguments
 
 	Symbol*											scopeSymbol = nullptr;
 	Symbol*											functionBodySymbol = nullptr;
+	ITsys*											parentDeclType = nullptr;
 	TemplateArgumentContext*						taContext = nullptr;
 	Ptr<ITsysAlloc>									tsys;
 	Ptr<IIndexRecorder>								recorder;
@@ -361,10 +361,14 @@ struct ParsingArguments
 	ParsingArguments								WithScope(Symbol* _scopeSymbol)const;
 	ParsingArguments								WithArgs(TemplateArgumentContext& taContext)const;
 	ParsingArguments								AdjustForDecl(Symbol* declSymbol)const;
+	ParsingArguments								AdjustForDecl(Symbol* declSymbol, ITsys* parentDeclType, bool forceOverrideForNull)const;
 
 	EvaluationKind									GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const;
 	bool											IsGeneralEvaluation()const;
 	const List<ITsys*>*								TryGetReplacedGenericArgs(ITsys* arg)const;
+
+	static TemplateArgumentContext*					AdjustTaContextForScope(Symbol* scopeSymbol, TemplateArgumentContext* taContext);
+	static ITsys*									AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* parentDeclType);
 };
 
 struct EvaluateSymbolContext
