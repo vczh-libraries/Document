@@ -23,6 +23,7 @@
       - [x] Refine `EvaluateXXXSymbol` functions to handle `ITsys* parentDeclType` properly.
       - [ ] Remove `nullptr` default values for `EvaluateXXXSymbol` arguments.
         - [ ] Bring `parentDeclType` information to type aliases, since they can be passed to high-level template argument.
+          - Add `parentDeclType` to `GenericFunction` type.
       - [ ] Child type evaluation: `v::t`.
       - [x] Instantiate classes with all non-default template arguments specified.
     - [ ] Member type evaluation.
