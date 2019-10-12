@@ -370,7 +370,7 @@ namespace symbol_type_resolving
 		GpaList gpaMappings;
 		CalculateGpa(gpaMappings, genericFunction, genericFuncInfo, inputArgumentCount, boundedAnys, offset);
 
-		auto pa = invokerPa.AdjustForDecl(genericFuncInfo.declSymbol).WithArgs(newTaContext);
+		auto pa = invokerPa.AdjustForDecl(genericFuncInfo.declSymbol).AppendSingleLevelArgs(newTaContext);
 		for (vint i = 0; i < genericFunction->GetParamCount(); i++)
 		{
 			auto gpa = gpaMappings[i];

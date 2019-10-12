@@ -359,7 +359,7 @@ struct ParsingArguments
 	ParsingArguments&								operator=(ParsingArguments&&) = default;
 
 	ParsingArguments								WithScope(Symbol* _scopeSymbol)const;
-	ParsingArguments								WithArgs(TemplateArgumentContext& taContext)const;
+	ParsingArguments								AppendSingleLevelArgs(TemplateArgumentContext& taContext)const;
 	ParsingArguments								AdjustForDecl(Symbol* declSymbol)const;
 	ParsingArguments								AdjustForDecl(Symbol* declSymbol, ITsys* parentDeclType, bool forceOverrideForNull)const;
 

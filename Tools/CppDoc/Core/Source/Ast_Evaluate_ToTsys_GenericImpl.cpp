@@ -65,7 +65,7 @@ namespace symbol_totsys_impl
 			case symbol_component::SymbolKind::Union:
 			case symbol_component::SymbolKind::GenericTypeArgument:
 				esContext.evaluation.Allocate();
-				genericFunction->GetElement()->ReplaceGenericArgs(pa.WithArgs(esContext.additionalArguments), esContext.evaluation.Get());
+				genericFunction->GetElement()->ReplaceGenericArgs(pa.AppendSingleLevelArgs(esContext.additionalArguments), esContext.evaluation.Get());
 				break;
 			case symbol_component::SymbolKind::TypeAlias:
 				{

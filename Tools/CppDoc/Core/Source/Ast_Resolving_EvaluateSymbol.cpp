@@ -45,16 +45,13 @@ namespace symbol_type_resolving
 
 		if (esContext)
 		{
-			return newPa.WithArgs(esContext->additionalArguments);
+			newPa.taContext = &esContext->additionalArguments;
 		}
 		else if (parentTaContext)
 		{
-			return newPa.WithArgs(*parentTaContext);
+			newPa.taContext = parentTaContext;
 		}
-		else
-		{
-			return newPa;
-		}
+		return newPa;
 	}
 
 	TypeTsysList& FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& declPa, Declaration* decl, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)

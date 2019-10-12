@@ -616,7 +616,7 @@ ParsingArguments ParsingArguments::WithScope(Symbol* _scopeSymbol)const
 	return pa;
 }
 
-ParsingArguments ParsingArguments::WithArgs(TemplateArgumentContext& taContext)const
+ParsingArguments ParsingArguments::AppendSingleLevelArgs(TemplateArgumentContext& taContext)const
 {
 	ParsingArguments pa = *this;
 	taContext.parent = pa.taContext;
