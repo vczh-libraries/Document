@@ -22,10 +22,14 @@
         - We references a instantiated class like `(currentScope::)A<T1>::B<T2>` so all levels of `gaContext` will be created.
       - [x] Refine `EvaluateXXXSymbol` functions to handle `ITsys* parentDeclType` properly.
       - [ ] Remove `nullptr` default values for `EvaluateXXXSymbol` arguments.
+        - [ ] `GenericType` need to handle `ChildType`
       - [ ] Child type evaluation: `v::t`.
       - [x] Instantiate classes with all non-default template arguments specified.
     - [ ] Member type evaluation.
+      - [ ] `GenericExpr` need to handle `ChildExpr`
+      - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
       - [ ] `v.f`, `v->f`, `v.*f`, `v->*f`, `v::f`
+      - [ ] `auto` member function
     - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
   - [ ] More `template`
     - [ ] Function specializations recognized but not used
