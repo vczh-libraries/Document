@@ -114,7 +114,7 @@ struct GA
 		};
 
 		using _CC = CC;
-		template<typename TC> using _GC = GC<TB>;
+		template<typename TC> using _GC = GC<TC>;
 	};
 
 	template<typename TB>
@@ -130,7 +130,7 @@ struct GA
 		};
 
 		using _CC = CC;
-		template<typename TC> using _GC = GC<TB>;
+		template<typename TC> using _GC = GC<TC>;
 	};
 
 	using _CB = CB;
