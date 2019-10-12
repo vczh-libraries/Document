@@ -57,6 +57,7 @@ namespace symbol_totsys_impl
 	{
 		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa](ITsys* genericFunction, Symbol* declSymbol, EvaluateSymbolContext& esContext)
 		{
+			auto parentDeclType = genericFunction->GetGenericFunction().parentDeclType;
 			switch (declSymbol->kind)
 			{
 			case symbol_component::SymbolKind::Class:
@@ -70,8 +71,7 @@ namespace symbol_totsys_impl
 				{
 					auto decl = declSymbol->GetImplDecl_NFb<TypeAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					// TODO: [Cpp.md] Deal with DeclInstant here
-					EvaluateTypeAliasSymbol(pa, decl.Obj(), nullptr, &esContext);
+					EvaluateTypeAliasSymbol(pa, decl.Obj(), parentDeclType, &esContext);
 				}
 				break;
 			default:
@@ -88,14 +88,14 @@ namespace symbol_totsys_impl
 	{
 		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa](ITsys* genericFunction, Symbol* declSymbol, EvaluateSymbolContext& esContext)
 		{
+			auto parentDeclType = genericFunction->GetGenericFunction().parentDeclType;
 			switch (declSymbol->kind)
 			{
 			case symbol_component::SymbolKind::FunctionBodySymbol:
 				{
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					// TODO: [Cpp.md] Deal with DeclInstant here
-					EvaluateFuncSymbol(pa, decl.Obj(), nullptr, &esContext);
+					EvaluateFuncSymbol(pa, decl.Obj(), parentDeclType, &esContext);
 					for (vint i = 0; i < esContext.evaluation.Get().Count(); i++)
 					{
 						esContext.evaluation.Get()[i] = esContext.evaluation.Get()[i]->PtrOf();
@@ -106,8 +106,7 @@ namespace symbol_totsys_impl
 				{
 					auto decl = declSymbol->GetImplDecl_NFb<ValueAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					// TODO: [Cpp.md] Deal with DeclInstant here
-					EvaluateValueAliasSymbol(pa, decl.Obj(), nullptr, &esContext);
+					EvaluateValueAliasSymbol(pa, decl.Obj(), parentDeclType, &esContext);
 				}
 				break;
 			default:

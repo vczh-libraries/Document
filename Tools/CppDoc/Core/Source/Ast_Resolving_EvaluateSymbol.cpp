@@ -53,7 +53,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	TypeTsysList& FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& declPa, Declaration* decl, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)
+	TypeTsysList& FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& declPa, Declaration* decl, Ptr<TemplateSpec> spec, ITsys* parentDeclType, EvaluateSymbolContext* esContext)
 	{
 		auto& ev = GetCorrectEvaluation(declPa, decl, spec, esContext);
 		auto& evaluatedTypes = ev.Get();
@@ -64,6 +64,7 @@ namespace symbol_type_resolving
 			TypeTsysList params;
 
 			genericFunction.declSymbol = decl->symbol;
+			genericFunction.parentDeclType = parentDeclType;
 			CreateGenericFunctionHeader(declPa, spec, params, genericFunction);
 
 			for (vint i = 0; i < evaluatedTypes.Count(); i++)
@@ -311,7 +312,8 @@ namespace symbol_type_resolving
 			IsMemberFunction(funcDecl)
 		);
 
-		FinishEvaluatingPotentialGenericSymbol(pa, funcDecl, funcDecl->templateSpec, esContext);
+		// TODO: [Cpp.md] Deal with DeclInstant here
+		FinishEvaluatingPotentialGenericSymbol(pa, funcDecl, funcDecl->templateSpec, nullptr, esContext);
 	}
 
 	TypeTsysList& EvaluateFuncSymbol(
@@ -334,7 +336,7 @@ namespace symbol_type_resolving
 					if (eval.evaluatedTypes.Count() == 0)
 					{
 						eval.evaluatedTypes.Add(eval.declPa.tsys->Void());
-						return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, esContext);
+						return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, parentDeclType, esContext);
 					}
 					else
 					{
@@ -349,7 +351,7 @@ namespace symbol_type_resolving
 			else
 			{
 				TypeToTsysNoVta(eval.declPa.WithScope(eval.symbol->GetParentScope()), funcDecl->type, eval.evaluatedTypes, IsMemberFunction(funcDecl));
-				return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, esContext);
+				return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, parentDeclType, esContext);
 			}
 		}
 		else
@@ -399,7 +401,7 @@ namespace symbol_type_resolving
 					eval.evaluatedTypes.Add(eval.declPa.tsys->DeclOf(eval.symbol));
 				}
 			}
-			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, classDecl, classDecl->templateSpec, esContext);
+			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, classDecl, classDecl->templateSpec, parentDeclType, esContext);
 		}
 		else
 		{
@@ -457,7 +459,7 @@ namespace symbol_type_resolving
 		if (eval)
 		{
 			TypeToTsysNoVta(eval.declPa, usingDecl->type, eval.evaluatedTypes);
-			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, esContext);
+			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, parentDeclType, esContext);
 		}
 		else
 		{
@@ -501,7 +503,7 @@ namespace symbol_type_resolving
 				TypeToTsysNoVta(eval.declPa, usingDecl->type, eval.evaluatedTypes);
 			}
 
-			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, esContext);
+			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, parentDeclType, esContext);
 		}
 		else
 		{

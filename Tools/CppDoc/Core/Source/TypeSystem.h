@@ -191,6 +191,7 @@ struct TsysGenericFunction
 {
 	bool							isLastParameterVta = false;
 	Symbol*							declSymbol = nullptr;
+	ITsys*							parentDeclType = nullptr;
 	Array<bool>						acceptTypes;
 
 	TsysGenericFunction() = default;
@@ -215,6 +216,8 @@ struct TsysGenericFunction
 		if (a.isLastParameterVta > b.isLastParameterVta) return 1;
 		if (a.declSymbol < b.declSymbol) return -1;
 		if (a.declSymbol > b.declSymbol) return 1;
+		if (a.parentDeclType < b.parentDeclType) return -1;
+		if (a.parentDeclType > b.parentDeclType) return 1;
 		return CompareEnumerable(a.acceptTypes, b.acceptTypes);
 	}
 };

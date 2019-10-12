@@ -31,13 +31,8 @@ namespace symbol_totsys_impl
 			return;
 		case symbol_component::SymbolKind::TypeAlias:
 			{
-				if (parentDeclType)
-				{
-					// TODO: [Cpp.md] Deal with DeclInstant here
-					throw 0;
-				}
 				auto usingDecl = symbol->GetImplDecl_NFb<TypeAliasDeclaration>();
-				auto& evTypes = EvaluateTypeAliasSymbol(pa, usingDecl.Obj());
+				auto& evTypes = EvaluateTypeAliasSymbol(pa, usingDecl.Obj(), parentDeclType);
 				for (vint j = 0; j < evTypes.Count(); j++)
 				{
 					AddTsysToResult(result, evTypes[j]);

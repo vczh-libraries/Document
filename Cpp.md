@@ -23,11 +23,12 @@
       - [x] Refine `EvaluateXXXSymbol` functions to handle `ITsys* parentDeclType` properly.
       - [ ] Remove `nullptr` default values for `EvaluateXXXSymbol` arguments.
         - [ ] Bring `parentDeclType` information to type aliases, since they can be passed to high-level template argument.
-          - Add `parentDeclType` to `GenericFunction` type.
+          - [x] Add `parentDeclType` to `GenericFunction` type.
+          - [ ] Add `parentDeclType` to `ParsingArguments`.
       - [ ] Child type evaluation: `v::t`.
       - [x] Instantiate classes with all non-default template arguments specified.
     - [ ] Member type evaluation.
-      - [ ] `GenericExpr` need to handle `ChildExpr`
+      - [ ] `GenericExpr` need to handle `parentDeclType` in `GenericFunction`
       - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
       - [ ] `v.f`, `v->f`, `v.*f`, `v->*f`, `v::f`
       - [ ] `auto` member function
