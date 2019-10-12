@@ -368,7 +368,7 @@ struct ParsingArguments
 	const List<ITsys*>*								TryGetReplacedGenericArgs(ITsys* arg)const;
 
 	static TemplateArgumentContext*					AdjustTaContextForScope(Symbol* scopeSymbol, TemplateArgumentContext* taContext);
-	static ITsys*									AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* parentDeclType);
+	static ITsys*									AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* parentDeclType, bool returnTypeOfScope);
 };
 
 struct EvaluateSymbolContext

@@ -145,7 +145,7 @@ namespace symbol_type_resolving
 		}
 
 		auto symbol = decl->symbol;
-		ITsys* parentTemplateClass = nullptr;
+		Symbol* parentTemplateClassSymbol = nullptr;
 		{
 			auto parent = symbol->GetParentScope();
 			while (parent)
@@ -159,8 +159,7 @@ namespace symbol_type_resolving
 					{
 						if (parentClassDecl->templateSpec)
 						{
-							auto parentPa = invokerPa.AdjustForDecl(parent, parentDeclType, true);
-							parentTemplateClass = EvaluateForwardClassSymbol(parentPa, parentClassDecl.Obj(), nullptr, nullptr)[0]->GetElement();
+							parentTemplateClassSymbol = parent;
 							goto FINISH_PARENT_TEMPLATE;
 						}
 					}
@@ -171,15 +170,26 @@ namespace symbol_type_resolving
 		}
 	FINISH_PARENT_TEMPLATE:
 
-		if (parentTemplateClass)
+		ITsys* parentTemplateClass = nullptr;
+		if (parentTemplateClassSymbol)
 		{
 			if (parentDeclType)
 			{
-				if (parentTemplateClass->GetDecl() != parentDeclType->GetDecl())
+				if (parentTemplateClassSymbol != parentDeclType->GetDecl())
 				{
 					throw L"parentDeclType does not point to an instance of the inner most parent template class of classDecl.";
 				}
 				parentTemplateClass = parentDeclType;
+			}
+			else if (invokerPa.parentDeclType)
+			{
+				parentTemplateClass = ParsingArguments::AdjustDeclInstantForScope(parentTemplateClassSymbol, invokerPa.parentDeclType, true);
+			}
+			else
+			{
+				auto parentClassDecl = parentTemplateClassSymbol->GetAnyForwardDecl<ForwardClassDeclaration>();
+				auto parentPa = invokerPa.AdjustForDecl(parentTemplateClassSymbol, nullptr, true);
+				parentTemplateClass = EvaluateForwardClassSymbol(parentPa, parentClassDecl.Obj(), nullptr, nullptr)[0]->GetElement();
 			}
 		}
 		else if (parentDeclType)

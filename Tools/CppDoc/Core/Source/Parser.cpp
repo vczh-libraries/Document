@@ -592,7 +592,7 @@ ParsingArguments ParsingArguments::WithScope(Symbol* _scopeSymbol)const
 	ParsingArguments pa(root, tsys, recorder);
 	pa.program = program;
 	pa.scopeSymbol = _scopeSymbol;
-	pa.parentDeclType = AdjustDeclInstantForScope(_scopeSymbol, parentDeclType);
+	pa.parentDeclType = AdjustDeclInstantForScope(_scopeSymbol, parentDeclType, false);
 	pa.taContext = AdjustTaContextForScope(_scopeSymbol, taContext);
 
 	while (_scopeSymbol)
@@ -656,7 +656,7 @@ ParsingArguments ParsingArguments::AdjustForDecl(Symbol* declSymbol, ITsys* pare
 	auto pa = AdjustForDecl(declSymbol);
 	if (forceOverrideForNull || parentDeclType)
 	{
-		pa.parentDeclType = AdjustDeclInstantForScope(pa.scopeSymbol, parentDeclType);
+		pa.parentDeclType = AdjustDeclInstantForScope(pa.scopeSymbol, parentDeclType, false);
 	}
 	return pa;
 }
@@ -717,7 +717,7 @@ TemplateArgumentContext* ParsingArguments::AdjustTaContextForScope(Symbol* scope
 	return taContext;
 }
 
-ITsys* ParsingArguments::AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* parentDeclType)
+ITsys* ParsingArguments::AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* parentDeclType, bool returnTypeOfScope)
 {
 	if (!parentDeclType)
 	{
@@ -756,6 +756,10 @@ ITsys* ParsingArguments::AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* p
 		const auto& di = parentDeclType->GetDeclInstant();
 		if (di.declSymbol == scopeWithTemplateClass)
 		{
+			if (!returnTypeOfScope)
+			{
+				parentDeclType = di.parentDeclType;
+			}
 			break;
 		}
 		parentDeclType = di.parentDeclType;
