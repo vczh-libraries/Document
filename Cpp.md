@@ -18,6 +18,8 @@
       - [ ] `GenericExpr` need to handle `parentDeclType` in `GenericFunction`
       - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
       - [ ] `v.f`, `v->f`, `v.*f`, `v->*f`, `v::f`
+        - [ ] const / volatile
+        - [ ] members of base types
       - [ ] `auto` member function
     - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
   - [ ] More `template`
