@@ -158,8 +158,10 @@
     <ClCompile Include="TestOverloadingOperator.cpp" />
     <ClCompile Include="TestParseGenericClass.cpp" />
     <ClCompile Include="TestParseGenericFunction.cpp" />
+    <ClCompile Include="TestParseGenericMember.cpp" />
     <ClCompile Include="TestParseGenericTypeAlias.cpp" />
     <ClCompile Include="TestParseGenericValueAlias.cpp" />
+    <ClCompile Include="TestParseMember.cpp" />
     <ClCompile Include="TestParseVariadicTemplateArgument.cpp" />
     <ClCompile Include="TestTypeConvert.cpp" />
     <ClCompile Include="TestTypeConvertGeneric.cpp" />
