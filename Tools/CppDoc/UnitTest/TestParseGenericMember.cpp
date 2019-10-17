@@ -145,44 +145,6 @@ const X* cpx;
 	AssertExpr(pa, L"cpx->x",					L"cpx->x",						L"__int32 const $L"			);
 }
 
-TEST_CASE(TestParseGenericMember_ArrayQualifier)
-{
-	auto input = LR"(
-int x[1];
-int (&lx)[1];
-int (&&rx)[1];
-
-const int cx[1];
-const int (&clx)[1];
-const int (&&crx)[1];
-
-int (&lF())[1];
-int (&&rF())[1];
-
-const int (&clF())[1];
-const int (&&crF())[1];
-
-int* px;
-const int* cpx;
-)";
-	COMPILE_PROGRAM(program, pa, input);
-
-	AssertExpr(pa, L"x[0]",						L"x[0]",						L"__int32 & $L"				);
-	AssertExpr(pa, L"lx[0]",					L"lx[0]",						L"__int32 & $L"				);
-	AssertExpr(pa, L"rx[0]",					L"rx[0]",						L"__int32 & $L"				);
-	AssertExpr(pa, L"cx[0]",					L"cx[0]",						L"__int32 const & $L"		);
-	AssertExpr(pa, L"clx[0]",					L"clx[0]",						L"__int32 const & $L"		);
-	AssertExpr(pa, L"crx[0]",					L"crx[0]",						L"__int32 const & $L"		);
-
-	AssertExpr(pa, L"lF()[0]",					L"lF()[0]",						L"__int32 & $L"				);
-	AssertExpr(pa, L"rF()[0]",					L"rF()[0]",						L"__int32 && $X"			);
-	AssertExpr(pa, L"clF()[0]",					L"clF()[0]",					L"__int32 const & $L"		);
-	AssertExpr(pa, L"crF()[0]",					L"crF()[0]",					L"__int32 const && $X"		);
-
-	AssertExpr(pa, L"px[0]",					L"px[0]",						L"__int32 & $L"				);
-	AssertExpr(pa, L"cpx[0]",					L"cpx[0]",						L"__int32 const & $L"		);
-}
-
 TEST_CASE(TestParseGenericMember_FFA_Qualifier)
 {
 	auto input = LR"(
