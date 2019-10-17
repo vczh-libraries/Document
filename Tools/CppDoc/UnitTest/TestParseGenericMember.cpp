@@ -71,7 +71,7 @@ Z<void*, char*>* pz = nullptr;
 	AssertExpr(pa, L"z.operator()(0)",							L"z.operator ()(0)",							L"::X<void * const, char * volatile> $PR"						);
 	AssertExpr(pa, L"z.operator()(nullptr)",					L"z.operator ()(nullptr)",						L"::Y<void * const, char * volatile> $PR"						);
 	AssertExpr(pa, L"z.operator[](\"a\")",						L"z.operator [](\"a\")",						L"::X<void * const, char * volatile> $PR"						);
-	AssertExpr(pa, L"z.operator[](Z())",						L"z.operator [](Z())",							L"::Y<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"z.operator[](Z<void*, char*>())",			L"z.operator [](Z<void *, char *>())",			L"::Y<void * const, char * volatile> $PR"						);
 	AssertExpr(pa, L"z.F(0)",									L"z.F(0)",										L"void * $PR"													);
 	AssertExpr(pa, L"z.G(0)",									L"z.G(0)",										L"char * $PR"													);
 
@@ -80,7 +80,7 @@ Z<void*, char*>* pz = nullptr;
 	AssertExpr(pa, L"z(0)",										L"z(0)",										L"::X<void * const, char * volatile> $PR"						);
 	AssertExpr(pa, L"z(nullptr)",								L"z(nullptr)",									L"::Y<void * const, char * volatile> $PR"						);
 	AssertExpr(pa, L"z[\"a\"]",									L"z[\"a\"]",									L"::X<void * const, char * volatile> $PR"						);
-	AssertExpr(pa, L"z[Z()]",									L"z[Z()]",										L"::Y<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"z[Z<void*, char*>()]",						L"z[Z<void *, char *>()]",						L"::Y<void * const, char * volatile> $PR"						);
 
 	AssertExpr(pa, L"x(0)",										L"x(0)",										L"::X<char, wchar_t> $PR"										);
 	AssertExpr(pa, L"y(0)",										L"y(0)",										L"::Y<float, double> $PR"										);

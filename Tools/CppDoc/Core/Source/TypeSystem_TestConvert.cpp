@@ -219,6 +219,15 @@ namespace TestConvert_Helpers
 			fromType = fromType->GetElement()->GetEntity(fromCV, fromRef);
 		}
 
+		switch (fromType->GetType())
+		{
+		case TsysType::Decl:
+		case TsysType::DeclInstant:
+			break;
+		default:
+			return false;
+		}
+
 		if (!TryGetDeclFromType<ClassDeclaration>(toType)) return false;
 
 		List<ITsys*> searched;
@@ -227,6 +236,19 @@ namespace TestConvert_Helpers
 		{
 			auto currentType = searched[i];
 			if (currentType == toType) return true;
+
+			switch (currentType->GetType())
+			{
+			case TsysType::Decl:
+				break;
+			case TsysType::DeclInstant:
+				// TODO: [Cpp.md] Deal with DeclInstant here
+				// Delete the whole switch with the label after this is resolved
+				throw 0;
+			default:
+				goto SKIP_SEARCHING_BASE_TYPES;
+			}
+
 			if (auto currentClass = TryGetDeclFromType<ClassDeclaration>(currentType))
 			{
 				auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, currentClass.Obj(), nullptr, nullptr);
@@ -242,6 +264,8 @@ namespace TestConvert_Helpers
 					}
 				}
 			}
+
+		SKIP_SEARCHING_BASE_TYPES:;
 		}
 		return false;
 	}
@@ -353,7 +377,7 @@ namespace TestConvert_Helpers
 
 		auto toClass = TryGetDeclFromType<ClassDeclaration>(toEntity);
 		if (!toClass) return false;
-		if (toClass->templateSpec)
+		if (toEntity->GetType() == TsysType::DeclInstant)
 		{
 			// TODO: [Cpp.md] Deal with DeclInstant here
 			throw 0;
