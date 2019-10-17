@@ -195,10 +195,8 @@ namespace TestConvert_Helpers
 			}
 			break;
 		case TsysType::Decl:
-			return false;
 		case TsysType::DeclInstant:
-			// TODO: [Cpp.md] Deal with DeclInstant here
-			throw 0;
+			return false;
 		case TsysType::Init:
 			switch (fromType->GetType())
 			{

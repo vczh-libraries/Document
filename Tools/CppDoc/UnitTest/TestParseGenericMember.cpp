@@ -30,7 +30,7 @@ struct Z
 	X<const Tx, volatile Ty> operator()(int);
 	Y<const Tx, volatile Ty> operator()(void*);
 	X<const Tx, volatile Ty> operator[](const char*);
-	Y<const Tx, volatile Ty> operator[](Z&&);
+	Y<const Tx, volatile Ty> operator[](Z<Tx, Ty>&&);
 
 	static Tx F(double);
 	Ty G(void*);

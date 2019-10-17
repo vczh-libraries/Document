@@ -38,20 +38,46 @@ namespace symbol_type_resolving
 	ParsingArguments GetPaFromInvokerPa(const ParsingArguments& pa, Symbol* declSymbol, TemplateArgumentContext* parentTaContext, EvaluateSymbolContext* esContext)
 	{
 		auto newPa = pa.AdjustForDecl(declSymbol);
-		if (parentTaContext && esContext)
-		{
-			esContext->additionalArguments.parent = parentTaContext;
-		}
-
 		if (esContext)
 		{
+			if (parentTaContext)
+			{
+				esContext->additionalArguments.parent = parentTaContext;
+			}
 			newPa.taContext = &esContext->additionalArguments;
+			return newPa;
 		}
-		else if (parentTaContext)
+		else
 		{
-			newPa.taContext = parentTaContext;
+			// esContext == nullptr means that it is not requested by GenericExpr or GenericType
+			// so we must adjust taContext to it's parent symbol
+			
+			if (parentTaContext)
+			{
+				// parentDeclType is provided, so just use it
+				newPa.taContext = parentTaContext;
+			}
+			else
+			{
+				// parentDeclType is not provided, need to check taContext
+				auto ta = newPa.taContext;
+				while (ta)
+				{
+					if (ta->symbolToApply == declSymbol)
+					{
+						// for all taContext that after this ta
+						// those type arguments are useless because they replace internal symbols
+						// so we use this ta's parent
+						// in this case this symbol will be evaluated to a GenericFunction if it has TemplateSpec
+						// this is for ensuring GetEvaluationKind doesn't return EvaluationKind::Instantiated
+						newPa.taContext = ta->parent;
+						break;
+					}
+					ta = ta->parent;
+				}
+			}
+			return newPa;
 		}
-		return newPa;
 	}
 
 	TypeTsysList& FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& declPa, Declaration* decl, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)

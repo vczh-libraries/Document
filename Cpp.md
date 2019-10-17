@@ -24,6 +24,7 @@
         - [ ] Cache parameter/variable evaluations in generic functions
     - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
   - [ ] More `template`
+    - [ ] Inside `template<...> class X`, if `X` is used as a type without type arguments, it is filled with template arguments.
     - [ ] Function specializations recognized but not used
     - [ ] Class specializations recognized but not used
     - [ ] Parse `template<typename T>template<typename U>template<typename V>void A<T*>::B<const U&>::F(){}`
