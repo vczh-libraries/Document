@@ -82,7 +82,7 @@ namespace TestConvert_Helpers
 					auto ctorSymbol = pCtors->Get(i);
 					auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (ctorDecl->decoratorDelete) continue;
-					auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj());
+					auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), nullptr, nullptr);
 
 					for (vint j = 0; j < evTypes.Count(); j++)
 					{
@@ -322,7 +322,8 @@ namespace TestConvert_Helpers
 				if (typeOpType->parameters.Count() != 0) continue;
 				if (TestFunctionQualifier(fromCV, fromRef, typeOpType) == TsysConv::Illegal) continue;
 			}
-			auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, typeOpDecl.Obj());
+
+			auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, typeOpDecl.Obj(), (fromEntity->GetType() == TsysType::DeclInstant ? fromEntity : nullptr), nullptr);
 
 			for (vint j = 0; j < evTypes.Count(); j++)
 			{
@@ -385,7 +386,7 @@ namespace TestConvert_Helpers
 				if (!ctorType) continue;
 				if (ctorType->parameters.Count() != 1) continue;
 			}
-			auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj());
+			auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
 
 			for (vint j = 0; j < evTypes.Count(); j++)
 			{

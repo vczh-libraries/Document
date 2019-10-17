@@ -427,7 +427,7 @@ public:
 	void Visit(FunctionDeclaration* self) override
 	{
 		EnsureFunctionBodyParsed(self);
-		symbol_type_resolving::EvaluateFuncSymbol(pa, self);
+		symbol_type_resolving::EvaluateFuncSymbol(pa, self, pa.parentDeclType, nullptr);
 
 		if(self->initList.Count() > 0)
 		{
@@ -511,12 +511,12 @@ public:
 
 	void Visit(TypeAliasDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateTypeAliasSymbol(pa, self, nullptr, nullptr);
+		symbol_type_resolving::EvaluateTypeAliasSymbol(pa, self, pa.parentDeclType, nullptr);
 	}
 
 	void Visit(ValueAliasDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateValueAliasSymbol(pa, self);
+		symbol_type_resolving::EvaluateValueAliasSymbol(pa, self, pa.parentDeclType, nullptr);
 	}
 
 	void Visit(NamespaceDeclaration* self) override
@@ -545,7 +545,7 @@ void EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctio
 
 void EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration* decl)
 {
-	symbol_type_resolving::EvaluateVarSymbol(pa, decl);
+	symbol_type_resolving::EvaluateVarSymbol(pa, decl, pa.parentDeclType);
 	if (!decl->needResolveTypeFromInitializer && decl->initializer)
 	{
 		for (vint i = 0; i < decl->initializer->arguments.Count(); i++)

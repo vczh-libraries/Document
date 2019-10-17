@@ -42,7 +42,7 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 		if (!forwardFunc) continue;
 		if (symbol_type_resolving::IsStaticSymbol<ForwardFunctionDeclaration>(member)) continue;
 
-		auto& types = symbol_type_resolving::EvaluateFuncSymbol(pa, forwardFunc.Obj());
+		auto& types = symbol_type_resolving::EvaluateFuncSymbol(pa, forwardFunc.Obj(), nullptr, nullptr);
 		for (vint j = 0; j < types.Count(); j++)
 		{
 			auto funcType = types[j];
@@ -228,6 +228,8 @@ GenerateMembers
 
 bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclaration* classDecl, SpecialMemberKind kind, bool passIfFieldHasInitializer)
 {
+	// TODO: [Cpp.md] Deal with DeclInstant here
+	// This function is called by GenerateMembers, should find a way to store different results for different type argument combinations
 	auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, classDecl, nullptr, nullptr);
 	auto classSymbol = classDecl->symbol;
 	for (vint i = 0; i < ev.ExtraCount(); i++)
@@ -251,7 +253,7 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 				continue;
 			}
 
-			auto& types = symbol_type_resolving::EvaluateVarSymbol(pa, varDecl.Obj());
+			auto& types = symbol_type_resolving::EvaluateVarSymbol(pa, varDecl.Obj(), nullptr);
 			for (vint j = 0; j < types.Count(); j++)
 			{
 				if (!IsSpecialMemberEnabledForType(pa, types[j], kind))

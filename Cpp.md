@@ -13,7 +13,7 @@
 
 - [ ] Next Demo!
   - [ ] `template` on classes.
-    - [ ] Remove `nullptr` default values for `EvaluateXXXSymbol` arguments.
+    - [x] Remove `nullptr` default values for `EvaluateXXXSymbol` arguments.
     - [ ] Member type evaluation.
       - [ ] `GenericExpr` need to handle `parentDeclType` in `GenericFunction`
       - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
@@ -21,6 +21,7 @@
         - [ ] const / volatile
         - [ ] members of base types
       - [ ] `auto` member function
+        - [ ] Cache parameter/variable evaluations in generic functions
     - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
   - [ ] More `template`
     - [ ] Function specializations recognized but not used

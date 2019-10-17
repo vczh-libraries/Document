@@ -136,12 +136,19 @@ namespace symbol_type_resolving
 
 	/***********************************************************************
 	VisitSymbol: Fill a symbol to ExprTsysList
-		thisItem: When afterScope==false
-			it represents typeof(x) in x.name or typeof(&x) in x->name
-			it could be null if it is initiated by IdExpr
+		thisItem:
+			it represents typeof(x) in x.name or typeof(*x) in x->name
+			it could be null if it is initiated by IdExpr (visitMemberKind == InScope)
 	***********************************************************************/
 
-	void VisitSymbolInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, bool afterScope, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
+	enum class VisitMemberKind
+	{
+		MemberAfterType,
+		MemberAfterValue,
+		InScope,
+	};
+
+	void VisitSymbolInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, VisitMemberKind visitMemberKind, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
 		ITsys* classScope = nullptr;
 		if (auto parent = symbol->GetParentScope())
@@ -152,12 +159,18 @@ namespace symbol_type_resolving
 			}
 		}
 
+		ITsys* parentDeclType = nullptr;
+		if (thisItem && thisItem->tsys->GetType() == TsysType::DeclInstant)
+		{
+			parentDeclType = thisItem->tsys;
+		}
+
 		switch (symbol->kind)
 		{
 		case symbol_component::SymbolKind::Variable:
 			{
 				auto varDecl = symbol->GetAnyForwardDecl<ForwardVariableDeclaration>();
-				auto& evTypes = EvaluateVarSymbol(pa, varDecl.Obj());
+				auto& evTypes = EvaluateVarSymbol(pa, varDecl.Obj(), parentDeclType);
 				bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol);
 
 				for (vint k = 0; k < evTypes.Count(); k++)
@@ -168,31 +181,37 @@ namespace symbol_type_resolving
 					{
 						AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
 					}
-					else if (afterScope)
-					{
-						if (classScope)
-						{
-							if (classScope->GetDecl()->GetImplDecl_NFb<ClassDeclaration>()->templateSpec)
-							{
-								// TODO: [Cpp.md] Deal with DeclInstant here
-								throw 0;
-							}
-							AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope) });
-						}
-						else
-						{
-							AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
-						}
-					}
 					else
 					{
-						if (thisItem)
+						switch (visitMemberKind)
 						{
-							CalculateValueFieldType(thisItem, symbol, tsys, false, result);
-						}
-						else
-						{
-							AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
+						case VisitMemberKind::MemberAfterType:
+							{
+								if (classScope)
+								{
+									if (classScope->GetDecl()->GetImplDecl_NFb<ClassDeclaration>()->templateSpec)
+									{
+										// TODO: [Cpp.md] Deal with DeclInstant here
+										throw 0;
+									}
+									AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope) });
+								}
+								else
+								{
+									AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
+								}
+							}
+							break;
+						case VisitMemberKind::MemberAfterValue:
+							{
+								CalculateValueFieldType(thisItem, symbol, tsys, false, result);
+							}
+							break;
+						case VisitMemberKind::InScope:
+							{
+								AddInternal(result, { symbol,ExprTsysType::LValue,tsys });
+							}
+							break;
 						}
 					}
 				}
@@ -202,7 +221,7 @@ namespace symbol_type_resolving
 		case symbol_component::SymbolKind::FunctionSymbol:
 			{
 				auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-				auto& evTypes = EvaluateFuncSymbol(pa, funcDecl.Obj());
+				auto& evTypes = EvaluateFuncSymbol(pa, funcDecl.Obj(), parentDeclType, nullptr);
 				bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol);
 				bool isMember = classScope && !isStaticSymbol;
 
@@ -210,7 +229,7 @@ namespace symbol_type_resolving
 				{
 					auto tsys = evTypes[k];
 
-					if (isMember && afterScope)
+					if (isMember && visitMemberKind == VisitMemberKind::MemberAfterType)
 					{
 						tsys = tsys->MemberOf(classScope)->PtrOf();
 					}
@@ -234,7 +253,7 @@ namespace symbol_type_resolving
 		case symbol_component::SymbolKind::ValueAlias:
 			{
 				auto usingDecl = symbol->GetImplDecl_NFb<ValueAliasDeclaration>();
-				auto& evTypes = EvaluateValueAliasSymbol(pa, usingDecl.Obj());
+				auto& evTypes = EvaluateValueAliasSymbol(pa, usingDecl.Obj(), parentDeclType, nullptr);
 				AddTemp(result, evTypes);
 				hasNonVariadic = true;
 			}
@@ -307,21 +326,21 @@ namespace symbol_type_resolving
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		VisitSymbolInternal(pa, nullptr, symbol, false, result, false, hasVariadic, hasNonVariadic);
+		VisitSymbolInternal(pa, nullptr, symbol, VisitMemberKind::InScope, result, false, hasVariadic, hasNonVariadic);
 	}
 
 	void VisitSymbolForScope(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result)
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		VisitSymbolInternal(pa, thisItem, symbol, true, result, false, hasVariadic, hasNonVariadic);
+		VisitSymbolInternal(pa, thisItem, symbol, VisitMemberKind::MemberAfterType, result, false, hasVariadic, hasNonVariadic);
 	}
 
 	void VisitSymbolForField(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result)
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		VisitSymbolInternal(pa, thisItem, symbol, false, result, false, hasVariadic, hasNonVariadic);
+		VisitSymbolInternal(pa, thisItem, symbol, VisitMemberKind::MemberAfterValue, result, false, hasVariadic, hasNonVariadic);
 	}
 
 	/***********************************************************************
@@ -382,7 +401,7 @@ namespace symbol_type_resolving
 				}
 			}
 
-			VisitSymbolInternal(pa, (targetTypeList == &result ? nullptr : thisItem), resolving->resolvedSymbols[i], false, *targetTypeList, allowVariadic, hasVariadic, hasNonVariadic);
+			VisitSymbolInternal(pa, thisItem, resolving->resolvedSymbols[i], (thisItem ? VisitMemberKind::MemberAfterValue : VisitMemberKind::InScope), *targetTypeList, allowVariadic, hasVariadic, hasNonVariadic);
 		}
 
 		if (thisItem)
