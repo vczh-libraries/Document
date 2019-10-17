@@ -1,88 +1,93 @@
 #include <Ast_Decl.h>
 #include "Util.h"
-/*
+
 TEST_CASE(TestParseGenericMember_FFA)
 {
 	auto input = LR"(
+template<typename Tx, typename Ty>
 struct X
 {
-	int x;
-	int y;
+	Tx x;
+	Ty y;
 };
+
+template<typename Tx, typename Ty>
 struct Y
 {
-	double x;
-	double y;
+	Tx x;
+	Ty y;
 
-	X* operator->();
+	X<Tx*, Ty&>* operator->();
 };
+
+template<typename Tx, typename Ty>
 struct Z
 {
-	bool x;
-	bool y;
+	Tx x;
+	Ty y;
 
-	Y operator->();
-	X operator()(int);
-	Y operator()(void*);
-	X operator[](const char*);
-	Y operator[](Z&&);
+	Y<const Tx, volatile Ty> operator->();
+	X<const Tx, volatile Ty> operator()(int);
+	Y<const Tx, volatile Ty> operator()(void*);
+	X<const Tx, volatile Ty> operator[](const char*);
+	Y<const Tx, volatile Ty> operator[](Z&&);
 
-	static int F(double);
-	int G(void*);
+	static Tx F(double);
+	Ty G(void*);
 };
 
-X (*x)(int) = nullptr;
-Y (*const y)(int) = nullptr;
+X<char, wchar_t> (*x)(int) = nullptr;
+Y<float, double> (*const y)(int) = nullptr;
 
-X (*(*x2)(void*))(int) = nullptr;
-Y (*const (*const y2)(void*))(int) = nullptr;
+X<char, wchar_t> (*(*x2)(void*))(int) = nullptr;
+Y<float, double> (*const (*const y2)(void*))(int) = nullptr;
 
-Z z;
-Z* pz = nullptr;
+Z<void*, char*> z;
+Z<void*, char*>* pz = nullptr;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(pa, L"pz->x",					L"pz->x",						L"bool $L"								);
-	AssertExpr(pa, L"pz->y",					L"pz->y",						L"bool $L"								);
-	AssertExpr(pa, L"pz->F",					L"pz->F",						L"__int32 __cdecl(double) * $PR"		);
-	AssertExpr(pa, L"pz->G",					L"pz->G",						L"__int32 __thiscall(void *) * $PR"		);
-	AssertExpr(pa, L"pz->operator->",			L"pz->operator ->",				L"::Y __thiscall() * $PR"				);
+	AssertExpr(pa, L"pz->x",					L"pz->x",						L"void * $L"													);
+	AssertExpr(pa, L"pz->y",					L"pz->y",						L"char * $L"													);
+	AssertExpr(pa, L"pz->F",					L"pz->F",						L"void * __cdecl(double) * $PR"									);
+	AssertExpr(pa, L"pz->G",					L"pz->G",						L"char * __thiscall(void *) * $PR"								);
+	AssertExpr(pa, L"pz->operator->",			L"pz->operator ->",				L"::Y<void * const, char * volatile> __thiscall() * $PR"		);
 
-	AssertExpr(pa, L"z.x",						L"z.x",							L"bool $L"								);
-	AssertExpr(pa, L"z.y",						L"z.y",							L"bool $L"								);
-	AssertExpr(pa, L"z.F",						L"z.F",							L"__int32 __cdecl(double) * $PR"		);
-	AssertExpr(pa, L"z.G",						L"z.G",							L"__int32 __thiscall(void *) * $PR"		);
-	AssertExpr(pa, L"z.operator->",				L"z.operator ->",				L"::Y __thiscall() * $PR"				);
+	AssertExpr(pa, L"z.x",						L"z.x",							L"void * $L"													);
+	AssertExpr(pa, L"z.y",						L"z.y",							L"char * $L"													);
+	AssertExpr(pa, L"z.F",						L"z.F",							L"void * __cdecl(double) * $PR"									);
+	AssertExpr(pa, L"z.G",						L"z.G",							L"char * __thiscall(void *) * $PR"								);
+	AssertExpr(pa, L"z.operator->",				L"z.operator ->",				L"::Y<void * const, char * volatile> __thiscall() * $PR"		);
 
-	AssertExpr(pa, L"pz->operator->()",			L"pz->operator ->()",			L"::Y $PR"								);
-	AssertExpr(pa, L"pz->operator()(0)",		L"pz->operator ()(0)",			L"::X $PR"								);
-	AssertExpr(pa, L"pz->operator()(nullptr)",	L"pz->operator ()(nullptr)",	L"::Y $PR"								);
-	AssertExpr(pa, L"pz->operator[](\"a\")",	L"pz->operator [](\"a\")",		L"::X $PR"								);
-	AssertExpr(pa, L"pz->operator[](Z())",		L"pz->operator [](Z())",		L"::Y $PR"								);
-	AssertExpr(pa, L"pz->F(0)",					L"pz->F(0)",					L"__int32 $PR"							);
-	AssertExpr(pa, L"pz->G(0)",					L"pz->G(0)",					L"__int32 $PR"							);
+	AssertExpr(pa, L"pz->operator->()",			L"pz->operator ->()",			L"::Y<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"pz->operator()(0)",		L"pz->operator ()(0)",			L"::X<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"pz->operator()(nullptr)",	L"pz->operator ()(nullptr)",	L"::Y<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"pz->operator[](\"a\")",	L"pz->operator [](\"a\")",		L"::X<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"pz->operator[](Z())",		L"pz->operator [](Z())",		L"::Y<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"pz->F(0)",					L"pz->F(0)",					L"void * $PR"													);
+	AssertExpr(pa, L"pz->G(0)",					L"pz->G(0)",					L"char * $PR"													);
 
-	AssertExpr(pa, L"z.operator->()",			L"z.operator ->()",				L"::Y $PR"								);
-	AssertExpr(pa, L"z.operator()(0)",			L"z.operator ()(0)",			L"::X $PR"								);
-	AssertExpr(pa, L"z.operator()(nullptr)",	L"z.operator ()(nullptr)",		L"::Y $PR"								);
-	AssertExpr(pa, L"z.operator[](\"a\")",		L"z.operator [](\"a\")",		L"::X $PR"								);
-	AssertExpr(pa, L"z.operator[](Z())",		L"z.operator [](Z())",			L"::Y $PR"								);
-	AssertExpr(pa, L"z.F(0)",					L"z.F(0)",						L"__int32 $PR"							);
-	AssertExpr(pa, L"z.G(0)",					L"z.G(0)",						L"__int32 $PR"							);
+	AssertExpr(pa, L"z.operator->()",			L"z.operator ->()",				L"::Y<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"z.operator()(0)",			L"z.operator ()(0)",			L"::X<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"z.operator()(nullptr)",	L"z.operator ()(nullptr)",		L"::Y<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"z.operator[](\"a\")",		L"z.operator [](\"a\")",		L"::X<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"z.operator[](Z())",		L"z.operator [](Z())",			L"::Y<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"z.F(0)",					L"z.F(0)",						L"void * $PR"													);
+	AssertExpr(pa, L"z.G(0)",					L"z.G(0)",						L"char * $PR"													);
 
-	AssertExpr(pa, L"z->x",						L"z->x",						L"__int32 $L"							);
-	AssertExpr(pa, L"z->y",						L"z->y",						L"__int32 $L"							);
-	AssertExpr(pa, L"z(0)",						L"z(0)",						L"::X $PR"								);
-	AssertExpr(pa, L"z(nullptr)",				L"z(nullptr)",					L"::Y $PR"								);
-	AssertExpr(pa, L"z[\"a\"]",					L"z[\"a\"]",					L"::X $PR"								);
-	AssertExpr(pa, L"z[Z()]",					L"z[Z()]",						L"::Y $PR"								);
+	AssertExpr(pa, L"z->x",						L"z->x",						L"void * const * $L"											);
+	AssertExpr(pa, L"z->y",						L"z->y",						L"char * volatile & $L"											);
+	AssertExpr(pa, L"z(0)",						L"z(0)",						L"::X<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"z(nullptr)",				L"z(nullptr)",					L"::Y<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"z[\"a\"]",					L"z[\"a\"]",					L"::X<void * const, char * volatile> $PR"						);
+	AssertExpr(pa, L"z[Z()]",					L"z[Z()]",						L"::Y<void * const, char * volatile> $PR"						);
 
-	AssertExpr(pa, L"x(0)",						L"x(0)",						L"::X $PR"								);
-	AssertExpr(pa, L"y(0)",						L"y(0)",						L"::Y $PR"								);
-	AssertExpr(pa, L"x2(nullptr)(0)",			L"x2(nullptr)(0)",				L"::X $PR"								);
-	AssertExpr(pa, L"y2(nullptr)(0)",			L"y2(nullptr)(0)",				L"::Y $PR"								);
+	AssertExpr(pa, L"x(0)",						L"x(0)",						L"::X<char, wchar_t> $PR"										);
+	AssertExpr(pa, L"y(0)",						L"y(0)",						L"::Y<float, double> $PR"										);
+	AssertExpr(pa, L"x2(nullptr)(0)",			L"x2(nullptr)(0)",				L"::X<char, wchar_t> $PR"										);
+	AssertExpr(pa, L"y2(nullptr)(0)",			L"y2(nullptr)(0)",				L"::Y<float, double> $PR"										);
 }
-
+/*
 TEST_CASE(TestParseGenericMember_Field_Qualifier)
 {
 	auto input = LR"(
