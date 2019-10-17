@@ -236,7 +236,7 @@ namespace symbol_totsys_impl
 		{
 			AddTemp(result, pa.tsys->Any());
 		}
-		else if (entityType->GetType() == TsysType::Decl)
+		else if (entityType->GetType() == TsysType::Decl || entityType->GetType() == TsysType::DeclInstant)
 		{
 			ExprTsysList funcTypes;
 			VisitFunctors(pa, argArray, L"operator []", funcTypes);
@@ -253,11 +253,6 @@ namespace symbol_totsys_impl
 			{
 				AddSymbolsToOperatorResolving(pa, self->opName, self->opResolving, selectedFunctions, indexed);
 			}
-		}
-		else if (entityType->GetType() == TsysType::DeclInstant)
-		{
-			// TODO: [Cpp.md] Deal with DeclInstant here
-			throw 0;
 		}
 		else if (entityType->GetType() == TsysType::Array)
 		{

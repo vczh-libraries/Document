@@ -385,7 +385,7 @@ namespace symbol_totsys_impl
 						ExprTsysItem parentItem(nullptr, ExprTsysType::LValue, entityType->GetElement());
 						ResolveField(pa, result, totalRar, parentItem, argClass.tsys, idExpr, childExpr);
 					}
-					else if (entityType->GetType() == TsysType::Decl)
+					else if (entityType->GetType() == TsysType::Decl || entityType->GetType() == TsysType::DeclInstant)
 					{
 						ExprTsysList opResult;
 						VisitFunctors(pa, indirectionItems[i], L"operator ->", opResult);
@@ -400,11 +400,6 @@ namespace symbol_totsys_impl
 						{
 							AddSymbolsToOperatorResolving(pa, self->opName, self->opResolving, opResult, operatorIndexed);
 						}
-					}
-					else if (entityType->GetType() == TsysType::DeclInstant)
-					{
-						// TODO: [Cpp.md] Deal with DeclInstant here
-						throw 0;
 					}
 				}
 			}

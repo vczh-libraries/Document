@@ -94,7 +94,7 @@ namespace symbol_type_resolving
 				TsysRefType refType;
 				auto entityType = funcType.tsys->GetEntity(cv, refType);
 
-				if (entityType->GetType() == TsysType::Decl && lookForOp)
+				if ((entityType->GetType() == TsysType::Decl || entityType->GetType() == TsysType::DeclInstant) && lookForOp)
 				{
 					ExprTsysList opResult;
 					VisitFunctors(pa, funcType, L"operator ()", opResult);
@@ -107,11 +107,6 @@ namespace symbol_type_resolving
 					{
 						funcChoices.Add(TsysConv::Exact);
 					}
-				}
-				else if (entityType->GetType() == TsysType::DeclInstant && lookForOp)
-				{
-					// TODO: [Cpp.md] Deal with DeclInstant here
-					throw 0;
 				}
 				else if (entityType->GetType() == TsysType::Ptr)
 				{
