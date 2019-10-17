@@ -192,6 +192,7 @@ namespace symbol_type_resolving
 									if (classScope->GetDecl()->GetImplDecl_NFb<ClassDeclaration>()->templateSpec)
 									{
 										// TODO: [Cpp.md] Deal with DeclInstant here
+										// it is possible that non-generic classScope is in a generic class
 										throw 0;
 									}
 									AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope) });

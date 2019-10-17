@@ -309,7 +309,7 @@ namespace symbol_totsys_impl
 		opName.type = CppNameType::Operator;
 		opName.name = L"operator " + resolvableName.name;
 
-		if (leftEntity->GetType() == TsysType::Decl)
+		if (leftEntity->GetType() == TsysType::Decl || leftEntity->GetType() == TsysType::DeclInstant)
 		{
 			auto newPa = pa.WithScope(leftEntity->GetDecl());
 			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbolFromOutside);
@@ -340,11 +340,6 @@ namespace symbol_totsys_impl
 				}
 				return true;
 			}
-		}
-		else if (leftEntity->GetType() == TsysType::DeclInstant)
-		{
-			// TODO: [Cpp.md] Deal with DeclInstant here
-			throw 0;
 		}
 		{
 			ExprTsysList opTypes;
@@ -406,15 +401,10 @@ namespace symbol_totsys_impl
 		{
 			AddTemp(result, pa.tsys->Any());
 		}
-		else if (entity->GetType() == TsysType::Decl)
+		else if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
 		{
 			ExprTsysItem extraParam(nullptr, ExprTsysType::PRValue, pa.tsys->Int());
 			VisitOperator(pa, result, &arg, &extraParam, self->opName, self->opResolving, indexed);
-		}
-		else if (entity->GetType() == TsysType::DeclInstant)
-		{
-			// TODO: [Cpp.md] Deal with DeclInstant here
-			throw 0;
 		}
 		else if (entity->GetType() == TsysType::Primitive)
 		{
@@ -445,17 +435,12 @@ namespace symbol_totsys_impl
 			AddTemp(result, pa.tsys->Any());
 			return;
 		}
-		else if (entity->GetType() == TsysType::Decl)
+		else if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
 		{
 			if (VisitOperator(pa, result, &arg, nullptr, self->opName, self->opResolving, indexed))
 			{
 				return;
 			}
-		}
-		else if (entity->GetType() == TsysType::DeclInstant)
-		{
-			// TODO: [Cpp.md] Deal with DeclInstant here
-			throw 0;
 		}
 
 		switch (self->op)

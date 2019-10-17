@@ -68,52 +68,44 @@ namespace TestConvert_Helpers
 		TsysRefType toRef;
 		auto toEntity = toType->GetEntity(toCV, toRef);
 
-		if (toEntity->GetType() == TsysType::Decl)
+		if (auto toDecl = TryGetDeclFromType<ClassDeclaration>(toEntity))
 		{
-			if (auto toDecl = TryGetDeclFromType<ClassDeclaration>(toEntity))
+			auto toSymbol = toDecl->symbol;
+			auto pCtors = toSymbol->TryGetChildren_NFb(L"$__ctor");
+			if (!pCtors) return TsysConv::Illegal;
+
+			ExprTsysList funcTypes;
+			for (vint i = 0; i < pCtors->Count(); i++)
 			{
-				auto toSymbol = toDecl->symbol;
-				auto pCtors = toSymbol->TryGetChildren_NFb(L"$__ctor");
-				if (!pCtors) return TsysConv::Illegal;
+				auto ctorSymbol = pCtors->Get(i);
+				auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+				if (ctorDecl->decoratorDelete) continue;
+				auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
 
-				ExprTsysList funcTypes;
-				for (vint i = 0; i < pCtors->Count(); i++)
+				for (vint j = 0; j < evTypes.Count(); j++)
 				{
-					auto ctorSymbol = pCtors->Get(i);
-					auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-					if (ctorDecl->decoratorDelete) continue;
-					auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), nullptr, nullptr);
-
-					for (vint j = 0; j < evTypes.Count(); j++)
-					{
-						auto tsys = evTypes[j];
-						funcTypes.Add({ ctorSymbol.Obj(),ExprTsysType::PRValue,tsys });
-					}
-				}
-
-				Array<ExprTsysItem> argTypesList(fromEntity->GetParamCount());
-				for (vint i = 0; i < fromEntity->GetParamCount(); i++)
-				{
-					argTypesList[i] = { init.headers[i],fromEntity->GetParam(i) };
-				}
-
-				SortedList<vint> boundedAnys;
-				ExprTsysList result;
-				symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, boundedAnys, result, nullptr);
-				if (result.Count() > 0)
-				{
-					return TsysConv::UserDefinedConversion;
-				}
-				else
-				{
-					return TsysConv::Illegal;
+					auto tsys = evTypes[j];
+					funcTypes.Add({ ctorSymbol.Obj(),ExprTsysType::PRValue,tsys });
 				}
 			}
-		}
-		else if (toEntity->GetType() == TsysType::DeclInstant)
-		{
-			// TODO: [Cpp.md] Deal with DeclInstant here
-			throw 0;
+
+			Array<ExprTsysItem> argTypesList(fromEntity->GetParamCount());
+			for (vint i = 0; i < fromEntity->GetParamCount(); i++)
+			{
+				argTypesList[i] = { init.headers[i],fromEntity->GetParam(i) };
+			}
+
+			SortedList<vint> boundedAnys;
+			ExprTsysList result;
+			symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, boundedAnys, result, nullptr);
+			if (result.Count() > 0)
+			{
+				return TsysConv::UserDefinedConversion;
+			}
+			else
+			{
+				return TsysConv::Illegal;
+			}
 		}
 
 		if (fromEntity->GetParamCount() == 0)
@@ -377,11 +369,6 @@ namespace TestConvert_Helpers
 
 		auto toClass = TryGetDeclFromType<ClassDeclaration>(toEntity);
 		if (!toClass) return false;
-		if (toEntity->GetType() == TsysType::DeclInstant)
-		{
-			// TODO: [Cpp.md] Deal with DeclInstant here
-			throw 0;
-		}
 
 		auto toSymbol = toClass->symbol;
 		{
