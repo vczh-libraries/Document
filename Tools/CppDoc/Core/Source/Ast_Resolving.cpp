@@ -375,6 +375,7 @@ namespace symbol_type_resolving
 			auto targetTypeList = &result;
 			auto symbol = resolving->resolvedSymbols[i];
 			
+			bool parentScopeIsClass = false;
 			if (auto parent = symbol->GetParentScope())
 			{
 				switch (parent->kind)
@@ -382,6 +383,7 @@ namespace symbol_type_resolving
 				case symbol_component::SymbolKind::Class:
 				case symbol_component::SymbolKind::Struct:
 				case symbol_component::SymbolKind::Union:
+					parentScopeIsClass = true;
 					switch (symbol->kind)
 					{
 					case symbol_component::SymbolKind::Variable:
@@ -401,23 +403,31 @@ namespace symbol_type_resolving
 				}
 			}
 
-			VisitSymbolInternal(pa, thisItem, resolving->resolvedSymbols[i], (thisItem ? VisitMemberKind::MemberAfterValue : VisitMemberKind::InScope), *targetTypeList, allowVariadic, hasVariadic, hasNonVariadic);
+			auto thisItemForSymbol = parentScopeIsClass ? thisItem : nullptr;
+			VisitSymbolInternal(pa, thisItemForSymbol, resolving->resolvedSymbols[i], (thisItemForSymbol ? VisitMemberKind::MemberAfterValue : VisitMemberKind::InScope), *targetTypeList, allowVariadic, hasVariadic, hasNonVariadic);
 		}
 
-		if (thisItem)
+		if (varTypes.Count() > 0)
 		{
+			// varTypes has non-static member fields
 			AddInternal(result, varTypes);
-
-			TsysCV thisCv;
-			TsysRefType thisRef;
-			thisItem->tsys->GetEntity(thisCv, thisRef);
-			FilterFieldsAndBestQualifiedFunctions(thisCv, thisRef, funcTypes);
-			AddInternal(result, funcTypes);
 		}
-		else
+
+		if (funcTypes.Count() > 0)
 		{
-			AddInternal(result, varTypes);
-			AddInternal(result, funcTypes);
+			if (thisItem)
+			{
+				// funcTypes has non-static member functions
+				TsysCV thisCv;
+				TsysRefType thisRef;
+				thisItem->tsys->GetEntity(thisCv, thisRef);
+				FilterFieldsAndBestQualifiedFunctions(thisCv, thisRef, funcTypes);
+				AddInternal(result, funcTypes);
+			}
+			else
+			{
+				AddInternal(result, funcTypes);
+			}
 		}
 	}
 
