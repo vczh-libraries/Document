@@ -29,14 +29,44 @@ namespace symbol_totsys_impl
 				throw NotConvertableException();
 			}
 
-			EvaluateSymbolContext esContext;
-			esContext.additionalArguments.symbolToApply = genericFunction->GetGenericFunction().declSymbol;
-			ResolveGenericParameters(pa, esContext.additionalArguments, genericFunction, args, isTypes, argSource, boundedAnys, 1);
-			process(genericFunction, declSymbol, esContext);
+			TemplateArgumentContext taContext;
+			taContext.symbolToApply = genericFunction->GetGenericFunction().declSymbol;
+			ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1);
 
-			for (vint j = 0; j < esContext.evaluation.Get().Count(); j++)
+			symbol_component::Evaluation* evaluation = nullptr;
 			{
-				AddExprTsysItemToResult(result, GetExprTsysItem(esContext.evaluation.Get()[j]));
+				symbol_component::SG_Cache cacheKey;
+				cacheKey.parentDeclTypeAndParams = MakePtr<Array<ITsys*>>(genericFunction->GetParamCount() + 1);
+				cacheKey.parentDeclTypeAndParams->Set(0, genericFunction->GetGenericFunction().parentDeclType);
+				for (vint i = 0; i < genericFunction->GetParamCount(); i++)
+				{
+					cacheKey.parentDeclTypeAndParams->Set(i + 1, taContext.arguments[genericFunction->GetParam(i)]);
+				}
+
+				vint index = declSymbol->genericCaches.IndexOf(cacheKey);
+				if (index == -1)
+				{
+					cacheKey.cachedEvaluation = MakePtr<symbol_component::Evaluation>();
+					declSymbol->genericCaches.Add(cacheKey);
+					evaluation = cacheKey.cachedEvaluation.Obj();
+
+					EvaluateSymbolContext esContext;
+					esContext.additionalArguments = &taContext;
+					esContext.evaluation = evaluation;
+					process(genericFunction, declSymbol, esContext);
+				}
+				else
+				{
+					evaluation = declSymbol->genericCaches[index].cachedEvaluation.Obj();
+				}
+			}
+
+			{
+				auto& tsys = evaluation->Get();
+				for (vint j = 0; j < tsys.Count(); j++)
+				{
+					AddExprTsysItemToResult(result, GetExprTsysItem(tsys[j]));
+				}
 			}
 		}
 		else if (genericFunction->GetType() == TsysType::Any)
@@ -64,8 +94,8 @@ namespace symbol_totsys_impl
 			case symbol_component::SymbolKind::Struct:
 			case symbol_component::SymbolKind::Union:
 			case symbol_component::SymbolKind::GenericTypeArgument:
-				esContext.evaluation.Allocate();
-				genericFunction->GetElement()->ReplaceGenericArgs(pa.AppendSingleLevelArgs(esContext.additionalArguments), esContext.evaluation.Get());
+				esContext.evaluation->Allocate();
+				genericFunction->GetElement()->ReplaceGenericArgs(pa.AppendSingleLevelArgs(*esContext.additionalArguments), esContext.evaluation->Get());
 				break;
 			case symbol_component::SymbolKind::TypeAlias:
 				{
@@ -96,9 +126,11 @@ namespace symbol_totsys_impl
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
 					EvaluateFuncSymbol(pa, decl.Obj(), parentDeclType, &esContext);
-					for (vint i = 0; i < esContext.evaluation.Get().Count(); i++)
+
+					auto& tsys = esContext.evaluation->Get();
+					for (vint i = 0; i < tsys.Count(); i++)
 					{
-						esContext.evaluation.Get()[i] = esContext.evaluation.Get()[i]->PtrOf();
+						tsys[i] = tsys[i]->PtrOf();
 					}
 				}
 				break;

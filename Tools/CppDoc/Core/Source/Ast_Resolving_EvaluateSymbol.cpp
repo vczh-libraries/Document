@@ -13,7 +13,7 @@ namespace symbol_type_resolving
 			{
 				throw L"Missing esContext for EvaluationKind::Instantiated";
 			}
-			return esContext->evaluation;
+			return *esContext->evaluation;
 		default:
 			{
 				auto taContext = pa.taContext;
@@ -42,9 +42,9 @@ namespace symbol_type_resolving
 		{
 			if (parentTaContext)
 			{
-				esContext->additionalArguments.parent = parentTaContext;
+				esContext->additionalArguments->parent = parentTaContext;
 			}
-			newPa.taContext = &esContext->additionalArguments;
+			newPa.taContext = esContext->additionalArguments;
 			return newPa;
 		}
 		else

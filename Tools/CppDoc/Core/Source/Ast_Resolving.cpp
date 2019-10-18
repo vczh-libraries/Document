@@ -270,39 +270,36 @@ namespace symbol_type_resolving
 					hasVariadic = true;
 
 					auto argumentKey = pa.tsys->DeclOf(symbol);
-					if (auto pReplacedTypes = pa.TryGetReplacedGenericArgs(argumentKey))
+					ITsys* replacedType = nullptr;
+					if (pa.TryGetReplacedGenericArg(argumentKey, replacedType))
 					{
-						for (vint i = 0; i < pReplacedTypes->Count(); i++)
+						if (!replacedType)
 						{
-							auto replacedType = pReplacedTypes->Get(i);
-							if (!replacedType)
-							{
-								throw NotConvertableException();
-							}
+							throw NotConvertableException();
+						}
 
-							switch (replacedType->GetType())
+						switch (replacedType->GetType())
+						{
+						case TsysType::Init:
 							{
-							case TsysType::Init:
+								TypeTsysList tsys;
+								tsys.SetLessMemoryMode(false);
+
+								Array<ExprTsysList> initArgs(replacedType->GetParamCount());
+								for (vint j = 0; j < initArgs.Count(); j++)
 								{
-									TypeTsysList tsys;
-									tsys.SetLessMemoryMode(false);
-
-									Array<ExprTsysList> initArgs(replacedType->GetParamCount());
-									for (vint j = 0; j < initArgs.Count(); j++)
-									{
-										tsys.Clear();
-										EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa, tsys);
-										AddTemp(initArgs[j], tsys);
-									}
-									CreateUniversalInitializerType(pa, initArgs, result);
+									tsys.Clear();
+									EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa, tsys);
+									AddTemp(initArgs[j], tsys);
 								}
-								break;
-							case TsysType::Any:
-								AddTemp(result, pa.tsys->Any());
-								break;
-							default:
-								throw NotConvertableException();
+								CreateUniversalInitializerType(pa, initArgs, result);
 							}
+							break;
+						case TsysType::Any:
+							AddTemp(result, pa.tsys->Any());
+							break;
+						default:
+							throw NotConvertableException();
 						}
 					}
 					else

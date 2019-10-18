@@ -678,7 +678,7 @@ bool ParsingArguments::IsGeneralEvaluation()const
 	return taContext == nullptr;
 }
 
-const List<ITsys*>* ParsingArguments::TryGetReplacedGenericArgs(ITsys* arg)const
+bool ParsingArguments::TryGetReplacedGenericArg(ITsys* arg, ITsys*& result)const
 {
 	auto current = taContext;
 	while (current)
@@ -686,11 +686,12 @@ const List<ITsys*>* ParsingArguments::TryGetReplacedGenericArgs(ITsys* arg)const
 		vint index = current->arguments.Keys().IndexOf(arg);
 		if (index != -1)
 		{
-			return &current->arguments.GetByIndex(index);
+			result = current->arguments.Values()[index];
+			return true;
 		}
 		current = current->parent;
 	}
-	return nullptr;
+	return false;
 }
 
 TemplateArgumentContext* ParsingArguments::AdjustTaContextForScope(Symbol* scopeSymbol, TemplateArgumentContext* taContext)

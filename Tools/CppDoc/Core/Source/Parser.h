@@ -178,6 +178,30 @@ namespace symbol_component
 		void										Alloc(SymbolCategory category);
 		void										Free(SymbolCategory category);
 	};
+
+	struct SG_Cache
+	{
+		Ptr<Array<ITsys*>>							parentDeclTypeAndParams;
+		Ptr<Evaluation>								cachedEvaluation;
+
+		static vint Compare(const SG_Cache& a, const SG_Cache& b)
+		{
+			return CompareEnumerable(*a.parentDeclTypeAndParams.Obj(), *b.parentDeclTypeAndParams.Obj());
+		}
+#define OPERATOR_COMPARE(OP)\
+		bool operator OP(const SG_Cache& cache)const\
+		{\
+			return SG_Cache::Compare(*this, cache) OP 0;\
+		}\
+
+		OPERATOR_COMPARE(> )
+		OPERATOR_COMPARE(>= )
+		OPERATOR_COMPARE(< )
+		OPERATOR_COMPARE(<= )
+		OPERATOR_COMPARE(== )
+		OPERATOR_COMPARE(!= )
+#undef OPERATOR_COMPARE
+	};
 }
 
 class Symbol : public Object
@@ -197,6 +221,7 @@ public:
 	WString											name;
 	WString											uniqueId;
 	List<Symbol*>									usingNss;
+	SortedList<symbol_component::SG_Cache>			genericCaches;
 
 public:
 	Symbol(symbol_component::SymbolCategory _category, Symbol* _parent = nullptr);
@@ -338,7 +363,7 @@ struct TemplateArgumentContext
 	//		Single												:	Anything (nullptr for value argument)
 	//		MultipleValues										:	{Values ...}
 	//		UnknownAmountOfMultipleValues						:	any_t
-	Group<ITsys*, ITsys*>										arguments;
+	Dictionary<ITsys*, ITsys*>									arguments;
 
 	//	evaluation result if template arguments of this symbol are unassigned, but template arguments of parent scopes are assigned
 	Dictionary<Symbol*, Ptr<symbol_component::Evaluation>>		symbolEvaluations;
@@ -371,7 +396,7 @@ struct ParsingArguments
 
 	EvaluationKind									GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const;
 	bool											IsGeneralEvaluation()const;
-	const List<ITsys*>*								TryGetReplacedGenericArgs(ITsys* arg)const;
+	bool											TryGetReplacedGenericArg(ITsys* arg, ITsys*& result)const;
 
 	static TemplateArgumentContext*					AdjustTaContextForScope(Symbol* scopeSymbol, TemplateArgumentContext* taContext);
 	static ITsys*									AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* parentDeclType, bool returnTypeOfScope);
@@ -379,8 +404,8 @@ struct ParsingArguments
 
 struct EvaluateSymbolContext
 {
-	TemplateArgumentContext							additionalArguments;
-	symbol_component::Evaluation					evaluation;
+	TemplateArgumentContext*						additionalArguments = nullptr;
+	symbol_component::Evaluation*					evaluation = nullptr;
 };
 
 class DelayParse : public Object

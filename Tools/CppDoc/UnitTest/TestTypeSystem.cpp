@@ -321,8 +321,8 @@ TEST_CASE(TestTypeSystem_DeclInstance)
 
 	auto k1 = symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[0], tsys.Obj());
 	auto k2 = symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[1], tsys.Obj());
-	TEST_ASSERT(data2.taContext->arguments[k1][0] == tsys->Nullptr());
-	TEST_ASSERT(data2.taContext->arguments[k2][0] == tsys->Void());
+	TEST_ASSERT(data2.taContext->arguments[k1] == tsys->Nullptr());
+	TEST_ASSERT(data2.taContext->arguments[k2] == tsys->Void());
 }
 
 TEST_CASE(TestTypeSystem_Type)

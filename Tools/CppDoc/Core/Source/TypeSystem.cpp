@@ -20,7 +20,7 @@ struct WithParams
 	TType*					itsys;
 	TData					data;
 
-	static vint Compare(WithParams<TType, TData> a, WithParams<TType, TData> b)
+	static vint Compare(const WithParams<TType, TData>& a, const WithParams<TType, TData>& b)
 	{
 		vint result = TData::Compare(a.data, b.data);
 		if (result != 0) return result;
@@ -29,7 +29,7 @@ struct WithParams
 };
 #define OPERATOR_COMPARE(OP)\
 	template<typename TType, typename TData>\
-	bool operator OP(WithParams<TType, TData> a, WithParams<TType, TData> b)\
+	bool operator OP(const WithParams<TType, TData>& a, const WithParams<TType, TData>& b)\
 	{\
 		return WithParams<TType, TData>::Compare(a, b) OP 0;\
 	}\
@@ -41,15 +41,6 @@ OPERATOR_COMPARE(<=)
 OPERATOR_COMPARE(==)
 OPERATOR_COMPARE(!=)
 #undef OPERATOR_COMPARE
-
-namespace vl
-{
-	template<typename TType, typename TData>
-	struct POD<WithParams<TType, TData>>
-	{
-		static const bool Result = POD<TData>::Result;
-	};
-}
 
 template<typename TType, typename TData>
 using WithParamsList = SortedList<WithParams<TType, TData>>;
@@ -131,7 +122,8 @@ public:
 
 bool IsGenericArgInContext(const ParsingArguments& pa, ITsys* key)
 {
-	return pa.TryGetReplacedGenericArgs(key) != nullptr;
+	ITsys* replacedType = nullptr;
+	return pa.TryGetReplacedGenericArg(key, replacedType);
 }
 
 /***********************************************************************
@@ -253,9 +245,10 @@ Concrete Tsys (GenericArgs)
 	}																								\
 	void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override				\
 	{																								\
-		if (auto pReplacedTypes = pa.TryGetReplacedGenericArgs(this))								\
+		ITsys* replacedType = nullptr;																\
+		if (pa.TryGetReplacedGenericArg(this, replacedType))										\
 		{																							\
-			CopyFrom(output, *pReplacedTypes);														\
+			output.Add(replacedType);																\
 			return;																					\
 		}																							\
 		output.Add(this);																			\
