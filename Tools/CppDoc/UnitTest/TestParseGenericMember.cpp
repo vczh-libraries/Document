@@ -157,8 +157,8 @@ const X<int, double>* cpx;
 	AssertExpr(pa, L"cF().y",					L"cF().y",						L"double const $PR"							);
 	AssertExpr(pa, L"clF().y",					L"clF().y",						L"double const $L"							);
 	AssertExpr(pa, L"crF().y",					L"crF().y",						L"double const && $X"						);
-	AssertExpr(pa, L"px->x",					L"px->x",						L"double $L"								);
-	AssertExpr(pa, L"cpx->x",					L"cpx->x",						L"double const $L"							);
+	AssertExpr(pa, L"px->y",					L"px->y",						L"double $L"								);
+	AssertExpr(pa, L"cpx->y",					L"cpx->y",						L"double const $L"							);
 }
 /*
 TEST_CASE(TestParseGenericMember_FFA_Qualifier)

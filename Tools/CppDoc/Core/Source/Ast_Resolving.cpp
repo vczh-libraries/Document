@@ -160,9 +160,19 @@ namespace symbol_type_resolving
 		}
 
 		ITsys* parentDeclType = nullptr;
-		if (thisItem && thisItem->tsys->GetType() == TsysType::DeclInstant)
+		if (thisItem)
 		{
-			parentDeclType = thisItem->tsys;
+			TsysCV cv;
+			TsysRefType ref;
+			auto entity = thisItem->tsys->GetEntity(cv, ref);
+			if (entity->GetType() == TsysType::Ptr)
+			{
+				entity = entity->GetElement();
+			}
+			if (entity->GetType() == TsysType::DeclInstant)
+			{
+				parentDeclType = entity;
+			}
 		}
 
 		switch (symbol->kind)
