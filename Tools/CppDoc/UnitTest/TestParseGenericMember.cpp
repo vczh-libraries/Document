@@ -87,64 +87,80 @@ Z<void*, char*>* pz = nullptr;
 	AssertExpr(pa, L"x2(nullptr)(0)",							L"x2(nullptr)(0)",								L"::X<char, wchar_t> $PR"										);
 	AssertExpr(pa, L"y2(nullptr)(0)",							L"y2(nullptr)(0)",								L"::Y<float, double> $PR"										);
 }
-/*
+
 TEST_CASE(TestParseGenericMember_Field_Qualifier)
 {
 	auto input = LR"(
+template<typename Tx, typename Ty>
 struct X
 {
-	int x;
-	int y;
+	Tx x;
+	Ty y;
 };
 
-X x;
-X& lx;
-X&& rx;
+X<int, double> x;
+X<int, double>& lx;
+X<int, double>&& rx;
 
-const X cx;
-const X& clx;
-const X&& crx;
+const X<int, double> cx;
+const X<int, double>& clx;
+const X<int, double>&& crx;
 
-X F();
-X& lF();
-X&& rF();
+X<int, double> F();
+X<int, double>& lF();
+X<int, double>&& rF();
 
-const X cF();
-const X& clF();
-const X&& crF();
+const X<int, double> cF();
+const X<int, double>& clF();
+const X<int, double>&& crF();
 
-X* px;
-const X* cpx;
+X<int, double>* px;
+const X<int, double>* cpx;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(pa, L"x",						L"x",							L"::X $L"					);
-	AssertExpr(pa, L"lx",						L"lx",							L"::X & $L"					);
-	AssertExpr(pa, L"rx",						L"rx",							L"::X && $L"				);
-	AssertExpr(pa, L"cx",						L"cx",							L"::X const $L"				);
-	AssertExpr(pa, L"clx",						L"clx",							L"::X const & $L"			);
-	AssertExpr(pa, L"crx",						L"crx",							L"::X const && $L"			);
+	AssertExpr(pa, L"x",						L"x",							L"::X<__int32, double> $L"					);
+	AssertExpr(pa, L"lx",						L"lx",							L"::X<__int32, double> & $L"				);
+	AssertExpr(pa, L"rx",						L"rx",							L"::X<__int32, double> && $L"				);
+	AssertExpr(pa, L"cx",						L"cx",							L"::X<__int32, double> const $L"			);
+	AssertExpr(pa, L"clx",						L"clx",							L"::X<__int32, double> const & $L"			);
+	AssertExpr(pa, L"crx",						L"crx",							L"::X<__int32, double> const && $L"			);
+	AssertExpr(pa, L"px",						L"px",							L"::X<__int32, double> * $L"				);
+	AssertExpr(pa, L"cpx",						L"cpx",							L"::X<__int32, double> const * $L"			);
 
-	AssertExpr(pa, L"x.x",						L"x.x",							L"__int32 $L"				);
-	AssertExpr(pa, L"lx.x",						L"lx.x",						L"__int32 $L"				);
-	AssertExpr(pa, L"rx.x",						L"rx.x",						L"__int32 $L"				);
-	AssertExpr(pa, L"cx.x",						L"cx.x",						L"__int32 const $L"			);
-	AssertExpr(pa, L"clx.x",					L"clx.x",						L"__int32 const $L"			);
-	AssertExpr(pa, L"crx.x",					L"crx.x",						L"__int32 const $L"			);
+	AssertExpr(pa, L"x.x",						L"x.x",							L"__int32 $L"								);
+	AssertExpr(pa, L"lx.x",						L"lx.x",						L"__int32 $L"								);
+	AssertExpr(pa, L"rx.x",						L"rx.x",						L"__int32 $L"								);
+	AssertExpr(pa, L"cx.x",						L"cx.x",						L"__int32 const $L"							);
+	AssertExpr(pa, L"clx.x",					L"clx.x",						L"__int32 const $L"							);
+	AssertExpr(pa, L"crx.x",					L"crx.x",						L"__int32 const $L"							);
 
-	AssertExpr(pa, L"F().x",					L"F().x",						L"__int32 $PR"				);
-	AssertExpr(pa, L"lF().x",					L"lF().x",						L"__int32 $L"				);
-	AssertExpr(pa, L"rF().x",					L"rF().x",						L"__int32 && $X"			);
-	AssertExpr(pa, L"cF().x",					L"cF().x",						L"__int32 const $PR"		);
-	AssertExpr(pa, L"clF().x",					L"clF().x",						L"__int32 const $L"			);
-	AssertExpr(pa, L"crF().x",					L"crF().x",						L"__int32 const && $X"		);
+	AssertExpr(pa, L"x.y",						L"x.y",							L"double $L"								);
+	AssertExpr(pa, L"lx.y",						L"lx.y",						L"double $L"								);
+	AssertExpr(pa, L"rx.y",						L"rx.y",						L"double $L"								);
+	AssertExpr(pa, L"cx.y",						L"cx.y",						L"double const $L"							);
+	AssertExpr(pa, L"clx.y",					L"clx.y",						L"double const $L"							);
+	AssertExpr(pa, L"crx.y",					L"crx.y",						L"double const $L"							);
 
-	AssertExpr(pa, L"px",						L"px",							L"::X * $L"					);
-	AssertExpr(pa, L"cpx",						L"cpx",							L"::X const * $L"			);
-	AssertExpr(pa, L"px->x",					L"px->x",						L"__int32 $L"				);
-	AssertExpr(pa, L"cpx->x",					L"cpx->x",						L"__int32 const $L"			);
+	AssertExpr(pa, L"F().x",					L"F().x",						L"__int32 $PR"								);
+	AssertExpr(pa, L"lF().x",					L"lF().x",						L"__int32 $L"								);
+	AssertExpr(pa, L"rF().x",					L"rF().x",						L"__int32 && $X"							);
+	AssertExpr(pa, L"cF().x",					L"cF().x",						L"__int32 const $PR"						);
+	AssertExpr(pa, L"clF().x",					L"clF().x",						L"__int32 const $L"							);
+	AssertExpr(pa, L"crF().x",					L"crF().x",						L"__int32 const && $X"						);
+	AssertExpr(pa, L"px->x",					L"px->x",						L"__int32 $L"								);
+	AssertExpr(pa, L"cpx->x",					L"cpx->x",						L"__int32 const $L"							);
+
+	AssertExpr(pa, L"F().y",					L"F().y",						L"double $PR"								);
+	AssertExpr(pa, L"lF().y",					L"lF().y",						L"double $L"								);
+	AssertExpr(pa, L"rF().y",					L"rF().y",						L"double && $X"								);
+	AssertExpr(pa, L"cF().y",					L"cF().y",						L"double const $PR"							);
+	AssertExpr(pa, L"clF().y",					L"clF().y",						L"double const $L"							);
+	AssertExpr(pa, L"crF().y",					L"crF().y",						L"double const && $X"						);
+	AssertExpr(pa, L"px->x",					L"px->x",						L"double $L"								);
+	AssertExpr(pa, L"cpx->x",					L"cpx->x",						L"double const $L"							);
 }
-
+/*
 TEST_CASE(TestParseGenericMember_FFA_Qualifier)
 {
 	auto input = LR"(
