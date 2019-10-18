@@ -288,9 +288,7 @@ namespace symbol_type_resolving
 								Array<ExprTsysList> initArgs(replacedType->GetParamCount());
 								for (vint j = 0; j < initArgs.Count(); j++)
 								{
-									tsys.Clear();
-									EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa, tsys);
-									AddTemp(initArgs[j], tsys);
+									AddTemp(initArgs[j], EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa));
 								}
 								CreateUniversalInitializerType(pa, initArgs, result);
 							}
@@ -309,9 +307,7 @@ namespace symbol_type_resolving
 				}
 				else
 				{
-					TypeTsysList tsys;
-					EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa, tsys);
-					AddTemp(result, tsys);
+					AddTemp(result, EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa));
 					hasNonVariadic = true;
 				}
 			}

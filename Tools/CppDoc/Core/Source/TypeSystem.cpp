@@ -105,9 +105,9 @@ public:
 		return false;
 	}
 
-	void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override
+	ITsys* ReplaceGenericArgs(const ParsingArguments& pa)override
 	{
-		output.Add(this);
+		return this;
 	}
 };
 
@@ -210,19 +210,16 @@ Concrete Tsys (ReplaceGenericArgs for type with element)
 		{																							\
 			return element->HasUnknownType();														\
 		}																							\
-		void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override			\
+		ITsys* ReplaceGenericArgs(const ParsingArguments& pa)override								\
 		{																							\
-			element->ReplaceGenericArgs(pa, output);												\
-			if (output.Count() == 1 && output[0] == element)										\
+			auto elementResult = element->ReplaceGenericArgs(pa);									\
+			if (elementResult == element)															\
 			{																						\
-				output[0] = this;																	\
+				return this;																		\
 			}																						\
 			else																					\
 			{																						\
-				for (vint i = 0; i < output.Count(); i++)											\
-				{																					\
-					output[i] = output[i]->NAME(DATA);												\
-				}																					\
+				return elementResult->NAME(DATA);													\
 			}																						\
 		}																							\
 
@@ -243,15 +240,14 @@ Concrete Tsys (GenericArgs)
 	{																								\
 		return true;																				\
 	}																								\
-	void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override				\
+	ITsys* ReplaceGenericArgs(const ParsingArguments& pa)override									\
 	{																								\
 		ITsys* replacedType = nullptr;																\
 		if (pa.TryGetReplacedGenericArg(this, replacedType))										\
 		{																							\
-			output.Add(replacedType);																\
-			return;																					\
+			return replacedType;																	\
 		}																							\
-		output.Add(this);																			\
+		return this;																				\
 	}																								\
 
 /***********************************************************************
@@ -470,24 +466,17 @@ class ITSYS_CLASS(Member)
 		return element->HasUnknownType() || data->HasUnknownType();
 	}
 
-	void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override
+	ITsys* ReplaceGenericArgs(const ParsingArguments& pa)override
 	{
 		if (!HasGenericArg(pa))
 		{
-			output.Add(this);
+			return this;
 		}
 		else
 		{
-			List<ITsys*> classTypes, elementTypes;
-			data->ReplaceGenericArgs(pa, classTypes);
-			element->ReplaceGenericArgs(pa, elementTypes);
-			for (vint i = 0; i < elementTypes.Count(); i++)
-			{
-				for (vint j = 0; j < classTypes.Count(); j++)
-				{
-					output.Add(elementTypes[i]->MemberOf(classTypes[j]));
-				}
-			}
+			auto classResult = data->ReplaceGenericArgs(pa);
+			auto memberResult = element->ReplaceGenericArgs(pa);
+			return memberResult->MemberOf(classResult);
 		}
 	}
 };
@@ -553,76 +542,47 @@ bool HasUnknownTypeWithParams(List<ITsys*>& params, ITsys* element)
 }
 
 template<typename TITsys>
-void ReplaceGenericArgsWithParamsPartial(ITsys* element, Array<vint>& indices, Array<List<ITsys*>>& replacedParams, Array<ITsys*>& selectedParams, vint count, List<ITsys*>& output, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
+ITsys* ReplaceGenericArgsWithParams(const ParsingArguments& pa, List<ITsys*>& params, ITsys* element, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
 {
-	if (count == replacedParams.Count())
-	{
-		auto result = (self->*callback)(element, selectedParams);
-		if (!output.Contains(result))
-		{
-			output.Add(result);
-		}
-	}
-	else
-	{
-		for (vint i = 0; i < replacedParams[count].Count(); i++)
-		{
-			indices[count] = i;
-			selectedParams[count] = replacedParams[count][i];
-			ReplaceGenericArgsWithParamsPartial(element, indices, replacedParams, selectedParams, count + 1, output, self, callback);
-		}
-	}
-}
-
-template<typename TITsys>
-void ReplaceGenericArgsWithParams(const ParsingArguments& pa, List<ITsys*>& params, ITsys* element, List<ITsys*>& output, TITsys* self, ITsys* (TITsys::* callback)(ITsys* element, Array<ITsys*>& params))
-{
-	List<ITsys*> replacedElement;
 	Array<vint> indices(params.Count());
-	Array<List<ITsys*>> replacedParams(params.Count());
+	Array<ITsys*> replacedParams(params.Count());
 	Array<ITsys*> selectedParams(params.Count());
 
+	ITsys* elementResult = nullptr;
 	if (element)
 	{
-		element->ReplaceGenericArgs(pa, replacedElement);
-	}
-	else
-	{
-		replacedElement.Add(nullptr);
+		elementResult = element->ReplaceGenericArgs(pa);
 	}
 
+	Array<ITsys*> paramResults(params.Count());
 	for (vint i = 0; i < params.Count(); i++)
 	{
-		params[i]->ReplaceGenericArgs(pa, replacedParams[i]);
+		paramResults[i] = params[i]->ReplaceGenericArgs(pa);
 	}
-
-	for (vint i = 0; i < replacedElement.Count(); i++)
-	{
-		ReplaceGenericArgsWithParamsPartial(replacedElement[i], indices, replacedParams, selectedParams, 0, output, self, callback);
-	}
+	return (self->*callback)(elementResult, paramResults);
 }
 
-#define ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(ELEMENT) \
-public:\
-	bool HasGenericArg(const ParsingArguments& pa)override\
-	{\
-		return HasGenericArgWithParams(params, ELEMENT, pa);\
-	}\
-	bool HasUnknownType()override\
-	{\
-		return HasUnknownTypeWithParams(params, ELEMENT);\
-	}\
-	void ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output)override\
-	{\
-		if (HasGenericArg(pa))\
-		{\
-			ReplaceGenericArgsWithParams(pa, params, ELEMENT, output, this, &RemoveReference<decltype(*this)>::Type::ReplaceGenericArgsCallback);\
-		}\
-		else\
-		{\
-			output.Add(this);\
-		}\
-	}\
+#define ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(ELEMENT)																								\
+public:																																				\
+	bool HasGenericArg(const ParsingArguments& pa)override																							\
+	{																																				\
+		return HasGenericArgWithParams(params, ELEMENT, pa);																						\
+	}																																				\
+	bool HasUnknownType()override																													\
+	{																																				\
+		return HasUnknownTypeWithParams(params, ELEMENT);																							\
+	}																																				\
+	ITsys* ReplaceGenericArgs(const ParsingArguments& pa)override																					\
+	{																																				\
+		if (HasGenericArg(pa))																														\
+		{																																			\
+			return ReplaceGenericArgsWithParams(pa, params, ELEMENT, this, &RemoveReference<decltype(*this)>::Type::ReplaceGenericArgsCallback);	\
+		}																																			\
+		else																																		\
+		{																																			\
+			return this;																															\
+		}																																			\
+	}																																				\
 
 class ITSYS_CLASS(Function)
 {

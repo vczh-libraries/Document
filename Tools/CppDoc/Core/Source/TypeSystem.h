@@ -400,7 +400,7 @@ public:
 	virtual bool						IsUnknownType() = 0;
 	virtual bool						HasGenericArg(const ParsingArguments& pa) = 0;
 	virtual bool						HasUnknownType() = 0;
-	virtual void						ReplaceGenericArgs(const ParsingArguments& pa, List<ITsys*>& output) = 0;
+	virtual ITsys*						ReplaceGenericArgs(const ParsingArguments& pa) = 0;
 };
 
 /***********************************************************************

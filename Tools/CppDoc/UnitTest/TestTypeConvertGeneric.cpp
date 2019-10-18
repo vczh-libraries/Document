@@ -287,9 +287,7 @@ using Context = T;
 			TypeTsysList tsys;
 			TemplateArgumentContext taContext;
 			taContext.arguments.Add(genericTypes[0], pa.tsys->Int());
-			genericTypes[i]->ReplaceGenericArgs(pa.AppendSingleLevelArgs(taContext), tsys);
-			TEST_ASSERT(tsys.Count() == 1);
-			intTypes[i] = tsys[0];
+			intTypes[i] = genericTypes[i]->ReplaceGenericArgs(pa.AppendSingleLevelArgs(taContext));
 		}
 
 		for (vint i = 0; i < TypeCount; i++)
@@ -297,9 +295,7 @@ using Context = T;
 			TypeTsysList tsys;
 			TemplateArgumentContext taContext;
 			taContext.arguments.Add(genericTypes[0], pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"S")->Get(0).Obj()));
-			genericTypes[i]->ReplaceGenericArgs(pa.AppendSingleLevelArgs(taContext), tsys);
-			TEST_ASSERT(tsys.Count() == 1);
-			structTypes[i] = tsys[0];
+			structTypes[i] = genericTypes[i]->ReplaceGenericArgs(pa.AppendSingleLevelArgs(taContext));
 		}
 	}
 
