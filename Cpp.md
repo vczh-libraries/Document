@@ -23,6 +23,7 @@
       - [ ] `auto` member function
     - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
   - [ ] More `template`
+    - [ ] Create similar test cases for testing accessing base classes member inside or outside of the class.
     - [ ] Inside `template<...> class X`, if `X` is used as a type without type arguments, it is filled with template arguments.
     - [ ] Function specializations recognized but not used
     - [ ] Class specializations recognized but not used
