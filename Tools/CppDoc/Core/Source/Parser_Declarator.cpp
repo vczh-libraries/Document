@@ -1,6 +1,7 @@
 #include "Parser.h"
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
+#include "Ast_Resolving.h"
 
 /***********************************************************************
 ReplaceOutOfDeclaratorTypeVisitor
@@ -1022,25 +1023,35 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 	auto cache = MakePtr<symbol_component::ClassMemberCache>();
 	cache->symbolDefinedInsideClass = symbolDefinedInsideClass;
 
-	cache->classSymbols.Add(classSymbol);
-	for (vint i = 0; i < cache->classSymbols.Count(); i++)
 	{
-		auto parentScope = cache->classSymbols[i]->GetParentScope();
-		switch (parentScope->kind)
+		auto current = classSymbol;
+		while (current)
 		{
-		case symbol_component::SymbolKind::Class:
-		case symbol_component::SymbolKind::Struct:
-		case symbol_component::SymbolKind::Union:
-			cache->classSymbols.Add(parentScope);
-			break;
-		default:
-			cache->parentScope = parentScope;
+			switch (current->kind)
+			{
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+			case symbol_component::SymbolKind::Union:
+				if (auto classDecl = current->GetAnyForwardDecl<ForwardClassDeclaration>())
+				{
+					auto declPa = pa.AdjustForDecl(current, nullptr, true);
+					auto& ev = symbol_type_resolving::EvaluateForwardClassSymbol(declPa, classDecl.Obj(), nullptr, nullptr);
+					auto classType = ev[0];
+					if (classType->GetType() == TsysType::GenericFunction)
+					{
+						classType = classType->GetElement();
+					}
+					cache->containerClassTypes.Add(classType);
+				}
+				break;
+			}
+			current = current->GetParentScope();
 		}
 	}
 
 	if (symbolDefinedInsideClass)
 	{
-		cache->parentScope = cache->classSymbols[cache->classSymbols.Count() - 1]->GetParentScope();
+		cache->parentScope = cache->containerClassTypes[cache->containerClassTypes.Count() - 1]->GetDecl()->GetParentScope();
 	}
 	else if (IsInTemplateHeader(pa))
 	{

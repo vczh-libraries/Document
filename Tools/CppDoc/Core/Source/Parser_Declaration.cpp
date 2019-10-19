@@ -867,7 +867,7 @@ void ParseDeclaration_Function(
 		throw StopParsingException(cursor);
 	}
 
-	auto context = declarator->classMemberCache ? declarator->classMemberCache->classSymbols[0] : pa.scopeSymbol;
+	auto context = declarator->classMemberCache ? declarator->classMemberCache->containerClassTypes[0]->GetDecl() : pa.scopeSymbol;
 	if (hasStat)
 	{
 		// if there is a statement, then it is a function declaration
@@ -882,9 +882,8 @@ void ParseDeclaration_Function(
 			cv.isGeneralConst = funcType->qualifierConstExpr || funcType->qualifierConst;
 			cv.isVolatile = funcType->qualifierVolatile;
 
-			auto classDecl = declarator->classMemberCache->classSymbols[0]->GetAnyForwardDecl<ForwardClassDeclaration>();
-			auto& ev = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
-			declarator->classMemberCache->thisType = ev[0]->CVOf(cv)->PtrOf();
+			auto classType = declarator->classMemberCache->containerClassTypes[0];
+			declarator->classMemberCache->thisType = classType->CVOf(cv)->PtrOf();
 
 			if (!declarator->classMemberCache->symbolDefinedInsideClass)
 			{
@@ -1016,7 +1015,7 @@ void ParseDeclaration_Variable(
 			throw StopParsingException(cursor);
 		}
 
-		auto context = declarator->classMemberCache ? declarator->classMemberCache->classSymbols[0] : pa.scopeSymbol;
+		auto context = declarator->classMemberCache ? declarator->classMemberCache->containerClassTypes[0]->GetDecl() : pa.scopeSymbol;
 		if (decoratorExtern || (decoratorStatic && !declarator->initializer))
 		{
 			// if there is extern, or static without an initializer, then it is a forward variable declaration

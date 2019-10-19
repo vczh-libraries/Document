@@ -21,7 +21,7 @@ namespace symbol_component
 		/*
 		for void A::B::C::F(){}, it will be [C, B, A]
 		*/
-		List<Symbol*>				classSymbols;
+		List<ITsys*>				containerClassTypes;
 
 		/*
 		true for members defined inside a class, so that type arguments reachable in classSymbols are reachable here

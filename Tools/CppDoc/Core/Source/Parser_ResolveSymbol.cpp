@@ -172,9 +172,14 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 				? SearchPolicy::ChildSymbolFromMemberInside
 				: SearchPolicy::ChildSymbolFromMemberOutside
 				;
-			for (vint i = 0; i < cache->classSymbols.Count(); i++)
+			for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
 			{
-				auto newPa = pa.WithScope(cache->classSymbols[i]);
+				auto classType = cache->containerClassTypes[i];
+				auto newPa
+					= classType->GetType() == TsysType::Decl
+					? pa.AdjustForDecl(classType->GetDecl())
+					: pa.AdjustForDecl(classType->GetDecl(), classType->GetDeclInstant().parentDeclType, true)
+					;
 				ResolveSymbolInternal(newPa, childPolicy, rsa);
 			}
 		}
