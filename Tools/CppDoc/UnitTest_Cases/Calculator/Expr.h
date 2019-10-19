@@ -1,5 +1,7 @@
 #pragma once
 
+#include <intrin.h>
+
 #define EXPR_TYPES(F)\
 	F(NumberExpr)\
 	F(UnaryExpr)\
@@ -23,33 +25,95 @@ namespace calculator
 #undef VISIT_EXPR
 	};
 
+	template<typename T>
+	class Ptr
+	{
+	private:
+		T*				reference = nullptr;
+
+		void			Inc();
+		void			Dec();
+	public:
+		Ptr()
+		{
+		}
+
+		Ptr(T* _reference)
+			:reference(_reference)
+		{
+			Inc();
+		}
+
+		Ptr(const Ptr<T>& ptr)
+			:reference(ptr.reference)
+		{
+			Inc();
+		}
+
+		Ptr(Ptr<T>&& ptr)
+			:reference(ptr.reference)
+		{
+			ptr.reference = nullptr;
+		}
+
+		~Ptr()
+		{
+			Dec();
+		}
+
+		Ptr& operator=(const Ptr& ptr)
+		{
+			if (this == &ptr) return *this;
+			Dec();
+			reference = ptr.reference;
+			Inc();
+			return *this;
+		}
+
+		Ptr& operator=(Ptr&& ptr)
+		{
+			if (this == &ptr) return *this;
+			Dec();
+			reference = ptr.reference;
+			ptr.reference = nullptr;
+			return *this;
+		}
+
+		T* operator->() const
+		{
+			return reference;
+		}
+	};
+
+	template<typename X>
+	void Ptr<X>::Inc()
+	{
+		if (reference)
+		{
+			_InterlockedIncrement(&reference->counter);
+		}
+	}
+
+	template<typename X>
+	void Ptr<X>::Dec()
+	{
+		if (reference)
+		{
+			if (_InterlockedDecrement(&reference->counter) == 0)
+			{
+				delete reference;
+				reference = nullptr;
+			}
+		}
+	}
+
 	class Expr
 	{
 	private:
+		friend class Ptr<Expr>;
 		volatile long		counter = 0;
 	public:
-		class Ptr
-		{
-		private:
-			Expr*			expr;
-
-			void			Inc();
-			void			Dec();
-		public:
-			Ptr();
-			Ptr(Expr* _expr);
-			Ptr(const Ptr& ptr);
-			Ptr(Ptr&& ptr);
-			~Ptr();
-
-			Ptr&			operator=(const Ptr& ptr);
-			Ptr&			operator=(Ptr&& ptr);
-
-			Expr* operator->() const
-			{
-				return expr;
-			}
-		};
+		using Ptr = Ptr<Expr>;
 
 		virtual ~Expr() = default;
 		virtual void		Accept(IExprVisitor* visitor) = 0;

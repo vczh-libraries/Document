@@ -1,4 +1,3 @@
-#include <intrin.h>
 #include <stdio.h>
 #include "Expr.h"
 
@@ -12,72 +11,6 @@ namespace calculator
 
 	EXPR_TYPES(EXPR_ACCEPT_VISITOR_IMPL)
 #undef EXPR_ACCEPT_VISITOR_IMPL
-
-	void Expr::Ptr::Inc()
-	{
-		if (expr)
-		{
-			_InterlockedIncrement(&expr->counter);
-		}
-	}
-
-	void Expr::Ptr::Dec()
-	{
-		if (expr)
-		{
-			if (_InterlockedDecrement(&expr->counter) == 0)
-			{
-				delete expr;
-				expr = nullptr;
-			}
-		}
-	}
-
-	Expr::Ptr::Ptr()
-	{
-		Inc();
-	}
-
-	Expr::Ptr::Ptr(Expr* _expr)
-		:expr(_expr)
-	{
-		Inc();
-	}
-
-	Expr::Ptr::Ptr(const Ptr& ptr)
-		:expr(ptr.expr)
-	{
-		Inc();
-	}
-
-	Expr::Ptr::Ptr(Ptr&& ptr)
-		:expr(ptr.expr)
-	{
-		ptr.expr = nullptr;
-	}
-
-	Expr::Ptr::~Ptr()
-	{
-		Dec();
-	}
-
-	Expr::Ptr& Expr::Ptr::operator=(const Ptr& ptr)
-	{
-		if (this == &ptr) return *this;
-		Dec();
-		expr = ptr.expr;
-		Inc();
-		return *this;
-	}
-
-	Expr::Ptr& Expr::Ptr::operator=(Ptr&& ptr)
-	{
-		if (this == &ptr) return *this;
-		Dec();
-		expr = ptr.expr;
-		ptr.expr = nullptr;
-		return *this;
-	}
 
 /***********************************************************************
 Evaluation
