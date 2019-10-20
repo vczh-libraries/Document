@@ -151,7 +151,7 @@ struct GA
 	AssertType(pa,		L"GA<int>::_GB<bool>::_GC<float>",	L"GA<int> :: _GB<bool> :: _GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"										);
 }
 
-TEST_CASE(TestParseGenericClass_NestedThisType)
+TEST_CASE(TestParseGenericClass_BaseThisType)
 {
 	auto input = LR"(
 template<typename T>
@@ -251,6 +251,10 @@ volatile const D<char> cvd;
 	AssertExpr(L"ccd.B_()",		L"ccd.B_()",		L"::B const volatile *"				);
 	AssertExpr(L"ccd.C_()",		L"ccd.C_()",		L"::C<double> const volatile *"		);
 	AssertExpr(L"ccd.D_()",		L"ccd.D_()",		L"::D<char> const volatile *"		);
+}
+
+TEST_CASE(TestParseGenericClass_NestedThisType)
+{
 }
 
 TEST_CASE(TestParseGenericClass_NestedStructUsedInside)
