@@ -32,42 +32,7 @@ namespace symbol_totsys_impl
 			TemplateArgumentContext taContext;
 			taContext.symbolToApply = genericFunction->GetGenericFunction().declSymbol;
 			ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1);
-
-			symbol_component::Evaluation* evaluation = nullptr;
-			{
-				symbol_component::SG_Cache cacheKey;
-				cacheKey.parentDeclTypeAndParams = MakePtr<Array<ITsys*>>(genericFunction->GetParamCount() + 1);
-				cacheKey.parentDeclTypeAndParams->Set(0, genericFunction->GetGenericFunction().parentDeclType);
-				for (vint i = 0; i < genericFunction->GetParamCount(); i++)
-				{
-					cacheKey.parentDeclTypeAndParams->Set(i + 1, taContext.arguments[genericFunction->GetParam(i)]);
-				}
-
-				vint index = declSymbol->genericCaches.IndexOf(cacheKey);
-				if (index == -1)
-				{
-					cacheKey.cachedEvaluation = MakePtr<symbol_component::Evaluation>();
-					declSymbol->genericCaches.Add(cacheKey);
-					evaluation = cacheKey.cachedEvaluation.Obj();
-
-					EvaluateSymbolContext esContext;
-					esContext.additionalArguments = &taContext;
-					esContext.evaluation = evaluation;
-					process(genericFunction, declSymbol, esContext);
-				}
-				else
-				{
-					evaluation = declSymbol->genericCaches[index].cachedEvaluation.Obj();
-				}
-			}
-
-			{
-				auto& tsys = evaluation->Get();
-				for (vint j = 0; j < tsys.Count(); j++)
-				{
-					AddExprTsysItemToResult(result, GetExprTsysItem(tsys[j]));
-				}
-			}
+			process(genericFunction, declSymbol, &taContext);
 		}
 		else if (genericFunction->GetType() == TsysType::Any)
 		{
@@ -79,13 +44,26 @@ namespace symbol_totsys_impl
 		}
 	}
 
+	void UseTsys(ExprTsysList& result, ITsys* tsys)
+	{
+		AddExprTsysItemToResult(result, GetExprTsysItem(tsys));
+	}
+
+	void UseTypeTsysList(ExprTsysList& result, TypeTsysList& tsys)
+	{
+		for (vint j = 0; j < tsys.Count(); j++)
+		{
+			UseTsys(result, tsys[j]);
+		}
+	}
+
 	//////////////////////////////////////////////////////////////////////////////////////
 	// ProcessGenericType
 	//////////////////////////////////////////////////////////////////////////////////////
 	
 	void ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, GenericType* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 	{
-		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa](ITsys* genericFunction, Symbol* declSymbol, EvaluateSymbolContext& esContext)
+		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa, &result](ITsys* genericFunction, Symbol* declSymbol, TemplateArgumentContext* argumentsToApply)
 		{
 			auto parentDeclType = genericFunction->GetGenericFunction().parentDeclType;
 			switch (declSymbol->kind)
@@ -93,15 +71,25 @@ namespace symbol_totsys_impl
 			case symbol_component::SymbolKind::Class:
 			case symbol_component::SymbolKind::Struct:
 			case symbol_component::SymbolKind::Union:
-			case symbol_component::SymbolKind::GenericTypeArgument:
-				esContext.evaluation->Allocate();
-				esContext.evaluation->Get().Add(genericFunction->GetElement()->ReplaceGenericArgs(pa.AppendSingleLevelArgs(*esContext.additionalArguments)));
+				{
+					auto decl = declSymbol->GetAnyForwardDecl<ForwardClassDeclaration>();
+					if (!decl->templateSpec) throw NotConvertableException();
+					auto& tsys = EvaluateForwardClassSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
+					UseTypeTsysList(result, tsys);
+				}
 				break;
 			case symbol_component::SymbolKind::TypeAlias:
 				{
 					auto decl = declSymbol->GetImplDecl_NFb<TypeAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					EvaluateTypeAliasSymbol(pa, decl.Obj(), parentDeclType, &esContext);
+					auto& tsys = EvaluateTypeAliasSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
+					UseTypeTsysList(result, tsys);
+				}
+				break;
+			case symbol_component::SymbolKind::GenericTypeArgument:
+				{
+					auto tsys = genericFunction->GetElement()->ReplaceGenericArgs(pa.AppendSingleLevelArgs(*argumentsToApply));
+					UseTsys(result, tsys);
 				}
 				break;
 			default:
@@ -116,7 +104,7 @@ namespace symbol_totsys_impl
 
 	void ProcessGenericExpr(const ParsingArguments& pa, ExprTsysList& result, GenericExpr* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 	{
-		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa](ITsys* genericFunction, Symbol* declSymbol, EvaluateSymbolContext& esContext)
+		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa, &result](ITsys* genericFunction, Symbol* declSymbol, TemplateArgumentContext* argumentsToApply)
 		{
 			auto parentDeclType = genericFunction->GetGenericFunction().parentDeclType;
 			switch (declSymbol->kind)
@@ -125,12 +113,11 @@ namespace symbol_totsys_impl
 				{
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					EvaluateFuncSymbol(pa, decl.Obj(), parentDeclType, &esContext);
+					auto& tsys = EvaluateFuncSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
 
-					auto& tsys = esContext.evaluation->Get();
 					for (vint i = 0; i < tsys.Count(); i++)
 					{
-						tsys[i] = tsys[i]->PtrOf();
+						UseTsys(result, tsys[i]->PtrOf());
 					}
 				}
 				break;
@@ -138,7 +125,8 @@ namespace symbol_totsys_impl
 				{
 					auto decl = declSymbol->GetImplDecl_NFb<ValueAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					EvaluateValueAliasSymbol(pa, decl.Obj(), parentDeclType, &esContext);
+					auto& tsys = EvaluateValueAliasSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
+					UseTypeTsysList(result, tsys);
 				}
 				break;
 			default:

@@ -80,12 +80,12 @@ namespace symbol_type_resolving
 	// EvaluateSymbol
 
 	extern TypeTsysList&						EvaluateVarSymbol				(const ParsingArguments& invokerPa,	ForwardVariableDeclaration* varDecl,	ITsys* parentDeclType															);
-	extern void									SetFuncTypeByReturnStat			(const ParsingArguments& pa,		FunctionDeclaration* funcDecl,			TypeTsysList& returnTypes,			EvaluateSymbolContext* esContext			);
-	extern TypeTsysList&						EvaluateFuncSymbol				(const ParsingArguments& invokerPa,	ForwardFunctionDeclaration* funcDecl,	ITsys* parentDeclType,				EvaluateSymbolContext* esContext			);
-	extern TypeTsysList&						EvaluateForwardClassSymbol		(const ParsingArguments& invokerPa,	ForwardClassDeclaration* classDecl,		ITsys* parentDeclType,				EvaluateSymbolContext* esContext			);
-	extern symbol_component::Evaluation&		EvaluateClassSymbol				(const ParsingArguments& invokerPa,	ClassDeclaration* classDecl,			ITsys* parentDeclType,				EvaluateSymbolContext* esContext			);
-	extern TypeTsysList&						EvaluateTypeAliasSymbol			(const ParsingArguments& invokerPa,	TypeAliasDeclaration* usingDecl,		ITsys* parentDeclType,				EvaluateSymbolContext* esContext			);
-	extern TypeTsysList&						EvaluateValueAliasSymbol		(const ParsingArguments& invokerPa,	ValueAliasDeclaration* usingDecl,		ITsys* parentDeclType,				EvaluateSymbolContext* esContext			);
+	extern void									SetFuncTypeByReturnStat			(const ParsingArguments& pa,		FunctionDeclaration* funcDecl,			TypeTsysList& returnTypes,			TemplateArgumentContext* argumentsToApply	);
+	extern TypeTsysList&						EvaluateFuncSymbol				(const ParsingArguments& invokerPa,	ForwardFunctionDeclaration* funcDecl,	ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
+	extern TypeTsysList&						EvaluateForwardClassSymbol		(const ParsingArguments& invokerPa,	ForwardClassDeclaration* classDecl,		ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
+	extern symbol_component::Evaluation&		EvaluateClassSymbol				(const ParsingArguments& invokerPa,	ClassDeclaration* classDecl,			ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
+	extern TypeTsysList&						EvaluateTypeAliasSymbol			(const ParsingArguments& invokerPa,	TypeAliasDeclaration* usingDecl,		ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
+	extern TypeTsysList&						EvaluateValueAliasSymbol		(const ParsingArguments& invokerPa,	ValueAliasDeclaration* usingDecl,		ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
 	extern ITsys*								EvaluateGenericArgumentSymbol	(Symbol* symbol);
 
 	// Overloading

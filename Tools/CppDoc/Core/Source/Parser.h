@@ -402,12 +402,6 @@ struct ParsingArguments
 	static ITsys*									AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* parentDeclType, bool returnTypeOfScope);
 };
 
-struct EvaluateSymbolContext
-{
-	TemplateArgumentContext*						additionalArguments = nullptr;
-	symbol_component::Evaluation*					evaluation = nullptr;
-};
-
 class DelayParse : public Object
 {
 public:

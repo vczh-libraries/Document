@@ -11,18 +11,18 @@ class EvaluateStatVisitor : public Object, public IStatVisitor
 public:
 	const ParsingArguments&			pa;
 	bool							resolvingFunctionType;
-	EvaluateSymbolContext*			esContext;
+	TemplateArgumentContext*		argumentsToApply;
 
-	EvaluateStatVisitor(const ParsingArguments& _pa, bool _resolvingFunctionType, EvaluateSymbolContext* _esContext)
+	EvaluateStatVisitor(const ParsingArguments& _pa, bool _resolvingFunctionType, TemplateArgumentContext* _argumentsToApply)
 		:pa(_pa)
 		, resolvingFunctionType(_resolvingFunctionType)
-		, esContext(_esContext)
+		, argumentsToApply(_argumentsToApply)
 	{
 	}
 
 	void Evaluate(const ParsingArguments& spa, Ptr<Stat> stat)
 	{
-		EvaluateStatVisitor visitor(spa, resolvingFunctionType, esContext);
+		EvaluateStatVisitor visitor(spa, resolvingFunctionType, argumentsToApply);
 		stat->Accept(&visitor);
 	}
 
@@ -342,7 +342,7 @@ public:
 			{
 				tsyses.Add(pa.tsys->Void());
 			}
-			symbol_type_resolving::SetFuncTypeByReturnStat(pa, pa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>().Obj(), tsyses, esContext);
+			symbol_type_resolving::SetFuncTypeByReturnStat(pa, pa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>().Obj(), tsyses, argumentsToApply);
 			throw FinishEvaluatingReturnType();
 		}
 	}
@@ -533,9 +533,9 @@ public:
 Evaluate
 ***********************************************************************/
 
-void EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctionType, EvaluateSymbolContext* esContext)
+void EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctionType, TemplateArgumentContext* argumentsToApply)
 {
-	EvaluateStatVisitor visitor(pa, resolvingFunctionType, esContext);
+	EvaluateStatVisitor visitor(pa, resolvingFunctionType, argumentsToApply);
 	try
 	{
 		s->Accept(&visitor);

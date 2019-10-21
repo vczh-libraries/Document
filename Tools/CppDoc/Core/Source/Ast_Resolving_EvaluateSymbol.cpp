@@ -2,18 +2,42 @@
 
 namespace symbol_type_resolving
 {
-	symbol_component::Evaluation& GetCorrectEvaluation(const ParsingArguments& pa, Declaration* decl, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)
+	symbol_component::Evaluation& GetCorrectEvaluation(const ParsingArguments& pa, Declaration* decl, Ptr<TemplateSpec> spec, TemplateArgumentContext* argumentsToApply)
 	{
 		switch (pa.GetEvaluationKind(decl, spec))
 		{
 		case EvaluationKind::General:
 			return decl->symbol->GetEvaluationForUpdating_NFb();
 		case EvaluationKind::Instantiated:
-			if (!esContext)
 			{
-				throw L"Missing esContext for EvaluationKind::Instantiated";
+				if (!spec)
+				{
+					throw L"Missing TemplateSpec for EvaluationKind::Instantiated";
+				}
+				if (!argumentsToApply)
+				{
+					throw L"Missing TemplateArgumentContext for EvaluationKind::Instantiated";
+				}
+
+				symbol_component::SG_Cache cacheKey;
+				cacheKey.parentDeclTypeAndParams = MakePtr<Array<ITsys*>>(spec->arguments.Count() + 1);
+				cacheKey.parentDeclTypeAndParams->Set(0, pa.parentDeclType);
+				for (vint i = 0; i < spec->arguments.Count(); i++)
+				{
+					auto key = GetTemplateArgumentKey(spec->arguments[i], pa.tsys.Obj());
+					cacheKey.parentDeclTypeAndParams->Set(i + 1, argumentsToApply->arguments[key]);
+				}
+
+				vint index = decl->symbol->genericCaches.IndexOf(cacheKey);
+				if (index != -1)
+				{
+					return *decl->symbol->genericCaches[index].cachedEvaluation.Obj();
+				}
+
+				cacheKey.cachedEvaluation = MakePtr<symbol_component::Evaluation>();
+				decl->symbol->genericCaches.Add(cacheKey);
+				return *cacheKey.cachedEvaluation.Obj();
 			}
-			return *esContext->evaluation;
 		default:
 			{
 				auto taContext = pa.taContext;
@@ -35,16 +59,16 @@ namespace symbol_type_resolving
 		}
 	}
 
-	ParsingArguments GetPaFromInvokerPa(const ParsingArguments& pa, Symbol* declSymbol, TemplateArgumentContext* parentTaContext, EvaluateSymbolContext* esContext)
+	ParsingArguments GetPaFromInvokerPa(const ParsingArguments& pa, Symbol* declSymbol, TemplateArgumentContext* parentTaContext, TemplateArgumentContext* argumentsToApply)
 	{
 		auto newPa = pa.AdjustForDecl(declSymbol);
-		if (esContext)
+		if (argumentsToApply)
 		{
 			if (parentTaContext)
 			{
-				esContext->additionalArguments->parent = parentTaContext;
+				argumentsToApply->parent = parentTaContext;
 			}
-			newPa.taContext = esContext->additionalArguments;
+			newPa.taContext = argumentsToApply;
 			return newPa;
 		}
 		else
@@ -80,12 +104,12 @@ namespace symbol_type_resolving
 		}
 	}
 
-	TypeTsysList& FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& declPa, Declaration* decl, Ptr<TemplateSpec> spec, EvaluateSymbolContext* esContext)
+	TypeTsysList& FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& declPa, Declaration* decl, Ptr<TemplateSpec> spec, TemplateArgumentContext* argumentsToApply)
 	{
-		auto& ev = GetCorrectEvaluation(declPa, decl, spec, esContext);
+		auto& ev = GetCorrectEvaluation(declPa, decl, spec, argumentsToApply);
 		auto& evaluatedTypes = ev.Get();
 
-		if (spec && !esContext)
+		if (spec && !argumentsToApply)
 		{
 			TsysGenericFunction genericFunction;
 			TypeTsysList params;
@@ -136,7 +160,7 @@ namespace symbol_type_resolving
 		}
 	};
 
-	Eval ProcessArguments(const ParsingArguments& invokerPa, Declaration* decl, Ptr<TemplateSpec> spec, ITsys*& parentDeclType, EvaluateSymbolContext* esContext)
+	Eval ProcessArguments(const ParsingArguments& invokerPa, Declaration* decl, Ptr<TemplateSpec> spec, ITsys*& parentDeclType, TemplateArgumentContext* argumentsToApply)
 	{
 		if (parentDeclType)
 		{
@@ -217,9 +241,9 @@ namespace symbol_type_resolving
 			throw L"parentDeclType should be nullptr if classDecl is not contained by a template class.";
 		}
 
-		auto declPa = GetPaFromInvokerPa(invokerPa, symbol, parentTaContext, esContext);
+		auto declPa = GetPaFromInvokerPa(invokerPa, symbol, parentTaContext, argumentsToApply);
 		declPa.parentDeclType = parentTemplateClass;
-		auto& ev = GetCorrectEvaluation(declPa, decl, spec, esContext);
+		auto& ev = GetCorrectEvaluation(declPa, decl, spec, argumentsToApply);
 
 		switch (ev.progress)
 		{
@@ -314,11 +338,11 @@ namespace symbol_type_resolving
 		const ParsingArguments& pa,
 		FunctionDeclaration* funcDecl,
 		TypeTsysList& returnTypes,
-		EvaluateSymbolContext* esContext
+		TemplateArgumentContext* argumentsToApply
 	)
 	{
 		auto symbol = funcDecl->symbol;
-		auto& ev = GetCorrectEvaluation(pa, funcDecl, funcDecl->templateSpec, esContext);
+		auto& ev = GetCorrectEvaluation(pa, funcDecl, funcDecl->templateSpec, argumentsToApply);
 		if (ev.progress != symbol_component::EvaluationProgress::Evaluating)
 		{
 			throw NotResolvableException();
@@ -348,17 +372,17 @@ namespace symbol_type_resolving
 			IsMemberFunction(funcDecl)
 		);
 
-		FinishEvaluatingPotentialGenericSymbol(pa, funcDecl, funcDecl->templateSpec, esContext);
+		FinishEvaluatingPotentialGenericSymbol(pa, funcDecl, funcDecl->templateSpec, argumentsToApply);
 	}
 
 	TypeTsysList& EvaluateFuncSymbol(
 		const ParsingArguments& invokerPa,
 		ForwardFunctionDeclaration* funcDecl,
 		ITsys* parentDeclType,
-		EvaluateSymbolContext* esContext
+		TemplateArgumentContext* argumentsToApply
 	)
 	{
-		auto eval = ProcessArguments(invokerPa, funcDecl, funcDecl->templateSpec, parentDeclType, esContext);
+		auto eval = ProcessArguments(invokerPa, funcDecl, funcDecl->templateSpec, parentDeclType, argumentsToApply);
 		if (eval)
 		{
 			if (funcDecl->needResolveTypeFromStatement)
@@ -366,12 +390,12 @@ namespace symbol_type_resolving
 				if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))
 				{
 					EnsureFunctionBodyParsed(rootFuncDecl);
-					EvaluateStat(eval.declPa, rootFuncDecl->statement, true, esContext);
+					EvaluateStat(eval.declPa, rootFuncDecl->statement, true, argumentsToApply);
 
 					if (eval.evaluatedTypes.Count() == 0)
 					{
 						eval.evaluatedTypes.Add(eval.declPa.tsys->Void());
-						return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, esContext);
+						return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, argumentsToApply);
 					}
 					else
 					{
@@ -386,7 +410,7 @@ namespace symbol_type_resolving
 			else
 			{
 				TypeToTsysNoVta(eval.declPa, funcDecl->type, eval.evaluatedTypes, IsMemberFunction(funcDecl));
-				return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, esContext);
+				return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, argumentsToApply);
 			}
 		}
 		else
@@ -403,16 +427,10 @@ namespace symbol_type_resolving
 		const ParsingArguments& invokerPa,
 		ForwardClassDeclaration* classDecl,
 		ITsys* parentDeclType,
-		EvaluateSymbolContext* esContext
+		TemplateArgumentContext* argumentsToApply
 	)
 	{
-		if (esContext)
-		{
-			// not implemented
-			throw 0;
-		}
-
-		auto eval = ProcessArguments(invokerPa, classDecl, classDecl->templateSpec, parentDeclType, esContext);
+		auto eval = ProcessArguments(invokerPa, classDecl, classDecl->templateSpec, parentDeclType, argumentsToApply);
 		if (eval)
 		{
 			if (classDecl->templateSpec)
@@ -436,7 +454,12 @@ namespace symbol_type_resolving
 					eval.evaluatedTypes.Add(eval.declPa.tsys->DeclOf(eval.symbol));
 				}
 			}
-			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, classDecl, classDecl->templateSpec, esContext);
+
+			if (argumentsToApply)
+			{
+				eval.evaluatedTypes[0] = eval.evaluatedTypes[0]->ReplaceGenericArgs(eval.declPa);
+			}
+			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, classDecl, classDecl->templateSpec, argumentsToApply);
 		}
 		else
 		{
@@ -448,17 +471,11 @@ namespace symbol_type_resolving
 		const ParsingArguments& invokerPa,
 		ClassDeclaration* classDecl,
 		ITsys* parentDeclType,
-		EvaluateSymbolContext* esContext
+		TemplateArgumentContext* argumentsToApply
 	)
 	{
-		if (esContext)
-		{
-			// not implemented
-			throw 0;
-		}
-
-		EvaluateForwardClassSymbol(invokerPa, classDecl, parentDeclType, esContext);
-		auto eval = ProcessArguments(invokerPa, classDecl, classDecl->templateSpec, parentDeclType, esContext);
+		EvaluateForwardClassSymbol(invokerPa, classDecl, parentDeclType, argumentsToApply);
+		auto eval = ProcessArguments(invokerPa, classDecl, classDecl->templateSpec, parentDeclType, argumentsToApply);
 		if (eval.ev.progress == symbol_component::EvaluationProgress::Evaluated)
 		{
 			if (eval.ev.ExtraCount() != 0 || classDecl->baseTypes.Count() == 0)
@@ -487,14 +504,14 @@ namespace symbol_type_resolving
 		const ParsingArguments& invokerPa,
 		TypeAliasDeclaration* usingDecl,
 		ITsys* parentDeclType,
-		EvaluateSymbolContext* esContext
+		TemplateArgumentContext* argumentsToApply
 	)
 	{
-		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, esContext);
+		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, argumentsToApply);
 		if (eval)
 		{
 			TypeToTsysNoVta(eval.declPa, usingDecl->type, eval.evaluatedTypes);
-			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, esContext);
+			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, argumentsToApply);
 		}
 		else
 		{
@@ -510,10 +527,10 @@ namespace symbol_type_resolving
 		const ParsingArguments& invokerPa,
 		ValueAliasDeclaration* usingDecl,
 		ITsys* parentDeclType,
-		EvaluateSymbolContext* esContext
+		TemplateArgumentContext* argumentsToApply
 	)
 	{
-		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, esContext);
+		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, argumentsToApply);
 		if (eval)
 		{
 			if (usingDecl->needResolveTypeFromInitializer)
@@ -538,7 +555,7 @@ namespace symbol_type_resolving
 				TypeToTsysNoVta(eval.declPa, usingDecl->type, eval.evaluatedTypes);
 			}
 
-			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, esContext);
+			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, argumentsToApply);
 		}
 		else
 		{
