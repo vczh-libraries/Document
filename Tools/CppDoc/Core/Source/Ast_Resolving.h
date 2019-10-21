@@ -87,6 +87,7 @@ namespace symbol_type_resolving
 	extern TypeTsysList&						EvaluateTypeAliasSymbol			(const ParsingArguments& invokerPa,	TypeAliasDeclaration* usingDecl,		ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
 	extern TypeTsysList&						EvaluateValueAliasSymbol		(const ParsingArguments& invokerPa,	ValueAliasDeclaration* usingDecl,		ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
 	extern ITsys*								EvaluateGenericArgumentSymbol	(Symbol* symbol);
+	extern symbol_component::Evaluation&		EvaluateClassType				(const ParsingArguments& invokerPa, ITsys* classType);
 
 	// Overloading
 

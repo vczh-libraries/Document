@@ -496,6 +496,32 @@ namespace symbol_type_resolving
 		return eval.ev;
 	}
 
+	symbol_component::Evaluation& EvaluateClassType(const ParsingArguments& invokerPa, ITsys* classType)
+	{
+		switch (classType->GetType())
+		{
+		case TsysType::Decl:
+		case TsysType::DeclInstant:
+			{
+				auto symbol = classType->GetDecl();
+				auto classDecl = symbol->GetImplDecl_NFb<ClassDeclaration>();
+				if (!classDecl) throw NotResolvableException();
+
+				if (classType->GetType() == TsysType::Decl)
+				{
+					return EvaluateClassSymbol(invokerPa, classDecl.Obj(), nullptr, nullptr);
+				}
+				else
+				{
+					const auto& di = classType->GetDeclInstant();
+					return EvaluateClassSymbol(invokerPa, classDecl.Obj(), di.parentDeclType, di.taContext.Obj());
+				}
+			}
+		default:
+			throw NotResolvableException();
+		}
+	}
+
 	/***********************************************************************
 	EvaluateTypeAliasSymbol: Evaluate the declared type for an alias
 	***********************************************************************/
