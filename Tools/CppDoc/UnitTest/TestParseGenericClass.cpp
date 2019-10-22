@@ -216,41 +216,41 @@ volatile const D<char> cvd;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(L"d._A()",		L"d._A()",			L"::A<__int32> *"					);
-	AssertExpr(L"d._B()",		L"d._B()",			L"::B *"							);
-	AssertExpr(L"d._C()",		L"d._C()",			L"::C<double> *"					);
-	AssertExpr(L"d._D()",		L"d._D()",			L"::D<char> *"						);
-	AssertExpr(L"d.A_()",		L"d.A_()",			L"::A<__int32> *"					);
-	AssertExpr(L"d.B_()",		L"d.B_()",			L"::B *"							);
-	AssertExpr(L"d.C_()",		L"d.C_()",			L"::C<double> *"					);
-	AssertExpr(L"d.D_()",		L"d.D_()",			L"::D<char> *"						);
+	AssertExpr(pa,		L"d._A()",		L"d._A()",			L"::A<__int32> * $PR"					);
+	AssertExpr(pa,		L"d._B()",		L"d._B()",			L"::B * $PR"							);
+	AssertExpr(pa,		L"d._C()",		L"d._C()",			L"::C<double> * $PR"					);
+	AssertExpr(pa,		L"d._D()",		L"d._D()",			L"::D<char> * $PR"						);
+	AssertExpr(pa,		L"d.A_()",		L"d.A_()",			L"::A<__int32> * $PR"					);
+	AssertExpr(pa,		L"d.B_()",		L"d.B_()",			L"::B * $PR"							);
+	AssertExpr(pa,		L"d.C_()",		L"d.C_()",			L"::C<double> * $PR"					);
+	AssertExpr(pa,		L"d.D_()",		L"d.D_()",			L"::D<char> * $PR"						);
 
-	AssertExpr(L"cd._A()",		L"cd._A()",			L"::A<__int32> const *"				);
-	AssertExpr(L"cd._B()",		L"cd._B()",			L"::B const *"						);
-	AssertExpr(L"cd._C()",		L"cd._C()",			L"::C<double> const *"				);
-	AssertExpr(L"cd._D()",		L"cd._D()",			L"::D<char> const *"				);
-	AssertExpr(L"cd.A_()",		L"cd.A_()",			L"::A<__int32> const *"				);
-	AssertExpr(L"cd.B_()",		L"cd.B_()",			L"::B const *"						);
-	AssertExpr(L"cd.C_()",		L"cd.C_()",			L"::C<double> const *"				);
-	AssertExpr(L"cd.D_()",		L"cd.D_()",			L"::D<char> const *"				);
+	AssertExpr(pa,		L"cd._A()",		L"cd._A()",			L"::A<__int32> const * $PR"				);
+	AssertExpr(pa,		L"cd._B()",		L"cd._B()",			L"::B const * $PR"						);
+	AssertExpr(pa,		L"cd._C()",		L"cd._C()",			L"::C<double> const * $PR"				);
+	AssertExpr(pa,		L"cd._D()",		L"cd._D()",			L"::D<char> const * $PR"				);
+	AssertExpr(pa,		L"cd.A_()",		L"cd.A_()",			L"::A<__int32> const * $PR"				);
+	AssertExpr(pa,		L"cd.B_()",		L"cd.B_()",			L"::B const * $PR"						);
+	AssertExpr(pa,		L"cd.C_()",		L"cd.C_()",			L"::C<double> const * $PR"				);
+	AssertExpr(pa,		L"cd.D_()",		L"cd.D_()",			L"::D<char> const * $PR"				);
 
-	AssertExpr(L"cd._A()",		L"cd._A()",			L"::A<__int32> volatile *"			);
-	AssertExpr(L"cd._B()",		L"cd._B()",			L"::B volatile *"					);
-	AssertExpr(L"cd._C()",		L"cd._C()",			L"::C<double> volatile *"			);
-	AssertExpr(L"cd._D()",		L"cd._D()",			L"::D<char> volatile *"				);
-	AssertExpr(L"cd.A_()",		L"cd.A_()",			L"::A<__int32> volatile *"			);
-	AssertExpr(L"cd.B_()",		L"cd.B_()",			L"::B volatile *"					);
-	AssertExpr(L"cd.C_()",		L"cd.C_()",			L"::C<double> volatile *"			);
-	AssertExpr(L"cd.D_()",		L"cd.D_()",			L"::D<char> volatile *"				);
+	AssertExpr(pa,		L"cd._A()",		L"cd._A()",			L"::A<__int32> volatile * $PR"			);
+	AssertExpr(pa,		L"cd._B()",		L"cd._B()",			L"::B volatile * $PR"					);
+	AssertExpr(pa,		L"cd._C()",		L"cd._C()",			L"::C<double> volatile * $PR"			);
+	AssertExpr(pa,		L"cd._D()",		L"cd._D()",			L"::D<char> volatile * $PR"				);
+	AssertExpr(pa,		L"cd.A_()",		L"cd.A_()",			L"::A<__int32> volatile * $PR"			);
+	AssertExpr(pa,		L"cd.B_()",		L"cd.B_()",			L"::B volatile * $PR"					);
+	AssertExpr(pa,		L"cd.C_()",		L"cd.C_()",			L"::C<double> volatile * $PR"			);
+	AssertExpr(pa,		L"cd.D_()",		L"cd.D_()",			L"::D<char> volatile * $PR"				);
 
-	AssertExpr(L"ccd._A()",		L"ccd._A()",		L"::A<__int32> const volatile *"	);
-	AssertExpr(L"ccd._B()",		L"ccd._B()",		L"::B const volatile *"				);
-	AssertExpr(L"ccd._C()",		L"ccd._C()",		L"::C<double> const volatile *"		);
-	AssertExpr(L"ccd._D()",		L"ccd._D()",		L"::D<char> const volatile *"		);
-	AssertExpr(L"ccd.A_()",		L"ccd.A_()",		L"::A<__int32> const volatile *"	);
-	AssertExpr(L"ccd.B_()",		L"ccd.B_()",		L"::B const volatile *"				);
-	AssertExpr(L"ccd.C_()",		L"ccd.C_()",		L"::C<double> const volatile *"		);
-	AssertExpr(L"ccd.D_()",		L"ccd.D_()",		L"::D<char> const volatile *"		);
+	AssertExpr(pa,		L"ccd._A()",	L"ccd._A()",		L"::A<__int32> const volatile * $PR"	);
+	AssertExpr(pa,		L"ccd._B()",	L"ccd._B()",		L"::B const volatile * $PR"				);
+	AssertExpr(pa,		L"ccd._C()",	L"ccd._C()",		L"::C<double> const volatile * $PR"		);
+	AssertExpr(pa,		L"ccd._D()",	L"ccd._D()",		L"::D<char> const volatile * $PR"		);
+	AssertExpr(pa,		L"ccd.A_()",	L"ccd.A_()",		L"::A<__int32> const volatile * $PR"	);
+	AssertExpr(pa,		L"ccd.B_()",	L"ccd.B_()",		L"::B const volatile * $PR"				);
+	AssertExpr(pa,		L"ccd.C_()",	L"ccd.C_()",		L"::C<double> const volatile * $PR"		);
+	AssertExpr(pa,		L"ccd.D_()",	L"ccd.D_()",		L"::D<char> const volatile * $PR"		);
 }
 
 TEST_CASE(TestParseGenericClass_NestedThisType)

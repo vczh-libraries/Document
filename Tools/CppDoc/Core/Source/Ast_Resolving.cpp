@@ -148,7 +148,7 @@ namespace symbol_type_resolving
 		InScope,
 	};
 
-	void VisitSymbolInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, VisitMemberKind visitMemberKind, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
+	void VisitSymbolInternalWithCorrectThisItem(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, VisitMemberKind visitMemberKind, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
 		ITsys* classScope = nullptr;
 		if (auto parent = symbol->GetParentScope())
@@ -324,6 +324,83 @@ namespace symbol_type_resolving
 			return;
 		}
 		throw IllegalExprException();
+	}
+
+	void VisitSymbolInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, VisitMemberKind visitMemberKind, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
+	{
+		switch (symbol->GetParentScope()->kind)
+		{
+		case symbol_component::SymbolKind::Class:
+		case symbol_component::SymbolKind::Struct:
+		case symbol_component::SymbolKind::Union:
+			break;
+		default:
+			thisItem = nullptr;
+		}
+
+		if (thisItem)
+		{
+			auto thisType = ApplyExprTsysType(thisItem->tsys, thisItem->type);
+			TsysCV thisCv;
+			TsysRefType thisRef;
+			auto entity = thisType->GetEntity(thisCv, thisRef);
+
+			List<ITsys*> visiting;
+			SortedList<ITsys*> visited;
+			visiting.Add(entity);
+
+			bool found = false;
+			for (vint i = 0; i < visiting.Count(); i++)
+			{
+				auto currentThis = visiting[i];
+				if (visited.Contains(currentThis))
+				{
+					continue;
+				}
+				visited.Add(currentThis);
+
+				switch (currentThis->GetType())
+				{
+				case TsysType::Decl:
+				case TsysType::DeclInstant:
+					break;
+				default:
+					throw NotConvertableException();
+				}
+
+				auto thisSymbol = currentThis->GetDecl();
+				if (symbol->GetParentScope() == thisSymbol)
+				{
+					found = true;
+					ExprTsysItem baseItem({ thisSymbol,ExprTsysType::PRValue }, currentThis->CVOf(thisCv));
+					switch (thisRef)
+					{
+					case TsysRefType::LRef:
+						baseItem.tsys = baseItem.tsys->LRefOf();
+						break;
+					case TsysRefType::RRef:
+						baseItem.tsys = baseItem.tsys->RRefOf();
+						break;
+					}
+					VisitSymbolInternalWithCorrectThisItem(pa, &baseItem, symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
+				}
+
+				auto& ev = symbol_type_resolving::EvaluateClassType(pa, currentThis);
+				for (vint j = 0; j < ev.ExtraCount(); j++)
+				{
+					CopyFrom(visiting, ev.GetExtra(j), true);
+				}
+			}
+
+			if (!found)
+			{
+				throw NotConvertableException();
+			}
+		}
+		else
+		{
+			VisitSymbolInternalWithCorrectThisItem(pa, nullptr, symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
+		}
 	}
 
 	void VisitSymbol(const ParsingArguments& pa, Symbol* symbol, ExprTsysList& result)

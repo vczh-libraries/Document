@@ -137,7 +137,14 @@ namespace symbol_totsys_impl
 			{
 				if (cache->thisType)
 				{
-					AddTemp(result, cache->thisType);
+					if (pa.taContext)
+					{
+						AddTemp(result, cache->thisType->ReplaceGenericArgs(pa));
+					}
+					else
+					{
+						AddTemp(result, cache->thisType);
+					}
 					return;
 				}
 			}
