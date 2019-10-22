@@ -204,7 +204,7 @@ public:
 
 	void Visit(IdExpr* self)override
 	{
-		CreateIdReferenceExpr(pa, self->resolving, result, false, true, isVta);
+		CreateIdReferenceExpr(pa, self->resolving, result, nullptr, false, true, isVta);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -216,7 +216,7 @@ public:
 		if (!IsResolvedToType(self->classType))
 		{
 			bool childIsVta = false;
-			CreateIdReferenceExpr(pa, self->resolving, result, true, false, childIsVta);
+			CreateIdReferenceExpr(pa, self->resolving, result, nullptr, true, false, childIsVta);
 			return;
 		}
 

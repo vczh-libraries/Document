@@ -497,9 +497,9 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void VisitResolvedMember(const ParsingArguments& pa, Ptr<Resolving> resolving, ExprTsysList& result, bool& hasVariadic, bool& hasNonVariadic)
+	void VisitResolvedMember(const ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result, bool& hasVariadic, bool& hasNonVariadic)
 	{
-		VisitResolvedMemberInternal(pa, nullptr, resolving, result, true, hasVariadic, hasNonVariadic);
+		VisitResolvedMemberInternal(pa, thisItem, resolving, result, true, hasVariadic, hasNonVariadic);
 	}
 
 	void VisitResolvedMember(const ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result)

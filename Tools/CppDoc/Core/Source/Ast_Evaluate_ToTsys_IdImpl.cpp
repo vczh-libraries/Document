@@ -207,7 +207,7 @@ namespace symbol_totsys_impl
 	// CreateIdReferenceExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void CreateIdReferenceExpr(const ParsingArguments& pa, Ptr<Resolving> resolving, ExprTsysList& result, bool allowAny, bool allowVariadic, bool& isVta)
+	void CreateIdReferenceExpr(const ParsingArguments& pa, Ptr<Resolving> resolving, ExprTsysList& result, const ExprTsysItem* childExprClassItem, bool allowAny, bool allowVariadic, bool& isVta)
 	{
 		if (!resolving)
 		{
@@ -222,7 +222,7 @@ namespace symbol_totsys_impl
 			throw NotConvertableException();
 		}
 
-		if (pa.functionBodySymbol && pa.functionBodySymbol->GetClassMemberCache_NFb())
+		else if (!childExprClassItem && pa.functionBodySymbol && pa.functionBodySymbol->GetClassMemberCache_NFb())
 		{
 			TsysCV thisCv;
 			TsysRefType thisRef;
@@ -238,7 +238,7 @@ namespace symbol_totsys_impl
 		{
 			bool hasVariadic = false;
 			bool hasNonVariadic = false;
-			VisitResolvedMember(pa, resolving, result, hasVariadic, hasNonVariadic);
+			VisitResolvedMember(pa, childExprClassItem, resolving, result, hasVariadic, hasNonVariadic);
 
 			if (hasVariadic && hasNonVariadic)
 			{
@@ -294,7 +294,7 @@ namespace symbol_totsys_impl
 		if (resolving)
 		{
 			bool childIsVta = false;
-			CreateIdReferenceExpr(pa, resolving, result, false, false, childIsVta);
+			CreateIdReferenceExpr(pa, resolving, result, &argClass, false, false, childIsVta);
 		}
 	}
 
