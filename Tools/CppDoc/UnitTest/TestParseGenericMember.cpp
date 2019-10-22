@@ -246,7 +246,7 @@ const Z<int, double>* const pcz;
 	AssertExpr(pa, L"pcz->operator()(0)",		L"pcz->operator ()(0)",			L"::X<__int32 volatile, double const> $PR"					);
 	AssertExpr(pa, L"pcz->operator[](0)",		L"pcz->operator [](0)",			L"::X<__int32 volatile, double const> $PR"					);
 }
-/*
+
 Symbol* TestParseGenericMember_InsideFunction(const ParsingArguments& pa, const WString& className, const WString& methodName)
 {
 	auto classSymbol = pa.scopeSymbol->TryGetChildren_NFb(className)->Get(0);
@@ -258,24 +258,22 @@ Symbol* TestParseGenericMember_InsideFunction(const ParsingArguments& pa, const 
 TEST_CASE(TestParseGenericMember_FFA_Qualifier_OfExplicitOrImplicitThisExpr)
 {
 	auto input = LR"(
+template<typename Tx, typename Ty>
 struct X
 {
-	int x;
-	int y;
+	Tx x;
+	Ty y;
 };
-struct Y
-{
-	double x;
-	double y;
-};
+
+template<typename Tx, typename Ty>
 struct Z
 {
-	X* operator->()const;
-	const Y* operator->();
-	X operator()(int)const;
-	Y operator()(int);
-	X operator[](int)const;
-	Y operator[](int);
+	X<volatile Tx, const Ty>* operator->()const;
+	volatile X<const Tx, volatile Ty>* operator->();
+	X<volatile Tx, const Ty> operator()(int)const;
+	X<const Tx, volatile Ty> operator()(int);
+	X<volatile Tx, const Ty> operator[](int)const;
+	X<const Tx, volatile Ty> operator[](int);
 
 	void M(){}
 	void C()const{}
@@ -286,25 +284,25 @@ struct Z
 	{
 		auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"Z", L"M"));
 
-		AssertExpr(spa, L"operator->()",			L"operator ->()",				L"::Y const * $PR"			);
-		AssertExpr(spa, L"operator()(0)",			L"operator ()(0)",				L"::Y $PR"					);
-		AssertExpr(spa, L"operator[](0)",			L"operator [](0)",				L"::Y $PR"					);
-		AssertExpr(spa, L"(*this)->x",				L"((* this))->x",				L"double const $L"			);
-		AssertExpr(spa, L"(*this)(0)",				L"((* this))(0)",				L"::Y $PR"					);
-		AssertExpr(spa, L"(*this)[0]",				L"((* this))[0]",				L"::Y $PR"					);
+		AssertExpr(spa, L"operator->()",			L"operator ->()",				L"::X<::Z::[Tx] const, ::Z::[Ty] volatile> volatile * $PR"		);
+		AssertExpr(spa, L"operator()(0)",			L"operator ()(0)",				L"::X<::Z::[Tx] const, ::Z::[Ty] volatile> $PR"					);
+		AssertExpr(spa, L"operator[](0)",			L"operator [](0)",				L"::X<::Z::[Tx] const, ::Z::[Ty] volatile> $PR"					);
+		AssertExpr(spa, L"(*this)->x",				L"((* this))->x",				L"::Z::[Tx] const volatile $L"									);
+		AssertExpr(spa, L"(*this)(0)",				L"((* this))(0)",				L"::X<::Z::[Tx] const, ::Z::[Ty] volatile> $PR"					);
+		AssertExpr(spa, L"(*this)[0]",				L"((* this))[0]",				L"::X<::Z::[Tx] const, ::Z::[Ty] volatile> $PR"					);
 	}
 	{
 		auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"Z", L"C"));
 
-		AssertExpr(spa, L"operator->()",			L"operator ->()",				L"::X * $PR"				);
-		AssertExpr(spa, L"operator()(0)",			L"operator ()(0)",				L"::X $PR"					);
-		AssertExpr(spa, L"operator[](0)",			L"operator [](0)",				L"::X $PR"					);
-		AssertExpr(spa, L"(*this)->x",				L"((* this))->x",				L"__int32 $L"				);
-		AssertExpr(spa, L"(*this)(0)",				L"((* this))(0)",				L"::X $PR"					);
-		AssertExpr(spa, L"(*this)[0]",				L"((* this))[0]",				L"::X $PR"					);
+		AssertExpr(spa, L"operator->()",			L"operator ->()",				L"::X<::Z::[Tx] volatile, ::Z::[Ty] const> * $PR"				);
+		AssertExpr(spa, L"operator()(0)",			L"operator ()(0)",				L"::X<::Z::[Tx] volatile, ::Z::[Ty] const> $PR"					);
+		AssertExpr(spa, L"operator[](0)",			L"operator [](0)",				L"::X<::Z::[Tx] volatile, ::Z::[Ty] const> $PR"					);
+		AssertExpr(spa, L"(*this)->x",				L"((* this))->x",				L"::Z::[Tx] volatile $L"										);
+		AssertExpr(spa, L"(*this)(0)",				L"((* this))(0)",				L"::X<::Z::[Tx] volatile, ::Z::[Ty] const> $PR"					);
+		AssertExpr(spa, L"(*this)[0]",				L"((* this))[0]",				L"::X<::Z::[Tx] volatile, ::Z::[Ty] const> $PR"					);
 	}
 }
-
+/*
 TEST_CASE(TestParseGenericMember_AddressOfArrayFunctionMemberPointer)
 {
 	auto input = LR"(
