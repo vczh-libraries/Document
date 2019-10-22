@@ -15,12 +15,12 @@
   - [ ] `template` on classes.
     - [x] Remove `nullptr` default values for `EvaluateXXXSymbol` arguments.
     - [ ] Member type evaluation.
-      - [ ] `GenericExpr` need to handle `parentDeclType` in `GenericFunction`
+      - [x] `GenericExpr` need to handle `parentDeclType` in `GenericFunction`
       - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
       - [ ] `v.f`, `v->f`, `v.*f`, `v->*f`, `v::f`
-        - [ ] const / volatile
-        - [ ] members of base types
-      - [ ] `auto` member function
+        - [x] const / volatile
+        - [x] members of base types
+      - [x] `auto` member function
     - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
   - [ ] More `template`
     - [ ] Create similar test cases for testing accessing base classes member inside or outside of the class.
