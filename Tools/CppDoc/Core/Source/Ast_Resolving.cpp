@@ -366,7 +366,7 @@ namespace symbol_type_resolving
 				if (symbol->GetParentScope() == thisSymbol)
 				{
 					found = true;
-					ExprTsysItem baseItem({ thisSymbol,ExprTsysType::PRValue }, CvRefOf(currentThis, thisCv, thisRef));
+					ExprTsysItem baseItem(thisSymbol, (thisItem ? thisItem->type : ExprTsysType::PRValue), CvRefOf(currentThis, thisCv, thisRef));
 					VisitSymbolInternalWithCorrectThisItem(pa, &baseItem, symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
 				}
 

@@ -222,14 +222,19 @@ namespace symbol_totsys_impl
 			throw NotConvertableException();
 		}
 
-		else if (!childExprClassItem && pa.functionBodySymbol && pa.functionBodySymbol->GetClassMemberCache_NFb())
+		else if (pa.functionBodySymbol && pa.functionBodySymbol->GetClassMemberCache_NFb())
 		{
-			TsysCV thisCv;
-			TsysRefType thisRef;
-			auto thisType = pa.functionBodySymbol->GetClassMemberCache_NFb()->thisType->GetEntity(thisCv, thisRef);
-			if (pa.taContext)
+			auto thisType = pa.functionBodySymbol->GetClassMemberCache_NFb()->thisType;
+			if (childExprClassItem)
 			{
-				thisType = thisType->ReplaceGenericArgs(pa);
+				thisType = ReplaceThisType(thisType, childExprClassItem->tsys);
+			}
+			else
+			{
+				if (pa.taContext)
+				{
+					thisType = thisType->ReplaceGenericArgs(pa);
+				}
 			}
 			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
 			VisitResolvedMember(pa, &thisItem, resolving, result);
@@ -294,6 +299,7 @@ namespace symbol_totsys_impl
 		if (resolving)
 		{
 			bool childIsVta = false;
+			argClass.type = ExprTsysType::LValue;
 			CreateIdReferenceExpr(pa, resolving, result, &argClass, false, false, childIsVta);
 		}
 	}
@@ -343,7 +349,7 @@ namespace symbol_totsys_impl
 					{
 						ExprTsysItem classItem = parentItem;
 						classItem.tsys = ReplaceThisType(classItem.tsys, classType);
-						VisitResolvedMember(pa, &parentItem, resolving, result);
+						VisitResolvedMember(pa, &classItem, resolving, result);
 					}
 				}
 			}
