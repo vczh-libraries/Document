@@ -433,6 +433,9 @@ Helpers
 ***********************************************************************/
 
 extern ITsys*					ApplyExprTsysType(ITsys* tsys, ExprTsysType type);
+extern ITsys*					CvRefOf(ITsys* tsys, TsysCV cv, TsysRefType refType);
+extern ITsys*					GetThisEntity(ITsys* thisType);
+extern ITsys*					ReplaceThisType(ITsys* thisType, ITsys* entity);
 extern TsysConv					TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType);
 extern TsysConv					TestConvert(const ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem);
 

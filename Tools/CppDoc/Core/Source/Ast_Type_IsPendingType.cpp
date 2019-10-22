@@ -207,18 +207,7 @@ public:
 				result = entity->CVOf(cv);
 				break;
 			case PendingMatching::Exact:
-				switch (ref)
-				{
-				case TsysRefType::LRef:
-					result = entity->CVOf(cv)->LRefOf();
-					break;
-				case TsysRefType::RRef:
-					result = entity->CVOf(cv)->RRefOf();
-					break;
-				case TsysRefType::None:
-					result = entity->CVOf(cv);
-					break;
-				}
+				result = CvRefOf(entity, cv, ref);
 				break;
 			}
 		}

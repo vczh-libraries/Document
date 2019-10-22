@@ -650,19 +650,7 @@ namespace symbol_totsys_impl
 			cv.isVolatile |= rightCV.isVolatile;
 
 			auto refType = leftRefType == rightRefType ? leftRefType : TsysRefType::None;
-
-			switch (refType)
-			{
-			case TsysRefType::LRef:
-				AddTemp(result, leftEntity->CVOf(cv)->LRefOf());
-				break;
-			case TsysRefType::RRef:
-				AddTemp(result, leftEntity->CVOf(cv)->RRefOf());
-				break;
-			default:
-				AddTemp(result, leftEntity->CVOf(cv));
-				break;
-			}
+			AddTemp(result, CvRefOf(leftEntity, cv, refType));
 		}
 		else
 		{

@@ -15,6 +15,51 @@ ITsys* ApplyExprTsysType(ITsys* tsys, ExprTsysType type)
 	}
 }
 
+ITsys* CvRefOf(ITsys* tsys, TsysCV cv, TsysRefType refType)
+{
+	switch (refType)
+	{
+	case TsysRefType::LRef:
+		return tsys->CVOf(cv)->LRefOf();
+	case TsysRefType::RRef:
+		return tsys->CVOf(cv)->RRefOf();
+	default:
+		return tsys->CVOf(cv);
+	}
+}
+
+ITsys* GetThisEntity(ITsys* thisType)
+{
+	TsysCV cv;
+	TsysRefType ref;
+	auto thisEntity = thisType->GetEntity(cv, ref);
+	if (thisEntity->GetType() == TsysType::Ptr)
+	{
+		thisEntity = thisEntity->GetElement();
+	}
+	return thisEntity;
+}
+
+ITsys* ReplaceThisTypeInternal(ITsys* thisType, ITsys* entity)
+{
+	TsysCV cv;
+	TsysRefType ref;
+	auto thisEntity = thisType->GetEntity(cv, ref);
+	if (thisEntity->GetType() == TsysType::Ptr)
+	{
+		return CvRefOf(ReplaceThisTypeInternal(thisType->GetElement(), entity), cv, ref)->PtrOf();
+	}
+	else
+	{
+		return CvRefOf(entity, cv, ref);
+	}
+}
+
+ITsys* ReplaceThisType(ITsys* thisType, ITsys* entity)
+{
+	return ReplaceThisTypeInternal(thisType, GetThisEntity(entity));
+}
+
 TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType)
 {
 	bool tC = thisCV.isGeneralConst;
@@ -229,35 +274,18 @@ namespace TestConvert_Helpers
 			auto currentType = searched[i];
 			if (currentType == toType) return true;
 
-			switch (currentType->GetType())
+			auto& ev = symbol_type_resolving::EvaluateClassType(pa, currentType);
+			for (vint j = 0; j < ev.ExtraCount(); j++)
 			{
-			case TsysType::Decl:
-				break;
-			case TsysType::DeclInstant:
-				// TODO: [Cpp.md] Deal with DeclInstant here
-				// Delete the whole switch with the label after this is resolved
-				throw 0;
-			default:
-				goto SKIP_SEARCHING_BASE_TYPES;
-			}
-
-			if (auto currentClass = TryGetDeclFromType<ClassDeclaration>(currentType))
-			{
-				auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, currentClass.Obj(), nullptr, nullptr);
-				for (vint j = 0; j < ev.ExtraCount(); j++)
+				auto& baseTypes = ev.GetExtra(j);
+				for (vint k = 0; k < baseTypes.Count(); k++)
 				{
-					auto& baseTypes = ev.GetExtra(j);
-					for (vint k = 0; k < baseTypes.Count(); k++)
+					if (!searched.Contains(baseTypes[k]))
 					{
-						if (!searched.Contains(baseTypes[k]))
-						{
-							searched.Add(baseTypes[k]);
-						}
+						searched.Add(baseTypes[k]);
 					}
 				}
 			}
-
-		SKIP_SEARCHING_BASE_TYPES:;
 		}
 		return false;
 	}

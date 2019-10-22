@@ -569,7 +569,7 @@ public:
 						{
 							AddTemp(processResult, pa.tsys->Any());
 						}
-						else if (arg1.tsys->GetType() == TsysType::Decl)
+						else if (arg1.tsys->GetType() == TsysType::Decl || arg1.tsys->GetType() == TsysType::DeclInstant)
 						{
 							auto newPa = pa.WithScope(arg1.tsys->GetDecl());
 							auto rsr = ResolveSymbol(newPa, childExpr->name, SearchPolicy::ChildSymbolFromOutside);
@@ -577,15 +577,9 @@ public:
 							{
 								for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
 								{
-									VisitSymbolForScope(newPa, nullptr, rsr.values->resolvedSymbols[i], processResult);
+									VisitSymbolForScope(newPa, &arg1, rsr.values->resolvedSymbols[i], processResult);
 								}
 							}
-						}
-						else if (arg1.tsys->GetType() == TsysType::DeclInstant)
-						{
-							// TODO: [Cpp.md] Deal with DeclInstant here
-							// &Class<Arguments>::Member
-							throw 0;
 						}
 					}, Input(classTypes, typesVta));
 					goto SKIP_RESOLVING_OPERAND;

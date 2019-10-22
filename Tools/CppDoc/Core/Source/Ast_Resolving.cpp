@@ -150,29 +150,29 @@ namespace symbol_type_resolving
 
 	void VisitSymbolInternalWithCorrectThisItem(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, VisitMemberKind visitMemberKind, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
-		ITsys* classScope = nullptr;
+		Symbol* classScope = nullptr;
 		if (auto parent = symbol->GetParentScope())
 		{
 			if (parent->GetImplDecl_NFb<ClassDeclaration>())
 			{
-				classScope = pa.tsys->DeclOf(parent);
+				classScope = parent;
 			}
 		}
 
 		ITsys* parentDeclType = nullptr;
+		ITsys* thisEntity = nullptr;
 		if (thisItem)
 		{
-			TsysCV cv;
-			TsysRefType ref;
-			auto entity = thisItem->tsys->GetEntity(cv, ref);
-			if (entity->GetType() == TsysType::Ptr)
+			thisEntity = GetThisEntity(thisItem->tsys);
+			if (thisEntity->GetType() == TsysType::DeclInstant)
 			{
-				entity = entity->GetElement();
+				parentDeclType = thisEntity;
 			}
-			if (entity->GetType() == TsysType::DeclInstant)
-			{
-				parentDeclType = entity;
-			}
+		}
+
+		if (classScope && !thisEntity)
+		{
+			throw NotConvertableException();
 		}
 
 		switch (symbol->kind)
@@ -199,13 +199,7 @@ namespace symbol_type_resolving
 							{
 								if (classScope)
 								{
-									if (classScope->GetDecl()->GetImplDecl_NFb<ClassDeclaration>()->templateSpec)
-									{
-										// TODO: [Cpp.md] Deal with DeclInstant here
-										// it is possible that non-generic classScope is in a generic class
-										throw 0;
-									}
-									AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(classScope) });
+									AddInternal(result, { symbol,ExprTsysType::PRValue,tsys->MemberOf(thisEntity) });
 								}
 								else
 								{
@@ -242,7 +236,7 @@ namespace symbol_type_resolving
 
 					if (isMember && visitMemberKind == VisitMemberKind::MemberAfterType)
 					{
-						tsys = tsys->MemberOf(classScope)->PtrOf();
+						tsys = tsys->MemberOf(thisEntity)->PtrOf();
 					}
 					else
 					{
@@ -372,16 +366,7 @@ namespace symbol_type_resolving
 				if (symbol->GetParentScope() == thisSymbol)
 				{
 					found = true;
-					ExprTsysItem baseItem({ thisSymbol,ExprTsysType::PRValue }, currentThis->CVOf(thisCv));
-					switch (thisRef)
-					{
-					case TsysRefType::LRef:
-						baseItem.tsys = baseItem.tsys->LRefOf();
-						break;
-					case TsysRefType::RRef:
-						baseItem.tsys = baseItem.tsys->RRefOf();
-						break;
-					}
+					ExprTsysItem baseItem({ thisSymbol,ExprTsysType::PRValue }, CvRefOf(currentThis, thisCv, thisRef));
 					VisitSymbolInternalWithCorrectThisItem(pa, &baseItem, symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
 				}
 

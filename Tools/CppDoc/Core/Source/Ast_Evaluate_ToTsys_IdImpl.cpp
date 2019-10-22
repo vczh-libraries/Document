@@ -227,6 +227,10 @@ namespace symbol_totsys_impl
 			TsysCV thisCv;
 			TsysRefType thisRef;
 			auto thisType = pa.functionBodySymbol->GetClassMemberCache_NFb()->thisType->GetEntity(thisCv, thisRef);
+			if (pa.taContext)
+			{
+				thisType = thisType->ReplaceGenericArgs(pa);
+			}
 			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
 			VisitResolvedMember(pa, &thisItem, resolving, result);
 		}
@@ -251,7 +255,7 @@ namespace symbol_totsys_impl
 	template<typename TReceiver>
 	void ResolveChildExprWithGenericArguments(const ParsingArguments& pa, ChildExpr* self, ITsys* classType, SortedList<Symbol*>& visited, TReceiver&& receiver)
 	{
-		if (classType->GetType() == TsysType::Decl)
+		if (classType->GetType() == TsysType::Decl || classType->GetType() == TsysType::DeclInstant)
 		{
 			auto newPa = pa.WithScope(classType->GetDecl());
 			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbolFromOutside);
@@ -267,11 +271,6 @@ namespace symbol_totsys_impl
 					}
 				}
 			}
-		}
-		else if (classType->GetType() == TsysType::DeclInstant)
-		{
-			// TODO: [Cpp.md] Deal with DeclInstant here
-			throw 0;
 		}
 	}
 
@@ -342,6 +341,8 @@ namespace symbol_totsys_impl
 
 					if (resolving)
 					{
+						ExprTsysItem classItem = parentItem;
+						classItem.tsys = ReplaceThisType(classItem.tsys, classType);
 						VisitResolvedMember(pa, &parentItem, resolving, result);
 					}
 				}

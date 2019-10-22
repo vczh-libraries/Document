@@ -940,6 +940,7 @@ ITsys* TsysBase::FunctionOf(IEnumerable<ITsys*>& params, TsysFunc func)
 
 ITsys* TsysBase::MemberOf(ITsys* classType)
 {
+	if (!classType) throw 0;
 	vint index = memberOf.Keys().IndexOf(classType);
 	if (index != -1) return memberOf.Values()[index];
 	auto itsys = tsys->_member.Alloc(tsys, this, classType);
