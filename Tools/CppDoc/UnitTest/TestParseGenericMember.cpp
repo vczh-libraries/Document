@@ -364,13 +364,13 @@ auto&			_E6 = _E5;
 	AssertExpr(pa, L"Y::B",			L"Y :: B",				L"bool $L"																	);
 	AssertExpr(pa, L"Y::C",			L"Y :: C",				L"float __cdecl() * $PR"													);
 	AssertExpr(pa, L"Y::D",			L"Y :: D",				L"double __thiscall() * $PR"												);
-	AssertExpr(pa, L"E",			L"E",					L"void * __cdecl() * $PR"													);
+	AssertExpr(pa, L"E",			L"E",					L"<::E::[T]> ::E::[T] * __cdecl() * $PR"									);
 
 	AssertExpr(pa, L"&Y::A",		L"(& Y :: A)",			L"char * $PR"																);
 	AssertExpr(pa, L"&Y::B",		L"(& Y :: B)",			L"bool (::X<char, bool, float, double> ::) * $PR"							);
 	AssertExpr(pa, L"&Y::C",		L"(& Y :: C)",			L"float __cdecl() * $PR"													);
 	AssertExpr(pa, L"&Y::D",		L"(& Y :: D)",			L"double __thiscall() (::X<char, bool, float, double> ::) * $PR"			);
-	AssertExpr(pa, L"&E",			L"(& E)",				L"void * __cdecl() * $PR"													);
+	AssertExpr(pa, L"&E<void>",		L"(& E<void>)",			L"void * __cdecl() * $PR"													);
 
 	AssertExpr(pa, L"_A1",			L"_A1",					L"char * $L"																);
 	AssertExpr(pa, L"_B1",			L"_B1",					L"bool (::X<char, bool, float, double> ::) * $L"							);

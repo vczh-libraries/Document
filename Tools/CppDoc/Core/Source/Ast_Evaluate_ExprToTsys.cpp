@@ -438,6 +438,19 @@ public:
 				name = &childExpr->name;
 				nameResolving = &childExpr->resolving;
 			}
+			else if (auto genericExpr = self->expr.Cast<GenericExpr>())
+			{
+				if (auto idExpr = genericExpr->expr.Cast<IdExpr>())
+				{
+					name = &idExpr->name;
+					nameResolving = &idExpr->resolving;
+				}
+				else if (auto childExpr = genericExpr->expr.Cast<ChildExpr>())
+				{
+					name = &childExpr->name;
+					nameResolving = &childExpr->resolving;
+				}
+			}
 			else if (auto fieldExpr = self->expr.Cast<FieldAccessExpr>())
 			{
 				if (auto fieldExprName = fieldExpr->name.Cast<IdExpr>())

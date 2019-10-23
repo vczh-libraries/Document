@@ -483,14 +483,14 @@ namespace symbol_totsys_impl
 			{
 				if (entity->GetElement()->GetType() == TsysType::Member)
 				{
-					if (self->operand.Cast<ChildExpr>())
+					if (self->operand.Cast<ChildExpr>() || self->operand.Cast<GenericExpr>())
 					{
 						AddTemp(result, arg.tsys);
 					}
 				}
 				else if (entity->GetElement()->GetType() == TsysType::Function)
 				{
-					if (self->operand.Cast<ChildExpr>() || self->operand.Cast<IdExpr>())
+					if (self->operand.Cast<ChildExpr>() || self->operand.Cast<IdExpr>() || self->operand.Cast<GenericExpr>())
 					{
 						AddTemp(result, arg.tsys);
 					}
