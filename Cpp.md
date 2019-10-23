@@ -17,7 +17,7 @@
     - [ ] Member type evaluation.
       - [x] `GenericExpr` need to handle `parentDeclType` in `GenericFunction`
       - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
-      - [ ] `v.f`, `v->f`, `v.*f`, `v->*f`, `v::f`
+      - [x] `v.f`, `v->f`, `v.*f`, `v->*f`, `v::f`
         - [x] const / volatile
         - [x] members of base types
       - [x] `auto` member function
@@ -29,6 +29,7 @@
     - [ ] Class specializations recognized but not used
     - [ ] Parse `template<typename T>template<typename U>template<typename V>void A<T*>::B<const U&>::F(){}`
       - matches `template<typename X>class A<X*>{ template<typename Y>class B<const Y&>{ void template<typename Z>F(); }; };`
+      - activate commented test cases in `TestParseGenericMember.cpp`
   - [ ] Make generic `Expr::Ptr` in `Calculator` case.
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
 - [ ] `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
