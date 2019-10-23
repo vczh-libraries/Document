@@ -322,41 +322,41 @@ struct Y : X<char, bool, float, double>
 template<typename T>
 T* E();
 
-auto			_A1 = &Y::A;
-auto			_B1 = &Y::B;
-auto			_C1 = &Y::C;
-auto			_D1 = &Y::D;
-auto			_E1 = &E<void>;
+auto				_A1 = &Y::A;
+auto				_B1 = &Y::B;
+auto				_C1 = &Y::C;
+auto				_D1 = &Y::D;
+auto				_E1 = &E<void>;
 
-decltype(auto)	_A2 = &Y::A;
-decltype(auto)	_B2 = &Y::B;
-decltype(auto)	_C2 = &Y::C;
-decltype(auto)	_D2 = &Y::D;
-decltype(auto)	_E2 = &E<void>;
+decltype(auto)		_A2 = &Y::A;
+decltype(auto)		_B2 = &Y::B;
+decltype(auto)		_C2 = &Y::C;
+decltype(auto)		_D2 = &Y::D;
+decltype(auto)		_E2 = &E<void>;
 
-decltype(&Y::A)	_A3[1] = &Y::A;
-decltype(&Y::B)	_B3[1] = &Y::B;
-decltype(&Y::C)	_C3[1] = &Y::C;
-decltype(&Y::D)	_D3[1] = &Y::D;
-decltype(&E)	_E3[1] = &E<void>;
+decltype(&Y::A)		_A3[1] = {&Y::A};
+decltype(&Y::B)		_B3[1] = {&Y::B};
+decltype(&Y::C)		_C3[1] = {&Y::C};
+decltype(&Y::D)		_D3[1] = {&Y::D};
+decltype(&E<void>)	_E3[1] = {&E<void>};
 
-auto&&			_A4 = &Y::A;
-auto&&			_B4 = &Y::B;
-auto&&			_C4 = &Y::C;
-auto&&			_D4 = &Y::D;
-auto&&			_E4 = &E<void>;
+auto&&				_A4 = &Y::A;
+auto&&				_B4 = &Y::B;
+auto&&				_C4 = &Y::C;
+auto&&				_D4 = &Y::D;
+auto&&				_E4 = &E<void>;
 
-const auto&		_A5 = &Y::A;
-const auto&		_B5 = &Y::B;
-const auto&		_C5 = &Y::C;
-const auto&		_D5 = &Y::D;
-const auto&		_E5 = &E<void>;
+const auto&			_A5 = &Y::A;
+const auto&			_B5 = &Y::B;
+const auto&			_C5 = &Y::C;
+const auto&			_D5 = &Y::D;
+const auto&			_E5 = &E<void>;
 
-auto&			_A6 = _A5;
-auto&			_B6 = _B5;
-auto&			_C6 = _C5;
-auto&			_D6 = _D5;
-auto&			_E6 = _E5;
+auto&				_A6 = _A5;
+auto&				_B6 = _B5;
+auto&				_C6 = _C5;
+auto&				_D6 = _D5;
+auto&				_E6 = _E5;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 

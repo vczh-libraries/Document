@@ -353,11 +353,11 @@ decltype(auto)	_C2 = &Y::C;
 decltype(auto)	_D2 = &Y::D;
 decltype(auto)	_E2 = &E;
 
-decltype(&Y::A)	_A3[1] = &Y::A;
-decltype(&Y::B)	_B3[1] = &Y::B;
-decltype(&Y::C)	_C3[1] = &Y::C;
-decltype(&Y::D)	_D3[1] = &Y::D;
-decltype(&E)	_E3[1] = &E;
+decltype(&Y::A)	_A3[1] = {&Y::A};
+decltype(&Y::B)	_B3[1] = {&Y::B};
+decltype(&Y::C)	_C3[1] = {&Y::C};
+decltype(&Y::D)	_D3[1] = {&Y::D};
+decltype(&E)	_E3[1] = {&E};
 
 auto&&			_A4 = &Y::A;
 auto&&			_B4 = &Y::B;
