@@ -302,53 +302,55 @@ struct Z
 		AssertExpr(spa, L"(*this)[0]",				L"((* this))[0]",				L"::X<::Z::[Tx] volatile, ::Z::[Ty] const> $PR"					);
 	}
 }
-/*
+
 TEST_CASE(TestParseGenericMember_AddressOfArrayFunctionMemberPointer)
 {
 	auto input = LR"(
+template<typename TA, typename TB, typename TC, typename TD>
 struct X
 {
-	static int A;
-	int B;
-	static int C();
-	int D();
+	static TA A;
+	TB B;
+	static TC C();
+	TD D();
 };
 
-struct Y : X
+struct Y : X<char, bool, float, double>
 {
 };
 
-int E();
+template<typename T>
+T* E();
 
 auto			_A1 = &Y::A;
 auto			_B1 = &Y::B;
 auto			_C1 = &Y::C;
 auto			_D1 = &Y::D;
-auto			_E1 = &E;
+auto			_E1 = &E<void>;
 
 decltype(auto)	_A2 = &Y::A;
 decltype(auto)	_B2 = &Y::B;
 decltype(auto)	_C2 = &Y::C;
 decltype(auto)	_D2 = &Y::D;
-decltype(auto)	_E2 = &E;
+decltype(auto)	_E2 = &E<void>;
 
 decltype(&Y::A)	_A3[1] = &Y::A;
 decltype(&Y::B)	_B3[1] = &Y::B;
 decltype(&Y::C)	_C3[1] = &Y::C;
 decltype(&Y::D)	_D3[1] = &Y::D;
-decltype(&E)	_E3[1] = &E;
+decltype(&E)	_E3[1] = &E<void>;
 
 auto&&			_A4 = &Y::A;
 auto&&			_B4 = &Y::B;
 auto&&			_C4 = &Y::C;
 auto&&			_D4 = &Y::D;
-auto&&			_E4 = &E;
+auto&&			_E4 = &E<void>;
 
 const auto&		_A5 = &Y::A;
 const auto&		_B5 = &Y::B;
 const auto&		_C5 = &Y::C;
 const auto&		_D5 = &Y::D;
-const auto&		_E5 = &E;
+const auto&		_E5 = &E<void>;
 
 auto&			_A6 = _A5;
 auto&			_B6 = _B5;
@@ -358,91 +360,91 @@ auto&			_E6 = _E5;
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(pa, L"Y::A",			L"Y :: A",				L"__int32 $L"									);
-	AssertExpr(pa, L"Y::B",			L"Y :: B",				L"__int32 $L"									);
-	AssertExpr(pa, L"Y::C",			L"Y :: C",				L"__int32 __cdecl() * $PR"						);
-	AssertExpr(pa, L"Y::D",			L"Y :: D",				L"__int32 __thiscall() * $PR"					);
-	AssertExpr(pa, L"E",			L"E",					L"__int32 __cdecl() * $PR"						);
+	AssertExpr(pa, L"Y::A",			L"Y :: A",				L"char $L"																	);
+	AssertExpr(pa, L"Y::B",			L"Y :: B",				L"bool $L"																	);
+	AssertExpr(pa, L"Y::C",			L"Y :: C",				L"float __cdecl() * $PR"													);
+	AssertExpr(pa, L"Y::D",			L"Y :: D",				L"double __thiscall() * $PR"												);
+	AssertExpr(pa, L"E",			L"E",					L"void * __cdecl() * $PR"													);
 
-	AssertExpr(pa, L"&Y::A",		L"(& Y :: A)",			L"__int32 * $PR"								);
-	AssertExpr(pa, L"&Y::B",		L"(& Y :: B)",			L"__int32 (::X ::) * $PR"						);
-	AssertExpr(pa, L"&Y::C",		L"(& Y :: C)",			L"__int32 __cdecl() * $PR"						);
-	AssertExpr(pa, L"&Y::D",		L"(& Y :: D)",			L"__int32 __thiscall() (::X ::) * $PR"			);
-	AssertExpr(pa, L"&E",			L"(& E)",				L"__int32 __cdecl() * $PR"						);
+	AssertExpr(pa, L"&Y::A",		L"(& Y :: A)",			L"char * $PR"																);
+	AssertExpr(pa, L"&Y::B",		L"(& Y :: B)",			L"bool (::X<char, bool, float, double> ::) * $PR"							);
+	AssertExpr(pa, L"&Y::C",		L"(& Y :: C)",			L"float __cdecl() * $PR"													);
+	AssertExpr(pa, L"&Y::D",		L"(& Y :: D)",			L"double __thiscall() (::X<char, bool, float, double> ::) * $PR"			);
+	AssertExpr(pa, L"&E",			L"(& E)",				L"void * __cdecl() * $PR"													);
 
-	AssertExpr(pa, L"_A1",			L"_A1",					L"__int32 * $L"									);
-	AssertExpr(pa, L"_B1",			L"_B1",					L"__int32 (::X ::) * $L"						);
-	AssertExpr(pa, L"_C1",			L"_C1",					L"__int32 __cdecl() * $L"						);
-	AssertExpr(pa, L"_D1",			L"_D1",					L"__int32 __thiscall() (::X ::) * $L"			);
-	AssertExpr(pa, L"_E1",			L"_E1",					L"__int32 __cdecl() * $L"						);
+	AssertExpr(pa, L"_A1",			L"_A1",					L"char * $L"																);
+	AssertExpr(pa, L"_B1",			L"_B1",					L"bool (::X<char, bool, float, double> ::) * $L"							);
+	AssertExpr(pa, L"_C1",			L"_C1",					L"float __cdecl() * $L"														);
+	AssertExpr(pa, L"_D1",			L"_D1",					L"double __thiscall() (::X<char, bool, float, double> ::) * $L"				);
+	AssertExpr(pa, L"_E1",			L"_E1",					L"void * __cdecl() * $L"													);
 
-	AssertExpr(pa, L"&_A1",			L"(& _A1)",				L"__int32 * * $PR"								);
-	AssertExpr(pa, L"&_B1",			L"(& _B1)",				L"__int32 (::X ::) * * $PR"						);
-	AssertExpr(pa, L"&_C1",			L"(& _C1)",				L"__int32 __cdecl() * * $PR"					);
-	AssertExpr(pa, L"&_D1",			L"(& _D1)",				L"__int32 __thiscall() (::X ::) * * $PR"		);
-	AssertExpr(pa, L"&_E1",			L"(& _E1)",				L"__int32 __cdecl() * * $PR"					);
+	AssertExpr(pa, L"&_A1",			L"(& _A1)",				L"char * * $PR"																);
+	AssertExpr(pa, L"&_B1",			L"(& _B1)",				L"bool (::X<char, bool, float, double> ::) * * $PR"							);
+	AssertExpr(pa, L"&_C1",			L"(& _C1)",				L"float __cdecl() * * $PR"													);
+	AssertExpr(pa, L"&_D1",			L"(& _D1)",				L"double __thiscall() (::X<char, bool, float, double> ::) * * $PR"			);
+	AssertExpr(pa, L"&_E1",			L"(& _E1)",				L"void * __cdecl() * * $PR"													);
 
-	AssertExpr(pa, L"_A2",			L"_A2",					L"__int32 * $L"									);
-	AssertExpr(pa, L"_B2",			L"_B2",					L"__int32 (::X ::) * $L"						);
-	AssertExpr(pa, L"_C2",			L"_C2",					L"__int32 __cdecl() * $L"						);
-	AssertExpr(pa, L"_D2",			L"_D2",					L"__int32 __thiscall() (::X ::) * $L"			);
-	AssertExpr(pa, L"_E2",			L"_E2",					L"__int32 __cdecl() * $L"						);
+	AssertExpr(pa, L"_A2",			L"_A2",					L"char * $L"																);
+	AssertExpr(pa, L"_B2",			L"_B2",					L"bool (::X<char, bool, float, double> ::) * $L"							);
+	AssertExpr(pa, L"_C2",			L"_C2",					L"float __cdecl() * $L"														);
+	AssertExpr(pa, L"_D2",			L"_D2",					L"double __thiscall() (::X<char, bool, float, double> ::) * $L"				);
+	AssertExpr(pa, L"_E2",			L"_E2",					L"void * __cdecl() * $L"													);
 
-	AssertExpr(pa, L"&_A2",			L"(& _A2)",				L"__int32 * * $PR"								);
-	AssertExpr(pa, L"&_B2",			L"(& _B2)",				L"__int32 (::X ::) * * $PR"						);
-	AssertExpr(pa, L"&_C2",			L"(& _C2)",				L"__int32 __cdecl() * * $PR"					);
-	AssertExpr(pa, L"&_D2",			L"(& _D2)",				L"__int32 __thiscall() (::X ::) * * $PR"		);
-	AssertExpr(pa, L"&_E2",			L"(& _E2)",				L"__int32 __cdecl() * * $PR"					);
+	AssertExpr(pa, L"&_A2",			L"(& _A2)",				L"char * * $PR"																);
+	AssertExpr(pa, L"&_B2",			L"(& _B2)",				L"bool (::X<char, bool, float, double> ::) * * $PR"							);
+	AssertExpr(pa, L"&_C2",			L"(& _C2)",				L"float __cdecl() * * $PR"													);
+	AssertExpr(pa, L"&_D2",			L"(& _D2)",				L"double __thiscall() (::X<char, bool, float, double> ::) * * $PR"			);
+	AssertExpr(pa, L"&_E2",			L"(& _E2)",				L"void * __cdecl() * * $PR"													);
 
-	AssertExpr(pa, L"_A3",			L"_A3",					L"__int32 * [] $L"								);
-	AssertExpr(pa, L"_B3",			L"_B3",					L"__int32 (::X ::) * [] $L"						);
-	AssertExpr(pa, L"_C3",			L"_C3",					L"__int32 __cdecl() * [] $L"					);
-	AssertExpr(pa, L"_D3",			L"_D3",					L"__int32 __thiscall() (::X ::) * [] $L"		);
-	AssertExpr(pa, L"_E3",			L"_E3",					L"__int32 __cdecl() * [] $L"					);
+	AssertExpr(pa, L"_A3",			L"_A3",					L"char * [] $L"																);
+	AssertExpr(pa, L"_B3",			L"_B3",					L"bool (::X<char, bool, float, double> ::) * [] $L"							);
+	AssertExpr(pa, L"_C3",			L"_C3",					L"float __cdecl() * [] $L"													);
+	AssertExpr(pa, L"_D3",			L"_D3",					L"double __thiscall() (::X<char, bool, float, double> ::) * [] $L"			);
+	AssertExpr(pa, L"_E3",			L"_E3",					L"void * __cdecl() * [] $L"													);
 
-	AssertExpr(pa, L"&_A3",			L"(& _A3)",				L"__int32 * [] * $PR"							);
-	AssertExpr(pa, L"&_B3",			L"(& _B3)",				L"__int32 (::X ::) * [] * $PR"					);
-	AssertExpr(pa, L"&_C3",			L"(& _C3)",				L"__int32 __cdecl() * [] * $PR"					);
-	AssertExpr(pa, L"&_D3",			L"(& _D3)",				L"__int32 __thiscall() (::X ::) * [] * $PR"		);
-	AssertExpr(pa, L"&_E3",			L"(& _E3)",				L"__int32 __cdecl() * [] * $PR"					);
+	AssertExpr(pa, L"&_A3",			L"(& _A3)",				L"char * [] * $PR"															);
+	AssertExpr(pa, L"&_B3",			L"(& _B3)",				L"bool (::X<char, bool, float, double> ::) * [] * $PR"						);
+	AssertExpr(pa, L"&_C3",			L"(& _C3)",				L"float __cdecl() * [] * $PR"												);
+	AssertExpr(pa, L"&_D3",			L"(& _D3)",				L"double __thiscall() (::X<char, bool, float, double> ::) * [] * $PR"		);
+	AssertExpr(pa, L"&_E3",			L"(& _E3)",				L"void * __cdecl() * [] * $PR"												);
 
-	AssertExpr(pa, L"_A4",			L"_A4",					L"__int32 * && $L"								);
-	AssertExpr(pa, L"_B4",			L"_B4",					L"__int32 (::X ::) * && $L"						);
-	AssertExpr(pa, L"_C4",			L"_C4",					L"__int32 __cdecl() * && $L"					);
-	AssertExpr(pa, L"_D4",			L"_D4",					L"__int32 __thiscall() (::X ::) * && $L"		);
-	AssertExpr(pa, L"_E4",			L"_E4",					L"__int32 __cdecl() * && $L"					);
+	AssertExpr(pa, L"_A4",			L"_A4",					L"char * && $L"																);
+	AssertExpr(pa, L"_B4",			L"_B4",					L"bool (::X<char, bool, float, double> ::) * && $L"							);
+	AssertExpr(pa, L"_C4",			L"_C4",					L"float __cdecl() * && $L"													);
+	AssertExpr(pa, L"_D4",			L"_D4",					L"double __thiscall() (::X<char, bool, float, double> ::) * && $L"			);
+	AssertExpr(pa, L"_E4",			L"_E4",					L"void * __cdecl() * && $L"													);
 
-	AssertExpr(pa, L"&_A4",			L"(& _A4)",				L"__int32 * * $PR"								);
-	AssertExpr(pa, L"&_B4",			L"(& _B4)",				L"__int32 (::X ::) * * $PR"						);
-	AssertExpr(pa, L"&_C4",			L"(& _C4)",				L"__int32 __cdecl() * * $PR"					);
-	AssertExpr(pa, L"&_D4",			L"(& _D4)",				L"__int32 __thiscall() (::X ::) * * $PR"		);
-	AssertExpr(pa, L"&_E4",			L"(& _E4)",				L"__int32 __cdecl() * * $PR"					);
+	AssertExpr(pa, L"&_A4",			L"(& _A4)",				L"char * * $PR"																);
+	AssertExpr(pa, L"&_B4",			L"(& _B4)",				L"bool (::X<char, bool, float, double> ::) * * $PR"							);
+	AssertExpr(pa, L"&_C4",			L"(& _C4)",				L"float __cdecl() * * $PR"													);
+	AssertExpr(pa, L"&_D4",			L"(& _D4)",				L"double __thiscall() (::X<char, bool, float, double> ::) * * $PR"			);
+	AssertExpr(pa, L"&_E4",			L"(& _E4)",				L"void * __cdecl() * * $PR"													);
 
-	AssertExpr(pa, L"_A5",			L"_A5",					L"__int32 * const & $L"							);
-	AssertExpr(pa, L"_B5",			L"_B5",					L"__int32 (::X ::) * const & $L"				);
-	AssertExpr(pa, L"_C5",			L"_C5",					L"__int32 __cdecl() * const & $L"				);
-	AssertExpr(pa, L"_D5",			L"_D5",					L"__int32 __thiscall() (::X ::) * const & $L"	);
-	AssertExpr(pa, L"_E5",			L"_E5",					L"__int32 __cdecl() * const & $L"				);
+	AssertExpr(pa, L"_A5",			L"_A5",					L"char * const & $L"														);
+	AssertExpr(pa, L"_B5",			L"_B5",					L"bool (::X<char, bool, float, double> ::) * const & $L"					);
+	AssertExpr(pa, L"_C5",			L"_C5",					L"float __cdecl() * const & $L"												);
+	AssertExpr(pa, L"_D5",			L"_D5",					L"double __thiscall() (::X<char, bool, float, double> ::) * const & $L"		);
+	AssertExpr(pa, L"_E5",			L"_E5",					L"void * __cdecl() * const & $L"											);
 
-	AssertExpr(pa, L"&_A5",			L"(& _A5)",				L"__int32 * const * $PR"						);
-	AssertExpr(pa, L"&_B5",			L"(& _B5)",				L"__int32 (::X ::) * const * $PR"				);
-	AssertExpr(pa, L"&_C5",			L"(& _C5)",				L"__int32 __cdecl() * const * $PR"				);
-	AssertExpr(pa, L"&_D5",			L"(& _D5)",				L"__int32 __thiscall() (::X ::) * const * $PR"	);
-	AssertExpr(pa, L"&_E5",			L"(& _E5)",				L"__int32 __cdecl() * const * $PR"				);
+	AssertExpr(pa, L"&_A5",			L"(& _A5)",				L"char * const * $PR"														);
+	AssertExpr(pa, L"&_B5",			L"(& _B5)",				L"bool (::X<char, bool, float, double> ::) * const * $PR"					);
+	AssertExpr(pa, L"&_C5",			L"(& _C5)",				L"float __cdecl() * const * $PR"											);
+	AssertExpr(pa, L"&_D5",			L"(& _D5)",				L"double __thiscall() (::X<char, bool, float, double> ::) * const * $PR"	);
+	AssertExpr(pa, L"&_E5",			L"(& _E5)",				L"void * __cdecl() * const * $PR"											);
 
-	AssertExpr(pa, L"_A6",			L"_A6",					L"__int32 * const & $L"							);
-	AssertExpr(pa, L"_B6",			L"_B6",					L"__int32 (::X ::) * const & $L"				);
-	AssertExpr(pa, L"_C6",			L"_C6",					L"__int32 __cdecl() * const & $L"				);
-	AssertExpr(pa, L"_D6",			L"_D6",					L"__int32 __thiscall() (::X ::) * const & $L"	);
-	AssertExpr(pa, L"_E6",			L"_E6",					L"__int32 __cdecl() * const & $L"				);
+	AssertExpr(pa, L"_A6",			L"_A6",					L"char * const & $L"														);
+	AssertExpr(pa, L"_B6",			L"_B6",					L"bool (::X<char, bool, float, double> ::) * const & $L"					);
+	AssertExpr(pa, L"_C6",			L"_C6",					L"float __cdecl() * const & $L"												);
+	AssertExpr(pa, L"_D6",			L"_D6",					L"double __thiscall() (::X<char, bool, float, double> ::) * const & $L"		);
+	AssertExpr(pa, L"_E6",			L"_E6",					L"void * __cdecl() * const & $L"											);
 
-	AssertExpr(pa, L"&_A6",			L"(& _A6)",				L"__int32 * const * $PR"						);
-	AssertExpr(pa, L"&_B6",			L"(& _B6)",				L"__int32 (::X ::) * const * $PR"				);
-	AssertExpr(pa, L"&_C6",			L"(& _C6)",				L"__int32 __cdecl() * const * $PR"				);
-	AssertExpr(pa, L"&_D6",			L"(& _D6)",				L"__int32 __thiscall() (::X ::) * const * $PR"	);
-	AssertExpr(pa, L"&_E6",			L"(& _E6)",				L"__int32 __cdecl() * const * $PR"				);
+	AssertExpr(pa, L"&_A6",			L"(& _A6)",				L"char * const * $PR"														);
+	AssertExpr(pa, L"&_B6",			L"(& _B6)",				L"bool (::X<char, bool, float, double> ::) * const * $PR"					);
+	AssertExpr(pa, L"&_C6",			L"(& _C6)",				L"float __cdecl() * const * $PR"											);
+	AssertExpr(pa, L"&_D6",			L"(& _D6)",				L"double __thiscall() (::X<char, bool, float, double> ::) * const * $PR"	);
+	AssertExpr(pa, L"&_E6",			L"(& _E6)",				L"void * __cdecl() * const * $PR"											);
 }
-
+/*
 TEST_CASE(TestParseGenericMember_AddressOfMember_OfExplicitOrImplicitThisExpr)
 {
 	auto input = LR"(
