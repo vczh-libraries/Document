@@ -12,25 +12,14 @@
 ## TODO
 
 - [ ] Next Demo!
-  - [ ] `template` on classes.
-    - [x] Remove `nullptr` default values for `EvaluateXXXSymbol` arguments.
-    - [ ] Member type evaluation.
-      - [x] `GenericExpr` need to handle `parentDeclType` in `GenericFunction`
-      - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
-      - [x] `v.f`, `v->f`, `v.*f`, `v->*f`, `v::f`
-        - [x] const / volatile
-        - [x] members of base types
-      - [x] `auto` member function
-    - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
-  - [ ] More `template`
-    - [ ] Create similar test cases for testing accessing base classes member inside or outside of the class.
-    - [ ] Inside `template<...> class X`, if `X` is used as a type without type arguments, it is filled with template arguments.
-    - [ ] Function specializations recognized but not used
-    - [ ] Class specializations recognized but not used
-    - [ ] Parse `template<typename T>template<typename U>template<typename V>void A<T*>::B<const U&>::F(){}`
-      - matches `template<typename X>class A<X*>{ template<typename Y>class B<const Y&>{ void template<typename Z>F(); }; };`
-      - activate commented test cases in `TestParseGenericMember.cpp`
-  - [ ] Make generic `Expr::Ptr` in `Calculator` case.
+  - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
+  - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
+  - [ ] Inside `template<...> class X`, if `X` is used as a type without type arguments, it is filled with template arguments.
+  - [ ] Function specializations recognized but not used
+  - [ ] Class specializations recognized but not used
+  - [ ] Parse `template<typename T>template<typename U>template<typename V>void A<T*>::B<const U&>::F(){}`
+    - matches `template<typename X>class A<X*>{ template<typename Y>class B<const Y&>{ void template<typename Z>F(); }; };`
+    - activate commented test cases in `TestParseGenericMember.cpp`
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
 - [ ] `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
   - [ ] Call a function with some or all template arguments unspecified.
