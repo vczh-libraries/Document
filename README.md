@@ -18,11 +18,12 @@ All **the compiler** here means the compiler created by this project.
 
 ## Supported C++ Core Language Features
 
-- **Not Care**: The syntax is parsed (if checked) but the semantic is not important, because it doesn't take effect in type inferencing.
-- **Ignored**: My implementation does not match the standard, but this only lead to inaccuracy in overloading. Since I accept not fully resolved overloading symbols and display multiple links at the same time.
-- (not supported yet): I will implement it later.
-- Need test: I even forget if I have implemented it or not.
-- [ ]: No plan yet.
+- Flags
+  - **Not Care**: The syntax is parsed (if checked) but the semantic is not important, because it doesn't take effect in type inferencing.
+  - **Ignored**: My implementation does not match the standard, but this only lead to inaccuracy in overloading. Since I accept not fully resolved overloading symbols and display multiple links at the same time.
+  - (not supported yet): I will implement it later.
+  - Need test: I even forget if I have implemented it or not.
+  - [ ]: No plan yet.
 
 - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
   - [x] Rvalue references and move constructors
