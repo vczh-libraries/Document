@@ -78,7 +78,8 @@ All **the compiler** here means the compiler created by this project.
   - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
     - copy-initialization and direct-initialization of objects of type `T` from prvalue expressions of type `T` (ignoring top-level cv-qualifiers) shall result in no copy or move constructors from the prvalue expression. See copy elision for more information. helper template function std::make_pair(5.0, false).
     - Inline variables, which allows the definition of variables in header files without violating the one definition rule. The rules are effectively the same as inline functions
-    - Value of `__cplusplus` changed to 201703L: **Not Care: I don't do preprocessing by myself**
+    - Value of `__cplusplus` changed to 201703L: **I don't do preprocessing by myself**
+    - `__has_include`, allowing the availability of a header to be checked by preprocessor directives: **I don't do preprocessing by myself**
 - **Parsed but it only reduces the accuracy of overloading so I don't care**
   - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
     - constexpr – Generalized constant expressions: **Treat all constant values identical**
@@ -101,7 +102,6 @@ All **the compiler** here means the compiler created by this project.
     - Hexadecimal floating-point literals
     - Some extensions on over-aligned memory allocation
     - Class template argument deduction (CTAD), introducing constructor deduction guides, eg. allowing `std::pair(5.0, false)` instead of requiring explicit constructor arguments types `std::pair<double, bool>(5.0, false)` or an additional   helper template function std::make_pair(5.0, false).
-    - `__has_include`, allowing the availability of a header to be checked by preprocessor directives
     - Structured binding declarations, allowing `auto [a, b] = getTwoReturnValues();`for   more information.
     - Fold expressions, for variadic templates
 
