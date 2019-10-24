@@ -371,18 +371,18 @@ int main()
 	TEST_ASSERT(CheckTokens(tokens) == 31);
 }
 
-TEST_CASE(TestLexer_GacUI_Input)
-{
-	FilePath inputPath = L"../../../.Output/Import/Preprocessed.txt";
-	TEST_ASSERT(inputPath.IsFile());
-
-	wchar_t* buffer = ReadBigFile(inputPath);
-
-	List<RegexToken> tokens;
-	GlobalCppLexer()->Parse(WString(buffer, false)).ReadToEnd(tokens);
-	CheckTokens(tokens);
-	delete[] buffer;
-}
+//TEST_CASE(TestLexer_GacUI_Input)
+//{
+//	FilePath inputPath = L"../../../.Output/Import/Preprocessed.txt";
+//	TEST_ASSERT(inputPath.IsFile());
+//
+//	wchar_t* buffer = ReadBigFile(inputPath);
+//
+//	List<RegexToken> tokens;
+//	GlobalCppLexer()->Parse(WString(buffer, false)).ReadToEnd(tokens);
+//	CheckTokens(tokens);
+//	delete[] buffer;
+//}
 
 TEST_CASE(TestLexer_Reader)
 {
