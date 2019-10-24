@@ -8,7 +8,7 @@
 GetSpecialMember
 ***********************************************************************/
 
-Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, SpecialMemberKind kind)
+Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, ITsys* classType, SpecialMemberKind kind)
 {
 	{
 		auto classDecl = classSymbol->GetImplDecl_NFb<ClassDeclaration>();
@@ -70,16 +70,9 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 					auto entity = paramType->GetEntity(cv, refType);
 					if (refType == TsysRefType::LRef)
 					{
-						if (entity->GetType() == TsysType::Decl && entity->GetDecl() == classSymbol)
+						if (entity == classType)
 						{
 							return member;
-						}
-						else if (entity->GetType() == TsysType::DeclInstant && entity->GetDecl() == classSymbol)
-						{
-							// TODO: [Cpp.md] Deal with DeclInstant here
-							// need to check if type arguments of entity are exactly the same as type parameters
-							// e.g., Ptr(const Ptr<T>&) is CopyCtor, but Ptr(const Ptr<T*>&) is not
-							throw 0;
 						}
 					}
 				}
@@ -94,15 +87,9 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, Specia
 					auto entity = paramType->GetEntity(cv, refType);
 					if (refType == TsysRefType::RRef)
 					{
-						if (entity->GetType() == TsysType::Decl && entity->GetDecl() == classSymbol)
+						if (entity == classType)
 						{
 							return member;
-						}
-						else if (entity->GetType() == TsysType::DeclInstant && entity->GetDecl() == classSymbol)
-						{
-							// TODO: [Cpp.md] Deal with DeclInstant here
-							// the same as above
-							throw 0;
 						}
 					}
 				}
@@ -127,8 +114,19 @@ bool IsSpecialMemberEnabled(Symbol* member)
 	return true;
 }
 
-bool IsSpecialMemberFeatureEnabled(const ParsingArguments& pa, Symbol* classSymbol, SpecialMemberKind kind)
+bool IsSpecialMemberFeatureEnabled(const ParsingArguments& pa, ITsys* classType, SpecialMemberKind kind)
 {
+	switch (classType->GetType())
+	{
+	case TsysType::Decl:
+	case TsysType::DeclInstant:
+		break;
+	default:
+		throw NotResolvableException();
+	}
+
+	auto classSymbol = classType->GetDecl();
+
 	Symbol* symbolDefaultCtor = nullptr;
 	Symbol* symbolCopyCtor = nullptr;
 	Symbol* symbolMoveCtor = nullptr;
@@ -136,7 +134,7 @@ bool IsSpecialMemberFeatureEnabled(const ParsingArguments& pa, Symbol* classSymb
 	Symbol* symbolMoveAssignOp = nullptr;
 	Symbol* symbolDtor = nullptr;
 
-#define SYMBOL(KIND) (symbol##KIND ? symbol##KIND : (symbol##KIND = GetSpecialMember(pa, classSymbol, SpecialMemberKind::KIND)))
+#define SYMBOL(KIND) (symbol##KIND ? symbol##KIND : (symbol##KIND = GetSpecialMember(pa, classSymbol, classType, SpecialMemberKind::KIND)))
 #define DEFINED(KIND) (SYMBOL(KIND) != nullptr)
 #define DELETED(KIND) (SYMBOL(KIND) && symbol##KIND->GetAnyForwardDecl<ForwardFunctionDeclaration>()->decoratorDelete)
 #define ENABLED(KIND) IsSpecialMemberEnabled(SYMBOL(KIND))
@@ -202,7 +200,7 @@ bool IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, Spec
 			auto classDecl = type->GetDecl()->GetImplDecl_NFb<ClassDeclaration>();
 			if (!classDecl) return true;
 			if (classDecl->classType == CppClassType::Union) return true;
-			return IsSpecialMemberFeatureEnabled(pa, classDecl->symbol, kind);
+			return IsSpecialMemberFeatureEnabled(pa, type, kind);
 		}
 	case TsysType::Init:
 		for (vint i = 0; i < type->GetParamCount(); i++)
@@ -228,8 +226,6 @@ GenerateMembers
 
 bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclaration* classDecl, SpecialMemberKind kind, bool passIfFieldHasInitializer)
 {
-	// TODO: [Cpp.md] Deal with DeclInstant here
-	// This function is called by GenerateMembers, should find a way to store different results for different type argument combinations
 	auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, classDecl, nullptr, nullptr);
 	auto classSymbol = classDecl->symbol;
 	for (vint i = 0; i < ev.ExtraCount(); i++)
@@ -351,12 +347,21 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 	{
 		if (classDecl->classType != CppClassType::Union)
 		{
-			auto symbolDefaultCtor = GetSpecialMember(pa, classSymbol, SpecialMemberKind::DefaultCtor);
-			auto symbolCopyCtor = GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyCtor);
-			auto symbolMoveCtor = GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveCtor);
-			auto symbolCopyAssignOp = GetSpecialMember(pa, classSymbol, SpecialMemberKind::CopyAssignOp);
-			auto symbolMoveAssignOp = GetSpecialMember(pa, classSymbol, SpecialMemberKind::MoveAssignOp);
-			auto symbolDtor = GetSpecialMember(pa, classSymbol, SpecialMemberKind::Dtor);
+			// TODO: [Cpp.md] Deal with DeclInstant here
+			// Find a way to store different results for different type argument combinations
+			auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
+			auto classType = ev.Get()[0];
+			if (classType->GetType() == TsysType::GenericFunction)
+			{
+				classType = classType->GetElement();
+			}
+
+			auto symbolDefaultCtor = GetSpecialMember(pa, classSymbol, classType, SpecialMemberKind::DefaultCtor);
+			auto symbolCopyCtor = GetSpecialMember(pa, classSymbol, classType, SpecialMemberKind::CopyCtor);
+			auto symbolMoveCtor = GetSpecialMember(pa, classSymbol, classType, SpecialMemberKind::MoveCtor);
+			auto symbolCopyAssignOp = GetSpecialMember(pa, classSymbol, classType, SpecialMemberKind::CopyAssignOp);
+			auto symbolMoveAssignOp = GetSpecialMember(pa, classSymbol, classType, SpecialMemberKind::MoveAssignOp);
+			auto symbolDtor = GetSpecialMember(pa, classSymbol, classType, SpecialMemberKind::Dtor);
 
 			auto enabledDefaultCtor = IsSpecialMemberEnabled(symbolDefaultCtor);
 			auto enabledCopyCtor = IsSpecialMemberEnabled(symbolCopyCtor);

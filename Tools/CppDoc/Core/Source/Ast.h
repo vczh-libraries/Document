@@ -182,7 +182,7 @@ enum class SpecialMemberKind
 	Dtor,
 };
 
-extern bool					IsSpecialMemberFeatureEnabled(const ParsingArguments& pa, Symbol* classSymbol, SpecialMemberKind kind);
+extern bool					IsSpecialMemberFeatureEnabled(const ParsingArguments& pa, ITsys* classType, SpecialMemberKind kind);
 extern void					GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol);
 
 #endif
