@@ -18,94 +18,113 @@ All **the compiler** here means the compiler created by this project.
 
 ## Supported C++ Core Language Features
 
-- Flags
-  - **Not Care**: The syntax is parsed (if checked) but the semantic is not important, because it doesn't take effect in type inferencing.
-  - **Ignored**: My implementation does not match the standard, but this only lead to inaccuracy in overloading. Since I accept not fully resolved overloading symbols and display multiple links at the same time.
-  - (not supported yet): I will implement it later.
-  - Need test: I even forget if I have implemented it or not.
-  - [ ]: No plan yet.
-
-- [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
-  - [x] Rvalue references and move constructors
-  - [x] constexpr – Generalized constant expressions: **Ignored: Treat all constant values identical**
-  - [x] Modification to the definition of plain old data: **Ignored**
-  - [ ] Extern template: **Not Care**
-    - Need test to see if `extern` before `template` is correctly parsed
-  - [ ] Initializer lists
-    - (not supported yet)
-  - [x] Uniform initialization
-  - [x] Type inference
-  - [x] Range-based for loop
-  - [ ] Lambda functions and expressions
-    - (not supported yet)
-  - [x] Alternative function syntax
-  - [ ] Object construction improvement
-    - Constructor calls another constructor in initializing list (not supported yet)
-    - Using base class' constructors (not supported yet)
-  - [ ] Explicit overrides and final
-    - `final` keyword (not supported yet)
-  - [x] Null pointer constant
-  - [x] Strongly typed enumerations: **Ignored: Type is ignored**
-  - [x] Right angle bracket
-  - [ ] Explicit conversion operators: **Ignored: Treat all as implicit**
-    - Need test to see if `explicit` is correctly parsed
-  - [x] Template aliases
-  - [x] Unrestricted unions
-  - [x] Variadic templates
-  - [x] New string literals
-  - [ ] User-defined literals
-  - [ ] Multithreading memory model: **Not care**
-  - [x] Thread-local storage: **Not care**
-  - [x] Explicitly defaulted and deleted special member functions
-  - [ ] Type long long int
-    - (not supported yet)
-  - [ ] Static assertions
-    - (not supported yet)
-  - [x] Allow sizeof to work on members of classes without an explicit object: **Not Care**
-  - [ ] Control and query object alignment
-    - Need test
-  - [ ] Allow garbage collected implementations: **Not Care**
-  - [x] Attributes: **Not Care**
-- [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
-  - [x] Function return type deduction
-  - [x] Alternate type deduction on declaration
-  - [x] Relaxed constexpr restrictions: **Ignored: Treat all constant values identical**
-  - [x] Variable templates
-  - [ ] Aggregate member initialization
-  - [x] Binary literals
-  - [ ] Digit separators
-  - [ ] Generic lambdas
-    - (not supported yet)
-  - [ ] Lambda capture expressions
-    - (not supported yet)
-  - [x] The attribute `[[deprecated]]`: **Not Care**
-- [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
-  - [ ] Making the text message for static_assert optional
-    - (not supported yet)
-  - [x] Allow typename (as an alternative to class) in a template template parameter
-  - [x] New rules for auto deduction from braced-init-list: **Ignored**
-  - [x] Nested namespace definitions, e.g., `namespace X::Y { … }` instead of namespace `X { namespace Y { … } }`
-  - [x] Allowing attributes for namespaces and enumerators
-  - [ ] New standard attributes `[[fallthrough]]`, `[[maybe_unused]]` and `[[nodiscard]]`
-    - (not supported yet)
-  - [x] UTF-8 (u8) character literals (UTF-8 string literals have existed since C++11; C++17 adds the corresponding character literals for consistency, though as they are restricted to a single byte they can only store ASCII)
-  - [ ] Hexadecimal floating-point literals
-  - [x] Constant evaluation for all non-type template arguments: **Ignored: Treat all constant values identical**
-  - [ ] Fold expressions, for variadic templates
-    - (not supported yet)
-  - [ ] A compile-time static if with the form if constexpr(expression): **Not Care**
-    - Need test
-  - [ ] Structured binding declarations, allowing `auto [a, b] = getTwoReturnValues();`
-  - [x] Initializers in if and switch statements
-  - [x] copy-initialization and direct-initialization of objects of type `T` from prvalue expressions of type `T` (ignoring top-level cv-qualifiers) shall result in no copy or move constructors from the prvalue expression. See copy elision for more information.: **Not Care**
-  - [ ] Some extensions on over-aligned memory allocation
-  - [ ] Class template argument deduction (CTAD), introducing constructor deduction guides, eg. allowing `std::pair(5.0, false)` instead of requiring explicit constructor arguments types `std::pair<double, bool>(5.0, false)` or an additional helper template function std::make_pair(5.0, false).
-  - [x] Inline variables, which allows the definition of variables in header files without violating the one definition rule. The rules are effectively the same as inline functions: **Not Care**
-  - [ ] `__has_include`, allowing the availability of a header to be checked by preprocessor directives
-  - [x] Value of `__cplusplus` changed to 201703L: **Not Care: I don't do preprocessing by myself**
-  - [x] Exception specifications were made part of the function type: **Ignored: Don't compare exception specifications**
-- [C++20](https://en.wikipedia.org/wiki/C%2B%2B20)
-  - Review after publishing
+- **Supported**
+  - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
+    - [x] Rvalue references and move constructors
+    - [x] Uniform initialization
+    - [x] Type inference
+    - [x] Range-based for loop
+    - [x] Alternative function syntax
+    - [x] Null pointer constant
+    - [x] Right angle bracket
+    - [x] Template aliases
+    - [x] Unrestricted unions
+    - [x] Variadic templates
+    - [x] New string literals
+    - [x] Explicitly defaulted and deleted special member functions
+  - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
+    - [x] Function return type deduction
+    - [x] Alternate type deduction on declaration
+    - [x] Variable templates
+    - [x] Binary literals
+  - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
+    - [x] Allow typename (as an alternative to class) in a template template parameter
+    - [x] Nested namespace definitions, e.g., `namespace X::Y { … }` instead of namespace `X { namespace Y { … } }`
+    - [x] Allowing attributes for namespaces and enumerators
+    - [x] UTF-8 (u8) character literals (UTF-8 string literals have existed since C++11; C++17 adds the corresponding character literals for consistency, though as they are restricted to a single byte they can only store ASCII)
+    - [x] Initializers in if and switch statements
+  - [C++20](https://en.wikipedia.org/wiki/C%2B%2B20)
+    - Review after publishing
+- **Support before releasing**
+  - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
+    - [ ] Initializer lists
+      - (not supported yet)
+    - [ ] Lambda functions and expressions
+      - (not supported yet)
+    - [ ] Object construction improvement
+      - Constructor calls another constructor in initializing list (not supported yet)
+      - Using base class' constructors (not supported yet)
+    - [ ] Explicit overrides and final
+      - `final` keyword (not supported yet)
+    - [ ] Type long long int
+      - (not supported yet)
+    - [ ] Static assertions
+      - (not supported yet)
+    - [ ] Control and query object alignment
+      - Need test
+  - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
+    - [ ] Generic lambdas
+      - (not supported yet)
+    - [ ] Lambda capture expressions
+      - (not supported yet)
+  - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
+    - [ ] Making the text message for static_assert optional
+      - (not supported yet)
+    - [ ] New standard attributes `[[fallthrough]]`, `[[maybe_unused]]` and `[[nodiscard]]`
+      - (not supported yet)
+    - [ ] Fold expressions, for variadic templates
+      - (not supported yet)
+      - Need test
+  - [C++20](https://en.wikipedia.org/wiki/C%2B%2B20)
+    - Review after publishing
+- **Parsed (if checked, or I will support it before eleasing) but it doesn't affect type inferencing so I don't care**
+  - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
+    - [x] Thread-local storage
+    - [x] Allow sizeof to work on members of classes without an explicit object:
+    - [x] Attributes
+    - [ ] Extern template
+  - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
+    - [x] The attribute `[[deprecated]]`
+  - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
+    - [x] copy-initialization and direct-initialization of objects of type `T` from prvalue expressions of type `T` (ignoring top-level cv-qualifiers) shall result in no copy or move constructors from the prvalue expression. See copy elision for more information. helper template function std::make_pair(5.0, false).
+    - [x] Inline variables, which allows the definition of variables in header files without violating the one definition rule. The rules are effectively the same as inline functions
+      - (not supported yet)
+    - [x] Value of `__cplusplus` changed to 201703L: **Not Care: I don't do preprocessing by myself**
+    - [ ] A compile-time static if with the form if constexpr(expression)
+      - Need test
+    - [ ] Structured binding declarations, allowing `auto [a, b] = getTwoReturnValues();`for   more information.
+  - [C++20](https://en.wikipedia.org/wiki/C%2B%2B20)
+    - Review after publishing
+- **Parsed (if checked, or I will support it before eleasing) but it only reduces the accuracy of overloading so I don't care**
+  - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
+    - [x] constexpr – Generalized constant expressions: **Treat all constant values identical**
+    - [x] Modification to the definition of plain old data
+    - [x] Strongly typed enumerations: **Type is ignored**
+    - [x] Relaxed constexpr restrictions: **Treat all constant values identical**
+    - [ ] Explicit conversion operators: **Treat all as implicit**
+      - Need test to see if `explicit` is correctly parsed
+  - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
+  - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
+    - [x] New rules for auto deduction from braced-init-list
+    - [x] Constant evaluation for all non-type template arguments: **Treat all constant values identical**
+    - [x] Exception specifications were made part of the function type: **Don't compare exception specifications**
+  - [C++20](https://en.wikipedia.org/wiki/C%2B%2B20)
+    - Review after publishing
+- **No plan**
+  - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
+    - [ ] User-defined literals
+    - [ ] Multithreading memory model
+    - [ ] Allow garbage collected implementations
+  - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
+    - [ ] Aggregate member initialization
+    - [ ] Digit separators
+  - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
+    - [ ] Hexadecimal floating-point literals
+    - [ ] Some extensions on over-aligned memory allocation
+    - [ ] Class template argument deduction (CTAD), introducing constructor deduction guides, eg. allowing `std::pair(5.0, false)` instead of requiring explicit constructor arguments types `std::pair<double, bool>(5.0, false)` or an additional   helper template function std::make_pair(5.0, false).
+    - [ ] `__has_include`, allowing the availability of a header to be checked by preprocessor directives
+  - [C++20](https://en.wikipedia.org/wiki/C%2B%2B20)
+    - Review after publishing
 
 ## Limitations
 
