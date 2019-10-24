@@ -114,7 +114,9 @@ struct GA
 		};
 
 		using _CC = CC;
+		using __CC = _CC;
 		template<typename TC> using _GC = GC<TC>;
+		template<typename TC> using __GC = _GC<TC>;
 	};
 
 	template<typename TB>
@@ -130,25 +132,29 @@ struct GA
 		};
 
 		using _CC = CC;
+		using __CC = _CC;
 		template<typename TC> using _GC = GC<TC>;
+		template<typename TC> using __GC = _GC<TC>;
 	};
 
 	using _CB = CB;
+	using __CB = _CB;
 	template<typename TB> using _GB = GB<TB>;
+	template<typename TB> using __GB = _GB<TB>;
 };
 )";
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertType(pa,		L"GA",								L"GA",									L"<::GA::[TA]> ::GA<::GA::[TA]>"											);
-	AssertType(pa,		L"GA<int>::_CB",					L"GA<int> :: _CB",						L"::GA<__int32>::CB"														);
-	AssertType(pa,		L"GA<int>::_GB",					L"GA<int> :: _GB",						L"<::GA::_GB::[TB]> ::GA<__int32>::GB<::GA::_GB::[TB]>"						);
-	AssertType(pa,		L"GA<int>::_GB<bool>",				L"GA<int> :: _GB<bool>",				L"::GA<__int32>::GB<bool>"													);
-	AssertType(pa,		L"GA<int>::_CB::_CC",				L"GA<int> :: _CB :: _CC",				L"::GA<__int32>::CB::CC"													);
-	AssertType(pa,		L"GA<int>::_CB::_GC",				L"GA<int> :: _CB :: _GC",				L"<::GA::CB::_GC::[TC]> ::GA<__int32>::CB::GC<::GA::CB::_GC::[TC]>"			);
-	AssertType(pa,		L"GA<int>::_CB::_GC<float>",		L"GA<int> :: _CB :: _GC<float>",		L"::GA<__int32>::CB::GC<float>"												);
-	AssertType(pa,		L"GA<int>::_GB<bool>::_CC",			L"GA<int> :: _GB<bool> :: _CC",			L"::GA<__int32>::GB<bool>::CC"												);
-	AssertType(pa,		L"GA<int>::_GB<bool>::_GC",			L"GA<int> :: _GB<bool> :: _GC",			L"<::GA::GB::_GC::[TC]> ::GA<__int32>::GB<bool>::GC<::GA::GB::_GC::[TC]>"	);
-	AssertType(pa,		L"GA<int>::_GB<bool>::_GC<float>",	L"GA<int> :: _GB<bool> :: _GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"										);
+	AssertType(pa,		L"GA",									L"GA",										L"<::GA::[TA]> ::GA<::GA::[TA]>"											);
+	AssertType(pa,		L"GA<int>::__CB",						L"GA<int> :: __CB",							L"::GA<__int32>::CB"														);
+	AssertType(pa,		L"GA<int>::__GB",						L"GA<int> :: __GB",							L"<::GA::__GB::[TB]> ::GA<__int32>::GB<::GA::__GB::[TB]>"					);
+	AssertType(pa,		L"GA<int>::__GB<bool>",					L"GA<int> :: __GB<bool>",					L"::GA<__int32>::GB<bool>"													);
+	AssertType(pa,		L"GA<int>::__CB::__CC",					L"GA<int> :: __CB :: __CC",					L"::GA<__int32>::CB::CC"													);
+	AssertType(pa,		L"GA<int>::__CB::__GC",					L"GA<int> :: __CB :: __GC",					L"<::GA::CB::__GC::[TC]> ::GA<__int32>::CB::GC<::GA::CB::__GC::[TC]>"		);
+	AssertType(pa,		L"GA<int>::__CB::__GC<float>",			L"GA<int> :: __CB :: __GC<float>",			L"::GA<__int32>::CB::GC<float>"												);
+	AssertType(pa,		L"GA<int>::__GB<bool>::__CC",			L"GA<int> :: __GB<bool> :: __CC",			L"::GA<__int32>::GB<bool>::CC"												);
+	AssertType(pa,		L"GA<int>::__GB<bool>::__GC",			L"GA<int> :: __GB<bool> :: __GC",			L"<::GA::GB::__GC::[TC]> ::GA<__int32>::GB<bool>::GC<::GA::GB::__GC::[TC]>"	);
+	AssertType(pa,		L"GA<int>::__GB<bool>::__GC<float>",	L"GA<int> :: __GB<bool> :: __GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"										);
 }
 
 TEST_CASE(TestParseGenericClass_BaseThisType)
@@ -360,14 +366,6 @@ volatile const x<void*>::D<char> cvd;
 	AssertExpr(pa,		L"cvd.B_()",	L"cvd.B_()",		L"::x<void *>::y<float>::B const volatile * $PR"			);
 	AssertExpr(pa,		L"cvd.C_()",	L"cvd.C_()",		L"::x<void *>::y<double>::C const volatile * $PR"			);
 	AssertExpr(pa,		L"cvd.D_()",	L"cvd.D_()",		L"::x<void *>::D<char> const volatile * $PR"				);
-}
-
-TEST_CASE(TestParseGenericClass_NestedStructUsedInside)
-{
-}
-
-TEST_CASE(TestParseGenericClass_NestedTypeAliasUsedInside)
-{
 }
 
 TEST_CASE(TestParseGenericClass_Overloading_BaseClass)
