@@ -48,33 +48,23 @@ All **the compiler** here means the compiler created by this project.
 - **Support before releasing**
   - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
     - [ ] Initializer lists
-      - (not supported yet)
     - [ ] Lambda functions and expressions
-      - (not supported yet)
     - [ ] Object construction improvement
       - Constructor calls another constructor in initializing list (not supported yet)
       - Using base class' constructors (not supported yet)
     - [ ] Explicit overrides and final
-      - `final` keyword (not supported yet)
+      - `final` keyword
     - [ ] Type long long int
-      - (not supported yet)
     - [ ] Static assertions
-      - (not supported yet)
     - [ ] Control and query object alignment
       - Need test
   - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
     - [ ] Generic lambdas
-      - (not supported yet)
     - [ ] Lambda capture expressions
-      - (not supported yet)
   - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
     - [ ] Making the text message for static_assert optional
-      - (not supported yet)
     - [ ] New standard attributes `[[fallthrough]]`, `[[maybe_unused]]` and `[[nodiscard]]`
-      - (not supported yet)
     - [ ] Fold expressions, for variadic templates
-      - (not supported yet)
-      - Need test
   - [C++20](https://en.wikipedia.org/wiki/C%2B%2B20)
     - Review after publishing
 - **Parsed (if checked, or I will support it before eleasing) but it doesn't affect type inferencing so I don't care**
@@ -83,16 +73,14 @@ All **the compiler** here means the compiler created by this project.
     - [x] Allow sizeof to work on members of classes without an explicit object:
     - [x] Attributes
     - [ ] Extern template
+      - `extern` keyword before `template` keyword
   - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
     - [x] The attribute `[[deprecated]]`
   - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
     - [x] copy-initialization and direct-initialization of objects of type `T` from prvalue expressions of type `T` (ignoring top-level cv-qualifiers) shall result in no copy or move constructors from the prvalue expression. See copy elision for more information. helper template function std::make_pair(5.0, false).
     - [x] Inline variables, which allows the definition of variables in header files without violating the one definition rule. The rules are effectively the same as inline functions
-      - (not supported yet)
     - [x] Value of `__cplusplus` changed to 201703L: **Not Care: I don't do preprocessing by myself**
     - [ ] A compile-time static if with the form if constexpr(expression)
-      - Need test
-    - [ ] Structured binding declarations, allowing `auto [a, b] = getTwoReturnValues();`for   more information.
   - [C++20](https://en.wikipedia.org/wiki/C%2B%2B20)
     - Review after publishing
 - **Parsed (if checked, or I will support it before eleasing) but it only reduces the accuracy of overloading so I don't care**
@@ -123,6 +111,7 @@ All **the compiler** here means the compiler created by this project.
     - [ ] Some extensions on over-aligned memory allocation
     - [ ] Class template argument deduction (CTAD), introducing constructor deduction guides, eg. allowing `std::pair(5.0, false)` instead of requiring explicit constructor arguments types `std::pair<double, bool>(5.0, false)` or an additional   helper template function std::make_pair(5.0, false).
     - [ ] `__has_include`, allowing the availability of a header to be checked by preprocessor directives
+    - [ ] Structured binding declarations, allowing `auto [a, b] = getTwoReturnValues();`for   more information.
   - [C++20](https://en.wikipedia.org/wiki/C%2B%2B20)
     - Review after publishing
 
