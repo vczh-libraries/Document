@@ -155,6 +155,7 @@
     <ClCompile Include="TestIntegralPromotion.cpp" />
     <ClCompile Include="TestOverloading.cpp" />
     <ClCompile Include="TestOverloadingAdl.cpp" />
+    <ClCompile Include="TestOverloadingGenericClass.cpp" />
     <ClCompile Include="TestOverloadingOperator.cpp" />
     <ClCompile Include="TestParseGenericClass.cpp" />
     <ClCompile Include="TestParseGenericFunction.cpp" />

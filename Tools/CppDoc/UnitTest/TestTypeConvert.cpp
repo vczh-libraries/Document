@@ -1,4 +1,3 @@
-#include <Parser.h>
 #include "Util.h"
 
 void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WString& toCppType, TsysConv conv, bool fromTemp)

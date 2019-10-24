@@ -1,5 +1,5 @@
-#include "Util.h"
 #include <Ast_Decl.h>
+#include "Util.h"
 
 TEST_CASE(TestParseStat_Everything)
 {

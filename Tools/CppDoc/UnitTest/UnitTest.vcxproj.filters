@@ -102,6 +102,9 @@
     <ClCompile Include="TestParseGenericMember.cpp">
       <Filter>Source Files\TestParserGeneric</Filter>
     </ClCompile>
+    <ClCompile Include="TestOverloadingGenericClass.cpp">
+      <Filter>Source Files\TestOverloading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">

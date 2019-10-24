@@ -1,4 +1,3 @@
-#include <Ast_Decl.h>
 #include "Util.h"
 
 TEST_CASE(TestParseGenericClass)
@@ -366,20 +365,4 @@ volatile const x<void*>::D<char> cvd;
 	AssertExpr(pa,		L"cvd.B_()",	L"cvd.B_()",		L"::x<void *>::y<float>::B const volatile * $PR"			);
 	AssertExpr(pa,		L"cvd.C_()",	L"cvd.C_()",		L"::x<void *>::y<double>::C const volatile * $PR"			);
 	AssertExpr(pa,		L"cvd.D_()",	L"cvd.D_()",		L"::x<void *>::D<char> const volatile * $PR"				);
-}
-
-TEST_CASE(TestParseGenericClass_Overloading_BaseClass)
-{
-}
-
-TEST_CASE(TestParseGenericClass_Overloading_SpecialMember)
-{
-}
-
-TEST_CASE(TestParseGenericClass_Overloading_GeneratedSpecialMember)
-{
-}
-
-TEST_CASE(TestParseGenericClass_Overloading_OperatorOverloading)
-{
 }

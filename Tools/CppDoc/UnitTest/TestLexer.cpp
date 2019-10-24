@@ -1,5 +1,4 @@
 #include <Lexer.h>
-#include <Utility.h>
 
 extern Ptr<RegexLexer> GlobalCppLexer();
 
