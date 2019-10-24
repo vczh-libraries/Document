@@ -79,7 +79,7 @@ All **the compiler** here means the compiler created by this project.
     - copy-initialization and direct-initialization of objects of type `T` from prvalue expressions of type `T` (ignoring top-level cv-qualifiers) shall result in no copy or move constructors from the prvalue expression. See copy elision for more information. helper template function std::make_pair(5.0, false).
     - Inline variables, which allows the definition of variables in header files without violating the one definition rule. The rules are effectively the same as inline functions
     - Value of `__cplusplus` changed to 201703L: **Not Care: I don't do preprocessing by myself**
-- **Parsed (if checked, or I will support it before eleasing) but it only reduces the accuracy of overloading so I don't care**
+- **Parsed but it only reduces the accuracy of overloading so I don't care**
   - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
     - constexpr – Generalized constant expressions: **Treat all constant values identical**
     - Modification to the definition of plain old data
