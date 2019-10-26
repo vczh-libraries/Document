@@ -48,10 +48,6 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			auto& ev = argumentSymbol->GetEvaluationForUpdating_NFb();
 			ev.Allocate();
 
-			TsysGenericArg arg;
-			arg.argIndex = spec->arguments.Count();
-			arg.argSymbol = argumentSymbol.Obj();
-
 			if (argument.templateSpec)
 			{
 				TsysGenericFunction genericFunction;
@@ -62,6 +58,9 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			}
 			else
 			{
+				TsysGenericArg arg;
+				arg.argIndex = spec->arguments.Count();
+				arg.argSymbol = argumentSymbol.Obj();
 				ev.Get().Add(pa.tsys->DeclOf(symbol.Obj())->GenericArgOf(arg));
 			}
 

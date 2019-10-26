@@ -355,20 +355,6 @@ enum class TsysRefType
 	RRef,
 };
 
-enum class TsysConv
-{
-	// Any means this could be any conversion including illegal.
-	// Any is not superior than any conversion, instead it should be always included in overloading resolutions.
-	Any,
-	Exact,
-	TrivialConversion,
-	IntegralPromotion,
-	StandardConversion,
-	UserDefinedConversion,
-	Ellipsis,
-	Illegal,
-};
-
 class ITsys abstract : public Interface
 {
 public:
@@ -438,6 +424,7 @@ enum class TypeConvCat
 	Trivial,
 	IntegralPromotion,
 	Standard,
+	ToVoidPtr,
 	UserDefined,
 	Ellipsis,
 	Illegal,
