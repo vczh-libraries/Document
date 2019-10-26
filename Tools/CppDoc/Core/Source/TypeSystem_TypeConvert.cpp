@@ -316,6 +316,11 @@ Exact
 		case TsysType::Decl:
 			return toEntity == fromEntity;
 		case TsysType::DeclInstant:
+			if (toEntity == fromEntity)
+			{
+				return true;
+			}
+			else
 			{
 				const auto& toDI = toEntity->GetDeclInstant();
 				const auto& fromDI = fromEntity->GetDeclInstant();
@@ -331,6 +336,7 @@ Exact
 				{
 					if (!IsExactEntityMatch(toEntity->GetParam(i), fromEntity->GetParam(i), anyInvolved)) return false;
 				}
+				return true;
 			}
 			break;
 		case TsysType::Init:
@@ -686,10 +692,13 @@ UserDefined (toType:Ctor)
 
 		auto toSymbol = toClass->symbol;
 		{
-			auto newFromType = pa.tsys->DeclOf(toSymbol)->RRefOf();
-			if (TestTypeConversionInternal(pa, toType, newFromType, tested).cat == TypeConvCat::Illegal)
+			auto newFromType = toEntity->RRefOf();
+			if (!tested.Keys().Contains({ toType, newFromType }))
 			{
-				return false;
+				if (TestTypeConversionInternal(pa, toType, newFromType, tested).cat == TypeConvCat::Illegal)
+				{
+					return false;
+				}
 			}
 		}
 
