@@ -79,14 +79,21 @@ Utilities
 		return tsys;
 	}
 
-	bool AllowEntityTypeChanging(TsysCV toCV, TsysCV fromCV, TsysRefType toRef, TsysRefType fromRef, bool& cvInvolved)
+	bool AllowEntityTypeChanging(TsysCV toCV, TsysCV fromCV, TsysRefType toRef, TsysRefType fromRef, bool& cvInvolved, bool& allowInheritanceOnly)
 	{
 		switch (toRef)
 		{
 		case TsysRefType::LRef:
 			if (!toCV.isGeneralConst)
 			{
-				return false;
+				if (fromRef == TsysRefType::LRef)
+				{
+					allowInheritanceOnly = true;
+				}
+				else
+				{
+					return false;
+				}
 			}
 			break;
 		case TsysRefType::RRef:
@@ -94,6 +101,7 @@ Utilities
 			{
 				return false;
 			}
+			break;
 		}
 
 		if (toRef != TsysRefType::None)
@@ -115,36 +123,62 @@ Utilities
 		return true;
 	}
 
-	bool AllowConvertingToPointer(ITsys* toEntity, ITsys* fromEntity, ENTITY_VARS(Element, &, _))
+	bool AllowConvertingToPointer(ITsys* toEntity, ITsys* fromEntity, ENTITY_VARS(Element, &, _), bool allowInheritanceOnly)
 	{
-		if (toEntity->GetType() == TsysType::Ptr)
+		switch (toEntity->GetType())
 		{
-			auto toElement = toEntity->GetElement();
-			ITsys* fromElement = nullptr;
-			if (fromEntity->GetType() == TsysType::Ptr)
+		case TsysType::Array:
+			switch (fromEntity->GetType())
 			{
-				fromElement = fromEntity->GetElement();
-			}
-			else if (fromEntity->GetType() == TsysType::Array)
-			{
-				fromElement = ArrayRemoveOneDim(fromEntity);
-			}
-			else
-			{
+			case TsysType::Array:
+				break;
+			default:
 				return false;
 			}
-
-			fromElementEntity = fromElement->GetEntity(fromElementCV, fromElementRef);
-			toElementEntity = toElement->GetEntity(toElementCV, toElementRef);
-
-			if (fromElementRef != TsysRefType::None || toElementRef != TsysRefType::None)
+			break;
+		case TsysType::Ptr:
+			switch (fromEntity->GetType())
 			{
-				throw L"Pointer to reference is illegal.";
+			case TsysType::Array:
+			case TsysType::Ptr:
+				break;
+			default:
+				return false;
 			}
-
-			return true;
+			break;
+		default:
+			return false;
 		}
-		return false;
+
+		if (toEntity->GetType() == TsysType::Array)
+		{
+			toEntity = ArrayRemoveOneDim(toEntity);
+		}
+		else
+		{
+			if (allowInheritanceOnly) return false;
+			toEntity = toEntity->GetElement();
+		}
+
+		if (fromEntity->GetType() == TsysType::Array)
+		{
+			fromEntity = ArrayRemoveOneDim(fromEntity);
+		}
+		else
+		{
+			if (allowInheritanceOnly) return false;
+			fromEntity = fromEntity->GetElement();
+		}
+
+		toElementEntity = toEntity->GetEntity(toElementCV, toElementRef);
+		fromElementEntity = fromEntity->GetEntity(fromElementCV, fromElementRef);
+
+		if (fromElementRef != TsysRefType::None || toElementRef != TsysRefType::None)
+		{
+			throw L"Pointer to reference is illegal.";
+		}
+
+		return true;
 	}
 
 /***********************************************************************
@@ -158,6 +192,7 @@ Exact
 			anyInvolved = true;
 			return true;
 		}
+
 		if (toEntity->GetType() != fromEntity->GetType())
 		{
 			return false;
@@ -200,6 +235,7 @@ Exact
 				IsExactEntityMatch(toEntity->GetClass(), fromEntity->GetClass(), anyInvolved);
 		case TsysType::CV:
 			{
+				if (!IsExactEntityMatch(toEntity->GetElement(), fromEntity->GetElement(), anyInvolved)) return false;
 				auto toCV = toEntity->GetCV();
 				auto fromCV = fromEntity->GetCV();
 				return IsCVEqual(toCV, fromCV);
@@ -290,16 +326,36 @@ Exact
 Trivial
 ***********************************************************************/
 
-	TypeConv PetformToPtrTrivialConversion(ENTITY_VARS(, , _))
+	TypeConv PerformEnumToIntTrivialConversion(ENTITY_VARS(, , _))
+	{
+		if (toEntity->GetType() == TsysType::Primitive && fromEntity->GetType() == TsysType::Decl)
+		{
+			if (auto decl = TryGetForwardDeclFromType<ForwardEnumDeclaration>(fromEntity))
+			{
+				if (!decl->enumClass)
+				{
+					auto primitive = toEntity->GetPrimitive();
+					if (primitive.type == TsysPrimitiveType::SInt && primitive.bytes == TsysBytes::_4)
+					{
+						return TypeConvCat::Trivial;
+					}
+				}
+			}
+		}
+		return TypeConvCat::Illegal;
+	}
+
+	TypeConv PerformToPtrTrivialConversion(ENTITY_VARS(, , _))
 	{
 		bool cvInvolved = false;
-		if (!AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved))
+		bool allowInheritanceOnly = false;
+		if (!AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved, allowInheritanceOnly))
 		{
 			return TypeConvCat::Illegal;
 		}
 
 		ENTITY_VARS(Element, , ;);
-		if (!AllowConvertingToPointer(toEntity, fromEntity, ENTITY_PASS(Element)))
+		if (!AllowConvertingToPointer(toEntity, fromEntity, ENTITY_PASS(Element), allowInheritanceOnly))
 		{
 			return TypeConvCat::Illegal;
 		}
@@ -311,7 +367,7 @@ Trivial
 			{
 				return { TypeConvCat::Exact,false,anyInvolved };
 			}
-			else
+			else if (IsCVCompatible(toElementCV, fromElementCV))
 			{
 				return { TypeConvCat::Trivial,false,anyInvolved };
 			}
@@ -404,20 +460,23 @@ UserDefined (Inheriting)
 	bool IsToPtrInheriting(const ParsingArguments& pa, ENTITY_VARS(, , _), bool& cvInvolved, bool& anyInvolved)
 	{
 		ENTITY_VARS(Element, , ;);
-		if (!AllowConvertingToPointer(toEntity, fromEntity, ENTITY_PASS(Element)))
+		if (!AllowConvertingToPointer(toEntity, fromEntity, ENTITY_PASS(Element), false))
 		{
 			return false;
 		}
 
-		if (IsInheriting(pa, toElementEntity, fromElementEntity, anyInvolved))
+		bool _anyInvolved = false;
+		if (IsInheriting(pa, toElementEntity, fromElementEntity, _anyInvolved))
 		{
 			if (IsCVEqual(toElementCV, fromElementCV))
 			{
+				anyInvolved |= _anyInvolved;
 				return true;
 			}
-			else
+			else if (IsCVCompatible(toElementCV, fromElementCV))
 			{
 				cvInvolved = true;
+				anyInvolved |= _anyInvolved;
 				return true;
 			}
 		}
@@ -459,9 +518,12 @@ UserDefined (fromType:Operator)
 				auto tsys = evTypes[j];
 				{
 					auto newFromType = tsys->GetElement()->RRefOf();
-					if (TestTypeConversionInternal(newPa, toType, newFromType, tested).cat != TypeConvCat::Illegal)
+					if (!tested.Keys().Contains({ toType,newFromType }))
 					{
-						return true;
+						if (TestTypeConversionInternal(newPa, toType, newFromType, tested).cat != TypeConvCat::Illegal)
+						{
+							return true;
+						}
 					}
 				}
 			}
@@ -515,9 +577,12 @@ UserDefined (toType:Ctor)
 				auto tsys = evTypes[j];
 				{
 					auto newToType = tsys->GetParam(0);
-					if (TestTypeConversionInternal(newPa, newToType, fromType, tested).cat != TypeConvCat::Illegal)
+					if (!tested.Keys().Contains({ newToType,fromType }))
 					{
-						return true;
+						if (TestTypeConversionInternal(newPa, newToType, fromType, tested).cat != TypeConvCat::Illegal)
+						{
+							return true;
+						}
 					}
 				}
 			}
@@ -533,7 +598,7 @@ ToVoidPtr
 	bool IsToVoidPtrConversion(ITsys* toType, ITsys* fromType, bool& cvInvolved)
 	{
 		ENTITY_VARS(Element, , ;);
-		if (!AllowConvertingToPointer(toType, fromType, ENTITY_PASS(Element)))
+		if (!AllowConvertingToPointer(toType, fromType, ENTITY_PASS(Element), false))
 		{
 			return false;
 		}
@@ -672,53 +737,58 @@ TestTypeConversionImpl
 			if (result.cat != TypeConvCat::Illegal) return result;
 		}
 		{
-			auto result = PetformToPtrTrivialConversion(ENTITY_PASS());
+			auto result = PerformEnumToIntTrivialConversion(ENTITY_PASS());
+			if (result.cat != TypeConvCat::Illegal) return result;
+		}
+		{
+			auto result = PerformToPtrTrivialConversion(ENTITY_PASS());
 			if (result.cat != TypeConvCat::Illegal) return result;
 		}
 
 		bool cvInvolved = false;
 		bool anyInvolved = false;
-		if (!AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved))
+		bool allowInheritanceOnly = false;
+		if (!AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved, allowInheritanceOnly))
 		{
 			return TypeConvCat::Illegal;
 		}
 
-		if (fromEntity->GetType() == TsysType::Init)
+		if (!allowInheritanceOnly && fromEntity->GetType() == TsysType::Init)
 		{
 			return IsUniversalInitialization(pa, ENTITY_PASS(), fromEntity->GetInit(), tested);
 		}
 
-		if (IsNumericPromotion(toEntity, fromEntity))
+		if (!allowInheritanceOnly && IsNumericPromotion(toEntity, fromEntity))
 		{
 			return { TypeConvCat::IntegralPromotion,cvInvolved,false };
 		}
 
-		if (IsNumericConversion(toEntity, fromEntity))
+		if (!allowInheritanceOnly && IsNumericConversion(toEntity, fromEntity))
 		{
 			return { TypeConvCat::Standard,cvInvolved,false };
 		}
 
 		if (IsInheriting(pa, toEntity, fromEntity, anyInvolved))
 		{
-			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
+			return { TypeConvCat::Standard,cvInvolved,anyInvolved };
 		}
 
-		if (IsToPtrInheriting(pa, ENTITY_PASS(), cvInvolved, anyInvolved))
+		if (!allowInheritanceOnly && IsToPtrInheriting(pa, ENTITY_PASS(), cvInvolved, anyInvolved))
+		{
+			return { TypeConvCat::Standard,cvInvolved,anyInvolved };
+		}
+
+		if (!allowInheritanceOnly && IsFromTypeOperator(pa, ENTITY_PASS(), cvInvolved, anyInvolved, tested))
 		{
 			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
 		}
 
-		if (IsFromTypeOperator(pa, ENTITY_PASS(), cvInvolved, anyInvolved, tested))
+		if (!allowInheritanceOnly && IsToTypeCtor(pa, ENTITY_PASS(), cvInvolved, anyInvolved, tested))
 		{
 			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
 		}
 
-		if (IsToTypeCtor(pa, ENTITY_PASS(), cvInvolved, anyInvolved, tested))
-		{
-			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
-		}
-
-		if (IsToVoidPtrConversion(toEntity, fromEntity, cvInvolved))
+		if (!allowInheritanceOnly && IsToVoidPtrConversion(toEntity, fromEntity, cvInvolved))
 		{
 			return { TypeConvCat::ToVoidPtr,cvInvolved,false };
 		}

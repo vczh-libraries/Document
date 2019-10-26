@@ -108,7 +108,7 @@ TEST_CASE(TestTypeConvert_Exact)
 #undef S
 }
 
-TEST_CASE(TestTypeConvert_TrivalConversion)
+TEST_CASE(TestTypeConvert_Trival)
 {
 	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
 #define S Trivial
@@ -213,7 +213,7 @@ enum class C{};
 #undef F
 }
 
-TEST_CASE(TestTypeConvert_StandardConversion)
+TEST_CASE(TestTypeConvert_Standard)
 {
 	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
 #define S Standard
@@ -232,7 +232,15 @@ TEST_CASE(TestTypeConvert_StandardConversion)
 	TEST_CONV_TYPE(double,					int&&,									F,	S);
 	TEST_CONV_TYPE(char,					double&&,								F,	S);
 	TEST_CONV_TYPE(double,					char&&,									F,	S);
+#undef S
+#undef F
+}
 
+TEST_CASE(TestTypeConvert_ToVoidPtr)
+{
+	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
+#define S ToVoidPtr
+#define F Illegal
 	TEST_CONV_TYPE(int(*)(),				void*,									S,	S);
 	TEST_CONV_TYPE(int*,					void*,									S,	S);
 	TEST_CONV_TYPE(const int*,				const void*,							S,	S);
