@@ -75,7 +75,7 @@ namespace TestTypeConversion_Impl
 		return tsys;
 	}
 
-	bool IsExactEntityMatch(const ParsingArguments& pa, ITsys* toEntity, ITsys* fromEntity, bool& anyInvolved)
+	bool IsExactEntityMatch(ITsys* toEntity, ITsys* fromEntity, bool& anyInvolved)
 	{
 		if (IsUnknownType(toEntity) || IsUnknownType(fromEntity))
 		{
@@ -100,29 +100,28 @@ namespace TestTypeConversion_Impl
 		case TsysType::LRef:
 		case TsysType::RRef:
 		case TsysType::Ptr:
-			return IsExactEntityMatch(pa, toEntity->GetElement(), fromEntity->GetElement(), anyInvolved);
+			return IsExactEntityMatch(toEntity->GetElement(), fromEntity->GetElement(), anyInvolved);
 		case TsysType::Array:
 			return IsExactEntityMatch(
-				pa,
 				ArrayRemoveOneDim(toEntity),
 				ArrayRemoveOneDim(fromEntity),
 				anyInvolved
 			);
 		case TsysType::Function:
 			{
-				if (!IsExactEntityMatch(pa, toEntity->GetElement(), fromEntity->GetElement(), anyInvolved)) return false;
+				if (!IsExactEntityMatch(toEntity->GetElement(), fromEntity->GetElement(), anyInvolved)) return false;
 				if (toEntity->GetParamCount() != fromEntity->GetParamCount()) return false;
 				vint count = toEntity->GetParamCount();
 				for (vint i = 0; i < count; i++)
 				{
-					if (!IsExactEntityMatch(pa, toEntity->GetParam(i), fromEntity->GetParam(i), anyInvolved)) return false;
+					if (!IsExactEntityMatch(toEntity->GetParam(i), fromEntity->GetParam(i), anyInvolved)) return false;
 				}
 				return true;
 			}
 		case TsysType::Member:
 			return
-				IsExactEntityMatch(pa, toEntity->GetElement(), fromEntity->GetElement(), anyInvolved) &&
-				IsExactEntityMatch(pa, toEntity->GetClass(), fromEntity->GetClass(), anyInvolved);
+				IsExactEntityMatch(toEntity->GetElement(), fromEntity->GetElement(), anyInvolved) &&
+				IsExactEntityMatch(toEntity->GetClass(), fromEntity->GetClass(), anyInvolved);
 		case TsysType::CV:
 			{
 				auto toCV = toEntity->GetCV();
@@ -139,13 +138,13 @@ namespace TestTypeConversion_Impl
 
 				if (toDI.parentDeclType && fromDI.parentDeclType)
 				{
-					if (!IsExactEntityMatch(pa, toDI.parentDeclType, fromDI.parentDeclType, anyInvolved)) return false;
+					if (!IsExactEntityMatch(toDI.parentDeclType, fromDI.parentDeclType, anyInvolved)) return false;
 				}
 
 				vint count = toEntity->GetParamCount();
 				for (vint i = 0; i < count; i++)
 				{
-					if (!IsExactEntityMatch(pa, toEntity->GetParam(i), fromEntity->GetParam(i), anyInvolved)) return false;
+					if (!IsExactEntityMatch(toEntity->GetParam(i), fromEntity->GetParam(i), anyInvolved)) return false;
 				}
 			}
 			break;
@@ -158,7 +157,6 @@ namespace TestTypeConversion_Impl
 				for (vint i = 0; i < count; i++)
 				{
 					if (!IsExactEntityMatch(
-						pa,
 						ApplyExprTsysType(toEntity->GetParam(i), toI.headers[i].type),
 						ApplyExprTsysType(fromEntity->GetParam(i), fromI.headers[i].type),
 						anyInvolved
@@ -173,10 +171,10 @@ namespace TestTypeConversion_Impl
 		return false;
 	}
 
-	TypeConv PerformExactEntityMatch(const ParsingArguments& pa, ENTITY_VARS(, , _))
+	TypeConv PerformExactEntityMatch(ENTITY_VARS(, , _))
 	{
 		bool anyInvolved = false;
-		if (IsExactEntityMatch(pa, toEntity, fromEntity, anyInvolved))
+		if (IsExactEntityMatch(toEntity, fromEntity, anyInvolved))
 		{
 			switch (toRef)
 			{
@@ -280,7 +278,7 @@ namespace TestTypeConversion_Impl
 		return false;
 	}
 
-	TypeConv PetformToPtrTrivialConversion(const ParsingArguments& pa, ENTITY_VARS(, , _))
+	TypeConv PetformToPtrTrivialConversion(ENTITY_VARS(, , _))
 	{
 		bool cvInvolved = false;
 		if (!AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved))
@@ -295,7 +293,7 @@ namespace TestTypeConversion_Impl
 		}
 
 		bool anyInvolved = false;
-		if (IsExactEntityMatch(pa, toElementEntity, fromElementEntity, anyInvolved))
+		if (IsExactEntityMatch(toElementEntity, fromElementEntity, anyInvolved))
 		{
 			if (IsCVEqual(toElementCV, fromElementCV))
 			{
@@ -342,6 +340,35 @@ namespace TestTypeConversion_Impl
 		if (fromP.type == TsysPrimitiveType::Void) return false;
 
 		return true;
+	}
+
+	bool IsInheriting(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+	{
+		throw 0;
+	}
+
+	bool IsToPtrInheriting(const ParsingArguments& pa, ENTITY_VARS(, , _), bool& cvInvolved)
+	{
+		ENTITY_VARS(Element, , ;);
+		if (!AllowConvertingToPointer(toEntity, fromEntity, ENTITY_PASS(Element)))
+		{
+			return false;
+		}
+
+		bool anyInvolved = false;
+		if (IsInheriting(pa, toElementEntity, fromElementEntity))
+		{
+			if (IsCVEqual(toElementCV, fromElementCV))
+			{
+				return true;
+			}
+			else
+			{
+				cvInvolved = true;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	bool IsToVoidPtrConversion(ITsys* toType, ITsys* fromType, bool& cvInvolved)
@@ -402,14 +429,13 @@ namespace TestTypeConversion_Impl
 #pragma warning (push)
 #pragma warning (disable: 4003)
 		{
-			auto result = PerformExactEntityMatch(pa, ENTITY_PASS());
+			auto result = PerformExactEntityMatch(ENTITY_PASS());
 			if (result.cat != TypeConvCat::Illegal) return result;
 		}
 		{
-			auto result = PetformToPtrTrivialConversion(pa, ENTITY_PASS());
+			auto result = PetformToPtrTrivialConversion(ENTITY_PASS());
 			if (result.cat != TypeConvCat::Illegal) return result;
 		}
-#pragma warning (pop)
 
 		bool cvInvolved = false;
 		if (!AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved))
@@ -425,11 +451,19 @@ namespace TestTypeConversion_Impl
 		{
 			return { TypeConvCat::Standard,cvInvolved,false };
 		}
+		if (IsInheriting(pa, toEntity, fromEntity))
+		{
+			return { TypeConvCat::UserDefined,cvInvolved,false };
+		}
+		if (IsToPtrInheriting(pa, ENTITY_PASS(), cvInvolved))
+		{
+			return { TypeConvCat::UserDefined,cvInvolved,false };
+		}
 		if (IsToVoidPtrConversion(toEntity, fromEntity, cvInvolved))
 		{
 			return { TypeConvCat::ToVoidPtr,cvInvolved,false };
 		}
-
+#pragma warning (pop)
 		return TypeConvCat::Illegal;
 	}
 
