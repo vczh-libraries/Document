@@ -305,15 +305,15 @@ using Context = T;
 		{
 			{
 				auto toType = intTypes[j];
-				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+				auto result = TestTypeConversion(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 				auto expect = g2c[i][j];
-				TEST_ASSERT(result == (expect == L'*' ? TsysConv::Any : TsysConv::Illegal));
+				TEST_ASSERT(expect == L'*' ? result.anyInvolved : result.cat == TypeConvCat::Illegal);
 			}
 			{
 				auto toType = structTypes[j];
-				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+				auto result = TestTypeConversion(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 				auto expect = g2c[i][j];
-				TEST_ASSERT(result == (expect == L'*' ? TsysConv::Any : TsysConv::Illegal));
+				TEST_ASSERT(expect == L'*' ? result.anyInvolved : result.cat == TypeConvCat::Illegal);
 			}
 		}
 	}
@@ -325,9 +325,9 @@ using Context = T;
 			for (vint j = 0; j < TypeCount; j++)
 			{
 				auto toType = genericTypes[j];
-				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+				auto result = TestTypeConversion(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 				auto expect = c2g[i][j];
-				TEST_ASSERT(result == (expect == L'*' ? TsysConv::Any : TsysConv::Illegal));
+				TEST_ASSERT(expect == L'*' ? result.anyInvolved : result.cat == TypeConvCat::Illegal);
 			}
 		}
 		{
@@ -335,9 +335,9 @@ using Context = T;
 			for (vint j = 0; j < TypeCount; j++)
 			{
 				auto toType = genericTypes[j];
-				auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+				auto result = TestTypeConversion(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 				auto expect = c2g[i][j];
-				TEST_ASSERT(result == (expect == L'*' ? TsysConv::Any : TsysConv::Illegal));
+				TEST_ASSERT(expect == L'*' ? result.anyInvolved : result.cat == TypeConvCat::Illegal);
 			}
 		}
 	}
@@ -348,9 +348,9 @@ using Context = T;
 		for (vint j = 0; j < TypeCount; j++)
 		{
 			auto toType = genericTypes[j];
-			auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+			auto result = TestTypeConversion(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
 			auto expect = g2g[i][j];
-			TEST_ASSERT(result == (expect == L'*' ? TsysConv::Any : TsysConv::Illegal));
+			TEST_ASSERT(expect == L'*' ? result.anyInvolved : result.cat == TypeConvCat::Illegal);
 		}
 	}
 
@@ -358,15 +358,15 @@ using Context = T;
 	{
 		auto fromType = genericTypes[i];
 		auto toType = pa.tsys->Any();
-		auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
-		TEST_ASSERT(result == TsysConv::Any);
+		auto result = TestTypeConversion(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+		TEST_ASSERT(result.anyInvolved);
 	}
 
 	for (vint i = 0; i < TypeCount; i++)
 	{
 		auto fromType = pa.tsys->Any();
 		auto toType = genericTypes[i];
-		auto result = TestConvert(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
-		TEST_ASSERT(result == TsysConv::Any);
+		auto result = TestTypeConversion(spa, toType, { nullptr,ExprTsysType::PRValue,fromType });
+		TEST_ASSERT(result.anyInvolved);
 	}
 }

@@ -1,6 +1,6 @@
 #include "Util.h"
 
-void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WString& toCppType, TsysConv conv, bool fromTemp)
+void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WString& toCppType, TypeConvCat conv, bool fromTemp)
 {
 	TypeTsysList fromTypes, toTypes;
 	Ptr<Type> fromType, toType;
@@ -38,15 +38,15 @@ void AssertTypeConvert(ParsingArguments& pa, const WString fromCppType, const WS
 			type = ExprTsysType::PRValue;
 		}
 	}
-	auto output = TestConvert(pa, toTypes[0], { nullptr,type,fromTypes[0] });
-	TEST_ASSERT(output == conv);
+	auto output = TestTypeConversion(pa, toTypes[0], { nullptr,type,fromTypes[0] });
+	TEST_ASSERT(output.cat == conv);
 }
 
 #pragma warning (push)
 #pragma warning (disable: 4076)
 #pragma warning (disable: 4244)
 
-template<typename TTo, TsysConv Conv>
+template<typename TTo, TypeConvCat Conv>
 struct RunTypeTester
 {
 	static void Test(...);
@@ -54,7 +54,7 @@ struct RunTypeTester
 };
 
 template<typename TTo>
-struct RunTypeTester<TTo, TsysConv::Illegal>
+struct RunTypeTester<TTo, TypeConvCat::Illegal>
 {
 	static int Test(...);
 	static void Test(TTo);
@@ -75,10 +75,10 @@ struct RunTypeConvertFromTemp
 };
 
 #define TEST_CONV_TYPE(FROM, TO, CONV1, CONV2)\
-	RunTypeConvert<FROM, TO, RunTypeTester<TO, TsysConv::CONV1>>::test,\
-	RunTypeConvertFromTemp<FROM, TO, RunTypeTester<TO, TsysConv::CONV2>>::test,\
-	AssertTypeConvert(pa, L#FROM, L#TO, TsysConv::CONV1, false),\
-	AssertTypeConvert(pa, L#FROM, L#TO, TsysConv::CONV2, true)\
+	RunTypeConvert<FROM, TO, RunTypeTester<TO, TypeConvCat::CONV1>>::test,\
+	RunTypeConvertFromTemp<FROM, TO, RunTypeTester<TO, TypeConvCat::CONV2>>::test,\
+	AssertTypeConvert(pa, L#FROM, L#TO, TypeConvCat::CONV1, false),\
+	AssertTypeConvert(pa, L#FROM, L#TO, TypeConvCat::CONV2, true)\
 
 TEST_CASE(TestTypeConvert_Exact)
 {
@@ -111,7 +111,7 @@ TEST_CASE(TestTypeConvert_Exact)
 TEST_CASE(TestTypeConvert_TrivalConversion)
 {
 	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
-#define S TrivialConversion
+#define S Trivial
 #define F Illegal
 	TEST_CONV_TYPE(int*,					const int*,								S,	S);
 	TEST_CONV_TYPE(int*,					volatile int*,							S,	S);
@@ -140,7 +140,7 @@ enum class C{};
 	);
 	COMPILE_PROGRAM(program, pa, input);
 
-#define T TrivialConversion
+#define T Trivial
 #define S IntegralPromotion
 #define F Illegal
 	TEST_CONV_TYPE(short,					int,									S,	S);
@@ -216,7 +216,7 @@ enum class C{};
 TEST_CASE(TestTypeConvert_StandardConversion)
 {
 	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
-#define S StandardConversion
+#define S Standard
 #define F Illegal
 	TEST_CONV_TYPE(signed int,				unsigned int,							S,	S);
 	TEST_CONV_TYPE(unsigned int,			signed int,								S,	S);
@@ -287,7 +287,7 @@ class Derived : public Base {};
 	);
 	COMPILE_PROGRAM(program, pa, input);
 
-#define S StandardConversion
+#define S Standard
 #define F Illegal
 
 	TEST_CONV_TYPE(Derived*,			Base*,										S,	S);
@@ -348,7 +348,7 @@ struct Target
 	);
 	COMPILE_PROGRAM(program, pa, input);
 
-#define S UserDefinedConversion
+#define S UserDefined
 #define F Illegal
 	TEST_CONV_TYPE(const Source&,		const Target&,								S,	S);
 	TEST_CONV_TYPE(const Source&,		const Target&&,								S,	S);
@@ -467,7 +467,7 @@ struct Source
 	);
 	COMPILE_PROGRAM(program, pa, input);
 
-#define S UserDefinedConversion
+#define S UserDefined
 #define F Illegal
 	TEST_CONV_TYPE(const Source&,		const TargetA&,								S,	S);
 	TEST_CONV_TYPE(const Source&,		const TargetA&&,							S,	S);
