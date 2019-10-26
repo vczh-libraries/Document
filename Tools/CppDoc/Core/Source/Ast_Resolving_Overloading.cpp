@@ -7,7 +7,7 @@ namespace symbol_type_resolving
 		Returns: Exact, TrivalConversion, Illegal
 	***********************************************************************/
 
-	TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, const ExprTsysItem& funcType)
+	TypeConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, const ExprTsysItem& funcType)
 	{
 		if (funcType.symbol)
 		{
@@ -19,20 +19,20 @@ namespace symbol_type_resolving
 				}
 			}
 		}
-		return TsysConv::Exact;
+		return TypeConvCat::Exact;
 	}
 
 	/***********************************************************************
 	FilterFieldsAndBestQualifiedFunctions: Filter functions by their qualifiers
 	***********************************************************************/
 
-	TsysConv FindMinConv(ArrayBase<TsysConv>& funcChoices)
+	TypeConv FindMinConv(ArrayBase<TypeConv>& funcChoices)
 	{
-		auto target = TsysConv::Illegal;
+		auto target = TypeConv::Max();
 		for (vint i = 0; i < funcChoices.Count(); i++)
 		{
 			auto candidate = funcChoices[i];
-			if (candidate != TsysConv::Any && target > candidate)
+			if (!candidate.anyInvolved && TypeConv::CompareIgnoreAny(candidate, target) == -1)
 			{
 				target = candidate;
 			}
@@ -40,17 +40,14 @@ namespace symbol_type_resolving
 		return target;
 	}
 
-	bool IsFunctionAcceptableByMinConv(TsysConv functionConv, TsysConv minConv)
+	bool IsFunctionAcceptableByMinConv(TypeConv functionConv, TypeConv minConv)
 	{
-		switch (functionConv)
-		{
-		case TsysConv::Any:			return true;
-		case TsysConv::Illegal:		return false;
-		default:					return functionConv == minConv;
-		}
+		if (functionConv.cat == TypeConvCat::Illegal) return false;
+		if (functionConv.anyInvolved) return true;
+		return TypeConv::CompareIgnoreAny(functionConv, minConv) == 0;
 	}
 
-	void FilterFunctionByConv(ExprTsysList& funcTypes, ArrayBase<TsysConv>& funcChoices)
+	void FilterFunctionByConv(ExprTsysList& funcTypes, ArrayBase<TypeConv>& funcChoices)
 	{
 		auto target = FindMinConv(funcChoices);
 		for (vint i = funcTypes.Count() - 1; i >= 0; i--)
@@ -64,7 +61,7 @@ namespace symbol_type_resolving
 
 	void FilterFieldsAndBestQualifiedFunctions(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes)
 	{
-		Array<TsysConv> funcChoices(funcTypes.Count());
+		Array<TypeConv> funcChoices(funcTypes.Count());
 
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
@@ -81,14 +78,14 @@ namespace symbol_type_resolving
 	void FindQualifiedFunctors(const ParsingArguments& pa, TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes, bool lookForOp)
 	{
 		ExprTsysList expandedFuncTypes;
-		List<TsysConv> funcChoices;
+		List<TypeConv> funcChoices;
 
 		for (vint i = 0; i < funcTypes.Count(); i++)
 		{
 			auto funcType = funcTypes[i];
 			auto choice = TestFunctionQualifier(thisCV, thisRef, funcType);
 
-			if (choice != TsysConv::Illegal)
+			if (choice.cat != TypeConvCat::Illegal)
 			{
 				TsysCV cv;
 				TsysRefType refType;
@@ -105,7 +102,7 @@ namespace symbol_type_resolving
 
 					for (vint i = 0; i < (newCount - oldCount); i++)
 					{
-						funcChoices.Add(TsysConv::Exact);
+						funcChoices.Add(TypeConvCat::Exact);
 					}
 				}
 				else if (entityType->GetType() == TsysType::Ptr)
@@ -237,7 +234,7 @@ namespace symbol_type_resolving
 
 			for (vint i = 0; i < minLoopCount; i++)
 			{
-				Array<TsysConv> funcChoices(validFuncTypes.Count());
+				Array<TypeConv> funcChoices(validFuncTypes.Count());
 
 				for (vint j = 0; j < validFuncTypes.Count(); j++)
 				{
@@ -249,17 +246,17 @@ namespace symbol_type_resolving
 						vint funcParamCount = funcType.tsys->GetParamCount();
 						if (funcParamCount <= i)
 						{
-							funcChoices[j] = TsysConv::Ellipsis;
+							funcChoices[j] = TypeConvCat::Ellipsis;
 							continue;
 						}
 
 						auto paramType = funcType.tsys->GetParam(i);
-						funcChoices[j] = TestConvert(pa, paramType, argTypes[i]);
+						funcChoices[j] = TestTypeConversion(pa, paramType, argTypes[i]);
 					}
 					else
 					{
 						// if there is not argument, we say functions without ellipsis are better
-						funcChoices[j] = funcType.tsys->GetFunc().ellipsis ? TsysConv::Ellipsis : TsysConv::Exact;
+						funcChoices[j] = funcType.tsys->GetFunc().ellipsis ? TypeConvCat::Ellipsis : TypeConvCat::Exact;
 					}
 				}
 

@@ -449,6 +449,9 @@ struct TypeConv
 		if (result > 0) return 1;
 		return 0;
 	}
+
+	inline static TypeConv		Min() { return { TypeConvCat::Exact,false,false }; }
+	inline static TypeConv		Max() { return { TypeConvCat::Illegal,true,false }; }
 };
 
 extern ITsys*					ApplyExprTsysType(ITsys* tsys, ExprTsysType type);
