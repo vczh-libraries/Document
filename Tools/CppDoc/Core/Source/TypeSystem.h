@@ -438,6 +438,17 @@ struct TypeConv
 
 	TypeConv() = default;
 	TypeConv(TypeConvCat _cat, bool _cv = false, bool _any = false) : cat(_cat), cvInvolved(_cv), anyInvolved(_any) {}
+
+	inline static int CompareIgnoreAny(TypeConv a, TypeConv b)
+	{
+		vint result = (vint)a.cat - (vint)b.cat;
+		if (result < 0) return -1;
+		if (result > 0) return 1;
+		result = (a.cvInvolved ? 0 : 1) - (b.cvInvolved ? 0 : 1);
+		if (result < 0) return -1;
+		if (result > 0) return 1;
+		return 0;
+	}
 };
 
 extern ITsys*					ApplyExprTsysType(ITsys* tsys, ExprTsysType type);

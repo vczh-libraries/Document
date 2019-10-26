@@ -654,48 +654,55 @@ namespace symbol_totsys_impl
 		}
 		else
 		{
-			auto l2r = TestConvert(pa, rightType, argLeft);
-			auto r2l = TestConvert(pa, leftType, argRight);
-			if (l2r < r2l)
+			auto l2r = TestTypeConversion(pa, rightType, argLeft);
+			auto r2l = TestTypeConversion(pa, leftType, argRight);
+			if (l2r.anyInvolved || r2l.anyInvolved)
 			{
-				AddTemp(result, rightType);
-			}
-			else if (l2r > r2l)
-			{
-				AddTemp(result, leftType);
-			}
-			else
-			{
-				auto leftPrim = leftEntity->GetType() == TsysType::Primitive;
-				auto rightPrim = rightEntity->GetType() == TsysType::Primitive;
-				auto leftPtrArr = leftEntity->GetType() == TsysType::Ptr || leftEntity->GetType() == TsysType::Array;
-				auto rightPtrArr = rightEntity->GetType() == TsysType::Ptr || rightEntity->GetType() == TsysType::Array;
-				auto leftNull = leftEntity->GetType() == TsysType::Zero || leftEntity->GetType() == TsysType::Nullptr;
-				auto rightNull = rightEntity->GetType() == TsysType::Zero || rightEntity->GetType() == TsysType::Nullptr;
-
-				if (l2r == TsysConv::StandardConversion && leftPrim && rightPrim)
-				{
-					auto leftP = leftEntity->GetPrimitive();
-					auto rightP = rightEntity->GetPrimitive();
-					auto primitive = ArithmeticConversion(leftP, rightP);
-					AddTemp(result, pa.tsys->PrimitiveOf(primitive));
-					return;
-				}
-
-				if (leftPtrArr && rightNull)
-				{
-					AddTemp(result, leftEntity->GetElement()->PtrOf());
-					return;
-				}
-
-				if (leftNull && rightPtrArr)
-				{
-					AddTemp(result, rightEntity->GetElement()->PtrOf());
-					return;
-				}
-
 				AddInternal(result, argLeft);
 				AddInternal(result, argRight);
+			}
+
+			switch (TypeConv::CompareIgnoreAny(l2r, r2l))
+			{
+			case -1:
+				AddTemp(result, rightType);
+				break;
+			case 1:
+				AddTemp(result, leftType);
+				break;
+			case 0:
+				{
+					auto leftPrim = leftEntity->GetType() == TsysType::Primitive;
+					auto rightPrim = rightEntity->GetType() == TsysType::Primitive;
+					auto leftPtrArr = leftEntity->GetType() == TsysType::Ptr || leftEntity->GetType() == TsysType::Array;
+					auto rightPtrArr = rightEntity->GetType() == TsysType::Ptr || rightEntity->GetType() == TsysType::Array;
+					auto leftNull = leftEntity->GetType() == TsysType::Zero || leftEntity->GetType() == TsysType::Nullptr;
+					auto rightNull = rightEntity->GetType() == TsysType::Zero || rightEntity->GetType() == TsysType::Nullptr;
+
+					if (l2r.cat == TypeConvCat::Standard && leftPrim && rightPrim)
+					{
+						auto leftP = leftEntity->GetPrimitive();
+						auto rightP = rightEntity->GetPrimitive();
+						auto primitive = ArithmeticConversion(leftP, rightP);
+						AddTemp(result, pa.tsys->PrimitiveOf(primitive));
+						return;
+					}
+
+					if (leftPtrArr && rightNull)
+					{
+						AddTemp(result, leftEntity->GetElement()->PtrOf());
+						return;
+					}
+
+					if (leftNull && rightPtrArr)
+					{
+						AddTemp(result, rightEntity->GetElement()->PtrOf());
+						return;
+					}
+
+					AddInternal(result, argLeft);
+					AddInternal(result, argRight);
+				}
 			}
 		}
 	}
