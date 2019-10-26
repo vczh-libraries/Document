@@ -185,5 +185,8 @@
     <ClCompile Include="..\..\..\Import\VlppRegex.cpp">
       <Filter>Import</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TypeSystem_Helpers.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
