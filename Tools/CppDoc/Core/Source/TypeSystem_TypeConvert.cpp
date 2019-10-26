@@ -29,6 +29,10 @@ namespace TestTypeConversion_Impl
 
 #define _ ,
 
+/***********************************************************************
+Utilities
+***********************************************************************/
+
 	bool IsUnknownType(ITsys* type)
 	{
 		switch (type->GetType())
@@ -74,6 +78,78 @@ namespace TestTypeConversion_Impl
 		}
 		return tsys;
 	}
+
+	bool AllowEntityTypeChanging(TsysCV toCV, TsysCV fromCV, TsysRefType toRef, TsysRefType fromRef, bool& cvInvolved)
+	{
+		switch (toRef)
+		{
+		case TsysRefType::LRef:
+			if (!toCV.isGeneralConst)
+			{
+				return false;
+			}
+			break;
+		case TsysRefType::RRef:
+			if (fromRef == TsysRefType::LRef)
+			{
+				return false;
+			}
+		}
+
+		if (toRef != TsysRefType::None)
+		{
+			if (IsCVEqual(toCV, fromCV))
+			{
+				return true;
+			}
+			else if (IsCVCompatible(toCV, fromCV))
+			{
+				cvInvolved = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool AllowConvertingToPointer(ITsys* toEntity, ITsys* fromEntity, ENTITY_VARS(Element, &, _))
+	{
+		if (toEntity->GetType() == TsysType::Ptr)
+		{
+			auto toElement = toEntity->GetElement();
+			ITsys* fromElement = nullptr;
+			if (fromEntity->GetType() == TsysType::Ptr)
+			{
+				fromElement = fromEntity->GetElement();
+			}
+			else if (fromEntity->GetType() == TsysType::Array)
+			{
+				fromElement = ArrayRemoveOneDim(fromEntity);
+			}
+			else
+			{
+				return false;
+			}
+
+			fromElementEntity = fromElement->GetEntity(fromElementCV, fromElementRef);
+			toElementEntity = toElement->GetEntity(toElementCV, toElementRef);
+
+			if (fromElementRef != TsysRefType::None || toElementRef != TsysRefType::None)
+			{
+				throw L"Pointer to reference is illegal.";
+			}
+
+			return true;
+		}
+		return false;
+	}
+
+/***********************************************************************
+Exact
+***********************************************************************/
 
 	bool IsExactEntityMatch(ITsys* toEntity, ITsys* fromEntity, bool& anyInvolved)
 	{
@@ -210,73 +286,9 @@ namespace TestTypeConversion_Impl
 		return TypeConvCat::Illegal;
 	}
 
-	bool AllowEntityTypeChanging(TsysCV toCV, TsysCV fromCV, TsysRefType toRef, TsysRefType fromRef, bool& cvInvolved)
-	{
-		switch (toRef)
-		{
-		case TsysRefType::LRef:
-			if (!toCV.isGeneralConst)
-			{
-				return false;
-			}
-			break;
-		case TsysRefType::RRef:
-			if (fromRef == TsysRefType::LRef)
-			{
-				return false;
-			}
-		}
-
-		if (toRef != TsysRefType::None)
-		{
-			if (IsCVEqual(toCV, fromCV))
-			{
-				return true;
-			}
-			else if (IsCVCompatible(toCV, fromCV))
-			{
-				cvInvolved = true;
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-
-	bool AllowConvertingToPointer(ITsys* toEntity, ITsys* fromEntity, ENTITY_VARS(Element, &, _))
-	{
-		if (toEntity->GetType() == TsysType::Ptr)
-		{
-			auto toElement = toEntity->GetElement();
-			ITsys* fromElement = nullptr;
-			if (fromEntity->GetType() == TsysType::Ptr)
-			{
-				fromElement = fromEntity->GetElement();
-			}
-			else if (fromEntity->GetType() == TsysType::Array)
-			{
-				fromElement = ArrayRemoveOneDim(fromEntity);
-			}
-			else
-			{
-				return false;
-			}
-
-			fromElementEntity = fromElement->GetEntity(fromElementCV, fromElementRef);
-			toElementEntity = toElement->GetEntity(toElementCV, toElementRef);
-
-			if (fromElementRef != TsysRefType::None || toElementRef != TsysRefType::None)
-			{
-				throw L"Pointer to reference is illegal.";
-			}
-
-			return true;
-		}
-		return false;
-	}
+/***********************************************************************
+Trivial
+***********************************************************************/
 
 	TypeConv PetformToPtrTrivialConversion(ENTITY_VARS(, , _))
 	{
@@ -307,6 +319,10 @@ namespace TestTypeConversion_Impl
 		return TypeConvCat::Illegal;
 	}
 
+/***********************************************************************
+IntegralPromotion
+***********************************************************************/
+
 	bool IsNumericPromotion(ITsys* toType, ITsys* fromType)
 	{
 		if (toType->GetType() != TsysType::Primitive) return false;
@@ -328,6 +344,10 @@ namespace TestTypeConversion_Impl
 		return toP.bytes > fromP.bytes;
 	}
 
+/***********************************************************************
+Standard
+***********************************************************************/
+
 	bool IsNumericConversion(ITsys* toType, ITsys* fromType)
 	{
 		if (toType->GetType() != TsysType::Primitive) return false;
@@ -341,6 +361,10 @@ namespace TestTypeConversion_Impl
 
 		return true;
 	}
+
+/***********************************************************************
+UserDefined (Inheriting)
+***********************************************************************/
 
 	bool IsInheritingInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, SortedList<ITsys*>& visitedFroms, bool& anyInvolved)
 	{
@@ -400,6 +424,28 @@ namespace TestTypeConversion_Impl
 		return false;
 	}
 
+/***********************************************************************
+UserDefined (fromType:Operator)
+***********************************************************************/
+
+	bool IsFromTypeOperator(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, bool& cvInvolved, bool& anyInvolved, TCITestedSet& tested)
+	{
+		throw 0;
+	}
+
+/***********************************************************************
+UserDefined (toType:Ctor)
+***********************************************************************/
+
+	bool IsToTypeCtor(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, bool& cvInvolved, bool& anyInvolved, TCITestedSet& tested)
+	{
+		throw 0;
+	}
+
+/***********************************************************************
+ToVoidPtr
+***********************************************************************/
+
 	bool IsToVoidPtrConversion(ITsys* toType, ITsys* fromType, bool& cvInvolved)
 	{
 		ENTITY_VARS(Element, , ;);
@@ -428,6 +474,10 @@ namespace TestTypeConversion_Impl
 		}
 		return false;
 	}
+
+/***********************************************************************
+TestTypeConversionImpl
+***********************************************************************/
 
 	TypeConv TestTypeConversionImpl(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested)
 	{
@@ -490,6 +540,16 @@ namespace TestTypeConversion_Impl
 		}
 
 		if (IsToPtrInheriting(pa, ENTITY_PASS(), cvInvolved, anyInvolved))
+		{
+			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
+		}
+
+		if (IsFromTypeOperator(pa, toEntity, fromEntity, cvInvolved, anyInvolved, tested))
+		{
+			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
+		}
+
+		if (IsToTypeCtor(pa, toEntity, fromEntity, cvInvolved, anyInvolved, tested))
 		{
 			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
 		}
