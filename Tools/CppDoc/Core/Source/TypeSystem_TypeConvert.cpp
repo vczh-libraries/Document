@@ -428,7 +428,7 @@ UserDefined (Inheriting)
 UserDefined (fromType:Operator)
 ***********************************************************************/
 
-	bool IsFromTypeOperator(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, bool& cvInvolved, bool& anyInvolved, TCITestedSet& tested)
+	bool IsFromTypeOperator(const ParsingArguments& pa, ENTITY_VARS(, , _), bool& cvInvolved, bool& anyInvolved, TCITestedSet& tested)
 	{
 		throw 0;
 	}
@@ -437,7 +437,7 @@ UserDefined (fromType:Operator)
 UserDefined (toType:Ctor)
 ***********************************************************************/
 
-	bool IsToTypeCtor(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, bool& cvInvolved, bool& anyInvolved, TCITestedSet& tested)
+	bool IsToTypeCtor(const ParsingArguments& pa, ENTITY_VARS(, , _), bool& cvInvolved, bool& anyInvolved, TCITestedSet& tested)
 	{
 		throw 0;
 	}
@@ -544,12 +544,12 @@ TestTypeConversionImpl
 			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
 		}
 
-		if (IsFromTypeOperator(pa, toEntity, fromEntity, cvInvolved, anyInvolved, tested))
+		if (IsFromTypeOperator(pa, ENTITY_PASS(), cvInvolved, anyInvolved, tested))
 		{
 			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
 		}
 
-		if (IsToTypeCtor(pa, toEntity, fromEntity, cvInvolved, anyInvolved, tested))
+		if (IsToTypeCtor(pa, ENTITY_PASS(), cvInvolved, anyInvolved, tested))
 		{
 			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
 		}
