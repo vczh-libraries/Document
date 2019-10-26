@@ -430,7 +430,44 @@ UserDefined (fromType:Operator)
 
 	bool IsFromTypeOperator(const ParsingArguments& pa, ENTITY_VARS(, , _), bool& cvInvolved, bool& anyInvolved, TCITestedSet& tested)
 	{
-		throw 0;
+		auto fromClass = TryGetDeclFromType<ClassDeclaration>(fromEntity);
+		if (!fromClass) return false;
+
+		auto fromSymbol = fromClass->symbol;
+		auto pTypeOps = fromSymbol->TryGetChildren_NFb(L"$__type");
+		if (!pTypeOps) return false;
+
+		auto toType = CvRefOf(toEntity, toCV, toRef);
+		auto newPa = pa.WithScope(fromSymbol);
+		for (vint i = 0; i < pTypeOps->Count(); i++)
+		{
+			auto typeOpSymbol = pTypeOps->Get(i);
+			auto typeOpDecl = typeOpSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+			{
+				if (typeOpDecl->decoratorExplicit) continue;
+				if (typeOpDecl->decoratorDelete) continue;
+				auto typeOpType = GetTypeWithoutMemberAndCC(typeOpDecl->type).Cast<FunctionType>();
+				if (!typeOpType) continue;
+				if (typeOpType->parameters.Count() != 0) continue;
+				if (TestFunctionQualifier(fromCV, fromRef, typeOpType).cat == TypeConvCat::Illegal) continue;
+			}
+
+			auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, typeOpDecl.Obj(), (fromEntity->GetType() == TsysType::DeclInstant ? fromEntity : nullptr), nullptr);
+
+			for (vint j = 0; j < evTypes.Count(); j++)
+			{
+				auto tsys = evTypes[j];
+				{
+					auto newFromType = tsys->GetElement()->RRefOf();
+					if (TestTypeConversionInternal(newPa, toType, newFromType, tested).cat != TypeConvCat::Illegal)
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 /***********************************************************************
@@ -439,7 +476,54 @@ UserDefined (toType:Ctor)
 
 	bool IsToTypeCtor(const ParsingArguments& pa, ENTITY_VARS(, , _), bool& cvInvolved, bool& anyInvolved, TCITestedSet& tested)
 	{
-		throw 0;
+		if (toRef == TsysRefType::LRef && !toCV.isGeneralConst) return false;
+
+		auto toClass = TryGetDeclFromType<ClassDeclaration>(toEntity);
+		if (!toClass) return false;
+
+		auto toType = CvRefOf(toEntity, toCV, toRef);
+		auto fromType = CvRefOf(fromEntity, fromCV, fromRef);
+
+		auto toSymbol = toClass->symbol;
+		{
+			auto newFromType = pa.tsys->DeclOf(toSymbol)->RRefOf();
+			if (TestTypeConversionInternal(pa, toType, newFromType, tested).cat == TypeConvCat::Illegal)
+			{
+				return false;
+			}
+		}
+
+		auto pCtors = toSymbol->TryGetChildren_NFb(L"$__ctor");
+		if (!pCtors) return false;
+
+		auto newPa = pa.WithScope(toSymbol);
+		for (vint i = 0; i < pCtors->Count(); i++)
+		{
+			auto ctorSymbol = pCtors->Get(i);
+			auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+			{
+				if (ctorDecl->decoratorExplicit) continue;
+				if (ctorDecl->decoratorDelete) continue;
+				auto ctorType = GetTypeWithoutMemberAndCC(ctorDecl->type).Cast<FunctionType>();
+				if (!ctorType) continue;
+				if (ctorType->parameters.Count() != 1) continue;
+			}
+			auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
+
+			for (vint j = 0; j < evTypes.Count(); j++)
+			{
+				auto tsys = evTypes[j];
+				{
+					auto newToType = tsys->GetParam(0);
+					if (TestTypeConversionInternal(newPa, newToType, fromType, tested).cat != TypeConvCat::Illegal)
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 /***********************************************************************
