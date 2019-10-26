@@ -52,6 +52,7 @@ void AssertExpr(const wchar_t* input, const wchar_t* log, T... logTsys)
 	AssertExpr(pa, input, log, logTsys...);
 }
 
+#define TEST_DECL_NO_REFINE(SOMETHING) SOMETHING wchar_t input[] = L#SOMETHING
 #define TEST_DECL(SOMETHING) SOMETHING wchar_t input[] = L#SOMETHING; RefineInput(input)
 
 #define TOKEN_READER(INPUT)\
