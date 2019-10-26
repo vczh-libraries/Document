@@ -439,4 +439,8 @@ extern ITsys*					ReplaceThisType(ITsys* thisType, ITsys* entity);
 extern TsysConv					TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType);
 extern TsysConv					TestConvert(const ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem);
 
+/***********************************************************************
+Type Conversion Level
+***********************************************************************/
+
 #endif
