@@ -195,6 +195,22 @@ Exact
 
 		if (toEntity->GetType() != fromEntity->GetType())
 		{
+			if (toEntity->GetType() == TsysType::LRef && fromEntity->GetType() == TsysType::RRef)
+			{
+				if (IsUnknownType(fromEntity->GetElement()))
+				{
+					anyInvolved = true;
+					return true;
+				}
+			}
+			else if (toEntity->GetType() == TsysType::RRef && fromEntity->GetType() == TsysType::LRef)
+			{
+				if (IsUnknownType(toEntity->GetElement()))
+				{
+					anyInvolved = true;
+					return true;
+				}
+			}
 			return false;
 		}
 
@@ -210,8 +226,24 @@ Exact
 			}
 		case TsysType::LRef:
 		case TsysType::RRef:
-		case TsysType::Ptr:
 			return IsExactEntityMatch(toEntity->GetElement(), fromEntity->GetElement(), anyInvolved);
+		case TsysType::Ptr:
+			{
+				auto toElement = toEntity->GetElement();
+				auto fromElement = fromEntity->GetElement();
+				bool _anyInvolved = false;
+				if (!IsExactEntityMatch(toElement, fromElement, _anyInvolved)) return false;
+				if (IsUnknownType(toElement) && fromElement->GetType() == TsysType::Member)
+				{
+					return false;
+				}
+				if (IsUnknownType(fromElement) && toElement->GetType() == TsysType::Member)
+				{
+					return false;
+				}
+				anyInvolved |= _anyInvolved;
+				return true;
+			}
 		case TsysType::Array:
 			return IsExactEntityMatch(
 				ArrayRemoveOneDim(toEntity),
@@ -235,10 +267,29 @@ Exact
 				IsExactEntityMatch(toEntity->GetClass(), fromEntity->GetClass(), anyInvolved);
 		case TsysType::CV:
 			{
-				if (!IsExactEntityMatch(toEntity->GetElement(), fromEntity->GetElement(), anyInvolved)) return false;
+				auto toElement = toEntity->GetElement();
+				auto fromElement = fromEntity->GetElement();
+				bool _anyInvolved = false;
+				if (!IsExactEntityMatch(toElement, fromElement, _anyInvolved)) return false;
+
 				auto toCV = toEntity->GetCV();
 				auto fromCV = fromEntity->GetCV();
-				return IsCVEqual(toCV, fromCV);
+				if (IsCVEqual(toCV, fromCV))
+				{
+					anyInvolved |= _anyInvolved;
+					return true;
+				}
+				else if(IsCVCompatible(toCV, fromCV) && IsUnknownType(fromElement))
+				{
+					anyInvolved |= _anyInvolved;
+					return true;
+				}
+				else if (IsUnknownType(toElement))
+				{
+					anyInvolved |= _anyInvolved;
+					return true;
+				}
+				return false;
 			}
 		case TsysType::Decl:
 			return toEntity == fromEntity;
@@ -288,6 +339,32 @@ Exact
 		bool anyInvolved = false;
 		if (IsExactEntityMatch(toEntity, fromEntity, anyInvolved))
 		{
+			if (anyInvolved)
+			{
+				if (IsUnknownType(toEntity) || IsUnknownType(fromEntity))
+				{
+					return { TypeConvCat::Exact,false,true };
+				}
+
+				if (toEntity->GetType() != fromEntity->GetType())
+				{
+					if (toEntity->GetType() == TsysType::LRef && fromEntity->GetType() == TsysType::RRef)
+					{
+						if (IsUnknownType(fromEntity->GetElement()))
+						{
+							return { TypeConvCat::Exact,false,true };
+						}
+					}
+					else if (toEntity->GetType() == TsysType::RRef && fromEntity->GetType() == TsysType::LRef)
+					{
+						if (IsUnknownType(toEntity->GetElement()))
+						{
+							return { TypeConvCat::Exact,false,true };
+						}
+					}
+				}
+			}
+
 			switch (toRef)
 			{
 			case TsysRefType::None:
@@ -363,6 +440,31 @@ Trivial
 		bool anyInvolved = false;
 		if (IsExactEntityMatch(toElementEntity, fromElementEntity, anyInvolved))
 		{
+			if (anyInvolved)
+			{
+				bool toU = IsUnknownType(toElementEntity);
+				bool fromU = IsUnknownType(fromElementEntity);
+
+				if (toU && fromU)
+				{
+					return { TypeConvCat::Exact,false,true };
+				}
+				else if (toU)
+				{
+					if (fromElementEntity->GetType() == TsysType::Member)
+					{
+						return TypeConvCat::Illegal;
+					}
+				}
+				else if (fromU)
+				{
+					if (toElementEntity->GetType() == TsysType::Member)
+					{
+						return TypeConvCat::Illegal;
+					}
+				}
+			}
+
 			if (IsCVEqual(toElementCV, fromElementCV))
 			{
 				return { TypeConvCat::Exact,false,anyInvolved };
@@ -422,10 +524,11 @@ Standard
 UserDefined (Inheriting)
 ***********************************************************************/
 
-	bool IsInheritingInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, SortedList<ITsys*>& visitedFroms, bool& anyInvolved)
+	bool IsInheritingInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, SortedList<ITsys*>& visitedFroms, bool topLevel, bool& anyInvolved)
 	{
-		if (IsUnknownType(toType) || IsUnknownType(fromType))
+		if (IsUnknownType(fromType))
 		{
+			if (topLevel) return false;
 			anyInvolved = true;
 			return true;
 		}
@@ -442,7 +545,7 @@ UserDefined (Inheriting)
 			auto& baseTypes = ev.GetExtra(i);
 			for (vint j = 0; j < baseTypes.Count(); j++)
 			{
-				if (IsInheritingInternal(pa, toType, baseTypes[j], visitedFroms, anyInvolved))
+				if (IsInheritingInternal(pa, toType, baseTypes[j], visitedFroms, false, anyInvolved))
 				{
 					return true;
 				}
@@ -454,7 +557,7 @@ UserDefined (Inheriting)
 	bool IsInheriting(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, bool& anyInvolved)
 	{
 		SortedList<ITsys*> visitedFroms;
-		return IsInheritingInternal(pa, toType, fromType, visitedFroms, anyInvolved);
+		return IsInheritingInternal(pa, toType, fromType, visitedFroms, true, anyInvolved);
 	}
 
 	bool IsToPtrInheriting(const ParsingArguments& pa, ENTITY_VARS(, , _), bool& cvInvolved, bool& anyInvolved)
