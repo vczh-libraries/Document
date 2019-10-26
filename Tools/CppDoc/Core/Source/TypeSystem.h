@@ -424,8 +424,8 @@ enum class TypeConvCat
 	Trivial,
 	IntegralPromotion,
 	Standard,
-	ToVoidPtr,
 	UserDefined,
+	ToVoidPtr,
 	Ellipsis,
 	Illegal,
 };
