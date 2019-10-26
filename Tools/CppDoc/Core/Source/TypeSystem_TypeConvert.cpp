@@ -476,6 +476,81 @@ ToVoidPtr
 	}
 
 /***********************************************************************
+Init
+***********************************************************************/
+
+	TypeConv IsUniversalInitialization(const ParsingArguments& pa, ENTITY_VARS(, , _), const TsysInit& init, TCITestedSet& tested)
+	{
+		if (auto toDecl = TryGetDeclFromType<ClassDeclaration>(toEntity))
+		{
+			auto toSymbol = toDecl->symbol;
+			auto pCtors = toSymbol->TryGetChildren_NFb(L"$__ctor");
+			if (!pCtors) return TypeConvCat::Illegal;
+
+			ExprTsysList funcTypes;
+			for (vint i = 0; i < pCtors->Count(); i++)
+			{
+				auto ctorSymbol = pCtors->Get(i);
+				auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+				if (ctorDecl->decoratorDelete) continue;
+				auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
+
+				for (vint j = 0; j < evTypes.Count(); j++)
+				{
+					auto tsys = evTypes[j];
+					funcTypes.Add({ ctorSymbol.Obj(),ExprTsysType::PRValue,tsys });
+				}
+			}
+
+			Array<ExprTsysItem> argTypesList(fromEntity->GetParamCount());
+			for (vint i = 0; i < fromEntity->GetParamCount(); i++)
+			{
+				argTypesList[i] = { init.headers[i],fromEntity->GetParam(i) };
+			}
+
+			SortedList<vint> boundedAnys;
+			ExprTsysList result;
+			symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, boundedAnys, result, nullptr);
+			if (result.Count() > 0)
+			{
+				return TypeConvCat::UserDefined;
+			}
+			else
+			{
+				return TypeConvCat::Illegal;
+			}
+		}
+
+		if (fromEntity->GetParamCount() == 0)
+		{
+			return TypeConvCat::Exact;
+		}
+
+		if (fromEntity->GetParamCount() != 1)
+		{
+			return TypeConvCat::Illegal;
+		}
+
+		auto type = fromEntity->GetParam(0);
+		{
+			TsysCV cv;
+			TsysRefType ref;
+			auto entity = type->GetEntity(cv, ref);
+			if (entity->GetType() == TsysType::Init)
+			{
+				return TypeConvCat::Illegal;
+			}
+		}
+
+		return TestTypeConversionInternal(
+			pa,
+			CvRefOf(toEntity, toCV, toRef),
+			ApplyExprTsysType(type, init.headers[0].type),
+			tested
+		);
+	}
+
+/***********************************************************************
 TestTypeConversionImpl
 ***********************************************************************/
 
@@ -522,6 +597,11 @@ TestTypeConversionImpl
 		if (!AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved))
 		{
 			return TypeConvCat::Illegal;
+		}
+
+		if (fromEntity->GetType() == TsysType::Init)
+		{
+			return IsUniversalInitialization(pa, ENTITY_PASS(), fromEntity->GetInit(), tested);
 		}
 
 		if (IsNumericPromotion(toEntity, fromEntity))
