@@ -342,12 +342,42 @@ namespace TestTypeConversion_Impl
 		return true;
 	}
 
-	bool IsInheriting(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
+	bool IsInheritingInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, SortedList<ITsys*>& visitedFroms, bool& anyInvolved)
 	{
-		throw 0;
+		if (IsUnknownType(toType) || IsUnknownType(fromType))
+		{
+			anyInvolved = true;
+			return true;
+		}
+
+		if (!TryGetDeclFromType<ClassDeclaration>(toType)) return false;
+		if (!TryGetDeclFromType<ClassDeclaration>(fromType)) return false;
+		if (visitedFroms.Contains(fromType)) return false;
+		visitedFroms.Add(fromType);
+
+		if (IsExactEntityMatch(toType, fromType, anyInvolved)) return true;
+		auto& ev = symbol_type_resolving::EvaluateClassType(pa, fromType);
+		for (vint i = 0; i < ev.ExtraCount(); i++)
+		{
+			auto& baseTypes = ev.GetExtra(i);
+			for (vint j = 0; j < baseTypes.Count(); j++)
+			{
+				if (IsInheritingInternal(pa, toType, baseTypes[j], visitedFroms, anyInvolved))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
-	bool IsToPtrInheriting(const ParsingArguments& pa, ENTITY_VARS(, , _), bool& cvInvolved)
+	bool IsInheriting(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, bool& anyInvolved)
+	{
+		SortedList<ITsys*> visitedFroms;
+		return IsInheritingInternal(pa, toType, fromType, visitedFroms, anyInvolved);
+	}
+
+	bool IsToPtrInheriting(const ParsingArguments& pa, ENTITY_VARS(, , _), bool& cvInvolved, bool& anyInvolved)
 	{
 		ENTITY_VARS(Element, , ;);
 		if (!AllowConvertingToPointer(toEntity, fromEntity, ENTITY_PASS(Element)))
@@ -355,8 +385,7 @@ namespace TestTypeConversion_Impl
 			return false;
 		}
 
-		bool anyInvolved = false;
-		if (IsInheriting(pa, toElementEntity, fromElementEntity))
+		if (IsInheriting(pa, toElementEntity, fromElementEntity, anyInvolved))
 		{
 			if (IsCVEqual(toElementCV, fromElementCV))
 			{
@@ -428,6 +457,7 @@ namespace TestTypeConversion_Impl
 
 #pragma warning (push)
 #pragma warning (disable: 4003)
+
 		{
 			auto result = PerformExactEntityMatch(ENTITY_PASS());
 			if (result.cat != TypeConvCat::Illegal) return result;
@@ -438,6 +468,7 @@ namespace TestTypeConversion_Impl
 		}
 
 		bool cvInvolved = false;
+		bool anyInvolved = false;
 		if (!AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved))
 		{
 			return TypeConvCat::Illegal;
@@ -447,22 +478,27 @@ namespace TestTypeConversion_Impl
 		{
 			return { TypeConvCat::IntegralPromotion,cvInvolved,false };
 		}
+
 		if (IsNumericConversion(toEntity, fromEntity))
 		{
 			return { TypeConvCat::Standard,cvInvolved,false };
 		}
-		if (IsInheriting(pa, toEntity, fromEntity))
+
+		if (IsInheriting(pa, toEntity, fromEntity, anyInvolved))
 		{
-			return { TypeConvCat::UserDefined,cvInvolved,false };
+			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
 		}
-		if (IsToPtrInheriting(pa, ENTITY_PASS(), cvInvolved))
+
+		if (IsToPtrInheriting(pa, ENTITY_PASS(), cvInvolved, anyInvolved))
 		{
-			return { TypeConvCat::UserDefined,cvInvolved,false };
+			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
 		}
+
 		if (IsToVoidPtrConversion(toEntity, fromEntity, cvInvolved))
 		{
 			return { TypeConvCat::ToVoidPtr,cvInvolved,false };
 		}
+
 #pragma warning (pop)
 		return TypeConvCat::Illegal;
 	}
