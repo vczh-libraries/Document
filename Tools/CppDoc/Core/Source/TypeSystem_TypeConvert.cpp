@@ -1,6 +1,6 @@
 #include "Ast_Resolving.h"
 
-using TCITestedSet = SortedList<Tuple<ITsys*, ITsys*>>;
+using TCITestedSet = Dictionary<Tuple<ITsys*, ITsys*>, Nullable<TypeConv>>;
 TypeConv TestTypeConversionInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested);
 
 namespace TestTypeConversion_Impl
@@ -108,6 +108,22 @@ namespace TestTypeConversion_Impl
 		case TsysType::Decl:
 			return toEntity == fromEntity;
 		case TsysType::DeclInstant:
+			{
+				const auto& toDI = toEntity->GetDeclInstant();
+				const auto& fromDI = fromEntity->GetDeclInstant();
+				if (toDI.declSymbol != fromDI.declSymbol) return false;
+
+				if (toDI.parentDeclType && fromDI.parentDeclType)
+				{
+					if (!IsExactEntityMatch(pa, toDI.parentDeclType, fromDI.parentDeclType, anyInvolved)) return false;
+				}
+
+				vint count = toEntity->GetParamCount();
+				for (vint i = 0; i < count; i++)
+				{
+					if (!IsExactEntityMatch(pa, toEntity->GetParam(i), fromEntity->GetParam(i), anyInvolved)) return false;
+				}
+			}
 			break;
 		case TsysType::Init:
 			{
@@ -249,6 +265,41 @@ namespace TestTypeConversion_Impl
 		return TypeConvCat::Illegal;
 	}
 
+	bool IsNumericPromotion(ITsys* toType, ITsys* fromType)
+	{
+		if (toType->GetType() != TsysType::Primitive) return false;
+		auto toP = toType->GetPrimitive();
+		if (toP.type == TsysPrimitiveType::Void) return false;
+
+		if (auto decl = TryGetForwardDeclFromType<ForwardEnumDeclaration>(fromType))
+		{
+			return !decl->enumClass;
+		}
+
+		if (fromType->GetType() != TsysType::Primitive) return false;
+		auto fromP = fromType->GetPrimitive();
+		if (fromP.type == TsysPrimitiveType::Void) return false;
+
+		bool toF = toP.type == TsysPrimitiveType::Float;
+		bool fromF = fromP.type == TsysPrimitiveType::Float;
+		if (toF != fromF) return false;
+		return toP.bytes > fromP.bytes;
+	}
+
+	bool IsNumericConversion(ITsys* toType, ITsys* fromType)
+	{
+		if (toType->GetType() != TsysType::Primitive) return false;
+		if (fromType->GetType() != TsysType::Primitive) return false;
+
+		auto toP = toType->GetPrimitive();
+		auto fromP = fromType->GetPrimitive();
+
+		if (toP.type == TsysPrimitiveType::Void) return false;
+		if (fromP.type == TsysPrimitiveType::Void) return false;
+
+		return true;
+	}
+
 	TypeConv TestTypeConversionImpl(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested)
 	{
 		TsysCV fromCV, toCV;
@@ -286,6 +337,18 @@ namespace TestTypeConversion_Impl
 			auto result = PetformToPtrTrivialConversion(pa, toEntity, fromEntity, toCV, fromCV, toRef, fromRef);
 			if (result.cat != TypeConvCat::Illegal) return result;
 		}
+		if (!AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef))
+		{
+			return TypeConvCat::Illegal;
+		}
+		if (IsNumericPromotion(toEntity, fromEntity))
+		{
+			return { TypeConvCat::IntegralPromotion,!IsCVEqual(toCV,fromCV),false };
+		}
+		if (IsNumericConversion(toEntity, fromEntity))
+		{
+			return { TypeConvCat::Standard,!IsCVEqual(toCV,fromCV),false };
+		}
 
 		return TypeConvCat::Illegal;
 	}
@@ -295,21 +358,34 @@ using namespace TestTypeConversion_Impl;
 TypeConv TestTypeConversionInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested)
 {
 	Tuple<ITsys*, ITsys*> pair(toType, fromType);
-	if (tested.Contains(pair))
+	vint index = tested.Keys().IndexOf(pair);
+	if (index == -1)
 	{
-		// make sure caller doesn't call this function recursively for the same pair of type.
-		struct TestConvertInternalStackOverflowException {};
-		throw TestConvertInternalStackOverflowException();
+		tested.Add(pair, {});
+		auto result = TestTypeConversionImpl(pa, toType, fromType, tested);
+		tested.Set(pair, result);
+		return result;
 	}
-
-	vint index = tested.Add(pair);
-	auto result = TestTypeConversionImpl(pa, toType, fromType, tested);
-	tested.RemoveAt(index);
-	return result;
+	else
+	{
+		auto result = tested.Values()[index];
+		if (result)
+		{
+			return result.Value();
+		}
+		else
+		{
+			// make sure caller doesn't call this function recursively for the same pair of type.
+			struct TestConvertInternalStackOverflowException {};
+			throw TestConvertInternalStackOverflowException();
+		}
+	}
 }
+
+TCITestedSet* globalCache = nullptr;
 
 TypeConv TestTypeConversion(const ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem)
 {
-	TCITestedSet tested;
-	return TestTypeConversionInternal(pa, toType, ApplyExprTsysType(fromItem.tsys, fromItem.type), tested);
+	TCITestedSet localCache;
+	return TestTypeConversionInternal(pa, toType, ApplyExprTsysType(fromItem.tsys, fromItem.type), (globalCache ? *globalCache : localCache));
 }
