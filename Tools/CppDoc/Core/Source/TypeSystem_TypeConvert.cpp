@@ -560,7 +560,7 @@ UserDefined (Inheriting)
 		return IsInheritingInternal(pa, toType, fromType, visitedFroms, true, anyInvolved);
 	}
 
-	bool IsToPtrInheriting(const ParsingArguments& pa, ENTITY_VARS(, , _), bool& cvInvolved, bool& anyInvolved)
+	bool IsToPtrInheriting(const ParsingArguments& pa, ITsys* toEntity, ITsys* fromEntity, bool& cvInvolved, bool& anyInvolved)
 	{
 		ENTITY_VARS(Element, , ;);
 		if (!AllowConvertingToPointer(toEntity, fromEntity, ENTITY_PASS(Element), false))
@@ -735,48 +735,54 @@ Init
 	{
 		if (auto toDecl = TryGetDeclFromType<ClassDeclaration>(toEntity))
 		{
-			auto toSymbol = toDecl->symbol;
-			auto pCtors = toSymbol->TryGetChildren_NFb(L"$__ctor");
-			if (!pCtors) return TypeConvCat::Illegal;
-
-			ExprTsysList funcTypes;
-			for (vint i = 0; i < pCtors->Count(); i++)
+			if (toRef != TsysRefType::LRef || toCV.isGeneralConst)
 			{
-				auto ctorSymbol = pCtors->Get(i);
-				auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-				if (ctorDecl->decoratorDelete) continue;
-				auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
+				auto toSymbol = toDecl->symbol;
+				auto pCtors = toSymbol->TryGetChildren_NFb(L"$__ctor");
+				if (!pCtors) return TypeConvCat::Illegal;
 
-				for (vint j = 0; j < evTypes.Count(); j++)
+				ExprTsysList funcTypes;
+				for (vint i = 0; i < pCtors->Count(); i++)
 				{
-					auto tsys = evTypes[j];
-					funcTypes.Add({ ctorSymbol.Obj(),ExprTsysType::PRValue,tsys });
+					auto ctorSymbol = pCtors->Get(i);
+					auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+					if (ctorDecl->decoratorDelete) continue;
+					auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
+
+					for (vint j = 0; j < evTypes.Count(); j++)
+					{
+						auto tsys = evTypes[j];
+						funcTypes.Add({ ctorSymbol.Obj(),ExprTsysType::PRValue,tsys });
+					}
 				}
-			}
 
-			Array<ExprTsysItem> argTypesList(fromEntity->GetParamCount());
-			for (vint i = 0; i < fromEntity->GetParamCount(); i++)
-			{
-				argTypesList[i] = { init.headers[i],fromEntity->GetParam(i) };
-			}
+				Array<ExprTsysItem> argTypesList(fromEntity->GetParamCount());
+				for (vint i = 0; i < fromEntity->GetParamCount(); i++)
+				{
+					argTypesList[i] = { init.headers[i],fromEntity->GetParam(i) };
+				}
 
-			SortedList<vint> boundedAnys;
-			ExprTsysList result;
-			bool anyInvolved = false;
-			symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, boundedAnys, result, nullptr, &anyInvolved);
-			if (result.Count() > 0)
-			{
-				return { TypeConvCat::UserDefined,false,anyInvolved };
-			}
-			else
-			{
-				return TypeConvCat::Illegal;
+				SortedList<vint> boundedAnys;
+				ExprTsysList result;
+				bool anyInvolved = false;
+				symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, boundedAnys, result, nullptr, &anyInvolved);
+				if (result.Count() > 0)
+				{
+					return { TypeConvCat::UserDefined,false,anyInvolved };
+				}
+				else
+				{
+					return TypeConvCat::Illegal;
+				}
 			}
 		}
 
 		if (fromEntity->GetParamCount() == 0)
 		{
-			return TypeConvCat::Exact;
+			if (toRef != TsysRefType::LRef || toCV.isGeneralConst)
+			{
+				return TypeConvCat::Exact;
+			}
 		}
 
 		if (fromEntity->GetParamCount() != 1)
@@ -849,17 +855,17 @@ TestTypeConversionImpl
 			if (result.cat != TypeConvCat::Illegal) return result;
 		}
 
+		if (fromEntity->GetType() == TsysType::Init)
+		{
+			return IsUniversalInitialization(pa, ENTITY_PASS(), fromEntity->GetInit(), tested);
+		}
+
 		bool cvInvolved = false;
 		bool anyInvolved = false;
 		bool allowInheritanceOnly = false;
 		if (!AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved, allowInheritanceOnly))
 		{
 			return TypeConvCat::Illegal;
-		}
-
-		if (!allowInheritanceOnly && fromEntity->GetType() == TsysType::Init)
-		{
-			return IsUniversalInitialization(pa, ENTITY_PASS(), fromEntity->GetInit(), tested);
 		}
 
 		if (!allowInheritanceOnly && IsNumericPromotion(toEntity, fromEntity))
@@ -877,7 +883,7 @@ TestTypeConversionImpl
 			return { TypeConvCat::Standard,cvInvolved,anyInvolved };
 		}
 
-		if (!allowInheritanceOnly && IsToPtrInheriting(pa, ENTITY_PASS(), cvInvolved, anyInvolved))
+		if (!allowInheritanceOnly && IsToPtrInheriting(pa, toEntity, fromEntity, cvInvolved, anyInvolved))
 		{
 			return { TypeConvCat::Standard,cvInvolved,anyInvolved };
 		}
