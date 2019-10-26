@@ -58,7 +58,7 @@ ITsys* ReplaceThisType(ITsys* thisType, ITsys* entity)
 	return ReplaceThisTypeInternal(thisType, GetThisEntity(entity));
 }
 
-TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType)
+TypeConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType)
 {
 	bool tC = thisCV.isGeneralConst;
 	bool dC = funcType->qualifierConstExpr || funcType->qualifierConst;
@@ -69,7 +69,7 @@ TsysConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionT
 	bool tR = thisRef == TsysRefType::RRef;
 	bool dR = funcType->qualifierRRef;
 
-	if (tC && !dC || tV && !dV || tL && dR || tR && dL) return TsysConv::Illegal;
-	if (tC == dC && tV == dV && ((tL == dL && tR == dR) || (!dL && !dR))) return TsysConv::Exact;
-	return TsysConv::TrivialConversion;
+	if (tC && !dC || tV && !dV || tL && dR || tR && dL) return TypeConvCat::Illegal;
+	if (tC == dC && tV == dV && ((tL == dL && tR == dR) || (!dL && !dR))) return TypeConvCat::Exact;
+	return TypeConvCat::Trivial;
 }

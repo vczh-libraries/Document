@@ -432,11 +432,32 @@ public:
 Helpers
 ***********************************************************************/
 
+enum class TypeConvCat
+{
+	Exact,
+	Trivial,
+	IntegralPromotion,
+	Standard,
+	UserDefined,
+	Ellipsis,
+	Illegal,
+};
+
+struct TypeConv
+{
+	TypeConvCat					cat = TypeConvCat::Illegal;
+	bool						cvInvolved = false;
+	bool						anyInvolved = false;
+
+	TypeConv() = default;
+	TypeConv(TypeConvCat _cat, bool _cv = false, bool _any = false) : cat(_cat), cvInvolved(_cv), anyInvolved(_any) {}
+};
+
 extern ITsys*					ApplyExprTsysType(ITsys* tsys, ExprTsysType type);
 extern ITsys*					CvRefOf(ITsys* tsys, TsysCV cv, TsysRefType refType);
 extern ITsys*					GetThisEntity(ITsys* thisType);
 extern ITsys*					ReplaceThisType(ITsys* thisType, ITsys* entity);
-extern TsysConv					TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType);
-extern TsysConv					TestConvert(const ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem);
+extern TypeConv					TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType);
+extern TypeConv					TestTypeConvertion(const ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem);
 
 #endif

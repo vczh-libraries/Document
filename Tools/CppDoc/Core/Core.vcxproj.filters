@@ -131,9 +131,6 @@
     <ClCompile Include="Source\Parser_ResolveSymbol.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TypeSystem_TestConvert.cpp">
-      <Filter>Source Files\TypeSystem</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Ast_Type_IsPendingType.cpp">
       <Filter>Source Files\Ast\Type</Filter>
     </ClCompile>
@@ -154,9 +151,6 @@
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_Generic.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TypeSystem_TestConvert_ExactOrTrivial.cpp">
-      <Filter>Source Files\TypeSystem</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_TypeImpl.cpp">
       <Filter>Source Files\Ast\Evaluation</Filter>
@@ -186,6 +180,9 @@
       <Filter>Import</Filter>
     </ClCompile>
     <ClCompile Include="Source\TypeSystem_Helpers.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TypeSystem_TypeConvert.cpp">
       <Filter>Source Files\TypeSystem</Filter>
     </ClCompile>
   </ItemGroup>

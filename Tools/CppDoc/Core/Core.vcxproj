@@ -204,8 +204,7 @@
     <ClCompile Include="Source\Parser_Type.cpp" />
     <ClCompile Include="Source\TypeSystem.cpp" />
     <ClCompile Include="Source\TypeSystem_Helpers.cpp" />
-    <ClCompile Include="Source\TypeSystem_TestConvert.cpp" />
-    <ClCompile Include="Source\TypeSystem_TestConvert_ExactOrTrivial.cpp" />
+    <ClCompile Include="Source\TypeSystem_TypeConvert.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
