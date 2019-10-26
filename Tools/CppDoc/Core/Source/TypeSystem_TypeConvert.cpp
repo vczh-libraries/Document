@@ -1,7 +1,7 @@
 #include "Ast_Resolving.h"
 
 using TCITestedSet = Dictionary<Tuple<ITsys*, ITsys*>, Nullable<TypeConv>>;
-TypeConv TestTypeConversionInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested);
+TypeConv TestTypeConversionInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested, bool returnIllegalIfStackOverflow);
 
 namespace TestTypeConversion_Impl
 {
@@ -662,12 +662,9 @@ UserDefined (fromType:Operator)
 				auto tsys = evTypes[j];
 				{
 					auto newFromType = tsys->GetElement()->RRefOf();
-					if (!tested.Keys().Contains({ toType,newFromType }))
+					if (TestTypeConversionInternal(newPa, toType, newFromType, tested, true).cat != TypeConvCat::Illegal)
 					{
-						if (TestTypeConversionInternal(newPa, toType, newFromType, tested).cat != TypeConvCat::Illegal)
-						{
-							return true;
-						}
+						return true;
 					}
 				}
 			}
@@ -693,12 +690,9 @@ UserDefined (toType:Ctor)
 		auto toSymbol = toClass->symbol;
 		{
 			auto newFromType = toEntity->RRefOf();
-			if (!tested.Keys().Contains({ toType, newFromType }))
+			if (TestTypeConversionInternal(pa, toType, newFromType, tested, true).cat == TypeConvCat::Illegal)
 			{
-				if (TestTypeConversionInternal(pa, toType, newFromType, tested).cat == TypeConvCat::Illegal)
-				{
-					return false;
-				}
+				return false;
 			}
 		}
 
@@ -724,12 +718,9 @@ UserDefined (toType:Ctor)
 				auto tsys = evTypes[j];
 				{
 					auto newToType = tsys->GetParam(0);
-					if (!tested.Keys().Contains({ newToType,fromType }))
+					if (TestTypeConversionInternal(newPa, newToType, fromType, tested, true).cat != TypeConvCat::Illegal)
 					{
-						if (TestTypeConversionInternal(newPa, newToType, fromType, tested).cat != TypeConvCat::Illegal)
-						{
-							return true;
-						}
+						return true;
 					}
 				}
 			}
@@ -849,7 +840,8 @@ Init
 			pa,
 			CvRefOf(toEntity, toCV, toRef),
 			ApplyExprTsysType(type, init.headers[0].type),
-			tested
+			tested,
+			false
 		);
 	}
 
@@ -905,34 +897,49 @@ TestTypeConversionImpl
 		}
 
 		{
+			bool anyInvolved = false;
+			if (IsInheriting(pa, toEntity, fromEntity, anyInvolved))
+			{
+				bool cvInvolved = false;
+				bool allowInheritanceOnly = false;
+				if (AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved, allowInheritanceOnly))
+				{
+					return { TypeConvCat::Standard,cvInvolved,anyInvolved };
+				}
+				else
+				{
+					return TypeConvCat::Illegal;
+				}
+			}
+		}
+
+		{
 			bool cvInvolved = false;
 			bool anyInvolved = false;
 			bool allowInheritanceOnly = false;
 			if (AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved, allowInheritanceOnly))
 			{
-				if (!allowInheritanceOnly && IsNumericPromotion(toEntity, fromEntity))
+				if (!allowInheritanceOnly)
 				{
-					return { TypeConvCat::IntegralPromotion,cvInvolved,false };
-				}
+					if (IsNumericPromotion(toEntity, fromEntity))
+					{
+						return { TypeConvCat::IntegralPromotion,cvInvolved,false };
+					}
 
-				if (!allowInheritanceOnly && IsNumericConversion(toEntity, fromEntity))
-				{
-					return { TypeConvCat::Standard,cvInvolved,false };
-				}
+					if (IsNumericConversion(toEntity, fromEntity))
+					{
+						return { TypeConvCat::Standard,cvInvolved,false };
+					}
 
-				if (IsInheriting(pa, toEntity, fromEntity, anyInvolved))
-				{
-					return { TypeConvCat::Standard,cvInvolved,anyInvolved };
-				}
+					if (IsToPtrInheriting(pa, toEntity, fromEntity, cvInvolved, anyInvolved))
+					{
+						return { TypeConvCat::Standard,cvInvolved,anyInvolved };
+					}
 
-				if (!allowInheritanceOnly && IsToPtrInheriting(pa, toEntity, fromEntity, cvInvolved, anyInvolved))
-				{
-					return { TypeConvCat::Standard,cvInvolved,anyInvolved };
-				}
-
-				if (!allowInheritanceOnly && IsToVoidPtrConversion(toEntity, fromEntity, cvInvolved))
-				{
-					return { TypeConvCat::ToVoidPtr,cvInvolved,false };
+					if (IsToVoidPtrConversion(toEntity, fromEntity, cvInvolved))
+					{
+						return { TypeConvCat::ToVoidPtr,cvInvolved,false };
+					}
 				}
 			}
 		}
@@ -966,7 +973,7 @@ TestTypeConversionImpl
 }
 using namespace TestTypeConversion_Impl;
 
-TypeConv TestTypeConversionInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested)
+TypeConv TestTypeConversionInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested, bool returnIllegalIfStackOverflow)
 {
 	Tuple<ITsys*, ITsys*> pair(toType, fromType);
 	vint index = tested.Keys().IndexOf(pair);
@@ -984,6 +991,10 @@ TypeConv TestTypeConversionInternal(const ParsingArguments& pa, ITsys* toType, I
 		{
 			return result.Value();
 		}
+		else if (returnIllegalIfStackOverflow)
+		{
+			return TypeConvCat::Illegal;
+		}
 		else
 		{
 			// make sure caller doesn't call this function recursively for the same pair of type.
@@ -998,5 +1009,11 @@ TCITestedSet* globalCache = nullptr;
 TypeConv TestTypeConversion(const ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem)
 {
 	TCITestedSet localCache;
-	return TestTypeConversionInternal(pa, toType, ApplyExprTsysType(fromItem.tsys, fromItem.type), (globalCache ? *globalCache : localCache));
+	return TestTypeConversionInternal(
+		pa,
+		toType,
+		ApplyExprTsysType(fromItem.tsys, fromItem.type),
+		(globalCache ? *globalCache : localCache),
+		false
+	);
 }
