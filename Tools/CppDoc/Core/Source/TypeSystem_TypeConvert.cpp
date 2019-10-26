@@ -185,7 +185,15 @@ Utilities
 Exact
 ***********************************************************************/
 
+	bool IsExactEntityMatch(ITsys* toEntity, ITsys* fromEntity, bool ofPointer, bool& cvInvolved, bool& anyInvolved);
+
 	bool IsExactEntityMatch(ITsys* toEntity, ITsys* fromEntity, bool& anyInvolved)
+	{
+		bool cvInvolved = false;
+		return IsExactEntityMatch(toEntity, fromEntity, false, cvInvolved, anyInvolved);
+	}
+
+	bool IsExactEntityMatch(ITsys* toEntity, ITsys* fromEntity, bool ofPointer, bool& cvInvolved, bool& anyInvolved)
 	{
 		if (IsUnknownType(toEntity) || IsUnknownType(fromEntity))
 		{
@@ -209,6 +217,18 @@ Exact
 				{
 					anyInvolved = true;
 					return true;
+				}
+			}
+			else if (toEntity->GetType() == TsysType::CV)
+			{
+				if (ofPointer)
+				{
+					bool _anyInvolved = false;
+					if (IsExactEntityMatch(toEntity->GetElement(), fromEntity, _anyInvolved))
+					{
+						anyInvolved |= _anyInvolved;
+						return true;
+					}
 				}
 			}
 			return false;
@@ -248,6 +268,8 @@ Exact
 			return IsExactEntityMatch(
 				ArrayRemoveOneDim(toEntity),
 				ArrayRemoveOneDim(fromEntity),
+				ofPointer,
+				cvInvolved,
 				anyInvolved
 			);
 		case TsysType::Function:
@@ -279,7 +301,7 @@ Exact
 					anyInvolved |= _anyInvolved;
 					return true;
 				}
-				else if(IsCVCompatible(toCV, fromCV) && IsUnknownType(fromElement))
+				else if(IsCVCompatible(toCV, fromCV) && (ofPointer || IsUnknownType(fromElement)))
 				{
 					anyInvolved |= _anyInvolved;
 					return true;
@@ -438,13 +460,12 @@ Trivial
 		}
 
 		bool anyInvolved = false;
-		if (IsExactEntityMatch(toElementEntity, fromElementEntity, anyInvolved))
+		if (IsExactEntityMatch(toElementEntity, fromElementEntity, true, cvInvolved, anyInvolved))
 		{
+			bool toU = IsUnknownType(toElementEntity);
+			bool fromU = IsUnknownType(fromElementEntity);
 			if (anyInvolved)
 			{
-				bool toU = IsUnknownType(toElementEntity);
-				bool fromU = IsUnknownType(fromElementEntity);
-
 				if (toU && fromU)
 				{
 					return { TypeConvCat::Exact,false,true };
@@ -471,7 +492,21 @@ Trivial
 			}
 			else if (IsCVCompatible(toElementCV, fromElementCV))
 			{
-				return { TypeConvCat::Trivial,false,anyInvolved };
+				if (fromU)
+				{
+					return { TypeConvCat::Exact,false,true };
+				}
+				else
+				{
+					return { TypeConvCat::Trivial,cvInvolved,anyInvolved };
+				}
+			}
+			else
+			{
+				if (toU)
+				{
+					return { TypeConvCat::Exact,false,true };
+				}
 			}
 		}
 		return TypeConvCat::Illegal;
