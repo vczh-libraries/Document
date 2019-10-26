@@ -762,10 +762,11 @@ Init
 
 			SortedList<vint> boundedAnys;
 			ExprTsysList result;
-			symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, boundedAnys, result, nullptr);
+			bool anyInvolved = false;
+			symbol_type_resolving::VisitOverloadedFunction(pa, funcTypes, argTypesList, boundedAnys, result, nullptr, &anyInvolved);
 			if (result.Count() > 0)
 			{
-				return TypeConvCat::UserDefined;
+				return { TypeConvCat::UserDefined,false,anyInvolved };
 			}
 			else
 			{

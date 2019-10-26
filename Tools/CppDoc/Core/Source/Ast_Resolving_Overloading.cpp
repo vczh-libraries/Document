@@ -132,7 +132,7 @@ namespace symbol_type_resolving
 		return true;
 	}
 
-	void VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys, ExprTsysList& result, ExprTsysList* selectedFunctions)
+	void VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys, ExprTsysList& result, ExprTsysList* selectedFunctions, bool* anyInvolved)
 	{
 		bool withVariadicInput = boundedAnys.Count() > 0;
 
@@ -264,7 +264,18 @@ namespace symbol_type_resolving
 				auto min = FindMinConv(funcChoices);
 				for (vint j = 0; j < validFuncTypes.Count(); j++)
 				{
-					if (!IsFunctionAcceptableByMinConv(funcChoices[j], min))
+					auto choice = funcChoices[j];
+					if (IsFunctionAcceptableByMinConv(choice, min))
+					{
+						if (choice.anyInvolved)
+						{
+							if (anyInvolved)
+							{
+								*anyInvolved = choice.anyInvolved;
+							}
+						}
+					}
+					else
 					{
 						selectedIndices[j] = false;
 					}
