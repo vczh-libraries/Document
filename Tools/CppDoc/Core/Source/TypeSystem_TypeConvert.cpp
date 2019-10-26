@@ -904,47 +904,55 @@ TestTypeConversionImpl
 			return IsUniversalInitialization(pa, ENTITY_PASS(), fromEntity->GetInit(), tested);
 		}
 
-		bool cvInvolved = false;
-		bool anyInvolved = false;
-		bool allowInheritanceOnly = false;
-		if (!AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved, allowInheritanceOnly))
 		{
-			return TypeConvCat::Illegal;
+			bool cvInvolved = false;
+			bool anyInvolved = false;
+			bool allowInheritanceOnly = false;
+			if (AllowEntityTypeChanging(toCV, fromCV, toRef, fromRef, cvInvolved, allowInheritanceOnly))
+			{
+				if (!allowInheritanceOnly && IsNumericPromotion(toEntity, fromEntity))
+				{
+					return { TypeConvCat::IntegralPromotion,cvInvolved,false };
+				}
+
+				if (!allowInheritanceOnly && IsNumericConversion(toEntity, fromEntity))
+				{
+					return { TypeConvCat::Standard,cvInvolved,false };
+				}
+
+				if (IsInheriting(pa, toEntity, fromEntity, anyInvolved))
+				{
+					return { TypeConvCat::Standard,cvInvolved,anyInvolved };
+				}
+
+				if (!allowInheritanceOnly && IsToPtrInheriting(pa, toEntity, fromEntity, cvInvolved, anyInvolved))
+				{
+					return { TypeConvCat::Standard,cvInvolved,anyInvolved };
+				}
+
+				if (!allowInheritanceOnly && IsToVoidPtrConversion(toEntity, fromEntity, cvInvolved))
+				{
+					return { TypeConvCat::ToVoidPtr,cvInvolved,false };
+				}
+			}
 		}
 
-		if (!allowInheritanceOnly && IsNumericPromotion(toEntity, fromEntity))
+		if (toRef != TsysRefType::LRef || toCV.isGeneralConst)
 		{
-			return { TypeConvCat::IntegralPromotion,cvInvolved,false };
+			bool cvInvolved = false;
+			bool anyInvolved = false;
+			if (IsFromTypeOperator(pa, ENTITY_PASS(), cvInvolved, anyInvolved, tested))
+			{
+				return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
+			}
 		}
-
-		if (!allowInheritanceOnly && IsNumericConversion(toEntity, fromEntity))
 		{
-			return { TypeConvCat::Standard,cvInvolved,false };
-		}
-
-		if (IsInheriting(pa, toEntity, fromEntity, anyInvolved))
-		{
-			return { TypeConvCat::Standard,cvInvolved,anyInvolved };
-		}
-
-		if (!allowInheritanceOnly && IsToPtrInheriting(pa, toEntity, fromEntity, cvInvolved, anyInvolved))
-		{
-			return { TypeConvCat::Standard,cvInvolved,anyInvolved };
-		}
-
-		if (!allowInheritanceOnly && IsFromTypeOperator(pa, ENTITY_PASS(), cvInvolved, anyInvolved, tested))
-		{
-			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
-		}
-
-		if (!allowInheritanceOnly && IsToTypeCtor(pa, ENTITY_PASS(), cvInvolved, anyInvolved, tested))
-		{
-			return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
-		}
-
-		if (!allowInheritanceOnly && IsToVoidPtrConversion(toEntity, fromEntity, cvInvolved))
-		{
-			return { TypeConvCat::ToVoidPtr,cvInvolved,false };
+			bool cvInvolved = false;
+			bool anyInvolved = false;
+			if (IsToTypeCtor(pa, ENTITY_PASS(), cvInvolved, anyInvolved, tested))
+			{
+				return { TypeConvCat::UserDefined,cvInvolved,anyInvolved };
+			}
 		}
 
 #pragma warning (pop)

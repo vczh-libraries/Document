@@ -444,7 +444,7 @@ struct TypeConv
 		vint result = (vint)a.cat - (vint)b.cat;
 		if (result < 0) return -1;
 		if (result > 0) return 1;
-		result = (a.cvInvolved ? 0 : 1) - (b.cvInvolved ? 0 : 1);
+		result = (a.cvInvolved ? 1 : 0) - (b.cvInvolved ? 1 : 0);
 		if (result < 0) return -1;
 		if (result > 0) return 1;
 		return 0;
