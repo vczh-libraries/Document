@@ -30,15 +30,17 @@
   - [ ] Overload functions with some or all template arguments unspecified.
   - [ ] `...` arguments
   - [ ] Full Specialization
+    - [ ] Connect functions with forward declarations.
+      - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
     - [ ] When overloading, specialized functions are not considered. When a template function wins, then choose among the primiary and its specializations.
-- [ ] More `template` on classes.
-  - [ ] Partial Specialization
-    - [ ] Connect method with forward declarations inside multiple levels of template classes.
-    - [ ] With a `DeclInstant` is created, best possible choices are returned at the same time.
+- [ ] More `template` on classes (partial specialization).
+  - [ ] Connect methods with forward declarations inside multiple levels of template classes.
+    - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
+  - [ ] With a `DeclInstant` is created, best possible choices are returned at the same time.
 - [ ] SFINAE on choosing among generic functions or classes.
 - [ ] `std::initialization_list`.
 - [ ] Lambda expressions.
-- [ ] `nullptr` failed to convert to `const function_type*&`.
+- [ ] `nullptr` failed to convert to `function_type * const &`.
 - [ ] `decltype(EXPR)::ChildType`
 - [ ] Connect function with forward declarations containing `decltype(EXPR)` in expression type.
 
