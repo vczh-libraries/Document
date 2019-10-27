@@ -12,13 +12,17 @@
 ## TODO
 
 - [ ] Next Demo!
+  - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T>::B<U>::F(){}`
+    - matches `template<typename X>class A { template<typename Y>class B { void template<typename Z>F(); }; };`
   - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
+    - `Name_Child_CategoryExpr`
+    - `Name_Child_FieldAccess_CategoryExpr`
   - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
   - [ ] Inside `template<...> class X`, if `X` is used as a type without type arguments, it is filled with template arguments.
   - [ ] Function specializations recognized but not used
   - [ ] Class specializations recognized but not used
-  - [ ] Parse `template<typename T>template<typename U>template<typename V>void A<T*>::B<const U&>::F(){}`
-    - matches `template<typename X>class A<X*>{ template<typename Y>class B<const Y&>{ void template<typename Z>F(); }; };`
+  - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T*>::B<const U&>::F(){}`
+    - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`
     - activate commented test cases in `TestParseGenericMember.cpp`
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
 - [ ] `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
