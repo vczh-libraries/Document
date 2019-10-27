@@ -25,19 +25,17 @@
     - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`
     - activate commented test cases in `TestParseGenericMember.cpp`
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
-- [ ] `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
+- [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
   - [ ] Call a function with some or all template arguments unspecified.
   - [ ] Overload functions with some or all template arguments unspecified.
   - [ ] `...` arguments
-  - [ ] Specialization
+  - [ ] Full Specialization
     - [ ] When overloading, specialized functions are not considered. When a template function wins, then choose among the primiary and its specializations.
-- [ ] `template` on classes.
-  - [ ] Nested template declaration.
-  - [ ] Allow `template` on members.
-  - [ ] Connect method with forward declarations inside multiple levels of template classes.
-  - [ ] Specialization
-    - [ ] When representing an instantiated class type, specialized classes are not considered. When child symbols are required, then choose among the primary and its specializations.
-  - [ ] SFINAE
+- [ ] More `template` on classes.
+  - [ ] Partial Specialization
+    - [ ] Connect method with forward declarations inside multiple levels of template classes.
+    - [ ] With a `DeclInstant` is created, best possible choices are returned at the same time.
+- [ ] SFINAE on choosing among generic functions or classes.
 - [ ] `std::initialization_list`.
 - [ ] Lambda expressions.
 - [ ] `nullptr` failed to convert to `const function_type*&`.
