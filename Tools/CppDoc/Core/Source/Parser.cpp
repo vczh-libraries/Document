@@ -106,17 +106,23 @@ Symbol
 
 void Symbol::ReuseTemplateSpecSymbol(Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category)
 {
-	List<Ptr<Symbol>> existingChildren;
+	// change templateSpecSymbol to Normal if it is not
 	if (_category != symbol_component::SymbolCategory::Normal)
 	{
+		List<Ptr<Symbol>> existingChildren;
 		{
+			// copy children
 			const auto& children = templateSpecSymbol->GetChildren_NFb();
 			for (vint i = 0; i < children.Count(); i++)
 			{
 				CopyFrom(existingChildren, children.GetByIndex(i), true);
 			}
 		}
+		
+		// reset category and clear everything
 		templateSpecSymbol->SetCategory(_category);
+
+		// copy children back
 		for (vint i = 0; i < existingChildren.Count(); i++)
 		{
 			auto child = existingChildren[i];
@@ -127,6 +133,7 @@ void Symbol::ReuseTemplateSpecSymbol(Ptr<Symbol> templateSpecSymbol, symbol_comp
 
 Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category)
 {
+	// match parent "category" with child "_category"
 	switch (_category)
 	{
 	case symbol_component::SymbolCategory::Normal:
@@ -144,6 +151,7 @@ Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, Ptr<Symbol> templat
 		break;
 	}
 
+	// if templateSpecSymbol is not offered for reusing, create a new one
 	auto symbol = templateSpecSymbol;
 	if (symbol)
 	{
@@ -156,6 +164,7 @@ Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, Ptr<Symbol> templat
 	symbol->name = _decl->name.name;
 	symbol->kind = _kind;
 
+	// add the created symbol to the correct location
 	if (category == symbol_component::SymbolCategory::Function)
 	{
 		if (_decl.Cast<FunctionDeclaration>())
@@ -181,21 +190,42 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 {
 	if (auto pChildren = TryGetChildren_NFb(_decl->name.name))
 	{
-		if (templateSpecSymbol)
-		{
-			return nullptr;
-		}
-
+		// if the symbol has been created, fail if the symbol doesn't have a current kind
 		if (pChildren->Count() != 1) return nullptr;
 		auto symbol = pChildren->Get(0).Obj();
 		if (symbol->kind != kind) return nullptr;
-		_decl->symbol = symbol;
-		return symbol;
+
+		if (templateSpecSymbol)
+		{
+			// if a template<...> is offered (not possible for forward declaration)
+			switch (kind)
+			{
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+			case symbol_component::SymbolKind::Union:
+				// there should be no implementation
+				if (symbol->categoryData.normal.implDecl) return nullptr;
+				if (symbol->categoryData.normal.children.Count() > 0) return nullptr;
+				break;
+			default:
+				// only generic class implementation can be added using this function
+				return nullptr;
+			}
+			throw UnexpectedSymbolCategoryException();
+		}
+		else
+		{
+			// if no template<...> is offered, return the symbol when there is only one with the same kind
+			_decl->symbol = symbol;
+			return symbol;
+		}
 	}
 	else
 	{
+		// if the symbol has never been created
 		if (templateSpecSymbol)
 		{
+			// if a template<...> is offered (not possible for forward declaration), reuse the symbol
 			ReuseTemplateSpecSymbol(templateSpecSymbol, _category);
 			templateSpecSymbol->name = _decl->name.name;
 			templateSpecSymbol->kind = kind;
@@ -205,6 +235,7 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 		}
 		else
 		{
+			// if no template<...> is offered, create a symbol
 			return CreateSymbolInternal(_decl, nullptr, kind, symbol_component::SymbolCategory::Normal);
 		}
 	}
@@ -221,6 +252,7 @@ void Symbol::SetParent(Symbol* parent)
 		categoryData.function.parent = parent;
 		break;
 	default:
+		// FunctionBody's parent cannot be changed
 		throw UnexpectedSymbolCategoryException();
 	}
 }
@@ -258,6 +290,7 @@ symbol_component::SymbolCategory Symbol::GetCategory()
 
 void Symbol::SetCategory(symbol_component::SymbolCategory _category)
 {
+	// change category and clear everything
 	if (category == _category)
 	{
 		throw UnexpectedSymbolCategoryException();
@@ -401,10 +434,15 @@ Ptr<symbol_component::ClassMemberCache> Symbol::GetClassMemberCache_NFb()
 
 void Symbol::SetClassMemberCacheForTemplateSpecScope_N(Ptr<symbol_component::ClassMemberCache> classMemberCache)
 {
+	// ensure the current symbol is a scope created for TemplateSpec
 	if (category != symbol_component::SymbolCategory::Normal && kind != symbol_component::SymbolKind::Root && categoryData.normal.parent == nullptr)
 	{
 		throw UnexpectedSymbolCategoryException();
 	}
+
+	// only following actions are allowed:
+	//   set classMemberCache when it has not
+	//   reset classMemberCache when it has
 	if ((categoryData.normal.classMemberCache == nullptr) == (classMemberCache == nullptr))
 	{
 		throw UnexpectedSymbolCategoryException();
@@ -441,6 +479,8 @@ void Symbol::RemoveChildAndResetParent_NFb(const WString& name, Symbol* child)
 
 Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
 {
+	// add a new Function category symbol
+	// Function can be overloaded, so don't need to check if there is any existing symbols of the same name
 	auto symbol = MakePtr<Symbol>(symbol_component::SymbolCategory::Function);
 	symbol->kind = symbol_component::SymbolKind::FunctionSymbol;
 	symbol->name = _decl->name.name;
@@ -450,6 +490,8 @@ Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
 
 Symbol* Symbol::CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl, Ptr<Symbol> templateSpecSymbol)
 {
+	// Create a new FunctionBodySymbol inside a FunctionBody
+	// Function can be overloaded, so don't need to check if there is any existing symbols of the same name
 	auto symbol = CreateSymbolInternal(_decl, templateSpecSymbol, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
 	symbol->categoryData.functionBody.forwardDecl = _decl;
 	return symbol;
@@ -457,10 +499,13 @@ Symbol* Symbol::CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _d
 
 Symbol* Symbol::CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<Symbol> templateSpecSymbol, Ptr<symbol_component::ClassMemberCache> classMemberCache)
 {
+	// Create a new FunctionBodySymbol inside a FunctionBody
+	// Function can be overloaded, so don't need to check if there is any existing symbols of the same name
 	auto symbol = CreateSymbolInternal(_decl, templateSpecSymbol, symbol_component::SymbolKind::FunctionBodySymbol, symbol_component::SymbolCategory::FunctionBody);
 	symbol->categoryData.functionBody.implDecl = _decl;
 	if (classMemberCache)
 	{
+		// assign classMemberCache to the created symbol
 		symbol->categoryData.functionBody.classMemberCache = classMemberCache;
 		classMemberCache->funcSymbol = symbol;
 		classMemberCache->funcDecl = _decl;
@@ -470,6 +515,8 @@ Symbol* Symbol::CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<S
 
 Symbol* Symbol::AddForwardDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind)
 {
+	// Create a symbol if the name is not used
+	// Or add _decl to the existing symbol of the specified name, ensuring that the symbol has a correct kind
 	auto symbol = AddToSymbolInternal_NFb(_decl, kind, nullptr, symbol_component::SymbolCategory::Normal);
 	if (!symbol) return nullptr;
 	symbol->categoryData.normal.forwardDecls.Add(_decl);
@@ -478,8 +525,12 @@ Symbol* Symbol::AddForwardDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_compon
 
 Symbol* Symbol::AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol)
 {
+	// Create a symbol if the name is not used
+	// Or add _decl to the existing symbol of the specified name, ensuring that the symbol has a correct kind
 	auto symbol = AddToSymbolInternal_NFb(_decl, kind, templateSpecSymbol, symbol_component::SymbolCategory::Normal);
 	if (!symbol) return nullptr;
+
+	// Fail if an implementation has been assigned
 	if (symbol->categoryData.normal.implDecl) return nullptr;
 	symbol->categoryData.normal.implDecl = _decl;
 	return symbol;
@@ -487,6 +538,7 @@ Symbol* Symbol::AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component
 
 Symbol* Symbol::CreateStatSymbol_NFb(Ptr<Stat> _stat)
 {
+	// There is no limitation on statement scopes
 	auto symbol = MakePtr<Symbol>();
 	symbol->name = L"$";
 	symbol->kind = symbol_component::SymbolKind::Statement;
