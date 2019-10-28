@@ -201,10 +201,100 @@ TEST_CASE(TestConnectForwardGeneric_FunctionsWithAmbiguity)
 
 TEST_CASE(TestConnectForwardGeneric_Classes)
 {
+	auto input = LR"(
+template<typename T>
+struct X;
 
+template<typename T>
+struct X;
+
+template<typename T>
+struct X{};
+
+template<typename T>
+struct X;
+
+template<typename T>
+struct X;
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	TEST_ASSERT(pa.root->TryGetChildren_NFb(L"X")->Count() == 1);
+	auto symbol = pa.root->TryGetChildren_NFb(L"X")->Get(0);
+
+	TEST_ASSERT(symbol->GetImplDecl_NFb<ClassDeclaration>());
+	TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 4);
+	TEST_ASSERT(From(symbol->GetForwardDecls_N()).Distinct().Count() == 4);
+	for (vint i = 0; i < 4; i++)
+	{
+		TEST_ASSERT(symbol->GetForwardDecls_N()[i].Cast<ForwardClassDeclaration>());
+		TEST_ASSERT(!symbol->GetForwardDecls_N()[i].Cast<ClassDeclaration>());
+	}
 }
 
 TEST_CASE(TestConnectForwardGeneric_ClassMembers)
 {
+	auto input = LR"(
+namespace ns
+{
+	struct A
+	{
+		template<typename T>
+		struct B
+		{
+			struct C
+			{
+				template<typename U>
+				struct D
+				{
+					void Method();
+					template<typename V> void Method(V, V*);
+					template<typename V> void Method(V*, V);
+				};
+			};
+		};
+	};
+}
 
+namespace ns
+{
+	template<typename X>	template<typename Y>							void A::B<X>::C::D<Y>::Method(){}
+	template<typename X>	template<typename Y>	template<typaname Z>	void A::B<X>::C::D<Y>::Method(Z, Z*){}
+	template<typename X>	template<typename Y>	template<typaname Z>	void A::B<X>::C::D<Y>::Method(Z*, Z){}
+}
+)";
+	COMPILE_PROGRAM(program, pa, input);
+
+	using Item = Tuple<CppClassAccessor, Ptr<Declaration>>;
+	List<Ptr<Declaration>> inClassMembers;
+	auto& inClassMembersUnfiltered = pa.root
+		->TryGetChildren_NFb(L"ns")->Get(0)
+		->TryGetChildren_NFb(L"A")->Get(0)
+		->TryGetChildren_NFb(L"B")->Get(0)
+		->TryGetChildren_NFb(L"C")->Get(0)
+		->TryGetChildren_NFb(L"D")->Get(0)
+		->GetImplDecl_NFb<ClassDeclaration>()->decls;
+
+	CopyFrom(inClassMembers, From(inClassMembersUnfiltered).Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; }));
+	TEST_ASSERT(inClassMembers.Count() == 3);
+
+	auto& outClassMembers = pa.root
+		->TryGetChildren_NFb(L"ns")->Get(0)
+		->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
+	TEST_ASSERT(outClassMembers.Count() == 3);
+
+	for (vint i = 0; i < 3; i++)
+	{
+		auto inClassDecl = inClassMembers[i];
+		auto outClassDecl = outClassMembers[i];
+
+		auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
+		TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
+
+		TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
+		TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
+
+		TEST_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
+		TEST_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
+	}
 }
