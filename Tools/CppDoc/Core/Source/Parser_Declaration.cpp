@@ -6,25 +6,24 @@
 ParseTemplateSpec
 ***********************************************************************/
 
-using TemplateSpecResult = Tuple<Ptr<Symbol>, Ptr<TemplateSpec>>;
-
-TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<Symbol>& specSymbol, Ptr<TemplateSpec>& spec)
 {
 	RequireToken(cursor, CppTokens::DECL_TEMPLATE);
 	RequireToken(cursor, CppTokens::LT);
 
-	auto symbol = MakePtr<Symbol>(pa.scopeSymbol);
-	auto newPa = pa.WithScope(symbol.Obj());
+	if (!specSymbol)
+	{
+		specSymbol = MakePtr<Symbol>(pa.scopeSymbol);
+	}
+	spec = MakePtr<TemplateSpec>();
+	auto newPa = pa.WithScope(specSymbol.Obj());
 
-	auto spec = MakePtr<TemplateSpec>();
 	while (!TestToken(cursor, CppTokens::GT))
 	{
 		TemplateSpec::Argument argument;
 		if (TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
 		{
-			auto argumentSpec = ParseTemplateSpec(newPa, cursor);
-			argument.templateSpecScope = argumentSpec.f0;
-			argument.templateSpec = argumentSpec.f1;
+			ParseTemplateSpec(newPa, cursor, argument.templateSpecScope, argument.templateSpec);
 		}
 
 		if (TestToken(cursor, CppTokens::TYPENAME) || TestToken(cursor, CppTokens::DECL_CLASS))
@@ -33,13 +32,13 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			argument.ellipsis = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
 			if (ParseCppName(argument.name, cursor))
 			{
-				if (symbol->TryGetChildren_NFb(argument.name.name))
+				if (specSymbol->TryGetChildren_NFb(argument.name.name))
 				{
 					throw StopParsingException(cursor);
 				}
 			}
 
-			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : MakePtr<Symbol>(symbol.Obj());
+			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : MakePtr<Symbol>(specSymbol.Obj());
 			argument.argumentSymbol = argumentSymbol.Obj();
 
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
@@ -61,16 +60,16 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 				TsysGenericArg arg;
 				arg.argIndex = spec->arguments.Count();
 				arg.argSymbol = argumentSymbol.Obj();
-				ev.Get().Add(pa.tsys->DeclOf(symbol.Obj())->GenericArgOf(arg));
+				ev.Get().Add(pa.tsys->DeclOf(specSymbol.Obj())->GenericArgOf(arg));
 			}
 
 			if (argument.name)
 			{
-				symbol->AddChild_NFb(argumentSymbol->name, argumentSymbol);
+				specSymbol->AddChild_NFb(argumentSymbol->name, argumentSymbol);
 			}
 			else
 			{
-				symbol->AddChild_NFb(L"$", argumentSymbol);
+				specSymbol->AddChild_NFb(L"$", argumentSymbol);
 			}
 
 			if (TestToken(cursor, CppTokens::EQ))
@@ -108,13 +107,13 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			}
 			if (argument.name)
 			{
-				if (symbol->TryGetChildren_NFb(argument.name.name))
+				if (specSymbol->TryGetChildren_NFb(argument.name.name))
 				{
 					throw StopParsingException(cursor);
 				}
 			}
 
-			auto argumentSymbol = MakePtr<Symbol>(symbol.Obj());
+			auto argumentSymbol = MakePtr<Symbol>(specSymbol.Obj());
 			argument.argumentSymbol = argumentSymbol.Obj();
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
 			argumentSymbol->ellipsis = argument.ellipsis;
@@ -129,11 +128,11 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 
 			if (argument.name)
 			{
-				symbol->AddChild_NFb(argumentSymbol->name, argumentSymbol);
+				specSymbol->AddChild_NFb(argumentSymbol->name, argumentSymbol);
 			}
 			else
 			{
-				symbol->AddChild_NFb(L"$", argumentSymbol);
+				specSymbol->AddChild_NFb(L"$", argumentSymbol);
 			}
 		}
 		spec->arguments.Add(argument);
@@ -153,8 +152,6 @@ TemplateSpecResult ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCur
 			throw StopParsingException(cursor);
 		}
 	}
-
-	return { symbol,spec };
 }
 
 /***********************************************************************
@@ -338,7 +335,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 ParseDeclaration_<CLASS / STRUCT / UNION>
 ***********************************************************************/
 
-Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingArguments& pa, const TemplateSpecResult& spec, bool forTypeDef, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingArguments& pa, Ptr<Symbol> specSymbol, Ptr<TemplateSpec> spec, bool forTypeDef, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	// [union | class | struct] NAME ...
 	auto classType = CppClassType::Union;
@@ -398,12 +395,12 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 	{
 		// ... [: { [public|protected|private] TYPE , ...} ]
 		auto decl = MakePtr<ClassDeclaration>();
-		decl->templateSpec = spec.f1;
+		decl->templateSpec = spec;
 		decl->classType = classType;
 		decl->name = cppName;
 		vint declIndex = output.Add(decl);
 
-		auto classContextSymbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbolKind, spec.f0);
+		auto classContextSymbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbolKind, specSymbol);
 		if (!classContextSymbol)
 		{
 			throw StopParsingException(cursor);
@@ -544,12 +541,12 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 ParseDeclaration_<USING>
 ***********************************************************************/
 
-void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult& spec, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<Symbol> specSymbol, Ptr<TemplateSpec> spec, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	RequireToken(cursor, CppTokens::DECL_USING);
 	if (TestToken(cursor, CppTokens::DECL_NAMESPACE))
 	{
-		if (spec.f1)
+		if (spec)
 		{
 			throw StopParsingException(cursor);
 		}
@@ -597,16 +594,16 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 				goto SKIP_TYPE_ALIAS;
 			}
 
-			auto newPa = spec.f1 ? pa.WithScope(spec.f0.Obj()) : pa;
+			auto newPa = specSymbol ? pa.WithScope(specSymbol.Obj()) : pa;
 
 			auto decl = MakePtr<TypeAliasDeclaration>();
-			decl->templateSpec = spec.f1;
+			decl->templateSpec = spec;
 			decl->name = cppName;
 			decl->type = ParseType(newPa, cursor);
 			RequireToken(cursor, CppTokens::SEMICOLON);
 
 			output.Add(decl);
-			if (!pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias, spec.f0))
+			if (!pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias, specSymbol))
 			{
 				throw StopParsingException(cursor);
 			}
@@ -615,7 +612,7 @@ void ParseDeclaration_Using(const ParsingArguments& pa, const TemplateSpecResult
 		}
 	SKIP_TYPE_ALIAS:
 		{
-			if (spec.f1)
+			if (spec)
 			{
 				throw StopParsingException(cursor);
 			}
@@ -721,7 +718,7 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 	if (!cStyleTypeReference && (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false)))
 	{
 		// typedef class{} ...;
-		auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, { nullptr, nullptr }, true, cursor, output);
+		auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, nullptr, nullptr, true, cursor, output);
 
 		createdType = MakePtr<IdType>();
 		createdType->name = classDecl->name;
@@ -843,7 +840,8 @@ ParseDeclaration_FuncVar
 
 void ParseDeclaration_Function(
 	const ParsingArguments& pa,
-	const TemplateSpecResult& spec,
+	Ptr<Symbol> specSymbol,
+	List<Ptr<TemplateSpec>>& specs,
 	Ptr<Declarator> declarator,
 	Ptr<FunctionType> funcType,
 	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_PARAMETER)
@@ -866,12 +864,18 @@ void ParseDeclaration_Function(
 		throw StopParsingException(cursor);
 	}
 
+	if (specs.Count() > 1)
+	{
+		throw StopParsingException(cursor);
+	}
+	auto spec = specs.Count() > 0 ? specs[0] : nullptr;
+
 	auto context = declarator->classMemberCache ? declarator->classMemberCache->containerClassTypes[0]->GetDecl() : pa.scopeSymbol;
 	if (hasStat)
 	{
 		// if there is a statement, then it is a function declaration
 		auto decl = MakePtr<FunctionDeclaration>();
-		decl->templateSpec = spec.f1;
+		decl->templateSpec = spec;
 		FILL_FUNCTION;
 		output.Add(decl);
 
@@ -891,7 +895,7 @@ void ParseDeclaration_Function(
 		}
 
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
-		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, (spec.f1 ? spec.f0 : nullptr), declarator->classMemberCache);
+		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, specSymbol, declarator->classMemberCache);
 
 		{
 			auto newPa = pa.WithScope(functionBodySymbol);
@@ -945,13 +949,13 @@ void ParseDeclaration_Function(
 		}
 
 		auto decl = MakePtr<ForwardFunctionDeclaration>();
-		decl->templateSpec = spec.f1;
+		decl->templateSpec = spec;
 		FILL_FUNCTION;
 		output.Add(decl);
 		RequireToken(cursor, CppTokens::SEMICOLON);
 
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
-		functionSymbol->CreateFunctionForwardSymbol_F(decl, (spec.f1 ? spec.f0 : nullptr));
+		functionSymbol->CreateFunctionForwardSymbol_F(decl, specSymbol);
 	}
 #undef FILL_FUNCTION
 }
@@ -960,7 +964,8 @@ void ParseDeclaration_Function(
 
 void ParseDeclaration_Variable(
 	const ParsingArguments& pa,
-	const TemplateSpecResult& spec,
+	Ptr<Symbol> specSymbol,
+	Ptr<TemplateSpec> spec,
 	Ptr<Declarator> declarator,
 	FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_PARAMETER)
 	Ptr<CppTokenCursor>& cursor,
@@ -973,7 +978,7 @@ void ParseDeclaration_Variable(
 		throw StopParsingException(cursor);
 	}
 
-	if (spec.f1)
+	if (spec)
 	{
 		if (!declarator->initializer || declarator->initializer->initializerType != CppInitializerType::Equal)
 		{
@@ -981,7 +986,7 @@ void ParseDeclaration_Variable(
 		}
 
 		auto decl = MakePtr<ValueAliasDeclaration>();
-		decl->templateSpec = spec.f1;
+		decl->templateSpec = spec;
 		decl->name = declarator->name;
 		decl->type = declarator->type;
 		decl->expr = declarator->initializer->arguments[0].item;
@@ -995,7 +1000,7 @@ void ParseDeclaration_Variable(
 			if (primitiveType->primitive != CppPrimitiveType::_auto) throw StopParsingException(cursor);
 		}
 
-		if (!pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::ValueAlias, spec.f0))
+		if (!pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::ValueAlias, specSymbol))
 		{
 			throw StopParsingException(cursor);
 		}
@@ -1051,7 +1056,31 @@ void ParseDeclaration_Variable(
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResult& spec, bool decoratorFriend, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+void EnsureNoTemplateSpec(List<Ptr<TemplateSpec>>& specs, Ptr<CppTokenCursor>& cursor)
+{
+	if (specs.Count() > 0)
+	{
+		throw StopParsingException(cursor);
+	}
+}
+
+Ptr<TemplateSpec> EnsureNoMultipleTemplateSpec(List<Ptr<TemplateSpec>>& specs, Ptr<CppTokenCursor>& cursor)
+{
+	if (specs.Count() > 1)
+	{
+		throw StopParsingException(cursor);
+	}
+	else if (specs.Count() == 1)
+	{
+		return specs[0];
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol, List<Ptr<TemplateSpec>>& specs, bool decoratorFriend, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	// parse declarators for functions and variables
 
@@ -1076,10 +1105,10 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 
 	// get all declarators
 	{
-		auto pda = pda_Decls(pa.scopeSymbol->GetImplDecl_NFb<ClassDeclaration>(), spec.f1);
+		auto pda = pda_Decls(pa.scopeSymbol->GetImplDecl_NFb<ClassDeclaration>(), specs.Count() > 0);
 		pda.containingClass = containingClass;
 
-		auto newPa = spec.f1 ? pa.WithScope(spec.f0.Obj()) : pa;
+		auto newPa = specSymbol ? pa.WithScope(specSymbol.Obj()) : pa;
 		ParseMemberDeclarator(newPa, pda, cursor, declarators);
 	}
 
@@ -1154,7 +1183,8 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 
 		ParseDeclaration_Function(
 			pa,
-			spec,
+			specSymbol,
+			specs,
 			declarators[0],
 			funcType,
 			FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_ARGUMENT)
@@ -1165,7 +1195,8 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 	}
 	else
 	{
-		if (spec.f1 && declarators.Count() > 1)
+		auto spec = EnsureNoMultipleTemplateSpec(specs, cursor);
+		if (spec && declarators.Count() > 1)
 		{
 			throw StopParsingException(cursor);
 		}
@@ -1173,6 +1204,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, const TemplateSpecResu
 		{
 			ParseDeclaration_Variable(
 				pa,
+				specSymbol,
 				spec,
 				declarators[i],
 				FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_ARGUMENT)
@@ -1209,7 +1241,8 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 	{
 		ParseDeclaration_Variable(
 			pa,
-			{ nullptr,nullptr },
+			nullptr,
+			nullptr,
 			declarators[i],
 			false, false, false, false, false, false, false, false,
 			cursor,
@@ -1227,10 +1260,13 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		return;
 	}
 
-	TemplateSpecResult spec;
-	if (TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
+	Ptr<Symbol> specSymbol;
+	List<Ptr<TemplateSpec>> specs;
+	while(TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
 	{
-		spec = ParseTemplateSpec(pa, cursor);
+		Ptr<TemplateSpec> spec;
+		ParseTemplateSpec(pa, cursor, specSymbol, spec);
+		specs.Add(spec);
 	}
 
 	bool decoratorFriend = TestToken(cursor, CppTokens::DECL_FRIEND);
@@ -1281,18 +1317,12 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 	if (TestToken(cursor, CppTokens::DECL_NAMESPACE, false))
 	{
-		if (spec.f1)
-		{
-			throw StopParsingException(cursor);
-		}
+		EnsureNoTemplateSpec(specs, cursor);
 		ParseDeclaration_Namespace(pa, cursor, output);
 	}
 	else if (!cStyleTypeReference && TestToken(cursor, CppTokens::DECL_ENUM, false))
 	{
-		if (spec.f1)
-		{
-			throw StopParsingException(cursor);
-		}
+		EnsureNoTemplateSpec(specs, cursor);
 		if (auto enumDecl = ParseDeclaration_Enum_NotConsumeSemicolon(pa, false, cursor, output))
 		{
 			if (!TestToken(cursor, CppTokens::SEMICOLON, false))
@@ -1304,7 +1334,8 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else if (!cStyleTypeReference && (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false)))
 	{
-		if (auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, spec, false, cursor, output))
+		auto spec = EnsureNoMultipleTemplateSpec(specs, cursor);
+		if (auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, specSymbol, spec, false, cursor, output))
 		{
 			if (!TestToken(cursor, CppTokens::SEMICOLON, false))
 			{
@@ -1315,19 +1346,17 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	}
 	else if (TestToken(cursor, CppTokens::DECL_USING, false))
 	{
-		ParseDeclaration_Using(pa, spec, cursor, output);
+		auto spec = EnsureNoMultipleTemplateSpec(specs, cursor);
+		ParseDeclaration_Using(pa, specSymbol, spec, cursor, output);
 	}
 	else if(TestToken(cursor,CppTokens::DECL_TYPEDEF, false))
 	{
-		if (spec.f1)
-		{
-			throw StopParsingException(cursor);
-		}
+		EnsureNoTemplateSpec(specs, cursor);
 		ParseDeclaration_Typedef(pa, cursor, output);
 	}
 	else
 	{
-		ParseDeclaration_FuncVar(pa, spec, decoratorFriend, cursor, output);
+		ParseDeclaration_FuncVar(pa, specSymbol, specs, decoratorFriend, cursor, output);
 	}
 }
 
