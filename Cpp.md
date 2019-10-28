@@ -12,12 +12,14 @@
 ## TODO
 
 - [ ] Next Demo!
-  - [ ] Connect `template<typename T> class X;` with `template<typename T> class X{};`.
+  - [x] Connect `template<typename T> class X;` with `template<typename T> class X{};`.
   - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T>::B<U>::F(){}`.
+    - store all `template<...>` for classes in `FunctionDeclaration`
     - matches `template<typename X>class A { template<typename Y>class B { void template<typename Z>F(); }; };`.
   - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
-    - `Name_Child_CategoryExpr`
-    - `Name_Child_FieldAccess_CategoryExpr`
+    - [ ] `Name_Child_CategoryExpr`
+    - [ ] `Name_Child_FieldAccess_CategoryExpr`
+    - [ ] Check types of `obj.Method` and `obj.Method<T>` examples when they have implementations defined outside of classes
   - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
   - [ ] Inside `template<...> class X`, if `X` is used as a type without type arguments, it is filled with template arguments.
   - [ ] Function specializations recognized but not used
