@@ -104,30 +104,36 @@ SC_Data
 Symbol
 ***********************************************************************/
 
+void CopySymbolChildren(Symbol* symbol, List<Ptr<Symbol>>& existingChildren)
+{
+	const auto& children = symbol->GetChildren_NFb();
+	for (vint i = 0; i < children.Count(); i++)
+	{
+		CopyFrom(existingChildren, children.GetByIndex(i), true);
+	}
+}
+
+void AddSymbolChildren(Symbol* symbol, List<Ptr<Symbol>>& existingChildren)
+{
+	for (vint i = 0; i < existingChildren.Count(); i++)
+	{
+		auto child = existingChildren[i];
+		symbol->AddChildAndSetParent_NFb(child->name, child);
+	}
+}
+
 void Symbol::ReuseTemplateSpecSymbol(Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category)
 {
-	// change templateSpecSymbol to Normal if it is not
+	// change templateSpecSymbol to _category only if it is not
 	if (_category != symbol_component::SymbolCategory::Normal)
 	{
 		List<Ptr<Symbol>> existingChildren;
-		{
-			// copy children
-			const auto& children = templateSpecSymbol->GetChildren_NFb();
-			for (vint i = 0; i < children.Count(); i++)
-			{
-				CopyFrom(existingChildren, children.GetByIndex(i), true);
-			}
-		}
+		CopySymbolChildren(templateSpecSymbol.Obj(), existingChildren);
 		
 		// reset category and clear everything
 		templateSpecSymbol->SetCategory(_category);
 
-		// copy children back
-		for (vint i = 0; i < existingChildren.Count(); i++)
-		{
-			auto child = existingChildren[i];
-			templateSpecSymbol->AddChildAndSetParent_NFb(child->name, child);
-		}
+		AddSymbolChildren(templateSpecSymbol.Obj(), existingChildren);
 	}
 }
 
@@ -211,7 +217,18 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 				// only generic class implementation can be added using this function
 				return nullptr;
 			}
-			throw UnexpectedSymbolCategoryException();
+
+			// move everything from templateSpecSymbol to symbol that is created by forward declarations
+			if (templateSpecSymbol->GetParentScope() != this)
+			{
+				return nullptr;
+			}
+
+			List<Ptr<Symbol>> existingChildren;
+			CopySymbolChildren(templateSpecSymbol.Obj(), existingChildren);
+			AddSymbolChildren(symbol, existingChildren);
+			_decl->symbol = symbol;
+			return symbol;
 		}
 		else
 		{

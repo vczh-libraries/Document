@@ -93,6 +93,12 @@ EnsureMemberTypeResolved
 ClassDeclaration* EnsureMemberTypeResolved(Ptr<MemberType> memberType, Ptr<CppTokenCursor>& cursor)
 {
 	auto resolvableType = memberType->classType.Cast<ResolvableType>();
+	if (!resolvableType)
+	{
+		auto genericType = memberType->classType.Cast<GenericType>();
+		resolvableType = genericType->type;
+	}
+
 	if (!resolvableType) throw StopParsingException(cursor);
 	if (!resolvableType->resolving) throw StopParsingException(cursor);
 	if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
