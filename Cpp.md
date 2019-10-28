@@ -12,8 +12,9 @@
 ## TODO
 
 - [ ] Next Demo!
-  - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T>::B<U>::F(){}`
-    - matches `template<typename X>class A { template<typename Y>class B { void template<typename Z>F(); }; };`
+  - [ ] Connect `template<typename T> class X;` with `template<typename T> class X{};`.
+  - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T>::B<U>::F(){}`.
+    - matches `template<typename X>class A { template<typename Y>class B { void template<typename Z>F(); }; };`.
   - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
     - `Name_Child_CategoryExpr`
     - `Name_Child_FieldAccess_CategoryExpr`

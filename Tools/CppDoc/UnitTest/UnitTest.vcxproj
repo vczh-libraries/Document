@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="TestConnectForward.cpp" />
+    <ClCompile Include="TestConnectForwardGeneric.cpp" />
     <ClCompile Include="TestGeneratedFunctions.cpp" />
     <ClCompile Include="TestIntegralPromotion.cpp" />
     <ClCompile Include="TestOverloading.cpp" />

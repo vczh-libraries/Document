@@ -105,6 +105,12 @@
     <ClCompile Include="TestOverloadingGenericClass.cpp">
       <Filter>Source Files\TestOverloading</Filter>
     </ClCompile>
+    <ClCompile Include="TestConnectForward.cpp">
+      <Filter>Source Files\TestParser</Filter>
+    </ClCompile>
+    <ClCompile Include="TestConnectForwardGeneric.cpp">
+      <Filter>Source Files\TestParserGeneric</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">
