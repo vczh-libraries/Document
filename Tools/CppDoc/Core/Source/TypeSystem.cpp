@@ -807,9 +807,7 @@ public:
 
 		switch (decl->kind)
 		{
-		case symbol_component::SymbolKind::Class:
-		case symbol_component::SymbolKind::Struct:
-		case symbol_component::SymbolKind::Union:
+		case CLASS_SYMBOL_KIND:
 			break;
 		default:
 			throw L"Decl should be a class.";

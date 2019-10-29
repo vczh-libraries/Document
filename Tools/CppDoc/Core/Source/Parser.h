@@ -76,6 +76,11 @@ namespace symbol_component
 		Root,
 	};
 
+#define CLASS_SYMBOL_KIND						\
+	symbol_component::SymbolKind::Class:		\
+	case symbol_component::SymbolKind::Struct:	\
+	case symbol_component::SymbolKind::Union	\
+
 	struct Evaluation
 	{
 	private:
@@ -517,7 +522,6 @@ extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const
 extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern Ptr<Declarator>								ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Type>									ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
-extern Ptr<symbol_component::ClassMemberCache>		CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, bool symbolDefinedInsideClass);
 
 // Parser_Declaration.cpp
 extern void											ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
@@ -550,6 +554,7 @@ extern Ptr<Stat>									ParseStat(const ParsingArguments& pa, Ptr<CppTokenCurso
 extern void											EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl);
 extern bool											ParseTypeOrExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor, Ptr<Type>& type, Ptr<Expr>& expr);
 extern Ptr<Program>									ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Symbol*										FindParentClassSymbol(Symbol* symbol, bool includeThisSymbol);
 
 /***********************************************************************
 Helpers

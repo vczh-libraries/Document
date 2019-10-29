@@ -324,9 +324,7 @@ namespace symbol_type_resolving
 	{
 		switch (symbol->GetParentScope()->kind)
 		{
-		case symbol_component::SymbolKind::Class:
-		case symbol_component::SymbolKind::Struct:
-		case symbol_component::SymbolKind::Union:
+		case CLASS_SYMBOL_KIND:
 			break;
 		default:
 			thisItem = nullptr;
@@ -446,9 +444,7 @@ namespace symbol_type_resolving
 			{
 				switch (parent->kind)
 				{
-				case symbol_component::SymbolKind::Class:
-				case symbol_component::SymbolKind::Struct:
-				case symbol_component::SymbolKind::Union:
+				case CLASS_SYMBOL_KIND:
 					parentScopeIsClass = true;
 					switch (symbol->kind)
 					{

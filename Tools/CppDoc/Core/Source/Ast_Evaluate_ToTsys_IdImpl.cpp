@@ -16,9 +16,7 @@ namespace symbol_totsys_impl
 			AddTsysToResult(result, pa.tsys->DeclOf(symbol));
 			hasNonVariadic = true;
 			return;
-		case symbol_component::SymbolKind::Class:
-		case symbol_component::SymbolKind::Struct:
-		case symbol_component::SymbolKind::Union:
+		case CLASS_SYMBOL_KIND:
 			{
 				auto classDecl = symbol->GetAnyForwardDecl<ForwardClassDeclaration>();
 				auto& evTypes = EvaluateForwardClassSymbol(pa, classDecl.Obj(), parentDeclType, nullptr);

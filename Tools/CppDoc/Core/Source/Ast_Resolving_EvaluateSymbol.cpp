@@ -191,25 +191,18 @@ namespace symbol_type_resolving
 		auto symbol = decl->symbol;
 		Symbol* parentTemplateClassSymbol = nullptr;
 		{
-			auto parent = symbol->GetParentScope();
-			while (parent)
+			auto parentClassSymbol = FindParentClassSymbol(symbol, false);
+			while (parentClassSymbol)
 			{
-				switch (parent->kind)
+				if (auto parentClassDecl = parentClassSymbol->GetAnyForwardDecl<ForwardClassDeclaration>())
 				{
-				case symbol_component::SymbolKind::Class:
-				case symbol_component::SymbolKind::Struct:
-				case symbol_component::SymbolKind::Union:
-					if (auto parentClassDecl = parent->GetAnyForwardDecl<ForwardClassDeclaration>())
+					if (parentClassDecl->templateSpec)
 					{
-						if (parentClassDecl->templateSpec)
-						{
-							parentTemplateClassSymbol = parent;
-							goto FINISH_PARENT_TEMPLATE;
-						}
+						parentTemplateClassSymbol = parentClassSymbol;
+						goto FINISH_PARENT_TEMPLATE;
 					}
-					break;
 				}
-				parent = parent->GetParentScope();
+				parentClassSymbol = FindParentClassSymbol(parentClassSymbol, false);
 			}
 		}
 	FINISH_PARENT_TEMPLATE:

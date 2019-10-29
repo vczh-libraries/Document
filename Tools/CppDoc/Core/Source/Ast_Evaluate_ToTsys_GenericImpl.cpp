@@ -68,9 +68,7 @@ namespace symbol_totsys_impl
 			auto parentDeclType = genericFunction->GetGenericFunction().parentDeclType;
 			switch (declSymbol->kind)
 			{
-			case symbol_component::SymbolKind::Class:
-			case symbol_component::SymbolKind::Struct:
-			case symbol_component::SymbolKind::Union:
+			case CLASS_SYMBOL_KIND:
 				{
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardClassDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();

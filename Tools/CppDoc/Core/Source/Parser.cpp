@@ -206,9 +206,7 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 			// if a template<...> is offered (not possible for forward declaration)
 			switch (kind)
 			{
-			case symbol_component::SymbolKind::Class:
-			case symbol_component::SymbolKind::Struct:
-			case symbol_component::SymbolKind::Union:
+			case CLASS_SYMBOL_KIND:
 				// there should be no implementation
 				if (symbol->categoryData.normal.implDecl) return nullptr;
 				if (symbol->categoryData.normal.children.Count() > 0) return nullptr;
@@ -798,27 +796,14 @@ ITsys* ParsingArguments::AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* p
 		throw L"Wrong parentDeclType";
 	}
 
-	auto scopeWithTemplateClass = scopeSymbol;
+	auto scopeWithTemplateClass = FindParentClassSymbol(scopeSymbol, true);
 	while (scopeWithTemplateClass)
 	{
 		if (symbol_type_resolving::GetTemplateSpecFromSymbol(scopeWithTemplateClass))
 		{
-			bool isClass = false;
-			switch (scopeWithTemplateClass->kind)
-			{
-			case symbol_component::SymbolKind::Class:
-			case symbol_component::SymbolKind::Struct:
-			case symbol_component::SymbolKind::Union:
-				isClass = true;
-				break;
-			}
-
-			if (isClass)
-			{
-				break;
-			}
+			break;
 		}
-		scopeWithTemplateClass = scopeWithTemplateClass->GetParentScope();
+		scopeWithTemplateClass = FindParentClassSymbol(scopeWithTemplateClass, false);
 	}
 
 	while (parentDeclType)
@@ -1038,4 +1023,19 @@ Ptr<Program> ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		program->decls[i]->Accept(&visitor);
 	}
 	return program;
+}
+
+Symbol* FindParentClassSymbol(Symbol* symbol, bool includeThisSymbol)
+{
+	auto current = includeThisSymbol ? symbol : symbol->GetParentScope();
+	while (current)
+	{
+		switch (current->kind)
+		{
+		case CLASS_SYMBOL_KIND:
+			return current;
+		}
+		current = current->GetParentScope();
+	}
+	return nullptr;
 }
