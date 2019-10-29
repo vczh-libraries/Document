@@ -448,7 +448,7 @@ TEST_CASE(TestParseGenericMember_AddressOfMember_OfExplicitOrImplicitThisExpr)
 {
 	auto input = LR"(
 template<typename X>
-struct Field{};
+struct Field;
 
 template<typename T>
 struct S
@@ -713,8 +713,8 @@ template<typename A>	template<typename B>	void S<A>::F2(B p)					{ using _S = S<
 TEST_CASE(TestParseGenericMember_FieldReference)
 {
 	auto input = LR"(
-template<typename X, typename Y>
-struct Field{};
+template<typename X>
+struct Field;
 
 template<typename T, typename U>
 struct A
