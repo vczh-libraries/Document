@@ -182,7 +182,9 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	using InitItem = Tuple<Ptr<IdExpr>, Ptr<Expr>>;
+	using ClassSpec = Tuple<Ptr<TemplateSpec>, ClassDeclaration*>;
 
+	List<ClassSpec>									classSpecs;
 	List<InitItem>									initList;
 	Ptr<Stat>										statement;
 	Ptr<DelayParse>									delayParse;

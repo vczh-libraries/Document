@@ -239,12 +239,12 @@ namespace ns
 {
 	struct A
 	{
-		template<typename T>
+		template<int X, typename T>
 		struct B
 		{
 			struct C
 			{
-				template<typename U>
+				template<typename U, int Y>
 				struct D
 				{
 					void Method();
@@ -258,9 +258,9 @@ namespace ns
 
 namespace ns
 {
-	template<typename X>	template<typename Y>							void A::B<X>::C::D<Y>::Method(){}
-	template<typename X>	template<typename Y>	template<typaname Z>	void A::B<X>::C::D<Y>::Method(Z, Z*){}
-	template<typename X>	template<typename Y>	template<typaname Z>	void A::B<X>::C::D<Y>::Method(Z*, Z){}
+	template<int _1, typename X>	template<typename Y, int _2>							void A::B<X>::C::D<Y>::Method(){}
+	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	void A::B<X>::C::D<Y>::Method(Z, Z*){}
+	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	void A::B<X>::C::D<Y>::Method(Z*, Z){}
 }
 )";
 	COMPILE_PROGRAM(program, pa, input);

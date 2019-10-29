@@ -838,6 +838,32 @@ ParseDeclaration_FuncVar
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+void EnsureNoTemplateSpec(List<Ptr<TemplateSpec>>& specs, Ptr<CppTokenCursor>& cursor)
+{
+	if (specs.Count() > 0)
+	{
+		throw StopParsingException(cursor);
+	}
+}
+
+Ptr<TemplateSpec> EnsureNoMultipleTemplateSpec(List<Ptr<TemplateSpec>>& specs, Ptr<CppTokenCursor>& cursor)
+{
+	if (specs.Count() > 1)
+	{
+		throw StopParsingException(cursor);
+	}
+	else if (specs.Count() == 1)
+	{
+		return specs[0];
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 void ParseDeclaration_Function(
 	const ParsingArguments& pa,
 	Ptr<Symbol> specSymbol,
@@ -864,18 +890,62 @@ void ParseDeclaration_Function(
 		throw StopParsingException(cursor);
 	}
 
-	if (specs.Count() > 1)
+	Ptr<TemplateSpec> functionSpec;
+	List<Ptr<TemplateSpec>> containerClassSpecs;
+	List<ClassDeclaration*> containerClassDecls;
+	if (declarator->classMemberCache && !declarator->classMemberCache->symbolDefinedInsideClass)
 	{
-		throw StopParsingException(cursor);
+		vint used = 0;
+		auto& thisTypes = declarator->classMemberCache->containerClassTypes;
+		for (vint i = thisTypes.Count() - 1; i >= 0; i--)
+		{
+			auto thisType = thisTypes[i];
+			auto thisDecl = thisType->GetDecl()->GetImplDecl_NFb<ClassDeclaration>();
+			if (!thisDecl) throw StopParsingException(cursor);
+
+			if (thisDecl->templateSpec)
+			{
+				if (used >= specs.Count()) throw StopParsingException(cursor);
+				auto thisSpec = specs[used++];
+				if (thisSpec->arguments.Count() != thisDecl->templateSpec->arguments.Count()) throw StopParsingException(cursor);
+				for (vint j = 0; j < thisSpec->arguments.Count(); j++)
+				{
+					auto specArg = thisSpec->arguments[j];
+					auto declArg = thisDecl->templateSpec->arguments[j];
+					if (specArg.argumentType != declArg.argumentType) throw StopParsingException(cursor);
+				}
+				containerClassSpecs.Add(thisSpec);
+				containerClassDecls.Add(thisDecl.Obj());
+			}
+		}
+
+		switch (specs.Count() - used)
+		{
+		case 0:
+			break;
+		case 1:
+			functionSpec = specs[used];
+			break;
+		default:
+			throw StopParsingException(cursor);
+		}
 	}
-	auto spec = specs.Count() > 0 ? specs[0] : nullptr;
+	else
+	{
+		functionSpec = EnsureNoMultipleTemplateSpec(specs, cursor);
+	}
 
 	auto context = declarator->classMemberCache ? declarator->classMemberCache->containerClassTypes[0]->GetDecl() : pa.scopeSymbol;
 	if (hasStat)
 	{
 		// if there is a statement, then it is a function declaration
 		auto decl = MakePtr<FunctionDeclaration>();
-		decl->templateSpec = spec;
+		decl->templateSpec = functionSpec;
+		for (vint i = 0; i < containerClassSpecs.Count(); i++)
+		{
+			decl->classSpecs.Add({ containerClassSpecs[i],containerClassDecls[i] });
+		}
+
 		FILL_FUNCTION;
 		output.Add(decl);
 
@@ -949,7 +1019,7 @@ void ParseDeclaration_Function(
 		}
 
 		auto decl = MakePtr<ForwardFunctionDeclaration>();
-		decl->templateSpec = spec;
+		decl->templateSpec = functionSpec;
 		FILL_FUNCTION;
 		output.Add(decl);
 		RequireToken(cursor, CppTokens::SEMICOLON);
@@ -1055,30 +1125,6 @@ void ParseDeclaration_Variable(
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-
-void EnsureNoTemplateSpec(List<Ptr<TemplateSpec>>& specs, Ptr<CppTokenCursor>& cursor)
-{
-	if (specs.Count() > 0)
-	{
-		throw StopParsingException(cursor);
-	}
-}
-
-Ptr<TemplateSpec> EnsureNoMultipleTemplateSpec(List<Ptr<TemplateSpec>>& specs, Ptr<CppTokenCursor>& cursor)
-{
-	if (specs.Count() > 1)
-	{
-		throw StopParsingException(cursor);
-	}
-	else if (specs.Count() == 1)
-	{
-		return specs[0];
-	}
-	else
-	{
-		return nullptr;
-	}
-}
 
 void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol, List<Ptr<TemplateSpec>>& specs, bool decoratorFriend, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
