@@ -443,254 +443,265 @@ auto&				_E6 = _E5;
 	AssertExpr(pa, L"&_D6",			L"(& _D6)",				L"double __thiscall() (::X<char, bool, float, double> ::) * const * $PR"	);
 	AssertExpr(pa, L"&_E6",			L"(& _E6)",				L"void * __cdecl() * const * $PR"											);
 }
-/*
+
 TEST_CASE(TestParseGenericMember_AddressOfMember_OfExplicitOrImplicitThisExpr)
 {
 	auto input = LR"(
+template<typename T>
 struct S
 {
-	int f;
-	int& r;
-	const int c;
-	static int s;
+	T f;
+	T& r;
+	const T c;
+	static T s;
 
-	void M1(double p){}
-	void C1(double p)const{}
-	void V1(double p)volatile{}
-	void CV1(double p)const volatile{}
-	static void F1(double p){}
+	template<typename U> void M1(U p){}
+	template<typename U> void C1(U p)const{}
+	template<typename U> void V1(U p)volatile{}
+	template<typename U> void CV1(U p)const volatile{}
+	template<typename U> static void F1(U p){}
 
-	void M2(double p);
-	void C2(double p)const;
-	void V2(double p)volatile;
-	void CV2(double p)const volatile;
-	static void F2(double p);
+	template<typename U>void M2(U p);
+	template<typename U>void C2(U p)const;
+	template<typename U>void V2(U p)volatile;
+	template<typename U>void CV2(U p)const volatile;
+	template<typename U>static void F2(U p);
 };
 
-void S::M2(double p){}
-void S::C2(double p)const{}
-void S::V2(double p)volatile{}
-void S::CV2(double p)const volatile{}
-void S::F2(double p){}
+template<typename A>	template<typename B>	void S<A>::M2(B p){}
+template<typename A>	template<typename B>	void S<A>::C2(B p)const{}
+template<typename A>	template<typename B>	void S<A>::V2(B p)volatile{}
+template<typename A>	template<typename B>	void S<A>::CV2(B p)const volatile{}
+template<typename A>	template<typename B>	void S<A>::F2(B p){}
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	for (vint i = 1; i <= 2; i++)
 	{
 		auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"S", L"M" + itow(i)));
+		WString classArg = L"::S::[T]";
+		WString funcArg = L"::S::M" + itow(i) + L"::[U]";
 
-		AssertExpr(spa, L"this",					L"this",						L"::S * $PR"								);
-		AssertExpr(spa, L"p",						L"p",							L"double $L"								);
+		AssertExpr(spa, L"this",					L"this",						(L"::S<" + classArg + L"> * $PR").Buffer()					);
+		AssertExpr(spa, L"p",						L"p",							(funcArg + L" $L").Buffer()									);
 
-		AssertExpr(spa, L"f",						L"f",							L"__int32 $L"								);
-		AssertExpr(spa, L"S::f",					L"S :: f",						L"__int32 $L"								);
-		AssertExpr(spa, L"&f",						L"(& f)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::f",					L"(& S :: f)",					L"__int32 (::S ::) * $PR"					);
-		AssertExpr(spa, L"this->f",					L"this->f",						L"__int32 $L"								);
-		AssertExpr(spa, L"this->S::f",				L"this->S :: f",				L"__int32 $L"								);
-		AssertExpr(spa, L"&this->f",				L"(& this->f)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"f",						L"f",							(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"S::f",					L"S :: f",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&f",						L"(& f)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::f",					L"(& S :: f)",					(classArg + L" (::S ::) * $PR").Buffer()					);
+		AssertExpr(spa, L"this->f",					L"this->f",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"this->S::f",				L"this->S :: f",				(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&this->f",				L"(& this->f)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			(classArg + L" * $PR").Buffer()								);
 
-		AssertExpr(spa, L"r",						L"r",							L"__int32 & $L"								);
-		AssertExpr(spa, L"S::r",					L"S :: r",						L"__int32 & $L"								);
-		AssertExpr(spa, L"&r",						L"(& r)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::r",					L"(& S :: r)",					L"__int32 & (::S ::) * $PR"					);
-		AssertExpr(spa, L"this->r",					L"this->r",						L"__int32 & $L"								);
-		AssertExpr(spa, L"this->S::r",				L"this->S :: r",				L"__int32 & $L"								);
-		AssertExpr(spa, L"&this->r",				L"(& this->r)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"r",						L"r",							(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"S::r",					L"S :: r",						(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"&r",						L"(& r)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::r",					L"(& S :: r)",					(classArg + L" & (::S ::) * $PR").Buffer()					);
+		AssertExpr(spa, L"this->r",					L"this->r",						(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"this->S::r",				L"this->S :: r",				(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"&this->r",				L"(& this->r)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			(classArg + L" * $PR").Buffer()								);
 
-		AssertExpr(spa, L"c",						L"c",							L"__int32 const $L"							);
-		AssertExpr(spa, L"S::c",					L"S :: c",						L"__int32 const $L"							);
-		AssertExpr(spa, L"&c",						L"(& c)",						L"__int32 const * $PR"						);
-		AssertExpr(spa, L"&S::c",					L"(& S :: c)",					L"__int32 const (::S ::) * $PR"				);
-		AssertExpr(spa, L"this->c",					L"this->c",						L"__int32 const $L"							);
-		AssertExpr(spa, L"this->S::c",				L"this->S :: c",				L"__int32 const $L"							);
-		AssertExpr(spa, L"&this->c",				L"(& this->c)",					L"__int32 const * $PR"						);
-		AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			L"__int32 const * $PR"						);
+		AssertExpr(spa, L"c",						L"c",							(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"S::c",					L"S :: c",						(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"&c",						L"(& c)",						(classArg + L" const * $PR").Buffer()						);
+		AssertExpr(spa, L"&S::c",					L"(& S :: c)",					(classArg + L" const (::S ::) * $PR").Buffer()				);
+		AssertExpr(spa, L"this->c",					L"this->c",						(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"this->S::c",				L"this->S :: c",				(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"&this->c",				L"(& this->c)",					(classArg + L" const * $PR").Buffer()						);
+		AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			(classArg + L" const * $PR").Buffer()						);
 
-		AssertExpr(spa, L"s",						L"s",							L"__int32 $L"								);
-		AssertExpr(spa, L"S::s",					L"S :: s",						L"__int32 $L"								);
-		AssertExpr(spa, L"&s",						L"(& s)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::s",					L"(& S :: s)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"this->s",					L"this->s",						L"__int32 $L"								);
-		AssertExpr(spa, L"this->S::s",				L"this->S :: s",				L"__int32 $L"								);
-		AssertExpr(spa, L"&this->s",				L"(& this->s)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"s",						L"s",							(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"S::s",					L"S :: s",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&s",						L"(& s)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::s",					L"(& S :: s)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"this->s",					L"this->s",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"this->S::s",				L"this->S :: s",				(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&this->s",				L"(& this->s)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			(classArg + L" * $PR").Buffer()								);
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
 		auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"S", L"C" + itow(i)));
+		WString classArg = L"::S::[T]";
+		WString funcArg = L"::S::C" + itow(i) + L"::[U]";
 
-		AssertExpr(spa, L"this",					L"this",						L"::S const * $PR"							);
-		AssertExpr(spa, L"p",						L"p",							L"double $L"								);
+		AssertExpr(spa, L"this",					L"this",						(L"::S<" + classArg + L"> const * $PR").Buffer()			);
+		AssertExpr(spa, L"p",						L"p",							(funcArg + L" $L").Buffer()									);
 
-		AssertExpr(spa, L"f",						L"f",							L"__int32 const $L"							);
-		AssertExpr(spa, L"S::f",					L"S :: f",						L"__int32 const $L"							);
-		AssertExpr(spa, L"&f",						L"(& f)",						L"__int32 const * $PR"						);
-		AssertExpr(spa, L"&S::f",					L"(& S :: f)",					L"__int32 (::S ::) * $PR"					);
-		AssertExpr(spa, L"this->f",					L"this->f",						L"__int32 const $L"							);
-		AssertExpr(spa, L"this->S::f",				L"this->S :: f",				L"__int32 const $L"							);
-		AssertExpr(spa, L"&this->f",				L"(& this->f)",					L"__int32 const * $PR"						);
-		AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			L"__int32 const * $PR"						);
+		AssertExpr(spa, L"f",						L"f",							(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"S::f",					L"S :: f",						(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"&f",						L"(& f)",						(classArg + L" const * $PR").Buffer()						);
+		AssertExpr(spa, L"&S::f",					L"(& S :: f)",					(classArg + L" (::S ::) * $PR").Buffer()					);
+		AssertExpr(spa, L"this->f",					L"this->f",						(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"this->S::f",				L"this->S :: f",				(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"&this->f",				L"(& this->f)",					(classArg + L" const * $PR").Buffer()						);
+		AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			(classArg + L" const * $PR").Buffer()						);
 
-		AssertExpr(spa, L"r",						L"r",							L"__int32 & $L"								);
-		AssertExpr(spa, L"S::r",					L"S :: r",						L"__int32 & $L"								);
-		AssertExpr(spa, L"&r",						L"(& r)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::r",					L"(& S :: r)",					L"__int32 & (::S ::) * $PR"					);
-		AssertExpr(spa, L"this->r",					L"this->r",						L"__int32 & $L"								);
-		AssertExpr(spa, L"this->S::r",				L"this->S :: r",				L"__int32 & $L"								);
-		AssertExpr(spa, L"&this->r",				L"(& this->r)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"r",						L"r",							(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"S::r",					L"S :: r",						(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"&r",						L"(& r)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::r",					L"(& S :: r)",					(classArg + L" & (::S ::) * $PR").Buffer()					);
+		AssertExpr(spa, L"this->r",					L"this->r",						(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"this->S::r",				L"this->S :: r",				(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"&this->r",				L"(& this->r)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			(classArg + L" * $PR").Buffer()								);
 
-		AssertExpr(spa, L"c",						L"c",							L"__int32 const $L"							);
-		AssertExpr(spa, L"S::c",					L"S :: c",						L"__int32 const $L"							);
-		AssertExpr(spa, L"&c",						L"(& c)",						L"__int32 const * $PR"						);
-		AssertExpr(spa, L"&S::c",					L"(& S :: c)",					L"__int32 const (::S ::) * $PR"				);
-		AssertExpr(spa, L"this->c",					L"this->c",						L"__int32 const $L"							);
-		AssertExpr(spa, L"this->S::c",				L"this->S :: c",				L"__int32 const $L"							);
-		AssertExpr(spa, L"&this->c",				L"(& this->c)",					L"__int32 const * $PR"						);
-		AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			L"__int32 const * $PR"						);
+		AssertExpr(spa, L"c",						L"c",							(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"S::c",					L"S :: c",						(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"&c",						L"(& c)",						(classArg + L" const * $PR").Buffer()						);
+		AssertExpr(spa, L"&S::c",					L"(& S :: c)",					(classArg + L" const (::S ::) * $PR").Buffer()				);
+		AssertExpr(spa, L"this->c",					L"this->c",						(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"this->S::c",				L"this->S :: c",				(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"&this->c",				L"(& this->c)",					(classArg + L" const * $PR").Buffer()						);
+		AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			(classArg + L" const * $PR").Buffer()						);
 
-		AssertExpr(spa, L"s",						L"s",							L"__int32 $L"								);
-		AssertExpr(spa, L"S::s",					L"S :: s",						L"__int32 $L"								);
-		AssertExpr(spa, L"&s",						L"(& s)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::s",					L"(& S :: s)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"this->s",					L"this->s",						L"__int32 $L"								);
-		AssertExpr(spa, L"this->S::s",				L"this->S :: s",				L"__int32 $L"								);
-		AssertExpr(spa, L"&this->s",				L"(& this->s)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"s",						L"s",							(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"S::s",					L"S :: s",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&s",						L"(& s)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::s",					L"(& S :: s)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"this->s",					L"this->s",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"this->S::s",				L"this->S :: s",				(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&this->s",				L"(& this->s)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			(classArg + L" * $PR").Buffer()								);
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
 		auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"S", L"V" + itow(i)));
+		WString classArg = L"::S::[T]";
+		WString funcArg = L"::S::V" + itow(i) + L"::[U]";
 
-		AssertExpr(spa, L"this",					L"this",						L"::S volatile * $PR"						);
-		AssertExpr(spa, L"p",						L"p",							L"double $L"								);
+		AssertExpr(spa, L"this",					L"this",						(L"::S<" + classArg + L"> volatile * $PR").Buffer()			);
+		AssertExpr(spa, L"p",						L"p",							(funcArg + L" $L").Buffer()									);
 
-		AssertExpr(spa, L"f",						L"f",							L"__int32 volatile $L"						);
-		AssertExpr(spa, L"S::f",					L"S :: f",						L"__int32 volatile $L"						);
-		AssertExpr(spa, L"&f",						L"(& f)",						L"__int32 volatile * $PR"					);
-		AssertExpr(spa, L"&S::f",					L"(& S :: f)",					L"__int32 (::S ::) * $PR"					);
-		AssertExpr(spa, L"this->f",					L"this->f",						L"__int32 volatile $L"						);
-		AssertExpr(spa, L"this->S::f",				L"this->S :: f",				L"__int32 volatile $L"						);
-		AssertExpr(spa, L"&this->f",				L"(& this->f)",					L"__int32 volatile * $PR"					);
-		AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			L"__int32 volatile * $PR"					);
+		AssertExpr(spa, L"f",						L"f",							(classArg + L" volatile $L").Buffer()						);
+		AssertExpr(spa, L"S::f",					L"S :: f",						(classArg + L" volatile $L").Buffer()						);
+		AssertExpr(spa, L"&f",						L"(& f)",						(classArg + L" volatile * $PR").Buffer()					);
+		AssertExpr(spa, L"&S::f",					L"(& S :: f)",					(classArg + L" (::S ::) * $PR").Buffer()					);
+		AssertExpr(spa, L"this->f",					L"this->f",						(classArg + L" volatile $L").Buffer()						);
+		AssertExpr(spa, L"this->S::f",				L"this->S :: f",				(classArg + L" volatile $L").Buffer()						);
+		AssertExpr(spa, L"&this->f",				L"(& this->f)",					(classArg + L" volatile * $PR").Buffer()					);
+		AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			(classArg + L" volatile * $PR").Buffer()					);
 
-		AssertExpr(spa, L"r",						L"r",							L"__int32 & $L"								);
-		AssertExpr(spa, L"S::r",					L"S :: r",						L"__int32 & $L"								);
-		AssertExpr(spa, L"&r",						L"(& r)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::r",					L"(& S :: r)",					L"__int32 & (::S ::) * $PR"					);
-		AssertExpr(spa, L"this->r",					L"this->r",						L"__int32 & $L"								);
-		AssertExpr(spa, L"this->S::r",				L"this->S :: r",				L"__int32 & $L"								);
-		AssertExpr(spa, L"&this->r",				L"(& this->r)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"r",						L"r",							(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"S::r",					L"S :: r",						(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"&r",						L"(& r)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::r",					L"(& S :: r)",					(classArg + L" & (::S ::) * $PR").Buffer()					);
+		AssertExpr(spa, L"this->r",					L"this->r",						(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"this->S::r",				L"this->S :: r",				(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"&this->r",				L"(& this->r)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			(classArg + L" * $PR").Buffer()								);
 
-		AssertExpr(spa, L"c",						L"c",							L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"S::c",					L"S :: c",						L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"&c",						L"(& c)",						L"__int32 const volatile * $PR"				);
-		AssertExpr(spa, L"&S::c",					L"(& S :: c)",					L"__int32 const (::S ::) * $PR"				);
-		AssertExpr(spa, L"this->c",					L"this->c",						L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"this->S::c",				L"this->S :: c",				L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"&this->c",				L"(& this->c)",					L"__int32 const volatile * $PR"				);
-		AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			L"__int32 const volatile * $PR"				);
+		AssertExpr(spa, L"c",						L"c",							(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"S::c",					L"S :: c",						(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"&c",						L"(& c)",						(classArg + L" const volatile * $PR").Buffer()				);
+		AssertExpr(spa, L"&S::c",					L"(& S :: c)",					(classArg + L" const (::S ::) * $PR").Buffer()				);
+		AssertExpr(spa, L"this->c",					L"this->c",						(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"this->S::c",				L"this->S :: c",				(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"&this->c",				L"(& this->c)",					(classArg + L" const volatile * $PR").Buffer()				);
+		AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			(classArg + L" const volatile * $PR").Buffer()				);
 
-		AssertExpr(spa, L"s",						L"s",							L"__int32 $L"								);
-		AssertExpr(spa, L"S::s",					L"S :: s",						L"__int32 $L"								);
-		AssertExpr(spa, L"&s",						L"(& s)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::s",					L"(& S :: s)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"this->s",					L"this->s",						L"__int32 $L"								);
-		AssertExpr(spa, L"this->S::s",				L"this->S :: s",				L"__int32 $L"								);
-		AssertExpr(spa, L"&this->s",				L"(& this->s)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"s",						L"s",							(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"S::s",					L"S :: s",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&s",						L"(& s)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::s",					L"(& S :: s)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"this->s",					L"this->s",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"this->S::s",				L"this->S :: s",				(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&this->s",				L"(& this->s)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			(classArg + L" * $PR").Buffer()								);
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
 		auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"S", L"CV" + itow(i)));
+		WString classArg = L"::S::[T]";
+		WString funcArg = L"::S::CV" + itow(i) + L"::[U]";
 
-		AssertExpr(spa, L"this",					L"this",						L"::S const volatile * $PR"					);
-		AssertExpr(spa, L"p",						L"p",							L"double $L"								);
+		AssertExpr(spa, L"this",					L"this",						(L"::S<" + classArg + L"> const volatile* $PR").Buffer()	);
+		AssertExpr(spa, L"p",						L"p",							(funcArg + L" $L").Buffer()									);
 
-		AssertExpr(spa, L"f",						L"f",							L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"S::f",					L"S :: f",						L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"&f",						L"(& f)",						L"__int32 const volatile * $PR"				);
-		AssertExpr(spa, L"&S::f",					L"(& S :: f)",					L"__int32 (::S ::) * $PR"					);
-		AssertExpr(spa, L"this->f",					L"this->f",						L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"this->S::f",				L"this->S :: f",				L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"&this->f",				L"(& this->f)",					L"__int32 const volatile * $PR"				);
-		AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			L"__int32 const volatile * $PR"				);
+		AssertExpr(spa, L"f",						L"f",							(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"S::f",					L"S :: f",						(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"&f",						L"(& f)",						(classArg + L" const volatile * $PR").Buffer()				);
+		AssertExpr(spa, L"&S::f",					L"(& S :: f)",					(classArg + L" (::S ::) * $PR").Buffer()					);
+		AssertExpr(spa, L"this->f",					L"this->f",						(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"this->S::f",				L"this->S :: f",				(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"&this->f",				L"(& this->f)",					(classArg + L" const volatile * $PR").Buffer()				);
+		AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			(classArg + L" const volatile * $PR").Buffer()				);
 
-		AssertExpr(spa, L"r",						L"r",							L"__int32 & $L"								);
-		AssertExpr(spa, L"S::r",					L"S :: r",						L"__int32 & $L"								);
-		AssertExpr(spa, L"&r",						L"(& r)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::r",					L"(& S :: r)",					L"__int32 & (::S ::) * $PR"					);
-		AssertExpr(spa, L"this->r",					L"this->r",						L"__int32 & $L"								);
-		AssertExpr(spa, L"this->S::r",				L"this->S :: r",				L"__int32 & $L"								);
-		AssertExpr(spa, L"&this->r",				L"(& this->r)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"r",						L"r",							(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"S::r",					L"S :: r",						(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"&r",						L"(& r)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::r",					L"(& S :: r)",					(classArg + L" & (::S ::) * $PR").Buffer()					);
+		AssertExpr(spa, L"this->r",					L"this->r",						(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"this->S::r",				L"this->S :: r",				(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"&this->r",				L"(& this->r)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			(classArg + L" * $PR").Buffer()								);
 
-		AssertExpr(spa, L"c",						L"c",							L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"S::c",					L"S :: c",						L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"&c",						L"(& c)",						L"__int32 const volatile * $PR"				);
-		AssertExpr(spa, L"&S::c",					L"(& S :: c)",					L"__int32 const (::S ::) * $PR"				);
-		AssertExpr(spa, L"this->c",					L"this->c",						L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"this->S::c",				L"this->S :: c",				L"__int32 const volatile $L"				);
-		AssertExpr(spa, L"&this->c",				L"(& this->c)",					L"__int32 const volatile * $PR"				);
-		AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			L"__int32 const volatile * $PR"				);
+		AssertExpr(spa, L"c",						L"c",							(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"S::c",					L"S :: c",						(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"&c",						L"(& c)",						(classArg + L" const volatile * $PR").Buffer()				);
+		AssertExpr(spa, L"&S::c",					L"(& S :: c)",					(classArg + L" const (::S ::) * $PR").Buffer()				);
+		AssertExpr(spa, L"this->c",					L"this->c",						(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"this->S::c",				L"this->S :: c",				(classArg + L" const volatile $L").Buffer()					);
+		AssertExpr(spa, L"&this->c",				L"(& this->c)",					(classArg + L" const volatile * $PR").Buffer()				);
+		AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			(classArg + L" const volatile * $PR").Buffer()				);
 
-		AssertExpr(spa, L"s",						L"s",							L"__int32 $L"								);
-		AssertExpr(spa, L"S::s",					L"S :: s",						L"__int32 $L"								);
-		AssertExpr(spa, L"&s",						L"(& s)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::s",					L"(& S :: s)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"this->s",					L"this->s",						L"__int32 $L"								);
-		AssertExpr(spa, L"this->S::s",				L"this->S :: s",				L"__int32 $L"								);
-		AssertExpr(spa, L"&this->s",				L"(& this->s)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"s",						L"s",							(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"S::s",					L"S :: s",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&s",						L"(& s)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::s",					L"(& S :: s)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"this->s",					L"this->s",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"this->S::s",				L"this->S :: s",				(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&this->s",				L"(& this->s)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			(classArg + L" * $PR").Buffer()								);
 	}
 	for (vint i = 1; i <= 2; i++)
 	{
 		auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"S", L"F" + itow(i)));
+		WString classArg = L"::S::[T]";
+		WString funcArg = L"::S::S" + itow(i) + L"::[U]";
 
-		AssertExpr(spa, L"this",					L"this",						L"::S * $PR"								);
-		AssertExpr(spa, L"p",						L"p",							L"double $L"								);
+		AssertExpr(spa, L"this",					L"this",						(L"::S<" + classArg + L"> * $PR").Buffer()					);
+		AssertExpr(spa, L"p",						L"p",							(funcArg + L" $L").Buffer()									);
 
-		AssertExpr(spa, L"f",						L"f",							L"__int32 $L"								);
-		AssertExpr(spa, L"S::f",					L"S :: f",						L"__int32 $L"								);
-		AssertExpr(spa, L"&f",						L"(& f)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::f",					L"(& S :: f)",					L"__int32 (::S ::) * $PR"					);
-		AssertExpr(spa, L"this->f",					L"this->f",						L"__int32 $L"								);
-		AssertExpr(spa, L"this->S::f",				L"this->S :: f",				L"__int32 $L"								);
-		AssertExpr(spa, L"&this->f",				L"(& this->f)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"f",						L"f",							(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"S::f",					L"S :: f",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&f",						L"(& f)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::f",					L"(& S :: f)",					(classArg + L" (::S ::) * $PR").Buffer()					);
+		AssertExpr(spa, L"this->f",					L"this->f",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"this->S::f",				L"this->S :: f",				(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&this->f",				L"(& this->f)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			(classArg + L" * $PR").Buffer()								);
 
-		AssertExpr(spa, L"r",						L"r",							L"__int32 & $L"								);
-		AssertExpr(spa, L"S::r",					L"S :: r",						L"__int32 & $L"								);
-		AssertExpr(spa, L"&r",						L"(& r)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::r",					L"(& S :: r)",					L"__int32 & (::S ::) * $PR"					);
-		AssertExpr(spa, L"this->r",					L"this->r",						L"__int32 & $L"								);
-		AssertExpr(spa, L"this->S::r",				L"this->S :: r",				L"__int32 & $L"								);
-		AssertExpr(spa, L"&this->r",				L"(& this->r)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"r",						L"r",							(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"S::r",					L"S :: r",						(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"&r",						L"(& r)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::r",					L"(& S :: r)",					(classArg + L" & (::S ::) * $PR").Buffer()					);
+		AssertExpr(spa, L"this->r",					L"this->r",						(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"this->S::r",				L"this->S :: r",				(classArg + L" & $L").Buffer()								);
+		AssertExpr(spa, L"&this->r",				L"(& this->r)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			(classArg + L" * $PR").Buffer()								);
 
-		AssertExpr(spa, L"c",						L"c",							L"__int32 const $L"							);
-		AssertExpr(spa, L"S::c",					L"S :: c",						L"__int32 const $L"							);
-		AssertExpr(spa, L"&c",						L"(& c)",						L"__int32 const * $PR"						);
-		AssertExpr(spa, L"&S::c",					L"(& S :: c)",					L"__int32 const (::S ::) * $PR"				);
-		AssertExpr(spa, L"this->c",					L"this->c",						L"__int32 const $L"							);
-		AssertExpr(spa, L"this->S::c",				L"this->S :: c",				L"__int32 const $L"							);
-		AssertExpr(spa, L"&this->c",				L"(& this->c)",					L"__int32 const * $PR"						);
-		AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			L"__int32 const * $PR"						);
+		AssertExpr(spa, L"c",						L"c",							(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"S::c",					L"S :: c",						(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"&c",						L"(& c)",						(classArg + L" const * $PR").Buffer()						);
+		AssertExpr(spa, L"&S::c",					L"(& S :: c)",					(classArg + L" const (::S ::) * $PR").Buffer()				);
+		AssertExpr(spa, L"this->c",					L"this->c",						(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"this->S::c",				L"this->S :: c",				(classArg + L" const $L").Buffer()							);
+		AssertExpr(spa, L"&this->c",				L"(& this->c)",					(classArg + L" const * $PR").Buffer()						);
+		AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			(classArg + L" const * $PR").Buffer()						);
 
-		AssertExpr(spa, L"s",						L"s",							L"__int32 $L"								);
-		AssertExpr(spa, L"S::s",					L"S :: s",						L"__int32 $L"								);
-		AssertExpr(spa, L"&s",						L"(& s)",						L"__int32 * $PR"							);
-		AssertExpr(spa, L"&S::s",					L"(& S :: s)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"this->s",					L"this->s",						L"__int32 $L"								);
-		AssertExpr(spa, L"this->S::s",				L"this->S :: s",				L"__int32 $L"								);
-		AssertExpr(spa, L"&this->s",				L"(& this->s)",					L"__int32 * $PR"							);
-		AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			L"__int32 * $PR"							);
+		AssertExpr(spa, L"s",						L"s",							(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"S::s",					L"S :: s",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&s",						L"(& s)",						(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&S::s",					L"(& S :: s)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"this->s",					L"this->s",						(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"this->S::s",				L"this->S :: s",				(classArg + L" $L").Buffer()								);
+		AssertExpr(spa, L"&this->s",				L"(& this->s)",					(classArg + L" * $PR").Buffer()								);
+		AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			(classArg + L" * $PR").Buffer()								);
 	}
 }
-
+/*
 TEST_CASE(TestParseGenericMember_FieldReference)
 {
 	auto input = LR"(
