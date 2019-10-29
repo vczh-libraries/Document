@@ -16,10 +16,25 @@
   - [x] Parse `template<typename T> template<typename U> template<typename V> void A<T>::B<U>::F(){}`.
     - store all `template<...>` for classes in `FunctionDeclaration`
     - matches `template<typename X>class A { template<typename Y>class B { void template<typename Z>F(); }; };`.
-  - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now)
-    - [ ] `Name_Child_CategoryExpr`
-    - [ ] `Name_Child_FieldAccess_CategoryExpr`
-    - [ ] Check types of `obj.Method` and `obj.Method<T>` examples when they have implementations defined outside of classes
+  - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now, `\.Cast<(Id|Child)Expr>`)
+    - [ ] Extract function: given `types` and `typeVta` and evaluate expression `types<...>`.
+      - `VariaditInput<>::ApplyTypes` add `isVta` parameter.
+    - [ ] Rename `ResolvableType` to `Category_Id_Child_Type`.
+    - [ ] Rename `ResolvableExpr` to `Category_Id_Child_Expr`.
+      - inheriting from `Category_Id_Child_Generic_Expr`.
+        - inheriting from `Category_Id_Child_Generic_FieldAccess_Expr`.
+    - [ ] `FuncAccessExpr` take care of `Category_Id_Child_Generic_FieldAccess_Expr`.
+      - `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FuncAccessExpr* self)override`: adding hyper linkes. Cast to `Category_Id_Child_Generic_FieldAccess_Expr` first and then deal with all possible situations.
+    - [ ] `FieldAccessExpr` take care of `Category_Id_Child_Generic_Expr`.
+      - Change `name` from `ResolvableExpr` to `Category_Id_Child_Generic_Expr`.
+      - `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FieldAccessExpr* self)override`: at the beginning.
+      - `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FuncAccessExpr* self)override`: adding hyper linkes to a function call to `FieldAccessExpr`.
+    - [ ] `PrefixUnaryExpr` (AddressOf) takes care of `Category_Id_Child_Generic_Expr`.
+      - `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(PrefixUnaryExpr* self)override`: at the beginning to set `SearchPolicy::ChildSymbolFromOutside` (evaluating `ChildExpr` directly won't do this).
+      - `Ast_Evaluate_ToTsys_ExprImpl.cpp` -> `void ProcessPrefixUnaryExpr...)`: `case CppPrefixUnaryOp::AddressOf`.
+    - [ ] Check types of `&Name<T>` and `&Class::Method<T>`.
+    - [ ] Check types of `obj.Method` and `obj.Method<T>` for methods defined outside of classes.
+    - [ ] Check `FuncAccessExpr`, `FieldAccessExpr`, `PrefixUnaryExpr` (AddressOf) for generating hyper links on generic expression.
   - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
   - [ ] Inside `template<...> class X`, if `X` is used as a type without type arguments, it is filled with template arguments.
   - [ ] Function specializations recognized but not used
