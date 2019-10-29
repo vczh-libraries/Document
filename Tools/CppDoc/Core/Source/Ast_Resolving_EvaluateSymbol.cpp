@@ -130,10 +130,8 @@ namespace symbol_type_resolving
 
 	struct Eval
 	{
-	private:
-		bool								notEvaluated;
-
 	public:
+		bool								notEvaluated;
 		Symbol*								symbol;
 		ParsingArguments					declPa;
 		symbol_component::Evaluation&		ev;
@@ -143,14 +141,13 @@ namespace symbol_type_resolving
 			bool							_notEvaluated,
 			Symbol*							_symbol,
 			ParsingArguments				_declPa,
-			symbol_component::Evaluation&	_ev,
-			TypeTsysList&					_evaluatedTypes
+			symbol_component::Evaluation&	_ev
 		)
 			: notEvaluated(_notEvaluated)
 			, symbol(_symbol)
 			, declPa(_declPa)
 			, ev(_ev)
-			, evaluatedTypes(_evaluatedTypes)
+			, evaluatedTypes(_ev.Get())
 		{
 		}
 
@@ -243,11 +240,11 @@ namespace symbol_type_resolving
 		case symbol_component::EvaluationProgress::Evaluating:
 			throw NotResolvableException();
 		case symbol_component::EvaluationProgress::Evaluated:
-			return Eval(false, symbol, declPa, ev, ev.Get());
+			return Eval(false, symbol, declPa, ev);
 		default:
 			ev.progress = symbol_component::EvaluationProgress::Evaluating;
 			ev.Allocate();
-			return Eval(true, symbol, declPa, ev, ev.Get());
+			return Eval(true, symbol, declPa, ev);
 		}
 	}
 
@@ -424,6 +421,25 @@ namespace symbol_type_resolving
 	)
 	{
 		auto eval = ProcessArguments(invokerPa, classDecl, classDecl->templateSpec, parentDeclType, argumentsToApply);
+		if (eval)
+		{
+			for (vint i = 0; i < eval.evaluatedTypes.Count(); i++)
+			{
+				auto tsys = eval.evaluatedTypes[i];
+				if (tsys->GetType() == TsysType::GenericFunction)
+				{
+					auto expect = GetTemplateArgumentKey(classDecl->templateSpec->arguments[0], eval.declPa.tsys.Obj());
+					auto actual = tsys->GetParam(0);
+					if (expect != actual)
+					{
+						eval.notEvaluated = true;
+						eval.evaluatedTypes.Clear();
+						eval.ev.progress = symbol_component::EvaluationProgress::Evaluating;
+					}
+				}
+			}
+		}
+
 		if (eval)
 		{
 			if (classDecl->templateSpec)

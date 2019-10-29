@@ -37,6 +37,7 @@
       - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
     - [ ] When overloading, specialized functions are not considered. When a template function wins, then choose among the primiary and its specializations.
 - [ ] More `template` on classes (partial specialization).
+  - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
   - [ ] Connect methods with forward declarations inside multiple levels of template classes.
     - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
   - [ ] With a `DeclInstant` is created, best possible choices are returned at the same time.

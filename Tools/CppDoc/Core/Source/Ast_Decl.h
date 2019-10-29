@@ -162,6 +162,8 @@ public:
 	Ptr<SpecializationSpec>							speclizationSpec;
 	CppClassType									classType;
 	bool											decoratorFriend = false;
+
+	Ptr<Symbol>										keepTemplateSpecArgumentSymbolsAliveOnlyForForwardDeclaration;
 };
 
 /***********************************************************************
