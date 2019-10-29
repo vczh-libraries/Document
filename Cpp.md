@@ -47,6 +47,8 @@
 - [ ] `nullptr` failed to convert to `function_type * const &`.
 - [ ] `decltype(EXPR)::ChildType`
 - [ ] Connect function with forward declarations containing `decltype(EXPR)` in expression type.
+- [ ] Pass variadic template argument to placement new expression.
+- [ ] `GenerateMembers` on `DeclInstance`.
 
 ## Finisher Work Items
 
