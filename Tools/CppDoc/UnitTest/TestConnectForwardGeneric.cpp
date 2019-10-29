@@ -247,9 +247,9 @@ namespace ns
 				template<typename U, int Y>
 				struct D
 				{
-					void Method();
-					template<typename V> void Method(V, V*);
-					template<typename V> void Method(V*, V);
+					void Method(T, U);
+					template<typename V> void Method(T, U*, V, V*);
+					template<typename V> void Method(T*, U, V*, V);
 				};
 			};
 		};
@@ -258,9 +258,9 @@ namespace ns
 
 namespace ns
 {
-	template<int _1, typename X>	template<typename Y, int _2>							void A::B<X>::C::D<Y>::Method(){}
-	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	void A::B<X>::C::D<Y>::Method(Z, Z*){}
-	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	void A::B<X>::C::D<Y>::Method(Z*, Z){}
+	template<int _1, typename X>	template<typename Y, int _2>							void A::B<_1, X>::C::D<Y, _2>::Method(X, Y){}
+	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	void A::B<_1, X>::C::D<Y, _2>::Method(X, Y*, Z, Z*){}
+	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	void A::B<_1, X>::C::D<Y, _2>::Method(X*, Y, Z*, Z){}
 }
 )";
 	COMPILE_PROGRAM(program, pa, input);
