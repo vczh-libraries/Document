@@ -273,6 +273,16 @@ bool IsCompatibleFunctionDeclInSameScope(Ptr<ForwardFunctionDeclaration> declNew
 	{
 		return false;
 	}
+	if (auto funcDecl = declNew.Cast<FunctionDeclaration>())
+	{
+		for (vint i = 0; i < funcDecl->classSpecs.Count(); i++)
+		{
+			if (!IsCompatibleTemplateSpec(funcDecl->classSpecs[i].f0, funcDecl->classSpecs[i].f1->templateSpec, equivalentNames))
+			{
+				return false;
+			}
+		}
+	}
 
 	auto typeNew = declNew->type;
 	auto typeOld = declOld->type;
