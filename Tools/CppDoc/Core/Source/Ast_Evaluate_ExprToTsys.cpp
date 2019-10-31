@@ -249,16 +249,25 @@ public:
 		bool classVta = false;
 		ExprToTsysInternal(pa, self->expr, parentTypes, parentVta);
 
-		auto childExpr = self->name.Cast<ChildExpr>();
-		auto idExpr = self->name.Cast<IdExpr>();
-		if (childExpr && IsResolvedToType(childExpr->classType))
-		{
-			TypeToTsysInternal(pa, childExpr->classType, classTypes, classVta);
-		}
-		else
-		{
-			classTypes.Add(nullptr);
-		}
+		Ptr<IdExpr> idExpr;
+		Ptr<ChildExpr> childExpr;
+		MatchCategoryExpr(
+			self->name,
+			[&idExpr, &classTypes](const Ptr<IdExpr>& _idExpr)
+			{
+				idExpr = _idExpr;
+				classTypes.Add(nullptr);
+			},
+			[this, &childExpr, &classTypes, &classVta](const Ptr<ChildExpr>& _childExpr)
+			{
+				childExpr = _childExpr;
+				TypeToTsysInternal(pa, childExpr->classType, classTypes, classVta);
+			},
+			[](const Ptr<GenericExpr>& genericExpr)
+			{
+				throw NotConvertableException();
+			}
+		);
 
 		ResolveSymbolResult totalRar;
 		bool operatorIndexed = false;
@@ -428,36 +437,44 @@ public:
 		{
 			CppName* name = nullptr;
 			Ptr<Resolving>* nameResolving = nullptr;
-			if (auto idExpr = self->expr.Cast<IdExpr>())
+
+			Ptr<Category_Id_Child_Generic_Expr> catIcgExpr;
+			if (auto fieldExpr = self->expr.Cast<FieldAccessExpr>())
 			{
-				name = &idExpr->name;
-				nameResolving = &idExpr->resolving;
+				catIcgExpr = fieldExpr->name;
 			}
-			else if (auto childExpr = self->expr.Cast<ChildExpr>())
+			else
 			{
-				name = &childExpr->name;
-				nameResolving = &childExpr->resolving;
+				catIcgExpr = self->expr.Cast<Category_Id_Child_Generic_Expr>();
 			}
-			else if (auto genericExpr = self->expr.Cast<GenericExpr>())
+
+			if(catIcgExpr)
 			{
-				if (auto idExpr = genericExpr->expr.Cast<IdExpr>())
+				auto processId = [&](const Ptr<IdExpr>& idExpr)
 				{
 					name = &idExpr->name;
 					nameResolving = &idExpr->resolving;
-				}
-				else if (auto childExpr = genericExpr->expr.Cast<ChildExpr>())
+				};
+
+				auto processChild = [&](const Ptr<ChildExpr>& childExpr)
 				{
 					name = &childExpr->name;
 					nameResolving = &childExpr->resolving;
-				}
-			}
-			else if (auto fieldExpr = self->expr.Cast<FieldAccessExpr>())
-			{
-				if (auto fieldExprName = fieldExpr->name.Cast<IdExpr>())
-				{
-					name = &fieldExprName->name;
-					nameResolving = &fieldExprName->resolving;
-				}
+				};
+
+				MatchCategoryExpr(
+					catIcgExpr,
+					processId,
+					processChild,
+					[&](const Ptr<GenericExpr>& genericExpr)
+					{
+						MatchCategoryExpr(
+							genericExpr->expr,
+							processId,
+							processChild
+						);
+					}
+				);
 			}
 
 			bool addedName = false;
@@ -568,40 +585,65 @@ public:
 	{
 		ExprTsysList types;
 		bool typesVta = false;
+		bool skipEvaluatingOperand = false;
 		if (self->op == CppPrefixUnaryOp::AddressOf)
 		{
-			if (auto childExpr = self->operand.Cast<ChildExpr>())
+			if (auto catIcgExpr = self->operand.Cast<Category_Id_Child_Generic_Expr>())
 			{
-				if (IsResolvedToType(childExpr->classType))
-				{
-					TypeTsysList classTypes;
-					TypeToTsysInternal(pa, childExpr->classType, classTypes, typesVta);
-					ExpandPotentialVtaMultiResult(pa, types, [this, self, childExpr](ExprTsysList& processResult, ExprTsysItem arg1)
+				MatchCategoryExpr(
+					catIcgExpr,
+					[](const Ptr<IdExpr>& idExpr)
 					{
-						if (arg1.tsys->IsUnknownType())
+					},
+					[this, self, &types, &typesVta, &skipEvaluatingOperand](const Ptr<ChildExpr>& childExpr)
+					{
+						if (IsResolvedToType(childExpr->classType))
 						{
-							AddTemp(processResult, pa.tsys->Any());
-						}
-						else if (arg1.tsys->GetType() == TsysType::Decl || arg1.tsys->GetType() == TsysType::DeclInstant)
-						{
-							auto newPa = pa.WithScope(arg1.tsys->GetDecl());
-							auto rsr = ResolveSymbol(newPa, childExpr->name, SearchPolicy::ChildSymbolFromOutside);
-							if (rsr.values)
+							TypeTsysList classTypes;
+							TypeToTsysInternal(pa, childExpr->classType, classTypes, typesVta);
+							ExpandPotentialVtaMultiResult(pa, types, [this, self, childExpr](ExprTsysList& processResult, ExprTsysItem arg1)
 							{
-								for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
+								if (arg1.tsys->IsUnknownType())
 								{
-									VisitSymbolForScope(newPa, &arg1, rsr.values->resolvedSymbols[i], processResult);
+									AddTemp(processResult, pa.tsys->Any());
 								}
-							}
+								else if (arg1.tsys->GetType() == TsysType::Decl || arg1.tsys->GetType() == TsysType::DeclInstant)
+								{
+									auto newPa = pa.WithScope(arg1.tsys->GetDecl());
+									auto rsr = ResolveSymbol(newPa, childExpr->name, SearchPolicy::ChildSymbolFromOutside);
+									if (rsr.values)
+									{
+										for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
+										{
+											VisitSymbolForScope(newPa, &arg1, rsr.values->resolvedSymbols[i], processResult);
+										}
+									}
+								}
+							}, Input(classTypes, typesVta));
+							skipEvaluatingOperand = true;
 						}
-					}, Input(classTypes, typesVta));
-					goto SKIP_RESOLVING_OPERAND;
-				}
+					},
+					[](const Ptr<GenericExpr>& genericExpr)
+					{
+						MatchCategoryExpr(
+							genericExpr->expr,
+							[&](const Ptr<IdExpr>& idExpr)
+							{
+							},
+							[&](const Ptr<ChildExpr>& childExpr)
+							{
+								throw NotResolvableException();
+							}
+						);
+					}
+				);
 			}
 		}
 
-		ExprToTsysInternal(pa, self->operand, types, typesVta);
-	SKIP_RESOLVING_OPERAND:
+		if (!skipEvaluatingOperand)
+		{
+			ExprToTsysInternal(pa, self->operand, types, typesVta);
+		}
 		bool indexed = false;
 
 		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &indexed](ExprTsysList& processResult, ExprTsysItem arg1)

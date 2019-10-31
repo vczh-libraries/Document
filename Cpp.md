@@ -22,18 +22,24 @@
     - [x] Rename `ResolvableType` to `Category_Id_Child_Type`.
     - [x] Rename `ResolvableExpr` to `Category_Id_Child_Expr`.
       - inheriting from `Category_Id_Child_Generic_Expr`.
-        - inheriting from `Category_Id_Child_Generic_FieldAccess_Expr`.
-    - [ ] `FuncAccessExpr` take care of `Category_Id_Child_Generic_FieldAccess_Expr`.
-      - `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FuncAccessExpr* self)override`: adding hyper linkes. Cast to `Category_Id_Child_Generic_FieldAccess_Expr` first and then deal with all possible situations.
+    - [x] `FuncAccessExpr` take care of `Category_Id_Child_Generic_FieldAccess_Expr`.
+      - [x] `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FuncAccessExpr* self)override`: adding hyper linkes. Cast to `Category_Id_Child_Generic_FieldAccess_Expr` first and then deal with all possible situations.
     - [ ] `FieldAccessExpr` take care of `Category_Id_Child_Generic_Expr`.
-      - Change `name` from `ResolvableExpr` to `Category_Id_Child_Generic_Expr`.
-      - `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FieldAccessExpr* self)override`: at the beginning.
-      - `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FuncAccessExpr* self)override`: adding hyper linkes to a function call to `FieldAccessExpr`.
+      - [x] Change `name` from `ResolvableExpr` to `Category_Id_Child_Generic_Expr`.
+      - [ ] `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FieldAccessExpr* self)override`: at the beginning.
+        - [x] Use `MatchCategoryExpr`
+        - [ ] Remove the need of passing `idExpr` and `childExpr` to `ProcessFieldAccessExpr`
+        - [ ] Refactor `ProcessFieldAccessExpr` so that `childExpr` can be evaluated first and then passed to this function, instead of evaluating `childExpr` inside this function
+        - [ ] Handle `GenericExpr`
+      - [x] `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FuncAccessExpr* self)override`: adding hyper linkes to a function call to `FieldAccessExpr`.
     - [ ] `PrefixUnaryExpr` (AddressOf) takes care of `Category_Id_Child_Generic_Expr`.
-      - `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(PrefixUnaryExpr* self)override`: at the beginning to set `SearchPolicy::ChildSymbolFromOutside` (evaluating `ChildExpr` directly won't do this).
-      - `Ast_Evaluate_ToTsys_ExprImpl.cpp` -> `void ProcessPrefixUnaryExpr...)`: `case CppPrefixUnaryOp::AddressOf`.
+      - [ ] `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(PrefixUnaryExpr* self)override`: at the beginning to set `SearchPolicy::ChildSymbolFromOutside` (evaluating `ChildExpr` directly won't do this).
+        - [x] Use `MatchCategoryExpr`
+        - [ ] Handle `GenericExpr to ChildExpr`
+      - [x] `Ast_Evaluate_ToTsys_ExprImpl.cpp` -> `void ProcessPrefixUnaryExpr(...)`: `case CppPrefixUnaryOp::AddressOf`.
     - [ ] Check types of `&Name<T>` and `&Class::Method<T>`.
     - [ ] Check types of `obj.Method` and `obj.Method<T>` for methods defined outside of classes.
+    - [ ] Check types of `obj.X::Method` and `obj.X::Method<T>` for methods defined outside of classes.
     - [ ] Check `FuncAccessExpr`, `FieldAccessExpr`, `PrefixUnaryExpr` (AddressOf) for generating hyper links on generic expression.
   - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
   - [ ] Inside `template<...> class X`, if `X` is used as a type without type arguments, it is filled with template arguments.

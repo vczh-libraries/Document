@@ -481,16 +481,26 @@ namespace symbol_totsys_impl
 		case CppPrefixUnaryOp::AddressOf:
 			if (entity->GetType() == TsysType::Ptr && arg.type == ExprTsysType::PRValue)
 			{
-				if (entity->GetElement()->GetType() == TsysType::Member)
+				if (auto catIcgExpr = self->operand.Cast<Category_Id_Child_Generic_Expr>())
 				{
-					if (self->operand.Cast<ChildExpr>() || self->operand.Cast<GenericExpr>())
+					if (entity->GetElement()->GetType() == TsysType::Member)
 					{
-						AddTemp(result, arg.tsys);
+						MatchCategoryExpr(
+							catIcgExpr,
+							[](const Ptr<IdExpr>& idExpr)
+							{
+							},
+							[&result, arg](const Ptr<ChildExpr>& childExpr)
+							{
+								AddTemp(result, arg.tsys);
+							},
+							[&result, arg](const Ptr<GenericExpr>& genericExpr)
+							{
+								AddTemp(result, arg.tsys);
+							}
+						);
 					}
-				}
-				else if (entity->GetElement()->GetType() == TsysType::Function)
-				{
-					if (self->operand.Cast<ChildExpr>() || self->operand.Cast<IdExpr>() || self->operand.Cast<GenericExpr>())
+					else if (entity->GetElement()->GetType() == TsysType::Function)
 					{
 						AddTemp(result, arg.tsys);
 					}

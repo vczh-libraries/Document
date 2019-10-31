@@ -324,4 +324,46 @@ public:
 	VariadicList<GenericArgument>	arguments;
 };
 
+/***********************************************************************
+Expressions
+***********************************************************************/
+
+template<typename TId, typename TChild, typename TGeneric>
+void MatchCategoryExpr(const Ptr<Category_Id_Child_Generic_Expr>& expr, TId&& processId, TChild&& processChild, TGeneric&& processGeneric)
+{
+	if (auto idExpr = expr.Cast<IdExpr>())
+	{
+		processId(idExpr);
+	}
+	else if (auto childExpr = expr.Cast<ChildExpr>())
+	{
+		processChild(childExpr);
+	}
+	else if (auto genericExpr = expr.Cast<GenericExpr>())
+	{
+		processGeneric(genericExpr);
+	}
+	else
+	{
+		throw NotResolvableException();
+	}
+}
+
+template<typename TId, typename TChild>
+void MatchCategoryExpr(const Ptr<Category_Id_Child_Expr>& expr, TId&& processId, TChild&& processChild)
+{
+	if (auto idExpr = expr.Cast<IdExpr>())
+	{
+		processId(idExpr);
+	}
+	else if (auto childExpr = expr.Cast<ChildExpr>())
+	{
+		processChild(childExpr);
+	}
+	else
+	{
+		throw NotResolvableException();
+	}
+}
+
 #endif
