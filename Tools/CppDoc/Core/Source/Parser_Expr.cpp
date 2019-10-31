@@ -146,7 +146,7 @@ Ptr<ChildExpr> TryParseChildExpr(const ParsingArguments& pa, Ptr<Type> classType
 ParseNameOrCtorAccessExpr
 ***********************************************************************/
 
-Ptr<Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<ResolvableExpr> resolvableExpr, bool templateKeyword)
+Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<Category_Id_Child_Expr> catIdChildExpr, bool templateKeyword)
 {
 	if (!TestToken(cursor, CppTokens::LT, false))
 	{
@@ -156,37 +156,37 @@ Ptr<Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		}
 		else
 		{
-			return resolvableExpr;
+			return catIdChildExpr;
 		}
 	}
 
-	if (!resolvableExpr->resolving)
+	if (!catIdChildExpr->resolving)
 	{
 		if (!templateKeyword)
 		{
-			return resolvableExpr;
+			return catIdChildExpr;
 		}
 	}
 
-	if (resolvableExpr->resolving)
+	if (catIdChildExpr->resolving)
 	{
 		List<Symbol*> genericSymbols;
-		for (vint i = 0; i < resolvableExpr->resolving->resolvedSymbols.Count(); i++)
+		for (vint i = 0; i < catIdChildExpr->resolving->resolvedSymbols.Count(); i++)
 		{
-			auto symbol = resolvableExpr->resolving->resolvedSymbols[i];
+			auto symbol = catIdChildExpr->resolving->resolvedSymbols[i];
 			if (symbol_type_resolving::GetTemplateSpecFromSymbol(symbol))
 			{
 				genericSymbols.Add(symbol);
 			}
 		}
 
-		if (genericSymbols.Count() == 0) return resolvableExpr;
-		CopyFrom(resolvableExpr->resolving->resolvedSymbols, genericSymbols);
+		if (genericSymbols.Count() == 0) return catIdChildExpr;
+		CopyFrom(catIdChildExpr->resolving->resolvedSymbols, genericSymbols);
 	}
 
 	SkipToken(cursor);
 	auto expr = MakePtr<GenericExpr>();
-	expr->expr = resolvableExpr;
+	expr->expr = catIdChildExpr;
 	while (!TestToken(cursor, CppTokens::GT))
 	{
 		GenericArgument argument;
@@ -398,7 +398,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 ParsePostfixUnaryExpr
 ***********************************************************************/
 
-Ptr<ResolvableExpr> ParseIdOrChildExprAfterFieldAccess(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<Category_Id_Child_Generic_Expr> ParseFieldAccessNameExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	auto oldCursor = cursor;
 	try
@@ -412,7 +412,7 @@ Ptr<ResolvableExpr> ParseIdOrChildExprAfterFieldAccess(const ParsingArguments& p
 			{
 				throw StopParsingException(cursor);
 			}
-			return childExpr;
+			return TryParseGenericExpr(pa, cursor, childExpr, false);
 		}
 	}
 	catch (const StopParsingException&)
@@ -425,7 +425,7 @@ Ptr<ResolvableExpr> ParseIdOrChildExprAfterFieldAccess(const ParsingArguments& p
 	{
 		throw StopParsingException(cursor);
 	}
-	return idExpr;
+	return TryParseGenericExpr(pa, cursor, idExpr, false);
 }
 
 Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
@@ -438,7 +438,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			auto newExpr = MakePtr<FieldAccessExpr>();
 			newExpr->type = CppFieldAccessType::Dot;
 			newExpr->expr = expr;
-			newExpr->name = ParseIdOrChildExprAfterFieldAccess(pa, cursor);
+			newExpr->name = ParseFieldAccessNameExpr(pa, cursor);
 			expr = newExpr;
 		}
 		else if (!TestToken(cursor, CppTokens::SUB, CppTokens::GT, CppTokens::MUL, false) && TestToken(cursor, CppTokens::SUB, CppTokens::GT, false))
@@ -455,7 +455,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			}
 			newExpr->type = CppFieldAccessType::Arrow;
 			newExpr->expr = expr;
-			newExpr->name = ParseIdOrChildExprAfterFieldAccess(pa, cursor);
+			newExpr->name = ParseFieldAccessNameExpr(pa, cursor);
 			expr = newExpr;
 		}
 		else if (TestToken(cursor, CppTokens::LBRACKET, false))

@@ -628,9 +628,9 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<Symbol> specSymbol, 
 			Ptr<Resolving> resolving;
 			if (decl->expr)
 			{
-				if (auto resolvableExpr = decl->expr.Cast<ResolvableExpr>())
+				if (auto catIdChild = decl->expr.Cast<Category_Id_Child_Expr>())
 				{
-					resolving = resolvableExpr->resolving;
+					resolving = catIdChild->resolving;
 				}
 			}
 			else if (decl->type)

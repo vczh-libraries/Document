@@ -20,7 +20,7 @@
     - [ ] Extract function: given `types` and `typeVta` and evaluate expression `types<...>`.
       - `VariaditInput<>::ApplyTypes` add `isVta` parameter.
     - [x] Rename `ResolvableType` to `Category_Id_Child_Type`.
-    - [ ] Rename `ResolvableExpr` to `Category_Id_Child_Expr`.
+    - [x] Rename `ResolvableExpr` to `Category_Id_Child_Expr`.
       - inheriting from `Category_Id_Child_Generic_Expr`.
         - inheriting from `Category_Id_Child_Generic_FieldAccess_Expr`.
     - [ ] `FuncAccessExpr` take care of `Category_Id_Child_Generic_FieldAccess_Expr`.

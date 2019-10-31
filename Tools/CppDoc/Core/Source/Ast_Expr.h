@@ -50,7 +50,12 @@ public:
 Preparation
 ***********************************************************************/
 
-class ResolvableExpr : public Expr
+class Category_Id_Child_Generic_Expr : public Expr
+{
+public:
+};
+
+class Category_Id_Child_Expr : public Category_Id_Child_Generic_Expr
 {
 public:
 	Ptr<Resolving>					resolving;
@@ -152,7 +157,7 @@ public:
 	Ptr<Expr>						expr;
 };
 
-class IdExpr : public ResolvableExpr
+class IdExpr : public Category_Id_Child_Expr
 {
 public:
 	IExprVisitor_ACCEPT;
@@ -160,7 +165,7 @@ public:
 	CppName							name;
 };
 
-class ChildExpr : public ResolvableExpr
+class ChildExpr : public Category_Id_Child_Expr
 {
 public:
 	IExprVisitor_ACCEPT;
@@ -180,12 +185,12 @@ class FieldAccessExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
-	CppName							opName;
-	Ptr<Resolving>					opResolving;
+	CppName									opName;
+	Ptr<Resolving>							opResolving;
 
-	CppFieldAccessType				type;
-	Ptr<Expr>						expr;
-	Ptr<ResolvableExpr>				name;	// IdExpr or ChildExpr
+	CppFieldAccessType						type;
+	Ptr<Expr>								expr;
+	Ptr<Category_Id_Child_Generic_Expr>		name;
 };
 
 class ArrayAccessExpr : public Expr
@@ -310,12 +315,12 @@ public:
 	Ptr<Expr>						right;
 };
 
-class GenericExpr : public Expr
+class GenericExpr : public Category_Id_Child_Generic_Expr
 {
 public:
 	IExprVisitor_ACCEPT;
 
-	Ptr<ResolvableExpr>				expr;
+	Ptr<Category_Id_Child_Expr>		expr;
 	VariadicList<GenericArgument>	arguments;
 };
 
