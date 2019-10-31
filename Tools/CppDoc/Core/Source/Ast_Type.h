@@ -39,7 +39,12 @@ public:
 Preparation
 ***********************************************************************/
 
-class ResolvableType : public Type
+class Category_Id_Child_Generic_Root_Type : public Type
+{
+public:
+};
+
+class Category_Id_Child_Type : public Category_Id_Child_Generic_Root_Type
 {
 public:
 	Ptr<Resolving>			resolving;
@@ -164,13 +169,13 @@ public:
 	bool										isVolatile = false;
 };
 
-class RootType : public Type
+class RootType : public Category_Id_Child_Generic_Root_Type
 {
 public:
 	ITypeVisitor_ACCEPT;
 };
 
-class IdType : public ResolvableType
+class IdType : public Category_Id_Child_Type
 {
 public:
 	ITypeVisitor_ACCEPT;
@@ -179,22 +184,22 @@ public:
 	CppName										name;
 };
 
-class ChildType : public ResolvableType
+class ChildType : public Category_Id_Child_Type
 {
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<Type>									classType;
+	Ptr<Category_Id_Child_Generic_Root_Type>	classType;
 	bool										typenameType = false;
 	CppName										name;
 };
 
-class GenericType : public Type
+class GenericType : public Category_Id_Child_Generic_Root_Type
 {
 public:
 	ITypeVisitor_ACCEPT;
 
-	Ptr<ResolvableType>							type;
+	Ptr<Category_Id_Child_Type>					type;
 	VariadicList<GenericArgument>				arguments;
 };
 

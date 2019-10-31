@@ -559,11 +559,11 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<Symbol> specSymbol, 
 		output.Add(decl);
 		RequireToken(cursor, CppTokens::SEMICOLON);
 
-		if (auto resolvableType = decl->ns.Cast<ResolvableType>())
+		if (auto catIdChildType = decl->ns.Cast<Category_Id_Child_Type>())
 		{
-			if (!resolvableType->resolving) throw StopParsingException(cursor);
-			if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
-			auto symbol = resolvableType->resolving->resolvedSymbols[0];
+			if (!catIdChildType->resolving) throw StopParsingException(cursor);
+			if (catIdChildType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
+			auto symbol = catIdChildType->resolving->resolvedSymbols[0];
 
 			switch (symbol->kind)
 			{
@@ -635,9 +635,9 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<Symbol> specSymbol, 
 			}
 			else if (decl->type)
 			{
-				if (auto resolvableType = decl->type.Cast<ResolvableType>())
+				if (auto catIdChildType = decl->type.Cast<Category_Id_Child_Type>())
 				{
-					resolving = resolvableType->resolving;
+					resolving = catIdChildType->resolving;
 				}
 			}
 

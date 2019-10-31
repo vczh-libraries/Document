@@ -561,7 +561,7 @@ public:
 
 	void Visit(ChildType* self)override
 	{
-		Log(self->classType, writer);
+		Log(Ptr<Type>(self->classType), writer);
 		writer.WriteString(L" :: ");
 		if (self->typenameType) writer.WriteString(L"typename ");
 		writer.WriteString(self->name.name);

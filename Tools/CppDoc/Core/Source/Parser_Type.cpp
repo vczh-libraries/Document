@@ -179,7 +179,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 TryParseChildType
 ***********************************************************************/
 
-Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Type> classType, bool typenameType, bool& templateKeyword, Ptr<CppTokenCursor>& cursor)
+Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Category_Id_Child_Generic_Root_Type> classType, bool typenameType, bool& templateKeyword, Ptr<CppTokenCursor>& cursor)
 {
 	if ((templateKeyword = TestToken(cursor, CppTokens::DECL_TEMPLATE)))
 	{
@@ -210,6 +210,34 @@ Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Type> classType
 	return nullptr;
 }
 
+Ptr< Category_Id_Child_Generic_Root_Type> TryParseGenericType(const ParsingArguments& pa, Ptr<Category_Id_Child_Type> classType, Ptr<CppTokenCursor>& cursor)
+{
+	if (TestToken(cursor, CppTokens::LT))
+	{
+		// TYPE< { TYPE/EXPR ...} >
+		auto type = MakePtr<GenericType>();
+		type->type = classType;
+		while (!TestToken(cursor, CppTokens::GT))
+		{
+			GenericArgument argument;
+			ParseTypeOrExpr(pa, pea_GenericArgument(), cursor, argument.type, argument.expr);
+			bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+			type->arguments.Add({ argument,isVariadic });
+
+			if (!TestToken(cursor, CppTokens::COMMA))
+			{
+				RequireToken(cursor, CppTokens::GT);
+				break;
+			}
+		}
+		return type;
+	}
+	else
+	{
+		return classType;
+	}
+}
+
 /***********************************************************************
 ParseNameType
 ***********************************************************************/
@@ -217,13 +245,13 @@ ParseNameType
 Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTokenCursor>& cursor)
 {
 	bool templateKeyword = false;
-	Ptr<Type> typeResult;
+	Ptr<Category_Id_Child_Generic_Root_Type> typeResult;
 	if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 	{
 		// :: NAME
 		if (auto type = TryParseChildType(pa, MakePtr<RootType>(), false, templateKeyword, cursor))
 		{
-			typeResult = type;
+			typeResult = TryParseGenericType(pa, type, cursor);
 		}
 		else
 		{
@@ -233,59 +261,28 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 	else
 	{
 		// NAME
-		typeResult = ParseIdType(pa, cursor);
+		typeResult = TryParseGenericType(pa, ParseIdType(pa, cursor), cursor);
 	}
 
 	while (true)
 	{
-		if (TestToken(cursor, CppTokens::LT))
+		// TYPE::NAME
+		auto oldCursor = cursor;
+		if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 		{
-			// TYPE< { TYPE/EXPR ...} >
-			auto resolvableType = typeResult.Cast<ResolvableType>();
-			if (!resolvableType)
+			if (templateKeyword)
 			{
 				throw StopParsingException(cursor);
 			}
-
-			auto type = MakePtr<GenericType>();
-			type->type = resolvableType;
-			while (!TestToken(cursor, CppTokens::GT))
+			if (auto type = TryParseChildType(pa, typeResult, typenameType, templateKeyword, cursor))
 			{
-				GenericArgument argument;
-				ParseTypeOrExpr(pa, pea_GenericArgument(), cursor, argument.type, argument.expr);
-				bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
-				type->arguments.Add({ argument,isVariadic });
-
-				if (!TestToken(cursor, CppTokens::COMMA))
-				{
-					RequireToken(cursor, CppTokens::GT);
-					break;
-				}
+				typeResult = TryParseGenericType(pa, type, cursor);
+				continue;
 			}
-			typeResult = type;
 		}
-		else
-		{
-			// TYPE::NAME
-			auto oldCursor = cursor;
-			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
-			{
-				if (templateKeyword)
-				{
-					throw StopParsingException(cursor);
-				}
-				if (auto type = TryParseChildType(pa, typeResult, typenameType, templateKeyword, cursor))
-				{
-					typeResult = type;
-					continue;
-				}
-			}
-
-			cursor = oldCursor;
-			break;
-		}
+		cursor = oldCursor;
+		return typeResult;
 	}
-	return typeResult;
 }
 
 /***********************************************************************

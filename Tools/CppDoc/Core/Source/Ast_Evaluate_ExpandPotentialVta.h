@@ -78,11 +78,11 @@ namespace symbol_totsys_impl
 			return false;
 		}
 
-		if (auto resolvableType = type.Cast<ResolvableType>())
+		if (auto catIdChildType = type.Cast<Category_Id_Child_Type>())
 		{
-			if (resolvableType->resolving)
+			if (catIdChildType->resolving)
 			{
-				auto& symbols = resolvableType->resolving->resolvedSymbols;
+				auto& symbols = catIdChildType->resolving->resolvedSymbols;
 				for (vint i = 0; i < symbols.Count(); i++)
 				{
 					if (symbols[i]->kind != symbol_component::SymbolKind::Namespace)

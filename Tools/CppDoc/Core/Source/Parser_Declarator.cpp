@@ -7,12 +7,23 @@
 ReplaceOutOfDeclaratorTypeVisitor
 ***********************************************************************/
 
+template<typename TCreator>
 class ReplaceOutOfDeclaratorTypeVisitor : public Object, public virtual ITypeVisitor
 {
+private:
+	Ptr<CppTokenCursor>&			cursor;
+	Ptr<Type>						typeToReplace;
+	TCreator						typeCreator;
+
 public:
 	Ptr<Type>						createdType;
-	Ptr<Type>						typeToReplace;
-	Func<Ptr<Type>(Ptr<Type>)>		typeCreator;
+
+	ReplaceOutOfDeclaratorTypeVisitor(Ptr<CppTokenCursor>& _cursor, Ptr<Type> _typeToReplace, TCreator&& _typeCreator)
+		:cursor(_cursor)
+		, typeToReplace(_typeToReplace)
+		, typeCreator(ForwardValue<TCreator>(_typeCreator))
+	{
+	}
 
 	void Execute(Ptr<Type>& targetType)
 	{
@@ -24,6 +35,20 @@ public:
 		else
 		{
 			targetType->Accept(this);
+		}
+	}
+
+	void Execute(Ptr<Category_Id_Child_Generic_Root_Type>& targetType)
+	{
+		Ptr<Type> type = targetType;
+		Execute(type);
+		if (auto resultType = type.Cast<Category_Id_Child_Generic_Root_Type>())
+		{
+			targetType = resultType;
+		}
+		else
+		{
+			throw StopParsingException(cursor);
 		}
 	}
 
@@ -86,24 +111,32 @@ public:
 	}
 };
 
+template<typename T>
+ReplaceOutOfDeclaratorTypeVisitor<T> MakeReplacer(Ptr<CppTokenCursor>& _cursor, Ptr<Type> _typeToReplace, T&& _typeCreator)
+{
+	return { _cursor,_typeToReplace,ForwardValue<T>(_typeCreator) };
+}
+
 /***********************************************************************
 EnsureMemberTypeResolved
 ***********************************************************************/
 
 ClassDeclaration* EnsureMemberTypeResolved(Ptr<MemberType> memberType, Ptr<CppTokenCursor>& cursor)
 {
-	auto resolvableType = memberType->classType.Cast<ResolvableType>();
-	if (!resolvableType)
+	auto catIdChildType = memberType->classType.Cast<Category_Id_Child_Type>();
+	if (!catIdChildType)
 	{
-		auto genericType = memberType->classType.Cast<GenericType>();
-		resolvableType = genericType->type;
+		if (auto genericType = memberType->classType.Cast<GenericType>())
+		{
+			catIdChildType = genericType->type;
+		}
 	}
 
-	if (!resolvableType) throw StopParsingException(cursor);
-	if (!resolvableType->resolving) throw StopParsingException(cursor);
-	if (resolvableType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
+	if (!catIdChildType) throw StopParsingException(cursor);
+	if (!catIdChildType->resolving) throw StopParsingException(cursor);
+	if (catIdChildType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
 
-	auto symbol = resolvableType->resolving->resolvedSymbols[0];
+	auto symbol = catIdChildType->resolving->resolvedSymbols[0];
 	auto containingClass
 		= symbol->GetCategory() == symbol_component::SymbolCategory::Normal
 		? symbol->GetImplDecl_NFb<ClassDeclaration>().Obj()
@@ -370,10 +403,10 @@ bool ParseSingleDeclarator_Array(const ParsingArguments& pa, Ptr<Declarator> dec
 			index = ParseExpr(pa, pea_Full(), cursor);
 		}
 
-		ReplaceOutOfDeclaratorTypeVisitor replacer;
-		{
-			replacer.typeToReplace = targetType;
-			replacer.typeCreator = [=](Ptr<Type> typeToReplace)->Ptr<Type>
+		auto replacer = MakeReplacer(
+			cursor,
+			targetType,
+			[=](Ptr<Type> typeToReplace)->Ptr<Type>
 			{
 				if (index || !forParameter)
 				{
@@ -389,10 +422,9 @@ bool ParseSingleDeclarator_Array(const ParsingArguments& pa, Ptr<Declarator> dec
 					type->type = typeToReplace;
 					return type;
 				}
-			};
-
-			replacer.Execute(declarator->type);
-		}
+			}
+		);
+		replacer.Execute(declarator->type);
 
 		RequireToken(cursor, CppTokens::RBRACKET);
 		return true;
@@ -471,18 +503,18 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 		{
 			// otherwise, it is possible that the return type has already been decorated with __stdcall or CLASS::
 			// we should move them out of the return type, and decorate the function type with them
-			ReplaceOutOfDeclaratorTypeVisitor replacer;
-			{
-				replacer.typeToReplace = targetType;
-				replacer.typeCreator = [](Ptr<Type> typeToReplace)->Ptr<Type>
+			auto replacer = MakeReplacer(
+				cursor,
+				targetType,
+				[](Ptr<Type> typeToReplace)->Ptr<Type>
 				{
 					auto type = MakePtr<FunctionType>();
 					type->returnType = typeToReplace;
 					return AdjustReturnTypeWithMemberAndCC(type);
-				};
+				}
+			);
 
-				replacer.Execute(declarator->type);
-			}
+			replacer.Execute(declarator->type);
 			type = GetTypeWithoutMemberAndCC(replacer.createdType).Cast<FunctionType>();
 		}
 		// here type is the FunctionType we are going to add information to, it is possible that type is not declarator->type

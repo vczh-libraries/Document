@@ -21,7 +21,7 @@ public:
 
 	void TestResolving(Ptr<Resolving> resolving)
 	{
-		if (auto type = peerType.Cast<ResolvableType>())
+		if (auto type = peerType.Cast<Category_Id_Child_Type>())
 		{
 			if (type->resolving)
 			{

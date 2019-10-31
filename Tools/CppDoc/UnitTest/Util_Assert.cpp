@@ -92,6 +92,10 @@ AssertExpr
 
 void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t** logTsys, vint count, ParsingArguments& pa)
 {
+	if (wcscmp(input, L"*ars") == 0)
+	{
+		int a = 0;
+	}
 	TOKEN_READER(input);
 	auto cursor = reader.GetFirstToken();
 
