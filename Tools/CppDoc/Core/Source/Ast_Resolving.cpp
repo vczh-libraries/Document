@@ -234,13 +234,37 @@ namespace symbol_type_resolving
 				{
 					auto tsys = evTypes[k];
 
-					if (isMember && visitMemberKind == VisitMemberKind::MemberAfterType)
+					if (tsys->GetType() == TsysType::GenericFunction)
 					{
-						tsys = tsys->MemberOf(thisEntity)->PtrOf();
+						auto elementTsys = tsys->GetElement();
+						if (isMember && visitMemberKind == VisitMemberKind::MemberAfterType)
+						{
+							elementTsys = elementTsys->MemberOf(thisEntity)->PtrOf();
+						}
+						else
+						{
+							elementTsys = elementTsys->PtrOf();
+						}
+
+						const auto& gf = tsys->GetGenericFunction();
+						TypeTsysList params;
+						vint count = tsys->GetParamCount();
+						for (vint l = 0; l < count; l++)
+						{
+							params.Add(tsys->GetParam(l));
+						}
+						tsys = elementTsys->GenericFunctionOf(params, gf);
 					}
 					else
 					{
-						tsys = tsys->PtrOf();
+						if (isMember && visitMemberKind == VisitMemberKind::MemberAfterType)
+						{
+							tsys = tsys->MemberOf(thisEntity)->PtrOf();
+						}
+						else
+						{
+							tsys = tsys->PtrOf();
+						}
 					}
 
 					AddInternal(result, { symbol,ExprTsysType::PRValue,tsys });

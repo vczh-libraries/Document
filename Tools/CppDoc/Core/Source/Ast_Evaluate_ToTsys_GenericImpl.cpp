@@ -109,13 +109,34 @@ namespace symbol_totsys_impl
 			{
 			case symbol_component::SymbolKind::FunctionBodySymbol:
 				{
+					ITsys* classType = nullptr;
+					{
+						auto elementType = genericFunction->GetElement();
+						if (elementType->GetType() == TsysType::Ptr)
+						{
+							elementType = elementType->GetElement();
+						}
+						if (elementType->GetType() == TsysType::Member)
+						{
+							// the GenericFunction type of a Class::* FunctionType does not contain type arguments for Class
+							classType = elementType->GetClass();
+						}
+					}
+
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
 					auto& tsys = EvaluateFuncSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
 
 					for (vint i = 0; i < tsys.Count(); i++)
 					{
-						UseTsys(result, tsys[i]->PtrOf());
+						if (classType)
+						{
+							UseTsys(result, tsys[i]->MemberOf(classType)->PtrOf());
+						}
+						else
+						{
+							UseTsys(result, tsys[i]->PtrOf());
+						}
 					}
 				}
 				break;
