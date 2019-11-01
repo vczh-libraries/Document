@@ -32,10 +32,10 @@
         - [ ] Refactor `ProcessFieldAccessExpr` so that `childExpr` can be evaluated first and then passed to this function, instead of evaluating `childExpr` inside this function
         - [ ] Handle `GenericExpr`
       - [x] `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FuncAccessExpr* self)override`: adding hyper linkes to a function call to `FieldAccessExpr`.
-    - [ ] `PrefixUnaryExpr` (AddressOf) takes care of `Category_Id_Child_Generic_Expr`.
-      - [ ] `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(PrefixUnaryExpr* self)override`: at the beginning to set `SearchPolicy::ChildSymbolFromOutside` (evaluating `ChildExpr` directly won't do this).
+    - [x] `PrefixUnaryExpr` (AddressOf) takes care of `Category_Id_Child_Generic_Expr`.
+      - [x] `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(PrefixUnaryExpr* self)override`: at the beginning to set `SearchPolicy::ChildSymbolFromOutside` (evaluating `ChildExpr` directly won't do this).
         - [x] Use `MatchCategoryExpr`
-        - [ ] Handle `GenericExpr to ChildExpr`
+        - [x] Handle `GenericExpr to ChildExpr`
       - [x] `Ast_Evaluate_ToTsys_ExprImpl.cpp` -> `void ProcessPrefixUnaryExpr(...)`: `case CppPrefixUnaryOp::AddressOf`.
     - [ ] Check types of `&Name<T>` and `&Class::Method<T>`.
     - [ ] Check types of `obj.Method` and `obj.Method<T>` for methods defined outside of classes.

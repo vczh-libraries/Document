@@ -581,6 +581,36 @@ public:
 	// PrefixUnaryExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
+	static bool AddressOfChildExpr(const ParsingArguments& pa, ChildExpr* childExpr, ExprTsysList& tsys, bool& isVta)
+	{
+		if (IsResolvedToType(childExpr->classType))
+		{
+			TypeTsysList classTypes;
+			TypeToTsysInternal(pa, childExpr->classType, classTypes, isVta);
+			ExpandPotentialVtaMultiResult(pa, tsys, [&pa, childExpr](ExprTsysList& processResult, ExprTsysItem arg1)
+			{
+				if (arg1.tsys->IsUnknownType())
+				{
+					AddTemp(processResult, pa.tsys->Any());
+				}
+				else if (arg1.tsys->GetType() == TsysType::Decl || arg1.tsys->GetType() == TsysType::DeclInstant)
+				{
+					auto newPa = pa.WithScope(arg1.tsys->GetDecl());
+					auto rsr = ResolveSymbol(newPa, childExpr->name, SearchPolicy::ChildSymbolFromOutside);
+					if (rsr.values)
+					{
+						for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
+						{
+							VisitSymbolForScope(newPa, &arg1, rsr.values->resolvedSymbols[i], processResult);
+						}
+					}
+				}
+			}, Input(classTypes, isVta));
+			return true;
+		}
+		return false;
+	}
+
 	void Visit(PrefixUnaryExpr* self)override
 	{
 		ExprTsysList types;
@@ -595,44 +625,30 @@ public:
 					[](const Ptr<IdExpr>& idExpr)
 					{
 					},
-					[this, self, &types, &typesVta, &skipEvaluatingOperand](const Ptr<ChildExpr>& childExpr)
+					[this, &types, &typesVta, &skipEvaluatingOperand](const Ptr<ChildExpr>& childExpr)
 					{
-						if (IsResolvedToType(childExpr->classType))
-						{
-							TypeTsysList classTypes;
-							TypeToTsysInternal(pa, childExpr->classType, classTypes, typesVta);
-							ExpandPotentialVtaMultiResult(pa, types, [this, self, childExpr](ExprTsysList& processResult, ExprTsysItem arg1)
-							{
-								if (arg1.tsys->IsUnknownType())
-								{
-									AddTemp(processResult, pa.tsys->Any());
-								}
-								else if (arg1.tsys->GetType() == TsysType::Decl || arg1.tsys->GetType() == TsysType::DeclInstant)
-								{
-									auto newPa = pa.WithScope(arg1.tsys->GetDecl());
-									auto rsr = ResolveSymbol(newPa, childExpr->name, SearchPolicy::ChildSymbolFromOutside);
-									if (rsr.values)
-									{
-										for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
-										{
-											VisitSymbolForScope(newPa, &arg1, rsr.values->resolvedSymbols[i], processResult);
-										}
-									}
-								}
-							}, Input(classTypes, typesVta));
-							skipEvaluatingOperand = true;
-						}
+						skipEvaluatingOperand = AddressOfChildExpr(pa, childExpr.Obj(), types, typesVta);
 					},
-					[](const Ptr<GenericExpr>& genericExpr)
+					[this, &types, &typesVta, &skipEvaluatingOperand](const Ptr<GenericExpr>& genericExpr)
 					{
 						MatchCategoryExpr(
 							genericExpr->expr,
 							[&](const Ptr<IdExpr>& idExpr)
 							{
 							},
-							[&](const Ptr<ChildExpr>& childExpr)
+							[this, &genericExpr, &types, &typesVta, &skipEvaluatingOperand](const Ptr<ChildExpr>& childExpr)
 							{
-								throw NotResolvableException();
+								ExprTsysList classTypes;
+								bool classIsVta = false;
+								if (AddressOfChildExpr(pa, childExpr.Obj(), classTypes, classIsVta))
+								{
+									GenericExprToTsys(pa, genericExpr.Obj(), types, typesVta,
+										[&classTypes, classIsVta](VariadicInput<ExprTsysItem>& variadicInput)
+										{
+											variadicInput.ApplyTypes(0, classTypes, classIsVta);
+										});
+									skipEvaluatingOperand = true;
+								}
 							}
 						);
 					}
