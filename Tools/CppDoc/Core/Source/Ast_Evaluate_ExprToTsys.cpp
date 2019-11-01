@@ -269,7 +269,6 @@ public:
 		bool operatorIndexed = false;
 		if (idExpr)
 		{
-			ResolveSymbolResult totalRar;
 			isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, idExpr, &totalRar, &operatorIndexed](ExprTsysList& processResult, ExprTsysItem argParent)
 			{
 				ProcessFieldAccessExprForIdExpr(pa, processResult, self, argParent, idExpr, totalRar, operatorIndexed);
