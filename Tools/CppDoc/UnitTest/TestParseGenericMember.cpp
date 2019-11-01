@@ -810,7 +810,7 @@ const A<int> ca;
 volatile A<int>* pva;
 )";
 	COMPILE_PROGRAM(program, pa, input);
-	/*
+
 	AssertExpr(pa, L"a.C<double>",							L"a.C<double>",							L"::Field<double> __thiscall(__int32) * $PR"								);
 	AssertExpr(pa, L"a.E<double>",							L"a.E<double>",							L"::Field<double> __cdecl(__int32, ...) * $PR"								);
 	AssertExpr(pa, L"pa->C<double>",						L"pa->C<double>",						L"::Field<double> __thiscall(__int32) * $PR"								);
@@ -828,7 +828,7 @@ volatile A<int>* pva;
 	AssertExpr(pa, L"ca.A<int>::E<double>",					L"ca.A<int> :: E<double>",				L"::Field<double> __cdecl(__int32, ...) * $PR"								);
 	AssertExpr(pa, L"pva->A<int>::C<double>",				L"pva->A<int> :: C<double>"																							);
 	AssertExpr(pa, L"pva->A<int>::E<double>",				L"pva->A<int> :: E<double>"																							);
-	*/
+
 	AssertExpr(pa, L"a.*&A<int>::C<double>",				L"(a .* (& A<int> :: C<double>))",		L"::Field<double> __thiscall(__int32) * $PR"								);
 	AssertExpr(pa, L"a.*&A<int>::E<double>",				L"(a .* (& A<int> :: E<double>))",		L"::Field<double> __cdecl(__int32, ...) * $PR"								);
 	AssertExpr(pa, L"pa->*&A<int>::C<double>",				L"(pa ->* (& A<int> :: C<double>))",	L"::Field<double> __thiscall(__int32) * $PR"								);
