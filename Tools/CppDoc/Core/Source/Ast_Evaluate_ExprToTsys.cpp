@@ -249,6 +249,7 @@ public:
 
 		Ptr<IdExpr> idExpr;
 		Ptr<ChildExpr> childExpr;
+		Ptr<GenericExpr> genericExpr;
 		MatchCategoryExpr(
 			self->name,
 			[&idExpr](const Ptr<IdExpr>& _idExpr)
@@ -259,17 +260,31 @@ public:
 			{
 				childExpr = _childExpr;
 			},
-			[](const Ptr<GenericExpr>& genericExpr)
+			[&idExpr, &childExpr, &genericExpr](const Ptr<GenericExpr>& _genericExpr)
 			{
-				throw NotConvertableException();
+				genericExpr = _genericExpr;
+				MatchCategoryExpr(
+					genericExpr->expr,
+					[&idExpr](const Ptr<IdExpr>& _idExpr)
+					{
+						idExpr = _idExpr;
+					},
+					[&childExpr](const Ptr<ChildExpr>& _childExpr)
+					{
+						childExpr = _childExpr;
+					}
+				);
 			}
 		);
+
+		ExprTsysList nonGenericResult;
+		bool nonGenericIsVta = false;
 
 		ResolveSymbolResult totalRar;
 		bool operatorIndexed = false;
 		if (idExpr)
 		{
-			isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, idExpr, &totalRar, &operatorIndexed](ExprTsysList& processResult, ExprTsysItem argParent)
+			nonGenericIsVta = ExpandPotentialVtaMultiResult(pa, nonGenericResult, [this, self, idExpr, &totalRar, &operatorIndexed](ExprTsysList& processResult, ExprTsysItem argParent)
 			{
 				ProcessFieldAccessExprForIdExpr(pa, processResult, self, argParent, idExpr, totalRar, operatorIndexed);
 			}, Input(parentTypes, parentVta));
@@ -280,10 +295,24 @@ public:
 			bool classVta = false;
 			TypeToTsysInternal(pa, childExpr->classType, classTypes, classVta);
 
-			isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, idExpr, childExpr, &totalRar, &operatorIndexed](ExprTsysList& processResult, ExprTsysItem argParent, ExprTsysItem argClass)
+			nonGenericIsVta = ExpandPotentialVtaMultiResult(pa, nonGenericResult, [this, self, idExpr, childExpr, &totalRar, &operatorIndexed](ExprTsysList& processResult, ExprTsysItem argParent, ExprTsysItem argClass)
 			{
 				ProcessFieldAccessExprForChildExpr(pa, processResult, self, argParent, argClass, childExpr, totalRar, operatorIndexed);
 			}, Input(parentTypes, parentVta), Input(classTypes, classVta));
+		}
+
+		if (genericExpr)
+		{
+			GenericExprToTsys(pa, genericExpr.Obj(), result, isVta,
+				[&nonGenericResult, nonGenericIsVta](VariadicInput<ExprTsysItem>& variadicInput)
+				{
+					variadicInput.ApplyTypes(0, nonGenericResult, nonGenericIsVta);
+				});
+		}
+		else
+		{
+			CopyFrom(result, nonGenericResult, true);
+			isVta = nonGenericIsVta;
 		}
 
 		if (idExpr && pa.IsGeneralEvaluation())
