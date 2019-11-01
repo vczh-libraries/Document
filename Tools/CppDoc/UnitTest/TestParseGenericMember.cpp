@@ -712,7 +712,7 @@ template<typename A>	template<typename B>	void S<A>::F2(B p)					{ using _S = S<
 
 TEST_CASE(TestParseGenericMember_FieldReference)
 {
-	auto input = LR"(
+	WString input1 = LR"(
 template<typename X>
 struct Field;
 
@@ -732,68 +732,76 @@ A<int, double>* pa;
 const A<int, double> ca;
 volatile A<int, double>* pva;
 )";
-	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(pa, L"a.a",									L"a.a",									L"::Field<__int32> $L"														);
-	AssertExpr(pa, L"a.b",									L"a.b",									L"::Field<__int32> (::A<__int32, double> ::) * $L"							);
-	AssertExpr(pa, L"a.C",									L"a.C",									L"::Field<double> __thiscall() * $PR"										);
-	AssertExpr(pa, L"a.d",									L"a.d",									L"::Field<double> __thiscall() (::A<__int32, double> ::) * $L"				);
-	AssertExpr(pa, L"a.E",									L"a.E",									L"::Field<double> __cdecl(...) * $PR"										);
-	AssertExpr(pa, L"a.f",									L"a.f",									L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * $L"				);
+	WString input2 = input1 + LR"(
+)";
 
-	AssertExpr(pa, L"pa->a",								L"pa->a",								L"::Field<__int32> $L"														);
-	AssertExpr(pa, L"pa->b",								L"pa->b",								L"::Field<__int32> (::A<__int32, double> ::) * $L"							);
-	AssertExpr(pa, L"pa->C",								L"pa->C",								L"::Field<double> __thiscall() * $PR"										);
-	AssertExpr(pa, L"pa->d",								L"pa->d",								L"::Field<double> __thiscall() (::A<__int32, double> ::) * $L"				);
-	AssertExpr(pa, L"pa->E",								L"pa->E",								L"::Field<double> __cdecl(...) * $PR"										);
-	AssertExpr(pa, L"pa->f",								L"pa->f",								L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * $L"				);
+	const wchar_t* inputs[] = { input1.Buffer(),input2.Buffer() };
+	for(vint i = 0; i < 2; i++)
+	{
+		COMPILE_PROGRAM(program, pa, inputs[i]);
 
-	AssertExpr(pa, L"ca.a",									L"ca.a",								L"::Field<__int32> const $L"												);
-	AssertExpr(pa, L"ca.b",									L"ca.b",								L"::Field<__int32> (::A<__int32, double> ::) * const $L"					);
-	AssertExpr(pa, L"ca.C",									L"ca.C"																												);
-	AssertExpr(pa, L"ca.d",									L"ca.d",								L"::Field<double> __thiscall() (::A<__int32, double> ::) * const $L"		);
-	AssertExpr(pa, L"ca.E",									L"ca.E",								L"::Field<double> __cdecl(...) * $PR"										);
-	AssertExpr(pa, L"ca.f",									L"ca.f",								L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * const $L"		);
+		AssertExpr(pa, L"a.a",									L"a.a",									L"::Field<__int32> $L"														);
+		AssertExpr(pa, L"a.b",									L"a.b",									L"::Field<__int32> (::A<__int32, double> ::) * $L"							);
+		AssertExpr(pa, L"a.C",									L"a.C",									L"::Field<double> __thiscall() * $PR"										);
+		AssertExpr(pa, L"a.d",									L"a.d",									L"::Field<double> __thiscall() (::A<__int32, double> ::) * $L"				);
+		AssertExpr(pa, L"a.E",									L"a.E",									L"::Field<double> __cdecl(...) * $PR"										);
+		AssertExpr(pa, L"a.f",									L"a.f",									L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * $L"				);
 
-	AssertExpr(pa, L"pva->a",								L"pva->a",								L"::Field<__int32> volatile $L"												);
-	AssertExpr(pa, L"pva->b",								L"pva->b",								L"::Field<__int32> (::A<__int32, double> ::) * volatile $L"					);
-	AssertExpr(pa, L"pva->C",								L"pva->C"																											);
-	AssertExpr(pa, L"pva->d",								L"pva->d",								L"::Field<double> __thiscall() (::A<__int32, double> ::) * volatile $L"		);
-	AssertExpr(pa, L"pva->E",								L"pva->E"																											);
-	AssertExpr(pa, L"pva->f",								L"pva->f",								L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * volatile $L"		);
+		AssertExpr(pa, L"pa->a",								L"pa->a",								L"::Field<__int32> $L"														);
+		AssertExpr(pa, L"pa->b",								L"pa->b",								L"::Field<__int32> (::A<__int32, double> ::) * $L"							);
+		AssertExpr(pa, L"pa->C",								L"pa->C",								L"::Field<double> __thiscall() * $PR"										);
+		AssertExpr(pa, L"pa->d",								L"pa->d",								L"::Field<double> __thiscall() (::A<__int32, double> ::) * $L"				);
+		AssertExpr(pa, L"pa->E",								L"pa->E",								L"::Field<double> __cdecl(...) * $PR"										);
+		AssertExpr(pa, L"pa->f",								L"pa->f",								L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * $L"				);
 
-	AssertExpr(pa, L"a.*&A<int,double>::a",					L"(a .* (& A<int, double> :: a))",		L"::Field<__int32> & $L"													);
-	AssertExpr(pa, L"a.*&A<int,double>::b",					L"(a .* (& A<int, double> :: b))",		L"::Field<__int32> (::A<__int32, double> ::) * & $L"						);
-	AssertExpr(pa, L"a.*&A<int,double>::C",					L"(a .* (& A<int, double> :: C))",		L"::Field<double> __thiscall() * $PR"										);
-	AssertExpr(pa, L"a.*&A<int,double>::d",					L"(a .* (& A<int, double> :: d))",		L"::Field<double> __thiscall() (::A<__int32, double> ::) * & $L"			);
-	AssertExpr(pa, L"a.*&A<int,double>::E",					L"(a .* (& A<int, double> :: E))",		L"::Field<double> __cdecl(...) * $PR"										);
-	AssertExpr(pa, L"a.*&A<int,double>::f",					L"(a .* (& A<int, double> :: f))",		L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * & $L"			);
+		AssertExpr(pa, L"ca.a",									L"ca.a",								L"::Field<__int32> const $L"												);
+		AssertExpr(pa, L"ca.b",									L"ca.b",								L"::Field<__int32> (::A<__int32, double> ::) * const $L"					);
+		AssertExpr(pa, L"ca.C",									L"ca.C"																												);
+		AssertExpr(pa, L"ca.d",									L"ca.d",								L"::Field<double> __thiscall() (::A<__int32, double> ::) * const $L"		);
+		AssertExpr(pa, L"ca.E",									L"ca.E",								L"::Field<double> __cdecl(...) * $PR"										);
+		AssertExpr(pa, L"ca.f",									L"ca.f",								L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * const $L"		);
 
-	AssertExpr(pa, L"pa->*&A<int,double>::a",				L"(pa ->* (& A<int, double> :: a))",	L"::Field<__int32> & $L"													);
-	AssertExpr(pa, L"pa->*&A<int,double>::b",				L"(pa ->* (& A<int, double> :: b))",	L"::Field<__int32> (::A<__int32, double> ::) * & $L"						);
-	AssertExpr(pa, L"pa->*&A<int,double>::C",				L"(pa ->* (& A<int, double> :: C))",	L"::Field<double> __thiscall() * $PR"										);
-	AssertExpr(pa, L"pa->*&A<int,double>::d",				L"(pa ->* (& A<int, double> :: d))",	L"::Field<double> __thiscall() (::A<__int32, double> ::) * & $L"			);
-	AssertExpr(pa, L"pa->*&A<int,double>::E",				L"(pa ->* (& A<int, double> :: E))",	L"::Field<double> __cdecl(...) * $PR"										);
-	AssertExpr(pa, L"pa->*&A<int,double>::f",				L"(pa ->* (& A<int, double> :: f))",	L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * & $L"			);
+		AssertExpr(pa, L"pva->a",								L"pva->a",								L"::Field<__int32> volatile $L"												);
+		AssertExpr(pa, L"pva->b",								L"pva->b",								L"::Field<__int32> (::A<__int32, double> ::) * volatile $L"					);
+		AssertExpr(pa, L"pva->C",								L"pva->C"																											);
+		AssertExpr(pa, L"pva->d",								L"pva->d",								L"::Field<double> __thiscall() (::A<__int32, double> ::) * volatile $L"		);
+		AssertExpr(pa, L"pva->E",								L"pva->E"																											);
+		AssertExpr(pa, L"pva->f",								L"pva->f",								L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * volatile $L"		);
 
-	AssertExpr(pa, L"ca.*&A<int,double>::a",				L"(ca .* (& A<int, double> :: a))",		L"::Field<__int32> const & $L"												);
-	AssertExpr(pa, L"ca.*&A<int,double>::b",				L"(ca .* (& A<int, double> :: b))",		L"::Field<__int32> (::A<__int32, double> ::) * const & $L"					);
-	AssertExpr(pa, L"ca.*&A<int,double>::C",				L"(ca .* (& A<int, double> :: C))",		L"::Field<double> __thiscall() * $PR"										);
-	AssertExpr(pa, L"ca.*&A<int,double>::d",				L"(ca .* (& A<int, double> :: d))",		L"::Field<double> __thiscall() (::A<__int32, double> ::) * const & $L"		);
-	AssertExpr(pa, L"ca.*&A<int,double>::E",				L"(ca .* (& A<int, double> :: E))",		L"::Field<double> __cdecl(...) * $PR"										);
-	AssertExpr(pa, L"ca.*&A<int,double>::f",				L"(ca .* (& A<int, double> :: f))",		L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * const & $L"		);
+		AssertExpr(pa, L"a.*&A<int,double>::a",					L"(a .* (& A<int, double> :: a))",		L"::Field<__int32> & $L"													);
+		AssertExpr(pa, L"a.*&A<int,double>::b",					L"(a .* (& A<int, double> :: b))",		L"::Field<__int32> (::A<__int32, double> ::) * & $L"						);
+		AssertExpr(pa, L"a.*&A<int,double>::C",					L"(a .* (& A<int, double> :: C))",		L"::Field<double> __thiscall() * $PR"										);
+		AssertExpr(pa, L"a.*&A<int,double>::d",					L"(a .* (& A<int, double> :: d))",		L"::Field<double> __thiscall() (::A<__int32, double> ::) * & $L"			);
+		AssertExpr(pa, L"a.*&A<int,double>::E",					L"(a .* (& A<int, double> :: E))",		L"::Field<double> __cdecl(...) * $PR"										);
+		AssertExpr(pa, L"a.*&A<int,double>::f",					L"(a .* (& A<int, double> :: f))",		L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * & $L"			);
 
-	AssertExpr(pa, L"pva->*&A<int,double>::a",				L"(pva ->* (& A<int, double> :: a))",	L"::Field<__int32> volatile & $L"											);
-	AssertExpr(pa, L"pva->*&A<int,double>::b",				L"(pva ->* (& A<int, double> :: b))",	L"::Field<__int32> (::A<__int32, double> ::) * volatile & $L"				);
-	AssertExpr(pa, L"pva->*&A<int,double>::C",				L"(pva ->* (& A<int, double> :: C))",	L"::Field<double> __thiscall() * $PR"										);
-	AssertExpr(pa, L"pva->*&A<int,double>::d",				L"(pva ->* (& A<int, double> :: d))",	L"::Field<double> __thiscall() (::A<__int32, double> ::) * volatile & $L"	);
-	AssertExpr(pa, L"pva->*&A<int,double>::E",				L"(pva ->* (& A<int, double> :: E))",	L"::Field<double> __cdecl(...) * $PR"										);
-	AssertExpr(pa, L"pva->*&A<int,double>::f",				L"(pva ->* (& A<int, double> :: f))",	L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * volatile & $L"	);
+		AssertExpr(pa, L"pa->*&A<int,double>::a",				L"(pa ->* (& A<int, double> :: a))",	L"::Field<__int32> & $L"													);
+		AssertExpr(pa, L"pa->*&A<int,double>::b",				L"(pa ->* (& A<int, double> :: b))",	L"::Field<__int32> (::A<__int32, double> ::) * & $L"						);
+		AssertExpr(pa, L"pa->*&A<int,double>::C",				L"(pa ->* (& A<int, double> :: C))",	L"::Field<double> __thiscall() * $PR"										);
+		AssertExpr(pa, L"pa->*&A<int,double>::d",				L"(pa ->* (& A<int, double> :: d))",	L"::Field<double> __thiscall() (::A<__int32, double> ::) * & $L"			);
+		AssertExpr(pa, L"pa->*&A<int,double>::E",				L"(pa ->* (& A<int, double> :: E))",	L"::Field<double> __cdecl(...) * $PR"										);
+		AssertExpr(pa, L"pa->*&A<int,double>::f",				L"(pa ->* (& A<int, double> :: f))",	L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * & $L"			);
+
+		AssertExpr(pa, L"ca.*&A<int,double>::a",				L"(ca .* (& A<int, double> :: a))",		L"::Field<__int32> const & $L"												);
+		AssertExpr(pa, L"ca.*&A<int,double>::b",				L"(ca .* (& A<int, double> :: b))",		L"::Field<__int32> (::A<__int32, double> ::) * const & $L"					);
+		AssertExpr(pa, L"ca.*&A<int,double>::C",				L"(ca .* (& A<int, double> :: C))",		L"::Field<double> __thiscall() * $PR"										);
+		AssertExpr(pa, L"ca.*&A<int,double>::d",				L"(ca .* (& A<int, double> :: d))",		L"::Field<double> __thiscall() (::A<__int32, double> ::) * const & $L"		);
+		AssertExpr(pa, L"ca.*&A<int,double>::E",				L"(ca .* (& A<int, double> :: E))",		L"::Field<double> __cdecl(...) * $PR"										);
+		AssertExpr(pa, L"ca.*&A<int,double>::f",				L"(ca .* (& A<int, double> :: f))",		L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * const & $L"		);
+
+		AssertExpr(pa, L"pva->*&A<int,double>::a",				L"(pva ->* (& A<int, double> :: a))",	L"::Field<__int32> volatile & $L"											);
+		AssertExpr(pa, L"pva->*&A<int,double>::b",				L"(pva ->* (& A<int, double> :: b))",	L"::Field<__int32> (::A<__int32, double> ::) * volatile & $L"				);
+		AssertExpr(pa, L"pva->*&A<int,double>::C",				L"(pva ->* (& A<int, double> :: C))",	L"::Field<double> __thiscall() * $PR"										);
+		AssertExpr(pa, L"pva->*&A<int,double>::d",				L"(pva ->* (& A<int, double> :: d))",	L"::Field<double> __thiscall() (::A<__int32, double> ::) * volatile & $L"	);
+		AssertExpr(pa, L"pva->*&A<int,double>::E",				L"(pva ->* (& A<int, double> :: E))",	L"::Field<double> __cdecl(...) * $PR"										);
+		AssertExpr(pa, L"pva->*&A<int,double>::f",				L"(pva ->* (& A<int, double> :: f))",	L"::Field<double> __cdecl(...) (::A<__int32, double> ::) * volatile & $L"	);
+	}
 }
 
 TEST_CASE(TestParseGenericMember_GenericFieldReference)
 {
-	auto input = LR"(
+	WString input1 = LR"(
 template<typename X>
 struct Field;
 
@@ -809,32 +817,40 @@ A<int>* pa;
 const A<int> ca;
 volatile A<int>* pva;
 )";
-	COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(pa, L"a.C<double>",							L"a.C<double>",							L"::Field<double> __thiscall(__int32) * $PR"								);
-	AssertExpr(pa, L"a.E<double>",							L"a.E<double>",							L"::Field<double> __cdecl(__int32, ...) * $PR"								);
-	AssertExpr(pa, L"pa->C<double>",						L"pa->C<double>",						L"::Field<double> __thiscall(__int32) * $PR"								);
-	AssertExpr(pa, L"pa->E<double>",						L"pa->E<double>",						L"::Field<double> __cdecl(__int32, ...) * $PR"								);
-	AssertExpr(pa, L"ca.C<double>",							L"ca.C<double>"																										);
-	AssertExpr(pa, L"ca.E<double>",							L"ca.E<double>",						L"::Field<double> __cdecl(__int32, ...) * $PR"								);
-	AssertExpr(pa, L"pva->C<double>",						L"pva->C<double>"																									);
-	AssertExpr(pa, L"pva->E<double>",						L"pva->E<double>"																									);
+	WString input2 = input1 + LR"(
+)";
 
-	AssertExpr(pa, L"a.A<int>::C<double>",					L"a.A<int> :: C<double>",				L"::Field<double> __thiscall(__int32) * $PR"								);
-	AssertExpr(pa, L"a.A<int>::E<double>",					L"a.A<int> :: E<double>",				L"::Field<double> __cdecl(__int32, ...) * $PR"								);
-	AssertExpr(pa, L"pa->A<int>::C<double>",				L"pa->A<int> :: C<double>",				L"::Field<double> __thiscall(__int32) * $PR"								);
-	AssertExpr(pa, L"pa->A<int>::E<double>",				L"pa->A<int> :: E<double>",				L"::Field<double> __cdecl(__int32, ...) * $PR"								);
-	AssertExpr(pa, L"ca.A<int>::C<double>",					L"ca.A<int> :: C<double>"																							);
-	AssertExpr(pa, L"ca.A<int>::E<double>",					L"ca.A<int> :: E<double>",				L"::Field<double> __cdecl(__int32, ...) * $PR"								);
-	AssertExpr(pa, L"pva->A<int>::C<double>",				L"pva->A<int> :: C<double>"																							);
-	AssertExpr(pa, L"pva->A<int>::E<double>",				L"pva->A<int> :: E<double>"																							);
+	const wchar_t* inputs[] = { input1.Buffer(),input2.Buffer() };
+	for (vint i = 0; i < 2; i++)
+	{
+		COMPILE_PROGRAM(program, pa, inputs[i]);
 
-	AssertExpr(pa, L"a.*&A<int>::C<double>",				L"(a .* (& A<int> :: C<double>))",		L"::Field<double> __thiscall(__int32) * $PR"								);
-	AssertExpr(pa, L"a.*&A<int>::E<double>",				L"(a .* (& A<int> :: E<double>))",		L"::Field<double> __cdecl(__int32, ...) * $PR"								);
-	AssertExpr(pa, L"pa->*&A<int>::C<double>",				L"(pa ->* (& A<int> :: C<double>))",	L"::Field<double> __thiscall(__int32) * $PR"								);
-	AssertExpr(pa, L"pa->*&A<int>::E<double>",				L"(pa ->* (& A<int> :: E<double>))",	L"::Field<double> __cdecl(__int32, ...) * $PR"								);
-	AssertExpr(pa, L"ca.*&A<int>::C<double>",				L"(ca .* (& A<int> :: C<double>))",		L"::Field<double> __thiscall(__int32) * $PR"								);
-	AssertExpr(pa, L"ca.*&A<int>::E<double>",				L"(ca .* (& A<int> :: E<double>))",		L"::Field<double> __cdecl(__int32, ...) * $PR"								);
-	AssertExpr(pa, L"pva->*&A<int>::C<double>",				L"(pva ->* (& A<int> :: C<double>))",	L"::Field<double> __thiscall(__int32) * $PR"								);
-	AssertExpr(pa, L"pva->*&A<int>::E<double>",				L"(pva ->* (& A<int> :: E<double>))",	L"::Field<double> __cdecl(__int32, ...) * $PR"								);
+		AssertExpr(pa, L"a.C<double>",							L"a.C<double>",							L"::Field<double> __thiscall(__int32) * $PR"								);
+		AssertExpr(pa, L"a.E<double>",							L"a.E<double>",							L"::Field<double> __cdecl(__int32, ...) * $PR"								);
+		AssertExpr(pa, L"pa->C<double>",						L"pa->C<double>",						L"::Field<double> __thiscall(__int32) * $PR"								);
+		AssertExpr(pa, L"pa->E<double>",						L"pa->E<double>",						L"::Field<double> __cdecl(__int32, ...) * $PR"								);
+		AssertExpr(pa, L"ca.C<double>",							L"ca.C<double>"																										);
+		AssertExpr(pa, L"ca.E<double>",							L"ca.E<double>",						L"::Field<double> __cdecl(__int32, ...) * $PR"								);
+		AssertExpr(pa, L"pva->C<double>",						L"pva->C<double>"																									);
+		AssertExpr(pa, L"pva->E<double>",						L"pva->E<double>"																									);
+
+		AssertExpr(pa, L"a.A<int>::C<double>",					L"a.A<int> :: C<double>",				L"::Field<double> __thiscall(__int32) * $PR"								);
+		AssertExpr(pa, L"a.A<int>::E<double>",					L"a.A<int> :: E<double>",				L"::Field<double> __cdecl(__int32, ...) * $PR"								);
+		AssertExpr(pa, L"pa->A<int>::C<double>",				L"pa->A<int> :: C<double>",				L"::Field<double> __thiscall(__int32) * $PR"								);
+		AssertExpr(pa, L"pa->A<int>::E<double>",				L"pa->A<int> :: E<double>",				L"::Field<double> __cdecl(__int32, ...) * $PR"								);
+		AssertExpr(pa, L"ca.A<int>::C<double>",					L"ca.A<int> :: C<double>"																							);
+		AssertExpr(pa, L"ca.A<int>::E<double>",					L"ca.A<int> :: E<double>",				L"::Field<double> __cdecl(__int32, ...) * $PR"								);
+		AssertExpr(pa, L"pva->A<int>::C<double>",				L"pva->A<int> :: C<double>"																							);
+		AssertExpr(pa, L"pva->A<int>::E<double>",				L"pva->A<int> :: E<double>"																							);
+
+		AssertExpr(pa, L"a.*&A<int>::C<double>",				L"(a .* (& A<int> :: C<double>))",		L"::Field<double> __thiscall(__int32) * $PR"								);
+		AssertExpr(pa, L"a.*&A<int>::E<double>",				L"(a .* (& A<int> :: E<double>))",		L"::Field<double> __cdecl(__int32, ...) * $PR"								);
+		AssertExpr(pa, L"pa->*&A<int>::C<double>",				L"(pa ->* (& A<int> :: C<double>))",	L"::Field<double> __thiscall(__int32) * $PR"								);
+		AssertExpr(pa, L"pa->*&A<int>::E<double>",				L"(pa ->* (& A<int> :: E<double>))",	L"::Field<double> __cdecl(__int32, ...) * $PR"								);
+		AssertExpr(pa, L"ca.*&A<int>::C<double>",				L"(ca .* (& A<int> :: C<double>))",		L"::Field<double> __thiscall(__int32) * $PR"								);
+		AssertExpr(pa, L"ca.*&A<int>::E<double>",				L"(ca .* (& A<int> :: E<double>))",		L"::Field<double> __cdecl(__int32, ...) * $PR"								);
+		AssertExpr(pa, L"pva->*&A<int>::C<double>",				L"(pva ->* (& A<int> :: C<double>))",	L"::Field<double> __thiscall(__int32) * $PR"								);
+		AssertExpr(pa, L"pva->*&A<int>::E<double>",				L"(pva ->* (& A<int> :: E<double>))",	L"::Field<double> __cdecl(__int32, ...) * $PR"								);
+	}
 }
