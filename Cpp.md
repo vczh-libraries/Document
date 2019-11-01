@@ -37,7 +37,7 @@
         - [x] Use `MatchCategoryExpr`
         - [x] Handle `GenericExpr to ChildExpr`
       - [x] `Ast_Evaluate_ToTsys_ExprImpl.cpp` -> `void ProcessPrefixUnaryExpr(...)`: `case CppPrefixUnaryOp::AddressOf`.
-    - [ ] Check types of `&Name<T>` and `&Class::Method<T>`.
+    - [x] Check types of `&Name<T>` and `&Class::Method<T>`.
     - [ ] Check types of `obj.Method` and `obj.Method<T>` for methods defined outside of classes.
     - [ ] Check types of `obj.X::Method` and `obj.X::Method<T>` for methods defined outside of classes.
     - [ ] Check `FuncAccessExpr`, `FieldAccessExpr`, `PrefixUnaryExpr` (AddressOf) for generating hyper links on generic expression.
