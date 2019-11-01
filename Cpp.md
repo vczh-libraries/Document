@@ -17,7 +17,7 @@
     - store all `template<...>` for classes in `FunctionDeclaration`
     - matches `template<typename X>class A { template<typename Y>class B { void template<typename Z>F(); }; };`.
   - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now, `\.Cast<(Id|Child)Expr>`)
-    - [ ] Extract function: given `types` and `typeVta` and evaluate expression `types<...>`.
+    - [x] Extract function: given `types` and `typeVta` and evaluate expression `types<...>`.
       - `VariaditInput<>::ApplyTypes` add `isVta` parameter.
     - [x] Rename `ResolvableType` to `Category_Id_Child_Type`.
     - [x] Rename `ResolvableExpr` to `Category_Id_Child_Expr`.

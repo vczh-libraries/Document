@@ -554,13 +554,22 @@ namespace symbol_totsys_impl
 		{
 		}
 
-		void ApplyTypes(vint index, const TypeTsysList& types)
+		void ApplyTypes(vint index, const TypeTsysList& types, bool isVta)
 		{
 			for (vint i = 0; i < types.Count(); i++)
 			{
 				AddExprTsysItemToResult(argItems[index], GetExprTsysItem(types[i]));
 			}
-			isVtas[index] = false;
+			isVtas[index] = isVta;
+		}
+
+		void ApplyTypes(vint index, const ExprTsysList& types, bool isVta)
+		{
+			for (vint i = 0; i < types.Count(); i++)
+			{
+				AddExprTsysItemToResult(argItems[index], types[i]);
+			}
+			isVtas[index] = isVta;
 		}
 
 		template<typename TNode>

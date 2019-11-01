@@ -105,7 +105,7 @@ public:
 		VariadicInput<ITsys*> variadicInput(self->parameters.Count() + 1, pa);
 		if (returnTypes)
 		{
-			variadicInput.ApplyTypes(0, *returnTypes);
+			variadicInput.ApplyTypes(0, *returnTypes, false);
 		}
 		else if (self->decoratorReturnType)
 		{
@@ -119,7 +119,7 @@ public:
 		{
 			TypeTsysList types;
 			types.Add(pa.tsys->Void());
-			variadicInput.ApplyTypes(0, types);
+			variadicInput.ApplyTypes(0, types, false);
 		}
 		variadicInput.ApplyVariadicList(1, self->parameters);
 

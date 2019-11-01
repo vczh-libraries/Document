@@ -15,6 +15,7 @@ struct EvaluateSymbolContext;
 class ITsys;
 class ForwardFunctionDeclaration;
 class VariableDeclaration;
+class GenericExpr;
 
 /***********************************************************************
 Symbol
@@ -164,6 +165,7 @@ extern void					TypeToTsysInternal(const ParsingArguments& pa, Ptr<Type> t, Type
 extern void					TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
 extern void					TypeToTsysNoVta(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
 extern void					TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf);
+extern void					GenericExprToTsys(const ParsingArguments& pa, ExprTsysList& nameTypes, bool nameIsVta, GenericExpr* argumentsPart, ExprTsysList& tsys, bool& isVta);
 extern void					ExprToTsysInternal(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, bool& isVta);
 extern void					ExprToTsysNoVta(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys);
 

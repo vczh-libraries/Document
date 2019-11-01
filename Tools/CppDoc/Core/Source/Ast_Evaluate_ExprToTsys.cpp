@@ -705,24 +705,43 @@ public:
 	// GenericExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void Visit(GenericExpr* self)override
+	template<typename TAddTypes>
+	static void GenericExprToTsys(const ParsingArguments& pa, GenericExpr* argumentsPart, ExprTsysList& tsys, bool& isVta, TAddTypes&& addTypes)
 	{
-		vint count = self->arguments.Count() + 1;
+		vint count = argumentsPart->arguments.Count() + 1;
 		Array<bool> isTypes(count);
 		isTypes[0] = false;
 
 		VariadicInput<ExprTsysItem> variadicInput(count, pa);
-		variadicInput.ApplySingle<Expr>(0, self->expr);
-		variadicInput.ApplyGenericArguments(1, isTypes, self->arguments);
-		isVta = variadicInput.Expand(&self->arguments, result,
-			[this, self, &isTypes](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
+		addTypes(variadicInput);
+		variadicInput.ApplyGenericArguments(1, isTypes, argumentsPart->arguments);
+		isVta = variadicInput.Expand(&argumentsPart->arguments, tsys,
+			[&pa, argumentsPart, &isTypes](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 			{
-				ProcessGenericExpr(pa, processResult, self, isTypes, args, argSource, boundedAnys);
+				ProcessGenericExpr(pa, processResult, argumentsPart, isTypes, args, argSource, boundedAnys);
+			});
+	}
+
+	void Visit(GenericExpr* self)override
+	{
+		GenericExprToTsys(pa, self, result, isVta,
+			[self](VariadicInput<ExprTsysItem>& variadicInput)
+			{
+				variadicInput.ApplySingle<Expr>(0, self->expr);
 			});
 	}
 };
 
 // Resolve expressions to types
+
+void GenericExprToTsys(const ParsingArguments& pa, ExprTsysList& nameTypes, bool nameIsVta, GenericExpr* argumentsPart, ExprTsysList& tsys, bool& isVta)
+{
+	ExprToTsysVisitor::GenericExprToTsys(pa, argumentsPart, tsys, isVta,
+		[&nameTypes, nameIsVta](VariadicInput<ExprTsysItem>& variadicInput)
+		{
+			variadicInput.ApplyTypes(0, nameTypes, nameIsVta);
+		});
+}
 
 void ExprToTsysInternal(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, bool& isVta)
 {
