@@ -244,24 +244,20 @@ public:
 	void Visit(FieldAccessExpr* self)override
 	{
 		ExprTsysList parentTypes;
-		TypeTsysList classTypes;
 		bool parentVta = false;
-		bool classVta = false;
 		ExprToTsysInternal(pa, self->expr, parentTypes, parentVta);
 
 		Ptr<IdExpr> idExpr;
 		Ptr<ChildExpr> childExpr;
 		MatchCategoryExpr(
 			self->name,
-			[&idExpr, &classTypes](const Ptr<IdExpr>& _idExpr)
+			[&idExpr](const Ptr<IdExpr>& _idExpr)
 			{
 				idExpr = _idExpr;
-				classTypes.Add(nullptr);
 			},
-			[this, &childExpr, &classTypes, &classVta](const Ptr<ChildExpr>& _childExpr)
+			[&childExpr](const Ptr<ChildExpr>& _childExpr)
 			{
 				childExpr = _childExpr;
-				TypeToTsysInternal(pa, childExpr->classType, classTypes, classVta);
 			},
 			[](const Ptr<GenericExpr>& genericExpr)
 			{
@@ -271,10 +267,25 @@ public:
 
 		ResolveSymbolResult totalRar;
 		bool operatorIndexed = false;
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, idExpr, childExpr, &totalRar, &operatorIndexed](ExprTsysList& processResult, ExprTsysItem argParent, ExprTsysItem argClass)
+		if (idExpr)
 		{
-			ProcessFieldAccessExpr(pa, processResult, self, argParent, argClass, idExpr, childExpr, totalRar, operatorIndexed);
-		}, Input(parentTypes, parentVta), Input(classTypes, classVta));
+			ResolveSymbolResult totalRar;
+			isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, idExpr, &totalRar, &operatorIndexed](ExprTsysList& processResult, ExprTsysItem argParent)
+			{
+				ProcessFieldAccessExprForIdExpr(pa, processResult, self, argParent, idExpr, totalRar, operatorIndexed);
+			}, Input(parentTypes, parentVta));
+		}
+		else
+		{
+			TypeTsysList classTypes;
+			bool classVta = false;
+			TypeToTsysInternal(pa, childExpr->classType, classTypes, classVta);
+
+			isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, idExpr, childExpr, &totalRar, &operatorIndexed](ExprTsysList& processResult, ExprTsysItem argParent, ExprTsysItem argClass)
+			{
+				ProcessFieldAccessExprForChildExpr(pa, processResult, self, argParent, argClass, childExpr, totalRar, operatorIndexed);
+			}, Input(parentTypes, parentVta), Input(classTypes, classVta));
+		}
 
 		if (idExpr && pa.IsGeneralEvaluation())
 		{

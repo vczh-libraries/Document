@@ -28,8 +28,7 @@
       - [x] Change `name` from `ResolvableExpr` to `Category_Id_Child_Generic_Expr`.
       - [ ] `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FieldAccessExpr* self)override`: at the beginning.
         - [x] Use `MatchCategoryExpr`
-        - [ ] Remove the need of passing `idExpr` and `childExpr` to `ProcessFieldAccessExpr`
-        - [ ] Refactor `ProcessFieldAccessExpr` so that `childExpr` can be evaluated first and then passed to this function, instead of evaluating `childExpr` inside this function
+        - [x] Separate `ProcessFieldAccessExpr` by `idExpr` and `childExpr`
         - [ ] Handle `GenericExpr`
       - [x] `Ast_Evaluate_ExprToTsys.cpp` -> `void Visit(FuncAccessExpr* self)override`: adding hyper linkes to a function call to `FieldAccessExpr`.
     - [x] `PrefixUnaryExpr` (AddressOf) takes care of `Category_Id_Child_Generic_Expr`.

@@ -255,9 +255,9 @@ namespace symbol_totsys_impl
 	// ResolveChildExprWithGenericArguments
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	template<typename TReceiver>
-	void ResolveChildExprWithGenericArguments(const ParsingArguments& pa, ChildExpr* self, ITsys* classType, SortedList<Symbol*>& visited, TReceiver&& receiver)
+	Ptr<Resolving> ResolveChildExprWithGenericArguments(const ParsingArguments& pa, ChildExpr* self, ITsys* classType, SortedList<Symbol*>& visited)
 	{
+		Ptr<Resolving> resolving;
 		if (classType->GetType() == TsysType::Decl || classType->GetType() == TsysType::DeclInstant)
 		{
 			auto newPa = pa.WithScope(classType->GetDecl());
@@ -270,11 +270,16 @@ namespace symbol_totsys_impl
 					if (!visited.Contains(symbol))
 					{
 						visited.Add(symbol);
-						receiver(symbol);
+						if (!resolving)
+						{
+							resolving = MakePtr<Resolving>();
+						}
+						resolving->resolvedSymbols.Add(symbol);
 					}
 				}
 			}
 		}
+		return resolving;
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -283,18 +288,8 @@ namespace symbol_totsys_impl
 
 	void ProcessChildExpr(const ParsingArguments& pa, ExprTsysList& result, ChildExpr* self, ExprTsysItem argClass)
 	{
-		Ptr<Resolving> resolving;
 		SortedList<Symbol*> visited;
-		ResolveChildExprWithGenericArguments(pa, self, argClass.tsys, visited, [&](Symbol* symbol)
-		{
-			if (!resolving)
-			{
-				resolving = MakePtr<Resolving>();
-			}
-			resolving->resolvedSymbols.Add(symbol);
-		});
-
-		if (resolving)
+		if (auto resolving = ResolveChildExprWithGenericArguments(pa, self, argClass.tsys, visited))
 		{
 			bool childIsVta = false;
 			argClass.type = ExprTsysType::LValue;
@@ -303,73 +298,16 @@ namespace symbol_totsys_impl
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// ResolveField
-	//////////////////////////////////////////////////////////////////////////////////////
-
-	void ResolveField(const ParsingArguments& pa, ExprTsysList& result, ResolveSymbolResult& totalRar, const ExprTsysItem& parentItem, ITsys* classType, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr)
-	{
-		if (idExpr)
-		{
-			if (parentItem.tsys->IsUnknownType())
-			{
-				AddTemp(result, pa.tsys->Any());
-			}
-			else
-			{
-				if (auto resolving = FindMembersByName(pa, idExpr->name, &totalRar, parentItem))
-				{
-					VisitResolvedMember(pa, &parentItem, resolving, result);
-				}
-			}
-		}
-		else
-		{
-			if (classType)
-			{
-				if (classType->IsUnknownType())
-				{
-					AddTemp(result, pa.tsys->Any());
-				}
-				else
-				{
-					Ptr<Resolving> resolving;
-					SortedList<Symbol*> visited;
-					ResolveChildExprWithGenericArguments(pa, childExpr.Obj(), classType, visited, [&](Symbol* symbol)
-					{
-						if (!resolving)
-						{
-							resolving = MakePtr<Resolving>();
-						}
-						resolving->resolvedSymbols.Add(symbol);
-					});
-
-					if (resolving)
-					{
-						ExprTsysItem classItem = parentItem;
-						classItem.tsys = ReplaceThisType(classItem.tsys, classType);
-						VisitResolvedMember(pa, &classItem, resolving, result);
-					}
-				}
-			}
-			else
-			{
-				VisitResolvedMember(pa, &parentItem, childExpr->resolving, result);
-			}
-		}
-	}
-
-	//////////////////////////////////////////////////////////////////////////////////////
 	// ProcessFieldAccessExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void ProcessFieldAccessExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<IdExpr>& idExpr, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed)
+	template<typename TProcessor>
+	void ProcessFieldAccessExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, bool& operatorIndexed, TProcessor&& process)
 	{
 		switch (self->type)
 		{
 		case CppFieldAccessType::Dot:
-			{
-				ResolveField(pa, result, totalRar, argParent, argClass.tsys, idExpr, childExpr);
-			}
+			process(argParent);
 			break;
 		case CppFieldAccessType::Arrow:
 			{
@@ -385,7 +323,7 @@ namespace symbol_totsys_impl
 					if (entityType->GetType() == TsysType::Ptr)
 					{
 						ExprTsysItem parentItem(nullptr, ExprTsysType::LValue, entityType->GetElement());
-						ResolveField(pa, result, totalRar, parentItem, argClass.tsys, idExpr, childExpr);
+						process(parentItem);
 					}
 					else if (entityType->GetType() == TsysType::Decl || entityType->GetType() == TsysType::DeclInstant)
 					{
@@ -407,5 +345,44 @@ namespace symbol_totsys_impl
 			}
 			break;
 		}
+	}
+
+	void ProcessFieldAccessExprForIdExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, const Ptr<IdExpr>& idExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed)
+	{
+		ProcessFieldAccessExpr(pa, result, self, argParent, operatorIndexed, [&](ExprTsysItem parentItem)
+		{
+			if (parentItem.tsys->IsUnknownType())
+			{
+				AddTemp(result, pa.tsys->Any());
+			}
+			else
+			{
+				if (auto resolving = FindMembersByName(pa, idExpr->name, &totalRar, parentItem))
+				{
+					VisitResolvedMember(pa, &parentItem, resolving, result);
+				}
+			}
+		});
+	}
+
+	void ProcessFieldAccessExprForChildExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed)
+	{
+		ProcessFieldAccessExpr(pa, result, self, argParent, operatorIndexed, [&](ExprTsysItem parentItem)
+		{
+			if (argClass.tsys->IsUnknownType())
+			{
+				AddTemp(result, pa.tsys->Any());
+			}
+			else
+			{
+				SortedList<Symbol*> visited;
+				if (auto resolving = ResolveChildExprWithGenericArguments(pa, childExpr.Obj(), argClass.tsys, visited))
+				{
+					ExprTsysItem classItem = parentItem;
+					classItem.tsys = ReplaceThisType(classItem.tsys, argClass.tsys);
+					VisitResolvedMember(pa, &classItem, resolving, result);
+				}
+			}
+		});
 	}
 }
