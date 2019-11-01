@@ -17,16 +17,12 @@
     - store all `template<...>` for classes in `FunctionDeclaration`
     - matches `template<typename X>class A { template<typename Y>class B { void template<typename Z>F(); }; };`.
   - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now, `\.Cast<(Id|Child)Expr>`)
-    - [ ] Check types of `obj.Method` and `obj.Method<T>` for methods defined outside of classes.
-    - [ ] Check types of `obj.X::Method` and `obj.X::Method<T>` for methods defined outside of classes.
+    - [x] Check types of `obj.Method` and `obj.Method<T>` for methods defined outside of classes.
+    - [x] Check types of `obj.X::Method` and `obj.X::Method<T>` for methods defined outside of classes.
     - [ ] Check `FuncAccessExpr`, `FieldAccessExpr`, `PrefixUnaryExpr` (AddressOf) for generating hyper links on generic expression.
-  - [ ] `TestFunctionQualifier` should take care of `this` when it points to a generic type.
   - [ ] Inside `template<...> class X`, if `X` is used as a type without type arguments, it is filled with template arguments.
   - [ ] Function specializations recognized but not used
   - [ ] Class specializations recognized but not used
-  - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T*>::B<const U&>::F(){}`
-    - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`
-    - activate commented test cases in `TestParseGenericMember.cpp`
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
 - [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
   - [ ] Call a function with some or all template arguments unspecified.
@@ -39,6 +35,8 @@
 - [ ] More `template` on classes (partial specialization).
   - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
   - [ ] Connect methods with forward declarations inside multiple levels of template classes.
+    - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T*>::B<const U&>::F(){}`
+      - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`
     - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
   - [ ] With a `DeclInstant` is created, best possible choices are returned at the same time.
 - [ ] SFINAE on choosing among generic functions or classes.

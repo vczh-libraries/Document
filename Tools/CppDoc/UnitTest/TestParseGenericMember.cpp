@@ -734,6 +734,15 @@ volatile A<int, double>* pva;
 )";
 
 	WString input2 = input1 + LR"(
+template<typename T, typename U>
+Field<U> A<T, U>::C()
+{
+}
+
+template<typename T, typename U>
+Field<U> A<T, U>::E(...)const
+{
+}
 )";
 
 	const wchar_t* inputs[] = { input1.Buffer(),input2.Buffer() };
@@ -819,6 +828,17 @@ volatile A<int>* pva;
 )";
 
 	WString input2 = input1 + LR"(
+template<typename T>
+template<typename U>
+Field<U> A<T>::C(T)
+{
+}
+
+template<typename T>
+template<typename U>
+Field<U> A<T>::E(T, ...)const
+{
+}
 )";
 
 	const wchar_t* inputs[] = { input1.Buffer(),input2.Buffer() };
