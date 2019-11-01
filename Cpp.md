@@ -67,6 +67,8 @@
 - [ ] Lambda expressions.
 - [ ] `nullptr` failed to convert to `function_type * const &`.
 - [ ] `decltype(EXPR)::ChildType`
+- [ ] `::new`
+- [ ] `::delete`
 - [ ] Connect function with forward declarations containing `decltype(EXPR)` in expression type.
 - [ ] Pass variadic template argument to placement new expression.
 - [ ] `GenerateMembers` on `DeclInstance`.
@@ -185,20 +187,20 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 ### FUNCTION
 
 - [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} TYPE-SINGLE (`;` | STAT) [ = (`0` | `default` | `delete`)
-  - [ ] TEMPLATE-SPEC
-  - [ ] SPECIALIZATION-SPEC
+  - TEMPLATE-SPEC
+  - SPECIALIZATION-SPEC
 - [TEMPLATE-SPEC] {`static` | `virtual` | `explicit` | `inline` | `__forceinline`} `operator` TYPE-ZERO (`;` | STAT) [ = (`0` | `default` | `delete`)
-  - [ ] TEMPLATE-SPEC
+  - TEMPLATE-SPEC
 
 ### OBJECT
 
 - [TEMPLATE-SPEC] (`class` | `struct`) [[SPECIFIERS] IDENTIFIER [SPECIALIZATION-SPEC]] [`abstract`] [`:` {TYPE `,` ...}+] [`{` {DECL} `}`
-  - [ ] TEMPLATE-SPEC: Not allowed when the class is defined after `typedef`, or is anonymous followed by variable declaration.
-  - [ ] SPECIALIZATION-SPEC
+  - TEMPLATE-SPEC: Not allowed when the class is defined after `typedef`, or is anonymous followed by variable declaration.
+  - SPECIALIZATION-SPEC
 - `enum` [`class` | `struct`] [[SPECIFIERS]IDENTIFIER] [`:` TYPE] [`{` {IDENTIFIER [`=` EXPR] `,` ...} [`,`] `}`
 - [TEMPLATE-SPEC] `union` [[SPECIFIERS]IDENTIFIER [SPECIALIZATION-SPEC]] [`{` {DECL} `}`
-  - [ ] TEMPLATE-SPEC: Not allowed when the class is defined after `typedef`, or is anonymous followed by variable declaration.
-  - [ ] SPECIALIZATION-SPEC
+  - TEMPLATE-SPEC: Not allowed when the class is defined after `typedef`, or is anonymous followed by variable declaration.
+  - SPECIALIZATION-SPEC
 
 ### DECL (Declaration)
 
@@ -288,10 +290,10 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 - `new` [`(` {EXPR `,` ...}+ `)`] TYPE [`(` {EXPR `,` ... } `)` | [`{` {EXPR `,` ... } `}`]]
 - `delete` [`[` `]`] EXPR
 - `throw` EXPR
-- [ ] EXPR `...`
-- [ ] `::new`
-- [ ] `::delete`
-- [ ] `[` {`&` | `=` | [IDENTIFIER `=`] EXPR | } `]` FUNCTION-TAIL STAT
+- EXPR `...`
+- `::new`
+- `::delete`
+- `[` {`&` | `=` | [IDENTIFIER `=`] EXPR | } `]` FUNCTION-TAIL STAT
 
 ### Operators
 
@@ -318,4 +320,3 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 17. (<-): `=` `*=` `/=` `%=` `+=` `-=` `<<=` `>>=` `&=` `|=` `^=`
 18. (<-): `throw`
 19. : `,`
-
