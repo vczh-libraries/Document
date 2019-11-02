@@ -3,6 +3,7 @@
 
 #include <Parser.h>
 #include <VlppOS.h>
+#include <Ast_Resolving.h>
 
 using namespace vl::stream;
 using namespace vl::filesystem;
@@ -116,19 +117,92 @@ Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
 		TEST_ASSERT(false);\
 	})\
 
+template<typename T>
+bool AssertSymbol(
+	SortedList<vint>& accessed,
+	CppName& name,
+	List<Symbol*>& resolvedSymbols,
+	bool reIndex,
+	bool _reIndex,
+	vint _index,
+	WString _name,
+	vint _tRow,
+	vint _tCol,
+	vint _pRow,
+	vint _pCol
+)
+{
+	if (reIndex == _reIndex && name.nameTokens[0].rowStart == _tRow && name.nameTokens[0].columnStart == _tCol)
+	{
+		TEST_ASSERT(name.name == _name);
+		TEST_ASSERT(resolvedSymbols.Count() == 1);
+		auto symbol = resolvedSymbols[0];
+		auto decl = symbol->GetAnyForwardDecl<T>();
+		TEST_ASSERT(decl);
+		TEST_ASSERT(decl->name.name == _name || decl->name.name == L"operator " + _name);
+		TEST_ASSERT(decl->name.nameTokens[0].rowStart == _pRow);
+		TEST_ASSERT(decl->name.nameTokens[0].columnStart == _pCol);
+		if (!accessed.Contains(_index)) accessed.Add(_index);
+		return true;
+	}
+	return false;
+}
+
+template<>
+inline bool AssertSymbol<void>(
+	SortedList<vint>& accessed,
+	CppName& name,
+	List<Symbol*>& resolvedSymbols,
+	bool reIndex,
+	bool _reIndex,
+	vint _index,
+	WString _name,
+	vint _tRow,
+	vint _tCol,
+	vint _pRow,
+	vint _pCol
+	)
+{
+	if (reIndex == _reIndex && name.nameTokens[0].rowStart == _tRow && name.nameTokens[0].columnStart == _tCol)
+	{
+		TEST_ASSERT(name.name == _name);
+		TEST_ASSERT(resolvedSymbols.Count() == 1);
+		auto symbol = resolvedSymbols[0];
+		switch (symbol->kind)
+		{
+		case symbol_component::SymbolKind::GenericTypeArgument:
+		case symbol_component::SymbolKind::GenericValueArgument:
+			break;
+		default:
+			TEST_ASSERT(false);
+		}
+
+		if (symbol->GetParentScope()->kind == symbol_component::SymbolKind::Root)
+		{
+			// the declaration that should contain a TemplateSpec has not been created yet
+			TEST_ASSERT(symbol->name == _name);
+			TEST_ASSERT(_pRow == -1);
+			TEST_ASSERT(_pCol == -1);
+		}
+		else
+		{
+			auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(symbol->GetParentScope());
+			auto argTsys = symbol_type_resolving::EvaluateGenericArgumentSymbol(symbol);
+			auto argIndex = argTsys->GetGenericArg().argIndex;
+			auto arg = spec->arguments[argIndex];
+			TEST_ASSERT(arg.name.name == _name);
+			TEST_ASSERT(arg.name.nameTokens[0].rowStart == _pRow);
+			TEST_ASSERT(arg.name.nameTokens[0].columnStart == _pCol);
+		}
+		if (!accessed.Contains(_index)) accessed.Add(_index);
+		return true;
+	}
+	return false;
+}
+
 #define ASSERT_SYMBOL_INTERNAL(REINDEX, INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)\
-		if (reIndex == REINDEX && name.nameTokens[0].rowStart == TROW && name.nameTokens[0].columnStart == TCOL)\
-		{\
-			TEST_ASSERT(name.name == NAME);\
-			TEST_ASSERT(resolvedSymbols.Count() == 1);\
-			auto symbol = resolvedSymbols[0];\
-			auto decl = symbol->GetAnyForwardDecl<TYPE>();\
-			TEST_ASSERT(decl);\
-			TEST_ASSERT(decl->name.name == NAME || decl->name.name == L"operator " NAME);\
-			TEST_ASSERT(decl->name.nameTokens[0].rowStart == PROW);\
-			TEST_ASSERT(decl->name.nameTokens[0].columnStart == PCOL);\
-			if (!accessed.Contains(INDEX)) accessed.Add(INDEX);\
-		} else\
+		if (AssertSymbol<TYPE>(accessed, name, resolvedSymbols, reIndex, REINDEX, INDEX, NAME, TROW, TCOL, PROW, PCOL)) \
+		{ } else \
 
 #define ASSERT_SYMBOL(INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)\
 		ASSERT_SYMBOL_INTERNAL(false, INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)

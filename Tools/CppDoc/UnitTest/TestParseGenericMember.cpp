@@ -874,3 +874,52 @@ Field<U> A<T>::E(T, ...)const
 		AssertExpr(pa, L"pva->*&A<int>::E<double>",				L"(pva ->* (& A<int> :: E<double>))",	L"::Field<double> __cdecl(__int32, ...) * $PR"								);
 	}
 }
+
+TEST_CASE(TestParserGenericMember_ReIndex)
+{
+	auto input = LR"(
+template<typename T>
+struct X
+{
+	template<typename U>
+	T* Method(U);
+};
+
+template<typename A>
+template<typename B>
+A* X<A>::Method(B){}
+
+X<int> x;
+auto a1 = x.Method<double>;
+auto a2 = x.Method<double>();
+auto b1 = x.X<int>::Method<double>;
+auto b2 = x.X<int>::Method<double>();
+auto c = &X<int>::Method<double>;
+)";
+
+	SortedList<vint> accessed;
+	auto recorder = BEGIN_ASSERT_SYMBOL
+		ASSERT_SYMBOL			(0, L"T", 5, 1, void, 1, 18)
+		ASSERT_SYMBOL			(1, L"U", 5, 11, void, -1, -1)
+		ASSERT_SYMBOL			(2, L"A", 10, 0, void, -1, -1)
+		ASSERT_SYMBOL			(3, L"X", 10, 3, ClassDeclaration, 2, 7)
+		ASSERT_SYMBOL			(4, L"A", 10, 5, void, -1, -1)
+		ASSERT_SYMBOL			(5, L"B", 10, 16, void, -1, -1)
+		ASSERT_SYMBOL			(6, L"X", 12, 0, ClassDeclaration, 2, 7)
+		ASSERT_SYMBOL			(7, L"x", 13, 10, VariableDeclaration, 12, 7)
+		ASSERT_SYMBOL			(8, L"Method", 13, 12, FunctionDeclaration, 10, 9)
+		ASSERT_SYMBOL			(9, L"x", 14, 10, VariableDeclaration, 12, 7)
+		ASSERT_SYMBOL			(10, L"Method", 14, 12, FunctionDeclaration, 10, 9)
+		ASSERT_SYMBOL			(11, L"x", 15, 10, VariableDeclaration, 12, 7)
+		ASSERT_SYMBOL			(12, L"X", 15, 12, ClassDeclaration, 2, 7)
+		ASSERT_SYMBOL			(13, L"Method", 15, 20, FunctionDeclaration, 10, 9)
+		ASSERT_SYMBOL			(14, L"x", 16, 10, VariableDeclaration, 12, 7)
+		ASSERT_SYMBOL			(15, L"X", 16, 12, ClassDeclaration, 2, 7)
+		ASSERT_SYMBOL			(16, L"Method", 16, 20, FunctionDeclaration, 10, 9)
+		ASSERT_SYMBOL			(17, L"X", 17, 10, ClassDeclaration, 2, 7)
+		ASSERT_SYMBOL			(18, L"Method", 17, 18, FunctionDeclaration, 10, 9)
+	END_ASSERT_SYMBOL;
+
+	COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
+	TEST_ASSERT(accessed.Count() == 19);
+}

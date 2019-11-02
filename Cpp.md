@@ -16,10 +16,10 @@
   - [x] Parse `template<typename T> template<typename U> template<typename V> void A<T>::B<U>::F(){}`.
     - store all `template<...>` for classes in `FunctionDeclaration`
     - matches `template<typename X>class A { template<typename Y>class B { void template<typename Z>F(); }; };`.
-  - [ ] `GenericExpr` on `FieldAccessExpr` (which is illegal now, `\.Cast<(Id|Child)Expr>`)
+  - [x] `GenericExpr` on `FieldAccessExpr` (which is illegal now, `\.Cast<(Id|Child)Expr>`)
     - [x] Check types of `obj.Method` and `obj.Method<T>` for methods defined outside of classes.
     - [x] Check types of `obj.X::Method` and `obj.X::Method<T>` for methods defined outside of classes.
-    - [ ] Check `FuncAccessExpr`, `FieldAccessExpr`, `PrefixUnaryExpr` (AddressOf) for generating hyper links on generic expression.
+    - [x] Check `FuncAccessExpr`, `FieldAccessExpr`, `PrefixUnaryExpr` (AddressOf) for generating hyper links on generic expression.
   - [ ] Inside `template<...> class X`, if `X` is used as a type without type arguments, it is filled with template arguments.
   - [ ] Function specializations recognized but not used
   - [ ] Class specializations recognized but not used
