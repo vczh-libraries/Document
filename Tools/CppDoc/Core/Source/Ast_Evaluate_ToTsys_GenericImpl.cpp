@@ -44,16 +44,16 @@ namespace symbol_totsys_impl
 		}
 	}
 
-	void UseTsys(ExprTsysList& result, ITsys* tsys)
+	void UseTsys(ExprTsysList& result, Symbol* symbol, ITsys* tsys)
 	{
-		AddExprTsysItemToResult(result, GetExprTsysItem(tsys));
+		AddExprTsysItemToResult(result, { symbol,ExprTsysType::PRValue,tsys });
 	}
 
-	void UseTypeTsysList(ExprTsysList& result, TypeTsysList& tsys)
+	void UseTypeTsysList(ExprTsysList& result, Symbol* symbol, TypeTsysList& tsys)
 	{
 		for (vint j = 0; j < tsys.Count(); j++)
 		{
-			UseTsys(result, tsys[j]);
+			UseTsys(result, symbol, tsys[j]);
 		}
 	}
 
@@ -73,7 +73,7 @@ namespace symbol_totsys_impl
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardClassDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
 					auto& tsys = EvaluateForwardClassSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
-					UseTypeTsysList(result, tsys);
+					UseTypeTsysList(result, declSymbol, tsys);
 				}
 				break;
 			case symbol_component::SymbolKind::TypeAlias:
@@ -81,13 +81,13 @@ namespace symbol_totsys_impl
 					auto decl = declSymbol->GetImplDecl_NFb<TypeAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
 					auto& tsys = EvaluateTypeAliasSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
-					UseTypeTsysList(result, tsys);
+					UseTypeTsysList(result, nullptr, tsys);
 				}
 				break;
 			case symbol_component::SymbolKind::GenericTypeArgument:
 				{
 					auto tsys = genericFunction->GetElement()->ReplaceGenericArgs(pa.AppendSingleLevelArgs(*argumentsToApply));
-					UseTsys(result, tsys);
+					UseTsys(result, nullptr, tsys);
 				}
 				break;
 			default:
@@ -131,11 +131,11 @@ namespace symbol_totsys_impl
 					{
 						if (classType)
 						{
-							UseTsys(result, tsys[i]->MemberOf(classType)->PtrOf());
+							UseTsys(result, declSymbol, tsys[i]->MemberOf(classType)->PtrOf());
 						}
 						else
 						{
-							UseTsys(result, tsys[i]->PtrOf());
+							UseTsys(result, declSymbol, tsys[i]->PtrOf());
 						}
 					}
 				}
@@ -145,7 +145,7 @@ namespace symbol_totsys_impl
 					auto decl = declSymbol->GetImplDecl_NFb<ValueAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
 					auto& tsys = EvaluateValueAliasSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
-					UseTypeTsysList(result, tsys);
+					UseTypeTsysList(result, nullptr, tsys);
 				}
 				break;
 			default:

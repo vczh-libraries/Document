@@ -891,9 +891,9 @@ A* X<A>::Method(B){}
 
 X<int> x;
 auto a1 = x.Method<double>;
-auto a2 = x.Method<double>();
+auto a2 = x.Method<double>(0);
 auto b1 = x.X<int>::Method<double>;
-auto b2 = x.X<int>::Method<double>();
+auto b2 = x.X<int>::Method<double>(0);
 auto c = &X<int>::Method<double>;
 )";
 
@@ -918,8 +918,10 @@ auto c = &X<int>::Method<double>;
 		ASSERT_SYMBOL			(16, L"Method", 16, 20, FunctionDeclaration, 10, 9)
 		ASSERT_SYMBOL			(17, L"X", 17, 10, ClassDeclaration, 2, 7)
 		ASSERT_SYMBOL			(18, L"Method", 17, 18, FunctionDeclaration, 10, 9)
+		ASSERT_SYMBOL_OVERLOAD	(19, L"Method", 14, 12, ForwardFunctionDeclaration, 5, 4)
+		ASSERT_SYMBOL_OVERLOAD	(20, L"Method", 16, 20, ForwardFunctionDeclaration, 5, 4)
 	END_ASSERT_SYMBOL;
 
 	COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
-	TEST_ASSERT(accessed.Count() == 19);
+	TEST_ASSERT(accessed.Count() == 21);
 }
