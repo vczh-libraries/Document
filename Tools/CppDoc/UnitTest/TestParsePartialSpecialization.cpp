@@ -71,11 +71,19 @@ struct Obj
 	void Method(T, U);
 
 	template<>
-	U Method<int>(T, int);
+	int Method<int>(T, int);
 };
 )";
 
 	auto output = LR"(
+template<typename T>
+struct Obj
+{
+	public template<typename U>
+	__forward Method: void (T, U);
+	public template<>
+	__forward Method<int>: int (T, int);
+};
 )";
 
 	COMPILE_PROGRAM(program, pa, input);
