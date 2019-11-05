@@ -12,14 +12,11 @@
 ## TODO
 
 - [ ] Next Demo!
-  - [ ] Inside the scope of `template<...> class X`, if `X` is used as a type without type arguments, it becomes the current instantiation.
-    - In `TypeToTsys(Internal|NoVta)`, make `bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None` to a struct with default and full-members constructors.
-    - Add `bool mustBeTemplate`, when it is true, it is used `Here<T...>` or `X<..., Here, ...>` when it is required to be a template.
-      - Only when `Here` is an `IdExpr` (different than ISO)
   - [ ] Function specializations recognized but not used
   - [ ] Class specializations recognized but not used
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
 - [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
+  - [ ] Generate `ClassMemberCache` for generated special members
   - [ ] Call a function with some or all template arguments unspecified.
   - [ ] Overload functions with some or all template arguments unspecified.
   - [ ] `...` arguments

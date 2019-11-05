@@ -126,7 +126,10 @@ All **the compiler** here means the compiler created by this project.
 - All members are treated as public.
 - Implicitly generated members doesn't care if any base class is virtual.
 - C style type reference is allowed to refer to a unexisting type. In this case, a forward declaration with the symbol is created in the root namespace.
-- Implicit generated type alias of current instantiation `A` is not really added to template class `A`. The compiler only allow `A` (which is an `IdExpr`) to be the current instantiation when the code is in the scope of `A`.
+- Implicit generated type alias of current instantiation `A` is not really added to template class `A`.
+  - The compiler only allow `A` (which is an `IdExpr`) to be the current instantiation when the code is in the scope of `A`.
+  - The compiler will always let `A` becomes the current instantiation even when it is passed as a template argument.
+- The compiler assumes MSVC 32bits.
 
 ### Analyzing Code
 

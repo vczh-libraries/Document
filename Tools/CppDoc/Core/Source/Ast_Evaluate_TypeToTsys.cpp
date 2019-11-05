@@ -247,6 +247,73 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 	TypeToTsysVisitor visitor(pa, tsys, nullptr, config);
 	t->Accept(&visitor);
 	isVta = visitor.isVta;
+
+	if (dynamic_cast<IdType*>(t) && config.idExprToInstant)
+	{
+		List<vint> genericTypes;
+		for (vint i = 0; i < tsys.Count(); i++)
+		{
+			if (tsys[i]->GetType() == TsysType::GenericFunction)
+			{
+				switch (tsys[i]->GetElement()->GetType())
+				{
+				case TsysType::DeclInstant:
+					genericTypes.Add(i);
+					break;
+				}
+			}
+		}
+		if (genericTypes.Count() == 0) return;
+
+		List<symbol_component::ClassMemberCache*> caches;
+		{
+			auto current = pa.scopeSymbol;
+			while (current)
+			{
+				if (auto cache = current->GetClassMemberCache_NFb())
+				{
+					caches.Add(cache.Obj());
+					current = cache->parentScope;
+				}
+				else
+				{
+					current = current->GetParentScope();
+				}
+			}
+		}
+
+		if (caches.Count() > 0)
+		{
+			ParsingArguments rootPa = pa.WithScope(pa.root.Obj());
+			for (vint i = 0; i < genericTypes.Count(); i++)
+			{
+				auto& targetTsys = tsys[genericTypes[i]];
+				auto targetDecl = targetTsys->GetElement()->GetDecl();
+				auto classDecl = targetDecl->GetImplDecl_NFb<ClassDeclaration>();
+				if (classDecl)
+				{
+					auto& evTypes = EvaluateForwardClassSymbol(rootPa, classDecl.Obj(), nullptr, nullptr);
+					if (evTypes[0] == targetTsys)
+					{
+						for (vint j = 0; j < caches.Count(); j++)
+						{
+							auto cache = caches[j];
+							for (vint k = 0; k < cache->containerClassTypes.Count(); k++)
+							{
+								auto classType = cache->containerClassTypes[k];
+								if (classType->GetDecl() == targetDecl)
+								{
+									targetTsys = classType;
+									goto FINISH;
+								}
+							}
+						}
+					}
+				}
+			FINISH:;
+			}
+		}
+	}
 }
 
 void TypeToTsysInternal(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool& isVta, TypeToTsysConfig config)
