@@ -9,6 +9,7 @@ Symbol
 ***********************************************************************/
 
 class TemplateSpec;
+class SpecializationSpec;
 class ClassDeclaration;
 class FunctionDeclaration;
 class ForwardFunctionDeclaration;
@@ -522,6 +523,11 @@ extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const
 extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern Ptr<Declarator>								ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Type>									ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+
+// Parser_Template.cpp
+extern void											ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<Symbol>& specSymbol, Ptr<TemplateSpec>& spec);
+extern void											ParseSpecializationSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<SpecializationSpec>& spec);
+extern void											ParseGenericArgumentsSkippedLT(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, VariadicList<GenericArgument>& arguments);
 
 // Parser_Declaration.cpp
 extern void											ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);

@@ -74,7 +74,7 @@ public:
 class SpecializationSpec : public Object
 {
 public:
-	List<GenericArgument>							arguments;
+	VariadicList<GenericArgument>					arguments;
 };
 
 /***********************************************************************

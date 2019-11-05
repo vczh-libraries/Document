@@ -185,5 +185,8 @@
     <ClCompile Include="Source\TypeSystem_TypeConvert.cpp">
       <Filter>Source Files\TypeSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Parser_Template.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

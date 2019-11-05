@@ -217,19 +217,7 @@ Ptr< Category_Id_Child_Generic_Root_Type> TryParseGenericType(const ParsingArgum
 		// TYPE< { TYPE/EXPR ...} >
 		auto type = MakePtr<GenericType>();
 		type->type = classType;
-		while (!TestToken(cursor, CppTokens::GT))
-		{
-			GenericArgument argument;
-			ParseTypeOrExpr(pa, pea_GenericArgument(), cursor, argument.type, argument.expr);
-			bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
-			type->arguments.Add({ argument,isVariadic });
-
-			if (!TestToken(cursor, CppTokens::COMMA))
-			{
-				RequireToken(cursor, CppTokens::GT);
-				break;
-			}
-		}
+		ParseGenericArgumentsSkippedLT(pa, cursor, type->arguments);
 		return type;
 	}
 	else

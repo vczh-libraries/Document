@@ -148,21 +148,10 @@ ParseNameOrCtorAccessExpr
 
 Ptr<GenericExpr> ParseGenericExprSkippedLT(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<Category_Id_Child_Expr> catIdChildExpr)
 {
+	// EXPR< { TYPE/EXPR ...} >
 	auto expr = MakePtr<GenericExpr>();
 	expr->expr = catIdChildExpr;
-	while (!TestToken(cursor, CppTokens::GT))
-	{
-		GenericArgument argument;
-		ParseTypeOrExpr(pa, pea_GenericArgument(), cursor, argument.type, argument.expr);
-		bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
-		expr->arguments.Add({ argument,isVariadic });
-
-		if (!TestToken(cursor, CppTokens::COMMA))
-		{
-			RequireToken(cursor, CppTokens::GT);
-			break;
-		}
-	}
+	ParseGenericArgumentsSkippedLT(pa, cursor, expr->arguments);
 	return expr;
 }
 
