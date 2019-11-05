@@ -15,9 +15,9 @@
   - [x] Function specializations recognized but not used
     - [x] Parse
     - [x] Ensure this function does not participate in overloading
-  - [ ] Class specializations recognized but not used
-    - [ ] Parse
-    - [ ] Ensure this function does not participate in overloading
+  - [x] Class specializations recognized but not used
+    - [x] Parse
+    - [x] Ensure this function does not participate in overloading
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
 - [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
   - [ ] Generate `ClassMemberCache` for generated special members

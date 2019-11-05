@@ -25,7 +25,6 @@ __forward Function<double>: double (double);
 
 TEST_CASE(TestParsePartialSpecialization_Classes)
 {
-	return;
 	auto input = LR"(
 template<typename T>
 struct Obj
@@ -44,6 +43,18 @@ struct Obj<T(*)(U)>
 )";
 
 	auto output = LR"(
+template<typename T>
+struct Obj
+{
+};
+template<typename T>
+struct Obj<T *>
+{
+};
+template<typename T, typename U>
+struct Obj<T (U) *>
+{
+};
 )";
 
 	COMPILE_PROGRAM(program, pa, input);
@@ -52,7 +63,6 @@ struct Obj<T(*)(U)>
 
 TEST_CASE(TestParsePartialSpecialization_Methods)
 {
-	return;
 	auto input = LR"(
 template<typename T>
 struct Obj

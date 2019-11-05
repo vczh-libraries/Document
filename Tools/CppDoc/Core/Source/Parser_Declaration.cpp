@@ -220,6 +220,13 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		cppName.type = CppNameType::Normal;
 	}
 
+	Ptr<SpecializationSpec> specializationSpec;
+	if (spec)
+	{
+		auto specPa = pa.WithScope(specSymbol.Obj());
+		ParseSpecializationSpec(specPa, cursor, specializationSpec);
+	}
+
 	if (TestToken(cursor, CppTokens::SEMICOLON, false))
 	{
 		if (forTypeDef || isAnonymous)
@@ -231,6 +238,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		auto decl = MakePtr<ForwardClassDeclaration>();
 		decl->keepTemplateSpecArgumentSymbolsAliveOnlyForForwardDeclaration = specSymbol;
 		decl->templateSpec = spec;
+		decl->specializationSpec = specializationSpec;
 		decl->classType = classType;
 		decl->name = cppName;
 		output.Add(decl);
@@ -246,6 +254,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		// ... [: { [public|protected|private] TYPE , ...} ]
 		auto decl = MakePtr<ClassDeclaration>();
 		decl->templateSpec = spec;
+		decl->specializationSpec = specializationSpec;
 		decl->classType = classType;
 		decl->name = cppName;
 		vint declIndex = output.Add(decl);
@@ -783,6 +792,12 @@ void ParseDeclaration_Function(
 	else
 	{
 		functionSpec = EnsureNoMultipleTemplateSpec(specs, cursor);
+	}
+
+	if (declarator->specializationSpec)
+	{
+		if (!functionSpec) throw StopParsingException(cursor);
+		if (functionSpec->arguments.Count() != 0) throw StopParsingException(cursor);
 	}
 
 	auto context = declarator->classMemberCache ? declarator->classMemberCache->containerClassTypes[0]->GetDecl() : pa.scopeSymbol;
