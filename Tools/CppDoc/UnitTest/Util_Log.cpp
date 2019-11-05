@@ -44,20 +44,25 @@ void Log(Ptr<Initializer> initializer, StreamWriter& writer)
 	}
 }
 
-void Log(Ptr<Declarator> declarator, StreamWriter& writer)
+void Log(VariadicList<GenericArgument>& arguments, StreamWriter& writer)
 {
-	if (declarator->name)
+	writer.WriteString(L"<");
+	for (vint i = 0; i < arguments.Count(); i++)
 	{
-		writer.WriteString(declarator->name.name);
-		writer.WriteString(L": ");
-	}
+		if (i != 0)
+		{
+			writer.WriteString(L", ");
+		}
 
-	Log(declarator->type, writer);
-
-	if (declarator->initializer)
-	{
-		Log(declarator->initializer, writer);
+		auto arg = arguments[i].item;
+		if (arg.expr) Log(arg.expr, writer);
+		if (arg.type) Log(arg.type, writer);
+		if (arguments[i].isVariadic)
+		{
+			writer.WriteString(L"...");
+		}
 	}
+	writer.WriteString(L">");
 }
 
 /***********************************************************************
@@ -341,23 +346,7 @@ public:
 	void Visit(GenericExpr* self)override
 	{
 		Log(Ptr<Expr>(self->expr), writer);
-		writer.WriteString(L"<");
-		for (vint i = 0; i < self->arguments.Count(); i++)
-		{
-			if (i != 0)
-			{
-				writer.WriteString(L", ");
-			}
-
-			auto arg = self->arguments[i].item;
-			if (arg.expr) Log(arg.expr, writer);
-			if (arg.type) Log(arg.type, writer);
-			if (self->arguments[i].isVariadic)
-			{
-				writer.WriteString(L"...");
-			}
-		}
-		writer.WriteString(L">");
+		Log(self->arguments, writer);
 	}
 };
 
@@ -570,23 +559,7 @@ public:
 	void Visit(GenericType* self)override
 	{
 		Log(Ptr<Type>(self->type), writer);
-		writer.WriteString(L"<");
-		for (vint i = 0; i < self->arguments.Count(); i++)
-		{
-			if (i != 0)
-			{
-				writer.WriteString(L", ");
-			}
-
-			auto arg = self->arguments[i].item;
-			if (arg.expr) Log(arg.expr, writer);
-			if (arg.type) Log(arg.type, writer);
-			if (self->arguments[i].isVariadic)
-			{
-				writer.WriteString(L"...");
-			}
-		}
-		writer.WriteString(L">");
+		Log(self->arguments, writer);
 	}
 };
 
@@ -947,6 +920,10 @@ private:
 			break;
 		}
 		writer.WriteString(self->name.name);
+		if (self->speclizationSpec)
+		{
+			Log(self->speclizationSpec->arguments, writer);
+		}
 		writer.WriteString(L": ");
 		Log(self->type, writer);
 		if (self->decoratorAbstract)
@@ -989,6 +966,10 @@ private:
 			break;
 		}
 		writer.WriteString(self->name.name);
+		if (self->speclizationSpec)
+		{
+			Log(self->speclizationSpec->arguments, writer);
+		}
 	}
 
 	void WriteTemplateSpec(TemplateSpec* spec)

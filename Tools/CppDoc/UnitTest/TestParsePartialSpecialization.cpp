@@ -2,14 +2,21 @@
 
 TEST_CASE(TestParsePartialSpecialization_Functions)
 {
-	return;
 	auto input = LR"(
-template<typename T> void Function(T);
+template<typename T> void Function(T){}
 template<> int Function<int>(int);
 template<> double Function<double>(double);
 )";
 
 	auto output = LR"(
+template<typename T>
+Function: void (T)
+{
+}
+template<>
+__forward Function<int>: int (int);
+template<>
+__forward Function<double>: double (double);
 )";
 
 	COMPILE_PROGRAM(program, pa, input);
