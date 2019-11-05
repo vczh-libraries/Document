@@ -1281,6 +1281,21 @@ public:
 		WriteIndentation();
 		writer.WriteLine(L"}");
 	}
+
+	void Visit(StaticAssertDeclaration* self) override
+	{
+		writer.WriteString(L"static_assert(");
+		for (vint i = 0; i < self->exprs.Count(); i++)
+		{
+			if (i != 0)
+			{
+				writer.WriteString(L", ");
+			}
+			Log(self->exprs[i], writer);
+		}
+		writer.WriteString(L")");
+		if (semicolon) writer.WriteLine(L";");
+	}
 };
 
 /***********************************************************************

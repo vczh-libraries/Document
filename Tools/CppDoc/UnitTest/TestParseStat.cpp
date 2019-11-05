@@ -3,7 +3,7 @@
 TEST_CASE(TestParseStat_Everything)
 {
 	AssertStat(
-		L"{;break;continue;return;return 0; X:; X:0; default:; default:0; case 1:; case 1:0; goto X; __leave;}",
+		L"{;break;continue;return;return 0; X:; X:0; default:; default:0; case 1:; case 1:0; goto X; __leave; static_assert(sizeof(int) == 4);}",
 		LR"(
 {
 	;
@@ -19,6 +19,7 @@ TEST_CASE(TestParseStat_Everything)
 	case 1: 0;
 	goto X;
 	__leave;
+	static_assert((sizeof(int) == 4));
 }
 )");
 

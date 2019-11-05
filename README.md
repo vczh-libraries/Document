@@ -57,7 +57,6 @@ All **the compiler** here means the compiler created by this project.
     - Extern template **(not care #1)**
       - `extern` keyword before `template` keyword
     - Type `long long int`
-    - Static assertions **(not care #1)**
     - Control and query object alignment **(not care #1)**
     - Explicit conversion operators: **Treat all as implicit** **(not care #2)**
       - Need test to see if `explicit` is correctly parsed
@@ -65,7 +64,6 @@ All **the compiler** here means the compiler created by this project.
     - Generic lambdas
     - Lambda capture expressions
   - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
-    - Making the text message for static_assert optional **(not care #1)**
     - New standard attributes `[[fallthrough]]`, `[[maybe_unused]]` and `[[nodiscard]]`
     - A compile-time static if with the form if constexpr(expression) **(not care #1)**
 - **Parsed but it doesn't affect type inferencing so I don't care**
@@ -73,6 +71,7 @@ All **the compiler** here means the compiler created by this project.
     - Thread-local storage
     - Allow sizeof to work on members of classes without an explicit object:
     - Attributes
+    - Static assertions
   - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
     - The attribute `[[deprecated]]`
   - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
@@ -80,6 +79,7 @@ All **the compiler** here means the compiler created by this project.
     - Inline variables, which allows the definition of variables in header files without violating the one definition rule. The rules are effectively the same as inline functions
     - Value of `__cplusplus` changed to 201703L: **I don't do preprocessing by myself**
     - `__has_include`, allowing the availability of a header to be checked by preprocessor directives: **I don't do preprocessing by myself**
+    - Making the text message for static_assert optional
 - **Parsed but it only reduces the accuracy of overloading so I don't care**
   - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
     - constexpr – Generalized constant expressions: **Treat all constant values identical**

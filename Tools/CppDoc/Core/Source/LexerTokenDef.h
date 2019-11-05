@@ -100,6 +100,7 @@ Keywords
 	F(PRIVATE,					private)				\
 	F(__PRAGMA,					__pragma)				\
 	F(__DECLSPEC,				__declspec)				\
+	F(STATIC_ASSERT,			static_assert)			\
 
 /***********************************************************************
 Others

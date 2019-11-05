@@ -1164,12 +1164,41 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 	}
 }
 
+void ParseDeclaration_StaticAssert(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+{
+	RequireToken(cursor, CppTokens::STATIC_ASSERT);
+	RequireToken(cursor, CppTokens::LPARENTHESIS);
+
+	auto decl = MakePtr<StaticAssertDeclaration>();
+	output.Add(decl);
+
+	if (!TestToken(cursor, CppTokens::RPARENTHESIS))
+	{
+		while (true)
+		{
+			decl->exprs.Add(ParseExpr(pa, pea_Argument(), cursor));
+			if (!TestToken(cursor, CppTokens::COMMA))
+			{
+				RequireToken(cursor, CppTokens::RPARENTHESIS);
+				break;
+			}
+		}
+	}
+
+	RequireToken(cursor, CppTokens::SEMICOLON);
+}
+
 void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	while (SkipSpecifiers(cursor));
 	if (TestToken(cursor, CppTokens::SEMICOLON))
 	{
 		// ignore lonely semicolon
+		return;
+	}
+	if (TestToken(cursor, CppTokens::STATIC_ASSERT, false))
+	{
+		ParseDeclaration_StaticAssert(pa, cursor, output);
 		return;
 	}
 

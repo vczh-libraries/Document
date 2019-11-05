@@ -25,6 +25,7 @@ Visitor
 	F(TypeAliasDeclaration)\
 	F(ValueAliasDeclaration)\
 	F(NamespaceDeclaration)\
+	F(StaticAssertDeclaration)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
 CPPDOC_DECL_LIST(CPPDOC_FORWARD)
@@ -280,6 +281,14 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	List<Ptr<Declaration>>							decls;
+};
+
+class StaticAssertDeclaration : public Declaration
+{
+public:
+	IDeclarationVisitor_ACCEPT;
+
+	List<Ptr<Expr>>									exprs;
 };
 
 #endif

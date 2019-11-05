@@ -195,6 +195,7 @@ TEST_CASE(TestParseDecl_Methods)
 	auto input = LR"(
 struct Vector
 {
+	static_assert(sizeof(int) == 8, "This is an error message.");
 	double x = 0;
 	double y = 0;
 
@@ -214,6 +215,7 @@ static Vector operator-(Vector v1, Vector v2);
 	auto output = LR"(
 struct Vector
 {
+	public static_assert((sizeof(int) == 8), "This is an error message.");
 	public x: double = 0;
 	public y: double = 0;
 	public __forward __ctor $__ctor: __null () __stdcall;

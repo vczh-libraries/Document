@@ -527,6 +527,15 @@ public:
 			EvaluateDeclaration(dpa, self->decls[i]);
 		}
 	}
+
+	void Visit(StaticAssertDeclaration* self) override
+	{
+		for (vint i = 0; i < self->exprs.Count(); i++)
+		{
+			ExprTsysList tsys;
+			ExprToTsysNoVta(pa, self->exprs[i], tsys);
+		}
+	}
 };
 
 /***********************************************************************

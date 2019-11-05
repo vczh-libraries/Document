@@ -931,6 +931,10 @@ public:
 			self->decls[i]->Accept(this);
 		}
 	}
+
+	void Visit(StaticAssertDeclaration* self) override
+	{
+	}
 };
 
 void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
