@@ -525,24 +525,24 @@ namespace symbol_totsys_impl
 		bool						hasBoundedVta = false;
 		vint						unboundedVtaCount = -1;
 
-		void Apply(TypeTsysList& result, bool& isVta, const Ptr<Type>& type)
+		void Apply(TypeTsysList& result, bool& isVta, const Ptr<Type>& type, TypeToTsysConfig config)
 		{
-			TypeToTsysInternal(pa, type, result, isVta);
+			TypeToTsysInternal(pa, type, result, isVta, config);
 		}
 
-		void Apply(TypeTsysList& result, bool& isVta, const Ptr<VariableDeclaration>& varDecl)
+		void Apply(TypeTsysList& result, bool& isVta, const Ptr<VariableDeclaration>& varDecl, TypeToTsysConfig config)
 		{
-			TypeToTsysInternal(pa, varDecl->type, result, isVta);
+			TypeToTsysInternal(pa, varDecl->type, result, isVta, config);
 		}
 
-		void Apply(ExprTsysList& result, bool& isVta, const Ptr<Type>& type)
+		void Apply(ExprTsysList& result, bool& isVta, const Ptr<Type>& type, TypeToTsysConfig config)
 		{
 			TypeTsysList tsyses;
-			TypeToTsysInternal(pa, type, tsyses, isVta);
+			TypeToTsysInternal(pa, type, tsyses, isVta, config);
 			symbol_type_resolving::AddTemp(result, tsyses);
 		}
 
-		void Apply(ExprTsysList& result, bool& isVta, const Ptr<Expr>& expr)
+		void Apply(ExprTsysList& result, bool& isVta, const Ptr<Expr>& expr, TypeToTsysConfig config)
 		{
 			ExprToTsysInternal(pa, expr, result, isVta);
 		}
@@ -574,18 +574,9 @@ namespace symbol_totsys_impl
 		}
 
 		template<typename TNode>
-		void ApplySingle(vint index, const Ptr<TNode>& node)
+		void ApplySingle(vint index, const Ptr<TNode>& node, TypeToTsysConfig config = {})
 		{
-			Apply(argItems[index], isVtas[index], node);
-		}
-
-		template<typename TNode>
-		void ApplyList(vint index, const List<Ptr<TNode>>& nodes)
-		{
-			for (vint i = 0; i < nodes.Count(); i++)
-			{
-				ApplySingle<TNode>(i + index, nodes[i]);
-			}
+			Apply(argItems[index], isVtas[index], node, config);
 		}
 
 		template<typename TNode>

@@ -154,16 +154,43 @@ struct NotResolvableException {};
 struct UnexpectedSymbolCategoryException {};
 struct FinishEvaluatingReturnType {};
 
+struct TypeToTsysConfig
+{
+	bool					idExprToInstant = true;
+	bool					memberOf = false;
+	TsysCallingConvention	cc = TsysCallingConvention::None;
+
+	TypeToTsysConfig() = default;
+	TypeToTsysConfig(bool _idExprToInstant, bool _memberOf, TsysCallingConvention _cc)
+		:idExprToInstant(_idExprToInstant), memberOf(_memberOf), cc(_cc)
+	{
+	}
+
+	static TypeToTsysConfig ExpectTemplate()
+	{
+		TypeToTsysConfig config;
+		config.idExprToInstant = false;
+		return config;
+	}
+
+	static TypeToTsysConfig MemberOf(bool _memberOf)
+	{
+		TypeToTsysConfig config;
+		config.memberOf = _memberOf;
+		return config;
+	}
+};
+
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2, Dictionary<WString, WString>& equivalentNames);
 extern bool					IsCompatibleFunctionDeclInSameScope(Ptr<ForwardFunctionDeclaration> declNew, Ptr<ForwardFunctionDeclaration> declOld);
 extern bool					IsPendingType(Type* type);
 extern bool					IsPendingType(Ptr<Type> type);
 extern ITsys*				ResolvePendingType(const ParsingArguments& pa, Ptr<Type> type, ExprTsysItem target);
 
-extern void					TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool& isVta, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
-extern void					TypeToTsysInternal(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool& isVta, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
-extern void					TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
-extern void					TypeToTsysNoVta(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None);
+extern void					TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool& isVta, TypeToTsysConfig config = {});
+extern void					TypeToTsysInternal(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, bool& isVta, TypeToTsysConfig config = {});
+extern void					TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, TypeToTsysConfig config = {});
+extern void					TypeToTsysNoVta(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys, TypeToTsysConfig config = {});
 extern void					TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf);
 extern void					GenericExprToTsys(const ParsingArguments& pa, ExprTsysList& nameTypes, bool nameIsVta, GenericExpr* argumentsPart, ExprTsysList& tsys, bool& isVta);
 extern void					ExprToTsysInternal(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys, bool& isVta);

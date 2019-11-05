@@ -399,7 +399,7 @@ namespace symbol_type_resolving
 			}
 			else
 			{
-				TypeToTsysNoVta(eval.declPa, funcDecl->type, eval.evaluatedTypes, IsMemberFunction(funcDecl));
+				TypeToTsysNoVta(eval.declPa, funcDecl->type, eval.evaluatedTypes, TypeToTsysConfig::MemberOf(IsMemberFunction(funcDecl)));
 				return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, argumentsToApply);
 			}
 		}
