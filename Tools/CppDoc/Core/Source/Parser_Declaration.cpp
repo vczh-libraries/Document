@@ -618,7 +618,7 @@ SearchForFunctionWithSameSignature
 
 Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
 {
-	if (!decl->needResolveTypeFromStatement)
+	if (!decl->needResolveTypeFromStatement && !decl->specializationSpec)
 	{
 		if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
 		{
@@ -791,7 +791,7 @@ void ParseDeclaration_Function(
 		// if there is a statement, then it is a function declaration
 		auto decl = MakePtr<FunctionDeclaration>();
 		decl->templateSpec = functionSpec;
-		decl->speclizationSpec = declarator->specializationSpec;
+		decl->specializationSpec = declarator->specializationSpec;
 		for (vint i = 0; i < containerClassSpecs.Count(); i++)
 		{
 			decl->classSpecs.Add({ containerClassSpecs[i],containerClassDecls[i] });
@@ -871,7 +871,7 @@ void ParseDeclaration_Function(
 
 		auto decl = MakePtr<ForwardFunctionDeclaration>();
 		decl->templateSpec = functionSpec;
-		decl->speclizationSpec = declarator->specializationSpec;
+		decl->specializationSpec = declarator->specializationSpec;
 		FILL_FUNCTION;
 		output.Add(decl);
 		RequireToken(cursor, CppTokens::SEMICOLON);

@@ -12,9 +12,9 @@
 ## TODO
 
 - [ ] Next Demo!
-  - [ ] Function specializations recognized but not used
+  - [x] Function specializations recognized but not used
     - [x] Parse
-    - [ ] Ensure this function does not participate in overloading
+    - [x] Ensure this function does not participate in overloading
   - [ ] Class specializations recognized but not used
     - [ ] Parse
     - [ ] Ensure this function does not participate in overloading

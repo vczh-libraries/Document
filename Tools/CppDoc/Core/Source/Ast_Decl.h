@@ -116,7 +116,7 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<TemplateSpec>								templateSpec;
-	Ptr<SpecializationSpec>							speclizationSpec;
+	Ptr<SpecializationSpec>							specializationSpec;
 	Ptr<Type>										type;
 	CppMethodType									methodType = CppMethodType::Function;
 	bool											decoratorExtern = false;
@@ -159,7 +159,7 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<TemplateSpec>								templateSpec;
-	Ptr<SpecializationSpec>							speclizationSpec;
+	Ptr<SpecializationSpec>							specializationSpec;
 	CppClassType									classType;
 	bool											decoratorFriend = false;
 

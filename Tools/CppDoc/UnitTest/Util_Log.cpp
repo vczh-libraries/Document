@@ -920,9 +920,9 @@ private:
 			break;
 		}
 		writer.WriteString(self->name.name);
-		if (self->speclizationSpec)
+		if (self->specializationSpec)
 		{
-			Log(self->speclizationSpec->arguments, writer);
+			Log(self->specializationSpec->arguments, writer);
 		}
 		writer.WriteString(L": ");
 		Log(self->type, writer);
@@ -966,9 +966,9 @@ private:
 			break;
 		}
 		writer.WriteString(self->name.name);
-		if (self->speclizationSpec)
+		if (self->specializationSpec)
 		{
-			Log(self->speclizationSpec->arguments, writer);
+			Log(self->specializationSpec->arguments, writer);
 		}
 	}
 

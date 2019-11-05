@@ -216,8 +216,9 @@ private:
 	symbol_component::SymbolCategory				category;
 	symbol_component::SC_Data						categoryData;
 
+	WString											DecorateNameForSpecializationSpec(const WString& symbolName, Ptr<SpecializationSpec> spec);
 	void											ReuseTemplateSpecSymbol(Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category);
-	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category);
+	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, const WString& declName, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category);
 	Symbol*											AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category);
 	void											SetParent(Symbol* parent);
 
