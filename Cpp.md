@@ -15,6 +15,7 @@
   - [ ] Inside the scope of `template<...> class X`, if `X` is used as a type without type arguments, it becomes the current instantiation.
     - In `TypeToTsys(Internal|NoVta)`, make `bool memberOf = false, TsysCallingConvention cc = TsysCallingConvention::None` to a struct with default and full-members constructors.
     - Add `bool mustBeTemplate`, when it is true, it is used `Here<T...>` or `X<..., Here, ...>` when it is required to be a template.
+      - Only when `Here` is an `IdExpr` (different than ISO)
   - [ ] Function specializations recognized but not used
   - [ ] Class specializations recognized but not used
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
