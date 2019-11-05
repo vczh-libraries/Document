@@ -151,23 +151,11 @@ ParseDeclaratorContext
 
 struct ParseDeclaratorContext
 {
-	ClassDeclaration*		containingClass;
-	bool					forParameter;
-	DeclaratorRestriction	dr;
-	InitializerRestriction	ir;
-	bool					allowBitField;
-	bool					allowEllipsis;
-	bool					allowComma;
+	PARSING_DECLARATOR_ARGUMENTS;
 	bool					forceSpecialMethod;
 
 	ParseDeclaratorContext(const ParsingDeclaratorArguments& pda, bool _forceSpecialMethod)
-		:containingClass(pda.containingClass)
-		, forParameter(pda.forParameter)
-		, dr(pda.dr)
-		, ir(pda.ir)
-		, allowBitField(pda.allowBitField)
-		, allowEllipsis(pda.allowEllipsis)
-		, allowComma(pda.allowComma)
+		: PARSING_DECLARATOR_COPY(pda.)
 		, forceSpecialMethod(_forceSpecialMethod)
 	{
 	}
@@ -440,26 +428,35 @@ bool ParseSingleDeclarator_Array(const ParsingArguments& pa, Ptr<Declarator> dec
 ParseSingleDeclarator_Function
 ***********************************************************************/
 
-bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<Type> targetType, bool forceSpecialMethod, Ptr<CppTokenCursor>& cursor)
+bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> declarator, Ptr<Type> targetType, bool forceSpecialMethod, bool allowSpecializationSpec, Ptr<CppTokenCursor>& cursor)
 {
 	// if it is not an array declarator, then there are only two possibilities
 	//   1. it is a function declarator
 	//   2. it is a declarator but not array or function
 	// so we see if we can find __stdcall
+
+	auto oldCursor = cursor;
+
+	Ptr<SpecializationSpec> spec;
 	auto callingConvention = TsysCallingConvention::None;
-	{
-		auto oldCursor = cursor;
-		if (ParseCallingConvention(callingConvention, cursor))
-		{
-			if (!TestToken(cursor, CppTokens::LPARENTHESIS, false))
-			{
-				cursor = oldCursor;
-			}
-		}
-	}
+
+	ParseSpecializationSpec(pa, cursor, spec);
+	ParseCallingConvention(callingConvention, cursor);
 
 	if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
 	{
+		if (spec)
+		{
+			if (declarator->name)
+			{
+				declarator->specializationSpec = spec;
+			}
+			else
+			{
+				throw StopParsingException(cursor);
+			}
+		}
+
 		if (!forceSpecialMethod || callingConvention != TsysCallingConvention::None)
 		{
 			// if we see (EXPRESSION, then this is an initializer, we stop here.
@@ -652,6 +649,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 	}
 	else
 	{
+		cursor = oldCursor;
 		return false;
 	}
 }
@@ -904,7 +902,7 @@ READY_FOR_ARRAY_OR_FUNCTION:
 		}
 		else
 		{
-			ParseSingleDeclarator_Function(newPa, declarator, targetType, pdc.forceSpecialMethod, cursor);
+			ParseSingleDeclarator_Function(newPa, declarator, targetType, pdc.forceSpecialMethod, pdc.allowSpecializationSpec, cursor);
 		}
 	});
 	return declarator;

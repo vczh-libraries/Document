@@ -13,6 +13,7 @@ namespace symbol_component
 struct ParsingArguments;
 struct EvaluateSymbolContext;
 class ITsys;
+class SpecializationSpec;
 class ForwardFunctionDeclaration;
 class VariableDeclaration;
 class GenericExpr;
@@ -142,6 +143,7 @@ public:
 	bool										ellipsis = false;
 	CppName										name;
 	Ptr<Initializer>							initializer;
+	Ptr<SpecializationSpec>						specializationSpec;
 };
 
 /***********************************************************************

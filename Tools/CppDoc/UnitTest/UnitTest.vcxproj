@@ -165,7 +165,7 @@
     <ClCompile Include="TestParseGenericTypeAlias.cpp" />
     <ClCompile Include="TestParseGenericValueAlias.cpp" />
     <ClCompile Include="TestParseMember.cpp" />
-    <ClCompile Include="TestParsePartialInstantiation.cpp" />
+    <ClCompile Include="TestParsePartialSpecialization.cpp" />
     <ClCompile Include="TestParseVariadicTemplateArgument.cpp" />
     <ClCompile Include="TestTypeConvert.cpp" />
     <ClCompile Include="TestTypeConvertGeneric.cpp" />

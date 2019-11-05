@@ -478,45 +478,53 @@ extern bool											ParseCallingConvention(TsysCallingConvention& callingConve
 // Parser_Type.cpp
 extern Ptr<Type>									ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
+#define PARSING_DECLARATOR_ARGUMENTS										\
+	ClassDeclaration*								containingClass;		\
+	bool											forParameter;			\
+	DeclaratorRestriction							dr;						\
+	InitializerRestriction							ir;						\
+	bool											allowBitField;			\
+	bool											allowEllipsis;			\
+	bool											allowComma;				\
+	bool											allowSpecializationSpec	\
+
+#define PARSING_DECLARATOR_COPY(PREFIX)										\
+	containingClass(PREFIX##containingClass)								\
+	, forParameter(PREFIX##forParameter)									\
+	, dr(PREFIX##dr)														\
+	, ir(PREFIX##ir)														\
+	, allowBitField(PREFIX##allowBitField)									\
+	, allowEllipsis(PREFIX##allowEllipsis)									\
+	, allowComma(PREFIX##allowComma)										\
+	, allowSpecializationSpec(PREFIX##allowSpecializationSpec)				\
+
 // Parser_Declarator.cpp
 struct ParsingDeclaratorArguments
 {
-	ClassDeclaration*								containingClass;
-	bool											forParameter;
-	DeclaratorRestriction							dr;
-	InitializerRestriction							ir;
-	bool											allowBitField;
-	bool											allowEllipsis;
-	bool											allowComma;
+	PARSING_DECLARATOR_ARGUMENTS;
 
-	ParsingDeclaratorArguments(ClassDeclaration* _containingClass, bool _forParameter, DeclaratorRestriction _dr, InitializerRestriction _ir, bool _allowBitField, bool _allowEllipsis, bool _allowComma)
-		:containingClass(_containingClass)
-		, forParameter(_forParameter)
-		, dr(_dr)
-		, ir(_ir)
-		, allowBitField(_allowBitField)
-		, allowEllipsis(_allowEllipsis)
-		, allowComma(_allowComma)
+	ParsingDeclaratorArguments(ClassDeclaration* _containingClass, bool _forParameter, DeclaratorRestriction _dr, InitializerRestriction _ir, bool _allowBitField, bool _allowEllipsis, bool _allowComma, bool _allowSpecializationSpec)
+		: PARSING_DECLARATOR_COPY(_)
 	{
 	}
 };
 
 inline ParsingDeclaratorArguments					pda_Type()
-	{	return { nullptr,	false,			DeclaratorRestriction::Zero,		InitializerRestriction::Zero,		false,			false,	false		}; } // Type
+	{	return { nullptr,	false,			DeclaratorRestriction::Zero,		InitializerRestriction::Zero,		false,			false,	false,		false	}; } // Type
 inline ParsingDeclaratorArguments					pda_VarType()
-	{	return { nullptr,	false,			DeclaratorRestriction::Optional,	InitializerRestriction::Zero,		false,			false,	false		}; } // Type or Variable without Initializer
+	{	return { nullptr,	false,			DeclaratorRestriction::Optional,	InitializerRestriction::Zero,		false,			false,	false,		false	}; } // Type or Variable without Initializer
 inline ParsingDeclaratorArguments					pda_VarInit()
-	{	return { nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Optional,	false,			false,	false		}; } // Variable with Initializer
+	{	return { nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Optional,	false,			false,	false,		false	}; } // Variable with Initializer
 inline ParsingDeclaratorArguments					pda_VarNoInit()
-	{	return { nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Zero,		false,			false,	false		}; } // Variable without Initializer
+	{	return { nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Zero,		false,			false,	false,		false	}; } // Variable without Initializer
 inline ParsingDeclaratorArguments					pda_Param(bool forParameter)
-	{	return { nullptr,	forParameter,	DeclaratorRestriction::Optional,	InitializerRestriction::Optional,	false,			false,	false		}; } // Parameter
+	{	return { nullptr,	forParameter,	DeclaratorRestriction::Optional,	InitializerRestriction::Optional,	false,			false,	false,		false	}; } // Parameter
 inline ParsingDeclaratorArguments					pda_TemplateParam()
-	{	return { nullptr,	false,			DeclaratorRestriction::Optional,	InitializerRestriction::Optional,	false,			true,	false		}; } // Parameter
+	{	return { nullptr,	false,			DeclaratorRestriction::Optional,	InitializerRestriction::Optional,	false,			true,	false,		false	}; } // Parameter
 inline ParsingDeclaratorArguments					pda_Decls(bool allowBitField, bool allowComma)	
-	{	return { nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Optional,	allowBitField,	false,	allowComma	}; } // Declarations
+	{	return { nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Optional,	allowBitField,	false,	allowComma,	true	}; } // Declarations
 inline ParsingDeclaratorArguments					pda_Typedefs()	
-	{	return { nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Zero,		false,			false,	false		}; } // Declarations after typedef keyword
+	{	return { nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Zero,		false,			false,	false,		false	}; } // Declarations after typedef keyword
 
 extern void											ParseMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<Type> type, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
