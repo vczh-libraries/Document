@@ -618,6 +618,11 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 			}
 			else if (TestToken(cursor, CppTokens::NOEXCEPT))
 			{
+				if (TestToken(cursor, CppTokens::LPARENTHESIS))
+				{
+					ParseExpr(pa, pea_Full(), cursor);
+					RequireToken(cursor, CppTokens::RPARENTHESIS);
+				}
 				// noexcept
 				type->decoratorNoExcept = true;
 			}

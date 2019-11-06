@@ -1036,6 +1036,7 @@ Ptr<Program> ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	pa.program = program;
 
 	// these types will be used before it is defined
+	/*
 	PredefineType(program, pa, L"__m64", false, CppClassType::Struct, symbol_component::SymbolKind::Struct);
 	PredefineType(program, pa, L"__m128", false, CppClassType::Union, symbol_component::SymbolKind::Struct);
 	PredefineType(program, pa, L"__m128d", true, CppClassType::Struct, symbol_component::SymbolKind::Struct);
@@ -1046,6 +1047,7 @@ Ptr<Program> ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	PredefineType(program, pa, L"__m512", true, CppClassType::Union, symbol_component::SymbolKind::Union);
 	PredefineType(program, pa, L"__m512d", true, CppClassType::Struct, symbol_component::SymbolKind::Struct);
 	PredefineType(program, pa, L"__m512i", true, CppClassType::Union, symbol_component::SymbolKind::Union);
+	*/
 
 	while (cursor)
 	{

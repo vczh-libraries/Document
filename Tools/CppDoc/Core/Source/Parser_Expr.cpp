@@ -91,6 +91,12 @@ Ptr<IdExpr> ParseIdExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		auto rsr = ResolveSymbol(pa, cppName, SearchPolicy::SymbolAccessableInScope);
 		if (!rsr.types)
 		{
+			if (!rsr.values && !TestToken(cursor, CppTokens::LPARENTHESIS, false))
+			{
+				// unknown name is acceptable only when it could be resolved by argument-dependent lookup
+				// so "(" has to be right after this name
+				throw StopParsingException(cursor);
+			}
 			auto type = MakePtr<IdExpr>();
 			type->name = cppName;
 			type->resolving = rsr.values;
