@@ -16,6 +16,7 @@
   - [x] Parse `UnitTest_Cases`, generate HTML and check.
   - [ ] Check template symbol in `SymbolIndex.html`.
   - [ ] Check carefully around all links.
+    - [ ] Template arguments are not located in HTML.
   - [ ] Show progress while parsing cases.
 - [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
   - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s

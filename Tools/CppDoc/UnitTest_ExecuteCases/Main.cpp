@@ -1441,7 +1441,7 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 				}
 				for (vint j = 0; j < symbol->GetForwardDecls_N().Count(); j++)
 				{
-					impls.Add(L"NF[" + itow(j) + L"]$" + symbol->uniqueId);
+					decls.Add(L"NF[" + itow(j) + L"]$" + symbol->uniqueId);
 				}
 			}
 			break;
