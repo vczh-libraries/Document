@@ -166,7 +166,7 @@ function jumpToSymbol(overloadResolutions, resolved) {
             if (referencedSymbol !== undefined) {
                 const symbol = { displayNameInHtml: referencedSymbol.displayNameInHtml, decls: [] };
 
-                for (i = 0; i < referencedSymbol.impls; i++) {
+                for (i = 0; i < referencedSymbol.impls.length; i++) {
                     const elementId = referencedSymbol.impls[i];
                     const label = 'impl[' + i + ']';
                     const file = symbolToFiles[elementId];
@@ -175,7 +175,7 @@ function jumpToSymbol(overloadResolutions, resolved) {
                     }
                 }
 
-                for (i = 0; i < referencedSymbol.decls; i++) {
+                for (i = 0; i < referencedSymbol.decls.length; i++) {
                     const elementId = referencedSymbol.decls[i];
                     const label = 'decl[' + i + ']';
                     const file = symbolToFiles[elementId];
@@ -195,7 +195,7 @@ function jumpToSymbol(overloadResolutions, resolved) {
     }
 
     if (dropdownData.length === 0) {
-        promptTooltipMessage('The target symbol is not defined in the source code.', event.target.parentElement);
+        promptTooltipMessage('The target symbol is not defined in the source code.', event.target);
         return;
     }
 
@@ -216,5 +216,5 @@ function jumpToSymbol(overloadResolutions, resolved) {
         }
     }
 
-    promptTooltipDropdownData(dropdownData, event.target.parentElement);
+    promptTooltipDropdownData(dropdownData, event.target);
 }

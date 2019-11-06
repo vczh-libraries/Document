@@ -305,6 +305,8 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 				}
 			}
 			break;
+		case symbol_component::SymbolCategory::Function:
+			break;
 		case symbol_component::SymbolCategory::FunctionBody:
 			if (auto decl = symbol->GetImplDecl_NFb())
 			{
@@ -779,9 +781,14 @@ void GenerateHtmlLine(
 				}
 			}
 
-			Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([");
-			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; (Use(html).WriteString(L"], ["), i--))
+			Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol(");
+			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
+				if (i != (vint)IndexReason::OverloadedResolution)
+				{
+					Use(html).WriteString(L", ");
+				}
+				Use(html).WriteString(L"[");
 				if (tracker.indexResolve[i].inRange)
 				{
 					auto& symbols = result.index[i].GetByIndex(tracker.indexResolve[i].index);
@@ -794,6 +801,7 @@ void GenerateHtmlLine(
 							switch (symbol->GetCategory())
 							{
 							case symbol_component::SymbolCategory::Normal:
+							case symbol_component::SymbolCategory::Function:
 								Use(html).WriteString(symbol->uniqueId);
 								break;
 							case symbol_component::SymbolCategory::FunctionBody:
@@ -804,8 +812,9 @@ void GenerateHtmlLine(
 						Use(html).WriteString(L"\'");
 					}
 				}
+				Use(html).WriteString(L"]");
 			}
-			Use(html).WriteString(L"])\">");
+			Use(html).WriteString(L")\">");
 		}
 		else if (!tracker.lastTokenIsDef && !isRefToken && tracker.lastTokenIsRef)
 		{
@@ -1154,7 +1163,32 @@ public:
 
 	void Visit(GenericType* self)override
 	{
-		throw Exception(L"Not Implemented.");
+		WString currentResult = result;
+		WString genericResult;
+
+		{
+			result = L"";
+			self->type->Accept(this);
+			genericResult = result + L"<";
+		}
+		for (vint i = 0; i < self->arguments.Count(); i++)
+		{
+			if (i > 0) genericResult += L", ";
+			auto argument = self->arguments[i];
+			if (argument.item.type)
+			{
+				result = L"";
+				argument.item.type->Accept(this);
+				genericResult += result;
+			}
+			else
+			{
+				genericResult += L"...";
+			}
+		}
+		genericResult += L">";
+
+		result = genericResult + L" " + currentResult;
 	}
 };
 
@@ -1427,6 +1461,8 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 				}
 			}
 			break;
+		case symbol_component::SymbolCategory::FunctionBody:
+			throw UnexpectedSymbolCategoryException();
 		}
 		
 		if (impls.Count() == 0)
@@ -1556,6 +1592,8 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 				}
 			}
 			break;
+		case symbol_component::SymbolCategory::FunctionBody:
+			throw UnexpectedSymbolCategoryException();
 		}
 	}
 	writer.WriteLine(L"");
@@ -1674,6 +1712,8 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 				}
 			}
 			break;
+		case symbol_component::SymbolCategory::FunctionBody:
+			throw UnexpectedSymbolCategoryException();
 		}
 
 		for (vint i = 0; i < decls.Count(); i++)
@@ -1857,6 +1897,8 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 				}
 			}
 			break;
+		case symbol_component::SymbolCategory::FunctionBody:
+			throw UnexpectedSymbolCategoryException();
 		}
 		writer.WriteLine(L"");
 	}
@@ -1920,6 +1962,9 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 
 /***********************************************************************
 Main
+
+Set root folder which contains UnitTest_Cases.vcxproj
+Open http://127.0.0.1:8080/Calculator.i.Output/FileIndex.html
 ***********************************************************************/
 
 int main()

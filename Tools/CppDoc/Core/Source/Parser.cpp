@@ -605,7 +605,7 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 
 	if (category == symbol_component::SymbolCategory::FunctionBody)
 	{
-		uniqueId = prefix;
+		ids.Add((uniqueId = prefix), this);
 		nextPrefix = prefix + L"::";
 	}
 	else
@@ -624,8 +624,7 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 					WString id = prefix + name + (counter == 1 ? WString::Empty : itow(counter));
 					if (!ids.Keys().Contains(id))
 					{
-						uniqueId = id;
-						ids.Add(id, this);
+						ids.Add((uniqueId = id), this);
 						nextPrefix = id + L"::";
 						break;
 					}
