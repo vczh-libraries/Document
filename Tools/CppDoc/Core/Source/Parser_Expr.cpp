@@ -557,6 +557,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 		}
 		catch (const StopParsingException&)
 		{
+			newExpr->type = nullptr;
 			cursor = oldCursor;
 		}
 		newExpr->expr = ParsePrefixUnaryExpr(pa, cursor);
@@ -673,6 +674,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 		}
 		catch (const StopParsingException&)
 		{
+			type = nullptr;
 			cursor = oldCursor;
 		}
 

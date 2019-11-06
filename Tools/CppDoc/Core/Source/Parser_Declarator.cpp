@@ -357,8 +357,8 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 			}
 			catch (const StopParsingException&)
 			{
-				cursor = oldCursor;
 				classType = nullptr;
+				cursor = oldCursor;
 			}
 		}
 
@@ -861,6 +861,7 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 			}
 			catch (const StopParsingException&)
 			{
+				declarator = nullptr;
 				cursor = oldCursor;
 				goto READY_FOR_ARRAY_OR_FUNCTION;
 			}

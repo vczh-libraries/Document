@@ -17,6 +17,7 @@ void ParseVariableOrExpression(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	}
 	catch (const StopParsingException&)
 	{
+		declarator = nullptr;
 		cursor = oldCursor;
 	}
 
@@ -127,6 +128,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			}
 			catch (const StopParsingException&)
 			{
+				declarator = nullptr;
 				cursor = oldCursor;
 				goto FOR_EACH_FAILED;
 			}
@@ -158,6 +160,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				}
 				catch (const StopParsingException&)
 				{
+					declarators.Clear();
 					cursor = oldCursor;
 				}
 
@@ -203,6 +206,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			}
 			catch (const StopParsingException&)
 			{
+				declarators.Clear();
 				cursor = oldCursor;
 			}
 		}
