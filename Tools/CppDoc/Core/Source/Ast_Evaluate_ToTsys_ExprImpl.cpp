@@ -356,7 +356,9 @@ namespace symbol_totsys_impl
 			{
 				for (vint j = 0; j < opFuncs.values->resolvedSymbols.Count(); j++)
 				{
-					VisitSymbolForField(pa, leftType, opFuncs.values->resolvedSymbols[j], opTypes);
+					// prevent from getting non-static operators inside a class
+					auto funcSymbol = opFuncs.values->resolvedSymbols[j];
+					VisitSymbol(pa, funcSymbol, opTypes);
 				}
 			}
 			if (!opFuncs.values || IsAdlEnabled(pa, opFuncs.values))

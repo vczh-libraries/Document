@@ -14,6 +14,7 @@
 - [ ] Next Demo!
   - [x] `static_assert`
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
+  - [ ] Show progress while parsing cases
 - [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
   - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
   - [ ] Generate `ClassMemberCache` for generated special members

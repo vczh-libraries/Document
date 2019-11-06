@@ -170,11 +170,6 @@ namespace symbol_type_resolving
 			}
 		}
 
-		if (classScope && !thisEntity)
-		{
-			throw NotConvertableException();
-		}
-
 		switch (symbol->kind)
 		{
 		case symbol_component::SymbolKind::Variable:
@@ -182,6 +177,11 @@ namespace symbol_type_resolving
 				auto varDecl = symbol->GetAnyForwardDecl<ForwardVariableDeclaration>();
 				auto& evTypes = EvaluateVarSymbol(pa, varDecl.Obj(), parentDeclType);
 				bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol);
+				bool isMember = classScope && !isStaticSymbol;
+				if (!thisItem && isMember)
+				{
+					return;
+				}
 
 				for (vint k = 0; k < evTypes.Count(); k++)
 				{
@@ -229,6 +229,10 @@ namespace symbol_type_resolving
 				auto& evTypes = EvaluateFuncSymbol(pa, funcDecl.Obj(), parentDeclType, nullptr);
 				bool isStaticSymbol = IsStaticSymbol<ForwardFunctionDeclaration>(symbol);
 				bool isMember = classScope && !isStaticSymbol;
+				if (!thisItem && isMember)
+				{
+					return;
+				}
 
 				for (vint k = 0; k < evTypes.Count(); k++)
 				{

@@ -1449,11 +1449,12 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 					writer.WriteLine(L"\',");
 				}
 			}
+			writer.WriteLine(L"        ],");
 		}
 
 		if (decls.Count() == 0)
 		{
-			writer.WriteLine(L"        \'decls\': [],");
+			writer.WriteLine(L"        \'decls\': []");
 		}
 		else
 		{
@@ -1471,15 +1472,16 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 					writer.WriteLine(L"\',");
 				}
 			}
+			writer.WriteLine(L"        ]");
 		}
 
 		if (i == flr->refSymbols.Count() - 1)
 		{
-			writer.WriteLine(L"}");
+			writer.WriteLine(L"    }");
 		}
 		else
 		{
-			writer.WriteLine(L"},");
+			writer.WriteLine(L"    },");
 		}
 	}
 	writer.WriteLine(L"};");
