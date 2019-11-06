@@ -659,12 +659,13 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 	case symbol_component::SymbolCategory::Function:
 		for (vint i = 0; i < categoryData.function.forwardSymbols.Count(); i++)
 		{
-			categoryData.function.forwardSymbols[i]->uniqueId = uniqueId;
+			auto symbol = categoryData.function.forwardSymbols[i].Obj();
+			symbol->GenerateUniqueId(ids, uniqueId + L"[decl" + itow(i) + L"]");
 		}
 		for (vint i = 0; i < categoryData.function.implSymbols.Count(); i++)
 		{
 			auto symbol = categoryData.function.implSymbols[i].Obj();
-			symbol->GenerateUniqueId(ids, uniqueId + L"[decl" + itow(i) + L"]");
+			symbol->GenerateUniqueId(ids, uniqueId + L"[impl" + itow(i) + L"]");
 		}
 		return;
 	default:

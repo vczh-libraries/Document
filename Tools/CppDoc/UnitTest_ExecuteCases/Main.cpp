@@ -284,22 +284,45 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, Ind
 	for (vint i = 0; i < result.ids.Count(); i++)
 	{
 		auto symbol = result.ids.Values()[i];
-		if (auto decl = symbol->GetImplDecl())
+		switch (symbol->GetCategory())
 		{
-			auto& name = decl->name;
-			if (name.tokenCount > 0)
+		case symbol_component::SymbolCategory::Normal:
+			if (auto decl = symbol->GetImplDecl_NFb())
 			{
-				result.decls.Add(IndexToken::GetToken(name), decl);
+				auto& name = decl->name;
+				if (name.tokenCount > 0)
+				{
+					result.decls.Add(IndexToken::GetToken(name), decl);
+				}
 			}
-		}
-		for (vint i = 0; i < symbol->GetForwardDecls().Count(); i++)
-		{
-			auto decl = symbol->GetForwardDecls()[i];
-			auto& name = decl->name;
-			if (name.tokenCount > 0)
+			for (vint i = 0; i < symbol->GetForwardDecls_N().Count(); i++)
 			{
-				result.decls.Add(IndexToken::GetToken(name), decl);
+				auto decl = symbol->GetForwardDecls_N()[i];
+				auto& name = decl->name;
+				if (name.tokenCount > 0)
+				{
+					result.decls.Add(IndexToken::GetToken(name), decl);
+				}
 			}
+			break;
+		case symbol_component::SymbolCategory::FunctionBody:
+			if (auto decl = symbol->GetImplDecl_NFb())
+			{
+				auto& name = decl->name;
+				if (name.tokenCount > 0)
+				{
+					result.decls.Add(IndexToken::GetToken(name), decl);
+				}
+			}
+			if (auto decl = symbol->GetForwardDecl_Fb())
+			{
+				auto& name = decl->name;
+				if (name.tokenCount > 0)
+				{
+					result.decls.Add(IndexToken::GetToken(name), decl);
+				}
+			}
+			break;
 		}
 	}
 }
@@ -476,23 +499,24 @@ const wchar_t* GetSymbolDivClass(Symbol* symbol)
 	case symbol_component::SymbolKind::Struct:
 	case symbol_component::SymbolKind::Union:
 	case symbol_component::SymbolKind::TypeAlias:
+	case symbol_component::SymbolKind::GenericTypeArgument:
 		return L"cpp_type";
 	case symbol_component::SymbolKind::EnumItem:
 		return L"cpp_enum";
 	case symbol_component::SymbolKind::Variable:
 		if (auto parent = symbol->GetParentScope())
 		{
-			if (parent->GetImplDecl<FunctionDeclaration>())
+			if (parent->GetImplDecl_NFb<FunctionDeclaration>())
 			{
 				return L"cpp_argument";
 			}
-			else if (parent->GetImplDecl<ClassDeclaration>())
+			else if (parent->GetImplDecl_NFb<ClassDeclaration>())
 			{
 				return L"cpp_field";
 			}
 		}
 		break;
-	case symbol_component::SymbolKind::Function:
+	case symbol_component::SymbolKind::FunctionBodySymbol:
 		return L"cpp_function";
 	}
 	return nullptr;
@@ -611,7 +635,7 @@ void GenerateHtmlToken(
 	}
 }
 
-template<typename T>
+template<typename TCallback>
 void GenerateHtmlLine(
 	Ptr<CppTokenCursor>& cursor,
 	Ptr<GlobalLinesRecord> global,
@@ -619,7 +643,7 @@ void GenerateHtmlLine(
 	Array<TokenSkipping>& skipping,
 	IndexResult& result,
 	TokenTracker& tracker,
-	const T& callback)
+	TCallback&& callback)
 {
 	if (!cursor) return;
 	const wchar_t* rawBegin = cursor->token.reading;
@@ -663,25 +687,65 @@ void GenerateHtmlLine(
 			}
 
 			Use(html).WriteString(L"<div class=\"def\" id=\"");
-			if (decl == decl->symbol->GetImplDecl())
+			switch (decl->symbol->GetCategory())
 			{
-				Use(html).WriteString(L"Decl$");
+			case symbol_component::SymbolCategory::Normal:
+				{
+					if (decl == decl->symbol->GetImplDecl_NFb())
+					{
+						Use(html).WriteString(L"NI$");
+					}
+					else
+					{
+						Use(html).WriteString(L"NF[" + itow(decl->symbol->GetForwardDecls_N().IndexOf(decl.Obj())) + L"]$");
+					}
+					Use(html).WriteString(decl->symbol->uniqueId);
+				}
+				break;
+			case symbol_component::SymbolCategory::FunctionBody:
+				{
+					Use(html).WriteString(L"FB$");
+					Use(html).WriteString(decl->symbol->uniqueId);
+				}
+				break;
 			}
-			else
-			{
-				Use(html).WriteString(L"Forward[" + itow(decl->symbol->GetForwardDecls().IndexOf(decl.Obj())) + L"]$");
-			}
-			Use(html).WriteString(decl->symbol->uniqueId);
 			Use(html).WriteString(L"\">");
 
-			if ((decl->symbol->GetImplDecl() ? 1 : 0) + decl->symbol->GetForwardDecls().Count() > 1)
+			bool generateLink = false;
+			switch (decl->symbol->GetCategory())
+			{
+			case symbol_component::SymbolCategory::Normal:
+				generateLink = (decl->symbol->GetImplDecl_NFb() ? 1 : 0) + decl->symbol->GetForwardDecls_N().Count() > 1;
+				break;
+			case symbol_component::SymbolCategory::FunctionBody:
+				generateLink = true;
+				break;
+			}
+
+			if (generateLink)
 			{
 				if (!flr->refSymbols.Contains(decl->symbol))
 				{
-					flr->refSymbols.Add(decl->symbol);
+					switch (decl->symbol->GetCategory())
+					{
+					case symbol_component::SymbolCategory::Normal:
+						flr->refSymbols.Add(decl->symbol);
+						break;
+					case symbol_component::SymbolCategory::FunctionBody:
+						flr->refSymbols.Add(decl->symbol->GetFunctionSymbol_Fb());
+						break;
+					}
 				}
 				Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([], [\'");
-				Use(html).WriteString(decl->symbol->uniqueId);
+				switch (decl->symbol->GetCategory())
+				{
+				case symbol_component::SymbolCategory::Normal:
+					Use(html).WriteString(decl->symbol->uniqueId);
+					break;
+				case symbol_component::SymbolCategory::FunctionBody:
+					Use(html).WriteString(decl->symbol->GetFunctionSymbol_Fb()->uniqueId);
+					break;
+				}
 				Use(html).WriteString(L"\'])\">");
 			}
 			else
@@ -725,7 +789,18 @@ void GenerateHtmlLine(
 					{
 						if (j != 0) Use(html).WriteString(L", ");
 						Use(html).WriteString(L"\'");
-						Use(html).WriteString(symbols[j]->uniqueId);
+						{
+							auto symbol = symbols[j];
+							switch (symbol->GetCategory())
+							{
+							case symbol_component::SymbolCategory::Normal:
+								Use(html).WriteString(symbol->uniqueId);
+								break;
+							case symbol_component::SymbolCategory::FunctionBody:
+								Use(html).WriteString(symbol->GetFunctionSymbol_Fb()->uniqueId);
+								break;
+							}
+						}
 						Use(html).WriteString(L"\'");
 					}
 				}
@@ -1096,7 +1171,7 @@ WString GetDisplayNameInHtml(Symbol* symbol)
 			current = current->GetParentScope();
 		}
 	}
-	else if (symbol->kind == symbol_component::SymbolKind::Variable && (symbol->GetParentScope() && !symbol->GetParentScope()->GetImplDecl<ClassDeclaration>()))
+	else if (symbol->kind == symbol_component::SymbolKind::Variable && (symbol->GetParentScope() && !symbol->GetParentScope()->GetImplDecl_NFb<ClassDeclaration>()))
 	{
 		displayNameInHtml = symbol->name;
 	}
@@ -1315,14 +1390,89 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 		auto symbol = flr->refSymbols[i];
 		writer.WriteString(L"    \'");
 		writer.WriteString(symbol->uniqueId);
-		writer.WriteString(L"\': { \'displayNameInHtml\': \'");
+		writer.WriteLine(L"\': {");
+
+		writer.WriteString(L"        \'displayNameInHtml\': \'");
+		writer.WriteString(GetDisplayNameInHtml(symbol));
+		writer.WriteLine(L"\',");
+
+		List<WString> impls, decls;
+		switch (symbol->GetCategory())
 		{
-			writer.WriteString(GetDisplayNameInHtml(symbol));
+		case symbol_component::SymbolCategory::Normal:
+			{
+				if (symbol->GetImplDecl_NFb())
+				{
+					impls.Add(L"NI$" + symbol->uniqueId);
+				}
+				for (vint j = 0; j < symbol->GetForwardDecls_N().Count(); j++)
+				{
+					impls.Add(L"NF[" + itow(j) + L"]$" + symbol->uniqueId);
+				}
+			}
+			break;
+		case symbol_component::SymbolCategory::Function:
+			{
+				auto& symbols = symbol->GetImplSymbols_F();
+				for (vint j = 0; j < symbols.Count(); j++)
+				{
+					impls.Add(L"FB$" + symbols[j]->uniqueId);
+				}
+			}
+			{
+				auto& symbols = symbol->GetForwardSymbols_F();
+				for (vint j = 0; j < symbols.Count(); j++)
+				{
+					decls.Add(L"FB$" + symbols[j]->uniqueId);
+				}
+			}
+			break;
 		}
-		writer.WriteString(L"\', \'definition\': ");
-		writer.WriteString(symbol->GetImplDecl() ? L"true" : L"false");
-		writer.WriteString(L", \'declarations\': ");
-		writer.WriteString(itow(symbol->GetForwardDecls().Count()));
+		
+		if (impls.Count() == 0)
+		{
+			writer.WriteLine(L"        \'impls\': [],");
+		}
+		else
+		{
+			writer.WriteLine(L"        \'impls\': [");
+			for (vint j = 0; j < impls.Count(); j++)
+			{
+				writer.WriteString(L"            \'");
+				writer.WriteString(impls[j]);
+				if (j == impls.Count() - 1)
+				{
+					writer.WriteLine(L"\'");
+				}
+				else
+				{
+					writer.WriteLine(L"\',");
+				}
+			}
+		}
+
+		if (decls.Count() == 0)
+		{
+			writer.WriteLine(L"        \'decls\': [],");
+		}
+		else
+		{
+			writer.WriteLine(L"        \'decls\': [");
+			for (vint j = 0; j < decls.Count(); j++)
+			{
+				writer.WriteString(L"            \'");
+				writer.WriteString(decls[j]);
+				if (j == decls.Count() - 1)
+				{
+					writer.WriteLine(L"\'");
+				}
+				else
+				{
+					writer.WriteLine(L"\',");
+				}
+			}
+		}
+
 		if (i == flr->refSymbols.Count() - 1)
 		{
 			writer.WriteLine(L"}");
@@ -1373,14 +1523,37 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	for (vint i = 0; i < flr->refSymbols.Count(); i++)
 	{
 		auto symbol = flr->refSymbols[i];
-		if (auto decl = symbol->GetImplDecl())
+		switch (symbol->GetCategory())
 		{
-			writeFileMapping(L"Decl$", decl);
-		}
-		for (vint j = 0; j < symbol->GetForwardDecls().Count(); j++)
-		{
-			auto decl = symbol->GetForwardDecls()[j];
-			writeFileMapping(L"Forward[" + itow(j) + L"]$", decl);
+		case symbol_component::SymbolCategory::Normal:
+			{
+				if (auto decl = symbol->GetImplDecl_NFb())
+				{
+					writeFileMapping(L"NI$", decl);
+				}
+				for (vint j = 0; j < symbol->GetForwardDecls_N().Count(); j++)
+				{
+					auto decl = symbol->GetForwardDecls_N()[j];
+					writeFileMapping(L"NF[" + itow(j) + L"]$", decl);
+				}
+			}
+			break;
+		case symbol_component::SymbolCategory::Function:
+			{
+				auto& symbols = symbol->GetImplSymbols_F();
+				for (vint j = 0; j < symbols.Count(); j++)
+				{
+					writeFileMapping(L"FB$", symbols[j]->GetImplDecl_NFb());
+				}
+			}
+			{
+				auto& symbols = symbol->GetForwardSymbols_F();
+				for (vint j = 0; j < symbols.Count(); j++)
+				{
+					writeFileMapping(L"FB$", symbols[j]->GetForwardDecl_Fb());
+				}
+			}
+			break;
 		}
 	}
 	writer.WriteLine(L"");
@@ -1470,28 +1643,50 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 	if (context->kind != symbol_component::SymbolKind::Root)
 	{
 		bool definedInThisFileGroup = false;
-		if (auto decl = context->GetImplDecl())
+		List<Ptr<Declaration>> decls;
+		switch (context->GetCategory())
 		{
-			vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
+		case symbol_component::SymbolCategory::Normal:
+			if (auto decl = context->GetImplDecl_NFb())
+			{
+				decls.Add(decl);
+			}
+			for (vint i = 0; i < context->GetForwardDecls_N().Count(); i++)
+			{
+				decls.Add(context->GetForwardDecls_N()[i]);
+			}
+			break;
+		case symbol_component::SymbolCategory::Function:
+			for (vint i = 0; i < context->GetImplSymbols_F().Count(); i++)
+			{
+				if (auto decl = context->GetImplSymbols_F()[i]->GetImplDecl_NFb())
+				{
+					decls.Add(decl);
+				}
+			}
+			for (vint i = 0; i < context->GetForwardSymbols_F().Count(); i++)
+			{
+				if (auto decl = context->GetForwardSymbols_F()[i]->GetForwardDecl_Fb())
+				{
+					decls.Add(decl);
+				}
+			}
+			break;
+		}
+
+		for (vint i = 0; i < decls.Count(); i++)
+		{
+			vint index = global->declToFiles.Keys().IndexOf(decls[i].Obj());
 			if (index != -1)
 			{
 				if (INVLOC.StartsWith(wupper(global->declToFiles.Values()[index].GetFullPath()), fileGroupPrefix, Locale::Normalization::None))
 				{
 					definedInThisFileGroup = true;
+					break;
 				}
 			}
 		}
-		for (vint i = 0; !definedInThisFileGroup && i < context->GetForwardDecls().Count(); i++)
-		{
-			vint index = global->declToFiles.Keys().IndexOf(context->GetForwardDecls()[i].Obj());
-			if (index != -1)
-			{
-				if (INVLOC.StartsWith(wupper(global->declToFiles.Values()[index].GetFullPath()), fileGroupPrefix, Locale::Normalization::None))
-				{
-					definedInThisFileGroup = true;
-				}
-			}
-		}
+
 		if (!definedInThisFileGroup)
 		{
 			return;
@@ -1547,7 +1742,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 		keyword = L"typedef";
 		tokenClass = L"cpp_type";
 		break;
-	case symbol_component::SymbolKind::Function:
+	case symbol_component::SymbolKind::FunctionSymbol:
 		if (!context->GetAnyForwardDecl<ForwardFunctionDeclaration>()->implicitlyGeneratedMember)
 		{
 			keyword = L"function";
@@ -1558,7 +1753,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 		keyword = L"variable";
 		if (auto parent = context->GetParentScope())
 		{
-			if (parent->GetImplDecl<ClassDeclaration>())
+			if (parent->GetImplDecl_NFb<ClassDeclaration>())
 			{
 				tokenClass = L"cpp_field";
 			}
@@ -1609,7 +1804,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 			writer.WriteString(L"</div>");
 		}
 
-		if (auto decl = context->GetImplDecl())
+		auto writeTag = [&](const WString& prefix, Symbol* context, Ptr<Declaration> decl)
 		{
 			vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
 			if (index != -1)
@@ -1618,32 +1813,48 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 				auto htmlFileName = global->fileLines[filePath]->htmlFileName;
 				writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
 				writer.WriteString(htmlFileName);
-				writer.WriteString(L".html#Decl$");
+				writer.WriteString(L".html#");
+				writer.WriteString(prefix);
 				writer.WriteString(context->uniqueId);
 				writer.WriteString(L"\">");
 				writer.WriteString(L"definition");
 				writer.WriteString(L"</a>");
 			}
-		}
-		for (vint i = 0; i < context->GetForwardDecls().Count(); i++)
+		};
+
+		switch (context->GetCategory())
 		{
-			auto decl = context->GetForwardDecls()[i];
-			vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
-			if (index != -1)
+		case symbol_component::SymbolCategory::Normal:
 			{
-				auto filePath = global->declToFiles.Values()[index];
-				auto htmlFileName = global->fileLines[filePath]->htmlFileName;
-				writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
-				writer.WriteString(htmlFileName);
-				writer.WriteString(L".html#Forward[");
-				writer.WriteString(itow(i));
-				writer.WriteString(L"]$");
-				writer.WriteString(context->uniqueId);
-				writer.WriteString(L"\">");
-				writer.WriteString(L"decl[");
-				writer.WriteString(itow(i + 1));
-				writer.WriteString(L"]</a>");
+				if (auto decl = context->GetImplDecl_NFb())
+				{
+					writeTag(L"NI$", context, decl);
+				}
+				for (vint j = 0; j < context->GetForwardDecls_N().Count(); j++)
+				{
+					auto decl = context->GetForwardDecls_N()[j];
+					writeTag(L"NF[" + itow(j) + L"]$", context, decl);
+				}
 			}
+			break;
+		case symbol_component::SymbolCategory::Function:
+			{
+				auto& symbols = context->GetImplSymbols_F();
+				for (vint j = 0; j < symbols.Count(); j++)
+				{
+					auto symbol = symbols[j].Obj();
+					writeTag(L"FB$", symbol, symbol->GetImplDecl_NFb());
+				}
+			}
+			{
+				auto& symbols = context->GetForwardSymbols_F();
+				for (vint j = 0; j < symbols.Count(); j++)
+				{
+					auto symbol = symbols[j].Obj();
+					writeTag(L"FB$", symbol, symbol->GetForwardDecl_Fb());
+				}
+			}
+			break;
 		}
 		writer.WriteLine(L"");
 	}
@@ -1651,9 +1862,9 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 	if (searchForChild)
 	{
 		bool printedChildNextLevel = false;
-		for (vint i = 0; i < context->GetChildren().Count(); i++)
+		for (vint i = 0; i < context->GetChildren_NFb().Count(); i++)
 		{
-			auto& children = context->GetChildren().GetByIndex(i);
+			auto& children = context->GetChildren_NFb().GetByIndex(i);
 			for (vint j = 0; j < children.Count(); j++)
 			{
 				GenerateSymbolIndex(global, writer, fileGroupPrefix, indentation + 1, children[j].Obj(), !isRoot, printedChildNextLevel);

@@ -15,6 +15,7 @@
   - [x] `static_assert`
   - [ ] Parse `UnitTest_Cases`, generate HTML and check.
 - [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
+  - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
   - [ ] Generate `ClassMemberCache` for generated special members
   - [ ] Call a function with some or all template arguments unspecified.
   - [ ] Overload functions with some or all template arguments unspecified.

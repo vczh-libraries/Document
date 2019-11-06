@@ -131,6 +131,21 @@ function promptTooltipDropdownData(dropdownData, underElement) {
  *     }[]
  *   }[]
  * }[]
+ *
+ * referencedSymbols: {
+ *   [key: string]: {
+ *     displayNameInHtml: string,
+ *     impls: string[],
+ *     decls: string[]
+ *   }
+ * }
+ *
+ * symbolToFiles: {
+ *   [key: string]: null | {
+ *     htmlFileName: string,
+ *     displayName: string
+ *   }
+ * }
  */
 
 function jumpToSymbol(overloadResolutions, resolved) {
@@ -151,17 +166,17 @@ function jumpToSymbol(overloadResolutions, resolved) {
             if (referencedSymbol !== undefined) {
                 const symbol = { displayNameInHtml: referencedSymbol.displayNameInHtml, decls: [] };
 
-                if (referencedSymbol.definition === true) {
-                    const elementId = 'Decl$' + uniqueId;
-                    const label = 'declaration';
+                for (i = 0; i < referencedSymbol.impls; i++) {
+                    const elementId = referencedSymbol.impls[i];
+                    const label = 'impl[' + i + ']';
                     const file = symbolToFiles[elementId];
                     if (file !== undefined) {
                         symbol.decls.push({ label, file, elementId });
                     }
                 }
 
-                for (i = 0; i < referencedSymbol.declarations; i++) {
-                    const elementId = 'Forward[' + i + ']$' + uniqueId;
+                for (i = 0; i < referencedSymbol.decls; i++) {
+                    const elementId = referencedSymbol.decls[i];
                     const label = 'decl[' + i + ']';
                     const file = symbolToFiles[elementId];
                     if (file !== undefined) {
