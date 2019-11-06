@@ -37,7 +37,6 @@
 - [ ] SFINAE on choosing among generic functions or classes.
 - [ ] `std::initialization_list`.
 - [ ] Lambda expressions.
-- [ ] `nullptr` failed to convert to `function_type * const &`.
 - [ ] `decltype(EXPR)::ChildType`
 - [ ] `::new`
 - [ ] `::delete`
