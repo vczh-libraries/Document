@@ -1214,13 +1214,44 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	bool decoratorFriend = TestToken(cursor, CppTokens::DECL_FRIEND);
 	if (decoratorFriend)
 	{
-		// someone will write "friend TYPE_NAME;", just throw away, since this name must have been declared.
-		auto oldCursor = cursor;
-		if (TestToken(cursor, CppTokens::ID) && TestToken(cursor, CppTokens::SEMICOLON))
+		if (specs.Count() == 0)
 		{
+			// someone will write "friend TYPE_NAME;", just throw away, since this name must have been declared.
+			auto oldCursor = cursor;
+			if (TestToken(cursor, CppTokens::ID) && TestToken(cursor, CppTokens::SEMICOLON))
+			{
+				return;
+			}
+			cursor = oldCursor;
+		}
+
+		if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
+		{
+			auto decl = MakePtr<FriendClassDeclaration>();
+			decl->templateSpec = EnsureNoMultipleTemplateSpec(specs, cursor);
+
+			switch ((CppTokens)cursor->token.token)
+			{
+			case CppTokens::DECL_CLASS:
+				decl->classType = CppClassType::Class;
+				break;
+			case CppTokens::DECL_STRUCT:
+				decl->classType = CppClassType::Struct;
+				break;
+			case CppTokens::DECL_UNION:
+				decl->classType = CppClassType::Union;
+				break;
+			default:
+				throw StopParsingException(cursor);
+			}
+			SkipToken(cursor);
+
+			// friend class could not have partial specialization, so any symbols in template<...> will not be used
+			decl->usedClass = ParseType(pa, cursor);
+			RequireToken(cursor, CppTokens::SEMICOLON);
+			output.Add(decl);
 			return;
 		}
-		cursor = oldCursor;
 	}
 	bool cStyleTypeReference = IsCStyleTypeReference(cursor);
 

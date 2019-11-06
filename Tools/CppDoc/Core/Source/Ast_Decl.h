@@ -14,6 +14,7 @@ Visitor
 	F(ForwardFunctionDeclaration)\
 	F(ForwardEnumDeclaration)\
 	F(ForwardClassDeclaration)\
+	F(FriendClassDeclaration)\
 	F(VariableDeclaration)\
 	F(FunctionDeclaration)\
 	F(EnumItemDeclaration)\
@@ -165,6 +166,16 @@ public:
 	bool											decoratorFriend = false;
 
 	Ptr<Symbol>										keepTemplateSpecArgumentSymbolsAliveOnlyForForwardDeclaration;
+};
+
+class FriendClassDeclaration : public Declaration
+{
+public:
+	IDeclarationVisitor_ACCEPT;
+
+	Ptr<TemplateSpec>								templateSpec;
+	CppClassType									classType;
+	Ptr<Type>										usedClass;
 };
 
 /***********************************************************************

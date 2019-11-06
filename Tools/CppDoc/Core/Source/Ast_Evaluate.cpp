@@ -419,6 +419,12 @@ public:
 	{
 	}
 
+	void Visit(FriendClassDeclaration* self) override
+	{
+		TypeTsysList tsys;
+		TypeToTsysNoVta(pa, self->usedClass, tsys);
+	}
+
 	void Visit(VariableDeclaration* self) override
 	{
 		EvaluateVariableDeclaration(pa, self);

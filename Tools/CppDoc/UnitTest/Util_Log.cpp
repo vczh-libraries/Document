@@ -1070,6 +1070,25 @@ public:
 		if (semicolon) writer.WriteLine(L";");
 	}
 
+	void Visit(FriendClassDeclaration* self) override
+	{
+		WriteTemplateSpecIfExists(self->templateSpec);
+		switch (self->classType)
+		{
+		case CppClassType::Class:
+			writer.WriteString(L"friend class ");
+			break;
+		case CppClassType::Struct:
+			writer.WriteString(L"friend struct ");
+			break;
+		case CppClassType::Union:
+			writer.WriteString(L"friend union ");
+			break;
+		}
+		Log(self->usedClass, writer);
+		if (semicolon) writer.WriteLine(L";");
+	}
+
 	void Visit(VariableDeclaration* self)override
 	{
 		WriteHeader(self);

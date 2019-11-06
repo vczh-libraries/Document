@@ -876,6 +876,10 @@ public:
 	{
 	}
 
+	void Visit(FriendClassDeclaration* self) override
+	{
+	}
+
 	void Visit(VariableDeclaration* self) override
 	{
 	}
