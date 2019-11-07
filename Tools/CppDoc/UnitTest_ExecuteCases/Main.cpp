@@ -1849,7 +1849,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 			writer.WriteString(L"</div>");
 		}
 
-		auto writeTag = [&](const WString& prefix, Symbol* context, Ptr<Declaration> decl)
+		auto writeTag = [&](const WString& prefix, const WString& tag, Symbol* context, Ptr<Declaration> decl)
 		{
 			vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
 			if (index != -1)
@@ -1862,7 +1862,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 				writer.WriteString(prefix);
 				writer.WriteString(context->uniqueId);
 				writer.WriteString(L"\">");
-				writer.WriteString(L"definition");
+				writer.WriteString(tag);
 				writer.WriteString(L"</a>");
 			}
 		};
@@ -1873,12 +1873,12 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 			{
 				if (auto decl = context->GetImplDecl_NFb())
 				{
-					writeTag(L"NI$", context, decl);
+					writeTag(L"NI$", L"impl", context, decl);
 				}
 				for (vint j = 0; j < context->GetForwardDecls_N().Count(); j++)
 				{
 					auto decl = context->GetForwardDecls_N()[j];
-					writeTag(L"NF[" + itow(j) + L"]$", context, decl);
+					writeTag(L"NF[" + itow(j) + L"]$", L"decl", context, decl);
 				}
 			}
 			break;
@@ -1888,7 +1888,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 				for (vint j = 0; j < symbols.Count(); j++)
 				{
 					auto symbol = symbols[j].Obj();
-					writeTag(L"FB$", symbol, symbol->GetImplDecl_NFb());
+					writeTag(L"FB$", L"impl", symbol, symbol->GetImplDecl_NFb());
 				}
 			}
 			{
@@ -1896,7 +1896,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, StreamWriter& writer, co
 				for (vint j = 0; j < symbols.Count(); j++)
 				{
 					auto symbol = symbols[j].Obj();
-					writeTag(L"FB$", symbol, symbol->GetForwardDecl_Fb());
+					writeTag(L"FB$", L"decl", symbol, symbol->GetForwardDecl_Fb());
 				}
 			}
 			break;
