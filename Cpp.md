@@ -17,7 +17,9 @@
   - [ ] Check template symbol in `SymbolIndex.html`.
   - [ ] Check carefully around all links.
     - [ ] Template arguments are not located in HTML.
-    - [ ] Stop generating links to functions that count(impls + decls) == 1
+    - [ ] Fix display name of template symbols.
+    - [ ] `expr->Accept` should have 3 links.
+    - [x] Stop generating links to functions that count(impls + decls) == 1
   - [ ] Show progress while parsing cases.
 - [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
   - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s

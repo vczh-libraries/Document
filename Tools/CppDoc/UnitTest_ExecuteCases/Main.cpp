@@ -720,7 +720,10 @@ void GenerateHtmlLine(
 				generateLink = (decl->symbol->GetImplDecl_NFb() ? 1 : 0) + decl->symbol->GetForwardDecls_N().Count() > 1;
 				break;
 			case symbol_component::SymbolCategory::FunctionBody:
-				generateLink = true;
+				{
+					auto functionSymbol = decl->symbol->GetFunctionSymbol_Fb();
+					generateLink = functionSymbol->GetImplSymbols_F().Count() + functionSymbol->GetForwardSymbols_F().Count() > 1;
+				}
 				break;
 			}
 
