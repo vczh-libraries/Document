@@ -157,12 +157,8 @@ void GenerateHtmlToken(
 
 	if (divClass)
 	{
-		Use(html).WriteString(L"<div class=\"");
-		if (divClass)
-		{
-			Use(html).WriteString(L"token ");
-			Use(html).WriteString(divClass);
-		}
+		Use(html).WriteString(L"<div class=\"token ");
+		Use(html).WriteString(divClass);
 		Use(html).WriteString(L"\">");
 	}
 
