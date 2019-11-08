@@ -61,7 +61,7 @@ public:
 
 		if (self->expr)
 		{
-			result += L"[<span class=\"cpp_keyword\">...</span>]";
+			result += L"[<span class=\"cpp_keyword\">(expr)</span>]";
 		}
 		else
 		{
@@ -187,7 +187,7 @@ public:
 		{
 			result = L"";
 			self->type->Accept(this);
-			genericResult = result + L"<";
+			genericResult = result + HtmlTextSingleLineToString(L"<");
 		}
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
@@ -201,10 +201,14 @@ public:
 			}
 			else
 			{
-				genericResult += L"<span class=\"cpp_keyword\">...</span>";
+				genericResult += L"<span class=\"cpp_keyword\">(expr)</span>";
+			}
+			if (argument.isVariadic)
+			{
+				genericResult += L"...";
 			}
 		}
-		genericResult += L">";
+		genericResult += HtmlTextSingleLineToString(L">");
 
 		result = genericResult + L" " + currentResult;
 	}

@@ -166,7 +166,78 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 			writer.WriteString(divClass);
 			writer.WriteString(L"\">");
 		}
-		WriteHtmlTextSingleLine(context->name, writer);
+		{
+			Ptr<TemplateSpec> templateSpec = symbol_type_resolving::GetTemplateSpecFromSymbol(context);
+			Ptr<SpecializationSpec> specializationSpec;
+			WString declName = context->name;
+			switch (context->kind)
+			{
+			case symbol_component::SymbolKind::Class:
+			case symbol_component::SymbolKind::Struct:
+			case symbol_component::SymbolKind::Union:
+				{
+					auto decl = context->GetAnyForwardDecl<ForwardClassDeclaration>();
+					specializationSpec = decl->specializationSpec;
+					declName = decl->name.name;
+				}
+				break;
+			case symbol_component::SymbolKind::FunctionSymbol:
+				{
+					auto decl = context->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+					specializationSpec = decl->specializationSpec;
+					declName = decl->name.name;
+				}
+				break;
+			}
+
+			WriteHtmlTextSingleLine(declName, writer);
+			if (specializationSpec)
+			{
+				WriteHtmlTextSingleLine(L"<", writer);
+				for (vint i = 0; i < specializationSpec->arguments.Count(); i++)
+				{
+					if (i > 0) writer.WriteString(L", ");
+					auto argument = specializationSpec->arguments[i];
+					if (argument.item.expr)
+					{
+						writer.WriteString(L"<span class=\"cpp_keyword\">(expr)</span>");
+					}
+					else
+					{
+						writer.WriteString(GetTypeDisplayNameInHtml(argument.item.type));
+					}
+					if (argument.isVariadic)
+					{
+						writer.WriteString(L" ...");
+					}
+				}
+				WriteHtmlTextSingleLine(L">", writer);
+			}
+			else if (templateSpec)
+			{
+				WriteHtmlTextSingleLine(L"<", writer);
+				for (vint i = 0; i < templateSpec->arguments.Count(); i++)
+				{
+					if (i > 0) writer.WriteString(L", ");
+					auto argument = templateSpec->arguments[i];
+					if (argument.argumentType == CppTemplateArgumentType::Value)
+					{
+						writer.WriteString(L"<span class=\"cpp_keyword\">(expr)</span>");
+					}
+					else
+					{
+						writer.WriteString(L"<span class=\"cpp_type\">");
+						WriteHtmlTextSingleLine(argument.name.name, writer);
+						writer.WriteString(L"</span>");
+					}
+					if (argument.ellipsis)
+					{
+						writer.WriteString(L" ...");
+					}
+				}
+				WriteHtmlTextSingleLine(L">", writer);
+			}
+		}
 		if (divClass)
 		{
 			writer.WriteString(L"</div>");

@@ -2,9 +2,7 @@
 #define VCZH_DOCUMENT_CPPDOC_RENDER
 
 #include <VlppOS.h>
-#include <Parser.h>
-#include <Ast_Decl.h>
-#include <Ast_Type.h>
+#include <Ast_Resolving.h>
 
 using namespace vl::stream;
 using namespace vl::filesystem;

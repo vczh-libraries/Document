@@ -14,7 +14,7 @@
 - [ ] Next Demo!
   - [x] `static_assert`
   - [x] Parse `UnitTest_Cases`, generate HTML and check.
-  - [ ] Check template symbol in `SymbolIndex.html`.
+  - [x] Check template symbol in `SymbolIndex.html`.
   - [ ] Check carefully around all links.
     - [x] Make HTML generator a lib.
     - [x] `referencedSymbols` and `symbolToFiles` content must be sorted.
