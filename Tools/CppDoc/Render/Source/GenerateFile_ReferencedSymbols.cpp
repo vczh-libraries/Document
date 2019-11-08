@@ -63,7 +63,7 @@ public:
 
 		if (self->expr)
 		{
-			result += L"[...]";
+			result += L"[<span class=\"cpp_keyword\">...</span>]";
 		}
 		else
 		{
@@ -108,6 +108,10 @@ public:
 		}
 		if (self->ellipsis)
 		{
+			if (self->parameters.Count() > 0)
+			{
+				result += L", ";
+			}
 			result += L" ...";
 		}
 		result += L")";
@@ -164,7 +168,7 @@ public:
 		}
 		else
 		{
-			result = self->name.name + result;
+			result = HtmlTextSingleLineToString(self->name.name) + result;
 		}
 	}
 
@@ -176,7 +180,7 @@ public:
 		}
 		else
 		{
-			result = L"::" + self->name.name + result;
+			result = L"::" + HtmlTextSingleLineToString(self->name.name) + result;
 			self->classType->Accept(this);
 		}
 	}
@@ -203,7 +207,7 @@ public:
 			}
 			else
 			{
-				genericResult += L"...";
+				genericResult += L"<span class=\"cpp_keyword\">...</span>";
 			}
 		}
 		genericResult += L">";
@@ -221,13 +225,13 @@ WString GetDisplayNameInHtml(Symbol* symbol)
 		while (current->kind != symbol_component::SymbolKind::Root)
 		{
 			if (current != symbol) displayNameInHtml = L"::" + displayNameInHtml;
-			displayNameInHtml = current->name + displayNameInHtml;
+			displayNameInHtml = HtmlTextSingleLineToString(current->name) + displayNameInHtml;
 			current = current->GetParentScope();
 		}
 	}
 	else if (symbol->kind == symbol_component::SymbolKind::Variable && (symbol->GetParentScope() && !symbol->GetParentScope()->GetImplDecl_NFb<ClassDeclaration>()))
 	{
-		displayNameInHtml = symbol->name;
+		displayNameInHtml = HtmlTextSingleLineToString(symbol->name);
 	}
 	else
 	{
@@ -237,11 +241,11 @@ WString GetDisplayNameInHtml(Symbol* symbol)
 			if (current != symbol) displayNameInHtml = L"::" + displayNameInHtml;
 			if (auto divClass = GetSymbolDivClass(current))
 			{
-				displayNameInHtml = L"<span class=\"" + WString(divClass, false) + L"\">" + current->name + L"</span>" + displayNameInHtml;
+				displayNameInHtml = L"<span class=\"" + WString(divClass, false) + L"\">" + HtmlTextSingleLineToString(current->name) + L"</span>" + displayNameInHtml;
 			}
 			else
 			{
-				displayNameInHtml = current->name + displayNameInHtml;
+				displayNameInHtml = HtmlTextSingleLineToString(current->name) + displayNameInHtml;
 			}
 			current = current->GetParentScope();
 		}

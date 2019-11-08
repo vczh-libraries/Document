@@ -29,15 +29,15 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 		flrs,
 		From(global->fileLines.Values())
 		.OrderBy([](Ptr<FileLinesRecord> flr1, Ptr<FileLinesRecord> flr2)
-	{
-		return WString::Compare(flr1->filePath.GetFullPath(), flr2->filePath.GetFullPath());
-	})
+		{
+			return WString::Compare(flr1->filePath.GetFullPath(), flr2->filePath.GetFullPath());
+		})
 	);
 	for (vint i = 0; i < fileGroups.Count(); i++)
 	{
 		auto prefix = fileGroups[i].f0;
 		writer.WriteString(L"<span class=\"fileGroupLabel\">");
-		writer.WriteString(fileGroups[i].f1);
+		WriteHtmlTextSingleLine(fileGroups[i].f1, writer);
 		writer.WriteLine(L"</span><br>");
 
 		for (vint j = 0; j < flrs.Count(); j++)
@@ -46,24 +46,25 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 			if (INVLOC.StartsWith(wupper(flr->filePath.GetFullPath()), prefix, Locale::Normalization::None))
 			{
 				writer.WriteString(L"&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"fileIndex\" href=\"./");
-				writer.WriteString(flr->htmlFileName);
+				WriteHtmlAttribute(flr->htmlFileName, writer);
 				writer.WriteString(L".html\">");
-				writer.WriteString(flr->filePath.GetFullPath().Right(flr->filePath.GetFullPath().Length() - prefix.Length()));
+				WriteHtmlTextSingleLine(flr->filePath.GetFullPath().Right(flr->filePath.GetFullPath().Length() - prefix.Length()), writer);
 				writer.WriteLine(L"</a><br>");
 				flrs.RemoveAt(j--);
 			}
 		}
 	}
+	if (flrs.Count() > 0)
 	{
-		writer.WriteString(L"<span class=\"fileGroupLabel\">");
+		writer.WriteLine(L"<span class=\"fileGroupLabel\">MISC</span><br>");
 
 		for (vint j = 0; j < flrs.Count(); j++)
 		{
 			auto flr = flrs[j];
 			writer.WriteString(L"<a class=\"fileIndex\" href=\"./");
-			writer.WriteString(flr->htmlFileName);
+			WriteHtmlAttribute(flr->htmlFileName, writer);
 			writer.WriteString(L".html\">");
-			writer.WriteString(flr->filePath.GetFullPath());
+			WriteHtmlTextSingleLine(flr->filePath.GetFullPath(), writer);
 			writer.WriteLine(L"</a><br>");
 		}
 	}

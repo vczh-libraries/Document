@@ -18,7 +18,9 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	writer.WriteLine(L"<!DOCTYPE html>");
 	writer.WriteLine(L"<html>");
 	writer.WriteLine(L"<head>");
-	writer.WriteLine(L"    <title>" + flr->filePath.GetName() + L"</title>");
+	writer.WriteString(L"    <title>");
+	WriteHtmlTextSingleLine(flr->filePath.GetName(), writer);
+	writer.WriteLine(L"</title>");
 	writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
 	writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
 	writer.WriteLine(L"    <script type=\"text/javascript\" src=\"../Cpp.js\" ></script>");

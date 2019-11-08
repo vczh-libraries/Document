@@ -162,6 +162,9 @@ extern void											EnumerateDecls(Symbol* symbol, const Func<void(Ptr<Declara
 extern WString										GetDeclId(Ptr<Declaration> decl);
 extern WString										GetSymbolId(Symbol* symbol);
 extern const wchar_t*								GetSymbolDivClass(Symbol* symbol);
+extern void											WriteHtmlTextSingleLine(const WString& text, StreamWriter& writer);
+extern WString										HtmlTextSingleLineToString(const WString& text);
+extern void											WriteHtmlAttribute(const WString& text, StreamWriter& writer);
 
 /***********************************************************************
 Index Collecting
@@ -179,6 +182,7 @@ extern void											GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesR
 Index Page Generating
 ***********************************************************************/
 
+// {PathPrefix, Label}
 using FileGroupConfig = List<Tuple<WString, WString>>;
 
 extern void											GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGroupConfig& fileGroups);

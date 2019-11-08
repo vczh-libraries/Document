@@ -127,3 +127,62 @@ const wchar_t* GetSymbolDivClass(Symbol* symbol)
 	}
 	return nullptr;
 }
+
+/***********************************************************************
+WriteHtmlTextSingleLine
+***********************************************************************/
+
+void WriteHtmlTextSingleLine(const WString& text, StreamWriter& writer)
+{
+	auto reading = text.Buffer();
+	while (auto c = *reading++)
+	{
+		switch (c)
+		{
+		case L'<':
+			writer.WriteString(L"&lt;");
+			break;
+		case L'>':
+			writer.WriteString(L"&gt;");
+			break;
+		case L'&':
+			writer.WriteString(L"&amp;");
+			break;
+		case L'\'':
+			writer.WriteString(L"&apos;");
+			break;
+		case L'\"':
+			writer.WriteString(L"&quot;");
+			break;
+		default:
+			writer.WriteChar(c);
+		}
+	}
+}
+
+/***********************************************************************
+WriteHtmlTextSingleLine
+***********************************************************************/
+
+WString HtmlTextSingleLineToString(const WString& text)
+{
+	MemoryStream stream;
+	{
+		StreamWriter writer(stream);
+		WriteHtmlTextSingleLine(text, writer);
+	}
+	stream.SeekFromBegin(0);
+	{
+		StreamReader reader(stream);
+		return reader.ReadToEnd();
+	}
+}
+
+/***********************************************************************
+WriteHtmlAttribute
+***********************************************************************/
+
+void WriteHtmlAttribute(const WString& text, StreamWriter& writer)
+{
+	WriteHtmlTextSingleLine(text, writer);
+}

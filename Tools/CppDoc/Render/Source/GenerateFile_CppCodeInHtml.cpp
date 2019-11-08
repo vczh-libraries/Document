@@ -107,30 +107,7 @@ void GenerateCppCodeInHtml(Ptr<FileLinesRecord> flr, StreamWriter& writer)
 				{
 					writer.WriteLine(L"");
 				}
-				auto reading = originalLines[i].Buffer();
-				while (auto c = *reading++)
-				{
-					switch (c)
-					{
-					case L'<':
-						writer.WriteString(L"&lt;");
-						break;
-					case L'>':
-						writer.WriteString(L"&gt;");
-						break;
-					case L'&':
-						writer.WriteString(L"&amp;");
-						break;
-					case L'\'':
-						writer.WriteString(L"&apos;");
-						break;
-					case L'\"':
-						writer.WriteString(L"&quot;");
-						break;
-					default:
-						writer.WriteChar(c);
-					}
-				}
+				WriteHtmlTextSingleLine(originalLines[i], writer);
 			}
 			writer.WriteLine(L"</div>");
 			if (hasEmbeddedHtml)

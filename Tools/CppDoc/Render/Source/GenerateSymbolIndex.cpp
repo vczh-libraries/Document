@@ -166,7 +166,7 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 			writer.WriteString(tokenClass);
 			writer.WriteString(L"\">");
 		}
-		writer.WriteString(context->name);
+		WriteHtmlTextSingleLine(context->name, writer);
 		if (tokenClass)
 		{
 			writer.WriteString(L"</div>");
@@ -180,11 +180,11 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 				auto filePath = global->declToFiles.Values()[index];
 				auto htmlFileName = global->fileLines[filePath]->htmlFileName;
 				writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
-				writer.WriteString(htmlFileName);
+				WriteHtmlAttribute(htmlFileName, writer);
 				writer.WriteString(L".html#");
-				writer.WriteString(declId);
+				WriteHtmlAttribute(declId, writer);
 				writer.WriteString(L"\">");
-				writer.WriteString(tag);
+				WriteHtmlTextSingleLine(tag, writer);
 				writer.WriteString(L"</a>");
 			}
 		};
@@ -246,7 +246,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 	{
 		auto prefix = fileGroups[i].f0;
 		writer.WriteString(L"<span class=\"fileGroupLabel\">");
-		writer.WriteString(fileGroups[i].f1);
+		WriteHtmlTextSingleLine(fileGroups[i].f1, writer);
 		writer.WriteLine(L"</span>");
 
 		bool printedChild = false;
