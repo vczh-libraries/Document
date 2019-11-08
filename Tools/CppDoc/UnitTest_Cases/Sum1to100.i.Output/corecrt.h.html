@@ -1,0 +1,2118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>corecrt.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// corecrt.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Declarations used throughout the CoreCRT library.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+
+<div class="disabled"/>#include &lt;vcruntime.h&gt;</div>
+
+<div class="expandable"/><div class="disabled"/>_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Annotation Macros</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#ifndef _ACRTIMP</div>
+<div class="disabled"/>    #if defined _CRTIMP &amp;&amp; !defined _VCRT_DEFINED_CRTIMP</div>
+<div class="disabled"/>        #define _ACRTIMP _CRTIMP
+    #elif !defined _CORECRT_BUILD &amp;&amp; defined _DLL</div>
+<div class="disabled"/>        #define _ACRTIMP __declspec(dllimport)</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _ACRTIMP
+    #endif
+#endif</div>
+
+<div class="token cpp_comment ">// If you need the ability to remove __declspec(import) from an API, to support static replacement,</div>
+<div class="token cpp_comment ">// declare the API using _ACRTIMP_ALT instead of _ACRTIMP.</div>
+<div class="disabled"/>#ifndef _ACRTIMP_ALT</div>
+<div class="disabled"/>    #define _ACRTIMP_ALT _ACRTIMP
+#endif</div>
+
+<div class="disabled"/>#ifndef _DCRTIMP</div>
+<div class="disabled"/>    #if defined _CRTIMP &amp;&amp; !defined _VCRT_DEFINED_CRTIMP</div>
+<div class="disabled"/>        #define _DCRTIMP _CRTIMP
+    #elif !defined _CORECRT_BUILD &amp;&amp; defined _DLL</div>
+<div class="disabled"/>        #define _DCRTIMP __declspec(dllimport)</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _DCRTIMP
+    #endif
+#endif</div>
+
+<div class="disabled"/>#if defined _CRT_SUPPRESS_RESTRICT || defined _CORECRT_BUILD</div>
+<div class="disabled"/>    #define _CRTRESTRICT
+#else</div>
+<div class="disabled"/>    #define _CRTRESTRICT __declspec(restrict)
+#endif</div>
+
+<div class="disabled"/>#if defined _MSC_VER &amp;&amp; _MSC_VER &gt;= 1900 &amp;&amp; !defined _CORECRT_BUILD</div>
+<div class="disabled"/>    #define _CRTALLOCATOR __declspec(allocator)</div>
+<div class="disabled"/>#else</div>
+<div class="disabled"/>    #define _CRTALLOCATOR
+#endif</div>
+
+<div class="disabled"/>#if defined _M_CEE &amp;&amp; defined _M_X64</div>
+<div class="disabled"/>    // This is only needed when managed code is calling the native APIs,</div>
+<div class="disabled"/>    // targeting the 64-bit runtime.</div>
+<div class="disabled"/>    #define _CRT_JIT_INTRINSIC __declspec(jitintrinsic)
+#else</div>
+<div class="disabled"/>    #define _CRT_JIT_INTRINSIC
+#endif</div>
+
+<div class="token cpp_comment ">// __declspec(guard(overflow)) enabled by /sdl compiler switch for CRT allocators</div>
+<div class="disabled"/>#ifdef _GUARDOVERFLOW_CRT_ALLOCATORS</div>
+<div class="disabled"/>    #define _CRT_GUARDOVERFLOW __declspec(guard(overflow))</div>
+<div class="disabled"/>#else</div>
+<div class="disabled"/>    #define _CRT_GUARDOVERFLOW
+#endif</div>
+
+<div class="disabled"/>#if defined _DLL &amp;&amp; defined _M_HYBRID &amp;&amp; (defined _CORECRT_BUILD || defined _VCRT_BUILD)</div>
+<div class="disabled"/>    #define _CRT_HYBRIDPATCHABLE __declspec(hybrid_patchable)
+#else</div>
+<div class="disabled"/>    #define _CRT_HYBRIDPATCHABLE
+#endif</div>
+
+<div class="token cpp_comment ">// The CLR requires code calling other SecurityCritical code or using SecurityCritical types</div>
+<div class="token cpp_comment ">// to be marked as SecurityCritical.</div>
+<div class="token cpp_comment ">// _CRT_SECURITYCRITICAL_ATTRIBUTE covers this for internal function definitions.</div>
+<div class="token cpp_comment ">// _CRT_INLINE_PURE_SECURITYCRITICAL_ATTRIBUTE is for inline pure functions defined in the header.</div>
+<div class="token cpp_comment ">// This is clr:pure-only because for mixed mode we compile inline functions as native.</div>
+<div class="disabled"/>#ifdef _M_CEE_PURE</div>
+<div class="disabled"/>    #define _CRT_INLINE_PURE_SECURITYCRITICAL_ATTRIBUTE [System::Security::SecurityCritical]</div>
+<div class="disabled"/>#else</div>
+<div class="disabled"/>    #define _CRT_INLINE_PURE_SECURITYCRITICAL_ATTRIBUTE
+#endif</div>
+
+<div class="disabled"/>#ifndef _CONST_RETURN</div>
+<div class="disabled"/>    #ifdef __cplusplus</div>
+<div class="disabled"/>        #define _CONST_RETURN const</div>
+<div class="disabled"/>        #define _CRT_CONST_CORRECT_OVERLOADS</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _CONST_RETURN</div>
+<div class="disabled"/>    #endif</div>
+<div class="disabled"/>#endif</div>
+
+<div class="disabled"/>#define _WConst_return _CONST_RETURN // For backwards compatibility</div>
+
+<div class="disabled"/>#ifndef _CRT_ALIGN</div>
+<div class="disabled"/>    #ifdef __midl</div>
+<div class="disabled"/>        #define _CRT_ALIGN(x)</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _CRT_ALIGN(x) __declspec(align(x))
+    #endif
+#endif</div>
+
+<div class="disabled"/>#if defined _PREFAST_ &amp;&amp; defined _CA_SHOULD_CHECK_RETURN</div>
+<div class="disabled"/>    #define _Check_return_opt_ _Check_return_
+#else</div>
+<div class="disabled"/>    #define _Check_return_opt_
+#endif</div>
+
+<div class="disabled"/>#if defined _PREFAST_ &amp;&amp; defined _CA_SHOULD_CHECK_RETURN_WER</div>
+<div class="disabled"/>    #define _Check_return_wat_ _Check_return_
+#else</div>
+<div class="disabled"/>    #define _Check_return_wat_
+#endif</div>
+
+<div class="disabled"/>#if !defined __midl &amp;&amp; !defined MIDL_PASS &amp;&amp; defined _PREFAST_</div>
+<div class="disabled"/>    #define __crt_typefix(ctype) __declspec(&quot;SAL_typefix(&quot; _CRT_STRINGIZE(ctype) &quot;)&quot;)
+#else</div>
+<div class="disabled"/>    #define __crt_typefix(ctype)
+#endif</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Miscellaneous Stuff</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div>
+{
+    <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">bool</div> _Enable, <div class="token cpp_keyword ">typename</div> _Ty&gt;
+    <div class="token cpp_keyword ">struct</div> <div class="def" id="NF[0]$_CrtEnableIf"><div><div class="token cpp_type">_CrtEnableIf</div></div></div>;
+
+    <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> _Ty&gt;
+    <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_CrtEnableIf<1>"><div><div class="token cpp_type">_CrtEnableIf</div></div></div>&lt;<div class="token cpp_keyword ">true</div>, <div class="ref" onclick="jumpToSymbol([], ['_CrtEnableIf<1>::_Ty'])"><div class="token cpp_type">_Ty</div></div>&gt;
+    {
+        <div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['_CrtEnableIf<1>::_Ty'])"><div class="token cpp_type">_Ty</div></div> <div class="def" id="NI$_CrtEnableIf<1>::_Type"><div><div class="token cpp_type">_Type</div></div></div>;
+    };
+}
+<div class="disabled"/>#endif</div>
+
+<div class="disabled"/>#if defined __cplusplus</div>
+    <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">bool</div>  <div class="def" id="NI$__crt_bool"><div><div class="token cpp_type">__crt_bool</div></div></div>;
+<div class="disabled"/>#elif defined __midl</div>
+<div class="disabled"/>    // MIDL understands neither bool nor _Bool.  Use char as a best-fit</div>
+<div class="disabled"/>    // replacement (the differences won&apos;t matter in practice).</div>
+<div class="disabled"/>    typedef char __crt_bool;</div>
+<div class="disabled"/>#else</div>
+<div class="disabled"/>    typedef _Bool __crt_bool;
+#endif</div>
+
+<div class="disabled"/>#define _ARGMAX   100</div>
+<div class="disabled"/>#define _TRUNCATE ((size_t)-1)</div>
+<div class="disabled"/>#define _CRT_INT_MAX 2147483647</div>
+<div class="disabled"/>#define _CRT_SIZE_MAX ((size_t)-1)</div>
+
+<div class="disabled"/>#define __FILEW__     _CRT_WIDE(__FILE__)</div>
+<div class="disabled"/>#define __FUNCTIONW__ _CRT_WIDE(__FUNCTION__)</div>
+
+<div class="disabled"/>#ifndef _STATIC_ASSERT</div>
+<div class="disabled"/>    #define _STATIC_ASSERT(expr) typedef char __static_assert_t[(expr) != 0]
+#endif</div>
+
+<div class="disabled"/>#ifndef NULL</div>
+<div class="disabled"/>    #ifdef __cplusplus</div>
+<div class="disabled"/>        #define NULL 0</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define NULL ((void *)0)</div>
+<div class="disabled"/>    #endif</div>
+<div class="disabled"/>#endif</div>
+
+<div class="token cpp_comment ">// CRT headers are included into some kinds of source files where only data type</div>
+<div class="token cpp_comment ">// definitions and macro definitions are required but function declarations and</div>
+<div class="token cpp_comment ">// inline function definitions are not.  These files include assembly files, IDL</div>
+<div class="token cpp_comment ">// files, and resource files.  The tools that process these files often have a</div>
+<div class="token cpp_comment ">// limited ability to process C and C++ code.  The _CRT_FUNCTIONS_REQUIRED macro</div>
+<div class="token cpp_comment ">// is defined to 1 when we are compiling a file that actually needs functions to</div>
+<div class="token cpp_comment ">// be declared (and defined, where applicable), and to 0 when we are compiling a</div>
+<div class="token cpp_comment ">// file that does not.  This allows us to suppress declarations and definitions</div>
+<div class="token cpp_comment ">// that are not compilable with the aforementioned tools.</div>
+<div class="disabled"/>#if !defined _CRT_FUNCTIONS_REQUIRED</div>
+<div class="disabled"/>    #if defined __assembler || defined __midl || defined RC_INVOKED</div>
+<div class="disabled"/>        #define _CRT_FUNCTIONS_REQUIRED 0
+    #else</div>
+<div class="disabled"/>        #define _CRT_FUNCTIONS_REQUIRED 1
+    #endif
+#endif</div>
+
+<div class="disabled"/>#if !defined _NO_INLINING &amp;&amp; !_CRT_FUNCTIONS_REQUIRED</div>
+<div class="disabled"/>        #define _NO_INLINING // Suppress &lt;tchar.h&gt; inlines
+#endif</div>
+
+<div class="disabled"/>#ifndef _CRT_UNUSED</div>
+<div class="disabled"/>    #define _CRT_UNUSED(x) (void)x
+#endif</div>
+
+<div class="disabled"/>#ifndef _CRT_HAS_CXX17</div>
+<div class="disabled"/> #ifdef _MSVC_LANG</div>
+<div class="disabled"/>  #if _MSVC_LANG &gt; 201402</div>
+<div class="disabled"/>   #define _CRT_HAS_CXX17   1
+  #else /* _MSVC_LANG &gt; 201402 */</div>
+<div class="disabled"/>   #define _CRT_HAS_CXX17   0
+  #endif /* _MSVC_LANG &gt; 201402 */</div>
+<div class="disabled"/> #else /* _MSVC_LANG */</div>
+<div class="disabled"/>  #if __cplusplus &gt; 201402</div>
+<div class="disabled"/>   #define _CRT_HAS_CXX17   1</div>
+<div class="disabled"/>  #else /* __cplusplus &gt; 201402 */</div>
+<div class="disabled"/>   #define _CRT_HAS_CXX17   0</div>
+<div class="disabled"/>  #endif /* __cplusplus &gt; 201402 */
+ #endif /* _MSVC_LANG */
+#endif /* _CRT_HAS_CXX17 */</div>
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Windows API Partitioning and ARM Desktop Support</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#ifndef _CRT_USE_WINAPI_FAMILY_DESKTOP_APP</div>
+<div class="disabled"/>    #ifdef WINAPI_FAMILY</div>
+<div class="disabled"/>        #include &lt;winapifamily.h&gt;</div>
+<div class="disabled"/>        #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+<div class="disabled"/>            #define _CRT_USE_WINAPI_FAMILY_DESKTOP_APP</div>
+<div class="disabled"/>        #else</div>
+<div class="disabled"/>            #ifdef WINAPI_FAMILY_PHONE_APP</div>
+<div class="disabled"/>                #if WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP</div>
+<div class="disabled"/>                    #define _CRT_USE_WINAPI_FAMILY_PHONE_APP</div>
+<div class="disabled"/>                #endif</div>
+<div class="disabled"/>            #endif</div>
+<div class="disabled"/>        #endif</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _CRT_USE_WINAPI_FAMILY_DESKTOP_APP
+    #endif
+#endif</div>
+
+<div class="disabled"/>#ifndef _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE</div>
+<div class="disabled"/>    #define _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE 1
+#endif</div>
+
+<div class="disabled"/>#ifndef _CRT_BUILD_DESKTOP_APP</div>
+<div class="disabled"/>    #ifdef _CRT_USE_WINAPI_FAMILY_DESKTOP_APP</div>
+<div class="disabled"/>        #define _CRT_BUILD_DESKTOP_APP 1</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _CRT_BUILD_DESKTOP_APP 0
+    #endif
+#endif</div>
+
+<div class="token cpp_comment ">// Verify that the ARM Desktop SDK is available when building an ARM Desktop app</div>
+<div class="disabled"/>#ifdef _M_ARM</div>
+<div class="disabled"/>    #if _CRT_BUILD_DESKTOP_APP &amp;&amp; !_ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE</div>
+<div class="disabled"/>        #error Compiling Desktop applications for the ARM platform is not supported.</div>
+<div class="disabled"/>    #endif</div>
+<div class="disabled"/>#endif</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Invalid Parameter Handler</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#ifdef _DEBUG</div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP void __cdecl _invalid_parameter(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_invalid_parameter[decl0]"><div><div class="token cpp_function">_invalid_parameter</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_opt_z_ wchar_t const*,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_opt_z_ wchar_t const*,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_opt_z_ wchar_t const*,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_       unsigned int,</div>
+<div class="expanded">                <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_       uintptr_t</div>
+<div class="expanded">                <div class="ref" onclick="jumpToSymbol([], ['uintptr_t'])"><div class="token cpp_type">uintptr_t</div></div></div></div>
+        );
+<div class="disabled"/>#endif</div>
+
+<div class="expandable"/><div class="disabled"/>_ACRTIMP_ALT void __cdecl _invalid_parameter_noinfo(void);</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_invalid_parameter_noinfo[decl0]"><div><div class="token cpp_function">_invalid_parameter_noinfo</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP __declspec(noreturn) void __cdecl _invalid_parameter_noinfo_noreturn(void);</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(noreturn) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_invalid_parameter_noinfo_noreturn[decl0]"><div><div class="token cpp_function">_invalid_parameter_noinfo_noreturn</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="token cpp_keyword ">__declspec</div>(noreturn)
+<div class="expandable"/><div class="disabled"/>_ACRTIMP void __cdecl _invoke_watson(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_invoke_watson[decl0]"><div><div class="token cpp_function">_invoke_watson</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_z_ wchar_t const* _Expression,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Expression,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_z_ wchar_t const* _FunctionName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _FunctionName,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_z_ wchar_t const* _FileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _FileName,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_       unsigned int _LineNo,</div>
+<div class="expanded">            <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> _LineNo,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_       uintptr_t _Reserved);</div>
+<div class="expanded">            <div class="ref" onclick="jumpToSymbol([], ['uintptr_t'])"><div class="token cpp_type">uintptr_t</div></div> _Reserved);</div></div>
+
+<div class="disabled"/>#ifndef _CRT_SECURE_INVALID_PARAMETER</div>
+<div class="disabled"/>    #ifdef _DEBUG</div>
+<div class="disabled"/>        #define _CRT_SECURE_INVALID_PARAMETER(expr) \</div>
+<div class="disabled"/>            ::_invalid_parameter(_CRT_WIDE(#expr), __FUNCTIONW__, __FILEW__, __LINE__, 0)</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        // By default, _CRT_SECURE_INVALID_PARAMETER in retail invokes</div>
+<div class="disabled"/>        // _invalid_parameter_noinfo_noreturn(), which is marked</div>
+<div class="disabled"/>        // __declspec(noreturn) and does not return control to the application.</div>
+<div class="disabled"/>        // Even if _set_invalid_parameter_handler() is used to set a new invalid</div>
+<div class="disabled"/>        // parameter handler which does return control to the application,</div>
+<div class="disabled"/>        // _invalid_parameter_noinfo_noreturn() will terminate the application</div>
+<div class="disabled"/>        // and invoke Watson. You can overwrite the definition of</div>
+<div class="disabled"/>        // _CRT_SECURE_INVALID_PARAMETER if you need.</div>
+<div class="disabled"/>        //</div>
+<div class="disabled"/>        // _CRT_SECURE_INVALID_PARAMETER is used in the Standard C++ Libraries</div>
+<div class="disabled"/>        // and the SafeInt library.</div>
+<div class="disabled"/>        #define _CRT_SECURE_INVALID_PARAMETER(expr) \</div>
+<div class="disabled"/>            ::_invalid_parameter_noinfo_noreturn()
+    #endif
+#endif</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Deprecation and Warnings</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#define _CRT_WARNING_MESSAGE(NUMBER, MESSAGE) \</div>
+<div class="disabled"/>    __FILE__ &quot;(&quot; _CRT_STRINGIZE(__LINE__) &quot;): warning &quot; NUMBER &quot;: &quot; MESSAGE</div>
+
+<div class="disabled"/>#define _CRT_INTERNAL_NONSTDC_NAMES                                            \</div>
+<div class="disabled"/>    (                                                                          \</div>
+<div class="disabled"/>        ( defined _CRT_DECLARE_NONSTDC_NAMES &amp;&amp; _CRT_DECLARE_NONSTDC_NAMES) || \</div>
+<div class="disabled"/>        (!defined _CRT_DECLARE_NONSTDC_NAMES &amp;&amp; !__STDC__                 )    \</div>
+<div class="disabled"/>    )</div>
+
+<div class="disabled"/>#if defined _CRT_NONSTDC_NO_DEPRECATE &amp;&amp; !defined _CRT_NONSTDC_NO_WARNINGS</div>
+<div class="disabled"/>    #define _CRT_NONSTDC_NO_WARNINGS
+#endif</div>
+
+<div class="disabled"/>#ifndef _CRT_NONSTDC_DEPRECATE</div>
+<div class="disabled"/>    #ifdef _CRT_NONSTDC_NO_WARNINGS</div>
+<div class="disabled"/>        #define _CRT_NONSTDC_DEPRECATE(_NewName)</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _CRT_NONSTDC_DEPRECATE(_NewName) _CRT_DEPRECATE_TEXT(             \</div>
+<div class="disabled"/>            &quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot; \</div>
+<div class="disabled"/>            &quot;and C++ conformant name: &quot; #_NewName &quot;. See online help for details.&quot;)
+    #endif
+#endif</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Managed CRT Support</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#ifndef _PGLOBAL</div>
+<div class="disabled"/>    #ifdef _M_CEE</div>
+<div class="disabled"/>        #ifdef __cplusplus_cli</div>
+<div class="disabled"/>            #define _PGLOBAL __declspec(process)</div>
+<div class="disabled"/>        #else</div>
+<div class="disabled"/>            #define _PGLOBAL</div>
+<div class="disabled"/>        #endif</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _PGLOBAL
+    #endif
+#endif</div>
+
+<div class="disabled"/>#ifndef _AGLOBAL</div>
+<div class="disabled"/>    #ifdef _M_CEE</div>
+<div class="disabled"/>        #define _AGLOBAL __declspec(appdomain)</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _AGLOBAL
+    #endif
+#endif</div>
+
+<div class="disabled"/>#if defined _M_CEE &amp;&amp; !defined _M_CEE_PURE</div>
+<div class="disabled"/>    #define _M_CEE_MIXED
+#endif</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// SecureCRT Configuration</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#if defined _CRTBLD || defined _CORECRT_BUILD || defined _VCRT_BUILD</div>
+<div class="disabled"/>    // Disable C++ overloads internally:</div>
+<div class="disabled"/>    #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES       0</div>
+<div class="disabled"/>    #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 0</div>
+<div class="disabled"/>    #define _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES         0
+#endif</div>
+
+<div class="disabled"/>#if !_CRT_FUNCTIONS_REQUIRED</div>
+<div class="disabled"/>    // If we don&apos;t require function declarations at all, we need not define the</div>
+<div class="disabled"/>    // overloads (MIDL and RC do not need the C++ overloads).</div>
+<div class="disabled"/>    #undef  _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES</div>
+<div class="disabled"/>    #undef  _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT</div>
+<div class="disabled"/>    #undef  _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES</div>
+<div class="disabled"/>    #undef  _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_MEMORY</div>
+<div class="disabled"/>    #undef  _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES_MEMORY</div>
+
+<div class="disabled"/>    #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 0</div>
+<div class="disabled"/>    #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 0</div>
+<div class="disabled"/>    #define _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES 0</div>
+<div class="disabled"/>    #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_MEMORY 0</div>
+<div class="disabled"/>    #define _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES_MEMORY 0
+#endif</div>
+
+<div class="disabled"/>#define __STDC_SECURE_LIB__ 200411L</div>
+<div class="disabled"/>#define __GOT_SECURE_LIB__ __STDC_SECURE_LIB__ // For backwards compatibility</div>
+
+<div class="disabled"/>#ifndef __STDC_WANT_SECURE_LIB__</div>
+<div class="disabled"/>    #define __STDC_WANT_SECURE_LIB__ 1
+#endif</div>
+
+<div class="disabled"/>#if !__STDC_WANT_SECURE_LIB__ &amp;&amp; !defined _CRT_SECURE_NO_WARNINGS</div>
+<div class="disabled"/>    #define _CRT_SECURE_NO_WARNINGS
+#endif</div>
+
+<div class="disabled"/>#ifndef RC_INVOKED</div>
+<div class="disabled"/>    #if defined _CRT_SECURE_NO_DEPRECATE_GLOBALS &amp;&amp; !defined _CRT_SECURE_NO_WARNINGS_GLOBALS</div>
+<div class="disabled"/>        #define _CRT_SECURE_NO_WARNINGS_GLOBALS
+    #endif
+#endif</div>
+
+<div class="disabled"/>#ifndef _CRT_INSECURE_DEPRECATE_GLOBALS</div>
+<div class="disabled"/>    #ifdef RC_INVOKED</div>
+<div class="disabled"/>        #define _CRT_INSECURE_DEPRECATE_GLOBALS(replacement)</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #ifdef _CRT_SECURE_NO_WARNINGS_GLOBALS</div>
+<div class="disabled"/>            #define _CRT_INSECURE_DEPRECATE_GLOBALS(replacement)</div>
+<div class="disabled"/>        #else</div>
+<div class="disabled"/>            #define _CRT_INSECURE_DEPRECATE_GLOBALS(replacement) _CRT_INSECURE_DEPRECATE(replacement)
+        #endif
+    #endif
+#endif</div>
+
+<div class="disabled"/>#if defined _CRT_MANAGED_HEAP_NO_DEPRECATE &amp;&amp; !defined _CRT_MANAGED_HEAP_NO_WARNINGS</div>
+<div class="disabled"/>    #define _CRT_MANAGED_HEAP_NO_WARNINGS
+#endif</div>
+
+<div class="disabled"/>#define _SECURECRT_FILL_BUFFER_PATTERN 0xFE</div>
+
+<div class="disabled"/>#if defined _CRT_OBSOLETE_NO_DEPRECATE &amp;&amp; !defined _CRT_OBSOLETE_NO_WARNINGS</div>
+<div class="disabled"/>    #define _CRT_OBSOLETE_NO_WARNINGS
+#endif</div>
+
+<div class="disabled"/>#ifndef _CRT_OBSOLETE</div>
+<div class="disabled"/>    #ifdef _CRT_OBSOLETE_NO_WARNINGS</div>
+<div class="disabled"/>        #define _CRT_OBSOLETE(_NewItem)</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _CRT_OBSOLETE(_NewItem) _CRT_DEPRECATE_TEXT(                   \</div>
+<div class="disabled"/>            &quot;This function or variable has been superceded by newer library &quot;  \</div>
+<div class="disabled"/>            &quot;or operating system functionality. Consider using &quot; #_NewItem &quot; &quot; \</div>
+<div class="disabled"/>            &quot;instead. See online help for details.&quot;)
+    #endif
+#endif</div>
+
+<div class="disabled"/>#ifndef RC_INVOKED</div>
+<div class="disabled"/>    #ifndef _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES</div>
+<div class="disabled"/>        #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 0</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #if !__STDC_WANT_SECURE_LIB__ &amp;&amp; _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES</div>
+<div class="disabled"/>            #error Cannot use Secure CRT C++ overloads when __STDC_WANT_SECURE_LIB__ is 0</div>
+<div class="disabled"/>        #endif
+    #endif</div>
+
+<div class="disabled"/>    #ifndef _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT</div>
+        <div class="token cpp_comment ">// _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT is ignored if</div>
+        <div class="token cpp_comment ">// _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES is set to 0</div>
+<div class="disabled"/>        #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 0</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #if !__STDC_WANT_SECURE_LIB__ &amp;&amp; _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT</div>
+<div class="disabled"/>            #error Cannot use Secure CRT C++ overloads when __STDC_WANT_SECURE_LIB__ is 0</div>
+<div class="disabled"/>        #endif
+    #endif</div>
+
+<div class="disabled"/>    #ifndef _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES</div>
+<div class="disabled"/>        #if __STDC_WANT_SECURE_LIB__</div>
+<div class="disabled"/>              #define _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES 1</div>
+<div class="disabled"/>        #else</div>
+<div class="disabled"/>              #define _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES 0
+        #endif</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #if !__STDC_WANT_SECURE_LIB__ &amp;&amp; _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES</div>
+<div class="disabled"/>            #error Cannot use Secure CRT C++ overloads when __STDC_WANT_SECURE_LIB__ is 0</div>
+<div class="disabled"/>        #endif
+    #endif</div>
+
+<div class="disabled"/>    #ifndef _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_MEMORY</div>
+<div class="disabled"/>        #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_MEMORY 0</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #if !__STDC_WANT_SECURE_LIB__ &amp;&amp; _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_MEMORY</div>
+<div class="disabled"/>            #error Cannot use Secure CRT C++ overloads when __STDC_WANT_SECURE_LIB__ is 0</div>
+<div class="disabled"/>        #endif
+    #endif</div>
+
+<div class="disabled"/>    #ifndef _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES_MEMORY</div>
+<div class="disabled"/>        #define _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES_MEMORY 0</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #if !__STDC_WANT_SECURE_LIB__ &amp;&amp; _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES_MEMORY</div>
+<div class="disabled"/>           #error Cannot use Secure CRT C++ overloads when __STDC_WANT_SECURE_LIB__ is 0</div>
+<div class="disabled"/>        #endif
+    #endif
+#endif</div>
+
+<div class="disabled"/>#ifndef _CRT_SECURE_CPP_NOTHROW</div>
+<div class="disabled"/>    #define _CRT_SECURE_CPP_NOTHROW throw()
+#endif</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Basic Types</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div>                           <div class="def" id="NI$errno_t"><div><div class="token cpp_type">errno_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div>                <div class="def" id="NI$wint_t"><div><div class="token cpp_type">wint_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div>                <div class="def" id="NI$wctype_t"><div><div class="token cpp_type">wctype_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">long</div>                          <div class="def" id="NI$__time32_t"><div><div class="token cpp_type">__time32_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">__int64</div>                       <div class="def" id="NI$__time64_t"><div><div class="token cpp_type">__time64_t</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$__crt_locale_data_public"><div><div class="token cpp_type">__crt_locale_data_public</div></div></div>
+{
+      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$__crt_locale_data_public::_locale_pctype"><div><div class="token cpp_field">_locale_pctype</div></div></div>;
+<div class="expandable"/><div class="disabled"/>    _Field_range_(1, 2) int _locale_mb_cur_max;</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> <div class="def" id="NI$__crt_locale_data_public::_locale_mb_cur_max"><div><div class="token cpp_field">_locale_mb_cur_max</div></div></div>;</div></div>
+               <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$__crt_locale_data_public::_locale_lc_codepage"><div><div class="token cpp_field">_locale_lc_codepage</div></div></div>;
+} <div class="ref" onclick="jumpToSymbol([], ['__crt_locale_data_public'])"><div class="token cpp_type">__crt_locale_data_public</div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$__crt_locale_pointers"><div><div class="token cpp_type">__crt_locale_pointers</div></div></div>
+{
+    <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['__crt_locale_data'])"><div class="token cpp_type">__crt_locale_data</div></div>*    <div class="def" id="NI$__crt_locale_pointers::locinfo"><div><div class="token cpp_field">locinfo</div></div></div>;
+    <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['__crt_multibyte_data'])"><div class="token cpp_type">__crt_multibyte_data</div></div>* <div class="def" id="NI$__crt_locale_pointers::mbcinfo"><div><div class="token cpp_field">mbcinfo</div></div></div>;
+} <div class="ref" onclick="jumpToSymbol([], ['__crt_locale_pointers'])"><div class="token cpp_type">__crt_locale_pointers</div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['__crt_locale_pointers'])"><div class="token cpp_type">__crt_locale_pointers</div></div>* <div class="def" id="NI$_locale_t"><div><div class="token cpp_type">_locale_t</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_Mbstatet"><div><div class="token cpp_type">_Mbstatet</div></div></div>
+{ <div class="token cpp_comment ">// state of a multibyte translation</div>
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$_Mbstatet::_Wchar"><div><div class="token cpp_field">_Wchar</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> <div class="def" id="NI$_Mbstatet::_Byte"><div><div class="token cpp_field">_Byte</div></div></div>, <div class="def" id="NI$_Mbstatet::_State"><div><div class="token cpp_field">_State</div></div></div>;
+} <div class="ref" onclick="jumpToSymbol([], ['_Mbstatet'])"><div class="token cpp_type">_Mbstatet</div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['_Mbstatet'])"><div class="token cpp_type">_Mbstatet</div></div> <div class="def" id="NI$mbstate_t"><div><div class="token cpp_type">mbstate_t</div></div></div>;
+
+<div class="disabled"/>#if defined _USE_32BIT_TIME_T &amp;&amp; defined _WIN64</div>
+<div class="disabled"/>    #error You cannot use 32-bit time_t (_USE_32BIT_TIME_T) with _WIN64
+#endif</div>
+
+<div class="disabled"/>#if defined _VCRT_BUILD || defined _CORECRT_BUILD</div>
+<div class="disabled"/>    #define _CRT_NO_TIME_T
+#endif</div>
+
+<div class="disabled"/>#ifndef _CRT_NO_TIME_T</div>
+<div class="disabled"/>    #ifdef _USE_32BIT_TIME_T</div>
+<div class="disabled"/>        typedef __time32_t time_t;</div>
+<div class="disabled"/>    #else</div>
+        <div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['__time64_t'])"><div class="token cpp_type">__time64_t</div></div> <div class="def" id="NI$time_t"><div><div class="token cpp_type">time_t</div></div></div>;
+<div class="disabled"/>    #endif
+#endif</div>
+
+<div class="token cpp_comment ">// Indicate that these common types are defined</div>
+<div class="disabled"/>#ifndef _TIME_T_DEFINED</div>
+<div class="disabled"/>    #define _TIME_T_DEFINED
+#endif</div>
+
+<div class="disabled"/>#if __STDC_WANT_SECURE_LIB__</div>
+    <div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$rsize_t"><div><div class="token cpp_type">rsize_t</div></div></div>;
+<div class="disabled"/>#endif</div>
+
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// C++ Secure Overload Generation Macros</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#ifndef RC_INVOKED</div>
+<div class="disabled"/>    #if defined __cplusplus &amp;&amp; _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_0(_ReturnType, _FuncName, _DstType, _Dst)     \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                          \</div>
+<div class="disabled"/>            {                                                                                     \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt;                                                           \</div>
+<div class="disabled"/>                inline                                                                            \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType (&amp;_Dst)[_Size]) _CRT_SECURE_CPP_NOTHROW  \</div>
+<div class="disabled"/>                {                                                                                 \</div>
+<div class="disabled"/>                    return _FuncName(_Dst, _Size);                                                \</div>
+<div class="disabled"/>                }                                                                                 \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(_ReturnType, _FuncName, _DstType, _Dst, _TType1, _TArg1)   \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                                         \</div>
+<div class="disabled"/>            {                                                                                                    \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt;                                                                          \</div>
+<div class="disabled"/>                inline                                                                                           \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType (&amp;_Dst)[_Size], _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>                {                                                                                                \</div>
+<div class="disabled"/>                    return _FuncName(_Dst, _Size, _TArg1);                                                       \</div>
+<div class="disabled"/>                }                                                                                                \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_2(_ReturnType, _FuncName, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)  \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                                                         \</div>
+<div class="disabled"/>            {                                                                                                                    \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt;                                                                                          \</div>
+<div class="disabled"/>                inline                                                                                                           \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>                {                                                                                                                \</div>
+<div class="disabled"/>                    return _FuncName(_Dst, _Size, _TArg1, _TArg2);                                                               \</div>
+<div class="disabled"/>                }                                                                                                                \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_3(_ReturnType, _FuncName, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                                                                         \</div>
+<div class="disabled"/>            {                                                                                                                                    \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt;                                                                                                          \</div>
+<div class="disabled"/>                inline                                                                                                                           \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>                {                                                                                                                                \</div>
+<div class="disabled"/>                    return _FuncName(_Dst, _Size, _TArg1, _TArg2, _TArg3);                                                                       \</div>
+<div class="disabled"/>                }                                                                                                                                \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_4(_ReturnType, _FuncName, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4, _TArg4) \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                                                                                          \</div>
+<div class="disabled"/>            {                                                                                                                                                     \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt;                                                                                                                           \</div>
+<div class="disabled"/>                inline                                                                                                                                            \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3, _TType4 _TArg4) _CRT_SECURE_CPP_NOTHROW  \</div>
+<div class="disabled"/>                {                                                                                                                                                 \</div>
+<div class="disabled"/>                    return _FuncName(_Dst, _Size, _TArg1, _TArg2, _TArg3, _TArg4);                                                                                \</div>
+<div class="disabled"/>                }                                                                                                                                                 \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_1_1(_ReturnType, _FuncName, _HType1, _HArg1, _DstType, _Dst, _TType1, _TArg1)  \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                                                         \</div>
+<div class="disabled"/>            {                                                                                                                    \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt;                                                                                          \</div>
+<div class="disabled"/>                inline                                                                                                           \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, _DstType (&amp;_Dst)[_Size], _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>                {                                                                                                                \</div>
+<div class="disabled"/>                    return _FuncName(_HArg1, _Dst, _Size, _TArg1);                                                               \</div>
+<div class="disabled"/>                }                                                                                                                \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_1_2(_ReturnType, _FuncName, _HType1, _HArg1, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                                                                         \</div>
+<div class="disabled"/>            {                                                                                                                                    \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt;                                                                                                          \</div>
+<div class="disabled"/>                inline                                                                                                                           \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, _DstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>                {                                                                                                                                \</div>
+<div class="disabled"/>                    return _FuncName(_HArg1, _Dst, _Size, _TArg1, _TArg2);                                                                       \</div>
+<div class="disabled"/>                }                                                                                                                                \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_1_3(_ReturnType, _FuncName, _HType1, _HArg1, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                                                                                          \</div>
+<div class="disabled"/>            {                                                                                                                                                     \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt;                                                                                                                           \</div>
+<div class="disabled"/>                inline                                                                                                                                            \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, _DstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW  \</div>
+<div class="disabled"/>                {                                                                                                                                                 \</div>
+<div class="disabled"/>                    return _FuncName(_HArg1, _Dst, _Size, _TArg1, _TArg2, _TArg3);                                                                                \</div>
+<div class="disabled"/>                }                                                                                                                                                 \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_2_0(_ReturnType, _FuncName, _HType1, _HArg1, _HType2, _HArg2, _DstType, _Dst)  \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                                                         \</div>
+<div class="disabled"/>            {                                                                                                                    \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt;                                                                                          \</div>
+<div class="disabled"/>                inline                                                                                                           \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, _HType2 _HArg2, _DstType (&amp;_Dst)[_Size]) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>                {                                                                                                                \</div>
+<div class="disabled"/>                    return _FuncName(_HArg1, _HArg2, _Dst, _Size);                                                               \</div>
+<div class="disabled"/>                }                                                                                                                \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1_ARGLIST(_ReturnType, _FuncName, _VFuncName, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                                                           \</div>
+<div class="disabled"/>            {                                                                                                                      \</div>
+<div class="disabled"/>                __pragma(warning(push));                                                                                           \</div>
+<div class="disabled"/>                __pragma(warning(disable: 4793));                                                                                  \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt;                                                                                            \</div>
+<div class="disabled"/>                inline                                                                                                             \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType (&amp;_Dst)[_Size], _TType1 _TArg1, ...) _CRT_SECURE_CPP_NOTHROW              \</div>
+<div class="disabled"/>                {                                                                                                                  \</div>
+<div class="disabled"/>                    va_list _ArgList;                                                                                              \</div>
+<div class="disabled"/>                    __crt_va_start(_ArgList, _TArg1);                                                                              \</div>
+<div class="disabled"/>                    return _VFuncName(_Dst, _Size, _TArg1, _ArgList);                                                              \</div>
+<div class="disabled"/>                }                                                                                                                  \</div>
+<div class="disabled"/>                __pragma(warning(pop));                                                                                            \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_2_ARGLIST(_ReturnType, _FuncName, _VFuncName, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                                                                            \</div>
+<div class="disabled"/>            {                                                                                                                                       \</div>
+<div class="disabled"/>                __pragma(warning(push));                                                                                                            \</div>
+<div class="disabled"/>                __pragma(warning(disable: 4793));                                                                                                   \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt;                                                                                                             \</div>
+<div class="disabled"/>                inline                                                                                                                              \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2, ...) _CRT_SECURE_CPP_NOTHROW               \</div>
+<div class="disabled"/>                {                                                                                                                                   \</div>
+<div class="disabled"/>                    va_list _ArgList;                                                                                                               \</div>
+<div class="disabled"/>                    __crt_va_start(_ArgList, _TArg2);                                                                                               \</div>
+<div class="disabled"/>                    return _VFuncName(_Dst, _Size, _TArg1, _TArg2, _ArgList);                                                                       \</div>
+<div class="disabled"/>                }                                                                                                                                   \</div>
+<div class="disabled"/>                __pragma(warning(pop));                                                                                                             \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_SPLITPATH(_ReturnType, _FuncName, _DstType, _Src)               \</div>
+<div class="disabled"/>            extern &quot;C++&quot;                                                                                          \</div>
+<div class="disabled"/>            {                                                                                                     \</div>
+<div class="disabled"/>                template &lt;size_t _DriveSize, size_t _DirSize, size_t _NameSize, size_t _ExtSize&gt;                  \</div>
+<div class="disabled"/>                inline                                                                                            \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(                                                                  \</div>
+<div class="disabled"/>                    _In_z_ _DstType const* _Src,                                                                  \</div>
+<div class="disabled"/>                    _Post_z_ _DstType (&amp;_Drive)[_DriveSize],                                                      \</div>
+<div class="disabled"/>                    _Post_z_ _DstType (&amp;_Dir)[_DirSize],                                                          \</div>
+<div class="disabled"/>                    _Post_z_ _DstType (&amp;_Name)[_NameSize],                                                        \</div>
+<div class="disabled"/>                    _Post_z_ _DstType (&amp;_Ext)[_ExtSize]                                                           \</div>
+<div class="disabled"/>                    ) _CRT_SECURE_CPP_NOTHROW                                                                     \</div>
+<div class="disabled"/>                {                                                                                                 \</div>
+<div class="disabled"/>                    return _FuncName(_Src, _Drive, _DriveSize, _Dir, _DirSize, _Name, _NameSize, _Ext, _ExtSize); \</div>
+<div class="disabled"/>                }                                                                                                 \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>    #else  // ^^^ _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES ^^^ // vvv !_CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES vvv //</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_0(_ReturnType, _FuncName, _DstType, _Dst)</div>
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(_ReturnType, _FuncName, _DstType, _Dst, _TType1, _TArg1)</div>
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_2(_ReturnType, _FuncName, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_3(_ReturnType, _FuncName, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_4(_ReturnType, _FuncName, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4, _TArg4)</div>
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_1_1(_ReturnType, _FuncName, _HType1, _HArg1, _DstType, _Dst, _TType1, _TArg1)</div>
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_1_2(_ReturnType, _FuncName, _HType1, _HArg1, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_1_3(_ReturnType, _FuncName, _HType1, _HArg1, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_2_0(_ReturnType, _FuncName, _HType1, _HArg1, _HType2, _HArg2, _DstType, _Dst)</div>
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1_ARGLIST(_ReturnType, _FuncName, _VFuncName, _DstType, _Dst, _TType1, _TArg1)</div>
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_2_ARGLIST(_ReturnType, _FuncName, _VFuncName, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_SECURE_FUNC_SPLITPATH(_ReturnType, _FuncName, _DstType, _Src)</div>
+
+<div class="disabled"/>    #endif // !_CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES
+#endif</div>
+
+
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _SalAttributeDst, _DstType, _Dst)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _DstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _DstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _DstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_4(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4, _TArg4) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_4_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4, _TArg4)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_2_0(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _HType1, _HArg1, _HType2, _HArg2, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_2_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _HType1, _HArg1, _HType2, _HArg2, _SalAttributeDst, _DstType, _Dst)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_ARGLIST(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _VFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _FuncName##_s, _VFuncName, _VFuncName##_s, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_ARGLIST(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _VFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _VFuncName, _VFuncName##_s, _DstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_SIZE(_DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_SIZE_EX(_DeclSpec, _FuncName, _FuncName##_s, _DstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3_SIZE(_DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3_SIZE_EX(_DeclSpec, _FuncName, _FuncName##_s, _DstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+
+
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_0(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _SalAttributeDst, _DstType, _Dst)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _SalAttributeDst, _DstType, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _DstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _DstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_4(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4, _TArg4) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_4_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4, _TArg4)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_1_1(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_1_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_2_0(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _HType1, _HArg1, _HType2, _HArg2, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_2_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _HType1, _HArg1, _HType2, _HArg2, _SalAttributeDst, _DstType, _Dst)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1_ARGLIST(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _VFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, __cdecl, _FuncName, _FuncName##_s, _VFuncName, _VFuncName##_s, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_SIZE(_DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_SIZE_EX(_DeclSpec, _FuncName, _FuncName##_s, _DstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>#define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3_SIZE(_DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3_SIZE_EX(_DeclSpec, _FuncName, _FuncName##_s, _DstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// C++ Standard Overload Generation Macros</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#ifndef RC_INVOKED</div>
+<div class="disabled"/>    #if defined __cplusplus &amp;&amp; _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES</div>
+
+<div class="disabled"/>        #define __RETURN_POLICY_SAME(_FunctionCall, _Dst) return (_FunctionCall)</div>
+<div class="disabled"/>        #define __RETURN_POLICY_DST(_FunctionCall, _Dst)  return ((_FunctionCall) == 0 ? _Dst : 0)</div>
+<div class="disabled"/>        #define __RETURN_POLICY_VOID(_FunctionCall, _Dst) (_FunctionCall); return</div>
+<div class="disabled"/>        #define __EMPTY_DECLSPEC</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_SalAttributeDst _DstType *_Dst) \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst); \</div>
+<div class="disabled"/>                return _FuncName(_Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst)); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst)); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_DstType (&amp;_Dst)[_Size]) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, _Size), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1]) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, 1), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0_CGETS(_ReturnType, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_SalAttributeDst _DstType *_Dst) \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst); \</div>
+<div class="disabled"/>                return _FuncName(_Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_FuncName##_s) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst)); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_FuncName##_s) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst)); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_FuncName##_s) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_DstType (&amp;_Dst)[_Size]) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                size_t _SizeRead = 0; \</div>
+<div class="disabled"/>                errno_t _Err = _FuncName##_s(_Dst + 2, (_Size - 2) &lt; ((size_t)_Dst[0]) ? (_Size - 2) : ((size_t)_Dst[0]), &amp;_SizeRead); \</div>
+<div class="disabled"/>                _Dst[1] = (_DstType)(_SizeRead); \</div>
+<div class="disabled"/>                return (_Err == 0 ? _Dst + 2 : 0); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_FuncName##_s) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1]) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName((_DstType *)_Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_FuncName##_s) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;2&gt;(_DstType (&amp;_Dst)[2]) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName((_DstType *)_Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1) \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1); \</div>
+<div class="disabled"/>                return _FuncName(_Dst, _TArg1); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst, _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst, _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst, _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst, _TArg1); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SecureDstType (&amp;_Dst)[_Size], _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, _Size, _TArg1), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, 1, _TArg1), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2); \</div>
+<div class="disabled"/>                return _FuncName(_Dst, _TArg1, _TArg2); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst, _TArg1, _TArg2); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SecureDstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, _Size, _TArg1, _TArg2), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, 1, _TArg1, _TArg2), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3); \</div>
+<div class="disabled"/>                return _FuncName(_Dst, _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst, _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SecureDstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, _Size, _TArg1, _TArg2, _TArg3), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, 1, _TArg1, _TArg2, _TArg3), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_4_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4, _TArg4) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3, _TType4 _TArg4) \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3, _TType4 _TArg4); \</div>
+<div class="disabled"/>                return _FuncName(_Dst, _TArg1, _TArg2, _TArg3, _TArg4); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3, _TType4 _TArg4) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _TArg3, _TArg4); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3, _TType4 _TArg4) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _TArg3, _TArg4); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3, _TType4 _TArg4) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst, _TArg1, _TArg2, _TArg3, _TArg4); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_DstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3, _TType4 _TArg4) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, _Size, _TArg1, _TArg2, _TArg3, _TArg4), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3, _TType4 _TArg4) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, 1, _TArg1, _TArg2, _TArg3, _TArg4), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_HType1 _HArg1, _SalAttributeDst _DstType *_Dst, _TType1 _TArg1) \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnType __cdecl _FuncName(_HType1 _HArg1, _SalAttributeDst _DstType *_Dst, _TType1 _TArg1); \</div>
+<div class="disabled"/>                return _FuncName(_HArg1, _Dst, _TArg1); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, _T &amp;_Dst, _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_HArg1, static_cast&lt;_DstType *&gt;(_Dst), _TArg1); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, const _T &amp;_Dst, _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_HArg1, static_cast&lt;_DstType *&gt;(_Dst), _TArg1); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, _SalAttributeDst _DstType * &amp;_Dst, _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_HArg1, _Dst, _TArg1); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, _DstType (&amp;_Dst)[_Size], _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_HArg1, _Dst, _Size, _TArg1), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_HType1 _HArg1, _DstType (&amp;_Dst)[1], _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_HArg1, _Dst, 1, _TArg1), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_2_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _HType2, _HArg2, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_HType1 _HArg1, _HType2 _HArg2, _SalAttributeDst _DstType *_Dst) \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnType __cdecl _FuncName(_HType1 _HArg1, _HType2 _HArg2, _SalAttributeDst _DstType *_Dst); \</div>
+<div class="disabled"/>                return _FuncName(_HArg1, _HArg2, _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, _HType2 _HArg2, _T &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_HArg1, _HArg2, static_cast&lt;_DstType *&gt;(_Dst)); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, _HType2 _HArg2, const _T &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_HArg1, _HArg2, static_cast&lt;_DstType *&gt;(_Dst)); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, _HType2 _HArg2, _SalAttributeDst _DstType * &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_HArg1, _HArg2, _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_HType1 _HArg1, _HType2 _HArg2, _DstType (&amp;_Dst)[_Size]) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_HArg1, _HArg2, _Dst, _Size), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_HType1 _HArg1, _HType2 _HArg2, _DstType (&amp;_Dst)[1]) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_HArg1, _HArg2, _Dst, 1), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _SecureFuncName, _VFuncName, _SecureVFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, va_list _ArgList) \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnType _CC _VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, va_list _ArgList); \</div>
+<div class="disabled"/>                return _VFuncName(_Dst, _TArg1, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                __pragma(warning(push)); \</div>
+<div class="disabled"/>                __pragma(warning(disable: 4793)); \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst, _TType1 _TArg1, ...) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                va_list _ArgList; \</div>
+<div class="disabled"/>                __crt_va_start(_ArgList, _TArg1); \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst, _TType1 _TArg1, ...) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                va_list _ArgList; \</div>
+<div class="disabled"/>                __crt_va_start(_ArgList, _TArg1); \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>                __pragma(warning(pop)); \</div>
+<div class="disabled"/>                \</div>
+<div class="disabled"/>                __pragma(warning(push)); \</div>
+<div class="disabled"/>                __pragma(warning(disable: 4793)); \</div>
+<div class="disabled"/>                template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst, _TType1 _TArg1, ...) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                va_list _ArgList; \</div>
+<div class="disabled"/>                __crt_va_start(_ArgList, _TArg1); \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(_Dst, _TArg1, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>                __pragma(warning(pop)); \</div>
+<div class="disabled"/>                \</div>
+<div class="disabled"/>                __pragma(warning(push)); \</div>
+<div class="disabled"/>                __pragma(warning(disable: 4793)); \</div>
+<div class="disabled"/>                template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_DstType (&amp;_Dst)[_Size], _TType1 _TArg1, ...) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                va_list _ArgList; \</div>
+<div class="disabled"/>                __crt_va_start(_ArgList, _TArg1); \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureVFuncName(_Dst, _Size, _TArg1, _ArgList), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>                __pragma(warning(pop)); \</div>
+<div class="disabled"/>                \</div>
+<div class="disabled"/>                __pragma(warning(push)); \</div>
+<div class="disabled"/>                __pragma(warning(disable: 4793)); \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1, ...) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                va_list _ArgList; \</div>
+<div class="disabled"/>                __crt_va_start(_ArgList, _TArg1); \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureVFuncName(_Dst, 1, _TArg1, _ArgList), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>                __pragma(warning(pop)); \</div>
+<div class="disabled"/>                \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureVFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _VFuncName(_T &amp;_Dst, _TType1 _TArg1, va_list _ArgList) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureVFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _VFuncName(const _T &amp;_Dst, _TType1 _TArg1, va_list _ArgList) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureVFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _VFuncName(_SalAttributeDst _DstType *&amp;_Dst, _TType1 _TArg1, va_list _ArgList) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(_Dst, _TArg1, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _VFuncName(_DstType (&amp;_Dst)[_Size], _TType1 _TArg1, va_list _ArgList) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureVFuncName(_Dst, _Size, _TArg1, _ArgList), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureVFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _VFuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1, va_list _ArgList) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureVFuncName(_Dst, 1, _TArg1, _ArgList), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _VFuncName, _SecureVFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, va_list _ArgList) \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnType _CC _VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, va_list _ArgList); \</div>
+<div class="disabled"/>                return _VFuncName(_Dst, _TArg1, _TArg2, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                __pragma(warning(push)); \</div>
+<div class="disabled"/>                __pragma(warning(disable: 4793)); \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_FuncName##_s) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, ...) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                va_list _ArgList; \</div>
+<div class="disabled"/>                __crt_va_start(_ArgList, _TArg2); \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_FuncName##_s) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, ...) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                va_list _ArgList; \</div>
+<div class="disabled"/>                __crt_va_start(_ArgList, _TArg2); \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>                __pragma(warning(pop)); \</div>
+<div class="disabled"/>                \</div>
+<div class="disabled"/>                __pragma(warning(push)); \</div>
+<div class="disabled"/>                __pragma(warning(disable: 4793)); \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_FuncName##_s) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, ...) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                va_list _ArgList; \</div>
+<div class="disabled"/>                __crt_va_start(_ArgList, _TArg2); \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(_Dst, _TArg1, _TArg2, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>                __pragma(warning(pop)); \</div>
+<div class="disabled"/>                \</div>
+<div class="disabled"/>                __pragma(warning(push)); \</div>
+<div class="disabled"/>                __pragma(warning(disable: 4793)); \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SecureDstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2, ...) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                va_list _ArgList; \</div>
+<div class="disabled"/>                __crt_va_start(_ArgList, _TArg2); \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureVFuncName(_Dst, _Size, _TArg1, _TArg2, _ArgList), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>                __pragma(warning(pop)); \</div>
+<div class="disabled"/>                \</div>
+<div class="disabled"/>                __pragma(warning(push)); \</div>
+<div class="disabled"/>                __pragma(warning(disable: 4793)); \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_FuncName##_s) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1, _TType2 _TArg2, ...) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                va_list _ArgList; \</div>
+<div class="disabled"/>                __crt_va_start(_ArgList, _TArg2); \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureVFuncName(_Dst, 1, _TArg1, _TArg2, _ArgList), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>                __pragma(warning(pop)); \</div>
+<div class="disabled"/>                \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureVFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _VFuncName(_T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, va_list _ArgList) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureVFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _VFuncName(const _T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, va_list _ArgList) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureVFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _VFuncName(_SalAttributeDst _DstType *&amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, va_list _ArgList) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_VFuncName(_Dst, _TArg1, _TArg2, _ArgList); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _VFuncName(_SecureDstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2, va_list _ArgList) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureVFuncName(_Dst, _Size, _TArg1, _TArg2, _ArgList), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureVFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _VFuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1, _TType2 _TArg2, va_list _ArgList) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureVFuncName(_Dst, 1, _TArg1, _TArg2, _ArgList), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            size_t __CRTDECL __insecure_##_FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2) \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _DeclSpec size_t __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2); \</div>
+<div class="disabled"/>                return _FuncName(_Dst, _TArg1, _TArg2); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            size_t __CRTDECL _FuncName(_T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            size_t __CRTDECL _FuncName(const _T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            size_t __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst, _TArg1, _TArg2); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            size_t __CRTDECL _FuncName(_SecureDstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                size_t _Ret = 0; \</div>
+<div class="disabled"/>                _SecureFuncName(&amp;_Ret, _Dst, _Size, _TArg1, _TArg2); \</div>
+<div class="disabled"/>                return (_Ret &gt; 0 ? (_Ret - 1) : _Ret); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            size_t __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                size_t _Ret = 0; \</div>
+<div class="disabled"/>                _SecureFuncName(&amp;_Ret, _Dst, 1, _TArg1, _TArg2); \</div>
+<div class="disabled"/>                return (_Ret &gt; 0 ? (_Ret - 1) : _Ret); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            size_t __CRTDECL __insecure_##_FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _DeclSpec size_t __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3); \</div>
+<div class="disabled"/>                return _FuncName(_Dst, _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            size_t __CRTDECL _FuncName(_T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            size_t __CRTDECL _FuncName(const _T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            size_t __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst, _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            size_t __CRTDECL _FuncName(_SecureDstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                size_t _Ret = 0; \</div>
+<div class="disabled"/>                _SecureFuncName(&amp;_Ret, _Dst, _Size, _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>                return (_Ret &gt; 0 ? (_Ret - 1) : _Ret); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            size_t __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                size_t _Ret = 0; \</div>
+<div class="disabled"/>                _SecureFuncName(&amp;_Ret, _Dst, 1, _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>                return (_Ret &gt; 0 ? (_Ret - 1) : _Ret); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_DstType *_Dst)</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst) \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst)); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst)); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_DstType * &amp;_Dst) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SecureDstType (&amp;_Dst)[_Size]) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, _Size), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1]) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, 1), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_DstType *_Dst, _TType1 _TArg1)</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst, _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst, _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_DstType * &amp;_Dst, _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst, _TArg1); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SecureDstType (&amp;_Dst)[_Size], _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, _Size, _TArg1), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, 1, _TArg1), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2)</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst, _TArg1, _TArg2); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SecureDstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, _Size, _TArg1, _TArg2), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1, _TType2 _TArg2) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, 1, _TArg1, _TArg2), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>            __inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL __insecure_##_FuncName(_DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3)</div>
+
+<div class="disabled"/>        #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>            extern &quot;C++&quot; \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;typename _T&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(const _T &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(static_cast&lt;_DstType *&gt;(_Dst), _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SalAttributeDst _DstType * &amp;_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                return __insecure_##_FuncName(_Dst, _TArg1, _TArg2, _TArg3); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;size_t _Size&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName(_SecureDstType (&amp;_Dst)[_Size], _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, _Size, _TArg1, _TArg2, _TArg3), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            template &lt;&gt; \</div>
+<div class="disabled"/>            inline \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>            _ReturnType __CRTDECL _FuncName&lt;1&gt;(_DstType (&amp;_Dst)[1], _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3) _CRT_SECURE_CPP_NOTHROW \</div>
+<div class="disabled"/>            { \</div>
+<div class="disabled"/>                _ReturnPolicy(_SecureFuncName(_Dst, 1, _TArg1, _TArg2, _TArg3), _Dst); \</div>
+<div class="disabled"/>            } \</div>
+<div class="disabled"/>            }</div>
+
+<div class="disabled"/>        #if _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_0_CGETS(_ReturnType, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0_CGETS(_ReturnType, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_4_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_4_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_1_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_2_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _HType2, _HArg2, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_2_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _HType2, _HArg2, _SalAttributeDst, _DstType, _Dst)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _SecureFuncName, _VFuncName, _SecureVFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _SecureFuncName, _VFuncName, _SecureVFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_ARGLIST(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _VFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_ARGLIST(_ReturnType, _ReturnPolicy, _DeclSpec, __cdecl, _FuncName, _VFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _VFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _VFuncName, _VFuncName##_s, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst) \</div>
+<div class="disabled"/>                __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType _DstType, _Dst)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+
+<div class="disabled"/>        #else // ^^^ _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT ^^^ // vvv _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT vvv //</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>                    _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_0_GETS(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _DstType, _Dst) \</div>
+<div class="disabled"/>                    _CRT_INSECURE_DEPRECATE(_FuncName##_s) _DeclSpec _ReturnType __cdecl _FuncName(_DstType *_Dst);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_4_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4, _TArg4) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3, _TType4 _TArg4);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_1_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_HType1 _HArg1, _SalAttributeDst _DstType *_Dst, _TType1 _TArg1);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_2_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _HType2, _HArg2, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_HType1 _HArg1, _HType2 _HArg2, _SalAttributeDst _DstType *_Dst);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _SecureFuncName,_VFuncName, _SecureVFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType _CC _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, ...); \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureVFuncName) _DeclSpec _ReturnType _CC _VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, va_list _Args);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_ARGLIST(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _VFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_FuncName##_s) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, ...); \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_VFuncName##_s) _DeclSpec _ReturnType __cdecl _VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, va_list _Args);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _VFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_FuncName##_s) _DeclSpec _ReturnType _CC _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, ...); \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_VFuncName##_s) _DeclSpec _ReturnType _CC _VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, va_list _Args);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec size_t __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec size_t __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3);</div>
+
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst, _TType1 _TArg1)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+
+<div class="disabled"/>        #endif // !_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT</div>
+
+<div class="disabled"/>    #else  // ^^^ _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES ^^^ // vvv !_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES vvv //</div>
+
+<div class="disabled"/>        #define __RETURN_POLICY_SAME(_FunctionCall)</div>
+<div class="disabled"/>        #define __RETURN_POLICY_DST(_FunctionCall)</div>
+<div class="disabled"/>        #define __RETURN_POLICY_VOID(_FunctionCall)</div>
+<div class="disabled"/>        #define __EMPTY_DECLSPEC</div>
+
+<div class="disabled"/>        #if _CRT_FUNCTIONS_REQUIRED</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0_CGETS(_ReturnType, _DeclSpec, _FuncName, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_FuncName##_s) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_4_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4, _TArg4) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3, _TType4 _TArg4);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_HType1 _HArg1, _SalAttributeDst _DstType *_Dst, _TType1 _TArg1);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_2_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _HType2, _HArg2, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_HType1 _HArg1, _HType2 _HArg2, _SalAttributeDst _DstType *_Dst);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _SecureFuncName, _VFuncName, _SecureVFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType _CC _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, ...); \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureVFuncName) _DeclSpec _ReturnType _CC _VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, va_list _Args);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _VFuncName, _SecureVFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_FuncName##_s) _DeclSpec _ReturnType _CC _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, ...); \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureVFuncName) _DeclSpec _ReturnType _CC _VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, va_list _Args);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec size_t __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec size_t __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_0_GETS(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _DstType, _Dst) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_FuncName##_s) _DeclSpec _ReturnType __cdecl _FuncName(_DstType *_Dst);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_4_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3, _TType4, _TArg4) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3, _TType4 _TArg4);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_1_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_HType1 _HArg1, _SalAttributeDst _DstType *_Dst, _TType1 _TArg1);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_2_0_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _SecureFuncName, _HType1, _HArg1, _HType2, _HArg2, _SalAttributeDst, _DstType, _Dst) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_HType1 _HArg1, _HType2 _HArg2, _SalAttributeDst _DstType *_Dst);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _SecureFuncName, _VFuncName, _SecureVFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType _CC _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, ...); \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureVFuncName) _DeclSpec _ReturnType _CC _VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, va_list _Args);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_ARGLIST(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _VFuncName, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_FuncName##_s) _DeclSpec _ReturnType __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, ...); \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_VFuncName##_s) _DeclSpec _ReturnType __cdecl _VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, va_list _Args);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_ARGLIST_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _CC, _FuncName, _VFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_FuncName##_s) _DeclSpec _ReturnType _CC _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, ...); \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_VFuncName##_s) _DeclSpec _ReturnType _CC _VFuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, va_list _Args);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec size_t __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2);</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3_SIZE_EX(_DeclSpec, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec size_t __cdecl _FuncName(_SalAttributeDst _DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3);</div>
+
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst, _TType1 _TArg1)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_0_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst, _TType1 _TArg1)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_1_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_2_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2)</div>
+
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3) \</div>
+<div class="disabled"/>                _CRT_INSECURE_DEPRECATE(_SecureFuncName) \</div>
+<div class="disabled"/>                __inline \</div>
+<div class="disabled"/>                _ReturnType __CRTDECL _FuncName(_DstType *_Dst, _TType1 _TArg1, _TType2 _TArg2, _TType3 _TArg3)</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_3_EX(_ReturnType, _ReturnPolicy, _FuncName, _SecureFuncName, _SecureDstType, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1, _TType2, _TArg2, _TType3, _TArg3)</div>
+
+<div class="disabled"/>        #else // ^^^ _CRT_FUNCTIONS_REQUIRED ^^^ // vvv !_CRT_FUNCTIONS_REQUIRED vvv //</div>
+
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0_CGETS(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_4_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_2_0_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_ARGLIST_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_ARGLIST_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_2_SIZE_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_3_SIZE_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_0_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_0_GETS(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_4_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_1_1_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_2_0_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_1_ARGLIST_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_ARGLIST(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_ARGLIST_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_SIZE_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_3_SIZE_EX(...)</div>
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_0_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_0_EX(...)</div>
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_1_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_1_EX(...)</div>
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_2_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_2_EX(...)</div>
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_FUNC_0_3_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_FUNC_0_3_EX(...)</div>
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_0_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_0_EX(...)</div>
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_1_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_1_EX(...)</div>
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_2_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_2_EX(...)</div>
+<div class="disabled"/>            #define __DECLARE_CPP_OVERLOAD_INLINE_NFUNC_0_3_EX(...)</div>
+<div class="disabled"/>            #define __DEFINE_CPP_OVERLOAD_INLINE_NFUNC_0_3_EX(...)</div>
+
+<div class="disabled"/>        #endif // !_CRT_FUNCTIONS_REQUIRED
+    #endif // !_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES
+#endif</div>
+
+
+
+<div class="expandable"/><div class="disabled"/>_CRT_END_C_HEADER
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'uintptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
+        'impls': [
+            'NI$uintptr_t'
+        ],
+        'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    },
+    '_CrtEnableIf<1>::_Ty': {
+        'displayNameInHtml': '<span class="cpp_type">_CrtEnableIf<1></span>::<span class="cpp_type">_Ty</span>',
+        'impls': [],
+        'decls': []
+    },
+    '_Mbstatet': {
+        'displayNameInHtml': '<span class="cpp_type">_Mbstatet</span>',
+        'impls': [
+            'NI$_Mbstatet'
+        ],
+        'decls': []
+    },
+    '__time64_t': {
+        'displayNameInHtml': '<span class="cpp_type">__time64_t</span>',
+        'impls': [
+            'NI$__time64_t'
+        ],
+        'decls': []
+    },
+    '__crt_locale_data_public': {
+        'displayNameInHtml': '<span class="cpp_type">__crt_locale_data_public</span>',
+        'impls': [
+            'NI$__crt_locale_data_public'
+        ],
+        'decls': []
+    },
+    '__crt_locale_data': {
+        'displayNameInHtml': '<span class="cpp_type">__crt_locale_data</span>',
+        'impls': [],
+        'decls': [
+            'NF[0]$__crt_locale_data'
+        ]
+    },
+    '__crt_multibyte_data': {
+        'displayNameInHtml': '<span class="cpp_type">__crt_multibyte_data</span>',
+        'impls': [],
+        'decls': [
+            'NF[0]$__crt_multibyte_data'
+        ]
+    },
+    '__crt_locale_pointers': {
+        'displayNameInHtml': '<span class="cpp_type">__crt_locale_pointers</span>',
+        'impls': [
+            'NI$__crt_locale_pointers'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$_Mbstatet': null,
+    'NI$__time64_t': null,
+    'NI$__crt_locale_data_public': null,
+    'NI$__crt_locale_pointers': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

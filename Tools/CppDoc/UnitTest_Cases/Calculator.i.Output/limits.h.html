@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>limits.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// limits.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The C Standard Library &lt;limits.h&gt; header.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+<div class="disabled"/>#define _INC_LIMITS</div>
+
+<div class="disabled"/>#include &lt;vcruntime.h&gt;</div>
+
+<div class="expandable"/><div class="disabled"/>_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="disabled"/>#define CHAR_BIT      8         // number of bits in a char</div>
+<div class="disabled"/>#define SCHAR_MIN   (-128)      // minimum signed char value</div>
+<div class="disabled"/>#define SCHAR_MAX     127       // maximum signed char value</div>
+<div class="disabled"/>#define UCHAR_MAX     0xff      // maximum unsigned char value</div>
+
+<div class="disabled"/>#ifndef _CHAR_UNSIGNED</div>
+<div class="disabled"/>    #define CHAR_MIN    SCHAR_MIN   // mimimum char value</div>
+<div class="disabled"/>    #define CHAR_MAX    SCHAR_MAX   // maximum char value</div>
+<div class="disabled"/>#else</div>
+<div class="disabled"/>    #define CHAR_MIN    0</div>
+<div class="disabled"/>    #define CHAR_MAX    UCHAR_MAX
+#endif</div>
+
+<div class="disabled"/>#define MB_LEN_MAX    5             // max. # bytes in multibyte char</div>
+<div class="disabled"/>#define SHRT_MIN    (-32768)        // minimum (signed) short value</div>
+<div class="disabled"/>#define SHRT_MAX      32767         // maximum (signed) short value</div>
+<div class="disabled"/>#define USHRT_MAX     0xffff        // maximum unsigned short value</div>
+<div class="disabled"/>#define INT_MIN     (-2147483647 - 1) // minimum (signed) int value</div>
+<div class="disabled"/>#define INT_MAX       2147483647    // maximum (signed) int value</div>
+<div class="disabled"/>#define UINT_MAX      0xffffffff    // maximum unsigned int value</div>
+<div class="disabled"/>#define LONG_MIN    (-2147483647L - 1) // minimum (signed) long value</div>
+<div class="disabled"/>#define LONG_MAX      2147483647L   // maximum (signed) long value</div>
+<div class="disabled"/>#define ULONG_MAX     0xffffffffUL  // maximum unsigned long value</div>
+<div class="disabled"/>#define LLONG_MAX     9223372036854775807i64       // maximum signed long long int value</div>
+<div class="disabled"/>#define LLONG_MIN   (-9223372036854775807i64 - 1)  // minimum signed long long int value</div>
+<div class="disabled"/>#define ULLONG_MAX    0xffffffffffffffffui64       // maximum unsigned long long int value</div>
+
+<div class="disabled"/>#define _I8_MIN     (-127i8 - 1)    // minimum signed 8 bit value</div>
+<div class="disabled"/>#define _I8_MAX       127i8         // maximum signed 8 bit value</div>
+<div class="disabled"/>#define _UI8_MAX      0xffui8       // maximum unsigned 8 bit value</div>
+
+<div class="disabled"/>#define _I16_MIN    (-32767i16 - 1) // minimum signed 16 bit value</div>
+<div class="disabled"/>#define _I16_MAX      32767i16      // maximum signed 16 bit value</div>
+<div class="disabled"/>#define _UI16_MAX     0xffffui16    // maximum unsigned 16 bit value</div>
+
+<div class="disabled"/>#define _I32_MIN    (-2147483647i32 - 1) // minimum signed 32 bit value</div>
+<div class="disabled"/>#define _I32_MAX      2147483647i32 // maximum signed 32 bit value</div>
+<div class="disabled"/>#define _UI32_MAX     0xffffffffui32 // maximum unsigned 32 bit value</div>
+
+<div class="token cpp_comment ">// minimum signed 64 bit value</div>
+<div class="disabled"/>#define _I64_MIN    (-9223372036854775807i64 - 1)</div>
+<div class="token cpp_comment ">// maximum signed 64 bit value</div>
+<div class="disabled"/>#define _I64_MAX      9223372036854775807i64</div>
+<div class="token cpp_comment ">// maximum unsigned 64 bit value</div>
+<div class="disabled"/>#define _UI64_MAX     0xffffffffffffffffui64</div>
+
+<div class="disabled"/>#if _INTEGRAL_MAX_BITS &gt;= 128</div>
+<div class="disabled"/>    // minimum signed 128 bit value</div>
+<div class="disabled"/>    #define _I128_MIN   (-170141183460469231731687303715884105727i128 - 1)</div>
+<div class="disabled"/>    // maximum signed 128 bit value</div>
+<div class="disabled"/>    #define _I128_MAX     170141183460469231731687303715884105727i128</div>
+<div class="disabled"/>    // maximum unsigned 128 bit value</div>
+<div class="disabled"/>    #define _UI128_MAX    0xffffffffffffffffffffffffffffffffui128
+#endif</div>
+
+<div class="disabled"/>#ifndef SIZE_MAX</div>
+<div class="disabled"/>    #ifdef _WIN64</div>
+<div class="disabled"/>        #define SIZE_MAX _UI64_MAX</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define SIZE_MAX UINT_MAX
+    #endif
+#endif</div>
+
+<div class="disabled"/>#if __STDC_WANT_SECURE_LIB__</div>
+<div class="disabled"/>    #ifndef RSIZE_MAX</div>
+<div class="disabled"/>        #define RSIZE_MAX (SIZE_MAX &gt;&gt; 1)
+    #endif
+#endif</div>
+
+
+
+<div class="expandable"/><div class="disabled"/>_CRT_END_C_HEADER
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

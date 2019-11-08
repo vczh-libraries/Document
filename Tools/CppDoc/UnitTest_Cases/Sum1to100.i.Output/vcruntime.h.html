@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vcruntime.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// vcruntime.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Declarations used throughout the VCRuntime library.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Note on use of &quot;deprecate&quot;:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Various places in this header and other headers use</div>
+<div class="token cpp_comment ">// __declspec(deprecate) or macros that have the term DEPRECATE in them.</div>
+<div class="token cpp_comment ">// We use &quot;deprecate&quot; here ONLY to signal the compiler to emit a warning</div>
+<div class="token cpp_comment ">// about these items. The use of &quot;deprecate&quot; should NOT be taken to imply</div>
+<div class="token cpp_comment ">// that any standard committee has deprecated these functions from the</div>
+<div class="token cpp_comment ">// relevant standards.  In fact, these functions are NOT deprecated from</div>
+<div class="token cpp_comment ">// the standard.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Full details can be found in our documentation by searching for</div>
+<div class="token cpp_comment ">// &quot;Security Enhancements in the CRT&quot;.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled"/>#ifndef _VCRUNTIME_H</div>
+<div class="disabled"/>#define _VCRUNTIME_H</div>
+
+<div class="disabled"/>#ifndef _UCRT</div>
+<div class="disabled"/>    #define _UCRT
+#endif</div>
+
+<div class="token cpp_comment ">// The _CRTIMP macro is not used in the VCRuntime or the CoreCRT anymore, but</div>
+<div class="token cpp_comment ">// there is a lot of existing code that declares CRT functions using this macro,</div>
+<div class="token cpp_comment ">// and if we remove its definition, we break that existing code.  It is thus</div>
+<div class="token cpp_comment ">// defined here only for compatibility.</div>
+<div class="disabled"/>#ifndef _CRTIMP</div>
+<div class="disabled"/>    #define _VCRT_DEFINED_CRTIMP</div>
+<div class="disabled"/>    #if defined CRTDLL &amp;&amp; defined _CRTBLD</div>
+<div class="disabled"/>        #define _CRTIMP __declspec(dllexport)
+    #else</div>
+<div class="disabled"/>        #ifdef _DLL</div>
+<div class="disabled"/>            #define _CRTIMP __declspec(dllimport)</div>
+<div class="disabled"/>        #else</div>
+<div class="disabled"/>            #define _CRTIMP
+        #endif
+    #endif
+#endif</div>
+
+<div class="disabled"/>#include &lt;sal.h&gt;
+#include &lt;vadefs.h&gt;</div>
+
+<div class="token cpp_comment ">// All C headers have a common prologue and epilogue, to enclose the header in</div>
+<div class="token cpp_comment ">// an extern &quot;C&quot; declaration when the header is #included in a C++ translation</div>
+<div class="token cpp_comment ">// unit and to push/pop the packing.</div>
+<div class="disabled"/>#if defined __cplusplus</div>
+
+<div class="disabled"/>    #define _CRT_BEGIN_C_HEADER            \</div>
+<div class="disabled"/>        __pragma(pack(push, _CRT_PACKING)) \</div>
+<div class="disabled"/>        extern &quot;C&quot; {</div>
+
+<div class="disabled"/>    #define _CRT_END_C_HEADER \</div>
+<div class="disabled"/>        }                     \</div>
+<div class="disabled"/>        __pragma(pack(pop))</div>
+
+<div class="disabled"/>#elif defined __midl</div>
+
+<div class="disabled"/>    #define _CRT_BEGIN_C_HEADER                         \</div>
+<div class="disabled"/>        cpp_quote(&quot;__pragma(pack(push, _CRT_PACKING))&quot;) \</div>
+<div class="disabled"/>        cpp_quote(&quot;extern \&quot;C\&quot; {&quot;)</div>
+
+<div class="disabled"/>    #define _CRT_END_C_HEADER            \</div>
+<div class="disabled"/>        cpp_quote(&quot;}&quot;)                   \</div>
+<div class="disabled"/>        cpp_quote(&quot;__pragma(pack(pop))&quot;)</div>
+
+<div class="disabled"/>#else</div>
+
+<div class="disabled"/>    #define _CRT_BEGIN_C_HEADER            \</div>
+<div class="disabled"/>        __pragma(pack(push, _CRT_PACKING))</div>
+
+<div class="disabled"/>    #define _CRT_END_C_HEADER \</div>
+<div class="disabled"/>        __pragma(pack(pop))</div>
+
+<div class="disabled"/>#endif</div>
+
+<div class="expandable"/><div class="disabled"/>_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="disabled"/>#ifndef _HAS_EXCEPTIONS // Predefine as 0 to disable exceptions</div>
+<div class="disabled"/>    #ifdef _KERNEL_MODE</div>
+<div class="disabled"/>        #define _HAS_EXCEPTIONS 0</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _HAS_EXCEPTIONS 1
+    #endif /* _KERNEL_MODE */
+#endif /* _HAS_EXCEPTIONS */</div>
+
+
+
+<div class="disabled"/>#define _CRT_STRINGIZE_(x) #x</div>
+<div class="disabled"/>#define _CRT_STRINGIZE(x) _CRT_STRINGIZE_(x)</div>
+
+<div class="disabled"/>#define _CRT_WIDE_(s) L ## s</div>
+<div class="disabled"/>#define _CRT_WIDE(s) _CRT_WIDE_(s)</div>
+
+<div class="disabled"/>#define _CRT_CONCATENATE_(a, b) a ## b</div>
+<div class="disabled"/>#define _CRT_CONCATENATE(a, b)  _CRT_CONCATENATE_(a, b)</div>
+
+<div class="disabled"/>#define _CRT_UNPARENTHESIZE_(...) __VA_ARGS__</div>
+<div class="disabled"/>#define _CRT_UNPARENTHESIZE(...)  _CRT_UNPARENTHESIZE_ __VA_ARGS__</div>
+
+<div class="disabled"/>#ifndef _VCRTIMP</div>
+<div class="disabled"/>    #if defined _CRTIMP &amp;&amp; !defined _VCRT_DEFINED_CRTIMP</div>
+<div class="disabled"/>        #define _VCRTIMP _CRTIMP
+    #elif defined _VCRT_BUILD &amp;&amp; defined CRTDLL</div>
+<div class="disabled"/>        #define _VCRTIMP __declspec(dllexport)
+    #else</div>
+<div class="disabled"/>        #define _VCRTIMP
+    #endif
+#endif</div>
+
+<div class="disabled"/>#ifndef _MRTIMP</div>
+<div class="disabled"/>    #if defined MRTDLL &amp;&amp; defined _CRTBLD &amp;&amp; !defined _M_CEE_PURE</div>
+<div class="disabled"/>        #define _MRTIMP __declspec(dllexport)
+    #else</div>
+<div class="disabled"/>        #define _MRTIMP
+    #endif
+#endif</div>
+
+<div class="token cpp_comment ">// Definitions of calling conventions used code sometimes compiled as managed</div>
+<div class="disabled"/>#if defined _M_CEE_PURE || defined MRTDLL</div>
+<div class="disabled"/>    #define __CLRCALL_OR_CDECL __clrcall</div>
+<div class="disabled"/>    #define __CLR_OR_THIS_CALL __clrcall
+#else</div>
+<div class="disabled"/>    #define __CLRCALL_OR_CDECL __cdecl</div>
+<div class="disabled"/>    #define __CLR_OR_THIS_CALL
+#endif</div>
+
+<div class="disabled"/>#ifdef _M_CEE_PURE</div>
+<div class="disabled"/>    #define __CLRCALL_PURE_OR_CDECL __clrcall</div>
+<div class="disabled"/>#else</div>
+<div class="disabled"/>    #define __CLRCALL_PURE_OR_CDECL __cdecl
+#endif</div>
+
+<div class="disabled"/>#define __CRTDECL __CLRCALL_PURE_OR_CDECL</div>
+
+<div class="token cpp_comment ">// Definitions of common __declspecs</div>
+<div class="disabled"/>#define _VCRT_NOALIAS __declspec(noalias)</div>
+<div class="disabled"/>#define _VCRT_RESTRICT __declspec(restrict)</div>
+
+<div class="disabled"/>#if !defined _MSC_VER || _MSC_VER &gt;= 1900</div>
+<div class="disabled"/>    #define _VCRT_ALLOCATOR __declspec(allocator)</div>
+<div class="disabled"/>#else</div>
+<div class="disabled"/>    #define _VCRT_ALLOCATOR
+#endif</div>
+
+<div class="disabled"/>#if defined _M_CEE &amp;&amp; defined _M_X64</div>
+<div class="disabled"/>    #define _VCRT_JIT_INTRINSIC __declspec(jitintrinsic)
+#else</div>
+<div class="disabled"/>    #define _VCRT_JIT_INTRINSIC
+#endif</div>
+
+<div class="disabled"/>#ifdef __midl</div>
+<div class="disabled"/>    #define _VCRT_ALIGN(x)</div>
+<div class="disabled"/>#else</div>
+<div class="disabled"/>    #define _VCRT_ALIGN(x) __declspec(align(x))
+#endif</div>
+
+<div class="disabled"/>#ifndef _CONST_RETURN</div>
+<div class="disabled"/>    #ifdef __cplusplus</div>
+<div class="disabled"/>        #define _CRT_CONST_CORRECT_OVERLOADS</div>
+<div class="disabled"/>        #define _CONST_RETURN  const</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>      #define _CONST_RETURN
+    #endif
+#endif</div>
+
+<div class="token cpp_comment ">// For backwards compatibility</div>
+<div class="disabled"/>#define _WConst_return _CONST_RETURN</div>
+
+<div class="token cpp_comment ">// Definitions of common types</div>
+<div class="disabled"/>#ifdef _WIN64</div>
+<div class="disabled"/>    typedef unsigned __int64 size_t;</div>
+<div class="disabled"/>    typedef __int64          ptrdiff_t;</div>
+<div class="disabled"/>    typedef __int64          intptr_t;</div>
+<div class="disabled"/>#else</div>
+    <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>     <div class="def" id="NI$size_t"><div><div class="token cpp_type">size_t</div></div></div>;
+    <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div>              <div class="def" id="NI$ptrdiff_t"><div><div class="token cpp_type">ptrdiff_t</div></div></div>;
+    <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div>              <div class="def" id="NI$intptr_t"><div><div class="token cpp_type">intptr_t</div></div></div>;
+<div class="disabled"/>#endif</div>
+
+<div class="disabled"/>#if defined __cplusplus</div>
+    <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">bool</div>  <div class="def" id="NI$__vcrt_bool"><div><div class="token cpp_type">__vcrt_bool</div></div></div>;
+<div class="disabled"/>#elif defined __midl</div>
+<div class="disabled"/>    // MIDL understands neither bool nor _Bool.  Use char as a best-fit</div>
+<div class="disabled"/>    // replacement (the differences won&apos;t matter in practice).</div>
+<div class="disabled"/>    typedef char __vcrt_bool;</div>
+<div class="disabled"/>#else</div>
+<div class="disabled"/>    typedef _Bool __vcrt_bool;
+#endif</div>
+
+<div class="token cpp_comment ">// Indicate that these common types are defined</div>
+<div class="disabled"/>#ifndef _SIZE_T_DEFINED</div>
+<div class="disabled"/>    #define _SIZE_T_DEFINED
+#endif</div>
+
+<div class="disabled"/>#ifndef _PTRDIFF_T_DEFINED</div>
+<div class="disabled"/>    #define _PTRDIFF_T_DEFINED
+#endif</div>
+
+<div class="disabled"/>#ifndef _INTPTR_T_DEFINED</div>
+<div class="disabled"/>    #define _INTPTR_T_DEFINED
+#endif</div>
+
+<div class="token cpp_comment ">// Provide a typedef for wchar_t for use under /Zc:wchar_t-</div>
+<div class="disabled"/>#ifndef _WCHAR_T_DEFINED</div>
+<div class="disabled"/>    #define _WCHAR_T_DEFINED</div>
+<div class="disabled"/>    typedef unsigned short wchar_t;</div>
+<div class="disabled"/>#endif</div>
+
+<div class="disabled"/>#ifndef NULL</div>
+<div class="disabled"/>    #ifdef __cplusplus</div>
+<div class="disabled"/>        #define NULL 0</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define NULL ((void *)0)
+    #endif
+#endif</div>
+
+<div class="disabled"/>#if defined _M_X64 || defined _M_ARM || defined _M_ARM64</div>
+<div class="disabled"/>    #define _UNALIGNED __unaligned
+#else</div>
+<div class="disabled"/>    #define _UNALIGNED
+#endif</div>
+
+<div class="disabled"/>#ifdef __cplusplus</div>
+    <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div>
+    {
+        <div class="token cpp_keyword ">template</div> &lt;<div class="token cpp_keyword ">typename</div> _CountofType, <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _SizeOfArray&gt;
+<div class="expandable"/><div class="disabled"/>        char (*__countof_helper(_UNALIGNED _CountofType (&amp;_Array)[_SizeOfArray]))[_SizeOfArray];</div>
+<div class="expanded">        <div class="token cpp_keyword ">char</div> (*<div class="def" id="FB$__countof_helper[decl0]"><div><div class="token cpp_function">__countof_helper</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['__countof_helper[decl0]::_CountofType'])"><div class="token cpp_type">_CountofType</div></div> (&amp;_Array)[<div class="ref" onclick="jumpToSymbol([], ['__countof_helper[decl0]::_SizeOfArray'])">_SizeOfArray</div>]))[<div class="ref" onclick="jumpToSymbol([], ['__countof_helper[decl0]::_SizeOfArray'])">_SizeOfArray</div>];</div></div>
+
+<div class="disabled"/>        #define __crt_countof(_Array) (sizeof(*__countof_helper(_Array)) + 0)</div>
+    }
+<div class="disabled"/>#else</div>
+<div class="disabled"/>    #define __crt_countof(_Array) (sizeof(_Array) / sizeof(_Array[0]))
+#endif</div>
+
+<div class="token cpp_comment ">// See note on use of &quot;deprecate&quot; at the top of this file</div>
+<div class="disabled"/>#define _CRT_DEPRECATE_TEXT(_Text) __declspec(deprecated(_Text))</div>
+
+<div class="disabled"/>#if defined _CRT_SECURE_NO_DEPRECATE &amp;&amp; !defined _CRT_SECURE_NO_WARNINGS</div>
+<div class="disabled"/>    #define _CRT_SECURE_NO_WARNINGS
+#endif</div>
+
+<div class="disabled"/>#ifndef _CRT_INSECURE_DEPRECATE</div>
+<div class="disabled"/>    #ifdef _CRT_SECURE_NO_WARNINGS</div>
+<div class="disabled"/>        #define _CRT_INSECURE_DEPRECATE(_Replacement)</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _CRT_INSECURE_DEPRECATE(_Replacement) _CRT_DEPRECATE_TEXT(    \</div>
+<div class="disabled"/>            &quot;This function or variable may be unsafe. Consider using &quot;        \</div>
+<div class="disabled"/>            #_Replacement                                                     \</div>
+<div class="disabled"/>            &quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot; \</div>
+<div class="disabled"/>            &quot;See online help for details.&quot;)
+    #endif
+#endif</div>
+
+<div class="disabled"/>#if defined _CRT_SECURE_DEPRECATE_MEMORY &amp;&amp; !defined _CRT_SECURE_WARNINGS_MEMORY</div>
+<div class="disabled"/>    #define _CRT_SECURE_WARNINGS_MEMORY
+#endif</div>
+
+<div class="disabled"/>#ifndef _CRT_INSECURE_DEPRECATE_MEMORY</div>
+<div class="disabled"/>    #ifndef _CRT_SECURE_WARNINGS_MEMORY</div>
+<div class="disabled"/>        #define _CRT_INSECURE_DEPRECATE_MEMORY(_Replacement)</div>
+<div class="disabled"/>    #else</div>
+<div class="disabled"/>        #define _CRT_INSECURE_DEPRECATE_MEMORY(_Replacement) \</div>
+<div class="disabled"/>            _CRT_INSECURE_DEPRECATE(_Replacement)
+    #endif
+#endif</div>
+
+<div class="disabled"/>#if !defined _M_CEE &amp;&amp; !defined __midl</div>
+    <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__security_init_cookie[decl0]"><div><div class="token cpp_function">__security_init_cookie</div></div></div>(<div class="token cpp_keyword ">void</div>);
+
+<div class="disabled"/>    #ifdef _M_IX86</div>
+<div class="expandable"/><div class="disabled"/>        void __fastcall __security_check_cookie(_In_ uintptr_t _StackCookie);</div>
+<div class="expanded">        <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__fastcall</div> <div class="def" id="FB$__security_check_cookie[decl0]"><div><div class="token cpp_function">__security_check_cookie</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['uintptr_t'])"><div class="token cpp_type">uintptr_t</div></div> _StackCookie);</div></div>
+        <div class="token cpp_keyword ">__declspec</div>(noreturn) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__report_gsfailure[decl0]"><div><div class="token cpp_function">__report_gsfailure</div></div></div>(<div class="token cpp_keyword ">void</div>);
+<div class="disabled"/>    #else  /* _M_IX86 */</div>
+<div class="disabled"/>        void __cdecl __security_check_cookie(_In_ uintptr_t _StackCookie);</div>
+<div class="disabled"/>        __declspec(noreturn) void __cdecl __report_gsfailure(_In_ uintptr_t _StackCookie);
+    #endif
+#endif</div>
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['uintptr_t'])"><div class="token cpp_type">uintptr_t</div></div> <div class="def" id="NF[0]$__security_cookie"><div>__security_cookie</div></div>;
+
+<div class="disabled"/>#ifndef _VCRT_BUILD</div>
+<div class="disabled"/>    #define __vcrt_malloc_normal(_Size) malloc(_Size)</div>
+<div class="disabled"/>    #define __vcrt_calloc_normal(_Count, _Size) calloc(_Count, _Size)</div>
+<div class="disabled"/>    #define __vcrt_free_normal(_Memory) free(_Memory)
+#endif</div>
+
+<div class="expandable"/><div class="disabled"/>_CRT_END_C_HEADER</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+
+<div class="disabled"/>#endif // _VCRUNTIME_H
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'uintptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
+        'impls': [
+            'NI$uintptr_t'
+        ],
+        'decls': []
+    },
+    '__countof_helper[decl0]::_CountofType': {
+        'displayNameInHtml': '<span class="cpp_function">__countof_helper</span>::<span class="cpp_type">_CountofType</span>',
+        'impls': [],
+        'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    },
+    '__countof_helper[decl0]::_SizeOfArray': {
+        'displayNameInHtml': '<span class="cpp_function">__countof_helper</span>::_SizeOfArray',
+        'impls': [],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
+    'NI$size_t': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

@@ -6,7 +6,8 @@
 
 #UnitTest_Cases
 **/UnitTest_Cases/*.i
-**/UnitTest_Cases/*.i.Output/
+**/UnitTest_Cases/*.i.Output/*.bin
+**/UnitTest_Cases/*.i.Output/*.cpp
 
 # User-specific files
 *.suo

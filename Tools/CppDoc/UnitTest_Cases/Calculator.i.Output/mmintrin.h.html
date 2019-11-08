@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>mmintrin.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***
+*** Copyright (C) 1985-2015 Intel Corporation.  All rights reserved.
+***
+*** The information and source code contained herein is the exclusive
+*** property of Intel Corporation and may not be disclosed, examined
+*** or reproduced in whole or in part without explicit written authorization
+*** from the company.
+***
+****/</div>
+
+<div class="token cpp_comment ">/*
+ * Definitions and declarations for use with compiler intrinsics.
+ */</div>
+
+#pragma once
+<div class="disabled"/>#ifndef _MMINTRIN_H_INCLUDED</div>
+<div class="disabled"/>#define _MMINTRIN_H_INCLUDED</div>
+<div class="disabled"/>#ifndef __midl</div>
+
+<div class="disabled"/>#if !defined _M_IX86 &amp;&amp; !defined _M_X64</div>
+<div class="disabled"/>    #error This header is specific to X86 and X64 targets
+#endif</div>
+
+<div class="disabled"/>#if defined (_M_CEE_PURE)</div>
+<div class="disabled"/>        #error ERROR: MM intrinsics not supported in the pure mode!
+#else  /* defined (_M_CEE_PURE) */</div>
+
+<div class="disabled"/>#if defined __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> { <div class="token cpp_comment ">/* Begin &quot;C&quot; */</div>
+<div class="token cpp_comment ">/* Intrinsics use C name-mangling.
+ */</div>
+<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">union</div> <div class="token cpp_keyword ">__declspec</div>(intrin_type) <div class="token cpp_keyword ">__declspec</div>(align(<div class="token cpp_number ">8</div>)) <div class="def" id="NI$__m64"><div><div class="token cpp_type">__m64</div></div></div>
+{
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div>    <div class="def" id="NI$__m64::m64_u64"><div><div class="token cpp_field">m64_u64</div></div></div>;
+    <div class="token cpp_keyword ">float</div>               <div class="def" id="NI$__m64::m64_f32"><div><div class="token cpp_field">m64_f32</div></div></div>[<div class="token cpp_number ">2</div>];
+    <div class="token cpp_keyword ">__int8</div>              <div class="def" id="NI$__m64::m64_i8"><div><div class="token cpp_field">m64_i8</div></div></div>[<div class="token cpp_number ">8</div>];
+    <div class="token cpp_keyword ">__int16</div>             <div class="def" id="NI$__m64::m64_i16"><div><div class="token cpp_field">m64_i16</div></div></div>[<div class="token cpp_number ">4</div>];
+    <div class="token cpp_keyword ">__int32</div>             <div class="def" id="NI$__m64::m64_i32"><div><div class="token cpp_field">m64_i32</div></div></div>[<div class="token cpp_number ">2</div>];
+    <div class="token cpp_keyword ">__int64</div>             <div class="def" id="NI$__m64::m64_i64"><div><div class="token cpp_field">m64_i64</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int8</div>     <div class="def" id="NI$__m64::m64_u8"><div><div class="token cpp_field">m64_u8</div></div></div>[<div class="token cpp_number ">8</div>];
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int16</div>    <div class="def" id="NI$__m64::m64_u16"><div><div class="token cpp_field">m64_u16</div></div></div>[<div class="token cpp_number ">4</div>];
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int32</div>    <div class="def" id="NI$__m64::m64_u32"><div><div class="token cpp_field">m64_u32</div></div></div>[<div class="token cpp_number ">2</div>];
+} <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>;
+
+<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="token cpp_comment ">/* General support intrinsics */</div>
+<div class="token cpp_keyword ">void</div>  <div class="def" id="FB$_m_empty[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_empty'])"><div class="token cpp_function">_m_empty</div></div></div>(<div class="token cpp_keyword ">void</div>);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_from_int[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_from_int'])"><div class="token cpp_function">_m_from_int</div></div></div>(<div class="token cpp_keyword ">int</div> _I);
+<div class="token cpp_keyword ">int</div>   <div class="def" id="FB$_m_to_int[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_to_int'])"><div class="token cpp_function">_m_to_int</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_packsswb[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_packsswb'])"><div class="token cpp_function">_m_packsswb</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_packssdw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_packssdw'])"><div class="token cpp_function">_m_packssdw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_packuswb[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_packuswb'])"><div class="token cpp_function">_m_packuswb</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_punpckhbw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_punpckhbw'])"><div class="token cpp_function">_m_punpckhbw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_punpckhwd[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_punpckhwd'])"><div class="token cpp_function">_m_punpckhwd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_punpckhdq[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_punpckhdq'])"><div class="token cpp_function">_m_punpckhdq</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_punpcklbw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_punpcklbw'])"><div class="token cpp_function">_m_punpcklbw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_punpcklwd[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_punpcklwd'])"><div class="token cpp_function">_m_punpcklwd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_punpckldq[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_punpckldq'])"><div class="token cpp_function">_m_punpckldq</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+
+<div class="token cpp_comment ">/* Packed arithmetic intrinsics */</div>
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_paddb[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_paddb'])"><div class="token cpp_function">_m_paddb</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_paddw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_paddw'])"><div class="token cpp_function">_m_paddw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_paddd[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_paddd'])"><div class="token cpp_function">_m_paddd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_paddsb[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_paddsb'])"><div class="token cpp_function">_m_paddsb</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_paddsw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_paddsw'])"><div class="token cpp_function">_m_paddsw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_paddusb[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_paddusb'])"><div class="token cpp_function">_m_paddusb</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_paddusw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_paddusw'])"><div class="token cpp_function">_m_paddusw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psubb[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psubb'])"><div class="token cpp_function">_m_psubb</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psubw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psubw'])"><div class="token cpp_function">_m_psubw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psubd[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psubd'])"><div class="token cpp_function">_m_psubd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psubsb[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psubsb'])"><div class="token cpp_function">_m_psubsb</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psubsw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psubsw'])"><div class="token cpp_function">_m_psubsw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psubusb[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psubusb'])"><div class="token cpp_function">_m_psubusb</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psubusw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psubusw'])"><div class="token cpp_function">_m_psubusw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pmaddwd[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pmaddwd'])"><div class="token cpp_function">_m_pmaddwd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pmulhw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pmulhw'])"><div class="token cpp_function">_m_pmulhw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pmullw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pmullw'])"><div class="token cpp_function">_m_pmullw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+
+<div class="token cpp_comment ">/* Shift intrinsics */</div>
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psllw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psllw'])"><div class="token cpp_function">_m_psllw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psllwi[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psllwi'])"><div class="token cpp_function">_m_psllwi</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="token cpp_keyword ">int</div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pslld[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pslld'])"><div class="token cpp_function">_m_pslld</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pslldi[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pslldi'])"><div class="token cpp_function">_m_pslldi</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="token cpp_keyword ">int</div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psllq[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psllq'])"><div class="token cpp_function">_m_psllq</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psllqi[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psllqi'])"><div class="token cpp_function">_m_psllqi</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="token cpp_keyword ">int</div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psraw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psraw'])"><div class="token cpp_function">_m_psraw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psrawi[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psrawi'])"><div class="token cpp_function">_m_psrawi</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="token cpp_keyword ">int</div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psrad[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psrad'])"><div class="token cpp_function">_m_psrad</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psradi[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psradi'])"><div class="token cpp_function">_m_psradi</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="token cpp_keyword ">int</div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psrlw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psrlw'])"><div class="token cpp_function">_m_psrlw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psrlwi[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psrlwi'])"><div class="token cpp_function">_m_psrlwi</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="token cpp_keyword ">int</div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psrld[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psrld'])"><div class="token cpp_function">_m_psrld</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psrldi[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psrldi'])"><div class="token cpp_function">_m_psrldi</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="token cpp_keyword ">int</div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psrlq[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psrlq'])"><div class="token cpp_function">_m_psrlq</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Count);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psrlqi[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psrlqi'])"><div class="token cpp_function">_m_psrlqi</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _M, <div class="token cpp_keyword ">int</div> _Count);
+
+<div class="token cpp_comment ">/* Logical intrinsics */</div>
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pand[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pand'])"><div class="token cpp_function">_m_pand</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pandn[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pandn'])"><div class="token cpp_function">_m_pandn</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_por[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_por'])"><div class="token cpp_function">_m_por</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pxor[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pxor'])"><div class="token cpp_function">_m_pxor</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+
+<div class="token cpp_comment ">/* Comparison intrinsics */</div>
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pcmpeqb[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pcmpeqb'])"><div class="token cpp_function">_m_pcmpeqb</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pcmpeqw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pcmpeqw'])"><div class="token cpp_function">_m_pcmpeqw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pcmpeqd[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pcmpeqd'])"><div class="token cpp_function">_m_pcmpeqd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pcmpgtb[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pcmpgtb'])"><div class="token cpp_function">_m_pcmpgtb</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pcmpgtw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pcmpgtw'])"><div class="token cpp_function">_m_pcmpgtw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pcmpgtd[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pcmpgtd'])"><div class="token cpp_function">_m_pcmpgtd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _MM2);
+
+<div class="token cpp_comment ">/* Utility intrinsics */</div>
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_setzero_si64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_setzero_si64'])"><div class="token cpp_function">_mm_setzero_si64</div></div></div>(<div class="token cpp_keyword ">void</div>);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_set_pi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set_pi32'])"><div class="token cpp_function">_mm_set_pi32</div></div></div>(<div class="token cpp_keyword ">int</div> _I1, <div class="token cpp_keyword ">int</div> _I0);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_set_pi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set_pi16'])"><div class="token cpp_function">_mm_set_pi16</div></div></div>(<div class="token cpp_keyword ">short</div> _S3, <div class="token cpp_keyword ">short</div> _S2, <div class="token cpp_keyword ">short</div> _S1, <div class="token cpp_keyword ">short</div> _S0);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_set_pi8[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set_pi8'])"><div class="token cpp_function">_mm_set_pi8</div></div></div>(<div class="token cpp_keyword ">char</div> _B7, <div class="token cpp_keyword ">char</div> _B6, <div class="token cpp_keyword ">char</div> _B5, <div class="token cpp_keyword ">char</div> _B4,
+                  <div class="token cpp_keyword ">char</div> _B3, <div class="token cpp_keyword ">char</div> _B2, <div class="token cpp_keyword ">char</div> _B1, <div class="token cpp_keyword ">char</div> _B0);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_set1_pi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set1_pi32'])"><div class="token cpp_function">_mm_set1_pi32</div></div></div>(<div class="token cpp_keyword ">int</div> _I);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_set1_pi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set1_pi16'])"><div class="token cpp_function">_mm_set1_pi16</div></div></div>(<div class="token cpp_keyword ">short</div> _S);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_set1_pi8[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set1_pi8'])"><div class="token cpp_function">_mm_set1_pi8</div></div></div>(<div class="token cpp_keyword ">char</div> _B);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_setr_pi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_setr_pi32'])"><div class="token cpp_function">_mm_setr_pi32</div></div></div>(<div class="token cpp_keyword ">int</div> _I1, <div class="token cpp_keyword ">int</div> _I0);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_setr_pi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_setr_pi16'])"><div class="token cpp_function">_mm_setr_pi16</div></div></div>(<div class="token cpp_keyword ">short</div> _S3, <div class="token cpp_keyword ">short</div> _S2, <div class="token cpp_keyword ">short</div> _S1, <div class="token cpp_keyword ">short</div> _S0);
+<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_setr_pi8[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_setr_pi8'])"><div class="token cpp_function">_mm_setr_pi8</div></div></div>(<div class="token cpp_keyword ">char</div> _B7, <div class="token cpp_keyword ">char</div> _B6, <div class="token cpp_keyword ">char</div> _B5, <div class="token cpp_keyword ">char</div> _B4,
+                   <div class="token cpp_keyword ">char</div> _B3, <div class="token cpp_keyword ">char</div> _B2, <div class="token cpp_keyword ">char</div> _B1, <div class="token cpp_keyword ">char</div> _B0);
+
+<div class="token cpp_comment ">/* Alternate intrinsic name definitions */</div>
+<div class="disabled"/>#define _mm_empty         _m_empty</div>
+<div class="disabled"/>#define _mm_cvtsi32_si64  _m_from_int</div>
+<div class="disabled"/>#define _mm_cvtsi64_si32  _m_to_int</div>
+<div class="disabled"/>#define _mm_packs_pi16    _m_packsswb</div>
+<div class="disabled"/>#define _mm_packs_pi32    _m_packssdw</div>
+<div class="disabled"/>#define _mm_packs_pu16    _m_packuswb</div>
+<div class="disabled"/>#define _mm_unpackhi_pi8  _m_punpckhbw</div>
+<div class="disabled"/>#define _mm_unpackhi_pi16 _m_punpckhwd</div>
+<div class="disabled"/>#define _mm_unpackhi_pi32 _m_punpckhdq</div>
+<div class="disabled"/>#define _mm_unpacklo_pi8  _m_punpcklbw</div>
+<div class="disabled"/>#define _mm_unpacklo_pi16 _m_punpcklwd</div>
+<div class="disabled"/>#define _mm_unpacklo_pi32 _m_punpckldq</div>
+<div class="disabled"/>#define _mm_add_pi8       _m_paddb</div>
+<div class="disabled"/>#define _mm_add_pi16      _m_paddw</div>
+<div class="disabled"/>#define _mm_add_pi32      _m_paddd</div>
+<div class="disabled"/>#define _mm_adds_pi8      _m_paddsb</div>
+<div class="disabled"/>#define _mm_adds_pi16     _m_paddsw</div>
+<div class="disabled"/>#define _mm_adds_pu8      _m_paddusb</div>
+<div class="disabled"/>#define _mm_adds_pu16     _m_paddusw</div>
+<div class="disabled"/>#define _mm_sub_pi8       _m_psubb</div>
+<div class="disabled"/>#define _mm_sub_pi16      _m_psubw</div>
+<div class="disabled"/>#define _mm_sub_pi32      _m_psubd</div>
+<div class="disabled"/>#define _mm_subs_pi8      _m_psubsb</div>
+<div class="disabled"/>#define _mm_subs_pi16     _m_psubsw</div>
+<div class="disabled"/>#define _mm_subs_pu8      _m_psubusb</div>
+<div class="disabled"/>#define _mm_subs_pu16     _m_psubusw</div>
+<div class="disabled"/>#define _mm_madd_pi16     _m_pmaddwd</div>
+<div class="disabled"/>#define _mm_mulhi_pi16    _m_pmulhw</div>
+<div class="disabled"/>#define _mm_mullo_pi16    _m_pmullw</div>
+<div class="disabled"/>#define _mm_sll_pi16      _m_psllw</div>
+<div class="disabled"/>#define _mm_slli_pi16     _m_psllwi</div>
+<div class="disabled"/>#define _mm_sll_pi32      _m_pslld</div>
+<div class="disabled"/>#define _mm_slli_pi32     _m_pslldi</div>
+<div class="disabled"/>#define _mm_sll_si64      _m_psllq</div>
+<div class="disabled"/>#define _mm_slli_si64     _m_psllqi</div>
+<div class="disabled"/>#define _mm_sra_pi16      _m_psraw</div>
+<div class="disabled"/>#define _mm_srai_pi16     _m_psrawi</div>
+<div class="disabled"/>#define _mm_sra_pi32      _m_psrad</div>
+<div class="disabled"/>#define _mm_srai_pi32     _m_psradi</div>
+<div class="disabled"/>#define _mm_srl_pi16      _m_psrlw</div>
+<div class="disabled"/>#define _mm_srli_pi16     _m_psrlwi</div>
+<div class="disabled"/>#define _mm_srl_pi32      _m_psrld</div>
+<div class="disabled"/>#define _mm_srli_pi32     _m_psrldi</div>
+<div class="disabled"/>#define _mm_srl_si64      _m_psrlq</div>
+<div class="disabled"/>#define _mm_srli_si64     _m_psrlqi</div>
+<div class="disabled"/>#define _mm_and_si64      _m_pand</div>
+<div class="disabled"/>#define _mm_andnot_si64   _m_pandn</div>
+<div class="disabled"/>#define _mm_or_si64       _m_por</div>
+<div class="disabled"/>#define _mm_xor_si64      _m_pxor</div>
+<div class="disabled"/>#define _mm_cmpeq_pi8     _m_pcmpeqb</div>
+<div class="disabled"/>#define _mm_cmpeq_pi16    _m_pcmpeqw</div>
+<div class="disabled"/>#define _mm_cmpeq_pi32    _m_pcmpeqd</div>
+<div class="disabled"/>#define _mm_cmpgt_pi8     _m_pcmpgtb</div>
+<div class="disabled"/>#define _mm_cmpgt_pi16    _m_pcmpgtw</div>
+<div class="disabled"/>#define _mm_cmpgt_pi32    _m_pcmpgtd
+#endif // defined(_M_IX86)</div>
+
+<div class="disabled"/>#if defined __cplusplus</div>
+}; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
+<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+
+<div class="disabled"/>#endif  /* defined (_M_CEE_PURE) */
+#endif  /* __midl */
+#endif  /* _MMINTRIN_H_INCLUDED */
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '_m_empty': {
+        'displayNameInHtml': '_m_empty()',
+        'impls': [],
+        'decls': [
+            'FB$_m_empty[decl0]',
+            'FB$_m_empty[decl1]'
+        ]
+    },
+    '__m64': {
+        'displayNameInHtml': '<span class="cpp_type">__m64</span>',
+        'impls': [
+            'NI$__m64'
+        ],
+        'decls': []
+    },
+    '_m_packssdw': {
+        'displayNameInHtml': '_m_packssdw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_packssdw[decl0]',
+            'FB$_m_packssdw[decl1]'
+        ]
+    },
+    '_m_paddb': {
+        'displayNameInHtml': '_m_paddb(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_paddb[decl0]',
+            'FB$_m_paddb[decl1]'
+        ]
+    },
+    '_m_paddd': {
+        'displayNameInHtml': '_m_paddd(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_paddd[decl0]',
+            'FB$_m_paddd[decl1]'
+        ]
+    },
+    '_m_punpckhbw': {
+        'displayNameInHtml': '_m_punpckhbw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_punpckhbw[decl0]',
+            'FB$_m_punpckhbw[decl1]'
+        ]
+    },
+    '_m_from_int': {
+        'displayNameInHtml': '_m_from_int(<span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_from_int[decl0]',
+            'FB$_m_from_int[decl1]'
+        ]
+    },
+    '_m_paddw': {
+        'displayNameInHtml': '_m_paddw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_paddw[decl0]',
+            'FB$_m_paddw[decl1]'
+        ]
+    },
+    '_m_paddsb': {
+        'displayNameInHtml': '_m_paddsb(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_paddsb[decl0]',
+            'FB$_m_paddsb[decl1]'
+        ]
+    },
+    '_m_packsswb': {
+        'displayNameInHtml': '_m_packsswb(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_packsswb[decl0]',
+            'FB$_m_packsswb[decl1]'
+        ]
+    },
+    '_m_punpcklbw': {
+        'displayNameInHtml': '_m_punpcklbw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_punpcklbw[decl0]',
+            'FB$_m_punpcklbw[decl1]'
+        ]
+    },
+    '_m_punpckldq': {
+        'displayNameInHtml': '_m_punpckldq(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_punpckldq[decl0]',
+            'FB$_m_punpckldq[decl1]'
+        ]
+    },
+    '_m_packuswb': {
+        'displayNameInHtml': '_m_packuswb(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_packuswb[decl0]',
+            'FB$_m_packuswb[decl1]'
+        ]
+    },
+    '_m_punpckhwd': {
+        'displayNameInHtml': '_m_punpckhwd(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_punpckhwd[decl0]',
+            'FB$_m_punpckhwd[decl1]'
+        ]
+    },
+    '_m_punpckhdq': {
+        'displayNameInHtml': '_m_punpckhdq(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_punpckhdq[decl0]',
+            'FB$_m_punpckhdq[decl1]'
+        ]
+    },
+    '_m_punpcklwd': {
+        'displayNameInHtml': '_m_punpcklwd(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_punpcklwd[decl0]',
+            'FB$_m_punpcklwd[decl1]'
+        ]
+    },
+    '_m_to_int': {
+        'displayNameInHtml': '_m_to_int(<span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_to_int[decl0]',
+            'FB$_m_to_int[decl1]'
+        ]
+    },
+    '_m_psllw': {
+        'displayNameInHtml': '_m_psllw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psllw[decl0]',
+            'FB$_m_psllw[decl1]'
+        ]
+    },
+    '_m_psubusb': {
+        'displayNameInHtml': '_m_psubusb(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psubusb[decl0]',
+            'FB$_m_psubusb[decl1]'
+        ]
+    },
+    '_m_psubsw': {
+        'displayNameInHtml': '_m_psubsw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psubsw[decl0]',
+            'FB$_m_psubsw[decl1]'
+        ]
+    },
+    '_m_pmaddwd': {
+        'displayNameInHtml': '_m_pmaddwd(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pmaddwd[decl0]',
+            'FB$_m_pmaddwd[decl1]'
+        ]
+    },
+    '_m_psubw': {
+        'displayNameInHtml': '_m_psubw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psubw[decl0]',
+            'FB$_m_psubw[decl1]'
+        ]
+    },
+    '_m_paddusw': {
+        'displayNameInHtml': '_m_paddusw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_paddusw[decl0]',
+            'FB$_m_paddusw[decl1]'
+        ]
+    },
+    '_m_psubusw': {
+        'displayNameInHtml': '_m_psubusw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psubusw[decl0]',
+            'FB$_m_psubusw[decl1]'
+        ]
+    },
+    '_m_psubsb': {
+        'displayNameInHtml': '_m_psubsb(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psubsb[decl0]',
+            'FB$_m_psubsb[decl1]'
+        ]
+    },
+    '_m_paddusb': {
+        'displayNameInHtml': '_m_paddusb(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_paddusb[decl0]',
+            'FB$_m_paddusb[decl1]'
+        ]
+    },
+    '_m_pmullw': {
+        'displayNameInHtml': '_m_pmullw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pmullw[decl0]',
+            'FB$_m_pmullw[decl1]'
+        ]
+    },
+    '_m_psllwi': {
+        'displayNameInHtml': '_m_psllwi(<span class="cpp_type">__m64</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psllwi[decl0]',
+            'FB$_m_psllwi[decl1]'
+        ]
+    },
+    '_m_pslld': {
+        'displayNameInHtml': '_m_pslld(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pslld[decl0]',
+            'FB$_m_pslld[decl1]'
+        ]
+    },
+    '_m_psubd': {
+        'displayNameInHtml': '_m_psubd(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psubd[decl0]',
+            'FB$_m_psubd[decl1]'
+        ]
+    },
+    '_m_pmulhw': {
+        'displayNameInHtml': '_m_pmulhw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pmulhw[decl0]',
+            'FB$_m_pmulhw[decl1]'
+        ]
+    },
+    '_m_paddsw': {
+        'displayNameInHtml': '_m_paddsw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_paddsw[decl0]',
+            'FB$_m_paddsw[decl1]'
+        ]
+    },
+    '_m_psubb': {
+        'displayNameInHtml': '_m_psubb(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psubb[decl0]',
+            'FB$_m_psubb[decl1]'
+        ]
+    },
+    '_m_psrlwi': {
+        'displayNameInHtml': '_m_psrlwi(<span class="cpp_type">__m64</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psrlwi[decl0]',
+            'FB$_m_psrlwi[decl1]'
+        ]
+    },
+    '_m_psrlq': {
+        'displayNameInHtml': '_m_psrlq(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psrlq[decl0]',
+            'FB$_m_psrlq[decl1]'
+        ]
+    },
+    '_m_psllqi': {
+        'displayNameInHtml': '_m_psllqi(<span class="cpp_type">__m64</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psllqi[decl0]',
+            'FB$_m_psllqi[decl1]'
+        ]
+    },
+    '_m_psrawi': {
+        'displayNameInHtml': '_m_psrawi(<span class="cpp_type">__m64</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psrawi[decl0]',
+            'FB$_m_psrawi[decl1]'
+        ]
+    },
+    '_m_psrlqi': {
+        'displayNameInHtml': '_m_psrlqi(<span class="cpp_type">__m64</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psrlqi[decl0]',
+            'FB$_m_psrlqi[decl1]'
+        ]
+    },
+    '_m_psrad': {
+        'displayNameInHtml': '_m_psrad(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psrad[decl0]',
+            'FB$_m_psrad[decl1]'
+        ]
+    },
+    '_m_por': {
+        'displayNameInHtml': '_m_por(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_por[decl0]',
+            'FB$_m_por[decl1]'
+        ]
+    },
+    '_m_psllq': {
+        'displayNameInHtml': '_m_psllq(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psllq[decl0]',
+            'FB$_m_psllq[decl1]'
+        ]
+    },
+    '_m_psrlw': {
+        'displayNameInHtml': '_m_psrlw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psrlw[decl0]',
+            'FB$_m_psrlw[decl1]'
+        ]
+    },
+    '_m_pand': {
+        'displayNameInHtml': '_m_pand(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pand[decl0]',
+            'FB$_m_pand[decl1]'
+        ]
+    },
+    '_m_psradi': {
+        'displayNameInHtml': '_m_psradi(<span class="cpp_type">__m64</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psradi[decl0]',
+            'FB$_m_psradi[decl1]'
+        ]
+    },
+    '_m_pandn': {
+        'displayNameInHtml': '_m_pandn(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pandn[decl0]',
+            'FB$_m_pandn[decl1]'
+        ]
+    },
+    '_m_pslldi': {
+        'displayNameInHtml': '_m_pslldi(<span class="cpp_type">__m64</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pslldi[decl0]',
+            'FB$_m_pslldi[decl1]'
+        ]
+    },
+    '_m_psraw': {
+        'displayNameInHtml': '_m_psraw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psraw[decl0]',
+            'FB$_m_psraw[decl1]'
+        ]
+    },
+    '_m_psrld': {
+        'displayNameInHtml': '_m_psrld(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psrld[decl0]',
+            'FB$_m_psrld[decl1]'
+        ]
+    },
+    '_m_psrldi': {
+        'displayNameInHtml': '_m_psrldi(<span class="cpp_type">__m64</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_psrldi[decl0]',
+            'FB$_m_psrldi[decl1]'
+        ]
+    },
+    '_m_pxor': {
+        'displayNameInHtml': '_m_pxor(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pxor[decl0]',
+            'FB$_m_pxor[decl1]'
+        ]
+    },
+    '_mm_setr_pi32': {
+        'displayNameInHtml': '_mm_setr_pi32(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_setr_pi32[decl0]',
+            'FB$_mm_setr_pi32[decl1]'
+        ]
+    },
+    '_m_pcmpeqw': {
+        'displayNameInHtml': '_m_pcmpeqw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pcmpeqw[decl0]',
+            'FB$_m_pcmpeqw[decl1]'
+        ]
+    },
+    '_mm_setr_pi16': {
+        'displayNameInHtml': '_mm_setr_pi16(<span class="cpp_keyword">short</span>, <span class="cpp_keyword">short</span>, <span class="cpp_keyword">short</span>, <span class="cpp_keyword">short</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_setr_pi16[decl0]',
+            'FB$_mm_setr_pi16[decl1]'
+        ]
+    },
+    '_m_pcmpeqd': {
+        'displayNameInHtml': '_m_pcmpeqd(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pcmpeqd[decl0]',
+            'FB$_m_pcmpeqd[decl1]'
+        ]
+    },
+    '_m_pcmpeqb': {
+        'displayNameInHtml': '_m_pcmpeqb(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pcmpeqb[decl0]',
+            'FB$_m_pcmpeqb[decl1]'
+        ]
+    },
+    '_mm_set_pi32': {
+        'displayNameInHtml': '_mm_set_pi32(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_set_pi32[decl0]',
+            'FB$_mm_set_pi32[decl1]'
+        ]
+    },
+    '_mm_set_pi16': {
+        'displayNameInHtml': '_mm_set_pi16(<span class="cpp_keyword">short</span>, <span class="cpp_keyword">short</span>, <span class="cpp_keyword">short</span>, <span class="cpp_keyword">short</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_set_pi16[decl0]',
+            'FB$_mm_set_pi16[decl1]'
+        ]
+    },
+    '_mm_set_pi8': {
+        'displayNameInHtml': '_mm_set_pi8(<span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_set_pi8[decl0]',
+            'FB$_mm_set_pi8[decl1]'
+        ]
+    },
+    '_mm_set1_pi16': {
+        'displayNameInHtml': '_mm_set1_pi16(<span class="cpp_keyword">short</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_set1_pi16[decl0]',
+            'FB$_mm_set1_pi16[decl1]'
+        ]
+    },
+    '_mm_set1_pi8': {
+        'displayNameInHtml': '_mm_set1_pi8(<span class="cpp_keyword">char</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_set1_pi8[decl0]',
+            'FB$_mm_set1_pi8[decl1]'
+        ]
+    },
+    '_m_pcmpgtd': {
+        'displayNameInHtml': '_m_pcmpgtd(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pcmpgtd[decl0]',
+            'FB$_m_pcmpgtd[decl1]'
+        ]
+    },
+    '_mm_set1_pi32': {
+        'displayNameInHtml': '_mm_set1_pi32(<span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_set1_pi32[decl0]',
+            'FB$_mm_set1_pi32[decl1]'
+        ]
+    },
+    '_m_pcmpgtb': {
+        'displayNameInHtml': '_m_pcmpgtb(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pcmpgtb[decl0]',
+            'FB$_m_pcmpgtb[decl1]'
+        ]
+    },
+    '_mm_setzero_si64': {
+        'displayNameInHtml': '_mm_setzero_si64()',
+        'impls': [],
+        'decls': [
+            'FB$_mm_setzero_si64[decl0]',
+            'FB$_mm_setzero_si64[decl1]'
+        ]
+    },
+    '_m_pcmpgtw': {
+        'displayNameInHtml': '_m_pcmpgtw(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_m_pcmpgtw[decl0]',
+            'FB$_m_pcmpgtw[decl1]'
+        ]
+    },
+    '_mm_setr_pi8': {
+        'displayNameInHtml': '_mm_setr_pi8(<span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_setr_pi8[decl0]',
+            'FB$_mm_setr_pi8[decl1]'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$_m_empty[decl0]': null,
+    'FB$_m_empty[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'NI$__m64': null,
+    'FB$_m_packssdw[decl0]': null,
+    'FB$_m_packssdw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_paddb[decl0]': null,
+    'FB$_m_paddb[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_paddd[decl0]': null,
+    'FB$_m_paddd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_punpckhbw[decl0]': null,
+    'FB$_m_punpckhbw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_from_int[decl0]': null,
+    'FB$_m_from_int[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_paddw[decl0]': null,
+    'FB$_m_paddw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_paddsb[decl0]': null,
+    'FB$_m_paddsb[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_packsswb[decl0]': null,
+    'FB$_m_packsswb[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_punpcklbw[decl0]': null,
+    'FB$_m_punpcklbw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_punpckldq[decl0]': null,
+    'FB$_m_punpckldq[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_packuswb[decl0]': null,
+    'FB$_m_packuswb[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_punpckhwd[decl0]': null,
+    'FB$_m_punpckhwd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_punpckhdq[decl0]': null,
+    'FB$_m_punpckhdq[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_punpcklwd[decl0]': null,
+    'FB$_m_punpcklwd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_to_int[decl0]': null,
+    'FB$_m_to_int[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psllw[decl0]': null,
+    'FB$_m_psllw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psubusb[decl0]': null,
+    'FB$_m_psubusb[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psubsw[decl0]': null,
+    'FB$_m_psubsw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pmaddwd[decl0]': null,
+    'FB$_m_pmaddwd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psubw[decl0]': null,
+    'FB$_m_psubw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_paddusw[decl0]': null,
+    'FB$_m_paddusw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psubusw[decl0]': null,
+    'FB$_m_psubusw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psubsb[decl0]': null,
+    'FB$_m_psubsb[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_paddusb[decl0]': null,
+    'FB$_m_paddusb[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pmullw[decl0]': null,
+    'FB$_m_pmullw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psllwi[decl0]': null,
+    'FB$_m_psllwi[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pslld[decl0]': null,
+    'FB$_m_pslld[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psubd[decl0]': null,
+    'FB$_m_psubd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pmulhw[decl0]': null,
+    'FB$_m_pmulhw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_paddsw[decl0]': null,
+    'FB$_m_paddsw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psubb[decl0]': null,
+    'FB$_m_psubb[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psrlwi[decl0]': null,
+    'FB$_m_psrlwi[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psrlq[decl0]': null,
+    'FB$_m_psrlq[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psllqi[decl0]': null,
+    'FB$_m_psllqi[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psrawi[decl0]': null,
+    'FB$_m_psrawi[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psrlqi[decl0]': null,
+    'FB$_m_psrlqi[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psrad[decl0]': null,
+    'FB$_m_psrad[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_por[decl0]': null,
+    'FB$_m_por[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psllq[decl0]': null,
+    'FB$_m_psllq[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psrlw[decl0]': null,
+    'FB$_m_psrlw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pand[decl0]': null,
+    'FB$_m_pand[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psradi[decl0]': null,
+    'FB$_m_psradi[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pandn[decl0]': null,
+    'FB$_m_pandn[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pslldi[decl0]': null,
+    'FB$_m_pslldi[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psraw[decl0]': null,
+    'FB$_m_psraw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psrld[decl0]': null,
+    'FB$_m_psrld[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_psrldi[decl0]': null,
+    'FB$_m_psrldi[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pxor[decl0]': null,
+    'FB$_m_pxor[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_setr_pi32[decl0]': null,
+    'FB$_mm_setr_pi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pcmpeqw[decl0]': null,
+    'FB$_m_pcmpeqw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_setr_pi16[decl0]': null,
+    'FB$_mm_setr_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pcmpeqd[decl0]': null,
+    'FB$_m_pcmpeqd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pcmpeqb[decl0]': null,
+    'FB$_m_pcmpeqb[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_set_pi32[decl0]': null,
+    'FB$_mm_set_pi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_set_pi16[decl0]': null,
+    'FB$_mm_set_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_set_pi8[decl0]': null,
+    'FB$_mm_set_pi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_set1_pi16[decl0]': null,
+    'FB$_mm_set1_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_set1_pi8[decl0]': null,
+    'FB$_mm_set1_pi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pcmpgtd[decl0]': null,
+    'FB$_m_pcmpgtd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_set1_pi32[decl0]': null,
+    'FB$_mm_set1_pi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pcmpgtb[decl0]': null,
+    'FB$_m_pcmpgtb[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_setzero_si64[decl0]': null,
+    'FB$_mm_setzero_si64[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_m_pcmpgtw[decl0]': null,
+    'FB$_m_pcmpgtw[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_setr_pi8[decl0]': null,
+    'FB$_mm_setr_pi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>
