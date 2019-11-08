@@ -23,6 +23,8 @@ struct TokenSkipping
 	vint											columnUntil = -1;
 };
 
+extern void											ReadMappingFile(FilePath pathMapping, Array<TokenSkipping>& mapping);
+extern void											WriteMappingFile(FilePath pathMapping, List<TokenSkipping>& mapping);
 extern void											PreprocessedFileToCompactCodeAndMapping(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath pathPreprocessed, FilePath pathOutput, FilePath pathMapping);
 
 /***********************************************************************
@@ -36,15 +38,8 @@ struct IndexToken
 	vint											rowEnd;
 	vint											columnEnd;
 
-	static vint Compare(const IndexToken& a, const IndexToken& b)
-	{
-		vint result;
-		if ((result = a.rowStart - b.rowStart) != 0) return result;
-		if ((result = a.columnStart - b.columnStart) != 0) return result;
-		if ((result = a.rowEnd - b.rowEnd) != 0) return result;
-		if ((result = a.columnEnd - b.columnEnd) != 0) return result;
-		return 0;
-	}
+	static vint										Compare(const IndexToken& a, const IndexToken& b);
+	static IndexToken								GetToken(CppName& name);
 
 	bool operator <  (const IndexToken& k)const { return Compare(*this, k) < 0; }
 	bool operator <= (const IndexToken& k)const { return Compare(*this, k) <= 0; }
@@ -52,16 +47,6 @@ struct IndexToken
 	bool operator >= (const IndexToken& k)const { return Compare(*this, k) >= 0; }
 	bool operator == (const IndexToken& k)const { return Compare(*this, k) == 0; }
 	bool operator != (const IndexToken& k)const { return Compare(*this, k) != 0; }
-
-	static IndexToken GetToken(CppName& name)
-	{
-		return {
-			name.nameTokens[0].rowStart,
-			name.nameTokens[0].columnStart,
-			name.nameTokens[name.tokenCount - 1].rowEnd,
-			name.nameTokens[name.tokenCount - 1].columnEnd,
-		};
-	}
 };
 
 enum class IndexReason
@@ -87,44 +72,14 @@ struct IndexResult
 class IndexRecorder : public Object, public virtual IIndexRecorder
 {
 public:
-	IndexResult&				result;
+	IndexResult&									result;
 
-	IndexRecorder(IndexResult& _result)
-		:result(_result)
-	{
-	}
+	IndexRecorder(IndexResult& _result);
 
-	void IndexInternal(CppName& name, List<Symbol*>& resolvedSymbols, IndexReason reason)
-	{
-		auto key = IndexToken::GetToken(name);
-		if (name.tokenCount > 0)
-		{
-			for (vint i = 0; i < resolvedSymbols.Count(); i++)
-			{
-				auto symbol = resolvedSymbols[i];
-				if (!result.index[(vint)reason].Contains(key, symbol))
-				{
-					result.index[(vint)reason].Add(key, symbol);
-					result.reverseIndex[(vint)reason].Add(symbol, key);
-				}
-			}
-		}
-	}
-
-	void Index(CppName& name, List<Symbol*>& resolvedSymbols)override
-	{
-		IndexInternal(name, resolvedSymbols, IndexReason::Resolved);
-	}
-
-	void IndexOverloadingResolution(CppName& name, List<Symbol*>& resolvedSymbols)override
-	{
-		IndexInternal(name, resolvedSymbols, IndexReason::OverloadedResolution);
-	}
-
-	void ExpectValueButType(CppName& name, List<Symbol*>& resolvedSymbols)override
-	{
-		IndexInternal(name, resolvedSymbols, IndexReason::NeedValueButType);
-	}
+	void											IndexInternal(CppName& name, List<Symbol*>& resolvedSymbols, IndexReason reason);
+	void											Index(CppName& name, List<Symbol*>& resolvedSymbols)override;
+	void											IndexOverloadingResolution(CppName& name, List<Symbol*>& resolvedSymbols)override;
+	void											ExpectValueButType(CppName& name, List<Symbol*>& resolvedSymbols)override;
 };
 
 /***********************************************************************
@@ -202,6 +157,8 @@ struct StreamHolder
 	{
 	}
 };
+
+extern const wchar_t*								GetSymbolDivClass(Symbol* symbol);
 
 /***********************************************************************
 Index Collecting

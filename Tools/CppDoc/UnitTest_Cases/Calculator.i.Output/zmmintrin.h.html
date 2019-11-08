@@ -5556,13 +5556,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__m256i': {
-        'displayNameInHtml': '<span class="cpp_type">__m256i</span>',
-        'impls': [
-            'NI$__m256i'
-        ],
-        'decls': []
-    },
     '__m256': {
         'displayNameInHtml': '<span class="cpp_type">__m256</span>',
         'impls': [
@@ -5574,6 +5567,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">__m256d</span>',
         'impls': [
             'NI$__m256d'
+        ],
+        'decls': []
+    },
+    '__m256i': {
+        'displayNameInHtml': '<span class="cpp_type">__m256i</span>',
+        'impls': [
+            'NI$__m256i'
         ],
         'decls': []
     },
@@ -5591,10 +5591,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__m512': {
-        'displayNameInHtml': '<span class="cpp_type">__m512</span>',
+    '__mmask16': {
+        'displayNameInHtml': '<span class="cpp_type">__mmask16</span>',
         'impls': [
-            'NI$__m512'
+            'NI$__mmask16'
+        ],
+        'decls': []
+    },
+    '__mmask64': {
+        'displayNameInHtml': '<span class="cpp_type">__mmask64</span>',
+        'impls': [
+            'NI$__mmask64'
         ],
         'decls': []
     },
@@ -5612,17 +5619,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__mmask64': {
-        'displayNameInHtml': '<span class="cpp_type">__mmask64</span>',
+    '__m512': {
+        'displayNameInHtml': '<span class="cpp_type">__m512</span>',
         'impls': [
-            'NI$__mmask64'
-        ],
-        'decls': []
-    },
-    '__mmask16': {
-        'displayNameInHtml': '<span class="cpp_type">__mmask16</span>',
-        'impls': [
-            'NI$__mmask16'
+            'NI$__m512'
         ],
         'decls': []
     }
@@ -5631,16 +5631,16 @@ symbolToFiles = {
     'NI$__m128': { 'htmlFileName': 'xmmintrin.h', 'displayName': 'xmmintrin.h' },
     'NI$__m128i': { 'htmlFileName': 'emmintrin.h', 'displayName': 'emmintrin.h' },
     'NI$__m128d': { 'htmlFileName': 'emmintrin.h', 'displayName': 'emmintrin.h' },
-    'NI$__m256i': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
     'NI$__m256': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
     'NI$__m256d': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
+    'NI$__m256i': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
     'NI$__mmask8': null,
     'NI$__m512d': null,
-    'NI$__m512': null,
+    'NI$__mmask16': null,
+    'NI$__mmask64': null,
     'NI$__mmask32': null,
     'NI$__m512i': null,
-    'NI$__mmask64': null,
-    'NI$__mmask16': null
+    'NI$__m512': null
 };
 turnOnSymbol();
 </script>

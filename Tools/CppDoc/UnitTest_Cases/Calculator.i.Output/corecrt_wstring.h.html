@@ -891,10 +891,10 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'size_t': {
-        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+    'errno_t': {
+        'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
         'impls': [
-            'NI$size_t'
+            'NI$errno_t'
         ],
         'decls': []
     },
@@ -912,32 +912,25 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'errno_t': {
-        'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
         'impls': [
-            'NI$errno_t'
+            'NI$size_t'
         ],
         'decls': []
-    },
-    'wcsrchr': {
-        'displayNameInHtml': 'wcsrchr(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$wcsrchr[decl0]'
-        ]
-    },
-    'wcsstr': {
-        'displayNameInHtml': 'wcsstr(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
-        'impls': [],
-        'decls': [
-            'FB$wcsstr[decl0]'
-        ]
     },
     'wcschr': {
         'displayNameInHtml': 'wcschr(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span>)',
         'impls': [],
         'decls': [
             'FB$wcschr[decl0]'
+        ]
+    },
+    'wcsrchr': {
+        'displayNameInHtml': 'wcsrchr(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcsrchr[decl0]'
         ]
     },
     'wcscat_s': {
@@ -947,6 +940,13 @@ referencedSymbols = {
             'FB$wcscat_s[decl0]'
         ]
     },
+    'wcsstr': {
+        'displayNameInHtml': 'wcsstr(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcsstr[decl0]'
+        ]
+    },
     'wcscpy_s': {
         'displayNameInHtml': 'wcscpy_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
         'impls': [],
@@ -954,69 +954,15 @@ referencedSymbols = {
             'FB$wcscpy_s[decl0]'
         ]
     },
-    'wcsncat_s': {
-        'displayNameInHtml': 'wcsncat_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">rsize_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$wcsncat_s[decl0]'
-        ]
-    },
-    'wcsncpy_s': {
-        'displayNameInHtml': 'wcsncpy_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">rsize_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$wcsncpy_s[decl0]'
-        ]
-    },
-    'wcscpy_s2': {
-        'displayNameInHtml': 'wcscpy_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
-        'impls': [
-            'FB$wcscpy_s2[impl0]'
-        ],
-        'decls': []
-    },
-    'wcscpy_s2[impl0]::_Source': {
-        'displayNameInHtml': '_Source',
-        'impls': [
-            'NI$wcscpy_s2[impl0]::_Source'
-        ],
-        'decls': []
-    },
-    'wcscat_s2': {
-        'displayNameInHtml': 'wcscat_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
-        'impls': [
-            'FB$wcscat_s2[impl0]'
-        ],
-        'decls': []
-    },
-    'wcscat_s2[impl0]::_Source': {
-        'displayNameInHtml': '_Source',
-        'impls': [
-            'NI$wcscat_s2[impl0]::_Source'
-        ],
-        'decls': []
-    },
-    'wcsnlen_s[impl0]::_Source': {
-        'displayNameInHtml': '_Source',
-        'impls': [
-            'NI$wcsnlen_s[impl0]::_Source'
-        ],
-        'decls': []
-    },
-    'wcscat_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">wcscat_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
     'wcscpy_s2[impl0]::_Size': {
         'displayNameInHtml': '<span class="cpp_function">wcscpy_s</span>::_Size',
         'impls': [],
         'decls': []
     },
-    'wcscpy_s2[impl0]::_Destination': {
-        'displayNameInHtml': '_Destination',
+    'wcscpy_s2': {
+        'displayNameInHtml': 'wcscpy_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
         'impls': [
-            'NI$wcscpy_s2[impl0]::_Destination'
+            'FB$wcscpy_s2[impl0]'
         ],
         'decls': []
     },
@@ -1027,6 +973,20 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'wcscpy_s2[impl0]::_Destination': {
+        'displayNameInHtml': '_Destination',
+        'impls': [
+            'NI$wcscpy_s2[impl0]::_Destination'
+        ],
+        'decls': []
+    },
+    'wcscpy_s2[impl0]::_Source': {
+        'displayNameInHtml': '_Source',
+        'impls': [
+            'NI$wcscpy_s2[impl0]::_Source'
+        ],
+        'decls': []
+    },
     'wcsnlen': {
         'displayNameInHtml': 'wcsnlen(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
@@ -1034,85 +994,43 @@ referencedSymbols = {
             'FB$wcsnlen[decl0]'
         ]
     },
-    'wcsnlen_s[impl0]::_MaxCount': {
-        'displayNameInHtml': '_MaxCount',
-        'impls': [
-            'NI$wcsnlen_s[impl0]::_MaxCount'
-        ],
-        'decls': []
-    },
-    'wcsncat_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">wcsncat_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    'wcstok2[impl0]::_String': {
-        'displayNameInHtml': '_String',
-        'impls': [
-            'NI$wcstok2[impl0]::_String'
-        ],
-        'decls': []
-    },
-    'wcstok2[impl0]::_Delimiter': {
-        'displayNameInHtml': '_Delimiter',
-        'impls': [
-            'NI$wcstok2[impl0]::_Delimiter'
-        ],
-        'decls': []
-    },
-    '_wcstok[impl0]::_String': {
-        'displayNameInHtml': '_String',
-        'impls': [
-            'NI$_wcstok[impl0]::_String'
-        ],
-        'decls': []
-    },
-    'wcsncpy_s2[impl0]::_Destination': {
-        'displayNameInHtml': '_Destination',
-        'impls': [
-            'NI$wcsncpy_s2[impl0]::_Destination'
-        ],
-        'decls': []
-    },
-    'wcsncat_s2[impl0]::_Source': {
-        'displayNameInHtml': '_Source',
-        'impls': [
-            'NI$wcsncat_s2[impl0]::_Source'
-        ],
-        'decls': []
-    },
-    'wcsncat_s2[impl0]::_Count': {
-        'displayNameInHtml': '_Count',
-        'impls': [
-            'NI$wcsncat_s2[impl0]::_Count'
-        ],
-        'decls': []
-    },
-    'wcsncpy_s2': {
-        'displayNameInHtml': 'wcsncpy_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
-        'impls': [
-            'FB$wcsncpy_s2[impl0]'
-        ],
-        'decls': []
-    },
-    'wcspbrk': {
-        'displayNameInHtml': 'wcspbrk(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+    'wcsncat_s': {
+        'displayNameInHtml': 'wcsncat_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">rsize_t</span>)',
         'impls': [],
         'decls': [
-            'FB$wcspbrk[decl0]'
+            'FB$wcsncat_s[decl0]'
         ]
     },
-    'wcsncat_s2': {
-        'displayNameInHtml': 'wcsncat_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+    'wcscat_s2': {
+        'displayNameInHtml': 'wcscat_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
         'impls': [
-            'FB$wcsncat_s2[impl0]'
+            'FB$wcscat_s2[impl0]'
         ],
         'decls': []
     },
-    'wcsncpy_s2[impl0]::_Count': {
-        'displayNameInHtml': '_Count',
+    'wcscat_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">wcscat_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    'wcscat_s2[impl0]::_Source': {
+        'displayNameInHtml': '_Source',
         'impls': [
-            'NI$wcsncpy_s2[impl0]::_Count'
+            'NI$wcscat_s2[impl0]::_Source'
+        ],
+        'decls': []
+    },
+    'wcsncpy_s': {
+        'displayNameInHtml': 'wcsncpy_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">rsize_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcsncpy_s[decl0]'
+        ]
+    },
+    'wcsnlen_s[impl0]::_Source': {
+        'displayNameInHtml': '_Source',
+        'impls': [
+            'NI$wcsnlen_s[impl0]::_Source'
         ],
         'decls': []
     },
@@ -1130,9 +1048,70 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'wcsncpy_s2[impl0]::_Count': {
+        'displayNameInHtml': '_Count',
+        'impls': [
+            'NI$wcsncpy_s2[impl0]::_Count'
+        ],
+        'decls': []
+    },
+    'wcsncat_s2': {
+        'displayNameInHtml': 'wcsncat_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$wcsncat_s2[impl0]'
+        ],
+        'decls': []
+    },
+    'wcsncpy_s2[impl0]::_Destination': {
+        'displayNameInHtml': '_Destination',
+        'impls': [
+            'NI$wcsncpy_s2[impl0]::_Destination'
+        ],
+        'decls': []
+    },
+    'wcsncat_s2[impl0]::_Source': {
+        'displayNameInHtml': '_Source',
+        'impls': [
+            'NI$wcsncat_s2[impl0]::_Source'
+        ],
+        'decls': []
+    },
+    'wcsnlen_s[impl0]::_MaxCount': {
+        'displayNameInHtml': '_MaxCount',
+        'impls': [
+            'NI$wcsnlen_s[impl0]::_MaxCount'
+        ],
+        'decls': []
+    },
+    'wcsncat_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">wcsncat_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    'wcspbrk': {
+        'displayNameInHtml': 'wcspbrk(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcspbrk[decl0]'
+        ]
+    },
+    'wcsncpy_s2': {
+        'displayNameInHtml': 'wcsncpy_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$wcsncpy_s2[impl0]'
+        ],
+        'decls': []
+    },
     'wcsncpy_s2[impl0]::_Size': {
         'displayNameInHtml': '<span class="cpp_function">wcsncpy_s</span>::_Size',
         'impls': [],
+        'decls': []
+    },
+    'wcsncat_s2[impl0]::_Count': {
+        'displayNameInHtml': '_Count',
+        'impls': [
+            'NI$wcsncat_s2[impl0]::_Count'
+        ],
         'decls': []
     },
     'wcstok': {
@@ -1142,10 +1121,10 @@ referencedSymbols = {
             'FB$wcstok[decl0]'
         ]
     },
-    'wcstok2': {
-        'displayNameInHtml': 'wcstok(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+    '_wcstok[impl0]::_String': {
+        'displayNameInHtml': '_String',
         'impls': [
-            'FB$wcstok2[impl0]'
+            'NI$_wcstok[impl0]::_String'
         ],
         'decls': []
     },
@@ -1156,8 +1135,15 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__wcserror_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">__wcserror_s</span>::_Size',
+    'wcstok2': {
+        'displayNameInHtml': 'wcstok(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$wcstok2[impl0]'
+        ],
+        'decls': []
+    },
+    '_wcsnset_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_wcsnset_s</span>::_Size',
         'impls': [],
         'decls': []
     },
@@ -1168,90 +1154,10 @@ referencedSymbols = {
             'FB$_wcsnset_s[decl0]'
         ]
     },
-    '_wcserror_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
+    'wcstok2[impl0]::_String': {
+        'displayNameInHtml': '_String',
         'impls': [
-            'NI$_wcserror_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '__wcserror_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$__wcserror_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_wcsnset_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_wcsnset_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_wcsnset_s2[impl0]::_Value': {
-        'displayNameInHtml': '_Value',
-        'impls': [
-            'NI$_wcsnset_s2[impl0]::_Value'
-        ],
-        'decls': []
-    },
-    '_wcsnset_s2[impl0]::_MaxCount': {
-        'displayNameInHtml': '_MaxCount',
-        'impls': [
-            'NI$_wcsnset_s2[impl0]::_MaxCount'
-        ],
-        'decls': []
-    },
-    '_wcserror_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_wcserror_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_wcserror_s2[impl0]::_Error': {
-        'displayNameInHtml': '_Error',
-        'impls': [
-            'NI$_wcserror_s2[impl0]::_Error'
-        ],
-        'decls': []
-    },
-    '__wcserror_s': {
-        'displayNameInHtml': '__wcserror_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
-        'impls': [],
-        'decls': [
-            'FB$__wcserror_s[decl0]'
-        ]
-    },
-    '_wcsnset_s2[impl0]::_Destination': {
-        'displayNameInHtml': '_Destination',
-        'impls': [
-            'NI$_wcsnset_s2[impl0]::_Destination'
-        ],
-        'decls': []
-    },
-    '_wcserror_s2': {
-        'displayNameInHtml': '_wcserror_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">int</span>)',
-        'impls': [
-            'FB$_wcserror_s2[impl0]'
-        ],
-        'decls': []
-    },
-    '__wcserror_s2[impl0]::_ErrorMessage': {
-        'displayNameInHtml': '_ErrorMessage',
-        'impls': [
-            'NI$__wcserror_s2[impl0]::_ErrorMessage'
-        ],
-        'decls': []
-    },
-    '__wcserror_s2': {
-        'displayNameInHtml': '__wcserror_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
-        'impls': [
-            'FB$__wcserror_s2[impl0]'
-        ],
-        'decls': []
-    },
-    '_wcsnset_s2': {
-        'displayNameInHtml': '_wcsnset_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span>, <span class="cpp_type">size_t</span>)',
-        'impls': [
-            'FB$_wcsnset_s2[impl0]'
+            'NI$wcstok2[impl0]::_String'
         ],
         'decls': []
     },
@@ -1262,12 +1168,125 @@ referencedSymbols = {
             'FB$_wcserror_s[decl0]'
         ]
     },
-    '_wcsupr_s': {
-        'displayNameInHtml': '_wcsupr_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>)',
+    '__wcserror_s': {
+        'displayNameInHtml': '__wcserror_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
         'impls': [],
         'decls': [
-            'FB$_wcsupr_s[decl0]'
+            'FB$__wcserror_s[decl0]'
         ]
+    },
+    '_wcserror_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_wcserror_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_wcserror_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_wcserror_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '__wcserror_s2[impl0]::_ErrorMessage': {
+        'displayNameInHtml': '_ErrorMessage',
+        'impls': [
+            'NI$__wcserror_s2[impl0]::_ErrorMessage'
+        ],
+        'decls': []
+    },
+    '__wcserror_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">__wcserror_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_wcserror_s2': {
+        'displayNameInHtml': '_wcserror_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">int</span>)',
+        'impls': [
+            'FB$_wcserror_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_wcserror_s2[impl0]::_Error': {
+        'displayNameInHtml': '_Error',
+        'impls': [
+            'NI$_wcserror_s2[impl0]::_Error'
+        ],
+        'decls': []
+    },
+    '__wcserror_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$__wcserror_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '__wcserror_s2': {
+        'displayNameInHtml': '__wcserror_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$__wcserror_s2[impl0]'
+        ],
+        'decls': []
+    },
+    'wcstok2[impl0]::_Delimiter': {
+        'displayNameInHtml': '_Delimiter',
+        'impls': [
+            'NI$wcstok2[impl0]::_Delimiter'
+        ],
+        'decls': []
+    },
+    '_wcslwr_s': {
+        'displayNameInHtml': '_wcslwr_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_wcslwr_s[decl0]'
+        ]
+    },
+    '_wcslwr_s_l2[impl0]::_String': {
+        'displayNameInHtml': '_String',
+        'impls': [
+            'NI$_wcslwr_s_l2[impl0]::_String'
+        ],
+        'decls': []
+    },
+    '_wcsset_s': {
+        'displayNameInHtml': '_wcsset_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">wchar_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_wcsset_s[decl0]'
+        ]
+    },
+    '_wcslwr_s_l': {
+        'displayNameInHtml': '_wcslwr_s_l(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_wcslwr_s_l[decl0]'
+        ]
+    },
+    '_wcslwr_s_l2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_wcslwr_s_l</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_wcsnset_s2[impl0]::_Destination': {
+        'displayNameInHtml': '_Destination',
+        'impls': [
+            'NI$_wcsnset_s2[impl0]::_Destination'
+        ],
+        'decls': []
+    },
+    '_wcsnset_s2': {
+        'displayNameInHtml': '_wcsnset_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span>, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$_wcsnset_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_wcsnset_s2[impl0]::_MaxCount': {
+        'displayNameInHtml': '_MaxCount',
+        'impls': [
+            'NI$_wcsnset_s2[impl0]::_MaxCount'
+        ],
+        'decls': []
     },
     '_wcsset_s2': {
         'displayNameInHtml': '_wcsset_s(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">wchar_t</span>)',
@@ -1283,17 +1302,19 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_wcsset_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_wcsset_s</span>::_Size',
-        'impls': [],
+    '_wcsset_s2[impl0]::_String': {
+        'displayNameInHtml': '_String',
+        'impls': [
+            'NI$_wcsset_s2[impl0]::_String'
+        ],
         'decls': []
     },
-    '_wcslwr_s_l': {
-        'displayNameInHtml': '_wcslwr_s_l(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_wcslwr_s_l[decl0]'
-        ]
+    '_wcslwr_s2[impl0]::_String': {
+        'displayNameInHtml': '_String',
+        'impls': [
+            'NI$_wcslwr_s2[impl0]::_String'
+        ],
+        'decls': []
     },
     '_wcslwr_s2[impl0]::_Size': {
         'displayNameInHtml': '<span class="cpp_function">_wcslwr_s</span>::_Size',
@@ -1307,43 +1328,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_wcslwr_s2[impl0]::_String': {
-        'displayNameInHtml': '_String',
+    '_wcsnset_s2[impl0]::_Value': {
+        'displayNameInHtml': '_Value',
         'impls': [
-            'NI$_wcslwr_s2[impl0]::_String'
+            'NI$_wcsnset_s2[impl0]::_Value'
         ],
         'decls': []
-    },
-    '_wcslwr_s': {
-        'displayNameInHtml': '_wcslwr_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_wcslwr_s[decl0]'
-        ]
     },
     '_wcslwr_s_l2': {
         'displayNameInHtml': '_wcslwr_s_l(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_type">_locale_t</span>)',
         'impls': [
             'FB$_wcslwr_s_l2[impl0]'
-        ],
-        'decls': []
-    },
-    '_wcslwr_s_l2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_wcslwr_s_l</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_wcsset_s': {
-        'displayNameInHtml': '_wcsset_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">wchar_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_wcsset_s[decl0]'
-        ]
-    },
-    '_wcslwr_s_l2[impl0]::_String': {
-        'displayNameInHtml': '_String',
-        'impls': [
-            'NI$_wcslwr_s_l2[impl0]::_String'
         ],
         'decls': []
     },
@@ -1354,10 +1349,29 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_wcsset_s2[impl0]::_String': {
-        'displayNameInHtml': '_String',
+    '_wcsset_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_wcsset_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_wcsupr_s': {
+        'displayNameInHtml': '_wcsupr_s(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_wcsupr_s[decl0]'
+        ]
+    },
+    '_wcsupr_s_l': {
+        'displayNameInHtml': '_wcsupr_s_l(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_wcsupr_s_l[decl0]'
+        ]
+    },
+    '_wcsupr_s_l2[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
         'impls': [
-            'NI$_wcsset_s2[impl0]::_String'
+            'NI$_wcsupr_s_l2[impl0]::_Locale'
         ],
         'decls': []
     },
@@ -1368,6 +1382,11 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_wcsupr_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_wcsupr_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
     '_wcsupr_s_l2': {
         'displayNameInHtml': '_wcsupr_s_l(<span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_type">_locale_t</span>)',
         'impls': [
@@ -1375,10 +1394,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_wcsupr_s_l2[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
+    '_wcsupr_s_l2[impl0]::_String': {
+        'displayNameInHtml': '_String',
         'impls': [
-            'NI$_wcsupr_s_l2[impl0]::_Locale'
+            'NI$_wcsupr_s_l2[impl0]::_String'
         ],
         'decls': []
     },
@@ -1389,35 +1408,9 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_wcsupr_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_wcsupr_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_wcsupr_s_l': {
-        'displayNameInHtml': '_wcsupr_s_l(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_wcsupr_s_l[decl0]'
-        ]
-    },
     '_wcsupr_s_l2[impl0]::_Size': {
         'displayNameInHtml': '<span class="cpp_function">_wcsupr_s_l</span>::_Size',
         'impls': [],
-        'decls': []
-    },
-    '_wcsupr_s_l2[impl0]::_String': {
-        'displayNameInHtml': '_String',
-        'impls': [
-            'NI$_wcsupr_s_l2[impl0]::_String'
-        ],
-        'decls': []
-    },
-    'wcsstr2[impl0]::_String': {
-        'displayNameInHtml': '_String',
-        'impls': [
-            'NI$wcsstr2[impl0]::_String'
-        ],
         'decls': []
     },
     'wcschr2[impl0]::_C': {
@@ -1441,45 +1434,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'wcsrchr2': {
-        'displayNameInHtml': 'wcsrchr(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span>)',
-        'impls': [
-            'FB$wcsrchr2[impl0]'
-        ],
-        'decls': []
-    },
-    'wcsrchr2[impl0]::_String': {
+    'wcsstr2[impl0]::_String': {
         'displayNameInHtml': '_String',
         'impls': [
-            'NI$wcsrchr2[impl0]::_String'
-        ],
-        'decls': []
-    },
-    'wcsstr2': {
-        'displayNameInHtml': 'wcsstr(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
-        'impls': [
-            'FB$wcsstr2[impl0]'
-        ],
-        'decls': []
-    },
-    'wcsrchr2[impl0]::_C': {
-        'displayNameInHtml': '_C',
-        'impls': [
-            'NI$wcsrchr2[impl0]::_C'
-        ],
-        'decls': []
-    },
-    'wcschr2[impl0]::_String': {
-        'displayNameInHtml': '_String',
-        'impls': [
-            'NI$wcschr2[impl0]::_String'
-        ],
-        'decls': []
-    },
-    'wcspbrk2[impl0]::_Control': {
-        'displayNameInHtml': '_Control',
-        'impls': [
-            'NI$wcspbrk2[impl0]::_Control'
+            'NI$wcsstr2[impl0]::_String'
         ],
         'decls': []
     },
@@ -1490,93 +1448,135 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'wcsrchr2': {
+        'displayNameInHtml': 'wcsrchr(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span>)',
+        'impls': [
+            'FB$wcsrchr2[impl0]'
+        ],
+        'decls': []
+    },
+    'wcsstr2': {
+        'displayNameInHtml': 'wcsstr(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$wcsstr2[impl0]'
+        ],
+        'decls': []
+    },
+    'wcspbrk2[impl0]::_Control': {
+        'displayNameInHtml': '_Control',
+        'impls': [
+            'NI$wcspbrk2[impl0]::_Control'
+        ],
+        'decls': []
+    },
+    'wcsrchr2[impl0]::_String': {
+        'displayNameInHtml': '_String',
+        'impls': [
+            'NI$wcsrchr2[impl0]::_String'
+        ],
+        'decls': []
+    },
+    'wcschr2[impl0]::_String': {
+        'displayNameInHtml': '_String',
+        'impls': [
+            'NI$wcschr2[impl0]::_String'
+        ],
+        'decls': []
+    },
     'wcschr2': {
         'displayNameInHtml': 'wcschr(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span>)',
         'impls': [
             'FB$wcschr2[impl0]'
         ],
         'decls': []
+    },
+    'wcsrchr2[impl0]::_C': {
+        'displayNameInHtml': '_C',
+        'impls': [
+            'NI$wcsrchr2[impl0]::_C'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
-    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'FB$wcsrchr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
-    'FB$wcsstr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
     'FB$wcschr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$wcsrchr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
     'FB$wcscat_s[decl0]': null,
+    'FB$wcsstr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
     'FB$wcscpy_s[decl0]': null,
-    'FB$wcsncat_s[decl0]': null,
-    'FB$wcsncpy_s[decl0]': null,
     'FB$wcscpy_s2[impl0]': null,
+    'NI$wcscat_s2[impl0]::_Destination': null,
+    'NI$wcscpy_s2[impl0]::_Destination': null,
     'NI$wcscpy_s2[impl0]::_Source': null,
+    'FB$wcsnlen[decl0]': null,
+    'FB$wcsncat_s[decl0]': null,
     'FB$wcscat_s2[impl0]': null,
     'NI$wcscat_s2[impl0]::_Source': null,
+    'FB$wcsncpy_s[decl0]': null,
     'NI$wcsnlen_s[impl0]::_Source': null,
-    'NI$wcscpy_s2[impl0]::_Destination': null,
-    'NI$wcscat_s2[impl0]::_Destination': null,
-    'FB$wcsnlen[decl0]': null,
-    'NI$wcsnlen_s[impl0]::_MaxCount': null,
-    'NI$wcstok2[impl0]::_String': null,
-    'NI$wcstok2[impl0]::_Delimiter': null,
-    'NI$_wcstok[impl0]::_String': null,
-    'NI$wcsncpy_s2[impl0]::_Destination': null,
-    'NI$wcsncat_s2[impl0]::_Source': null,
-    'NI$wcsncat_s2[impl0]::_Count': null,
-    'FB$wcsncpy_s2[impl0]': null,
-    'FB$wcspbrk[decl0]': null,
-    'FB$wcsncat_s2[impl0]': null,
-    'NI$wcsncpy_s2[impl0]::_Count': null,
     'NI$wcsncat_s2[impl0]::_Destination': null,
     'NI$wcsncpy_s2[impl0]::_Source': null,
+    'NI$wcsncpy_s2[impl0]::_Count': null,
+    'FB$wcsncat_s2[impl0]': null,
+    'NI$wcsncpy_s2[impl0]::_Destination': null,
+    'NI$wcsncat_s2[impl0]::_Source': null,
+    'NI$wcsnlen_s[impl0]::_MaxCount': null,
+    'FB$wcspbrk[decl0]': null,
+    'FB$wcsncpy_s2[impl0]': null,
+    'NI$wcsncat_s2[impl0]::_Count': null,
     'FB$wcstok[decl0]': null,
-    'FB$wcstok2[impl0]': null,
+    'NI$_wcstok[impl0]::_String': null,
     'NI$_wcstok[impl0]::_Delimiter': null,
+    'FB$wcstok2[impl0]': null,
     'FB$_wcsnset_s[decl0]': null,
-    'NI$_wcserror_s2[impl0]::_Buffer': null,
-    'NI$__wcserror_s2[impl0]::_Buffer': null,
-    'NI$_wcsnset_s2[impl0]::_Value': null,
-    'NI$_wcsnset_s2[impl0]::_MaxCount': null,
-    'NI$_wcserror_s2[impl0]::_Error': null,
-    'FB$__wcserror_s[decl0]': null,
-    'NI$_wcsnset_s2[impl0]::_Destination': null,
-    'FB$_wcserror_s2[impl0]': null,
-    'NI$__wcserror_s2[impl0]::_ErrorMessage': null,
-    'FB$__wcserror_s2[impl0]': null,
-    'FB$_wcsnset_s2[impl0]': null,
+    'NI$wcstok2[impl0]::_String': null,
     'FB$_wcserror_s[decl0]': null,
-    'FB$_wcsupr_s[decl0]': null,
+    'FB$__wcserror_s[decl0]': null,
+    'NI$_wcserror_s2[impl0]::_Buffer': null,
+    'NI$__wcserror_s2[impl0]::_ErrorMessage': null,
+    'FB$_wcserror_s2[impl0]': null,
+    'NI$_wcserror_s2[impl0]::_Error': null,
+    'NI$__wcserror_s2[impl0]::_Buffer': null,
+    'FB$__wcserror_s2[impl0]': null,
+    'NI$wcstok2[impl0]::_Delimiter': null,
+    'FB$_wcslwr_s[decl0]': null,
+    'NI$_wcslwr_s_l2[impl0]::_String': null,
+    'FB$_wcsset_s[decl0]': null,
+    'FB$_wcslwr_s_l[decl0]': null,
+    'NI$_wcsnset_s2[impl0]::_Destination': null,
+    'FB$_wcsnset_s2[impl0]': null,
+    'NI$_wcsnset_s2[impl0]::_MaxCount': null,
     'FB$_wcsset_s2[impl0]': null,
     'NI$_wcsset_s2[impl0]::_Value': null,
-    'FB$_wcslwr_s_l[decl0]': null,
-    'FB$_wcslwr_s2[impl0]': null,
-    'NI$_wcslwr_s2[impl0]::_String': null,
-    'FB$_wcslwr_s[decl0]': null,
-    'FB$_wcslwr_s_l2[impl0]': null,
-    'FB$_wcsset_s[decl0]': null,
-    'NI$_wcslwr_s_l2[impl0]::_String': null,
-    'NI$_wcslwr_s_l2[impl0]::_Locale': null,
     'NI$_wcsset_s2[impl0]::_String': null,
+    'NI$_wcslwr_s2[impl0]::_String': null,
+    'FB$_wcslwr_s2[impl0]': null,
+    'NI$_wcsnset_s2[impl0]::_Value': null,
+    'FB$_wcslwr_s_l2[impl0]': null,
+    'NI$_wcslwr_s_l2[impl0]::_Locale': null,
+    'FB$_wcsupr_s[decl0]': null,
+    'FB$_wcsupr_s_l[decl0]': null,
+    'NI$_wcsupr_s_l2[impl0]::_Locale': null,
     'NI$_wcsupr_s2[impl0]::_String': null,
     'FB$_wcsupr_s_l2[impl0]': null,
-    'NI$_wcsupr_s_l2[impl0]::_Locale': null,
-    'FB$_wcsupr_s2[impl0]': null,
-    'FB$_wcsupr_s_l[decl0]': null,
     'NI$_wcsupr_s_l2[impl0]::_String': null,
-    'NI$wcsstr2[impl0]::_String': null,
+    'FB$_wcsupr_s2[impl0]': null,
     'NI$wcschr2[impl0]::_C': null,
     'NI$wcspbrk2[impl0]::_String': null,
     'FB$wcspbrk2[impl0]': null,
-    'FB$wcsrchr2[impl0]': null,
-    'NI$wcsrchr2[impl0]::_String': null,
-    'FB$wcsstr2[impl0]': null,
-    'NI$wcsrchr2[impl0]::_C': null,
-    'NI$wcschr2[impl0]::_String': null,
-    'NI$wcspbrk2[impl0]::_Control': null,
+    'NI$wcsstr2[impl0]::_String': null,
     'NI$wcsstr2[impl0]::_SubStr': null,
-    'FB$wcschr2[impl0]': null
+    'FB$wcsrchr2[impl0]': null,
+    'FB$wcsstr2[impl0]': null,
+    'NI$wcspbrk2[impl0]::_Control': null,
+    'NI$wcsrchr2[impl0]::_String': null,
+    'NI$wcschr2[impl0]::_String': null,
+    'FB$wcschr2[impl0]': null,
+    'NI$wcsrchr2[impl0]::_C': null
 };
 turnOnSymbol();
 </script>

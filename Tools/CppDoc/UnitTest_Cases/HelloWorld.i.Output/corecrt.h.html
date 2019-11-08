@@ -2042,17 +2042,12 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'uintptr_t': {
-        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
-        'impls': [
-            'NI$uintptr_t'
-        ],
-        'decls': []
-    },
-    '_CrtEnableIf<1>::_Ty': {
-        'displayNameInHtml': '<span class="cpp_type">_CrtEnableIf<1></span>::<span class="cpp_type">_Ty</span>',
+    '__crt_locale_data': {
+        'displayNameInHtml': '<span class="cpp_type">__crt_locale_data</span>',
         'impls': [],
-        'decls': []
+        'decls': [
+            'NF[0]$__crt_locale_data'
+        ]
     },
     '__crt_multibyte_data': {
         'displayNameInHtml': '<span class="cpp_type">__crt_multibyte_data</span>',
@@ -2061,17 +2056,17 @@ referencedSymbols = {
             'NF[0]$__crt_multibyte_data'
         ]
     },
-    '__crt_locale_data': {
-        'displayNameInHtml': '<span class="cpp_type">__crt_locale_data</span>',
-        'impls': [],
-        'decls': [
-            'NF[0]$__crt_locale_data'
-        ]
-    },
     '__crt_locale_pointers': {
         'displayNameInHtml': '<span class="cpp_type">__crt_locale_pointers</span>',
         'impls': [
             'NI$__crt_locale_pointers'
+        ],
+        'decls': []
+    },
+    'uintptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
+        'impls': [
+            'NI$uintptr_t'
         ],
         'decls': []
     },
@@ -2082,11 +2077,9 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_Mbstatet': {
-        'displayNameInHtml': '<span class="cpp_type">_Mbstatet</span>',
-        'impls': [
-            'NI$_Mbstatet'
-        ],
+    '_CrtEnableIf<1>::_Ty': {
+        'displayNameInHtml': '<span class="cpp_type">_CrtEnableIf<1></span>::<span class="cpp_type">_Ty</span>',
+        'impls': [],
         'decls': []
     },
     '__time64_t': {
@@ -2102,15 +2095,22 @@ referencedSymbols = {
             'NI$__crt_locale_data_public'
         ],
         'decls': []
+    },
+    '_Mbstatet': {
+        'displayNameInHtml': '<span class="cpp_type">_Mbstatet</span>',
+        'impls': [
+            'NI$_Mbstatet'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
-    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
     'NI$__crt_locale_pointers': null,
+    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
     'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
-    'NI$_Mbstatet': null,
     'NI$__time64_t': null,
-    'NI$__crt_locale_data_public': null
+    'NI$__crt_locale_data_public': null,
+    'NI$_Mbstatet': null
 };
 turnOnSymbol();
 </script>

@@ -126,12 +126,12 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'rsize_t': {
-        'displayNameInHtml': '<span class="cpp_type">rsize_t</span>',
-        'impls': [
-            'NI$rsize_t'
-        ],
-        'decls': []
+    '_invalid_parameter_noinfo': {
+        'displayNameInHtml': '_invalid_parameter_noinfo()',
+        'impls': [],
+        'decls': [
+            'FB$_invalid_parameter_noinfo[decl0]'
+        ]
     },
     'errno_t': {
         'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
@@ -140,12 +140,12 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_invalid_parameter_noinfo': {
-        'displayNameInHtml': '_invalid_parameter_noinfo()',
-        'impls': [],
-        'decls': [
-            'FB$_invalid_parameter_noinfo[decl0]'
-        ]
+    'rsize_t': {
+        'displayNameInHtml': '<span class="cpp_type">rsize_t</span>',
+        'impls': [
+            'NI$rsize_t'
+        ],
+        'decls': []
     },
     '_errno': {
         'displayNameInHtml': '_errno()',
@@ -156,11 +156,11 @@ referencedSymbols = {
             'FB$_errno[decl2]'
         ]
     },
-    'memmove': {
-        'displayNameInHtml': 'memmove(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+    'memcpy': {
+        'displayNameInHtml': 'memcpy(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
         'decls': [
-            'FB$memmove[decl0]'
+            'FB$memcpy[decl0]'
         ]
     },
     'memset': {
@@ -170,17 +170,17 @@ referencedSymbols = {
             'FB$memset[decl0]'
         ]
     },
-    'memcpy': {
-        'displayNameInHtml': 'memcpy(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+    'memmove': {
+        'displayNameInHtml': 'memmove(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
         'decls': [
-            'FB$memcpy[decl0]'
+            'FB$memmove[decl0]'
         ]
     },
-    'memcpy_s[impl0]::_DestinationSize': {
-        'displayNameInHtml': '_DestinationSize',
+    'memmove_s[impl0]::_SourceSize': {
+        'displayNameInHtml': '_SourceSize',
         'impls': [
-            'NI$memcpy_s[impl0]::_DestinationSize'
+            'NI$memmove_s[impl0]::_SourceSize'
         ],
         'decls': []
     },
@@ -191,27 +191,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'memmove_s[impl0]::_DestinationSize': {
-        'displayNameInHtml': '_DestinationSize',
-        'impls': [
-            'NI$memmove_s[impl0]::_DestinationSize'
-        ],
-        'decls': []
-    },
-    'memmove_s[impl0]::_SourceSize': {
-        'displayNameInHtml': '_SourceSize',
-        'impls': [
-            'NI$memmove_s[impl0]::_SourceSize'
-        ],
-        'decls': []
-    },
-    'memmove_s[impl0]::_Source': {
-        'displayNameInHtml': '_Source',
-        'impls': [
-            'NI$memmove_s[impl0]::_Source'
-        ],
-        'decls': []
-    },
     'memcpy_s[impl0]::_SourceSize': {
         'displayNameInHtml': '_SourceSize',
         'impls': [
@@ -219,10 +198,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'memcpy_s[impl0]::_Destination': {
-        'displayNameInHtml': '_Destination',
+    'memcpy_s[impl0]::_DestinationSize': {
+        'displayNameInHtml': '_DestinationSize',
         'impls': [
-            'NI$memcpy_s[impl0]::_Destination'
+            'NI$memcpy_s[impl0]::_DestinationSize'
         ],
         'decls': []
     },
@@ -233,17 +212,24 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'memcpy_s[impl0]::_Expr_val': {
-        'displayNameInHtml': '_Expr_val',
+    'memmove_s[impl0]::_DestinationSize': {
+        'displayNameInHtml': '_DestinationSize',
         'impls': [
-            'NI$memcpy_s[impl0]::_Expr_val'
+            'NI$memmove_s[impl0]::_DestinationSize'
         ],
         'decls': []
     },
-    'memcpy_s[impl0]::_Expr_val2': {
-        'displayNameInHtml': '_Expr_val',
+    'memmove_s[impl0]::_Source': {
+        'displayNameInHtml': '_Source',
         'impls': [
-            'NI$memcpy_s[impl0]::_Expr_val2'
+            'NI$memmove_s[impl0]::_Source'
+        ],
+        'decls': []
+    },
+    'memcpy_s[impl0]::_Destination': {
+        'displayNameInHtml': '_Destination',
+        'impls': [
+            'NI$memcpy_s[impl0]::_Destination'
         ],
         'decls': []
     },
@@ -254,10 +240,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'memcpy_s[impl0]::_Expr_val3': {
+    'memmove_s[impl0]::_Expr_val2': {
         'displayNameInHtml': '_Expr_val',
         'impls': [
-            'NI$memcpy_s[impl0]::_Expr_val3'
+            'NI$memmove_s[impl0]::_Expr_val2'
         ],
         'decls': []
     },
@@ -268,38 +254,52 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'memmove_s[impl0]::_Expr_val2': {
+    'memcpy_s[impl0]::_Expr_val': {
         'displayNameInHtml': '_Expr_val',
         'impls': [
-            'NI$memmove_s[impl0]::_Expr_val2'
+            'NI$memcpy_s[impl0]::_Expr_val'
+        ],
+        'decls': []
+    },
+    'memcpy_s[impl0]::_Expr_val3': {
+        'displayNameInHtml': '_Expr_val',
+        'impls': [
+            'NI$memcpy_s[impl0]::_Expr_val3'
+        ],
+        'decls': []
+    },
+    'memcpy_s[impl0]::_Expr_val2': {
+        'displayNameInHtml': '_Expr_val',
+        'impls': [
+            'NI$memcpy_s[impl0]::_Expr_val2'
         ],
         'decls': []
     }
 };
 symbolToFiles = {
-    'NI$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'FB$_invalid_parameter_noinfo[decl0]': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'FB$_errno[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
     'FB$_errno[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
     'FB$_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
-    'FB$memmove[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
-    'FB$memset[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
     'FB$memcpy[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
-    'NI$memcpy_s[impl0]::_DestinationSize': null,
-    'NI$memcpy_s[impl0]::_Source': null,
-    'NI$memmove_s[impl0]::_DestinationSize': null,
+    'FB$memset[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$memmove[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
     'NI$memmove_s[impl0]::_SourceSize': null,
-    'NI$memmove_s[impl0]::_Source': null,
+    'NI$memcpy_s[impl0]::_Source': null,
     'NI$memcpy_s[impl0]::_SourceSize': null,
-    'NI$memcpy_s[impl0]::_Destination': null,
+    'NI$memcpy_s[impl0]::_DestinationSize': null,
     'NI$memmove_s[impl0]::_Destination': null,
-    'NI$memcpy_s[impl0]::_Expr_val': null,
-    'NI$memcpy_s[impl0]::_Expr_val2': null,
+    'NI$memmove_s[impl0]::_DestinationSize': null,
+    'NI$memmove_s[impl0]::_Source': null,
+    'NI$memcpy_s[impl0]::_Destination': null,
     'NI$memmove_s[impl0]::_Expr_val3': null,
-    'NI$memcpy_s[impl0]::_Expr_val3': null,
+    'NI$memmove_s[impl0]::_Expr_val2': null,
     'NI$memmove_s[impl0]::_Expr_val': null,
-    'NI$memmove_s[impl0]::_Expr_val2': null
+    'NI$memcpy_s[impl0]::_Expr_val': null,
+    'NI$memcpy_s[impl0]::_Expr_val3': null,
+    'NI$memcpy_s[impl0]::_Expr_val2': null
 };
 turnOnSymbol();
 </script>

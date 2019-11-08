@@ -19,6 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Collecting.cpp" />
+    <ClCompile Include="Source\Compiling.cpp" />
+    <ClCompile Include="Source\GenerateFile.cpp" />
+    <ClCompile Include="Source\GenerateFileIndex.cpp" />
+    <ClCompile Include="Source\GenerateSymbolIndex.cpp" />
+    <ClCompile Include="Source\Indexing.cpp" />
+    <ClCompile Include="Source\Preprocessing.cpp" />
     <ClCompile Include="Source\Render.cpp" />
   </ItemGroup>
   <ItemGroup>
