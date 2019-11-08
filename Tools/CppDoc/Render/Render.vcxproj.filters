@@ -48,6 +48,9 @@
     <ClCompile Include="Source\GenerateFile_SymbolToFiles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\DisplayNameInHtml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Render.h">

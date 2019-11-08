@@ -64,7 +64,7 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 	bool isRoot = false;
 	bool searchForChild = false;
 	const wchar_t* keyword = nullptr;
-	const wchar_t* tokenClass = nullptr;
+	const wchar_t* divClass = nullptr;
 	switch (context->kind)
 	{
 	case symbol_component::SymbolKind::Enum:
@@ -79,7 +79,7 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 			{
 				keyword = L"enum";
 			}
-			tokenClass = L"cpp_type";
+			divClass = L"cpp_type";
 		}
 		break;
 	case symbol_component::SymbolKind::Class:
@@ -87,7 +87,7 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 		{
 			searchForChild = true;
 			keyword = L"class";
-			tokenClass = L"cpp_type";
+			divClass = L"cpp_type";
 		}
 		break;
 	case symbol_component::SymbolKind::Struct:
@@ -95,7 +95,7 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 		{
 			searchForChild = true;
 			keyword = L"struct";
-			tokenClass = L"cpp_type";
+			divClass = L"cpp_type";
 		}
 		break;
 	case symbol_component::SymbolKind::Union:
@@ -103,18 +103,18 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 		{
 			searchForChild = true;
 			keyword = L"union";
-			tokenClass = L"cpp_type";
+			divClass = L"cpp_type";
 		}
 		break;
 	case symbol_component::SymbolKind::TypeAlias:
 		keyword = L"typedef";
-		tokenClass = L"cpp_type";
+		divClass = L"cpp_type";
 		break;
 	case symbol_component::SymbolKind::FunctionSymbol:
 		if (!context->GetAnyForwardDecl<ForwardFunctionDeclaration>()->implicitlyGeneratedMember)
 		{
 			keyword = L"function";
-			tokenClass = L"cpp_function";
+			divClass = L"cpp_function";
 		}
 		break;
 	case symbol_component::SymbolKind::Variable:
@@ -123,7 +123,7 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 		{
 			if (parent->GetImplDecl_NFb<ClassDeclaration>())
 			{
-				tokenClass = L"cpp_field";
+				divClass = L"cpp_field";
 			}
 		}
 		break;
@@ -160,14 +160,14 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 		writer.WriteString(keyword);
 		writer.WriteString(L"</div>");
 		writer.WriteChar(L' ');
-		if (tokenClass)
+		if (divClass)
 		{
 			writer.WriteString(L"<div class=\"");
-			writer.WriteString(tokenClass);
+			writer.WriteString(divClass);
 			writer.WriteString(L"\">");
 		}
 		WriteHtmlTextSingleLine(context->name, writer);
-		if (tokenClass)
+		if (divClass)
 		{
 			writer.WriteString(L"</div>");
 		}

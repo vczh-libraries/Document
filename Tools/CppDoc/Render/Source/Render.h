@@ -167,6 +167,13 @@ extern WString										HtmlTextSingleLineToString(const WString& text);
 extern void											WriteHtmlAttribute(const WString& text, StreamWriter& writer);
 
 /***********************************************************************
+HTML Display Name
+***********************************************************************/
+
+extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
+extern WString										GetTypeDisplayNameInHtml(Ptr<Type> type);
+
+/***********************************************************************
 Index Collecting
 ***********************************************************************/
 
