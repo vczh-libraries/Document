@@ -274,174 +274,155 @@ WString GetDisplayNameInHtml(Symbol* symbol)
 }
 
 /***********************************************************************
-GenerateFile
+GenerateCppCodeInHtml
 ***********************************************************************/
 
-void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, IndexResult& result, FilePath pathHtml)
+void GenerateCppCodeInHtml(Ptr<FileLinesRecord> flr, StreamWriter& writer)
 {
-	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
-	Utf8Encoder encoder;
-	EncoderStream encoderStream(fileStream, encoder);
-	StreamWriter writer(encoderStream);
+	List<WString> originalLines;
+	File(flr->filePath).ReadAllLinesByBom(originalLines);
 
-	writer.WriteLine(L"<!DOCTYPE html>");
-	writer.WriteLine(L"<html>");
-	writer.WriteLine(L"<head>");
-	writer.WriteLine(L"    <title>" + flr->filePath.GetName() + L"</title>");
-	writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
-	writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
-	writer.WriteLine(L"    <script type=\"text/javascript\" src=\"../Cpp.js\" ></script>");
-	writer.WriteLine(L"</head>");
-	writer.WriteLine(L"<body>");
-	writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
-	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
-	writer.WriteLine(L"<br>");
-	writer.WriteLine(L"<br>");
-	writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
-
+	vint originalIndex = 0;
+	vint flrIndex = 0;
+	while (originalIndex < originalLines.Count())
 	{
-		List<WString> originalLines;
-		File(flr->filePath).ReadAllLinesByBom(originalLines);
+		vint disableEnd = -1;
+		vint nextProcessingLine = -1;
+		WString embedHtmlInDisabled;
 
-		vint originalIndex = 0;
-		vint flrIndex = 0;
-		while (originalIndex < originalLines.Count())
+		if (flrIndex == flr->lines.Count())
 		{
-			vint disableEnd = -1;
-			vint nextProcessingLine = -1;
-			WString embedHtmlInDisabled;
-
-			if (flrIndex == flr->lines.Count())
+			disableEnd = originalLines.Count();
+			nextProcessingLine = disableEnd;
+		}
+		else
+		{
+			vint nextAvailable = flr->lines.Keys()[flrIndex];
+			if (originalIndex < nextAvailable)
 			{
-				disableEnd = originalLines.Count();
+				disableEnd = nextAvailable;
 				nextProcessingLine = disableEnd;
 			}
-			else
+			else if (originalIndex == nextAvailable)
 			{
-				vint nextAvailable = flr->lines.Keys()[flrIndex];
-				if (originalIndex < nextAvailable)
+				auto& currentHtmlLines = flr->lines.Values()[flrIndex++];
+				if (flrIndex == flr->lines.Count())
 				{
-					disableEnd = nextAvailable;
-					nextProcessingLine = disableEnd;
-				}
-				else if (originalIndex == nextAvailable)
-				{
-					auto& currentHtmlLines = flr->lines.Values()[flrIndex++];
-					if (flrIndex == flr->lines.Count())
-					{
-						nextProcessingLine = originalLines.Count();
-					}
-					else
-					{
-						nextProcessingLine = flr->lines.Keys()[flrIndex];
-					}
-
-					bool rawCodeMatched = (nextProcessingLine - originalIndex) >= currentHtmlLines.lineCount;
-					if (rawCodeMatched)
-					{
-						StringReader reader(WString(currentHtmlLines.rawBegin, (vint)(currentHtmlLines.rawEnd - currentHtmlLines.rawBegin)));
-						for (vint i = 0; i < currentHtmlLines.lineCount; i++)
-						{
-							if (originalLines[originalIndex + i] != reader.ReadLine())
-							{
-								rawCodeMatched = false;
-								break;
-							}
-						}
-					}
-
-					if (rawCodeMatched)
-					{
-						writer.WriteLine(currentHtmlLines.htmlCode);
-						nextProcessingLine = originalIndex + currentHtmlLines.lineCount;
-					}
-					else
-					{
-						bool allSpaces = true;
-						for (auto reading = currentHtmlLines.rawBegin; allSpaces && reading < currentHtmlLines.rawEnd; reading++)
-						{
-							switch (*reading++)
-							{
-							case L' ':
-							case L'\t':
-							case L'\r':
-							case L'\n':
-							case L'\v':
-							case L'\f':
-								break;
-							default:
-								allSpaces = false;
-							}
-						}
-
-						if (!allSpaces)
-						{
-							embedHtmlInDisabled = currentHtmlLines.htmlCode;
-						}
-						disableEnd = nextProcessingLine;
-					}
+					nextProcessingLine = originalLines.Count();
 				}
 				else
 				{
-					throw Exception(L"Too many lines are processed.");
+					nextProcessingLine = flr->lines.Keys()[flrIndex];
 				}
-			}
 
-			if (disableEnd != -1)
-			{
-				bool hasEmbeddedHtml = embedHtmlInDisabled.Length() != 0;
-				if (hasEmbeddedHtml)
+				bool rawCodeMatched = (nextProcessingLine - originalIndex) >= currentHtmlLines.lineCount;
+				if (rawCodeMatched)
 				{
-					writer.WriteString(L"<div class=\"expandable\"/>");
-				}
-				writer.WriteString(L"<div class=\"disabled\"/>");
-				for (vint i = originalIndex; i < disableEnd; i++)
-				{
-					if (i > originalIndex)
+					StringReader reader(WString(currentHtmlLines.rawBegin, (vint)(currentHtmlLines.rawEnd - currentHtmlLines.rawBegin)));
+					for (vint i = 0; i < currentHtmlLines.lineCount; i++)
 					{
-						writer.WriteLine(L"");
-					}
-					auto reading = originalLines[i].Buffer();
-					while (auto c = *reading++)
-					{
-						switch (c)
+						if (originalLines[originalIndex + i] != reader.ReadLine())
 						{
-						case L'<':
-							writer.WriteString(L"&lt;");
+							rawCodeMatched = false;
 							break;
-						case L'>':
-							writer.WriteString(L"&gt;");
-							break;
-						case L'&':
-							writer.WriteString(L"&amp;");
-							break;
-						case L'\'':
-							writer.WriteString(L"&apos;");
-							break;
-						case L'\"':
-							writer.WriteString(L"&quot;");
-							break;
-						default:
-							writer.WriteChar(c);
 						}
 					}
 				}
-				writer.WriteLine(L"</div>");
-				if (hasEmbeddedHtml)
+
+				if (rawCodeMatched)
 				{
-					writer.WriteString(L"<div class=\"expanded\">");
-					writer.WriteString(embedHtmlInDisabled);
-					writer.WriteLine(L"</div></div>");
+					writer.WriteLine(currentHtmlLines.htmlCode);
+					nextProcessingLine = originalIndex + currentHtmlLines.lineCount;
+				}
+				else
+				{
+					bool allSpaces = true;
+					for (auto reading = currentHtmlLines.rawBegin; allSpaces && reading < currentHtmlLines.rawEnd; reading++)
+					{
+						switch (*reading++)
+						{
+						case L' ':
+						case L'\t':
+						case L'\r':
+						case L'\n':
+						case L'\v':
+						case L'\f':
+							break;
+						default:
+							allSpaces = false;
+						}
+					}
+
+					if (!allSpaces)
+					{
+						embedHtmlInDisabled = currentHtmlLines.htmlCode;
+					}
+					disableEnd = nextProcessingLine;
 				}
 			}
-			originalIndex = nextProcessingLine;
+			else
+			{
+				throw Exception(L"Too many lines are processed.");
+			}
 		}
+
+		if (disableEnd != -1)
+		{
+			bool hasEmbeddedHtml = embedHtmlInDisabled.Length() != 0;
+			if (hasEmbeddedHtml)
+			{
+				writer.WriteString(L"<div class=\"expandable\"/>");
+			}
+			writer.WriteString(L"<div class=\"disabled\"/>");
+			for (vint i = originalIndex; i < disableEnd; i++)
+			{
+				if (i > originalIndex)
+				{
+					writer.WriteLine(L"");
+				}
+				auto reading = originalLines[i].Buffer();
+				while (auto c = *reading++)
+				{
+					switch (c)
+					{
+					case L'<':
+						writer.WriteString(L"&lt;");
+						break;
+					case L'>':
+						writer.WriteString(L"&gt;");
+						break;
+					case L'&':
+						writer.WriteString(L"&amp;");
+						break;
+					case L'\'':
+						writer.WriteString(L"&apos;");
+						break;
+					case L'\"':
+						writer.WriteString(L"&quot;");
+						break;
+					default:
+						writer.WriteChar(c);
+					}
+				}
+			}
+			writer.WriteLine(L"</div>");
+			if (hasEmbeddedHtml)
+			{
+				writer.WriteString(L"<div class=\"expanded\">");
+				writer.WriteString(embedHtmlInDisabled);
+				writer.WriteLine(L"</div></div>");
+			}
+		}
+		originalIndex = nextProcessingLine;
 	}
+}
 
-	writer.WriteLine(L"</div></div>");
+/***********************************************************************
+GenerateReferencedSymbols
+***********************************************************************/
 
-	writer.WriteLine(L"<script type=\"text/javascript\">");
-
+void GenerateReferencedSymbols(Ptr<FileLinesRecord> flr, StreamWriter& writer)
+{
 	writer.WriteLine(L"referencedSymbols = {");
 	for (vint i = 0; i < flr->refSymbols.Count(); i++)
 	{
@@ -545,7 +526,14 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 		}
 	}
 	writer.WriteLine(L"};");
+}
 
+/***********************************************************************
+GenerateSymbolToFiles
+***********************************************************************/
+
+void GenerateSymbolToFiles(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, StreamWriter& writer)
+{
 	writer.WriteLine(L"symbolToFiles = {");
 	bool firstFileMapping = false;
 	auto writeFileMapping = [&](const WString& prefix, Ptr<Declaration> decl)
@@ -620,6 +608,40 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 			throw UnexpectedSymbolCategoryException();
 		}
 	}
+}
+
+/***********************************************************************
+GenerateFile
+***********************************************************************/
+
+void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, IndexResult& result, FilePath pathHtml)
+{
+	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
+	Utf8Encoder encoder;
+	EncoderStream encoderStream(fileStream, encoder);
+	StreamWriter writer(encoderStream);
+
+	writer.WriteLine(L"<!DOCTYPE html>");
+	writer.WriteLine(L"<html>");
+	writer.WriteLine(L"<head>");
+	writer.WriteLine(L"    <title>" + flr->filePath.GetName() + L"</title>");
+	writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
+	writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
+	writer.WriteLine(L"    <script type=\"text/javascript\" src=\"../Cpp.js\" ></script>");
+	writer.WriteLine(L"</head>");
+	writer.WriteLine(L"<body>");
+	writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
+	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
+	writer.WriteLine(L"<br>");
+	writer.WriteLine(L"<br>");
+
+	writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
+	GenerateCppCodeInHtml(flr, writer);
+	writer.WriteLine(L"</div></div>");
+
+	writer.WriteLine(L"<script type=\"text/javascript\">");
+	GenerateReferencedSymbols(flr, writer);
+	GenerateSymbolToFiles(global, flr, writer);
 	writer.WriteLine(L"");
 	writer.WriteLine(L"};");
 	writer.WriteLine(L"turnOnSymbol();");

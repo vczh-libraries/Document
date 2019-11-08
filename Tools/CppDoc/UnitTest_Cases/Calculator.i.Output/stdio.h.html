@@ -3292,27 +3292,6 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'FILE': {
-        'displayNameInHtml': '<span class="cpp_type">FILE</span>',
-        'impls': [
-            'NI$FILE'
-        ],
-        'decls': []
-    },
-    '__acrt_iob_func': {
-        'displayNameInHtml': '__acrt_iob_func(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$__acrt_iob_func[decl0]'
-        ]
-    },
-    'errno_t': {
-        'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
-        'impls': [
-            'NI$errno_t'
-        ],
-        'decls': []
-    },
     'va_list': {
         'displayNameInHtml': '<span class="cpp_type">va_list</span>',
         'impls': [
@@ -3327,10 +3306,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_locale_t': {
-        'displayNameInHtml': '<span class="cpp_type">_locale_t</span>',
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
         'impls': [
-            'NI$_locale_t'
+            'NI$size_t'
         ],
         'decls': []
     },
@@ -3341,13 +3320,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__local_stdio_scanf_options': {
-        'displayNameInHtml': '__local_stdio_scanf_options()',
-        'impls': [
-            'FB$__local_stdio_scanf_options[impl0]'
-        ],
-        'decls': []
-    },
     'rsize_t': {
         'displayNameInHtml': '<span class="cpp_type">rsize_t</span>',
         'impls': [
@@ -3355,38 +3327,24 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'size_t': {
-        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+    '__local_stdio_scanf_options': {
+        'displayNameInHtml': '__local_stdio_scanf_options()',
         'impls': [
-            'NI$size_t'
+            'FB$__local_stdio_scanf_options[impl0]'
         ],
         'decls': []
     },
-    'fpos_t': {
-        'displayNameInHtml': '<span class="cpp_type">fpos_t</span>',
+    'errno_t': {
+        'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
         'impls': [
-            'NI$fpos_t'
+            'NI$errno_t'
         ],
         'decls': []
     },
-    'tmpnam_s': {
-        'displayNameInHtml': 'tmpnam_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">rsize_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$tmpnam_s[decl0]'
-        ]
-    },
-    'gets_s': {
-        'displayNameInHtml': 'gets_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">rsize_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$gets_s[decl0]'
-        ]
-    },
-    'gets_s2': {
-        'displayNameInHtml': 'gets_s(<span class="cpp_keyword">char</span>( &)[...])',
+    '_locale_t': {
+        'displayNameInHtml': '<span class="cpp_type">_locale_t</span>',
         'impls': [
-            'FB$gets_s2[impl0]'
+            'NI$_locale_t'
         ],
         'decls': []
     },
@@ -3397,6 +3355,11 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'gets_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">gets_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
     'perror': {
         'displayNameInHtml': 'perror(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
         'impls': [],
@@ -3405,43 +3368,234 @@ referencedSymbols = {
             'FB$perror[decl1]'
         ]
     },
-    'gets_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">gets_s</span>::_Size',
+    'gets_s2': {
+        'displayNameInHtml': 'gets_s(<span class="cpp_keyword">char</span>( &)[...])',
+        'impls': [
+            'FB$gets_s2[impl0]'
+        ],
+        'decls': []
+    },
+    'fpos_t': {
+        'displayNameInHtml': '<span class="cpp_type">fpos_t</span>',
+        'impls': [
+            'NI$fpos_t'
+        ],
+        'decls': []
+    },
+    'gets_s': {
+        'displayNameInHtml': 'gets_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">rsize_t</span>)',
         'impls': [],
-        'decls': []
+        'decls': [
+            'FB$gets_s[decl0]'
+        ]
     },
-    '_vprintf_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
+    'tmpnam_s': {
+        'displayNameInHtml': 'tmpnam_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">rsize_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$tmpnam_s[decl0]'
+        ]
+    },
+    '__stdio_common_vfprintf_s': {
+        'displayNameInHtml': '__stdio_common_vfprintf_s(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_type">FILE</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [],
+        'decls': [
+            'FB$__stdio_common_vfprintf_s[decl0]'
+        ]
+    },
+    '__stdio_common_vfprintf_p': {
+        'displayNameInHtml': '__stdio_common_vfprintf_p(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_type">FILE</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [],
+        'decls': [
+            'FB$__stdio_common_vfprintf_p[decl0]'
+        ]
+    },
+    '_vfprintf_l': {
+        'displayNameInHtml': '_vfprintf_l(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
         'impls': [
-            'NI$_vprintf_l[impl0]::_ArgList'
+            'FB$_vfprintf_l[impl0]'
         ],
         'decls': []
     },
-    '_vprintf_p_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vprintf_p_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'fprintf[impl0]::_Stream': {
+    '_vfprintf_l[impl0]::_Stream': {
         'displayNameInHtml': '_Stream',
         'impls': [
-            'NI$fprintf[impl0]::_Stream'
+            'NI$_vfprintf_l[impl0]::_Stream'
         ],
         'decls': []
     },
-    'vprintf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
+    '_vfprintf_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
         'impls': [
-            'NI$vprintf_s[impl0]::_ArgList'
+            'NI$_vfprintf_l[impl0]::_Format'
         ],
         'decls': []
     },
-    '_vprintf_l[impl0]::_Locale': {
+    '__stdio_common_vfprintf': {
+        'displayNameInHtml': '__stdio_common_vfprintf(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_type">FILE</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [],
+        'decls': [
+            'FB$__stdio_common_vfprintf[decl0]'
+        ]
+    },
+    'vfprintf_s[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$vfprintf_s[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_vfprintf_s_l[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
-            'NI$_vprintf_l[impl0]::_Locale'
+            'NI$_vfprintf_s_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_vfprintf_p_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vfprintf_p_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_vfprintf_p[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vfprintf_p[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_vfprintf_s_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vfprintf_s_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'vfprintf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vfprintf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_vfprintf_p_l': {
+        'displayNameInHtml': '_vfprintf_p_l(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vfprintf_p_l[impl0]'
+        ],
+        'decls': []
+    },
+    '_vprintf_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_vprintf_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vfprintf_p[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_vfprintf_p[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vfprintf_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vfprintf_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_vfprintf_p_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_vfprintf_p_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_vfprintf_p_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_vfprintf_p_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vfprintf_p_l[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$_vfprintf_p_l[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_vfprintf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_vfprintf_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    'vfprintf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vfprintf_s[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vfprintf_s_l': {
+        'displayNameInHtml': '_vfprintf_s_l(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vfprintf_s_l[impl0]'
+        ],
+        'decls': []
+    },
+    '_vfprintf_p[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$_vfprintf_p[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    'vfprintf[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$vfprintf[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_vfprintf_s_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_vfprintf_s_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'vfprintf[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vfprintf[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'vfprintf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vfprintf[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vfprintf_s_l[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$_vfprintf_s_l[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_vprintf_s_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vprintf_s_l[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -3452,20 +3606,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vprintf_p_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vprintf_p_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'vprintf[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vprintf[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
     '_vprintf_s_l[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
@@ -3473,10 +3613,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vprintf_s[impl0]::_Format': {
+    '_vprintf_p_l[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$vprintf_s[impl0]::_Format'
+            'NI$_vprintf_p_l[impl0]::_Format'
         ],
         'decls': []
     },
@@ -3487,17 +3627,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_fprintf_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
+    '_vprintf_p[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_fprintf_l[impl0]::_Format'
+            'NI$_vprintf_p[impl0]::_ArgList'
         ],
         'decls': []
     },
-    'vprintf[impl0]::_Format': {
+    'vprintf_s[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$vprintf[impl0]::_Format'
+            'NI$vprintf_s[impl0]::_Format'
         ],
         'decls': []
     },
@@ -3508,17 +3648,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vprintf_p[impl0]::_ArgList': {
+    '_vprintf_l[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_vprintf_p[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_fprintf_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_fprintf_l[impl0]::_Locale'
+            'NI$_vprintf_l[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -3529,10 +3662,59 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vprintf_s_l[impl0]::_ArgList': {
+    '_vprintf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_vprintf_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    'vprintf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vprintf[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'vprintf_s[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_vprintf_s_l[impl0]::_ArgList'
+            'NI$vprintf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_fprintf_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_fprintf_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'vprintf[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vprintf[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'fprintf[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$fprintf[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_vprintf_p_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vprintf_p_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_fprintf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_fprintf_l[impl0]::_Locale'
         ],
         'decls': []
     },
@@ -3555,236 +3737,397 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__stdio_common_vfprintf': {
-        'displayNameInHtml': '__stdio_common_vfprintf(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_type">FILE</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
+    '__acrt_iob_func': {
+        'displayNameInHtml': '__acrt_iob_func(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
         'impls': [],
         'decls': [
-            'FB$__stdio_common_vfprintf[decl0]'
+            'FB$__acrt_iob_func[decl0]'
         ]
     },
-    '_vfprintf_l[impl0]::_Format': {
+    'FILE': {
+        'displayNameInHtml': '<span class="cpp_type">FILE</span>',
+        'impls': [
+            'NI$FILE'
+        ],
+        'decls': []
+    },
+    '_fprintf_s_l[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$_vfprintf_l[impl0]::_Format'
+            'NI$_fprintf_s_l[impl0]::_Format'
         ],
         'decls': []
     },
-    '_vfprintf_s_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vfprintf_s_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vfprintf_s_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vfprintf_s_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'vfprintf_s[impl0]::_Stream': {
+    '_fprintf_p_l[impl0]::_Stream': {
         'displayNameInHtml': '_Stream',
         'impls': [
-            'NI$vfprintf_s[impl0]::_Stream'
+            'NI$_fprintf_p_l[impl0]::_Stream'
         ],
         'decls': []
     },
-    'vfprintf_s[impl0]::_Format': {
+    '_fprintf_p_l[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$vfprintf_s[impl0]::_Format'
+            'NI$_fprintf_p_l[impl0]::_Format'
         ],
         'decls': []
     },
-    '__stdio_common_vfprintf_s': {
-        'displayNameInHtml': '__stdio_common_vfprintf_s(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_type">FILE</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
+    '_fprintf_p_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_fprintf_p_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    'fprintf_s[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$fprintf_s[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_fprintf_s_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_fprintf_s_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_printf_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_printf_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_fprintf_p[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_fprintf_p[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'printf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$printf[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'fprintf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$fprintf_s[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_printf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_printf_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    'fprintf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$fprintf[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_fprintf_s_l[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$_fprintf_s_l[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_fprintf_p[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$_fprintf_p[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_vfscanf_s_l': {
+        'displayNameInHtml': '_vfscanf_s_l(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vfscanf_s_l[impl0]'
+        ],
+        'decls': []
+    },
+    '_printf_p_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_printf_p_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vfscanf_l[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$_vfscanf_l[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    'vfscanf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vfscanf[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vfscanf_s_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vfscanf_s_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_printf_p_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_printf_p_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_vfscanf_s_l[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$_vfscanf_s_l[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_vfscanf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_vfscanf_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_printf_s_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_printf_s_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vfscanf_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_vfscanf_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vfscanf_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vfscanf_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_printf_p[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_printf_p[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'vfscanf[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$vfscanf[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_vfscanf_s_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_vfscanf_s_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    'vfscanf[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vfscanf[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '__stdio_common_vfscanf': {
+        'displayNameInHtml': '__stdio_common_vfscanf(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_type">FILE</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
         'impls': [],
         'decls': [
-            'FB$__stdio_common_vfprintf_s[decl0]'
+            'FB$__stdio_common_vfscanf[decl0]'
         ]
     },
-    '_vfprintf_l': {
-        'displayNameInHtml': '_vfprintf_l(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vfprintf_l[impl0]'
-        ],
-        'decls': []
-    },
-    '_vfprintf_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_vfprintf_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_vfprintf_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vfprintf_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'vfprintf[impl0]::_Format': {
+    '_vfscanf_s_l[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$vfprintf[impl0]::_Format'
+            'NI$_vfscanf_s_l[impl0]::_Format'
         ],
         'decls': []
     },
-    'vfprintf[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$vfprintf[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    'vfprintf[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vfprintf[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vfprintf_s_l[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$_vfprintf_s_l[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    '_vfprintf_s_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_vfprintf_s_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_vfprintf_s_l': {
-        'displayNameInHtml': '_vfprintf_s_l(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vfprintf_s_l[impl0]'
-        ],
-        'decls': []
-    },
-    '__stdio_common_vfprintf_p': {
-        'displayNameInHtml': '__stdio_common_vfprintf_p(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_type">FILE</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [],
-        'decls': [
-            'FB$__stdio_common_vfprintf_p[decl0]'
-        ]
-    },
-    '_vfprintf_l[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$_vfprintf_l[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    '_vfprintf_p[impl0]::_Format': {
+    'printf_s[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$_vfprintf_p[impl0]::_Format'
+            'NI$printf_s[impl0]::_Format'
         ],
         'decls': []
     },
-    '_vfprintf_p_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vfprintf_p_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vfprintf_p_l[impl0]::_Locale': {
+    '_printf_s_l[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
-            'NI$_vfprintf_p_l[impl0]::_Locale'
+            'NI$_printf_s_l[impl0]::_Locale'
         ],
         'decls': []
     },
-    '_vfprintf_p[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
+    '_vfscanf_l': {
+        'displayNameInHtml': '_vfscanf_l(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
         'impls': [
-            'NI$_vfprintf_p[impl0]::_Stream'
+            'FB$_vfscanf_l[impl0]'
         ],
         'decls': []
     },
-    '_vfprintf_p_l': {
-        'displayNameInHtml': '_vfprintf_p_l(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vfprintf_p_l[impl0]'
-        ],
-        'decls': []
-    },
-    '_vfprintf_p_l[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$_vfprintf_p_l[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    '_vfprintf_p_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vfprintf_p_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vfprintf_p[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vfprintf_p[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vprintf_l[impl0]::_Format': {
+    '_fscanf_l[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$_vprintf_l[impl0]::_Format'
+            'NI$_fscanf_l[impl0]::_Format'
         ],
         'decls': []
     },
-    'vfprintf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
+    '_vscanf_s_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
         'impls': [
-            'NI$vfprintf_s[impl0]::_ArgList'
+            'NI$_vscanf_s_l[impl0]::_Format'
         ],
         'decls': []
     },
-    '_vsnprintf_l[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$_vsnprintf_l[impl0]::_BufferCount'
-        ],
-        'decls': []
-    },
-    'vsnprintf[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$vsnprintf[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_scanf_s_l[impl0]::_Locale': {
+    '_fscanf_l[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
-            'NI$_scanf_s_l[impl0]::_Locale'
+            'NI$_fscanf_l[impl0]::_Locale'
         ],
         'decls': []
     },
-    'vsnprintf[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
+    '_vscanf_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
         'impls': [
-            'NI$vsnprintf[impl0]::_BufferCount'
+            'NI$_vscanf_l[impl0]::_Format'
         ],
         'decls': []
     },
-    '__stdio_common_vsprintf': {
-        'displayNameInHtml': '__stdio_common_vsprintf(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [],
-        'decls': [
-            'FB$__stdio_common_vsprintf[decl0]'
-        ]
+    'vscanf[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vscanf[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'vscanf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vscanf_s[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'fscanf[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$fscanf[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    'fscanf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$fscanf[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'vfscanf_s[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$vfscanf_s[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    'vfscanf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vfscanf_s[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vscanf_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vscanf_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'vfscanf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vfscanf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'vscanf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vscanf[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vscanf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_vscanf_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_vscanf_s_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_vscanf_s_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_vscanf_s_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vscanf_s_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'vscanf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vscanf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_fscanf_l[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$_fscanf_l[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_scanf_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_scanf_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'scanf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$scanf[impl0]::_Format'
+        ],
+        'decls': []
     },
     '_scanf_s_l[impl0]::_Format': {
         'displayNameInHtml': '_Format',
@@ -3793,10 +4136,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vsnprintf_l': {
-        'displayNameInHtml': '_vsnprintf_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+    '_fscanf_s_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
         'impls': [
-            'FB$_vsnprintf_l[impl0]'
+            'NI$_fscanf_s_l[impl0]::_Format'
         ],
         'decls': []
     },
@@ -3807,10 +4150,108 @@ referencedSymbols = {
             'FB$__stdio_common_vsnprintf_s[decl0]'
         ]
     },
-    '_vsnprintf_l[impl0]::_Buffer': {
+    'scanf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$scanf_s[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_scanf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_scanf_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '__stdio_common_vsprintf_s': {
+        'displayNameInHtml': '__stdio_common_vsprintf_s(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [],
+        'decls': [
+            'FB$__stdio_common_vsprintf_s[decl0]'
+        ]
+    },
+    '__stdio_common_vsprintf_p': {
+        'displayNameInHtml': '__stdio_common_vsprintf_p(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [],
+        'decls': [
+            'FB$__stdio_common_vsprintf_p[decl0]'
+        ]
+    },
+    '_scanf_s_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_scanf_s_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    'fscanf_s[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$fscanf_s[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_l': {
+        'displayNameInHtml': '_vsnprintf_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vsnprintf_l[impl0]'
+        ],
+        'decls': []
+    },
+    '_fscanf_s_l[impl0]::_Stream': {
+        'displayNameInHtml': '_Stream',
+        'impls': [
+            'NI$_fscanf_s_l[impl0]::_Stream'
+        ],
+        'decls': []
+    },
+    'fscanf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$fscanf_s[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_fscanf_s_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_fscanf_s_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '__stdio_common_vsprintf': {
+        'displayNameInHtml': '__stdio_common_vsprintf(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [],
+        'decls': [
+            'FB$__stdio_common_vsprintf[decl0]'
+        ]
+    },
+    'vsnprintf[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$vsnprintf[impl0]::_BufferCount'
+        ],
+        'decls': []
+    },
+    'vsnprintf[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_vsnprintf_l[impl0]::_Buffer'
+            'NI$vsnprintf[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    'vsnprintf': {
+        'displayNameInHtml': 'vsnprintf(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$vsnprintf[impl0]'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_l[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$_vsnprintf_l[impl0]::_BufferCount'
         ],
         'decls': []
     },
@@ -3821,17 +4262,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_vsnprintf': {
+        'displayNameInHtml': '_vsnprintf(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vsnprintf[impl0]'
+        ],
+        'decls': []
+    },
     '_vsnprintf_l[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
             'NI$_vsnprintf_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vsnprintf_l[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -3842,31 +4283,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'scanf_s[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
+    '_vsnprintf_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$scanf_s[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '__stdio_common_vsprintf_p': {
-        'displayNameInHtml': '__stdio_common_vsprintf_p(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [],
-        'decls': [
-            'FB$__stdio_common_vsprintf_p[decl0]'
-        ]
-    },
-    '__stdio_common_vsprintf_s': {
-        'displayNameInHtml': '__stdio_common_vsprintf_s(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [],
-        'decls': [
-            'FB$__stdio_common_vsprintf_s[decl0]'
-        ]
-    },
-    '_vsnprintf': {
-        'displayNameInHtml': '_vsnprintf(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vsnprintf[impl0]'
+            'NI$_vsnprintf_l[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -3891,561 +4311,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vsnprintf': {
-        'displayNameInHtml': 'vsnprintf(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$vsnprintf[impl0]'
-        ],
-        'decls': []
-    },
-    '_fprintf_p[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$_fprintf_p[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    '_fprintf_s_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_fprintf_s_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_fprintf_p[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_fprintf_p[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'fprintf_s[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$fprintf_s[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    '_printf_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_printf_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_fprintf_p_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_fprintf_p_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'printf[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$printf[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_fprintf_s_l[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$_fprintf_s_l[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    'fprintf_s[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$fprintf_s[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_fprintf_p_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_fprintf_p_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_printf_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_printf_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'fprintf[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$fprintf[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_fprintf_s_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_fprintf_s_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_fprintf_p_l[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$_fprintf_p_l[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    '_vfscanf_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vfscanf_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vfscanf_s_l': {
-        'displayNameInHtml': '_vfscanf_s_l(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vfscanf_s_l[impl0]'
-        ],
-        'decls': []
-    },
-    '_vfscanf_s_l[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$_vfscanf_s_l[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    '_vfscanf_s_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vfscanf_s_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vfscanf_s_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vfscanf_s_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'printf_s[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$printf_s[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '__stdio_common_vfscanf': {
-        'displayNameInHtml': '__stdio_common_vfscanf(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_type">FILE</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [],
-        'decls': [
-            'FB$__stdio_common_vfscanf[decl0]'
-        ]
-    },
-    '_vfscanf_s_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_vfscanf_s_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_printf_p[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_printf_p[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_printf_p_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_printf_p_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_printf_s_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_printf_s_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_printf_s_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_printf_s_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vfscanf_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vfscanf_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vfscanf_l': {
-        'displayNameInHtml': '_vfscanf_l(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vfscanf_l[impl0]'
-        ],
-        'decls': []
-    },
-    '_printf_p_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_printf_p_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vfscanf_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_vfscanf_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    'vfscanf[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$vfscanf[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    '_vfscanf_l[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$_vfscanf_l[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    'vfscanf[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$vfscanf[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'vfscanf[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vfscanf[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_fscanf_l[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$_fscanf_l[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    'vscanf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vscanf_s[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_fscanf_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_fscanf_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_fscanf_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_fscanf_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_vscanf_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_vscanf_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    'vscanf[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$vscanf[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'fscanf[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$fscanf[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    'fscanf[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$fscanf[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vscanf_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vscanf_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'vfscanf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vfscanf_s[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vscanf_s_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_vscanf_s_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    'vfscanf_s[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$vfscanf_s[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    'vscanf[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vscanf[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vscanf_s_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vscanf_s_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'vscanf_s[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$vscanf_s[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'vfscanf_s[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$vfscanf_s[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vscanf_s_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vscanf_s_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vscanf_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vscanf_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_scanf_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_scanf_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    'scanf[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$scanf[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_fscanf_s_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_fscanf_s_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_fscanf_s_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_fscanf_s_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_scanf_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_scanf_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'fscanf_s[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$fscanf_s[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    '_fscanf_s_l[impl0]::_Stream': {
-        'displayNameInHtml': '_Stream',
-        'impls': [
-            'NI$_fscanf_s_l[impl0]::_Stream'
-        ],
-        'decls': []
-    },
-    'fscanf_s[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$fscanf_s[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vsprintf_s_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_vsprintf_s_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    'vsprintf_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">vsprintf_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    'vsprintf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vsprintf_s[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'vsnprintf[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vsnprintf[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vsprintf_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vsprintf_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vsprintf_s_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vsprintf_s_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'vsnprintf[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$vsnprintf[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vsprintf_l': {
-        'displayNameInHtml': '_vsprintf_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vsprintf_l[impl0]'
-        ],
-        'decls': []
-    },
-    'vsprintf_s[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$vsprintf_s[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'vsprintf_s2[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vsprintf_s2[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'vsprintf[impl0]::_Buffer': {
+    '_vsnprintf_l[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$vsprintf[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_vsprintf_s_l': {
-        'displayNameInHtml': '_vsprintf_s_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vsprintf_s_l[impl0]'
-        ],
-        'decls': []
-    },
-    'vsprintf[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$vsprintf[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'vsprintf[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vsprintf[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vsprintf_s_l[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$_vsprintf_s_l[impl0]::_BufferCount'
-        ],
-        'decls': []
-    },
-    '_vsprintf_s_l[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_vsprintf_s_l[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_vsprintf_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_vsprintf_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_vsprintf_s_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vsprintf_s_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'vsprintf_s[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$vsprintf_s[impl0]::_Buffer'
+            'NI$_vsnprintf_l[impl0]::_Buffer'
         ],
         'decls': []
     },
@@ -4456,6 +4325,41 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_vsprintf_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vsprintf_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_vsprintf_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_vsprintf_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'vsprintf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vsprintf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_vsprintf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_vsprintf_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_vsprintf_s_l': {
+        'displayNameInHtml': '_vsprintf_s_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vsprintf_s_l[impl0]'
+        ],
+        'decls': []
+    },
     '_vsprintf_l[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
@@ -4463,17 +4367,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vsprintf_s': {
-        'displayNameInHtml': 'vsprintf_s(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+    'vsprintf[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
         'impls': [
-            'FB$vsprintf_s[impl0]'
+            'NI$vsprintf[impl0]::_ArgList'
         ],
         'decls': []
     },
-    'vsprintf_s2': {
-        'displayNameInHtml': 'vsprintf_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">va_list</span>)',
+    '_vsprintf_s_l[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
         'impls': [
-            'FB$vsprintf_s2[impl0]'
+            'NI$_vsprintf_s_l[impl0]::_Buffer'
         ],
         'decls': []
     },
@@ -4484,6 +4388,41 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vsnprintf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vsnprintf[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'vsnprintf[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vsnprintf[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'vsprintf_s[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$vsprintf_s[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    'vsprintf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vsprintf[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'vsprintf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vsprintf_s[impl0]::_Format'
+        ],
+        'decls': []
+    },
     'vsprintf_s2[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
@@ -4491,78 +4430,85 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vsprintf_l[impl0]::_ArgList': {
+    '_vsprintf_s_l[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_vsprintf_l[impl0]::_ArgList'
+            'NI$_vsprintf_s_l[impl0]::_ArgList'
         ],
         'decls': []
     },
-    '_vsnprintf_s[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$_vsnprintf_s[impl0]::_BufferCount'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_s[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_vsnprintf_s[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_s_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vsnprintf_s_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_s[impl0]::_MaxCount': {
-        'displayNameInHtml': '_MaxCount',
-        'impls': [
-            'NI$_vsnprintf_s[impl0]::_MaxCount'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_s[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vsnprintf_s[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_s_l': {
-        'displayNameInHtml': '_vsnprintf_s_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vsnprintf_s_l[impl0]'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vsnprintf_s[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_vsnprintf_s</span>::_Size',
+    'vsprintf_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">vsprintf_s</span>::_Size',
         'impls': [],
         'decls': []
     },
-    '_vsnprintf_s2': {
-        'displayNameInHtml': '_vsnprintf_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">va_list</span>)',
+    'vsprintf_s2': {
+        'displayNameInHtml': 'vsprintf_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">va_list</span>)',
         'impls': [
-            'FB$_vsnprintf_s2[impl0]'
+            'FB$vsprintf_s2[impl0]'
         ],
         'decls': []
     },
-    '_vsnprintf_s2[impl0]::_Buffer': {
+    'vsprintf_s2[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vsprintf_s2[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_vsprintf_l': {
+        'displayNameInHtml': '_vsprintf_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vsprintf_l[impl0]'
+        ],
+        'decls': []
+    },
+    'vsprintf[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_vsnprintf_s2[impl0]::_Buffer'
+            'NI$vsprintf[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_vsprintf_s_l[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$_vsprintf_s_l[impl0]::_BufferCount'
+        ],
+        'decls': []
+    },
+    '_vsprintf_s_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_vsprintf_s_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    'vsprintf_s': {
+        'displayNameInHtml': 'vsprintf_s(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$vsprintf_s[impl0]'
+        ],
+        'decls': []
+    },
+    '_vsprintf_s_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_vsprintf_s_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vsprintf_p[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_vsprintf_p[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_s': {
+        'displayNameInHtml': '_vsnprintf_s(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vsnprintf_s[impl0]'
         ],
         'decls': []
     },
@@ -4573,10 +4519,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vsprintf_p_l': {
-        'displayNameInHtml': '_vsprintf_p_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+    '_vsprintf_p[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
         'impls': [
-            'FB$_vsprintf_p_l[impl0]'
+            'NI$_vsprintf_p[impl0]::_BufferCount'
         ],
         'decls': []
     },
@@ -4601,34 +4547,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vsprintf_p[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_vsprintf_p[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_vsprintf_p[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$_vsprintf_p[impl0]::_BufferCount'
-        ],
-        'decls': []
-    },
-    '_vsprintf_p[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vsprintf_p[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_s_l[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_vsnprintf_s_l[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
     '_vsnprintf_s_l[impl0]::_MaxCount': {
         'displayNameInHtml': '_MaxCount',
         'impls': [
@@ -4643,10 +4561,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vsprintf_p_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
+    '_vsnprintf_s[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_vsprintf_p_l[impl0]::_Format'
+            'NI$_vsnprintf_s[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_s[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$_vsnprintf_s[impl0]::_BufferCount'
         ],
         'decls': []
     },
@@ -4657,6 +4582,20 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_vsnprintf_s_l': {
+        'displayNameInHtml': '_vsnprintf_s_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vsnprintf_s_l[impl0]'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_s[impl0]::_MaxCount': {
+        'displayNameInHtml': '_MaxCount',
+        'impls': [
+            'NI$_vsnprintf_s[impl0]::_MaxCount'
+        ],
+        'decls': []
+    },
     '_vsnprintf_s_l[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
@@ -4664,10 +4603,36 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vsnprintf_s': {
-        'displayNameInHtml': '_vsnprintf_s(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+    '_vsprintf_p_l': {
+        'displayNameInHtml': '_vsprintf_p_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
         'impls': [
-            'FB$_vsnprintf_s[impl0]'
+            'FB$_vsprintf_p_l[impl0]'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_s_l[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_vsnprintf_s_l[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vsnprintf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_vsnprintf_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_vsprintf_p_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_vsprintf_p_l[impl0]::_Format'
         ],
         'decls': []
     },
@@ -4678,38 +4643,52 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vsnprintf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
+    '_vsprintf_p[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
         'impls': [
-            'NI$vsnprintf_s[impl0]::_ArgList'
+            'NI$_vsprintf_p[impl0]::_Format'
         ],
         'decls': []
     },
-    '_vsnprintf_s2[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
+    '_vsnprintf_s_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
         'impls': [
-            'NI$_vsnprintf_s2[impl0]::_BufferCount'
+            'NI$_vsnprintf_s_l[impl0]::_Format'
         ],
         'decls': []
     },
-    '_vscprintf_l[impl0]::_Locale': {
+    '_vsnprintf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_vsnprintf_s[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_s2': {
+        'displayNameInHtml': '_vsnprintf_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vsnprintf_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_vsnprintf_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_vscprintf_p_l': {
+        'displayNameInHtml': '_vscprintf_p_l(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vscprintf_p_l[impl0]'
+        ],
+        'decls': []
+    },
+    '_vscprintf_p_l[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
-            'NI$_vscprintf_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_vscprintf_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vscprintf_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_s2[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vsnprintf_s2[impl0]::_ArgList'
+            'NI$_vscprintf_p_l[impl0]::_Locale'
         ],
         'decls': []
     },
@@ -4720,10 +4699,52 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_vscprintf_p_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vscprintf_p_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'vsnprintf_s[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$vsnprintf_s[impl0]::_BufferCount'
+        ],
+        'decls': []
+    },
     '_vscprintf_p': {
         'displayNameInHtml': '_vscprintf_p(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
         'impls': [
             'FB$_vscprintf_p[impl0]'
+        ],
+        'decls': []
+    },
+    'vsnprintf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vsnprintf_s[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_s2[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$_vsnprintf_s2[impl0]::_BufferCount'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_s2[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vsnprintf_s2[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'vsnprintf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vsnprintf_s[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -4741,24 +4762,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vsnprintf_s[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
+    'vsnprintf_s2': {
+        'displayNameInHtml': 'vsnprintf_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">va_list</span>)',
         'impls': [
-            'NI$vsnprintf_s[impl0]::_BufferCount'
+            'FB$vsnprintf_s2[impl0]'
         ],
         'decls': []
     },
-    '_vsnprintf_s2[impl0]::_Format': {
+    'vsnprintf_s2[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$_vsnprintf_s2[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'vsnprintf_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$vsnprintf_s2[impl0]::_Buffer'
+            'NI$vsnprintf_s2[impl0]::_Format'
         ],
         'decls': []
     },
@@ -4769,6 +4783,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vsnprintf_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$vsnprintf_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
     'vsnprintf_s[impl0]::_MaxCount': {
         'displayNameInHtml': '_MaxCount',
         'impls': [
@@ -4776,17 +4797,36 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vsnprintf_s[impl0]::_Format': {
+    '_vsnprintf_s2[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$vsnprintf_s[impl0]::_Format'
+            'NI$_vsnprintf_s2[impl0]::_Format'
         ],
         'decls': []
     },
-    '_vscprintf_l': {
-        'displayNameInHtml': '_vscprintf_l(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+    'vsnprintf_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">vsnprintf_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_vscprintf_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
         'impls': [
-            'FB$_vscprintf_l[impl0]'
+            'NI$_vscprintf_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vscprintf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_vscprintf_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_vscprintf_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vscprintf_l[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -4804,24 +4844,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vscprintf_p_l': {
-        'displayNameInHtml': '_vscprintf_p_l(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+    '_vscprintf_l': {
+        'displayNameInHtml': '_vscprintf_l(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
         'impls': [
-            'FB$_vscprintf_p_l[impl0]'
-        ],
-        'decls': []
-    },
-    '_vscprintf_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vscprintf_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'vsnprintf_s2[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$vsnprintf_s2[impl0]::_Format'
+            'FB$_vscprintf_l[impl0]'
         ],
         'decls': []
     },
@@ -4832,29 +4858,24 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vscprintf_p_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
+    '_vsnprintf_c[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
         'impls': [
-            'NI$_vscprintf_p_l[impl0]::_Locale'
+            'NI$_vsnprintf_c[impl0]::_Format'
         ],
         'decls': []
     },
-    'vsnprintf_s2': {
-        'displayNameInHtml': 'vsnprintf_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">va_list</span>)',
+    '_sprintf_l[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
         'impls': [
-            'FB$vsnprintf_s2[impl0]'
+            'NI$_sprintf_l[impl0]::_Buffer'
         ],
         'decls': []
     },
-    'vsnprintf_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">vsnprintf_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_vscprintf_p_l[impl0]::_ArgList': {
+    '_vsnprintf_c[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_vscprintf_p_l[impl0]::_ArgList'
+            'NI$_vsnprintf_c[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -4862,6 +4883,48 @@ referencedSymbols = {
         'displayNameInHtml': '_Format',
         'impls': [
             'NI$_sprintf_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'sprintf[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$sprintf[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_vscprintf_p[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_vscprintf_p[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_c[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_vsnprintf_c[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_c_l': {
+        'displayNameInHtml': '_vsnprintf_c_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vsnprintf_c_l[impl0]'
+        ],
+        'decls': []
+    },
+    '_vscprintf_p[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_vscprintf_p[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_c_l[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$_vsnprintf_c_l[impl0]::_BufferCount'
         ],
         'decls': []
     },
@@ -4879,13 +4942,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vscprintf_p[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vscprintf_p[impl0]::_Format'
-        ],
-        'decls': []
-    },
     '_sprintf_s_l[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
@@ -4900,45 +4956,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vscprintf_p[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vscprintf_p[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_c[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_vsnprintf_c[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_c_l[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$_vsnprintf_c_l[impl0]::_BufferCount'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_c_l': {
-        'displayNameInHtml': '_vsnprintf_c_l(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vsnprintf_c_l[impl0]'
-        ],
-        'decls': []
-    },
     '_vsnprintf_c_l[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
             'NI$_vsnprintf_c_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_c[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_vsnprintf_c[impl0]::_Buffer'
         ],
         'decls': []
     },
@@ -4949,20 +4970,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vsnprintf_c_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vsnprintf_c_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_sprintf_l[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_sprintf_l[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
     '_vsnprintf_c_l[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
@@ -4970,38 +4977,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vsnprintf_c[impl0]::_ArgList': {
+    '_vsnprintf_c_l[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_vsnprintf_c[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'sprintf[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$sprintf[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    'sprintf_s[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$sprintf_s[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    'sprintf_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$sprintf_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    'sprintf_s2[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$sprintf_s2[impl0]::_Format'
+            'NI$_vsnprintf_c_l[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -5012,29 +4991,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'sprintf_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">sprintf_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    'sprintf_s[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$sprintf_s[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_sprintf_s_l[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$_sprintf_s_l[impl0]::_BufferCount'
-        ],
-        'decls': []
-    },
     '_sprintf_s_l[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
             'NI$_sprintf_s_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    'sprintf_s[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$sprintf_s[impl0]::_Buffer'
         ],
         'decls': []
     },
@@ -5045,10 +5012,36 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'snprintf[impl0]::_Buffer': {
+    '_sprintf_s_l[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$_sprintf_s_l[impl0]::_BufferCount'
+        ],
+        'decls': []
+    },
+    'sprintf_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">sprintf_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    'sprintf_s2[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$snprintf[impl0]::_Buffer'
+            'NI$sprintf_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    'sprintf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$sprintf_s[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'sprintf_s2[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$sprintf_s2[impl0]::_Format'
         ],
         'decls': []
     },
@@ -5059,38 +5052,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_sprintf_p_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_sprintf_p_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    'snprintf[impl0]::_Format': {
+    '_snprintf[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$snprintf[impl0]::_Format'
+            'NI$_snprintf[impl0]::_Format'
         ],
         'decls': []
     },
-    '_snprintf[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$_snprintf[impl0]::_BufferCount'
-        ],
-        'decls': []
-    },
-    '_sprintf_p_l[impl0]::_Buffer': {
+    '_snprintf_c_l[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_sprintf_p_l[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_sprintf_p[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_sprintf_p[impl0]::_Buffer'
+            'NI$_snprintf_c_l[impl0]::_Buffer'
         ],
         'decls': []
     },
@@ -5098,6 +5070,13 @@ referencedSymbols = {
         'displayNameInHtml': '_Buffer',
         'impls': [
             'NI$_snprintf_l[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_sprintf_p[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_sprintf_p[impl0]::_Format'
         ],
         'decls': []
     },
@@ -5115,38 +5094,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_snprintf_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
+    '_sprintf_p_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
         'impls': [
-            'NI$_snprintf_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_vsnprintf2': {
-        'displayNameInHtml': '_vsnprintf(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">va_list</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_vsnprintf2[decl0]'
-        ]
-    },
-    'snprintf[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$snprintf[impl0]::_BufferCount'
-        ],
-        'decls': []
-    },
-    '_snprintf[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_snprintf[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_snprintf_c_l[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_snprintf_c_l[impl0]::_Buffer'
+            'NI$_sprintf_p_l[impl0]::_Format'
         ],
         'decls': []
     },
@@ -5157,80 +5108,73 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_snprintf[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_snprintf[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_sprintf_p_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_sprintf_p_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_sprintf_p[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_sprintf_p[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_snprintf_c_l[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$_snprintf_c_l[impl0]::_BufferCount'
-        ],
-        'decls': []
-    },
-    '_snprintf_c_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_snprintf_c_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_snprintf_c[impl0]::_Buffer': {
+    '_sprintf_p[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_snprintf_c[impl0]::_Buffer'
+            'NI$_sprintf_p[impl0]::_Buffer'
         ],
         'decls': []
     },
-    '_snprintf_c[impl0]::_BufferCount': {
+    '_snprintf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_snprintf_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    'snprintf[impl0]::_BufferCount': {
         'displayNameInHtml': '_BufferCount',
         'impls': [
-            'NI$_snprintf_c[impl0]::_BufferCount'
+            'NI$snprintf[impl0]::_BufferCount'
         ],
         'decls': []
     },
-    '_snprintf_s_l[impl0]::_Buffer': {
+    'snprintf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$snprintf[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_snprintf[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_snprintf_s_l[impl0]::_Buffer'
+            'NI$_snprintf[impl0]::_Buffer'
         ],
         'decls': []
     },
-    '_snprintf_s_l[impl0]::_BufferCount': {
+    '_vsnprintf2': {
+        'displayNameInHtml': '_vsnprintf(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">va_list</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_vsnprintf2[decl0]'
+        ]
+    },
+    '_sprintf_p_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_sprintf_p_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_snprintf[impl0]::_BufferCount': {
         'displayNameInHtml': '_BufferCount',
         'impls': [
-            'NI$_snprintf_s_l[impl0]::_BufferCount'
+            'NI$_snprintf[impl0]::_BufferCount'
         ],
         'decls': []
     },
-    '_snprintf_s[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
+    'snprintf[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_snprintf_s[impl0]::_BufferCount'
+            'NI$snprintf[impl0]::_Buffer'
         ],
         'decls': []
     },
-    '_snprintf_s[impl0]::_MaxCount': {
-        'displayNameInHtml': '_MaxCount',
+    '_sprintf_p_l[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_snprintf_s[impl0]::_MaxCount'
+            'NI$_sprintf_p_l[impl0]::_Buffer'
         ],
         'decls': []
     },
@@ -5241,17 +5185,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_snprintf_s[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
+    '_snprintf_c[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
         'impls': [
-            'NI$_snprintf_s[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_scprintf_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_scprintf_l[impl0]::_Locale'
+            'NI$_snprintf_c[impl0]::_BufferCount'
         ],
         'decls': []
     },
@@ -5262,10 +5199,101 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_snprintf_s_l[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$_snprintf_s_l[impl0]::_BufferCount'
+        ],
+        'decls': []
+    },
+    '_snprintf_s[impl0]::_MaxCount': {
+        'displayNameInHtml': '_MaxCount',
+        'impls': [
+            'NI$_snprintf_s[impl0]::_MaxCount'
+        ],
+        'decls': []
+    },
+    '_snprintf_c_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_snprintf_c_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_snprintf_c_l[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$_snprintf_c_l[impl0]::_BufferCount'
+        ],
+        'decls': []
+    },
+    '_snprintf_s2[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$_snprintf_s2[impl0]::_BufferCount'
+        ],
+        'decls': []
+    },
+    '_scprintf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_scprintf_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_snprintf_c[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_snprintf_c[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_snprintf_s_l[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_snprintf_s_l[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_snprintf_s_l[impl0]::_MaxCount': {
+        'displayNameInHtml': '_MaxCount',
+        'impls': [
+            'NI$_snprintf_s_l[impl0]::_MaxCount'
+        ],
+        'decls': []
+    },
     '_snprintf_s_l[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
             'NI$_snprintf_s_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_snprintf_s[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$_snprintf_s[impl0]::_BufferCount'
+        ],
+        'decls': []
+    },
+    '_snprintf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_snprintf_s[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_snprintf_c[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_snprintf_c[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_snprintf_c_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_snprintf_c_l[impl0]::_Format'
         ],
         'decls': []
     },
@@ -5288,87 +5316,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_snprintf_s_l[impl0]::_MaxCount': {
-        'displayNameInHtml': '_MaxCount',
-        'impls': [
-            'NI$_snprintf_s_l[impl0]::_MaxCount'
-        ],
-        'decls': []
-    },
-    '_snprintf_s2[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$_snprintf_s2[impl0]::_BufferCount'
-        ],
-        'decls': []
-    },
-    '_snprintf_c[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_snprintf_c[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_snprintf_c_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_snprintf_c_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
     '_snprintf_s2[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
             'NI$_snprintf_s2[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'vsscanf[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$vsscanf[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_vsscanf_s_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_vsscanf_s_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '__stdio_common_vsscanf': {
-        'displayNameInHtml': '__stdio_common_vsscanf(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [],
-        'decls': [
-            'FB$__stdio_common_vsscanf[decl0]'
-        ]
-    },
-    '_vsscanf_s_l': {
-        'displayNameInHtml': '_vsscanf_s_l(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vsscanf_s_l[impl0]'
-        ],
-        'decls': []
-    },
-    'vsscanf_s': {
-        'displayNameInHtml': 'vsscanf_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$vsscanf_s[impl0]'
-        ],
-        'decls': []
-    },
-    '_scprintf_p_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_scprintf_p_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'vsscanf_s[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$vsscanf_s[impl0]::_Buffer'
         ],
         'decls': []
     },
@@ -5379,10 +5330,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_scprintf_p_l[impl0]::_Locale': {
+    '_vsscanf_s_l[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
-            'NI$_scprintf_p_l[impl0]::_Locale'
+            'NI$_vsscanf_s_l[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    'vsscanf_s': {
+        'displayNameInHtml': 'vsscanf_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$vsscanf_s[impl0]'
         ],
         'decls': []
     },
@@ -5393,10 +5351,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vsscanf_l[impl0]::_Format': {
+    'vsscanf[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$_vsscanf_l[impl0]::_Format'
+            'NI$vsscanf[impl0]::_Format'
         ],
         'decls': []
     },
@@ -5407,38 +5365,59 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_vsscanf_s_l[impl0]::_Buffer': {
+    '__stdio_common_vsscanf': {
+        'displayNameInHtml': '__stdio_common_vsscanf(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_locale_t</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [],
+        'decls': [
+            'FB$__stdio_common_vsscanf[decl0]'
+        ]
+    },
+    'vsscanf[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_vsscanf_s_l[impl0]::_Buffer'
+            'NI$vsscanf[impl0]::_Buffer'
         ],
         'decls': []
     },
-    '_vsscanf_s_l[impl0]::_Locale': {
+    '_vsscanf_s_l': {
+        'displayNameInHtml': '_vsscanf_s_l(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$_vsscanf_s_l[impl0]'
+        ],
+        'decls': []
+    },
+    'vsscanf_s[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$vsscanf_s[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_scprintf_p_l[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
-            'NI$_vsscanf_s_l[impl0]::_Locale'
+            'NI$_scprintf_p_l[impl0]::_Locale'
         ],
         'decls': []
     },
-    '_scprintf_p[impl0]::_Format': {
+    '_scprintf_p_l[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$_scprintf_p[impl0]::_Format'
+            'NI$_scprintf_p_l[impl0]::_Format'
         ],
         'decls': []
     },
-    '_vsscanf_s_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
+    '_vsscanf_s_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_vsscanf_s_l[impl0]::_Format'
+            'NI$_vsscanf_s_l[impl0]::_ArgList'
         ],
         'decls': []
     },
-    '_scprintf[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
+    '_vsscanf_l': {
+        'displayNameInHtml': '_vsscanf_l(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
         'impls': [
-            'NI$_scprintf[impl0]::_Format'
+            'FB$_vsscanf_l[impl0]'
         ],
         'decls': []
     },
@@ -5456,45 +5435,80 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vsscanf[impl0]::_Format': {
+    '_scprintf[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$vsscanf[impl0]::_Format'
+            'NI$_scprintf[impl0]::_Format'
         ],
         'decls': []
     },
-    '_vsscanf_l': {
-        'displayNameInHtml': '_vsscanf_l(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">_locale_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
-        'impls': [
-            'FB$_vsscanf_l[impl0]'
-        ],
-        'decls': []
-    },
-    'vsscanf_s2[impl0]::_Format': {
+    '_vsscanf_l[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
-            'NI$vsscanf_s2[impl0]::_Format'
+            'NI$_vsscanf_l[impl0]::_Format'
         ],
         'decls': []
     },
-    '_sscanf_l[impl0]::_Locale': {
+    '_vsscanf_s_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_vsscanf_s_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_scprintf_p[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_scprintf_p[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_vsscanf_s_l[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_vsscanf_s_l[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_sscanf_s_l[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
-            'NI$_sscanf_l[impl0]::_Locale'
+            'NI$_sscanf_s_l[impl0]::_Locale'
         ],
         'decls': []
     },
-    '_sscanf_l[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
+    'sscanf_s[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
         'impls': [
-            'NI$_sscanf_l[impl0]::_Buffer'
+            'NI$sscanf_s[impl0]::_Format'
         ],
         'decls': []
     },
-    'sscanf_s[impl0]::_Buffer': {
+    '_sscanf_s_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_sscanf_s_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'vsscanf_s2[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$sscanf_s[impl0]::_Buffer'
+            'NI$vsscanf_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_sscanf_l[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$_sscanf_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'sscanf[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$sscanf[impl0]::_Format'
         ],
         'decls': []
     },
@@ -5512,17 +5526,22 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_snscanf_l[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$_snscanf_l[impl0]::_BufferCount'
-        ],
-        'decls': []
-    },
     '_snscanf_l[impl0]::_Format': {
         'displayNameInHtml': '_Format',
         'impls': [
             'NI$_snscanf_l[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    'vsscanf_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">vsscanf_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_sscanf_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_sscanf_l[impl0]::_Locale'
         ],
         'decls': []
     },
@@ -5533,64 +5552,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vsscanf_s2[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vsscanf_s2[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'sscanf_s[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$sscanf_s[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'sscanf[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$sscanf[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_sscanf_s_l[impl0]::_Buffer': {
+    'sscanf_s[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_sscanf_s_l[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_sscanf_s_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_sscanf_s_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    'vsscanf_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">vsscanf_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_sscanf_l[impl0]::_Format': {
-        'displayNameInHtml': '_Format',
-        'impls': [
-            'NI$_sscanf_l[impl0]::_Format'
-        ],
-        'decls': []
-    },
-    '_sscanf_s_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_sscanf_s_l[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    'vsscanf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$vsscanf_s[impl0]::_ArgList'
+            'NI$sscanf_s[impl0]::_Buffer'
         ],
         'decls': []
     },
@@ -5601,24 +5566,45 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vsscanf_s2[impl0]::_Buffer': {
+    '_sscanf_l[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$vsscanf_s2[impl0]::_Buffer'
+            'NI$_sscanf_l[impl0]::_Buffer'
         ],
         'decls': []
     },
-    '_snscanf_s_l[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
+    '_snscanf_l[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
         'impls': [
-            'NI$_snscanf_s_l[impl0]::_Locale'
+            'NI$_snscanf_l[impl0]::_BufferCount'
         ],
         'decls': []
     },
-    '_snscanf[impl0]::_Buffer': {
+    'vsscanf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vsscanf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'vsscanf_s2[impl0]::_Format': {
+        'displayNameInHtml': '_Format',
+        'impls': [
+            'NI$vsscanf_s2[impl0]::_Format'
+        ],
+        'decls': []
+    },
+    '_sscanf_s_l[impl0]::_Buffer': {
         'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_snscanf[impl0]::_Buffer'
+            'NI$_sscanf_s_l[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    'vsscanf_s2[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$vsscanf_s2[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -5626,13 +5612,6 @@ referencedSymbols = {
         'displayNameInHtml': '_Buffer',
         'impls': [
             'NI$_snscanf_s[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_snscanf_s[impl0]::_BufferCount': {
-        'displayNameInHtml': '_BufferCount',
-        'impls': [
-            'NI$_snscanf_s[impl0]::_BufferCount'
         ],
         'decls': []
     },
@@ -5657,6 +5636,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_snscanf_s[impl0]::_BufferCount': {
+        'displayNameInHtml': '_BufferCount',
+        'impls': [
+            'NI$_snscanf_s[impl0]::_BufferCount'
+        ],
+        'decls': []
+    },
     '_snscanf[impl0]::_BufferCount': {
         'displayNameInHtml': '_BufferCount',
         'impls': [
@@ -5678,52 +5664,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_fprintf_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
+    '_snscanf_s_l[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
         'impls': [
-            'NI$_fprintf_l[impl0]::_ArgList'
+            'NI$_snscanf_s_l[impl0]::_Locale'
         ],
         'decls': []
     },
-    'fprintf[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
+    '_snscanf[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$fprintf[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_fprintf_s_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_fprintf_s_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_fprintf_s_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_fprintf_s_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'fprintf_s[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$fprintf_s[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    'fprintf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$fprintf_s[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'fprintf[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$fprintf[impl0]::_Result'
+            'NI$_snscanf[impl0]::_Buffer'
         ],
         'decls': []
     },
@@ -5734,10 +5685,24 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_printf_p[impl0]::_Result': {
+    '_fprintf_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_fprintf_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'fprintf[impl0]::_Result': {
         'displayNameInHtml': '_Result',
         'impls': [
-            'NI$_printf_p[impl0]::_Result'
+            'NI$fprintf[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    'fprintf[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$fprintf[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -5745,6 +5710,69 @@ referencedSymbols = {
         'displayNameInHtml': '_ArgList',
         'impls': [
             'NI$printf[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_printf_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_printf_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_printf_s_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_printf_s_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_printf_p_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_printf_p_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_fprintf_p[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_fprintf_p[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_printf_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_printf_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_fprintf_p_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_fprintf_p_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_printf_p[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_printf_p[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    'fprintf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$fprintf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'printf_s[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$printf_s[impl0]::_Result'
         ],
         'decls': []
     },
@@ -5762,48 +5790,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_printf_s_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_printf_s_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_fprintf_p[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_fprintf_p[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_printf_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_printf_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_fprintf_p_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_fprintf_p_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'printf[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$printf[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_printf_p_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_printf_p_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
     '_fprintf_p[impl0]::_Result': {
         'displayNameInHtml': '_Result',
         'impls': [
@@ -5811,10 +5797,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_printf_l[impl0]::_ArgList': {
+    '_fprintf_s_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_fprintf_s_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_fprintf_s_l[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_printf_l[impl0]::_ArgList'
+            'NI$_fprintf_s_l[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -5825,10 +5818,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'printf_s[impl0]::_Result': {
+    'printf[impl0]::_Result': {
         'displayNameInHtml': '_Result',
         'impls': [
-            'NI$printf_s[impl0]::_Result'
+            'NI$printf[impl0]::_Result'
         ],
         'decls': []
     },
@@ -5839,59 +5832,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'fprintf_s[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$fprintf_s[impl0]::_Result'
+        ],
+        'decls': []
+    },
     '_printf_p_l[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
             'NI$_printf_p_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vsprintf_s_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_vsprintf_s_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    'fscanf[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$fscanf[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_fscanf_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_fscanf_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'scanf[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$scanf[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    'fscanf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$fscanf_s[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_fscanf_s_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_fscanf_s_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    'scanf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$scanf_s[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -5902,6 +5853,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_scanf_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_scanf_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
     '_fscanf_l[impl0]::_Result': {
         'displayNameInHtml': '_Result',
         'impls': [
@@ -5909,10 +5867,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_fscanf_s_l[impl0]::_ArgList': {
+    '_fscanf_l[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_fscanf_s_l[impl0]::_ArgList'
+            'NI$_fscanf_l[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -5930,6 +5888,27 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'fscanf[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$fscanf[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_fscanf_s_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_fscanf_s_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'fscanf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$fscanf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
     '_scanf_l[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
@@ -5941,6 +5920,20 @@ referencedSymbols = {
         'displayNameInHtml': '_Result',
         'impls': [
             'NI$scanf[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    'scanf[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$scanf[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_fscanf_s_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_fscanf_s_l[impl0]::_Result'
         ],
         'decls': []
     },
@@ -5958,20 +5951,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vsnprintf[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$vsnprintf[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_scanf_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_scanf_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
     'scanf_s[impl0]::_Result': {
         'displayNameInHtml': '_Result',
         'impls': [
@@ -5979,73 +5958,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_sprintf_l[impl0]::_ArgList': {
+    'scanf_s[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_sprintf_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_sprintf_s_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_sprintf_s_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_vsprintf_p_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_vsprintf_p_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    'sprintf_s[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$sprintf_s[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    'sprintf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$sprintf_s[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_sprintf_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_sprintf_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_s_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_vsnprintf_s_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_vsnprintf_c_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_vsnprintf_c_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_vscprintf_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_vscprintf_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    'sprintf[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$sprintf[impl0]::_Result'
+            'NI$scanf_s[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -6056,10 +5972,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_sprintf_s_l[impl0]::_Result': {
+    '_vsprintf_p_l[impl0]::_Result': {
         'displayNameInHtml': '_Result',
         'impls': [
-            'NI$_sprintf_s_l[impl0]::_Result'
+            'NI$_vsprintf_p_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_vsnprintf_c_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_vsnprintf_c_l[impl0]::_Result'
         ],
         'decls': []
     },
@@ -6070,24 +5993,52 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_snprintf[impl0]::_Result': {
+    '_sprintf_l[impl0]::_Result': {
         'displayNameInHtml': '_Result',
         'impls': [
-            'NI$_snprintf[impl0]::_Result'
+            'NI$_sprintf_l[impl0]::_Result'
         ],
         'decls': []
     },
-    'sprintf_s2[impl0]::_ArgList': {
+    'sprintf[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$sprintf[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_sprintf_l[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$sprintf_s2[impl0]::_ArgList'
+            'NI$_sprintf_l[impl0]::_ArgList'
         ],
         'decls': []
     },
-    '_snprintf_c_l[impl0]::_Result': {
+    '_vsnprintf_s_l[impl0]::_Result': {
         'displayNameInHtml': '_Result',
         'impls': [
-            'NI$_snprintf_c_l[impl0]::_Result'
+            'NI$_vsnprintf_s_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_vscprintf_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_vscprintf_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_vsprintf_s_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_vsprintf_s_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    'vsnprintf[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$vsnprintf[impl0]::_Result'
         ],
         'decls': []
     },
@@ -6098,80 +6049,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_snprintf_s_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_snprintf_s_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_snprintf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_snprintf_s[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_snprintf_s2[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_snprintf_s2[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
     '_snprintf_c[impl0]::_Result': {
         'displayNameInHtml': '_Result',
         'impls': [
             'NI$_snprintf_c[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_snprintf_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_snprintf_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_snprintf[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_snprintf[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_sprintf_p_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_sprintf_p_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_snprintf_c[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_snprintf_c[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_sprintf_p_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_sprintf_p_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_snprintf_s[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_snprintf_s[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    'snprintf[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$snprintf[impl0]::_Result'
         ],
         'decls': []
     },
@@ -6182,24 +6063,38 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_snprintf[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_snprintf[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_sprintf_s_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_sprintf_s_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_snprintf_s_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_snprintf_s_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    'sprintf_s2[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$sprintf_s2[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
     'snprintf[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
             'NI$snprintf[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_snprintf_c_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_snprintf_c_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_snprintf_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_snprintf_l[impl0]::_Result'
         ],
         'decls': []
     },
@@ -6210,31 +6105,129 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_snprintf_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_snprintf_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'sprintf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$sprintf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'sprintf_s[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$sprintf_s[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_sprintf_p_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_sprintf_p_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    'snprintf[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$snprintf[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_snprintf[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_snprintf[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_snprintf_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_snprintf_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_sprintf_s_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_sprintf_s_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_sprintf_p_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_sprintf_p_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_snprintf_c_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_snprintf_c_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_snprintf_c_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_snprintf_c_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_snprintf_c[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_snprintf_c[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_sscanf_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_sscanf_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_scprintf[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_scprintf[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_sscanf_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_sscanf_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_scprintf_p_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_scprintf_p_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_snprintf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_snprintf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
     '_scprintf[impl0]::_Result': {
         'displayNameInHtml': '_Result',
         'impls': [
             'NI$_scprintf[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    'sscanf[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$sscanf[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_scprintf_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_scprintf_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_scprintf_p_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_scprintf_p_l[impl0]::_Result'
         ],
         'decls': []
     },
@@ -6252,10 +6245,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_sscanf_l[impl0]::_ArgList': {
+    'sscanf[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$sscanf[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    'sscanf[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_sscanf_l[impl0]::_ArgList'
+            'NI$sscanf[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -6266,6 +6266,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_snprintf_s[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_snprintf_s[impl0]::_Result'
+        ],
+        'decls': []
+    },
     '_sscanf_s_l[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
@@ -6273,38 +6280,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'sscanf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$sscanf_s[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_sscanf_l[impl0]::_Result': {
+    '_scprintf_p_l[impl0]::_Result': {
         'displayNameInHtml': '_Result',
         'impls': [
-            'NI$_sscanf_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_snscanf_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_snscanf_l[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    'sscanf[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$sscanf[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_scprintf_p_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_scprintf_p_l[impl0]::_ArgList'
+            'NI$_scprintf_p_l[impl0]::_Result'
         ],
         'decls': []
     },
@@ -6315,52 +6294,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'sscanf_s[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$sscanf_s[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_scprintf[impl0]::_ArgList': {
+    '_snprintf_s2[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_scprintf[impl0]::_ArgList'
+            'NI$_snprintf_s2[impl0]::_ArgList'
         ],
         'decls': []
     },
-    '_snscanf_l[impl0]::_ArgList': {
+    '_scprintf_l[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
-            'NI$_snscanf_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_snscanf_s_l[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_snscanf_s_l[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_snscanf_s[impl0]::_ArgList': {
-        'displayNameInHtml': '_ArgList',
-        'impls': [
-            'NI$_snscanf_s[impl0]::_ArgList'
-        ],
-        'decls': []
-    },
-    '_snscanf[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_snscanf[impl0]::_Result'
-        ],
-        'decls': []
-    },
-    '_snscanf_s_l[impl0]::_Result': {
-        'displayNameInHtml': '_Result',
-        'impls': [
-            'NI$_snscanf_s_l[impl0]::_Result'
+            'NI$_scprintf_l[impl0]::_ArgList'
         ],
         'decls': []
     },
@@ -6371,451 +6315,507 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_snscanf_s_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_snscanf_s_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_snscanf[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_snscanf[impl0]::_Result'
+        ],
+        'decls': []
+    },
     '_snscanf[impl0]::_ArgList': {
         'displayNameInHtml': '_ArgList',
         'impls': [
             'NI$_snscanf[impl0]::_ArgList'
         ],
         'decls': []
+    },
+    'sscanf_s[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$sscanf_s[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_snscanf_l[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_snscanf_l[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_snscanf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$_snscanf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    'sscanf_s[impl0]::_ArgList': {
+        'displayNameInHtml': '_ArgList',
+        'impls': [
+            'NI$sscanf_s[impl0]::_ArgList'
+        ],
+        'decls': []
+    },
+    '_snscanf_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_snscanf_l[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_snscanf_s_l[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_snscanf_s_l[impl0]::_Result'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
-    'NI$FILE': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
-    'FB$__acrt_iob_func[decl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
-    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$va_list': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
     'NI$__vcrt_assert_va_start_is_not_reference': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
-    'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'FB$__local_stdio_printf_options[impl0]': { 'htmlFileName': 'corecrt_stdio_config.h', 'displayName': 'corecrt_stdio_config.h' },
-    'FB$__local_stdio_scanf_options[impl0]': { 'htmlFileName': 'corecrt_stdio_config.h', 'displayName': 'corecrt_stdio_config.h' },
-    'NI$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
-    'NI$fpos_t': null,
-    'FB$tmpnam_s[decl0]': null,
-    'FB$gets_s[decl0]': null,
-    'FB$gets_s2[impl0]': null,
+    'FB$__local_stdio_printf_options[impl0]': { 'htmlFileName': 'corecrt_stdio_config.h', 'displayName': 'corecrt_stdio_config.h' },
+    'NI$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'FB$__local_stdio_scanf_options[impl0]': { 'htmlFileName': 'corecrt_stdio_config.h', 'displayName': 'corecrt_stdio_config.h' },
+    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$gets_s2[impl0]::_Buffer': null,
     'FB$perror[decl0]': null,
     'FB$perror[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
-    'NI$_vprintf_l[impl0]::_ArgList': null,
-    'NI$_vprintf_p_l[impl0]::_Format': null,
-    'NI$fprintf[impl0]::_Stream': null,
-    'NI$vprintf_s[impl0]::_ArgList': null,
-    'NI$_vprintf_l[impl0]::_Locale': null,
-    'NI$_vprintf_p_l[impl0]::_Locale': null,
-    'NI$_vprintf_p_l[impl0]::_ArgList': null,
-    'NI$vprintf[impl0]::_ArgList': null,
-    'NI$_vprintf_s_l[impl0]::_Locale': null,
-    'NI$vprintf_s[impl0]::_Format': null,
-    'NI$_vprintf_p[impl0]::_Format': null,
-    'NI$_fprintf_l[impl0]::_Format': null,
-    'NI$vprintf[impl0]::_Format': null,
-    'NI$_fprintf_l[impl0]::_Stream': null,
-    'NI$_vprintf_p[impl0]::_ArgList': null,
-    'NI$_fprintf_l[impl0]::_Locale': null,
-    'NI$_vprintf_s_l[impl0]::_Format': null,
-    'NI$_vprintf_s_l[impl0]::_ArgList': null,
-    'FB$tmpnam_s2[impl0]': null,
-    'NI$tmpnam_s2[impl0]::_Buffer': null,
-    'FB$__stdio_common_vfprintf[decl0]': null,
-    'NI$_vfprintf_l[impl0]::_Format': null,
-    'NI$_vfprintf_s_l[impl0]::_Format': null,
-    'NI$_vfprintf_s_l[impl0]::_ArgList': null,
-    'NI$vfprintf_s[impl0]::_Stream': null,
-    'NI$vfprintf_s[impl0]::_Format': null,
+    'FB$gets_s2[impl0]': null,
+    'NI$fpos_t': null,
+    'FB$gets_s[decl0]': null,
+    'FB$tmpnam_s[decl0]': null,
     'FB$__stdio_common_vfprintf_s[decl0]': null,
-    'FB$_vfprintf_l[impl0]': null,
-    'NI$_vfprintf_l[impl0]::_Locale': null,
-    'NI$_vfprintf_l[impl0]::_ArgList': null,
-    'NI$vfprintf[impl0]::_Format': null,
-    'NI$vfprintf[impl0]::_Stream': null,
-    'NI$vfprintf[impl0]::_ArgList': null,
-    'NI$_vfprintf_s_l[impl0]::_Stream': null,
-    'NI$_vfprintf_s_l[impl0]::_Locale': null,
-    'FB$_vfprintf_s_l[impl0]': null,
     'FB$__stdio_common_vfprintf_p[decl0]': null,
+    'FB$_vfprintf_l[impl0]': null,
     'NI$_vfprintf_l[impl0]::_Stream': null,
-    'NI$_vfprintf_p[impl0]::_Format': null,
-    'NI$_vfprintf_p_l[impl0]::_Format': null,
-    'NI$_vfprintf_p_l[impl0]::_Locale': null,
-    'NI$_vfprintf_p[impl0]::_Stream': null,
-    'FB$_vfprintf_p_l[impl0]': null,
-    'NI$_vfprintf_p_l[impl0]::_Stream': null,
+    'NI$_vfprintf_l[impl0]::_Format': null,
+    'FB$__stdio_common_vfprintf[decl0]': null,
+    'NI$vfprintf_s[impl0]::_Stream': null,
+    'NI$_vfprintf_s_l[impl0]::_Locale': null,
     'NI$_vfprintf_p_l[impl0]::_ArgList': null,
     'NI$_vfprintf_p[impl0]::_ArgList': null,
-    'NI$_vprintf_l[impl0]::_Format': null,
+    'NI$_vfprintf_s_l[impl0]::_ArgList': null,
     'NI$vfprintf_s[impl0]::_ArgList': null,
-    'NI$_vsnprintf_l[impl0]::_BufferCount': null,
-    'NI$vsnprintf[impl0]::_Buffer': null,
-    'NI$_scanf_s_l[impl0]::_Locale': null,
-    'NI$vsnprintf[impl0]::_BufferCount': null,
-    'FB$__stdio_common_vsprintf[decl0]': null,
+    'FB$_vfprintf_p_l[impl0]': null,
+    'NI$_vprintf_l[impl0]::_Format': null,
+    'NI$_vfprintf_p[impl0]::_Format': null,
+    'NI$_vfprintf_l[impl0]::_ArgList': null,
+    'NI$_vfprintf_p_l[impl0]::_Locale': null,
+    'NI$_vfprintf_p_l[impl0]::_Format': null,
+    'NI$_vfprintf_p_l[impl0]::_Stream': null,
+    'NI$_vfprintf_l[impl0]::_Locale': null,
+    'NI$vfprintf_s[impl0]::_Format': null,
+    'FB$_vfprintf_s_l[impl0]': null,
+    'NI$_vfprintf_p[impl0]::_Stream': null,
+    'NI$vfprintf[impl0]::_Stream': null,
+    'NI$_vfprintf_s_l[impl0]::_Format': null,
+    'NI$vfprintf[impl0]::_ArgList': null,
+    'NI$vfprintf[impl0]::_Format': null,
+    'NI$_vfprintf_s_l[impl0]::_Stream': null,
+    'NI$_vprintf_s_l[impl0]::_ArgList': null,
+    'NI$_vprintf_p_l[impl0]::_Locale': null,
+    'NI$_vprintf_s_l[impl0]::_Locale': null,
+    'NI$_vprintf_p_l[impl0]::_Format': null,
+    'NI$_vprintf_p[impl0]::_Format': null,
+    'NI$_vprintf_p[impl0]::_ArgList': null,
+    'NI$vprintf_s[impl0]::_Format': null,
+    'NI$_fprintf_l[impl0]::_Stream': null,
+    'NI$_vprintf_l[impl0]::_ArgList': null,
+    'NI$_vprintf_s_l[impl0]::_Format': null,
+    'NI$_vprintf_l[impl0]::_Locale': null,
+    'NI$vprintf[impl0]::_Format': null,
+    'NI$vprintf_s[impl0]::_ArgList': null,
+    'NI$_fprintf_l[impl0]::_Format': null,
+    'NI$vprintf[impl0]::_ArgList': null,
+    'NI$fprintf[impl0]::_Stream': null,
+    'NI$_vprintf_p_l[impl0]::_ArgList': null,
+    'NI$_fprintf_l[impl0]::_Locale': null,
+    'FB$tmpnam_s2[impl0]': null,
+    'NI$tmpnam_s2[impl0]::_Buffer': null,
+    'FB$__acrt_iob_func[decl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'NI$FILE': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'NI$_fprintf_s_l[impl0]::_Format': null,
+    'NI$_fprintf_p_l[impl0]::_Stream': null,
+    'NI$_fprintf_p_l[impl0]::_Format': null,
+    'NI$_fprintf_p_l[impl0]::_Locale': null,
+    'NI$fprintf_s[impl0]::_Stream': null,
+    'NI$_fprintf_s_l[impl0]::_Locale': null,
+    'NI$_printf_l[impl0]::_Format': null,
+    'NI$_fprintf_p[impl0]::_Format': null,
+    'NI$printf[impl0]::_Format': null,
+    'NI$fprintf_s[impl0]::_Format': null,
+    'NI$_printf_l[impl0]::_Locale': null,
+    'NI$fprintf[impl0]::_Format': null,
+    'NI$_fprintf_s_l[impl0]::_Stream': null,
+    'NI$_fprintf_p[impl0]::_Stream': null,
+    'FB$_vfscanf_s_l[impl0]': null,
+    'NI$_printf_p_l[impl0]::_Format': null,
+    'NI$_vfscanf_l[impl0]::_Stream': null,
+    'NI$vfscanf[impl0]::_Format': null,
+    'NI$_vfscanf_s_l[impl0]::_ArgList': null,
+    'NI$_printf_p_l[impl0]::_Locale': null,
+    'NI$_vfscanf_s_l[impl0]::_Stream': null,
+    'NI$_vfscanf_l[impl0]::_Locale': null,
+    'NI$_printf_s_l[impl0]::_Format': null,
+    'NI$_vfscanf_l[impl0]::_Format': null,
+    'NI$_vfscanf_l[impl0]::_ArgList': null,
+    'NI$_printf_p[impl0]::_Format': null,
+    'NI$vfscanf[impl0]::_Stream': null,
+    'NI$_vfscanf_s_l[impl0]::_Locale': null,
+    'NI$vfscanf[impl0]::_ArgList': null,
+    'FB$__stdio_common_vfscanf[decl0]': null,
+    'NI$_vfscanf_s_l[impl0]::_Format': null,
+    'NI$printf_s[impl0]::_Format': null,
+    'NI$_printf_s_l[impl0]::_Locale': null,
+    'FB$_vfscanf_l[impl0]': null,
+    'NI$_fscanf_l[impl0]::_Format': null,
+    'NI$_vscanf_s_l[impl0]::_Format': null,
+    'NI$_fscanf_l[impl0]::_Locale': null,
+    'NI$_vscanf_l[impl0]::_Format': null,
+    'NI$vscanf[impl0]::_ArgList': null,
+    'NI$vscanf_s[impl0]::_Format': null,
+    'NI$fscanf[impl0]::_Stream': null,
+    'NI$fscanf[impl0]::_Format': null,
+    'NI$vfscanf_s[impl0]::_Stream': null,
+    'NI$vfscanf_s[impl0]::_Format': null,
+    'NI$_vscanf_l[impl0]::_ArgList': null,
+    'NI$vfscanf_s[impl0]::_ArgList': null,
+    'NI$vscanf[impl0]::_Format': null,
+    'NI$_vscanf_l[impl0]::_Locale': null,
+    'NI$_vscanf_s_l[impl0]::_Locale': null,
+    'NI$_vscanf_s_l[impl0]::_ArgList': null,
+    'NI$vscanf_s[impl0]::_ArgList': null,
+    'NI$_fscanf_l[impl0]::_Stream': null,
+    'NI$_scanf_l[impl0]::_Format': null,
+    'NI$scanf[impl0]::_Format': null,
     'NI$_scanf_s_l[impl0]::_Format': null,
-    'FB$_vsnprintf_l[impl0]': null,
+    'NI$_fscanf_s_l[impl0]::_Format': null,
     'FB$__stdio_common_vsnprintf_s[decl0]': null,
-    'NI$_vsnprintf_l[impl0]::_Buffer': null,
-    'NI$_vsnprintf_l[impl0]::_Format': null,
-    'NI$_vsnprintf_l[impl0]::_Locale': null,
-    'NI$_vsnprintf_l[impl0]::_ArgList': null,
-    'NI$_vsnprintf[impl0]::_Buffer': null,
     'NI$scanf_s[impl0]::_Format': null,
-    'FB$__stdio_common_vsprintf_p[decl0]': null,
+    'NI$_scanf_l[impl0]::_Locale': null,
     'FB$__stdio_common_vsprintf_s[decl0]': null,
+    'FB$__stdio_common_vsprintf_p[decl0]': null,
+    'NI$_scanf_s_l[impl0]::_Locale': null,
+    'NI$fscanf_s[impl0]::_Stream': null,
+    'FB$_vsnprintf_l[impl0]': null,
+    'NI$_fscanf_s_l[impl0]::_Stream': null,
+    'NI$fscanf_s[impl0]::_Format': null,
+    'NI$_fscanf_s_l[impl0]::_Locale': null,
+    'FB$__stdio_common_vsprintf[decl0]': null,
+    'NI$vsnprintf[impl0]::_BufferCount': null,
+    'NI$vsnprintf[impl0]::_Buffer': null,
+    'FB$vsnprintf[impl0]': null,
+    'NI$_vsnprintf_l[impl0]::_BufferCount': null,
+    'NI$_vsnprintf_l[impl0]::_Format': null,
     'FB$_vsnprintf[impl0]': null,
+    'NI$_vsnprintf_l[impl0]::_Locale': null,
+    'NI$_vsnprintf[impl0]::_Buffer': null,
+    'NI$_vsnprintf_l[impl0]::_ArgList': null,
     'NI$_vsnprintf[impl0]::_BufferCount': null,
     'NI$_vsnprintf[impl0]::_Format': null,
     'NI$_vsnprintf[impl0]::_ArgList': null,
-    'FB$vsnprintf[impl0]': null,
-    'NI$_fprintf_p[impl0]::_Stream': null,
-    'NI$_fprintf_s_l[impl0]::_Locale': null,
-    'NI$_fprintf_p[impl0]::_Format': null,
-    'NI$fprintf_s[impl0]::_Stream': null,
-    'NI$_printf_l[impl0]::_Locale': null,
-    'NI$_fprintf_p_l[impl0]::_Format': null,
-    'NI$printf[impl0]::_Format': null,
-    'NI$_fprintf_s_l[impl0]::_Stream': null,
-    'NI$fprintf_s[impl0]::_Format': null,
-    'NI$_fprintf_p_l[impl0]::_Locale': null,
-    'NI$_printf_l[impl0]::_Format': null,
-    'NI$fprintf[impl0]::_Format': null,
-    'NI$_fprintf_s_l[impl0]::_Format': null,
-    'NI$_fprintf_p_l[impl0]::_Stream': null,
-    'NI$_vfscanf_l[impl0]::_ArgList': null,
-    'FB$_vfscanf_s_l[impl0]': null,
-    'NI$_vfscanf_s_l[impl0]::_Stream': null,
-    'NI$_vfscanf_s_l[impl0]::_Format': null,
-    'NI$_vfscanf_s_l[impl0]::_ArgList': null,
-    'NI$printf_s[impl0]::_Format': null,
-    'FB$__stdio_common_vfscanf[decl0]': null,
-    'NI$_vfscanf_s_l[impl0]::_Locale': null,
-    'NI$_printf_p[impl0]::_Format': null,
-    'NI$_printf_p_l[impl0]::_Locale': null,
-    'NI$_printf_s_l[impl0]::_Locale': null,
-    'NI$_printf_s_l[impl0]::_Format': null,
-    'NI$_vfscanf_l[impl0]::_Format': null,
-    'FB$_vfscanf_l[impl0]': null,
-    'NI$_printf_p_l[impl0]::_Format': null,
-    'NI$_vfscanf_l[impl0]::_Locale': null,
-    'NI$vfscanf[impl0]::_Stream': null,
-    'NI$_vfscanf_l[impl0]::_Stream': null,
-    'NI$vfscanf[impl0]::_Format': null,
-    'NI$vfscanf[impl0]::_ArgList': null,
-    'NI$_fscanf_l[impl0]::_Stream': null,
-    'NI$vscanf_s[impl0]::_ArgList': null,
-    'NI$_fscanf_l[impl0]::_Format': null,
-    'NI$_fscanf_l[impl0]::_Locale': null,
-    'NI$_vscanf_l[impl0]::_Locale': null,
-    'NI$vscanf[impl0]::_Format': null,
-    'NI$fscanf[impl0]::_Stream': null,
-    'NI$fscanf[impl0]::_Format': null,
-    'NI$_vscanf_l[impl0]::_Format': null,
-    'NI$vfscanf_s[impl0]::_ArgList': null,
-    'NI$_vscanf_s_l[impl0]::_Locale': null,
-    'NI$vfscanf_s[impl0]::_Stream': null,
-    'NI$vscanf[impl0]::_ArgList': null,
-    'NI$_vscanf_s_l[impl0]::_ArgList': null,
-    'NI$vscanf_s[impl0]::_Format': null,
-    'NI$vfscanf_s[impl0]::_Format': null,
-    'NI$_vscanf_s_l[impl0]::_Format': null,
-    'NI$_vscanf_l[impl0]::_ArgList': null,
-    'NI$_scanf_l[impl0]::_Locale': null,
-    'NI$scanf[impl0]::_Format': null,
-    'NI$_fscanf_s_l[impl0]::_Locale': null,
-    'NI$_fscanf_s_l[impl0]::_Format': null,
-    'NI$_scanf_l[impl0]::_Format': null,
-    'NI$fscanf_s[impl0]::_Stream': null,
-    'NI$_fscanf_s_l[impl0]::_Stream': null,
-    'NI$fscanf_s[impl0]::_Format': null,
-    'NI$_vsprintf_s_l[impl0]::_Locale': null,
-    'NI$vsprintf_s[impl0]::_ArgList': null,
-    'NI$vsnprintf[impl0]::_ArgList': null,
-    'NI$_vsprintf_l[impl0]::_Format': null,
-    'NI$_vsprintf_s_l[impl0]::_ArgList': null,
-    'NI$vsnprintf[impl0]::_Format': null,
-    'FB$_vsprintf_l[impl0]': null,
-    'NI$vsprintf_s[impl0]::_Format': null,
-    'NI$vsprintf_s2[impl0]::_ArgList': null,
-    'NI$vsprintf[impl0]::_Buffer': null,
-    'FB$_vsprintf_s_l[impl0]': null,
-    'NI$vsprintf[impl0]::_Format': null,
-    'NI$vsprintf[impl0]::_ArgList': null,
-    'NI$_vsprintf_s_l[impl0]::_BufferCount': null,
-    'NI$_vsprintf_s_l[impl0]::_Buffer': null,
-    'NI$_vsprintf_l[impl0]::_Locale': null,
-    'NI$_vsprintf_s_l[impl0]::_Format': null,
-    'NI$vsprintf_s[impl0]::_Buffer': null,
+    'NI$_vsnprintf_l[impl0]::_Buffer': null,
     'NI$vsprintf_s[impl0]::_BufferCount': null,
-    'NI$_vsprintf_l[impl0]::_Buffer': null,
-    'FB$vsprintf_s[impl0]': null,
-    'FB$vsprintf_s2[impl0]': null,
-    'NI$vsprintf_s2[impl0]::_Buffer': null,
-    'NI$vsprintf_s2[impl0]::_Format': null,
     'NI$_vsprintf_l[impl0]::_ArgList': null,
-    'NI$_vsnprintf_s[impl0]::_BufferCount': null,
-    'NI$_vsnprintf_s[impl0]::_Buffer': null,
-    'NI$_vsnprintf_s_l[impl0]::_Format': null,
-    'NI$_vsnprintf_s[impl0]::_MaxCount': null,
-    'NI$_vsnprintf_s[impl0]::_Format': null,
-    'FB$_vsnprintf_s_l[impl0]': null,
-    'NI$_vsnprintf_s[impl0]::_ArgList': null,
-    'FB$_vsnprintf_s2[impl0]': null,
-    'NI$_vsnprintf_s2[impl0]::_Buffer': null,
+    'NI$_vsprintf_l[impl0]::_Format': null,
+    'NI$vsprintf_s[impl0]::_ArgList': null,
+    'NI$_vsprintf_l[impl0]::_Locale': null,
+    'FB$_vsprintf_s_l[impl0]': null,
+    'NI$_vsprintf_l[impl0]::_Buffer': null,
+    'NI$vsprintf[impl0]::_ArgList': null,
+    'NI$_vsprintf_s_l[impl0]::_Buffer': null,
+    'NI$vsprintf_s2[impl0]::_Buffer': null,
+    'NI$vsnprintf[impl0]::_Format': null,
+    'NI$vsnprintf[impl0]::_ArgList': null,
+    'NI$vsprintf_s[impl0]::_Buffer': null,
+    'NI$vsprintf[impl0]::_Format': null,
+    'NI$vsprintf_s[impl0]::_Format': null,
+    'NI$vsprintf_s2[impl0]::_Format': null,
+    'NI$_vsprintf_s_l[impl0]::_ArgList': null,
+    'FB$vsprintf_s2[impl0]': null,
+    'NI$vsprintf_s2[impl0]::_ArgList': null,
+    'FB$_vsprintf_l[impl0]': null,
+    'NI$vsprintf[impl0]::_Buffer': null,
+    'NI$_vsprintf_s_l[impl0]::_BufferCount': null,
+    'NI$_vsprintf_s_l[impl0]::_Locale': null,
+    'FB$vsprintf_s[impl0]': null,
+    'NI$_vsprintf_s_l[impl0]::_Format': null,
+    'NI$_vsprintf_p[impl0]::_Buffer': null,
+    'FB$_vsnprintf_s[impl0]': null,
     'NI$_vsprintf_p[impl0]::_ArgList': null,
-    'FB$_vsprintf_p_l[impl0]': null,
+    'NI$_vsprintf_p[impl0]::_BufferCount': null,
     'NI$_vsprintf_p_l[impl0]::_Buffer': null,
     'NI$_vsprintf_p_l[impl0]::_BufferCount': null,
     'NI$_vsprintf_p_l[impl0]::_ArgList': null,
-    'NI$_vsprintf_p[impl0]::_Buffer': null,
-    'NI$_vsprintf_p[impl0]::_BufferCount': null,
-    'NI$_vsprintf_p[impl0]::_Format': null,
-    'NI$_vsnprintf_s_l[impl0]::_Buffer': null,
     'NI$_vsnprintf_s_l[impl0]::_MaxCount': null,
     'NI$_vsnprintf_s_l[impl0]::_Locale': null,
-    'NI$_vsprintf_p_l[impl0]::_Format': null,
+    'NI$_vsnprintf_s[impl0]::_Buffer': null,
+    'NI$_vsnprintf_s[impl0]::_BufferCount': null,
     'NI$_vsprintf_p_l[impl0]::_Locale': null,
+    'FB$_vsnprintf_s_l[impl0]': null,
+    'NI$_vsnprintf_s[impl0]::_MaxCount': null,
     'NI$_vsnprintf_s_l[impl0]::_ArgList': null,
-    'FB$_vsnprintf_s[impl0]': null,
+    'FB$_vsprintf_p_l[impl0]': null,
+    'NI$_vsnprintf_s_l[impl0]::_Buffer': null,
+    'NI$_vsnprintf_s[impl0]::_ArgList': null,
+    'NI$_vsprintf_p_l[impl0]::_Format': null,
     'NI$_vsnprintf_s_l[impl0]::_BufferCount': null,
-    'NI$vsnprintf_s[impl0]::_ArgList': null,
-    'NI$_vsnprintf_s2[impl0]::_BufferCount': null,
-    'NI$_vscprintf_l[impl0]::_Locale': null,
-    'NI$_vscprintf_l[impl0]::_ArgList': null,
-    'NI$_vsnprintf_s2[impl0]::_ArgList': null,
+    'NI$_vsprintf_p[impl0]::_Format': null,
+    'NI$_vsnprintf_s_l[impl0]::_Format': null,
+    'NI$_vsnprintf_s[impl0]::_Format': null,
+    'FB$_vsnprintf_s2[impl0]': null,
+    'NI$_vsnprintf_s2[impl0]::_Buffer': null,
+    'FB$_vscprintf_p_l[impl0]': null,
+    'NI$_vscprintf_p_l[impl0]::_Locale': null,
     'NI$vsnprintf_s[impl0]::_Buffer': null,
+    'NI$_vscprintf_p_l[impl0]::_ArgList': null,
+    'NI$vsnprintf_s[impl0]::_BufferCount': null,
     'FB$_vscprintf_p[impl0]': null,
+    'NI$vsnprintf_s[impl0]::_Format': null,
+    'NI$_vsnprintf_s2[impl0]::_BufferCount': null,
+    'NI$_vsnprintf_s2[impl0]::_ArgList': null,
+    'NI$vsnprintf_s[impl0]::_ArgList': null,
     'NI$vsnprintf_s2[impl0]::_BufferCount': null,
     'NI$vsnprintf_s2[impl0]::_ArgList': null,
-    'NI$vsnprintf_s[impl0]::_BufferCount': null,
-    'NI$_vsnprintf_s2[impl0]::_Format': null,
-    'NI$vsnprintf_s2[impl0]::_Buffer': null,
+    'FB$vsnprintf_s2[impl0]': null,
+    'NI$vsnprintf_s2[impl0]::_Format': null,
     'FB$vsnprintf_s[impl0]': null,
+    'NI$vsnprintf_s2[impl0]::_Buffer': null,
     'NI$vsnprintf_s[impl0]::_MaxCount': null,
-    'NI$vsnprintf_s[impl0]::_Format': null,
-    'FB$_vscprintf_l[impl0]': null,
+    'NI$_vsnprintf_s2[impl0]::_Format': null,
+    'NI$_vscprintf_l[impl0]::_Format': null,
+    'NI$_vscprintf_l[impl0]::_Locale': null,
+    'NI$_vscprintf_l[impl0]::_ArgList': null,
     'NI$_vscprintf[impl0]::_Format': null,
     'NI$_vscprintf[impl0]::_ArgList': null,
-    'FB$_vscprintf_p_l[impl0]': null,
-    'NI$_vscprintf_l[impl0]::_Format': null,
-    'NI$vsnprintf_s2[impl0]::_Format': null,
+    'FB$_vscprintf_l[impl0]': null,
     'NI$_vscprintf_p_l[impl0]::_Format': null,
-    'NI$_vscprintf_p_l[impl0]::_Locale': null,
-    'FB$vsnprintf_s2[impl0]': null,
-    'NI$_vscprintf_p_l[impl0]::_ArgList': null,
+    'NI$_vsnprintf_c[impl0]::_Format': null,
+    'NI$_sprintf_l[impl0]::_Buffer': null,
+    'NI$_vsnprintf_c[impl0]::_ArgList': null,
     'NI$_sprintf_l[impl0]::_Format': null,
+    'NI$sprintf[impl0]::_Buffer': null,
+    'NI$_vscprintf_p[impl0]::_ArgList': null,
+    'NI$_vsnprintf_c[impl0]::_Buffer': null,
+    'FB$_vsnprintf_c_l[impl0]': null,
+    'NI$_vscprintf_p[impl0]::_Format': null,
+    'NI$_vsnprintf_c_l[impl0]::_BufferCount': null,
     'NI$_sprintf_l[impl0]::_Locale': null,
     'NI$sprintf[impl0]::_Format': null,
-    'NI$_vscprintf_p[impl0]::_Format': null,
     'NI$_sprintf_s_l[impl0]::_Buffer': null,
     'NI$_vsnprintf_c_l[impl0]::_Format': null,
-    'NI$_vscprintf_p[impl0]::_ArgList': null,
-    'NI$_vsnprintf_c[impl0]::_Format': null,
-    'NI$_vsnprintf_c_l[impl0]::_BufferCount': null,
-    'FB$_vsnprintf_c_l[impl0]': null,
     'NI$_vsnprintf_c_l[impl0]::_Locale': null,
-    'NI$_vsnprintf_c[impl0]::_Buffer': null,
     'NI$_vsnprintf_c[impl0]::_BufferCount': null,
-    'NI$_vsnprintf_c_l[impl0]::_ArgList': null,
-    'NI$_sprintf_l[impl0]::_Buffer': null,
     'NI$_vsnprintf_c_l[impl0]::_Buffer': null,
-    'NI$_vsnprintf_c[impl0]::_ArgList': null,
-    'NI$sprintf[impl0]::_Buffer': null,
-    'NI$sprintf_s[impl0]::_Buffer': null,
-    'NI$sprintf_s2[impl0]::_Buffer': null,
-    'NI$sprintf_s2[impl0]::_Format': null,
+    'NI$_vsnprintf_c_l[impl0]::_ArgList': null,
     'NI$_sprintf_s_l[impl0]::_Format': null,
-    'NI$sprintf_s[impl0]::_Format': null,
-    'NI$_sprintf_s_l[impl0]::_BufferCount': null,
     'NI$_sprintf_s_l[impl0]::_Locale': null,
+    'NI$sprintf_s[impl0]::_Buffer': null,
     'NI$sprintf_s[impl0]::_BufferCount': null,
-    'NI$snprintf[impl0]::_Buffer': null,
+    'NI$_sprintf_s_l[impl0]::_BufferCount': null,
+    'NI$sprintf_s2[impl0]::_Buffer': null,
+    'NI$sprintf_s[impl0]::_Format': null,
+    'NI$sprintf_s2[impl0]::_Format': null,
     'NI$_sprintf_p_l[impl0]::_BufferCount': null,
-    'NI$_sprintf_p_l[impl0]::_Locale': null,
-    'NI$snprintf[impl0]::_Format': null,
-    'NI$_snprintf[impl0]::_BufferCount': null,
-    'NI$_sprintf_p_l[impl0]::_Buffer': null,
-    'NI$_sprintf_p[impl0]::_Buffer': null,
+    'NI$_snprintf[impl0]::_Format': null,
+    'NI$_snprintf_c_l[impl0]::_Buffer': null,
     'NI$_snprintf_l[impl0]::_Buffer': null,
+    'NI$_sprintf_p[impl0]::_Format': null,
     'NI$_snprintf_l[impl0]::_BufferCount': null,
     'NI$_snprintf_l[impl0]::_Format': null,
-    'NI$_snprintf_l[impl0]::_Locale': null,
-    'FB$_vsnprintf2[decl0]': null,
-    'NI$snprintf[impl0]::_BufferCount': null,
-    'NI$_snprintf[impl0]::_Buffer': null,
-    'NI$_snprintf_c_l[impl0]::_Buffer': null,
-    'NI$_sprintf_p[impl0]::_BufferCount': null,
-    'NI$_snprintf[impl0]::_Format': null,
     'NI$_sprintf_p_l[impl0]::_Format': null,
-    'NI$_sprintf_p[impl0]::_Format': null,
-    'NI$_snprintf_c_l[impl0]::_BufferCount': null,
-    'NI$_snprintf_c_l[impl0]::_Format': null,
-    'NI$_snprintf_c[impl0]::_Buffer': null,
-    'NI$_snprintf_c[impl0]::_BufferCount': null,
-    'NI$_snprintf_s_l[impl0]::_Buffer': null,
-    'NI$_snprintf_s_l[impl0]::_BufferCount': null,
-    'NI$_snprintf_s[impl0]::_BufferCount': null,
-    'NI$_snprintf_s[impl0]::_MaxCount': null,
+    'NI$_sprintf_p[impl0]::_BufferCount': null,
+    'NI$_sprintf_p[impl0]::_Buffer': null,
+    'NI$_snprintf_l[impl0]::_Locale': null,
+    'NI$snprintf[impl0]::_BufferCount': null,
+    'NI$snprintf[impl0]::_Format': null,
+    'NI$_snprintf[impl0]::_Buffer': null,
+    'FB$_vsnprintf2[decl0]': null,
+    'NI$_sprintf_p_l[impl0]::_Locale': null,
+    'NI$_snprintf[impl0]::_BufferCount': null,
+    'NI$snprintf[impl0]::_Buffer': null,
+    'NI$_sprintf_p_l[impl0]::_Buffer': null,
     'NI$_scprintf_l[impl0]::_Format': null,
-    'NI$_snprintf_s[impl0]::_Format': null,
-    'NI$_scprintf_l[impl0]::_Locale': null,
+    'NI$_snprintf_c[impl0]::_BufferCount': null,
     'NI$_snprintf_s_l[impl0]::_Locale': null,
+    'NI$_snprintf_s_l[impl0]::_BufferCount': null,
+    'NI$_snprintf_s[impl0]::_MaxCount': null,
+    'NI$_snprintf_c_l[impl0]::_Locale': null,
+    'NI$_snprintf_c_l[impl0]::_BufferCount': null,
+    'NI$_snprintf_s2[impl0]::_BufferCount': null,
+    'NI$_scprintf_l[impl0]::_Locale': null,
+    'NI$_snprintf_c[impl0]::_Format': null,
+    'NI$_snprintf_s_l[impl0]::_Buffer': null,
+    'NI$_snprintf_s_l[impl0]::_MaxCount': null,
     'NI$_snprintf_s_l[impl0]::_Format': null,
+    'NI$_snprintf_s[impl0]::_BufferCount': null,
+    'NI$_snprintf_s[impl0]::_Format': null,
+    'NI$_snprintf_c[impl0]::_Buffer': null,
+    'NI$_snprintf_c_l[impl0]::_Format': null,
     'NI$_snprintf_s[impl0]::_Buffer': null,
     'NI$_snprintf_s2[impl0]::_Buffer': null,
-    'NI$_snprintf_s_l[impl0]::_MaxCount': null,
-    'NI$_snprintf_s2[impl0]::_BufferCount': null,
-    'NI$_snprintf_c[impl0]::_Format': null,
-    'NI$_snprintf_c_l[impl0]::_Locale': null,
     'NI$_snprintf_s2[impl0]::_Format': null,
-    'NI$vsscanf[impl0]::_Buffer': null,
-    'NI$_vsscanf_s_l[impl0]::_ArgList': null,
-    'FB$__stdio_common_vsscanf[decl0]': null,
-    'FB$_vsscanf_s_l[impl0]': null,
-    'FB$vsscanf_s[impl0]': null,
-    'NI$_scprintf_p_l[impl0]::_Format': null,
-    'NI$vsscanf_s[impl0]::_Buffer': null,
     'NI$vsscanf_s[impl0]::_Format': null,
-    'NI$_scprintf_p_l[impl0]::_Locale': null,
-    'NI$_vsscanf_l[impl0]::_Locale': null,
-    'NI$_vsscanf_l[impl0]::_Format': null,
-    'NI$vsscanf[impl0]::_ArgList': null,
-    'NI$_vsscanf_s_l[impl0]::_Buffer': null,
     'NI$_vsscanf_s_l[impl0]::_Locale': null,
-    'NI$_scprintf_p[impl0]::_Format': null,
-    'NI$_vsscanf_s_l[impl0]::_Format': null,
-    'NI$_scprintf[impl0]::_Format': null,
+    'FB$vsscanf_s[impl0]': null,
+    'NI$_vsscanf_l[impl0]::_Locale': null,
+    'NI$vsscanf[impl0]::_Format': null,
+    'NI$vsscanf[impl0]::_ArgList': null,
+    'FB$__stdio_common_vsscanf[decl0]': null,
+    'NI$vsscanf[impl0]::_Buffer': null,
+    'FB$_vsscanf_s_l[impl0]': null,
+    'NI$vsscanf_s[impl0]::_Buffer': null,
+    'NI$_scprintf_p_l[impl0]::_Locale': null,
+    'NI$_scprintf_p_l[impl0]::_Format': null,
+    'NI$_vsscanf_s_l[impl0]::_ArgList': null,
+    'FB$_vsscanf_l[impl0]': null,
     'NI$_vsscanf_l[impl0]::_Buffer': null,
     'NI$_vsscanf_l[impl0]::_ArgList': null,
-    'NI$vsscanf[impl0]::_Format': null,
-    'FB$_vsscanf_l[impl0]': null,
-    'NI$vsscanf_s2[impl0]::_Format': null,
-    'NI$_sscanf_l[impl0]::_Locale': null,
-    'NI$_sscanf_l[impl0]::_Buffer': null,
-    'NI$sscanf_s[impl0]::_Buffer': null,
+    'NI$_scprintf[impl0]::_Format': null,
+    'NI$_vsscanf_l[impl0]::_Format': null,
+    'NI$_vsscanf_s_l[impl0]::_Format': null,
+    'NI$_scprintf_p[impl0]::_Format': null,
+    'NI$_vsscanf_s_l[impl0]::_Buffer': null,
+    'NI$_sscanf_s_l[impl0]::_Locale': null,
+    'NI$sscanf_s[impl0]::_Format': null,
+    'NI$_sscanf_s_l[impl0]::_Format': null,
+    'NI$vsscanf_s2[impl0]::_Buffer': null,
+    'NI$_sscanf_l[impl0]::_Format': null,
+    'NI$sscanf[impl0]::_Format': null,
     'NI$_snscanf_l[impl0]::_Buffer': null,
     'NI$sscanf[impl0]::_Buffer': null,
-    'NI$_snscanf_l[impl0]::_BufferCount': null,
     'NI$_snscanf_l[impl0]::_Format': null,
+    'NI$_sscanf_l[impl0]::_Locale': null,
     'NI$_snscanf_l[impl0]::_Locale': null,
-    'NI$vsscanf_s2[impl0]::_ArgList': null,
-    'NI$sscanf_s[impl0]::_Format': null,
-    'NI$sscanf[impl0]::_Format': null,
-    'NI$_sscanf_s_l[impl0]::_Buffer': null,
-    'NI$_sscanf_s_l[impl0]::_Format': null,
-    'NI$_sscanf_l[impl0]::_Format': null,
-    'NI$_sscanf_s_l[impl0]::_Locale': null,
-    'NI$vsscanf_s[impl0]::_ArgList': null,
+    'NI$sscanf_s[impl0]::_Buffer': null,
     'FB$vsscanf_s2[impl0]': null,
-    'NI$vsscanf_s2[impl0]::_Buffer': null,
-    'NI$_snscanf_s_l[impl0]::_Locale': null,
-    'NI$_snscanf[impl0]::_Buffer': null,
+    'NI$_sscanf_l[impl0]::_Buffer': null,
+    'NI$_snscanf_l[impl0]::_BufferCount': null,
+    'NI$vsscanf_s[impl0]::_ArgList': null,
+    'NI$vsscanf_s2[impl0]::_Format': null,
+    'NI$_sscanf_s_l[impl0]::_Buffer': null,
+    'NI$vsscanf_s2[impl0]::_ArgList': null,
     'NI$_snscanf_s[impl0]::_Buffer': null,
-    'NI$_snscanf_s[impl0]::_BufferCount': null,
     'NI$_snscanf_s_l[impl0]::_Format': null,
     'NI$_snscanf[impl0]::_Format': null,
     'NI$_snscanf_s_l[impl0]::_BufferCount': null,
+    'NI$_snscanf_s[impl0]::_BufferCount': null,
     'NI$_snscanf[impl0]::_BufferCount': null,
     'NI$_snscanf_s_l[impl0]::_Buffer': null,
     'NI$_snscanf_s[impl0]::_Format': null,
-    'NI$_fprintf_l[impl0]::_ArgList': null,
-    'NI$fprintf[impl0]::_ArgList': null,
-    'NI$_fprintf_s_l[impl0]::_Result': null,
-    'NI$_fprintf_s_l[impl0]::_ArgList': null,
-    'NI$fprintf_s[impl0]::_Result': null,
-    'NI$fprintf_s[impl0]::_ArgList': null,
-    'NI$fprintf[impl0]::_Result': null,
+    'NI$_snscanf_s_l[impl0]::_Locale': null,
+    'NI$_snscanf[impl0]::_Buffer': null,
     'NI$_fprintf_l[impl0]::_Result': null,
-    'NI$_printf_p[impl0]::_Result': null,
+    'NI$_fprintf_l[impl0]::_ArgList': null,
+    'NI$fprintf[impl0]::_Result': null,
+    'NI$fprintf[impl0]::_ArgList': null,
     'NI$printf[impl0]::_ArgList': null,
+    'NI$_printf_l[impl0]::_Result': null,
+    'NI$_printf_s_l[impl0]::_ArgList': null,
+    'NI$_printf_p_l[impl0]::_Result': null,
+    'NI$_fprintf_p[impl0]::_ArgList': null,
+    'NI$_printf_l[impl0]::_ArgList': null,
+    'NI$_fprintf_p_l[impl0]::_ArgList': null,
+    'NI$_printf_p[impl0]::_Result': null,
+    'NI$fprintf_s[impl0]::_ArgList': null,
+    'NI$printf_s[impl0]::_Result': null,
     'NI$_printf_p[impl0]::_ArgList': null,
     'NI$_fprintf_p_l[impl0]::_Result': null,
-    'NI$_printf_s_l[impl0]::_ArgList': null,
-    'NI$_fprintf_p[impl0]::_ArgList': null,
-    'NI$_printf_l[impl0]::_Result': null,
-    'NI$_fprintf_p_l[impl0]::_ArgList': null,
-    'NI$printf[impl0]::_Result': null,
-    'NI$_printf_p_l[impl0]::_Result': null,
     'NI$_fprintf_p[impl0]::_Result': null,
-    'NI$_printf_l[impl0]::_ArgList': null,
+    'NI$_fprintf_s_l[impl0]::_Result': null,
+    'NI$_fprintf_s_l[impl0]::_ArgList': null,
     'NI$_printf_s_l[impl0]::_Result': null,
-    'NI$printf_s[impl0]::_Result': null,
+    'NI$printf[impl0]::_Result': null,
     'NI$printf_s[impl0]::_ArgList': null,
+    'NI$fprintf_s[impl0]::_Result': null,
     'NI$_printf_p_l[impl0]::_ArgList': null,
-    'NI$_vsprintf_s_l[impl0]::_Result': null,
-    'NI$fscanf[impl0]::_Result': null,
-    'NI$_fscanf_l[impl0]::_ArgList': null,
-    'NI$scanf[impl0]::_ArgList': null,
-    'NI$fscanf_s[impl0]::_ArgList': null,
-    'NI$_fscanf_s_l[impl0]::_Result': null,
-    'NI$scanf_s[impl0]::_ArgList': null,
     'NI$_vsnprintf_l[impl0]::_Result': null,
+    'NI$_scanf_l[impl0]::_Result': null,
     'NI$_fscanf_l[impl0]::_Result': null,
-    'NI$_fscanf_s_l[impl0]::_ArgList': null,
+    'NI$_fscanf_l[impl0]::_ArgList': null,
     'NI$fscanf[impl0]::_ArgList': null,
     'NI$fscanf_s[impl0]::_Result': null,
+    'NI$fscanf[impl0]::_Result': null,
+    'NI$_fscanf_s_l[impl0]::_ArgList': null,
+    'NI$fscanf_s[impl0]::_ArgList': null,
     'NI$_scanf_l[impl0]::_ArgList': null,
     'NI$scanf[impl0]::_Result': null,
+    'NI$scanf[impl0]::_ArgList': null,
+    'NI$_fscanf_s_l[impl0]::_Result': null,
     'NI$_scanf_s_l[impl0]::_Result': null,
     'NI$_scanf_s_l[impl0]::_ArgList': null,
-    'NI$vsnprintf[impl0]::_Result': null,
-    'NI$_scanf_l[impl0]::_Result': null,
     'NI$scanf_s[impl0]::_Result': null,
-    'NI$_sprintf_l[impl0]::_ArgList': null,
-    'NI$_sprintf_s_l[impl0]::_ArgList': null,
-    'NI$_vsprintf_p_l[impl0]::_Result': null,
-    'NI$sprintf_s[impl0]::_Result': null,
-    'NI$sprintf_s[impl0]::_ArgList': null,
-    'NI$_sprintf_l[impl0]::_Result': null,
-    'NI$_vsnprintf_s_l[impl0]::_Result': null,
-    'NI$_vsnprintf_c_l[impl0]::_Result': null,
-    'NI$_vscprintf_l[impl0]::_Result': null,
-    'NI$sprintf[impl0]::_Result': null,
+    'NI$scanf_s[impl0]::_ArgList': null,
     'NI$sprintf[impl0]::_ArgList': null,
-    'NI$_sprintf_s_l[impl0]::_Result': null,
+    'NI$_vsprintf_p_l[impl0]::_Result': null,
+    'NI$_vsnprintf_c_l[impl0]::_Result': null,
     'NI$_vscprintf_p_l[impl0]::_Result': null,
-    'NI$_snprintf[impl0]::_Result': null,
-    'NI$sprintf_s2[impl0]::_ArgList': null,
-    'NI$_snprintf_c_l[impl0]::_Result': null,
+    'NI$_sprintf_l[impl0]::_Result': null,
+    'NI$sprintf[impl0]::_Result': null,
+    'NI$_sprintf_l[impl0]::_ArgList': null,
+    'NI$_vsnprintf_s_l[impl0]::_Result': null,
+    'NI$_vscprintf_l[impl0]::_Result': null,
+    'NI$_vsprintf_s_l[impl0]::_Result': null,
+    'NI$vsnprintf[impl0]::_Result': null,
     'NI$_snprintf_s_l[impl0]::_ArgList': null,
-    'NI$_snprintf_s_l[impl0]::_Result': null,
-    'NI$_snprintf_s[impl0]::_ArgList': null,
-    'NI$_snprintf_s2[impl0]::_ArgList': null,
     'NI$_snprintf_c[impl0]::_Result': null,
-    'NI$_snprintf_l[impl0]::_ArgList': null,
-    'NI$_snprintf[impl0]::_ArgList': null,
-    'NI$_sprintf_p_l[impl0]::_ArgList': null,
-    'NI$_snprintf_c[impl0]::_ArgList': null,
-    'NI$_sprintf_p_l[impl0]::_Result': null,
-    'NI$_snprintf_s[impl0]::_Result': null,
-    'NI$snprintf[impl0]::_Result': null,
     'NI$_sprintf_p[impl0]::_Result': null,
+    'NI$_snprintf[impl0]::_Result': null,
+    'NI$_sprintf_s_l[impl0]::_ArgList': null,
+    'NI$_snprintf_s_l[impl0]::_Result': null,
+    'NI$sprintf_s2[impl0]::_ArgList': null,
     'NI$snprintf[impl0]::_ArgList': null,
-    'NI$_snprintf_c_l[impl0]::_ArgList': null,
-    'NI$_snprintf_l[impl0]::_Result': null,
     'NI$_sprintf_p[impl0]::_ArgList': null,
+    'NI$_snprintf_l[impl0]::_ArgList': null,
+    'NI$sprintf_s[impl0]::_ArgList': null,
+    'NI$sprintf_s[impl0]::_Result': null,
+    'NI$_sprintf_p_l[impl0]::_Result': null,
+    'NI$snprintf[impl0]::_Result': null,
+    'NI$_snprintf[impl0]::_ArgList': null,
+    'NI$_snprintf_l[impl0]::_Result': null,
+    'NI$_sprintf_s_l[impl0]::_Result': null,
+    'NI$_sprintf_p_l[impl0]::_ArgList': null,
+    'NI$_snprintf_c_l[impl0]::_Result': null,
+    'NI$_snprintf_c_l[impl0]::_ArgList': null,
+    'NI$_snprintf_c[impl0]::_ArgList': null,
+    'NI$_sscanf_l[impl0]::_Result': null,
+    'NI$_scprintf[impl0]::_ArgList': null,
+    'NI$_sscanf_l[impl0]::_ArgList': null,
+    'NI$_scprintf_p_l[impl0]::_ArgList': null,
+    'NI$_snprintf_s[impl0]::_ArgList': null,
     'NI$_scprintf[impl0]::_Result': null,
-    'NI$sscanf[impl0]::_ArgList': null,
-    'NI$_scprintf_l[impl0]::_ArgList': null,
-    'NI$_scprintf_p_l[impl0]::_Result': null,
     'NI$_scprintf_p[impl0]::_Result': null,
     'NI$_scprintf_p[impl0]::_ArgList': null,
-    'NI$_sscanf_l[impl0]::_ArgList': null,
-    'NI$_sscanf_s_l[impl0]::_Result': null,
-    'NI$_sscanf_s_l[impl0]::_ArgList': null,
-    'NI$sscanf_s[impl0]::_ArgList': null,
-    'NI$_sscanf_l[impl0]::_Result': null,
-    'NI$_snscanf_l[impl0]::_Result': null,
     'NI$sscanf[impl0]::_Result': null,
-    'NI$_scprintf_p_l[impl0]::_ArgList': null,
+    'NI$sscanf[impl0]::_ArgList': null,
+    'NI$_sscanf_s_l[impl0]::_Result': null,
+    'NI$_snprintf_s[impl0]::_Result': null,
+    'NI$_sscanf_s_l[impl0]::_ArgList': null,
+    'NI$_scprintf_p_l[impl0]::_Result': null,
     'NI$_scprintf_l[impl0]::_Result': null,
-    'NI$sscanf_s[impl0]::_Result': null,
-    'NI$_scprintf[impl0]::_ArgList': null,
-    'NI$_snscanf_l[impl0]::_ArgList': null,
-    'NI$_snscanf_s_l[impl0]::_ArgList': null,
-    'NI$_snscanf_s[impl0]::_ArgList': null,
-    'NI$_snscanf[impl0]::_Result': null,
-    'NI$_snscanf_s_l[impl0]::_Result': null,
+    'NI$_snprintf_s2[impl0]::_ArgList': null,
+    'NI$_scprintf_l[impl0]::_ArgList': null,
     'NI$_snscanf_s[impl0]::_Result': null,
-    'NI$_snscanf[impl0]::_ArgList': null
+    'NI$_snscanf_s_l[impl0]::_ArgList': null,
+    'NI$_snscanf[impl0]::_Result': null,
+    'NI$_snscanf[impl0]::_ArgList': null,
+    'NI$sscanf_s[impl0]::_Result': null,
+    'NI$_snscanf_l[impl0]::_ArgList': null,
+    'NI$_snscanf_s[impl0]::_ArgList': null,
+    'NI$sscanf_s[impl0]::_ArgList': null,
+    'NI$_snscanf_l[impl0]::_Result': null,
+    'NI$_snscanf_s_l[impl0]::_Result': null
 };
 turnOnSymbol();
 </script>

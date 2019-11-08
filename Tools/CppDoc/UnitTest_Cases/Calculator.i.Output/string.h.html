@@ -832,6 +832,20 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    },
+    'rsize_t': {
+        'displayNameInHtml': '<span class="cpp_type">rsize_t</span>',
+        'impls': [
+            'NI$rsize_t'
+        ],
+        'decls': []
+    },
     'errno_t': {
         'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
         'impls': [
@@ -843,20 +857,6 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">_locale_t</span>',
         'impls': [
             'NI$_locale_t'
-        ],
-        'decls': []
-    },
-    'rsize_t': {
-        'displayNameInHtml': '<span class="cpp_type">rsize_t</span>',
-        'impls': [
-            'NI$rsize_t'
-        ],
-        'decls': []
-    },
-    'size_t': {
-        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
-        'impls': [
-            'NI$size_t'
         ],
         'decls': []
     },
@@ -893,18 +893,11 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'strerror_s': {
-        'displayNameInHtml': 'strerror_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>)',
+    'strncat_s': {
+        'displayNameInHtml': 'strncat_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">rsize_t</span>)',
         'impls': [],
         'decls': [
-            'FB$strerror_s[decl0]'
-        ]
-    },
-    'strncpy_s': {
-        'displayNameInHtml': 'strncpy_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">rsize_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$strncpy_s[decl0]'
+            'FB$strncat_s[decl0]'
         ]
     },
     'strcpy_s': {
@@ -914,6 +907,13 @@ referencedSymbols = {
             'FB$strcpy_s[decl0]'
         ]
     },
+    'strerror_s': {
+        'displayNameInHtml': 'strerror_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$strerror_s[decl0]'
+        ]
+    },
     'strcat_s': {
         'displayNameInHtml': 'strcat_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
         'impls': [],
@@ -921,17 +921,24 @@ referencedSymbols = {
             'FB$strcat_s[decl0]'
         ]
     },
-    'strncat_s': {
-        'displayNameInHtml': 'strncat_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">rsize_t</span>)',
+    'strncpy_s': {
+        'displayNameInHtml': 'strncpy_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">rsize_t</span>)',
         'impls': [],
         'decls': [
-            'FB$strncat_s[decl0]'
+            'FB$strncpy_s[decl0]'
         ]
     },
-    'strcat_s2[impl0]::_Destination': {
-        'displayNameInHtml': '_Destination',
+    '_strerror_s2': {
+        'displayNameInHtml': '_strerror_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
         'impls': [
-            'NI$strcat_s2[impl0]::_Destination'
+            'FB$_strerror_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_strerror_s2[impl0]::_ErrorMessage': {
+        'displayNameInHtml': '_ErrorMessage',
+        'impls': [
+            'NI$_strerror_s2[impl0]::_ErrorMessage'
         ],
         'decls': []
     },
@@ -942,8 +949,41 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'strerror_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">strerror_s</span>::_Size',
+    'strcat_s2[impl0]::_Destination': {
+        'displayNameInHtml': '_Destination',
+        'impls': [
+            'NI$strcat_s2[impl0]::_Destination'
+        ],
+        'decls': []
+    },
+    'strcpy_s2': {
+        'displayNameInHtml': 'strcpy_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$strcpy_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_strerror_s': {
+        'displayNameInHtml': '_strerror_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_strerror_s[decl0]'
+        ]
+    },
+    '_strerror_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_strerror_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    'strcpy_s2[impl0]::_Destination': {
+        'displayNameInHtml': '_Destination',
+        'impls': [
+            'NI$strcpy_s2[impl0]::_Destination'
+        ],
+        'decls': []
+    },
+    'strcpy_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">strcpy_s</span>::_Size',
         'impls': [],
         'decls': []
     },
@@ -961,36 +1001,24 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_strerror_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_strerror_s</span>::_Size',
+    '_strlwr_s_l2': {
+        'displayNameInHtml': '_strlwr_s_l(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_type">_locale_t</span>)',
+        'impls': [
+            'FB$_strlwr_s_l2[impl0]'
+        ],
+        'decls': []
+    },
+    '_strlwr_s': {
+        'displayNameInHtml': '_strlwr_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
-        'decls': []
+        'decls': [
+            'FB$_strlwr_s[decl0]'
+        ]
     },
-    'strcpy_s2': {
-        'displayNameInHtml': 'strcpy_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+    '_strlwr_s2': {
+        'displayNameInHtml': '_strlwr_s(<span class="cpp_keyword">char</span>( &)[...])',
         'impls': [
-            'FB$strcpy_s2[impl0]'
-        ],
-        'decls': []
-    },
-    'strcpy_s2[impl0]::_Destination': {
-        'displayNameInHtml': '_Destination',
-        'impls': [
-            'NI$strcpy_s2[impl0]::_Destination'
-        ],
-        'decls': []
-    },
-    '_strerror_s2[impl0]::_ErrorMessage': {
-        'displayNameInHtml': '_ErrorMessage',
-        'impls': [
-            'NI$_strerror_s2[impl0]::_ErrorMessage'
-        ],
-        'decls': []
-    },
-    'strerror_s2': {
-        'displayNameInHtml': 'strerror_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>)',
-        'impls': [
-            'FB$strerror_s2[impl0]'
+            'FB$_strlwr_s2[impl0]'
         ],
         'decls': []
     },
@@ -1001,22 +1029,22 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'strcpy_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">strcpy_s</span>::_Size',
+    'strerror_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">strerror_s</span>::_Size',
         'impls': [],
         'decls': []
     },
-    '_strerror_s': {
-        'displayNameInHtml': '_strerror_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
-        'impls': [],
-        'decls': [
-            'FB$_strerror_s[decl0]'
-        ]
-    },
-    '_strerror_s2': {
-        'displayNameInHtml': '_strerror_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+    'strerror_s2': {
+        'displayNameInHtml': 'strerror_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>)',
         'impls': [
-            'FB$_strerror_s2[impl0]'
+            'FB$strerror_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_strlwr_s2[impl0]::_String': {
+        'displayNameInHtml': '_String',
+        'impls': [
+            'NI$_strlwr_s2[impl0]::_String'
         ],
         'decls': []
     },
@@ -1027,27 +1055,8 @@ referencedSymbols = {
             'FB$_strlwr_s_l[decl0]'
         ]
     },
-    '_strlwr_s': {
-        'displayNameInHtml': '_strlwr_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_strlwr_s[decl0]'
-        ]
-    },
     '_strlwr_s_l2[impl0]::_Size': {
         'displayNameInHtml': '<span class="cpp_function">_strlwr_s_l</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_strlwr_s_l2': {
-        'displayNameInHtml': '_strlwr_s_l(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_type">_locale_t</span>)',
-        'impls': [
-            'FB$_strlwr_s_l2[impl0]'
-        ],
-        'decls': []
-    },
-    'strncat_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">strncat_s</span>::_Size',
         'impls': [],
         'decls': []
     },
@@ -1055,13 +1064,6 @@ referencedSymbols = {
         'displayNameInHtml': '_String',
         'impls': [
             'NI$_strlwr_s_l2[impl0]::_String'
-        ],
-        'decls': []
-    },
-    'strncat_s2': {
-        'displayNameInHtml': 'strncat_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
-        'impls': [
-            'FB$strncat_s2[impl0]'
         ],
         'decls': []
     },
@@ -1079,6 +1081,25 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_strlwr_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_strlwr_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    'strncpy_s2[impl0]::_Count': {
+        'displayNameInHtml': '_Count',
+        'impls': [
+            'NI$strncpy_s2[impl0]::_Count'
+        ],
+        'decls': []
+    },
+    'strncat_s2': {
+        'displayNameInHtml': 'strncat_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$strncat_s2[impl0]'
+        ],
+        'decls': []
+    },
     'strncat_s2[impl0]::_Destination': {
         'displayNameInHtml': '_Destination',
         'impls': [
@@ -1086,48 +1107,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_strlwr_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_strlwr_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_strlwr_s2': {
-        'displayNameInHtml': '_strlwr_s(<span class="cpp_keyword">char</span>( &)[...])',
-        'impls': [
-            'FB$_strlwr_s2[impl0]'
-        ],
-        'decls': []
-    },
-    '_strlwr_s2[impl0]::_String': {
-        'displayNameInHtml': '_String',
-        'impls': [
-            'NI$_strlwr_s2[impl0]::_String'
-        ],
-        'decls': []
-    },
-    'strncpy_s2[impl0]::_Source': {
-        'displayNameInHtml': '_Source',
-        'impls': [
-            'NI$strncpy_s2[impl0]::_Source'
-        ],
-        'decls': []
-    },
-    'strncpy_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">strncpy_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
     'strncpy_s2': {
         'displayNameInHtml': 'strncpy_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [
             'FB$strncpy_s2[impl0]'
-        ],
-        'decls': []
-    },
-    'strncat_s2[impl0]::_Count': {
-        'displayNameInHtml': '_Count',
-        'impls': [
-            'NI$strncat_s2[impl0]::_Count'
         ],
         'decls': []
     },
@@ -1138,10 +1121,41 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'strncpy_s2[impl0]::_Count': {
+    'strncat_s2[impl0]::_Source': {
+        'displayNameInHtml': '_Source',
+        'impls': [
+            'NI$strncat_s2[impl0]::_Source'
+        ],
+        'decls': []
+    },
+    'strncat_s2[impl0]::_Count': {
         'displayNameInHtml': '_Count',
         'impls': [
-            'NI$strncpy_s2[impl0]::_Count'
+            'NI$strncat_s2[impl0]::_Count'
+        ],
+        'decls': []
+    },
+    'strncat_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">strncat_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    'strncpy_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">strncpy_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    'strncpy_s2[impl0]::_Source': {
+        'displayNameInHtml': '_Source',
+        'impls': [
+            'NI$strncpy_s2[impl0]::_Source'
+        ],
+        'decls': []
+    },
+    '_strset_s2[impl0]::_Value': {
+        'displayNameInHtml': '_Value',
+        'impls': [
+            'NI$_strset_s2[impl0]::_Value'
         ],
         'decls': []
     },
@@ -1152,39 +1166,9 @@ referencedSymbols = {
             'FB$strnlen[decl0]'
         ]
     },
-    'strncat_s2[impl0]::_Source': {
-        'displayNameInHtml': '_Source',
-        'impls': [
-            'NI$strncat_s2[impl0]::_Source'
-        ],
-        'decls': []
-    },
-    '_strnset_s2[impl0]::_Count': {
-        'displayNameInHtml': '_Count',
-        'impls': [
-            'NI$_strnset_s2[impl0]::_Count'
-        ],
-        'decls': []
-    },
-    '_strset_s2[impl0]::_Destination': {
-        'displayNameInHtml': '_Destination',
-        'impls': [
-            'NI$_strset_s2[impl0]::_Destination'
-        ],
-        'decls': []
-    },
-    'strnlen_s[impl0]::_String': {
-        'displayNameInHtml': '_String',
-        'impls': [
-            'NI$strnlen_s[impl0]::_String'
-        ],
-        'decls': []
-    },
-    '_strset_s2[impl0]::_Value': {
-        'displayNameInHtml': '_Value',
-        'impls': [
-            'NI$_strset_s2[impl0]::_Value'
-        ],
+    '_strnset_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_strnset_s</span>::_Size',
+        'impls': [],
         'decls': []
     },
     '_strnset_s2[impl0]::_Value': {
@@ -1201,43 +1185,8 @@ referencedSymbols = {
             'FB$strpbrk[decl0]'
         ]
     },
-    '_strupr_s': {
-        'displayNameInHtml': '_strupr_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_strupr_s[decl0]'
-        ]
-    },
-    '_strset_s2': {
-        'displayNameInHtml': '_strset_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>)',
-        'impls': [
-            'FB$_strset_s2[impl0]'
-        ],
-        'decls': []
-    },
-    '_strset_s': {
-        'displayNameInHtml': '_strset_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_strset_s[decl0]'
-        ]
-    },
-    '_strnset_s': {
-        'displayNameInHtml': '_strnset_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_strnset_s[decl0]'
-        ]
-    },
-    '_strnset_s2': {
-        'displayNameInHtml': '_strnset_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
-        'impls': [
-            'FB$_strnset_s2[impl0]'
-        ],
-        'decls': []
-    },
-    '_strnset_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_strnset_s</span>::_Size',
+    '_strset_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_strset_s</span>::_Size',
         'impls': [],
         'decls': []
     },
@@ -1248,6 +1197,27 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_strnset_s': {
+        'displayNameInHtml': '_strnset_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_strnset_s[decl0]'
+        ]
+    },
+    '_strset_s': {
+        'displayNameInHtml': '_strset_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_strset_s[decl0]'
+        ]
+    },
+    'strnlen_s[impl0]::_String': {
+        'displayNameInHtml': '_String',
+        'impls': [
+            'NI$strnlen_s[impl0]::_String'
+        ],
+        'decls': []
+    },
     '_strnset_s2[impl0]::_Destination': {
         'displayNameInHtml': '_Destination',
         'impls': [
@@ -1255,22 +1225,45 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_strset_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_strset_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    'strpbrk2[impl0]::_Control': {
-        'displayNameInHtml': '_Control',
+    '_strnset_s2[impl0]::_Count': {
+        'displayNameInHtml': '_Count',
         'impls': [
-            'NI$strpbrk2[impl0]::_Control'
+            'NI$_strnset_s2[impl0]::_Count'
         ],
         'decls': []
     },
-    'strchr2[impl0]::_String': {
+    '_strset_s2': {
+        'displayNameInHtml': '_strset_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>)',
+        'impls': [
+            'FB$_strset_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_strnset_s2': {
+        'displayNameInHtml': '_strnset_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$_strnset_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_strset_s2[impl0]::_Destination': {
+        'displayNameInHtml': '_Destination',
+        'impls': [
+            'NI$_strset_s2[impl0]::_Destination'
+        ],
+        'decls': []
+    },
+    '_strupr_s_l2': {
+        'displayNameInHtml': '_strupr_s_l(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_type">_locale_t</span>)',
+        'impls': [
+            'FB$_strupr_s_l2[impl0]'
+        ],
+        'decls': []
+    },
+    '_strupr_s_l2[impl0]::_String': {
         'displayNameInHtml': '_String',
         'impls': [
-            'NI$strchr2[impl0]::_String'
+            'NI$_strupr_s_l2[impl0]::_String'
         ],
         'decls': []
     },
@@ -1286,24 +1279,19 @@ referencedSymbols = {
         'impls': [],
         'decls': []
     },
-    '_strupr_s_l2': {
-        'displayNameInHtml': '_strupr_s_l(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_type">_locale_t</span>)',
+    '_strupr_s2[impl0]::_String': {
+        'displayNameInHtml': '_String',
         'impls': [
-            'FB$_strupr_s_l2[impl0]'
+            'NI$_strupr_s2[impl0]::_String'
         ],
         'decls': []
     },
-    '_strupr_s_l2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_strupr_s_l</span>::_Size',
+    '_strupr_s': {
+        'displayNameInHtml': '_strupr_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
-        'decls': []
-    },
-    'strrchr2': {
-        'displayNameInHtml': 'strrchr(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">int</span><span class="cpp_keyword"> const</span>)',
-        'impls': [
-            'FB$strrchr2[impl0]'
-        ],
-        'decls': []
+        'decls': [
+            'FB$_strupr_s[decl0]'
+        ]
     },
     '_strupr_s_l': {
         'displayNameInHtml': '_strupr_s_l(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
@@ -1312,20 +1300,6 @@ referencedSymbols = {
             'FB$_strupr_s_l[decl0]'
         ]
     },
-    '_strupr_s_l2[impl0]::_String': {
-        'displayNameInHtml': '_String',
-        'impls': [
-            'NI$_strupr_s_l2[impl0]::_String'
-        ],
-        'decls': []
-    },
-    '_strupr_s2[impl0]::_String': {
-        'displayNameInHtml': '_String',
-        'impls': [
-            'NI$_strupr_s2[impl0]::_String'
-        ],
-        'decls': []
-    },
     '_strupr_s_l2[impl0]::_Locale': {
         'displayNameInHtml': '_Locale',
         'impls': [
@@ -1333,10 +1307,22 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_strupr_s_l2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_strupr_s_l</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
     'strchr2': {
         'displayNameInHtml': 'strchr(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">int</span><span class="cpp_keyword"> const</span>)',
         'impls': [
             'FB$strchr2[impl0]'
+        ],
+        'decls': []
+    },
+    'strchr2[impl0]::_String': {
+        'displayNameInHtml': '_String',
+        'impls': [
+            'NI$strchr2[impl0]::_String'
         ],
         'decls': []
     },
@@ -1361,24 +1347,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'strpbrk2[impl0]::_Control': {
+        'displayNameInHtml': '_Control',
+        'impls': [
+            'NI$strpbrk2[impl0]::_Control'
+        ],
+        'decls': []
+    },
     'strrchr2[impl0]::_String': {
         'displayNameInHtml': '_String',
         'impls': [
             'NI$strrchr2[impl0]::_String'
-        ],
-        'decls': []
-    },
-    'strrchr2[impl0]::_Ch': {
-        'displayNameInHtml': '_Ch',
-        'impls': [
-            'NI$strrchr2[impl0]::_Ch'
-        ],
-        'decls': []
-    },
-    'strstr2': {
-        'displayNameInHtml': 'strstr(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>)',
-        'impls': [
-            'FB$strstr2[impl0]'
         ],
         'decls': []
     },
@@ -1389,87 +1368,108 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'strstr2': {
+        'displayNameInHtml': 'strstr(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>)',
+        'impls': [
+            'FB$strstr2[impl0]'
+        ],
+        'decls': []
+    },
     'strstr2[impl0]::_SubString': {
         'displayNameInHtml': '_SubString',
         'impls': [
             'NI$strstr2[impl0]::_SubString'
         ],
         'decls': []
+    },
+    'strrchr2[impl0]::_Ch': {
+        'displayNameInHtml': '_Ch',
+        'impls': [
+            'NI$strrchr2[impl0]::_Ch'
+        ],
+        'decls': []
+    },
+    'strrchr2': {
+        'displayNameInHtml': 'strrchr(<span class="cpp_keyword">char</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">int</span><span class="cpp_keyword"> const</span>)',
+        'impls': [
+            'FB$strrchr2[impl0]'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'NI$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
     'FB$strchr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
     'FB$strrchr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
     'FB$strstr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
     'FB$strcat_s2[impl0]': null,
-    'FB$strerror_s[decl0]': null,
-    'FB$strncpy_s[decl0]': null,
-    'FB$strcpy_s[decl0]': null,
-    'FB$strcat_s[decl0]': null,
     'FB$strncat_s[decl0]': null,
-    'NI$strcat_s2[impl0]::_Destination': null,
+    'FB$strcpy_s[decl0]': null,
+    'FB$strerror_s[decl0]': null,
+    'FB$strcat_s[decl0]': null,
+    'FB$strncpy_s[decl0]': null,
+    'FB$_strerror_s2[impl0]': null,
+    'NI$_strerror_s2[impl0]::_ErrorMessage': null,
     'NI$strcat_s2[impl0]::_Source': null,
+    'NI$strcat_s2[impl0]::_Destination': null,
+    'FB$strcpy_s2[impl0]': null,
+    'FB$_strerror_s[decl0]': null,
+    'NI$strcpy_s2[impl0]::_Destination': null,
     'NI$strcpy_s2[impl0]::_Source': null,
     'NI$_strerror_s2[impl0]::_Buffer': null,
-    'FB$strcpy_s2[impl0]': null,
-    'NI$strcpy_s2[impl0]::_Destination': null,
-    'NI$_strerror_s2[impl0]::_ErrorMessage': null,
-    'FB$strerror_s2[impl0]': null,
-    'NI$strerror_s2[impl0]::_Buffer': null,
-    'FB$_strerror_s[decl0]': null,
-    'FB$_strerror_s2[impl0]': null,
-    'FB$_strlwr_s_l[decl0]': null,
-    'FB$_strlwr_s[decl0]': null,
     'FB$_strlwr_s_l2[impl0]': null,
+    'FB$_strlwr_s[decl0]': null,
+    'FB$_strlwr_s2[impl0]': null,
+    'NI$strerror_s2[impl0]::_Buffer': null,
+    'FB$strerror_s2[impl0]': null,
+    'NI$_strlwr_s2[impl0]::_String': null,
+    'FB$_strlwr_s_l[decl0]': null,
     'NI$_strlwr_s_l2[impl0]::_String': null,
-    'FB$strncat_s2[impl0]': null,
     'NI$_strlwr_s_l2[impl0]::_Locale': null,
     'NI$strerror_s2[impl0]::_ErrorMessage': null,
-    'NI$strncat_s2[impl0]::_Destination': null,
-    'FB$_strlwr_s2[impl0]': null,
-    'NI$_strlwr_s2[impl0]::_String': null,
-    'NI$strncpy_s2[impl0]::_Source': null,
-    'FB$strncpy_s2[impl0]': null,
-    'NI$strncat_s2[impl0]::_Count': null,
-    'NI$strncpy_s2[impl0]::_Destination': null,
     'NI$strncpy_s2[impl0]::_Count': null,
-    'FB$strnlen[decl0]': null,
+    'FB$strncat_s2[impl0]': null,
+    'NI$strncat_s2[impl0]::_Destination': null,
+    'FB$strncpy_s2[impl0]': null,
+    'NI$strncpy_s2[impl0]::_Destination': null,
     'NI$strncat_s2[impl0]::_Source': null,
-    'NI$_strnset_s2[impl0]::_Count': null,
-    'NI$_strset_s2[impl0]::_Destination': null,
-    'NI$strnlen_s[impl0]::_String': null,
+    'NI$strncat_s2[impl0]::_Count': null,
+    'NI$strncpy_s2[impl0]::_Source': null,
     'NI$_strset_s2[impl0]::_Value': null,
+    'FB$strnlen[decl0]': null,
     'NI$_strnset_s2[impl0]::_Value': null,
     'FB$strpbrk[decl0]': null,
-    'FB$_strupr_s[decl0]': null,
-    'FB$_strset_s2[impl0]': null,
-    'FB$_strset_s[decl0]': null,
-    'FB$_strnset_s[decl0]': null,
-    'FB$_strnset_s2[impl0]': null,
     'NI$strnlen_s[impl0]::_MaxCount': null,
+    'FB$_strnset_s[decl0]': null,
+    'FB$_strset_s[decl0]': null,
+    'NI$strnlen_s[impl0]::_String': null,
     'NI$_strnset_s2[impl0]::_Destination': null,
-    'NI$strpbrk2[impl0]::_Control': null,
-    'NI$strchr2[impl0]::_String': null,
-    'FB$_strupr_s2[impl0]': null,
+    'NI$_strnset_s2[impl0]::_Count': null,
+    'FB$_strset_s2[impl0]': null,
+    'FB$_strnset_s2[impl0]': null,
+    'NI$_strset_s2[impl0]::_Destination': null,
     'FB$_strupr_s_l2[impl0]': null,
-    'FB$strrchr2[impl0]': null,
-    'FB$_strupr_s_l[decl0]': null,
     'NI$_strupr_s_l2[impl0]::_String': null,
+    'FB$_strupr_s2[impl0]': null,
     'NI$_strupr_s2[impl0]::_String': null,
+    'FB$_strupr_s[decl0]': null,
+    'FB$_strupr_s_l[decl0]': null,
     'NI$_strupr_s_l2[impl0]::_Locale': null,
     'FB$strchr2[impl0]': null,
+    'NI$strchr2[impl0]::_String': null,
     'NI$strchr2[impl0]::_Ch': null,
     'FB$strpbrk2[impl0]': null,
     'NI$strpbrk2[impl0]::_String': null,
+    'NI$strpbrk2[impl0]::_Control': null,
     'NI$strrchr2[impl0]::_String': null,
-    'NI$strrchr2[impl0]::_Ch': null,
-    'FB$strstr2[impl0]': null,
     'NI$strstr2[impl0]::_String': null,
-    'NI$strstr2[impl0]::_SubString': null
+    'FB$strstr2[impl0]': null,
+    'NI$strstr2[impl0]::_SubString': null,
+    'NI$strrchr2[impl0]::_Ch': null,
+    'FB$strrchr2[impl0]': null
 };
 turnOnSymbol();
 </script>

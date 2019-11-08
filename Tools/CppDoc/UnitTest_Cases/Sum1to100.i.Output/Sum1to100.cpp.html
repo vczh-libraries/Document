@@ -25,10 +25,10 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'printf': {
-        'displayNameInHtml': 'printf(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)',
+    'main[impl0]::sum': {
+        'displayNameInHtml': 'sum',
         'impls': [
-            'FB$printf[impl0]'
+            'NI$main[impl0]::sum'
         ],
         'decls': []
     },
@@ -39,18 +39,18 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'main[impl0]::sum': {
-        'displayNameInHtml': 'sum',
+    'printf': {
+        'displayNameInHtml': 'printf(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)',
         'impls': [
-            'NI$main[impl0]::sum'
+            'FB$printf[impl0]'
         ],
         'decls': []
     }
 };
 symbolToFiles = {
-    'FB$printf[impl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
+    'NI$main[impl0]::sum': null,
     'NI$main[impl0]::i': null,
-    'NI$main[impl0]::sum': null
+    'FB$printf[impl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' }
 };
 turnOnSymbol();
 </script>

@@ -196,13 +196,6 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'jmp_buf': {
-        'displayNameInHtml': '<span class="cpp_type">jmp_buf</span>',
-        'impls': [
-            'NI$jmp_buf'
-        ],
-        'decls': []
-    },
     '_setjmp': {
         'displayNameInHtml': '_setjmp(<span class="cpp_type">jmp_buf</span>)',
         'impls': [],
@@ -210,12 +203,19 @@ referencedSymbols = {
             'FB$_setjmp[decl0]',
             'FB$_setjmp[decl1]'
         ]
+    },
+    'jmp_buf': {
+        'displayNameInHtml': '<span class="cpp_type">jmp_buf</span>',
+        'impls': [
+            'NI$jmp_buf'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
-    'NI$jmp_buf': null,
     'FB$_setjmp[decl0]': null,
-    'FB$_setjmp[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' }
+    'FB$_setjmp[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'NI$jmp_buf': null
 };
 turnOnSymbol();
 </script>

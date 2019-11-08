@@ -158,17 +158,17 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    '_locale_t': {
-        'displayNameInHtml': '<span class="cpp_type">_locale_t</span>',
-        'impls': [
-            'NI$_locale_t'
-        ],
-        'decls': []
-    },
     'size_t': {
         'displayNameInHtml': '<span class="cpp_type">size_t</span>',
         'impls': [
             'NI$size_t'
+        ],
+        'decls': []
+    },
+    '_locale_t': {
+        'displayNameInHtml': '<span class="cpp_type">_locale_t</span>',
+        'impls': [
+            'NI$_locale_t'
         ],
         'decls': []
     },
@@ -178,6 +178,13 @@ referencedSymbols = {
         'decls': [
             'FB$memchr[decl0]'
         ]
+    },
+    'memchr2': {
+        'displayNameInHtml': 'memchr(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$memchr2[impl0]'
+        ],
+        'decls': []
     },
     'memchr2[impl0]::_Pv': {
         'displayNameInHtml': '_Pv',
@@ -200,13 +207,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'memchr2': {
-        'displayNameInHtml': 'memchr(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
-        'impls': [
-            'FB$memchr2[impl0]'
-        ],
-        'decls': []
-    },
     'memchr2[impl0]::_Pvc': {
         'displayNameInHtml': '_Pvc',
         'impls': [
@@ -216,13 +216,13 @@ referencedSymbols = {
     }
 };
 symbolToFiles = {
-    'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'FB$memchr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$memchr2[impl0]': null,
     'NI$memchr2[impl0]::_Pv': null,
     'NI$memchr2[impl0]::_C': null,
     'NI$memchr2[impl0]::_N': null,
-    'FB$memchr2[impl0]': null,
     'NI$memchr2[impl0]::_Pvc': null
 };
 turnOnSymbol();

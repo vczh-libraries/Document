@@ -2049,18 +2049,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_CrtEnableIf<1>::_Ty': {
-        'displayNameInHtml': '<span class="cpp_type">_CrtEnableIf<1></span>::<span class="cpp_type">_Ty</span>',
-        'impls': [],
-        'decls': []
-    },
-    'size_t': {
-        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
-        'impls': [
-            'NI$size_t'
-        ],
-        'decls': []
-    },
     '__crt_multibyte_data': {
         'displayNameInHtml': '<span class="cpp_type">__crt_multibyte_data</span>',
         'impls': [],
@@ -2082,6 +2070,11 @@ referencedSymbols = {
             'NF[0]$__crt_locale_data'
         ]
     },
+    '_CrtEnableIf<1>::_Ty': {
+        'displayNameInHtml': '<span class="cpp_type">_CrtEnableIf<1></span>::<span class="cpp_type">_Ty</span>',
+        'impls': [],
+        'decls': []
+    },
     '__crt_locale_data_public': {
         'displayNameInHtml': '<span class="cpp_type">__crt_locale_data_public</span>',
         'impls': [
@@ -2102,15 +2095,22 @@ referencedSymbols = {
             'NI$_Mbstatet'
         ],
         'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
     'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
-    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
     'NI$__crt_locale_pointers': null,
     'NI$__crt_locale_data_public': null,
     'NI$__time64_t': null,
-    'NI$_Mbstatet': null
+    'NI$_Mbstatet': null,
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' }
 };
 turnOnSymbol();
 </script>

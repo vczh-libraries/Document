@@ -46,17 +46,17 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'scanf_s': {
-        'displayNameInHtml': 'scanf_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)',
-        'impls': [
-            'FB$scanf_s[impl0]'
-        ],
-        'decls': []
-    },
     'printf': {
         'displayNameInHtml': 'printf(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)',
         'impls': [
             'FB$printf[impl0]'
+        ],
+        'decls': []
+    },
+    'scanf_s': {
+        'displayNameInHtml': 'scanf_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)',
+        'impls': [
+            'FB$scanf_s[impl0]'
         ],
         'decls': []
     },
@@ -102,20 +102,6 @@ referencedSymbols = {
             'FB$calculator::Evaluate[decl0]'
         ]
     },
-    'JustForFun': {
-        'displayNameInHtml': 'JustForFun()',
-        'impls': [
-            'FB$JustForFun[impl0]'
-        ],
-        'decls': []
-    },
-    'JustForFun2': {
-        'displayNameInHtml': 'JustForFun(<span class="cpp_keyword">int</span><span class="cpp_keyword"> const</span> *( &( <span class="cpp_keyword">__fastcall</span> *<span class="cpp_keyword"> const</span> &)(<span class="cpp_type">Expr</span><span class="cpp_keyword"> const</span><span class="cpp_keyword"> volatile</span> &&, <span class="cpp_keyword">int</span> <span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>:: *))[...])',
-        'impls': [
-            'FB$JustForFun2[impl0]'
-        ],
-        'decls': []
-    },
     'calculator::Parse': {
         'displayNameInHtml': 'Parse(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
         'impls': [
@@ -131,6 +117,20 @@ referencedSymbols = {
         'decls': [
             'FB$strcmp[decl0]'
         ]
+    },
+    'JustForFun': {
+        'displayNameInHtml': 'JustForFun()',
+        'impls': [
+            'FB$JustForFun[impl0]'
+        ],
+        'decls': []
+    },
+    'JustForFun2': {
+        'displayNameInHtml': 'JustForFun(<span class="cpp_keyword">int</span><span class="cpp_keyword"> const</span> *( &( <span class="cpp_keyword">__fastcall</span> *<span class="cpp_keyword"> const</span> &)(<span class="cpp_type">Expr</span><span class="cpp_keyword"> const</span><span class="cpp_keyword"> volatile</span> &&, <span class="cpp_keyword">int</span> <span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>:: *))[...])',
+        'impls': [
+            'FB$JustForFun2[impl0]'
+        ],
+        'decls': []
     },
     'main[impl0]::expr': {
         'displayNameInHtml': 'expr',
@@ -148,8 +148,8 @@ referencedSymbols = {
     }
 };
 symbolToFiles = {
-    'FB$scanf_s[impl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
     'FB$printf[impl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
+    'FB$scanf_s[impl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
     'NF[0]$calculator': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
     'NF[1]$calculator': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
     'NF[2]$calculator': { 'htmlFileName': 'Calculator.h', 'displayName': 'Calculator.h' },
@@ -160,11 +160,11 @@ symbolToFiles = {
     'FB$calculator::Print[decl0]': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
     'FB$calculator::Evaluate[impl0]': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
     'FB$calculator::Evaluate[decl0]': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
-    'FB$JustForFun[impl0]': null,
-    'FB$JustForFun2[impl0]': null,
     'FB$calculator::Parse[impl0]': { 'htmlFileName': 'Calculator.cpp2', 'displayName': 'Calculator.cpp' },
     'FB$calculator::Parse[decl0]': { 'htmlFileName': 'Calculator.h', 'displayName': 'Calculator.h' },
     'FB$strcmp[decl0]': { 'htmlFileName': 'string.h', 'displayName': 'string.h' },
+    'FB$JustForFun[impl0]': null,
+    'FB$JustForFun2[impl0]': null,
     'NI$main[impl0]::expr': null,
     'NI$main[impl0]::input': null
 };
