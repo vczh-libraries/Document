@@ -227,6 +227,14 @@ GetSymbolDisplayNameInHtml
 
 WString GetSymbolDisplayNameInHtml(Symbol* symbol)
 {
+	switch (symbol->kind)
+	{
+	case symbol_component::SymbolKind::GenericTypeArgument:
+		return L"<span class=\"cpp_type\">" + HtmlTextSingleLineToString(symbol->name) + L"</span>";
+	case symbol_component::SymbolKind::GenericValueArgument:
+		return HtmlTextSingleLineToString(symbol->name);
+	}
+
 	WString displayNameInHtml;
 	if (symbol->kind == symbol_component::SymbolKind::Namespace)
 	{
