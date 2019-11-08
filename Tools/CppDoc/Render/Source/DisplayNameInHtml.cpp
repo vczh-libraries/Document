@@ -164,35 +164,9 @@ public:
 	void Visit(GenericType* self)override
 	{
 		WString currentResult = result;
-		WString genericResult;
-
-		{
-			result = L"";
-			self->type->Accept(this);
-			genericResult = result + HtmlTextSingleLineToString(L"<");
-		}
-		for (vint i = 0; i < self->arguments.Count(); i++)
-		{
-			if (i > 0) genericResult += L", ";
-			auto argument = self->arguments[i];
-			if (argument.item.type)
-			{
-				result = L"";
-				argument.item.type->Accept(this);
-				genericResult += result;
-			}
-			else
-			{
-				genericResult += L"<span class=\"cpp_keyword\">(expr)</span>";
-			}
-			if (argument.isVariadic)
-			{
-				genericResult += L"...";
-			}
-		}
-		genericResult += HtmlTextSingleLineToString(L">");
-
-		result = genericResult + L" " + currentResult;
+		result = L"";
+		self->type->Accept(this);
+		result = result + AppendGenericArguments(self->arguments) + L" " + currentResult;
 	}
 };
 
@@ -205,7 +179,6 @@ WString GetTypeDisplayNameInHtml(Ptr<Type> type)
 
 /***********************************************************************
 AppendFunctionParametersInHtml
-
 ***********************************************************************/
 
 WString AppendFunctionParametersInHtml(FunctionType* funcType)
@@ -229,6 +202,66 @@ WString AppendFunctionParametersInHtml(FunctionType* funcType)
 		result += L"...";
 	}
 	result += L")";
+
+	return result;
+}
+
+/***********************************************************************
+AppendTemplateArguments
+***********************************************************************/
+
+WString AppendTemplateArguments(List<TemplateSpec::Argument>& arguments)
+{
+	WString result = HtmlTextSingleLineToString(L"<");
+	for (vint i = 0; i < arguments.Count(); i++)
+	{
+		if (i > 0) result += L", ";
+		auto argument = arguments[i];
+		if (argument.argumentType == CppTemplateArgumentType::Value)
+		{
+			result += L"<span class=\"cpp_keyword\">(expr)</span>";
+		}
+		else
+		{
+			result += L"<span class=\"cpp_type\">";
+			result += HtmlTextSingleLineToString(argument.name.name);
+			result += L"</span>";
+		}
+		if (argument.ellipsis)
+		{
+			result += L" ...";
+		}
+	}
+	result += HtmlTextSingleLineToString(L">");
+
+	return result;
+}
+
+/***********************************************************************
+AppendGenericArguments
+***********************************************************************/
+
+WString AppendGenericArguments(VariadicList<GenericArgument>& arguments)
+{
+	WString result = HtmlTextSingleLineToString(L"<");
+	for (vint i = 0; i < arguments.Count(); i++)
+	{
+		if (i > 0) result += L", ";
+		auto argument = arguments[i];
+		if (argument.item.expr)
+		{
+			result += L"<span class=\"cpp_keyword\">(expr)</span>";
+		}
+		else
+		{
+			result += GetTypeDisplayNameInHtml(argument.item.type);
+		}
+		if (argument.isVariadic)
+		{
+			result += L" ...";
+		}
+	}
+	result += HtmlTextSingleLineToString(L">");
 
 	return result;
 }
@@ -279,49 +312,11 @@ WString GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol)
 
 	if (specializationSpec)
 	{
-		result += HtmlTextSingleLineToString(L"<");
-		for (vint i = 0; i < specializationSpec->arguments.Count(); i++)
-		{
-			if (i > 0) result += L", ";
-			auto argument = specializationSpec->arguments[i];
-			if (argument.item.expr)
-			{
-				result += L"<span class=\"cpp_keyword\">(expr)</span>";
-			}
-			else
-			{
-				result += GetTypeDisplayNameInHtml(argument.item.type);
-			}
-			if (argument.isVariadic)
-			{
-				result += L" ...";
-			}
-		}
-		result += HtmlTextSingleLineToString(L">");
+		result += AppendGenericArguments(specializationSpec->arguments);
 	}
 	else if (templateSpec)
 	{
-		result += HtmlTextSingleLineToString(L"<");
-		for (vint i = 0; i < templateSpec->arguments.Count(); i++)
-		{
-			if (i > 0) result += L", ";
-			auto argument = templateSpec->arguments[i];
-			if (argument.argumentType == CppTemplateArgumentType::Value)
-			{
-				result += L"<span class=\"cpp_keyword\">(expr)</span>";
-			}
-			else
-			{
-				result += L"<span class=\"cpp_type\">";
-				result += HtmlTextSingleLineToString(argument.name.name);
-				result += L"</span>";
-			}
-			if (argument.ellipsis)
-			{
-				result += L" ...";
-			}
-		}
-		result += HtmlTextSingleLineToString(L">");
+		result += AppendTemplateArguments(templateSpec->arguments);
 	}
 	return result;
 }

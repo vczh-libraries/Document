@@ -171,6 +171,8 @@ HTML Display Name
 extern WString										GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol);
 extern WString										GetTypeDisplayNameInHtml(Ptr<Type> type);
 extern WString										AppendFunctionParametersInHtml(FunctionType* funcType);
+extern WString										AppendTemplateArguments(List<TemplateSpec::Argument>& arguments);
+extern WString										AppendGenericArguments(VariadicList<GenericArgument>& arguments);
 extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
 
 /***********************************************************************
