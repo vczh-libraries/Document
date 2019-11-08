@@ -92,25 +92,7 @@ public:
 			result = L"(" + result + L")";
 		}
 
-		result += L"(";
-		for (vint i = 0; i < self->parameters.Count(); i++)
-		{
-			if (i != 0) result += L", ";
-			result += GetTypeDisplayNameInHtml(self->parameters[i].item->type);
-			if (self->parameters[i].isVariadic)
-			{
-				result += L"...";
-			}
-		}
-		if (self->ellipsis)
-		{
-			if (self->parameters.Count() > 0)
-			{
-				result += L", ";
-			}
-			result += L" ...";
-		}
-		result += L")";
+		result += AppendFunctionParametersInHtml(self);
 
 		if (self->decoratorReturnType)
 		{
@@ -219,6 +201,36 @@ WString GetTypeDisplayNameInHtml(Ptr<Type> type)
 	GetDisplayNameInHtmlTypeVisitor visitor;
 	type->Accept(&visitor);
 	return visitor.result;
+}
+
+/***********************************************************************
+AppendFunctionParametersInHtml
+
+***********************************************************************/
+
+WString AppendFunctionParametersInHtml(FunctionType* funcType)
+{
+	WString result = L"(";
+	for (vint i = 0; i < funcType->parameters.Count(); i++)
+	{
+		if (i != 0) result += L", ";
+		result += GetTypeDisplayNameInHtml(funcType->parameters[i].item->type);
+		if (funcType->parameters[i].isVariadic)
+		{
+			result += L"...";
+		}
+	}
+	if (funcType->ellipsis)
+	{
+		if (funcType->parameters.Count() > 0)
+		{
+			result += L", ";
+		}
+		result += L"...";
+	}
+	result += L")";
+
+	return result;
 }
 
 /***********************************************************************
@@ -358,21 +370,7 @@ WString GetSymbolDisplayNameInHtml(Symbol* symbol)
 	{
 		if (auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>())
 		{
-			displayNameInHtml += L"(";
-			for (vint i = 0; i < funcType->parameters.Count(); i++)
-			{
-				if (i != 0) displayNameInHtml += L", ";
-				displayNameInHtml += GetTypeDisplayNameInHtml(funcType->parameters[i].item->type);
-				if (funcType->parameters[i].isVariadic)
-				{
-					displayNameInHtml += L"...";
-				}
-			}
-			if (funcType->ellipsis)
-			{
-				displayNameInHtml += L" ...";
-			}
-			displayNameInHtml += L")";
+			displayNameInHtml += AppendFunctionParametersInHtml(funcType.Obj());
 		}
 	}
 	return displayNameInHtml;

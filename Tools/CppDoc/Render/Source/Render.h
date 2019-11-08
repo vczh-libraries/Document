@@ -169,8 +169,9 @@ HTML Display Name
 ***********************************************************************/
 
 extern WString										GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol);
-extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
 extern WString										GetTypeDisplayNameInHtml(Ptr<Type> type);
+extern WString										AppendFunctionParametersInHtml(FunctionType* funcType);
+extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
 
 /***********************************************************************
 Index Collecting
