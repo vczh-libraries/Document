@@ -84,7 +84,7 @@ public:
 Compiling
 ***********************************************************************/
 
-extern void											Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, IndexResult& result);
+extern void											Compile(Ptr<RegexLexer> lexer, FilePath pathInput, IndexResult& result);
 
 /***********************************************************************
 Token Indexing
@@ -179,7 +179,7 @@ extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
 Index Collecting
 ***********************************************************************/
 
-extern Ptr<GlobalLinesRecord>						Collect(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result);
+extern Ptr<GlobalLinesRecord>						Collect(Ptr<RegexLexer> lexer, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result);
 
 /***********************************************************************
 Source Code Page Generating

@@ -419,7 +419,7 @@ void GenerateHtmlLine(
 Collect
 ***********************************************************************/
 
-Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, const WString& title, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result)
+Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result)
 {
 	auto global = MakePtr<GlobalLinesRecord>();
 	Dictionary<WString, FilePath> filePathCache;

@@ -4,7 +4,7 @@
 Compile
 ***********************************************************************/
 
-void Compile(Ptr<RegexLexer> lexer, FilePath pathFolder, FilePath pathInput, IndexResult& result)
+void Compile(Ptr<RegexLexer> lexer, FilePath pathInput, IndexResult& result)
 {
 	WString input = File(pathInput).ReadAllTextByBom();
 	CppTokenReader reader(lexer, input);

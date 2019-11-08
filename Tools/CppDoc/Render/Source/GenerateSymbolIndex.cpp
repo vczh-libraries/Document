@@ -47,7 +47,7 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 			vint index = global->declToFiles.Keys().IndexOf(decls[i].Obj());
 			if (index != -1)
 			{
-				if (INVLOC.StartsWith(wupper(global->declToFiles.Values()[index].GetFullPath()), fileGroupPrefix, Locale::Normalization::None))
+				if (INVLOC.StartsWith(global->declToFiles.Values()[index].GetFullPath(), fileGroupPrefix, Locale::Normalization::IgnoreCase))
 				{
 					definedInThisFileGroup = true;
 					break;

@@ -43,7 +43,7 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 		for (vint j = 0; j < flrs.Count(); j++)
 		{
 			auto flr = flrs[j];
-			if (INVLOC.StartsWith(wupper(flr->filePath.GetFullPath()), prefix, Locale::Normalization::None))
+			if (INVLOC.StartsWith(flr->filePath.GetFullPath(), prefix, Locale::Normalization::IgnoreCase))
 			{
 				writer.WriteString(L"&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"fileIndex\" href=\"./");
 				WriteHtmlAttribute(flr->htmlFileName, writer);
