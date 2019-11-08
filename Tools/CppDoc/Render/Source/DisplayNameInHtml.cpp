@@ -227,7 +227,91 @@ GetSymbolDisplayNameInHtml
 
 WString GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol)
 {
-	throw 0;
+	WString result;
+
+	Ptr<TemplateSpec> templateSpec = symbol_type_resolving::GetTemplateSpecFromSymbol(symbol);
+	Ptr<SpecializationSpec> specializationSpec;
+	WString declName = symbol->name;
+	switch (symbol->kind)
+	{
+	case symbol_component::SymbolKind::Class:
+	case symbol_component::SymbolKind::Struct:
+	case symbol_component::SymbolKind::Union:
+		{
+			auto decl = symbol->GetAnyForwardDecl<ForwardClassDeclaration>();
+			specializationSpec = decl->specializationSpec;
+			declName = decl->name.name;
+		}
+		break;
+	case symbol_component::SymbolKind::FunctionSymbol:
+		{
+			auto decl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+			specializationSpec = decl->specializationSpec;
+			declName = decl->name.name;
+		}
+		break;
+	}
+
+	const wchar_t* divClass = GetSymbolDivClass(symbol);
+	if (divClass)
+	{
+		result += L"<span class=\"";
+		result += divClass;
+		result += L"\">";
+	}
+	result += HtmlTextSingleLineToString(declName);
+	if (divClass)
+	{
+		result += L"</span>";
+	}
+
+	if (specializationSpec)
+	{
+		result += HtmlTextSingleLineToString(L"<");
+		for (vint i = 0; i < specializationSpec->arguments.Count(); i++)
+		{
+			if (i > 0) result += L", ";
+			auto argument = specializationSpec->arguments[i];
+			if (argument.item.expr)
+			{
+				result += L"<span class=\"cpp_keyword\">(expr)</span>";
+			}
+			else
+			{
+				result += GetTypeDisplayNameInHtml(argument.item.type);
+			}
+			if (argument.isVariadic)
+			{
+				result += L" ...";
+			}
+		}
+		result += HtmlTextSingleLineToString(L">");
+	}
+	else if (templateSpec)
+	{
+		result += HtmlTextSingleLineToString(L"<");
+		for (vint i = 0; i < templateSpec->arguments.Count(); i++)
+		{
+			if (i > 0) result += L", ";
+			auto argument = templateSpec->arguments[i];
+			if (argument.argumentType == CppTemplateArgumentType::Value)
+			{
+				result += L"<span class=\"cpp_keyword\">(expr)</span>";
+			}
+			else
+			{
+				result += L"<span class=\"cpp_type\">";
+				result += HtmlTextSingleLineToString(argument.name.name);
+				result += L"</span>";
+			}
+			if (argument.ellipsis)
+			{
+				result += L" ...";
+			}
+		}
+		result += HtmlTextSingleLineToString(L">");
+	}
+	return result;
 }
 
 /***********************************************************************
@@ -265,14 +349,7 @@ WString GetSymbolDisplayNameInHtml(Symbol* symbol)
 		while (current->kind != symbol_component::SymbolKind::Root && current->kind != symbol_component::SymbolKind::Namespace)
 		{
 			if (current != symbol) displayNameInHtml = L"::" + displayNameInHtml;
-			if (auto divClass = GetSymbolDivClass(current))
-			{
-				displayNameInHtml = L"<span class=\"" + WString(divClass, false) + L"\">" + HtmlTextSingleLineToString(current->name) + L"</span>" + displayNameInHtml;
-			}
-			else
-			{
-				displayNameInHtml = HtmlTextSingleLineToString(current->name) + displayNameInHtml;
-			}
+			displayNameInHtml = GetUnscopedSymbolDisplayNameInHtml(current) + displayNameInHtml;
 			current = current->GetParentScope();
 		}
 	}

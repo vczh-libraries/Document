@@ -21,7 +21,7 @@
     - [ ] Extract `<div>` token rendering functions.
     - [x] Extract symbol id and decl id generating functions.
     - [ ] Template arguments are not located in HTML.
-    - [ ] Fix display name of template symbols.
+    - [x] Fix display name of template symbols.
     - [ ] `expr->Accept` should have 3 links.
     - [x] Stop generating links to functions that count(impls + decls) == 1
   - [ ] Show progress while parsing cases.
