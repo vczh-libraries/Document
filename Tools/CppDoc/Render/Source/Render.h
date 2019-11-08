@@ -168,11 +168,11 @@ extern void											WriteHtmlAttribute(const WString& text, StreamWriter& writ
 HTML Display Name
 ***********************************************************************/
 
-extern WString										GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol);
-extern WString										GetTypeDisplayNameInHtml(Ptr<Type> type);
+extern WString										GetTypeDisplayNameInHtml(Ptr<Type> type, bool renderTypeArguments = true);
 extern WString										AppendFunctionParametersInHtml(FunctionType* funcType);
 extern WString										AppendTemplateArguments(List<TemplateSpec::Argument>& arguments);
 extern WString										AppendGenericArguments(VariadicList<GenericArgument>& arguments);
+extern WString										GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol, bool renderTypeArguments);
 extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
 
 /***********************************************************************

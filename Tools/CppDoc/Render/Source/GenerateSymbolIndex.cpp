@@ -146,7 +146,7 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 		writer.WriteString(keyword);
 		writer.WriteString(L"</div>");
 		writer.WriteChar(L' ');
-		writer.WriteString(GetUnscopedSymbolDisplayNameInHtml(context));
+		writer.WriteString(GetUnscopedSymbolDisplayNameInHtml(context, true));
 		if (auto funcDecl = context->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 		{
 			if (auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>())

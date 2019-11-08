@@ -8,6 +8,12 @@ class GetDisplayNameInHtmlTypeVisitor : public Object, public ITypeVisitor
 {
 public:
 	WString											result;
+	bool											renderTypeArguments;
+
+	GetDisplayNameInHtmlTypeVisitor(bool _renderTypeArguments)
+		:renderTypeArguments(_renderTypeArguments)
+	{
+	}
 
 	void Visit(PrimitiveType* self)override
 	{
@@ -140,7 +146,7 @@ public:
 	{
 		if (self->resolving)
 		{
-			result = GetSymbolDisplayNameInHtml(self->resolving->resolvedSymbols[0]) + result;
+			result = GetUnscopedSymbolDisplayNameInHtml(self->resolving->resolvedSymbols[0], renderTypeArguments) + result;
 		}
 		else
 		{
@@ -150,29 +156,27 @@ public:
 
 	void Visit(ChildType* self)override
 	{
+		WString nameType;
 		if (self->resolving)
 		{
-			result = GetSymbolDisplayNameInHtml(self->resolving->resolvedSymbols[0]) + result;
+			nameType = GetUnscopedSymbolDisplayNameInHtml(self->resolving->resolvedSymbols[0], renderTypeArguments);
 		}
 		else
 		{
-			result = L"::" + HtmlTextSingleLineToString(self->name.name) + result;
-			self->classType->Accept(this);
+			nameType = HtmlTextSingleLineToString(self->name.name);
 		}
+		result = GetTypeDisplayNameInHtml(self->classType) + L"::" + nameType + result;
 	}
 
 	void Visit(GenericType* self)override
 	{
-		WString currentResult = result;
-		result = L"";
-		self->type->Accept(this);
-		result = result + AppendGenericArguments(self->arguments) + L" " + currentResult;
+		result = GetTypeDisplayNameInHtml(self->type, false) + AppendGenericArguments(self->arguments) + result;
 	}
 };
 
-WString GetTypeDisplayNameInHtml(Ptr<Type> type)
+WString GetTypeDisplayNameInHtml(Ptr<Type> type, bool renderTypeArguments)
 {
-	GetDisplayNameInHtmlTypeVisitor visitor;
+	GetDisplayNameInHtmlTypeVisitor visitor(renderTypeArguments);
 	type->Accept(&visitor);
 	return visitor.result;
 }
@@ -254,7 +258,7 @@ WString AppendGenericArguments(VariadicList<GenericArgument>& arguments)
 		}
 		else
 		{
-			result += GetTypeDisplayNameInHtml(argument.item.type);
+			result += GetTypeDisplayNameInHtml(argument.item.type, true);
 		}
 		if (argument.isVariadic)
 		{
@@ -270,7 +274,7 @@ WString AppendGenericArguments(VariadicList<GenericArgument>& arguments)
 GetSymbolDisplayNameInHtml
 ***********************************************************************/
 
-WString GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol)
+WString GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol, bool renderTypeArguments)
 {
 	WString result;
 
@@ -310,13 +314,16 @@ WString GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol)
 		result += L"</span>";
 	}
 
-	if (specializationSpec)
+	if (renderTypeArguments)
 	{
-		result += AppendGenericArguments(specializationSpec->arguments);
-	}
-	else if (templateSpec)
-	{
-		result += AppendTemplateArguments(templateSpec->arguments);
+		if (specializationSpec)
+		{
+			result += AppendGenericArguments(specializationSpec->arguments);
+		}
+		else if (templateSpec)
+		{
+			result += AppendTemplateArguments(templateSpec->arguments);
+		}
 	}
 	return result;
 }
@@ -356,7 +363,7 @@ WString GetSymbolDisplayNameInHtml(Symbol* symbol)
 		while (current->kind != symbol_component::SymbolKind::Root && current->kind != symbol_component::SymbolKind::Namespace)
 		{
 			if (current != symbol) displayNameInHtml = L"::" + displayNameInHtml;
-			displayNameInHtml = GetUnscopedSymbolDisplayNameInHtml(current) + displayNameInHtml;
+			displayNameInHtml = GetUnscopedSymbolDisplayNameInHtml(current, true) + displayNameInHtml;
 			current = current->GetParentScope();
 		}
 	}
