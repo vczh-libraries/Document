@@ -49,42 +49,10 @@ void GenerateSymbolToFiles(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> f
 	for (vint i = 0; i < flr->refSymbols.Count(); i++)
 	{
 		auto symbol = flr->refSymbols[i];
-		switch (symbol->GetCategory())
+		EnumerateDecls(symbol, [&](Ptr<Declaration> decl, bool isImpl, vint index)
 		{
-		case symbol_component::SymbolCategory::Normal:
-			{
-				if (auto decl = symbol->GetImplDecl_NFb())
-				{
-					symbolToFiles.Add(L"NI$" + symbol->uniqueId, decl);
-				}
-				for (vint j = 0; j < symbol->GetForwardDecls_N().Count(); j++)
-				{
-					auto decl = symbol->GetForwardDecls_N()[j];
-					symbolToFiles.Add(L"NF[" + itow(j) + L"]$" + symbol->uniqueId, decl);
-				}
-			}
-			break;
-		case symbol_component::SymbolCategory::Function:
-			{
-				auto& symbols = symbol->GetImplSymbols_F();
-				for (vint j = 0; j < symbols.Count(); j++)
-				{
-					auto symbol = symbols[j];
-					symbolToFiles.Add(L"FB$" + symbol->uniqueId, symbol->GetImplDecl_NFb());
-				}
-			}
-			{
-				auto& symbols = symbol->GetForwardSymbols_F();
-				for (vint j = 0; j < symbols.Count(); j++)
-				{
-					auto symbol = symbols[j];
-					symbolToFiles.Add(L"FB$" + symbol->uniqueId, symbol->GetForwardDecl_Fb());
-				}
-			}
-			break;
-		case symbol_component::SymbolCategory::FunctionBody:
-			throw UnexpectedSymbolCategoryException();
-		}
+			symbolToFiles.Add(GetDeclId(decl), decl);
+		});
 	}
 
 	bool firstFileMapping = false;

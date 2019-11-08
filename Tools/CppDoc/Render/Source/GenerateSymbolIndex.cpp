@@ -172,7 +172,7 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 			writer.WriteString(L"</div>");
 		}
 
-		auto writeTag = [&](const WString& prefix, const WString& tag, Symbol* context, Ptr<Declaration> decl)
+		auto writeTag = [&](const WString& declId, const WString& tag, Ptr<Declaration> decl)
 		{
 			vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
 			if (index != -1)
@@ -182,50 +182,17 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 				writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
 				writer.WriteString(htmlFileName);
 				writer.WriteString(L".html#");
-				writer.WriteString(prefix);
-				writer.WriteString(context->uniqueId);
+				writer.WriteString(declId);
 				writer.WriteString(L"\">");
 				writer.WriteString(tag);
 				writer.WriteString(L"</a>");
 			}
 		};
 
-		switch (context->GetCategory())
+		EnumerateDecls(context, [&](Ptr<Declaration> decl, bool isImpl, vint index)
 		{
-		case symbol_component::SymbolCategory::Normal:
-			{
-				if (auto decl = context->GetImplDecl_NFb())
-				{
-					writeTag(L"NI$", L"impl", context, decl);
-				}
-				for (vint j = 0; j < context->GetForwardDecls_N().Count(); j++)
-				{
-					auto decl = context->GetForwardDecls_N()[j];
-					writeTag(L"NF[" + itow(j) + L"]$", L"decl", context, decl);
-				}
-			}
-			break;
-		case symbol_component::SymbolCategory::Function:
-			{
-				auto& symbols = context->GetImplSymbols_F();
-				for (vint j = 0; j < symbols.Count(); j++)
-				{
-					auto symbol = symbols[j].Obj();
-					writeTag(L"FB$", L"impl", symbol, symbol->GetImplDecl_NFb());
-				}
-			}
-			{
-				auto& symbols = context->GetForwardSymbols_F();
-				for (vint j = 0; j < symbols.Count(); j++)
-				{
-					auto symbol = symbols[j].Obj();
-					writeTag(L"FB$", L"decl", symbol, symbol->GetForwardDecl_Fb());
-				}
-			}
-			break;
-		case symbol_component::SymbolCategory::FunctionBody:
-			throw UnexpectedSymbolCategoryException();
-		}
+			writeTag(GetDeclId(decl), (isImpl ? L"impl" : L"decl"), decl);
+		});
 		writer.WriteLine(L"");
 	}
 

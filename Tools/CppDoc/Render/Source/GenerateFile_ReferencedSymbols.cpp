@@ -299,39 +299,17 @@ void GenerateReferencedSymbols(Ptr<FileLinesRecord> flr, StreamWriter& writer)
 		writer.WriteLine(L"\',");
 
 		List<WString> impls, decls;
-		switch (symbol->GetCategory())
+		EnumerateDecls(symbol, [&](Ptr<Declaration> decl, bool isImpl, vint index)
 		{
-		case symbol_component::SymbolCategory::Normal:
+			if (isImpl)
 			{
-				if (symbol->GetImplDecl_NFb())
-				{
-					impls.Add(L"NI$" + symbol->uniqueId);
-				}
-				for (vint j = 0; j < symbol->GetForwardDecls_N().Count(); j++)
-				{
-					decls.Add(L"NF[" + itow(j) + L"]$" + symbol->uniqueId);
-				}
+				impls.Add(GetDeclId(decl));
 			}
-			break;
-		case symbol_component::SymbolCategory::Function:
+			else
 			{
-				auto& symbols = symbol->GetImplSymbols_F();
-				for (vint j = 0; j < symbols.Count(); j++)
-				{
-					impls.Add(L"FB$" + symbols[j]->uniqueId);
-				}
+				decls.Add(GetDeclId(decl));
 			}
-			{
-				auto& symbols = symbol->GetForwardSymbols_F();
-				for (vint j = 0; j < symbols.Count(); j++)
-				{
-					decls.Add(L"FB$" + symbols[j]->uniqueId);
-				}
-			}
-			break;
-		case symbol_component::SymbolCategory::FunctionBody:
-			throw UnexpectedSymbolCategoryException();
-		}
+		});
 
 		if (impls.Count() == 0)
 		{

@@ -282,28 +282,7 @@ void GenerateHtmlLine(
 			}
 
 			Use(html).WriteString(L"<div class=\"def\" id=\"");
-			switch (decl->symbol->GetCategory())
-			{
-			case symbol_component::SymbolCategory::Normal:
-				{
-					if (decl == decl->symbol->GetImplDecl_NFb())
-					{
-						Use(html).WriteString(L"NI$");
-					}
-					else
-					{
-						Use(html).WriteString(L"NF[" + itow(decl->symbol->GetForwardDecls_N().IndexOf(decl.Obj())) + L"]$");
-					}
-					Use(html).WriteString(decl->symbol->uniqueId);
-				}
-				break;
-			case symbol_component::SymbolCategory::FunctionBody:
-				{
-					Use(html).WriteString(L"FB$");
-					Use(html).WriteString(decl->symbol->uniqueId);
-				}
-				break;
-			}
+			Use(html).WriteString(GetDeclId(decl));
 			Use(html).WriteString(L"\">");
 
 			bool generateLink = false;

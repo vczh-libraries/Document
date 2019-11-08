@@ -19,7 +19,7 @@
     - [x] Make HTML generator a lib.
     - [x] `referencedSymbols` and `symbolToFiles` content must be sorted.
     - [ ] Extract `<div>` token rendering functions.
-    - [ ] Extract symbol id and decl id generating functions.
+    - [x] Extract symbol id and decl id generating functions.
     - [ ] Template arguments are not located in HTML.
     - [ ] Fix display name of template symbols.
     - [ ] `expr->Accept` should have 3 links.
