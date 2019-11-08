@@ -23,6 +23,9 @@
     <ClCompile Include="Source\Compiling.cpp" />
     <ClCompile Include="Source\GenerateFile.cpp" />
     <ClCompile Include="Source\GenerateFileIndex.cpp" />
+    <ClCompile Include="Source\GenerateFile_CppCodeInHtml.cpp" />
+    <ClCompile Include="Source\GenerateFile_ReferencedSymbols.cpp" />
+    <ClCompile Include="Source\GenerateFile_SymbolToFiles.cpp" />
     <ClCompile Include="Source\GenerateSymbolIndex.cpp" />
     <ClCompile Include="Source\Indexing.cpp" />
     <ClCompile Include="Source\Preprocessing.cpp" />

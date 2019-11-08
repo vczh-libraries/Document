@@ -166,12 +166,20 @@ referencedSymbols = {
             'FB$_mm_addsub_ps[decl1]'
         ]
     },
-    '_mm_hsub_pd': {
-        'displayNameInHtml': '_mm_hsub_pd(<span class="cpp_type">__m128d</span>, <span class="cpp_type">__m128d</span>)',
+    '_mm_hadd_pd': {
+        'displayNameInHtml': '_mm_hadd_pd(<span class="cpp_type">__m128d</span>, <span class="cpp_type">__m128d</span>)',
         'impls': [],
         'decls': [
-            'FB$_mm_hsub_pd[decl0]',
-            'FB$_mm_hsub_pd[decl1]'
+            'FB$_mm_hadd_pd[decl0]',
+            'FB$_mm_hadd_pd[decl1]'
+        ]
+    },
+    '_mm_mwait': {
+        'displayNameInHtml': '_mm_mwait(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_mwait[decl0]',
+            'FB$_mm_mwait[decl1]'
         ]
     },
     '_mm_movedup_pd': {
@@ -190,28 +198,20 @@ referencedSymbols = {
             'FB$_mm_lddqu_si128[decl1]'
         ]
     },
-    '_mm_hadd_pd': {
-        'displayNameInHtml': '_mm_hadd_pd(<span class="cpp_type">__m128d</span>, <span class="cpp_type">__m128d</span>)',
+    '_mm_moveldup_ps': {
+        'displayNameInHtml': '_mm_moveldup_ps(<span class="cpp_type">__m128</span>)',
         'impls': [],
         'decls': [
-            'FB$_mm_hadd_pd[decl0]',
-            'FB$_mm_hadd_pd[decl1]'
+            'FB$_mm_moveldup_ps[decl0]',
+            'FB$_mm_moveldup_ps[decl1]'
         ]
     },
-    '_mm_monitor': {
-        'displayNameInHtml': '_mm_monitor(<span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
+    '_mm_hsub_pd': {
+        'displayNameInHtml': '_mm_hsub_pd(<span class="cpp_type">__m128d</span>, <span class="cpp_type">__m128d</span>)',
         'impls': [],
         'decls': [
-            'FB$_mm_monitor[decl0]',
-            'FB$_mm_monitor[decl1]'
-        ]
-    },
-    '_mm_mwait': {
-        'displayNameInHtml': '_mm_mwait(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_mwait[decl0]',
-            'FB$_mm_mwait[decl1]'
+            'FB$_mm_hsub_pd[decl0]',
+            'FB$_mm_hsub_pd[decl1]'
         ]
     },
     '_mm_movehdup_ps': {
@@ -230,12 +230,12 @@ referencedSymbols = {
             'FB$_mm_addsub_pd[decl1]'
         ]
     },
-    '_mm_moveldup_ps': {
-        'displayNameInHtml': '_mm_moveldup_ps(<span class="cpp_type">__m128</span>)',
+    '_mm_monitor': {
+        'displayNameInHtml': '_mm_monitor(<span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
         'impls': [],
         'decls': [
-            'FB$_mm_moveldup_ps[decl0]',
-            'FB$_mm_moveldup_ps[decl1]'
+            'FB$_mm_monitor[decl0]',
+            'FB$_mm_monitor[decl1]'
         ]
     },
     '_mm_loaddup_pd': {
@@ -257,24 +257,24 @@ symbolToFiles = {
     'FB$_mm_hsub_ps[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_addsub_ps[decl0]': null,
     'FB$_mm_addsub_ps[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_hsub_pd[decl0]': null,
-    'FB$_mm_hsub_pd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hadd_pd[decl0]': null,
+    'FB$_mm_hadd_pd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_mwait[decl0]': null,
+    'FB$_mm_mwait[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_movedup_pd[decl0]': null,
     'FB$_mm_movedup_pd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_lddqu_si128[decl0]': null,
     'FB$_mm_lddqu_si128[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_hadd_pd[decl0]': null,
-    'FB$_mm_hadd_pd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_monitor[decl0]': null,
-    'FB$_mm_monitor[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_mwait[decl0]': null,
-    'FB$_mm_mwait[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_moveldup_ps[decl0]': null,
+    'FB$_mm_moveldup_ps[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsub_pd[decl0]': null,
+    'FB$_mm_hsub_pd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_movehdup_ps[decl0]': null,
     'FB$_mm_movehdup_ps[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_addsub_pd[decl0]': null,
     'FB$_mm_addsub_pd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_moveldup_ps[decl0]': null,
-    'FB$_mm_moveldup_ps[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_monitor[decl0]': null,
+    'FB$_mm_monitor[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_loaddup_pd[decl0]': null,
     'FB$_mm_loaddup_pd[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' }
 };

@@ -179,6 +179,13 @@ referencedSymbols = {
             'FB$memchr[decl0]'
         ]
     },
+    'memchr2[impl0]::_C': {
+        'displayNameInHtml': '_C',
+        'impls': [
+            'NI$memchr2[impl0]::_C'
+        ],
+        'decls': []
+    },
     'memchr2': {
         'displayNameInHtml': 'memchr(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
         'impls': [
@@ -190,13 +197,6 @@ referencedSymbols = {
         'displayNameInHtml': '_Pv',
         'impls': [
             'NI$memchr2[impl0]::_Pv'
-        ],
-        'decls': []
-    },
-    'memchr2[impl0]::_C': {
-        'displayNameInHtml': '_C',
-        'impls': [
-            'NI$memchr2[impl0]::_C'
         ],
         'decls': []
     },
@@ -219,9 +219,9 @@ symbolToFiles = {
     'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
     'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'FB$memchr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'NI$memchr2[impl0]::_C': null,
     'FB$memchr2[impl0]': null,
     'NI$memchr2[impl0]::_Pv': null,
-    'NI$memchr2[impl0]::_C': null,
     'NI$memchr2[impl0]::_N': null,
     'NI$memchr2[impl0]::_Pvc': null
 };

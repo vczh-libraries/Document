@@ -80,17 +80,17 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'uintptr_t': {
-        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
-        'impls': [
-            'NI$uintptr_t'
-        ],
-        'decls': []
-    },
     'errno_t': {
         'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
         'impls': [
             'NI$errno_t'
+        ],
+        'decls': []
+    },
+    'uintptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
+        'impls': [
+            'NI$uintptr_t'
         ],
         'decls': []
     },
@@ -101,6 +101,15 @@ referencedSymbols = {
             'FB$_errno[decl0]',
             'FB$_errno[decl1]',
             'FB$_errno[decl2]'
+        ]
+    },
+    '_get_errno': {
+        'displayNameInHtml': '_get_errno(<span class="cpp_keyword">int</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_get_errno[decl0]',
+            'FB$_get_errno[decl1]',
+            'FB$_get_errno[decl2]'
         ]
     },
     'std': {
@@ -117,15 +126,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_get_errno': {
-        'displayNameInHtml': '_get_errno(<span class="cpp_keyword">int</span> *)',
-        'impls': [],
-        'decls': [
-            'FB$_get_errno[decl0]',
-            'FB$_get_errno[decl1]',
-            'FB$_get_errno[decl2]'
-        ]
-    },
     '_set_errno': {
         'displayNameInHtml': '_set_errno(<span class="cpp_keyword">int</span>)',
         'impls': [],
@@ -137,16 +137,16 @@ referencedSymbols = {
     }
 };
 symbolToFiles = {
-    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
     'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
     'FB$_errno[decl0]': null,
     'FB$_errno[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
     'FB$_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
-    'NF[0]$std': null,
-    'NI$std::nullptr_t': null,
     'FB$_get_errno[decl0]': null,
     'FB$_get_errno[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
     'FB$_get_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'NF[0]$std': null,
+    'NI$std::nullptr_t': null,
     'FB$_set_errno[decl0]': null,
     'FB$_set_errno[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
     'FB$_set_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' }

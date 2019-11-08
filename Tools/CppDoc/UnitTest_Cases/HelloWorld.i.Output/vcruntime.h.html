@@ -317,9 +317,11 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    '__countof_helper[decl0]::_SizeOfArray': {
-        'displayNameInHtml': '<span class="cpp_function">__countof_helper</span>::_SizeOfArray',
-        'impls': [],
+    'uintptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
+        'impls': [
+            'NI$uintptr_t'
+        ],
         'decls': []
     },
     'size_t': {
@@ -329,22 +331,20 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '__countof_helper[decl0]::_SizeOfArray': {
+        'displayNameInHtml': '<span class="cpp_function">__countof_helper</span>::_SizeOfArray',
+        'impls': [],
+        'decls': []
+    },
     '__countof_helper[decl0]::_CountofType': {
         'displayNameInHtml': '<span class="cpp_function">__countof_helper</span>::<span class="cpp_type">_CountofType</span>',
         'impls': [],
         'decls': []
-    },
-    'uintptr_t': {
-        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
-        'impls': [
-            'NI$uintptr_t'
-        ],
-        'decls': []
     }
 };
 symbolToFiles = {
-    'NI$size_t': null,
-    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' }
+    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
+    'NI$size_t': null
 };
 turnOnSymbol();
 </script>

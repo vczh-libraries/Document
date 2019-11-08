@@ -216,17 +216,17 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'size_t': {
-        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
-        'impls': [
-            'NI$size_t'
-        ],
-        'decls': []
-    },
     'intptr_t': {
         'displayNameInHtml': '<span class="cpp_type">intptr_t</span>',
         'impls': [
             'NI$intptr_t'
+        ],
+        'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
         ],
         'decls': []
     },
@@ -237,17 +237,17 @@ referencedSymbols = {
             'FB$free[decl0]'
         ]
     },
-    '_HEAPINFO': {
-        'displayNameInHtml': '<span class="cpp_type">_HEAPINFO</span>',
-        'impls': [
-            'NI$_HEAPINFO'
-        ],
-        'decls': []
-    },
     '_MarkAllocaS[impl0]::_Ptr': {
         'displayNameInHtml': '_Ptr',
         'impls': [
             'NI$_MarkAllocaS[impl0]::_Ptr'
+        ],
+        'decls': []
+    },
+    '_MarkAllocaS[impl0]::_Marker': {
+        'displayNameInHtml': '_Marker',
+        'impls': [
+            'NI$_MarkAllocaS[impl0]::_Marker'
         ],
         'decls': []
     },
@@ -258,10 +258,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_MarkAllocaS[impl0]::_Marker': {
-        'displayNameInHtml': '_Marker',
+    '_HEAPINFO': {
+        'displayNameInHtml': '<span class="cpp_type">_HEAPINFO</span>',
         'impls': [
-            'NI$_MarkAllocaS[impl0]::_Marker'
+            'NI$_HEAPINFO'
         ],
         'decls': []
     },
@@ -288,13 +288,13 @@ referencedSymbols = {
     }
 };
 symbolToFiles = {
-    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
     'NI$intptr_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
     'FB$free[decl0]': { 'htmlFileName': 'corecrt_malloc.h', 'displayName': 'corecrt_malloc.h' },
-    'NI$_HEAPINFO': null,
     'NI$_MarkAllocaS[impl0]::_Ptr': null,
-    'NI$_MallocaComputeSize[impl0]::_Size': null,
     'NI$_MarkAllocaS[impl0]::_Marker': null,
+    'NI$_MallocaComputeSize[impl0]::_Size': null,
+    'NI$_HEAPINFO': null,
     'NI$_freea[impl0]::_Memory': null,
     'NI$_MallocaComputeSize[impl0]::_MarkedSize': null,
     'NI$_freea[impl0]::_Marker': null
