@@ -317,11 +317,9 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'uintptr_t': {
-        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
-        'impls': [
-            'NI$uintptr_t'
-        ],
+    '__countof_helper[decl0]::_CountofType': {
+        'displayNameInHtml': '<span class="cpp_function">__countof_helper</span>::<span class="cpp_type">_CountofType</span>',
+        'impls': [],
         'decls': []
     },
     '__countof_helper[decl0]::_SizeOfArray': {
@@ -336,15 +334,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__countof_helper[decl0]::_CountofType': {
-        'displayNameInHtml': '<span class="cpp_function">__countof_helper</span>::<span class="cpp_type">_CountofType</span>',
-        'impls': [],
+    'uintptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
+        'impls': [
+            'NI$uintptr_t'
+        ],
         'decls': []
     }
 };
 symbolToFiles = {
-    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
-    'NI$size_t': null
+    'NI$size_t': null,
+    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' }
 };
 turnOnSymbol();
 </script>

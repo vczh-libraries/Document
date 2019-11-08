@@ -334,17 +334,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__m128i': {
-        'displayNameInHtml': '<span class="cpp_type">__m128i</span>',
-        'impls': [
-            'NI$__m128i'
-        ],
-        'decls': []
-    },
     '__m128d': {
         'displayNameInHtml': '<span class="cpp_type">__m128d</span>',
         'impls': [
             'NI$__m128d'
+        ],
+        'decls': []
+    },
+    '__m128i': {
+        'displayNameInHtml': '<span class="cpp_type">__m128i</span>',
+        'impls': [
+            'NI$__m128i'
         ],
         'decls': []
     },
@@ -368,30 +368,6 @@ referencedSymbols = {
             'NI$__m256i'
         ],
         'decls': []
-    },
-    '_tzcnt_u32': {
-        'displayNameInHtml': '_tzcnt_u32(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_tzcnt_u32[decl0]',
-            'FB$_tzcnt_u32[decl1]'
-        ]
-    },
-    '_lzcnt_u32': {
-        'displayNameInHtml': '_lzcnt_u32(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_lzcnt_u32[decl0]',
-            'FB$_lzcnt_u32[decl1]'
-        ]
-    },
-    '_blsr_u32': {
-        'displayNameInHtml': '_blsr_u32(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_blsr_u32[decl0]',
-            'FB$_blsr_u32[decl1]'
-        ]
     },
     '_bextr_u32': {
         'displayNameInHtml': '_bextr_u32(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
@@ -417,6 +393,22 @@ referencedSymbols = {
             'FB$_blsmsk_u32[decl1]'
         ]
     },
+    '_blsr_u32': {
+        'displayNameInHtml': '_blsr_u32(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_blsr_u32[decl0]',
+            'FB$_blsr_u32[decl1]'
+        ]
+    },
+    '_lzcnt_u32': {
+        'displayNameInHtml': '_lzcnt_u32(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_lzcnt_u32[decl0]',
+            'FB$_lzcnt_u32[decl1]'
+        ]
+    },
     '_mm_clzero': {
         'displayNameInHtml': '_mm_clzero(<span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *)',
         'impls': [],
@@ -440,33 +432,41 @@ referencedSymbols = {
             'FB$_mm_mwaitx[decl0]',
             'FB$_mm_mwaitx[decl1]'
         ]
+    },
+    '_tzcnt_u32': {
+        'displayNameInHtml': '_tzcnt_u32(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_tzcnt_u32[decl0]',
+            'FB$_tzcnt_u32[decl1]'
+        ]
     }
 };
 symbolToFiles = {
-    'NI$__m128': { 'htmlFileName': 'xmmintrin.h', 'displayName': 'xmmintrin.h' },
-    'NI$__m128i': { 'htmlFileName': 'emmintrin.h', 'displayName': 'emmintrin.h' },
-    'NI$__m128d': { 'htmlFileName': 'emmintrin.h', 'displayName': 'emmintrin.h' },
-    'NI$__m256': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
-    'NI$__m256d': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
-    'NI$__m256i': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
-    'FB$_tzcnt_u32[decl0]': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
-    'FB$_tzcnt_u32[decl1]': null,
-    'FB$_lzcnt_u32[decl0]': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
-    'FB$_lzcnt_u32[decl1]': null,
-    'FB$_blsr_u32[decl0]': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
-    'FB$_blsr_u32[decl1]': null,
     'FB$_bextr_u32[decl0]': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
     'FB$_bextr_u32[decl1]': null,
     'FB$_blsi_u32[decl0]': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
     'FB$_blsi_u32[decl1]': null,
     'FB$_blsmsk_u32[decl0]': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
     'FB$_blsmsk_u32[decl1]': null,
+    'FB$_blsr_u32[decl0]': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
+    'FB$_blsr_u32[decl1]': null,
+    'FB$_lzcnt_u32[decl0]': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
+    'FB$_lzcnt_u32[decl1]': null,
     'FB$_mm_clzero[decl0]': null,
     'FB$_mm_clzero[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_monitorx[decl0]': null,
     'FB$_mm_monitorx[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_mwaitx[decl0]': null,
-    'FB$_mm_mwaitx[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' }
+    'FB$_mm_mwaitx[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_tzcnt_u32[decl0]': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
+    'FB$_tzcnt_u32[decl1]': null,
+    'NI$__m128': { 'htmlFileName': 'xmmintrin.h', 'displayName': 'xmmintrin.h' },
+    'NI$__m128d': { 'htmlFileName': 'emmintrin.h', 'displayName': 'emmintrin.h' },
+    'NI$__m128i': { 'htmlFileName': 'emmintrin.h', 'displayName': 'emmintrin.h' },
+    'NI$__m256': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
+    'NI$__m256d': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' },
+    'NI$__m256i': { 'htmlFileName': 'immintrin.h', 'displayName': 'immintrin.h' }
 };
 turnOnSymbol();
 </script>

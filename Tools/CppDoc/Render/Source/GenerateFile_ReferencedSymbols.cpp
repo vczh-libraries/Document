@@ -279,10 +279,17 @@ GenerateReferencedSymbols
 
 void GenerateReferencedSymbols(Ptr<FileLinesRecord> flr, StreamWriter& writer)
 {
-	writer.WriteLine(L"referencedSymbols = {");
+	Dictionary<WString, Symbol*> referencedSymbols;
 	for (vint i = 0; i < flr->refSymbols.Count(); i++)
 	{
 		auto symbol = flr->refSymbols[i];
+		referencedSymbols.Add(symbol->uniqueId, symbol);
+	}
+
+	writer.WriteLine(L"referencedSymbols = {");
+	for (vint i = 0; i < referencedSymbols.Count(); i++)
+	{
+		auto symbol = referencedSymbols.Values()[i];
 		writer.WriteString(L"    \'");
 		writer.WriteString(symbol->uniqueId);
 		writer.WriteLine(L"\': {");

@@ -327,10 +327,22 @@ void GenerateHtmlLine(
 					switch (decl->symbol->GetCategory())
 					{
 					case symbol_component::SymbolCategory::Normal:
-						flr->refSymbols.Add(decl->symbol);
+						{
+							auto declSymbol = decl->symbol;
+							if (!flr->refSymbols.Contains(declSymbol))
+							{
+								flr->refSymbols.Add(declSymbol);
+							}
+						}
 						break;
 					case symbol_component::SymbolCategory::FunctionBody:
-						flr->refSymbols.Add(decl->symbol->GetFunctionSymbol_Fb());
+						{
+							auto declSymbol = decl->symbol->GetFunctionSymbol_Fb();
+							if (!flr->refSymbols.Contains(declSymbol))
+							{
+								flr->refSymbols.Add(declSymbol);
+							}
+						}
 						break;
 					}
 				}

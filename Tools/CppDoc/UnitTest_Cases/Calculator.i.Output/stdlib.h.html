@@ -1839,47 +1839,33 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'errno_t': {
-        'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
+    '_CRT_DOUBLE': {
+        'displayNameInHtml': '<span class="cpp_type">_CRT_DOUBLE</span>',
         'impls': [
-            'NI$errno_t'
+            'NI$_CRT_DOUBLE'
         ],
         'decls': []
     },
-    'size_t': {
-        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+    '_CRT_FLOAT': {
+        'displayNameInHtml': '<span class="cpp_type">_CRT_FLOAT</span>',
         'impls': [
-            'NI$size_t'
+            'NI$_CRT_FLOAT'
         ],
         'decls': []
     },
-    'uintptr_t': {
-        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
+    '_LDOUBLE': {
+        'displayNameInHtml': '<span class="cpp_type">_LDOUBLE</span>',
         'impls': [
-            'NI$uintptr_t'
+            'NI$_LDOUBLE'
         ],
         'decls': []
     },
-    '_locale_t': {
-        'displayNameInHtml': '<span class="cpp_type">_locale_t</span>',
-        'impls': [
-            'NI$_locale_t'
-        ],
-        'decls': []
-    },
-    'rsize_t': {
-        'displayNameInHtml': '<span class="cpp_type">rsize_t</span>',
-        'impls': [
-            'NI$rsize_t'
-        ],
-        'decls': []
-    },
-    'perror': {
-        'displayNameInHtml': 'perror(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+    '__doserrno': {
+        'displayNameInHtml': '__doserrno()',
         'impls': [],
         'decls': [
-            'FB$perror[decl0]',
-            'FB$perror[decl1]'
+            'FB$__doserrno[decl0]',
+            'FB$__doserrno[decl1]'
         ]
     },
     '_byteswap_uint64': {
@@ -1890,14 +1876,6 @@ referencedSymbols = {
             'FB$_byteswap_uint64[decl1]'
         ]
     },
-    '_byteswap_ushort': {
-        'displayNameInHtml': '_byteswap_ushort(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">short</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_byteswap_ushort[decl0]',
-            'FB$_byteswap_ushort[decl1]'
-        ]
-    },
     '_byteswap_ulong': {
         'displayNameInHtml': '_byteswap_ulong(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span>)',
         'impls': [],
@@ -1906,53 +1884,67 @@ referencedSymbols = {
             'FB$_byteswap_ulong[decl1]'
         ]
     },
-    '_lrotr': {
-        'displayNameInHtml': '_lrotr(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span>, <span class="cpp_keyword">int</span>)',
+    '_byteswap_ushort': {
+        'displayNameInHtml': '_byteswap_ushort(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">short</span>)',
         'impls': [],
         'decls': [
-            'FB$_lrotr[decl0]',
-            'FB$_lrotr[decl1]'
+            'FB$_byteswap_ushort[decl0]',
+            'FB$_byteswap_ushort[decl1]'
         ]
     },
-    '_lrotl': {
-        'displayNameInHtml': '_lrotl(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span>, <span class="cpp_keyword">int</span>)',
+    '_ecvt_s': {
+        'displayNameInHtml': '_ecvt_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span> *, <span class="cpp_keyword">int</span> *)',
         'impls': [],
         'decls': [
-            'FB$_lrotl[decl0]',
-            'FB$_lrotl[decl1]'
+            'FB$_ecvt_s[decl0]'
         ]
     },
-    '_rotr': {
-        'displayNameInHtml': '_rotr(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_rotr[decl0]',
-            'FB$_rotr[decl1]'
-        ]
+    '_ecvt_s2': {
+        'displayNameInHtml': '_ecvt_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span> *, <span class="cpp_keyword">int</span> *)',
+        'impls': [
+            'FB$_ecvt_s2[impl0]'
+        ],
+        'decls': []
     },
-    '_rotl': {
-        'displayNameInHtml': '_rotl(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_rotl[decl0]',
-            'FB$_rotl[decl1]'
-        ]
+    '_ecvt_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_ecvt_s2[impl0]::_Buffer'
+        ],
+        'decls': []
     },
-    '_rotr64': {
-        'displayNameInHtml': '_rotr64(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_rotr64[decl0]',
-            'FB$_rotr64[decl1]'
-        ]
+    '_ecvt_s2[impl0]::_DigitCount': {
+        'displayNameInHtml': '_DigitCount',
+        'impls': [
+            'NI$_ecvt_s2[impl0]::_DigitCount'
+        ],
+        'decls': []
     },
-    '_rotl64': {
-        'displayNameInHtml': '_rotl64(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">int</span>)',
+    '_ecvt_s2[impl0]::_PtDec': {
+        'displayNameInHtml': '_PtDec',
+        'impls': [
+            'NI$_ecvt_s2[impl0]::_PtDec'
+        ],
+        'decls': []
+    },
+    '_ecvt_s2[impl0]::_PtSign': {
+        'displayNameInHtml': '_PtSign',
+        'impls': [
+            'NI$_ecvt_s2[impl0]::_PtSign'
+        ],
+        'decls': []
+    },
+    '_ecvt_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_ecvt_s</span>::_Size',
         'impls': [],
-        'decls': [
-            'FB$_rotl64[decl0]',
-            'FB$_rotl64[decl1]'
-        ]
+        'decls': []
+    },
+    '_ecvt_s2[impl0]::_Value': {
+        'displayNameInHtml': '_Value',
+        'impls': [
+            'NI$_ecvt_s2[impl0]::_Value'
+        ],
+        'decls': []
     },
     '_errno': {
         'displayNameInHtml': '_errno()',
@@ -1961,6 +1953,108 @@ referencedSymbols = {
             'FB$_errno[decl0]',
             'FB$_errno[decl1]',
             'FB$_errno[decl2]'
+        ]
+    },
+    '_fcvt_s': {
+        'displayNameInHtml': '_fcvt_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span> *, <span class="cpp_keyword">int</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_fcvt_s[decl0]'
+        ]
+    },
+    '_fcvt_s2': {
+        'displayNameInHtml': '_fcvt_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span> *, <span class="cpp_keyword">int</span> *)',
+        'impls': [
+            'FB$_fcvt_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_fcvt_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_fcvt_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_fcvt_s2[impl0]::_FractionalDigitCount': {
+        'displayNameInHtml': '_FractionalDigitCount',
+        'impls': [
+            'NI$_fcvt_s2[impl0]::_FractionalDigitCount'
+        ],
+        'decls': []
+    },
+    '_fcvt_s2[impl0]::_PtDec': {
+        'displayNameInHtml': '_PtDec',
+        'impls': [
+            'NI$_fcvt_s2[impl0]::_PtDec'
+        ],
+        'decls': []
+    },
+    '_fcvt_s2[impl0]::_PtSign': {
+        'displayNameInHtml': '_PtSign',
+        'impls': [
+            'NI$_fcvt_s2[impl0]::_PtSign'
+        ],
+        'decls': []
+    },
+    '_fcvt_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_fcvt_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_fcvt_s2[impl0]::_Value': {
+        'displayNameInHtml': '_Value',
+        'impls': [
+            'NI$_fcvt_s2[impl0]::_Value'
+        ],
+        'decls': []
+    },
+    '_gcvt_s': {
+        'displayNameInHtml': '_gcvt_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_gcvt_s[decl0]'
+        ]
+    },
+    '_gcvt_s2': {
+        'displayNameInHtml': '_gcvt_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [
+            'FB$_gcvt_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_gcvt_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_gcvt_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_gcvt_s2[impl0]::_DigitCount': {
+        'displayNameInHtml': '_DigitCount',
+        'impls': [
+            'NI$_gcvt_s2[impl0]::_DigitCount'
+        ],
+        'decls': []
+    },
+    '_gcvt_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_gcvt_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_gcvt_s2[impl0]::_Value': {
+        'displayNameInHtml': '_Value',
+        'impls': [
+            'NI$_gcvt_s2[impl0]::_Value'
+        ],
+        'decls': []
+    },
+    '_get_doserrno': {
+        'displayNameInHtml': '_get_doserrno(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_get_doserrno[decl0]',
+            'FB$_get_doserrno[decl1]'
         ]
     },
     '_get_errno': {
@@ -1972,52 +2066,134 @@ referencedSymbols = {
             'FB$_get_errno[decl2]'
         ]
     },
-    '_set_errno': {
-        'displayNameInHtml': '_set_errno(<span class="cpp_keyword">int</span>)',
+    '_invalid_parameter_handler': {
+        'displayNameInHtml': '<span class="cpp_type">_invalid_parameter_handler</span>',
+        'impls': [
+            'NI$_invalid_parameter_handler'
+        ],
+        'decls': []
+    },
+    '_itoa_s': {
+        'displayNameInHtml': '_itoa_s(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>)',
         'impls': [],
         'decls': [
-            'FB$_set_errno[decl0]',
-            'FB$_set_errno[decl1]',
-            'FB$_set_errno[decl2]'
+            'FB$_itoa_s[decl0]'
         ]
     },
-    '_splitpath_s2[impl0]::_Name': {
-        'displayNameInHtml': '_Name',
+    '_itoa_s2': {
+        'displayNameInHtml': '_itoa_s(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>)',
         'impls': [
-            'NI$_splitpath_s2[impl0]::_Name'
+            'FB$_itoa_s2[impl0]'
         ],
         'decls': []
     },
-    '_splitpath_s2[impl0]::_DriveSize': {
-        'displayNameInHtml': '<span class="cpp_function">_splitpath_s</span>::_DriveSize',
+    '_itoa_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_itoa_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_itoa_s2[impl0]::_Radix': {
+        'displayNameInHtml': '_Radix',
+        'impls': [
+            'NI$_itoa_s2[impl0]::_Radix'
+        ],
+        'decls': []
+    },
+    '_itoa_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_itoa_s</span>::_Size',
         'impls': [],
         'decls': []
     },
-    '_splitpath_s': {
-        'displayNameInHtml': '_splitpath_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>)',
+    '_itoa_s2[impl0]::_Value': {
+        'displayNameInHtml': '_Value',
+        'impls': [
+            'NI$_itoa_s2[impl0]::_Value'
+        ],
+        'decls': []
+    },
+    '_locale_t': {
+        'displayNameInHtml': '<span class="cpp_type">_locale_t</span>',
+        'impls': [
+            'NI$_locale_t'
+        ],
+        'decls': []
+    },
+    '_lrotl': {
+        'displayNameInHtml': '_lrotl(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span>, <span class="cpp_keyword">int</span>)',
         'impls': [],
         'decls': [
-            'FB$_splitpath_s[decl0]'
+            'FB$_lrotl[decl0]',
+            'FB$_lrotl[decl1]'
         ]
     },
-    '_splitpath_s2[impl0]::_Dest': {
-        'displayNameInHtml': '_Dest',
+    '_lrotr': {
+        'displayNameInHtml': '_lrotr(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_lrotr[decl0]',
+            'FB$_lrotr[decl1]'
+        ]
+    },
+    '_ltoa_s': {
+        'displayNameInHtml': '_ltoa_s(<span class="cpp_keyword">long</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_ltoa_s[decl0]'
+        ]
+    },
+    '_ltoa_s2': {
+        'displayNameInHtml': '_ltoa_s(<span class="cpp_keyword">long</span>, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>)',
         'impls': [
-            'NI$_splitpath_s2[impl0]::_Dest'
+            'FB$_ltoa_s2[impl0]'
         ],
         'decls': []
     },
-    '_makepath_s2[impl0]::_Filename': {
-        'displayNameInHtml': '_Filename',
+    '_ltoa_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
         'impls': [
-            'NI$_makepath_s2[impl0]::_Filename'
+            'NI$_ltoa_s2[impl0]::_Buffer'
         ],
         'decls': []
     },
-    '_makepath_s2[impl0]::_Ext': {
-        'displayNameInHtml': '_Ext',
+    '_ltoa_s2[impl0]::_Radix': {
+        'displayNameInHtml': '_Radix',
         'impls': [
-            'NI$_makepath_s2[impl0]::_Ext'
+            'NI$_ltoa_s2[impl0]::_Radix'
+        ],
+        'decls': []
+    },
+    '_ltoa_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_ltoa_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_ltoa_s2[impl0]::_Value': {
+        'displayNameInHtml': '_Value',
+        'impls': [
+            'NI$_ltoa_s2[impl0]::_Value'
+        ],
+        'decls': []
+    },
+    '_makepath_s': {
+        'displayNameInHtml': '_makepath_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_makepath_s[decl0]'
+        ]
+    },
+    '_makepath_s2': {
+        'displayNameInHtml': '_makepath_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$_makepath_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_makepath_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_makepath_s2[impl0]::_Buffer'
         ],
         'decls': []
     },
@@ -2028,22 +2204,195 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_splitpath_s2[impl0]::_NameSize': {
-        'displayNameInHtml': '<span class="cpp_function">_splitpath_s</span>::_NameSize',
-        'impls': [],
-        'decls': []
-    },
-    '_splitpath_s2[impl0]::_ExtSize': {
-        'displayNameInHtml': '<span class="cpp_function">_splitpath_s</span>::_ExtSize',
-        'impls': [],
-        'decls': []
-    },
-    '_splitpath_s2[impl0]::_Drive': {
+    '_makepath_s2[impl0]::_Drive': {
         'displayNameInHtml': '_Drive',
         'impls': [
-            'NI$_splitpath_s2[impl0]::_Drive'
+            'NI$_makepath_s2[impl0]::_Drive'
         ],
         'decls': []
+    },
+    '_makepath_s2[impl0]::_Ext': {
+        'displayNameInHtml': '_Ext',
+        'impls': [
+            'NI$_makepath_s2[impl0]::_Ext'
+        ],
+        'decls': []
+    },
+    '_makepath_s2[impl0]::_Filename': {
+        'displayNameInHtml': '_Filename',
+        'impls': [
+            'NI$_makepath_s2[impl0]::_Filename'
+        ],
+        'decls': []
+    },
+    '_makepath_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_makepath_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_mbstowcs_s_l': {
+        'displayNameInHtml': '_mbstowcs_s_l(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mbstowcs_s_l[decl0]'
+        ]
+    },
+    '_mbstowcs_s_l2': {
+        'displayNameInHtml': '_mbstowcs_s_l(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
+        'impls': [
+            'FB$_mbstowcs_s_l2[impl0]'
+        ],
+        'decls': []
+    },
+    '_mbstowcs_s_l2[impl0]::_Dest': {
+        'displayNameInHtml': '_Dest',
+        'impls': [
+            'NI$_mbstowcs_s_l2[impl0]::_Dest'
+        ],
+        'decls': []
+    },
+    '_mbstowcs_s_l2[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_mbstowcs_s_l2[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_mbstowcs_s_l2[impl0]::_MaxCount': {
+        'displayNameInHtml': '_MaxCount',
+        'impls': [
+            'NI$_mbstowcs_s_l2[impl0]::_MaxCount'
+        ],
+        'decls': []
+    },
+    '_mbstowcs_s_l2[impl0]::_PtNumOfCharConverted': {
+        'displayNameInHtml': '_PtNumOfCharConverted',
+        'impls': [
+            'NI$_mbstowcs_s_l2[impl0]::_PtNumOfCharConverted'
+        ],
+        'decls': []
+    },
+    '_mbstowcs_s_l2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_mbstowcs_s_l</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_mbstowcs_s_l2[impl0]::_Source': {
+        'displayNameInHtml': '_Source',
+        'impls': [
+            'NI$_mbstowcs_s_l2[impl0]::_Source'
+        ],
+        'decls': []
+    },
+    '_onexit_t': {
+        'displayNameInHtml': '<span class="cpp_type">_onexit_t</span>',
+        'impls': [
+            'NI$_onexit_t'
+        ],
+        'decls': []
+    },
+    '_purecall_handler': {
+        'displayNameInHtml': '<span class="cpp_type">_purecall_handler</span>',
+        'impls': [
+            'NI$_purecall_handler'
+        ],
+        'decls': []
+    },
+    '_rotl': {
+        'displayNameInHtml': '_rotl(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_rotl[decl0]',
+            'FB$_rotl[decl1]'
+        ]
+    },
+    '_rotl64': {
+        'displayNameInHtml': '_rotl64(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_rotl64[decl0]',
+            'FB$_rotl64[decl1]'
+        ]
+    },
+    '_rotr': {
+        'displayNameInHtml': '_rotr(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_rotr[decl0]',
+            'FB$_rotr[decl1]'
+        ]
+    },
+    '_rotr64': {
+        'displayNameInHtml': '_rotr64(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_rotr64[decl0]',
+            'FB$_rotr64[decl1]'
+        ]
+    },
+    '_searchenv_s': {
+        'displayNameInHtml': '_searchenv_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_searchenv_s[decl0]'
+        ]
+    },
+    '_searchenv_s2': {
+        'displayNameInHtml': '_searchenv_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span>( &)[...])',
+        'impls': [
+            'FB$_searchenv_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_searchenv_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_searchenv_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_searchenv_s2[impl0]::_Filename': {
+        'displayNameInHtml': '_Filename',
+        'impls': [
+            'NI$_searchenv_s2[impl0]::_Filename'
+        ],
+        'decls': []
+    },
+    '_searchenv_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_searchenv_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_searchenv_s2[impl0]::_VarName': {
+        'displayNameInHtml': '_VarName',
+        'impls': [
+            'NI$_searchenv_s2[impl0]::_VarName'
+        ],
+        'decls': []
+    },
+    '_set_doserrno': {
+        'displayNameInHtml': '_set_doserrno(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_set_doserrno[decl0]',
+            'FB$_set_doserrno[decl1]'
+        ]
+    },
+    '_set_errno': {
+        'displayNameInHtml': '_set_errno(<span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_set_errno[decl0]',
+            'FB$_set_errno[decl1]',
+            'FB$_set_errno[decl2]'
+        ]
+    },
+    '_splitpath_s': {
+        'displayNameInHtml': '_splitpath_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_splitpath_s[decl0]'
+        ]
     },
     '_splitpath_s2': {
         'displayNameInHtml': '_splitpath_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span>( &)[...])',
@@ -2052,19 +2401,12 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_splitpath_s2[impl0]::_Ext': {
-        'displayNameInHtml': '_Ext',
+    '_splitpath_s2[impl0]::_Dest': {
+        'displayNameInHtml': '_Dest',
         'impls': [
-            'NI$_splitpath_s2[impl0]::_Ext'
+            'NI$_splitpath_s2[impl0]::_Dest'
         ],
         'decls': []
-    },
-    'getenv_s': {
-        'displayNameInHtml': 'getenv_s(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">char</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
-        'impls': [],
-        'decls': [
-            'FB$getenv_s[decl0]'
-        ]
     },
     '_splitpath_s2[impl0]::_Dir': {
         'displayNameInHtml': '_Dir',
@@ -2078,55 +2420,175 @@ referencedSymbols = {
         'impls': [],
         'decls': []
     },
-    '_purecall_handler': {
-        'displayNameInHtml': '<span class="cpp_type">_purecall_handler</span>',
+    '_splitpath_s2[impl0]::_Drive': {
+        'displayNameInHtml': '_Drive',
         'impls': [
-            'NI$_purecall_handler'
+            'NI$_splitpath_s2[impl0]::_Drive'
         ],
         'decls': []
     },
-    '_invalid_parameter_handler': {
-        'displayNameInHtml': '<span class="cpp_type">_invalid_parameter_handler</span>',
+    '_splitpath_s2[impl0]::_DriveSize': {
+        'displayNameInHtml': '<span class="cpp_function">_splitpath_s</span>::_DriveSize',
+        'impls': [],
+        'decls': []
+    },
+    '_splitpath_s2[impl0]::_Ext': {
+        'displayNameInHtml': '_Ext',
         'impls': [
-            'NI$_invalid_parameter_handler'
+            'NI$_splitpath_s2[impl0]::_Ext'
         ],
         'decls': []
     },
-    '_onexit_t': {
-        'displayNameInHtml': '<span class="cpp_type">_onexit_t</span>',
+    '_splitpath_s2[impl0]::_ExtSize': {
+        'displayNameInHtml': '<span class="cpp_function">_splitpath_s</span>::_ExtSize',
+        'impls': [],
+        'decls': []
+    },
+    '_splitpath_s2[impl0]::_Name': {
+        'displayNameInHtml': '_Name',
         'impls': [
-            'NI$_onexit_t'
+            'NI$_splitpath_s2[impl0]::_Name'
         ],
         'decls': []
     },
-    '_get_doserrno': {
-        'displayNameInHtml': '_get_doserrno(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span> *)',
+    '_splitpath_s2[impl0]::_NameSize': {
+        'displayNameInHtml': '<span class="cpp_function">_splitpath_s</span>::_NameSize',
+        'impls': [],
+        'decls': []
+    },
+    '_ultoa_s': {
+        'displayNameInHtml': '_ultoa_s(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>)',
         'impls': [],
         'decls': [
-            'FB$_get_doserrno[decl0]',
-            'FB$_get_doserrno[decl1]'
+            'FB$_ultoa_s[decl0]'
         ]
     },
-    '__doserrno': {
-        'displayNameInHtml': '__doserrno()',
-        'impls': [],
-        'decls': [
-            'FB$__doserrno[decl0]',
-            'FB$__doserrno[decl1]'
-        ]
-    },
-    '_set_doserrno': {
-        'displayNameInHtml': '_set_doserrno(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_set_doserrno[decl0]',
-            'FB$_set_doserrno[decl1]'
-        ]
-    },
-    'ldiv_t': {
-        'displayNameInHtml': '<span class="cpp_type">ldiv_t</span>',
+    '_ultoa_s2': {
+        'displayNameInHtml': '_ultoa_s(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span>, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>)',
         'impls': [
-            'NI$ldiv_t'
+            'FB$_ultoa_s2[impl0]'
+        ],
+        'decls': []
+    },
+    '_ultoa_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_ultoa_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_ultoa_s2[impl0]::_Radix': {
+        'displayNameInHtml': '_Radix',
+        'impls': [
+            'NI$_ultoa_s2[impl0]::_Radix'
+        ],
+        'decls': []
+    },
+    '_ultoa_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_ultoa_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_ultoa_s2[impl0]::_Value': {
+        'displayNameInHtml': '_Value',
+        'impls': [
+            'NI$_ultoa_s2[impl0]::_Value'
+        ],
+        'decls': []
+    },
+    '_wcstombs_s_l': {
+        'displayNameInHtml': '_wcstombs_s_l(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_wcstombs_s_l[decl0]'
+        ]
+    },
+    '_wcstombs_s_l2': {
+        'displayNameInHtml': '_wcstombs_s_l(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
+        'impls': [
+            'FB$_wcstombs_s_l2[impl0]'
+        ],
+        'decls': []
+    },
+    '_wcstombs_s_l2[impl0]::_Dest': {
+        'displayNameInHtml': '_Dest',
+        'impls': [
+            'NI$_wcstombs_s_l2[impl0]::_Dest'
+        ],
+        'decls': []
+    },
+    '_wcstombs_s_l2[impl0]::_Locale': {
+        'displayNameInHtml': '_Locale',
+        'impls': [
+            'NI$_wcstombs_s_l2[impl0]::_Locale'
+        ],
+        'decls': []
+    },
+    '_wcstombs_s_l2[impl0]::_MaxCount': {
+        'displayNameInHtml': '_MaxCount',
+        'impls': [
+            'NI$_wcstombs_s_l2[impl0]::_MaxCount'
+        ],
+        'decls': []
+    },
+    '_wcstombs_s_l2[impl0]::_PtNumOfCharConverted': {
+        'displayNameInHtml': '_PtNumOfCharConverted',
+        'impls': [
+            'NI$_wcstombs_s_l2[impl0]::_PtNumOfCharConverted'
+        ],
+        'decls': []
+    },
+    '_wcstombs_s_l2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">_wcstombs_s_l</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    '_wcstombs_s_l2[impl0]::_Source': {
+        'displayNameInHtml': '_Source',
+        'impls': [
+            'NI$_wcstombs_s_l2[impl0]::_Source'
+        ],
+        'decls': []
+    },
+    'abs2[impl0]::_X': {
+        'displayNameInHtml': '_X',
+        'impls': [
+            'NI$abs2[impl0]::_X'
+        ],
+        'decls': []
+    },
+    'abs3[impl0]::_X': {
+        'displayNameInHtml': '_X',
+        'impls': [
+            'NI$abs3[impl0]::_X'
+        ],
+        'decls': []
+    },
+    'div2[impl0]::_A1': {
+        'displayNameInHtml': '_A1',
+        'impls': [
+            'NI$div2[impl0]::_A1'
+        ],
+        'decls': []
+    },
+    'div2[impl0]::_A2': {
+        'displayNameInHtml': '_A2',
+        'impls': [
+            'NI$div2[impl0]::_A2'
+        ],
+        'decls': []
+    },
+    'div3[impl0]::_A1': {
+        'displayNameInHtml': '_A1',
+        'impls': [
+            'NI$div3[impl0]::_A1'
+        ],
+        'decls': []
+    },
+    'div3[impl0]::_A2': {
+        'displayNameInHtml': '_A2',
+        'impls': [
+            'NI$div3[impl0]::_A2'
         ],
         'decls': []
     },
@@ -2134,6 +2596,74 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">div_t</span>',
         'impls': [
             'NI$div_t'
+        ],
+        'decls': []
+    },
+    'errno_t': {
+        'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
+        'impls': [
+            'NI$errno_t'
+        ],
+        'decls': []
+    },
+    'getenv_s': {
+        'displayNameInHtml': 'getenv_s(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">char</span> *, <span class="cpp_type">rsize_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$getenv_s[decl0]'
+        ]
+    },
+    'getenv_s2': {
+        'displayNameInHtml': 'getenv_s(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$getenv_s2[impl0]'
+        ],
+        'decls': []
+    },
+    'getenv_s2[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$getenv_s2[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    'getenv_s2[impl0]::_RequiredCount': {
+        'displayNameInHtml': '_RequiredCount',
+        'impls': [
+            'NI$getenv_s2[impl0]::_RequiredCount'
+        ],
+        'decls': []
+    },
+    'getenv_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">getenv_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    'getenv_s2[impl0]::_VarName': {
+        'displayNameInHtml': '_VarName',
+        'impls': [
+            'NI$getenv_s2[impl0]::_VarName'
+        ],
+        'decls': []
+    },
+    'labs': {
+        'displayNameInHtml': 'labs(<span class="cpp_keyword">long</span>)',
+        'impls': [],
+        'decls': [
+            'FB$labs[decl0]'
+        ]
+    },
+    'ldiv': {
+        'displayNameInHtml': 'ldiv(<span class="cpp_keyword">long</span>, <span class="cpp_keyword">long</span>)',
+        'impls': [],
+        'decls': [
+            'FB$ldiv[decl0]'
+        ]
+    },
+    'ldiv_t': {
+        'displayNameInHtml': '<span class="cpp_type">ldiv_t</span>',
+        'impls': [
+            'NI$ldiv_t'
         ],
         'decls': []
     },
@@ -2158,348 +2688,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'ldiv': {
-        'displayNameInHtml': 'ldiv(<span class="cpp_keyword">long</span>, <span class="cpp_keyword">long</span>)',
+    'mbstowcs_s': {
+        'displayNameInHtml': 'mbstowcs_s(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
         'decls': [
-            'FB$ldiv[decl0]'
+            'FB$mbstowcs_s[decl0]'
         ]
     },
-    'labs': {
-        'displayNameInHtml': 'labs(<span class="cpp_keyword">long</span>)',
-        'impls': [],
-        'decls': [
-            'FB$labs[decl0]'
-        ]
-    },
-    'abs2[impl0]::_X': {
-        'displayNameInHtml': '_X',
+    'mbstowcs_s2': {
+        'displayNameInHtml': 'mbstowcs_s(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [
-            'NI$abs2[impl0]::_X'
-        ],
-        'decls': []
-    },
-    'div2[impl0]::_A2': {
-        'displayNameInHtml': '_A2',
-        'impls': [
-            'NI$div2[impl0]::_A2'
-        ],
-        'decls': []
-    },
-    'div3[impl0]::_A1': {
-        'displayNameInHtml': '_A1',
-        'impls': [
-            'NI$div3[impl0]::_A1'
-        ],
-        'decls': []
-    },
-    'abs3[impl0]::_X': {
-        'displayNameInHtml': '_X',
-        'impls': [
-            'NI$abs3[impl0]::_X'
-        ],
-        'decls': []
-    },
-    'div2[impl0]::_A1': {
-        'displayNameInHtml': '_A1',
-        'impls': [
-            'NI$div2[impl0]::_A1'
-        ],
-        'decls': []
-    },
-    'div3[impl0]::_A2': {
-        'displayNameInHtml': '_A2',
-        'impls': [
-            'NI$div3[impl0]::_A2'
-        ],
-        'decls': []
-    },
-    '_CRT_DOUBLE': {
-        'displayNameInHtml': '<span class="cpp_type">_CRT_DOUBLE</span>',
-        'impls': [
-            'NI$_CRT_DOUBLE'
-        ],
-        'decls': []
-    },
-    '_LDOUBLE': {
-        'displayNameInHtml': '<span class="cpp_type">_LDOUBLE</span>',
-        'impls': [
-            'NI$_LDOUBLE'
-        ],
-        'decls': []
-    },
-    '_CRT_FLOAT': {
-        'displayNameInHtml': '<span class="cpp_type">_CRT_FLOAT</span>',
-        'impls': [
-            'NI$_CRT_FLOAT'
-        ],
-        'decls': []
-    },
-    '_itoa_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_itoa_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_ltoa_s2[impl0]::_Value': {
-        'displayNameInHtml': '_Value',
-        'impls': [
-            'NI$_ltoa_s2[impl0]::_Value'
-        ],
-        'decls': []
-    },
-    '_ltoa_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_ltoa_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_itoa_s2[impl0]::_Value': {
-        'displayNameInHtml': '_Value',
-        'impls': [
-            'NI$_itoa_s2[impl0]::_Value'
-        ],
-        'decls': []
-    },
-    '_ltoa_s2[impl0]::_Radix': {
-        'displayNameInHtml': '_Radix',
-        'impls': [
-            'NI$_ltoa_s2[impl0]::_Radix'
-        ],
-        'decls': []
-    },
-    '_ultoa_s2': {
-        'displayNameInHtml': '_ultoa_s(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span>, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>)',
-        'impls': [
-            'FB$_ultoa_s2[impl0]'
-        ],
-        'decls': []
-    },
-    '_ultoa_s2[impl0]::_Value': {
-        'displayNameInHtml': '_Value',
-        'impls': [
-            'NI$_ultoa_s2[impl0]::_Value'
-        ],
-        'decls': []
-    },
-    '_ultoa_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_ultoa_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_itoa_s2': {
-        'displayNameInHtml': '_itoa_s(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>)',
-        'impls': [
-            'FB$_itoa_s2[impl0]'
-        ],
-        'decls': []
-    },
-    '_itoa_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_itoa_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_itoa_s2[impl0]::_Radix': {
-        'displayNameInHtml': '_Radix',
-        'impls': [
-            'NI$_itoa_s2[impl0]::_Radix'
-        ],
-        'decls': []
-    },
-    '_ltoa_s': {
-        'displayNameInHtml': '_ltoa_s(<span class="cpp_keyword">long</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_ltoa_s[decl0]'
-        ]
-    },
-    '_ultoa_s': {
-        'displayNameInHtml': '_ultoa_s(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_ultoa_s[decl0]'
-        ]
-    },
-    '_ltoa_s2': {
-        'displayNameInHtml': '_ltoa_s(<span class="cpp_keyword">long</span>, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">int</span>)',
-        'impls': [
-            'FB$_ltoa_s2[impl0]'
-        ],
-        'decls': []
-    },
-    '_ultoa_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_ultoa_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_itoa_s': {
-        'displayNameInHtml': '_itoa_s(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_itoa_s[decl0]'
-        ]
-    },
-    '_ltoa_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_ltoa_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_fcvt_s2[impl0]::_Value': {
-        'displayNameInHtml': '_Value',
-        'impls': [
-            'NI$_fcvt_s2[impl0]::_Value'
-        ],
-        'decls': []
-    },
-    '_ecvt_s2[impl0]::_Value': {
-        'displayNameInHtml': '_Value',
-        'impls': [
-            'NI$_ecvt_s2[impl0]::_Value'
-        ],
-        'decls': []
-    },
-    '_fcvt_s2[impl0]::_FractionalDigitCount': {
-        'displayNameInHtml': '_FractionalDigitCount',
-        'impls': [
-            'NI$_fcvt_s2[impl0]::_FractionalDigitCount'
-        ],
-        'decls': []
-    },
-    '_fcvt_s2[impl0]::_PtDec': {
-        'displayNameInHtml': '_PtDec',
-        'impls': [
-            'NI$_fcvt_s2[impl0]::_PtDec'
-        ],
-        'decls': []
-    },
-    '_ecvt_s': {
-        'displayNameInHtml': '_ecvt_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span> *, <span class="cpp_keyword">int</span> *)',
-        'impls': [],
-        'decls': [
-            'FB$_ecvt_s[decl0]'
-        ]
-    },
-    '_ecvt_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_ecvt_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_ecvt_s2': {
-        'displayNameInHtml': '_ecvt_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span> *, <span class="cpp_keyword">int</span> *)',
-        'impls': [
-            'FB$_ecvt_s2[impl0]'
-        ],
-        'decls': []
-    },
-    '_ecvt_s2[impl0]::_DigitCount': {
-        'displayNameInHtml': '_DigitCount',
-        'impls': [
-            'NI$_ecvt_s2[impl0]::_DigitCount'
-        ],
-        'decls': []
-    },
-    '_ecvt_s2[impl0]::_PtDec': {
-        'displayNameInHtml': '_PtDec',
-        'impls': [
-            'NI$_ecvt_s2[impl0]::_PtDec'
-        ],
-        'decls': []
-    },
-    '_ecvt_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_ecvt_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_ultoa_s2[impl0]::_Radix': {
-        'displayNameInHtml': '_Radix',
-        'impls': [
-            'NI$_ultoa_s2[impl0]::_Radix'
-        ],
-        'decls': []
-    },
-    '_ecvt_s2[impl0]::_PtSign': {
-        'displayNameInHtml': '_PtSign',
-        'impls': [
-            'NI$_ecvt_s2[impl0]::_PtSign'
-        ],
-        'decls': []
-    },
-    '_fcvt_s': {
-        'displayNameInHtml': '_fcvt_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span> *, <span class="cpp_keyword">int</span> *)',
-        'impls': [],
-        'decls': [
-            'FB$_fcvt_s[decl0]'
-        ]
-    },
-    '_fcvt_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_fcvt_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_fcvt_s2': {
-        'displayNameInHtml': '_fcvt_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span> *, <span class="cpp_keyword">int</span> *)',
-        'impls': [
-            'FB$_fcvt_s2[impl0]'
-        ],
-        'decls': []
-    },
-    '_fcvt_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_fcvt_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_fcvt_s2[impl0]::_PtSign': {
-        'displayNameInHtml': '_PtSign',
-        'impls': [
-            'NI$_fcvt_s2[impl0]::_PtSign'
-        ],
-        'decls': []
-    },
-    '_gcvt_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_gcvt_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_gcvt_s2[impl0]::_DigitCount': {
-        'displayNameInHtml': '_DigitCount',
-        'impls': [
-            'NI$_gcvt_s2[impl0]::_DigitCount'
-        ],
-        'decls': []
-    },
-    '_gcvt_s': {
-        'displayNameInHtml': '_gcvt_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_gcvt_s[decl0]'
-        ]
-    },
-    '_gcvt_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_gcvt_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_gcvt_s2[impl0]::_Value': {
-        'displayNameInHtml': '_Value',
-        'impls': [
-            'NI$_gcvt_s2[impl0]::_Value'
-        ],
-        'decls': []
-    },
-    '_gcvt_s2': {
-        'displayNameInHtml': '_gcvt_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">double</span>, <span class="cpp_keyword">int</span>)',
-        'impls': [
-            'FB$_gcvt_s2[impl0]'
+            'FB$mbstowcs_s2[impl0]'
         ],
         'decls': []
     },
@@ -2510,10 +2709,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_mbstowcs_s_l2[impl0]::_MaxCount': {
+    'mbstowcs_s2[impl0]::_MaxCount': {
         'displayNameInHtml': '_MaxCount',
         'impls': [
-            'NI$_mbstowcs_s_l2[impl0]::_MaxCount'
+            'NI$mbstowcs_s2[impl0]::_MaxCount'
+        ],
+        'decls': []
+    },
+    'mbstowcs_s2[impl0]::_PtNumOfCharConverted': {
+        'displayNameInHtml': '_PtNumOfCharConverted',
+        'impls': [
+            'NI$mbstowcs_s2[impl0]::_PtNumOfCharConverted'
         ],
         'decls': []
     },
@@ -2529,92 +2735,32 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_mbstowcs_s_l2': {
-        'displayNameInHtml': '_mbstowcs_s_l(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
-        'impls': [
-            'FB$_mbstowcs_s_l2[impl0]'
-        ],
-        'decls': []
-    },
-    '_mbstowcs_s_l2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_mbstowcs_s_l</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_mbstowcs_s_l2[impl0]::_PtNumOfCharConverted': {
-        'displayNameInHtml': '_PtNumOfCharConverted',
-        'impls': [
-            'NI$_mbstowcs_s_l2[impl0]::_PtNumOfCharConverted'
-        ],
-        'decls': []
-    },
-    '_mbstowcs_s_l2[impl0]::_Dest': {
-        'displayNameInHtml': '_Dest',
-        'impls': [
-            'NI$_mbstowcs_s_l2[impl0]::_Dest'
-        ],
-        'decls': []
-    },
-    '_mbstowcs_s_l2[impl0]::_Source': {
-        'displayNameInHtml': '_Source',
-        'impls': [
-            'NI$_mbstowcs_s_l2[impl0]::_Source'
-        ],
-        'decls': []
-    },
-    '_mbstowcs_s_l': {
-        'displayNameInHtml': '_mbstowcs_s_l(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
+    'perror': {
+        'displayNameInHtml': 'perror(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
         'impls': [],
         'decls': [
-            'FB$_mbstowcs_s_l[decl0]'
+            'FB$perror[decl0]',
+            'FB$perror[decl1]'
         ]
     },
-    '_mbstowcs_s_l2[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
+    'rsize_t': {
+        'displayNameInHtml': '<span class="cpp_type">rsize_t</span>',
         'impls': [
-            'NI$_mbstowcs_s_l2[impl0]::_Locale'
+            'NI$rsize_t'
         ],
         'decls': []
     },
-    'mbstowcs_s2': {
-        'displayNameInHtml': 'mbstowcs_s(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">wchar_t</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
         'impls': [
-            'FB$mbstowcs_s2[impl0]'
+            'NI$size_t'
         ],
         'decls': []
     },
-    'mbstowcs_s': {
-        'displayNameInHtml': 'mbstowcs_s(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$mbstowcs_s[decl0]'
-        ]
-    },
-    'mbstowcs_s2[impl0]::_PtNumOfCharConverted': {
-        'displayNameInHtml': '_PtNumOfCharConverted',
+    'uintptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
         'impls': [
-            'NI$mbstowcs_s2[impl0]::_PtNumOfCharConverted'
-        ],
-        'decls': []
-    },
-    'mbstowcs_s2[impl0]::_MaxCount': {
-        'displayNameInHtml': '_MaxCount',
-        'impls': [
-            'NI$mbstowcs_s2[impl0]::_MaxCount'
-        ],
-        'decls': []
-    },
-    'wcstombs_s2[impl0]::_Source': {
-        'displayNameInHtml': '_Source',
-        'impls': [
-            'NI$wcstombs_s2[impl0]::_Source'
-        ],
-        'decls': []
-    },
-    'wcstombs_s2': {
-        'displayNameInHtml': 'wcstombs_s(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
-        'impls': [
-            'FB$wcstombs_s2[impl0]'
+            'NI$uintptr_t'
         ],
         'decls': []
     },
@@ -2625,81 +2771,10 @@ referencedSymbols = {
             'FB$wcstombs_s[decl0]'
         ]
     },
-    'wcstombs_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">wcstombs_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    'wcstombs_s2[impl0]::_PtNumOfCharConverted': {
-        'displayNameInHtml': '_PtNumOfCharConverted',
+    'wcstombs_s2': {
+        'displayNameInHtml': 'wcstombs_s(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [
-            'NI$wcstombs_s2[impl0]::_PtNumOfCharConverted'
-        ],
-        'decls': []
-    },
-    'wcstombs_s2[impl0]::_MaxCount': {
-        'displayNameInHtml': '_MaxCount',
-        'impls': [
-            'NI$wcstombs_s2[impl0]::_MaxCount'
-        ],
-        'decls': []
-    },
-    '_wcstombs_s_l2[impl0]::_PtNumOfCharConverted': {
-        'displayNameInHtml': '_PtNumOfCharConverted',
-        'impls': [
-            'NI$_wcstombs_s_l2[impl0]::_PtNumOfCharConverted'
-        ],
-        'decls': []
-    },
-    '_wcstombs_s_l2[impl0]::_MaxCount': {
-        'displayNameInHtml': '_MaxCount',
-        'impls': [
-            'NI$_wcstombs_s_l2[impl0]::_MaxCount'
-        ],
-        'decls': []
-    },
-    '_wcstombs_s_l2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_wcstombs_s_l</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_wcstombs_s_l2[impl0]::_Dest': {
-        'displayNameInHtml': '_Dest',
-        'impls': [
-            'NI$_wcstombs_s_l2[impl0]::_Dest'
-        ],
-        'decls': []
-    },
-    '_wcstombs_s_l2[impl0]::_Locale': {
-        'displayNameInHtml': '_Locale',
-        'impls': [
-            'NI$_wcstombs_s_l2[impl0]::_Locale'
-        ],
-        'decls': []
-    },
-    '_wcstombs_s_l2': {
-        'displayNameInHtml': '_wcstombs_s_l(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
-        'impls': [
-            'FB$_wcstombs_s_l2[impl0]'
-        ],
-        'decls': []
-    },
-    '_makepath_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_makepath_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_makepath_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_makepath_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_makepath_s2': {
-        'displayNameInHtml': '_makepath_s(<span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
-        'impls': [
-            'FB$_makepath_s2[impl0]'
+            'FB$wcstombs_s2[impl0]'
         ],
         'decls': []
     },
@@ -2710,252 +2785,177 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_makepath_s2[impl0]::_Drive': {
-        'displayNameInHtml': '_Drive',
+    'wcstombs_s2[impl0]::_MaxCount': {
+        'displayNameInHtml': '_MaxCount',
         'impls': [
-            'NI$_makepath_s2[impl0]::_Drive'
+            'NI$wcstombs_s2[impl0]::_MaxCount'
         ],
         'decls': []
     },
-    '_wcstombs_s_l2[impl0]::_Source': {
+    'wcstombs_s2[impl0]::_PtNumOfCharConverted': {
+        'displayNameInHtml': '_PtNumOfCharConverted',
+        'impls': [
+            'NI$wcstombs_s2[impl0]::_PtNumOfCharConverted'
+        ],
+        'decls': []
+    },
+    'wcstombs_s2[impl0]::_Size': {
+        'displayNameInHtml': '<span class="cpp_function">wcstombs_s</span>::_Size',
+        'impls': [],
+        'decls': []
+    },
+    'wcstombs_s2[impl0]::_Source': {
         'displayNameInHtml': '_Source',
         'impls': [
-            'NI$_wcstombs_s_l2[impl0]::_Source'
-        ],
-        'decls': []
-    },
-    '_wcstombs_s_l': {
-        'displayNameInHtml': '_wcstombs_s_l(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">_locale_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_wcstombs_s_l[decl0]'
-        ]
-    },
-    '_makepath_s': {
-        'displayNameInHtml': '_makepath_s(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
-        'impls': [],
-        'decls': [
-            'FB$_makepath_s[decl0]'
-        ]
-    },
-    '_searchenv_s2[impl0]::_Filename': {
-        'displayNameInHtml': '_Filename',
-        'impls': [
-            'NI$_searchenv_s2[impl0]::_Filename'
-        ],
-        'decls': []
-    },
-    'getenv_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$getenv_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    '_searchenv_s2[impl0]::_Buffer': {
-        'displayNameInHtml': '_Buffer',
-        'impls': [
-            'NI$_searchenv_s2[impl0]::_Buffer'
-        ],
-        'decls': []
-    },
-    'getenv_s2[impl0]::_RequiredCount': {
-        'displayNameInHtml': '_RequiredCount',
-        'impls': [
-            'NI$getenv_s2[impl0]::_RequiredCount'
-        ],
-        'decls': []
-    },
-    'getenv_s2[impl0]::_VarName': {
-        'displayNameInHtml': '_VarName',
-        'impls': [
-            'NI$getenv_s2[impl0]::_VarName'
-        ],
-        'decls': []
-    },
-    '_searchenv_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">_searchenv_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_searchenv_s2[impl0]::_VarName': {
-        'displayNameInHtml': '_VarName',
-        'impls': [
-            'NI$_searchenv_s2[impl0]::_VarName'
-        ],
-        'decls': []
-    },
-    'getenv_s2[impl0]::_Size': {
-        'displayNameInHtml': '<span class="cpp_function">getenv_s</span>::_Size',
-        'impls': [],
-        'decls': []
-    },
-    '_searchenv_s': {
-        'displayNameInHtml': '_searchenv_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_searchenv_s[decl0]'
-        ]
-    },
-    'getenv_s2': {
-        'displayNameInHtml': 'getenv_s(<span class="cpp_type">size_t</span> *, <span class="cpp_keyword">char</span>( &)[...], <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
-        'impls': [
-            'FB$getenv_s2[impl0]'
-        ],
-        'decls': []
-    },
-    '_searchenv_s2': {
-        'displayNameInHtml': '_searchenv_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span>( &)[...])',
-        'impls': [
-            'FB$_searchenv_s2[impl0]'
+            'NI$wcstombs_s2[impl0]::_Source'
         ],
         'decls': []
     }
 };
 symbolToFiles = {
-    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
-    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
-    'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'NI$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'FB$perror[decl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
-    'FB$perror[decl1]': null,
+    'FB$__doserrno[decl0]': null,
+    'FB$__doserrno[decl1]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
     'FB$_byteswap_uint64[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_byteswap_uint64[decl1]': null,
-    'FB$_byteswap_ushort[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_byteswap_ushort[decl1]': null,
     'FB$_byteswap_ulong[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_byteswap_ulong[decl1]': null,
-    'FB$_lrotr[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_lrotr[decl1]': null,
+    'FB$_byteswap_ushort[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_byteswap_ushort[decl1]': null,
+    'FB$_ecvt_s2[impl0]': null,
+    'FB$_ecvt_s[decl0]': null,
+    'FB$_errno[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'FB$_errno[decl1]': null,
+    'FB$_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_fcvt_s2[impl0]': null,
+    'FB$_fcvt_s[decl0]': null,
+    'FB$_gcvt_s2[impl0]': null,
+    'FB$_gcvt_s[decl0]': null,
+    'FB$_get_doserrno[decl0]': null,
+    'FB$_get_doserrno[decl1]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_get_errno[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'FB$_get_errno[decl1]': null,
+    'FB$_get_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_itoa_s2[impl0]': null,
+    'FB$_itoa_s[decl0]': null,
     'FB$_lrotl[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_lrotl[decl1]': null,
-    'FB$_rotr[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_rotr[decl1]': null,
+    'FB$_lrotr[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_lrotr[decl1]': null,
+    'FB$_ltoa_s2[impl0]': null,
+    'FB$_ltoa_s[decl0]': null,
+    'FB$_makepath_s2[impl0]': null,
+    'FB$_makepath_s[decl0]': null,
+    'FB$_mbstowcs_s_l2[impl0]': null,
+    'FB$_mbstowcs_s_l[decl0]': null,
+    'FB$_rotl64[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_rotl64[decl1]': null,
     'FB$_rotl[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_rotl[decl1]': null,
     'FB$_rotr64[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_rotr64[decl1]': null,
-    'FB$_rotl64[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_rotl64[decl1]': null,
-    'FB$_errno[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
-    'FB$_errno[decl1]': null,
-    'FB$_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
-    'FB$_get_errno[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
-    'FB$_get_errno[decl1]': null,
-    'FB$_get_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_rotr[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_rotr[decl1]': null,
+    'FB$_searchenv_s2[impl0]': null,
+    'FB$_searchenv_s[decl0]': null,
+    'FB$_set_doserrno[decl0]': null,
+    'FB$_set_doserrno[decl1]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
     'FB$_set_errno[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
     'FB$_set_errno[decl1]': null,
     'FB$_set_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
-    'NI$_splitpath_s2[impl0]::_Name': null,
-    'FB$_splitpath_s[decl0]': null,
-    'NI$_splitpath_s2[impl0]::_Dest': null,
-    'NI$_makepath_s2[impl0]::_Filename': null,
-    'NI$_makepath_s2[impl0]::_Ext': null,
-    'NI$_makepath_s2[impl0]::_Dir': null,
-    'NI$_splitpath_s2[impl0]::_Drive': null,
     'FB$_splitpath_s2[impl0]': null,
-    'NI$_splitpath_s2[impl0]::_Ext': null,
+    'FB$_splitpath_s[decl0]': null,
+    'FB$_ultoa_s2[impl0]': null,
+    'FB$_ultoa_s[decl0]': null,
+    'FB$_wcstombs_s_l2[impl0]': null,
+    'FB$_wcstombs_s_l[decl0]': null,
+    'FB$getenv_s2[impl0]': null,
     'FB$getenv_s[decl0]': null,
-    'NI$_splitpath_s2[impl0]::_Dir': null,
-    'NI$_purecall_handler': null,
-    'NI$_invalid_parameter_handler': null,
-    'NI$_onexit_t': null,
-    'FB$_get_doserrno[decl0]': null,
-    'FB$_get_doserrno[decl1]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
-    'FB$__doserrno[decl0]': null,
-    'FB$__doserrno[decl1]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
-    'FB$_set_doserrno[decl0]': null,
-    'FB$_set_doserrno[decl1]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
-    'NI$ldiv_t': null,
-    'NI$div_t': null,
+    'FB$labs[decl0]': null,
+    'FB$ldiv[decl0]': null,
     'FB$llabs[decl0]': null,
     'FB$lldiv[decl0]': null,
-    'NI$lldiv_t': null,
-    'FB$ldiv[decl0]': null,
-    'FB$labs[decl0]': null,
-    'NI$abs2[impl0]::_X': null,
-    'NI$div2[impl0]::_A2': null,
-    'NI$div3[impl0]::_A1': null,
-    'NI$abs3[impl0]::_X': null,
-    'NI$div2[impl0]::_A1': null,
-    'NI$div3[impl0]::_A2': null,
-    'NI$_CRT_DOUBLE': null,
-    'NI$_LDOUBLE': null,
-    'NI$_CRT_FLOAT': null,
-    'NI$_ltoa_s2[impl0]::_Value': null,
-    'NI$_ltoa_s2[impl0]::_Buffer': null,
-    'NI$_itoa_s2[impl0]::_Value': null,
-    'NI$_ltoa_s2[impl0]::_Radix': null,
-    'FB$_ultoa_s2[impl0]': null,
-    'NI$_ultoa_s2[impl0]::_Value': null,
-    'NI$_ultoa_s2[impl0]::_Buffer': null,
-    'FB$_itoa_s2[impl0]': null,
-    'NI$_itoa_s2[impl0]::_Buffer': null,
-    'NI$_itoa_s2[impl0]::_Radix': null,
-    'FB$_ltoa_s[decl0]': null,
-    'FB$_ultoa_s[decl0]': null,
-    'FB$_ltoa_s2[impl0]': null,
-    'FB$_itoa_s[decl0]': null,
-    'NI$_fcvt_s2[impl0]::_Value': null,
-    'NI$_ecvt_s2[impl0]::_Value': null,
-    'NI$_fcvt_s2[impl0]::_FractionalDigitCount': null,
-    'NI$_fcvt_s2[impl0]::_PtDec': null,
-    'FB$_ecvt_s[decl0]': null,
-    'NI$_ecvt_s2[impl0]::_Buffer': null,
-    'FB$_ecvt_s2[impl0]': null,
-    'NI$_ecvt_s2[impl0]::_DigitCount': null,
-    'NI$_ecvt_s2[impl0]::_PtDec': null,
-    'NI$_ultoa_s2[impl0]::_Radix': null,
-    'NI$_ecvt_s2[impl0]::_PtSign': null,
-    'FB$_fcvt_s[decl0]': null,
-    'FB$_fcvt_s2[impl0]': null,
-    'NI$_fcvt_s2[impl0]::_Buffer': null,
-    'NI$_fcvt_s2[impl0]::_PtSign': null,
-    'NI$_gcvt_s2[impl0]::_DigitCount': null,
-    'FB$_gcvt_s[decl0]': null,
-    'NI$_gcvt_s2[impl0]::_Buffer': null,
-    'NI$_gcvt_s2[impl0]::_Value': null,
-    'FB$_gcvt_s2[impl0]': null,
-    'NI$mbstowcs_s2[impl0]::_Dest': null,
-    'NI$_mbstowcs_s_l2[impl0]::_MaxCount': null,
-    'NI$mbstowcs_s2[impl0]::_Source': null,
-    'FB$_mbstowcs_s_l2[impl0]': null,
-    'NI$_mbstowcs_s_l2[impl0]::_PtNumOfCharConverted': null,
-    'NI$_mbstowcs_s_l2[impl0]::_Dest': null,
-    'NI$_mbstowcs_s_l2[impl0]::_Source': null,
-    'FB$_mbstowcs_s_l[decl0]': null,
-    'NI$_mbstowcs_s_l2[impl0]::_Locale': null,
     'FB$mbstowcs_s2[impl0]': null,
     'FB$mbstowcs_s[decl0]': null,
-    'NI$mbstowcs_s2[impl0]::_PtNumOfCharConverted': null,
-    'NI$mbstowcs_s2[impl0]::_MaxCount': null,
-    'NI$wcstombs_s2[impl0]::_Source': null,
+    'FB$perror[decl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
+    'FB$perror[decl1]': null,
     'FB$wcstombs_s2[impl0]': null,
     'FB$wcstombs_s[decl0]': null,
-    'NI$wcstombs_s2[impl0]::_PtNumOfCharConverted': null,
-    'NI$wcstombs_s2[impl0]::_MaxCount': null,
-    'NI$_wcstombs_s_l2[impl0]::_PtNumOfCharConverted': null,
-    'NI$_wcstombs_s_l2[impl0]::_MaxCount': null,
+    'NI$_CRT_DOUBLE': null,
+    'NI$_CRT_FLOAT': null,
+    'NI$_LDOUBLE': null,
+    'NI$_ecvt_s2[impl0]::_Buffer': null,
+    'NI$_ecvt_s2[impl0]::_DigitCount': null,
+    'NI$_ecvt_s2[impl0]::_PtDec': null,
+    'NI$_ecvt_s2[impl0]::_PtSign': null,
+    'NI$_ecvt_s2[impl0]::_Value': null,
+    'NI$_fcvt_s2[impl0]::_Buffer': null,
+    'NI$_fcvt_s2[impl0]::_FractionalDigitCount': null,
+    'NI$_fcvt_s2[impl0]::_PtDec': null,
+    'NI$_fcvt_s2[impl0]::_PtSign': null,
+    'NI$_fcvt_s2[impl0]::_Value': null,
+    'NI$_gcvt_s2[impl0]::_Buffer': null,
+    'NI$_gcvt_s2[impl0]::_DigitCount': null,
+    'NI$_gcvt_s2[impl0]::_Value': null,
+    'NI$_invalid_parameter_handler': null,
+    'NI$_itoa_s2[impl0]::_Buffer': null,
+    'NI$_itoa_s2[impl0]::_Radix': null,
+    'NI$_itoa_s2[impl0]::_Value': null,
+    'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$_ltoa_s2[impl0]::_Buffer': null,
+    'NI$_ltoa_s2[impl0]::_Radix': null,
+    'NI$_ltoa_s2[impl0]::_Value': null,
+    'NI$_makepath_s2[impl0]::_Buffer': null,
+    'NI$_makepath_s2[impl0]::_Dir': null,
+    'NI$_makepath_s2[impl0]::_Drive': null,
+    'NI$_makepath_s2[impl0]::_Ext': null,
+    'NI$_makepath_s2[impl0]::_Filename': null,
+    'NI$_mbstowcs_s_l2[impl0]::_Dest': null,
+    'NI$_mbstowcs_s_l2[impl0]::_Locale': null,
+    'NI$_mbstowcs_s_l2[impl0]::_MaxCount': null,
+    'NI$_mbstowcs_s_l2[impl0]::_PtNumOfCharConverted': null,
+    'NI$_mbstowcs_s_l2[impl0]::_Source': null,
+    'NI$_onexit_t': null,
+    'NI$_purecall_handler': null,
+    'NI$_searchenv_s2[impl0]::_Buffer': null,
+    'NI$_searchenv_s2[impl0]::_Filename': null,
+    'NI$_searchenv_s2[impl0]::_VarName': null,
+    'NI$_splitpath_s2[impl0]::_Dest': null,
+    'NI$_splitpath_s2[impl0]::_Dir': null,
+    'NI$_splitpath_s2[impl0]::_Drive': null,
+    'NI$_splitpath_s2[impl0]::_Ext': null,
+    'NI$_splitpath_s2[impl0]::_Name': null,
+    'NI$_ultoa_s2[impl0]::_Buffer': null,
+    'NI$_ultoa_s2[impl0]::_Radix': null,
+    'NI$_ultoa_s2[impl0]::_Value': null,
     'NI$_wcstombs_s_l2[impl0]::_Dest': null,
     'NI$_wcstombs_s_l2[impl0]::_Locale': null,
-    'FB$_wcstombs_s_l2[impl0]': null,
-    'NI$_makepath_s2[impl0]::_Buffer': null,
-    'FB$_makepath_s2[impl0]': null,
-    'NI$wcstombs_s2[impl0]::_Dest': null,
-    'NI$_makepath_s2[impl0]::_Drive': null,
+    'NI$_wcstombs_s_l2[impl0]::_MaxCount': null,
+    'NI$_wcstombs_s_l2[impl0]::_PtNumOfCharConverted': null,
     'NI$_wcstombs_s_l2[impl0]::_Source': null,
-    'FB$_wcstombs_s_l[decl0]': null,
-    'FB$_makepath_s[decl0]': null,
-    'NI$_searchenv_s2[impl0]::_Filename': null,
+    'NI$abs2[impl0]::_X': null,
+    'NI$abs3[impl0]::_X': null,
+    'NI$div2[impl0]::_A1': null,
+    'NI$div2[impl0]::_A2': null,
+    'NI$div3[impl0]::_A1': null,
+    'NI$div3[impl0]::_A2': null,
+    'NI$div_t': null,
+    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$getenv_s2[impl0]::_Buffer': null,
-    'NI$_searchenv_s2[impl0]::_Buffer': null,
     'NI$getenv_s2[impl0]::_RequiredCount': null,
     'NI$getenv_s2[impl0]::_VarName': null,
-    'NI$_searchenv_s2[impl0]::_VarName': null,
-    'FB$_searchenv_s[decl0]': null,
-    'FB$getenv_s2[impl0]': null,
-    'FB$_searchenv_s2[impl0]': null
+    'NI$ldiv_t': null,
+    'NI$lldiv_t': null,
+    'NI$mbstowcs_s2[impl0]::_Dest': null,
+    'NI$mbstowcs_s2[impl0]::_MaxCount': null,
+    'NI$mbstowcs_s2[impl0]::_PtNumOfCharConverted': null,
+    'NI$mbstowcs_s2[impl0]::_Source': null,
+    'NI$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
+    'NI$wcstombs_s2[impl0]::_Dest': null,
+    'NI$wcstombs_s2[impl0]::_MaxCount': null,
+    'NI$wcstombs_s2[impl0]::_PtNumOfCharConverted': null,
+    'NI$wcstombs_s2[impl0]::_Source': null
 };
 turnOnSymbol();
 </script>

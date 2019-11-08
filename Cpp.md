@@ -17,7 +17,9 @@
   - [ ] Check template symbol in `SymbolIndex.html`.
   - [ ] Check carefully around all links.
     - [x] Make HTML generator a lib.
-    - [ ] `referencedSymbols` and `symbolToFiles` content must be sorted.
+    - [x] `referencedSymbols` and `symbolToFiles` content must be sorted.
+    - [ ] Extract `<div>` token rendering functions.
+    - [ ] Extract symbol id and decl id generating functions.
     - [ ] Template arguments are not located in HTML.
     - [ ] Fix display name of template symbols.
     - [ ] `expr->Accept` should have 3 links.

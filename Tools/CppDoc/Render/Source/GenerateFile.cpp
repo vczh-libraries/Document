@@ -36,8 +36,6 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	writer.WriteLine(L"<script type=\"text/javascript\">");
 	GenerateReferencedSymbols(flr, writer);
 	GenerateSymbolToFiles(global, flr, writer);
-	writer.WriteLine(L"");
-	writer.WriteLine(L"};");
 	writer.WriteLine(L"turnOnSymbol();");
 
 	writer.WriteLine(L"</script>");

@@ -80,20 +80,6 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'errno_t': {
-        'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
-        'impls': [
-            'NI$errno_t'
-        ],
-        'decls': []
-    },
-    'uintptr_t': {
-        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
-        'impls': [
-            'NI$uintptr_t'
-        ],
-        'decls': []
-    },
     '_errno': {
         'displayNameInHtml': '_errno()',
         'impls': [],
@@ -112,6 +98,22 @@ referencedSymbols = {
             'FB$_get_errno[decl2]'
         ]
     },
+    '_set_errno': {
+        'displayNameInHtml': '_set_errno(<span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_set_errno[decl0]',
+            'FB$_set_errno[decl1]',
+            'FB$_set_errno[decl2]'
+        ]
+    },
+    'errno_t': {
+        'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
+        'impls': [
+            'NI$errno_t'
+        ],
+        'decls': []
+    },
     'std': {
         'displayNameInHtml': 'std',
         'impls': [],
@@ -126,30 +128,28 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_set_errno': {
-        'displayNameInHtml': '_set_errno(<span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_set_errno[decl0]',
-            'FB$_set_errno[decl1]',
-            'FB$_set_errno[decl2]'
-        ]
+    'uintptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
+        'impls': [
+            'NI$uintptr_t'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
-    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
     'FB$_errno[decl0]': null,
     'FB$_errno[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
     'FB$_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
     'FB$_get_errno[decl0]': null,
     'FB$_get_errno[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
     'FB$_get_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
-    'NF[0]$std': null,
-    'NI$std::nullptr_t': null,
     'FB$_set_errno[decl0]': null,
     'FB$_set_errno[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
-    'FB$_set_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' }
+    'FB$_set_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'NF[0]$std': null,
+    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$std::nullptr_t': null,
+    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' }
 };
 turnOnSymbol();
 </script>

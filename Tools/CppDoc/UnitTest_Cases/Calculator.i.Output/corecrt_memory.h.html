@@ -158,13 +158,6 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'size_t': {
-        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
-        'impls': [
-            'NI$size_t'
-        ],
-        'decls': []
-    },
     '_locale_t': {
         'displayNameInHtml': '<span class="cpp_type">_locale_t</span>',
         'impls': [
@@ -179,13 +172,6 @@ referencedSymbols = {
             'FB$memchr[decl0]'
         ]
     },
-    'memchr2[impl0]::_C': {
-        'displayNameInHtml': '_C',
-        'impls': [
-            'NI$memchr2[impl0]::_C'
-        ],
-        'decls': []
-    },
     'memchr2': {
         'displayNameInHtml': 'memchr(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
         'impls': [
@@ -193,10 +179,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'memchr2[impl0]::_Pv': {
-        'displayNameInHtml': '_Pv',
+    'memchr2[impl0]::_C': {
+        'displayNameInHtml': '_C',
         'impls': [
-            'NI$memchr2[impl0]::_Pv'
+            'NI$memchr2[impl0]::_C'
         ],
         'decls': []
     },
@@ -207,23 +193,37 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'memchr2[impl0]::_Pv': {
+        'displayNameInHtml': '_Pv',
+        'impls': [
+            'NI$memchr2[impl0]::_Pv'
+        ],
+        'decls': []
+    },
     'memchr2[impl0]::_Pvc': {
         'displayNameInHtml': '_Pvc',
         'impls': [
             'NI$memchr2[impl0]::_Pvc'
         ],
         'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
-    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
-    'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'FB$memchr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
-    'NI$memchr2[impl0]::_C': null,
     'FB$memchr2[impl0]': null,
-    'NI$memchr2[impl0]::_Pv': null,
+    'FB$memchr[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$memchr2[impl0]::_C': null,
     'NI$memchr2[impl0]::_N': null,
-    'NI$memchr2[impl0]::_Pvc': null
+    'NI$memchr2[impl0]::_Pv': null,
+    'NI$memchr2[impl0]::_Pvc': null,
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' }
 };
 turnOnSymbol();
 </script>
