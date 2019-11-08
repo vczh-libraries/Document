@@ -25,114 +25,114 @@
 
 #pragma once
 
-<div class="disabled"/>#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
-<div class="disabled"/>#error This header is specific to X86 and X64 targets
+<div class="disabled">#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
+<div class="disabled">#error This header is specific to X86 and X64 targets
 #endif</div>
 
-<div class="disabled"/>#ifndef _INCLUDED_AMM</div>
-<div class="disabled"/>#define _INCLUDED_AMM</div>
-<div class="disabled"/>#ifndef __midl</div>
+<div class="disabled">#ifndef _INCLUDED_AMM</div>
+<div class="disabled">#define _INCLUDED_AMM</div>
+<div class="disabled">#ifndef __midl</div>
 
-<div class="disabled"/>#if !defined _M_IX86 &amp;&amp; !defined _M_X64</div>
-<div class="disabled"/>    #error This header is specific to X86 and X64 targets
+<div class="disabled">#if !defined _M_IX86 &amp;&amp; !defined _M_X64</div>
+<div class="disabled">    #error This header is specific to X86 and X64 targets
 #endif</div>
 
-<div class="disabled"/>#if defined (_M_CEE_PURE)</div>
-<div class="disabled"/>  #error ERROR: This file is not supported in the pure mode!
+<div class="disabled">#if defined (_M_CEE_PURE)</div>
+<div class="disabled">  #error ERROR: This file is not supported in the pure mode!
 #else  /* defined (_M_CEE_PURE) */</div>
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> { <div class="token cpp_comment ">/* Intrinsics use C name-mangling. */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
 <div class="token cpp_comment ">/*
  * Vector integer comparison control macros
  */</div>
 
-<div class="disabled"/>#define _MM_PCOMCTRL_LT    0</div>
-<div class="disabled"/>#define _MM_PCOMCTRL_LE    1</div>
-<div class="disabled"/>#define _MM_PCOMCTRL_GT    2</div>
-<div class="disabled"/>#define _MM_PCOMCTRL_GE    3</div>
-<div class="disabled"/>#define _MM_PCOMCTRL_EQ    4</div>
-<div class="disabled"/>#define _MM_PCOMCTRL_NEQ   5</div>
-<div class="disabled"/>#define _MM_PCOMCTRL_FALSE 6</div>
-<div class="disabled"/>#define _MM_PCOMCTRL_TRUE  7</div>
+<div class="disabled">#define _MM_PCOMCTRL_LT    0</div>
+<div class="disabled">#define _MM_PCOMCTRL_LE    1</div>
+<div class="disabled">#define _MM_PCOMCTRL_GT    2</div>
+<div class="disabled">#define _MM_PCOMCTRL_GE    3</div>
+<div class="disabled">#define _MM_PCOMCTRL_EQ    4</div>
+<div class="disabled">#define _MM_PCOMCTRL_NEQ   5</div>
+<div class="disabled">#define _MM_PCOMCTRL_FALSE 6</div>
+<div class="disabled">#define _MM_PCOMCTRL_TRUE  7</div>
 
 <div class="token cpp_comment ">/*
  * MACRO functions for vector integer comparisons
  */</div>
 
-<div class="disabled"/>#define _mm_comlt_epu8(v1, v2)      _mm_com_epu8(v1, v2, _MM_PCOMCTRL_LT)</div>
-<div class="disabled"/>#define _mm_comle_epu8(v1, v2)      _mm_com_epu8(v1, v2, _MM_PCOMCTRL_LE)</div>
-<div class="disabled"/>#define _mm_comgt_epu8(v1, v2)      _mm_com_epu8(v1, v2, _MM_PCOMCTRL_GT)</div>
-<div class="disabled"/>#define _mm_comge_epu8(v1, v2)      _mm_com_epu8(v1, v2, _MM_PCOMCTRL_GE)</div>
-<div class="disabled"/>#define _mm_comeq_epu8(v1, v2)      _mm_com_epu8(v1, v2, _MM_PCOMCTRL_EQ)</div>
-<div class="disabled"/>#define _mm_comneq_epu8(v1, v2)     _mm_com_epu8(v1, v2, _MM_PCOMCTRL_NEQ)</div>
-<div class="disabled"/>#define _mm_comfalse_epu8(v1, v2)   _mm_com_epu8(v1, v2, _MM_PCOMCTRL_FALSE)</div>
-<div class="disabled"/>#define _mm_comtrue_epu8(v1, v2)    _mm_com_epu8(v1, v2, _MM_PCOMCTRL_TRUE)</div>
+<div class="disabled">#define _mm_comlt_epu8(v1, v2)      _mm_com_epu8(v1, v2, _MM_PCOMCTRL_LT)</div>
+<div class="disabled">#define _mm_comle_epu8(v1, v2)      _mm_com_epu8(v1, v2, _MM_PCOMCTRL_LE)</div>
+<div class="disabled">#define _mm_comgt_epu8(v1, v2)      _mm_com_epu8(v1, v2, _MM_PCOMCTRL_GT)</div>
+<div class="disabled">#define _mm_comge_epu8(v1, v2)      _mm_com_epu8(v1, v2, _MM_PCOMCTRL_GE)</div>
+<div class="disabled">#define _mm_comeq_epu8(v1, v2)      _mm_com_epu8(v1, v2, _MM_PCOMCTRL_EQ)</div>
+<div class="disabled">#define _mm_comneq_epu8(v1, v2)     _mm_com_epu8(v1, v2, _MM_PCOMCTRL_NEQ)</div>
+<div class="disabled">#define _mm_comfalse_epu8(v1, v2)   _mm_com_epu8(v1, v2, _MM_PCOMCTRL_FALSE)</div>
+<div class="disabled">#define _mm_comtrue_epu8(v1, v2)    _mm_com_epu8(v1, v2, _MM_PCOMCTRL_TRUE)</div>
 
-<div class="disabled"/>#define _mm_comlt_epu16(v1, v2)     _mm_com_epu16(v1, v2, _MM_PCOMCTRL_LT)</div>
-<div class="disabled"/>#define _mm_comle_epu16(v1, v2)     _mm_com_epu16(v1, v2, _MM_PCOMCTRL_LE)</div>
-<div class="disabled"/>#define _mm_comgt_epu16(v1, v2)     _mm_com_epu16(v1, v2, _MM_PCOMCTRL_GT)</div>
-<div class="disabled"/>#define _mm_comge_epu16(v1, v2)     _mm_com_epu16(v1, v2, _MM_PCOMCTRL_GE)</div>
-<div class="disabled"/>#define _mm_comeq_epu16(v1, v2)     _mm_com_epu16(v1, v2, _MM_PCOMCTRL_EQ)</div>
-<div class="disabled"/>#define _mm_comneq_epu16(v1, v2)    _mm_com_epu16(v1, v2, _MM_PCOMCTRL_NEQ)</div>
-<div class="disabled"/>#define _mm_comfalse_epu16(v1, v2)  _mm_com_epu16(v1, v2, _MM_PCOMCTRL_FALSE)</div>
-<div class="disabled"/>#define _mm_comtrue_epu16(v1, v2)   _mm_com_epu16(v1, v2, _MM_PCOMCTRL_TRUE)</div>
+<div class="disabled">#define _mm_comlt_epu16(v1, v2)     _mm_com_epu16(v1, v2, _MM_PCOMCTRL_LT)</div>
+<div class="disabled">#define _mm_comle_epu16(v1, v2)     _mm_com_epu16(v1, v2, _MM_PCOMCTRL_LE)</div>
+<div class="disabled">#define _mm_comgt_epu16(v1, v2)     _mm_com_epu16(v1, v2, _MM_PCOMCTRL_GT)</div>
+<div class="disabled">#define _mm_comge_epu16(v1, v2)     _mm_com_epu16(v1, v2, _MM_PCOMCTRL_GE)</div>
+<div class="disabled">#define _mm_comeq_epu16(v1, v2)     _mm_com_epu16(v1, v2, _MM_PCOMCTRL_EQ)</div>
+<div class="disabled">#define _mm_comneq_epu16(v1, v2)    _mm_com_epu16(v1, v2, _MM_PCOMCTRL_NEQ)</div>
+<div class="disabled">#define _mm_comfalse_epu16(v1, v2)  _mm_com_epu16(v1, v2, _MM_PCOMCTRL_FALSE)</div>
+<div class="disabled">#define _mm_comtrue_epu16(v1, v2)   _mm_com_epu16(v1, v2, _MM_PCOMCTRL_TRUE)</div>
 
-<div class="disabled"/>#define _mm_comlt_epu32(v1, v2)     _mm_com_epu32(v1, v2, _MM_PCOMCTRL_LT)</div>
-<div class="disabled"/>#define _mm_comle_epu32(v1, v2)     _mm_com_epu32(v1, v2, _MM_PCOMCTRL_LE)</div>
-<div class="disabled"/>#define _mm_comgt_epu32(v1, v2)     _mm_com_epu32(v1, v2, _MM_PCOMCTRL_GT)</div>
-<div class="disabled"/>#define _mm_comge_epu32(v1, v2)     _mm_com_epu32(v1, v2, _MM_PCOMCTRL_GE)</div>
-<div class="disabled"/>#define _mm_comeq_epu32(v1, v2)     _mm_com_epu32(v1, v2, _MM_PCOMCTRL_EQ)</div>
-<div class="disabled"/>#define _mm_comneq_epu32(v1, v2)    _mm_com_epu32(v1, v2, _MM_PCOMCTRL_NEQ)</div>
-<div class="disabled"/>#define _mm_comfalse_epu32(v1, v2)  _mm_com_epu32(v1, v2, _MM_PCOMCTRL_FALSE)</div>
-<div class="disabled"/>#define _mm_comtrue_epu32(v1, v2)   _mm_com_epu32(v1, v2, _MM_PCOMCTRL_TRUE)</div>
+<div class="disabled">#define _mm_comlt_epu32(v1, v2)     _mm_com_epu32(v1, v2, _MM_PCOMCTRL_LT)</div>
+<div class="disabled">#define _mm_comle_epu32(v1, v2)     _mm_com_epu32(v1, v2, _MM_PCOMCTRL_LE)</div>
+<div class="disabled">#define _mm_comgt_epu32(v1, v2)     _mm_com_epu32(v1, v2, _MM_PCOMCTRL_GT)</div>
+<div class="disabled">#define _mm_comge_epu32(v1, v2)     _mm_com_epu32(v1, v2, _MM_PCOMCTRL_GE)</div>
+<div class="disabled">#define _mm_comeq_epu32(v1, v2)     _mm_com_epu32(v1, v2, _MM_PCOMCTRL_EQ)</div>
+<div class="disabled">#define _mm_comneq_epu32(v1, v2)    _mm_com_epu32(v1, v2, _MM_PCOMCTRL_NEQ)</div>
+<div class="disabled">#define _mm_comfalse_epu32(v1, v2)  _mm_com_epu32(v1, v2, _MM_PCOMCTRL_FALSE)</div>
+<div class="disabled">#define _mm_comtrue_epu32(v1, v2)   _mm_com_epu32(v1, v2, _MM_PCOMCTRL_TRUE)</div>
 
-<div class="disabled"/>#define _mm_comlt_epu64(v1, v2)     _mm_com_epu64(v1, v2, _MM_PCOMCTRL_LT)</div>
-<div class="disabled"/>#define _mm_comle_epu64(v1, v2)     _mm_com_epu64(v1, v2, _MM_PCOMCTRL_LE)</div>
-<div class="disabled"/>#define _mm_comgt_epu64(v1, v2)     _mm_com_epu64(v1, v2, _MM_PCOMCTRL_GT)</div>
-<div class="disabled"/>#define _mm_comge_epu64(v1, v2)     _mm_com_epu64(v1, v2, _MM_PCOMCTRL_GE)</div>
-<div class="disabled"/>#define _mm_comeq_epu64(v1, v2)     _mm_com_epu64(v1, v2, _MM_PCOMCTRL_EQ)</div>
-<div class="disabled"/>#define _mm_comneq_epu64(v1, v2)    _mm_com_epu64(v1, v2, _MM_PCOMCTRL_NEQ)</div>
-<div class="disabled"/>#define _mm_comfalse_epu64(v1, v2)  _mm_com_epu64(v1, v2, _MM_PCOMCTRL_FALSE)</div>
-<div class="disabled"/>#define _mm_comtrue_epu64(v1, v2)   _mm_com_epu64(v1, v2, _MM_PCOMCTRL_TRUE)</div>
+<div class="disabled">#define _mm_comlt_epu64(v1, v2)     _mm_com_epu64(v1, v2, _MM_PCOMCTRL_LT)</div>
+<div class="disabled">#define _mm_comle_epu64(v1, v2)     _mm_com_epu64(v1, v2, _MM_PCOMCTRL_LE)</div>
+<div class="disabled">#define _mm_comgt_epu64(v1, v2)     _mm_com_epu64(v1, v2, _MM_PCOMCTRL_GT)</div>
+<div class="disabled">#define _mm_comge_epu64(v1, v2)     _mm_com_epu64(v1, v2, _MM_PCOMCTRL_GE)</div>
+<div class="disabled">#define _mm_comeq_epu64(v1, v2)     _mm_com_epu64(v1, v2, _MM_PCOMCTRL_EQ)</div>
+<div class="disabled">#define _mm_comneq_epu64(v1, v2)    _mm_com_epu64(v1, v2, _MM_PCOMCTRL_NEQ)</div>
+<div class="disabled">#define _mm_comfalse_epu64(v1, v2)  _mm_com_epu64(v1, v2, _MM_PCOMCTRL_FALSE)</div>
+<div class="disabled">#define _mm_comtrue_epu64(v1, v2)   _mm_com_epu64(v1, v2, _MM_PCOMCTRL_TRUE)</div>
 
-<div class="disabled"/>#define _mm_comlt_epi8(v1, v2)      _mm_com_epi8(v1, v2, _MM_PCOMCTRL_LT)</div>
-<div class="disabled"/>#define _mm_comle_epi8(v1, v2)      _mm_com_epi8(v1, v2, _MM_PCOMCTRL_LE)</div>
-<div class="disabled"/>#define _mm_comgt_epi8(v1, v2)      _mm_com_epi8(v1, v2, _MM_PCOMCTRL_GT)</div>
-<div class="disabled"/>#define _mm_comge_epi8(v1, v2)      _mm_com_epi8(v1, v2, _MM_PCOMCTRL_GE)</div>
-<div class="disabled"/>#define _mm_comeq_epi8(v1, v2)      _mm_com_epi8(v1, v2, _MM_PCOMCTRL_EQ)</div>
-<div class="disabled"/>#define _mm_comneq_epi8(v1, v2)     _mm_com_epi8(v1, v2, _MM_PCOMCTRL_NEQ)</div>
-<div class="disabled"/>#define _mm_comfalse_epi8(v1, v2)   _mm_com_epi8(v1, v2, _MM_PCOMCTRL_FALSE)</div>
-<div class="disabled"/>#define _mm_comtrue_epi8(v1, v2)    _mm_com_epi8(v1, v2, _MM_PCOMCTRL_TRUE)</div>
+<div class="disabled">#define _mm_comlt_epi8(v1, v2)      _mm_com_epi8(v1, v2, _MM_PCOMCTRL_LT)</div>
+<div class="disabled">#define _mm_comle_epi8(v1, v2)      _mm_com_epi8(v1, v2, _MM_PCOMCTRL_LE)</div>
+<div class="disabled">#define _mm_comgt_epi8(v1, v2)      _mm_com_epi8(v1, v2, _MM_PCOMCTRL_GT)</div>
+<div class="disabled">#define _mm_comge_epi8(v1, v2)      _mm_com_epi8(v1, v2, _MM_PCOMCTRL_GE)</div>
+<div class="disabled">#define _mm_comeq_epi8(v1, v2)      _mm_com_epi8(v1, v2, _MM_PCOMCTRL_EQ)</div>
+<div class="disabled">#define _mm_comneq_epi8(v1, v2)     _mm_com_epi8(v1, v2, _MM_PCOMCTRL_NEQ)</div>
+<div class="disabled">#define _mm_comfalse_epi8(v1, v2)   _mm_com_epi8(v1, v2, _MM_PCOMCTRL_FALSE)</div>
+<div class="disabled">#define _mm_comtrue_epi8(v1, v2)    _mm_com_epi8(v1, v2, _MM_PCOMCTRL_TRUE)</div>
 
-<div class="disabled"/>#define _mm_comlt_epi16(v1, v2)     _mm_com_epi16(v1, v2, _MM_PCOMCTRL_LT)</div>
-<div class="disabled"/>#define _mm_comle_epi16(v1, v2)     _mm_com_epi16(v1, v2, _MM_PCOMCTRL_LE)</div>
-<div class="disabled"/>#define _mm_comgt_epi16(v1, v2)     _mm_com_epi16(v1, v2, _MM_PCOMCTRL_GT)</div>
-<div class="disabled"/>#define _mm_comge_epi16(v1, v2)     _mm_com_epi16(v1, v2, _MM_PCOMCTRL_GE)</div>
-<div class="disabled"/>#define _mm_comeq_epi16(v1, v2)     _mm_com_epi16(v1, v2, _MM_PCOMCTRL_EQ)</div>
-<div class="disabled"/>#define _mm_comneq_epi16(v1, v2)    _mm_com_epi16(v1, v2, _MM_PCOMCTRL_NEQ)</div>
-<div class="disabled"/>#define _mm_comfalse_epi16(v1, v2)  _mm_com_epi16(v1, v2, _MM_PCOMCTRL_FALSE)</div>
-<div class="disabled"/>#define _mm_comtrue_epi16(v1, v2)   _mm_com_epi16(v1, v2, _MM_PCOMCTRL_TRUE)</div>
+<div class="disabled">#define _mm_comlt_epi16(v1, v2)     _mm_com_epi16(v1, v2, _MM_PCOMCTRL_LT)</div>
+<div class="disabled">#define _mm_comle_epi16(v1, v2)     _mm_com_epi16(v1, v2, _MM_PCOMCTRL_LE)</div>
+<div class="disabled">#define _mm_comgt_epi16(v1, v2)     _mm_com_epi16(v1, v2, _MM_PCOMCTRL_GT)</div>
+<div class="disabled">#define _mm_comge_epi16(v1, v2)     _mm_com_epi16(v1, v2, _MM_PCOMCTRL_GE)</div>
+<div class="disabled">#define _mm_comeq_epi16(v1, v2)     _mm_com_epi16(v1, v2, _MM_PCOMCTRL_EQ)</div>
+<div class="disabled">#define _mm_comneq_epi16(v1, v2)    _mm_com_epi16(v1, v2, _MM_PCOMCTRL_NEQ)</div>
+<div class="disabled">#define _mm_comfalse_epi16(v1, v2)  _mm_com_epi16(v1, v2, _MM_PCOMCTRL_FALSE)</div>
+<div class="disabled">#define _mm_comtrue_epi16(v1, v2)   _mm_com_epi16(v1, v2, _MM_PCOMCTRL_TRUE)</div>
 
-<div class="disabled"/>#define _mm_comlt_epi32(v1, v2)     _mm_com_epi32(v1, v2, _MM_PCOMCTRL_LT)</div>
-<div class="disabled"/>#define _mm_comle_epi32(v1, v2)     _mm_com_epi32(v1, v2, _MM_PCOMCTRL_LE)</div>
-<div class="disabled"/>#define _mm_comgt_epi32(v1, v2)     _mm_com_epi32(v1, v2, _MM_PCOMCTRL_GT)</div>
-<div class="disabled"/>#define _mm_comge_epi32(v1, v2)     _mm_com_epi32(v1, v2, _MM_PCOMCTRL_GE)</div>
-<div class="disabled"/>#define _mm_comeq_epi32(v1, v2)     _mm_com_epi32(v1, v2, _MM_PCOMCTRL_EQ)</div>
-<div class="disabled"/>#define _mm_comneq_epi32(v1, v2)    _mm_com_epi32(v1, v2, _MM_PCOMCTRL_NEQ)</div>
-<div class="disabled"/>#define _mm_comfalse_epi32(v1, v2)  _mm_com_epi32(v1, v2, _MM_PCOMCTRL_FALSE)</div>
-<div class="disabled"/>#define _mm_comtrue_epi32(v1, v2)   _mm_com_epi32(v1, v2, _MM_PCOMCTRL_TRUE)</div>
+<div class="disabled">#define _mm_comlt_epi32(v1, v2)     _mm_com_epi32(v1, v2, _MM_PCOMCTRL_LT)</div>
+<div class="disabled">#define _mm_comle_epi32(v1, v2)     _mm_com_epi32(v1, v2, _MM_PCOMCTRL_LE)</div>
+<div class="disabled">#define _mm_comgt_epi32(v1, v2)     _mm_com_epi32(v1, v2, _MM_PCOMCTRL_GT)</div>
+<div class="disabled">#define _mm_comge_epi32(v1, v2)     _mm_com_epi32(v1, v2, _MM_PCOMCTRL_GE)</div>
+<div class="disabled">#define _mm_comeq_epi32(v1, v2)     _mm_com_epi32(v1, v2, _MM_PCOMCTRL_EQ)</div>
+<div class="disabled">#define _mm_comneq_epi32(v1, v2)    _mm_com_epi32(v1, v2, _MM_PCOMCTRL_NEQ)</div>
+<div class="disabled">#define _mm_comfalse_epi32(v1, v2)  _mm_com_epi32(v1, v2, _MM_PCOMCTRL_FALSE)</div>
+<div class="disabled">#define _mm_comtrue_epi32(v1, v2)   _mm_com_epi32(v1, v2, _MM_PCOMCTRL_TRUE)</div>
 
-<div class="disabled"/>#define _mm_comlt_epi64(v1, v2)     _mm_com_epi64(v1, v2, _MM_PCOMCTRL_LT)</div>
-<div class="disabled"/>#define _mm_comle_epi64(v1, v2)     _mm_com_epi64(v1, v2, _MM_PCOMCTRL_LE)</div>
-<div class="disabled"/>#define _mm_comgt_epi64(v1, v2)     _mm_com_epi64(v1, v2, _MM_PCOMCTRL_GT)</div>
-<div class="disabled"/>#define _mm_comge_epi64(v1, v2)     _mm_com_epi64(v1, v2, _MM_PCOMCTRL_GE)</div>
-<div class="disabled"/>#define _mm_comeq_epi64(v1, v2)     _mm_com_epi64(v1, v2, _MM_PCOMCTRL_EQ)</div>
-<div class="disabled"/>#define _mm_comneq_epi64(v1, v2)    _mm_com_epi64(v1, v2, _MM_PCOMCTRL_NEQ)</div>
-<div class="disabled"/>#define _mm_comfalse_epi64(v1, v2)  _mm_com_epi64(v1, v2, _MM_PCOMCTRL_FALSE)</div>
-<div class="disabled"/>#define _mm_comtrue_epi64(v1, v2)   _mm_com_epi64(v1, v2, _MM_PCOMCTRL_TRUE)</div>
+<div class="disabled">#define _mm_comlt_epi64(v1, v2)     _mm_com_epi64(v1, v2, _MM_PCOMCTRL_LT)</div>
+<div class="disabled">#define _mm_comle_epi64(v1, v2)     _mm_com_epi64(v1, v2, _MM_PCOMCTRL_LE)</div>
+<div class="disabled">#define _mm_comgt_epi64(v1, v2)     _mm_com_epi64(v1, v2, _MM_PCOMCTRL_GT)</div>
+<div class="disabled">#define _mm_comge_epi64(v1, v2)     _mm_com_epi64(v1, v2, _MM_PCOMCTRL_GE)</div>
+<div class="disabled">#define _mm_comeq_epi64(v1, v2)     _mm_com_epi64(v1, v2, _MM_PCOMCTRL_EQ)</div>
+<div class="disabled">#define _mm_comneq_epi64(v1, v2)    _mm_com_epi64(v1, v2, _MM_PCOMCTRL_NEQ)</div>
+<div class="disabled">#define _mm_comfalse_epi64(v1, v2)  _mm_com_epi64(v1, v2, _MM_PCOMCTRL_FALSE)</div>
+<div class="disabled">#define _mm_comtrue_epi64(v1, v2)   _mm_com_epi64(v1, v2, _MM_PCOMCTRL_TRUE)</div>
 
 <div class="token cpp_comment ">/* SSE5 intrinsics */</div>
 
@@ -230,10 +230,10 @@
 <div class="ref" onclick="jumpToSymbol([], ['__m128d'])"><div class="token cpp_type">__m128d</div></div> <div class="def" id="FB$_mm_frcz_sd[decl0]"><div><div class="token cpp_function">_mm_frcz_sd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128d'])"><div class="token cpp_type">__m128d</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128d'])"><div class="token cpp_type">__m128d</div></div>);
 
 <div class="token cpp_comment ">/* Control values for permute2 intrinsics */</div>
-<div class="disabled"/>#define _MM_PERMUTE2_COPY    0 /* just copy the selected value */</div>
+<div class="disabled">#define _MM_PERMUTE2_COPY    0 /* just copy the selected value */</div>
 <div class="token cpp_comment ">/* Note that using the constant 1 would have the same effect as 0 */</div>
-<div class="disabled"/>#define _MM_PERMUTE2_ZEROIF1 2 /* zero selected value if src3 bit is 1 */</div>
-<div class="disabled"/>#define _MM_PERMUTE2_ZEROIF0 3 /* zero selected value if src3 bit is 3 */</div>
+<div class="disabled">#define _MM_PERMUTE2_ZEROIF1 2 /* zero selected value if src3 bit is 1 */</div>
+<div class="disabled">#define _MM_PERMUTE2_ZEROIF0 3 /* zero selected value if src3 bit is 3 */</div>
 
 <div class="token cpp_comment ">/* Permutation */</div>
 <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_permute2_ps[decl0]"><div><div class="token cpp_function">_mm_permute2_ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div>, <div class="token cpp_keyword ">int</div>);
@@ -264,9 +264,9 @@
 <div class="token cpp_keyword ">void</div> *<div class="def" id="FB$__slwpcb[decl0]"><div><div class="token cpp_function">__slwpcb</div></div></div>();
 <div class="token cpp_keyword ">void</div> <div class="def" id="FB$__lwpval32[decl0]"><div><div class="token cpp_function">__lwpval32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
 <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="FB$__lwpins32[decl0]"><div><div class="token cpp_function">__lwpins32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>void __lwpval64(unsigned __int64, unsigned int, unsigned int);</div>
-<div class="disabled"/>unsigned char __lwpins64(unsigned __int64, unsigned int, unsigned int);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">void __lwpval64(unsigned __int64, unsigned int, unsigned int);</div>
+<div class="disabled">unsigned char __lwpins64(unsigned __int64, unsigned int, unsigned int);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*BMI intrinsics */</div>
@@ -277,14 +277,14 @@
 <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_blsr_u32[decl1]"><div class="ref" onclick="jumpToSymbol([], ['_blsr_u32'])"><div class="token cpp_function">_blsr_u32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
 <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_blsmsk_u32[decl1]"><div class="ref" onclick="jumpToSymbol([], ['_blsmsk_u32'])"><div class="token cpp_function">_blsmsk_u32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
 <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_blsi_u32[decl1]"><div class="ref" onclick="jumpToSymbol([], ['_blsi_u32'])"><div class="token cpp_function">_blsi_u32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>unsigned __int64 _bextr_u64(unsigned __int64, unsigned int, unsigned int);</div>
-<div class="disabled"/>unsigned __int64 _andn_u64(unsigned __int64, unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _tzcnt_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _lzcnt_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _blsr_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _blsmsk_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _blsi_u64(unsigned __int64);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">unsigned __int64 _bextr_u64(unsigned __int64, unsigned int, unsigned int);</div>
+<div class="disabled">unsigned __int64 _andn_u64(unsigned __int64, unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _tzcnt_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _lzcnt_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _blsr_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _blsmsk_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _blsi_u64(unsigned __int64);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/* TBM intrinsics */</div>
@@ -298,17 +298,17 @@
 <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_t1mskc_u32[decl0]"><div><div class="token cpp_function">_t1mskc_u32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
 <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_blcmsk_u32[decl0]"><div><div class="token cpp_function">_blcmsk_u32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
 <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_blci_u32[decl0]"><div><div class="token cpp_function">_blci_u32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>unsigned __int64 _bextri_u64(unsigned __int64, unsigned int);</div>
-<div class="disabled"/>unsigned __int64 _blcfill_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _blsfill_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _blcs_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _tzmsk_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _blcic_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _blsic_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _t1mskc_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _blcmsk_u64(unsigned __int64);</div>
-<div class="disabled"/>unsigned __int64 _blci_u64(unsigned __int64);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">unsigned __int64 _bextri_u64(unsigned __int64, unsigned int);</div>
+<div class="disabled">unsigned __int64 _blcfill_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _blsfill_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _blcs_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _tzmsk_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _blcic_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _blsic_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _t1mskc_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _blcmsk_u64(unsigned __int64);</div>
+<div class="disabled">unsigned __int64 _blci_u64(unsigned __int64);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_keyword ">void</div> <div class="def" id="FB$_mm_monitorx[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_monitorx'])"><div class="token cpp_function">_mm_monitorx</div></div></div>(<div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div> *, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
@@ -316,11 +316,11 @@
 
 <div class="token cpp_keyword ">void</div> <div class="def" id="FB$_mm_clzero[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_clzero'])"><div class="token cpp_function">_mm_clzero</div></div></div>(<div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div> *);
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 }; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
-<div class="disabled"/>#endif  /* defined (_M_CEE_PURE) */
+<div class="disabled">#endif  /* defined (_M_CEE_PURE) */
 #endif  /* __midl */
 #endif  /* _INCLUDED_AMM */
 </div>

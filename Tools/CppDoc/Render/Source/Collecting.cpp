@@ -116,7 +116,6 @@ GenerateHtmlToken
 template<typename T>
 void GenerateHtmlToken(
 	Ptr<CppTokenCursor>& cursor,
-	IndexResult& result,
 	Symbol* symbolForToken,
 	const wchar_t*& rawBegin,
 	const wchar_t*& rawEnd,
@@ -414,7 +413,7 @@ void GenerateHtmlLine(
 				}
 			}
 		}
-		GenerateHtmlToken(cursor, result, symbolForToken, rawBegin, rawEnd, html, lineCounter, callback);
+		GenerateHtmlToken(cursor, symbolForToken, rawBegin, rawEnd, html, lineCounter, callback);
 		SkipToken(cursor);
 		firstToken = false;
 	}

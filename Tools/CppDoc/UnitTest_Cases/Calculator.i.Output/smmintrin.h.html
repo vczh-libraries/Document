@@ -30,71 +30,71 @@
 
 #pragma once
 
-<div class="disabled"/>#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
-<div class="disabled"/>#error This header is specific to X86 and X64 targets
+<div class="disabled">#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
+<div class="disabled">#error This header is specific to X86 and X64 targets
 #endif</div>
 
-<div class="disabled"/>#ifndef _INCLUDED_SMM</div>
-<div class="disabled"/>#define _INCLUDED_SMM</div>
-<div class="disabled"/>#ifndef __midl</div>
+<div class="disabled">#ifndef _INCLUDED_SMM</div>
+<div class="disabled">#define _INCLUDED_SMM</div>
+<div class="disabled">#ifndef __midl</div>
 
-<div class="disabled"/>#if defined (_M_CEE_PURE)</div>
-<div class="disabled"/>        #error ERROR: EMM intrinsics not supported in the pure mode!
+<div class="disabled">#if defined (_M_CEE_PURE)</div>
+<div class="disabled">        #error ERROR: EMM intrinsics not supported in the pure mode!
 #else  /* defined (_M_CEE_PURE) */</div>
 
-<div class="disabled"/>#include &lt;tmmintrin.h&gt;</div>
+<div class="disabled">#include &lt;tmmintrin.h&gt;</div>
 
 
 <div class="token cpp_comment ">/*
  * Rounding mode macros
  */</div>
 
-<div class="disabled"/>#define _MM_FROUND_TO_NEAREST_INT    0x00</div>
-<div class="disabled"/>#define _MM_FROUND_TO_NEG_INF        0x01</div>
-<div class="disabled"/>#define _MM_FROUND_TO_POS_INF        0x02</div>
-<div class="disabled"/>#define _MM_FROUND_TO_ZERO           0x03</div>
-<div class="disabled"/>#define _MM_FROUND_CUR_DIRECTION     0x04</div>
+<div class="disabled">#define _MM_FROUND_TO_NEAREST_INT    0x00</div>
+<div class="disabled">#define _MM_FROUND_TO_NEG_INF        0x01</div>
+<div class="disabled">#define _MM_FROUND_TO_POS_INF        0x02</div>
+<div class="disabled">#define _MM_FROUND_TO_ZERO           0x03</div>
+<div class="disabled">#define _MM_FROUND_CUR_DIRECTION     0x04</div>
 
-<div class="disabled"/>#define _MM_FROUND_RAISE_EXC         0x00</div>
-<div class="disabled"/>#define _MM_FROUND_NO_EXC            0x08</div>
+<div class="disabled">#define _MM_FROUND_RAISE_EXC         0x00</div>
+<div class="disabled">#define _MM_FROUND_NO_EXC            0x08</div>
 
-<div class="disabled"/>#define _MM_FROUND_NINT      _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_RAISE_EXC</div>
-<div class="disabled"/>#define _MM_FROUND_FLOOR     _MM_FROUND_TO_NEG_INF     | _MM_FROUND_RAISE_EXC</div>
-<div class="disabled"/>#define _MM_FROUND_CEIL      _MM_FROUND_TO_POS_INF     | _MM_FROUND_RAISE_EXC</div>
-<div class="disabled"/>#define _MM_FROUND_TRUNC     _MM_FROUND_TO_ZERO        | _MM_FROUND_RAISE_EXC</div>
-<div class="disabled"/>#define _MM_FROUND_RINT      _MM_FROUND_CUR_DIRECTION  | _MM_FROUND_RAISE_EXC</div>
-<div class="disabled"/>#define _MM_FROUND_NEARBYINT _MM_FROUND_CUR_DIRECTION  | _MM_FROUND_NO_EXC</div>
+<div class="disabled">#define _MM_FROUND_NINT      _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_RAISE_EXC</div>
+<div class="disabled">#define _MM_FROUND_FLOOR     _MM_FROUND_TO_NEG_INF     | _MM_FROUND_RAISE_EXC</div>
+<div class="disabled">#define _MM_FROUND_CEIL      _MM_FROUND_TO_POS_INF     | _MM_FROUND_RAISE_EXC</div>
+<div class="disabled">#define _MM_FROUND_TRUNC     _MM_FROUND_TO_ZERO        | _MM_FROUND_RAISE_EXC</div>
+<div class="disabled">#define _MM_FROUND_RINT      _MM_FROUND_CUR_DIRECTION  | _MM_FROUND_RAISE_EXC</div>
+<div class="disabled">#define _MM_FROUND_NEARBYINT _MM_FROUND_CUR_DIRECTION  | _MM_FROUND_NO_EXC</div>
 
 <div class="token cpp_comment ">/*
  * MACRO functions for ceil/floor intrinsics
  */</div>
 
-<div class="disabled"/>#define _mm_ceil_pd(val)       _mm_round_pd((val), _MM_FROUND_CEIL)</div>
-<div class="disabled"/>#define _mm_ceil_sd(dst, val)  _mm_round_sd((dst), (val), _MM_FROUND_CEIL)</div>
+<div class="disabled">#define _mm_ceil_pd(val)       _mm_round_pd((val), _MM_FROUND_CEIL)</div>
+<div class="disabled">#define _mm_ceil_sd(dst, val)  _mm_round_sd((dst), (val), _MM_FROUND_CEIL)</div>
 
-<div class="disabled"/>#define _mm_floor_pd(val)      _mm_round_pd((val), _MM_FROUND_FLOOR)</div>
-<div class="disabled"/>#define _mm_floor_sd(dst, val) _mm_round_sd((dst), (val), _MM_FROUND_FLOOR)</div>
+<div class="disabled">#define _mm_floor_pd(val)      _mm_round_pd((val), _MM_FROUND_FLOOR)</div>
+<div class="disabled">#define _mm_floor_sd(dst, val) _mm_round_sd((dst), (val), _MM_FROUND_FLOOR)</div>
 
-<div class="disabled"/>#define _mm_ceil_ps(val)       _mm_round_ps((val), _MM_FROUND_CEIL)</div>
-<div class="disabled"/>#define _mm_ceil_ss(dst, val)  _mm_round_ss((dst), (val), _MM_FROUND_CEIL)</div>
+<div class="disabled">#define _mm_ceil_ps(val)       _mm_round_ps((val), _MM_FROUND_CEIL)</div>
+<div class="disabled">#define _mm_ceil_ss(dst, val)  _mm_round_ss((dst), (val), _MM_FROUND_CEIL)</div>
 
-<div class="disabled"/>#define _mm_floor_ps(val)      _mm_round_ps((val), _MM_FROUND_FLOOR)</div>
-<div class="disabled"/>#define _mm_floor_ss(dst, val) _mm_round_ss((dst), (val), _MM_FROUND_FLOOR)</div>
+<div class="disabled">#define _mm_floor_ps(val)      _mm_round_ps((val), _MM_FROUND_FLOOR)</div>
+<div class="disabled">#define _mm_floor_ss(dst, val) _mm_round_ss((dst), (val), _MM_FROUND_FLOOR)</div>
 
-<div class="disabled"/>#define _mm_test_all_zeros(mask, val)      _mm_testz_si128((mask), (val))</div>
+<div class="disabled">#define _mm_test_all_zeros(mask, val)      _mm_testz_si128((mask), (val))</div>
 
 <div class="token cpp_comment ">/*
  * MACRO functions for packed integer 128-bit comparison intrinsics.
  */</div>
 
-<div class="disabled"/>#define _mm_test_all_ones(val) \</div>
-<div class="disabled"/>              _mm_testc_si128((val), _mm_cmpeq_epi32((val),(val)))</div>
+<div class="disabled">#define _mm_test_all_ones(val) \</div>
+<div class="disabled">              _mm_testc_si128((val), _mm_cmpeq_epi32((val),(val)))</div>
 
-<div class="disabled"/>#define _mm_test_mix_ones_zeros(mask, val) _mm_testnzc_si128((mask), (val))</div>
+<div class="disabled">#define _mm_test_mix_ones_zeros(mask, val) _mm_testnzc_si128((mask), (val))</div>
 
-<div class="disabled"/>#if __cplusplus</div>
+<div class="disabled">#if __cplusplus</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
-<div class="disabled"/>#endif  /* __cplusplus */</div>
+<div class="disabled">#endif  /* __cplusplus */</div>
 
         <div class="token cpp_comment ">// Integer blend instructions - select data from 2 sources</div>
         <div class="token cpp_comment ">// using constant or variable mask</div>
@@ -174,8 +174,8 @@
 
         <div class="token cpp_comment ">// Helper macro to create index-parameter value for _mm_insert_ps</div>
 
-<div class="disabled"/>#define _MM_MK_INSERTPS_NDX(srcField, dstField, zeroMask) \</div>
-<div class="disabled"/>        (((srcField)&lt;&lt;6) | ((dstField)&lt;&lt;4) | (zeroMask))</div>
+<div class="disabled">#define _MM_MK_INSERTPS_NDX(srcField, dstField, zeroMask) \</div>
+<div class="disabled">        (((srcField)&lt;&lt;6) | ((dstField)&lt;&lt;4) | (zeroMask))</div>
 
         <div class="token cpp_comment ">// Extract binary representation of single precision float from</div>
         <div class="token cpp_comment ">// packed single precision array element selected by index</div>
@@ -185,15 +185,15 @@
         <div class="token cpp_comment ">// Extract single precision float from packed single precision</div>
         <div class="token cpp_comment ">// array element selected by index into dest</div>
 
-<div class="disabled"/>#define _MM_EXTRACT_FLOAT(dest, src, ndx) \</div>
-<div class="disabled"/>        *((int*)&amp;(dest)) = _mm_extract_ps((src), (ndx))</div>
+<div class="disabled">#define _MM_EXTRACT_FLOAT(dest, src, ndx) \</div>
+<div class="disabled">        *((int*)&amp;(dest)) = _mm_extract_ps((src), (ndx))</div>
 
         <div class="token cpp_comment ">// Extract specified single precision float element</div>
         <div class="token cpp_comment ">// into the lower part of __m128</div>
 
-<div class="disabled"/>#define _MM_PICK_OUT_PS(src, num) \</div>
-<div class="disabled"/>        _mm_insert_ps(_mm_setzero_ps(), (src), \</div>
-<div class="disabled"/>                      _MM_MK_INSERTPS_NDX((num), 0, 0x0e))</div>
+<div class="disabled">#define _MM_PICK_OUT_PS(src, num) \</div>
+<div class="disabled">        _mm_insert_ps(_mm_setzero_ps(), (src), \</div>
+<div class="disabled">                      _MM_MK_INSERTPS_NDX((num), 0, 0x0e))</div>
 
         <div class="token cpp_comment ">// Insert integer into packed integer array element</div>
         <div class="token cpp_comment ">// selected by index</div>
@@ -201,8 +201,8 @@
         <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_insert_epi8[decl0]"><div><div class="token cpp_function">_mm_insert_epi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="token cpp_comment ">/* dst */</div>, <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* src */</div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* index */</div>);
         <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_insert_epi32[decl0]"><div><div class="token cpp_function">_mm_insert_epi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="token cpp_comment ">/* dst */</div>, <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* src */</div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* index */</div>);
 
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>        extern __m128i _mm_insert_epi64(__m128i /* dst */, __int64 /* src */, const int /* index */);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">        extern __m128i _mm_insert_epi64(__m128i /* dst */, __int64 /* src */, const int /* index */);
 #endif  /* defined (_M_X64) */</div>
         <div class="token cpp_comment ">// Extract integer from packed integer array element</div>
         <div class="token cpp_comment ">// selected by index</div>
@@ -210,8 +210,8 @@
         <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div>   <div class="def" id="FB$_mm_extract_epi8[decl0]"><div><div class="token cpp_function">_mm_extract_epi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="token cpp_comment ">/* src */</div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* index */</div>);
         <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div>   <div class="def" id="FB$_mm_extract_epi32[decl0]"><div><div class="token cpp_function">_mm_extract_epi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="token cpp_comment ">/* src */</div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* index */</div>);
 
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>        extern __int64 _mm_extract_epi64(__m128i /* src */, const int /* index */);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">        extern __int64 _mm_extract_epi64(__m128i /* src */, const int /* index */);
 #endif  /* defined (_M_X64) */</div>
 
         <div class="token cpp_comment ">// Horizontal packed word minimum and its index in</div>
@@ -263,17 +263,17 @@
          * Load double quadword using non-temporal aligned hint
          */</div>
 
-<div class="disabled"/>#if defined(_CRT_WINDOWS) || defined(BUILD_WINDOWS)</div>
-<div class="disabled"/>        extern __m128i _mm_stream_load_si128(__m128i*);
+<div class="disabled">#if defined(_CRT_WINDOWS) || defined(BUILD_WINDOWS)</div>
+<div class="disabled">        extern __m128i _mm_stream_load_si128(__m128i*);
 #else /* defined(_CRT_WINDOWS) || defined(BUILD_WINDOWS) */</div>
         <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_stream_load_si128[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_stream_load_si128'])"><div class="token cpp_function">_mm_stream_load_si128</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div>*);
-<div class="disabled"/>#endif /* defined(_CRT_WINDOWS) || defined(BUILD_WINDOWS) */</div>
+<div class="disabled">#endif /* defined(_CRT_WINDOWS) || defined(BUILD_WINDOWS) */</div>
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 }; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
-<div class="disabled"/>#endif  /* defined (_M_CEE_PURE) */
+<div class="disabled">#endif  /* defined (_M_CEE_PURE) */
 #endif  /* __midl */
 #endif  /* _INCLUDED_SMM */
 </div>

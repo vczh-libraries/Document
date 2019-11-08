@@ -40,40 +40,40 @@
 
 #pragma once
 
-<div class="disabled"/>#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
-<div class="disabled"/>#error This header is specific to X86 and X64 targets
+<div class="disabled">#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
+<div class="disabled">#error This header is specific to X86 and X64 targets
 #endif</div>
 
-<div class="disabled"/>#ifndef _INCLUDED_MM2</div>
-<div class="disabled"/>#define _INCLUDED_MM2</div>
-<div class="disabled"/>#ifndef __midl</div>
+<div class="disabled">#ifndef _INCLUDED_MM2</div>
+<div class="disabled">#define _INCLUDED_MM2</div>
+<div class="disabled">#ifndef __midl</div>
 
-<div class="disabled"/>#if defined (_M_CEE_PURE)</div>
-<div class="disabled"/>        #error ERROR: XMM intrinsics not supported in the pure mode!
+<div class="disabled">#if defined (_M_CEE_PURE)</div>
+<div class="disabled">        #error ERROR: XMM intrinsics not supported in the pure mode!
 #else  /* defined (_M_CEE_PURE) */</div>
 
 <div class="token cpp_comment ">/*
  * the m64 type is required for the integer Streaming SIMD Extensions intrinsics
  */</div>
-<div class="disabled"/>#ifndef _MMINTRIN_H_INCLUDED
+<div class="disabled">#ifndef _MMINTRIN_H_INCLUDED
 #include &lt;mmintrin.h&gt;
 #endif  /* _MMINTRIN_H_INCLUDED */</div>
 
-<div class="disabled"/>#ifdef _MM2_FUNCTIONALITY</div>
-<div class="disabled"/>/* support old notation */</div>
-<div class="disabled"/>#ifndef _MM_FUNCTIONALITY</div>
-<div class="disabled"/>#define _MM_FUNCTIONALITY</div>
-<div class="disabled"/>#endif  /* _MM_FUNCTIONALITY */</div>
-<div class="disabled"/>#endif  /* _MM2_FUNCTIONALITY */</div>
+<div class="disabled">#ifdef _MM2_FUNCTIONALITY</div>
+<div class="disabled">/* support old notation */</div>
+<div class="disabled">#ifndef _MM_FUNCTIONALITY</div>
+<div class="disabled">#define _MM_FUNCTIONALITY</div>
+<div class="disabled">#endif  /* _MM_FUNCTIONALITY */</div>
+<div class="disabled">#endif  /* _MM2_FUNCTIONALITY */</div>
 
-<div class="disabled"/>#ifdef __ICL</div>
-<div class="disabled"/>#ifdef _MM_FUNCTIONALITY</div>
-<div class="disabled"/>#include &quot;xmm_func.h&quot;</div>
-<div class="disabled"/>#else  /* _MM_FUNCTIONALITY */</div>
-<div class="disabled"/>/* using real intrinsics */</div>
-<div class="disabled"/>typedef long long __m128;</div>
-<div class="disabled"/>#endif  /* _MM_FUNCTIONALITY */</div>
-<div class="disabled"/>#else  /* __ICL */</div>
+<div class="disabled">#ifdef __ICL</div>
+<div class="disabled">#ifdef _MM_FUNCTIONALITY</div>
+<div class="disabled">#include &quot;xmm_func.h&quot;</div>
+<div class="disabled">#else  /* _MM_FUNCTIONALITY */</div>
+<div class="disabled">/* using real intrinsics */</div>
+<div class="disabled">typedef long long __m128;</div>
+<div class="disabled">#endif  /* _MM_FUNCTIONALITY */</div>
+<div class="disabled">#else  /* __ICL */</div>
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">union</div> <div class="token cpp_keyword ">__declspec</div>(intrin_type) <div class="token cpp_keyword ">__declspec</div>(align(<div class="token cpp_number ">16</div>)) <div class="def" id="NI$__m128"><div><div class="token cpp_type">__m128</div></div></div> {
      <div class="token cpp_keyword ">float</div>               <div class="def" id="NI$__m128::m128_f32"><div><div class="token cpp_field">m128_f32</div></div></div>[<div class="token cpp_number ">4</div>];
@@ -87,9 +87,9 @@
      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int32</div>    <div class="def" id="NI$__m128::m128_u32"><div><div class="token cpp_field">m128_u32</div></div></div>[<div class="token cpp_number ">4</div>];
  } <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div>;
 
-<div class="disabled"/>#if !defined _VCRT_BUILD &amp;&amp; !defined _INC_MALLOC</div>
+<div class="disabled">#if !defined _VCRT_BUILD &amp;&amp; !defined _INC_MALLOC</div>
 <div class="token cpp_comment ">/* pick up _mm_malloc() and _mm_free() */</div>
-<div class="disabled"/>#include &lt;malloc.h&gt;
+<div class="disabled">#include &lt;malloc.h&gt;
 #endif  /* !defined _VCRT_BUILD &amp;&amp; !defined _INC_MALLOC */
 #endif  /* __ICL */</div>
 
@@ -103,8 +103,8 @@
  <div class="token cpp_comment ">/* places in fp1 of result. fp0 is the same for fp0 of */</div>
  <div class="token cpp_comment ">/* result                                              */</div>
  <div class="token cpp_comment ">/*******************************************************/</div>
-<div class="disabled"/>#define _MM_SHUFFLE(fp3,fp2,fp1,fp0) (((fp3) &lt;&lt; 6) | ((fp2) &lt;&lt; 4) | \</div>
-<div class="disabled"/>                                     ((fp1) &lt;&lt; 2) | ((fp0)))</div>
+<div class="disabled">#define _MM_SHUFFLE(fp3,fp2,fp1,fp0) (((fp3) &lt;&lt; 6) | ((fp2) &lt;&lt; 4) | \</div>
+<div class="disabled">                                     ((fp1) &lt;&lt; 2) | ((fp0)))</div>
 
 
  <div class="token cpp_comment ">/*******************************************************/</div>
@@ -117,90 +117,90 @@
  <div class="token cpp_comment ">/* now holds column 0 of the original matrix, row1 now */</div>
  <div class="token cpp_comment ">/* holds column 1 of the original matrix, etc.         */</div>
  <div class="token cpp_comment ">/*******************************************************/</div>
-<div class="disabled"/>#define _MM_TRANSPOSE4_PS(row0, row1, row2, row3) {                 \</div>
-<div class="disabled"/>            __m128 _Tmp3, _Tmp2, _Tmp1, _Tmp0;                          \</div>
-<div class="disabled"/>                                                                    \</div>
-<div class="disabled"/>            _Tmp0   = _mm_shuffle_ps((row0), (row1), 0x44);          \</div>
-<div class="disabled"/>            _Tmp2   = _mm_shuffle_ps((row0), (row1), 0xEE);          \</div>
-<div class="disabled"/>            _Tmp1   = _mm_shuffle_ps((row2), (row3), 0x44);          \</div>
-<div class="disabled"/>            _Tmp3   = _mm_shuffle_ps((row2), (row3), 0xEE);          \</div>
-<div class="disabled"/>                                                                    \</div>
-<div class="disabled"/>            (row0) = _mm_shuffle_ps(_Tmp0, _Tmp1, 0x88);              \</div>
-<div class="disabled"/>            (row1) = _mm_shuffle_ps(_Tmp0, _Tmp1, 0xDD);              \</div>
-<div class="disabled"/>            (row2) = _mm_shuffle_ps(_Tmp2, _Tmp3, 0x88);              \</div>
-<div class="disabled"/>            (row3) = _mm_shuffle_ps(_Tmp2, _Tmp3, 0xDD);              \</div>
-<div class="disabled"/>        }</div>
+<div class="disabled">#define _MM_TRANSPOSE4_PS(row0, row1, row2, row3) {                 \</div>
+<div class="disabled">            __m128 _Tmp3, _Tmp2, _Tmp1, _Tmp0;                          \</div>
+<div class="disabled">                                                                    \</div>
+<div class="disabled">            _Tmp0   = _mm_shuffle_ps((row0), (row1), 0x44);          \</div>
+<div class="disabled">            _Tmp2   = _mm_shuffle_ps((row0), (row1), 0xEE);          \</div>
+<div class="disabled">            _Tmp1   = _mm_shuffle_ps((row2), (row3), 0x44);          \</div>
+<div class="disabled">            _Tmp3   = _mm_shuffle_ps((row2), (row3), 0xEE);          \</div>
+<div class="disabled">                                                                    \</div>
+<div class="disabled">            (row0) = _mm_shuffle_ps(_Tmp0, _Tmp1, 0x88);              \</div>
+<div class="disabled">            (row1) = _mm_shuffle_ps(_Tmp0, _Tmp1, 0xDD);              \</div>
+<div class="disabled">            (row2) = _mm_shuffle_ps(_Tmp2, _Tmp3, 0x88);              \</div>
+<div class="disabled">            (row3) = _mm_shuffle_ps(_Tmp2, _Tmp3, 0xDD);              \</div>
+<div class="disabled">        }</div>
 
 
 <div class="token cpp_comment ">/* constants for use with _mm_prefetch */</div>
-<div class="disabled"/>#define _MM_HINT_NTA    0</div>
-<div class="disabled"/>#define _MM_HINT_T0     1</div>
-<div class="disabled"/>#define _MM_HINT_T1     2</div>
-<div class="disabled"/>#define _MM_HINT_T2     3</div>
-<div class="disabled"/>#define _MM_HINT_ENTA   4</div>
+<div class="disabled">#define _MM_HINT_NTA    0</div>
+<div class="disabled">#define _MM_HINT_T0     1</div>
+<div class="disabled">#define _MM_HINT_T1     2</div>
+<div class="disabled">#define _MM_HINT_T2     3</div>
+<div class="disabled">#define _MM_HINT_ENTA   4</div>
 <div class="token cpp_comment ">// The values below are not yet supported.</div>
 <div class="token cpp_comment ">//#define _MM_HINT_ET0    5</div>
 <div class="token cpp_comment ">//#define _MM_HINT_ET1    6</div>
 <div class="token cpp_comment ">//#define _MM_HINT_ET2    7</div>
 
 <div class="token cpp_comment ">/* (this declspec not supported with 0.A or 0.B) */</div>
-<div class="disabled"/>#define _MM_ALIGN16 _VCRT_ALIGN(16)</div>
+<div class="disabled">#define _MM_ALIGN16 _VCRT_ALIGN(16)</div>
 
 <div class="token cpp_comment ">/* MACRO functions for setting and reading the MXCSR */</div>
-<div class="disabled"/>#define _MM_EXCEPT_MASK       0x003f</div>
-<div class="disabled"/>#define _MM_EXCEPT_INVALID    0x0001</div>
-<div class="disabled"/>#define _MM_EXCEPT_DENORM     0x0002</div>
-<div class="disabled"/>#define _MM_EXCEPT_DIV_ZERO   0x0004</div>
-<div class="disabled"/>#define _MM_EXCEPT_OVERFLOW   0x0008</div>
-<div class="disabled"/>#define _MM_EXCEPT_UNDERFLOW  0x0010</div>
-<div class="disabled"/>#define _MM_EXCEPT_INEXACT    0x0020</div>
+<div class="disabled">#define _MM_EXCEPT_MASK       0x003f</div>
+<div class="disabled">#define _MM_EXCEPT_INVALID    0x0001</div>
+<div class="disabled">#define _MM_EXCEPT_DENORM     0x0002</div>
+<div class="disabled">#define _MM_EXCEPT_DIV_ZERO   0x0004</div>
+<div class="disabled">#define _MM_EXCEPT_OVERFLOW   0x0008</div>
+<div class="disabled">#define _MM_EXCEPT_UNDERFLOW  0x0010</div>
+<div class="disabled">#define _MM_EXCEPT_INEXACT    0x0020</div>
 
-<div class="disabled"/>#define _MM_MASK_MASK         0x1f80</div>
-<div class="disabled"/>#define _MM_MASK_INVALID      0x0080</div>
-<div class="disabled"/>#define _MM_MASK_DENORM       0x0100</div>
-<div class="disabled"/>#define _MM_MASK_DIV_ZERO     0x0200</div>
-<div class="disabled"/>#define _MM_MASK_OVERFLOW     0x0400</div>
-<div class="disabled"/>#define _MM_MASK_UNDERFLOW    0x0800</div>
-<div class="disabled"/>#define _MM_MASK_INEXACT      0x1000</div>
+<div class="disabled">#define _MM_MASK_MASK         0x1f80</div>
+<div class="disabled">#define _MM_MASK_INVALID      0x0080</div>
+<div class="disabled">#define _MM_MASK_DENORM       0x0100</div>
+<div class="disabled">#define _MM_MASK_DIV_ZERO     0x0200</div>
+<div class="disabled">#define _MM_MASK_OVERFLOW     0x0400</div>
+<div class="disabled">#define _MM_MASK_UNDERFLOW    0x0800</div>
+<div class="disabled">#define _MM_MASK_INEXACT      0x1000</div>
 
-<div class="disabled"/>#define _MM_ROUND_MASK        0x6000</div>
-<div class="disabled"/>#define _MM_ROUND_NEAREST     0x0000</div>
-<div class="disabled"/>#define _MM_ROUND_DOWN        0x2000</div>
-<div class="disabled"/>#define _MM_ROUND_UP          0x4000</div>
-<div class="disabled"/>#define _MM_ROUND_TOWARD_ZERO 0x6000</div>
+<div class="disabled">#define _MM_ROUND_MASK        0x6000</div>
+<div class="disabled">#define _MM_ROUND_NEAREST     0x0000</div>
+<div class="disabled">#define _MM_ROUND_DOWN        0x2000</div>
+<div class="disabled">#define _MM_ROUND_UP          0x4000</div>
+<div class="disabled">#define _MM_ROUND_TOWARD_ZERO 0x6000</div>
 
-<div class="disabled"/>#define _MM_FLUSH_ZERO_MASK   0x8000</div>
-<div class="disabled"/>#define _MM_FLUSH_ZERO_ON     0x8000</div>
-<div class="disabled"/>#define _MM_FLUSH_ZERO_OFF    0x0000</div>
+<div class="disabled">#define _MM_FLUSH_ZERO_MASK   0x8000</div>
+<div class="disabled">#define _MM_FLUSH_ZERO_ON     0x8000</div>
+<div class="disabled">#define _MM_FLUSH_ZERO_OFF    0x0000</div>
 
-<div class="disabled"/>#define _MM_SET_EXCEPTION_STATE(mask)                               \</div>
-<div class="disabled"/>            _mm_setcsr((_mm_getcsr() &amp; ~_MM_EXCEPT_MASK) | (mask))</div>
-<div class="disabled"/>#define _MM_GET_EXCEPTION_STATE()                                   \</div>
-<div class="disabled"/>            (_mm_getcsr() &amp; _MM_EXCEPT_MASK)</div>
+<div class="disabled">#define _MM_SET_EXCEPTION_STATE(mask)                               \</div>
+<div class="disabled">            _mm_setcsr((_mm_getcsr() &amp; ~_MM_EXCEPT_MASK) | (mask))</div>
+<div class="disabled">#define _MM_GET_EXCEPTION_STATE()                                   \</div>
+<div class="disabled">            (_mm_getcsr() &amp; _MM_EXCEPT_MASK)</div>
 
-<div class="disabled"/>#define _MM_SET_EXCEPTION_MASK(mask)                                \</div>
-<div class="disabled"/>            _mm_setcsr((_mm_getcsr() &amp; ~_MM_MASK_MASK) | (mask))</div>
-<div class="disabled"/>#define _MM_GET_EXCEPTION_MASK()                                    \</div>
-<div class="disabled"/>            (_mm_getcsr() &amp; _MM_MASK_MASK)</div>
+<div class="disabled">#define _MM_SET_EXCEPTION_MASK(mask)                                \</div>
+<div class="disabled">            _mm_setcsr((_mm_getcsr() &amp; ~_MM_MASK_MASK) | (mask))</div>
+<div class="disabled">#define _MM_GET_EXCEPTION_MASK()                                    \</div>
+<div class="disabled">            (_mm_getcsr() &amp; _MM_MASK_MASK)</div>
 
-<div class="disabled"/>#define _MM_SET_ROUNDING_MODE(mode)                                 \</div>
-<div class="disabled"/>            _mm_setcsr((_mm_getcsr() &amp; ~_MM_ROUND_MASK) | (mode))</div>
-<div class="disabled"/>#define _MM_GET_ROUNDING_MODE()                                     \</div>
-<div class="disabled"/>            (_mm_getcsr() &amp; _MM_ROUND_MASK)</div>
+<div class="disabled">#define _MM_SET_ROUNDING_MODE(mode)                                 \</div>
+<div class="disabled">            _mm_setcsr((_mm_getcsr() &amp; ~_MM_ROUND_MASK) | (mode))</div>
+<div class="disabled">#define _MM_GET_ROUNDING_MODE()                                     \</div>
+<div class="disabled">            (_mm_getcsr() &amp; _MM_ROUND_MASK)</div>
 
-<div class="disabled"/>#define _MM_SET_FLUSH_ZERO_MODE(mode)                               \</div>
-<div class="disabled"/>            _mm_setcsr((_mm_getcsr() &amp; ~_MM_FLUSH_ZERO_MASK) | (mode))</div>
-<div class="disabled"/>#define _MM_GET_FLUSH_ZERO_MODE()                                   \</div>
-<div class="disabled"/>            (_mm_getcsr() &amp; _MM_FLUSH_ZERO_MASK)</div>
+<div class="disabled">#define _MM_SET_FLUSH_ZERO_MODE(mode)                               \</div>
+<div class="disabled">            _mm_setcsr((_mm_getcsr() &amp; ~_MM_FLUSH_ZERO_MASK) | (mode))</div>
+<div class="disabled">#define _MM_GET_FLUSH_ZERO_MODE()                                   \</div>
+<div class="disabled">            (_mm_getcsr() &amp; _MM_FLUSH_ZERO_MASK)</div>
 
  <div class="token cpp_comment ">/*****************************************************/</div>
  <div class="token cpp_comment ">/*     INTRINSICS FUNCTION PROTOTYPES START HERE     */</div>
  <div class="token cpp_comment ">/*****************************************************/</div>
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> { <div class="token cpp_comment ">/* Begin &quot;C&quot; */</div>
   <div class="token cpp_comment ">/* Intrinsics use C name-mangling. */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
 <div class="token cpp_comment ">/*
  * FP, arithmetic
@@ -284,22 +284,22 @@
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_cvt_si2ss[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_cvt_si2ss'])"><div class="token cpp_function">_mm_cvt_si2ss</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div>, <div class="token cpp_keyword ">int</div>);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">float</div> <div class="def" id="FB$_mm_cvtss_f32[decl0]"><div><div class="token cpp_function">_mm_cvtss_f32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> _A);
 
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_comment ">/*
  * Support for MMX extension intrinsics
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_cvt_ps2pi[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_cvt_ps2pi'])"><div class="token cpp_function">_mm_cvt_ps2pi</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> _A);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_cvtt_ps2pi[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_cvtt_ps2pi'])"><div class="token cpp_function">_mm_cvtt_ps2pi</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> _A);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_cvt_pi2ps[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_cvt_pi2ps'])"><div class="token cpp_function">_mm_cvt_pi2ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>);
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>/*</div>
-<div class="disabled"/> * Support for 64-bit intrinsics</div>
-<div class="disabled"/> */</div>
-<div class="disabled"/>extern __int64 _mm_cvtss_si64(__m128 _A);</div>
-<div class="disabled"/>extern __int64 _mm_cvttss_si64(__m128 _A);</div>
-<div class="disabled"/>extern __m128  _mm_cvtsi64_ss(__m128 _A, __int64 _B);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">/*</div>
+<div class="disabled"> * Support for 64-bit intrinsics</div>
+<div class="disabled"> */</div>
+<div class="disabled">extern __int64 _mm_cvtss_si64(__m128 _A);</div>
+<div class="disabled">extern __int64 _mm_cvttss_si64(__m128 _A);</div>
+<div class="disabled">extern __m128  _mm_cvtsi64_ss(__m128 _A, __int64 _B);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -318,7 +318,7 @@
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_mm_movemask_ps[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_movemask_ps'])"><div class="token cpp_function">_mm_movemask_ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> _A);
 
 
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_comment ">/*
  * Integer (MMX) extensions
  */</div>
@@ -335,7 +335,7 @@
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pavgb[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pavgb'])"><div class="token cpp_function">_m_pavgb</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_pavgw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_pavgw'])"><div class="token cpp_function">_m_pavgw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_psadbw[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_psadbw'])"><div class="token cpp_function">_m_psadbw</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>);
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 
 <div class="token cpp_comment ">/*
  * memory &amp; initialization
@@ -357,9 +357,9 @@
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$_mm_storer_ps[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_storer_ps'])"><div class="token cpp_function">_mm_storer_ps</div></div></div>(<div class="token cpp_keyword ">float</div> *_V, <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> _A);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$_mm_storeu_ps[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_storeu_ps'])"><div class="token cpp_function">_mm_storeu_ps</div></div></div>(<div class="token cpp_keyword ">float</div> *_V, <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> _A);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$_mm_prefetch[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_prefetch'])"><div class="token cpp_function">_mm_prefetch</div></div></div>(<div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>*_A, <div class="token cpp_keyword ">int</div> _Sel);
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$_mm_stream_pi[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_stream_pi'])"><div class="token cpp_function">_mm_stream_pi</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> *, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>);
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$_mm_stream_ps[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_stream_ps'])"><div class="token cpp_function">_mm_stream_ps</div></div></div>(<div class="token cpp_keyword ">float</div> *, <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div>);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_move_ss[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_move_ss'])"><div class="token cpp_function">_mm_move_ss</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> _B);
 
@@ -367,42 +367,42 @@
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_mm_getcsr[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_getcsr'])"><div class="token cpp_function">_mm_getcsr</div></div></div>(<div class="token cpp_keyword ">void</div>);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$_mm_setcsr[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_setcsr'])"><div class="token cpp_function">_mm_setcsr</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
 
-<div class="disabled"/>#ifdef __ICL</div>
-<div class="disabled"/>extern void* __cdecl _mm_malloc(size_t _Siz, size_t _Al);</div>
-<div class="disabled"/>extern void __cdecl _mm_free(void *_P);</div>
-<div class="disabled"/>#endif  /* __ICL */</div>
+<div class="disabled">#ifdef __ICL</div>
+<div class="disabled">extern void* __cdecl _mm_malloc(size_t _Siz, size_t _Al);</div>
+<div class="disabled">extern void __cdecl _mm_free(void *_P);</div>
+<div class="disabled">#endif  /* __ICL */</div>
 
 <div class="token cpp_comment ">/* Alternate intrinsic names definition */</div>
-<div class="disabled"/>#if defined(_M_IX86)</div>
-<div class="disabled"/>#define _mm_cvtps_pi32    _mm_cvt_ps2pi</div>
-<div class="disabled"/>#define _mm_cvttps_pi32   _mm_cvtt_ps2pi</div>
-<div class="disabled"/>#define _mm_cvtpi32_ps    _mm_cvt_pi2ps</div>
-<div class="disabled"/>#define _mm_extract_pi16  _m_pextrw</div>
-<div class="disabled"/>#define _mm_insert_pi16   _m_pinsrw</div>
-<div class="disabled"/>#define _mm_max_pi16      _m_pmaxsw</div>
-<div class="disabled"/>#define _mm_max_pu8       _m_pmaxub</div>
-<div class="disabled"/>#define _mm_min_pi16      _m_pminsw</div>
-<div class="disabled"/>#define _mm_min_pu8       _m_pminub</div>
-<div class="disabled"/>#define _mm_movemask_pi8  _m_pmovmskb</div>
-<div class="disabled"/>#define _mm_mulhi_pu16    _m_pmulhuw</div>
-<div class="disabled"/>#define _mm_shuffle_pi16  _m_pshufw</div>
-<div class="disabled"/>#define _mm_maskmove_si64 _m_maskmovq</div>
-<div class="disabled"/>#define _mm_avg_pu8       _m_pavgb</div>
-<div class="disabled"/>#define _mm_avg_pu16      _m_pavgw</div>
-<div class="disabled"/>#define _mm_sad_pu8       _m_psadbw
+<div class="disabled">#if defined(_M_IX86)</div>
+<div class="disabled">#define _mm_cvtps_pi32    _mm_cvt_ps2pi</div>
+<div class="disabled">#define _mm_cvttps_pi32   _mm_cvtt_ps2pi</div>
+<div class="disabled">#define _mm_cvtpi32_ps    _mm_cvt_pi2ps</div>
+<div class="disabled">#define _mm_extract_pi16  _m_pextrw</div>
+<div class="disabled">#define _mm_insert_pi16   _m_pinsrw</div>
+<div class="disabled">#define _mm_max_pi16      _m_pmaxsw</div>
+<div class="disabled">#define _mm_max_pu8       _m_pmaxub</div>
+<div class="disabled">#define _mm_min_pi16      _m_pminsw</div>
+<div class="disabled">#define _mm_min_pu8       _m_pminub</div>
+<div class="disabled">#define _mm_movemask_pi8  _m_pmovmskb</div>
+<div class="disabled">#define _mm_mulhi_pu16    _m_pmulhuw</div>
+<div class="disabled">#define _mm_shuffle_pi16  _m_pshufw</div>
+<div class="disabled">#define _mm_maskmove_si64 _m_maskmovq</div>
+<div class="disabled">#define _mm_avg_pu8       _m_pavgb</div>
+<div class="disabled">#define _mm_avg_pu16      _m_pavgw</div>
+<div class="disabled">#define _mm_sad_pu8       _m_psadbw
 #endif</div>
-<div class="disabled"/>#define _mm_cvtss_si32    _mm_cvt_ss2si</div>
-<div class="disabled"/>#define _mm_cvttss_si32   _mm_cvtt_ss2si</div>
-<div class="disabled"/>#define _mm_cvtsi32_ss    _mm_cvt_si2ss</div>
-<div class="disabled"/>#define _mm_set1_ps       _mm_set_ps1</div>
-<div class="disabled"/>#define _mm_load1_ps      _mm_load_ps1</div>
-<div class="disabled"/>#define _mm_store1_ps     _mm_store_ps1</div>
+<div class="disabled">#define _mm_cvtss_si32    _mm_cvt_ss2si</div>
+<div class="disabled">#define _mm_cvttss_si32   _mm_cvtt_ss2si</div>
+<div class="disabled">#define _mm_cvtsi32_ss    _mm_cvt_si2ss</div>
+<div class="disabled">#define _mm_set1_ps       _mm_set_ps1</div>
+<div class="disabled">#define _mm_load1_ps      _mm_load_ps1</div>
+<div class="disabled">#define _mm_store1_ps     _mm_store_ps1</div>
 
  <div class="token cpp_comment ">/******************************************************/</div>
  <div class="token cpp_comment ">/* UTILITY INTRINSICS FUNCTION DEFINITIONS START HERE */</div>
  <div class="token cpp_comment ">/******************************************************/</div>
 
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
  <div class="token cpp_comment ">/*********************************************************/</div>
  <div class="token cpp_comment ">/*  NAME : _mm_cvtpi16_ps                                */</div>
  <div class="token cpp_comment ">/*  DESCRIPTION : Convert 4 16-bit signed integer values */</div>
@@ -414,14 +414,14 @@
 <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_cvtpi16_ps[impl0]"><div><div class="token cpp_function">_mm_cvtpi16_ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="NI$_mm_cvtpi16_ps[impl0]::_A"><div><div class="token cpp_argument">_A</div></div></div>)
 {
   <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> <div class="def" id="NI$_mm_cvtpi16_ps[impl0]::_Tmp"><div>_Tmp</div></div>;
-<div class="expandable"/><div class="disabled"/>  __m64  _Ext_val = _mm_cmpgt_pi16(_mm_setzero_si64(), _A);</div>
+<div class="expandable"><div class="disabled">  __m64  _Ext_val = _mm_cmpgt_pi16(_mm_setzero_si64(), _A);</div>
 <div class="expanded">  <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>  <div class="def" id="NI$_mm_cvtpi16_ps[impl0]::_Ext_val"><div>_Ext_val</div></div> = <div class="ref" onclick="jumpToSymbol(['_m_pcmpgtw'], ['_m_pcmpgtw'])">_m_pcmpgtw</div>(<div class="ref" onclick="jumpToSymbol(['_mm_setzero_si64'], ['_mm_setzero_si64'])">_mm_setzero_si64</div>(), <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi16_ps[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>);</div></div>
 
-<div class="expandable"/><div class="disabled"/>  _Tmp = _mm_cvtpi32_ps(_mm_setzero_ps(), _mm_unpackhi_pi16(_A, _Ext_val));</div>
+<div class="expandable"><div class="disabled">  _Tmp = _mm_cvtpi32_ps(_mm_setzero_ps(), _mm_unpackhi_pi16(_A, _Ext_val));</div>
 <div class="expanded">  <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi16_ps[impl0]::_Tmp'])">_Tmp</div> = <div class="ref" onclick="jumpToSymbol(['_mm_cvt_pi2ps'], ['_mm_cvt_pi2ps'])">_mm_cvt_pi2ps</div>(<div class="ref" onclick="jumpToSymbol(['_mm_setzero_ps'], ['_mm_setzero_ps'])">_mm_setzero_ps</div>(), <div class="ref" onclick="jumpToSymbol(['_m_punpckhwd'], ['_m_punpckhwd'])">_m_punpckhwd</div>(<div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi16_ps[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi16_ps[impl0]::_Ext_val'])">_Ext_val</div>));</div></div>
-<div class="expandable"/><div class="disabled"/>  return(_mm_cvtpi32_ps(_mm_movelh_ps(_Tmp, _Tmp),</div>
+<div class="expandable"><div class="disabled">  return(_mm_cvtpi32_ps(_mm_movelh_ps(_Tmp, _Tmp),</div>
 <div class="expanded">  <div class="token cpp_keyword ">return</div>(<div class="ref" onclick="jumpToSymbol(['_mm_cvt_pi2ps'], ['_mm_cvt_pi2ps'])">_mm_cvt_pi2ps</div>(<div class="ref" onclick="jumpToSymbol(['_mm_movelh_ps'], ['_mm_movelh_ps'])">_mm_movelh_ps</div>(<div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi16_ps[impl0]::_Tmp'])">_Tmp</div>, <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi16_ps[impl0]::_Tmp'])">_Tmp</div>),</div></div>
-<div class="expandable"/><div class="disabled"/>                        _mm_unpacklo_pi16(_A, _Ext_val)));</div>
+<div class="expandable"><div class="disabled">                        _mm_unpacklo_pi16(_A, _Ext_val)));</div>
 <div class="expanded">                        <div class="ref" onclick="jumpToSymbol(['_m_punpcklwd'], ['_m_punpcklwd'])">_m_punpcklwd</div>(<div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi16_ps[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi16_ps[impl0]::_Ext_val'])">_Ext_val</div>)));</div></div>
 }
 
@@ -439,11 +439,11 @@
   <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> <div class="def" id="NI$_mm_cvtpu16_ps[impl0]::_Tmp"><div>_Tmp</div></div>;
   <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>  <div class="def" id="NI$_mm_cvtpu16_ps[impl0]::_Ext_val"><div>_Ext_val</div></div> = <div class="ref" onclick="jumpToSymbol(['_mm_setzero_si64'], ['_mm_setzero_si64'])">_mm_setzero_si64</div>();
 
-<div class="expandable"/><div class="disabled"/>  _Tmp = _mm_cvtpi32_ps(_mm_setzero_ps(), _mm_unpackhi_pi16(_A, _Ext_val));</div>
+<div class="expandable"><div class="disabled">  _Tmp = _mm_cvtpi32_ps(_mm_setzero_ps(), _mm_unpackhi_pi16(_A, _Ext_val));</div>
 <div class="expanded">  <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpu16_ps[impl0]::_Tmp'])">_Tmp</div> = <div class="ref" onclick="jumpToSymbol(['_mm_cvt_pi2ps'], ['_mm_cvt_pi2ps'])">_mm_cvt_pi2ps</div>(<div class="ref" onclick="jumpToSymbol(['_mm_setzero_ps'], ['_mm_setzero_ps'])">_mm_setzero_ps</div>(), <div class="ref" onclick="jumpToSymbol(['_m_punpckhwd'], ['_m_punpckhwd'])">_m_punpckhwd</div>(<div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpu16_ps[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpu16_ps[impl0]::_Ext_val'])">_Ext_val</div>));</div></div>
-<div class="expandable"/><div class="disabled"/>  return(_mm_cvtpi32_ps(_mm_movelh_ps(_Tmp, _Tmp),</div>
+<div class="expandable"><div class="disabled">  return(_mm_cvtpi32_ps(_mm_movelh_ps(_Tmp, _Tmp),</div>
 <div class="expanded">  <div class="token cpp_keyword ">return</div>(<div class="ref" onclick="jumpToSymbol(['_mm_cvt_pi2ps'], ['_mm_cvt_pi2ps'])">_mm_cvt_pi2ps</div>(<div class="ref" onclick="jumpToSymbol(['_mm_movelh_ps'], ['_mm_movelh_ps'])">_mm_movelh_ps</div>(<div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpu16_ps[impl0]::_Tmp'])">_Tmp</div>, <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpu16_ps[impl0]::_Tmp'])">_Tmp</div>),</div></div>
-<div class="expandable"/><div class="disabled"/>                        _mm_unpacklo_pi16(_A, _Ext_val)));</div>
+<div class="expandable"><div class="disabled">                        _mm_unpacklo_pi16(_A, _Ext_val)));</div>
 <div class="expanded">                        <div class="ref" onclick="jumpToSymbol(['_m_punpcklwd'], ['_m_punpcklwd'])">_m_punpcklwd</div>(<div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpu16_ps[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpu16_ps[impl0]::_Ext_val'])">_Ext_val</div>)));</div></div>
 }
 
@@ -458,9 +458,9 @@
  <div class="token cpp_comment ">/******************************************************/</div>
 <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_cvtps_pi16[impl0]"><div><div class="token cpp_function">_mm_cvtps_pi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> <div class="def" id="NI$_mm_cvtps_pi16[impl0]::_A"><div><div class="token cpp_argument">_A</div></div></div>)
 {
-<div class="expandable"/><div class="disabled"/>  return _mm_packs_pi32(_mm_cvtps_pi32(_A),</div>
+<div class="expandable"><div class="disabled">  return _mm_packs_pi32(_mm_cvtps_pi32(_A),</div>
 <div class="expanded">  <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_m_packssdw'], ['_m_packssdw'])">_m_packssdw</div>(<div class="ref" onclick="jumpToSymbol(['_mm_cvt_ps2pi'], ['_mm_cvt_ps2pi'])">_mm_cvt_ps2pi</div>(<div class="ref" onclick="jumpToSymbol([], ['_mm_cvtps_pi16[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>),</div></div>
-<div class="expandable"/><div class="disabled"/>                        _mm_cvtps_pi32(_mm_movehl_ps(_A, _A)));</div>
+<div class="expandable"><div class="disabled">                        _mm_cvtps_pi32(_mm_movehl_ps(_A, _A)));</div>
 <div class="expanded">                        <div class="ref" onclick="jumpToSymbol(['_mm_cvt_ps2pi'], ['_mm_cvt_ps2pi'])">_mm_cvt_ps2pi</div>(<div class="ref" onclick="jumpToSymbol(['_mm_movehl_ps'], ['_mm_movehl_ps'])">_mm_movehl_ps</div>(<div class="ref" onclick="jumpToSymbol([], ['_mm_cvtps_pi16[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtps_pi16[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>)));</div></div>
 }
 
@@ -475,10 +475,10 @@
  <div class="token cpp_comment ">/******************************************************/</div>
 <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_cvtpi8_ps[impl0]"><div><div class="token cpp_function">_mm_cvtpi8_ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="NI$_mm_cvtpi8_ps[impl0]::_A"><div><div class="token cpp_argument">_A</div></div></div>)
 {
-<div class="expandable"/><div class="disabled"/>  __m64  _Ext_val = _mm_cmpgt_pi8(_mm_setzero_si64(), _A);</div>
+<div class="expandable"><div class="disabled">  __m64  _Ext_val = _mm_cmpgt_pi8(_mm_setzero_si64(), _A);</div>
 <div class="expanded">  <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>  <div class="def" id="NI$_mm_cvtpi8_ps[impl0]::_Ext_val"><div>_Ext_val</div></div> = <div class="ref" onclick="jumpToSymbol(['_m_pcmpgtb'], ['_m_pcmpgtb'])">_m_pcmpgtb</div>(<div class="ref" onclick="jumpToSymbol(['_mm_setzero_si64'], ['_mm_setzero_si64'])">_mm_setzero_si64</div>(), <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi8_ps[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>);</div></div>
 
-<div class="expandable"/><div class="disabled"/>  return _mm_cvtpi16_ps(_mm_unpacklo_pi8(_A, _Ext_val));</div>
+<div class="expandable"><div class="disabled">  return _mm_cvtpi16_ps(_mm_unpacklo_pi8(_A, _Ext_val));</div>
 <div class="expanded">  <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_mm_cvtpi16_ps'], ['_mm_cvtpi16_ps'])">_mm_cvtpi16_ps</div>(<div class="ref" onclick="jumpToSymbol(['_m_punpcklbw'], ['_m_punpcklbw'])">_m_punpcklbw</div>(<div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi8_ps[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi8_ps[impl0]::_Ext_val'])">_Ext_val</div>));</div></div>
 }
 
@@ -494,7 +494,7 @@
  <div class="token cpp_comment ">/******************************************************/</div>
 <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_cvtpu8_ps[impl0]"><div><div class="token cpp_function">_mm_cvtpu8_ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="NI$_mm_cvtpu8_ps[impl0]::_A"><div><div class="token cpp_argument">_A</div></div></div>)
 {
-<div class="expandable"/><div class="disabled"/>  return _mm_cvtpu16_ps(_mm_unpacklo_pi8(_A, _mm_setzero_si64()));</div>
+<div class="expandable"><div class="disabled">  return _mm_cvtpu16_ps(_mm_unpacklo_pi8(_A, _mm_setzero_si64()));</div>
 <div class="expanded">  <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_mm_cvtpu16_ps'], ['_mm_cvtpu16_ps'])">_mm_cvtpu16_ps</div>(<div class="ref" onclick="jumpToSymbol(['_m_punpcklbw'], ['_m_punpcklbw'])">_m_punpcklbw</div>(<div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpu8_ps[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>, <div class="ref" onclick="jumpToSymbol(['_mm_setzero_si64'], ['_mm_setzero_si64'])">_mm_setzero_si64</div>()));</div></div>
 }
 
@@ -509,7 +509,7 @@
  <div class="token cpp_comment ">/******************************************************/</div>
 <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_cvtps_pi8[impl0]"><div><div class="token cpp_function">_mm_cvtps_pi8</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'])"><div class="token cpp_type">__m128</div></div> <div class="def" id="NI$_mm_cvtps_pi8[impl0]::_A"><div><div class="token cpp_argument">_A</div></div></div>)
 {
-<div class="expandable"/><div class="disabled"/>  return _mm_packs_pi16(_mm_cvtps_pi16(_A), _mm_setzero_si64());</div>
+<div class="expandable"><div class="disabled">  return _mm_packs_pi16(_mm_cvtps_pi16(_A), _mm_setzero_si64());</div>
 <div class="expanded">  <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_m_packsswb'], ['_m_packsswb'])">_m_packsswb</div>(<div class="ref" onclick="jumpToSymbol(['_mm_cvtps_pi16'], ['_mm_cvtps_pi16'])">_mm_cvtps_pi16</div>(<div class="ref" onclick="jumpToSymbol([], ['_mm_cvtps_pi8[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>), <div class="ref" onclick="jumpToSymbol(['_mm_setzero_si64'], ['_mm_setzero_si64'])">_mm_setzero_si64</div>());</div></div>
 }
 
@@ -528,14 +528,14 @@
   <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_mm_movelh_ps'], ['_mm_movelh_ps'])">_mm_movelh_ps</div>(<div class="ref" onclick="jumpToSymbol(['_mm_cvt_pi2ps'], ['_mm_cvt_pi2ps'])">_mm_cvt_pi2ps</div>(<div class="ref" onclick="jumpToSymbol(['_mm_setzero_ps'], ['_mm_setzero_ps'])">_mm_setzero_ps</div>(), <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi32x2_ps[impl0]::_A'])"><div class="token cpp_argument">_A</div></div>),
                        <div class="ref" onclick="jumpToSymbol(['_mm_cvt_pi2ps'], ['_mm_cvt_pi2ps'])">_mm_cvt_pi2ps</div>(<div class="ref" onclick="jumpToSymbol(['_mm_setzero_ps'], ['_mm_setzero_ps'])">_mm_setzero_ps</div>(), <div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi32x2_ps[impl0]::_B'])"><div class="token cpp_argument">_B</div></div>));
 }
-<div class="disabled"/>#endif // _M_IX86</div>
+<div class="disabled">#endif // _M_IX86</div>
 
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 }; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
-<div class="disabled"/>#endif  /* defined (_M_CEE_PURE) */
+<div class="disabled">#endif  /* defined (_M_CEE_PURE) */
 #endif  /* __midl */
 #endif  /* _INCLUDED_MM2 */
 </div>

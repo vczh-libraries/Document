@@ -26,23 +26,23 @@
  */</div>
 
 #pragma once
-<div class="disabled"/>#ifndef _MMINTRIN_H_INCLUDED</div>
-<div class="disabled"/>#define _MMINTRIN_H_INCLUDED</div>
-<div class="disabled"/>#ifndef __midl</div>
+<div class="disabled">#ifndef _MMINTRIN_H_INCLUDED</div>
+<div class="disabled">#define _MMINTRIN_H_INCLUDED</div>
+<div class="disabled">#ifndef __midl</div>
 
-<div class="disabled"/>#if !defined _M_IX86 &amp;&amp; !defined _M_X64</div>
-<div class="disabled"/>    #error This header is specific to X86 and X64 targets
+<div class="disabled">#if !defined _M_IX86 &amp;&amp; !defined _M_X64</div>
+<div class="disabled">    #error This header is specific to X86 and X64 targets
 #endif</div>
 
-<div class="disabled"/>#if defined (_M_CEE_PURE)</div>
-<div class="disabled"/>        #error ERROR: MM intrinsics not supported in the pure mode!
+<div class="disabled">#if defined (_M_CEE_PURE)</div>
+<div class="disabled">        #error ERROR: MM intrinsics not supported in the pure mode!
 #else  /* defined (_M_CEE_PURE) */</div>
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> { <div class="token cpp_comment ">/* Begin &quot;C&quot; */</div>
 <div class="token cpp_comment ">/* Intrinsics use C name-mangling.
  */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">union</div> <div class="token cpp_keyword ">__declspec</div>(intrin_type) <div class="token cpp_keyword ">__declspec</div>(align(<div class="token cpp_number ">8</div>)) <div class="def" id="NI$__m64"><div><div class="token cpp_type">__m64</div></div></div>
 {
@@ -57,7 +57,7 @@
     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int32</div>    <div class="def" id="NI$__m64::m64_u32"><div><div class="token cpp_field">m64_u32</div></div></div>[<div class="token cpp_number ">2</div>];
 } <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div>;
 
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_comment ">/* General support intrinsics */</div>
 <div class="token cpp_keyword ">void</div>  <div class="def" id="FB$_m_empty[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_empty'])"><div class="token cpp_function">_m_empty</div></div></div>(<div class="token cpp_keyword ">void</div>);
 <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_m_from_int[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_m_from_int'])"><div class="token cpp_function">_m_from_int</div></div></div>(<div class="token cpp_keyword ">int</div> _I);
@@ -138,68 +138,68 @@
                    <div class="token cpp_keyword ">char</div> _B3, <div class="token cpp_keyword ">char</div> _B2, <div class="token cpp_keyword ">char</div> _B1, <div class="token cpp_keyword ">char</div> _B0);
 
 <div class="token cpp_comment ">/* Alternate intrinsic name definitions */</div>
-<div class="disabled"/>#define _mm_empty         _m_empty</div>
-<div class="disabled"/>#define _mm_cvtsi32_si64  _m_from_int</div>
-<div class="disabled"/>#define _mm_cvtsi64_si32  _m_to_int</div>
-<div class="disabled"/>#define _mm_packs_pi16    _m_packsswb</div>
-<div class="disabled"/>#define _mm_packs_pi32    _m_packssdw</div>
-<div class="disabled"/>#define _mm_packs_pu16    _m_packuswb</div>
-<div class="disabled"/>#define _mm_unpackhi_pi8  _m_punpckhbw</div>
-<div class="disabled"/>#define _mm_unpackhi_pi16 _m_punpckhwd</div>
-<div class="disabled"/>#define _mm_unpackhi_pi32 _m_punpckhdq</div>
-<div class="disabled"/>#define _mm_unpacklo_pi8  _m_punpcklbw</div>
-<div class="disabled"/>#define _mm_unpacklo_pi16 _m_punpcklwd</div>
-<div class="disabled"/>#define _mm_unpacklo_pi32 _m_punpckldq</div>
-<div class="disabled"/>#define _mm_add_pi8       _m_paddb</div>
-<div class="disabled"/>#define _mm_add_pi16      _m_paddw</div>
-<div class="disabled"/>#define _mm_add_pi32      _m_paddd</div>
-<div class="disabled"/>#define _mm_adds_pi8      _m_paddsb</div>
-<div class="disabled"/>#define _mm_adds_pi16     _m_paddsw</div>
-<div class="disabled"/>#define _mm_adds_pu8      _m_paddusb</div>
-<div class="disabled"/>#define _mm_adds_pu16     _m_paddusw</div>
-<div class="disabled"/>#define _mm_sub_pi8       _m_psubb</div>
-<div class="disabled"/>#define _mm_sub_pi16      _m_psubw</div>
-<div class="disabled"/>#define _mm_sub_pi32      _m_psubd</div>
-<div class="disabled"/>#define _mm_subs_pi8      _m_psubsb</div>
-<div class="disabled"/>#define _mm_subs_pi16     _m_psubsw</div>
-<div class="disabled"/>#define _mm_subs_pu8      _m_psubusb</div>
-<div class="disabled"/>#define _mm_subs_pu16     _m_psubusw</div>
-<div class="disabled"/>#define _mm_madd_pi16     _m_pmaddwd</div>
-<div class="disabled"/>#define _mm_mulhi_pi16    _m_pmulhw</div>
-<div class="disabled"/>#define _mm_mullo_pi16    _m_pmullw</div>
-<div class="disabled"/>#define _mm_sll_pi16      _m_psllw</div>
-<div class="disabled"/>#define _mm_slli_pi16     _m_psllwi</div>
-<div class="disabled"/>#define _mm_sll_pi32      _m_pslld</div>
-<div class="disabled"/>#define _mm_slli_pi32     _m_pslldi</div>
-<div class="disabled"/>#define _mm_sll_si64      _m_psllq</div>
-<div class="disabled"/>#define _mm_slli_si64     _m_psllqi</div>
-<div class="disabled"/>#define _mm_sra_pi16      _m_psraw</div>
-<div class="disabled"/>#define _mm_srai_pi16     _m_psrawi</div>
-<div class="disabled"/>#define _mm_sra_pi32      _m_psrad</div>
-<div class="disabled"/>#define _mm_srai_pi32     _m_psradi</div>
-<div class="disabled"/>#define _mm_srl_pi16      _m_psrlw</div>
-<div class="disabled"/>#define _mm_srli_pi16     _m_psrlwi</div>
-<div class="disabled"/>#define _mm_srl_pi32      _m_psrld</div>
-<div class="disabled"/>#define _mm_srli_pi32     _m_psrldi</div>
-<div class="disabled"/>#define _mm_srl_si64      _m_psrlq</div>
-<div class="disabled"/>#define _mm_srli_si64     _m_psrlqi</div>
-<div class="disabled"/>#define _mm_and_si64      _m_pand</div>
-<div class="disabled"/>#define _mm_andnot_si64   _m_pandn</div>
-<div class="disabled"/>#define _mm_or_si64       _m_por</div>
-<div class="disabled"/>#define _mm_xor_si64      _m_pxor</div>
-<div class="disabled"/>#define _mm_cmpeq_pi8     _m_pcmpeqb</div>
-<div class="disabled"/>#define _mm_cmpeq_pi16    _m_pcmpeqw</div>
-<div class="disabled"/>#define _mm_cmpeq_pi32    _m_pcmpeqd</div>
-<div class="disabled"/>#define _mm_cmpgt_pi8     _m_pcmpgtb</div>
-<div class="disabled"/>#define _mm_cmpgt_pi16    _m_pcmpgtw</div>
-<div class="disabled"/>#define _mm_cmpgt_pi32    _m_pcmpgtd
+<div class="disabled">#define _mm_empty         _m_empty</div>
+<div class="disabled">#define _mm_cvtsi32_si64  _m_from_int</div>
+<div class="disabled">#define _mm_cvtsi64_si32  _m_to_int</div>
+<div class="disabled">#define _mm_packs_pi16    _m_packsswb</div>
+<div class="disabled">#define _mm_packs_pi32    _m_packssdw</div>
+<div class="disabled">#define _mm_packs_pu16    _m_packuswb</div>
+<div class="disabled">#define _mm_unpackhi_pi8  _m_punpckhbw</div>
+<div class="disabled">#define _mm_unpackhi_pi16 _m_punpckhwd</div>
+<div class="disabled">#define _mm_unpackhi_pi32 _m_punpckhdq</div>
+<div class="disabled">#define _mm_unpacklo_pi8  _m_punpcklbw</div>
+<div class="disabled">#define _mm_unpacklo_pi16 _m_punpcklwd</div>
+<div class="disabled">#define _mm_unpacklo_pi32 _m_punpckldq</div>
+<div class="disabled">#define _mm_add_pi8       _m_paddb</div>
+<div class="disabled">#define _mm_add_pi16      _m_paddw</div>
+<div class="disabled">#define _mm_add_pi32      _m_paddd</div>
+<div class="disabled">#define _mm_adds_pi8      _m_paddsb</div>
+<div class="disabled">#define _mm_adds_pi16     _m_paddsw</div>
+<div class="disabled">#define _mm_adds_pu8      _m_paddusb</div>
+<div class="disabled">#define _mm_adds_pu16     _m_paddusw</div>
+<div class="disabled">#define _mm_sub_pi8       _m_psubb</div>
+<div class="disabled">#define _mm_sub_pi16      _m_psubw</div>
+<div class="disabled">#define _mm_sub_pi32      _m_psubd</div>
+<div class="disabled">#define _mm_subs_pi8      _m_psubsb</div>
+<div class="disabled">#define _mm_subs_pi16     _m_psubsw</div>
+<div class="disabled">#define _mm_subs_pu8      _m_psubusb</div>
+<div class="disabled">#define _mm_subs_pu16     _m_psubusw</div>
+<div class="disabled">#define _mm_madd_pi16     _m_pmaddwd</div>
+<div class="disabled">#define _mm_mulhi_pi16    _m_pmulhw</div>
+<div class="disabled">#define _mm_mullo_pi16    _m_pmullw</div>
+<div class="disabled">#define _mm_sll_pi16      _m_psllw</div>
+<div class="disabled">#define _mm_slli_pi16     _m_psllwi</div>
+<div class="disabled">#define _mm_sll_pi32      _m_pslld</div>
+<div class="disabled">#define _mm_slli_pi32     _m_pslldi</div>
+<div class="disabled">#define _mm_sll_si64      _m_psllq</div>
+<div class="disabled">#define _mm_slli_si64     _m_psllqi</div>
+<div class="disabled">#define _mm_sra_pi16      _m_psraw</div>
+<div class="disabled">#define _mm_srai_pi16     _m_psrawi</div>
+<div class="disabled">#define _mm_sra_pi32      _m_psrad</div>
+<div class="disabled">#define _mm_srai_pi32     _m_psradi</div>
+<div class="disabled">#define _mm_srl_pi16      _m_psrlw</div>
+<div class="disabled">#define _mm_srli_pi16     _m_psrlwi</div>
+<div class="disabled">#define _mm_srl_pi32      _m_psrld</div>
+<div class="disabled">#define _mm_srli_pi32     _m_psrldi</div>
+<div class="disabled">#define _mm_srl_si64      _m_psrlq</div>
+<div class="disabled">#define _mm_srli_si64     _m_psrlqi</div>
+<div class="disabled">#define _mm_and_si64      _m_pand</div>
+<div class="disabled">#define _mm_andnot_si64   _m_pandn</div>
+<div class="disabled">#define _mm_or_si64       _m_por</div>
+<div class="disabled">#define _mm_xor_si64      _m_pxor</div>
+<div class="disabled">#define _mm_cmpeq_pi8     _m_pcmpeqb</div>
+<div class="disabled">#define _mm_cmpeq_pi16    _m_pcmpeqw</div>
+<div class="disabled">#define _mm_cmpeq_pi32    _m_pcmpeqd</div>
+<div class="disabled">#define _mm_cmpgt_pi8     _m_pcmpgtb</div>
+<div class="disabled">#define _mm_cmpgt_pi16    _m_pcmpgtw</div>
+<div class="disabled">#define _mm_cmpgt_pi32    _m_pcmpgtd
 #endif // defined(_M_IX86)</div>
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 }; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
-<div class="disabled"/>#endif  /* defined (_M_CEE_PURE) */
+<div class="disabled">#endif  /* defined (_M_CEE_PURE) */
 #endif  /* __midl */
 #endif  /* _MMINTRIN_H_INCLUDED */
 </div>

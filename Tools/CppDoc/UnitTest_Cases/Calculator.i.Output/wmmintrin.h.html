@@ -29,24 +29,24 @@
 
 #pragma once
 
-<div class="disabled"/>#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
-<div class="disabled"/>#error This header is specific to X86 and X64 targets
+<div class="disabled">#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
+<div class="disabled">#error This header is specific to X86 and X64 targets
 #endif</div>
 
-<div class="disabled"/>#ifndef _INCLUDED_WMM</div>
-<div class="disabled"/>#define _INCLUDED_WMM</div>
-<div class="disabled"/>#ifndef __midl</div>
+<div class="disabled">#ifndef _INCLUDED_WMM</div>
+<div class="disabled">#define _INCLUDED_WMM</div>
+<div class="disabled">#ifndef __midl</div>
 
-<div class="disabled"/>#if defined (_M_CEE_PURE)</div>
-<div class="disabled"/>        #error ERROR: EMM intrinsics not supported in the pure mode!
+<div class="disabled">#if defined (_M_CEE_PURE)</div>
+<div class="disabled">        #error ERROR: EMM intrinsics not supported in the pure mode!
 #else  /* defined (_M_CEE_PURE) */</div>
 
-<div class="disabled"/>#include &lt;nmmintrin.h&gt;</div>
+<div class="disabled">#include &lt;nmmintrin.h&gt;</div>
 
 
-<div class="disabled"/>#if __cplusplus</div>
+<div class="disabled">#if __cplusplus</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
-<div class="disabled"/>#endif  /* __cplusplus */</div>
+<div class="disabled">#endif  /* __cplusplus */</div>
 
 <div class="token cpp_comment ">/*
  * Performs 1 round of AES decryption of the first m128i using
@@ -95,11 +95,11 @@
                                             <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* imm8 */</div>);
 
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 }; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
-<div class="disabled"/>#endif  /* defined (_M_CEE_PURE) */
+<div class="disabled">#endif  /* defined (_M_CEE_PURE) */
 #endif  /* __midl */
 #endif  /* _INCLUDED_WMM */
 </div>

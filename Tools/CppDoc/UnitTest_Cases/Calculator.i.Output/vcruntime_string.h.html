@@ -20,142 +20,142 @@
 <div class="token cpp_comment ">//</div>
 #pragma once
 
-<div class="disabled"/>#include &lt;vcruntime.h&gt;</div>
+<div class="disabled">#include &lt;vcruntime.h&gt;</div>
 
-<div class="disabled"/>#ifndef __midl</div>
+<div class="disabled">#ifndef __midl</div>
 
-<div class="expandable"/><div class="disabled"/>_CRT_BEGIN_C_HEADER</div>
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
 <div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
 
 
 
-<div class="disabled"/>_Check_return_</div>
-<div class="expandable"/><div class="disabled"/>_VCRTIMP void _CONST_RETURN* __cdecl memchr(</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_VCRTIMP void _CONST_RETURN* __cdecl memchr(</div>
 <div class="expanded"> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$memchr[decl0]"><div><div class="token cpp_function">memchr</div></div></div>(</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_reads_bytes_opt_(_MaxCount) void const* _Buf,</div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_opt_(_MaxCount) void const* _Buf,</div>
 <div class="expanded">      <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* _Buf,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                            int         _Val,</div>
+<div class="expandable"><div class="disabled">    _In_                            int         _Val,</div>
 <div class="expanded">                                 <div class="token cpp_keyword ">int</div>         _Val,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                            size_t      _MaxCount</div>
+<div class="expandable"><div class="disabled">    _In_                            size_t      _MaxCount</div>
 <div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div>      _MaxCount</div></div>
     );
 
-<div class="disabled"/>_Check_return_</div>
+<div class="disabled">_Check_return_</div>
 <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$memcmp[decl0]"><div><div class="token cpp_function">memcmp</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _In_reads_bytes_(_Size) void const* _Buf1,</div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_(_Size) void const* _Buf1,</div>
 <div class="expanded">      <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* _Buf1,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_reads_bytes_(_Size) void const* _Buf2,</div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_(_Size) void const* _Buf2,</div>
 <div class="expanded">      <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* _Buf2,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                    size_t      _Size</div>
+<div class="expandable"><div class="disabled">    _In_                    size_t      _Size</div>
 <div class="expanded">                         <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div>      _Size</div></div>
     );
 
-<div class="disabled"/>_CRT_INSECURE_DEPRECATE_MEMORY(memcpy_s)</div>
-<div class="disabled"/>_Post_equal_to_(_Dst)</div>
-<div class="disabled"/>_At_buffer_(
+<div class="disabled">_CRT_INSECURE_DEPRECATE_MEMORY(memcpy_s)</div>
+<div class="disabled">_Post_equal_to_(_Dst)</div>
+<div class="disabled">_At_buffer_(
     (unsigned char*)_Dst,
     _Iter_,
     _Size,
     _Post_satisfies_(((unsigned char*)_Dst)[_Iter_] == ((unsigned char*)_Src)[_Iter_])
 )</div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$memcpy[decl0]"><div><div class="token cpp_function">memcpy</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Out_writes_bytes_all_(_Size) void* _Dst,</div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_all_(_Size) void* _Dst,</div>
 <div class="expanded">      <div class="token cpp_keyword ">void</div>* _Dst,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_reads_bytes_(_Size)       void const* _Src,</div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_(_Size)       void const* _Src,</div>
 <div class="expanded">            <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* _Src,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                          size_t      _Size</div>
+<div class="expandable"><div class="disabled">    _In_                          size_t      _Size</div>
 <div class="expanded">                               <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div>      _Size</div></div>
     );
 
-<div class="disabled"/>_CRT_INSECURE_DEPRECATE_MEMORY(memmove_s)</div>
-<div class="expandable"/><div class="disabled"/>_VCRTIMP void* __cdecl memmove(</div>
+<div class="disabled">_CRT_INSECURE_DEPRECATE_MEMORY(memmove_s)</div>
+<div class="expandable"><div class="disabled">_VCRTIMP void* __cdecl memmove(</div>
 <div class="expanded"> <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$memmove[decl0]"><div><div class="token cpp_function">memmove</div></div></div>(</div></div>
-<div class="expandable"/><div class="disabled"/>    _Out_writes_bytes_all_opt_(_Size) void*       _Dst,</div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_all_opt_(_Size) void*       _Dst,</div>
 <div class="expanded">      <div class="token cpp_keyword ">void</div>*       _Dst,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_reads_bytes_opt_(_Size)       void const* _Src,</div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_opt_(_Size)       void const* _Src,</div>
 <div class="expanded">            <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* _Src,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                              size_t      _Size</div>
+<div class="expandable"><div class="disabled">    _In_                              size_t      _Size</div>
 <div class="expanded">                                   <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div>      _Size</div></div>
     );
 
-<div class="disabled"/>_Post_equal_to_(_Dst)</div>
-<div class="disabled"/>_At_buffer_(
+<div class="disabled">_Post_equal_to_(_Dst)</div>
+<div class="disabled">_At_buffer_(
     (unsigned char*)_Dst,
     _Iter_,
     _Size,
     _Post_satisfies_(((unsigned char*)_Dst)[_Iter_] == _Val)
 )</div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$memset[decl0]"><div><div class="token cpp_function">memset</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Out_writes_bytes_all_(_Size) void*  _Dst,</div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_all_(_Size) void*  _Dst,</div>
 <div class="expanded">      <div class="token cpp_keyword ">void</div>*  _Dst,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                          int    _Val,</div>
+<div class="expandable"><div class="disabled">    _In_                          int    _Val,</div>
 <div class="expanded">                               <div class="token cpp_keyword ">int</div>    _Val,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                          size_t _Size</div>
+<div class="expandable"><div class="disabled">    _In_                          size_t _Size</div>
 <div class="expanded">                               <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size</div></div>
     );
 
-<div class="disabled"/>_Check_return_</div>
-<div class="expandable"/><div class="disabled"/>_VCRTIMP char _CONST_RETURN* __cdecl strchr(</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_VCRTIMP char _CONST_RETURN* __cdecl strchr(</div>
 <div class="expanded"> <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$strchr[decl0]"><div><div class="token cpp_function">strchr</div></div></div>(</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_z_ char const* _Str,</div>
+<div class="expandable"><div class="disabled">    _In_z_ char const* _Str,</div>
 <div class="expanded">      <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>* _Str,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_   int         _Val</div>
+<div class="expandable"><div class="disabled">    _In_   int         _Val</div>
 <div class="expanded">        <div class="token cpp_keyword ">int</div>         _Val</div></div>
     );
 
-<div class="disabled"/>_Check_return_</div>
-<div class="expandable"/><div class="disabled"/>_VCRTIMP char _CONST_RETURN* __cdecl strrchr(</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_VCRTIMP char _CONST_RETURN* __cdecl strrchr(</div>
 <div class="expanded"> <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$strrchr[decl0]"><div><div class="token cpp_function">strrchr</div></div></div>(</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_z_ char const* _Str,</div>
+<div class="expandable"><div class="disabled">    _In_z_ char const* _Str,</div>
 <div class="expanded">      <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>* _Str,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_   int         _Ch</div>
+<div class="expandable"><div class="disabled">    _In_   int         _Ch</div>
 <div class="expanded">        <div class="token cpp_keyword ">int</div>         _Ch</div></div>
     );
 
-<div class="disabled"/>_Check_return_ _Ret_maybenull_</div>
-<div class="expandable"/><div class="disabled"/>_VCRTIMP char _CONST_RETURN* __cdecl strstr(</div>
+<div class="disabled">_Check_return_ _Ret_maybenull_</div>
+<div class="expandable"><div class="disabled">_VCRTIMP char _CONST_RETURN* __cdecl strstr(</div>
 <div class="expanded"> <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$strstr[decl0]"><div><div class="token cpp_function">strstr</div></div></div>(</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_z_ char const* _Str,</div>
+<div class="expandable"><div class="disabled">    _In_z_ char const* _Str,</div>
 <div class="expanded">      <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>* _Str,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_z_ char const* _SubStr</div>
+<div class="expandable"><div class="disabled">    _In_z_ char const* _SubStr</div>
 <div class="expanded">      <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>* _SubStr</div></div>
     );
 
-<div class="disabled"/>_Check_return_</div>
-<div class="disabled"/>_When_(return != NULL, _Ret_range_(_Str, _Str + _String_length_(_Str) - 1))</div>
-<div class="expandable"/><div class="disabled"/>_VCRTIMP wchar_t _CONST_RETURN* __cdecl wcschr(</div>
+<div class="disabled">_Check_return_</div>
+<div class="disabled">_When_(return != NULL, _Ret_range_(_Str, _Str + _String_length_(_Str) - 1))</div>
+<div class="expandable"><div class="disabled">_VCRTIMP wchar_t _CONST_RETURN* __cdecl wcschr(</div>
 <div class="expanded"> <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$wcschr[decl0]"><div><div class="token cpp_function">wcschr</div></div></div>(</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _Str,</div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _Str,</div>
 <div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Str,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_   wchar_t        _Ch</div>
+<div class="expandable"><div class="disabled">    _In_   wchar_t        _Ch</div>
 <div class="expanded">        <div class="token cpp_keyword ">wchar_t</div>        _Ch</div></div>
     );
 
-<div class="disabled"/>_Check_return_</div>
-<div class="expandable"/><div class="disabled"/>_VCRTIMP wchar_t _CONST_RETURN* __cdecl wcsrchr(</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_VCRTIMP wchar_t _CONST_RETURN* __cdecl wcsrchr(</div>
 <div class="expanded"> <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$wcsrchr[decl0]"><div><div class="token cpp_function">wcsrchr</div></div></div>(</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _Str,</div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _Str,</div>
 <div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Str,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_   wchar_t        _Ch</div>
+<div class="expandable"><div class="disabled">    _In_   wchar_t        _Ch</div>
 <div class="expanded">        <div class="token cpp_keyword ">wchar_t</div>        _Ch</div></div>
     );
 
-<div class="disabled"/>_Check_return_ _Ret_maybenull_</div>
-<div class="disabled"/>_When_(return != NULL, _Ret_range_(_Str, _Str + _String_length_(_Str) - 1))</div>
-<div class="expandable"/><div class="disabled"/>_VCRTIMP wchar_t _CONST_RETURN* __cdecl wcsstr(</div>
+<div class="disabled">_Check_return_ _Ret_maybenull_</div>
+<div class="disabled">_When_(return != NULL, _Ret_range_(_Str, _Str + _String_length_(_Str) - 1))</div>
+<div class="expandable"><div class="disabled">_VCRTIMP wchar_t _CONST_RETURN* __cdecl wcsstr(</div>
 <div class="expanded"> <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$wcsstr[decl0]"><div><div class="token cpp_function">wcsstr</div></div></div>(</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _Str,</div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _Str,</div>
 <div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Str,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _SubStr</div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _SubStr</div>
 <div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _SubStr</div></div>
     );
 
 
 
-<div class="expandable"/><div class="disabled"/>_CRT_END_C_HEADER</div>
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER</div>
 <div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
 
-<div class="disabled"/>#endif // __midl
+<div class="disabled">#endif // __midl
 </div>
 </div></div>
 <script type="text/javascript">

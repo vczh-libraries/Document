@@ -26,23 +26,23 @@
 
 #pragma once
 
-<div class="disabled"/>#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
-<div class="disabled"/>#error This header is specific to X86 and X64 targets
+<div class="disabled">#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
+<div class="disabled">#error This header is specific to X86 and X64 targets
 #endif</div>
 
-<div class="disabled"/>#ifndef _INCLUDED_IMM</div>
-<div class="disabled"/>#define _INCLUDED_IMM</div>
-<div class="disabled"/>#ifndef __midl</div>
+<div class="disabled">#ifndef _INCLUDED_IMM</div>
+<div class="disabled">#define _INCLUDED_IMM</div>
+<div class="disabled">#ifndef __midl</div>
 
-<div class="disabled"/>#if defined (_M_CEE_PURE)</div>
-<div class="disabled"/>        #error ERROR: Intel Architecture intrinsic functions not supported in the pure mode!
+<div class="disabled">#if defined (_M_CEE_PURE)</div>
+<div class="disabled">        #error ERROR: Intel Architecture intrinsic functions not supported in the pure mode!
 #else  /* defined (_M_CEE_PURE) */</div>
 
-<div class="disabled"/>#include &lt;wmmintrin.h&gt;</div>
+<div class="disabled">#include &lt;wmmintrin.h&gt;</div>
 
-<div class="disabled"/>#ifdef __cplusplus</div>
+<div class="disabled">#ifdef __cplusplus</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
-<div class="disabled"/>#endif  /* __cplusplus */</div>
+<div class="disabled">#endif  /* __cplusplus */</div>
 
 <div class="token cpp_comment ">/*
  * Intel(R) AVX compiler intrinsic functions.
@@ -70,43 +70,43 @@
 <div class="token cpp_comment ">/*
  * Compare predicates for scalar and packed compare intrinsic functions
  */</div>
-<div class="disabled"/>#define _CMP_EQ_OQ     0x00  /* Equal (ordered, nonsignaling)               */</div>
-<div class="disabled"/>#define _CMP_LT_OS     0x01  /* Less-than (ordered, signaling)              */</div>
-<div class="disabled"/>#define _CMP_LE_OS     0x02  /* Less-than-or-equal (ordered, signaling)     */</div>
-<div class="disabled"/>#define _CMP_UNORD_Q   0x03  /* Unordered (nonsignaling)                    */</div>
-<div class="disabled"/>#define _CMP_NEQ_UQ    0x04  /* Not-equal (unordered, nonsignaling)         */</div>
-<div class="disabled"/>#define _CMP_NLT_US    0x05  /* Not-less-than (unordered, signaling)        */</div>
-<div class="disabled"/>#define _CMP_NLE_US    0x06  /* Not-less-than-or-equal (unordered,</div>
-<div class="disabled"/>                                                        signaling)          */</div>
-<div class="disabled"/>#define _CMP_ORD_Q     0x07  /* Ordered (nonsignaling)                      */</div>
-<div class="disabled"/>#define _CMP_EQ_UQ     0x08  /* Equal (unordered, non-signaling)            */</div>
-<div class="disabled"/>#define _CMP_NGE_US    0x09  /* Not-greater-than-or-equal (unordered,</div>
-<div class="disabled"/>                                                           signaling)       */</div>
-<div class="disabled"/>#define _CMP_NGT_US    0x0A  /* Not-greater-than (unordered, signaling)     */</div>
-<div class="disabled"/>#define _CMP_FALSE_OQ  0x0B  /* False (ordered, nonsignaling)               */</div>
-<div class="disabled"/>#define _CMP_NEQ_OQ    0x0C  /* Not-equal (ordered, non-signaling)          */</div>
-<div class="disabled"/>#define _CMP_GE_OS     0x0D  /* Greater-than-or-equal (ordered, signaling)  */</div>
-<div class="disabled"/>#define _CMP_GT_OS     0x0E  /* Greater-than (ordered, signaling)           */</div>
-<div class="disabled"/>#define _CMP_TRUE_UQ   0x0F  /* True (unordered, non-signaling)             */</div>
-<div class="disabled"/>#define _CMP_EQ_OS     0x10  /* Equal (ordered, signaling)                  */</div>
-<div class="disabled"/>#define _CMP_LT_OQ     0x11  /* Less-than (ordered, nonsignaling)           */</div>
-<div class="disabled"/>#define _CMP_LE_OQ     0x12  /* Less-than-or-equal (ordered, nonsignaling)  */</div>
-<div class="disabled"/>#define _CMP_UNORD_S   0x13  /* Unordered (signaling)                       */</div>
-<div class="disabled"/>#define _CMP_NEQ_US    0x14  /* Not-equal (unordered, signaling)            */</div>
-<div class="disabled"/>#define _CMP_NLT_UQ    0x15  /* Not-less-than (unordered, nonsignaling)     */</div>
-<div class="disabled"/>#define _CMP_NLE_UQ    0x16  /* Not-less-than-or-equal (unordered,</div>
-<div class="disabled"/>                                                        nonsignaling)       */</div>
-<div class="disabled"/>#define _CMP_ORD_S     0x17  /* Ordered (signaling)                         */</div>
-<div class="disabled"/>#define _CMP_EQ_US     0x18  /* Equal (unordered, signaling)                */</div>
-<div class="disabled"/>#define _CMP_NGE_UQ    0x19  /* Not-greater-than-or-equal (unordered,</div>
-<div class="disabled"/>                                                           nonsignaling)    */</div>
-<div class="disabled"/>#define _CMP_NGT_UQ    0x1A  /* Not-greater-than (unordered, nonsignaling)  */</div>
-<div class="disabled"/>#define _CMP_FALSE_OS  0x1B  /* False (ordered, signaling)                  */</div>
-<div class="disabled"/>#define _CMP_NEQ_OS    0x1C  /* Not-equal (ordered, signaling)              */</div>
-<div class="disabled"/>#define _CMP_GE_OQ     0x1D  /* Greater-than-or-equal (ordered,</div>
-<div class="disabled"/>                                                       nonsignaling)        */</div>
-<div class="disabled"/>#define _CMP_GT_OQ     0x1E  /* Greater-than (ordered, nonsignaling)        */</div>
-<div class="disabled"/>#define _CMP_TRUE_US   0x1F  /* True (unordered, signaling)                 */</div>
+<div class="disabled">#define _CMP_EQ_OQ     0x00  /* Equal (ordered, nonsignaling)               */</div>
+<div class="disabled">#define _CMP_LT_OS     0x01  /* Less-than (ordered, signaling)              */</div>
+<div class="disabled">#define _CMP_LE_OS     0x02  /* Less-than-or-equal (ordered, signaling)     */</div>
+<div class="disabled">#define _CMP_UNORD_Q   0x03  /* Unordered (nonsignaling)                    */</div>
+<div class="disabled">#define _CMP_NEQ_UQ    0x04  /* Not-equal (unordered, nonsignaling)         */</div>
+<div class="disabled">#define _CMP_NLT_US    0x05  /* Not-less-than (unordered, signaling)        */</div>
+<div class="disabled">#define _CMP_NLE_US    0x06  /* Not-less-than-or-equal (unordered,</div>
+<div class="disabled">                                                        signaling)          */</div>
+<div class="disabled">#define _CMP_ORD_Q     0x07  /* Ordered (nonsignaling)                      */</div>
+<div class="disabled">#define _CMP_EQ_UQ     0x08  /* Equal (unordered, non-signaling)            */</div>
+<div class="disabled">#define _CMP_NGE_US    0x09  /* Not-greater-than-or-equal (unordered,</div>
+<div class="disabled">                                                           signaling)       */</div>
+<div class="disabled">#define _CMP_NGT_US    0x0A  /* Not-greater-than (unordered, signaling)     */</div>
+<div class="disabled">#define _CMP_FALSE_OQ  0x0B  /* False (ordered, nonsignaling)               */</div>
+<div class="disabled">#define _CMP_NEQ_OQ    0x0C  /* Not-equal (ordered, non-signaling)          */</div>
+<div class="disabled">#define _CMP_GE_OS     0x0D  /* Greater-than-or-equal (ordered, signaling)  */</div>
+<div class="disabled">#define _CMP_GT_OS     0x0E  /* Greater-than (ordered, signaling)           */</div>
+<div class="disabled">#define _CMP_TRUE_UQ   0x0F  /* True (unordered, non-signaling)             */</div>
+<div class="disabled">#define _CMP_EQ_OS     0x10  /* Equal (ordered, signaling)                  */</div>
+<div class="disabled">#define _CMP_LT_OQ     0x11  /* Less-than (ordered, nonsignaling)           */</div>
+<div class="disabled">#define _CMP_LE_OQ     0x12  /* Less-than-or-equal (ordered, nonsignaling)  */</div>
+<div class="disabled">#define _CMP_UNORD_S   0x13  /* Unordered (signaling)                       */</div>
+<div class="disabled">#define _CMP_NEQ_US    0x14  /* Not-equal (unordered, signaling)            */</div>
+<div class="disabled">#define _CMP_NLT_UQ    0x15  /* Not-less-than (unordered, nonsignaling)     */</div>
+<div class="disabled">#define _CMP_NLE_UQ    0x16  /* Not-less-than-or-equal (unordered,</div>
+<div class="disabled">                                                        nonsignaling)       */</div>
+<div class="disabled">#define _CMP_ORD_S     0x17  /* Ordered (signaling)                         */</div>
+<div class="disabled">#define _CMP_EQ_US     0x18  /* Equal (unordered, signaling)                */</div>
+<div class="disabled">#define _CMP_NGE_UQ    0x19  /* Not-greater-than-or-equal (unordered,</div>
+<div class="disabled">                                                           nonsignaling)    */</div>
+<div class="disabled">#define _CMP_NGT_UQ    0x1A  /* Not-greater-than (unordered, nonsignaling)  */</div>
+<div class="disabled">#define _CMP_FALSE_OS  0x1B  /* False (ordered, signaling)                  */</div>
+<div class="disabled">#define _CMP_NEQ_OS    0x1C  /* Not-equal (ordered, signaling)              */</div>
+<div class="disabled">#define _CMP_GE_OQ     0x1D  /* Greater-than-or-equal (ordered,</div>
+<div class="disabled">                                                       nonsignaling)        */</div>
+<div class="disabled">#define _CMP_GT_OQ     0x1E  /* Greater-than (ordered, nonsignaling)        */</div>
+<div class="disabled">#define _CMP_TRUE_US   0x1F  /* True (unordered, signaling)                 */</div>
 
 <div class="token cpp_comment ">/*
  * Add Packed Double Precision Floating-Point Values
@@ -602,27 +602,27 @@
  * equivalent C/C++ float type.
  */</div>
 <div class="token cpp_comment ">// float _mm256_cvtss_f32 (__m256 a)</div>
-<div class="disabled"/>#define _mm256_cvtss_f32(a) (_mm_cvtss_f32(_mm256_castps256_ps128(a)))</div>
+<div class="disabled">#define _mm256_cvtss_f32(a) (_mm_cvtss_f32(_mm256_castps256_ps128(a)))</div>
 
 <div class="token cpp_comment ">/*
  * Convert Scalar Double-Precision Floating-point value in 256-bit vector to
  * equivalent C/C++ double type.
  */</div>
 <div class="token cpp_comment ">// double _mm256_cvtsd_f64 (__m256d a)</div>
-<div class="disabled"/>#define _mm256_cvtsd_f64(a) (_mm_cvtsd_f64(_mm256_castpd256_pd128(a)))</div>
+<div class="disabled">#define _mm256_cvtsd_f64(a) (_mm_cvtsd_f64(_mm256_castpd256_pd128(a)))</div>
 
 <div class="token cpp_comment ">/*
  * Convert 32-bit Scalar integer in 256-bit vector to equivalent C/C++ int type.
  */</div>
 <div class="token cpp_comment ">// int _mm256_cvtsi256_si32 (__m256i a)</div>
-<div class="disabled"/>#define _mm256_cvtsi256_si32(a) (_mm_cvtsi128_si32(_mm256_castsi256_si128(a)))</div>
+<div class="disabled">#define _mm256_cvtsi256_si32(a) (_mm_cvtsi128_si32(_mm256_castsi256_si128(a)))</div>
 
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>/*</div>
-<div class="disabled"/> * Convert 64-bit Scalar integer in 256-bit vector to equivalent C/C++ __int64 type.</div>
-<div class="disabled"/> */</div>
-<div class="disabled"/>// __int64 _mm256_cvtsi256_si64 (__m256i a)</div>
-<div class="disabled"/>#define _mm256_cvtsi256_si64(a) (_mm_cvtsi128_si64(_mm256_castsi256_si128(a)))
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">/*</div>
+<div class="disabled"> * Convert 64-bit Scalar integer in 256-bit vector to equivalent C/C++ __int64 type.</div>
+<div class="disabled"> */</div>
+<div class="disabled">// __int64 _mm256_cvtsi256_si64 (__m256i a)</div>
+<div class="disabled">#define _mm256_cvtsi256_si64(a) (_mm_cvtsi128_si64(_mm256_castsi256_si128(a)))
 #endif  /* defined (_M_X64) */</div>
 
 
@@ -815,17 +815,17 @@
  * intrinsics.
  */</div>
 
-<div class="disabled"/>#define _mm256_loadu2_m128(/* float const* */ hiaddr, \</div>
-<div class="disabled"/>                           /* float const* */ loaddr) \</div>
-<div class="disabled"/>    _mm256_set_m128(_mm_loadu_ps(hiaddr), _mm_loadu_ps(loaddr))</div>
+<div class="disabled">#define _mm256_loadu2_m128(/* float const* */ hiaddr, \</div>
+<div class="disabled">                           /* float const* */ loaddr) \</div>
+<div class="disabled">    _mm256_set_m128(_mm_loadu_ps(hiaddr), _mm_loadu_ps(loaddr))</div>
 
-<div class="disabled"/>#define _mm256_loadu2_m128d(/* double const* */ hiaddr, \</div>
-<div class="disabled"/>                            /* double const* */ loaddr) \</div>
-<div class="disabled"/>    _mm256_set_m128d(_mm_loadu_pd(hiaddr), _mm_loadu_pd(loaddr))</div>
+<div class="disabled">#define _mm256_loadu2_m128d(/* double const* */ hiaddr, \</div>
+<div class="disabled">                            /* double const* */ loaddr) \</div>
+<div class="disabled">    _mm256_set_m128d(_mm_loadu_pd(hiaddr), _mm_loadu_pd(loaddr))</div>
 
-<div class="disabled"/>#define _mm256_loadu2_m128i(/* __m128i const* */ hiaddr, \</div>
-<div class="disabled"/>                            /* __m128i const* */ loaddr) \</div>
-<div class="disabled"/>    _mm256_set_m128i(_mm_loadu_si128(hiaddr), _mm_loadu_si128(loaddr))</div>
+<div class="disabled">#define _mm256_loadu2_m128i(/* __m128i const* */ hiaddr, \</div>
+<div class="disabled">                            /* __m128i const* */ loaddr) \</div>
+<div class="disabled">    _mm256_set_m128i(_mm_loadu_si128(hiaddr), _mm_loadu_si128(loaddr))</div>
 
 <div class="token cpp_comment ">/*
  * Store 256-bit Value To Two Unaligned 128-bit Locations
@@ -833,29 +833,29 @@
  * to two different potentially unaligned addresses.
  */</div>
 
-<div class="disabled"/>#define _mm256_storeu2_m128(/* float* */ hiaddr, /* float* */ loaddr, \</div>
-<div class="disabled"/>                            /* __m256 */ a) \</div>
-<div class="disabled"/>    do { \</div>
-<div class="disabled"/>        __m256 _a = (a); /* reference a only once in macro body */ \</div>
-<div class="disabled"/>        _mm_storeu_ps((loaddr), _mm256_castps256_ps128(_a)); \</div>
-<div class="disabled"/>        _mm_storeu_ps((hiaddr), _mm256_extractf128_ps(_a, 0x1)); \</div>
-<div class="disabled"/>    } while (0)</div>
+<div class="disabled">#define _mm256_storeu2_m128(/* float* */ hiaddr, /* float* */ loaddr, \</div>
+<div class="disabled">                            /* __m256 */ a) \</div>
+<div class="disabled">    do { \</div>
+<div class="disabled">        __m256 _a = (a); /* reference a only once in macro body */ \</div>
+<div class="disabled">        _mm_storeu_ps((loaddr), _mm256_castps256_ps128(_a)); \</div>
+<div class="disabled">        _mm_storeu_ps((hiaddr), _mm256_extractf128_ps(_a, 0x1)); \</div>
+<div class="disabled">    } while (0)</div>
 
-<div class="disabled"/>#define _mm256_storeu2_m128d(/* double* */ hiaddr, /* double* */ loaddr, \</div>
-<div class="disabled"/>                             /* __m256d */ a) \</div>
-<div class="disabled"/>    do { \</div>
-<div class="disabled"/>        __m256d _a = (a); /* reference a only once in macro body */ \</div>
-<div class="disabled"/>        _mm_storeu_pd((loaddr), _mm256_castpd256_pd128(_a)); \</div>
-<div class="disabled"/>        _mm_storeu_pd((hiaddr), _mm256_extractf128_pd(_a, 0x1)); \</div>
-<div class="disabled"/>    } while (0)</div>
+<div class="disabled">#define _mm256_storeu2_m128d(/* double* */ hiaddr, /* double* */ loaddr, \</div>
+<div class="disabled">                             /* __m256d */ a) \</div>
+<div class="disabled">    do { \</div>
+<div class="disabled">        __m256d _a = (a); /* reference a only once in macro body */ \</div>
+<div class="disabled">        _mm_storeu_pd((loaddr), _mm256_castpd256_pd128(_a)); \</div>
+<div class="disabled">        _mm_storeu_pd((hiaddr), _mm256_extractf128_pd(_a, 0x1)); \</div>
+<div class="disabled">    } while (0)</div>
 
-<div class="disabled"/>#define _mm256_storeu2_m128i(/* __m128i* */ hiaddr, /* __m128i* */ loaddr, \</div>
-<div class="disabled"/>                             /* __m256i */ a) \</div>
-<div class="disabled"/>    do { \</div>
-<div class="disabled"/>        __m256i _a = (a); /* reference a only once in macro body */ \</div>
-<div class="disabled"/>        _mm_storeu_si128((loaddr), _mm256_castsi256_si128(_a)); \</div>
-<div class="disabled"/>        _mm_storeu_si128((hiaddr), _mm256_extractf128_si256(_a, 0x1)); \</div>
-<div class="disabled"/>    } while (0)</div>
+<div class="disabled">#define _mm256_storeu2_m128i(/* __m128i* */ hiaddr, /* __m128i* */ loaddr, \</div>
+<div class="disabled">                             /* __m256i */ a) \</div>
+<div class="disabled">    do { \</div>
+<div class="disabled">        __m256i _a = (a); /* reference a only once in macro body */ \</div>
+<div class="disabled">        _mm_storeu_si128((loaddr), _mm256_castsi256_si128(_a)); \</div>
+<div class="disabled">        _mm_storeu_si128((hiaddr), _mm256_extractf128_si256(_a, 0x1)); \</div>
+<div class="disabled">    } while (0)</div>
 
 <div class="token cpp_comment ">/*
  * Conditional SIMD Packed Loads and Stores
@@ -1014,8 +1014,8 @@
  * converted to a QNaN.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256d'])"><div class="token cpp_type">__m256d</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_round_pd[decl0]"><div><div class="token cpp_function">_mm256_round_pd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256d'])"><div class="token cpp_type">__m256d</div></div>, <div class="token cpp_keyword ">int</div>);
-<div class="disabled"/>#define _mm256_ceil_pd(val)   _mm256_round_pd((val), _MM_FROUND_CEIL)</div>
-<div class="disabled"/>#define _mm256_floor_pd(val)  _mm256_round_pd((val), _MM_FROUND_FLOOR)</div>
+<div class="disabled">#define _mm256_ceil_pd(val)   _mm256_round_pd((val), _MM_FROUND_CEIL)</div>
+<div class="disabled">#define _mm256_floor_pd(val)  _mm256_round_pd((val), _MM_FROUND_FLOOR)</div>
 
 <div class="token cpp_comment ">/*
  * Round Packed Single-Precision Floating-Point Values
@@ -1029,8 +1029,8 @@
  * converted to a QNaN.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256'])"><div class="token cpp_type">__m256</div></div>  <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_round_ps[decl0]"><div><div class="token cpp_function">_mm256_round_ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256'])"><div class="token cpp_type">__m256</div></div>, <div class="token cpp_keyword ">int</div>);
-<div class="disabled"/>#define _mm256_ceil_ps(val)   _mm256_round_ps((val), _MM_FROUND_CEIL)</div>
-<div class="disabled"/>#define _mm256_floor_ps(val)  _mm256_round_ps((val), _MM_FROUND_FLOOR)</div>
+<div class="disabled">#define _mm256_ceil_ps(val)   _mm256_round_ps((val), _MM_FROUND_CEIL)</div>
+<div class="disabled">#define _mm256_floor_ps(val)  _mm256_round_ps((val), _MM_FROUND_FLOOR)</div>
 
 <div class="token cpp_comment ">/*
  * Unpack and Interleave High Packed Double-Precision Floating-Point Values
@@ -1073,16 +1073,16 @@
  * source operand and the logical NOT of the first source operand.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div>     <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_testz_si256[decl0]"><div><div class="token cpp_function">_mm256_testz_si256</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div>);
-<div class="disabled"/>#define _mm256_test_all_zeros(mask, val) \</div>
-<div class="disabled"/>              _mm256_testz_si256((mask), (val))</div>
+<div class="disabled">#define _mm256_test_all_zeros(mask, val) \</div>
+<div class="disabled">              _mm256_testz_si256((mask), (val))</div>
 
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div>     <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_testc_si256[decl0]"><div><div class="token cpp_function">_mm256_testc_si256</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div>);
-<div class="disabled"/>#define _mm256_test_all_ones(val) \</div>
-<div class="disabled"/>              _mm256_testc_si256((val), _mm256_cmpeq_epi32((val),(val)))</div>
+<div class="disabled">#define _mm256_test_all_ones(val) \</div>
+<div class="disabled">              _mm256_testc_si256((val), _mm256_cmpeq_epi32((val),(val)))</div>
 
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div>     <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_testnzc_si256[decl0]"><div><div class="token cpp_function">_mm256_testnzc_si256</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div>);
-<div class="disabled"/>#define _mm256_test_mix_ones_zeros(mask, val) \</div>
-<div class="disabled"/>              _mm256_testnzc_si256((mask), (val))</div>
+<div class="disabled">#define _mm256_test_mix_ones_zeros(mask, val) \</div>
+<div class="disabled">              _mm256_testnzc_si256((mask), (val))</div>
 
 <div class="token cpp_comment ">/*
  * Packed Bit Test
@@ -1168,14 +1168,14 @@
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_set_epi64x[decl0]"><div><div class="token cpp_function">_mm256_set_epi64x</div></div></div>(<div class="token cpp_keyword ">__int64</div>, <div class="token cpp_keyword ">__int64</div>,
                                                 <div class="token cpp_keyword ">__int64</div>, <div class="token cpp_keyword ">__int64</div>);
 
-<div class="disabled"/>#define _mm256_set_m128(/* __m128 */ hi, /* __m128 */ lo) \</div>
-<div class="disabled"/>    _mm256_insertf128_ps(_mm256_castps128_ps256(lo), (hi), 0x1)</div>
+<div class="disabled">#define _mm256_set_m128(/* __m128 */ hi, /* __m128 */ lo) \</div>
+<div class="disabled">    _mm256_insertf128_ps(_mm256_castps128_ps256(lo), (hi), 0x1)</div>
 
-<div class="disabled"/>#define _mm256_set_m128d(/* __m128d */ hi, /* __m128d */ lo) \</div>
-<div class="disabled"/>    _mm256_insertf128_pd(_mm256_castpd128_pd256(lo), (hi), 0x1)</div>
+<div class="disabled">#define _mm256_set_m128d(/* __m128d */ hi, /* __m128d */ lo) \</div>
+<div class="disabled">    _mm256_insertf128_pd(_mm256_castpd128_pd256(lo), (hi), 0x1)</div>
 
-<div class="disabled"/>#define _mm256_set_m128i(/* __m128i */ hi, /* __m128i */ lo) \</div>
-<div class="disabled"/>    _mm256_insertf128_si256(_mm256_castsi128_si256(lo), (hi), 0x1)</div>
+<div class="disabled">#define _mm256_set_m128i(/* __m128i */ hi, /* __m128i */ lo) \</div>
+<div class="disabled">    _mm256_insertf128_si256(_mm256_castsi128_si256(lo), (hi), 0x1)</div>
 
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256d'])"><div class="token cpp_type">__m256d</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_setr_pd[decl0]"><div><div class="token cpp_function">_mm256_setr_pd</div></div></div>(<div class="token cpp_keyword ">double</div>, <div class="token cpp_keyword ">double</div>, <div class="token cpp_keyword ">double</div>, <div class="token cpp_keyword ">double</div>);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256'])"><div class="token cpp_type">__m256</div></div>  <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_setr_ps[decl0]"><div><div class="token cpp_function">_mm256_setr_ps</div></div></div>(<div class="token cpp_keyword ">float</div>, <div class="token cpp_keyword ">float</div>, <div class="token cpp_keyword ">float</div>, <div class="token cpp_keyword ">float</div>,
@@ -1196,9 +1196,9 @@
                                                 <div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">int</div>);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_setr_epi64x[decl0]"><div><div class="token cpp_function">_mm256_setr_epi64x</div></div></div>(<div class="token cpp_keyword ">__int64</div>, <div class="token cpp_keyword ">__int64</div>,
                                                  <div class="token cpp_keyword ">__int64</div>, <div class="token cpp_keyword ">__int64</div>);
-<div class="disabled"/>#define _mm256_setr_m128(lo, hi)    _mm256_set_m128((hi), (lo))</div>
-<div class="disabled"/>#define _mm256_setr_m128d(lo, hi)   _mm256_set_m128d((hi), (lo))</div>
-<div class="disabled"/>#define _mm256_setr_m128i(lo, hi)   _mm256_set_m128i((hi), (lo))</div>
+<div class="disabled">#define _mm256_setr_m128(lo, hi)    _mm256_set_m128((hi), (lo))</div>
+<div class="disabled">#define _mm256_setr_m128d(lo, hi)   _mm256_set_m128d((hi), (lo))</div>
+<div class="disabled">#define _mm256_setr_m128i(lo, hi)   _mm256_set_m128i((hi), (lo))</div>
 
 <div class="token cpp_comment ">/*
  * Return 256-bit vector with all elements initialized to specified scalar
@@ -1244,18 +1244,18 @@
  * result of this intrinsic as an input argument to another intrinsic when the
  * initial value is irrelevant.
  */</div>
-<div class="disabled"/>#define _mm_undefined_ps       _mm_setzero_ps</div>
-<div class="disabled"/>#define _mm_undefined_pd       _mm_setzero_pd</div>
-<div class="disabled"/>#define _mm_undefined_si128    _mm_setzero_si128</div>
-<div class="disabled"/>#define _mm256_undefined_ps    _mm256_setzero_ps</div>
-<div class="disabled"/>#define _mm256_undefined_pd    _mm256_setzero_pd</div>
-<div class="disabled"/>#define _mm256_undefined_si256 _mm256_setzero_si256</div>
+<div class="disabled">#define _mm_undefined_ps       _mm_setzero_ps</div>
+<div class="disabled">#define _mm_undefined_pd       _mm_setzero_pd</div>
+<div class="disabled">#define _mm_undefined_si128    _mm_setzero_si128</div>
+<div class="disabled">#define _mm256_undefined_ps    _mm256_setzero_ps</div>
+<div class="disabled">#define _mm256_undefined_pd    _mm256_setzero_pd</div>
+<div class="disabled">#define _mm256_undefined_si256 _mm256_setzero_si256</div>
 
 <div class="token cpp_comment ">/*
  * The list of extended control registers.
  * Currently, the list includes only one register.
  */</div>
-<div class="disabled"/>#define _XCR_XFEATURE_ENABLED_MASK 0</div>
+<div class="disabled">#define _XCR_XFEATURE_ENABLED_MASK 0</div>
 
 <div class="token cpp_comment ">/* Returns the content of the specified extended control register */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_xgetbv[decl0]"><div><div class="token cpp_function">_xgetbv</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
@@ -1269,8 +1269,8 @@
  * using the specified memory address location and a mask.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_xsave[decl0]"><div><div class="token cpp_function">_xsave</div></div></div>(<div class="token cpp_keyword ">void</div> *, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div>);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern void __cdecl _xsave64(void *, unsigned __int64);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern void __cdecl _xsave64(void *, unsigned __int64);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -1279,8 +1279,8 @@
  * Optimize the state save operation if possible.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_xsaveopt[decl0]"><div><div class="token cpp_function">_xsaveopt</div></div></div>(<div class="token cpp_keyword ">void</div> *, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div>);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern void __cdecl _xsaveopt64(void *, unsigned __int64);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern void __cdecl _xsaveopt64(void *, unsigned __int64);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -1288,8 +1288,8 @@
  * components using the specified memory address location and a mask.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_xsavec[decl0]"><div><div class="token cpp_function">_xsavec</div></div></div>(<div class="token cpp_keyword ">void</div> *, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div>);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern void __cdecl _xsavec64(void *, unsigned __int64);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern void __cdecl _xsavec64(void *, unsigned __int64);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -1298,8 +1298,8 @@
  * and a mask.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_xrstor[decl0]"><div><div class="token cpp_function">_xrstor</div></div></div>(<div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div> *, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div>);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern void __cdecl _xrstor64(void const *, unsigned __int64);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern void __cdecl _xrstor64(void const *, unsigned __int64);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -1308,8 +1308,8 @@
  * specified memory address location and masks in XCR0 and IA32_XSS MSR.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_xsaves[decl0]"><div><div class="token cpp_function">_xsaves</div></div></div>(<div class="token cpp_keyword ">void</div> *, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div>);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern void __cdecl _xsaves64(void *, unsigned __int64);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern void __cdecl _xsaves64(void *, unsigned __int64);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -1318,8 +1318,8 @@
  * specified memory address location and masks in XCR0 and IA32_XSS MSR.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_xrstors[decl0]"><div><div class="token cpp_function">_xrstors</div></div></div>(<div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div> *, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div>);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern void __cdecl _xrstors64(void const *, unsigned __int64);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern void __cdecl _xrstors64(void const *, unsigned __int64);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -1327,8 +1327,8 @@
  * and MXCSR registers to the specified 512-byte memory location.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_fxsave[decl0]"><div><div class="token cpp_function">_fxsave</div></div></div>(<div class="token cpp_keyword ">void</div> *);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern void __cdecl _fxsave64(void *);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern void __cdecl _fxsave64(void *);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -1336,8 +1336,8 @@
  * and MXCSR registers from the specified 512-byte memory location.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_fxrstor[decl0]"><div><div class="token cpp_function">_fxrstor</div></div></div>(<div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div> *);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern void __cdecl _fxrstor64(void const *);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern void __cdecl _fxrstor64(void const *);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -1348,26 +1348,26 @@
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_rdrand16_step[decl0]"><div><div class="token cpp_function">_rdrand16_step</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_rdrand32_step[decl0]"><div><div class="token cpp_function">_rdrand32_step</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> *);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern int __cdecl _rdrand64_step(unsigned __int64 *);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern int __cdecl _rdrand64_step(unsigned __int64 *);
 #endif  /* defined (_M_X64) */</div>
 
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>/*</div>
-<div class="disabled"/> * Return the value of the FS/GS segment base register.</div>
-<div class="disabled"/> */</div>
-<div class="disabled"/>extern unsigned int     __cdecl _readfsbase_u32();</div>
-<div class="disabled"/>extern unsigned int     __cdecl _readgsbase_u32();</div>
-<div class="disabled"/>extern unsigned __int64 __cdecl _readfsbase_u64();</div>
-<div class="disabled"/>extern unsigned __int64 __cdecl _readgsbase_u64();</div>
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">/*</div>
+<div class="disabled"> * Return the value of the FS/GS segment base register.</div>
+<div class="disabled"> */</div>
+<div class="disabled">extern unsigned int     __cdecl _readfsbase_u32();</div>
+<div class="disabled">extern unsigned int     __cdecl _readgsbase_u32();</div>
+<div class="disabled">extern unsigned __int64 __cdecl _readfsbase_u64();</div>
+<div class="disabled">extern unsigned __int64 __cdecl _readgsbase_u64();</div>
 
-<div class="disabled"/>/*</div>
-<div class="disabled"/> * Write the value to the FS/GS segment base register.</div>
-<div class="disabled"/> */</div>
-<div class="disabled"/>extern void __cdecl _writefsbase_u32(unsigned int);</div>
-<div class="disabled"/>extern void __cdecl _writegsbase_u32(unsigned int);</div>
-<div class="disabled"/>extern void __cdecl _writefsbase_u64(unsigned __int64);</div>
-<div class="disabled"/>extern void __cdecl _writegsbase_u64(unsigned __int64);
+<div class="disabled">/*</div>
+<div class="disabled"> * Write the value to the FS/GS segment base register.</div>
+<div class="disabled"> */</div>
+<div class="disabled">extern void __cdecl _writefsbase_u32(unsigned int);</div>
+<div class="disabled">extern void __cdecl _writegsbase_u32(unsigned int);</div>
+<div class="disabled">extern void __cdecl _writefsbase_u64(unsigned __int64);</div>
+<div class="disabled">extern void __cdecl _writegsbase_u64(unsigned __int64);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -1519,9 +1519,9 @@
  * Integer 256-bit vector arithmetic/logical shift operations.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_slli_si256[decl0]"><div><div class="token cpp_function">_mm256_slli_si256</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div>);
-<div class="disabled"/>#define _mm256_bslli_epi128 _mm256_slli_si256</div>
+<div class="disabled">#define _mm256_bslli_epi128 _mm256_slli_si256</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_srli_si256[decl0]"><div><div class="token cpp_function">_mm256_srli_si256</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div>);
-<div class="disabled"/>#define _mm256_bsrli_epi128 _mm256_srli_si256</div>
+<div class="disabled">#define _mm256_bsrli_epi128 _mm256_srli_si256</div>
 
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_sll_epi16[decl0]"><div><div class="token cpp_function">_mm256_sll_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div>);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_sll_epi32[decl0]"><div><div class="token cpp_function">_mm256_sll_epi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div>);
@@ -1840,12 +1840,12 @@
 
 
 <div class="token cpp_comment ">// unaligned load and store functions</div>
-<div class="disabled"/>#define _mm_loadu_si16(p) _mm_cvtsi32_si128(*(unsigned short const*)(p))</div>
-<div class="disabled"/>#define _mm_storeu_si16(p, a) (void)(*(short*)(p) = (short)_mm_cvtsi128_si32((a)))</div>
-<div class="disabled"/>#define _mm_loadu_si32(p) _mm_cvtsi32_si128(*(unsigned int const*)(p))</div>
-<div class="disabled"/>#define _mm_storeu_si32(p, a) (void)(*(int*)(p) = _mm_cvtsi128_si32((a)))</div>
-<div class="disabled"/>#define _mm_loadu_si64(p) _mm_loadl_epi64((__m128i const*)(p))</div>
-<div class="disabled"/>#define _mm_storeu_si64(p, a) (_mm_storel_epi64((__m128i*)(p), (a)))</div>
+<div class="disabled">#define _mm_loadu_si16(p) _mm_cvtsi32_si128(*(unsigned short const*)(p))</div>
+<div class="disabled">#define _mm_storeu_si16(p, a) (void)(*(short*)(p) = (short)_mm_cvtsi128_si32((a)))</div>
+<div class="disabled">#define _mm_loadu_si32(p) _mm_cvtsi32_si128(*(unsigned int const*)(p))</div>
+<div class="disabled">#define _mm_storeu_si32(p, a) (void)(*(int*)(p) = _mm_cvtsi128_si32((a)))</div>
+<div class="disabled">#define _mm_loadu_si64(p) _mm_loadl_epi64((__m128i const*)(p))</div>
+<div class="disabled">#define _mm_storeu_si64(p, a) (_mm_storel_epi64((__m128i*)(p), (a)))</div>
 
 
 <div class="token cpp_comment ">/*
@@ -1877,30 +1877,30 @@
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>     <div class="def" id="FB$_shrx_u32[decl0]"><div><div class="token cpp_function">_shrx_u32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* src */</div>,
                                           <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* shift_count */</div>);
 
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern unsigned __int64 _bextr_u64(unsigned __int64 /* src */,</div>
-<div class="disabled"/>                                   unsigned int /* start_bit */,</div>
-<div class="disabled"/>                                   unsigned int /* len_in_bits */);</div>
-<div class="disabled"/>extern unsigned __int64 _blsi_u64(unsigned __int64);</div>
-<div class="disabled"/>extern unsigned __int64 _blsmsk_u64(unsigned __int64);</div>
-<div class="disabled"/>extern unsigned __int64 _blsr_u64(unsigned __int64);</div>
-<div class="disabled"/>extern unsigned __int64 _bzhi_u64(unsigned __int64 /* src */,</div>
-<div class="disabled"/>                                  unsigned int /* index */);</div>
-<div class="disabled"/>extern unsigned __int64 _mulx_u64(unsigned __int64 /* src1 */,</div>
-<div class="disabled"/>                                  unsigned __int64 /* src2 */,</div>
-<div class="disabled"/>                                  unsigned __int64 * /* high_bits */);</div>
-<div class="disabled"/>extern unsigned __int64 _pdep_u64(unsigned __int64 /* src */,</div>
-<div class="disabled"/>                                  unsigned __int64 /* mask */);</div>
-<div class="disabled"/>extern unsigned __int64 _pext_u64(unsigned __int64 /* src */,</div>
-<div class="disabled"/>                                  unsigned __int64 /* mask */);</div>
-<div class="disabled"/>extern unsigned __int64 _rorx_u64(unsigned __int64 /* src */,</div>
-<div class="disabled"/>                                  const unsigned int /* shift_count */);</div>
-<div class="disabled"/>extern __int64          _sarx_i64(__int64 /* src */,</div>
-<div class="disabled"/>                                  unsigned int /* shift_count */);</div>
-<div class="disabled"/>extern unsigned __int64 _shlx_u64(unsigned __int64 /* src */,</div>
-<div class="disabled"/>                                  unsigned int /* shift_count */);</div>
-<div class="disabled"/>extern unsigned __int64 _shrx_u64(unsigned __int64 /* src */,</div>
-<div class="disabled"/>                                          unsigned int /* shift_count */);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern unsigned __int64 _bextr_u64(unsigned __int64 /* src */,</div>
+<div class="disabled">                                   unsigned int /* start_bit */,</div>
+<div class="disabled">                                   unsigned int /* len_in_bits */);</div>
+<div class="disabled">extern unsigned __int64 _blsi_u64(unsigned __int64);</div>
+<div class="disabled">extern unsigned __int64 _blsmsk_u64(unsigned __int64);</div>
+<div class="disabled">extern unsigned __int64 _blsr_u64(unsigned __int64);</div>
+<div class="disabled">extern unsigned __int64 _bzhi_u64(unsigned __int64 /* src */,</div>
+<div class="disabled">                                  unsigned int /* index */);</div>
+<div class="disabled">extern unsigned __int64 _mulx_u64(unsigned __int64 /* src1 */,</div>
+<div class="disabled">                                  unsigned __int64 /* src2 */,</div>
+<div class="disabled">                                  unsigned __int64 * /* high_bits */);</div>
+<div class="disabled">extern unsigned __int64 _pdep_u64(unsigned __int64 /* src */,</div>
+<div class="disabled">                                  unsigned __int64 /* mask */);</div>
+<div class="disabled">extern unsigned __int64 _pext_u64(unsigned __int64 /* src */,</div>
+<div class="disabled">                                  unsigned __int64 /* mask */);</div>
+<div class="disabled">extern unsigned __int64 _rorx_u64(unsigned __int64 /* src */,</div>
+<div class="disabled">                                  const unsigned int /* shift_count */);</div>
+<div class="disabled">extern __int64          _sarx_i64(__int64 /* src */,</div>
+<div class="disabled">                                  unsigned int /* shift_count */);</div>
+<div class="disabled">extern unsigned __int64 _shlx_u64(unsigned __int64 /* src */,</div>
+<div class="disabled">                                  unsigned int /* shift_count */);</div>
+<div class="disabled">extern unsigned __int64 _shrx_u64(unsigned __int64 /* src */,</div>
+<div class="disabled">                                          unsigned int /* shift_count */);
 #endif  /* defined (_M_X64) */</div>
 
 
@@ -1911,8 +1911,8 @@
  *    Returns operand size as output when source operand is zero.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>     <div class="def" id="FB$_lzcnt_u32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_lzcnt_u32'])"><div class="token cpp_function">_lzcnt_u32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern unsigned __int64 _lzcnt_u64(unsigned __int64);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern unsigned __int64 _lzcnt_u64(unsigned __int64);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -1923,8 +1923,8 @@
  *    returned, otherwise the result is the number of bits in the operand size.
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>     <div class="def" id="FB$_tzcnt_u32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_tzcnt_u32'])"><div class="token cpp_function">_tzcnt_u32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern unsigned __int64 _tzcnt_u64(unsigned __int64);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern unsigned __int64 _tzcnt_u64(unsigned __int64);
 #endif  /* defined (_M_X64) */</div>
 
 
@@ -1965,36 +1965,36 @@
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="FB$_interlockedbittestandreset_HLEAcquire[decl0]"><div><div class="token cpp_function">_interlockedbittestandreset_HLEAcquire</div></div></div>(<div class="token cpp_keyword ">long</div> *,<div class="token cpp_keyword ">long</div>);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="FB$_interlockedbittestandreset_HLERelease[decl0]"><div><div class="token cpp_function">_interlockedbittestandreset_HLERelease</div></div></div>(<div class="token cpp_keyword ">long</div> *,<div class="token cpp_keyword ">long</div>);
 
-<div class="disabled"/>#if defined(_M_X64)</div>
-<div class="disabled"/>extern void _Store64_HLERelease(__int64 volatile *,__int64);</div>
-<div class="disabled"/>extern __int64 _InterlockedExchange64_HLEAcquire(__int64 volatile *,__int64);</div>
-<div class="disabled"/>extern __int64 _InterlockedExchange64_HLERelease(__int64 volatile *,__int64);</div>
+<div class="disabled">#if defined(_M_X64)</div>
+<div class="disabled">extern void _Store64_HLERelease(__int64 volatile *,__int64);</div>
+<div class="disabled">extern __int64 _InterlockedExchange64_HLEAcquire(__int64 volatile *,__int64);</div>
+<div class="disabled">extern __int64 _InterlockedExchange64_HLERelease(__int64 volatile *,__int64);</div>
 
-<div class="disabled"/>extern __int64 _InterlockedExchangeAdd64_HLEAcquire(__int64 volatile *,__int64);</div>
-<div class="disabled"/>extern __int64 _InterlockedExchangeAdd64_HLERelease(__int64 volatile *,__int64);</div>
+<div class="disabled">extern __int64 _InterlockedExchangeAdd64_HLEAcquire(__int64 volatile *,__int64);</div>
+<div class="disabled">extern __int64 _InterlockedExchangeAdd64_HLERelease(__int64 volatile *,__int64);</div>
 
-<div class="disabled"/>extern __int64 _InterlockedAnd64_HLEAcquire(__int64 volatile *,__int64);</div>
-<div class="disabled"/>extern __int64 _InterlockedAnd64_HLERelease(__int64 volatile *,__int64);</div>
-<div class="disabled"/>extern __int64 _InterlockedOr64_HLEAcquire(__int64 volatile *,__int64);</div>
-<div class="disabled"/>extern __int64 _InterlockedOr64_HLERelease(__int64 volatile *,__int64);</div>
-<div class="disabled"/>extern __int64 _InterlockedXor64_HLEAcquire(__int64 volatile *,__int64);</div>
-<div class="disabled"/>extern __int64 _InterlockedXor64_HLERelease(__int64 volatile *,__int64);</div>
+<div class="disabled">extern __int64 _InterlockedAnd64_HLEAcquire(__int64 volatile *,__int64);</div>
+<div class="disabled">extern __int64 _InterlockedAnd64_HLERelease(__int64 volatile *,__int64);</div>
+<div class="disabled">extern __int64 _InterlockedOr64_HLEAcquire(__int64 volatile *,__int64);</div>
+<div class="disabled">extern __int64 _InterlockedOr64_HLERelease(__int64 volatile *,__int64);</div>
+<div class="disabled">extern __int64 _InterlockedXor64_HLEAcquire(__int64 volatile *,__int64);</div>
+<div class="disabled">extern __int64 _InterlockedXor64_HLERelease(__int64 volatile *,__int64);</div>
 
-<div class="disabled"/>extern unsigned char _interlockedbittestandset64_HLEAcquire(__int64 *,__int64);</div>
-<div class="disabled"/>extern unsigned char _interlockedbittestandset64_HLERelease(__int64 *,__int64);</div>
-<div class="disabled"/>extern unsigned char _interlockedbittestandreset64_HLEAcquire(__int64 *,__int64);</div>
-<div class="disabled"/>extern unsigned char _interlockedbittestandreset64_HLERelease(__int64 *,__int64);
+<div class="disabled">extern unsigned char _interlockedbittestandset64_HLEAcquire(__int64 *,__int64);</div>
+<div class="disabled">extern unsigned char _interlockedbittestandset64_HLERelease(__int64 *,__int64);</div>
+<div class="disabled">extern unsigned char _interlockedbittestandreset64_HLEAcquire(__int64 *,__int64);</div>
+<div class="disabled">extern unsigned char _interlockedbittestandreset64_HLERelease(__int64 *,__int64);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">//  Restricted Transactional Memory</div>
-<div class="disabled"/>#define _XBEGIN_STARTED          (~0u)</div>
-<div class="disabled"/>#define _XABORT_EXPLICIT         (1 &lt;&lt; 0)</div>
-<div class="disabled"/>#define _XABORT_RETRY            (1 &lt;&lt; 1)</div>
-<div class="disabled"/>#define _XABORT_CONFLICT         (1 &lt;&lt; 2)</div>
-<div class="disabled"/>#define _XABORT_CAPACITY         (1 &lt;&lt; 3)</div>
-<div class="disabled"/>#define _XABORT_DEBUG            (1 &lt;&lt; 4)</div>
-<div class="disabled"/>#define _XABORT_NESTED           (1 &lt;&lt; 5)</div>
-<div class="disabled"/>#define _XABORT_CODE(x)          ((unsigned char)(((x) &gt;&gt; 24) &amp; 0xFF))</div>
+<div class="disabled">#define _XBEGIN_STARTED          (~0u)</div>
+<div class="disabled">#define _XABORT_EXPLICIT         (1 &lt;&lt; 0)</div>
+<div class="disabled">#define _XABORT_RETRY            (1 &lt;&lt; 1)</div>
+<div class="disabled">#define _XABORT_CONFLICT         (1 &lt;&lt; 2)</div>
+<div class="disabled">#define _XABORT_CAPACITY         (1 &lt;&lt; 3)</div>
+<div class="disabled">#define _XABORT_DEBUG            (1 &lt;&lt; 4)</div>
+<div class="disabled">#define _XABORT_NESTED           (1 &lt;&lt; 5)</div>
+<div class="disabled">#define _XABORT_CODE(x)          ((unsigned char)(((x) &gt;&gt; 24) &amp; 0xFF))</div>
 
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>     <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_xbegin[decl0]"><div><div class="token cpp_function">_xbegin</div></div></div>(<div class="token cpp_keyword ">void</div>);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>             <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_xend[decl0]"><div><div class="token cpp_function">_xend</div></div></div>(<div class="token cpp_keyword ">void</div>);
@@ -2010,8 +2010,8 @@
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_rdseed16_step[decl0]"><div><div class="token cpp_function">_rdseed16_step</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_rdseed32_step[decl0]"><div><div class="token cpp_function">_rdseed32_step</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> *);
-<div class="disabled"/>#if defined(_M_X64)</div>
-<div class="disabled"/>extern int __cdecl _rdseed64_step(unsigned __int64 *);
+<div class="disabled">#if defined(_M_X64)</div>
+<div class="disabled">extern int __cdecl _rdseed64_step(unsigned __int64 *);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -2029,11 +2029,11 @@
                                                    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> * <div class="token cpp_comment ">/*out*/</div>);
 
 
-<div class="disabled"/>#if defined(_M_X64)</div>
-<div class="disabled"/>extern unsigned char __cdecl _addcarryx_u64(unsigned char /*c_in*/,</div>
-<div class="disabled"/>                                                   unsigned __int64 /*src1*/,</div>
-<div class="disabled"/>                                                   unsigned __int64 /*src2*/,</div>
-<div class="disabled"/>                                                   unsigned __int64 * /*out*/);
+<div class="disabled">#if defined(_M_X64)</div>
+<div class="disabled">extern unsigned char __cdecl _addcarryx_u64(unsigned char /*c_in*/,</div>
+<div class="disabled">                                                   unsigned __int64 /*src1*/,</div>
+<div class="disabled">                                                   unsigned __int64 /*src2*/,</div>
+<div class="disabled">                                                   unsigned __int64 * /*out*/);
 #endif  /* defined (_M_X64) */</div>
 
 
@@ -2043,9 +2043,9 @@
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div>   <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_load_be_u16[decl0]"><div><div class="token cpp_function">_load_be_u16</div></div></div>(<div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>     <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_load_be_u32[decl0]"><div><div class="token cpp_function">_load_be_u32</div></div></div>(<div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_load_be_u64[decl0]"><div><div class="token cpp_function">_load_be_u64</div></div></div>(<div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*);
-<div class="disabled"/>#define _loadbe_i16(be_ptr) ((short)  _load_be_u16(be_ptr))</div>
-<div class="disabled"/>#define _loadbe_i32(be_ptr) ((int)    _load_be_u32(be_ptr))</div>
-<div class="disabled"/>#define _loadbe_i64(be_ptr) ((__int64)_load_be_u64(be_ptr))</div>
+<div class="disabled">#define _loadbe_i16(be_ptr) ((short)  _load_be_u16(be_ptr))</div>
+<div class="disabled">#define _loadbe_i32(be_ptr) ((int)    _load_be_u32(be_ptr))</div>
+<div class="disabled">#define _loadbe_i64(be_ptr) ((__int64)_load_be_u64(be_ptr))</div>
 
 <div class="token cpp_comment ">/*
  * Perform store a value to memory as big-endian.
@@ -2053,9 +2053,9 @@
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_store_be_u16[decl0]"><div><div class="token cpp_function">_store_be_u16</div></div></div>(<div class="token cpp_keyword ">void</div> *, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div>);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_store_be_u32[decl0]"><div><div class="token cpp_function">_store_be_u32</div></div></div>(<div class="token cpp_keyword ">void</div> *, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_store_be_u64[decl0]"><div><div class="token cpp_function">_store_be_u64</div></div></div>(<div class="token cpp_keyword ">void</div> *, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div>);
-<div class="disabled"/>#define _storebe_i16(be_ptr, val) _store_be_u16(be_ptr, (unsigned short)(val))</div>
-<div class="disabled"/>#define _storebe_i32(be_ptr, val) _store_be_u32(be_ptr, (unsigned int)(val))</div>
-<div class="disabled"/>#define _storebe_i64(be_ptr, val) _store_be_u64(be_ptr, (unsigned __int64)(__int64)(val))</div>
+<div class="disabled">#define _storebe_i16(be_ptr, val) _store_be_u16(be_ptr, (unsigned short)(val))</div>
+<div class="disabled">#define _storebe_i32(be_ptr, val) _store_be_u32(be_ptr, (unsigned int)(val))</div>
+<div class="disabled">#define _storebe_i64(be_ptr, val) _store_be_u64(be_ptr, (unsigned __int64)(__int64)(val))</div>
 
 <div class="token cpp_comment ">/*
  * The Secure Hash Algorithm (SHA) New Instructions.
@@ -2088,16 +2088,16 @@
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_insert_epi8[decl0]"><div><div class="token cpp_function">_mm256_insert_epi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_comment ">/* dst */</div>, <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* src */</div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* index */</div>);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_insert_epi16[decl0]"><div><div class="token cpp_function">_mm256_insert_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_comment ">/* dst */</div>, <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* src */</div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* index */</div>);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_insert_epi32[decl0]"><div><div class="token cpp_function">_mm256_insert_epi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_comment ">/* dst */</div>, <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* src */</div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* index */</div>);
-<div class="disabled"/>#if defined(_M_X64)</div>
-<div class="disabled"/>extern __m256i __cdecl _mm256_insert_epi64(__m256i /* dst */, __int64 /* src */, const int /* index */);
+<div class="disabled">#if defined(_M_X64)</div>
+<div class="disabled">extern __m256i __cdecl _mm256_insert_epi64(__m256i /* dst */, __int64 /* src */, const int /* index */);
 #endif  // defined (_M_X64)</div>
 
 <div class="token cpp_comment ">// Extract integer element selected by index from 256-bit packed integer array</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_extract_epi8[decl0]"><div><div class="token cpp_function">_mm256_extract_epi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_comment ">/* src */</div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* index */</div>);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_extract_epi16[decl0]"><div><div class="token cpp_function">_mm256_extract_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_comment ">/* src */</div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* index */</div>);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_mm256_extract_epi32[decl0]"><div><div class="token cpp_function">_mm256_extract_epi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m256i'])"><div class="token cpp_type">__m256i</div></div> <div class="token cpp_comment ">/* src */</div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* index */</div>);
-<div class="disabled"/>#if defined(_M_X64)</div>
-<div class="disabled"/>extern __int64 __cdecl _mm256_extract_epi64(__m256i /* src */, const int /* index */);
+<div class="disabled">#if defined(_M_X64)</div>
+<div class="disabled">extern __int64 __cdecl _mm256_extract_epi64(__m256i /* src */, const int /* index */);
 #endif  // defined (_M_X64)</div>
 
 <div class="token cpp_comment ">// Zero-extended cast functions</div>
@@ -2109,8 +2109,8 @@
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_rdpid_u32[decl0]"><div><div class="token cpp_function">_rdpid_u32</div></div></div>(<div class="token cpp_keyword ">void</div>);
 <div class="token cpp_comment ">// PTWRITE</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>         <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_ptwrite32[decl0]"><div><div class="token cpp_function">_ptwrite32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>);
-<div class="disabled"/>#if defined(_M_X64)</div>
-<div class="disabled"/>extern void         __cdecl _ptwrite64(unsigned __int64);
+<div class="disabled">#if defined(_M_X64)</div>
+<div class="disabled">extern void         __cdecl _ptwrite64(unsigned __int64);
 #endif  // defined (_M_X64)</div>
 
 <div class="token cpp_comment ">/*
@@ -2125,20 +2125,20 @@
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>             <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_setssbsy[decl0]"><div><div class="token cpp_function">_setssbsy</div></div></div> (<div class="token cpp_keyword ">void</div>);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>             <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_clrssbsy[decl0]"><div><div class="token cpp_function">_clrssbsy</div></div></div> (<div class="token cpp_keyword ">void</div> *);
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> *           <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_switchssp[decl0]"><div><div class="token cpp_function">_switchssp</div></div></div>(<div class="token cpp_keyword ">void</div> *);
-<div class="disabled"/>#if defined(_M_X64)</div>
-<div class="disabled"/>extern void             __cdecl _incsspq (unsigned __int64);</div>
-<div class="disabled"/>extern unsigned __int64 __cdecl _rdsspq (void);</div>
-<div class="disabled"/>extern void             __cdecl _wrssq (unsigned __int64, void *);</div>
-<div class="disabled"/>extern void             __cdecl _wrussq(unsigned __int64, void *);
+<div class="disabled">#if defined(_M_X64)</div>
+<div class="disabled">extern void             __cdecl _incsspq (unsigned __int64);</div>
+<div class="disabled">extern unsigned __int64 __cdecl _rdsspq (void);</div>
+<div class="disabled">extern void             __cdecl _wrssq (unsigned __int64, void *);</div>
+<div class="disabled">extern void             __cdecl _wrussq(unsigned __int64, void *);
 #endif</div>
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 }; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
-<div class="disabled"/>#include &lt;zmmintrin.h&gt;</div>
+<div class="disabled">#include &lt;zmmintrin.h&gt;</div>
 
-<div class="disabled"/>#endif  /* defined (_M_CEE_PURE) */
+<div class="disabled">#endif  /* defined (_M_CEE_PURE) */
 #endif  /* __midl */
 #endif  /* _INCLUDED_IMM */
 </div>

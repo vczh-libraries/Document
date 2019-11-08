@@ -11,20 +11,20 @@
 <a class="button" href="./SymbolIndex.html">Symbol Index</a>
 <br>
 <br>
-<div class="codebox"><div class="cpp_default"><div class="disabled"/>#include &lt;stdio.h&gt;
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;stdio.h&gt;
 #include &quot;Expr.h&quot;</div>
 
 <div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[1]$calculator"><div class="ref" onclick="jumpToSymbol([], ['calculator'])">calculator</div></div>
 {
-<div class="disabled"/>#define EXPR_ACCEPT_VISITOR_IMPL(TYPE)\</div>
-<div class="disabled"/>	void TYPE::Accept(IExprVisitor* visitor)\</div>
-<div class="disabled"/>	{\</div>
-<div class="disabled"/>		visitor-&gt;Visit(this);\</div>
-<div class="disabled"/>	}\</div>
+<div class="disabled">#define EXPR_ACCEPT_VISITOR_IMPL(TYPE)\</div>
+<div class="disabled">	void TYPE::Accept(IExprVisitor* visitor)\</div>
+<div class="disabled">	{\</div>
+<div class="disabled">		visitor-&gt;Visit(this);\</div>
+<div class="disabled">	}\</div>
 
-<div class="expandable"/><div class="disabled"/>	EXPR_TYPES(EXPR_ACCEPT_VISITOR_IMPL)</div>
+<div class="expandable"><div class="disabled">	EXPR_TYPES(EXPR_ACCEPT_VISITOR_IMPL)</div>
 <div class="expanded">	<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr'])"><div class="token cpp_type">NumberExpr</div></div>::<div class="def" id="FB$calculator::NumberExpr::Accept[impl0]"><div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr::Accept'])"><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::IExprVisitor'])"><div class="token cpp_type">IExprVisitor</div></div>* <div class="def" id="NI$calculator::NumberExpr::Accept[impl0]::visitor"><div><div class="token cpp_argument">visitor</div></div></div>) { <div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr::Accept[impl0]::visitor'])"><div class="token cpp_argument">visitor</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::IExprVisitor::Visit'], ['calculator::IExprVisitor::Visit', 'calculator::IExprVisitor::Visit2', 'calculator::IExprVisitor::Visit3'])">Visit</div>(<div class="token cpp_keyword ">this</div>); } <div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr'])"><div class="token cpp_type">UnaryExpr</div></div>::<div class="def" id="FB$calculator::UnaryExpr::Accept[impl0]"><div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr::Accept'])"><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::IExprVisitor'])"><div class="token cpp_type">IExprVisitor</div></div>* <div class="def" id="NI$calculator::UnaryExpr::Accept[impl0]::visitor"><div><div class="token cpp_argument">visitor</div></div></div>) { <div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr::Accept[impl0]::visitor'])"><div class="token cpp_argument">visitor</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::IExprVisitor::Visit2'], ['calculator::IExprVisitor::Visit', 'calculator::IExprVisitor::Visit2', 'calculator::IExprVisitor::Visit3'])">Visit</div>(<div class="token cpp_keyword ">this</div>); } <div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr'])"><div class="token cpp_type">BinaryExpr</div></div>::<div class="def" id="FB$calculator::BinaryExpr::Accept[impl0]"><div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::Accept'])"><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::IExprVisitor'])"><div class="token cpp_type">IExprVisitor</div></div>* <div class="def" id="NI$calculator::BinaryExpr::Accept[impl0]::visitor"><div><div class="token cpp_argument">visitor</div></div></div>) { <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::Accept[impl0]::visitor'])"><div class="token cpp_argument">visitor</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::IExprVisitor::Visit3'], ['calculator::IExprVisitor::Visit', 'calculator::IExprVisitor::Visit2', 'calculator::IExprVisitor::Visit3'])">Visit</div>(<div class="token cpp_keyword ">this</div>); }</div></div>
-<div class="disabled"/>#undef EXPR_ACCEPT_VISITOR_IMPL</div>
+<div class="disabled">#undef EXPR_ACCEPT_VISITOR_IMPL</div>
 
 <div class="token cpp_comment ">/***********************************************************************
 Evaluation

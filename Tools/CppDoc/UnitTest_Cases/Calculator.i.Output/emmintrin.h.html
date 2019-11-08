@@ -33,26 +33,26 @@
 
 #pragma once
 
-<div class="disabled"/>#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
-<div class="disabled"/>#error This header is specific to X86 and X64 targets
+<div class="disabled">#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
+<div class="disabled">#error This header is specific to X86 and X64 targets
 #endif</div>
 
-<div class="disabled"/>#ifndef _INCLUDED_EMM</div>
-<div class="disabled"/>#define _INCLUDED_EMM</div>
-<div class="disabled"/>#ifndef __midl</div>
+<div class="disabled">#ifndef _INCLUDED_EMM</div>
+<div class="disabled">#define _INCLUDED_EMM</div>
+<div class="disabled">#ifndef __midl</div>
 
-<div class="disabled"/>#if !defined _M_IX86 &amp;&amp; !defined _M_X64</div>
-<div class="disabled"/>    #error This header is specific to X86 and X64 targets
+<div class="disabled">#if !defined _M_IX86 &amp;&amp; !defined _M_X64</div>
+<div class="disabled">    #error This header is specific to X86 and X64 targets
 #endif</div>
 
-<div class="disabled"/>#if defined (_M_CEE_PURE)</div>
-<div class="disabled"/>        #error ERROR: EMM intrinsics not supported in the pure mode!
+<div class="disabled">#if defined (_M_CEE_PURE)</div>
+<div class="disabled">        #error ERROR: EMM intrinsics not supported in the pure mode!
 #else  /* defined (_M_CEE_PURE) */</div>
 
 <div class="token cpp_comment ">/*
  * the __m128 &amp; __m64 types are required for the intrinsics
  */</div>
-<div class="disabled"/>#include &lt;xmmintrin.h&gt;</div>
+<div class="disabled">#include &lt;xmmintrin.h&gt;</div>
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">union</div> <div class="token cpp_keyword ">__declspec</div>(intrin_type) <div class="token cpp_keyword ">__declspec</div>(align(<div class="token cpp_number ">16</div>)) <div class="def" id="NI$__m128i"><div><div class="token cpp_type">__m128i</div></div></div> {
     <div class="token cpp_keyword ">__int8</div>              <div class="def" id="NI$__m128i::m128i_i8"><div><div class="token cpp_field">m128i_i8</div></div></div>[<div class="token cpp_number ">16</div>];
@@ -72,16 +72,16 @@
 <div class="token cpp_comment ">/*
  * Macro function for shuffle
  */</div>
-<div class="disabled"/>#define _MM_SHUFFLE2(x,y) (((x)&lt;&lt;1) | (y))</div>
+<div class="disabled">#define _MM_SHUFFLE2(x,y) (((x)&lt;&lt;1) | (y))</div>
 
  <div class="token cpp_comment ">/*****************************************************/</div>
  <div class="token cpp_comment ">/*     INTRINSICS FUNCTION PROTOTYPES START HERE     */</div>
  <div class="token cpp_comment ">/*****************************************************/</div>
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> { <div class="token cpp_comment ">/* Begin &quot;C&quot; */</div>
   <div class="token cpp_comment ">/* Intrinsics use C name-mangling. */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
 <div class="token cpp_comment ">/*
  * DP, arithmetic
@@ -171,11 +171,11 @@
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_mm_cvttsd_si32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_cvttsd_si32'])"><div class="token cpp_function">_mm_cvttsd_si32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128d'])"><div class="token cpp_type">__m128d</div></div> _A);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128d'])"><div class="token cpp_type">__m128d</div></div> <div class="def" id="FB$_mm_cvtsi32_sd[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_cvtsi32_sd'])"><div class="token cpp_function">_mm_cvtsi32_sd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128d'])"><div class="token cpp_type">__m128d</div></div> _A, <div class="token cpp_keyword ">int</div> _B);
 
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_cvtpd_pi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpd_pi32'])"><div class="token cpp_function">_mm_cvtpd_pi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128d'])"><div class="token cpp_type">__m128d</div></div> _A);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_cvttpd_pi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_cvttpd_pi32'])"><div class="token cpp_function">_mm_cvttpd_pi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128d'])"><div class="token cpp_type">__m128d</div></div> _A);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128d'])"><div class="token cpp_type">__m128d</div></div> <div class="def" id="FB$_mm_cvtpi32_pd[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_cvtpi32_pd'])"><div class="token cpp_function">_mm_cvtpi32_pd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _A);
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 
 <div class="token cpp_comment ">/*
  * DP, misc
@@ -228,9 +228,9 @@
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_add_epi8[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_add_epi8'])"><div class="token cpp_function">_mm_add_epi8</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_add_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_add_epi16'])"><div class="token cpp_function">_mm_add_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_add_epi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_add_epi32'])"><div class="token cpp_function">_mm_add_epi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_add_si64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_add_si64'])"><div class="token cpp_function">_mm_add_si64</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _B);
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_add_epi64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_add_epi64'])"><div class="token cpp_function">_mm_add_epi64</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_adds_epi8[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_adds_epi8'])"><div class="token cpp_function">_mm_adds_epi8</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_adds_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_adds_epi16'])"><div class="token cpp_function">_mm_adds_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
@@ -246,17 +246,17 @@
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_mulhi_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_mulhi_epi16'])"><div class="token cpp_function">_mm_mulhi_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_mulhi_epu16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_mulhi_epu16'])"><div class="token cpp_function">_mm_mulhi_epu16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_mullo_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_mullo_epi16'])"><div class="token cpp_function">_mm_mullo_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_mul_su32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_mul_su32'])"><div class="token cpp_function">_mm_mul_su32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _B);
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_mul_epu32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_mul_epu32'])"><div class="token cpp_function">_mm_mul_epu32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_sad_epu8[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sad_epu8'])"><div class="token cpp_function">_mm_sad_epu8</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_sub_epi8[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sub_epi8'])"><div class="token cpp_function">_mm_sub_epi8</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_sub_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sub_epi16'])"><div class="token cpp_function">_mm_sub_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_sub_epi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sub_epi32'])"><div class="token cpp_function">_mm_sub_epi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_sub_si64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sub_si64'])"><div class="token cpp_function">_mm_sub_si64</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _B);
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_sub_epi64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sub_epi64'])"><div class="token cpp_function">_mm_sub_epi64</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_subs_epi8[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_subs_epi8'])"><div class="token cpp_function">_mm_subs_epi8</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_subs_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_subs_epi16'])"><div class="token cpp_function">_mm_subs_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _B);
@@ -277,7 +277,7 @@
  */</div>
 
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_slli_si128[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_slli_si128'])"><div class="token cpp_function">_mm_slli_si128</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="token cpp_keyword ">int</div> _Imm);
-<div class="disabled"/>#define _mm_bslli_si128 _mm_slli_si128</div>
+<div class="disabled">#define _mm_bslli_si128 _mm_slli_si128</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_slli_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_slli_epi16'])"><div class="token cpp_function">_mm_slli_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="token cpp_keyword ">int</div> _Count);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_sll_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sll_epi16'])"><div class="token cpp_function">_mm_sll_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _Count);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_slli_epi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_slli_epi32'])"><div class="token cpp_function">_mm_slli_epi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="token cpp_keyword ">int</div> _Count);
@@ -289,7 +289,7 @@
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_srai_epi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_srai_epi32'])"><div class="token cpp_function">_mm_srai_epi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="token cpp_keyword ">int</div> _Count);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_sra_epi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sra_epi32'])"><div class="token cpp_function">_mm_sra_epi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _Count);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_srli_si128[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_srli_si128'])"><div class="token cpp_function">_mm_srli_si128</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="token cpp_keyword ">int</div> _Imm);
-<div class="disabled"/>#define _mm_bsrli_si128 _mm_srli_si128</div>
+<div class="disabled">#define _mm_bsrli_si128 _mm_srli_si128</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_srli_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_srli_epi16'])"><div class="token cpp_function">_mm_srli_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="token cpp_keyword ">int</div> _Count);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_srl_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_srl_epi16'])"><div class="token cpp_function">_mm_srl_epi16</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _Count);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_srli_epi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_srli_epi32'])"><div class="token cpp_function">_mm_srli_epi32</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _A, <div class="token cpp_keyword ">int</div> _Count);
@@ -352,9 +352,9 @@
  * Integer, sets
  */</div>
 
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_set_epi64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set_epi64'])"><div class="token cpp_function">_mm_set_epi64</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Q1, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Q0);
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_set_epi64x[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set_epi64x'])"><div class="token cpp_function">_mm_set_epi64x</div></div></div>(<div class="token cpp_keyword ">__int64</div> _I1,<div class="token cpp_keyword ">__int64</div> _I0);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_set_epi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set_epi32'])"><div class="token cpp_function">_mm_set_epi32</div></div></div>(<div class="token cpp_keyword ">int</div> _I3, <div class="token cpp_keyword ">int</div> _I2, <div class="token cpp_keyword ">int</div> _I1, <div class="token cpp_keyword ">int</div> _I0);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_set_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set_epi16'])"><div class="token cpp_function">_mm_set_epi16</div></div></div>(<div class="token cpp_keyword ">short</div> _W7, <div class="token cpp_keyword ">short</div> _W6, <div class="token cpp_keyword ">short</div> _W5, <div class="token cpp_keyword ">short</div> _W4,
@@ -363,17 +363,17 @@
                             <div class="token cpp_keyword ">char</div> _B11, <div class="token cpp_keyword ">char</div> _B10, <div class="token cpp_keyword ">char</div> _B9, <div class="token cpp_keyword ">char</div> _B8,
                             <div class="token cpp_keyword ">char</div> _B7, <div class="token cpp_keyword ">char</div> _B6, <div class="token cpp_keyword ">char</div> _B5, <div class="token cpp_keyword ">char</div> _B4,
                             <div class="token cpp_keyword ">char</div> _B3, <div class="token cpp_keyword ">char</div> _B2, <div class="token cpp_keyword ">char</div> _B1, <div class="token cpp_keyword ">char</div> _B0);
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_set1_epi64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set1_epi64'])"><div class="token cpp_function">_mm_set1_epi64</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Q);
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_set1_epi64x[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set1_epi64x'])"><div class="token cpp_function">_mm_set1_epi64x</div></div></div>(<div class="token cpp_keyword ">__int64</div> i);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_set1_epi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set1_epi32'])"><div class="token cpp_function">_mm_set1_epi32</div></div></div>(<div class="token cpp_keyword ">int</div> _I);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_set1_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set1_epi16'])"><div class="token cpp_function">_mm_set1_epi16</div></div></div>(<div class="token cpp_keyword ">short</div> _W);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_set1_epi8[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_set1_epi8'])"><div class="token cpp_function">_mm_set1_epi8</div></div></div>(<div class="token cpp_keyword ">char</div> _B);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_setl_epi64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_setl_epi64'])"><div class="token cpp_function">_mm_setl_epi64</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _Q);
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_setr_epi64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_setr_epi64'])"><div class="token cpp_function">_mm_setr_epi64</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Q0, <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Q1);
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_setr_epi32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_setr_epi32'])"><div class="token cpp_function">_mm_setr_epi32</div></div></div>(<div class="token cpp_keyword ">int</div> _I0, <div class="token cpp_keyword ">int</div> _I1, <div class="token cpp_keyword ">int</div> _I2, <div class="token cpp_keyword ">int</div> _I3);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_setr_epi16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_setr_epi16'])"><div class="token cpp_function">_mm_setr_epi16</div></div></div>(<div class="token cpp_keyword ">short</div> _W0, <div class="token cpp_keyword ">short</div> _W1, <div class="token cpp_keyword ">short</div> _W2, <div class="token cpp_keyword ">short</div> _W3,
                               <div class="token cpp_keyword ">short</div> _W4, <div class="token cpp_keyword ">short</div> _W5, <div class="token cpp_keyword ">short</div> _W6, <div class="token cpp_keyword ">short</div> _W7);
@@ -397,10 +397,10 @@
  */</div>
 
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_move_epi64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_move_epi64'])"><div class="token cpp_function">_mm_move_epi64</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _Q);
-<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="disabled">#if defined(_M_IX86)</div>
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_movpi64_epi64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_movpi64_epi64'])"><div class="token cpp_function">_mm_movpi64_epi64</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> _Q);
 <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_movepi64_pi64[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_movepi64_pi64'])"><div class="token cpp_function">_mm_movepi64_pi64</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'])"><div class="token cpp_type">__m128i</div></div> _Q);
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 
 <div class="token cpp_comment ">/*
  * Cacheability support
@@ -437,21 +437,21 @@
  * Support for 64-bit extension intrinsics
  */</div>
 
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>extern __int64 _mm_cvtsd_si64(__m128d);</div>
-<div class="disabled"/>extern __int64 _mm_cvttsd_si64(__m128d);</div>
-<div class="disabled"/>extern __m128d _mm_cvtsi64_sd(__m128d, __int64);</div>
-<div class="disabled"/>extern __m128i _mm_cvtsi64_si128(__int64);</div>
-<div class="disabled"/>extern __int64 _mm_cvtsi128_si64(__m128i);</div>
-<div class="disabled"/>/* Alternate intrinsic name definitions */</div>
-<div class="disabled"/>#define _mm_stream_si64 _mm_stream_si64x
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">extern __int64 _mm_cvtsd_si64(__m128d);</div>
+<div class="disabled">extern __int64 _mm_cvttsd_si64(__m128d);</div>
+<div class="disabled">extern __m128d _mm_cvtsi64_sd(__m128d, __int64);</div>
+<div class="disabled">extern __m128i _mm_cvtsi64_si128(__int64);</div>
+<div class="disabled">extern __int64 _mm_cvtsi128_si64(__m128i);</div>
+<div class="disabled">/* Alternate intrinsic name definitions */</div>
+<div class="disabled">#define _mm_stream_si64 _mm_stream_si64x
 #endif  /* defined (_M_X64) */</div>
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 }; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
-<div class="disabled"/>#endif  /* defined (_M_CEE_PURE) */
+<div class="disabled">#endif  /* defined (_M_CEE_PURE) */
 #endif  /* __midl */
 #endif  /* _INCLUDED_EMM */
 </div>

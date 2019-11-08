@@ -98,9 +98,9 @@ void GenerateCppCodeInHtml(Ptr<FileLinesRecord> flr, StreamWriter& writer)
 			bool hasEmbeddedHtml = embedHtmlInDisabled.Length() != 0;
 			if (hasEmbeddedHtml)
 			{
-				writer.WriteString(L"<div class=\"expandable\"/>");
+				writer.WriteString(L"<div class=\"expandable\">");
 			}
-			writer.WriteString(L"<div class=\"disabled\"/>");
+			writer.WriteString(L"<div class=\"disabled\">");
 			for (vint i = originalIndex; i < disableEnd; i++)
 			{
 				if (i > originalIndex)

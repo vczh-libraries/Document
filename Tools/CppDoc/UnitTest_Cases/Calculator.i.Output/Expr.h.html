@@ -13,31 +13,31 @@
 <br>
 <div class="codebox"><div class="cpp_default">#pragma once
 
-<div class="disabled"/>#include &lt;intrin.h&gt;</div>
+<div class="disabled">#include &lt;intrin.h&gt;</div>
 
-<div class="disabled"/>#define EXPR_TYPES(F)\</div>
-<div class="disabled"/>	F(NumberExpr)\</div>
-<div class="disabled"/>	F(UnaryExpr)\</div>
-<div class="disabled"/>	F(BinaryExpr)\</div>
+<div class="disabled">#define EXPR_TYPES(F)\</div>
+<div class="disabled">	F(NumberExpr)\</div>
+<div class="disabled">	F(UnaryExpr)\</div>
+<div class="disabled">	F(BinaryExpr)\</div>
 
-<div class="disabled"/>#define EXPR_ACCEPT_VISITOR void Accept(IExprVisitor* visitor) override</div>
+<div class="disabled">#define EXPR_ACCEPT_VISITOR void Accept(IExprVisitor* visitor) override</div>
 
 <div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$calculator"><div class="ref" onclick="jumpToSymbol([], ['calculator'])">calculator</div></div>
 {
-<div class="disabled"/>#define DEFINE_EXPR(TYPE) class TYPE;</div>
-<div class="expandable"/><div class="disabled"/>	EXPR_TYPES(DEFINE_EXPR)</div>
+<div class="disabled">#define DEFINE_EXPR(TYPE) class TYPE;</div>
+<div class="expandable"><div class="disabled">	EXPR_TYPES(DEFINE_EXPR)</div>
 <div class="expanded">	<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$calculator::NumberExpr"><div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr'])"><div class="token cpp_type">NumberExpr</div></div></div>; <div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$calculator::UnaryExpr"><div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr'])"><div class="token cpp_type">UnaryExpr</div></div></div>; <div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$calculator::BinaryExpr"><div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr'])"><div class="token cpp_type">BinaryExpr</div></div></div>;</div></div>
-<div class="disabled"/>#undef DEFINE_EXPR</div>
+<div class="disabled">#undef DEFINE_EXPR</div>
 
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$calculator::IExprVisitor"><div><div class="token cpp_type">IExprVisitor</div></div></div>
 	{
 	<div class="token cpp_keyword ">public</div>:
 		<div class="token cpp_keyword ">virtual</div> <div class="def" id="FB$calculator::IExprVisitor::~IExprVisitor[decl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">IExprVisitor</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
-<div class="disabled"/>#define VISIT_EXPR(TYPE) virtual void Visit(TYPE* self) = 0;</div>
-<div class="expandable"/><div class="disabled"/>		EXPR_TYPES(VISIT_EXPR)</div>
+<div class="disabled">#define VISIT_EXPR(TYPE) virtual void Visit(TYPE* self) = 0;</div>
+<div class="expandable"><div class="disabled">		EXPR_TYPES(VISIT_EXPR)</div>
 <div class="expanded">		<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$calculator::IExprVisitor::Visit[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr'])"><div class="token cpp_type">NumberExpr</div></div>* self) = <div class="token cpp_number ">0</div>; <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$calculator::IExprVisitor::Visit2[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr'])"><div class="token cpp_type">UnaryExpr</div></div>* self) = <div class="token cpp_number ">0</div>; <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$calculator::IExprVisitor::Visit3[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr'])"><div class="token cpp_type">BinaryExpr</div></div>* self) = <div class="token cpp_number ">0</div>;</div></div>
-<div class="disabled"/>#undef VISIT_EXPR</div>
+<div class="disabled">#undef VISIT_EXPR</div>
 	};
 
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> T&gt;
@@ -137,7 +137,7 @@
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$calculator::NumberExpr"><div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr'])"><div class="token cpp_type">NumberExpr</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'])"><div class="token cpp_type">Expr</div></div>
 	{
 	<div class="token cpp_keyword ">public</div>:
-<div class="expandable"/><div class="disabled"/>		EXPR_ACCEPT_VISITOR;</div>
+<div class="expandable"><div class="disabled">		EXPR_ACCEPT_VISITOR;</div>
 <div class="expanded">		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$calculator::NumberExpr::Accept[decl0]"><div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr::Accept'])"><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::IExprVisitor'])"><div class="token cpp_type">IExprVisitor</div></div>* visitor) <div class="token cpp_keyword ">override</div>;</div></div>
 
 		<div class="token cpp_keyword ">double</div>				<div class="def" id="NI$calculator::NumberExpr::number"><div><div class="token cpp_field">number</div></div></div>;
@@ -151,7 +151,7 @@
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$calculator::UnaryExpr"><div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr'])"><div class="token cpp_type">UnaryExpr</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'])"><div class="token cpp_type">Expr</div></div>
 	{
 	<div class="token cpp_keyword ">public</div>:
-<div class="expandable"/><div class="disabled"/>		EXPR_ACCEPT_VISITOR;</div>
+<div class="expandable"><div class="disabled">		EXPR_ACCEPT_VISITOR;</div>
 <div class="expanded">		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$calculator::UnaryExpr::Accept[decl0]"><div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr::Accept'])"><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::IExprVisitor'])"><div class="token cpp_type">IExprVisitor</div></div>* visitor) <div class="token cpp_keyword ">override</div>;</div></div>
 
 		<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryOperator'])"><div class="token cpp_type">UnaryOperator</div></div>		<div class="def" id="NI$calculator::UnaryExpr::op"><div><div class="token cpp_field">op</div></div></div>;
@@ -169,7 +169,7 @@
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$calculator::BinaryExpr"><div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr'])"><div class="token cpp_type">BinaryExpr</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'])"><div class="token cpp_type">Expr</div></div>
 	{
 	<div class="token cpp_keyword ">public</div>:
-<div class="expandable"/><div class="disabled"/>		EXPR_ACCEPT_VISITOR;</div>
+<div class="expandable"><div class="disabled">		EXPR_ACCEPT_VISITOR;</div>
 <div class="expanded">		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$calculator::BinaryExpr::Accept[decl0]"><div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::Accept'])"><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::IExprVisitor'])"><div class="token cpp_type">IExprVisitor</div></div>* visitor) <div class="token cpp_keyword ">override</div>;</div></div>
 
 		<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'])"><div class="token cpp_type">BinaryOperator</div></div>		<div class="def" id="NI$calculator::BinaryExpr::op"><div><div class="token cpp_field">op</div></div></div>;

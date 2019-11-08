@@ -29,22 +29,22 @@
 
 #pragma once
 
-<div class="disabled"/>#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
-<div class="disabled"/>#error This header is specific to X86 and X64 targets
+<div class="disabled">#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
+<div class="disabled">#error This header is specific to X86 and X64 targets
 #endif</div>
 
-<div class="disabled"/>#ifndef _INCLUDED_PMM</div>
-<div class="disabled"/>#define _INCLUDED_PMM</div>
-<div class="disabled"/>#ifndef __midl</div>
+<div class="disabled">#ifndef _INCLUDED_PMM</div>
+<div class="disabled">#define _INCLUDED_PMM</div>
+<div class="disabled">#ifndef __midl</div>
 
-<div class="disabled"/>#if defined (_M_CEE_PURE)</div>
-<div class="disabled"/>        #error ERROR: EMM intrinsics not supported in the pure mode!
+<div class="disabled">#if defined (_M_CEE_PURE)</div>
+<div class="disabled">        #error ERROR: EMM intrinsics not supported in the pure mode!
 #else  /* defined (_M_CEE_PURE) */</div>
 
 <div class="token cpp_comment ">/*
  * We need emmintrin.h for the basic type declarations.
  */</div>
-<div class="disabled"/>#include &lt;emmintrin.h&gt;</div>
+<div class="disabled">#include &lt;emmintrin.h&gt;</div>
 
  <div class="token cpp_comment ">/*****************************************************/</div>
  <div class="token cpp_comment ">/*     MACROS FOR USE WITH INTRINSICS                */</div>
@@ -53,24 +53,24 @@
 <div class="token cpp_comment ">/*
  * MACRO functions for setting and reading the DAZ bit in the MXCSR
  */</div>
-<div class="disabled"/>#define _MM_DENORMALS_ZERO_MASK   0x0040</div>
-<div class="disabled"/>#define _MM_DENORMALS_ZERO_ON     0x0040</div>
-<div class="disabled"/>#define _MM_DENORMALS_ZERO_OFF    0x0000</div>
+<div class="disabled">#define _MM_DENORMALS_ZERO_MASK   0x0040</div>
+<div class="disabled">#define _MM_DENORMALS_ZERO_ON     0x0040</div>
+<div class="disabled">#define _MM_DENORMALS_ZERO_OFF    0x0000</div>
 
-<div class="disabled"/>#define _MM_SET_DENORMALS_ZERO_MODE(mode)                                   \</div>
-<div class="disabled"/>            _mm_setcsr((_mm_getcsr() &amp; ~_MM_DENORMALS_ZERO_MASK) | (mode))</div>
-<div class="disabled"/>#define _MM_GET_DENORMALS_ZERO_MODE()                                       \</div>
-<div class="disabled"/>            (_mm_getcsr() &amp; _MM_DENORMALS_ZERO_MASK)</div>
+<div class="disabled">#define _MM_SET_DENORMALS_ZERO_MODE(mode)                                   \</div>
+<div class="disabled">            _mm_setcsr((_mm_getcsr() &amp; ~_MM_DENORMALS_ZERO_MASK) | (mode))</div>
+<div class="disabled">#define _MM_GET_DENORMALS_ZERO_MODE()                                       \</div>
+<div class="disabled">            (_mm_getcsr() &amp; _MM_DENORMALS_ZERO_MASK)</div>
 
 
  <div class="token cpp_comment ">/*****************************************************/</div>
  <div class="token cpp_comment ">/*     INTRINSICS FUNCTION PROTOTYPES START HERE     */</div>
  <div class="token cpp_comment ">/*****************************************************/</div>
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> { <div class="token cpp_comment ">/* Begin &quot;C&quot; */</div>
   <div class="token cpp_comment ">/* Intrinsics use C name-mangling. */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
 <div class="token cpp_comment ">/*
  * New Single precision vector instructions.
@@ -110,11 +110,11 @@
  */</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$_mm_mwait[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_mwait'])"><div class="token cpp_function">_mm_mwait</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_comment ">/* extensions */</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_comment ">/* hints */</div>);
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 }; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
-<div class="disabled"/>#endif  /* defined (_M_CEE_PURE) */
+<div class="disabled">#endif  /* defined (_M_CEE_PURE) */
 #endif  /* __midl */
 #endif  /* _INCLUDED_PMM */
 </div>

@@ -11,7 +11,7 @@
 <a class="button" href="./SymbolIndex.html">Symbol Index</a>
 <br>
 <br>
-<div class="codebox"><div class="cpp_default"><div class="disabled"/>#include &lt;assert.h&gt;
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;assert.h&gt;
 #include &lt;stdlib.h&gt;
 #include &quot;Calculator.h&quot;</div>
 
@@ -25,7 +25,7 @@
 		{
 			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm[impl0]::input'])"><div class="token cpp_argument">input</div></div>++;
 			<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$calculator::ParseTerm[impl0]::expr"><div>expr</div></div> = <div class="ref" onclick="jumpToSymbol(['calculator::ParseExpr'], ['calculator::ParseExpr'])">ParseExpr</div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm[impl0]::input'])"><div class="token cpp_argument">input</div></div>);
-<div class="expandable"/><div class="disabled"/>			assert(*input == &apos;)&apos;);</div>
+<div class="expandable"><div class="disabled">			assert(*input == &apos;)&apos;);</div>
 <div class="expanded">			(<div class="token cpp_keyword ">void</div>)( (!!(*<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm[impl0]::input'])"><div class="token cpp_argument">input</div></div> == <div class="token cpp_string ">&apos;)&apos;</div>)) || (<div class="ref" onclick="jumpToSymbol(['_wassert'], ['_wassert'])">_wassert</div>(<div class="token cpp_string ">L&quot;*input == &apos;)&apos;&quot;</div>, <div class="token cpp_string ">L&quot;c:\\code\\vczhlibraries\\document\\tools\\cppdoc\\unittest_cases\\calculator\\calculator.cpp&quot;</div>, (<div class="token cpp_keyword ">unsigned</div>)(<div class="token cpp_number ">15</div>)), <div class="token cpp_number ">0</div>) );</div></div>
 			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm[impl0]::input'])"><div class="token cpp_argument">input</div></div>++;
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm[impl0]::expr'])">expr</div>;
@@ -77,7 +77,7 @@
 	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'])"><div class="token cpp_type">Ptr</div></div> <div class="def" id="FB$calculator::Parse[impl0]"><div class="ref" onclick="jumpToSymbol([], ['calculator::Parse'])"><div class="token cpp_function">Parse</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="def" id="NI$calculator::Parse[impl0]::input"><div><div class="token cpp_argument">input</div></div></div>)
 	{
 		<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$calculator::Parse[impl0]::expr"><div>expr</div></div> = <div class="ref" onclick="jumpToSymbol(['calculator::ParseExpr'], ['calculator::ParseExpr'])">ParseExpr</div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::Parse[impl0]::input'])"><div class="token cpp_argument">input</div></div>);
-<div class="expandable"/><div class="disabled"/>		assert(!*input);</div>
+<div class="expandable"><div class="disabled">		assert(!*input);</div>
 <div class="expanded">		(<div class="token cpp_keyword ">void</div>)( (!!(!*<div class="ref" onclick="jumpToSymbol([], ['calculator::Parse[impl0]::input'])"><div class="token cpp_argument">input</div></div>)) || (<div class="ref" onclick="jumpToSymbol(['_wassert'], ['_wassert'])">_wassert</div>(<div class="token cpp_string ">L&quot;!*input&quot;</div>, <div class="token cpp_string ">L&quot;c:\\code\\vczhlibraries\\document\\tools\\cppdoc\\unittest_cases\\calculator\\calculator.cpp&quot;</div>, (<div class="token cpp_keyword ">unsigned</div>)(<div class="token cpp_number ">66</div>)), <div class="token cpp_number ">0</div>) );</div></div>
 		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Parse[impl0]::expr'])">expr</div>;
 	}

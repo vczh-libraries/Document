@@ -22,123 +22,123 @@
 <div class="token cpp_comment ">// that are used throughout the CRT.</div>
 <div class="token cpp_comment ">//</div>
 #pragma once
-<div class="disabled"/>#define _INC_VADEFS</div>
+<div class="disabled">#define _INC_VADEFS</div>
 
-<div class="disabled"/>#define _CRT_PACKING 8</div>
-<div class="expandable"/><div class="disabled"/>#pragma pack(push, _CRT_PACKING)</div>
+<div class="disabled">#define _CRT_PACKING 8</div>
+<div class="expandable"><div class="disabled">#pragma pack(push, _CRT_PACKING)</div>
 <div class="expanded">#pragma pack(push, <div class="token cpp_number ">8</div>)</div></div>
 
-<div class="disabled"/>#ifdef __cplusplus</div>
+<div class="disabled">#ifdef __cplusplus</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 
-<div class="disabled"/>#if !defined _W64</div>
-<div class="disabled"/>#define _W64
+<div class="disabled">#if !defined _W64</div>
+<div class="disabled">#define _W64
 #endif</div>
 
-<div class="disabled"/>#ifndef _UINTPTR_T_DEFINED</div>
-<div class="disabled"/>    #define _UINTPTR_T_DEFINED</div>
-<div class="disabled"/>    #ifdef _WIN64</div>
-<div class="disabled"/>        typedef unsigned __int64  uintptr_t;</div>
-<div class="disabled"/>    #else</div>
+<div class="disabled">#ifndef _UINTPTR_T_DEFINED</div>
+<div class="disabled">    #define _UINTPTR_T_DEFINED</div>
+<div class="disabled">    #ifdef _WIN64</div>
+<div class="disabled">        typedef unsigned __int64  uintptr_t;</div>
+<div class="disabled">    #else</div>
         <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$uintptr_t"><div><div class="token cpp_type">uintptr_t</div></div></div>;
-<div class="disabled"/>    #endif
+<div class="disabled">    #endif
 #endif</div>
 
-<div class="disabled"/>#ifndef _VA_LIST_DEFINED</div>
-<div class="disabled"/>    #define _VA_LIST_DEFINED</div>
-<div class="disabled"/>    #ifdef _M_CEE_PURE</div>
-<div class="disabled"/>        typedef System::ArgIterator va_list;</div>
-<div class="disabled"/>    #else</div>
+<div class="disabled">#ifndef _VA_LIST_DEFINED</div>
+<div class="disabled">    #define _VA_LIST_DEFINED</div>
+<div class="disabled">    #ifdef _M_CEE_PURE</div>
+<div class="disabled">        typedef System::ArgIterator va_list;</div>
+<div class="disabled">    #else</div>
         <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">char</div>* <div class="def" id="NI$va_list"><div><div class="token cpp_type">va_list</div></div></div>;
-<div class="disabled"/>    #endif
+<div class="disabled">    #endif
 #endif</div>
 
-<div class="disabled"/>#ifdef __cplusplus</div>
-<div class="disabled"/>    #define _ADDRESSOF(v) (&amp;const_cast&lt;char&amp;&gt;(reinterpret_cast&lt;const volatile char&amp;&gt;(v)))</div>
-<div class="disabled"/>#else</div>
-<div class="disabled"/>    #define _ADDRESSOF(v) (&amp;(v))
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="disabled">    #define _ADDRESSOF(v) (&amp;const_cast&lt;char&amp;&gt;(reinterpret_cast&lt;const volatile char&amp;&gt;(v)))</div>
+<div class="disabled">#else</div>
+<div class="disabled">    #define _ADDRESSOF(v) (&amp;(v))
 #endif</div>
 
-<div class="disabled"/>#if (defined _M_ARM || defined _M_HYBRID_X86_ARM64) &amp;&amp; !defined _M_CEE_PURE</div>
-<div class="disabled"/>    #define _VA_ALIGN       4</div>
-<div class="disabled"/>    #define _SLOTSIZEOF(t)  ((sizeof(t) + _VA_ALIGN - 1) &amp; ~(_VA_ALIGN - 1))</div>
-<div class="disabled"/>    #define _APALIGN(t,ap)  (((va_list)0 - (ap)) &amp; (__alignof(t) - 1))
+<div class="disabled">#if (defined _M_ARM || defined _M_HYBRID_X86_ARM64) &amp;&amp; !defined _M_CEE_PURE</div>
+<div class="disabled">    #define _VA_ALIGN       4</div>
+<div class="disabled">    #define _SLOTSIZEOF(t)  ((sizeof(t) + _VA_ALIGN - 1) &amp; ~(_VA_ALIGN - 1))</div>
+<div class="disabled">    #define _APALIGN(t,ap)  (((va_list)0 - (ap)) &amp; (__alignof(t) - 1))
 #elif defined _M_ARM64 &amp;&amp; !defined _M_CEE_PURE</div>
-<div class="disabled"/>    #define _VA_ALIGN       8</div>
-<div class="disabled"/>    #define _SLOTSIZEOF(t)  ((sizeof(t) + _VA_ALIGN - 1) &amp; ~(_VA_ALIGN - 1))</div>
-<div class="disabled"/>    #define _APALIGN(t,ap)  (((va_list)0 - (ap)) &amp; (__alignof(t) - 1))
+<div class="disabled">    #define _VA_ALIGN       8</div>
+<div class="disabled">    #define _SLOTSIZEOF(t)  ((sizeof(t) + _VA_ALIGN - 1) &amp; ~(_VA_ALIGN - 1))</div>
+<div class="disabled">    #define _APALIGN(t,ap)  (((va_list)0 - (ap)) &amp; (__alignof(t) - 1))
 #else</div>
-<div class="disabled"/>    #define _SLOTSIZEOF(t)  (sizeof(t))</div>
-<div class="disabled"/>    #define _APALIGN(t,ap)  (__alignof(t))
+<div class="disabled">    #define _SLOTSIZEOF(t)  (sizeof(t))</div>
+<div class="disabled">    #define _APALIGN(t,ap)  (__alignof(t))
 #endif</div>
 
-<div class="disabled"/>#if defined _M_CEE_PURE || (defined _M_CEE &amp;&amp; !defined _M_ARM &amp;&amp; !defined _M_ARM64)</div>
+<div class="disabled">#if defined _M_CEE_PURE || (defined _M_CEE &amp;&amp; !defined _M_ARM &amp;&amp; !defined _M_ARM64)</div>
 
-<div class="disabled"/>    void  __cdecl __va_start(va_list*, ...);</div>
-<div class="disabled"/>    void* __cdecl __va_arg(va_list*, ...);</div>
-<div class="disabled"/>    void  __cdecl __va_end(va_list*);</div>
+<div class="disabled">    void  __cdecl __va_start(va_list*, ...);</div>
+<div class="disabled">    void* __cdecl __va_arg(va_list*, ...);</div>
+<div class="disabled">    void  __cdecl __va_end(va_list*);</div>
 
-<div class="disabled"/>    #define __crt_va_start_a(ap, v) ((void)(__va_start(&amp;ap, _ADDRESSOF(v), _SLOTSIZEOF(v), __alignof(v), _ADDRESSOF(v))))</div>
-<div class="disabled"/>    #define __crt_va_arg(ap, t)     (*(t *)__va_arg(&amp;ap, _SLOTSIZEOF(t), _APALIGN(t,ap), (t*)0))</div>
-<div class="disabled"/>    #define __crt_va_end(ap)        ((void)(__va_end(&amp;ap)))</div>
+<div class="disabled">    #define __crt_va_start_a(ap, v) ((void)(__va_start(&amp;ap, _ADDRESSOF(v), _SLOTSIZEOF(v), __alignof(v), _ADDRESSOF(v))))</div>
+<div class="disabled">    #define __crt_va_arg(ap, t)     (*(t *)__va_arg(&amp;ap, _SLOTSIZEOF(t), _APALIGN(t,ap), (t*)0))</div>
+<div class="disabled">    #define __crt_va_end(ap)        ((void)(__va_end(&amp;ap)))</div>
 
-<div class="disabled"/>#elif defined _M_IX86 &amp;&amp; !defined _M_HYBRID_X86_ARM64</div>
+<div class="disabled">#elif defined _M_IX86 &amp;&amp; !defined _M_HYBRID_X86_ARM64</div>
 
-<div class="disabled"/>    #define _INTSIZEOF(n)          ((sizeof(n) + sizeof(int) - 1) &amp; ~(sizeof(int) - 1))</div>
+<div class="disabled">    #define _INTSIZEOF(n)          ((sizeof(n) + sizeof(int) - 1) &amp; ~(sizeof(int) - 1))</div>
 
-<div class="disabled"/>    #define __crt_va_start_a(ap, v) ((void)(ap = (va_list)_ADDRESSOF(v) + _INTSIZEOF(v)))</div>
-<div class="disabled"/>    #define __crt_va_arg(ap, t)     (*(t*)((ap += _INTSIZEOF(t)) - _INTSIZEOF(t)))</div>
-<div class="disabled"/>    #define __crt_va_end(ap)        ((void)(ap = (va_list)0))</div>
+<div class="disabled">    #define __crt_va_start_a(ap, v) ((void)(ap = (va_list)_ADDRESSOF(v) + _INTSIZEOF(v)))</div>
+<div class="disabled">    #define __crt_va_arg(ap, t)     (*(t*)((ap += _INTSIZEOF(t)) - _INTSIZEOF(t)))</div>
+<div class="disabled">    #define __crt_va_end(ap)        ((void)(ap = (va_list)0))</div>
 
-<div class="disabled"/>#elif defined _M_ARM</div>
+<div class="disabled">#elif defined _M_ARM</div>
 
-<div class="disabled"/>    #ifdef __cplusplus</div>
-<div class="disabled"/>        void __cdecl __va_start(va_list*, ...);</div>
-<div class="disabled"/>        #define __crt_va_start_a(ap, v) ((void)(__va_start(&amp;ap, _ADDRESSOF(v), _SLOTSIZEOF(v), _ADDRESSOF(v))))</div>
-<div class="disabled"/>    #else</div>
-<div class="disabled"/>        #define __crt_va_start_a(ap, v) ((void)(ap = (va_list)_ADDRESSOF(v) + _SLOTSIZEOF(v)))</div>
-<div class="disabled"/>    #endif</div>
+<div class="disabled">    #ifdef __cplusplus</div>
+<div class="disabled">        void __cdecl __va_start(va_list*, ...);</div>
+<div class="disabled">        #define __crt_va_start_a(ap, v) ((void)(__va_start(&amp;ap, _ADDRESSOF(v), _SLOTSIZEOF(v), _ADDRESSOF(v))))</div>
+<div class="disabled">    #else</div>
+<div class="disabled">        #define __crt_va_start_a(ap, v) ((void)(ap = (va_list)_ADDRESSOF(v) + _SLOTSIZEOF(v)))</div>
+<div class="disabled">    #endif</div>
 
-<div class="disabled"/>    #define __crt_va_arg(ap, t) (*(t*)((ap += _SLOTSIZEOF(t) + _APALIGN(t,ap)) - _SLOTSIZEOF(t)))</div>
-<div class="disabled"/>    #define __crt_va_end(ap)    ((void)(ap = (va_list)0))</div>
+<div class="disabled">    #define __crt_va_arg(ap, t) (*(t*)((ap += _SLOTSIZEOF(t) + _APALIGN(t,ap)) - _SLOTSIZEOF(t)))</div>
+<div class="disabled">    #define __crt_va_end(ap)    ((void)(ap = (va_list)0))</div>
 
-<div class="disabled"/>#elif defined _M_HYBRID_X86_ARM64</div>
-<div class="disabled"/>    void __cdecl __va_start(va_list*, ...);</div>
-<div class="disabled"/>    #define __crt_va_start_a(ap,v) ((void)(__va_start(&amp;ap, _ADDRESSOF(v), _SLOTSIZEOF(v), __alignof(v), _ADDRESSOF(v))))</div>
-<div class="disabled"/>    #define __crt_va_arg(ap, t)    (*(t*)((ap += _SLOTSIZEOF(t)) - _SLOTSIZEOF(t)))</div>
-<div class="disabled"/>    #define __crt_va_end(ap)       ((void)(ap = (va_list)0))</div>
+<div class="disabled">#elif defined _M_HYBRID_X86_ARM64</div>
+<div class="disabled">    void __cdecl __va_start(va_list*, ...);</div>
+<div class="disabled">    #define __crt_va_start_a(ap,v) ((void)(__va_start(&amp;ap, _ADDRESSOF(v), _SLOTSIZEOF(v), __alignof(v), _ADDRESSOF(v))))</div>
+<div class="disabled">    #define __crt_va_arg(ap, t)    (*(t*)((ap += _SLOTSIZEOF(t)) - _SLOTSIZEOF(t)))</div>
+<div class="disabled">    #define __crt_va_end(ap)       ((void)(ap = (va_list)0))</div>
 
-<div class="disabled"/>#elif defined _M_ARM64</div>
+<div class="disabled">#elif defined _M_ARM64</div>
 
-<div class="disabled"/>    void __cdecl __va_start(va_list*, ...);</div>
+<div class="disabled">    void __cdecl __va_start(va_list*, ...);</div>
 
-<div class="disabled"/>    #define __crt_va_start_a(ap,v) ((void)(__va_start(&amp;ap, _ADDRESSOF(v), _SLOTSIZEOF(v), __alignof(v), _ADDRESSOF(v))))</div>
-<div class="disabled"/>    #define __crt_va_arg(ap, t)                                                 \</div>
-<div class="disabled"/>        ((sizeof(t) &gt; (2 * sizeof(__int64)))                                   \</div>
-<div class="disabled"/>            ? **(t**)((ap += sizeof(__int64)) - sizeof(__int64))               \</div>
-<div class="disabled"/>            : *(t*)((ap += _SLOTSIZEOF(t) + _APALIGN(t,ap)) - _SLOTSIZEOF(t)))</div>
-<div class="disabled"/>    #define __crt_va_end(ap)       ((void)(ap = (va_list)0))</div>
+<div class="disabled">    #define __crt_va_start_a(ap,v) ((void)(__va_start(&amp;ap, _ADDRESSOF(v), _SLOTSIZEOF(v), __alignof(v), _ADDRESSOF(v))))</div>
+<div class="disabled">    #define __crt_va_arg(ap, t)                                                 \</div>
+<div class="disabled">        ((sizeof(t) &gt; (2 * sizeof(__int64)))                                   \</div>
+<div class="disabled">            ? **(t**)((ap += sizeof(__int64)) - sizeof(__int64))               \</div>
+<div class="disabled">            : *(t*)((ap += _SLOTSIZEOF(t) + _APALIGN(t,ap)) - _SLOTSIZEOF(t)))</div>
+<div class="disabled">    #define __crt_va_end(ap)       ((void)(ap = (va_list)0))</div>
 
 
-<div class="disabled"/>#elif defined _M_X64</div>
+<div class="disabled">#elif defined _M_X64</div>
 
-<div class="disabled"/>    void __cdecl __va_start(va_list* , ...);</div>
+<div class="disabled">    void __cdecl __va_start(va_list* , ...);</div>
 
-<div class="disabled"/>    #define __crt_va_start_a(ap, x) ((void)(__va_start(&amp;ap, x)))</div>
-<div class="disabled"/>    #define __crt_va_arg(ap, t)                                               \</div>
-<div class="disabled"/>        ((sizeof(t) &gt; sizeof(__int64) || (sizeof(t) &amp; (sizeof(t) - 1)) != 0) \</div>
-<div class="disabled"/>            ? **(t**)((ap += sizeof(__int64)) - sizeof(__int64))             \</div>
-<div class="disabled"/>            :  *(t* )((ap += sizeof(__int64)) - sizeof(__int64)))</div>
-<div class="disabled"/>    #define __crt_va_end(ap)        ((void)(ap = (va_list)0))</div>
+<div class="disabled">    #define __crt_va_start_a(ap, x) ((void)(__va_start(&amp;ap, x)))</div>
+<div class="disabled">    #define __crt_va_arg(ap, t)                                               \</div>
+<div class="disabled">        ((sizeof(t) &gt; sizeof(__int64) || (sizeof(t) &amp; (sizeof(t) - 1)) != 0) \</div>
+<div class="disabled">            ? **(t**)((ap += sizeof(__int64)) - sizeof(__int64))             \</div>
+<div class="disabled">            :  *(t* )((ap += sizeof(__int64)) - sizeof(__int64)))</div>
+<div class="disabled">    #define __crt_va_end(ap)        ((void)(ap = (va_list)0))</div>
 
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 
-<div class="disabled"/>#ifdef __cplusplus</div>
+<div class="disabled">#ifdef __cplusplus</div>
 } <div class="token cpp_comment ">// extern &quot;C&quot;</div>
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 
-<div class="disabled"/>#if defined __cplusplus &amp;&amp; !defined _CRT_NO_VA_START_VALIDATION</div>
+<div class="disabled">#if defined __cplusplus &amp;&amp; !defined _CRT_NO_VA_START_VALIDATION</div>
     <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div>
     {
         <div class="token cpp_keyword ">template</div> &lt;<div class="token cpp_keyword ">typename</div> _Ty&gt;
@@ -167,16 +167,16 @@
         };
     } <div class="token cpp_comment ">// extern &quot;C++&quot;</div>
 
-<div class="disabled"/>    #define __crt_va_start(ap, x) ((void)(__vcrt_assert_va_start_is_not_reference&lt;decltype(x)&gt;(), __crt_va_start_a(ap, x)))</div>
+<div class="disabled">    #define __crt_va_start(ap, x) ((void)(__vcrt_assert_va_start_is_not_reference&lt;decltype(x)&gt;(), __crt_va_start_a(ap, x)))</div>
 
-<div class="disabled"/>#else // ^^^ __cplusplus ^^^ // vvv !__cplusplus vvv //</div>
+<div class="disabled">#else // ^^^ __cplusplus ^^^ // vvv !__cplusplus vvv //</div>
 
-<div class="disabled"/>    #define __crt_va_start(ap, x) __crt_va_start_a(ap, x)</div>
+<div class="disabled">    #define __crt_va_start(ap, x) __crt_va_start_a(ap, x)</div>
 
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 
 #pragma pack(pop)
-<div class="disabled"/></div>
+<div class="disabled"></div>
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {

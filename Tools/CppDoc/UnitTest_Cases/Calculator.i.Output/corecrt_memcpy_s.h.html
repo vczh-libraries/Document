@@ -20,41 +20,41 @@
 <div class="token cpp_comment ">//</div>
 #pragma once
 
-<div class="disabled"/>#include &lt;corecrt.h&gt;
+<div class="disabled">#include &lt;corecrt.h&gt;
 #include &lt;errno.h&gt;
 #include &lt;vcruntime_string.h&gt;</div>
 
-<div class="expandable"/><div class="disabled"/>_CRT_BEGIN_C_HEADER</div>
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
 <div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
 
-<div class="disabled"/>#ifndef _CRT_MEMCPY_S_INLINE</div>
-<div class="disabled"/>    #define _CRT_MEMCPY_S_INLINE static __inline
+<div class="disabled">#ifndef _CRT_MEMCPY_S_INLINE</div>
+<div class="disabled">    #define _CRT_MEMCPY_S_INLINE static __inline
 #endif</div>
 
-<div class="disabled"/>#define _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(expr, errorcode)                 \</div>
-<div class="disabled"/>    {                                                                          \</div>
-<div class="disabled"/>        int _Expr_val=!!(expr);                                                \</div>
-<div class="disabled"/>        if (!(_Expr_val))                                                      \</div>
-<div class="disabled"/>        {                                                                      \</div>
-<div class="disabled"/>            errno = errorcode;                                                 \</div>
-<div class="disabled"/>            _invalid_parameter_noinfo();                                       \</div>
-<div class="disabled"/>            return errorcode;                                                  \</div>
-<div class="disabled"/>        }                                                                      \</div>
-<div class="disabled"/>    }</div>
+<div class="disabled">#define _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(expr, errorcode)                 \</div>
+<div class="disabled">    {                                                                          \</div>
+<div class="disabled">        int _Expr_val=!!(expr);                                                \</div>
+<div class="disabled">        if (!(_Expr_val))                                                      \</div>
+<div class="disabled">        {                                                                      \</div>
+<div class="disabled">            errno = errorcode;                                                 \</div>
+<div class="disabled">            _invalid_parameter_noinfo();                                       \</div>
+<div class="disabled">            return errorcode;                                                  \</div>
+<div class="disabled">        }                                                                      \</div>
+<div class="disabled">    }</div>
 
-<div class="disabled"/>#if !defined RC_INVOKED &amp;&amp; !defined __midl &amp;&amp; __STDC_WANT_SECURE_LIB__</div>
+<div class="disabled">#if !defined RC_INVOKED &amp;&amp; !defined __midl &amp;&amp; __STDC_WANT_SECURE_LIB__</div>
 
-<div class="disabled"/>    _Success_(return == 0)</div>
-<div class="disabled"/>    _Check_return_opt_</div>
-<div class="expandable"/><div class="disabled"/>    _CRT_MEMCPY_S_INLINE errno_t __CRTDECL memcpy_s(</div>
+<div class="disabled">    _Success_(return == 0)</div>
+<div class="disabled">    _Check_return_opt_</div>
+<div class="expandable"><div class="disabled">    _CRT_MEMCPY_S_INLINE errno_t __CRTDECL memcpy_s(</div>
 <div class="expanded">    <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$memcpy_s[impl0]"><div><div class="token cpp_function">memcpy_s</div></div></div>(</div></div>
-<div class="expandable"/><div class="disabled"/>        _Out_writes_bytes_to_opt_(_DestinationSize, _SourceSize) void*       const _Destination,</div>
+<div class="expandable"><div class="disabled">        _Out_writes_bytes_to_opt_(_DestinationSize, _SourceSize) void*       const _Destination,</div>
 <div class="expanded">          <div class="token cpp_keyword ">void</div>*       <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s[impl0]::_Destination"><div><div class="token cpp_argument">_Destination</div></div></div>,</div></div>
-<div class="expandable"/><div class="disabled"/>        _In_                                                     rsize_t     const _DestinationSize,</div>
+<div class="expandable"><div class="disabled">        _In_                                                     rsize_t     const _DestinationSize,</div>
 <div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s[impl0]::_DestinationSize"><div><div class="token cpp_argument">_DestinationSize</div></div></div>,</div></div>
-<div class="expandable"/><div class="disabled"/>        _In_reads_bytes_opt_(_SourceSize)                        void const* const _Source,</div>
+<div class="expandable"><div class="disabled">        _In_reads_bytes_opt_(_SourceSize)                        void const* const _Source,</div>
 <div class="expanded">                                 <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s[impl0]::_Source"><div><div class="token cpp_argument">_Source</div></div></div>,</div></div>
-<div class="expandable"/><div class="disabled"/>        _In_                                                     rsize_t     const _SourceSize</div>
+<div class="expandable"><div class="disabled">        _In_                                                     rsize_t     const _SourceSize</div>
 <div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s[impl0]::_SourceSize"><div><div class="token cpp_argument">_SourceSize</div></div></div></div></div>
         )
     {
@@ -63,38 +63,38 @@
             <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
         }
 
-<div class="expandable"/><div class="disabled"/>        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Destination != NULL, EINVAL);</div>
+<div class="expandable"><div class="disabled">        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Destination != NULL, EINVAL);</div>
 <div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memcpy_s[impl0]::_Expr_val"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Expr_val'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])">_errno</div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])">_invalid_parameter_noinfo</div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
-<div class="expandable"/><div class="disabled"/>        if (_Source == NULL || _DestinationSize &lt; _SourceSize)</div>
+<div class="expandable"><div class="disabled">        if (_Source == NULL || _DestinationSize &lt; _SourceSize)</div>
 <div class="expanded">        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div> == <div class="token cpp_number ">0</div> || <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div> &lt; <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>)</div></div>
         {
             <div class="ref" onclick="jumpToSymbol(['memset'], ['memset'])">memset</div>(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div>);
 
-<div class="expandable"/><div class="disabled"/>            _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Source != NULL,                 EINVAL);</div>
+<div class="expandable"><div class="disabled">            _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Source != NULL,                 EINVAL);</div>
 <div class="expanded">            { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memcpy_s[impl0]::_Expr_val2"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Expr_val2'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])">_errno</div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])">_invalid_parameter_noinfo</div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
-<div class="expandable"/><div class="disabled"/>            _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_DestinationSize &gt;= _SourceSize, ERANGE);</div>
+<div class="expandable"><div class="disabled">            _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_DestinationSize &gt;= _SourceSize, ERANGE);</div>
 <div class="expanded">            { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memcpy_s[impl0]::_Expr_val3"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div> &gt;= <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Expr_val3'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])">_errno</div>()) = <div class="token cpp_number ">34</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])">_invalid_parameter_noinfo</div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">34</div>; } };</div></div>
 
             <div class="token cpp_comment ">// Unreachable, but required to suppress /analyze warnings:</div>
-<div class="expandable"/><div class="disabled"/>            return EINVAL;</div>
+<div class="expandable"><div class="disabled">            return EINVAL;</div>
 <div class="expanded">            <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>;</div></div>
         }
-<div class="expandable"/><div class="disabled"/>#pragma warning(suppress:4996) // Deprecation</div>
+<div class="expandable"><div class="disabled">#pragma warning(suppress:4996) // Deprecation</div>
 <div class="expanded">#pragma warning(suppress:<div class="token cpp_number ">4996</div>) </div></div>
         <div class="ref" onclick="jumpToSymbol(['memcpy'], ['memcpy'])">memcpy</div>(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>);
         <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
     }
 
-<div class="disabled"/>    _Check_return_wat_</div>
-<div class="expandable"/><div class="disabled"/>    _CRT_MEMCPY_S_INLINE errno_t __CRTDECL memmove_s(</div>
+<div class="disabled">    _Check_return_wat_</div>
+<div class="expandable"><div class="disabled">    _CRT_MEMCPY_S_INLINE errno_t __CRTDECL memmove_s(</div>
 <div class="expanded">    <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$memmove_s[impl0]"><div><div class="token cpp_function">memmove_s</div></div></div>(</div></div>
-<div class="expandable"/><div class="disabled"/>        _Out_writes_bytes_to_opt_(_DestinationSize, _SourceSize) void*       const _Destination,</div>
+<div class="expandable"><div class="disabled">        _Out_writes_bytes_to_opt_(_DestinationSize, _SourceSize) void*       const _Destination,</div>
 <div class="expanded">          <div class="token cpp_keyword ">void</div>*       <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s[impl0]::_Destination"><div><div class="token cpp_argument">_Destination</div></div></div>,</div></div>
-<div class="expandable"/><div class="disabled"/>        _In_                                                     rsize_t     const _DestinationSize,</div>
+<div class="expandable"><div class="disabled">        _In_                                                     rsize_t     const _DestinationSize,</div>
 <div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s[impl0]::_DestinationSize"><div><div class="token cpp_argument">_DestinationSize</div></div></div>,</div></div>
-<div class="expandable"/><div class="disabled"/>        _In_reads_bytes_opt_(_SourceSize)                        void const* const _Source,</div>
+<div class="expandable"><div class="disabled">        _In_reads_bytes_opt_(_SourceSize)                        void const* const _Source,</div>
 <div class="expanded">                                 <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s[impl0]::_Source"><div><div class="token cpp_argument">_Source</div></div></div>,</div></div>
-<div class="expandable"/><div class="disabled"/>        _In_                                                     rsize_t     const _SourceSize</div>
+<div class="expandable"><div class="disabled">        _In_                                                     rsize_t     const _SourceSize</div>
 <div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s[impl0]::_SourceSize"><div><div class="token cpp_argument">_SourceSize</div></div></div></div></div>
         )
     {
@@ -103,24 +103,24 @@
             <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
         }
 
-<div class="expandable"/><div class="disabled"/>        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Destination != NULL,            EINVAL);</div>
+<div class="expandable"><div class="disabled">        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Destination != NULL,            EINVAL);</div>
 <div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memmove_s[impl0]::_Expr_val"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Expr_val'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])">_errno</div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])">_invalid_parameter_noinfo</div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
-<div class="expandable"/><div class="disabled"/>        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Source != NULL,                 EINVAL);</div>
+<div class="expandable"><div class="disabled">        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Source != NULL,                 EINVAL);</div>
 <div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memmove_s[impl0]::_Expr_val2"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Expr_val2'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])">_errno</div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])">_invalid_parameter_noinfo</div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
-<div class="expandable"/><div class="disabled"/>        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_DestinationSize &gt;= _SourceSize, ERANGE);</div>
+<div class="expandable"><div class="disabled">        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_DestinationSize &gt;= _SourceSize, ERANGE);</div>
 <div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memmove_s[impl0]::_Expr_val3"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div> &gt;= <div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Expr_val3'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])">_errno</div>()) = <div class="token cpp_number ">34</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])">_invalid_parameter_noinfo</div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">34</div>; } };</div></div>
 
-<div class="expandable"/><div class="disabled"/>#pragma warning(suppress:4996) // Deprecation</div>
+<div class="expandable"><div class="disabled">#pragma warning(suppress:4996) // Deprecation</div>
 <div class="expanded">#pragma warning(suppress:<div class="token cpp_number ">4996</div>) </div></div>
         <div class="ref" onclick="jumpToSymbol(['memmove'], ['memmove'])">memmove</div>(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>);
         <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
     }
 
-<div class="disabled"/>#endif</div>
+<div class="disabled">#endif</div>
 
-<div class="disabled"/>#undef _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE</div>
+<div class="disabled">#undef _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE</div>
 
-<div class="expandable"/><div class="disabled"/>_CRT_END_C_HEADER
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
 </div>
 <div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
 </div></div>

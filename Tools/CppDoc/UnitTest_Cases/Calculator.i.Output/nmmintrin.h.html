@@ -30,63 +30,63 @@
 
 #pragma once
 
-<div class="disabled"/>#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
-<div class="disabled"/>#error This header is specific to X86 and X64 targets
+<div class="disabled">#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
+<div class="disabled">#error This header is specific to X86 and X64 targets
 #endif</div>
 
-<div class="disabled"/>#ifndef _INCLUDED_NMM</div>
-<div class="disabled"/>#define _INCLUDED_NMM</div>
-<div class="disabled"/>#ifndef __midl</div>
+<div class="disabled">#ifndef _INCLUDED_NMM</div>
+<div class="disabled">#define _INCLUDED_NMM</div>
+<div class="disabled">#ifndef __midl</div>
 
-<div class="disabled"/>#if defined (_M_CEE_PURE)</div>
-<div class="disabled"/>        #error ERROR: EMM intrinsics not supported in the pure mode!
+<div class="disabled">#if defined (_M_CEE_PURE)</div>
+<div class="disabled">        #error ERROR: EMM intrinsics not supported in the pure mode!
 #else  /* defined (_M_CEE_PURE) */</div>
 
-<div class="disabled"/>#include &lt;smmintrin.h&gt;</div>
+<div class="disabled">#include &lt;smmintrin.h&gt;</div>
 
 
-<div class="disabled"/>#if __cplusplus</div>
+<div class="disabled">#if __cplusplus</div>
 <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
-<div class="disabled"/>#endif  /* __cplusplus */</div>
+<div class="disabled">#endif  /* __cplusplus */</div>
 
 <div class="token cpp_comment ">/*
  * These defines are used to determine the kind of units to be compared
  */</div>
-<div class="disabled"/>#define _SIDD_UBYTE_OPS                0x00</div>
-<div class="disabled"/>#define _SIDD_UWORD_OPS                0x01</div>
-<div class="disabled"/>#define _SIDD_SBYTE_OPS                0x02</div>
-<div class="disabled"/>#define _SIDD_SWORD_OPS                0x03</div>
+<div class="disabled">#define _SIDD_UBYTE_OPS                0x00</div>
+<div class="disabled">#define _SIDD_UWORD_OPS                0x01</div>
+<div class="disabled">#define _SIDD_SBYTE_OPS                0x02</div>
+<div class="disabled">#define _SIDD_SWORD_OPS                0x03</div>
 
 
 <div class="token cpp_comment ">/*
  * These defines are used to determine the comparison operation
  */</div>
-<div class="disabled"/>#define _SIDD_CMP_EQUAL_ANY            0x00</div>
-<div class="disabled"/>#define _SIDD_CMP_RANGES               0x04</div>
-<div class="disabled"/>#define _SIDD_CMP_EQUAL_EACH           0x08</div>
-<div class="disabled"/>#define _SIDD_CMP_EQUAL_ORDERED        0x0C</div>
+<div class="disabled">#define _SIDD_CMP_EQUAL_ANY            0x00</div>
+<div class="disabled">#define _SIDD_CMP_RANGES               0x04</div>
+<div class="disabled">#define _SIDD_CMP_EQUAL_EACH           0x08</div>
+<div class="disabled">#define _SIDD_CMP_EQUAL_ORDERED        0x0C</div>
 
 
 <div class="token cpp_comment ">/*
  * These defines are used to determine the polarity
  */</div>
-<div class="disabled"/>#define _SIDD_POSITIVE_POLARITY        0x00</div>
-<div class="disabled"/>#define _SIDD_NEGATIVE_POLARITY        0x10</div>
-<div class="disabled"/>#define _SIDD_MASKED_POSITIVE_POLARITY 0x20</div>
-<div class="disabled"/>#define _SIDD_MASKED_NEGATIVE_POLARITY 0x30</div>
+<div class="disabled">#define _SIDD_POSITIVE_POLARITY        0x00</div>
+<div class="disabled">#define _SIDD_NEGATIVE_POLARITY        0x10</div>
+<div class="disabled">#define _SIDD_MASKED_POSITIVE_POLARITY 0x20</div>
+<div class="disabled">#define _SIDD_MASKED_NEGATIVE_POLARITY 0x30</div>
 
 
 <div class="token cpp_comment ">/*
  * These defines are used in _mm_cmpXstri()
  */</div>
-<div class="disabled"/>#define _SIDD_LEAST_SIGNIFICANT        0x00</div>
-<div class="disabled"/>#define _SIDD_MOST_SIGNIFICANT         0x40</div>
+<div class="disabled">#define _SIDD_LEAST_SIGNIFICANT        0x00</div>
+<div class="disabled">#define _SIDD_MOST_SIGNIFICANT         0x40</div>
 
 <div class="token cpp_comment ">/*
  * These defines are used _mm_cmpXstrm()
  */</div>
-<div class="disabled"/>#define _SIDD_BIT_MASK                 0x00</div>
-<div class="disabled"/>#define _SIDD_UNIT_MASK                0x40</div>
+<div class="disabled">#define _SIDD_BIT_MASK                 0x00</div>
+<div class="disabled">#define _SIDD_UNIT_MASK                0x40</div>
 
 
 <div class="token cpp_comment ">/*
@@ -128,8 +128,8 @@
 
     <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_mm_popcnt_u32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_popcnt_u32'])"><div class="token cpp_function">_mm_popcnt_u32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* v */</div>);
 
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>    extern __int64 _mm_popcnt_u64(unsigned __int64 /* v */);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">    extern __int64 _mm_popcnt_u64(unsigned __int64 /* v */);
 #endif  /* defined (_M_X64) */</div>
 
 <div class="token cpp_comment ">/*
@@ -140,15 +140,15 @@
     <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_mm_crc32_u16[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_crc32_u16'])"><div class="token cpp_function">_mm_crc32_u16</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* crc */</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> <div class="token cpp_comment ">/* v */</div>);
     <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$_mm_crc32_u32[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_crc32_u32'])"><div class="token cpp_function">_mm_crc32_u32</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* crc */</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_comment ">/* v */</div>);
 
-<div class="disabled"/>#if defined (_M_X64)</div>
-<div class="disabled"/>    extern unsigned __int64 _mm_crc32_u64(unsigned __int64 /* crc */, unsigned __int64 /* v */);
+<div class="disabled">#if defined (_M_X64)</div>
+<div class="disabled">    extern unsigned __int64 _mm_crc32_u64(unsigned __int64 /* crc */, unsigned __int64 /* v */);
 #endif  /* defined (_M_X64) */</div>
 
-<div class="disabled"/>#if defined __cplusplus</div>
+<div class="disabled">#if defined __cplusplus</div>
 }; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
-<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
 
-<div class="disabled"/>#endif  /* defined (_M_CEE_PURE) */
+<div class="disabled">#endif  /* defined (_M_CEE_PURE) */
 #endif  /* __midl */
 #endif  /* _INCLUDED_NMM */
 </div>

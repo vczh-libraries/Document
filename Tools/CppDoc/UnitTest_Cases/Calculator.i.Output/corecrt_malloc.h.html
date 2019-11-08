@@ -21,295 +21,295 @@
 <div class="token cpp_comment ">//</div>
 #pragma once
 
-<div class="disabled"/>#include &lt;corecrt.h&gt;</div>
+<div class="disabled">#include &lt;corecrt.h&gt;</div>
 
-<div class="expandable"/><div class="disabled"/>_CRT_BEGIN_C_HEADER</div>
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
 <div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
 
 
 
-<div class="disabled"/>#if defined _DEBUG &amp;&amp; defined _CRTDBG_MAP_ALLOC</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_aligned_free&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_aligned_malloc&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_aligned_msize&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_aligned_offset_malloc&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_aligned_offset_realloc&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_aligned_offset_recalloc&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_aligned_realloc&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_aligned_recalloc&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_expand&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_freea&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_msize&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;_recalloc&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;calloc&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;free&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;malloc&quot;)</div>
-<div class="disabled"/>    #pragma push_macro(&quot;realloc&quot;)</div>
+<div class="disabled">#if defined _DEBUG &amp;&amp; defined _CRTDBG_MAP_ALLOC</div>
+<div class="disabled">    #pragma push_macro(&quot;_aligned_free&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;_aligned_malloc&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;_aligned_msize&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;_aligned_offset_malloc&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;_aligned_offset_realloc&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;_aligned_offset_recalloc&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;_aligned_realloc&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;_aligned_recalloc&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;_expand&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;_freea&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;_msize&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;_recalloc&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;calloc&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;free&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;malloc&quot;)</div>
+<div class="disabled">    #pragma push_macro(&quot;realloc&quot;)</div>
 
-<div class="disabled"/>    #undef _aligned_free</div>
-<div class="disabled"/>    #undef _aligned_malloc</div>
-<div class="disabled"/>    #undef _aligned_msize</div>
-<div class="disabled"/>    #undef _aligned_offset_malloc</div>
-<div class="disabled"/>    #undef _aligned_offset_realloc</div>
-<div class="disabled"/>    #undef _aligned_offset_recalloc</div>
-<div class="disabled"/>    #undef _aligned_realloc</div>
-<div class="disabled"/>    #undef _aligned_recalloc</div>
-<div class="disabled"/>    #undef _expand</div>
-<div class="disabled"/>    #undef _freea</div>
-<div class="disabled"/>    #undef _msize</div>
-<div class="disabled"/>    #undef _recalloc</div>
-<div class="disabled"/>    #undef calloc</div>
-<div class="disabled"/>    #undef free</div>
-<div class="disabled"/>    #undef malloc</div>
-<div class="disabled"/>    #undef realloc
+<div class="disabled">    #undef _aligned_free</div>
+<div class="disabled">    #undef _aligned_malloc</div>
+<div class="disabled">    #undef _aligned_msize</div>
+<div class="disabled">    #undef _aligned_offset_malloc</div>
+<div class="disabled">    #undef _aligned_offset_realloc</div>
+<div class="disabled">    #undef _aligned_offset_recalloc</div>
+<div class="disabled">    #undef _aligned_realloc</div>
+<div class="disabled">    #undef _aligned_recalloc</div>
+<div class="disabled">    #undef _expand</div>
+<div class="disabled">    #undef _freea</div>
+<div class="disabled">    #undef _msize</div>
+<div class="disabled">    #undef _recalloc</div>
+<div class="disabled">    #undef calloc</div>
+<div class="disabled">    #undef free</div>
+<div class="disabled">    #undef malloc</div>
+<div class="disabled">    #undef realloc
 #endif</div>
 
-<div class="disabled"/>_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
+<div class="disabled">_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict)</div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_calloc_base[decl0]"><div><div class="token cpp_function">_calloc_base</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _In_ size_t _Count,</div>
+<div class="expandable"><div class="disabled">    _In_ size_t _Count,</div>
 <div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Count,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ size_t _Size</div>
+<div class="expandable"><div class="disabled">    _In_ size_t _Size</div>
 <div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size</div></div>
     );
 
-<div class="disabled"/>_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRT_JIT_INTRINSIC _CRTALLOCATOR _CRTRESTRICT _CRT_HYBRIDPATCHABLE</div>
+<div class="disabled">_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRT_JIT_INTRINSIC _CRTALLOCATOR _CRTRESTRICT _CRT_HYBRIDPATCHABLE</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)  <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict) </div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$calloc[decl0]"><div><div class="token cpp_function">calloc</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW size_t _Count,</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW size_t _Count,</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow)) <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Count,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW size_t _Size</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW size_t _Size</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow)) <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size</div></div>
     );
 
-<div class="disabled"/>_Check_return_</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP int __cdecl _callnewh(</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _callnewh(</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_callnewh[decl0]"><div><div class="token cpp_function">_callnewh</div></div></div>(</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ size_t _Size</div>
+<div class="expandable"><div class="disabled">    _In_ size_t _Size</div>
 <div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size</div></div>
     );
 
-<div class="disabled"/>_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRT_HYBRIDPATCHABLE</div>
+<div class="disabled">_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRT_HYBRIDPATCHABLE</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) </div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_expand[decl0]"><div><div class="token cpp_function">_expand</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_notnull_           void*  _Block,</div>
+<div class="expandable"><div class="disabled">    _Pre_notnull_           void*  _Block,</div>
 <div class="expanded">                <div class="token cpp_keyword ">void</div>*  _Block,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW size_t _Size</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW size_t _Size</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow)) <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size</div></div>
     );
 
-<div class="expandable"/><div class="disabled"/>_ACRTIMP</div>
+<div class="expandable"><div class="disabled">_ACRTIMP</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
 <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_free_base[decl0]"><div><div class="token cpp_function">_free_base</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_maybenull_ _Post_invalid_ void* _Block</div>
+<div class="expandable"><div class="disabled">    _Pre_maybenull_ _Post_invalid_ void* _Block</div>
 <div class="expanded">        <div class="token cpp_keyword ">void</div>* _Block</div></div>
     );
 
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRT_HYBRIDPATCHABLE</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRT_HYBRIDPATCHABLE</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) </div></div>
 <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$free[decl0]"><div><div class="token cpp_function">free</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_maybenull_ _Post_invalid_ void* _Block</div>
+<div class="expandable"><div class="disabled">    _Pre_maybenull_ _Post_invalid_ void* _Block</div>
 <div class="expanded">        <div class="token cpp_keyword ">void</div>* _Block</div></div>
     );
 
-<div class="disabled"/>_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
+<div class="disabled">_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict)</div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_malloc_base[decl0]"><div><div class="token cpp_function">_malloc_base</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _In_ size_t _Size</div>
+<div class="expandable"><div class="disabled">    _In_ size_t _Size</div>
 <div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size</div></div>
     );
 
-<div class="disabled"/>_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRT_JIT_INTRINSIC _CRTRESTRICT _CRT_HYBRIDPATCHABLE</div>
+<div class="disabled">_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRT_JIT_INTRINSIC _CRTRESTRICT _CRT_HYBRIDPATCHABLE</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator)  <div class="token cpp_keyword ">__declspec</div>(restrict) </div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$malloc[decl0]"><div><div class="token cpp_function">malloc</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW size_t _Size</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW size_t _Size</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow)) <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size</div></div>
     );
 
-<div class="disabled"/>_Check_return_</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
 <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_msize_base[decl0]"><div><div class="token cpp_function">_msize_base</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_notnull_ void* _Block</div>
+<div class="expandable"><div class="disabled">    _Pre_notnull_ void* _Block</div>
 <div class="expanded">      <div class="token cpp_keyword ">void</div>* _Block</div></div>
     );
 
-<div class="disabled"/>_Check_return_</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRT_HYBRIDPATCHABLE</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRT_HYBRIDPATCHABLE</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) </div></div>
 <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_msize[decl0]"><div><div class="token cpp_function">_msize</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_notnull_ void* _Block</div>
+<div class="expandable"><div class="disabled">    _Pre_notnull_ void* _Block</div>
 <div class="expanded">      <div class="token cpp_keyword ">void</div>* _Block</div></div>
     );
 
-<div class="disabled"/>_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
+<div class="disabled">_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict)</div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_realloc_base[decl0]"><div><div class="token cpp_function">_realloc_base</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_maybenull_ _Post_invalid_  void*  _Block,</div>
+<div class="expandable"><div class="disabled">    _Pre_maybenull_ _Post_invalid_  void*  _Block,</div>
 <div class="expanded">         <div class="token cpp_keyword ">void</div>*  _Block,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                            size_t _Size</div>
+<div class="expandable"><div class="disabled">    _In_                            size_t _Size</div>
 <div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size</div></div>
     );
 
-<div class="disabled"/>_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT _CRT_HYBRIDPATCHABLE</div>
+<div class="disabled">_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT _CRT_HYBRIDPATCHABLE</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict) </div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$realloc[decl0]"><div><div class="token cpp_function">realloc</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
+<div class="expandable"><div class="disabled">    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
 <div class="expanded">        <div class="token cpp_keyword ">void</div>*  _Block,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW        size_t _Size</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW        size_t _Size</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow))        <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size</div></div>
     );
 
-<div class="disabled"/>_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
+<div class="disabled">_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict)</div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_recalloc_base[decl0]"><div><div class="token cpp_function">_recalloc_base</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
+<div class="expandable"><div class="disabled">    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
 <div class="expanded">        <div class="token cpp_keyword ">void</div>*  _Block,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                           size_t _Count,</div>
+<div class="expandable"><div class="disabled">    _In_                           size_t _Count,</div>
 <div class="expanded">                                <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Count,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                           size_t _Size</div>
+<div class="expandable"><div class="disabled">    _In_                           size_t _Size</div>
 <div class="expanded">                                <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size</div></div>
     );
 
-<div class="disabled"/>_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
+<div class="disabled">_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict)</div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_recalloc[decl0]"><div><div class="token cpp_function">_recalloc</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
+<div class="expandable"><div class="disabled">    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
 <div class="expanded">        <div class="token cpp_keyword ">void</div>*  _Block,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW        size_t _Count,</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW        size_t _Count,</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow))        <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Count,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW        size_t _Size</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW        size_t _Size</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow))        <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size</div></div>
     );
 
-<div class="expandable"/><div class="disabled"/>_ACRTIMP</div>
+<div class="expandable"><div class="disabled">_ACRTIMP</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
 <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_aligned_free[decl0]"><div><div class="token cpp_function">_aligned_free</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_maybenull_ _Post_invalid_ void* _Block</div>
+<div class="expandable"><div class="disabled">    _Pre_maybenull_ _Post_invalid_ void* _Block</div>
 <div class="expanded">        <div class="token cpp_keyword ">void</div>* _Block</div></div>
     );
 
-<div class="disabled"/>_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
+<div class="disabled">_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict)</div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_aligned_malloc[decl0]"><div><div class="token cpp_function">_aligned_malloc</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW size_t _Size,</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW size_t _Size,</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow)) <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                    size_t _Alignment</div>
+<div class="expandable"><div class="disabled">    _In_                    size_t _Alignment</div>
 <div class="expanded">                         <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Alignment</div></div>
     );
 
-<div class="disabled"/>_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
+<div class="disabled">_Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict)</div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_aligned_offset_malloc[decl0]"><div><div class="token cpp_function">_aligned_offset_malloc</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW size_t _Size,</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW size_t _Size,</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow)) <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                    size_t _Alignment,</div>
+<div class="expandable"><div class="disabled">    _In_                    size_t _Alignment,</div>
 <div class="expanded">                         <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Alignment,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                    size_t _Offset</div>
+<div class="expandable"><div class="disabled">    _In_                    size_t _Offset</div>
 <div class="expanded">                         <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Offset</div></div>
     );
 
-<div class="disabled"/>_Check_return_</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
 <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_aligned_msize[decl0]"><div><div class="token cpp_function">_aligned_msize</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_notnull_ void*  _Block,</div>
+<div class="expandable"><div class="disabled">    _Pre_notnull_ void*  _Block,</div>
 <div class="expanded">      <div class="token cpp_keyword ">void</div>*  _Block,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_          size_t _Alignment,</div>
+<div class="expandable"><div class="disabled">    _In_          size_t _Alignment,</div>
 <div class="expanded">               <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Alignment,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_          size_t _Offset</div>
+<div class="expandable"><div class="disabled">    _In_          size_t _Offset</div>
 <div class="expanded">               <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Offset</div></div>
     );
 
-<div class="disabled"/>_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
+<div class="disabled">_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict)</div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_aligned_offset_realloc[decl0]"><div><div class="token cpp_function">_aligned_offset_realloc</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
+<div class="expandable"><div class="disabled">    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
 <div class="expanded">        <div class="token cpp_keyword ">void</div>*  _Block,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW        size_t _Size,</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW        size_t _Size,</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow))        <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                           size_t _Alignment,</div>
+<div class="expandable"><div class="disabled">    _In_                           size_t _Alignment,</div>
 <div class="expanded">                                <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Alignment,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                           size_t _Offset</div>
+<div class="expandable"><div class="disabled">    _In_                           size_t _Offset</div>
 <div class="expanded">                                <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Offset</div></div>
     );
 
-<div class="disabled"/>_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
+<div class="disabled">_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict)</div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_aligned_offset_recalloc[decl0]"><div><div class="token cpp_function">_aligned_offset_recalloc</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
+<div class="expandable"><div class="disabled">    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
 <div class="expanded">        <div class="token cpp_keyword ">void</div>*  _Block,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW        size_t _Count,</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW        size_t _Count,</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow))        <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Count,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW        size_t _Size,</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW        size_t _Size,</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow))        <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                           size_t _Alignment,</div>
+<div class="expandable"><div class="disabled">    _In_                           size_t _Alignment,</div>
 <div class="expanded">                                <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Alignment,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                           size_t _Offset</div>
+<div class="expandable"><div class="disabled">    _In_                           size_t _Offset</div>
 <div class="expanded">                                <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Offset</div></div>
     );
 
-<div class="disabled"/>_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
+<div class="disabled">_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict)</div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_aligned_realloc[decl0]"><div><div class="token cpp_function">_aligned_realloc</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
+<div class="expandable"><div class="disabled">    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
 <div class="expanded">        <div class="token cpp_keyword ">void</div>*  _Block,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW        size_t _Size,</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW        size_t _Size,</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow))        <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                           size_t _Alignment</div>
+<div class="expandable"><div class="disabled">    _In_                           size_t _Alignment</div>
 <div class="expanded">                                <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Alignment</div></div>
     );
 
-<div class="disabled"/>_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
-<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
+<div class="disabled">_Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR _CRTRESTRICT</div>
 <div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">__declspec</div>(restrict)</div></div>
 <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_aligned_recalloc[decl0]"><div><div class="token cpp_function">_aligned_recalloc</div></div></div>(
-<div class="expandable"/><div class="disabled"/>    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
+<div class="expandable"><div class="disabled">    _Pre_maybenull_ _Post_invalid_ void*  _Block,</div>
 <div class="expanded">        <div class="token cpp_keyword ">void</div>*  _Block,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW        size_t _Count,</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW        size_t _Count,</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow))        <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Count,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_ _CRT_GUARDOVERFLOW        size_t _Size,</div>
+<div class="expandable"><div class="disabled">    _In_ _CRT_GUARDOVERFLOW        size_t _Size,</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(guard(overflow))        <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Size,</div></div>
-<div class="expandable"/><div class="disabled"/>    _In_                           size_t _Alignment</div>
+<div class="expandable"><div class="disabled">    _In_                           size_t _Alignment</div>
 <div class="expanded">                                <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _Alignment</div></div>
     );
 
-<div class="disabled"/>#if defined _DEBUG &amp;&amp; defined _CRTDBG_MAP_ALLOC</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;realloc&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;malloc&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;free&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;calloc&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_recalloc&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_msize&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_freea&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_expand&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_aligned_recalloc&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_aligned_realloc&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_aligned_offset_recalloc&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_aligned_offset_realloc&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_aligned_offset_malloc&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_aligned_msize&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_aligned_malloc&quot;)</div>
-<div class="disabled"/>    #pragma pop_macro(&quot;_aligned_free&quot;)
+<div class="disabled">#if defined _DEBUG &amp;&amp; defined _CRTDBG_MAP_ALLOC</div>
+<div class="disabled">    #pragma pop_macro(&quot;realloc&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;malloc&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;free&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;calloc&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_recalloc&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_msize&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_freea&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_expand&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_aligned_recalloc&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_aligned_realloc&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_aligned_offset_recalloc&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_aligned_offset_realloc&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_aligned_offset_malloc&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_aligned_msize&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_aligned_malloc&quot;)</div>
+<div class="disabled">    #pragma pop_macro(&quot;_aligned_free&quot;)
 #endif</div>
 
 
 
-<div class="expandable"/><div class="disabled"/>_CRT_END_C_HEADER
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
 </div>
 <div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
 </div></div>
