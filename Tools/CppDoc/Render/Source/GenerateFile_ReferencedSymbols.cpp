@@ -283,7 +283,7 @@ void GenerateReferencedSymbols(Ptr<FileLinesRecord> flr, StreamWriter& writer)
 	for (vint i = 0; i < flr->refSymbols.Count(); i++)
 	{
 		auto symbol = flr->refSymbols[i];
-		referencedSymbols.Add(symbol->uniqueId, symbol);
+		referencedSymbols.Add(GetSymbolId(symbol), symbol);
 	}
 
 	writer.WriteLine(L"referencedSymbols = {");
@@ -291,7 +291,7 @@ void GenerateReferencedSymbols(Ptr<FileLinesRecord> flr, StreamWriter& writer)
 	{
 		auto symbol = referencedSymbols.Values()[i];
 		writer.WriteString(L"    \'");
-		writer.WriteString(symbol->uniqueId);
+		writer.WriteString(referencedSymbols.Keys()[i]);
 		writer.WriteLine(L"\': {");
 
 		writer.WriteString(L"        \'displayNameInHtml\': \'");

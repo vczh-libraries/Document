@@ -76,6 +76,23 @@ WString GetDeclId(Ptr<Declaration> decl)
 }
 
 /***********************************************************************
+GetSymbolId
+***********************************************************************/
+
+WString GetSymbolId(Symbol* symbol)
+{
+	switch (symbol->GetCategory())
+	{
+	case symbol_component::SymbolCategory::Normal:
+	case symbol_component::SymbolCategory::Function:
+		return symbol->uniqueId;
+	case symbol_component::SymbolCategory::FunctionBody:
+		return symbol->GetFunctionSymbol_Fb()->uniqueId;
+	}
+	throw L"Unrecognizable symbol.";
+}
+
+/***********************************************************************
 GetSymbolDivClass
 ***********************************************************************/
 

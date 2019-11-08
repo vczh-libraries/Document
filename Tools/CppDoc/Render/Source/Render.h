@@ -160,6 +160,7 @@ struct StreamHolder
 
 extern void											EnumerateDecls(Symbol* symbol, const Func<void(Ptr<Declaration>, bool, vint)>& callback);
 extern WString										GetDeclId(Ptr<Declaration> decl);
+extern WString										GetSymbolId(Symbol* symbol);
 extern const wchar_t*								GetSymbolDivClass(Symbol* symbol);
 
 /***********************************************************************

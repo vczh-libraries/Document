@@ -326,15 +326,7 @@ void GenerateHtmlLine(
 					}
 				}
 				Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([], [\'");
-				switch (decl->symbol->GetCategory())
-				{
-				case symbol_component::SymbolCategory::Normal:
-					Use(html).WriteString(decl->symbol->uniqueId);
-					break;
-				case symbol_component::SymbolCategory::FunctionBody:
-					Use(html).WriteString(decl->symbol->GetFunctionSymbol_Fb()->uniqueId);
-					break;
-				}
+				Use(html).WriteString(GetSymbolId(decl->symbol));
 				Use(html).WriteString(L"\'])\">");
 			}
 			else
@@ -383,19 +375,7 @@ void GenerateHtmlLine(
 					{
 						if (j != 0) Use(html).WriteString(L", ");
 						Use(html).WriteString(L"\'");
-						{
-							auto symbol = symbols[j];
-							switch (symbol->GetCategory())
-							{
-							case symbol_component::SymbolCategory::Normal:
-							case symbol_component::SymbolCategory::Function:
-								Use(html).WriteString(symbol->uniqueId);
-								break;
-							case symbol_component::SymbolCategory::FunctionBody:
-								Use(html).WriteString(symbol->GetFunctionSymbol_Fb()->uniqueId);
-								break;
-							}
-						}
+						Use(html).WriteString(GetSymbolId(symbols[j]));
 						Use(html).WriteString(L"\'");
 					}
 				}
