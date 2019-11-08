@@ -168,6 +168,7 @@ extern void											WriteHtmlAttribute(const WString& text, StreamWriter& writ
 HTML Display Name
 ***********************************************************************/
 
+extern WString										GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol);
 extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
 extern WString										GetTypeDisplayNameInHtml(Ptr<Type> type);
 

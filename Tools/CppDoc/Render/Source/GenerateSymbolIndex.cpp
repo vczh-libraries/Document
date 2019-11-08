@@ -147,12 +147,6 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 		writer.WriteString(keyword);
 		writer.WriteString(L"</div>");
 		writer.WriteChar(L' ');
-		if (divClass)
-		{
-			writer.WriteString(L"<div class=\"");
-			writer.WriteString(divClass);
-			writer.WriteString(L"\">");
-		}
 		{
 			Ptr<TemplateSpec> templateSpec = symbol_type_resolving::GetTemplateSpecFromSymbol(context);
 			Ptr<SpecializationSpec> specializationSpec;
@@ -177,7 +171,18 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 				break;
 			}
 
+			if (divClass)
+			{
+				writer.WriteString(L"<div class=\"");
+				writer.WriteString(divClass);
+				writer.WriteString(L"\">");
+			}
 			WriteHtmlTextSingleLine(declName, writer);
+			if (divClass)
+			{
+				writer.WriteString(L"</div>");
+			}
+
 			if (specializationSpec)
 			{
 				WriteHtmlTextSingleLine(L"<", writer);
@@ -224,10 +229,6 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 				}
 				WriteHtmlTextSingleLine(L">", writer);
 			}
-		}
-		if (divClass)
-		{
-			writer.WriteString(L"</div>");
 		}
 
 		auto writeTag = [&](const WString& declId, const WString& tag, Ptr<Declaration> decl)

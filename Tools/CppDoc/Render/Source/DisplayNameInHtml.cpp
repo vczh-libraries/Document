@@ -225,6 +225,15 @@ WString GetTypeDisplayNameInHtml(Ptr<Type> type)
 GetSymbolDisplayNameInHtml
 ***********************************************************************/
 
+WString GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol)
+{
+	throw 0;
+}
+
+/***********************************************************************
+GetSymbolDisplayNameInHtml
+***********************************************************************/
+
 WString GetSymbolDisplayNameInHtml(Symbol* symbol)
 {
 	switch (symbol->kind)
