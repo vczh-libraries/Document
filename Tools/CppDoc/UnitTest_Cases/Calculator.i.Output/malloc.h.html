@@ -216,17 +216,17 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'intptr_t': {
-        'displayNameInHtml': '<span class="cpp_type">intptr_t</span>',
-        'impls': [
-            'NI$intptr_t'
-        ],
-        'decls': []
-    },
     'size_t': {
         'displayNameInHtml': '<span class="cpp_type">size_t</span>',
         'impls': [
             'NI$size_t'
+        ],
+        'decls': []
+    },
+    'intptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">intptr_t</span>',
+        'impls': [
+            'NI$intptr_t'
         ],
         'decls': []
     },
@@ -236,20 +236,6 @@ referencedSymbols = {
         'decls': [
             'FB$free[decl0]'
         ]
-    },
-    '_MarkAllocaS[impl0]::_Marker': {
-        'displayNameInHtml': '_Marker',
-        'impls': [
-            'NI$_MarkAllocaS[impl0]::_Marker'
-        ],
-        'decls': []
-    },
-    '_MarkAllocaS[impl0]::_Ptr': {
-        'displayNameInHtml': '_Ptr',
-        'impls': [
-            'NI$_MarkAllocaS[impl0]::_Ptr'
-        ],
-        'decls': []
     },
     '_HEAPINFO': {
         'displayNameInHtml': '<span class="cpp_type">_HEAPINFO</span>',
@@ -272,10 +258,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '_MallocaComputeSize[impl0]::_MarkedSize': {
-        'displayNameInHtml': '_MarkedSize',
+    '_MarkAllocaS[impl0]::_Ptr': {
+        'displayNameInHtml': '_Ptr',
         'impls': [
-            'NI$_MallocaComputeSize[impl0]::_MarkedSize'
+            'NI$_MarkAllocaS[impl0]::_Ptr'
+        ],
+        'decls': []
+    },
+    '_MarkAllocaS[impl0]::_Marker': {
+        'displayNameInHtml': '_Marker',
+        'impls': [
+            'NI$_MarkAllocaS[impl0]::_Marker'
         ],
         'decls': []
     },
@@ -285,19 +278,26 @@ referencedSymbols = {
             'NI$_freea[impl0]::_Marker'
         ],
         'decls': []
+    },
+    '_MallocaComputeSize[impl0]::_MarkedSize': {
+        'displayNameInHtml': '_MarkedSize',
+        'impls': [
+            'NI$_MallocaComputeSize[impl0]::_MarkedSize'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
-    'NI$intptr_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
     'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$intptr_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
     'FB$free[decl0]': { 'htmlFileName': 'corecrt_malloc.h', 'displayName': 'corecrt_malloc.h' },
-    'NI$_MarkAllocaS[impl0]::_Marker': null,
-    'NI$_MarkAllocaS[impl0]::_Ptr': null,
     'NI$_HEAPINFO': null,
     'NI$_MallocaComputeSize[impl0]::_Size': null,
     'NI$_freea[impl0]::_Memory': null,
-    'NI$_MallocaComputeSize[impl0]::_MarkedSize': null,
-    'NI$_freea[impl0]::_Marker': null
+    'NI$_MarkAllocaS[impl0]::_Ptr': null,
+    'NI$_MarkAllocaS[impl0]::_Marker': null,
+    'NI$_freea[impl0]::_Marker': null,
+    'NI$_MallocaComputeSize[impl0]::_MarkedSize': null
 };
 turnOnSymbol();
 </script>

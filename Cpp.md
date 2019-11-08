@@ -16,7 +16,8 @@
   - [x] Parse `UnitTest_Cases`, generate HTML and check.
   - [ ] Check template symbol in `SymbolIndex.html`.
   - [ ] Check carefully around all links.
-    - [ ] Make HTML generator a lib.
+    - [x] Make HTML generator a lib.
+    - [ ] `referencedSymbols` and `symbolToFiles` content must be sorted.
     - [ ] Template arguments are not located in HTML.
     - [ ] Fix display name of template symbols.
     - [ ] `expr->Accept` should have 3 links.

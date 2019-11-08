@@ -200,20 +200,20 @@ referencedSymbols = {
             'FB$_mm_hadd_epi16[decl1]'
         ]
     },
-    '_mm_hadds_pi16': {
-        'displayNameInHtml': '_mm_hadds_pi16(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_hadds_pi16[decl0]',
-            'FB$_mm_hadds_pi16[decl1]'
-        ]
-    },
     '_mm_hadd_pi32': {
         'displayNameInHtml': '_mm_hadd_pi32(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
         'impls': [],
         'decls': [
             'FB$_mm_hadd_pi32[decl0]',
             'FB$_mm_hadd_pi32[decl1]'
+        ]
+    },
+    '_mm_hadds_pi16': {
+        'displayNameInHtml': '_mm_hadds_pi16(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hadds_pi16[decl0]',
+            'FB$_mm_hadds_pi16[decl1]'
         ]
     },
     '_mm_hadds_epi16': {
@@ -224,20 +224,28 @@ referencedSymbols = {
             'FB$_mm_hadds_epi16[decl1]'
         ]
     },
-    '_mm_hsubs_pi16': {
-        'displayNameInHtml': '_mm_hsubs_pi16(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+    '_mm_maddubs_epi16': {
+        'displayNameInHtml': '_mm_maddubs_epi16(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
         'impls': [],
         'decls': [
-            'FB$_mm_hsubs_pi16[decl0]',
-            'FB$_mm_hsubs_pi16[decl1]'
+            'FB$_mm_maddubs_epi16[decl0]',
+            'FB$_mm_maddubs_epi16[decl1]'
         ]
     },
-    '_mm_hsub_pi16': {
-        'displayNameInHtml': '_mm_hsub_pi16(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+    '_mm_mulhrs_epi16': {
+        'displayNameInHtml': '_mm_mulhrs_epi16(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
         'impls': [],
         'decls': [
-            'FB$_mm_hsub_pi16[decl0]',
-            'FB$_mm_hsub_pi16[decl1]'
+            'FB$_mm_mulhrs_epi16[decl0]',
+            'FB$_mm_mulhrs_epi16[decl1]'
+        ]
+    },
+    '_mm_hsubs_epi16': {
+        'displayNameInHtml': '_mm_hsubs_epi16(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hsubs_epi16[decl0]',
+            'FB$_mm_hsubs_epi16[decl1]'
         ]
     },
     '_mm_sign_epi16': {
@@ -248,12 +256,20 @@ referencedSymbols = {
             'FB$_mm_sign_epi16[decl1]'
         ]
     },
-    '_mm_maddubs_pi16': {
-        'displayNameInHtml': '_mm_maddubs_pi16(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+    '_mm_shuffle_epi8': {
+        'displayNameInHtml': '_mm_shuffle_epi8(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
         'impls': [],
         'decls': [
-            'FB$_mm_maddubs_pi16[decl0]',
-            'FB$_mm_maddubs_pi16[decl1]'
+            'FB$_mm_shuffle_epi8[decl0]',
+            'FB$_mm_shuffle_epi8[decl1]'
+        ]
+    },
+    '_mm_hsubs_pi16': {
+        'displayNameInHtml': '_mm_hsubs_pi16(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hsubs_pi16[decl0]',
+            'FB$_mm_hsubs_pi16[decl1]'
         ]
     },
     '_mm_hsub_pi32': {
@@ -262,6 +278,46 @@ referencedSymbols = {
         'decls': [
             'FB$_mm_hsub_pi32[decl0]',
             'FB$_mm_hsub_pi32[decl1]'
+        ]
+    },
+    '_mm_hsub_epi16': {
+        'displayNameInHtml': '_mm_hsub_epi16(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hsub_epi16[decl0]',
+            'FB$_mm_hsub_epi16[decl1]'
+        ]
+    },
+    '_mm_sign_epi8': {
+        'displayNameInHtml': '_mm_sign_epi8(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_sign_epi8[decl0]',
+            'FB$_mm_sign_epi8[decl1]'
+        ]
+    },
+    '_mm_sign_epi32': {
+        'displayNameInHtml': '_mm_sign_epi32(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_sign_epi32[decl0]',
+            'FB$_mm_sign_epi32[decl1]'
+        ]
+    },
+    '_mm_sign_pi8': {
+        'displayNameInHtml': '_mm_sign_pi8(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_sign_pi8[decl0]',
+            'FB$_mm_sign_pi8[decl1]'
+        ]
+    },
+    '_mm_maddubs_pi16': {
+        'displayNameInHtml': '_mm_maddubs_pi16(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_maddubs_pi16[decl0]',
+            'FB$_mm_maddubs_pi16[decl1]'
         ]
     },
     '_mm_mulhrs_pi16': {
@@ -280,14 +336,6 @@ referencedSymbols = {
             'FB$_mm_hsub_epi32[decl1]'
         ]
     },
-    '_mm_hsubs_epi16': {
-        'displayNameInHtml': '_mm_hsubs_epi16(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_hsubs_epi16[decl0]',
-            'FB$_mm_hsubs_epi16[decl1]'
-        ]
-    },
     '_mm_shuffle_pi8': {
         'displayNameInHtml': '_mm_shuffle_pi8(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
         'impls': [],
@@ -296,100 +344,12 @@ referencedSymbols = {
             'FB$_mm_shuffle_pi8[decl1]'
         ]
     },
-    '_mm_mulhrs_epi16': {
-        'displayNameInHtml': '_mm_mulhrs_epi16(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+    '_mm_hsub_pi16': {
+        'displayNameInHtml': '_mm_hsub_pi16(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
         'impls': [],
         'decls': [
-            'FB$_mm_mulhrs_epi16[decl0]',
-            'FB$_mm_mulhrs_epi16[decl1]'
-        ]
-    },
-    '_mm_shuffle_epi8': {
-        'displayNameInHtml': '_mm_shuffle_epi8(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_shuffle_epi8[decl0]',
-            'FB$_mm_shuffle_epi8[decl1]'
-        ]
-    },
-    '_mm_hsub_epi16': {
-        'displayNameInHtml': '_mm_hsub_epi16(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_hsub_epi16[decl0]',
-            'FB$_mm_hsub_epi16[decl1]'
-        ]
-    },
-    '_mm_maddubs_epi16': {
-        'displayNameInHtml': '_mm_maddubs_epi16(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_maddubs_epi16[decl0]',
-            'FB$_mm_maddubs_epi16[decl1]'
-        ]
-    },
-    '_mm_sign_epi8': {
-        'displayNameInHtml': '_mm_sign_epi8(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_sign_epi8[decl0]',
-            'FB$_mm_sign_epi8[decl1]'
-        ]
-    },
-    '_mm_sign_pi8': {
-        'displayNameInHtml': '_mm_sign_pi8(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_sign_pi8[decl0]',
-            'FB$_mm_sign_pi8[decl1]'
-        ]
-    },
-    '_mm_sign_epi32': {
-        'displayNameInHtml': '_mm_sign_epi32(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_sign_epi32[decl0]',
-            'FB$_mm_sign_epi32[decl1]'
-        ]
-    },
-    '_mm_sign_pi16': {
-        'displayNameInHtml': '_mm_sign_pi16(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_sign_pi16[decl0]',
-            'FB$_mm_sign_pi16[decl1]'
-        ]
-    },
-    '_mm_abs_pi8': {
-        'displayNameInHtml': '_mm_abs_pi8(<span class="cpp_type">__m64</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_abs_pi8[decl0]',
-            'FB$_mm_abs_pi8[decl1]'
-        ]
-    },
-    '_mm_alignr_epi8': {
-        'displayNameInHtml': '_mm_alignr_epi8(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>, <span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_alignr_epi8[decl0]',
-            'FB$_mm_alignr_epi8[decl1]'
-        ]
-    },
-    '_mm_alignr_pi8': {
-        'displayNameInHtml': '_mm_alignr_pi8(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>, <span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_alignr_pi8[decl0]',
-            'FB$_mm_alignr_pi8[decl1]'
-        ]
-    },
-    '_mm_abs_epi32': {
-        'displayNameInHtml': '_mm_abs_epi32(<span class="cpp_type">__m128i</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_mm_abs_epi32[decl0]',
-            'FB$_mm_abs_epi32[decl1]'
+            'FB$_mm_hsub_pi16[decl0]',
+            'FB$_mm_hsub_pi16[decl1]'
         ]
     },
     '_mm_abs_epi8': {
@@ -400,20 +360,20 @@ referencedSymbols = {
             'FB$_mm_abs_epi8[decl1]'
         ]
     },
-    '_mm_abs_pi32': {
-        'displayNameInHtml': '_mm_abs_pi32(<span class="cpp_type">__m64</span>)',
+    '_mm_sign_pi16': {
+        'displayNameInHtml': '_mm_sign_pi16(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
         'impls': [],
         'decls': [
-            'FB$_mm_abs_pi32[decl0]',
-            'FB$_mm_abs_pi32[decl1]'
+            'FB$_mm_sign_pi16[decl0]',
+            'FB$_mm_sign_pi16[decl1]'
         ]
     },
-    '_mm_abs_pi16': {
-        'displayNameInHtml': '_mm_abs_pi16(<span class="cpp_type">__m64</span>)',
+    '_mm_alignr_epi8': {
+        'displayNameInHtml': '_mm_alignr_epi8(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>, <span class="cpp_keyword">int</span>)',
         'impls': [],
         'decls': [
-            'FB$_mm_abs_pi16[decl0]',
-            'FB$_mm_abs_pi16[decl1]'
+            'FB$_mm_alignr_epi8[decl0]',
+            'FB$_mm_alignr_epi8[decl1]'
         ]
     },
     '_mm_abs_epi16': {
@@ -424,12 +384,52 @@ referencedSymbols = {
             'FB$_mm_abs_epi16[decl1]'
         ]
     },
+    '_mm_abs_pi16': {
+        'displayNameInHtml': '_mm_abs_pi16(<span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_abs_pi16[decl0]',
+            'FB$_mm_abs_pi16[decl1]'
+        ]
+    },
     '_mm_sign_pi32': {
         'displayNameInHtml': '_mm_sign_pi32(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
         'impls': [],
         'decls': [
             'FB$_mm_sign_pi32[decl0]',
             'FB$_mm_sign_pi32[decl1]'
+        ]
+    },
+    '_mm_alignr_pi8': {
+        'displayNameInHtml': '_mm_alignr_pi8(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_alignr_pi8[decl0]',
+            'FB$_mm_alignr_pi8[decl1]'
+        ]
+    },
+    '_mm_abs_pi32': {
+        'displayNameInHtml': '_mm_abs_pi32(<span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_abs_pi32[decl0]',
+            'FB$_mm_abs_pi32[decl1]'
+        ]
+    },
+    '_mm_abs_pi8': {
+        'displayNameInHtml': '_mm_abs_pi8(<span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_abs_pi8[decl0]',
+            'FB$_mm_abs_pi8[decl1]'
+        ]
+    },
+    '_mm_abs_epi32': {
+        'displayNameInHtml': '_mm_abs_epi32(<span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_abs_epi32[decl0]',
+            'FB$_mm_abs_epi32[decl1]'
         ]
     }
 };
@@ -442,64 +442,64 @@ symbolToFiles = {
     'FB$_mm_hadd_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_hadd_epi16[decl0]': null,
     'FB$_mm_hadd_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_hadds_pi16[decl0]': null,
-    'FB$_mm_hadds_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_hadd_pi32[decl0]': null,
     'FB$_mm_hadd_pi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hadds_pi16[decl0]': null,
+    'FB$_mm_hadds_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_hadds_epi16[decl0]': null,
     'FB$_mm_hadds_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_hsubs_pi16[decl0]': null,
-    'FB$_mm_hsubs_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_hsub_pi16[decl0]': null,
-    'FB$_mm_hsub_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_maddubs_epi16[decl0]': null,
+    'FB$_mm_maddubs_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_mulhrs_epi16[decl0]': null,
+    'FB$_mm_mulhrs_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsubs_epi16[decl0]': null,
+    'FB$_mm_hsubs_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_sign_epi16[decl0]': null,
     'FB$_mm_sign_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_maddubs_pi16[decl0]': null,
-    'FB$_mm_maddubs_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_shuffle_epi8[decl0]': null,
+    'FB$_mm_shuffle_epi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsubs_pi16[decl0]': null,
+    'FB$_mm_hsubs_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_hsub_pi32[decl0]': null,
     'FB$_mm_hsub_pi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsub_epi16[decl0]': null,
+    'FB$_mm_hsub_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_sign_epi8[decl0]': null,
+    'FB$_mm_sign_epi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_sign_epi32[decl0]': null,
+    'FB$_mm_sign_epi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_sign_pi8[decl0]': null,
+    'FB$_mm_sign_pi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_maddubs_pi16[decl0]': null,
+    'FB$_mm_maddubs_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_mulhrs_pi16[decl0]': null,
     'FB$_mm_mulhrs_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_hsub_epi32[decl0]': null,
     'FB$_mm_hsub_epi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_hsubs_epi16[decl0]': null,
-    'FB$_mm_hsubs_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_shuffle_pi8[decl0]': null,
     'FB$_mm_shuffle_pi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_mulhrs_epi16[decl0]': null,
-    'FB$_mm_mulhrs_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_shuffle_epi8[decl0]': null,
-    'FB$_mm_shuffle_epi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_hsub_epi16[decl0]': null,
-    'FB$_mm_hsub_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_maddubs_epi16[decl0]': null,
-    'FB$_mm_maddubs_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_sign_epi8[decl0]': null,
-    'FB$_mm_sign_epi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_sign_pi8[decl0]': null,
-    'FB$_mm_sign_pi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_sign_epi32[decl0]': null,
-    'FB$_mm_sign_epi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_sign_pi16[decl0]': null,
-    'FB$_mm_sign_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_abs_pi8[decl0]': null,
-    'FB$_mm_abs_pi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_alignr_epi8[decl0]': null,
-    'FB$_mm_alignr_epi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_alignr_pi8[decl0]': null,
-    'FB$_mm_alignr_pi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_abs_epi32[decl0]': null,
-    'FB$_mm_abs_epi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsub_pi16[decl0]': null,
+    'FB$_mm_hsub_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_abs_epi8[decl0]': null,
     'FB$_mm_abs_epi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_abs_pi32[decl0]': null,
-    'FB$_mm_abs_pi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
-    'FB$_mm_abs_pi16[decl0]': null,
-    'FB$_mm_abs_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_sign_pi16[decl0]': null,
+    'FB$_mm_sign_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_alignr_epi8[decl0]': null,
+    'FB$_mm_alignr_epi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_abs_epi16[decl0]': null,
     'FB$_mm_abs_epi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_abs_pi16[decl0]': null,
+    'FB$_mm_abs_pi16[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_mm_sign_pi32[decl0]': null,
-    'FB$_mm_sign_pi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' }
+    'FB$_mm_sign_pi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_alignr_pi8[decl0]': null,
+    'FB$_mm_alignr_pi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_abs_pi32[decl0]': null,
+    'FB$_mm_abs_pi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_abs_pi8[decl0]': null,
+    'FB$_mm_abs_pi8[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_abs_epi32[decl0]': null,
+    'FB$_mm_abs_epi32[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' }
 };
 turnOnSymbol();
 </script>

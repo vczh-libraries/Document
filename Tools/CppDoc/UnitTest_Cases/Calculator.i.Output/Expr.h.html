@@ -183,18 +183,18 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    '_InterlockedDecrement': {
-        'displayNameInHtml': '_InterlockedDecrement(<span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)',
-        'impls': [],
-        'decls': [
-            'FB$_InterlockedDecrement[decl0]'
-        ]
-    },
     '_InterlockedIncrement': {
         'displayNameInHtml': '_InterlockedIncrement(<span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)',
         'impls': [],
         'decls': [
             'FB$_InterlockedIncrement[decl0]'
+        ]
+    },
+    '_InterlockedDecrement': {
+        'displayNameInHtml': '_InterlockedDecrement(<span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_InterlockedDecrement[decl0]'
         ]
     },
     'calculator': {
@@ -207,60 +207,14 @@ referencedSymbols = {
             'NF[3]$calculator'
         ]
     },
-    'calculator::IExprVisitor': {
-        'displayNameInHtml': '<span class="cpp_type">IExprVisitor</span>',
+    'calculator::NumberExpr': {
+        'displayNameInHtml': '<span class="cpp_type">NumberExpr</span>',
         'impls': [
-            'NI$calculator::IExprVisitor'
-        ],
-        'decls': []
-    },
-    'calculator::Ptr::Dec': {
-        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::Dec()',
-        'impls': [
-            'FB$calculator::Ptr::Dec[impl0]'
+            'NI$calculator::NumberExpr'
         ],
         'decls': [
-            'FB$calculator::Ptr::Dec[decl0]'
+            'NF[0]$calculator::NumberExpr'
         ]
-    },
-    'calculator::Ptr::Dec': {
-        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::Dec()',
-        'impls': [
-            'FB$calculator::Ptr::Dec[impl0]'
-        ],
-        'decls': [
-            'FB$calculator::Ptr::Dec[decl0]'
-        ]
-    },
-    'calculator::Ptr': {
-        'displayNameInHtml': '<span class="cpp_type">Ptr</span>',
-        'impls': [
-            'NI$calculator::Ptr'
-        ],
-        'decls': []
-    },
-    'calculator::Ptr::Inc': {
-        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::Inc()',
-        'impls': [
-            'FB$calculator::Ptr::Inc[impl0]'
-        ],
-        'decls': [
-            'FB$calculator::Ptr::Inc[decl0]'
-        ]
-    },
-    'calculator::Ptr::Inc': {
-        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::Inc()',
-        'impls': [
-            'FB$calculator::Ptr::Inc[impl0]'
-        ],
-        'decls': [
-            'FB$calculator::Ptr::Inc[decl0]'
-        ]
-    },
-    'calculator::Ptr::T': {
-        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::<span class="cpp_type">T</span>',
-        'impls': [],
-        'decls': []
     },
     'calculator::UnaryExpr': {
         'displayNameInHtml': '<span class="cpp_type">UnaryExpr</span>',
@@ -271,12 +225,74 @@ referencedSymbols = {
             'NF[0]$calculator::UnaryExpr'
         ]
     },
+    'calculator::Ptr::$__ctor3[impl0]::ptr': {
+        'displayNameInHtml': 'ptr',
+        'impls': [
+            'NI$calculator::Ptr::$__ctor3[impl0]::ptr'
+        ],
+        'decls': []
+    },
+    'calculator::IExprVisitor': {
+        'displayNameInHtml': '<span class="cpp_type">IExprVisitor</span>',
+        'impls': [
+            'NI$calculator::IExprVisitor'
+        ],
+        'decls': []
+    },
+    'calculator::Ptr::T': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::<span class="cpp_type">T</span>',
+        'impls': [],
+        'decls': []
+    },
+    'calculator::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>',
+        'impls': [
+            'NI$calculator::Ptr'
+        ],
+        'decls': []
+    },
     'calculator::Ptr::reference': {
         'displayNameInHtml': '<span class="cpp_type">Ptr</span>::<span class="cpp_field">reference</span>',
         'impls': [
             'NI$calculator::Ptr::reference'
         ],
         'decls': []
+    },
+    'calculator::Ptr::Inc': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::Inc()',
+        'impls': [
+            'FB$calculator::Ptr::Inc[impl0]'
+        ],
+        'decls': [
+            'FB$calculator::Ptr::Inc[decl0]'
+        ]
+    },
+    'calculator::Ptr::Inc': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::Inc()',
+        'impls': [
+            'FB$calculator::Ptr::Inc[impl0]'
+        ],
+        'decls': [
+            'FB$calculator::Ptr::Inc[decl0]'
+        ]
+    },
+    'calculator::Ptr::Dec': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::Dec()',
+        'impls': [
+            'FB$calculator::Ptr::Dec[impl0]'
+        ],
+        'decls': [
+            'FB$calculator::Ptr::Dec[decl0]'
+        ]
+    },
+    'calculator::Ptr::Dec': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::Dec()',
+        'impls': [
+            'FB$calculator::Ptr::Dec[impl0]'
+        ],
+        'decls': [
+            'FB$calculator::Ptr::Dec[decl0]'
+        ]
     },
     'calculator::BinaryExpr': {
         'displayNameInHtml': '<span class="cpp_type">BinaryExpr</span>',
@@ -294,36 +310,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'calculator::NumberExpr': {
-        'displayNameInHtml': '<span class="cpp_type">NumberExpr</span>',
-        'impls': [
-            'NI$calculator::NumberExpr'
-        ],
-        'decls': [
-            'NF[0]$calculator::NumberExpr'
-        ]
-    },
-    'calculator::Ptr::operator =[impl0]::ptr': {
-        'displayNameInHtml': 'ptr',
-        'impls': [
-            'NI$calculator::Ptr::operator =[impl0]::ptr'
-        ],
-        'decls': []
-    },
-    'calculator::Ptr::operator =2[impl0]::ptr': {
-        'displayNameInHtml': 'ptr',
-        'impls': [
-            'NI$calculator::Ptr::operator =2[impl0]::ptr'
-        ],
-        'decls': []
-    },
-    'calculator::Ptr::$__ctor4[impl0]::ptr': {
-        'displayNameInHtml': 'ptr',
-        'impls': [
-            'NI$calculator::Ptr::$__ctor4[impl0]::ptr'
-        ],
-        'decls': []
-    },
     'calculator::Expr': {
         'displayNameInHtml': '<span class="cpp_type">Expr</span>',
         'impls': [
@@ -331,9 +317,11 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'calculator::Ptr::Dec[impl0]::X': {
-        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::<span class="cpp_function">Dec</span>::<span class="cpp_type">X</span>',
-        'impls': [],
+    'calculator::Ptr::operator =[impl0]::ptr': {
+        'displayNameInHtml': 'ptr',
+        'impls': [
+            'NI$calculator::Ptr::operator =[impl0]::ptr'
+        ],
         'decls': []
     },
     'calculator::Expr::Ptr': {
@@ -348,10 +336,38 @@ referencedSymbols = {
         'impls': [],
         'decls': []
     },
-    'calculator::Ptr::$__ctor3[impl0]::ptr': {
+    'calculator::Ptr::$__ctor4[impl0]::ptr': {
         'displayNameInHtml': 'ptr',
         'impls': [
-            'NI$calculator::Ptr::$__ctor3[impl0]::ptr'
+            'NI$calculator::Ptr::$__ctor4[impl0]::ptr'
+        ],
+        'decls': []
+    },
+    'calculator::NumberExpr::Accept': {
+        'displayNameInHtml': '<span class="cpp_type">NumberExpr</span>::Accept(<span class="cpp_type">IExprVisitor</span> *)',
+        'impls': [
+            'FB$calculator::NumberExpr::Accept[impl0]'
+        ],
+        'decls': [
+            'FB$calculator::NumberExpr::Accept[decl0]'
+        ]
+    },
+    'calculator::Ptr::operator =2[impl0]::ptr': {
+        'displayNameInHtml': 'ptr',
+        'impls': [
+            'NI$calculator::Ptr::operator =2[impl0]::ptr'
+        ],
+        'decls': []
+    },
+    'calculator::Ptr::Dec[impl0]::X': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>::<span class="cpp_function">Dec</span>::<span class="cpp_type">X</span>',
+        'impls': [],
+        'decls': []
+    },
+    'calculator::UnaryOperator': {
+        'displayNameInHtml': '<span class="cpp_type">UnaryOperator</span>',
+        'impls': [
+            'NI$calculator::UnaryOperator'
         ],
         'decls': []
     },
@@ -363,29 +379,6 @@ referencedSymbols = {
         'decls': [
             'FB$calculator::UnaryExpr::Accept[decl0]'
         ]
-    },
-    'calculator::NumberExpr::Accept': {
-        'displayNameInHtml': '<span class="cpp_type">NumberExpr</span>::Accept(<span class="cpp_type">IExprVisitor</span> *)',
-        'impls': [
-            'FB$calculator::NumberExpr::Accept[impl0]'
-        ],
-        'decls': [
-            'FB$calculator::NumberExpr::Accept[decl0]'
-        ]
-    },
-    'calculator::UnaryOperator': {
-        'displayNameInHtml': '<span class="cpp_type">UnaryOperator</span>',
-        'impls': [
-            'NI$calculator::UnaryOperator'
-        ],
-        'decls': []
-    },
-    'calculator::BinaryOperator': {
-        'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>',
-        'impls': [
-            'NI$calculator::BinaryOperator'
-        ],
-        'decls': []
     },
     'calculator::Print': {
         'displayNameInHtml': 'Print(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)',
@@ -405,6 +398,13 @@ referencedSymbols = {
             'FB$calculator::Evaluate[decl0]'
         ]
     },
+    'calculator::BinaryOperator': {
+        'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>',
+        'impls': [
+            'NI$calculator::BinaryOperator'
+        ],
+        'decls': []
+    },
     'calculator::BinaryExpr::Accept': {
         'displayNameInHtml': '<span class="cpp_type">BinaryExpr</span>::Accept(<span class="cpp_type">IExprVisitor</span> *)',
         'impls': [
@@ -416,46 +416,46 @@ referencedSymbols = {
     }
 };
 symbolToFiles = {
-    'FB$_InterlockedDecrement[decl0]': { 'htmlFileName': 'intrin0.h', 'displayName': 'intrin0.h' },
     'FB$_InterlockedIncrement[decl0]': { 'htmlFileName': 'intrin0.h', 'displayName': 'intrin0.h' },
+    'FB$_InterlockedDecrement[decl0]': { 'htmlFileName': 'intrin0.h', 'displayName': 'intrin0.h' },
     'NF[0]$calculator': null,
     'NF[1]$calculator': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
     'NF[2]$calculator': { 'htmlFileName': 'Calculator.h', 'displayName': 'Calculator.h' },
     'NF[3]$calculator': { 'htmlFileName': 'Calculator.cpp2', 'displayName': 'Calculator.cpp' },
-    'NI$calculator::IExprVisitor': null,
-    'FB$calculator::Ptr::Dec[impl0]': null,
-    'FB$calculator::Ptr::Dec[decl0]': null,
-    'FB$calculator::Ptr::Dec[impl0]': null,
-    'FB$calculator::Ptr::Dec[decl0]': null,
-    'NI$calculator::Ptr': null,
-    'FB$calculator::Ptr::Inc[impl0]': null,
-    'FB$calculator::Ptr::Inc[decl0]': null,
-    'FB$calculator::Ptr::Inc[impl0]': null,
-    'FB$calculator::Ptr::Inc[decl0]': null,
+    'NI$calculator::NumberExpr': null,
+    'NF[0]$calculator::NumberExpr': null,
     'NI$calculator::UnaryExpr': null,
     'NF[0]$calculator::UnaryExpr': null,
+    'NI$calculator::Ptr::$__ctor3[impl0]::ptr': null,
+    'NI$calculator::IExprVisitor': null,
+    'NI$calculator::Ptr': null,
     'NI$calculator::Ptr::reference': null,
+    'FB$calculator::Ptr::Inc[impl0]': null,
+    'FB$calculator::Ptr::Inc[decl0]': null,
+    'FB$calculator::Ptr::Inc[impl0]': null,
+    'FB$calculator::Ptr::Inc[decl0]': null,
+    'FB$calculator::Ptr::Dec[impl0]': null,
+    'FB$calculator::Ptr::Dec[decl0]': null,
+    'FB$calculator::Ptr::Dec[impl0]': null,
+    'FB$calculator::Ptr::Dec[decl0]': null,
     'NI$calculator::BinaryExpr': null,
     'NF[0]$calculator::BinaryExpr': null,
     'NI$calculator::Ptr::$__ctor2[impl0]::_reference': null,
-    'NI$calculator::NumberExpr': null,
-    'NF[0]$calculator::NumberExpr': null,
-    'NI$calculator::Ptr::operator =[impl0]::ptr': null,
-    'NI$calculator::Ptr::operator =2[impl0]::ptr': null,
-    'NI$calculator::Ptr::$__ctor4[impl0]::ptr': null,
     'NI$calculator::Expr': null,
+    'NI$calculator::Ptr::operator =[impl0]::ptr': null,
     'NI$calculator::Expr::Ptr': null,
-    'NI$calculator::Ptr::$__ctor3[impl0]::ptr': null,
-    'FB$calculator::UnaryExpr::Accept[impl0]': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
-    'FB$calculator::UnaryExpr::Accept[decl0]': null,
+    'NI$calculator::Ptr::$__ctor4[impl0]::ptr': null,
     'FB$calculator::NumberExpr::Accept[impl0]': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
     'FB$calculator::NumberExpr::Accept[decl0]': null,
+    'NI$calculator::Ptr::operator =2[impl0]::ptr': null,
     'NI$calculator::UnaryOperator': null,
-    'NI$calculator::BinaryOperator': null,
+    'FB$calculator::UnaryExpr::Accept[impl0]': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
+    'FB$calculator::UnaryExpr::Accept[decl0]': null,
     'FB$calculator::Print[impl0]': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
     'FB$calculator::Print[decl0]': null,
     'FB$calculator::Evaluate[impl0]': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
     'FB$calculator::Evaluate[decl0]': null,
+    'NI$calculator::BinaryOperator': null,
     'FB$calculator::BinaryExpr::Accept[impl0]': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
     'FB$calculator::BinaryExpr::Accept[decl0]': null
 };
