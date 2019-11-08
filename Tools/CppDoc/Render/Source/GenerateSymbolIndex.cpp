@@ -64,7 +64,7 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 	bool isRoot = false;
 	bool searchForChild = false;
 	const wchar_t* keyword = nullptr;
-	const wchar_t* divClass = nullptr;
+	const wchar_t* divClass = GetSymbolDivClass(context);
 	switch (context->kind)
 	{
 	case symbol_component::SymbolKind::Enum:
@@ -79,7 +79,6 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 			{
 				keyword = L"enum";
 			}
-			divClass = L"cpp_type";
 		}
 		break;
 	case symbol_component::SymbolKind::Class:
@@ -87,7 +86,6 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 		{
 			searchForChild = true;
 			keyword = L"class";
-			divClass = L"cpp_type";
 		}
 		break;
 	case symbol_component::SymbolKind::Struct:
@@ -95,7 +93,6 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 		{
 			searchForChild = true;
 			keyword = L"struct";
-			divClass = L"cpp_type";
 		}
 		break;
 	case symbol_component::SymbolKind::Union:
@@ -103,29 +100,19 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 		{
 			searchForChild = true;
 			keyword = L"union";
-			divClass = L"cpp_type";
 		}
 		break;
 	case symbol_component::SymbolKind::TypeAlias:
 		keyword = L"typedef";
-		divClass = L"cpp_type";
 		break;
 	case symbol_component::SymbolKind::FunctionSymbol:
 		if (!context->GetAnyForwardDecl<ForwardFunctionDeclaration>()->implicitlyGeneratedMember)
 		{
 			keyword = L"function";
-			divClass = L"cpp_function";
 		}
 		break;
 	case symbol_component::SymbolKind::Variable:
 		keyword = L"variable";
-		if (auto parent = context->GetParentScope())
-		{
-			if (parent->GetImplDecl_NFb<ClassDeclaration>())
-			{
-				divClass = L"cpp_field";
-			}
-		}
 		break;
 	case symbol_component::SymbolKind::Namespace:
 		searchForChild = true;

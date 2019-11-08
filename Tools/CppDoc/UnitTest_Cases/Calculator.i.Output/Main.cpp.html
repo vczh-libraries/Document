@@ -30,31 +30,31 @@
 	<div class="token cpp_keyword ">while</div> (<div class="token cpp_keyword ">true</div>)
 	{
 <div class="expandable"><div class="disabled">		scanf_s(&quot;%1023s&quot;, input, (unsigned)MAX_BUFFER);</div>
-<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['scanf_s'], ['scanf_s'])">scanf_s</div>(<div class="token cpp_string ">&quot;%1023s&quot;</div>, <div class="ref" onclick="jumpToSymbol([], ['main[impl0]::input'])">input</div>, (<div class="token cpp_keyword ">unsigned</div>)<div class="token cpp_number ">1024</div>);</div></div>
-		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol(['strcmp'], ['strcmp'])">strcmp</div>(<div class="ref" onclick="jumpToSymbol([], ['main[impl0]::input'])">input</div>, <div class="token cpp_string ">&quot;exit&quot;</div>) == <div class="token cpp_number ">0</div>)
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['scanf_s'], ['scanf_s'])"><div class="token cpp_function">scanf_s</div></div>(<div class="token cpp_string ">&quot;%1023s&quot;</div>, <div class="ref" onclick="jumpToSymbol([], ['main[impl0]::input'])">input</div>, (<div class="token cpp_keyword ">unsigned</div>)<div class="token cpp_number ">1024</div>);</div></div>
+		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol(['strcmp'], ['strcmp'])"><div class="token cpp_function">strcmp</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main[impl0]::input'])">input</div>, <div class="token cpp_string ">&quot;exit&quot;</div>) == <div class="token cpp_number ">0</div>)
 		{
 			<div class="token cpp_keyword ">break</div>;
 		}
 
-		<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$main[impl0]::expr"><div>expr</div></div> = <div class="ref" onclick="jumpToSymbol(['calculator::Parse'], ['calculator::Parse'])">Parse</div>(<div class="ref" onclick="jumpToSymbol([], ['main[impl0]::input'])">input</div>);
-		<div class="ref" onclick="jumpToSymbol(['calculator::Print'], ['calculator::Print'])">Print</div>(<div class="ref" onclick="jumpToSymbol([], ['main[impl0]::expr'])">expr</div>);
-		<div class="ref" onclick="jumpToSymbol(['printf'], ['printf'])">printf</div>(<div class="token cpp_string ">&quot; = %g\n&quot;</div>, <div class="ref" onclick="jumpToSymbol(['calculator::Evaluate'], ['calculator::Evaluate'])">Evaluate</div>(<div class="ref" onclick="jumpToSymbol([], ['main[impl0]::expr'])">expr</div>));
+		<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$main[impl0]::expr"><div>expr</div></div> = <div class="ref" onclick="jumpToSymbol(['calculator::Parse'], ['calculator::Parse'])"><div class="token cpp_function">Parse</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main[impl0]::input'])">input</div>);
+		<div class="ref" onclick="jumpToSymbol(['calculator::Print'], ['calculator::Print'])"><div class="token cpp_function">Print</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main[impl0]::expr'])">expr</div>);
+		<div class="ref" onclick="jumpToSymbol(['printf'], ['printf'])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot; = %g\n&quot;</div>, <div class="ref" onclick="jumpToSymbol(['calculator::Evaluate'], ['calculator::Evaluate'])"><div class="token cpp_function">Evaluate</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main[impl0]::expr'])">expr</div>));
 	}
-	<div class="ref" onclick="jumpToSymbol(['JustForFun2'], ['JustForFun', 'JustForFun2'])">JustForFun</div>(<div class="token cpp_keyword ">nullptr</div>);
+	<div class="ref" onclick="jumpToSymbol(['JustForFun2'], ['JustForFun', 'JustForFun2'])"><div class="token cpp_function">JustForFun</div></div>(<div class="token cpp_keyword ">nullptr</div>);
 	<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
 }
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
     'JustForFun': {
-        'displayNameInHtml': 'JustForFun()',
+        'displayNameInHtml': '<span class="cpp_function">JustForFun</span>()',
         'impls': [
             'FB$JustForFun[impl0]'
         ],
         'decls': []
     },
     'JustForFun2': {
-        'displayNameInHtml': 'JustForFun(<span class="cpp_keyword">int</span><span class="cpp_keyword"> const</span> *( &( <span class="cpp_keyword">__fastcall</span> *<span class="cpp_keyword"> const</span> &)(<span class="cpp_type">Expr</span><span class="cpp_keyword"> const</span><span class="cpp_keyword"> volatile</span> &&, <span class="cpp_keyword">int</span> <span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>:: *))[<span class="cpp_keyword">(expr)</span>])',
+        'displayNameInHtml': '<span class="cpp_function">JustForFun</span>(<span class="cpp_keyword">int</span><span class="cpp_keyword"> const</span> *( &( <span class="cpp_keyword">__fastcall</span> *<span class="cpp_keyword"> const</span> &)(<span class="cpp_type">Expr</span><span class="cpp_keyword"> const</span><span class="cpp_keyword"> volatile</span> &&, <span class="cpp_keyword">int</span> <span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>:: *))[<span class="cpp_keyword">(expr)</span>])',
         'impls': [
             'FB$JustForFun2[impl0]'
         ],
@@ -71,7 +71,7 @@ referencedSymbols = {
         ]
     },
     'calculator::Evaluate': {
-        'displayNameInHtml': 'Evaluate(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">Evaluate</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)',
         'impls': [
             'FB$calculator::Evaluate[impl0]'
         ],
@@ -94,7 +94,7 @@ referencedSymbols = {
         'decls': []
     },
     'calculator::Parse': {
-        'displayNameInHtml': 'Parse(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">Parse</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
         'impls': [
             'FB$calculator::Parse[impl0]'
         ],
@@ -103,7 +103,7 @@ referencedSymbols = {
         ]
     },
     'calculator::Print': {
-        'displayNameInHtml': 'Print(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">Print</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)',
         'impls': [
             'FB$calculator::Print[impl0]'
         ],
@@ -126,21 +126,21 @@ referencedSymbols = {
         'decls': []
     },
     'printf': {
-        'displayNameInHtml': 'printf(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)',
+        'displayNameInHtml': '<span class="cpp_function">printf</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)',
         'impls': [
             'FB$printf[impl0]'
         ],
         'decls': []
     },
     'scanf_s': {
-        'displayNameInHtml': 'scanf_s(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)',
+        'displayNameInHtml': '<span class="cpp_function">scanf_s</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)',
         'impls': [
             'FB$scanf_s[impl0]'
         ],
         'decls': []
     },
     'strcmp': {
-        'displayNameInHtml': 'strcmp(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">strcmp</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
         'impls': [],
         'decls': [
             'FB$strcmp[decl0]'

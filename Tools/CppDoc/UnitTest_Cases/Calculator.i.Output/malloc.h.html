@@ -186,7 +186,7 @@
 <div class="expandable"><div class="disabled">            if (_Marker == _ALLOCA_S_HEAP_MARKER)</div>
 <div class="expanded">            <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_freea[impl0]::_Marker'])">_Marker</div> == <div class="token cpp_number ">0xDDDD</div>)</div></div>
             {
-                <div class="ref" onclick="jumpToSymbol(['free'], ['free'])">free</div>(<div class="ref" onclick="jumpToSymbol([], ['_freea[impl0]::_Memory'])"><div class="token cpp_argument">_Memory</div></div>);
+                <div class="ref" onclick="jumpToSymbol(['free'], ['free'])"><div class="token cpp_function">free</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_freea[impl0]::_Memory'])"><div class="token cpp_argument">_Memory</div></div>);
             }
 <div class="disabled">            #ifdef _ASSERTE</div>
 <div class="disabled">            else if (_Marker != _ALLOCA_S_STACK_MARKER)</div>
@@ -266,7 +266,7 @@ referencedSymbols = {
         'decls': []
     },
     'free': {
-        'displayNameInHtml': 'free(<span class="cpp_keyword">void</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">free</span>(<span class="cpp_keyword">void</span> *)',
         'impls': [],
         'decls': [
             'FB$free[decl0]'

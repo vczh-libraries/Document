@@ -122,6 +122,7 @@ const wchar_t* GetSymbolDivClass(Symbol* symbol)
 			}
 		}
 		break;
+	case symbol_component::SymbolKind::FunctionSymbol:
 	case symbol_component::SymbolKind::FunctionBodySymbol:
 		return L"cpp_function";
 	}

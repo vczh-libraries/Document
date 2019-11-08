@@ -20,7 +20,7 @@
 	{
 		<div class="ref" onclick="jumpToSymbol([], ['main[impl0]::sum'])">sum</div> += <div class="ref" onclick="jumpToSymbol([], ['main[impl0]::i'])">i</div>;
 	}
-	<div class="ref" onclick="jumpToSymbol(['printf'], ['printf'])">printf</div>(<div class="token cpp_string ">&quot;1 + ... + 100 = %i&quot;</div>, <div class="ref" onclick="jumpToSymbol([], ['main[impl0]::sum'])">sum</div>);
+	<div class="ref" onclick="jumpToSymbol(['printf'], ['printf'])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;1 + ... + 100 = %i&quot;</div>, <div class="ref" onclick="jumpToSymbol([], ['main[impl0]::sum'])">sum</div>);
 }
 </div></div>
 <script type="text/javascript">
@@ -40,7 +40,7 @@ referencedSymbols = {
         'decls': []
     },
     'printf': {
-        'displayNameInHtml': 'printf(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)',
+        'displayNameInHtml': '<span class="cpp_function">printf</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)',
         'impls': [
             'FB$printf[impl0]'
         ],
