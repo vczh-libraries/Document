@@ -11,8 +11,20 @@
 
 ## TODO
 
+- Built-in types and functions can be found [here](https://clang.llvm.org/docs/LanguageExtensions.html)
+  - `__is_*` and `__has_*` return null, arguments could be expressions or types, create a new Expr subclass.
+    - This should be handled since arguments are not expressions
+  - When more built-in things are found, list below:
+    - Types
+      - `__make_integer_seq<A, B>` -> `A<B>`
+    - Functions (by default: ADL searching found nothing and evaluate to no type)
+      - `__builtin_addressof(EXPR)` -> `&EXPR` without calling overloaded operators
+      - `__builtin_huge_valf(...)` -> float
+      - `__builtin_nanf(...)` -> float
+      - `__builtin_nansf(...)` -> float
+
 - [ ] Next Demo!
-  - [ ] `__make_integer_seq<A, B>` -> `A<B>`
+  - [ ] `__make_integer_seq`
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.
