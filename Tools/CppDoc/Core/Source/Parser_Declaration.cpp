@@ -518,23 +518,34 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<Symbol> specSymbol, 
 				case symbol_component::SymbolKind::Variable:
 				case symbol_component::SymbolKind::ValueAlias:
 					{
-						if (pa.scopeSymbol->TryGetChildren_NFb(symbol->name))
+						if (auto pChildren = pa.scopeSymbol->TryGetChildren_NFb(symbol->name))
 						{
-							throw StopParsingException(cursor);
+							if (!pChildren->Contains(symbol.Obj()))
+							{
+								throw StopParsingException(cursor);
+							}
 						}
-						pa.scopeSymbol->AddChild_NFb(symbol->name, symbol);
+						else
+						{
+							pa.scopeSymbol->AddChild_NFb(symbol->name, symbol);
+						}
 					}
 					break;
 				case symbol_component::SymbolKind::FunctionSymbol:
 					{
 						if (auto pChildren = pa.scopeSymbol->TryGetChildren_NFb(symbol->name))
 						{
+							if (pChildren->Contains(symbol.Obj()))
+							{
+								goto SKIP_USING;
+							}
 							if (pChildren->Get(0)->kind != symbol_component::SymbolKind::FunctionSymbol)
 							{
 								throw StopParsingException(cursor);
 							}
 						}
 						pa.scopeSymbol->AddChild_NFb(symbol->name, symbol);
+					SKIP_USING:;
 					}
 					break;
 				default:
