@@ -6,6 +6,9 @@ TEST_CASE(TestParseGenericFunction)
 template<typename T, typename U>
 auto P(T, U)->decltype(T{}+U{});
 
+template<typename T, typename U>
+auto P2(T t, decltype(t, U{}) u)->decltype(t + u);
+
 template<typename T, int ...ts>
 auto F(T t)
 {
@@ -16,6 +19,8 @@ auto F(T t)
 	auto output = LR"(
 template<typename T, typename U>
 __forward P: (auto->decltype((T{} + U{}))) (T, U);
+template<typename T, typename U>
+__forward P2: (auto->decltype((t + u))) (T, decltype((t, U{})));
 template<typename T, int ...ts>
 F: auto (t: T)
 {
@@ -28,6 +33,9 @@ F: auto (t: T)
 
 	AssertExpr(pa, L"P",					L"P",					L"<::P::[T], ::P::[U]> any_t __cdecl(::P::[T], ::P::[U]) * $PR"						);
 	AssertExpr(pa, L"P<int, double>",		L"P<int, double>",		L"double __cdecl(__int32, double) * $PR"											);
+
+	AssertExpr(pa, L"P2",					L"P2",					L"<::P2::[T], ::P2::[U]> any_t __cdecl(::P2::[T], ::P2::[U]) * $PR"					);
+	AssertExpr(pa, L"P2<int, double>",		L"P2<int, double>",		L"double __cdecl(__int32, double) * $PR"											);
 
 	AssertExpr(pa, L"F",					L"F",					L"<::F::[T], ...*> any_t __cdecl(::F::[T]) * $PR"									);
 	AssertExpr(pa, L"F<void*,1,2,3>",		L"F<void *, 1, 2, 3>",	L"{void * $L, __int32 $PR, __int32 $PR, __int32 $PR} __cdecl(void *) * $PR"			);
