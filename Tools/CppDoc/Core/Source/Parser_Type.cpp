@@ -255,7 +255,25 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 
 			if (cursor->token.length == SIZE__make_integer_seq && wcsncmp(cursor->token.reading, NAME__make_integer_seq, SIZE__make_integer_seq) == 0)
 			{
-				throw StopParsingException(cursor);
+				SkipToken(cursor);
+				RequireToken(cursor, CppTokens::LT);
+				auto sequenceType = ParseIdType(pa, cursor);
+				RequireToken(cursor, CppTokens::COMMA);
+				auto elementType = ParseType(pa, cursor);
+				RequireToken(cursor, CppTokens::COMMA);
+				ParseExpr(pa, pea_GenericArgument(), cursor);
+				RequireToken(cursor, CppTokens::GT);
+
+				auto genericType = MakePtr<GenericType>();
+				genericType->type = sequenceType;
+
+				VariadicItem<GenericArgument> argument;
+				argument.isVariadic = false;
+				argument.item.type = elementType;
+				genericType->arguments.Add(argument);
+
+				typeResult = genericType;
+				goto SKIP_NORMAL_PARSING;
 			}
 		}
 		// NAME

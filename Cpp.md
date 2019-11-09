@@ -16,7 +16,7 @@
     - This should be handled since arguments are not expressions
   - When more built-in things are found, list below:
     - Types
-      - `__make_integer_seq<A, B>` -> `A<B>`
+      - `__make_integer_seq<A, B, Size>` -> `A<B>`
     - Functions (by default: ADL searching found nothing and evaluate to no type)
       - `__builtin_addressof(EXPR)` -> `&EXPR` without calling overloaded operators
       - `__builtin_huge_valf(...)` -> float
@@ -24,7 +24,6 @@
       - `__builtin_nansf(...)` -> float
 
 - [ ] Next Demo!
-  - [ ] `__make_integer_seq`
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.
