@@ -670,6 +670,7 @@ ParseDeclaration_FuncVar
 ***********************************************************************/
 
 #define FUNCVAR_DECORATORS(F)\
+	F(CONSTEXPR, Constexpr)\
 	F(DECL_EXTERN, Extern)\
 	F(STATIC, Static)\
 	F(MUTABLE, Mutable)\
@@ -682,6 +683,7 @@ ParseDeclaration_FuncVar
 	F(__FORCEINLINE, __ForceInline)\
 
 #define FUNCVAR_DECORATORS_FOR_FUNCTION(F)\
+	F(Constexpr)\
 	F(Extern)\
 	F(Friend)\
 	F(Static)\
@@ -695,6 +697,7 @@ ParseDeclaration_FuncVar
 	F(Delete)\
 
 #define FUNCVAR_DECORATORS_FOR_VARIABLE(F)\
+	F(Constexpr)\
 	F(Extern)\
 	F(Static)\
 	F(Mutable)\
@@ -940,6 +943,7 @@ void ParseDeclaration_Variable(
 		decl->name = declarator->name;
 		decl->type = declarator->type;
 		decl->expr = declarator->initializer->arguments[0].item;
+		decl->decoratorConstexpr = decoratorConstexpr;
 		decl->needResolveTypeFromInitializer = IsPendingType(declarator->type);
 		output.Add(decl);
 
@@ -1170,7 +1174,7 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 			nullptr,
 			nullptr,
 			declarators[i],
-			false, false, false, false, false, false, false, false,
+			false, false, false, false, false, false, false, false, false,
 			cursor,
 			output
 		);

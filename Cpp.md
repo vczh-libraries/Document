@@ -41,7 +41,7 @@
 - [ ] `decltype(EXPR)::ChildType`
 - [ ] `::new`
 - [ ] `::delete`
-- [ ] Treat `constexpr` like `static`, not `const`
+- [x] Treat `constexpr` like `static`, not `const`
 - [ ] Connect function with forward declarations containing `decltype(EXPR)` in expression type.
 - [ ] Pass variadic template argument to placement new expression.
 - [ ] `GenerateMembers` on `DeclInstance`.

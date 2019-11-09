@@ -129,10 +129,9 @@ public:
 	{
 		if (auto type = peerType.Cast<DecorateType>())
 		{
-			result = self->isConstExpr == type->isConstExpr
-				&& self->isConst == type->isConst
-				&& self->isVolatile == type->isVolatile
-				&& IsSameResolvedType(self->type, type->type, equivalentNames);
+			result =	self->isConst == type->isConst
+				&&		self->isVolatile == type->isVolatile
+				&&		IsSameResolvedType(self->type, type->type, equivalentNames);
 		}
 	}
 

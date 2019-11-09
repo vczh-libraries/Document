@@ -133,6 +133,6 @@ namespace symbol_totsys_impl
 
 	ITsys* ProcessDecorateType(const ParsingArguments& pa, DecorateType* self, ExprTsysItem arg)
 	{
-		return arg.tsys->CVOf({ (self->isConstExpr || self->isConst), self->isVolatile });
+		return arg.tsys->CVOf({ self->isConst, self->isVolatile });
 	}
 }

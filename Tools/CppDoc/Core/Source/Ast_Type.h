@@ -164,7 +164,6 @@ public:
 	ITypeVisitor_ACCEPT;
 
 	Ptr<Type>									type;
-	bool										isConstExpr = false;
 	bool										isConst = false;
 	bool										isVolatile = false;
 };

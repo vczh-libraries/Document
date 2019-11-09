@@ -533,7 +533,6 @@ public:
 	void Visit(DecorateType* self)override
 	{
 		Log(self->type, writer);
-		if (self->isConstExpr)	writer.WriteString(L" constexpr");
 		if (self->isConst)		writer.WriteString(L" const");
 		if (self->isVolatile)	writer.WriteString(L" volatile");
 	}
@@ -881,6 +880,7 @@ private:
 
 	void WriteHeader(ForwardVariableDeclaration* self)
 	{
+		if (self->decoratorConstexpr) writer.WriteString(L"constexpr ");
 		if (self->decoratorExtern) writer.WriteString(L"extern ");
 		if (self->decoratorMutable) writer.WriteString(L"mutable ");
 		if (self->decoratorRegister) writer.WriteString(L"register ");
@@ -900,6 +900,7 @@ private:
 	void WriteHeader(ForwardFunctionDeclaration* self)
 	{
 		if (self->decoratorExplicit) writer.WriteString(L"explicit ");
+		if (self->decoratorConstexpr) writer.WriteString(L"constexpr ");
 		if (self->decoratorExtern) writer.WriteString(L"extern ");
 		if (self->decoratorFriend) writer.WriteString(L"friend ");
 		if (self->decoratorInline) writer.WriteString(L"inline ");
@@ -1273,6 +1274,7 @@ public:
 	{
 		WriteTemplateSpecIfExists(self->templateSpec);
 		writer.WriteString(L"using_value ");
+		if (self->decoratorConstexpr) writer.WriteString(L"constexpr ");
 		writer.WriteString(self->name.name);
 		writer.WriteString(L": ");
 		Log(self->type, writer);

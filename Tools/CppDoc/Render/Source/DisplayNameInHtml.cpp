@@ -133,7 +133,6 @@ public:
 	{
 		if (self->isVolatile) result = L"<span class=\"cpp_keyword\"> volatile</span>" + result;
 		if (self->isConst) result = L"<span class=\"cpp_keyword\"> const</span>" + result;
-		if (self->isConstExpr) result = L"<span class=\"cpp_keyword\"> constexpr</span>" + result;
 		self->type->Accept(this);
 	}
 

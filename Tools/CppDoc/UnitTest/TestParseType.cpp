@@ -44,24 +44,16 @@ TEST_CASE(TestParseType_Short)
 {
 	AssertType(L"decltype(auto)",					L"decltype(auto)"													);
 	AssertType(L"decltype(0)",						L"decltype(0)",							L"__int32"					);
-	AssertType(L"constexpr int",					L"int constexpr",						L"__int32 const"			);
 	AssertType(L"const int",						L"int const",							L"__int32 const"			);
 	AssertType(L"volatile int",						L"int volatile",						L"__int32 volatile"			);
-	AssertType(L"constexpr const int",				L"int constexpr const",					L"__int32 const"			);
 	AssertType(L"const volatile int",				L"int const volatile",					L"__int32 const volatile"	);
-	AssertType(L"volatile constexpr int",			L"int constexpr volatile",				L"__int32 const volatile"	);
-	AssertType(L"volatile const constexpr int",		L"int constexpr const volatile",		L"__int32 const volatile"	);
 }
 
 TEST_CASE(TestParseType_Long)
 {
-	AssertType(L"int constexpr",					L"int constexpr",						L"__int32 const"					);
 	AssertType(L"int const",						L"int const",							L"__int32 const"					);
 	AssertType(L"int volatile",						L"int volatile",						L"__int32 volatile"					);
-	AssertType(L"int constexpr const",				L"int constexpr const",					L"__int32 const"					);
 	AssertType(L"int const volatile",				L"int const volatile",					L"__int32 const volatile"			);
-	AssertType(L"int volatile constexpr",			L"int constexpr volatile",				L"__int32 const volatile"			);
-	AssertType(L"int volatile const constexpr",		L"int constexpr const volatile",		L"__int32 const volatile"			);
 }
 
 TEST_CASE(TestParseType_ShortDeclarator)
@@ -84,9 +76,9 @@ TEST_CASE(TestParseType_LongDeclarator)
 	AssertType(L"int([1])[2][3]",					L"int [3] [2] [1]",						L"__int32 [,,]"		);
 	AssertType(L"int(*&)[][]",						L"int [] [] * &",						L"__int32 [,] * &"	);
 
-	AssertType(L"int(int[][2])",															L"int (int [2] *)",															L"__int32 __cdecl(__int32 [] *)"		);
-	AssertType(L"auto ()->int constexpr const volatile & && override noexcept throw()",		L"(auto->int constexpr const volatile & &&) () override noexcept throw()",	L"__int32 const volatile & __cdecl()"	);
-	AssertType(L"auto ()constexpr const volatile & && ->int override noexcept throw()",		L"(auto->int) () constexpr const volatile & && override noexcept throw()",	L"__int32 __cdecl()"					);
+	AssertType(L"int(int[][2])",															L"int (int [2] *)",													L"__int32 __cdecl(__int32 [] *)"		);
+	AssertType(L"auto ()->int const volatile & && override noexcept throw()",				L"(auto->int const volatile & &&) () override noexcept throw()",	L"__int32 const volatile & __cdecl()"	);
+	AssertType(L"auto ()const volatile & && ->int override noexcept throw()",				L"(auto->int) () const volatile & && override noexcept throw()",	L"__int32 __cdecl()"					);
 
 	AssertType(L"int __cdecl(int)",					L"int (int) __cdecl",					L"__int32 __cdecl(__int32)"							);
 	AssertType(L"int __clrcall(int)",				L"int (int) __clrcall",					L"__int32 __clrcall(__int32)"						);

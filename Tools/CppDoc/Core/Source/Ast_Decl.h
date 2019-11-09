@@ -91,6 +91,7 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Type>										type;
+	bool											decoratorConstexpr = false;
 	bool											decoratorExtern = false;
 	bool											decoratorStatic = false;
 	bool											decoratorMutable = false;
@@ -121,6 +122,7 @@ public:
 	Ptr<SpecializationSpec>							specializationSpec;
 	Ptr<Type>										type;
 	CppMethodType									methodType = CppMethodType::Function;
+	bool											decoratorConstexpr = false;
 	bool											decoratorExtern = false;
 	bool											decoratorFriend = false;
 	bool											decoratorStatic = false;
@@ -283,6 +285,7 @@ public:
 	Ptr<TemplateSpec>								templateSpec;
 	Ptr<Type>										type;
 	Ptr<Expr>										expr;
+	bool											decoratorConstexpr = false;
 	bool											needResolveTypeFromInitializer = false;
 };
 

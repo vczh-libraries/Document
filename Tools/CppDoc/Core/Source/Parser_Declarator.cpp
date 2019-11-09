@@ -285,18 +285,6 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 		type->type = baselineType;
 		return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
 	}
-	else if (TestToken(cursor, CppTokens::CONSTEXPR))
-	{
-		// constexpr DECLARATOR
-		auto type = baselineType.Cast<DecorateType>();
-		if (!type)
-		{
-			type = MakePtr<DecorateType>();
-			type->type = baselineType;
-		}
-		type->isConstExpr = true;
-		return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
-	}
 	else if (TestToken(cursor, CppTokens::CONST))
 	{
 		// const DECLARATOR

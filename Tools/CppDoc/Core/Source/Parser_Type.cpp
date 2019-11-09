@@ -301,19 +301,6 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, bool typenameType, Ptr<CppT
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
 		return type;
 	}
-	else if (TestToken(cursor, CppTokens::CONSTEXPR))
-	{
-		// constexpr TYPE
-		auto type = ParseShortType(pa, typenameType, cursor);
-		auto dt = type.Cast<DecorateType>();
-		if (!dt)
-		{
-			dt = MakePtr<DecorateType>();
-			dt->type = type;
-		}
-		dt->isConstExpr = true;
-		return dt;
-	}
 	else if (TestToken(cursor, CppTokens::CONST))
 	{
 		// const TYPE
@@ -370,19 +357,7 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 
 	while (true)
 	{
-		if (TestToken(cursor, CppTokens::CONSTEXPR))
-		{
-			// TYPE constexpr
-			auto type = typeResult.Cast<DecorateType>();
-			if (!type)
-			{
-				type = MakePtr<DecorateType>();
-				type->type = typeResult;
-			}
-			type->isConstExpr = true;
-			typeResult = type;
-		}
-		else if (TestToken(cursor, CppTokens::CONST))
+		if (TestToken(cursor, CppTokens::CONST))
 		{
 			// TYPE const
 			auto type = typeResult.Cast<DecorateType>();

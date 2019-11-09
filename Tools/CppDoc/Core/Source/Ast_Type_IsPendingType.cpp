@@ -468,7 +468,7 @@ public:
 					throw NotResolvableException();
 				}
 
-				if (cv.isGeneralConst != (self->isConst || self->isConstExpr))
+				if (cv.isGeneralConst != self->isConst)
 				{
 					throw NotResolvableException();
 				}
@@ -480,7 +480,7 @@ public:
 			}
 			else
 			{
-				if (cv.isGeneralConst && !(self->isConst || self->isConstExpr))
+				if (cv.isGeneralConst && !self->isConst)
 				{
 					throw NotResolvableException();
 				}
@@ -490,7 +490,7 @@ public:
 				}
 			}
 			Execute(pa, self->type.Obj(), entity, (matching == PendingMatching::Free ? PendingMatching::ExactExceptDecorator : matching));
-			cv.isGeneralConst |= (self->isConst || self->isConstExpr);
+			cv.isGeneralConst |= self->isConst;
 			cv.isVolatile |= self->isVolatile;
 			result = entity->CVOf(cv);
 		}
