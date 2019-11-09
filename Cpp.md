@@ -12,6 +12,7 @@
 ## TODO
 
 - [ ] Next Demo!
+  - [ ] `__make_integer_seq<A, B>` -> `A<B>`
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.

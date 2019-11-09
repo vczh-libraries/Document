@@ -248,8 +248,19 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 	}
 	else
 	{
+		if (TestToken(cursor, CppTokens::ID, false))
+		{
+			static const wchar_t	NAME__make_integer_seq[]	= L"__make_integer_seq";
+			static const vint		SIZE__make_integer_seq		= sizeof(NAME__make_integer_seq) / sizeof(wchar_t) - 1;
+
+			if (cursor->token.length == SIZE__make_integer_seq && wcsncmp(cursor->token.reading, NAME__make_integer_seq, SIZE__make_integer_seq) == 0)
+			{
+				throw StopParsingException(cursor);
+			}
+		}
 		// NAME
 		typeResult = TryParseGenericType(pa, ParseIdType(pa, cursor), cursor);
+	SKIP_NORMAL_PARSING:;
 	}
 
 	while (true)
