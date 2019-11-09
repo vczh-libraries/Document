@@ -1,3 +1,4 @@
+#include <VlppOS.h>
 #include "Ast_Expr.h"
 #include "Ast_Resolving.h"
 
@@ -97,14 +98,14 @@ Ptr<IdExpr> ParseIdExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				// so "(" has to be right after this name
 				throw StopParsingException(cursor);
 			}
-			auto type = MakePtr<IdExpr>();
-			type->name = cppName;
-			type->resolving = rsr.values;
-			if (pa.recorder && type->resolving)
+			auto expr = MakePtr<IdExpr>();
+			expr->name = cppName;
+			expr->resolving = rsr.values;
+			if (pa.recorder && expr->resolving)
 			{
-				pa.recorder->Index(type->name, type->resolving->resolvedSymbols);
+				pa.recorder->Index(expr->name, expr->resolving->resolvedSymbols);
 			}
-			return type;
+			return expr;
 		}
 	}
 	throw StopParsingException(cursor);
@@ -495,6 +496,13 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		}
 		else if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
 		{
+			if (auto idExpr = expr.Cast<IdExpr>())
+			{
+				if (!idExpr->resolving && (INVLOC.StartsWith(idExpr->name.name, L"__is_", Locale::Normalization::None) || INVLOC.StartsWith(idExpr->name.name, L"__has_", Locale::Normalization::None)))
+				{
+					throw StopParsingException(cursor);
+				}
+			}
 			auto newExpr = MakePtr<FuncAccessExpr>();
 			{
 				newExpr->opName.type = CppNameType::Operator;
