@@ -925,3 +925,28 @@ auto c = &X<int>::Method<double>;
 	COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
 	TEST_ASSERT(accessed.Count() == 21);
 }
+
+TEST_CASE(TestParserGenericMember_TypeDefInBaseClass)
+{
+	auto input = LR"(
+template<typename T>
+struct Id
+{
+	using Type = T;
+};
+
+template<typename T>
+struct Ptr : Id<T*>
+{
+};
+
+template<typename T>
+struct ConstPtr : Ptr<const T>
+{
+};
+)";
+
+	COMPILE_PROGRAM(program, pa, input);
+
+	AssertType(pa,	L"ConstPtr<int>::Type",				L"ConstPtr<int> :: Type",						L"__int32 const *");
+}
