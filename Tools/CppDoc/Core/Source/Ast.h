@@ -139,6 +139,11 @@ class Declarator : public Object
 public:
 	Ptr<symbol_component::ClassMemberCache>		classMemberCache;
 
+	// only for object that is created from ParseSingleDeclarator, for non-template or non-function symbols, it is an empty scope
+	// do not access it after parsing
+	// this scope is created to store template arguments and function parameters
+	Ptr<Symbol>									scopeSymbolToReuse;
+
 	Ptr<Type>									type;
 	bool										ellipsis = false;
 	CppName										name;

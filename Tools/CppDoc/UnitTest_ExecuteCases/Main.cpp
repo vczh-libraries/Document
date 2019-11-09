@@ -96,18 +96,7 @@ Open http://127.0.0.1:8080/Calculator.i.Output/FileIndex.html
 int main()
 {
 	List<File> preprocessedFiles;
-	{
-		Folder folderCase(L"../UnitTest_Cases");
-		List<File> files;
-		folderCase.GetFiles(files);
-		FOREACH(File, file, files)
-		{
-			if (wupper(file.GetFilePath().GetFullPath().Right(2)) == L".I")
-			{
-				preprocessedFiles.Add(file);
-			}
-		}
-	}
+	preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
 
 	Console::WriteLine(L"Cleaning ...");
 	FOREACH(File, file, preprocessedFiles)

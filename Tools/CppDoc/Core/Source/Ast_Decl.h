@@ -167,7 +167,10 @@ public:
 	CppClassType									classType;
 	bool											decoratorFriend = false;
 
-	Ptr<Symbol>										keepTemplateSpecArgumentSymbolsAliveOnlyForForwardDeclaration;
+	// only for part of template forward declarations
+	// do not access it after parsing
+	// templateSpec->arguments; symbols will be children of it
+	Ptr<Symbol>										keepTemplateArgumentAlive;
 };
 
 class FriendClassDeclaration : public Declaration
@@ -190,6 +193,10 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Initializer>								initializer;
+
+	// only for object that is created from ParseSingleDeclarator
+	// do not access it after parsing
+	Ptr<Symbol>										scopeSymbolToReuse;
 };
 
 class FunctionDeclaration : public ForwardFunctionDeclaration

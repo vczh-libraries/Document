@@ -12,8 +12,6 @@
 ## TODO
 
 - [ ] Next Demo!
-  - [ ] Create symbols for parameters during parsing function type
-    - [ ] Create a temporary symbol, or reuse the symbol created by `template<...>`. This symbol will later be reused to create `FunctionBodySymbol`.
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.

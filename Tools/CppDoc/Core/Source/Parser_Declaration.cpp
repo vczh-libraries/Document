@@ -238,7 +238,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 
 		// ... ;
 		auto decl = MakePtr<ForwardClassDeclaration>();
-		decl->keepTemplateSpecArgumentSymbolsAliveOnlyForForwardDeclaration = specSymbol;
+		decl->keepTemplateArgumentAlive = specSymbol;
 		decl->templateSpec = spec;
 		decl->specializationSpec = specializationSpec;
 		decl->classType = classType;
@@ -849,9 +849,29 @@ void ParseDeclaration_Function(
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
 		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, specSymbol, declarator->classMemberCache);
 
+		// remove cyclic referencing
+		GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>()->scopeSymbolToReuse = nullptr;
+
 		{
 			auto newPa = pa.WithScope(functionBodySymbol);
-			BuildSymbols(newPa, funcType->parameters, cursor);
+
+			// variable symbols could have been created during parsing
+			if (funcType->parameters.Count() > 0)
+			{
+				for (vint i = 0; i < funcType->parameters.Count(); i++)
+				{
+					auto parameter = funcType->parameters[i];
+					if (parameter.item->name)
+					{
+						if (functionBodySymbol->TryGetChildren_NFb(parameter.item->name.name))
+						{
+							goto SKIP_BUILDING_SYMBOLS;
+						}
+					}
+				}
+				BuildSymbols(newPa, funcType->parameters, cursor);
+			SKIP_BUILDING_SYMBOLS:;
+			}
 
 			// delay parse the statement
 			decl->delayParse = MakePtr<DelayParse>();
@@ -909,6 +929,9 @@ void ParseDeclaration_Function(
 
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
 		functionSymbol->CreateFunctionForwardSymbol_F(decl, specSymbol);
+
+		// remove cyclic referencing
+		GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>()->scopeSymbolToReuse = nullptr;
 	}
 #undef FILL_FUNCTION
 }
@@ -1037,6 +1060,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 	{
 		auto pda = pda_Decls(pa.scopeSymbol->GetImplDecl_NFb<ClassDeclaration>(), specs.Count() > 0);
 		pda.containingClass = containingClass;
+		pda.scopeSymbolToReuse = specSymbol;
 
 		auto newPa = specSymbol ? pa.WithScope(specSymbol.Obj()) : pa;
 		ParseMemberDeclarator(newPa, pda, cursor, declarators);
@@ -1113,7 +1137,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 
 		ParseDeclaration_Function(
 			pa,
-			specSymbol,
+			declarators[0]->scopeSymbolToReuse,
 			specs,
 			declarators[0],
 			funcType,
@@ -1134,7 +1158,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 		{
 			ParseDeclaration_Variable(
 				pa,
-				specSymbol,
+				declarators[i]->scopeSymbolToReuse,
 				spec,
 				declarators[i],
 				FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_ARGUMENT)
@@ -1361,6 +1385,7 @@ void BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclara
 		auto declarator = declarators[i];
 
 		auto varDecl = MakePtr<VariableDeclaration>();
+		varDecl->scopeSymbolToReuse = declarator->scopeSymbolToReuse;
 		varDecl->type = declarator->type;
 		varDecl->name = declarator->name;
 		varDecl->initializer = declarator->initializer;
@@ -1377,12 +1402,15 @@ void BuildSymbol(const ParsingArguments& pa, Ptr<VariableDeclaration> varDecl, b
 {
 	if (varDecl->name)
 	{
-		auto symbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(varDecl, symbol_component::SymbolKind::Variable);
+		auto symbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(varDecl, symbol_component::SymbolKind::Variable, varDecl->scopeSymbolToReuse);
 		if (!symbol)
 		{
 			throw StopParsingException(cursor);
 		}
 		symbol->ellipsis = isVariadic;
+
+		// remove cyclic referencing
+		varDecl->scopeSymbolToReuse = nullptr;
 	}
 }
 

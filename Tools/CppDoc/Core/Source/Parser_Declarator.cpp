@@ -477,6 +477,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 			}
 
 			type = MakePtr<FunctionType>();
+			type->scopeSymbolToReuse = declarator->scopeSymbolToReuse;
 			type->returnType = declarator->type;
 
 			auto ccType = MakePtr<CallingConventionType>();
@@ -491,9 +492,10 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 			auto replacer = MakeReplacer(
 				cursor,
 				targetType,
-				[](Ptr<Type> typeToReplace)->Ptr<Type>
+				[declarator](Ptr<Type> typeToReplace)->Ptr<Type>
 				{
 					auto type = MakePtr<FunctionType>();
+					type->scopeSymbolToReuse = declarator->scopeSymbolToReuse;
 					type->returnType = typeToReplace;
 					return AdjustReturnTypeWithMemberAndCC(type);
 				}
@@ -544,6 +546,9 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 							throw StopParsingException(cursor);
 						}
 						type->parameters.Add({ varDecls[0],isVariadic });
+
+						// build parameter symbols to declarator->scopeSymbolToReuse, so that decltype(...) is correctly handled
+						BuildSymbols(pa, varDecls, cursor);
 					}
 
 					if (!TestToken(cursor, CppTokens::COMMA))
@@ -757,29 +762,38 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 }
 
 template<typename TCallback>
-void InjectClassMemberCacheIfNecessary(const ParsingArguments& pa, Ptr<Declarator> declarator, TCallback&& callback)
+void InjectClassMemberCacheIfNecessary(const ParsingArguments& pa, const ParseDeclaratorContext& pdc, Ptr<Declarator> declarator, Ptr<CppTokenCursor>& cursor, TCallback&& callback)
 {
-	Ptr<Symbol> temporarySymbolHolder;
-	Symbol* temporarySymbol = nullptr;
-	bool setClassMemberCacheToCurrentScope = false;
-
-	if (declarator->classMemberCache)
+	if (pdc.scopeSymbolToReuse)
 	{
-		if (IsInTemplateHeader(pa))
+		if (pdc.scopeSymbolToReuse != pa.scopeSymbol)
 		{
-			// this scope is created from a template header
-			// if we create a new symbol inside this scope, its parentScope will skip this scope
-			pa.scopeSymbol->SetClassMemberCacheForTemplateSpecScope_N(declarator->classMemberCache);
-			setClassMemberCacheToCurrentScope = true;
-		}
-		else
-		{
-			temporarySymbolHolder = MakePtr<Symbol>(pa.scopeSymbol, declarator->classMemberCache);
-			temporarySymbol = temporarySymbolHolder.Obj();
+			throw StopParsingException(cursor);
 		}
 	}
 
-	auto newPa = temporarySymbol ? pa.WithScope(temporarySymbol) : pa;
+	bool setClassMemberCacheToCurrentScope = false;
+	if (!declarator->scopeSymbolToReuse)
+	{
+		// always ensure a symbol to reuse, since this declarator could be a function
+		if (pdc.scopeSymbolToReuse)
+		{
+			declarator->scopeSymbolToReuse = pdc.scopeSymbolToReuse;
+			if (declarator->classMemberCache && IsInTemplateHeader(pa))
+			{
+				// this scope is created from a template header
+				// if we create a new symbol inside this scope, its parentScope will skip this scope
+				pa.scopeSymbol->SetClassMemberCacheForTemplateSpecScope_N(declarator->classMemberCache);
+				setClassMemberCacheToCurrentScope = true;
+			}
+		}
+		else
+		{
+			declarator->scopeSymbolToReuse = MakePtr<Symbol>(pa.scopeSymbol, declarator->classMemberCache);
+		}
+	}
+
+	auto newPa = pdc.scopeSymbolToReuse ? pa : pa.WithScope(declarator->scopeSymbolToReuse.Obj());
 	callback(newPa);
 
 	if (setClassMemberCacheToCurrentScope)
@@ -886,7 +900,7 @@ READY_FOR_ARRAY_OR_FUNCTION:
 		declarator->classMemberCache = CreatePartialClassMemberCache(pa, nullptr, tsys[0], false);
 	}
 
-	InjectClassMemberCacheIfNecessary(pa, declarator, [&](const ParsingArguments& newPa)
+	InjectClassMemberCacheIfNecessary(pa, pdc, declarator, cursor, [&](const ParsingArguments& newPa)
 	{
 		// if there is [, we see an array declarator
 		// an array could be multiple dimension
@@ -1003,6 +1017,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 
 			auto opPdc = pda_Decls(false, false);
 			opPdc.containingClass = pdc.containingClass;
+			opPdc.scopeSymbolToReuse = pdc.scopeSymbolToReuse;
 			bool outsideOfClass = false;
 			if (typeOpMemberType && !opPdc.containingClass)
 			{
@@ -1034,7 +1049,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			declarator = ParseSingleDeclarator(pa, typeResult, newPdc, false, cursor);
 		}
 
-		InjectClassMemberCacheIfNecessary(pa, declarator, [&](const ParsingArguments& newPa)
+		InjectClassMemberCacheIfNecessary(pa, pdc, declarator, cursor, [&](const ParsingArguments& newPa)
 		{
 			// function doesn't have initializer
 			bool isFunction = GetTypeWithoutMemberAndCC(declarator->type).Cast<FunctionType>();

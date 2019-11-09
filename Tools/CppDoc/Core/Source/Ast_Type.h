@@ -139,6 +139,11 @@ public:
 	bool										decoratorThrow = false;
 	List<Ptr<Type>>								exceptions;
 	Ptr<Type>									decoratorReturnType;
+
+	// only for object that is created from ParseSingleDeclarator
+	// do not access it after parsing
+	// parameters' symbols will be children of it
+	Ptr<Symbol>									scopeSymbolToReuse;
 };
 
 class MemberType : public Type
