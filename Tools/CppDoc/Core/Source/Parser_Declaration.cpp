@@ -1385,7 +1385,6 @@ void BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclara
 		auto declarator = declarators[i];
 
 		auto varDecl = MakePtr<VariableDeclaration>();
-		varDecl->scopeSymbolToReuse = declarator->scopeSymbolToReuse;
 		varDecl->type = declarator->type;
 		varDecl->name = declarator->name;
 		varDecl->initializer = declarator->initializer;
@@ -1402,15 +1401,12 @@ void BuildSymbol(const ParsingArguments& pa, Ptr<VariableDeclaration> varDecl, b
 {
 	if (varDecl->name)
 	{
-		auto symbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(varDecl, symbol_component::SymbolKind::Variable, varDecl->scopeSymbolToReuse);
+		auto symbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(varDecl, symbol_component::SymbolKind::Variable, nullptr);
 		if (!symbol)
 		{
 			throw StopParsingException(cursor);
 		}
 		symbol->ellipsis = isVariadic;
-
-		// remove cyclic referencing
-		varDecl->scopeSymbolToReuse = nullptr;
 	}
 }
 

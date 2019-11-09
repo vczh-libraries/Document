@@ -193,10 +193,6 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<Initializer>								initializer;
-
-	// only for object that is created from ParseSingleDeclarator
-	// do not access it after parsing
-	Ptr<Symbol>										scopeSymbolToReuse;
 };
 
 class FunctionDeclaration : public ForwardFunctionDeclaration
