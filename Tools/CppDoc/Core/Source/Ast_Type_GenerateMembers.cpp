@@ -363,29 +363,31 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 			auto symbolMoveAssignOp = GetSpecialMember(pa, classSymbol, classType, SpecialMemberKind::MoveAssignOp);
 			auto symbolDtor = GetSpecialMember(pa, classSymbol, classType, SpecialMemberKind::Dtor);
 
-			auto enabledDefaultCtor = IsSpecialMemberEnabled(symbolDefaultCtor);
 			auto enabledCopyCtor = IsSpecialMemberEnabled(symbolCopyCtor);
-			auto enabledMoveCtor = IsSpecialMemberEnabled(symbolMoveCtor);
 			auto enabledCopyAssignOp = IsSpecialMemberEnabled(symbolCopyAssignOp);
-			auto enabledMoveAssignOp = IsSpecialMemberEnabled(symbolMoveAssignOp);
-			auto enabledDtor = IsSpecialMemberEnabled(symbolDtor);
+
+			bool ctorDefined = classSymbol->TryGetChildren_NFb(L"$__ctor") != nullptr;
+			bool assignDefined = classSymbol->TryGetChildren_NFb(L"operator =") != nullptr;
 
 			List<Ptr<ForwardFunctionDeclaration>> generatedMembers;
 			bool generatedEnabledCopyCtor = false;
 			bool generatedEnabledCopyAssignOp = false;
 
-			if (!symbolDefaultCtor)
+			if (!ctorDefined)
 			{
-				bool deleted = true;
-				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::DefaultCtor, true))
+				if (!symbolDefaultCtor)
 				{
-					if (!classSymbol->TryGetChildren_NFb(L"$__ctor"))
+					bool deleted = true;
+					if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::DefaultCtor, true))
 					{
-						deleted = false;
+						if (!classSymbol->TryGetChildren_NFb(L"$__ctor"))
+						{
+							deleted = false;
+						}
 					}
-				}
 
-				generatedMembers.Add(GenerateCtor(classSymbol, deleted, nullptr));
+					generatedMembers.Add(GenerateCtor(classSymbol, deleted, nullptr));
+				}
 			}
 			if (!symbolCopyCtor)
 			{
@@ -417,36 +419,41 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 					generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateMoveParameter(classSymbol)));
 				}
 			}
-			if (!symbolCopyAssignOp)
+
+			if (!assignDefined)
 			{
-				bool deleted = true;
-				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::CopyAssignOp, false))
+				if (!symbolCopyAssignOp)
 				{
-					if (!symbolMoveCtor && !symbolMoveAssignOp)
+					bool deleted = true;
+					if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::CopyAssignOp, false))
 					{
-						deleted = false;
+						if (!symbolMoveCtor && !symbolMoveAssignOp)
+						{
+							deleted = false;
+						}
+					}
+
+					generatedMembers.Add(GenerateAssignOp(classSymbol, deleted, GenerateCopyParameter(classSymbol)));
+					generatedEnabledCopyAssignOp = !deleted;
+				}
+				if (!symbolMoveAssignOp)
+				{
+					bool deleted = true;
+					if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::MoveAssignOp, false))
+					{
+						if (!symbolCopyCtor && !symbolCopyAssignOp && !symbolMoveCtor && !symbolDtor)
+						{
+							deleted = false;
+						}
+					}
+
+					if (!deleted || !(enabledCopyAssignOp || generatedEnabledCopyAssignOp))
+					{
+						generatedMembers.Add(GenerateAssignOp(classSymbol, deleted, GenerateMoveParameter(classSymbol)));
 					}
 				}
-
-				generatedMembers.Add(GenerateAssignOp(classSymbol, deleted, GenerateCopyParameter(classSymbol)));
-				generatedEnabledCopyAssignOp = !deleted;
 			}
-			if (!symbolMoveAssignOp)
-			{
-				bool deleted = true;
-				if (!IsSpecialMemberBlockedByDefinition(pa, classDecl.Obj(), SpecialMemberKind::MoveAssignOp, false))
-				{
-					if (!symbolCopyCtor && !symbolCopyAssignOp && !symbolMoveCtor && !symbolDtor)
-					{
-						deleted = false;
-					}
-				}
 
-				if (!deleted || !(enabledCopyAssignOp || generatedEnabledCopyAssignOp))
-				{
-					generatedMembers.Add(GenerateAssignOp(classSymbol, deleted, GenerateMoveParameter(classSymbol)));
-				}
-			}
 			if (!symbolDtor)
 			{
 				bool deleted = true;

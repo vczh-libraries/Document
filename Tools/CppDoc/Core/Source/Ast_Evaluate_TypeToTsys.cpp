@@ -265,24 +265,59 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 		}
 		if (genericTypes.Count() == 0) return;
 
-		List<symbol_component::ClassMemberCache*> caches;
+		List<ITsys*> classTypes;
 		{
+			auto rootPa = pa.WithScope(pa.root.Obj());
 			auto current = pa.scopeSymbol;
 			while (current)
 			{
 				if (auto cache = current->GetClassMemberCache_NFb())
 				{
-					caches.Add(cache.Obj());
+					for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
+					{
+						auto classType = cache->containerClassTypes[i];
+						if (classType->GetDecl()->GetAnyForwardDecl<ForwardClassDeclaration>()->templateSpec)
+						{
+							if (!classTypes.Contains(classType))
+							{
+								classTypes.Add(classType);
+							}
+						}
+					}
 					current = cache->parentScope;
 				}
 				else
 				{
+					switch (current->kind)
+					{
+					case CLASS_SYMBOL_KIND:
+						{
+							auto decl = current->GetAnyForwardDecl<ForwardClassDeclaration>();
+							if (decl->templateSpec)
+							{
+								auto& ev = EvaluateForwardClassSymbol(rootPa, decl.Obj(), nullptr, nullptr);
+								for (vint i = 0; i < ev.Count(); i++)
+								{
+									auto classType = ev[i];
+									if (classType->GetType() == TsysType::GenericFunction)
+									{
+										classType = classType->GetElement();
+									}
+									if (!classTypes.Contains(classType))
+									{
+										classTypes.Add(classType);
+									}
+								}
+							}
+						}
+						break;
+					}
 					current = current->GetParentScope();
 				}
 			}
 		}
 
-		if (caches.Count() > 0)
+		if (classTypes.Count() > 0)
 		{
 			ParsingArguments rootPa = pa.WithScope(pa.root.Obj());
 			for (vint i = 0; i < genericTypes.Count(); i++)
@@ -295,17 +330,13 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 					auto& evTypes = EvaluateForwardClassSymbol(rootPa, classDecl.Obj(), nullptr, nullptr);
 					if (evTypes[0] == targetTsys)
 					{
-						for (vint j = 0; j < caches.Count(); j++)
+						for (vint j = 0; j < classTypes.Count(); j++)
 						{
-							auto cache = caches[j];
-							for (vint k = 0; k < cache->containerClassTypes.Count(); k++)
+							auto classType = classTypes[j];
+							if (classType->GetDecl() == targetDecl)
 							{
-								auto classType = cache->containerClassTypes[k];
-								if (classType->GetDecl() == targetDecl)
-								{
-									targetTsys = classType;
-									goto FINISH;
-								}
+								targetTsys = classType->ReplaceGenericArgs(pa);
+								goto FINISH;
 							}
 						}
 					}

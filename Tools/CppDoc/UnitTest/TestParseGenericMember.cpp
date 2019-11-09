@@ -933,6 +933,7 @@ template<typename T>
 struct Id
 {
 	using Type = T;
+	using Self = Id;
 	T Get();
 };
 
@@ -949,6 +950,7 @@ struct ConstPtr : Ptr<const T>
 
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertType(pa,	L"ConstPtr<int>::Type",				L"ConstPtr<int> :: Type",						L"__int32 const *"		);
-	AssertExpr(pa,	L"ConstPtr<int>().Get()",			L"ConstPtr<int>().Get()",						L"__int32 const * $PR"	);
+	AssertType(pa,	L"ConstPtr<int>::Type",				L"ConstPtr<int> :: Type",						L"__int32 const *"			);
+	AssertType(pa,	L"ConstPtr<int>::Self",				L"ConstPtr<int> :: Self",						L"::Id<__int32 const *>"	);
+	AssertExpr(pa,	L"ConstPtr<int>().Get()",			L"ConstPtr<int>().Get()",						L"__int32 const * $PR"		);
 }
