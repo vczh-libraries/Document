@@ -348,6 +348,52 @@ namespace symbol_type_resolving
 		throw IllegalExprException();
 	}
 
+	Nullable<ExprTsysItem> AdjustThisItemForSymbol(const ParsingArguments& pa, ExprTsysItem thisItem, Symbol* symbol)
+	{
+		auto thisType = ApplyExprTsysType(thisItem.tsys, thisItem.type);
+		TsysCV thisCv;
+		TsysRefType thisRef;
+		auto entity = thisType->GetEntity(thisCv, thisRef);
+
+		List<ITsys*> visiting;
+		SortedList<ITsys*> visited;
+		visiting.Add(entity);
+
+		for (vint i = 0; i < visiting.Count(); i++)
+		{
+			auto currentThis = visiting[i];
+			if (visited.Contains(currentThis))
+			{
+				continue;
+			}
+			visited.Add(currentThis);
+
+			switch (currentThis->GetType())
+			{
+			case TsysType::Decl:
+			case TsysType::DeclInstant:
+				break;
+			default:
+				throw NotConvertableException();
+			}
+
+			auto thisSymbol = currentThis->GetDecl();
+			if (symbol->GetParentScope() == thisSymbol)
+			{
+				ExprTsysItem baseItem(thisSymbol, thisItem.type, CvRefOf(currentThis, thisCv, thisRef));
+				return baseItem;
+			}
+
+			auto& ev = symbol_type_resolving::EvaluateClassType(pa, currentThis);
+			for (vint j = 0; j < ev.ExtraCount(); j++)
+			{
+				CopyFrom(visiting, ev.GetExtra(j), true);
+			}
+		}
+
+		return {};
+	}
+
 	void VisitSymbolInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, VisitMemberKind visitMemberKind, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
 		switch (symbol->GetParentScope()->kind)
@@ -360,53 +406,14 @@ namespace symbol_type_resolving
 
 		if (thisItem)
 		{
-			auto thisType = ApplyExprTsysType(thisItem->tsys, thisItem->type);
-			TsysCV thisCv;
-			TsysRefType thisRef;
-			auto entity = thisType->GetEntity(thisCv, thisRef);
-
-			List<ITsys*> visiting;
-			SortedList<ITsys*> visited;
-			visiting.Add(entity);
-
-			bool found = false;
-			for (vint i = 0; i < visiting.Count(); i++)
-			{
-				auto currentThis = visiting[i];
-				if (visited.Contains(currentThis))
-				{
-					continue;
-				}
-				visited.Add(currentThis);
-
-				switch (currentThis->GetType())
-				{
-				case TsysType::Decl:
-				case TsysType::DeclInstant:
-					break;
-				default:
-					throw NotConvertableException();
-				}
-
-				auto thisSymbol = currentThis->GetDecl();
-				if (symbol->GetParentScope() == thisSymbol)
-				{
-					found = true;
-					ExprTsysItem baseItem(thisSymbol, (thisItem ? thisItem->type : ExprTsysType::PRValue), CvRefOf(currentThis, thisCv, thisRef));
-					VisitSymbolInternalWithCorrectThisItem(pa, &baseItem, symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
-				}
-
-				auto& ev = symbol_type_resolving::EvaluateClassType(pa, currentThis);
-				for (vint j = 0; j < ev.ExtraCount(); j++)
-				{
-					CopyFrom(visiting, ev.GetExtra(j), true);
-				}
-			}
-
-			if (!found)
+			auto adjustedThisItem = AdjustThisItemForSymbol(pa, *thisItem, symbol);
+			if (!adjustedThisItem)
 			{
 				throw NotConvertableException();
 			}
+
+			auto baseItem = adjustedThisItem.Value();
+			VisitSymbolInternalWithCorrectThisItem(pa, &baseItem, symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
 		}
 		else
 		{
