@@ -12,6 +12,7 @@
 ## TODO
 
 - [ ] Next Demo!
+  - [ ] Adjust parentDeclType while searching into members from base classes.
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.
@@ -40,6 +41,7 @@
 - [ ] `decltype(EXPR)::ChildType`
 - [ ] `::new`
 - [ ] `::delete`
+- [ ] Treat `constexpr` like `static`, not `const`
 - [ ] Connect function with forward declarations containing `decltype(EXPR)` in expression type.
 - [ ] Pass variadic template argument to placement new expression.
 - [ ] `GenerateMembers` on `DeclInstance`.
