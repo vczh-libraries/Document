@@ -151,7 +151,7 @@ ParseDeclaratorContext
 
 struct ParseDeclaratorContext
 {
-	PARSING_DECLARATOR_ARGUMENTS;
+	PARSING_DECLARATOR_ARGUMENTS(, ;);
 	bool					forceSpecialMethod;
 
 	ParseDeclaratorContext(const ParsingDeclaratorArguments& pda, bool _forceSpecialMethod)
@@ -920,7 +920,7 @@ READY_FOR_ARRAY_OR_FUNCTION:
 ParseInitializer
 ***********************************************************************/
 
-Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, bool allowComma)
+Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, bool allowComma, bool allowGT)
 {
 	// = EXPRESSION
 	// { { EXPRESSION , ...} }
@@ -946,7 +946,7 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 
 	while (true)
 	{
-		auto argument = ParseExpr(pa, (allowComma ? pea_Full() : pea_Argument()), cursor);
+		auto argument = ParseExpr(pa, { allowComma,allowGT }, cursor);
 		bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
 		initializer->arguments.Add({ argument,isVariadic });
 
@@ -1062,11 +1062,11 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			{
 				if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))
 				{
-					declarator->initializer = ParseInitializer(newPa, cursor, pdc.allowComma);
+					declarator->initializer = ParseInitializer(newPa, cursor, pdc.allowComma, pdc.allowGtInInitializer);
 				}
 				else if (TestToken(cursor, CppTokens::LBRACE, false))
 				{
-					declarator->initializer = ParseInitializer(newPa, cursor, pdc.allowComma);
+					declarator->initializer = ParseInitializer(newPa, cursor, pdc.allowComma, true);
 				}
 			}
 		});
