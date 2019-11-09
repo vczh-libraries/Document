@@ -326,7 +326,9 @@ namespace symbol_totsys_impl
 				ExprTsysList opTypes;
 				for (vint j = 0; j < opMethods.values->resolvedSymbols.Count(); j++)
 				{
-					VisitSymbolForField(pa, leftType, opMethods.values->resolvedSymbols[j], opTypes);
+					auto symbol = opMethods.values->resolvedSymbols[j];
+					auto adjusted = AdjustThisItemForSymbol(newPa, *leftType, symbol).Value();
+					VisitSymbolForField(pa, &adjusted, symbol, opTypes);
 				}
 				FilterFieldsAndBestQualifiedFunctions(leftCV, leftRef, opTypes);
 

@@ -640,7 +640,9 @@ public:
 					{
 						for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
 						{
-							VisitSymbolForScope(newPa, &arg1, rsr.values->resolvedSymbols[i], processResult);
+							auto symbol = rsr.values->resolvedSymbols[i];
+							auto adjusted = AdjustThisItemForSymbol(newPa, arg1, symbol).Value();
+							VisitSymbolForScope(newPa, &adjusted, symbol, processResult);
 						}
 					}
 				}

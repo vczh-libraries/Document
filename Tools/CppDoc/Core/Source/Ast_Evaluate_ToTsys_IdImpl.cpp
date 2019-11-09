@@ -156,12 +156,6 @@ namespace symbol_totsys_impl
 				auto newPa = pa.WithScope(classType->GetDecl());
 				auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbolFromOutside);
 
-				ITsys* parentDeclType = nullptr;
-				if (classType->GetType() == TsysType::DeclInstant)
-				{
-					parentDeclType = classType;
-				}
-
 				if (rsr.types)
 				{
 					for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
@@ -170,7 +164,9 @@ namespace symbol_totsys_impl
 						if (!visited.Contains(symbol))
 						{
 							visited.Add(symbol);
-							receiver(parentDeclType, symbol);
+
+							auto adjusted = AdjustThisItemForSymbol(newPa, { nullptr,ExprTsysType::PRValue,classType }, symbol).Value();
+							receiver((adjusted.tsys->GetType() == TsysType::DeclInstant ? adjusted.tsys : nullptr), symbol);
 						}
 					}
 				}
