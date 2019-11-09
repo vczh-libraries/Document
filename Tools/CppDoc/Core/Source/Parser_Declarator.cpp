@@ -197,7 +197,7 @@ bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>
 			{
 			case CppNameType::Normal:
 				// IDENTIFIER should be a constructor name for a special method
-				if (cppName.name == containingClass->name.name)
+				if (cppName.name == containingClass->name.name && TestToken(cursor, CppTokens::LPARENTHESIS, false))
 				{
 					cppName.name = L"$__ctor";
 					cppName.type = CppNameType::Constructor;
@@ -996,6 +996,19 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			catch (const StopParsingException&)
 			{
 				cursor = typeOpCursor;
+			}
+		}
+
+		if (pdc.forceSpecialMethod)
+		{
+			auto oldCursor = cursor;
+			if (TestToken(cursor, CppTokens::CONSTEXPR))
+			{
+				// constexpr operator TYPE()
+				if (!TestToken(cursor, CppTokens::OPERATOR, false))
+				{
+					cursor = oldCursor;
+				}
 			}
 		}
 

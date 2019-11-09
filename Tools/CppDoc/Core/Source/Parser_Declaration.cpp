@@ -220,6 +220,8 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		cppName.type = CppNameType::Normal;
 	}
 
+	TestToken(cursor, CppTokens::DECL_FINAL);
+
 	Ptr<SpecializationSpec> specializationSpec;
 	if (spec)
 	{
@@ -557,7 +559,7 @@ bool IsCStyleTypeReference(Ptr<CppTokenCursor>& cursor)
 		CppName name;
 		if (ParseCppName(name, cursor))
 		{
-			if (!TestToken(cursor, CppTokens::SEMICOLON) && !TestToken(cursor, CppTokens::LT) && !TestToken(cursor, CppTokens::COLON) && !TestToken(cursor, CppTokens::LBRACE))
+			if (!TestToken(cursor, CppTokens::SEMICOLON) && !TestToken(cursor, CppTokens::LT) && !TestToken(cursor, CppTokens::DECL_FINAL) && !TestToken(cursor, CppTokens::COLON) && !TestToken(cursor, CppTokens::LBRACE))
 			{
 				cStyleTypeReference = true;
 			}

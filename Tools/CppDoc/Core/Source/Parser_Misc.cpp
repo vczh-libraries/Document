@@ -68,6 +68,10 @@ ParseCppName
 // operator PREDEFINED-OPERATOR
 // ~IDENTIFIER
 // IDENTIFIER
+// operator new
+// operator new[]
+// operator delete
+// operator delete[]
 bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialMethod)
 {
 	if (TestToken(cursor, CppTokens::OPERATOR, false))
@@ -111,9 +115,9 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		}\
 		else\
 
-		OPERATOR_NAME_3(NEW, LPARENTHESIS, RPARENTHESIS)
+		OPERATOR_NAME_3(NEW, LBRACKET, RBRACKET)
 		OPERATOR_NAME_1(NEW)
-		OPERATOR_NAME_3(DELETE, LPARENTHESIS, RPARENTHESIS)
+		OPERATOR_NAME_3(DELETE, LBRACKET, RBRACKET)
 		OPERATOR_NAME_1(DELETE)
 
 		OPERATOR_NAME_1(COMMA)
