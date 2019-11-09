@@ -987,19 +987,6 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			}
 		}
 
-		if (pdc.forceSpecialMethod)
-		{
-			auto oldCursor = cursor;
-			if (TestToken(cursor, CppTokens::CONSTEXPR))
-			{
-				// constexpr operator TYPE()
-				if (!TestToken(cursor, CppTokens::OPERATOR, false))
-				{
-					cursor = oldCursor;
-				}
-			}
-		}
-
 		if (pdc.forceSpecialMethod && TestToken(cursor, CppTokens::OPERATOR, false))
 		{
 			if (declarators.Count() > 0)
