@@ -926,13 +926,14 @@ auto c = &X<int>::Method<double>;
 	TEST_ASSERT(accessed.Count() == 21);
 }
 
-TEST_CASE(TestParserGenericMember_TypeDefInBaseClass)
+TEST_CASE(TestParserGenericMember_MemberInBaseClass)
 {
 	auto input = LR"(
 template<typename T>
 struct Id
 {
 	using Type = T;
+	T Get();
 };
 
 template<typename T>
@@ -948,5 +949,6 @@ struct ConstPtr : Ptr<const T>
 
 	COMPILE_PROGRAM(program, pa, input);
 
-	AssertType(pa,	L"ConstPtr<int>::Type",				L"ConstPtr<int> :: Type",						L"__int32 const *");
+	AssertType(pa,	L"ConstPtr<int>::Type",				L"ConstPtr<int> :: Type",						L"__int32 const *"		);
+	AssertExpr(pa,	L"ConstPtr<int>().Get()",			L"ConstPtr<int>().Get()",						L"__int32 const * $PR"	);
 }
