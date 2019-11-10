@@ -31,6 +31,7 @@ Visitor
 	F(BinaryExpr)\
 	F(IfExpr)\
 	F(GenericExpr)\
+	F(BuiltinFuncAccessExpr)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
 CPPDOC_EXPR_LIST(CPPDOC_FORWARD)
@@ -321,6 +322,16 @@ public:
 	IExprVisitor_ACCEPT;
 
 	Ptr<Category_Id_Child_Expr>		expr;
+	VariadicList<GenericArgument>	arguments;
+};
+
+class BuiltinFuncAccessExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	Ptr<Type>						returnType;
+	Ptr<IdExpr>						name;
 	VariadicList<GenericArgument>	arguments;
 };
 

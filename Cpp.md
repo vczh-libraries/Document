@@ -24,6 +24,9 @@
       - `__builtin_nansf(...)` -> float
 
 - [ ] Next Demo!
+  - [ ] `template` and `typename` is not required if only type is needed.
+    - `static_cast<HERE>`
+    - `struct X : HERE`
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.

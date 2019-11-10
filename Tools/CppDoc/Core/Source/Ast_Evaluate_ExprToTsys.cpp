@@ -28,6 +28,7 @@ ExprToTsys
 	BinaryExpr					: unbounded
 	IfExpr						: unbounded
 	GenericExpr					: variant
+	BuiltinFuncAccessExpr		: variant		*
 ***********************************************************************/
 
 class ExprToTsysVisitor : public Object, public virtual IExprVisitor
@@ -786,6 +787,39 @@ public:
 			{
 				variadicInput.ApplySingle<Expr>(0, self->expr);
 			});
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// BuiltinFuncAccessExpr
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	void Visit(BuiltinFuncAccessExpr* self)override
+	{
+		isVta = false;
+		for (vint i = 0; i < self->arguments.Count(); i++)
+		{
+			auto argument = self->arguments[i];
+			bool tsysVta = false;
+			if (argument.item.type)
+			{
+				TypeTsysList tsys;
+				TypeToTsysInternal(pa, argument.item.type, tsys, tsysVta);
+			}
+			else
+			{
+				ExprTsysList tsys;
+				ExprToTsysInternal(pa, argument.item.expr, tsys, tsysVta);
+			}
+
+			if (!argument.isVariadic)
+			{
+				isVta |= tsysVta;
+			}
+		}
+
+		TypeTsysList tsys;
+		TypeToTsysNoVta(pa, self->returnType, tsys);
+		AddTemp(result, tsys);
 	}
 };
 

@@ -44,9 +44,9 @@ void Log(Ptr<Initializer> initializer, StreamWriter& writer)
 	}
 }
 
-void Log(VariadicList<GenericArgument>& arguments, StreamWriter& writer)
+void Log(VariadicList<GenericArgument>& arguments, const wchar_t* open, const wchar_t* close, StreamWriter& writer)
 {
-	writer.WriteString(L"<");
+	writer.WriteString(open);
 	for (vint i = 0; i < arguments.Count(); i++)
 	{
 		if (i != 0)
@@ -62,7 +62,7 @@ void Log(VariadicList<GenericArgument>& arguments, StreamWriter& writer)
 			writer.WriteString(L"...");
 		}
 	}
-	writer.WriteString(L">");
+	writer.WriteString(close);
 }
 
 /***********************************************************************
@@ -346,7 +346,13 @@ public:
 	void Visit(GenericExpr* self)override
 	{
 		Log(Ptr<Expr>(self->expr), writer);
-		Log(self->arguments, writer);
+		Log(self->arguments, L"<", L">", writer);
+	}
+
+	void Visit(BuiltinFuncAccessExpr* self)override
+	{
+		Log(Ptr<Expr>(self->name), writer);
+		Log(self->arguments, L"(", L")", writer);
 	}
 };
 
@@ -558,7 +564,7 @@ public:
 	void Visit(GenericType* self)override
 	{
 		Log(Ptr<Type>(self->type), writer);
-		Log(self->arguments, writer);
+		Log(self->arguments, L"<", L">", writer);
 	}
 };
 
@@ -923,7 +929,7 @@ private:
 		writer.WriteString(self->name.name);
 		if (self->specializationSpec)
 		{
-			Log(self->specializationSpec->arguments, writer);
+			Log(self->specializationSpec->arguments, L"<", L">", writer);
 		}
 		writer.WriteString(L": ");
 		Log(self->type, writer);
@@ -969,7 +975,7 @@ private:
 		writer.WriteString(self->name.name);
 		if (self->specializationSpec)
 		{
-			Log(self->specializationSpec->arguments, writer);
+			Log(self->specializationSpec->arguments, L"<", L">", writer);
 		}
 	}
 

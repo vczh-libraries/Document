@@ -217,7 +217,7 @@ Ptr< Category_Id_Child_Generic_Root_Type> TryParseGenericType(const ParsingArgum
 		// TYPE< { TYPE/EXPR ...} >
 		auto type = MakePtr<GenericType>();
 		type->type = classType;
-		ParseGenericArgumentsSkippedLT(pa, cursor, type->arguments);
+		ParseGenericArgumentsSkippedLT(pa, cursor, type->arguments, CppTokens::GT);
 		return type;
 	}
 	else

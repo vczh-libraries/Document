@@ -164,7 +164,7 @@ void ParseSpecializationSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 	{
 		// <{ TYPE/EXPR ...} >
 		spec = MakePtr<SpecializationSpec>();
-		ParseGenericArgumentsSkippedLT(pa, cursor, spec->arguments);
+		ParseGenericArgumentsSkippedLT(pa, cursor, spec->arguments, CppTokens::GT);
 	}
 }
 
@@ -172,10 +172,10 @@ void ParseSpecializationSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 ParseGenericArgumentsSkippedLT
 ***********************************************************************/
 
-void ParseGenericArgumentsSkippedLT(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, VariadicList<GenericArgument>& arguments)
+void ParseGenericArgumentsSkippedLT(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, VariadicList<GenericArgument>& arguments, CppTokens ending)
 {
 	// { TYPE/EXPR ...} >
-	while (!TestToken(cursor, CppTokens::GT))
+	while (!TestToken(cursor, ending))
 	{
 		GenericArgument argument;
 		ParseTypeOrExpr(pa, pea_GenericArgument(), cursor, argument.type, argument.expr);
@@ -184,7 +184,7 @@ void ParseGenericArgumentsSkippedLT(const ParsingArguments& pa, Ptr<CppTokenCurs
 
 		if (!TestToken(cursor, CppTokens::COMMA))
 		{
-			RequireToken(cursor, CppTokens::GT);
+			RequireToken(cursor, ending);
 			break;
 		}
 	}

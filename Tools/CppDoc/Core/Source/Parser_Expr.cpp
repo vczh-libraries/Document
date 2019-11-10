@@ -158,7 +158,7 @@ Ptr<GenericExpr> ParseGenericExprSkippedLT(const ParsingArguments& pa, Ptr<CppTo
 	// EXPR< { TYPE/EXPR ...} >
 	auto expr = MakePtr<GenericExpr>();
 	expr->expr = catIdChildExpr;
-	ParseGenericArgumentsSkippedLT(pa, cursor, expr->arguments);
+	ParseGenericArgumentsSkippedLT(pa, cursor, expr->arguments, CppTokens::GT);
 	return expr;
 }
 
@@ -498,36 +498,65 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		{
 			if (auto idExpr = expr.Cast<IdExpr>())
 			{
-				if (!idExpr->resolving && (INVLOC.StartsWith(idExpr->name.name, L"__is_", Locale::Normalization::None) || INVLOC.StartsWith(idExpr->name.name, L"__has_", Locale::Normalization::None)))
+				if (!idExpr->resolving)
 				{
-					throw StopParsingException(cursor);
-				}
-			}
-			auto newExpr = MakePtr<FuncAccessExpr>();
-			{
-				newExpr->opName.type = CppNameType::Operator;
-				newExpr->opName.name = L"()";
-				newExpr->opName.tokenCount = 1;
-				newExpr->opName.nameTokens[0] = cursor->token;
-				SkipToken(cursor);
-			}
-			newExpr->expr = expr;
-
-			if (!TestToken(cursor, CppTokens::RPARENTHESIS))
-			{
-				while (true)
-				{
-					auto argument = ParseExpr(pa, pea_Argument(), cursor);
-					bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
-					newExpr->arguments.Add({ argument,isVariadic });
-					if (!TestToken(cursor, CppTokens::COMMA))
+					Ptr<Type> returnType;
+					if (idExpr->name.name == L"alignof")
 					{
-						RequireToken(cursor, CppTokens::RPARENTHESIS);
-						break;
+						auto sizeType = MakePtr<PrimitiveType>();
+						sizeType->prefix = CppPrimitivePrefix::_unsigned;
+						sizeType->primitive = CppPrimitiveType::_int;
+						returnType = sizeType;
+					}
+					else if (INVLOC.StartsWith(idExpr->name.name, L"__is_", Locale::Normalization::None) || INVLOC.StartsWith(idExpr->name.name, L"__has_", Locale::Normalization::None))
+					{
+						auto boolType = MakePtr<PrimitiveType>();
+						boolType->prefix = CppPrimitivePrefix::_none;
+						boolType->primitive = CppPrimitiveType::_bool;
+						returnType = boolType;
+					}
+
+					if (returnType)
+					{
+						auto builtinExpr = MakePtr<BuiltinFuncAccessExpr>();
+						builtinExpr->name = idExpr;
+						builtinExpr->returnType = returnType;
+
+						SkipToken(cursor);
+						ParseGenericArgumentsSkippedLT(pa, cursor, builtinExpr->arguments, CppTokens::RPARENTHESIS);
+
+						expr = builtinExpr;
+						continue;
 					}
 				}
 			}
-			expr = newExpr;
+			{
+				auto newExpr = MakePtr<FuncAccessExpr>();
+				{
+					newExpr->opName.type = CppNameType::Operator;
+					newExpr->opName.name = L"()";
+					newExpr->opName.tokenCount = 1;
+					newExpr->opName.nameTokens[0] = cursor->token;
+				}
+				newExpr->expr = expr;
+
+				SkipToken(cursor);
+				if (!TestToken(cursor, CppTokens::RPARENTHESIS))
+				{
+					while (true)
+					{
+						auto argument = ParseExpr(pa, pea_Argument(), cursor);
+						bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+						newExpr->arguments.Add({ argument,isVariadic });
+						if (!TestToken(cursor, CppTokens::COMMA))
+						{
+							RequireToken(cursor, CppTokens::RPARENTHESIS);
+							break;
+						}
+					}
+				}
+				expr = newExpr;
+			}
 		}
 		else if (TestToken(cursor, CppTokens::ADD, CppTokens::ADD, false) || TestToken(cursor, CppTokens::SUB, CppTokens::SUB, false))
 		{
