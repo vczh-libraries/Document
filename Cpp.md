@@ -17,6 +17,7 @@
   - When more built-in things are found, list below:
     - Types
       - `__make_integer_seq<A, B, Size>` -> `A<B>`
+      - `__underlying_type` -> `int` // should be enum's integral type
     - Functions (by default: ADL searching found nothing and evaluate to no type)
       - `__builtin_addressof(EXPR)` -> `&EXPR` without calling overloaded operators
       - `__builtin_huge_valf(...)` -> float

@@ -179,11 +179,11 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 TryParseChildType
 ***********************************************************************/
 
-Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Category_Id_Child_Generic_Root_Type> classType, bool typenameType, bool& templateKeyword, Ptr<CppTokenCursor>& cursor)
+Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Category_Id_Child_Generic_Root_Type> classType, ShortTypeTypenameKind typenameKind, bool& templateKeyword, Ptr<CppTokenCursor>& cursor)
 {
 	if ((templateKeyword = TestToken(cursor, CppTokens::DECL_TEMPLATE)))
 	{
-		if (!typenameType)
+		if (typenameKind == ShortTypeTypenameKind::No)
 		{
 			return nullptr;
 		}
@@ -193,11 +193,22 @@ Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Category_Id_Chi
 	if (ParseCppName(cppName, cursor))
 	{
 		auto resolving = ResolveChildSymbol(pa, classType, cppName).types;
-		if (resolving || typenameType)
+		if (resolving || typenameKind != ShortTypeTypenameKind::No)
 		{
 			auto type = MakePtr<ChildType>();
 			type->classType = classType;
-			type->typenameType = typenameType;
+			switch (typenameKind)
+			{
+			case ShortTypeTypenameKind::No:
+				type->typenameType = false;
+				break;
+			case ShortTypeTypenameKind::Yes:
+				type->typenameType = true;
+				break;
+			case ShortTypeTypenameKind::Implicit:
+				type->typenameType = !resolving;
+				break;
+			}
 			type->name = cppName;
 			type->resolving = resolving;
 			if (pa.recorder && type->resolving)
@@ -230,14 +241,14 @@ Ptr< Category_Id_Child_Generic_Root_Type> TryParseGenericType(const ParsingArgum
 ParseNameType
 ***********************************************************************/
 
-Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTokenCursor>& cursor)
+Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typenameKind, Ptr<CppTokenCursor>& cursor)
 {
 	bool templateKeyword = false;
 	Ptr<Category_Id_Child_Generic_Root_Type> typeResult;
 	if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 	{
 		// :: NAME
-		if (auto type = TryParseChildType(pa, MakePtr<RootType>(), false, templateKeyword, cursor))
+		if (auto type = TryParseChildType(pa, MakePtr<RootType>(), ShortTypeTypenameKind::No, templateKeyword, cursor))
 		{
 			typeResult = TryParseGenericType(pa, type, cursor);
 		}
@@ -250,10 +261,16 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 	{
 		if (TestToken(cursor, CppTokens::ID, false))
 		{
-			static const wchar_t	NAME__make_integer_seq[]	= L"__make_integer_seq";
-			static const vint		SIZE__make_integer_seq		= sizeof(NAME__make_integer_seq) / sizeof(wchar_t) - 1;
+#define DEFINE_INTRINSIC_NAME(INTRINSIC_NAME)																		\
+			static const wchar_t	NAME##INTRINSIC_NAME[]	= L ## #INTRINSIC_NAME;									\
+			static const vint		SIZE##INTRINSIC_NAME	= sizeof(NAME##INTRINSIC_NAME) / sizeof(wchar_t) - 1	\
 
-			if (cursor->token.length == SIZE__make_integer_seq && wcsncmp(cursor->token.reading, NAME__make_integer_seq, SIZE__make_integer_seq) == 0)
+#define MATCH_INTRINSIC_NAME(INTRINSIC_NAME) cursor->token.length == SIZE##INTRINSIC_NAME && wcsncmp(cursor->token.reading, NAME##INTRINSIC_NAME, SIZE##INTRINSIC_NAME) == 0
+
+			DEFINE_INTRINSIC_NAME(__make_integer_seq);
+			DEFINE_INTRINSIC_NAME(__underlying_type);
+
+			if (MATCH_INTRINSIC_NAME(__make_integer_seq))
 			{
 				SkipToken(cursor);
 				RequireToken(cursor, CppTokens::LT);
@@ -275,6 +292,20 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 				typeResult = genericType;
 				goto SKIP_NORMAL_PARSING;
 			}
+			else if (MATCH_INTRINSIC_NAME(__underlying_type))
+			{
+				SkipToken(cursor);
+				RequireToken(cursor, CppTokens::LPARENTHESIS);
+				ParseType(pa, cursor);
+				RequireToken(cursor, CppTokens::RPARENTHESIS);
+
+				auto intType = MakePtr<PrimitiveType>();
+				intType->prefix = CppPrimitivePrefix::_none;
+				intType->primitive = CppPrimitiveType::_int;
+				return intType;
+			}
+#undef MATCH_INTRINSIC_NAME
+#undef DEFINE_INTRINSIC_NAME
 		}
 		// NAME
 		typeResult = TryParseGenericType(pa, ParseIdType(pa, cursor), cursor);
@@ -291,7 +322,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 			{
 				throw StopParsingException(cursor);
 			}
-			if (auto type = TryParseChildType(pa, typeResult, typenameType, templateKeyword, cursor))
+			if (auto type = TryParseChildType(pa, typeResult, typenameKind, templateKeyword, cursor))
 			{
 				typeResult = TryParseGenericType(pa, type, cursor);
 				continue;
@@ -306,7 +337,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, bool typenameType, Ptr<CppTo
 ParseShortType
 ***********************************************************************/
 
-Ptr<Type> ParseShortType(const ParsingArguments& pa, bool typenameType, Ptr<CppTokenCursor>& cursor)
+Ptr<Type> ParseShortType(const ParsingArguments& pa, ShortTypeTypenameKind typenameKind, Ptr<CppTokenCursor>& cursor)
 {
 	if (TestToken(cursor, CppTokens::SIGNED))
 	{
@@ -333,7 +364,7 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, bool typenameType, Ptr<CppT
 	else if (TestToken(cursor, CppTokens::CONST))
 	{
 		// const TYPE
-		auto type = ParseShortType(pa, typenameType, cursor);
+		auto type = ParseShortType(pa, typenameKind, cursor);
 		auto dt = type.Cast<DecorateType>();
 		if (!dt)
 		{
@@ -346,7 +377,7 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, bool typenameType, Ptr<CppT
 	else if (TestToken(cursor, CppTokens::VOLATILE))
 	{
 		// volatile TYPE
-		auto type = ParseShortType(pa, typenameType, cursor);
+		auto type = ParseShortType(pa, typenameKind, cursor);
 		auto dt = type.Cast<DecorateType>();
 		if (!dt)
 		{
@@ -358,7 +389,7 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, bool typenameType, Ptr<CppT
 	}
 	else if (TestToken(cursor, CppTokens::TYPENAME))
 	{
-		return ParseShortType(pa, true, cursor);
+		return ParseShortType(pa, ShortTypeTypenameKind::Yes, cursor);
 	}
 	else
 	{
@@ -368,7 +399,7 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, bool typenameType, Ptr<CppT
 			if (result) return result;
 		}
 
-		return ParseNameType(pa, typenameType, cursor);
+		return ParseNameType(pa, typenameKind, cursor);
 	}
 }
 
@@ -381,7 +412,7 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	Ptr<Type> typeResult;
 	{
 		bool typenameType = TestToken(cursor, CppTokens::TYPENAME);
-		typeResult = ParseShortType(pa, typenameType, cursor);
+		typeResult = ParseShortType(pa, (typenameType ? ShortTypeTypenameKind::Yes : ShortTypeTypenameKind::No), cursor);
 	}
 
 	while (true)

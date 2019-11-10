@@ -28,6 +28,10 @@ bool SkipSpecifiers(Ptr<CppTokenCursor>& cursor)
 			{
 				counter--;
 			}
+			else
+			{
+				SkipToken(cursor);
+			}
 		}
 		throw StopParsingException(cursor);
 	}

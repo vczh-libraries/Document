@@ -287,7 +287,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 					accessor = CppClassAccessor::Private;
 				}
 
-				auto type = ParseType(declPa, cursor);
+				auto type = ParseShortType(declPa, ShortTypeTypenameKind::Implicit, cursor);
 				decl->baseTypes.Add({ accessor,type });
 
 				if (TestToken(cursor, CppTokens::LBRACE, false))
@@ -392,7 +392,11 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 
 		if (classType != CppClassType::Union)
 		{
-			GenerateMembers(declPa, classContextSymbol);
+			// TODO: Remove this restriction
+			if (!decl->specializationSpec)
+			{
+				GenerateMembers(declPa, classContextSymbol);
+			}
 		}
 		return decl;
 	}

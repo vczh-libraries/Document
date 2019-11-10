@@ -477,6 +477,13 @@ extern Ptr<Type>									AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> funct
 extern bool											ParseCallingConvention(TsysCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
 
 // Parser_Type.cpp
+enum class ShortTypeTypenameKind
+{
+	No,
+	Yes,
+	Implicit,
+};
+extern Ptr<Type>									ParseShortType(const ParsingArguments& pa, ShortTypeTypenameKind typenameKind, Ptr<CppTokenCursor>& cursor);
 extern Ptr<Type>									ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 #define PARSING_DECLARATOR_ARGUMENTS(PREFIX, DELIMITER)												\
