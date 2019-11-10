@@ -58,13 +58,13 @@ template<typename R, typename... TArgs>
 using Member3 = R(*)(TArgs TArgs::*...);
 
 template<typename R, typename... TArgs>
-using Func1 = R(*)(TArgs(*)()...);
+using Func1 = R(*)(TArgs(*...)());
 
 template<typename R, typename... TArgs>
-using Func2 = R(*)(int(*)(TArgs)...);
+using Func2 = R(*)(int(*...)(TArgs));
 
 template<typename R, typename... TArgs>
-using Func3 = R(*)(TArgs(*)(TArgs)...);
+using Func3 = R(*)(TArgs(*...)(TArgs));
 )";
 	COMPILE_PROGRAM(program, pa, input);
 	

@@ -123,7 +123,7 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 			TypeToTsysNoVta(newPa, argument.type, ev.Get());
 			if (ev.Get().Count() == 0)
 			{
-				throw StopParsingException(cursor);
+				ev.Get().Add(pa.tsys->Any());
 			}
 
 			if (argument.name)

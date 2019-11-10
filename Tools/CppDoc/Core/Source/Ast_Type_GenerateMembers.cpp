@@ -48,7 +48,7 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, ITsys*
 			auto funcType = types[j];
 			if (funcType->GetType() != TsysType::Function)
 			{
-				throw NotResolvableException();
+				continue;
 			}
 
 			switch (kind)

@@ -539,13 +539,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 
 						List<Ptr<VariableDeclaration>> varDecls;
 						BuildVariables(declarators, varDecls);
-
-						bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
-						if (isVariadic && varDecls[0]->initializer)
-						{
-							throw StopParsingException(cursor);
-						}
-						type->parameters.Add({ varDecls[0],isVariadic });
+						type->parameters.Add({ varDecls[0],declarators[0]->ellipsis });
 
 						// build parameter symbols to declarator->scopeSymbolToReuse, so that decltype(...) is correctly handled
 						BuildSymbols(pa, varDecls, cursor);

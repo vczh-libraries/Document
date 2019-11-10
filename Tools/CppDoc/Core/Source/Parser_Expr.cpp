@@ -450,7 +450,23 @@ Ptr<Category_Id_Child_Generic_Expr> ParseFieldAccessNameExpr(const ParsingArgume
 
 Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	auto expr = ParsePrimitiveExpr(pa, cursor);
+	Ptr<Expr> expr;
+	if (TestToken(cursor, CppTokens::NOEXCEPT, false))
+	{
+		auto idExpr = MakePtr<IdExpr>();
+		idExpr->name.type = CppNameType::Normal;
+		idExpr->name.name = L"noexcept";
+		idExpr->name.tokenCount = 1;
+		idExpr->name.nameTokens[0] = cursor->token;
+		SkipToken(cursor);
+
+		expr = idExpr;
+	}
+	else
+	{
+		expr = ParsePrimitiveExpr(pa, cursor);
+	}
+
 	while (true)
 	{
 		if (!TestToken(cursor, CppTokens::DOT, CppTokens::MUL, false) && !TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT, false) && TestToken(cursor, CppTokens::DOT))
@@ -507,6 +523,13 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 						sizeType->prefix = CppPrimitivePrefix::_unsigned;
 						sizeType->primitive = CppPrimitiveType::_int;
 						returnType = sizeType;
+					}
+					else if (idExpr->name.name == L"noexcept")
+					{
+						auto boolType = MakePtr<PrimitiveType>();
+						boolType->prefix = CppPrimitivePrefix::_none;
+						boolType->primitive = CppPrimitiveType::_bool;
+						returnType = boolType;
 					}
 					else if (INVLOC.StartsWith(idExpr->name.name, L"__is_", Locale::Normalization::None) || INVLOC.StartsWith(idExpr->name.name, L"__has_", Locale::Normalization::None))
 					{

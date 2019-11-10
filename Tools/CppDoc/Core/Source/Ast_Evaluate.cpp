@@ -218,7 +218,7 @@ public:
 
 					if (ev.Get().Count() == 0)
 					{
-						throw NotResolvableException();
+						ev.Get().Add(pa.tsys->Any());
 					}
 					ev.progress = symbol_component::EvaluationProgress::Evaluated;
 				}
