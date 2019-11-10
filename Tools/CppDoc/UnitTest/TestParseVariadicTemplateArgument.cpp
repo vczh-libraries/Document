@@ -43,7 +43,7 @@ template<typename R, typename... TArgs>
 using Ref2 = R(*)(PtrLRef<TArgs>...);
 
 template<typename R, typename... TArgs>
-using Array = R(*)(TArgs[10]...);
+using Array = R(*)(TArgs...[10]);
 
 template<typename R, typename... TArgs>
 using Child = R(*)(const volatile typename TArgs::X...);
