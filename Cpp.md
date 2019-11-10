@@ -25,6 +25,8 @@
       - `__builtin_nansf(...)` -> float
 
 - [ ] Next Demo! (UnitTest_Cases::STL)
+  - [ ] `struct/class/union/enum` name could be hidden by non-type declaration of the same name
+    - [ ] Unless using `struct X`, only non-type declaration is visible (`IdType::cStyleTypeReference`)
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.

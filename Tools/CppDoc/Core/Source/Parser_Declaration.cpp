@@ -1054,7 +1054,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 
 	while (cursor)
 	{
-#define DEFINE_FUNCVAR_TEST(TOKEN, NAME) if (TestToken(cursor, CppTokens::TOKEN)) decorator##NAME = true; else
+#define DEFINE_FUNCVAR_TEST(TOKEN, NAME) if (TestToken(cursor, CppTokens::TOKEN)) { decorator##NAME = true; while(SkipSpecifiers(cursor)); } else
 		FUNCVAR_DECORATORS(DEFINE_FUNCVAR_TEST)
 #undef DEFINE_FUNCVAR_TEST
 		break;
@@ -1261,11 +1261,13 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		Ptr<TemplateSpec> spec;
 		ParseTemplateSpec(pa, cursor, specSymbol, spec);
 		specs.Add(spec);
+		while (SkipSpecifiers(cursor));
 	}
 
 	bool decoratorFriend = TestToken(cursor, CppTokens::DECL_FRIEND);
 	if (decoratorFriend)
 	{
+		while (SkipSpecifiers(cursor));
 		if (specs.Count() == 0)
 		{
 			// someone will write "friend TYPE_NAME;", just throw away, since this name must have been declared.
@@ -1299,7 +1301,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			SkipToken(cursor);
 
 			// friend class could not have partial specialization, so any symbols in template<...> will not be used
-			decl->usedClass = ParseType(pa, cursor);
+			decl->usedClass = ParseShortType(pa, ShortTypeTypenameKind::Implicit, cursor);
 			RequireToken(cursor, CppTokens::SEMICOLON);
 			output.Add(decl);
 			return;

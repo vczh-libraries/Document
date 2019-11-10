@@ -52,7 +52,7 @@ Ptr<Type> ParsePrimitiveType(Ptr<CppTokenCursor>& cursor, CppPrimitivePrefix pre
 ParseIdType
 ***********************************************************************/
 
-Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typenameKind, Ptr<CppTokenCursor>& cursor)
 {
 	auto idKind = cursor ? (CppTokens)cursor->token.token : CppTokens::ID;
 
@@ -171,6 +171,12 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			}
 			return type;
 		}
+
+		// if an expression is not required, just return the type without resolving
+		if (typenameKind != ShortTypeTypenameKind::No)
+		{
+			return type;
+		}
 	}
 	throw StopParsingException(cursor);
 }
@@ -220,6 +226,10 @@ Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Category_Id_Chi
 	}
 	return nullptr;
 }
+
+/***********************************************************************
+TryParseGenericType
+***********************************************************************/
 
 Ptr< Category_Id_Child_Generic_Root_Type> TryParseGenericType(const ParsingArguments& pa, Ptr<Category_Id_Child_Type> classType, Ptr<CppTokenCursor>& cursor)
 {
@@ -274,7 +284,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 			{
 				SkipToken(cursor);
 				RequireToken(cursor, CppTokens::LT);
-				auto sequenceType = ParseIdType(pa, cursor);
+				auto sequenceType = ParseIdType(pa, ShortTypeTypenameKind::Implicit, cursor);
 				RequireToken(cursor, CppTokens::COMMA);
 				auto elementType = ParseType(pa, cursor);
 				RequireToken(cursor, CppTokens::COMMA);
@@ -308,7 +318,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 #undef DEFINE_INTRINSIC_NAME
 		}
 		// NAME
-		typeResult = TryParseGenericType(pa, ParseIdType(pa, cursor), cursor);
+		typeResult = TryParseGenericType(pa, ParseIdType(pa, typenameKind, cursor), cursor);
 	SKIP_NORMAL_PARSING:;
 	}
 
