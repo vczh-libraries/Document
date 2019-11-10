@@ -23,6 +23,27 @@ __forward Function<double>: double (double);
 	AssertProgram(program, output);
 }
 
+TEST_CASE(TestParsePartialSpecialization_ValueAliases)
+{
+	auto input = LR"(
+template<typename T> auto Zero = (T)0;
+template<> auto Zero<char> = '0';
+template<> auto Zero<wchar_t> = L'0';
+)";
+
+	auto output = LR"(
+template<typename T>
+using_value Zero: auto = c_cast<T>(0);
+template<>
+using_value Zero<char>: auto = '0';
+template<>
+using_value Zero<wchar_t>: auto = L'0';
+)";
+
+	COMPILE_PROGRAM(program, pa, input);
+	AssertProgram(program, output);
+}
+
 TEST_CASE(TestParsePartialSpecialization_Classes)
 {
 	auto input = LR"(

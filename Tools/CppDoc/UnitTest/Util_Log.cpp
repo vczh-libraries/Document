@@ -1282,6 +1282,10 @@ public:
 		writer.WriteString(L"using_value ");
 		if (self->decoratorConstexpr) writer.WriteString(L"constexpr ");
 		writer.WriteString(self->name.name);
+		if (self->specializationSpec)
+		{
+			Log(self->specializationSpec->arguments, L"<", L">", writer);
+		}
 		writer.WriteString(L": ");
 		Log(self->type, writer);
 		writer.WriteString(L" = ");

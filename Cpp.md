@@ -33,6 +33,7 @@
     - [ ] Template arguments are not located in HTML.
     - [ ] `expr->Accept` should have 3 links.
   - [ ] Show progress while parsing cases.
+- [ ] More `template` on value aliases (partial specialization)
 - [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
   - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
   - [ ] Generate `ClassMemberCache` for generated special members

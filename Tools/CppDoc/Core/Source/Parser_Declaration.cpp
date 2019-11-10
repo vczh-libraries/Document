@@ -967,6 +967,7 @@ void ParseDeclaration_Variable(
 
 		auto decl = MakePtr<ValueAliasDeclaration>();
 		decl->templateSpec = spec;
+		decl->specializationSpec = declarator->specializationSpec;
 		decl->name = declarator->name;
 		decl->type = declarator->type;
 		decl->expr = declarator->initializer->arguments[0].item;
@@ -989,10 +990,15 @@ void ParseDeclaration_Variable(
 	else
 	{
 #define FILL_VARIABLE\
-	decl->name = declarator->name;\
-	decl->type = declarator->type;\
-	FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_FILL_DECLARATOR)\
-	decl->needResolveTypeFromInitializer = needResolveTypeFromInitializer\
+		decl->name = declarator->name;\
+		decl->type = declarator->type;\
+		FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_FILL_DECLARATOR)\
+		decl->needResolveTypeFromInitializer = needResolveTypeFromInitializer\
+
+		if (declarator->specializationSpec)
+		{
+			throw StopParsingException(cursor);
+		}
 
 		bool needResolveTypeFromInitializer = IsPendingType(declarator->type);
 		if (needResolveTypeFromInitializer && (!declarator->initializer || declarator->initializer->initializerType != CppInitializerType::Equal))

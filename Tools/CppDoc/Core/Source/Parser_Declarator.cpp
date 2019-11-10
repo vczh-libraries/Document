@@ -428,21 +428,21 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 	Ptr<SpecializationSpec> spec;
 	auto callingConvention = TsysCallingConvention::None;
 
-	ParseSpecializationSpec(pa, cursor, spec);
+	if (allowSpecializationSpec)
+	{
+		ParseSpecializationSpec(pa, cursor, spec);
+	}
 	ParseCallingConvention(callingConvention, cursor);
 
 	if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
 	{
 		if (spec)
 		{
-			if (declarator->name)
-			{
-				declarator->specializationSpec = spec;
-			}
-			else
+			if (!declarator->name)
 			{
 				throw StopParsingException(cursor);
 			}
+			declarator->specializationSpec = spec;
 		}
 
 		if (!forceSpecialMethod || callingConvention != TsysCallingConvention::None)
@@ -1058,6 +1058,12 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 				throw StopParsingException(cursor);
 			}
 
+			Ptr<SpecializationSpec> spec;
+			if (pdc.allowSpecializationSpec)
+			{
+				ParseSpecializationSpec(newPa, cursor, spec);
+			}
+
 			if (pdc.ir == InitializerRestriction::Optional && !isFunction)
 			{
 				if (TestToken(cursor, CppTokens::EQ, false) || TestToken(cursor, CppTokens::LPARENTHESIS, false))
@@ -1068,6 +1074,19 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 				{
 					declarator->initializer = ParseInitializer(newPa, cursor, pdc.allowComma, true);
 				}
+			}
+
+			if (spec)
+			{
+				if (!pdc.scopeSymbolToReuse)
+				{
+					throw StopParsingException(cursor);
+				}
+				if (!declarator->initializer || declarator->initializer->initializerType != CppInitializerType::Equal)
+				{
+					throw StopParsingException(cursor);
+				}
+				declarator->specializationSpec = spec;
 			}
 		});
 		declarators.Add(declarator);

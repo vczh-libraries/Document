@@ -217,6 +217,13 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 			declName = DecorateNameForSpecializationSpec(declName, classDecl->specializationSpec);
 		}
 	}
+	else if (auto valueAliasDecl = _decl.Cast<ValueAliasDeclaration>())
+	{
+		if (valueAliasDecl->specializationSpec)
+		{
+			declName = DecorateNameForSpecializationSpec(declName, valueAliasDecl->specializationSpec);
+		}
+	}
 
 	if (auto pChildren = TryGetChildren_NFb(declName))
 	{

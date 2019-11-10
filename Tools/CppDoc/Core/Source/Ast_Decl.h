@@ -286,6 +286,7 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<TemplateSpec>								templateSpec;
+	Ptr<SpecializationSpec>							specializationSpec;
 	Ptr<Type>										type;
 	Ptr<Expr>										expr;
 	bool											decoratorConstexpr = false;
