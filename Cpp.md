@@ -25,7 +25,6 @@
       - `__builtin_nansf(...)` -> float
 
 - [ ] Next Demo! (UnitTest_Cases::STL)
-  - [ ] Connect function with forward declarations containing `decltype(EXPR)` in expression type.
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.

@@ -21,14 +21,14 @@ TEST_CASE(TestConnectForwardGeneric_Functions)
 		
 /* 12 */ 	void F(S);
 /* 13 */ 	int F(S, ...);
-/* 14 */ 	template<typename T> T F(S, T);
-/* 15 */ 	template<typename T, typename U> T F(S, U*);
+/* 14 */ 	template<typename T> auto F(S s, T t) -> decltype(s, t);
+/* 15 */ 	template<typename T, typename U> auto F(S s, U* u) -> decltype(s, u);
 		};
  
 /*  8 */ void C::F(S){}
 /*  9 */ int C::F(S, ...){}
-/* 10 */ template<typename T> T C::F(S, T t){}
-/* 11 */ template<typename T, typename U> T C::F(S, U* pu){}
+/* 10 */ template<typename T> auto C::F(S ss, T tt) -> decltype(ss, tt) {}
+/* 11 */ template<typename T, typename U> auto C::F(S ss, U* uu) -> decltype(ss, uu) {}
 )";
 
 	COMPILE_PROGRAM(program, pa, input);
