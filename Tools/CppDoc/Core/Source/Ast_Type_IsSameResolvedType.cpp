@@ -41,6 +41,15 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<LiteralExpr>())
 		{
+			if (self->tokens.Count() != expr->tokens.Count()) return;
+			for (vint i = 0; i < self->tokens.Count(); i++)
+			{
+				auto& t1 = self->tokens[i];
+				auto& t2 = expr->tokens[i];
+				if (t1.length != t2.length) return;
+				if (wcsncmp(t1.reading, t2.reading, t1.length) != 0) return;
+			}
+			result = true;
 		}
 	}
 
@@ -48,6 +57,7 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<ThisExpr>())
 		{
+			result = true;
 		}
 	}
 
@@ -55,6 +65,7 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<NullptrExpr>())
 		{
+			result = true;
 		}
 	}
 
@@ -62,6 +73,7 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<ParenthesisExpr>())
 		{
+			result = IsSameResolvedExpr(self->expr, expr->expr, equivalentNames);
 		}
 	}
 
@@ -69,6 +81,10 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<CastExpr>())
 		{
+			result =
+				self->castType == expr->castType &&
+				IsSameResolvedType(self->type, expr->type, equivalentNames) &&
+				IsSameResolvedExpr(self->expr, expr->expr, equivalentNames);
 		}
 	}
 
@@ -76,6 +92,9 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<TypeidExpr>())
 		{
+			result =
+				IsSameResolvedType(self->type, expr->type, equivalentNames) &&
+				IsSameResolvedExpr(self->expr, expr->expr, equivalentNames);
 		}
 	}
 
@@ -83,6 +102,10 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<SizeofExpr>())
 		{
+			result =
+				self->ellipsis == expr->ellipsis &&
+				IsSameResolvedType(self->type, expr->type, equivalentNames) &&
+				IsSameResolvedExpr(self->expr, expr->expr, equivalentNames);
 		}
 	}
 
@@ -90,6 +113,7 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<ThrowExpr>())
 		{
+			result = IsSameResolvedExpr(self->expr, expr->expr, equivalentNames);
 		}
 	}
 
@@ -97,6 +121,9 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<DeleteExpr>())
 		{
+			result =
+				self->arrayDelete == expr->arrayDelete &&
+				IsSameResolvedExpr(self->expr, expr->expr, equivalentNames);
 		}
 	}
 
@@ -111,11 +138,13 @@ public:
 			}
 			else
 			{
+				if (self->name.name != idExpr->name.name) return;
 				result = CompareResolving(self->resolving, idExpr->resolving);
 			}
 		}
 		else if (auto childExpr = peerExpr.Cast<ChildExpr>())
 		{
+			if (self->name.name != childExpr->name.name) return;
 			result = CompareResolving(self->resolving, childExpr->resolving);
 		}
 	}
@@ -124,14 +153,13 @@ public:
 	{
 		if (auto idExpr = peerExpr.Cast<IdExpr>())
 		{
+			if (self->name.name != idExpr->name.name) return;
 			result = CompareResolving(self->resolving, idExpr->resolving);
 		}
 		else if (auto childExpr = peerExpr.Cast<ChildExpr>())
 		{
-			if (self->name.name == childExpr->name.name)
-			{
-				result = IsSameResolvedType(self->classType, childExpr->classType, equivalentNames);
-			}
+			if (self->name.name != childExpr->name.name) return;
+			result = IsSameResolvedType(self->classType, childExpr->classType, equivalentNames);
 		}
 	}
 
@@ -139,6 +167,10 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<FieldAccessExpr>())
 		{
+			result =
+				self->type == expr->type &&
+				IsSameResolvedExpr(self->expr, expr->expr, equivalentNames) &&
+				IsSameResolvedExpr(self->name, expr->name, equivalentNames);
 		}
 	}
 
@@ -146,13 +178,32 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<ArrayAccessExpr>())
 		{
+			result =
+				IsSameResolvedExpr(self->expr, expr->expr, equivalentNames) &&
+				IsSameResolvedExpr(self->index, expr->index, equivalentNames);
 		}
+	}
+
+	bool TestArguments(VariadicList<Ptr<Expr>>& es1, VariadicList<Ptr<Expr>>& es2)
+	{
+		if (es1.Count() != es2.Count()) return false;
+		for (vint i = 0; i < es1.Count(); i++)
+		{
+			auto& a1 = es1[i];
+			auto& a2 = es2[i];
+			if (a1.isVariadic != a2.isVariadic) return false;
+			if (!IsSameResolvedExpr(a1.item, a2.item, equivalentNames)) return false;
+		}
+		return true;
 	}
 
 	void Visit(FuncAccessExpr* self)override
 	{
 		if (auto expr = peerExpr.Cast<FuncAccessExpr>())
 		{
+			if (!IsSameResolvedExpr(self->expr, expr->expr, equivalentNames)) return;
+			if (!TestArguments(self->arguments, expr->arguments)) return;
+			result = true;
 		}
 	}
 
@@ -160,6 +211,10 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<CtorAccessExpr>())
 		{
+			if (!IsSameResolvedType(self->type, expr->type, equivalentNames)) return;
+			if (self->initializer->initializerType != expr->initializer->initializerType) return;
+			if (!TestArguments(self->initializer->arguments, expr->initializer->arguments)) return;
+			result = true;
 		}
 	}
 
@@ -167,6 +222,9 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<NewExpr>())
 		{
+			Visit((CtorAccessExpr*)self);
+			if (!result) return;
+			result = TestArguments(self->placementArguments, expr->placementArguments);
 		}
 	}
 
@@ -174,6 +232,7 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<UniversalInitializerExpr>())
 		{
+			result = TestArguments(self->arguments, expr->arguments);
 		}
 	}
 
@@ -181,6 +240,9 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<PostfixUnaryExpr>())
 		{
+			result =
+				self->op == expr->op &&
+				IsSameResolvedExpr(self->operand, expr->operand, equivalentNames);
 		}
 	}
 
@@ -188,6 +250,9 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<PrefixUnaryExpr>())
 		{
+			result =
+				self->op == expr->op &&
+				IsSameResolvedExpr(self->operand, expr->operand, equivalentNames);
 		}
 	}
 
@@ -195,6 +260,10 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<BinaryExpr>())
 		{
+			result =
+				self->op == expr->op &&
+				IsSameResolvedExpr(self->left, expr->left, equivalentNames) &&
+				IsSameResolvedExpr(self->right, expr->right, equivalentNames);
 		}
 	}
 
@@ -202,13 +271,34 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<IfExpr>())
 		{
+			result =
+				IsSameResolvedExpr(self->condition, expr->condition, equivalentNames) &&
+				IsSameResolvedExpr(self->left, expr->left, equivalentNames) &&
+				IsSameResolvedExpr(self->right, expr->right, equivalentNames);
 		}
+	}
+
+	bool TestGenericArguments(VariadicList<GenericArgument>& es1, VariadicList<GenericArgument>& es2)
+	{
+		if (es1.Count() != es2.Count()) return false;
+		for (vint i = 0; i < es1.Count(); i++)
+		{
+			auto& a1 = es1[i];
+			auto& a2 = es2[i];
+			if (a1.isVariadic != a2.isVariadic) return false;
+			if (!IsSameResolvedExpr(a1.item.expr, a2.item.expr, equivalentNames)) return false;
+			if (!IsSameResolvedType(a1.item.type, a2.item.type, equivalentNames)) return false;
+		}
+		return true;
 	}
 
 	void Visit(GenericExpr* self)override
 	{
 		if (auto expr = peerExpr.Cast<GenericExpr>())
 		{
+			if (!IsSameResolvedExpr(self->expr, expr->expr, equivalentNames)) return;
+			if (!TestGenericArguments(self->arguments, expr->arguments)) return;
+			result = true;
 		}
 	}
 
@@ -216,6 +306,7 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<BuiltinFuncAccessExpr>())
 		{
+			result = IsSameResolvedType(self->returnType, expr->returnType, equivalentNames);
 		}
 	}
 };
@@ -382,11 +473,13 @@ public:
 			}
 			else
 			{
+				if (self->name.name != idType->name.name) return;
 				result = CompareResolving(self->resolving, idType->resolving);
 			}
 		}
 		else if (auto childType = peerType.Cast<ChildType>())
 		{
+			if (self->name.name != childType->name.name) return;
 			result = CompareResolving(self->resolving, childType->resolving);
 		}
 	}
@@ -395,14 +488,13 @@ public:
 	{
 		if (auto idType = peerType.Cast<IdType>())
 		{
+			if (self->name.name != idType->name.name) return;
 			result = CompareResolving(self->resolving, idType->resolving);
 		}
 		else if (auto childType = peerType.Cast<ChildType>())
 		{
-			if (self->name.name == childType->name.name)
-			{
-				result = IsSameResolvedType(self->classType, childType->classType, equivalentNames);
-			}
+			if (self->name.name != childType->name.name) return;
+			result = IsSameResolvedType(self->classType, childType->classType, equivalentNames);
 		}
 	}
 
@@ -452,7 +544,7 @@ bool IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2, Dictionary<WString, WString>
 	}
 	else
 	{
-		return (t1 == nullptr) == (t2 == nullptr);
+		return !t1 && !t2;
 	}
 }
 
