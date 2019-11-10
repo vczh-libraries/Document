@@ -39,6 +39,7 @@ void ParseDeclaration_Namespace(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			}
 			contextDecl = decl;
 
+			while (SkipSpecifiers(cursor));
 			if (ParseCppName(decl->name, cursor))
 			{
 				// ensure all other overloadings are namespaces, and merge the scope with them

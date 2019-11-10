@@ -24,10 +24,8 @@
       - `__builtin_nanf(...)` -> float
       - `__builtin_nansf(...)` -> float
 
-- [ ] Next Demo!
-  - [ ] `template` and `typename` is not required if only type is needed.
-    - `static_cast<HERE>`
-    - `struct X : HERE`
+- [ ] Next Demo! (UnitTest_Cases::STL)
+  - [ ] Connect function with forward declarations containing `decltype(EXPR)` in expression type.
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.
@@ -57,7 +55,6 @@
 - [ ] `decltype(EXPR)::ChildType`
 - [ ] `::new`
 - [ ] `::delete`
-- [ ] Connect function with forward declarations containing `decltype(EXPR)` in expression type.
 - [ ] Pass variadic template argument to placement new expression.
 - [ ] `GenerateMembers` on `DeclInstance`.
 

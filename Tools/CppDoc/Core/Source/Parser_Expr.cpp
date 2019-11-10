@@ -124,22 +124,22 @@ Ptr<ChildExpr> TryParseChildExpr(const ParsingArguments& pa, Ptr<Type> classType
 		auto rsr = ResolveChildSymbol(pa, classType, cppName);
 		if (!rsr.types)
 		{
-			auto type = MakePtr<ChildExpr>();
-			type->classType = classType;
-			type->name = cppName;
-			type->resolving = rsr.values;
-			if (pa.recorder && type->resolving)
+			auto expr = MakePtr<ChildExpr>();
+			expr->classType = classType;
+			expr->name = cppName;
+			expr->resolving = rsr.values;
+			if (pa.recorder && expr->resolving)
 			{
-				pa.recorder->Index(type->name, type->resolving->resolvedSymbols);
+				pa.recorder->Index(expr->name, expr->resolving->resolvedSymbols);
 			}
-			return type;
+			return expr;
 		}
 		else if (templateKeyword)
 		{
-			auto type = MakePtr<ChildExpr>();
-			type->classType = classType;
-			type->name = cppName;
-			return type;
+			auto expr = MakePtr<ChildExpr>();
+			expr->classType = classType;
+			expr->name = cppName;
+			return expr;
 		}
 		else
 		{
@@ -806,7 +806,7 @@ Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, const ParsingExprArguments
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 7;
 		}
-		else if (TestToken(cursor, CppTokens::GT, CppTokens::GT, false) && !TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ, false))
+		else if (pea.allowGt && TestToken(cursor, CppTokens::GT, CppTokens::GT, false) && !TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ, false))
 		{
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 7;
