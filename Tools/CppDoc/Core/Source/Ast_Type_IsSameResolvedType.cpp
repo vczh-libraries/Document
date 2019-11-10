@@ -1,6 +1,238 @@
 #include "Ast.h"
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
+#include "Ast_Expr.h"
+
+
+bool CompareResolving(Ptr<Resolving> r1, Ptr<Resolving> r2)
+{
+	if (r1 && r2)
+	{
+		return CompareEnumerable(r1->resolvedSymbols, r2->resolvedSymbols) == 0;
+	}
+	else
+	{
+		return !r1 && !r2;
+	}
+}
+
+/***********************************************************************
+IsSameResolvedExpr
+***********************************************************************/
+
+class IsSameResolvedExprVisitor : public Object, public virtual IExprVisitor
+{
+public:
+	bool								result = false;
+	Ptr<Expr>							peerExpr;
+	Dictionary<WString, WString>&		equivalentNames;
+
+	IsSameResolvedExprVisitor(Ptr<Expr> _peerExpr, Dictionary<WString, WString>& _equivalentNames)
+		:peerExpr(_peerExpr)
+		, equivalentNames(_equivalentNames)
+	{
+	}
+
+	void Visit(PlaceholderExpr* self)override
+	{
+	}
+
+	void Visit(LiteralExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<LiteralExpr>())
+		{
+		}
+	}
+
+	void Visit(ThisExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<ThisExpr>())
+		{
+		}
+	}
+
+	void Visit(NullptrExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<NullptrExpr>())
+		{
+		}
+	}
+
+	void Visit(ParenthesisExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<ParenthesisExpr>())
+		{
+		}
+	}
+
+	void Visit(CastExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<CastExpr>())
+		{
+		}
+	}
+
+	void Visit(TypeidExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<TypeidExpr>())
+		{
+		}
+	}
+
+	void Visit(SizeofExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<SizeofExpr>())
+		{
+		}
+	}
+
+	void Visit(ThrowExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<ThrowExpr>())
+		{
+		}
+	}
+
+	void Visit(DeleteExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<DeleteExpr>())
+		{
+		}
+	}
+
+	void Visit(IdExpr* self)override
+	{
+		if (auto idExpr = peerExpr.Cast<IdExpr>())
+		{
+			vint index = equivalentNames.Keys().IndexOf(self->name.name);
+			if (index != -1 && idExpr->name.name == equivalentNames.Values()[index])
+			{
+				result = true;
+			}
+			else
+			{
+				result = CompareResolving(self->resolving, idExpr->resolving);
+			}
+		}
+		else if (auto childExpr = peerExpr.Cast<ChildExpr>())
+		{
+			result = CompareResolving(self->resolving, childExpr->resolving);
+		}
+	}
+
+	void Visit(ChildExpr* self)override
+	{
+		if (auto idExpr = peerExpr.Cast<IdExpr>())
+		{
+			result = CompareResolving(self->resolving, idExpr->resolving);
+		}
+		else if (auto childExpr = peerExpr.Cast<ChildExpr>())
+		{
+			if (self->name.name == childExpr->name.name)
+			{
+				result = IsSameResolvedType(self->classType, childExpr->classType, equivalentNames);
+			}
+		}
+	}
+
+	void Visit(FieldAccessExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<FieldAccessExpr>())
+		{
+		}
+	}
+
+	void Visit(ArrayAccessExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<ArrayAccessExpr>())
+		{
+		}
+	}
+
+	void Visit(FuncAccessExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<FuncAccessExpr>())
+		{
+		}
+	}
+
+	void Visit(CtorAccessExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<CtorAccessExpr>())
+		{
+		}
+	}
+
+	void Visit(NewExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<NewExpr>())
+		{
+		}
+	}
+
+	void Visit(UniversalInitializerExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<UniversalInitializerExpr>())
+		{
+		}
+	}
+
+	void Visit(PostfixUnaryExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<PostfixUnaryExpr>())
+		{
+		}
+	}
+
+	void Visit(PrefixUnaryExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<PrefixUnaryExpr>())
+		{
+		}
+	}
+
+	void Visit(BinaryExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<BinaryExpr>())
+		{
+		}
+	}
+
+	void Visit(IfExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<IfExpr>())
+		{
+		}
+	}
+
+	void Visit(GenericExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<GenericExpr>())
+		{
+		}
+	}
+
+	void Visit(BuiltinFuncAccessExpr* self)override
+	{
+		if (auto expr = peerExpr.Cast<BuiltinFuncAccessExpr>())
+		{
+		}
+	}
+};
+
+bool IsSameResolvedExpr(Ptr<Expr> e1, Ptr<Expr> e2, Dictionary<WString, WString>& equivalentNames)
+{
+	if (e1 && e2)
+	{
+		IsSameResolvedExprVisitor visitor(e2, equivalentNames);
+		e1->Accept(&visitor);
+		return visitor.result;
+	}
+	else
+	{
+		return (e1 == nullptr) == (e2 == nullptr);
+	}
+}
 
 /***********************************************************************
 IsSameResolvedType
@@ -115,8 +347,7 @@ public:
 		{
 			if (self->expr && declType->expr)
 			{
-				// TODO: [Cpp.md] Only compare shapes of these two expressions. ResolvableType only look into resolving.
-				throw 0;
+				result = IsSameResolvedExpr(self->expr, declType->expr, equivalentNames);
 			}
 			else if (!self->expr && !declType->expr)
 			{
@@ -148,21 +379,30 @@ public:
 			if (index != -1 && idType->name.name == equivalentNames.Values()[index])
 			{
 				result = true;
-				return;
+			}
+			else
+			{
+				result = CompareResolving(self->resolving, idType->resolving);
 			}
 		}
-
-		if (self->resolving)
+		else if (auto childType = peerType.Cast<ChildType>())
 		{
-			TestResolving(self->resolving);
+			result = CompareResolving(self->resolving, childType->resolving);
 		}
 	}
 
 	void Visit(ChildType* self)override
 	{
-		if (self->resolving)
+		if (auto idType = peerType.Cast<IdType>())
 		{
-			TestResolving(self->resolving);
+			result = CompareResolving(self->resolving, idType->resolving);
+		}
+		else if (auto childType = peerType.Cast<ChildType>())
+		{
+			if (self->name.name == childType->name.name)
+			{
+				result = IsSameResolvedType(self->classType, childType->classType, equivalentNames);
+			}
 		}
 	}
 
@@ -202,7 +442,6 @@ public:
 // Test if two types are actually the same one
 //   ArrayType length is ignored
 //   FunctionType declarators are ignored
-//   DeclType is not supported yet (in the future, only look at the expression's shape as C++ISO requires)
 bool IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2, Dictionary<WString, WString>& equivalentNames)
 {
 	if (t1 && t2)
