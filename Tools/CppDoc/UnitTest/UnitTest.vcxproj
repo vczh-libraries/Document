@@ -155,6 +155,7 @@
     <ClCompile Include="TestConnectForwardGeneric.cpp" />
     <ClCompile Include="TestGeneratedFunctions.cpp" />
     <ClCompile Include="TestIntegralPromotion.cpp" />
+    <ClCompile Include="TestMisc.cpp" />
     <ClCompile Include="TestOverloading.cpp" />
     <ClCompile Include="TestOverloadingAdl.cpp" />
     <ClCompile Include="TestOverloadingGenericClass.cpp" />

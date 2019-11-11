@@ -114,6 +114,9 @@
     <ClCompile Include="TestParsePartialSpecialization.cpp">
       <Filter>Source Files\TestParserGeneric</Filter>
     </ClCompile>
+    <ClCompile Include="TestMisc.cpp">
+      <Filter>Source Files\MISC</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">
