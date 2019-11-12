@@ -928,10 +928,18 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 	else if (TestToken(cursor, CppTokens::LBRACE))
 	{
 		initializer->initializerType = CppInitializerType::Universal;
+		if (TestToken(cursor, CppTokens::RBRACE))
+		{
+			return initializer;
+		}
 	}
 	else if (TestToken(cursor, CppTokens::LPARENTHESIS))
 	{
 		initializer->initializerType = CppInitializerType::Constructor;
+		if (TestToken(cursor, CppTokens::RPARENTHESIS))
+		{
+			return initializer;
+		}
 	}
 	else
 	{
