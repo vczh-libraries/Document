@@ -662,7 +662,13 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 				}
 				else
 				{
-					throw StopParsingException(cursor);
+					switch (symbol->kind)
+					{
+					case CSTYLE_TYPE_SYMBOL_KIND:
+						break;
+					default:
+						throw StopParsingException(cursor);
+					}
 				}
 			}
 		}

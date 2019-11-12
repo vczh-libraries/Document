@@ -82,6 +82,10 @@ namespace symbol_component
 	case symbol_component::SymbolKind::Struct:	\
 	case symbol_component::SymbolKind::Union	\
 
+#define CSTYLE_TYPE_SYMBOL_KIND					\
+	symbol_component::SymbolKind::Enum:			\
+	case CLASS_SYMBOL_KIND						\
+
 	struct Evaluation
 	{
 	private:

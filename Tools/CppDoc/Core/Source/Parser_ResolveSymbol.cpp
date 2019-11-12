@@ -167,10 +167,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 					switch (symbol->kind)
 					{
 					// type symbols
-					case symbol_component::SymbolKind::Enum:
-					case symbol_component::SymbolKind::Class:
-					case symbol_component::SymbolKind::Struct:
-					case symbol_component::SymbolKind::Union:
+					case CSTYLE_TYPE_SYMBOL_KIND:
 						rsa.found = true;
 						AddSymbolToResolve(rsa.result.types, symbol);
 						break;
