@@ -24,6 +24,7 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 		if (TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
 		{
 			ParseTemplateSpec(newPa, cursor, argument.templateSpecScope, argument.templateSpec);
+			ValidateForRootTemplateSpec(argument.templateSpec, cursor);
 		}
 
 		if (TestToken(cursor, CppTokens::TYPENAME) || TestToken(cursor, CppTokens::DECL_CLASS))
@@ -143,7 +144,14 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 			break;
 		}
 	}
+}
 
+/***********************************************************************
+ValidateForRootTemplateSpec
+***********************************************************************/
+
+void ValidateForRootTemplateSpec(Ptr<TemplateSpec>& spec, Ptr<CppTokenCursor>& cursor)
+{
 	for (vint i = 0; i < spec->arguments.Count() - 1; i++)
 	{
 		if (spec->arguments[i].ellipsis)
@@ -155,7 +163,7 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 }
 
 /***********************************************************************
-ParseTemplateSpec
+ParseSpecializationSpec
 ***********************************************************************/
 
 void ParseSpecializationSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<SpecializationSpec>& spec)

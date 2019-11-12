@@ -24,6 +24,17 @@
       - `__builtin_nanf(...)` -> float
       - `__builtin_nansf(...)` -> float
 
+- [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
+  - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
+  - [ ] Generate `ClassMemberCache` for generated special members
+  - [ ] Call a function with some or all template arguments unspecified.
+    - [ ] Allow multiple template arguments to be variadic as long as they are type inferenced (aka not assigned to directly) at call sites
+  - [ ] Overload functions with some or all template arguments unspecified.
+  - [ ] `...` arguments
+  - [ ] Full Specialization
+    - [ ] Connect functions with forward declarations.
+      - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
+    - [ ] When overloading, specialized functions are not considered. When a template function wins, then choose among the primiary and its specializations.
 - [ ] Next Demo! (UnitTest_Cases::STL)
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
@@ -31,16 +42,6 @@
     - [ ] `expr->Accept` should have 3 links.
   - [ ] Show progress while parsing cases.
 - [ ] More `template` on value aliases (partial specialization)
-- [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
-  - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
-  - [ ] Generate `ClassMemberCache` for generated special members
-  - [ ] Call a function with some or all template arguments unspecified.
-  - [ ] Overload functions with some or all template arguments unspecified.
-  - [ ] `...` arguments
-  - [ ] Full Specialization
-    - [ ] Connect functions with forward declarations.
-      - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
-    - [ ] When overloading, specialized functions are not considered. When a template function wins, then choose among the primiary and its specializations.
 - [ ] More `template` on classes (partial specialization).
   - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
   - [ ] Connect methods with forward declarations inside multiple levels of template classes.

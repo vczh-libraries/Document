@@ -228,6 +228,10 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 	{
 		auto specPa = pa.WithScope(specSymbol.Obj());
 		ParseSpecializationSpec(specPa, cursor, specializationSpec);
+		if (!specializationSpec)
+		{
+			ValidateForRootTemplateSpec(spec, cursor);
+		}
 	}
 
 	if (TestToken(cursor, CppTokens::SEMICOLON, false))
@@ -453,6 +457,12 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<Symbol> specSymbol, 
 		{
 			auto oldCursor = cursor;
 			// using NAME = TYPE;
+
+			if (spec)
+			{
+				ValidateForRootTemplateSpec(spec, cursor);
+			}
+
 			CppName cppName;
 			if (!ParseCppName(cppName, cursor) || !TestToken(cursor, CppTokens::EQ))
 			{
@@ -821,7 +831,12 @@ void ParseDeclaration_Function(
 	if (declarator->specializationSpec)
 	{
 		if (!functionSpec) throw StopParsingException(cursor);
+		if (functionSpec->arguments.Count() > 0) throw StopParsingException(cursor);
 		if (functionSpec->arguments.Count() != 0) throw StopParsingException(cursor);
+	}
+	else if (functionSpec)
+	{
+		ValidateForRootTemplateSpec(functionSpec, cursor);
 	}
 
 	auto context = declarator->classMemberCache ? declarator->classMemberCache->containerClassTypes[0]->GetDecl() : pa.scopeSymbol;
@@ -967,6 +982,11 @@ void ParseDeclaration_Variable(
 		if (!declarator->initializer || declarator->initializer->initializerType != CppInitializerType::Equal)
 		{
 			throw StopParsingException(cursor);
+		}
+
+		if (!declarator->specializationSpec)
+		{
+			ValidateForRootTemplateSpec(spec, cursor);
 		}
 
 		auto decl = MakePtr<ValueAliasDeclaration>();
