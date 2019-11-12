@@ -640,43 +640,6 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 }
 
 /***********************************************************************
-SearchForFunctionWithSameSignature
-***********************************************************************/
-
-Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
-{
-	if (!decl->needResolveTypeFromStatement && !decl->specializationSpec)
-	{
-		if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
-		{
-			for (vint i = 0; i < pSymbols->Count(); i++)
-			{
-				auto symbol = pSymbols->Get(i).Obj();
-				if (symbol->kind == symbol_component::SymbolKind::FunctionSymbol)
-				{
-					auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-					if (IsCompatibleFunctionDeclInSameScope(decl, declToCompare))
-					{
-						return symbol;
-					}
-				}
-				else
-				{
-					switch (symbol->kind)
-					{
-					case CSTYLE_TYPE_SYMBOL_KIND:
-						break;
-					default:
-						throw StopParsingException(cursor);
-					}
-				}
-			}
-		}
-	}
-	return context->CreateFunctionSymbol_NFb(decl);
-}
-
-/***********************************************************************
 ParseDeclaration_FuncVar
 ***********************************************************************/
 
@@ -749,6 +712,40 @@ Ptr<TemplateSpec> EnsureNoMultipleTemplateSpec(List<Ptr<TemplateSpec>>& specs, P
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+
+Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
+{
+	if (!decl->needResolveTypeFromStatement && !decl->specializationSpec)
+	{
+		if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
+		{
+			for (vint i = 0; i < pSymbols->Count(); i++)
+			{
+				auto symbol = pSymbols->Get(i).Obj();
+				if (symbol->kind == symbol_component::SymbolKind::FunctionSymbol)
+				{
+					auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+					if (IsCompatibleFunctionDeclInSameScope(decl, declToCompare))
+					{
+						return symbol;
+					}
+				}
+				else
+				{
+					switch (symbol->kind)
+					{
+					case CSTYLE_TYPE_SYMBOL_KIND:
+						// function can only override enum/class/struct/union
+						break;
+					default:
+						throw StopParsingException(cursor);
+					}
+				}
+			}
+		}
+	}
+	return context->CreateFunctionSymbol_NFb(decl);
+}
 
 void ParseDeclaration_Function(
 	const ParsingArguments& pa,
