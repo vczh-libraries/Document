@@ -627,7 +627,7 @@ using_type a: int;
 using_type b: int;
 using_type c: int;
 using_type d: C :: T (A, B, pS) *;
-using_type S__: S_;
+using_type S__: enum_class_struct_union S_;
 _a: a;
 _b: b;
 _c: c;

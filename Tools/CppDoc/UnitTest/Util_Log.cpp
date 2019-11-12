@@ -550,6 +550,10 @@ public:
 
 	void Visit(IdType* self)override
 	{
+		if (self->cStyleTypeReference)
+		{
+			writer.WriteString(L"enum_class_struct_union ");
+		}
 		writer.WriteString(self->name.name);
 	}
 

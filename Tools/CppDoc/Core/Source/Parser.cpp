@@ -225,13 +225,50 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 		}
 	}
 
+	// check if this symbol hides other symbols correctly
+	Symbol* targetSymbol = nullptr;
 	if (auto pChildren = TryGetChildren_NFb(declName))
 	{
-		// if the symbol has been created, fail if the symbol doesn't have a current kind
-		if (pChildren->Count() != 1) return nullptr;
-		auto symbol = pChildren->Get(0).Obj();
-		if (symbol->kind != kind) return nullptr;
+		Symbol* symbolCStyle = nullptr;
+		Symbol* symbolOther = nullptr;
 
+		// if there are multiple symbols with the same name, then it could only be one enum/class/struct/union and one of other kind.
+		for (vint i = 0; i < pChildren->Count(); i++)
+		{
+			auto symbol = pChildren->Get(0).Obj();
+			switch (symbol->kind)
+			{
+			case CSTYLE_TYPE_SYMBOL_KIND:
+				if (symbolCStyle) return nullptr;
+				symbolCStyle = symbol;
+				break;
+			default:
+				if (symbolOther) return nullptr;
+				symbolOther = symbol;
+			}
+		}
+
+		switch (kind)
+		{
+		case CSTYLE_TYPE_SYMBOL_KIND:
+			if (symbolCStyle)
+			{
+				if (symbolCStyle->kind != kind) return nullptr;
+				targetSymbol = symbolCStyle;
+			}
+			break;
+		default:
+			if (symbolOther)
+			{
+				if (symbolOther->kind != kind) return nullptr;
+				targetSymbol = symbolOther;
+			}
+		}
+	}
+
+	// if a symbol of the same kind is found, it could be a symbol that only has forward declarations assigned to it so far
+	if (targetSymbol)
+	{
 		if (templateSpecSymbol)
 		{
 			// if a template<...> is offered (not possible for forward declaration)
@@ -239,8 +276,8 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 			{
 			case CLASS_SYMBOL_KIND:
 				// there should be no implementation
-				if (symbol->categoryData.normal.implDecl) return nullptr;
-				if (symbol->categoryData.normal.children.Count() > 0) return nullptr;
+				if (targetSymbol->categoryData.normal.implDecl) return nullptr;
+				if (targetSymbol->categoryData.normal.children.Count() > 0) return nullptr;
 				break;
 			default:
 				// only generic class implementation can be added using this function
@@ -255,15 +292,15 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 
 			List<Ptr<Symbol>> existingChildren;
 			CopySymbolChildren(templateSpecSymbol.Obj(), existingChildren);
-			AddSymbolChildren(symbol, existingChildren);
-			_decl->symbol = symbol;
-			return symbol;
+			AddSymbolChildren(targetSymbol, existingChildren);
+			_decl->symbol = targetSymbol;
+			return targetSymbol;
 		}
 		else
 		{
 			// if no template<...> is offered, return the symbol when there is only one with the same kind
-			_decl->symbol = symbol;
-			return symbol;
+			_decl->symbol = targetSymbol;
+			return targetSymbol;
 		}
 	}
 	else
