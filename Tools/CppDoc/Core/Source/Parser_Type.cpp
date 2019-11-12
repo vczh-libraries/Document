@@ -66,7 +66,8 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 
 	if (ParseCppName(type->name, cursor))
 	{
-		if (auto resolving = ResolveSymbol(pa, type->name, SearchPolicy::SymbolAccessableInScope).types)
+		auto policy = type->cStyleTypeReference ? SearchPolicy::SymbolAccessableInScope_CStyleTypeReference : SearchPolicy::SymbolAccessableInScope;
+		if (auto resolving = ResolveSymbol(pa, type->name, policy).types)
 		{
 			type->resolving = resolving;
 			if (pa.recorder)

@@ -93,10 +93,20 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 	{
 		auto currentClassDecl = scope->GetImplDecl_NFb<ClassDeclaration>();
 		bool switchFromSymbolAccessableInScope = false;
-		if (currentClassDecl && policy == SearchPolicy::SymbolAccessableInScope)
+		bool switchFromSymbolAccessableInScope_CStyleTypeReference = false;
+		if (currentClassDecl)
 		{
-			policy = SearchPolicy::ChildSymbolFromMemberInside;
-			switchFromSymbolAccessableInScope = true;
+			switch (policy)
+			{
+			case SearchPolicy::SymbolAccessableInScope:
+				policy = SearchPolicy::ChildSymbolFromMemberInside;
+				switchFromSymbolAccessableInScope = true;
+				break;
+			case SearchPolicy::SymbolAccessableInScope_CStyleTypeReference:
+				policy = SearchPolicy::ChildSymbolFromMemberInside;
+				switchFromSymbolAccessableInScope_CStyleTypeReference = true;
+				break;
+			}
 		}
 
 		if (currentClassDecl && currentClassDecl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbolFromOutside)
@@ -109,46 +119,106 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 		if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 		{
+			bool hasCStyleType = false;
+			bool hasOthers = false;
 			for (vint i = 0; i < pSymbols->Count(); i++)
 			{
 				auto symbol = pSymbols->Get(i).Obj();
 				switch (symbol->kind)
 				{
-					// type symbols
 				case symbol_component::SymbolKind::Enum:
 				case symbol_component::SymbolKind::Class:
 				case symbol_component::SymbolKind::Struct:
 				case symbol_component::SymbolKind::Union:
-				case symbol_component::SymbolKind::TypeAlias:
-				case symbol_component::SymbolKind::Namespace:
-					rsa.found = true;
-					AddSymbolToResolve(rsa.result.types, symbol);
+					hasCStyleType = true;
 					break;
+				default:
+					hasOthers = true;
+				}
+			}
 
-					// value symbols
-				case symbol_component::SymbolKind::EnumItem:
-				case symbol_component::SymbolKind::FunctionSymbol:
-				case symbol_component::SymbolKind::Variable:
-				case symbol_component::SymbolKind::ValueAlias:
-					rsa.found = true;
-					AddSymbolToResolve(rsa.result.values, symbol);
-					break;
+			bool specifiedCStyleTypeReference = policy == SearchPolicy::SymbolAccessableInScope_CStyleTypeReference || switchFromSymbolAccessableInScope_CStyleTypeReference;
+			bool acceptCStyleType = false;
+			bool acceptOthers = false;
 
-				case symbol_component::SymbolKind::GenericTypeArgument:
-					if (policy == SearchPolicy::ChildSymbolFromMemberInside || policy == SearchPolicy::SymbolAccessableInScope)
+			if (hasCStyleType && hasOthers)
+			{
+				acceptCStyleType = specifiedCStyleTypeReference;
+				acceptOthers = !specifiedCStyleTypeReference;
+			}
+			else if (hasCStyleType)
+			{
+				acceptCStyleType = true;
+			}
+			else if (hasOthers)
+			{
+				acceptOthers = !specifiedCStyleTypeReference;
+			}
+			else
+			{
+				throw L"This could not happen, because pSymbols should be nullptr in this case.";
+			}
+
+			if (acceptCStyleType)
+			{
+				for (vint i = 0; i < pSymbols->Count(); i++)
+				{
+					auto symbol = pSymbols->Get(i).Obj();
+					switch (symbol->kind)
 					{
+					// type symbols
+					case symbol_component::SymbolKind::Enum:
+					case symbol_component::SymbolKind::Class:
+					case symbol_component::SymbolKind::Struct:
+					case symbol_component::SymbolKind::Union:
 						rsa.found = true;
 						AddSymbolToResolve(rsa.result.types, symbol);
+						break;
 					}
-					break;
+				}
+			}
 
-				case symbol_component::SymbolKind::GenericValueArgument:
-					if (policy == SearchPolicy::ChildSymbolFromMemberInside || policy == SearchPolicy::SymbolAccessableInScope)
+			if (acceptOthers)
+			{
+				for (vint i = 0; i < pSymbols->Count(); i++)
+				{
+					auto symbol = pSymbols->Get(i).Obj();
+					switch (symbol->kind)
 					{
+					// type symbols
+					case symbol_component::SymbolKind::TypeAlias:
+					case symbol_component::SymbolKind::Namespace:
+						rsa.found = true;
+						AddSymbolToResolve(rsa.result.types, symbol);
+						break;
+
+					// value symbols
+					case symbol_component::SymbolKind::EnumItem:
+					case symbol_component::SymbolKind::FunctionSymbol:
+					case symbol_component::SymbolKind::Variable:
+					case symbol_component::SymbolKind::ValueAlias:
 						rsa.found = true;
 						AddSymbolToResolve(rsa.result.values, symbol);
+						break;
+
+					// template type argument
+					case symbol_component::SymbolKind::GenericTypeArgument:
+						if (policy == SearchPolicy::ChildSymbolFromMemberInside || policy == SearchPolicy::SymbolAccessableInScope)
+						{
+							rsa.found = true;
+							AddSymbolToResolve(rsa.result.types, symbol);
+						}
+						break;
+
+					// template value argument
+					case symbol_component::SymbolKind::GenericValueArgument:
+						if (policy == SearchPolicy::ChildSymbolFromMemberInside || policy == SearchPolicy::SymbolAccessableInScope)
+						{
+							rsa.found = true;
+							AddSymbolToResolve(rsa.result.values, symbol);
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
@@ -189,6 +259,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 		switch (policy)
 		{
 		case SearchPolicy::SymbolAccessableInScope:
+		case SearchPolicy::SymbolAccessableInScope_CStyleTypeReference:
 			if (auto cache = scope->GetClassMemberCache_NFb())
 			{
 				scope = cache->parentScope;
@@ -222,6 +293,12 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 				{
 					// classMemberCache does not exist
 					policy = SearchPolicy::SymbolAccessableInScope;
+					scope = scope->GetParentScope();
+				}
+				else if (switchFromSymbolAccessableInScope_CStyleTypeReference)
+				{
+					// classMemberCache does not exist
+					policy = SearchPolicy::SymbolAccessableInScope_CStyleTypeReference;
 					scope = scope->GetParentScope();
 				}
 				else
