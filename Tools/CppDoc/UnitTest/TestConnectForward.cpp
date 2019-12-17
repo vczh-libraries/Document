@@ -21,20 +21,24 @@ namespace a::b
 }
 )";
 		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Count() == 1);
-		TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Count() == 1);
-		TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"A")->Count() == 1);
-		auto symbol = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"A")->Get(0).Obj();
 
-		TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Enum);
-		TEST_ASSERT(symbol->GetImplDecl_NFb<EnumDeclaration>());
-		TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 4);
-		TEST_ASSERT(From(symbol->GetForwardDecls_N()).Distinct().Count() == 4);
-		for (vint i = 0; i < 4; i++)
+		TEST_CASE(L"Checking connections")
 		{
-			TEST_ASSERT(symbol->GetForwardDecls_N()[i].Cast<ForwardEnumDeclaration>());
-			TEST_ASSERT(!symbol->GetForwardDecls_N()[i].Cast<EnumDeclaration>());
-		}
+			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Count() == 1);
+			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Count() == 1);
+			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"A")->Count() == 1);
+			auto symbol = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"A")->Get(0).Obj();
+
+			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Enum);
+			TEST_ASSERT(symbol->GetImplDecl_NFb<EnumDeclaration>());
+			TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 4);
+			TEST_ASSERT(From(symbol->GetForwardDecls_N()).Distinct().Count() == 4);
+			for (vint i = 0; i < 4; i++)
+			{
+				TEST_ASSERT(symbol->GetForwardDecls_N()[i].Cast<ForwardEnumDeclaration>());
+				TEST_ASSERT(!symbol->GetForwardDecls_N()[i].Cast<EnumDeclaration>());
+			}
+		});
 	});
 
 	TEST_CATEGORY(L"Variables")
@@ -56,20 +60,24 @@ namespace a::b
 }
 )";
 		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Count() == 1);
-		TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Count() == 1);
-		TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"x")->Count() == 1);
-		auto symbol = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"x")->Get(0).Obj();
 
-		TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
-		TEST_ASSERT(symbol->GetImplDecl_NFb<VariableDeclaration>());
-		TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 4);
-		TEST_ASSERT(From(symbol->GetForwardDecls_N()).Distinct().Count() == 4);
-		for (vint i = 0; i < 4; i++)
+		TEST_CASE(L"Checking connections")
 		{
-			TEST_ASSERT(symbol->GetForwardDecls_N()[i].Cast<ForwardVariableDeclaration>());
-			TEST_ASSERT(!symbol->GetForwardDecls_N()[i].Cast<VariableDeclaration>());
-		}
+			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Count() == 1);
+			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Count() == 1);
+			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"x")->Count() == 1);
+			auto symbol = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"x")->Get(0).Obj();
+
+			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
+			TEST_ASSERT(symbol->GetImplDecl_NFb<VariableDeclaration>());
+			TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 4);
+			TEST_ASSERT(From(symbol->GetForwardDecls_N()).Distinct().Count() == 4);
+			for (vint i = 0; i < 4; i++)
+			{
+				TEST_ASSERT(symbol->GetForwardDecls_N()[i].Cast<ForwardVariableDeclaration>());
+				TEST_ASSERT(!symbol->GetForwardDecls_N()[i].Cast<VariableDeclaration>());
+			}
+		});
 	});
 
 	TEST_CATEGORY(L"Functions")
@@ -91,20 +99,24 @@ namespace a::b
 }
 )";
 		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Count() == 1);
-		TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Count() == 1);
-		TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"Add")->Count() == 1);
-		auto symbol = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"Add")->Get(0).Obj();
 
-		TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
-		TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
-		TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb<FunctionDeclaration>());
-		TEST_ASSERT(symbol->GetForwardSymbols_F().Count() == 4);
-		for (vint i = 0; i < 4; i++)
+		TEST_CASE(L"Checking connections")
 		{
-			TEST_ASSERT(symbol->GetForwardSymbols_F()[i]->GetForwardDecl_Fb().Cast<ForwardFunctionDeclaration>());
-			TEST_ASSERT(!symbol->GetForwardSymbols_F()[i]->GetImplDecl_NFb<FunctionDeclaration>());
-		}
+			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Count() == 1);
+			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Count() == 1);
+			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"Add")->Count() == 1);
+			auto symbol = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"Add")->Get(0).Obj();
+
+			TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
+			TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
+			TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb<FunctionDeclaration>());
+			TEST_ASSERT(symbol->GetForwardSymbols_F().Count() == 4);
+			for (vint i = 0; i < 4; i++)
+			{
+				TEST_ASSERT(symbol->GetForwardSymbols_F()[i]->GetForwardDecl_Fb().Cast<ForwardFunctionDeclaration>());
+				TEST_ASSERT(!symbol->GetForwardSymbols_F()[i]->GetImplDecl_NFb<FunctionDeclaration>());
+			}
+		});
 	});
 
 	TEST_CATEGORY(L"Classes")
@@ -163,25 +175,29 @@ namespace a::b
 		for (vint i = 0; i < 3; i++)
 		{
 			COMPILE_PROGRAM(program, pa, inputs[i]);
-			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Count() == 1);
-			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Count() == 1);
-			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"X")->Count() == 1);
-			auto symbol = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"X")->Get(0).Obj();
 
-			switch (i)
+			TEST_CASE(L"Checking connections")
 			{
-			case 0: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Class); break;
-			case 1: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Struct); break;
-			case 2: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Union); break;
-			}
-			TEST_ASSERT(symbol->GetImplDecl_NFb<ClassDeclaration>());
-			TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 4);
-			TEST_ASSERT(From(symbol->GetForwardDecls_N()).Distinct().Count() == 4);
-			for (vint i = 0; i < 4; i++)
-			{
-				TEST_ASSERT(symbol->GetForwardDecls_N()[i].Cast<ForwardClassDeclaration>());
-				TEST_ASSERT(!symbol->GetForwardDecls_N()[i].Cast<ClassDeclaration>());
-			}
+				TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Count() == 1);
+				TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Count() == 1);
+				TEST_ASSERT(pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"X")->Count() == 1);
+				auto symbol = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"X")->Get(0).Obj();
+
+				switch (i)
+				{
+				case 0: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Class); break;
+				case 1: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Struct); break;
+				case 2: TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Union); break;
+				}
+				TEST_ASSERT(symbol->GetImplDecl_NFb<ClassDeclaration>());
+				TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 4);
+				TEST_ASSERT(From(symbol->GetForwardDecls_N()).Distinct().Count() == 4);
+				for (vint i = 0; i < 4; i++)
+				{
+					TEST_ASSERT(symbol->GetForwardDecls_N()[i].Cast<ForwardClassDeclaration>());
+					TEST_ASSERT(!symbol->GetForwardDecls_N()[i].Cast<ClassDeclaration>());
+				}
+			});
 		}
 	});
 
@@ -295,41 +311,44 @@ namespace a
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);
 
-		using Item = Tuple<CppClassAccessor, Ptr<Declaration>>;
-		List<Ptr<Declaration>> inClassMembers;
-		auto& inClassMembersUnfiltered = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"Something")->Get(0)->GetImplDecl_NFb<ClassDeclaration>()->decls;
-		CopyFrom(inClassMembers, From(inClassMembersUnfiltered).Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; }));
-		TEST_ASSERT(inClassMembers.Count() == 13);
-
-		auto& outClassMembers = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
-		TEST_ASSERT(outClassMembers.Count() == 12);
-
-		for (vint i = 0; i < 12; i++)
+		TEST_CASE(L"Checking connections")
 		{
-			auto inClassDecl = inClassMembers[i + 1];
-			auto outClassDecl = outClassMembers[i];
+			using Item = Tuple<CppClassAccessor, Ptr<Declaration>>;
+			List<Ptr<Declaration>> inClassMembers;
+			auto& inClassMembersUnfiltered = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->TryGetChildren_NFb(L"Something")->Get(0)->GetImplDecl_NFb<ClassDeclaration>()->decls;
+			CopyFrom(inClassMembers, From(inClassMembersUnfiltered).Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; }));
+			TEST_ASSERT(inClassMembers.Count() == 13);
 
-			if (i == 0)
+			auto& outClassMembers = pa.root->TryGetChildren_NFb(L"a")->Get(0)->TryGetChildren_NFb(L"b")->Get(0)->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
+			TEST_ASSERT(outClassMembers.Count() == 12);
+
+			for (vint i = 0; i < 12; i++)
 			{
-				auto symbol = inClassDecl->symbol;
-				TEST_ASSERT(symbol == outClassDecl->symbol);
-				TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
+				auto inClassDecl = inClassMembers[i + 1];
+				auto outClassDecl = outClassMembers[i];
 
-				TEST_ASSERT(symbol->GetImplDecl_NFb() == outClassDecl);
-				TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 1);
-				TEST_ASSERT(symbol->GetForwardDecls_N()[0] == inClassDecl);
+				if (i == 0)
+				{
+					auto symbol = inClassDecl->symbol;
+					TEST_ASSERT(symbol == outClassDecl->symbol);
+					TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
+
+					TEST_ASSERT(symbol->GetImplDecl_NFb() == outClassDecl);
+					TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 1);
+					TEST_ASSERT(symbol->GetForwardDecls_N()[0] == inClassDecl);
+				}
+				else
+				{
+					auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
+					TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
+
+					TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
+					TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
+
+					TEST_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
+					TEST_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
+				}
 			}
-			else
-			{
-				auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
-				TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
-
-				TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
-				TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
-
-				TEST_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
-				TEST_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
-			}
-		}
+		});
 	});
 }
