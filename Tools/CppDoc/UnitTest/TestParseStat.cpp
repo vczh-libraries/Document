@@ -1,10 +1,12 @@
 #include "Util.h"
 
-TEST_CASE(TestParseStat_Everything)
+TEST_FILE
 {
-	AssertStat(
-		L"{;break;continue;return;return 0; X:; X:0; default:; default:0; case 1:; case 1:0; goto X; __leave; static_assert(sizeof(int) == 4);}",
-		LR"(
+	TEST_CATEGORY(L"Everything")
+	{
+		AssertStat(
+			L"{;break;continue;return;return 0; X:; X:0; default:; default:0; case 1:; case 1:0; goto X; __leave; static_assert(sizeof(int) == 4);}",
+			LR"(
 {
 	;
 	break;
@@ -23,9 +25,9 @@ TEST_CASE(TestParseStat_Everything)
 }
 )");
 
-	AssertStat(
-		L"while(int x=1){do{;}while(0);}",
-		LR"(
+		AssertStat(
+			L"while(int x=1){do{;}while(0);}",
+			LR"(
 while (x: int = 1)
 {
 	do
@@ -36,9 +38,9 @@ while (x: int = 1)
 }
 )");
 
-	AssertStat(
-		L"for(int x:0) for(;;) for(0;1;2) for(int i=0,j=0;1;2) ;",
-		LR"(
+		AssertStat(
+			L"for(int x:0) for(;;) for(0;1;2) for(int i=0,j=0;1;2) ;",
+			LR"(
 foreach (x: int : 0)
 	for (; ; )
 		for (0; 1; 2)
@@ -46,9 +48,9 @@ foreach (x: int : 0)
 				;
 )");
 
-	AssertStat(
-		L"if (int i=0) if (0) 1; else if (int i=0,j=0;1) 2; else 3;",
-		LR"(
+		AssertStat(
+			L"if (int i=0) if (0) 1; else if (int i=0,j=0;1) 2; else 3;",
+			LR"(
 if (i: int = 0)
 	if (0)
 		1;
@@ -58,9 +60,9 @@ if (i: int = 0)
 		3;
 )");
 
-	AssertStat(
-		L"switch(0){case 1:1; break; case 2:2; default: switch(int i=0);}",
-		LR"(
+		AssertStat(
+			L"switch(0){case 1:1; break; case 2:2; default: switch(int i=0);}",
+			LR"(
 switch (0)
 {
 	case 1: 1;
@@ -71,9 +73,9 @@ switch (0)
 }
 )");
 
-	AssertStat(
-		L"try try{1;2;3;}catch(...); catch(int) try; catch(int x);",
-		LR"(
+		AssertStat(
+			L"try try{1;2;3;}catch(...); catch(int) try; catch(int x);",
+			LR"(
 try
 	try
 	{
@@ -90,9 +92,9 @@ catch (int)
 		;
 )");
 
-	AssertStat(
-		L"__try; __except(0) __try; __finally;",
-		LR"(
+		AssertStat(
+			L"__try; __except(0) __try; __finally;",
+			LR"(
 __try
 	;
 __except (0)
@@ -101,21 +103,21 @@ __except (0)
 	__finally
 		;
 )");
-}
+	});
 
-Symbol* GetStatementSymbol(const ParsingArguments& pa, const WString& functionName)
-{
-	auto functionSymbol = pa.scopeSymbol->TryGetChildren_NFb(functionName)->Get(0);
-	auto functionBodySymbol = functionSymbol->GetImplSymbols_F()[0];
-	auto bodyStat = functionBodySymbol->TryGetChildren_NFb(L"$")->Get(0);
-	auto controlFlowStat = bodyStat->TryGetChildren_NFb(L"$")->Get(0);
-	auto controlFlowBlock = controlFlowStat->TryGetChildren_NFb(L"$")->Get(0);
-	return controlFlowBlock.Obj();
-}
+	auto GetStatementSymbol = [](const ParsingArguments& pa, const WString& functionName)
+	{
+		auto functionSymbol = pa.scopeSymbol->TryGetChildren_NFb(functionName)->Get(0);
+		auto functionBodySymbol = functionSymbol->GetImplSymbols_F()[0];
+		auto bodyStat = functionBodySymbol->TryGetChildren_NFb(L"$")->Get(0);
+		auto controlFlowStat = bodyStat->TryGetChildren_NFb(L"$")->Get(0);
+		auto controlFlowBlock = controlFlowStat->TryGetChildren_NFb(L"$")->Get(0);
+		return controlFlowBlock.Obj();
+	};
 
-TEST_CASE(TestParseStat_SingleVar)
-{
-	auto input = LR"(
+	TEST_CATEGORY(L"Single variables")
+	{
+		auto input = LR"(
 void F1()
 {
 	{
@@ -176,18 +178,18 @@ void F8()
 	}
 }
 )";
-	COMPILE_PROGRAM(program, pa, input);
-	for (vint i = 1; i <= 8; i++)
-	{
-		auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
-		TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
-		AssertExpr(spa, L"a", L"a", L"__int32 $L");
-	}
-}
+		COMPILE_PROGRAM(program, pa, input);
+		for (vint i = 1; i <= 8; i++)
+		{
+			auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
+			TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
+			AssertExpr(spa, L"a", L"a", L"__int32 $L");
+		}
+	});
 
-TEST_CASE(TestParseStat_MultiVars)
-{
-	auto input = LR"(
+	TEST_CATEGORY(L"Multiple variables")
+	{
+		auto input = LR"(
 void F1()
 {
 	{
@@ -219,21 +221,20 @@ void F4()
 	}
 }
 )";
-	COMPILE_PROGRAM(program, pa, input);
-	for (vint i = 1; i <= 4; i++)
+		COMPILE_PROGRAM(program, pa, input);
+		for (vint i = 1; i <= 4; i++)
+		{
+			auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
+			TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
+			AssertExpr(spa, L"a", L"a", L"__int32 $L");
+			AssertExpr(spa, L"b", L"b", L"__int32 $L");
+			AssertExpr(spa, L"c", L"c", L"__int32 $L");
+		}
+	});
+
+	TEST_CATEGORY(L"Range-based for")
 	{
-		auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
-		TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
-		AssertExpr(spa, L"a", L"a", L"__int32 $L");
-		AssertExpr(spa, L"b", L"b", L"__int32 $L");
-		AssertExpr(spa, L"c", L"c", L"__int32 $L");
-	}
-}
-
-TEST_CASE(TestParseStat_RangeBasedFor)
-{
-	auto input = LR"(
-
+		auto input = LR"(
 void F1()
 {
 	int v[10];
@@ -279,12 +280,13 @@ void F3()
 	}
 }
 )";
-	COMPILE_PROGRAM(program, pa, input);
-	const wchar_t* expectedTypes[] = { L"__int32 & $L", L"__int32 const & $L", L"__int32 & $L" };
-	for (vint i = 1; i <= 3; i++)
-	{
-		auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
-		TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
-		AssertExpr(spa, L"a", L"a", expectedTypes[i - 1]);
-	}
+		COMPILE_PROGRAM(program, pa, input);
+		const wchar_t* expectedTypes[] = { L"__int32 & $L", L"__int32 const & $L", L"__int32 & $L" };
+		for (vint i = 1; i <= 3; i++)
+		{
+			auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
+			TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
+			AssertExpr(spa, L"a", L"a", expectedTypes[i - 1]);
+		}
+	});
 }

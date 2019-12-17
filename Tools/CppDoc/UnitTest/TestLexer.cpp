@@ -282,17 +282,19 @@ vint CheckTokens(List<RegexToken>& tokens)
 	return tokens.Count();
 }
 
-TEST_CASE(TestLexer_Punctuators)
+TEST_FILE
 {
-	WString input = LR"({}[]()<>=!%:;.?,*+-/^&|~#)";
-	List<RegexToken> tokens;
-	GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
-	TEST_ASSERT(CheckTokens(tokens) == 25);
-}
+	TEST_CASE(L"Punctuators")
+	{
+		WString input = LR"({}[]()<>=!%:;.?,*+-/^&|~#)";
+		List<RegexToken> tokens;
+		GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
+		TEST_ASSERT(CheckTokens(tokens) == 25);
+	});
 
-TEST_CASE(TestLexer_Numbers)
-{
-	WString input = LR"(
+	TEST_CASE(L"Numbers")
+	{
+		WString input = LR"(
 123
 123'123'123u
 123l
@@ -312,14 +314,14 @@ TEST_CASE(TestLexer_Numbers)
 123.e+10F
 .456e-10L
 )";
-	List<RegexToken> tokens;
-	GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
-	TEST_ASSERT(CheckTokens(tokens) == 37);
-}
+		List<RegexToken> tokens;
+		GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
+		TEST_ASSERT(CheckTokens(tokens) == 37);
+	});
 
-TEST_CASE(TestLexer_Strings)
-{
-	WString input = LR"(
+	TEST_CASE(L"Strings")
+	{
+		WString input = LR"(
 "abc"
 L"\"\"xxxx\"\""
 u"xxxx\"\"xxxx"
@@ -331,14 +333,14 @@ u'\''
 U'\''
 u8'\''
 )";
-	List<RegexToken> tokens;
-	GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
-	TEST_ASSERT(CheckTokens(tokens) == 21);
-}
+		List<RegexToken> tokens;
+		GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
+		TEST_ASSERT(CheckTokens(tokens) == 21);
+	});
 
-TEST_CASE(TestLexer_Comments)
-{
-	WString input = LR"(
+	TEST_CASE(L"Comments")
+	{
+		WString input = LR"(
 //
 //xxxxx
 ///
@@ -350,14 +352,14 @@ TEST_CASE(TestLexer_Comments)
 /* xx**x */
 /* x***x */
 )";
-	List<RegexToken> tokens;
-	GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
-	TEST_ASSERT(CheckTokens(tokens) == 21);
-}
+		List<RegexToken> tokens;
+		GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
+		TEST_ASSERT(CheckTokens(tokens) == 21);
+	});
 
-TEST_CASE(TestLexer_HelloWorld)
-{
-	WString input = LR"(
+	TEST_CASE(L"Hello, world!")
+	{
+		WString input = LR"(
 using namespace std;
 
 int main()
@@ -365,27 +367,27 @@ int main()
 	cout << "Hello, world!" << endl;
 }
 )";
-	List<RegexToken> tokens;
-	GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
-	TEST_ASSERT(CheckTokens(tokens) == 31);
-}
+		List<RegexToken> tokens;
+		GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
+		TEST_ASSERT(CheckTokens(tokens) == 31);
+	});
 
-//TEST_CASE(TestLexer_GacUI_Input)
-//{
-//	FilePath inputPath = L"../../../.Output/Import/Preprocessed.txt";
-//	TEST_ASSERT(inputPath.IsFile());
-//
-//	wchar_t* buffer = ReadBigFile(inputPath);
-//
-//	List<RegexToken> tokens;
-//	GlobalCppLexer()->Parse(WString(buffer, false)).ReadToEnd(tokens);
-//	CheckTokens(tokens);
-//	delete[] buffer;
-//}
+	//TEST_CASE(L"GacUI")
+	//{
+	//	FilePath inputPath = L"../../../.Output/Import/Preprocessed.txt";
+	//	TEST_ASSERT(inputPath.IsFile());
+	//
+	//	wchar_t* buffer = ReadBigFile(inputPath);
+	//
+	//	List<RegexToken> tokens;
+	//	GlobalCppLexer()->Parse(WString(buffer, false)).ReadToEnd(tokens);
+	//	CheckTokens(tokens);
+	//	delete[] buffer;
+	//});
 
-TEST_CASE(TestLexer_Reader)
-{
-	WString input = LR"(
+	TEST_CASE(L"Test CppTokenReader")
+	{
+		WString input = LR"(
 using namespace std;
 
 /// <summary>The main function.</summary>
@@ -395,61 +397,61 @@ int main()
 	cout << "Hello, world!" << endl;
 }
 )";
-	const wchar_t* output[] = {
-		L"using", L"namespace", L"std", L";",
-		L"/// <summary>The main function.</summary>",
-		L"/// <returns>This value is not used.</returns>",
-		L"int", L"main", L"(", L")",
-		L"{",
-		L"cout", L"<", L"<", L"\"Hello, world!\"", L"<", L"<", L"endl", L";",
-		L"}",
-	};
+		const wchar_t* output[] = {
+			L"using", L"namespace", L"std", L";",
+			L"/// <summary>The main function.</summary>",
+			L"/// <returns>This value is not used.</returns>",
+			L"int", L"main", L"(", L")",
+			L"{",
+			L"cout", L"<", L"<", L"\"Hello, world!\"", L"<", L"<", L"endl", L";",
+			L"}",
+		};
 
-	CppTokenReader reader(GlobalCppLexer(), input);
-	const vint CursorCount = 3;
-	const vint TokenCount = sizeof(output) / sizeof(*output);
+		CppTokenReader reader(GlobalCppLexer(), input);
+		const vint CursorCount = 3;
+		const vint TokenCount = sizeof(output) / sizeof(*output);
 
-	vint counts[CursorCount] = { 0 };
-	Ptr<CppTokenCursor> cursors[CursorCount];
-	for (vint i = 0; i < CursorCount; i++)
-	{
-		if (i == 0)
+		vint counts[CursorCount] = { 0 };
+		Ptr<CppTokenCursor> cursors[CursorCount];
+		for (vint i = 0; i < CursorCount; i++)
 		{
-			cursors[i] = reader.GetFirstToken();
-		}
-		else
-		{
-			cursors[i] = cursors[0];
-		}
-	}
-
-	for (vint i = 0; i < TokenCount; i++)
-	{
-		for (vint j = 0; j < CursorCount; j++)
-		{
-			auto& count = counts[j];
-			auto& cursor = cursors[j];
-
-			for (vint k = 0; k <= j; k++)
+			if (i == 0)
 			{
-				if (cursor)
+				cursors[i] = reader.GetFirstToken();
+			}
+			else
+			{
+				cursors[i] = cursors[0];
+			}
+		}
+
+		for (vint i = 0; i < TokenCount; i++)
+		{
+			for (vint j = 0; j < CursorCount; j++)
+			{
+				auto& count = counts[j];
+				auto& cursor = cursors[j];
+
+				for (vint k = 0; k <= j; k++)
 				{
-					auto token = cursor->token;
-					TEST_ASSERT(WString(token.reading, token.length) == output[count++]);
-					cursor = cursor->Next();
-				}
-				else
-				{
-					TEST_ASSERT(count == TokenCount);
+					if (cursor)
+					{
+						auto token = cursor->token;
+						TEST_ASSERT(WString(token.reading, token.length) == output[count++]);
+						cursor = cursor->Next();
+					}
+					else
+					{
+						TEST_ASSERT(count == TokenCount);
+					}
 				}
 			}
 		}
-	}
-}
+	});
 
-TEST_CASE(TestLexer_Clone)
-{
-	WString input = LR"(
+	TEST_CASE(L"Test cloning tokens")
+	{
+		WString input = LR"(
 using namespace std;
 
 /// <summary>The main function.</summary>
@@ -459,39 +461,40 @@ int main()
 	cout << "Hello, world!" << endl;
 }
 )";
-	const wchar_t* output[] = {
-		L"using", L"namespace", L"std", L";",
-		L"/// <summary>The main function.</summary>",
-		L"/// <returns>This value is not used.</returns>",
-		L"int", L"main", L"(", L")",
-		L"{",
-		L"cout", L"<", L"<", L"\"Hello, world!\"", L"<", L"<", L"endl", L";",
-		L"}",
-	};
-	const vint TokenCount = sizeof(output) / sizeof(*output);
+		const wchar_t* output[] = {
+			L"using", L"namespace", L"std", L";",
+			L"/// <summary>The main function.</summary>",
+			L"/// <returns>This value is not used.</returns>",
+			L"int", L"main", L"(", L")",
+			L"{",
+			L"cout", L"<", L"<", L"\"Hello, world!\"", L"<", L"<", L"endl", L";",
+			L"}",
+		};
+		const vint TokenCount = sizeof(output) / sizeof(*output);
 
-	Ptr<CppTokenReader> reader1, reader2;
-	Ptr<CppTokenCursor> cursor1, cursor2;
+		Ptr<CppTokenReader> reader1, reader2;
+		Ptr<CppTokenCursor> cursor1, cursor2;
 
-	reader1 = MakePtr<CppTokenReader>(GlobalCppLexer(), input);
-	cursor1 = reader1->GetFirstToken();
-	{
-		auto reading = cursor1;
-		for (vint i = 0; i < 5; i++)
+		reader1 = MakePtr<CppTokenReader>(GlobalCppLexer(), input);
+		cursor1 = reader1->GetFirstToken();
 		{
-			reading = reading->Next();
+			auto reading = cursor1;
+			for (vint i = 0; i < 5; i++)
+			{
+				reading = reading->Next();
+			}
 		}
-	}
-	cursor1->Clone(reader2, cursor2);
+		cursor1->Clone(reader2, cursor2);
 
-	for (vint i = 0; i < TokenCount; i++)
-	{
-		TEST_ASSERT(WString(cursor1->token.reading, cursor1->token.length) == output[i]);
-		TEST_ASSERT(WString(cursor2->token.reading, cursor2->token.length) == output[i]);
+		for (vint i = 0; i < TokenCount; i++)
+		{
+			TEST_ASSERT(WString(cursor1->token.reading, cursor1->token.length) == output[i]);
+			TEST_ASSERT(WString(cursor2->token.reading, cursor2->token.length) == output[i]);
 
-		cursor1 = cursor1->Next();
-		cursor2 = cursor2->Next();
-	}
-	TEST_ASSERT(!cursor1);
-	TEST_ASSERT(!cursor2);
+			cursor1 = cursor1->Next();
+			cursor2 = cursor2->Next();
+		}
+		TEST_ASSERT(!cursor1);
+		TEST_ASSERT(!cursor2);
+	});
 }
