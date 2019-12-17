@@ -7,14 +7,14 @@ Ptr<RegexLexer> GlobalCppLexer()
 	return cppLexer;
 }
 
-int wmain(vint argc, wchar_t* args[])
+int wmain(vint argc, wchar_t* argv[])
 {
 	cppLexer = CreateCppLexer();
-	unittest::UnitTest::RunAndDisposeTests();
+	int result = unittest::UnitTest::RunAndDisposeTests(argc, argv);
 	cppLexer = nullptr;
 	FinalizeGlobalStorage();
 #ifdef VCZH_CHECK_MEMORY_LEAKS
 	_CrtDumpMemoryLeaks();
 #endif
-	return 0;
+	return result;
 }

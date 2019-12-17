@@ -28,8 +28,11 @@ extern void					AssertProgram(Ptr<Program> program, const wchar_t* log);
 template<typename... T>
 void AssertType(ParsingArguments& pa, const wchar_t* input, const wchar_t* log, T... logTsys)
 {
-	const wchar_t* tsys[] = { logTsys...,L"" };
-	AssertTypeInternal(input, log, tsys, (vint)(sizeof...(logTsys)), pa);
+	TEST_CASE(L"Validate type: " + WString(input))
+	{
+		const wchar_t* tsys[] = { logTsys...,L"" };
+		AssertTypeInternal(input, log, tsys, (vint)(sizeof...(logTsys)), pa);
+	});
 }
 
 template<typename... T>
@@ -42,8 +45,11 @@ void AssertType(const wchar_t* input, const wchar_t* log, T... logTsys)
 template<typename... T>
 void AssertExpr(ParsingArguments& pa, const wchar_t* input, const wchar_t* log, T... logTsys)
 {
-	const wchar_t* tsys[] = { logTsys...,L"" };
-	AssertExprInternal(input, log, tsys, (vint)(sizeof...(logTsys)), pa);
+	TEST_CASE(L"Validate expr: " + WString(input))
+	{
+		const wchar_t* tsys[] = { logTsys...,L"" };
+		AssertExprInternal(input, log, tsys, (vint)(sizeof...(logTsys)), pa);
+	});
 }
 
 template<typename... T>
@@ -68,8 +74,8 @@ void AssertExpr(const wchar_t* input, const wchar_t* log, T... logTsys)
 	auto cursor = reader.GetFirstToken();\
 	ParsingArguments PA(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), RECORDER);\
 	auto PROGRAM = ParseProgram(PA, cursor);\
-	TEST_ASSERT(!cursor);\
-	TEST_ASSERT(PROGRAM);\
+	TEST_CASE_ASSERT(!cursor);\
+	TEST_CASE_ASSERT(PROGRAM);\
 	EvaluateProgram(PA, PROGRAM)\
 
 #define COMPILE_PROGRAM(PROGRAM, PA, INPUT) COMPILE_PROGRAM_WITH_RECORDER(PROGRAM, PA, INPUT, nullptr)
