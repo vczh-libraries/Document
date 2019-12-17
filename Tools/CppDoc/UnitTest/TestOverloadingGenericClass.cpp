@@ -24,21 +24,6 @@ namespace Input__TestParseGenericClass_Overloading_BaseClass
 	);
 }
 
-TEST_CASE(TestParseGenericClass_Overloading_BaseClass)
-{
-	using namespace Input__TestParseGenericClass_Overloading_BaseClass;
-	RefineInput(input);
-	COMPILE_PROGRAM(program, pa, input);
-	
-	ASSERT_OVERLOADING(F(cd),					L"F(cd)",					double *);
-	ASSERT_OVERLOADING(F(d),					L"F(d)",					bool *);
-	ASSERT_OVERLOADING(F(Derived<void>()),		L"F(Derived<void>())",		char *);
-	
-	ASSERT_OVERLOADING(G(cd),					L"G(cd)",					double);
-	ASSERT_OVERLOADING(G(d),					L"G(d)",					bool);
-	ASSERT_OVERLOADING(G(Derived<void>()),		L"G(Derived<void>())",		char);
-}
-
 namespace Input__TestParseGenericClass_Overloading_Constructor
 {
 	TEST_DECL_NO_REFINE(
@@ -61,18 +46,6 @@ namespace Input__TestParseGenericClass_Overloading_Constructor
 	);
 }
 
-TEST_CASE(TestParseGenericClass_Overloading_Constructor)
-{
-	using namespace Input__TestParseGenericClass_Overloading_Constructor;
-	RefineInput(input);
-	COMPILE_PROGRAM(program, pa, input);
-	
-	ASSERT_OVERLOADING(F(1),					L"F(1)",					bool);
-	ASSERT_OVERLOADING(F(1.0),					L"F(1.0)",					bool);
-	ASSERT_OVERLOADING(F("x"),					L"F(\"x\")",				char *);
-	ASSERT_OVERLOADING(F(L"x"),					L"F(L\"x\")",				char *);
-}
-
 namespace Input__TestParseGenericClass_Overloading_OperatorOverloading
 {
 	TEST_DECL_NO_REFINE(
@@ -89,15 +62,45 @@ namespace Input__TestParseGenericClass_Overloading_OperatorOverloading
 	);
 }
 
-TEST_CASE(TestParseGenericClass_Overloading_OperatorOverloading)
+TEST_FILE
 {
-	using namespace Input__TestParseGenericClass_Overloading_OperatorOverloading;
-	RefineInput(input);
-	COMPILE_PROGRAM(program, pa, input);
+	TEST_CATEGORY(L"Base classes")
+	{
+		using namespace Input__TestParseGenericClass_Overloading_BaseClass;
+		RefineInput(input);
+		COMPILE_PROGRAM(program, pa, input);
+	
+		ASSERT_OVERLOADING(F(cd),					L"F(cd)",					double *);
+		ASSERT_OVERLOADING(F(d),					L"F(d)",					bool *);
+		ASSERT_OVERLOADING(F(Derived<void>()),		L"F(Derived<void>())",		char *);
+	
+		ASSERT_OVERLOADING(G(cd),					L"G(cd)",					double);
+		ASSERT_OVERLOADING(G(d),					L"G(d)",					bool);
+		ASSERT_OVERLOADING(G(Derived<void>()),		L"G(Derived<void>())",		char);
+	});
 
-	ASSERT_OVERLOADING(F(X<void*>()),			L"F(X<void *>())",			bool);
-	ASSERT_OVERLOADING(F(X<char*>()),			L"F(X<char *>())",			double);
-	ASSERT_OVERLOADING(F(X<wchar_t*>()),		L"F(X<wchar_t *>())",		float);
+	TEST_CATEGORY(L"Constructors")
+	{
+		using namespace Input__TestParseGenericClass_Overloading_Constructor;
+		RefineInput(input);
+		COMPILE_PROGRAM(program, pa, input);
+	
+		ASSERT_OVERLOADING(F(1),					L"F(1)",					bool);
+		ASSERT_OVERLOADING(F(1.0),					L"F(1.0)",					bool);
+		ASSERT_OVERLOADING(F("x"),					L"F(\"x\")",				char *);
+		ASSERT_OVERLOADING(F(L"x"),					L"F(L\"x\")",				char *);
+	});
+
+	TEST_CATEGORY(L"Operators")
+	{
+		using namespace Input__TestParseGenericClass_Overloading_OperatorOverloading;
+		RefineInput(input);
+		COMPILE_PROGRAM(program, pa, input);
+
+		ASSERT_OVERLOADING(F(X<void*>()),			L"F(X<void *>())",			bool);
+		ASSERT_OVERLOADING(F(X<char*>()),			L"F(X<char *>())",			double);
+		ASSERT_OVERLOADING(F(X<wchar_t*>()),		L"F(X<wchar_t *>())",		float);
+	});
 }
 
 #undef _
