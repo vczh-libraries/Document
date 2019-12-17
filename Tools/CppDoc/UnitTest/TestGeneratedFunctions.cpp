@@ -6,10 +6,8 @@
 WString LoadGeneratedFunctionsCode()
 {
 	FilePath input = L"../UnitTest/TestGeneratedFunctions_Input.h";
-
 	WString code;
-	TEST_ASSERT(File(input).ReadAllTextByBom(code));
-
+	File(input).ReadAllTextByBom(code);
 	return code;
 }
 
@@ -71,39 +69,41 @@ struct TestGC_Helper
 	}
 };
 
-TEST_CASE(TestGF_Features)
+TEST_FILE
 {
-	COMPILE_PROGRAM(program, pa, LoadGeneratedFunctionsCode().Buffer());
-
-#define FEATURE(TYPE) TestGC_Helper<std::is_default_constructible_v<TYPE>>::DefaultCtor(L#TYPE, pa);
-	GENERATED_FUNCTION_TYPES(FEATURE)
-#undef FEATURE
-
-#define FEATURE(TYPE) TestGC_Helper<std::is_copy_constructible_v<TYPE>>::CopyCtor(L#TYPE, pa);
-	GENERATED_FUNCTION_TYPES(FEATURE)
-#undef FEATURE
-
-#define FEATURE(TYPE) TestGC_Helper<std::is_move_constructible_v<TYPE>>::MoveCtor(L#TYPE, pa);
-	GENERATED_FUNCTION_TYPES(FEATURE)
-#undef FEATURE
-
-#define FEATURE(TYPE) TestGC_Helper<std::is_copy_assignable_v<TYPE>>::CopyAssignOp(L#TYPE, pa);
-	GENERATED_FUNCTION_TYPES(FEATURE)
-#undef FEATURE
-
-#define FEATURE(TYPE) TestGC_Helper<std::is_move_assignable_v<TYPE>>::MoveAssignOp(L#TYPE, pa);
-	GENERATED_FUNCTION_TYPES(FEATURE)
-#undef FEATURE
-
-#define FEATURE(TYPE) TestGC_Helper<std::is_destructible_v<TYPE>>::Dtor(L#TYPE, pa);
-	GENERATED_FUNCTION_TYPES(FEATURE)
-#undef FEATURE
-}
-
-TEST_CASE(TestGF_FieldsAndBaseClasses)
-{
+	TEST_CASE(L"Generated functions")
 	{
-		auto input = LR"(
+		COMPILE_PROGRAM(program, pa, LoadGeneratedFunctionsCode().Buffer());
+
+	#define FEATURE(TYPE) TestGC_Helper<std::is_default_constructible_v<TYPE>>::DefaultCtor(L#TYPE, pa);
+		GENERATED_FUNCTION_TYPES(FEATURE)
+	#undef FEATURE
+
+	#define FEATURE(TYPE) TestGC_Helper<std::is_copy_constructible_v<TYPE>>::CopyCtor(L#TYPE, pa);
+		GENERATED_FUNCTION_TYPES(FEATURE)
+	#undef FEATURE
+
+	#define FEATURE(TYPE) TestGC_Helper<std::is_move_constructible_v<TYPE>>::MoveCtor(L#TYPE, pa);
+		GENERATED_FUNCTION_TYPES(FEATURE)
+	#undef FEATURE
+
+	#define FEATURE(TYPE) TestGC_Helper<std::is_copy_assignable_v<TYPE>>::CopyAssignOp(L#TYPE, pa);
+		GENERATED_FUNCTION_TYPES(FEATURE)
+	#undef FEATURE
+
+	#define FEATURE(TYPE) TestGC_Helper<std::is_move_assignable_v<TYPE>>::MoveAssignOp(L#TYPE, pa);
+		GENERATED_FUNCTION_TYPES(FEATURE)
+	#undef FEATURE
+
+	#define FEATURE(TYPE) TestGC_Helper<std::is_destructible_v<TYPE>>::Dtor(L#TYPE, pa);
+		GENERATED_FUNCTION_TYPES(FEATURE)
+	#undef FEATURE
+	});
+
+	TEST_CATEGORY(L"Generated functions affected by fields and base classes")
+	{
+		{
+			auto input = LR"(
 struct Unfeatured
 {
 	Unfeatured()=delete;
@@ -118,12 +118,12 @@ struct B
 	Unfeatured unfeatured;
 };
 )";
-		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::DefaultCtor) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::DefaultCtor) == false);
-	}
-	{
-		auto input = LR"(
+			COMPILE_PROGRAM(program, pa, input);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::DefaultCtor) == false);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::DefaultCtor) == false);
+		}
+		{
+			auto input = LR"(
 struct Unfeatured
 {
 	Unfeatured(const Unfeatured&)=delete;
@@ -138,12 +138,12 @@ struct B
 	Unfeatured unfeatured;
 };
 )";
-		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::CopyCtor) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::CopyCtor) == false);
-	}
-	{
-		auto input = LR"(
+			COMPILE_PROGRAM(program, pa, input);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::CopyCtor) == false);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::CopyCtor) == false);
+		}
+		{
+			auto input = LR"(
 struct Unfeatured
 {
 	Unfeatured(Unfeatured&&)=delete;
@@ -158,12 +158,12 @@ struct B
 	Unfeatured unfeatured;
 };
 )";
-		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::MoveCtor) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::MoveCtor) == false);
-	}
-	{
-		auto input = LR"(
+			COMPILE_PROGRAM(program, pa, input);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::MoveCtor) == false);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::MoveCtor) == false);
+		}
+		{
+			auto input = LR"(
 struct Unfeatured
 {
 	Unfeatured& operator=(const Unfeatured&)=delete;
@@ -178,12 +178,12 @@ struct B
 	Unfeatured unfeatured;
 };
 )";
-		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::CopyAssignOp) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::CopyAssignOp) == false);
-	}
-	{
-		auto input = LR"(
+			COMPILE_PROGRAM(program, pa, input);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::CopyAssignOp) == false);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::CopyAssignOp) == false);
+		}
+		{
+			auto input = LR"(
 struct Unfeatured
 {
 	Unfeatured& operator=(Unfeatured&&)=delete;
@@ -198,12 +198,12 @@ struct B
 	Unfeatured unfeatured;
 };
 )";
-		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::MoveAssignOp) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::MoveAssignOp) == false);
-	}
-	{
-		auto input = LR"(
+			COMPILE_PROGRAM(program, pa, input);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::MoveAssignOp) == false);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::MoveAssignOp) == false);
+		}
+		{
+			auto input = LR"(
 struct Unfeatured
 {
 	~Unfeatured()=delete;
@@ -218,8 +218,9 @@ struct B
 	Unfeatured unfeatured;
 };
 )";
-		COMPILE_PROGRAM(program, pa, input);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::Dtor) == false);
-		TEST_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::Dtor) == false);
-	}
+			COMPILE_PROGRAM(program, pa, input);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"A")->Get(0).Obj()), SpecialMemberKind::Dtor) == false);
+			TEST_CASE_ASSERT(IsSpecialMemberFeatureEnabled(pa, pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"B")->Get(0).Obj()), SpecialMemberKind::Dtor) == false);
+		}
+	});
 }
