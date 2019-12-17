@@ -1,8 +1,10 @@
 #include "Util.h"
 
-TEST_CASE(TestParsePartialSpecialization_Functions)
+TEST_FILE
 {
-	auto input = LR"(
+	TEST_CATEGORY(L"Functions")
+	{
+		auto input = LR"(
 template<typename T> void Function(T){}
 template<> int Function<int>(int);
 template<> double Function<double>(double);
@@ -19,19 +21,19 @@ template<>
 __forward Function<double>: double (double);
 )";
 
-	COMPILE_PROGRAM(program, pa, input);
-	AssertProgram(program, output);
-}
+		COMPILE_PROGRAM(program, pa, input);
+		AssertProgram(program, output);
+	});
 
-TEST_CASE(TestParsePartialSpecialization_ValueAliases)
-{
-	auto input = LR"(
+	TEST_CATEGORY(L"Value aliases")
+	{
+		auto input = LR"(
 template<typename T> auto Zero = (T)0;
 template<> auto Zero<char> = '0';
 template<> auto Zero<wchar_t> = L'0';
 )";
 
-	auto output = LR"(
+		auto output = LR"(
 template<typename T>
 using_value Zero: auto = c_cast<T>(0);
 template<>
@@ -40,13 +42,13 @@ template<>
 using_value Zero<wchar_t>: auto = L'0';
 )";
 
-	COMPILE_PROGRAM(program, pa, input);
-	AssertProgram(program, output);
-}
+		COMPILE_PROGRAM(program, pa, input);
+		AssertProgram(program, output);
+	});
 
-TEST_CASE(TestParsePartialSpecialization_Classes)
-{
-	auto input = LR"(
+	TEST_CATEGORY(L"Classes")
+	{
+		auto input = LR"(
 template<typename T>
 struct Obj
 {
@@ -63,7 +65,7 @@ struct Obj<T(*)(U)>
 };
 )";
 
-	auto output = LR"(
+		auto output = LR"(
 template<typename T>
 struct Obj
 {
@@ -78,13 +80,13 @@ struct Obj<T (U) *>
 };
 )";
 
-	COMPILE_PROGRAM(program, pa, input);
-	AssertProgram(program, output);
-}
+		COMPILE_PROGRAM(program, pa, input);
+		AssertProgram(program, output);
+	});
 
-TEST_CASE(TestParsePartialSpecialization_Methods)
-{
-	auto input = LR"(
+	TEST_CATEGORY(L"Methods")
+	{
+		auto input = LR"(
 template<typename T>
 struct Obj
 {
@@ -96,7 +98,7 @@ struct Obj
 };
 )";
 
-	auto output = LR"(
+		auto output = LR"(
 template<typename T>
 struct Obj
 {
@@ -107,6 +109,7 @@ struct Obj
 };
 )";
 
-	COMPILE_PROGRAM(program, pa, input);
-	AssertProgram(program, output);
+		COMPILE_PROGRAM(program, pa, input);
+		AssertProgram(program, output);
+	});
 }

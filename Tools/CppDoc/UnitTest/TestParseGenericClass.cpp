@@ -1,8 +1,10 @@
 #include "Util.h"
 
-TEST_CASE(TestParseGenericClass)
+TEST_FILE
 {
-	auto input = LR"(
+	TEST_CATEGORY(L"Normal")
+	{
+		auto input = LR"(
 template<typename T>
 struct Ptr
 {
@@ -17,7 +19,7 @@ public:
 };
 )";
 
-	auto output = LR"(
+		auto output = LR"(
 template<typename T>
 struct Ptr
 {
@@ -42,16 +44,16 @@ struct Ptr
 };
 )";
 
-	COMPILE_PROGRAM(program, pa, input);
-	AssertProgram(program, output);
+		COMPILE_PROGRAM(program, pa, input);
+		AssertProgram(program, output);
 
-	AssertType(pa,		L"Ptr",			L"Ptr",			L"<::Ptr::[T]> ::Ptr<::Ptr::[T]>"	);
-	AssertType(pa,		L"Ptr<int>",	L"Ptr<int>",	L"::Ptr<__int32>"					);
-}
+		AssertType(pa,		L"Ptr",			L"Ptr",			L"<::Ptr::[T]> ::Ptr<::Ptr::[T]>"	);
+		AssertType(pa,		L"Ptr<int>",	L"Ptr<int>",	L"::Ptr<__int32>"					);
+	});
 
-TEST_CASE(TestParseGenericClass_NestedStructUsedOutside)
-{
-	auto input = LR"(
+	TEST_CATEGORY(L"Nested classes used from outside")
+	{
+		auto input = LR"(
 template<typename TA>
 struct GA
 {
@@ -81,23 +83,23 @@ struct GA
 	};
 };
 )";
-	COMPILE_PROGRAM(program, pa, input);
+		COMPILE_PROGRAM(program, pa, input);
 
-	AssertType(pa,		L"GA",								L"GA",									L"<::GA::[TA]> ::GA<::GA::[TA]>"										);
-	AssertType(pa,		L"GA<int>::CB",						L"GA<int> :: CB",						L"::GA<__int32>::CB"													);
-	AssertType(pa,		L"GA<int>::GB",						L"GA<int> :: GB",						L"<::GA::GB::[TB]> ::GA<__int32>::GB<::GA::GB::[TB]>"					);
-	AssertType(pa,		L"GA<int>::GB<bool>",				L"GA<int> :: GB<bool>",					L"::GA<__int32>::GB<bool>"												);
-	AssertType(pa,		L"GA<int>::CB::CC",					L"GA<int> :: CB :: CC",					L"::GA<__int32>::CB::CC"												);
-	AssertType(pa,		L"GA<int>::CB::GC",					L"GA<int> :: CB :: GC",					L"<::GA::CB::GC::[TC]> ::GA<__int32>::CB::GC<::GA::CB::GC::[TC]>"		);
-	AssertType(pa,		L"GA<int>::CB::GC<float>",			L"GA<int> :: CB :: GC<float>",			L"::GA<__int32>::CB::GC<float>"											);
-	AssertType(pa,		L"GA<int>::GB<bool>::CC",			L"GA<int> :: GB<bool> :: CC",			L"::GA<__int32>::GB<bool>::CC"											);
-	AssertType(pa,		L"GA<int>::GB<bool>::GC",			L"GA<int> :: GB<bool> :: GC",			L"<::GA::GB::GC::[TC]> ::GA<__int32>::GB<bool>::GC<::GA::GB::GC::[TC]>"	);
-	AssertType(pa,		L"GA<int>::GB<bool>::GC<float>",	L"GA<int> :: GB<bool> :: GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"									);
-}
+		AssertType(pa,		L"GA",								L"GA",									L"<::GA::[TA]> ::GA<::GA::[TA]>"										);
+		AssertType(pa,		L"GA<int>::CB",						L"GA<int> :: CB",						L"::GA<__int32>::CB"													);
+		AssertType(pa,		L"GA<int>::GB",						L"GA<int> :: GB",						L"<::GA::GB::[TB]> ::GA<__int32>::GB<::GA::GB::[TB]>"					);
+		AssertType(pa,		L"GA<int>::GB<bool>",				L"GA<int> :: GB<bool>",					L"::GA<__int32>::GB<bool>"												);
+		AssertType(pa,		L"GA<int>::CB::CC",					L"GA<int> :: CB :: CC",					L"::GA<__int32>::CB::CC"												);
+		AssertType(pa,		L"GA<int>::CB::GC",					L"GA<int> :: CB :: GC",					L"<::GA::CB::GC::[TC]> ::GA<__int32>::CB::GC<::GA::CB::GC::[TC]>"		);
+		AssertType(pa,		L"GA<int>::CB::GC<float>",			L"GA<int> :: CB :: GC<float>",			L"::GA<__int32>::CB::GC<float>"											);
+		AssertType(pa,		L"GA<int>::GB<bool>::CC",			L"GA<int> :: GB<bool> :: CC",			L"::GA<__int32>::GB<bool>::CC"											);
+		AssertType(pa,		L"GA<int>::GB<bool>::GC",			L"GA<int> :: GB<bool> :: GC",			L"<::GA::GB::GC::[TC]> ::GA<__int32>::GB<bool>::GC<::GA::GB::GC::[TC]>"	);
+		AssertType(pa,		L"GA<int>::GB<bool>::GC<float>",	L"GA<int> :: GB<bool> :: GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"									);
+	});
 
-TEST_CASE(TestParseGenericClass_NestedTypeAliasUsedOutside)
-{
-	auto input = LR"(
+	TEST_CATEGORY(L"Nested type aliases used from outside")
+	{
+		auto input = LR"(
 template<typename TA>
 struct GA
 {
@@ -142,23 +144,23 @@ struct GA
 	template<typename TB> using __GB = _GB<TB>;
 };
 )";
-	COMPILE_PROGRAM(program, pa, input);
+		COMPILE_PROGRAM(program, pa, input);
 
-	AssertType(pa,		L"GA",									L"GA",										L"<::GA::[TA]> ::GA<::GA::[TA]>"											);
-	AssertType(pa,		L"GA<int>::__CB",						L"GA<int> :: __CB",							L"::GA<__int32>::CB"														);
-	AssertType(pa,		L"GA<int>::__GB",						L"GA<int> :: __GB",							L"<::GA::__GB::[TB]> ::GA<__int32>::GB<::GA::__GB::[TB]>"					);
-	AssertType(pa,		L"GA<int>::__GB<bool>",					L"GA<int> :: __GB<bool>",					L"::GA<__int32>::GB<bool>"													);
-	AssertType(pa,		L"GA<int>::__CB::__CC",					L"GA<int> :: __CB :: __CC",					L"::GA<__int32>::CB::CC"													);
-	AssertType(pa,		L"GA<int>::__CB::__GC",					L"GA<int> :: __CB :: __GC",					L"<::GA::CB::__GC::[TC]> ::GA<__int32>::CB::GC<::GA::CB::__GC::[TC]>"		);
-	AssertType(pa,		L"GA<int>::__CB::__GC<float>",			L"GA<int> :: __CB :: __GC<float>",			L"::GA<__int32>::CB::GC<float>"												);
-	AssertType(pa,		L"GA<int>::__GB<bool>::__CC",			L"GA<int> :: __GB<bool> :: __CC",			L"::GA<__int32>::GB<bool>::CC"												);
-	AssertType(pa,		L"GA<int>::__GB<bool>::__GC",			L"GA<int> :: __GB<bool> :: __GC",			L"<::GA::GB::__GC::[TC]> ::GA<__int32>::GB<bool>::GC<::GA::GB::__GC::[TC]>"	);
-	AssertType(pa,		L"GA<int>::__GB<bool>::__GC<float>",	L"GA<int> :: __GB<bool> :: __GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"										);
-}
+		AssertType(pa,		L"GA",									L"GA",										L"<::GA::[TA]> ::GA<::GA::[TA]>"											);
+		AssertType(pa,		L"GA<int>::__CB",						L"GA<int> :: __CB",							L"::GA<__int32>::CB"														);
+		AssertType(pa,		L"GA<int>::__GB",						L"GA<int> :: __GB",							L"<::GA::__GB::[TB]> ::GA<__int32>::GB<::GA::__GB::[TB]>"					);
+		AssertType(pa,		L"GA<int>::__GB<bool>",					L"GA<int> :: __GB<bool>",					L"::GA<__int32>::GB<bool>"													);
+		AssertType(pa,		L"GA<int>::__CB::__CC",					L"GA<int> :: __CB :: __CC",					L"::GA<__int32>::CB::CC"													);
+		AssertType(pa,		L"GA<int>::__CB::__GC",					L"GA<int> :: __CB :: __GC",					L"<::GA::CB::__GC::[TC]> ::GA<__int32>::CB::GC<::GA::CB::__GC::[TC]>"		);
+		AssertType(pa,		L"GA<int>::__CB::__GC<float>",			L"GA<int> :: __CB :: __GC<float>",			L"::GA<__int32>::CB::GC<float>"												);
+		AssertType(pa,		L"GA<int>::__GB<bool>::__CC",			L"GA<int> :: __GB<bool> :: __CC",			L"::GA<__int32>::GB<bool>::CC"												);
+		AssertType(pa,		L"GA<int>::__GB<bool>::__GC",			L"GA<int> :: __GB<bool> :: __GC",			L"<::GA::GB::__GC::[TC]> ::GA<__int32>::GB<bool>::GC<::GA::GB::__GC::[TC]>"	);
+		AssertType(pa,		L"GA<int>::__GB<bool>::__GC<float>",	L"GA<int> :: __GB<bool> :: __GC<float>",	L"::GA<__int32>::GB<bool>::GC<float>"										);
+	});
 
-TEST_CASE(TestParseGenericClass_BaseThisType)
-{
-	auto input = LR"(
+	TEST_CATEGORY(L"This in base types")
+	{
+		auto input = LR"(
 template<typename T>
 struct A
 {
@@ -219,48 +221,48 @@ const D<char> cd;
 volatile D<char> vd;
 volatile const D<char> cvd;
 )";
-	COMPILE_PROGRAM(program, pa, input);
+		COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(pa,		L"d._A()",		L"d._A()",			L"::A<__int32> * $PR"					);
-	AssertExpr(pa,		L"d._B()",		L"d._B()",			L"::B * $PR"							);
-	AssertExpr(pa,		L"d._C()",		L"d._C()",			L"::C<double> * $PR"					);
-	AssertExpr(pa,		L"d._D()",		L"d._D()",			L"::D<char> * $PR"						);
-	AssertExpr(pa,		L"d.A_()",		L"d.A_()",			L"::A<__int32> * $PR"					);
-	AssertExpr(pa,		L"d.B_()",		L"d.B_()",			L"::B * $PR"							);
-	AssertExpr(pa,		L"d.C_()",		L"d.C_()",			L"::C<double> * $PR"					);
-	AssertExpr(pa,		L"d.D_()",		L"d.D_()",			L"::D<char> * $PR"						);
+		AssertExpr(pa,		L"d._A()",		L"d._A()",			L"::A<__int32> * $PR"					);
+		AssertExpr(pa,		L"d._B()",		L"d._B()",			L"::B * $PR"							);
+		AssertExpr(pa,		L"d._C()",		L"d._C()",			L"::C<double> * $PR"					);
+		AssertExpr(pa,		L"d._D()",		L"d._D()",			L"::D<char> * $PR"						);
+		AssertExpr(pa,		L"d.A_()",		L"d.A_()",			L"::A<__int32> * $PR"					);
+		AssertExpr(pa,		L"d.B_()",		L"d.B_()",			L"::B * $PR"							);
+		AssertExpr(pa,		L"d.C_()",		L"d.C_()",			L"::C<double> * $PR"					);
+		AssertExpr(pa,		L"d.D_()",		L"d.D_()",			L"::D<char> * $PR"						);
 
-	AssertExpr(pa,		L"cd._A()",		L"cd._A()",			L"::A<__int32> const * $PR"				);
-	AssertExpr(pa,		L"cd._B()",		L"cd._B()",			L"::B const * $PR"						);
-	AssertExpr(pa,		L"cd._C()",		L"cd._C()",			L"::C<double> const * $PR"				);
-	AssertExpr(pa,		L"cd._D()",		L"cd._D()",			L"::D<char> const * $PR"				);
-	AssertExpr(pa,		L"cd.A_()",		L"cd.A_()",			L"::A<__int32> const * $PR"				);
-	AssertExpr(pa,		L"cd.B_()",		L"cd.B_()",			L"::B const * $PR"						);
-	AssertExpr(pa,		L"cd.C_()",		L"cd.C_()",			L"::C<double> const * $PR"				);
-	AssertExpr(pa,		L"cd.D_()",		L"cd.D_()",			L"::D<char> const * $PR"				);
+		AssertExpr(pa,		L"cd._A()",		L"cd._A()",			L"::A<__int32> const * $PR"				);
+		AssertExpr(pa,		L"cd._B()",		L"cd._B()",			L"::B const * $PR"						);
+		AssertExpr(pa,		L"cd._C()",		L"cd._C()",			L"::C<double> const * $PR"				);
+		AssertExpr(pa,		L"cd._D()",		L"cd._D()",			L"::D<char> const * $PR"				);
+		AssertExpr(pa,		L"cd.A_()",		L"cd.A_()",			L"::A<__int32> const * $PR"				);
+		AssertExpr(pa,		L"cd.B_()",		L"cd.B_()",			L"::B const * $PR"						);
+		AssertExpr(pa,		L"cd.C_()",		L"cd.C_()",			L"::C<double> const * $PR"				);
+		AssertExpr(pa,		L"cd.D_()",		L"cd.D_()",			L"::D<char> const * $PR"				);
 
-	AssertExpr(pa,		L"vd._A()",		L"vd._A()",			L"::A<__int32> volatile * $PR"			);
-	AssertExpr(pa,		L"vd._B()",		L"vd._B()",			L"::B volatile * $PR"					);
-	AssertExpr(pa,		L"vd._C()",		L"vd._C()",			L"::C<double> volatile * $PR"			);
-	AssertExpr(pa,		L"vd._D()",		L"vd._D()",			L"::D<char> volatile * $PR"				);
-	AssertExpr(pa,		L"vd.A_()",		L"vd.A_()",			L"::A<__int32> volatile * $PR"			);
-	AssertExpr(pa,		L"vd.B_()",		L"vd.B_()",			L"::B volatile * $PR"					);
-	AssertExpr(pa,		L"vd.C_()",		L"vd.C_()",			L"::C<double> volatile * $PR"			);
-	AssertExpr(pa,		L"vd.D_()",		L"vd.D_()",			L"::D<char> volatile * $PR"				);
+		AssertExpr(pa,		L"vd._A()",		L"vd._A()",			L"::A<__int32> volatile * $PR"			);
+		AssertExpr(pa,		L"vd._B()",		L"vd._B()",			L"::B volatile * $PR"					);
+		AssertExpr(pa,		L"vd._C()",		L"vd._C()",			L"::C<double> volatile * $PR"			);
+		AssertExpr(pa,		L"vd._D()",		L"vd._D()",			L"::D<char> volatile * $PR"				);
+		AssertExpr(pa,		L"vd.A_()",		L"vd.A_()",			L"::A<__int32> volatile * $PR"			);
+		AssertExpr(pa,		L"vd.B_()",		L"vd.B_()",			L"::B volatile * $PR"					);
+		AssertExpr(pa,		L"vd.C_()",		L"vd.C_()",			L"::C<double> volatile * $PR"			);
+		AssertExpr(pa,		L"vd.D_()",		L"vd.D_()",			L"::D<char> volatile * $PR"				);
 
-	AssertExpr(pa,		L"cvd._A()",	L"cvd._A()",		L"::A<__int32> const volatile * $PR"	);
-	AssertExpr(pa,		L"cvd._B()",	L"cvd._B()",		L"::B const volatile * $PR"				);
-	AssertExpr(pa,		L"cvd._C()",	L"cvd._C()",		L"::C<double> const volatile * $PR"		);
-	AssertExpr(pa,		L"cvd._D()",	L"cvd._D()",		L"::D<char> const volatile * $PR"		);
-	AssertExpr(pa,		L"cvd.A_()",	L"cvd.A_()",		L"::A<__int32> const volatile * $PR"	);
-	AssertExpr(pa,		L"cvd.B_()",	L"cvd.B_()",		L"::B const volatile * $PR"				);
-	AssertExpr(pa,		L"cvd.C_()",	L"cvd.C_()",		L"::C<double> const volatile * $PR"		);
-	AssertExpr(pa,		L"cvd.D_()",	L"cvd.D_()",		L"::D<char> const volatile * $PR"		);
-}
+		AssertExpr(pa,		L"cvd._A()",	L"cvd._A()",		L"::A<__int32> const volatile * $PR"	);
+		AssertExpr(pa,		L"cvd._B()",	L"cvd._B()",		L"::B const volatile * $PR"				);
+		AssertExpr(pa,		L"cvd._C()",	L"cvd._C()",		L"::C<double> const volatile * $PR"		);
+		AssertExpr(pa,		L"cvd._D()",	L"cvd._D()",		L"::D<char> const volatile * $PR"		);
+		AssertExpr(pa,		L"cvd.A_()",	L"cvd.A_()",		L"::A<__int32> const volatile * $PR"	);
+		AssertExpr(pa,		L"cvd.B_()",	L"cvd.B_()",		L"::B const volatile * $PR"				);
+		AssertExpr(pa,		L"cvd.C_()",	L"cvd.C_()",		L"::C<double> const volatile * $PR"		);
+		AssertExpr(pa,		L"cvd.D_()",	L"cvd.D_()",		L"::D<char> const volatile * $PR"		);
+	});
 
-TEST_CASE(TestParseGenericClass_NestedThisType)
-{
-	auto input = LR"(
+	TEST_CATEGORY(L"This in nested classes")
+	{
+		auto input = LR"(
 template<typename TX>
 struct x
 {
@@ -328,41 +330,42 @@ const x<void*>::D<char> cd;
 volatile x<void*>::D<char> vd;
 volatile const x<void*>::D<char> cvd;
 )";
-	COMPILE_PROGRAM(program, pa, input);
+		COMPILE_PROGRAM(program, pa, input);
 
-	AssertExpr(pa,		L"d._A()",		L"d._A()",			L"::x<void *>::A<__int32> * $PR"							);
-	AssertExpr(pa,		L"d._B()",		L"d._B()",			L"::x<void *>::y<float>::B * $PR"							);
-	AssertExpr(pa,		L"d._C()",		L"d._C()",			L"::x<void *>::y<double>::C * $PR"							);
-	AssertExpr(pa,		L"d._D()",		L"d._D()",			L"::x<void *>::D<char> * $PR"								);
-	AssertExpr(pa,		L"d.A_()",		L"d.A_()",			L"::x<void *>::A<__int32> * $PR"							);
-	AssertExpr(pa,		L"d.B_()",		L"d.B_()",			L"::x<void *>::y<float>::B * $PR"							);
-	AssertExpr(pa,		L"d.C_()",		L"d.C_()",			L"::x<void *>::y<double>::C * $PR"							);
-	AssertExpr(pa,		L"d.D_()",		L"d.D_()",			L"::x<void *>::D<char> * $PR"								);
+		AssertExpr(pa,		L"d._A()",		L"d._A()",			L"::x<void *>::A<__int32> * $PR"							);
+		AssertExpr(pa,		L"d._B()",		L"d._B()",			L"::x<void *>::y<float>::B * $PR"							);
+		AssertExpr(pa,		L"d._C()",		L"d._C()",			L"::x<void *>::y<double>::C * $PR"							);
+		AssertExpr(pa,		L"d._D()",		L"d._D()",			L"::x<void *>::D<char> * $PR"								);
+		AssertExpr(pa,		L"d.A_()",		L"d.A_()",			L"::x<void *>::A<__int32> * $PR"							);
+		AssertExpr(pa,		L"d.B_()",		L"d.B_()",			L"::x<void *>::y<float>::B * $PR"							);
+		AssertExpr(pa,		L"d.C_()",		L"d.C_()",			L"::x<void *>::y<double>::C * $PR"							);
+		AssertExpr(pa,		L"d.D_()",		L"d.D_()",			L"::x<void *>::D<char> * $PR"								);
 
-	AssertExpr(pa,		L"cd._A()",		L"cd._A()",			L"::x<void *>::A<__int32> const * $PR"						);
-	AssertExpr(pa,		L"cd._B()",		L"cd._B()",			L"::x<void *>::y<float>::B const * $PR"						);
-	AssertExpr(pa,		L"cd._C()",		L"cd._C()",			L"::x<void *>::y<double>::C const * $PR"					);
-	AssertExpr(pa,		L"cd._D()",		L"cd._D()",			L"::x<void *>::D<char> const * $PR"							);
-	AssertExpr(pa,		L"cd.A_()",		L"cd.A_()",			L"::x<void *>::A<__int32> const * $PR"						);
-	AssertExpr(pa,		L"cd.B_()",		L"cd.B_()",			L"::x<void *>::y<float>::B const * $PR"						);
-	AssertExpr(pa,		L"cd.C_()",		L"cd.C_()",			L"::x<void *>::y<double>::C const * $PR"					);
-	AssertExpr(pa,		L"cd.D_()",		L"cd.D_()",			L"::x<void *>::D<char> const * $PR"							);
+		AssertExpr(pa,		L"cd._A()",		L"cd._A()",			L"::x<void *>::A<__int32> const * $PR"						);
+		AssertExpr(pa,		L"cd._B()",		L"cd._B()",			L"::x<void *>::y<float>::B const * $PR"						);
+		AssertExpr(pa,		L"cd._C()",		L"cd._C()",			L"::x<void *>::y<double>::C const * $PR"					);
+		AssertExpr(pa,		L"cd._D()",		L"cd._D()",			L"::x<void *>::D<char> const * $PR"							);
+		AssertExpr(pa,		L"cd.A_()",		L"cd.A_()",			L"::x<void *>::A<__int32> const * $PR"						);
+		AssertExpr(pa,		L"cd.B_()",		L"cd.B_()",			L"::x<void *>::y<float>::B const * $PR"						);
+		AssertExpr(pa,		L"cd.C_()",		L"cd.C_()",			L"::x<void *>::y<double>::C const * $PR"					);
+		AssertExpr(pa,		L"cd.D_()",		L"cd.D_()",			L"::x<void *>::D<char> const * $PR"							);
 
-	AssertExpr(pa,		L"vd._A()",		L"vd._A()",			L"::x<void *>::A<__int32> volatile * $PR"					);
-	AssertExpr(pa,		L"vd._B()",		L"vd._B()",			L"::x<void *>::y<float>::B volatile * $PR"					);
-	AssertExpr(pa,		L"vd._C()",		L"vd._C()",			L"::x<void *>::y<double>::C volatile * $PR"					);
-	AssertExpr(pa,		L"vd._D()",		L"vd._D()",			L"::x<void *>::D<char> volatile * $PR"						);
-	AssertExpr(pa,		L"vd.A_()",		L"vd.A_()",			L"::x<void *>::A<__int32> volatile * $PR"					);
-	AssertExpr(pa,		L"vd.B_()",		L"vd.B_()",			L"::x<void *>::y<float>::B volatile * $PR"					);
-	AssertExpr(pa,		L"vd.C_()",		L"vd.C_()",			L"::x<void *>::y<double>::C volatile * $PR"					);
-	AssertExpr(pa,		L"vd.D_()",		L"vd.D_()",			L"::x<void *>::D<char> volatile * $PR"						);
+		AssertExpr(pa,		L"vd._A()",		L"vd._A()",			L"::x<void *>::A<__int32> volatile * $PR"					);
+		AssertExpr(pa,		L"vd._B()",		L"vd._B()",			L"::x<void *>::y<float>::B volatile * $PR"					);
+		AssertExpr(pa,		L"vd._C()",		L"vd._C()",			L"::x<void *>::y<double>::C volatile * $PR"					);
+		AssertExpr(pa,		L"vd._D()",		L"vd._D()",			L"::x<void *>::D<char> volatile * $PR"						);
+		AssertExpr(pa,		L"vd.A_()",		L"vd.A_()",			L"::x<void *>::A<__int32> volatile * $PR"					);
+		AssertExpr(pa,		L"vd.B_()",		L"vd.B_()",			L"::x<void *>::y<float>::B volatile * $PR"					);
+		AssertExpr(pa,		L"vd.C_()",		L"vd.C_()",			L"::x<void *>::y<double>::C volatile * $PR"					);
+		AssertExpr(pa,		L"vd.D_()",		L"vd.D_()",			L"::x<void *>::D<char> volatile * $PR"						);
 
-	AssertExpr(pa,		L"cvd._A()",	L"cvd._A()",		L"::x<void *>::A<__int32> const volatile * $PR"				);
-	AssertExpr(pa,		L"cvd._B()",	L"cvd._B()",		L"::x<void *>::y<float>::B const volatile * $PR"			);
-	AssertExpr(pa,		L"cvd._C()",	L"cvd._C()",		L"::x<void *>::y<double>::C const volatile * $PR"			);
-	AssertExpr(pa,		L"cvd._D()",	L"cvd._D()",		L"::x<void *>::D<char> const volatile * $PR"				);
-	AssertExpr(pa,		L"cvd.A_()",	L"cvd.A_()",		L"::x<void *>::A<__int32> const volatile * $PR"				);
-	AssertExpr(pa,		L"cvd.B_()",	L"cvd.B_()",		L"::x<void *>::y<float>::B const volatile * $PR"			);
-	AssertExpr(pa,		L"cvd.C_()",	L"cvd.C_()",		L"::x<void *>::y<double>::C const volatile * $PR"			);
-	AssertExpr(pa,		L"cvd.D_()",	L"cvd.D_()",		L"::x<void *>::D<char> const volatile * $PR"				);
+		AssertExpr(pa,		L"cvd._A()",	L"cvd._A()",		L"::x<void *>::A<__int32> const volatile * $PR"				);
+		AssertExpr(pa,		L"cvd._B()",	L"cvd._B()",		L"::x<void *>::y<float>::B const volatile * $PR"			);
+		AssertExpr(pa,		L"cvd._C()",	L"cvd._C()",		L"::x<void *>::y<double>::C const volatile * $PR"			);
+		AssertExpr(pa,		L"cvd._D()",	L"cvd._D()",		L"::x<void *>::D<char> const volatile * $PR"				);
+		AssertExpr(pa,		L"cvd.A_()",	L"cvd.A_()",		L"::x<void *>::A<__int32> const volatile * $PR"				);
+		AssertExpr(pa,		L"cvd.B_()",	L"cvd.B_()",		L"::x<void *>::y<float>::B const volatile * $PR"			);
+		AssertExpr(pa,		L"cvd.C_()",	L"cvd.C_()",		L"::x<void *>::y<double>::C const volatile * $PR"			);
+		AssertExpr(pa,		L"cvd.D_()",	L"cvd.D_()",		L"::x<void *>::D<char> const volatile * $PR"				);
+	});
 }

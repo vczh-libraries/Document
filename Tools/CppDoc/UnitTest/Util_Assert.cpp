@@ -161,18 +161,21 @@ void AssertStat(const wchar_t* input, const wchar_t* log)
 
 void AssertStat(ParsingArguments& pa, const wchar_t* input, const wchar_t* log)
 {
-	TOKEN_READER(input);
-	auto cursor = reader.GetFirstToken();
-
-	auto stat = ParseStat(pa, cursor);
-	TEST_ASSERT(!cursor);
-
-	auto output = GenerateToStream([&](StreamWriter& writer)
+	TEST_CASE(L"Validate stat: " + WString(input))
 	{
-		Log(stat, writer, 0);
-	});
+		TOKEN_READER(input);
+		auto cursor = reader.GetFirstToken();
 
-	AssertMultilines(output, log);
+		auto stat = ParseStat(pa, cursor);
+		TEST_ASSERT(!cursor);
+
+		auto output = GenerateToStream([&](StreamWriter& writer)
+		{
+			Log(stat, writer, 0);
+		});
+
+		AssertMultilines(output, log);
+	});
 }
 
 /***********************************************************************
@@ -187,9 +190,12 @@ void AssertProgram(const wchar_t* input, const wchar_t* log, Ptr<IIndexRecorder>
 
 void AssertProgram(Ptr<Program> program, const wchar_t* log)
 {
-	auto output = GenerateToStream([&](StreamWriter& writer)
+	TEST_CASE(L"Validate program: <hidden>")
 	{
-		Log(program, writer);
+		auto output = GenerateToStream([&](StreamWriter& writer)
+		{
+			Log(program, writer);
+		});
+		AssertMultilines(output, log);
 	});
-	AssertMultilines(output, log);
 }
