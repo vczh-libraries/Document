@@ -75,7 +75,7 @@ struct RunTypeConvertFromTemp
 };
 
 #define TEST_CONV_TYPE(FROM, TO, CONV1, CONV2)\
-	TEST_CASE(L"Convert from " L ## #FROM L" to " L ## #TO)\
+	TEST_CASE(L ## #FROM L" -> " L ## #TO)\
 	{\
 		RunTypeConvert<FROM, TO, RunTypeTester<TO, TypeConvCat::CONV1>>::test;\
 		RunTypeConvertFromTemp<FROM, TO, RunTypeTester<TO, TypeConvCat::CONV2>>::test;\

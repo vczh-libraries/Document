@@ -28,7 +28,7 @@ extern void					AssertProgram(Ptr<Program> program, const wchar_t* log);
 template<typename... T>
 void AssertType(ParsingArguments& pa, const wchar_t* input, const wchar_t* log, T... logTsys)
 {
-	TEST_CASE(L"Validate type: " + WString(input))
+	TEST_CASE(L"[TYPE] " + WString(input))
 	{
 		const wchar_t* tsys[] = { logTsys...,L"" };
 		AssertTypeInternal(input, log, tsys, (vint)(sizeof...(logTsys)), pa);
@@ -43,12 +43,18 @@ void AssertType(const wchar_t* input, const wchar_t* log, T... logTsys)
 }
 
 template<typename... T>
+void AssertExpr_NotTestCase(ParsingArguments& pa, const wchar_t* input, const wchar_t* log, T... logTsys)
+{
+	const wchar_t* tsys[] = { logTsys...,L"" };
+	AssertExprInternal(input, log, tsys, (vint)(sizeof...(logTsys)), pa);
+}
+
+template<typename... T>
 void AssertExpr(ParsingArguments& pa, const wchar_t* input, const wchar_t* log, T... logTsys)
 {
-	TEST_CASE(L"Validate expr: " + WString(input))
+	TEST_CASE(L"[EXPR] " + WString(input))
 	{
-		const wchar_t* tsys[] = { logTsys...,L"" };
-		AssertExprInternal(input, log, tsys, (vint)(sizeof...(logTsys)), pa);
+		AssertExpr_NotTestCase(pa, input, log, logTsys...);
 	});
 }
 

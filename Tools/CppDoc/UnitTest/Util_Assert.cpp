@@ -161,7 +161,7 @@ void AssertStat(const wchar_t* input, const wchar_t* log)
 
 void AssertStat(ParsingArguments& pa, const wchar_t* input, const wchar_t* log)
 {
-	TEST_CASE(L"Validate stat: " + WString(input))
+	TEST_CASE(L"[STAT] " + WString(input))
 	{
 		TOKEN_READER(input);
 		auto cursor = reader.GetFirstToken();
@@ -190,7 +190,7 @@ void AssertProgram(const wchar_t* input, const wchar_t* log, Ptr<IIndexRecorder>
 
 void AssertProgram(Ptr<Program> program, const wchar_t* log)
 {
-	TEST_CASE(L"Validate program: <hidden>")
+	TEST_CASE(L"[PROG] <hidden>")
 	{
 		auto output = GenerateToStream([&](StreamWriter& writer)
 		{
