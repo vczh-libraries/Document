@@ -10,11 +10,11 @@ ITsys* GetTsysFromCppType(Ptr<ITsysAlloc> tsys, const WString& cppType)
 	TOKEN_READER(cppType.Buffer());
 	auto cursor = reader.GetFirstToken();
 	auto type = ParseType(pa, cursor);
-	TEST_ASSERT(!cursor);
+	TEST_CASE_ASSERT(!cursor);
 
 	TypeTsysList types;
 	TypeToTsysNoVta(pa, type, types);
-	TEST_ASSERT(types.Count() == 1);
+	TEST_CASE_ASSERT(types.Count() == 1);
 	return types[0];
 }
 
@@ -293,7 +293,7 @@ TEST_FILE
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-		TEST_CASE(L"Checking")
+		TEST_CATEGORY(L"Checking")
 		{
 #define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME++))>(pa, L#NAME, L"++");
 			TEST_EACH_VAR_NO_BOOL(TEST_VAR)
@@ -310,7 +310,7 @@ TEST_FILE
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-		TEST_CASE(L"Checking")
+		TEST_CATEGORY(L"Checking")
 		{
 #define TEST_VAR(NAME) AssertPrefixUnary<decltype((++NAME))>(pa, L#NAME, L"++");
 			TEST_EACH_VAR_NO_BOOL(TEST_VAR)
@@ -357,7 +357,7 @@ TEST_FILE
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-		TEST_CASE(L"Checking")
+		TEST_CATEGORY(L"Checking")
 		{
 #define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1&&NAME2))>(pa, L#NAME1, L#NAME2, L"&&");
 			TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
@@ -398,7 +398,7 @@ TEST_FILE
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-		TEST_CASE(L"Checking")
+		TEST_CATEGORY(L"Checking")
 		{
 #define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");
 			TEST_EACH_VAR2(TEST_VAR)
@@ -423,7 +423,7 @@ TEST_FILE
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-		TEST_CASE(L"Checking")
+		TEST_CATEGORY(L"Checking")
 		{
 #define TEST_VAR(NAME) AssertBinary<decltype((NAME==NAME))>(pa, L#NAME, L#NAME, L"==");
 			TEST_EACH_VAR(TEST_VAR)
@@ -462,7 +462,7 @@ TEST_FILE
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-		TEST_CASE(L"Checking")
+		TEST_CATEGORY(L"Checking")
 		{
 #define TEST_VAR(NAME) AssertBinary<decltype((NAME=NAME))>(pa, L#NAME, L#NAME, L"=");
 			TEST_EACH_VAR(TEST_VAR)
@@ -515,7 +515,7 @@ TEST_FILE
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-		TEST_CASE(L"Checking")
+		TEST_CATEGORY(L"Checking")
 		{
 #define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME++))>(pa, L#NAME, L"++");
 			TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
@@ -532,7 +532,7 @@ TEST_FILE
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-		TEST_CASE(L"Checking")
+		TEST_CATEGORY(L"Checking")
 		{
 #define TEST_VAR(NAME) AssertPrefixUnary<decltype((++NAME))>(pa, L#NAME, L"++");
 			TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
@@ -557,7 +557,7 @@ TEST_FILE
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-		TEST_CASE(L"Checking")
+		TEST_CATEGORY(L"Checking")
 		{
 #define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");
 			TEST_EACH_VAR_PTR_INT(TEST_VAR)
@@ -574,7 +574,7 @@ TEST_FILE
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-		TEST_CASE(L"Checking")
+		TEST_CATEGORY(L"Checking")
 		{
 #define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");
 			TEST_EACH_VAR_INT_PTR(TEST_VAR)
@@ -587,7 +587,7 @@ TEST_FILE
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-		TEST_CASE(L"Checking")
+		TEST_CATEGORY(L"Checking")
 		{
 #define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");
 			TEST_EACH_VAR_PTR_PTR(TEST_VAR)

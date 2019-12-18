@@ -73,10 +73,14 @@ void AssertExpr(const wchar_t* input, const wchar_t* log, T... logTsys)
 	TOKEN_READER(INPUT);\
 	auto cursor = reader.GetFirstToken();\
 	ParsingArguments PA(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), RECORDER);\
-	auto PROGRAM = ParseProgram(PA, cursor);\
-	TEST_CASE_ASSERT(!cursor);\
-	TEST_CASE_ASSERT(PROGRAM);\
-	EvaluateProgram(PA, PROGRAM)\
+	Ptr<Program> PROGRAM;\
+	TEST_CASE(L"ParseProgram + EvaluateProgram")\
+	{\
+		PROGRAM = ParseProgram(PA, cursor);\
+		TEST_ASSERT(!cursor);\
+		TEST_ASSERT(PROGRAM);\
+		EvaluateProgram(PA, PROGRAM);\
+	})\
 
 #define COMPILE_PROGRAM(PROGRAM, PA, INPUT) COMPILE_PROGRAM_WITH_RECORDER(PROGRAM, PA, INPUT, nullptr)
 
