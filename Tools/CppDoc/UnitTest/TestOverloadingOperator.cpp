@@ -13,10 +13,10 @@ WString LoadOverloadingOperatorCode()
 	FilePath input4 = L"../UnitTest/TestOverloadingOperator_Input4.h";
 
 	WString code1, code2, code3, code4;
-	TEST_ASSERT(File(input1).ReadAllTextByBom(code1));
-	TEST_ASSERT(File(input2).ReadAllTextByBom(code2));
-	TEST_ASSERT(File(input3).ReadAllTextByBom(code3));
-	TEST_ASSERT(File(input4).ReadAllTextByBom(code4));
+	File(input1).ReadAllTextByBom(code1);
+	File(input2).ReadAllTextByBom(code2);
+	File(input3).ReadAllTextByBom(code3);
+	File(input4).ReadAllTextByBom(code4);
 
 	return code1 + L"\r\n" + code2 + L"\r\n" + code3 + L"\r\n" + code4;
 }

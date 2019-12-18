@@ -71,33 +71,36 @@ struct TestGC_Helper
 
 TEST_FILE
 {
-	TEST_CASE(L"Generated functions")
+	TEST_CATEGORY(L"Generated functions")
 	{
 		COMPILE_PROGRAM(program, pa, LoadGeneratedFunctionsCode().Buffer());
 
-	#define FEATURE(TYPE) TestGC_Helper<std::is_default_constructible_v<TYPE>>::DefaultCtor(L#TYPE, pa);
-		GENERATED_FUNCTION_TYPES(FEATURE)
-	#undef FEATURE
+		TEST_CASE(L"Checking")
+		{
+#define FEATURE(TYPE) TestGC_Helper<std::is_default_constructible_v<TYPE>>::DefaultCtor(L#TYPE, pa);
+			GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
 
-	#define FEATURE(TYPE) TestGC_Helper<std::is_copy_constructible_v<TYPE>>::CopyCtor(L#TYPE, pa);
-		GENERATED_FUNCTION_TYPES(FEATURE)
-	#undef FEATURE
+#define FEATURE(TYPE) TestGC_Helper<std::is_copy_constructible_v<TYPE>>::CopyCtor(L#TYPE, pa);
+			GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
 
-	#define FEATURE(TYPE) TestGC_Helper<std::is_move_constructible_v<TYPE>>::MoveCtor(L#TYPE, pa);
-		GENERATED_FUNCTION_TYPES(FEATURE)
-	#undef FEATURE
+#define FEATURE(TYPE) TestGC_Helper<std::is_move_constructible_v<TYPE>>::MoveCtor(L#TYPE, pa);
+			GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
 
-	#define FEATURE(TYPE) TestGC_Helper<std::is_copy_assignable_v<TYPE>>::CopyAssignOp(L#TYPE, pa);
-		GENERATED_FUNCTION_TYPES(FEATURE)
-	#undef FEATURE
+#define FEATURE(TYPE) TestGC_Helper<std::is_copy_assignable_v<TYPE>>::CopyAssignOp(L#TYPE, pa);
+			GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
 
-	#define FEATURE(TYPE) TestGC_Helper<std::is_move_assignable_v<TYPE>>::MoveAssignOp(L#TYPE, pa);
-		GENERATED_FUNCTION_TYPES(FEATURE)
-	#undef FEATURE
+#define FEATURE(TYPE) TestGC_Helper<std::is_move_assignable_v<TYPE>>::MoveAssignOp(L#TYPE, pa);
+			GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
 
-	#define FEATURE(TYPE) TestGC_Helper<std::is_destructible_v<TYPE>>::Dtor(L#TYPE, pa);
-		GENERATED_FUNCTION_TYPES(FEATURE)
-	#undef FEATURE
+#define FEATURE(TYPE) TestGC_Helper<std::is_destructible_v<TYPE>>::Dtor(L#TYPE, pa);
+			GENERATED_FUNCTION_TYPES(FEATURE)
+#undef FEATURE
+		});
 	});
 
 	TEST_CATEGORY(L"Generated functions affected by fields and base classes")

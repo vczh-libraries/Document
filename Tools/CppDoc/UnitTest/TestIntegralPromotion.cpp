@@ -288,298 +288,311 @@ void AssertBinary(ParsingArguments& pa, const WString& name1, const WString& nam
 
 TEST_FILE
 {
-	TEST_CASE(L"Test integral promition: postfix unary operator")
+	TEST_CATEGORY(L"Test integral promition: postfix unary operator")
 	{
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-	#define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME++))>(pa, L#NAME, L"++");
-		TEST_EACH_VAR_NO_BOOL(TEST_VAR)
-	#undef TEST_VAR
+		TEST_CASE(L"Checking")
+		{
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME++))>(pa, L#NAME, L"++");
+			TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME--))>(pa, L#NAME, L"--");
-		TEST_EACH_VAR_NO_BOOL(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME--))>(pa, L#NAME, L"--");
+			TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
+		});
 	});
 
-	TEST_CASE(L"Test integral promition: prefix unary operator")
+	TEST_CATEGORY(L"Test integral promition: prefix unary operator")
 	{
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-	#define TEST_VAR(NAME) AssertPrefixUnary<decltype((++NAME))>(pa, L#NAME, L"++");
-		TEST_EACH_VAR_NO_BOOL(TEST_VAR)
-	#undef TEST_VAR
+		TEST_CASE(L"Checking")
+		{
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((++NAME))>(pa, L#NAME, L"++");
+			TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertPrefixUnary<decltype((--NAME))>(pa, L#NAME, L"--");
-		TEST_EACH_VAR_NO_BOOL(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((--NAME))>(pa, L#NAME, L"--");
+			TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertPrefixUnary<decltype((~NAME))>(pa, L#NAME, L"~");
-		TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
-		TEST_EACH_VAR_CONST_NO_BOOL_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((~NAME))>(pa, L#NAME, L"~");
+			TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
+			TEST_EACH_VAR_CONST_NO_BOOL_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertPrefixUnary<decltype((!NAME))>(pa, L#NAME, L"!");
-		TEST_EACH_VAR(TEST_VAR)
-		TEST_EACH_VAR_CONST(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((!NAME))>(pa, L#NAME, L"!");
+			TEST_EACH_VAR(TEST_VAR)
+			TEST_EACH_VAR_CONST(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertPrefixUnary<decltype((-NAME))>(pa, L#NAME, L"-");
-		TEST_EACH_VAR_NO_BOOL_UNSIGNED(TEST_VAR)
-		TEST_EACH_VAR_CONST_NO_BOOL_UNSIGNED(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((-NAME))>(pa, L#NAME, L"-");
+			TEST_EACH_VAR_NO_BOOL_UNSIGNED(TEST_VAR)
+			TEST_EACH_VAR_CONST_NO_BOOL_UNSIGNED(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertPrefixUnary<decltype((+NAME))>(pa, L#NAME, L"+");
-		TEST_EACH_VAR(TEST_VAR)
-		TEST_EACH_VAR_CONST(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((+NAME))>(pa, L#NAME, L"+");
+			TEST_EACH_VAR(TEST_VAR)
+			TEST_EACH_VAR_CONST(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertPrefixUnary<decltype((&NAME))>(pa, L#NAME, L"&");
-		TEST_EACH_VAR(TEST_VAR)
-		TEST_EACH_VAR_CONST(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((&NAME))>(pa, L#NAME, L"&");
+			TEST_EACH_VAR(TEST_VAR)
+			TEST_EACH_VAR_CONST(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertDereferenceUnary<decltype((*&NAME))>(pa, L#NAME);
-		TEST_EACH_VAR(TEST_VAR)
-		TEST_EACH_VAR_CONST(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertDereferenceUnary<decltype((*&NAME))>(pa, L#NAME);
+			TEST_EACH_VAR(TEST_VAR)
+			TEST_EACH_VAR_CONST(TEST_VAR)
+#undef TEST_VAR
+		});
 	});
 
-	TEST_CASE(L"Test integral promition: binary integral operator")
+	TEST_CATEGORY(L"Test integral promition: binary integral operator")
 	{
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1&&NAME2))>(pa, L#NAME1, L#NAME2, L"&&");
-		TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+		TEST_CASE(L"Checking")
+		{
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1&&NAME2))>(pa, L#NAME1, L#NAME2, L"&&");
+			TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1||NAME2))>(pa, L#NAME1, L#NAME2, L"||");
-		TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1||NAME2))>(pa, L#NAME1, L#NAME2, L"||");
+			TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1&NAME2))>(pa, L#NAME1, L#NAME2, L"&");
-		TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1&NAME2))>(pa, L#NAME1, L#NAME2, L"&");
+			TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1|NAME2))>(pa, L#NAME1, L#NAME2, L"|");
-		TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1|NAME2))>(pa, L#NAME1, L#NAME2, L"|");
+			TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1^NAME2))>(pa, L#NAME1, L#NAME2, L"^");
-		TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1^NAME2))>(pa, L#NAME1, L#NAME2, L"^");
+			TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1<<NAME2))>(pa, L#NAME1, L#NAME2, L"<<");
-		TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1<<NAME2))>(pa, L#NAME1, L#NAME2, L"<<");
+			TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1>>NAME2))>(pa, L#NAME1, L#NAME2, L">>");
-		TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1>>NAME2))>(pa, L#NAME1, L#NAME2, L">>");
+			TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1%NAME2))>(pa, L#NAME1, L#NAME2, L"%");
-		TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1%NAME2))>(pa, L#NAME1, L#NAME2, L"%");
+			TEST_EACH_VAR2_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+		});
 	});
 
-	TEST_CASE(L"Test integral promition: binary numeric operator")
+	TEST_CATEGORY(L"Test integral promition: binary numeric operator")
 	{
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");
-		TEST_EACH_VAR2(TEST_VAR)
-	#undef TEST_VAR
+		TEST_CASE(L"Checking")
+		{
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");
+			TEST_EACH_VAR2(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");
-		TEST_EACH_VAR2(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");
+			TEST_EACH_VAR2(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1*NAME2))>(pa, L#NAME1, L#NAME2, L"*");
-		TEST_EACH_VAR2(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1*NAME2))>(pa, L#NAME1, L#NAME2, L"*");
+			TEST_EACH_VAR2(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1/NAME2))>(pa, L#NAME1, L#NAME2, L"/");
-		TEST_EACH_VAR2(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1/NAME2))>(pa, L#NAME1, L#NAME2, L"/");
+			TEST_EACH_VAR2(TEST_VAR)
+#undef TEST_VAR
+		});
 	});
 
-	TEST_CASE(L"Test integral promition: comparison operator")
+	TEST_CATEGORY(L"Test integral promition: comparison operator")
 	{
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME==NAME))>(pa, L#NAME, L#NAME, L"==");
-		TEST_EACH_VAR(TEST_VAR)
-		TEST_EACH_VAR_CONST(TEST_VAR)
-	#undef TEST_VAR
+		TEST_CASE(L"Checking")
+		{
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME==NAME))>(pa, L#NAME, L#NAME, L"==");
+			TEST_EACH_VAR(TEST_VAR)
+			TEST_EACH_VAR_CONST(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME!=NAME))>(pa, L#NAME, L#NAME, L"!=");
-		TEST_EACH_VAR(TEST_VAR)
-		TEST_EACH_VAR_CONST(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME!=NAME))>(pa, L#NAME, L#NAME, L"!=");
+			TEST_EACH_VAR(TEST_VAR)
+			TEST_EACH_VAR_CONST(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME<NAME))>(pa, L#NAME, L#NAME, L"<");
-		TEST_EACH_VAR(TEST_VAR)
-		TEST_EACH_VAR_CONST(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME<NAME))>(pa, L#NAME, L#NAME, L"<");
+			TEST_EACH_VAR(TEST_VAR)
+			TEST_EACH_VAR_CONST(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME<=NAME))>(pa, L#NAME, L#NAME, L"<=");
-		TEST_EACH_VAR(TEST_VAR)
-		TEST_EACH_VAR_CONST(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME<=NAME))>(pa, L#NAME, L#NAME, L"<=");
+			TEST_EACH_VAR(TEST_VAR)
+			TEST_EACH_VAR_CONST(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME>NAME))>(pa, L#NAME, L#NAME, L">");
-		TEST_EACH_VAR(TEST_VAR)
-		TEST_EACH_VAR_CONST(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME>NAME))>(pa, L#NAME, L#NAME, L">");
+			TEST_EACH_VAR(TEST_VAR)
+			TEST_EACH_VAR_CONST(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME>=NAME))>(pa, L#NAME, L#NAME, L">=");
-		TEST_EACH_VAR(TEST_VAR)
-		TEST_EACH_VAR_CONST(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME>=NAME))>(pa, L#NAME, L#NAME, L">=");
+			TEST_EACH_VAR(TEST_VAR)
+			TEST_EACH_VAR_CONST(TEST_VAR)
+#undef TEST_VAR
+		});
 	});
 
-	TEST_CASE(L"Test integral promition: assignment operator")
+	TEST_CATEGORY(L"Test integral promition: assignment operator")
 	{
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME=NAME))>(pa, L#NAME, L#NAME, L"=");
-		TEST_EACH_VAR(TEST_VAR)
-	#undef TEST_VAR
+		TEST_CASE(L"Checking")
+		{
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME=NAME))>(pa, L#NAME, L#NAME, L"=");
+			TEST_EACH_VAR(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME*=NAME))>(pa, L#NAME, L#NAME, L"*=");
-		TEST_EACH_VAR_NO_BOOL(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME*=NAME))>(pa, L#NAME, L#NAME, L"*=");
+			TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME/=NAME))>(pa, L#NAME, L#NAME, L"/=");
-		TEST_EACH_VAR_NO_BOOL(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME/=NAME))>(pa, L#NAME, L#NAME, L"/=");
+			TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME%=NAME))>(pa, L#NAME, L#NAME, L"%=");
-		TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME%=NAME))>(pa, L#NAME, L#NAME, L"%=");
+			TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME+=NAME))>(pa, L#NAME, L#NAME, L"+=");
-		TEST_EACH_VAR_NO_BOOL(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME+=NAME))>(pa, L#NAME, L#NAME, L"+=");
+			TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME-=NAME))>(pa, L#NAME, L#NAME, L"-=");
-		TEST_EACH_VAR_NO_BOOL(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME-=NAME))>(pa, L#NAME, L#NAME, L"-=");
+			TEST_EACH_VAR_NO_BOOL(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME<<=NAME))>(pa, L#NAME, L#NAME, L"<<=");
-		TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME<<=NAME))>(pa, L#NAME, L#NAME, L"<<=");
+			TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME>>=NAME))>(pa, L#NAME, L#NAME, L">>=");
-		TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME>>=NAME))>(pa, L#NAME, L#NAME, L">>=");
+			TEST_EACH_VAR_NO_BOOL_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME&=NAME))>(pa, L#NAME, L#NAME, L"&=");
-		TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME&=NAME))>(pa, L#NAME, L#NAME, L"&=");
+			TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME|=NAME))>(pa, L#NAME, L#NAME, L"|=");
-		TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME|=NAME))>(pa, L#NAME, L#NAME, L"|=");
+			TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME) AssertBinary<decltype((NAME^=NAME))>(pa, L#NAME, L#NAME, L"^=");
-		TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertBinary<decltype((NAME^=NAME))>(pa, L#NAME, L#NAME, L"^=");
+			TEST_EACH_VAR_NO_FLOAT(TEST_VAR)
+#undef TEST_VAR
+		});
 	});
 
-	TEST_CASE(L"Test pointer arithmetic: postfix unary operator")
+	TEST_CATEGORY(L"Test pointer arithmetic: postfix unary operator")
 	{
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-	#define TEST_VAR(NAME)\
-		AssertPostfixUnary<decltype((NAME++))>(pa, L#NAME, L"++");\
+		TEST_CASE(L"Checking")
+		{
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME++))>(pa, L#NAME, L"++");
+			TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
+#undef TEST_VAR
 
-		TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
-	#undef TEST_VAR
-
-	#define TEST_VAR(NAME)\
-		AssertPostfixUnary<decltype((NAME--))>(pa, L#NAME, L"--");\
-
-		TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertPostfixUnary<decltype((NAME--))>(pa, L#NAME, L"--");
+			TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
+#undef TEST_VAR
+		});
 	});
 
-	TEST_CASE(L"Test pointer arithmetic: prefix unary operator")
+	TEST_CATEGORY(L"Test pointer arithmetic: prefix unary operator")
 	{
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-	#define TEST_VAR(NAME)\
-		AssertPrefixUnary<decltype((++NAME))>(pa, L#NAME, L"++");\
+		TEST_CASE(L"Checking")
+		{
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((++NAME))>(pa, L#NAME, L"++");
+			TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
+#undef TEST_VAR
 
-		TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((--NAME))>(pa, L#NAME, L"--");
+			TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
+#undef TEST_VAR
 
-	#define TEST_VAR(NAME)\
-		AssertPrefixUnary<decltype((--NAME))>(pa, L#NAME, L"--");\
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((*NAME))>(pa, L#NAME, L"*");
+			TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
+#undef TEST_VAR
 
-		TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
-	#undef TEST_VAR
-
-	#define TEST_VAR(NAME)\
-		AssertPrefixUnary<decltype((*NAME))>(pa, L#NAME, L"*");\
-
-		TEST_EACH_VAR_PTR_NO_CONST(TEST_VAR)
-	#undef TEST_VAR
-
-	#define TEST_VAR(NAME)\
-		AssertPrefixUnary<decltype((*NAME))>(pa, L#NAME, L"*");\
-
-		TEST_EACH_VAR_ARR(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME) AssertPrefixUnary<decltype((*NAME))>(pa, L#NAME, L"*");
+			TEST_EACH_VAR_ARR(TEST_VAR)
+#undef TEST_VAR
+		});
 	});
 
-	TEST_CASE(L"Test pointer arithmetic: pointer OP integer")
+	TEST_CATEGORY(L"Test pointer arithmetic: pointer OP integer")
 	{
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-	#define TEST_VAR(NAME1, NAME2)\
-		AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");\
+		TEST_CASE(L"Checking")
+		{
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");
+			TEST_EACH_VAR_PTR_INT(TEST_VAR)
+#undef TEST_VAR
 
-		TEST_EACH_VAR_PTR_INT(TEST_VAR)
-	#undef TEST_VAR
-
-	#define TEST_VAR(NAME1, NAME2)\
-		AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");\
-
-		TEST_EACH_VAR_PTR_INT(TEST_VAR)
-	#undef TEST_VAR
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");
+			TEST_EACH_VAR_PTR_INT(TEST_VAR)
+#undef TEST_VAR
+		});
 	});
 
-	TEST_CASE(L"Test pointer arithmetic: integer OP pointer")
+	TEST_CATEGORY(L"Test pointer arithmetic: integer OP pointer")
 	{
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-	#define TEST_VAR(NAME1, NAME2)\
-		AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");\
-
-		TEST_EACH_VAR_INT_PTR(TEST_VAR)
-	#undef TEST_VAR
+		TEST_CASE(L"Checking")
+		{
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1+NAME2))>(pa, L#NAME1, L#NAME2, L"+");
+			TEST_EACH_VAR_INT_PTR(TEST_VAR)
+#undef TEST_VAR
+		});
 	});
 
-	TEST_CASE(L"Test pointer arithmetic: pointer OP pointer")
+	TEST_CATEGORY(L"Test pointer arithmetic: pointer OP pointer")
 	{
 		TEST_DECL_VARS;
 		COMPILE_PROGRAM(program, pa, input);
 
-	#define TEST_VAR(NAME1, NAME2)\
-		AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");\
-
-		TEST_EACH_VAR_PTR_PTR(TEST_VAR)
-	#undef TEST_VAR
+		TEST_CASE(L"Checking")
+		{
+#define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");
+			TEST_EACH_VAR_PTR_PTR(TEST_VAR)
+#undef TEST_VAR
+		});
 	});
 }
 

@@ -182,7 +182,7 @@ void F8()
 		for (vint i = 1; i <= 8; i++)
 		{
 			auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
-			TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
+			TEST_CASE_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
 			AssertExpr(spa, L"a", L"a", L"__int32 $L");
 		}
 	});
@@ -225,7 +225,7 @@ void F4()
 		for (vint i = 1; i <= 4; i++)
 		{
 			auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
-			TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
+			TEST_CASE_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
 			AssertExpr(spa, L"a", L"a", L"__int32 $L");
 			AssertExpr(spa, L"b", L"b", L"__int32 $L");
 			AssertExpr(spa, L"c", L"c", L"__int32 $L");
@@ -285,7 +285,7 @@ void F3()
 		for (vint i = 1; i <= 3; i++)
 		{
 			auto spa = pa.WithScope(GetStatementSymbol(pa, L"F" + itow(i)));
-			TEST_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
+			TEST_CASE_ASSERT(spa.functionBodySymbol->GetImplDecl_NFb<FunctionDeclaration>()->name.name == L"F" + itow(i));
 			AssertExpr(spa, L"a", L"a", expectedTypes[i - 1]);
 		}
 	});

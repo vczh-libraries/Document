@@ -925,7 +925,7 @@ auto c = &X<int>::Method<double>;
 		END_ASSERT_SYMBOL;
 
 		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
-		TEST_ASSERT(accessed.Count() == 21);
+		TEST_CASE_ASSERT(accessed.Count() == 21);
 	});
 
 	TEST_CATEGORY(L"Members in base classes")
