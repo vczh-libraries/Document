@@ -67,13 +67,13 @@ TEST_FILE
 		using namespace Input__TestOverloadingGenericClass_Overloading_BaseClass;
 		COMPILE_PROGRAM(program, pa, input);
 	
-		ASSERT_OVERLOADING(F(cd),					L"F(cd)",					double *);
-		ASSERT_OVERLOADING(F(d),					L"F(d)",					bool *);
-		ASSERT_OVERLOADING(F(Derived<void>()),		L"F(Derived<void>())",		char *);
+		ASSERT_OVERLOADING_SIMPLE(F(cd),					double *);
+		ASSERT_OVERLOADING_SIMPLE(F(d),						bool *);
+		ASSERT_OVERLOADING_SIMPLE(F(Derived<void>()),		char *);
 	
-		ASSERT_OVERLOADING(G(cd),					L"G(cd)",					double);
-		ASSERT_OVERLOADING(G(d),					L"G(d)",					bool);
-		ASSERT_OVERLOADING(G(Derived<void>()),		L"G(Derived<void>())",		char);
+		ASSERT_OVERLOADING_SIMPLE(G(cd),					double);
+		ASSERT_OVERLOADING_SIMPLE(G(d),						bool);
+		ASSERT_OVERLOADING_SIMPLE(G(Derived<void>()),		char);
 	});
 
 	TEST_CATEGORY(L"Constructors")
@@ -81,10 +81,10 @@ TEST_FILE
 		using namespace Input__TestOverloadingGenericClass_Overloading_Constructor;
 		COMPILE_PROGRAM(program, pa, input);
 	
-		ASSERT_OVERLOADING(F(1),					L"F(1)",					bool);
-		ASSERT_OVERLOADING(F(1.0),					L"F(1.0)",					bool);
-		ASSERT_OVERLOADING(F("x"),					L"F(\"x\")",				char *);
-		ASSERT_OVERLOADING(F(L"x"),					L"F(L\"x\")",				char *);
+		ASSERT_OVERLOADING_SIMPLE(F(1),						bool);
+		ASSERT_OVERLOADING_SIMPLE(F(1.0),					bool);
+		ASSERT_OVERLOADING_SIMPLE(F("x"),					char *);
+		ASSERT_OVERLOADING_SIMPLE(F(L"x"),					char *);
 	});
 
 	TEST_CATEGORY(L"Operators")
@@ -92,8 +92,8 @@ TEST_FILE
 		using namespace Input__TestOverloadingGenericClass_Overloading_OperatorOverloading;
 		COMPILE_PROGRAM(program, pa, input);
 
-		ASSERT_OVERLOADING(F(X<void*>()),			L"F(X<void *>())",			bool);
-		ASSERT_OVERLOADING(F(X<char*>()),			L"F(X<char *>())",			double);
-		ASSERT_OVERLOADING(F(X<wchar_t*>()),		L"F(X<wchar_t *>())",		float);
+		ASSERT_OVERLOADING_SIMPLE(F(X<void *>()),			bool);
+		ASSERT_OVERLOADING_SIMPLE(F(X<char *>()),			double);
+		ASSERT_OVERLOADING_SIMPLE(F(X<wchar_t *>()),		float);
 	});
 }
