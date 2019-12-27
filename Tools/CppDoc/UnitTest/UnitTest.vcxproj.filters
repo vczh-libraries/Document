@@ -117,6 +117,9 @@
     <ClCompile Include="TestMisc.cpp">
       <Filter>Source Files\MISC</Filter>
     </ClCompile>
+    <ClCompile Include="TestOverloadingGenericFunction.cpp">
+      <Filter>Source Files\TestOverloading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">

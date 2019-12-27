@@ -16,7 +16,6 @@ extern void					Log(Ptr<Declaration> decl, StreamWriter& writer, vint indentatio
 extern void					Log(Ptr<Program> program, StreamWriter& writer);
 extern void					Log(ITsys* tsys, StreamWriter& writer);
 
-extern void					RefineInput(wchar_t* input);
 extern void					AssertMultilines(const WString& output, const WString& log);
 extern void					AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t** logTsys, vint count, ParsingArguments& pa);
 extern void					AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t** logTsys, vint count, ParsingArguments& pa);
@@ -65,13 +64,11 @@ void AssertExpr(const wchar_t* input, const wchar_t* log, T... logTsys)
 	AssertExpr(pa, input, log, logTsys...);
 }
 
-#define TEST_DECL_NO_REFINE(SOMETHING) SOMETHING wchar_t input[] = L#SOMETHING
-#define TEST_DECL(SOMETHING) SOMETHING wchar_t input[] = L#SOMETHING; RefineInput(input)
+#define TEST_DECL(...) __VA_ARGS__ wchar_t input[] = L#__VA_ARGS__
 
 #define TOKEN_READER(INPUT)\
 	Array<wchar_t> reader_array((vint)wcslen(INPUT) + 1);\
 	memcpy(&reader_array[0], INPUT, (size_t)(reader_array.Count()) * sizeof(wchar_t));\
-	RefineInput(&reader_array[0]);\
 	WString reader_string(&reader_array[0], false);\
 	CppTokenReader reader(GlobalCppLexer(), reader_string)\
 
@@ -244,8 +241,8 @@ void RunOverloading()
 	typename IntIfSameType<T, U>::Type test = 0;
 }
 
-#define ASSERT_OVERLOADING(INPUT, OUTPUT, TYPE)\
-	RunOverloading<TYPE, decltype(INPUT)>, \
-	AssertExpr(pa, L#INPUT, OUTPUT, L#TYPE " $PR")\
+#define ASSERT_OVERLOADING(INPUT, OUTPUT, ...)\
+	RunOverloading<__VA_ARGS__, decltype(INPUT)>, \
+	AssertExpr(pa, L#INPUT, OUTPUT, L#__VA_ARGS__ " $PR")\
 
 #endif

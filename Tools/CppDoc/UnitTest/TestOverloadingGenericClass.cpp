@@ -1,15 +1,13 @@
 #include "Util.h"
 
-#define _ ,
-
-namespace Input__TestParseGenericClass_Overloading_BaseClass
+namespace Input__TestOverloadingGenericClass_Overloading_BaseClass
 {
-	TEST_DECL_NO_REFINE(
+	TEST_DECL(
 		template<typename T>
 		struct Base {};
 
 		template<typename T>
-		struct Derived : Base<T*> _ Base<T> {};
+		struct Derived : Base<T*>, Base<T> {};
 
 		double* F(const Base<void*>&);
 		bool* F(Base<void*>&);
@@ -24,9 +22,9 @@ namespace Input__TestParseGenericClass_Overloading_BaseClass
 	);
 }
 
-namespace Input__TestParseGenericClass_Overloading_Constructor
+namespace Input__TestOverloadingGenericClass_Overloading_Constructor
 {
-	TEST_DECL_NO_REFINE(
+	TEST_DECL(
 		template<typename T>
 		struct X
 		{
@@ -46,9 +44,9 @@ namespace Input__TestParseGenericClass_Overloading_Constructor
 	);
 }
 
-namespace Input__TestParseGenericClass_Overloading_OperatorOverloading
+namespace Input__TestOverloadingGenericClass_Overloading_OperatorOverloading
 {
-	TEST_DECL_NO_REFINE(
+	TEST_DECL(
 		template<typename T>
 		struct X
 		{
@@ -66,8 +64,7 @@ TEST_FILE
 {
 	TEST_CATEGORY(L"Base classes")
 	{
-		using namespace Input__TestParseGenericClass_Overloading_BaseClass;
-		RefineInput(input);
+		using namespace Input__TestOverloadingGenericClass_Overloading_BaseClass;
 		COMPILE_PROGRAM(program, pa, input);
 	
 		ASSERT_OVERLOADING(F(cd),					L"F(cd)",					double *);
@@ -81,8 +78,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Constructors")
 	{
-		using namespace Input__TestParseGenericClass_Overloading_Constructor;
-		RefineInput(input);
+		using namespace Input__TestOverloadingGenericClass_Overloading_Constructor;
 		COMPILE_PROGRAM(program, pa, input);
 	
 		ASSERT_OVERLOADING(F(1),					L"F(1)",					bool);
@@ -93,8 +89,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Operators")
 	{
-		using namespace Input__TestParseGenericClass_Overloading_OperatorOverloading;
-		RefineInput(input);
+		using namespace Input__TestOverloadingGenericClass_Overloading_OperatorOverloading;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING(F(X<void*>()),			L"F(X<void *>())",			bool);
@@ -102,5 +97,3 @@ TEST_FILE
 		ASSERT_OVERLOADING(F(X<wchar_t*>()),		L"F(X<wchar_t *>())",		float);
 	});
 }
-
-#undef _

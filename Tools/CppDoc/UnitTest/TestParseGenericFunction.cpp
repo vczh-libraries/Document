@@ -109,12 +109,4 @@ auto F(T t)
 		AssertExpr(pa, L"P<int, double>(1,2)",		L"P<int, double>(1, 2)",			L"double $PR"													);
 		AssertExpr(pa, L"F<void*,1,2,3>(nullptr)",	L"F<void *, 1, 2, 3>(nullptr)",		L"{void * $L, __int32 $PR, __int32 $PR, __int32 $PR} $PR"		);
 	});
-
-	TEST_CATEGORY(L"Call full instantiated functions with overloadings")
-	{
-		auto input = LR"(
-)";
-
-		COMPILE_PROGRAM(program, pa, input);
-	});
 }

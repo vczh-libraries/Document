@@ -273,7 +273,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 		if (TestToken(cursor, CppTokens::ID, false))
 		{
 #define DEFINE_INTRINSIC_NAME(INTRINSIC_NAME)																		\
-			static const wchar_t	NAME##INTRINSIC_NAME[]	= L ## #INTRINSIC_NAME;									\
+			static const wchar_t	NAME##INTRINSIC_NAME[]	= L#INTRINSIC_NAME;										\
 			static const vint		SIZE##INTRINSIC_NAME	= sizeof(NAME##INTRINSIC_NAME) / sizeof(wchar_t) - 1	\
 
 #define MATCH_INTRINSIC_NAME(INTRINSIC_NAME) cursor->token.length == SIZE##INTRINSIC_NAME && wcsncmp(cursor->token.reading, NAME##INTRINSIC_NAME, SIZE##INTRINSIC_NAME) == 0

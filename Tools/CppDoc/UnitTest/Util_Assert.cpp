@@ -4,22 +4,6 @@
 AssertMultilines
 ***********************************************************************/
 
-void RefineInput(wchar_t* input)
-{
-	auto reading = input;
-	while (true)
-	{
-		reading = wcsstr(reading, L" _ ");
-		if (!reading) break;
-		reading[1] = L',';
-		reading += 3;
-	}
-}
-
-/***********************************************************************
-AssertMultilines
-***********************************************************************/
-
 void AssertMultilines(const WString& output, const WString& log)
 {
 	StringReader srExpect(log);

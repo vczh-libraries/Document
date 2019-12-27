@@ -210,8 +210,6 @@ TEST_FILE
 		}
 	});
 
-	#define _ ,
-
 	TEST_CATEGORY(L"Universal initializations")
 	{
 		{
@@ -220,13 +218,13 @@ TEST_FILE
 				{
 					A() {}
 					A(int) {}
-					A(int _ void*) {}
+					A(int, void*) {}
 				};
 
 				struct B
 				{
 					B(void*) {}
-					B(void* _ int) {}
+					B(void*, int) {}
 				};
 
 				struct C
@@ -259,54 +257,54 @@ TEST_FILE
 				double F(B&);
 				char F(C);
 				wchar_t F(D);
-				char16_t F(Y _ void*);
+				char16_t F(Y, void*);
 
 				A a;
 				B b{ nullptr };
 			);
 			COMPILE_PROGRAM(program, pa, input);
 
-			ASSERT_OVERLOADING(F({}),												L"F({})",											bool);
-			ASSERT_OVERLOADING(F(1),												L"F(1)",											bool);
-			ASSERT_OVERLOADING(F({1}),												L"F({1})",											bool);
-			ASSERT_OVERLOADING(F({{1}}),											L"F({{1}})",										bool);
-			ASSERT_OVERLOADING(F({1 _ nullptr}),									L"F({1, nullptr})",									bool);
-			ASSERT_OVERLOADING(F({{1} _ {nullptr}}),								L"F({{1}, {nullptr}})",								bool);
-			ASSERT_OVERLOADING(F({1 _ {}}),											L"F({1, {}})",										bool);
-			ASSERT_OVERLOADING(F({{1} _ {}}),										L"F({{1}, {}})",									bool);
-			ASSERT_OVERLOADING(F({{} _ nullptr}),									L"F({{}, nullptr})",								bool);
-			ASSERT_OVERLOADING(F({{} _ {nullptr}}),									L"F({{}, {nullptr}})",								bool);
+			ASSERT_OVERLOADING(F({}),											L"F({})",											bool);
+			ASSERT_OVERLOADING(F(1),											L"F(1)",											bool);
+			ASSERT_OVERLOADING(F({1}),											L"F({1})",											bool);
+			ASSERT_OVERLOADING(F({{1}}),										L"F({{1}})",										bool);
+			ASSERT_OVERLOADING(F({1, nullptr}),									L"F({1, nullptr})",									bool);
+			ASSERT_OVERLOADING(F({{1}, {nullptr}}),								L"F({{1}, {nullptr}})",								bool);
+			ASSERT_OVERLOADING(F({1, {}}),										L"F({1, {}})",										bool);
+			ASSERT_OVERLOADING(F({{1}, {}}),									L"F({{1}, {}})",									bool);
+			ASSERT_OVERLOADING(F({{}, nullptr}),								L"F({{}, nullptr})",								bool);
+			ASSERT_OVERLOADING(F({{}, {nullptr}}),								L"F({{}, {nullptr}})",								bool);
 
-			ASSERT_OVERLOADING(F({nullptr}),										L"F({nullptr})",									void);
-			ASSERT_OVERLOADING(F({nullptr _ 1}),									L"F({nullptr, 1})",									void);
-			ASSERT_OVERLOADING(F({{nullptr} _ {1}}),								L"F({{nullptr}, {1}})",								void);
-			ASSERT_OVERLOADING(F({nullptr _ {}}),									L"F({nullptr, {}})",								void);
-			ASSERT_OVERLOADING(F({{nullptr} _ {}}),									L"F({{nullptr}, {}})",								void);
-			ASSERT_OVERLOADING(F({{} _ 1}),											L"F({{}, 1})",										void);
-			ASSERT_OVERLOADING(F({{} _ {1}}),										L"F({{}, {1}})",									void);
+			ASSERT_OVERLOADING(F({nullptr}),									L"F({nullptr})",									void);
+			ASSERT_OVERLOADING(F({nullptr, 1}),									L"F({nullptr, 1})",									void);
+			ASSERT_OVERLOADING(F({{nullptr}, {1}}),								L"F({{nullptr}, {1}})",								void);
+			ASSERT_OVERLOADING(F({nullptr, {}}),								L"F({nullptr, {}})",								void);
+			ASSERT_OVERLOADING(F({{nullptr}, {}}),								L"F({{nullptr}, {}})",								void);
+			ASSERT_OVERLOADING(F({{}, 1}),										L"F({{}, 1})",										void);
+			ASSERT_OVERLOADING(F({{}, {1}}),									L"F({{}, {1}})",									void);
 
-			ASSERT_OVERLOADING(F(a),												L"F(a)",											float);
-			ASSERT_OVERLOADING(F(b),												L"F(b)",											double);
+			ASSERT_OVERLOADING(F(a),											L"F(a)",											float);
+			ASSERT_OVERLOADING(F(b),											L"F(b)",											double);
 
-			ASSERT_OVERLOADING(F({{} _ nullptr _ true}),							L"F({{}, nullptr, true})",							char);
-			ASSERT_OVERLOADING(F({{} _ {nullptr _ 1} _ true}),						L"F({{}, {nullptr, 1}, true})",						char);
-			ASSERT_OVERLOADING(F({{{1}, {}} _ {{} _ {1}} _ true}),					L"F({{{1}, {}}, {{}, {1}}, true})",					char);
-			ASSERT_OVERLOADING(F({{{}, {nullptr}} _ {{nullptr} _ {}} _ true}),		L"F({{{}, {nullptr}}, {{nullptr}, {}}, true})",		char);
+			ASSERT_OVERLOADING(F({{}, nullptr, true}),							L"F({{}, nullptr, true})",							char);
+			ASSERT_OVERLOADING(F({{}, {nullptr, 1}, true}),						L"F({{}, {nullptr, 1}, true})",						char);
+			ASSERT_OVERLOADING(F({{{1}, {}}, {{}, {1}}, true}),					L"F({{{1}, {}}, {{}, {1}}, true})",					char);
+			ASSERT_OVERLOADING(F({{{}, {nullptr}}, {{nullptr}, {}}, true}),		L"F({{{}, {nullptr}}, {{nullptr}, {}}, true})",		char);
 
-			ASSERT_OVERLOADING(F({nullptr _ {} _ true}),							L"F({nullptr, {}, true})",							wchar_t);
-			ASSERT_OVERLOADING(F({{nullptr _ 1} _ {} _ true}),						L"F({{nullptr, 1}, {}, true})",						wchar_t);
-			ASSERT_OVERLOADING(F({{{} _ {1}} _ {{1}, {}} _ true}),					L"F({{{}, {1}}, {{1}, {}}, true})",					wchar_t);
-			ASSERT_OVERLOADING(F({{{nullptr} _ {}} _ {{}, {nullptr}} _ true}),		L"F({{{nullptr}, {}}, {{}, {nullptr}}, true})",		wchar_t);
+			ASSERT_OVERLOADING(F({nullptr, {}, true}),							L"F({nullptr, {}, true})",							wchar_t);
+			ASSERT_OVERLOADING(F({{nullptr, 1}, {}, true}),						L"F({{nullptr, 1}, {}, true})",						wchar_t);
+			ASSERT_OVERLOADING(F({{{}, {1}}, {{1}, {}}, true}),					L"F({{{}, {1}}, {{1}, {}}, true})",					wchar_t);
+			ASSERT_OVERLOADING(F({{{nullptr}, {}}, {{}, {nullptr}}, true}),		L"F({{{nullptr}, {}}, {{}, {nullptr}}, true})",		wchar_t);
 
-			ASSERT_OVERLOADING(F({} _ nullptr),										L"F({}, nullptr)",									char16_t);
-			ASSERT_OVERLOADING(F(nullptr _ nullptr),								L"F(nullptr, nullptr)",								char16_t);
-			ASSERT_OVERLOADING(F({nullptr} _ nullptr),								L"F({nullptr}, nullptr)",							char16_t);
-			ASSERT_OVERLOADING(F({{nullptr}} _ nullptr),							L"F({{nullptr}}, nullptr)",							char16_t);
-			ASSERT_OVERLOADING(F({{}} _ nullptr),									L"F({{}}, nullptr)",								char16_t);
-			ASSERT_OVERLOADING(F({{1}} _ nullptr),									L"F({{1}}, nullptr)",								char16_t);
-			ASSERT_OVERLOADING(F({{1.0}} _ nullptr),								L"F({{1.0}}, nullptr)",								char16_t);
-			ASSERT_OVERLOADING(F({{{1}}} _ nullptr),								L"F({{{1}}}, nullptr)",								char16_t);
-			ASSERT_OVERLOADING(F({{{1.0}}} _ nullptr),								L"F({{{1.0}}}, nullptr)",							char16_t);
+			ASSERT_OVERLOADING(F({}, nullptr),									L"F({}, nullptr)",									char16_t);
+			ASSERT_OVERLOADING(F(nullptr, nullptr),								L"F(nullptr, nullptr)",								char16_t);
+			ASSERT_OVERLOADING(F({nullptr}, nullptr),							L"F({nullptr}, nullptr)",							char16_t);
+			ASSERT_OVERLOADING(F({{nullptr}}, nullptr),							L"F({{nullptr}}, nullptr)",							char16_t);
+			ASSERT_OVERLOADING(F({{}}, nullptr),								L"F({{}}, nullptr)",								char16_t);
+			ASSERT_OVERLOADING(F({{1}}, nullptr),								L"F({{1}}, nullptr)",								char16_t);
+			ASSERT_OVERLOADING(F({{1.0}}, nullptr),								L"F({{1.0}}, nullptr)",								char16_t);
+			ASSERT_OVERLOADING(F({{{1}}}, nullptr),								L"F({{{1}}}, nullptr)",								char16_t);
+			ASSERT_OVERLOADING(F({{{1.0}}}, nullptr),							L"F({{{1.0}}}, nullptr)",							char16_t);
 		}
 	});
 
@@ -409,8 +407,6 @@ TEST_FILE
 		//   universal initialization(UI)
 		//   default paramter and variant argument together(DPVA)
 	});
-
-	#undef _
 }
 
 #pragma warning (pop)
