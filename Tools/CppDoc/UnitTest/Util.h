@@ -242,7 +242,7 @@ void RunOverloading()
 }
 
 #define ASSERT_OVERLOADING(INPUT, OUTPUT, ...)\
-	RunOverloading<__VA_ARGS__, decltype(INPUT)>, \
+	RunOverloading<__VA_ARGS__, decltype((INPUT))>, \
 	AssertExpr(pa, L#INPUT, OUTPUT, L#__VA_ARGS__ " $PR")\
 
 #define ASSERT_OVERLOADING_SIMPLE(INPUT, ...)\
