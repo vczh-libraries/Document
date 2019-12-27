@@ -57,7 +57,7 @@ namespace Input__TestOverloadingGenericFunction_TypeInferKinds
 		template<typename... TArgs>						auto VtaPtr(TArgs*...)						-> Types<TArgs...>			;
 		template<typename... TArgs>						auto VtaTypes(Types<TArgs...>)				-> Types<TArgs...>			;
 		template<typename R, typename... TArgs>			auto VtaFunc(Types<R(*)(TArgs*)...>)		-> Types<R, TArgs...>		;
-		template<typename... TRs, typename... TArgs>	auto VtaFunc2(Types<TRs&(*)(TArgs*)...>)		-> Types<TRs..., TArgs...>	;
+		template<typename... TRs, typename... TArgs>	auto VtaFunc2(Types<TRs&(*)(TArgs*)...>)	-> Types<TRs..., TArgs...>	;
 	);
 }
 
