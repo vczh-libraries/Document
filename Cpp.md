@@ -28,7 +28,9 @@
   - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
   - [ ] Generate `ClassMemberCache` for generated special members
   - [ ] Call a function with some or all template arguments unspecified.
-    - [ ] Allow multiple template arguments to be variadic as long as they are type inferenced (aka not assigned to directly) at call sites
+    - [ ] Refactor `ResolvePendingType` to call `ResolveTemplateArgument`, which resolve all specified template argument according to value argument.
+    - [ ] Allow multiple template arguments to be variadic as long as they are type inferenced (aka not assigned to directly) at call sites.
+    - [ ] Test resolving complex argument types containing template arguments.
   - [ ] Overload functions with some or all template arguments unspecified.
   - [ ] `...` arguments
   - [ ] Full Specialization

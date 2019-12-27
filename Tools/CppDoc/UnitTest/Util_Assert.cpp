@@ -20,6 +20,52 @@ void AssertMultilines(const WString& output, const WString& log)
 	}
 }
 
+void AssertLog(const WString& output, const wchar_t* log)
+{
+	if (output != log)
+	{
+		TEST_PRINT(L"Expect: " + WString(log));
+		TEST_PRINT(L"Actual: " + WString(output));
+		throw unittest::UnitTestAssertError(L"Log mismatched");
+	}
+}
+
+void PrintMultiple(SortedList<WString>& values, const wchar_t* label)
+{
+	if (values.Count() == 0)
+	{
+		TEST_PRINT(label + WString(L"<EMPTY>"));
+	}
+	else if (values.Count() == 1)
+	{
+		TEST_PRINT(label + values[0]);
+	}
+	else
+	{
+		TEST_PRINT(label);
+		for (vint i = 0; i < values.Count(); i++)
+		{
+			TEST_PRINT(L"    " + values[i]);
+		}
+	}
+}
+
+void AssertTsys(SortedList<WString>& actuals, const wchar_t** logTsys, vint count)
+{
+	SortedList<WString> expects;
+	for (vint i = 0; i < count; i++)
+	{
+		expects.Add(logTsys[i]);
+	}
+
+	if ((CompareEnumerable(expects, actuals) != 0))
+	{
+		PrintMultiple(expects, L"Expect: ");
+		PrintMultiple(actuals, L"Actual: ");
+		throw unittest::UnitTestAssertError(L"Type mismatched");
+	}
+}
+
 /***********************************************************************
 AssertType
 ***********************************************************************/
@@ -36,7 +82,7 @@ void AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 	{
 		Log(type, writer);
 	});
-	TEST_ASSERT(output == log);
+	AssertLog(output, log);
 
 	TypeTsysList tsys;
 	if (count > 0)
@@ -52,12 +98,6 @@ void AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 		catch (const NotConvertableException&) {}
 	}
 
-	SortedList<WString> expects;
-	for (vint i = 0; i < count; i++)
-	{
-		expects.Add(logTsys[i]);
-	}
-
 	SortedList<WString> actuals;
 	for (vint i = 0; i < tsys.Count(); i++)
 	{
@@ -66,8 +106,7 @@ void AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 			Log(tsys[i], writer);
 		}));
 	}
-
-	TEST_ASSERT(CompareEnumerable(expects, actuals) == 0);
+	AssertTsys(actuals, logTsys, count);
 }
 
 /***********************************************************************
@@ -86,7 +125,7 @@ void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 	{
 		Log(expr, writer);
 	});
-	TEST_ASSERT(output == log);
+	AssertLog(output, log);
 
 	ExprTsysList tsys;
 	if (count > 0)
@@ -101,12 +140,6 @@ void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 		}
 		catch (const IllegalExprException&) {}
 		catch (const NotConvertableException&) {}
-	}
-
-	SortedList<WString> expects;
-	for (vint i = 0; i < count; i++)
-	{
-		expects.Add(logTsys[i]);
 	}
 
 	SortedList<WString> actuals;
@@ -129,8 +162,7 @@ void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 			}
 		}));
 	}
-
-	TEST_ASSERT(CompareEnumerable(expects, actuals) == 0);
+	AssertTsys(actuals, logTsys, count);
 }
 
 /***********************************************************************

@@ -12,6 +12,7 @@ namespace Input__TestOverloadingGenericFunction_TypeInfer
 
 		template<typename T>
 		auto Simple2(T a, T b = {}) { return a; }
+		void Simple2(...) {}
 
 		template<typename... Ts>
 		struct Types {};
@@ -48,6 +49,10 @@ TEST_FILE
 		ASSERT_OVERLOADING(Simple2(ci, vi),		L"Simple2(ci, vi)",		__int32);
 		ASSERT_OVERLOADING(Simple2(vi, cvi),	L"Simple2(vi, cvi)",	__int32);
 		ASSERT_OVERLOADING(Simple2(cvi, ci),	L"Simple2(cvi, ci)",	__int32);
+
+		ASSERT_OVERLOADING(Simple2(1, 2.0),		L"Simple2(1, 2.0)",		void);
+		ASSERT_OVERLOADING(Simple2(1.0, 2.f),	L"Simple2(1.0, 2.f)",	void);
+		ASSERT_OVERLOADING(Simple2(1.f, 2),		L"Simple2(1.f, 2)",		void);
 	});
 
 	TEST_CATEGORY(L"Template argument deduction (variant)")
