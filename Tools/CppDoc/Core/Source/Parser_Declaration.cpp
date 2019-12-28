@@ -831,12 +831,7 @@ void ParseDeclaration_Function(
 	if (declarator->specializationSpec)
 	{
 		if (!functionSpec) throw StopParsingException(cursor);
-		if (functionSpec->arguments.Count() > 0) throw StopParsingException(cursor);
 		if (functionSpec->arguments.Count() != 0) throw StopParsingException(cursor);
-	}
-	else if (functionSpec)
-	{
-		ValidateForRootTemplateSpec(functionSpec, cursor);
 	}
 
 	auto context = declarator->classMemberCache ? declarator->classMemberCache->containerClassTypes[0]->GetDecl() : pa.scopeSymbol;
