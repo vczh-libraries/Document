@@ -63,7 +63,47 @@ namespace Input__TestOverloadingGenericFunction_TypeInferKinds
 
 TEST_FILE
 {
-	TEST_CATEGORY(L"Template argument deduction (simple)")
+	TEST_CATEGORY(L"Partially apply template arguments (simple)")
+	{
+		using namespace Input__TestOverloadingGenericFunction_TypeInferSimple;
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa, L"Simple",				L"Simple",					L"<::Simple::[T]> ::Simple::[T] __cdecl(::Simple::[T]) * $PR");
+		AssertExpr(pa, L"Simple<bool>",			L"Simple<bool>",			L"bool __cdecl(bool) * $PR");
+		AssertExpr(pa, L"Simple2",				L"Simple2",					L"<::Simple2::[T]> ::Simple2::[T] __cdecl(::Simple2::[T], ::Simple2::[T]) * $PR", L"void __cdecl(...) * $PR");
+		AssertExpr(pa, L"Simple2<bool>",		L"Simple2<bool>",			L"bool __cdecl(bool, bool) * $PR");
+	});
+
+	TEST_CATEGORY(L"Partially apply template arguments (variant)")
+	{
+		using namespace Input__TestOverloadingGenericFunction_TypeInferVariant;
+		COMPILE_PROGRAM(program, pa, input);
+		
+		AssertExpr(pa, L"Variant",				L"Variant",					L"<...::Variant::[Ts]> any_t $PR");
+		// test types of partially applied template functions, consider how to pass enough information to the applying function argument phase, could store partially applying in TsysGenericFunction
+	});
+
+	TEST_CATEGORY(L"Partially apply template arguments (kinds)")
+	{
+		using namespace Input__TestOverloadingGenericFunction_TypeInferKinds;
+		COMPILE_PROGRAM(program, pa, input);
+		
+		AssertExpr(pa, L"LRef",					L"LRef",					L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"RRef",					L"RRef",					L"<::RRef::[T]> ::Types<{::RRef::[T] $PR}> __cdecl(::RRef::[T] &&) * $PR");
+		AssertExpr(pa, L"Pointer",				L"Pointer",					L"<::Pointer::[T]> ::Types<{::Pointer::[T] $PR}> __cdecl(::Pointer::[T] *) * $PR");
+		AssertExpr(pa, L"Function",				L"Function",				L"<::Function::[R], ...::Function::[TArgs]> ::Types<any_t> __cdecl(any_t) * $PR");
+		AssertExpr(pa, L"Member",				L"Member",					L"<::Member::[T], ::Member::[U]> ::Types<{::Member::[T] $PR, ::Member::[U] $PR}> __cdecl(::Member::[T] (::Member::[U] ::) *) * $PR");
+		AssertExpr(pa, L"C",					L"C",						L"<::C::[T]> ::Types<{::C::[T] $PR}> __cdecl(::C::[T] const) * $PR");
+		AssertExpr(pa, L"V",					L"V",						L"<::V::[T]> ::Types<{::V::[T] $PR}> __cdecl(::V::[T] volatile) * $PR");
+		AssertExpr(pa, L"CV",					L"CV",						L"<::CV::[T]> ::Types<{::CV::[T] $PR}> __cdecl(::CV::[T] const volatile) * $PR");
+		AssertExpr(pa, L"VtaPtr",				L"VtaPtr",					L"<...::VtaPtr::[TArgs]> any_t $PR");
+		AssertExpr(pa, L"VtaTypes",				L"VtaTypes",				L"<...::VtaTypes::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc",				L"VtaFunc",					L"<::VtaFunc::[R], ...::VtaFunc::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc2",				L"VtaFunc2",				L"<...::VtaFunc2::[TRs], ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		// test types of partially applied template functions
+	});
+
+	/*TEST_CATEGORY(L"Template argument deduction (simple)")
 	{
 		using namespace Input__TestOverloadingGenericFunction_TypeInferSimple;
 		COMPILE_PROGRAM(program, pa, input);
@@ -159,5 +199,5 @@ TEST_FILE
 			VtaFunc2(Value<Types<FunctionOf<bool &, float *>, FunctionOf<char &, double *>>>()),
 			Types<bool, char, float, double>
 		);
-	});
+	});*/
 }

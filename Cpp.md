@@ -30,6 +30,7 @@
   - [ ] Call a function with some or all template arguments unspecified.
     - [ ] Only the last function parameter could be variadic, when there is no ellipsis (`ParseSingleDeclarator_Function` function performs a test).
     - [ ] Refactor `ResolveGenericParameters` so that it could also resolve function parameters with variadic or ellipsis.
+      - New parameter `allowPartialApply`, will throw when it is false and template arguments are not enough.
       - `ResolveGenericParameters` expand provided values or types to argument list eagerly.
         - For example, `template<typename..., typename...>`'s first argument accepts all provided arguments, the second of which deducted from parameters.
       - If there are multiple values/types arguments declarated together, all arguments are still offered to the first variadic argument, offered arguments are not grouped by values/types.
@@ -37,10 +38,12 @@
       - When it is used to resolve function parameters or class partial specializations, only the last argument could be variadic or ellipsis(function only).
       - Function has no partial specialization.
     - [ ] Refactor `ResolvePendingType` to call `ResolveTemplateArgument`, which resolve all specified template argument according to value argument.
+      - Resolve multiple arguments at the same time.
     - [ ] Allow multiple template arguments to be variadic as long as they are type inferenced (aka not assigned to directly) at call sites.
     - [ ] Test resolving complex argument types containing template arguments.
-  - [ ] Overload functions with some or all template arguments unspecified.
+    - [ ] Overload functions with some or all template arguments unspecified.
   - [ ] `...` arguments
+    - [ ] Refactor and rename `ResolveGenericParameters` to also handle function arguments.
   - [ ] Full Specialization
     - [ ] Connect functions with forward declarations.
       - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
