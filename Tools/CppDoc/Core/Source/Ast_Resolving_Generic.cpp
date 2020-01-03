@@ -48,31 +48,20 @@ namespace symbol_type_resolving
 
 	void CreateGenericFunctionHeader(const ParsingArguments& pa, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction)
 	{
-		genericFunction.isLastParameterVta = false;
+		genericFunction.vtaArguments.Resize(spec->arguments.Count());
 		genericFunction.acceptTypes.Resize(spec->arguments.Count());
 
 		for (vint i = 0; i < spec->arguments.Count(); i++)
 		{
 			const auto& argument = spec->arguments[i];
+			genericFunction.vtaArguments[i] = argument.ellipsis;
 			genericFunction.acceptTypes[i] = (argument.argumentType == CppTemplateArgumentType::Type);
 			params.Add(GetTemplateArgumentKey(argument, pa.tsys.Obj()));
-
-			if (argument.ellipsis)
-			{
-				if (!genericFunction.isLastParameterVta)
-				{
-					genericFunction.isLastParameterVta = true;
-				}
-				else
-				{
-					throw NotConvertableException();
-				}
-			}
 		}
 	}
 
 	/***********************************************************************
-	ResolveGenericParameters: Calculate generic parameter types by matching arguments to patterens
+	EnsureGenericTypeParameterAndArgumentMatched: Ensure values and types are passed in correct order
 	***********************************************************************/
 
 	void EnsureGenericFunctionParameterAndArgumentMatched(ITsys* parameter, ITsys* argument);
@@ -125,9 +114,14 @@ namespace symbol_type_resolving
 		}
 	}
 
+	/***********************************************************************
+	GetArgumentCountRange: Calculate the minimum and maximum allowed argument count for a template, -1 means infinity
+	***********************************************************************/
+
 	void GetArgumentCountRange(ITsys* genericFunction, Ptr<TemplateSpec> spec, const TsysGenericFunction& genericFuncInfo, vint& minCount, vint& maxCount)
 	{
-		maxCount = genericFuncInfo.isLastParameterVta ? -1 : genericFunction->GetParamCount();
+		bool hasVta = From(genericFuncInfo.vtaArguments).Any([](bool x) { return x; });
+		maxCount = hasVta ? -1 : genericFunction->GetParamCount();
 
 		vint firstDefaultIndex = -1;
 		if (spec)
@@ -165,9 +159,9 @@ namespace symbol_type_resolving
 		}
 	FINISH_FINDING_DEFAULT:
 
-		if (genericFuncInfo.isLastParameterVta)
+		if (hasVta)
 		{
-			// last_argument.ellipsis == -1, so firstDefaultIndex will not be -1
+			// when there is a variant argument, the minimum count is the numbers of arguments before this variant argument
 			minCount = firstDefaultIndex;
 			maxCount = -1;
 		}
@@ -184,6 +178,10 @@ namespace symbol_type_resolving
 			maxCount = genericFunction->GetParamCount();
 		}
 	}
+
+	/***********************************************************************
+	CalculateGpa: Calculate how arguments are grouped and passed to template
+	***********************************************************************/
 
 	enum class GenericParameterAssignmentKind
 	{
@@ -236,10 +234,32 @@ namespace symbol_type_resolving
 
 	using GpaList = List<GenericParameterAssignment>;
 
-	void CalculateGpa(GpaList& gpaMappings, ITsys* genericFunction, const TsysGenericFunction& genericFuncInfo, vint inputArgumentCount, SortedList<vint>& boundedAnys, vint offset)
+	void CalculateGpa(
+		GpaList& gpaMappings,
+		ITsys* genericFunction,
+		const TsysGenericFunction& genericFuncInfo,
+		vint inputArgumentCount,
+		SortedList<vint>& boundedAnys,
+		vint offset, bool allowPartialApply
+	)
 	{
-		vint parameterCount = genericFunction->GetParamCount();
-		if (genericFuncInfo.isLastParameterVta)
+		bool hasVta = false;
+		vint parameterCount = genericFuncInfo.vtaArguments.Count();
+		for (vint i = 0; i < genericFuncInfo.vtaArguments.Count(); i++)
+		{
+			if (genericFuncInfo.vtaArguments[i])
+			{
+				if (!allowPartialApply && i != parameterCount - 1)
+				{
+					throw NotConvertableException();
+				}
+				hasVta = true;
+				parameterCount = i + 1;
+				break;
+			}
+		}
+
+		if (hasVta)
 		{
 			if (boundedAnys.Count() == 0)
 			{
@@ -333,7 +353,21 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void ResolveGenericParameters(const ParsingArguments& invokerPa, TemplateArgumentContext& newTaContext, ITsys* genericFunction, Array<ExprTsysItem>& argumentTypes, Array<bool>& isTypes, Array<vint>& argSource, SortedList<vint>& boundedAnys, vint offset)
+	/***********************************************************************
+	ResolveGenericParameters: Calculate generic parameter types by matching arguments to patterens
+	***********************************************************************/
+
+	void ResolveGenericParameters(
+		const ParsingArguments& invokerPa,
+		TemplateArgumentContext& newTaContext,
+		ITsys* genericFunction,
+		Array<ExprTsysItem>& argumentTypes,
+		Array<bool>& isTypes,
+		Array<vint>& argSource,
+		SortedList<vint>& boundedAnys,
+		vint offset,
+		bool allowPartialApply
+	)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
 		{
@@ -368,7 +402,7 @@ namespace symbol_type_resolving
 		}
 
 		GpaList gpaMappings;
-		CalculateGpa(gpaMappings, genericFunction, genericFuncInfo, inputArgumentCount, boundedAnys, offset);
+		CalculateGpa(gpaMappings, genericFunction, genericFuncInfo, inputArgumentCount, boundedAnys, offset, allowPartialApply);
 
 		auto pa = invokerPa.AdjustForDecl(genericFuncInfo.declSymbol).AppendSingleLevelArgs(newTaContext);
 		for (vint i = 0; i < genericFunction->GetParamCount(); i++)

@@ -29,9 +29,10 @@ namespace symbol_totsys_impl
 				throw NotConvertableException();
 			}
 
+			bool isFunction = genericFunction->GetElement()->GetType() == TsysType::Function;
 			TemplateArgumentContext taContext;
 			taContext.symbolToApply = genericFunction->GetGenericFunction().declSymbol;
-			ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1);
+			ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1, isFunction);
 			process(genericFunction, declSymbol, &taContext);
 		}
 		else if (genericFunction->GetType() == TsysType::Any)

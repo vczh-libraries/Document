@@ -189,39 +189,45 @@ struct TsysInit
 
 struct TsysGenericFunction
 {
-	bool							isLastParameterVta = false;
 	Symbol*							declSymbol = nullptr;
 	ITsys*							parentDeclType = nullptr;
+	Array<bool>						vtaArguments;
 	Array<bool>						acceptTypes;
 
 	TsysGenericFunction() = default;
 
 	TsysGenericFunction(const TsysGenericFunction& genericFunction)
-		:isLastParameterVta(genericFunction.isLastParameterVta)
-		, declSymbol(genericFunction.declSymbol)
+		:declSymbol(genericFunction.declSymbol)
 		, parentDeclType(genericFunction.parentDeclType)
 	{
+		CopyFrom(vtaArguments, genericFunction.vtaArguments);
 		CopyFrom(acceptTypes, genericFunction.acceptTypes);
 	}
 
 	TsysGenericFunction& operator=(const TsysGenericFunction& genericFunction)
 	{
-		isLastParameterVta = genericFunction.isLastParameterVta;
 		declSymbol = genericFunction.declSymbol;
 		parentDeclType = genericFunction.parentDeclType;
+		CopyFrom(vtaArguments, genericFunction.vtaArguments);
 		CopyFrom(acceptTypes, genericFunction.acceptTypes);
 		return *this;
 	}
 
 	static vint Compare(const TsysGenericFunction& a, const TsysGenericFunction& b)
 	{
-		if (a.isLastParameterVta < b.isLastParameterVta) return -1;
-		if (a.isLastParameterVta > b.isLastParameterVta) return 1;
 		if (a.declSymbol < b.declSymbol) return -1;
 		if (a.declSymbol > b.declSymbol) return 1;
 		if (a.parentDeclType < b.parentDeclType) return -1;
 		if (a.parentDeclType > b.parentDeclType) return 1;
-		return CompareEnumerable(a.acceptTypes, b.acceptTypes);
+		{
+			vint result = CompareEnumerable(a.vtaArguments, b.vtaArguments);
+			if (result != 0) return result;
+		}
+		{
+			vint result = CompareEnumerable(a.acceptTypes, b.acceptTypes);
+			if (result != 0) return result;
+		}
+		return 0;
 	}
 };
 

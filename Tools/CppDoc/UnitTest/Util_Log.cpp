@@ -1608,7 +1608,7 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			for (vint i = 0; i < tsys->GetParamCount(); i++)
 			{
 				if (i > 0) writer.WriteString(L", ");
-				if (genericFunction.isLastParameterVta && i == tsys->GetParamCount() - 1)
+				if (genericFunction.vtaArguments[i])
 				{
 					writer.WriteString(L"...");
 				}

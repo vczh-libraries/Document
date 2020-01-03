@@ -30,14 +30,14 @@
   - [ ] Call a function with some or all template arguments unspecified.
     - [ ] Only the last function parameter could be variadic, when there is no ellipsis (`ParseSingleDeclarator_Function` function performs a test).
     - [ ] Refactor `ResolveGenericParameters` so that it could also resolve function parameters with variadic or ellipsis.
-      - New parameter `allowPartialApply`, will throw when it is false and template arguments are not enough.
-      - `ResolveGenericParameters` expand provided values or types to argument list eagerly.
+      - [x] New parameter `allowPartialApply`, will throw when it is false and template arguments are not enough.
+      - [ ] `ResolveGenericParameters` expand provided values or types to argument list eagerly.
         - If there are multiple values/types arguments declarated together, all arguments are still offered to the first variadic argument, offered arguments are not grouped by values/types.
           - For example, `template<typename..., typename...>`'s first argument accepts all provided arguments, the second of which deducted from parameters.
           - For example, `template<int..., typename...>` with `<1, int>` is invalid, because `int` is not a `int` constant expression.
           - `ResolveGenericParameters` only read informations about parameters to be filled to the first variadic argument (if `allowPartialApply` is false and this is not the argument, it becomes an error)
-      - When it is used to resolve function parameters or class partial specializations, only the last argument could be variadic or ellipsis(function only).
-      - Function has no partial specialization.
+      - [ ] When it is used to resolve function parameters or class partial specializations, only the last argument could be variadic or ellipsis(function only).
+      - [ ] Function has no partial specialization.
     - [ ] Refactor `ResolvePendingType` to call `ResolveTemplateArgument`, which resolve all specified template argument according to value argument.
       - Resolve multiple arguments at the same time.
     - [ ] Allow multiple template arguments to be variadic as long as they are type inferenced (aka not assigned to directly) at call sites.
