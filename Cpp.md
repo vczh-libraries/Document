@@ -37,7 +37,7 @@
           - For example, `template<int..., typename...>` with `<1, int>` is invalid, because `int` is not a `int` constant expression.
           - `ResolveGenericParameters` only read informations about parameters to be filled to the first variadic argument (if `allowPartialApply` is false and this is not the argument, it becomes an error)
       - [ ] When it is used to resolve function parameters or class partial specializations, only the last argument could be variadic or ellipsis(function only).
-      - [ ] Function has no partial specialization.
+        - Function has no partial specialization.
     - [ ] Refactor `ResolvePendingType` to call `ResolveTemplateArgument`, which resolve all specified template argument according to value argument.
       - Resolve multiple arguments at the same time.
     - [ ] Allow multiple template arguments to be variadic as long as they are type inferenced (aka not assigned to directly) at call sites.
