@@ -69,8 +69,10 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 
 		AssertExpr(pa, L"Simple",				L"Simple",					L"<::Simple::[T]> ::Simple::[T] __cdecl(::Simple::[T]) * $PR");
+		AssertExpr(pa, L"Simple<>",				L"Simple<>",				L"<::Simple::[T]> ::Simple::[T] __cdecl(::Simple::[T]) * $PR");
 		AssertExpr(pa, L"Simple<bool>",			L"Simple<bool>",			L"bool __cdecl(bool) * $PR");
 		AssertExpr(pa, L"Simple2",				L"Simple2",					L"<::Simple2::[T]> ::Simple2::[T] __cdecl(::Simple2::[T], ::Simple2::[T]) * $PR", L"void __cdecl(...) * $PR");
+		AssertExpr(pa, L"Simple2<>",			L"Simple2<>",				L"<::Simple2::[T]> ::Simple2::[T] __cdecl(::Simple2::[T], ::Simple2::[T]) * $PR", L"void __cdecl(...) * $PR");
 		AssertExpr(pa, L"Simple2<bool>",		L"Simple2<bool>",			L"bool __cdecl(bool, bool) * $PR");
 	});
 
@@ -80,6 +82,9 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 		
 		AssertExpr(pa, L"Variant",				L"Variant",					L"<...::Variant::[Ts]> any_t $PR");
+		AssertExpr(pa, L"Variant<>",			L"Variant<>",				L"<...::Variant::[Ts]> ::Types<{}> __cdecl() * $PR");
+		AssertExpr(pa, L"Variant<bool>",		L"Variant<bool>",			L"::Types<{bool $PR}> __cdecl(bool) * $PR");
+		AssertExpr(pa, L"Variant<bool, char>",	L"Variant<bool, char>",		L"::Types<{bool $PR, char $PR}> __cdecl(bool, char) * $PR");
 		// test types of partially applied template functions, consider how to pass enough information to the applying function argument phase, could store partially applying in TsysGenericFunction
 	});
 
@@ -88,18 +93,61 @@ TEST_FILE
 		using namespace Input__TestOverloadingGenericFunction_TypeInferKinds;
 		COMPILE_PROGRAM(program, pa, input);
 		
-		AssertExpr(pa, L"LRef",					L"LRef",					L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"RRef",					L"RRef",					L"<::RRef::[T]> ::Types<{::RRef::[T] $PR}> __cdecl(::RRef::[T] &&) * $PR");
-		AssertExpr(pa, L"Pointer",				L"Pointer",					L"<::Pointer::[T]> ::Types<{::Pointer::[T] $PR}> __cdecl(::Pointer::[T] *) * $PR");
-		AssertExpr(pa, L"Function",				L"Function",				L"<::Function::[R], ...::Function::[TArgs]> ::Types<any_t> __cdecl(any_t) * $PR");
-		AssertExpr(pa, L"Member",				L"Member",					L"<::Member::[T], ::Member::[U]> ::Types<{::Member::[T] $PR, ::Member::[U] $PR}> __cdecl(::Member::[T] (::Member::[U] ::) *) * $PR");
-		AssertExpr(pa, L"C",					L"C",						L"<::C::[T]> ::Types<{::C::[T] $PR}> __cdecl(::C::[T] const) * $PR");
-		AssertExpr(pa, L"V",					L"V",						L"<::V::[T]> ::Types<{::V::[T] $PR}> __cdecl(::V::[T] volatile) * $PR");
-		AssertExpr(pa, L"CV",					L"CV",						L"<::CV::[T]> ::Types<{::CV::[T] $PR}> __cdecl(::CV::[T] const volatile) * $PR");
-		AssertExpr(pa, L"VtaPtr",				L"VtaPtr",					L"<...::VtaPtr::[TArgs]> any_t $PR");
-		AssertExpr(pa, L"VtaTypes",				L"VtaTypes",				L"<...::VtaTypes::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
-		AssertExpr(pa, L"VtaFunc",				L"VtaFunc",					L"<::VtaFunc::[R], ...::VtaFunc::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
-		AssertExpr(pa, L"VtaFunc2",				L"VtaFunc2",				L"<...::VtaFunc2::[TRs], ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"LRef",								L"LRef",							L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"LRef<>",							L"LRef<>",							L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"LRef<bool>",						L"LRef<bool>",						L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+
+		AssertExpr(pa, L"RRef",								L"RRef",							L"<::RRef::[T]> ::Types<{::RRef::[T] $PR}> __cdecl(::RRef::[T] &&) * $PR");
+		AssertExpr(pa, L"RRef<>",							L"RRef<>",							L"<::RRef::[T]> ::Types<{::RRef::[T] $PR}> __cdecl(::RRef::[T] &&) * $PR");
+		AssertExpr(pa, L"RRef<bool>",						L"RRef<bool>",						L"::Types<{bool $PR}> __cdecl(bool &&) * $PR");
+
+		AssertExpr(pa, L"Pointer",							L"Pointer",							L"<::Pointer::[T]> ::Types<{::Pointer::[T] $PR}> __cdecl(::Pointer::[T] *) * $PR");
+		AssertExpr(pa, L"Pointer<>",						L"Pointer<>",						L"<::Pointer::[T]> ::Types<{::Pointer::[T] $PR}> __cdecl(::Pointer::[T] *) * $PR");
+		AssertExpr(pa, L"Pointer<bool>",					L"Pointer<bool>",					L"::Types<{bool $PR}> __cdecl(bool *) * $PR");
+
+		AssertExpr(pa, L"Function",							L"Function",						L"<::Function::[R], ...::Function::[TArgs]> ::Types<any_t> __cdecl(any_t) * $PR");
+		AssertExpr(pa, L"Function<>",						L"Function<>",						L"<::Function::[R], ...::Function::[TArgs]> ::Types<any_t> __cdecl(any_t) * $PR");
+		AssertExpr(pa, L"Function<bool>",					L"Function<bool>",					L"<=bool, ...::Function::[TArgs]> ::Types<any_t> __cdecl(any_t) * $PR");
+		AssertExpr(pa, L"Function<bool, char>",				L"Function<bool, char>",			L"::Types<{bool $PR, char $PR}> __cdecl(bool __cdecl(char) *) * $PR");
+		AssertExpr(pa, L"Function<bool, char, float>",		L"Function<bool, char, float>",		L"::Types<{bool $PR, char $PR, float $PR}> __cdecl(bool __cdecl(char, float) *) * $PR");
+
+		AssertExpr(pa, L"Member",							L"Member",							L"<::Member::[T], ::Member::[U]> ::Types<{::Member::[T] $PR, ::Member::[U] $PR}> __cdecl(::Member::[T] (::Member::[U] ::) *) * $PR");
+		AssertExpr(pa, L"Member<>",							L"Member<>",						L"<::Member::[T], ::Member::[U]> ::Types<{::Member::[T] $PR, ::Member::[U] $PR}> __cdecl(::Member::[T] (::Member::[U] ::) *) * $PR");
+		AssertExpr(pa, L"Member<>",							L"Member<>",						L"<::Member::[T], ::Member::[U]> ::Types<{::Member::[T] $PR, ::Member::[U] $PR}> __cdecl(::Member::[T] (::Member::[U] ::) *) * $PR");
+		AssertExpr(pa, L"Member<>",							L"Member<>",						L"<::Member::[T], ::Member::[U]> ::Types<{::Member::[T] $PR, ::Member::[U] $PR}> __cdecl(::Member::[T] (::Member::[U] ::) *) * $PR");
+
+		AssertExpr(pa, L"C",								L"C",								L"<::C::[T]> ::Types<{::C::[T] $PR}> __cdecl(::C::[T] const) * $PR");
+		AssertExpr(pa, L"C<>",								L"C<>",								L"<::C::[T]> ::Types<{::C::[T] $PR}> __cdecl(::C::[T] const) * $PR");
+		AssertExpr(pa, L"C<bool>",							L"C<bool>",							L"::Types<{bool $PR}> __cdecl(bool const) * $PR");
+
+		AssertExpr(pa, L"V",								L"V",								L"<::V::[T]> ::Types<{::V::[T] $PR}> __cdecl(::V::[T] volatile) * $PR");
+		AssertExpr(pa, L"V<>",								L"V<>",								L"<::V::[T]> ::Types<{::V::[T] $PR}> __cdecl(::V::[T] volatile) * $PR");
+		AssertExpr(pa, L"V<bool>",							L"V<bool>",							L"::Types<{bool $PR}> __cdecl(bool volatile) * $PR");
+
+		AssertExpr(pa, L"CV",								L"CV",								L"<::CV::[T]> ::Types<{::CV::[T] $PR}> __cdecl(::CV::[T] const volatile) * $PR");
+		AssertExpr(pa, L"CV<>",								L"CV<>",							L"<::CV::[T]> ::Types<{::CV::[T] $PR}> __cdecl(::CV::[T] const volatile) * $PR");
+		AssertExpr(pa, L"CV<bool>",							L"CV<bool>",						L"::Types<{bool $PR}> __cdecl(bool const volatile) * $PR");
+
+		AssertExpr(pa, L"VtaPtr",							L"VtaPtr",							L"<...::VtaPtr::[TArgs]> any_t $PR");
+		AssertExpr(pa, L"VtaPtr<>",							L"VtaPtr<>",						L"<...::VtaPtr::[TArgs]> any_t $PR");
+		AssertExpr(pa, L"VtaPtr<bool>",						L"VtaPtr<bool>",					L"::Types<{bool $PR}> __cdecl(bool*) $PR");
+		AssertExpr(pa, L"VtaPtr<bool, char>",				L"VtaPtr<bool, char>",				L"::Types<{bool $PR, char $PR}> __cdecl(bool *, char *) $PR");
+
+		AssertExpr(pa, L"VtaTypes",							L"VtaTypes",						L"<...::VtaTypes::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaTypes<>",						L"VtaTypes<>",						L"<...::VtaTypes::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaTypes<bool>",					L"VtaTypes<bool>",					L"::Types<{bool $PR}> __cdecl(::Types<{bool $PR}>) * $PR");
+		AssertExpr(pa, L"VtaTypes<bool, char>",				L"VtaTypes<bool, char>",			L"::Types<{bool $PR, char $PR}> __cdecl(::Types<{bool $PR, char $PR}>) * $PR");
+
+		AssertExpr(pa, L"VtaFunc",							L"VtaFunc",							L"<::VtaFunc::[R], ...::VtaFunc::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc<>",						L"VtaFunc<>",						L"<::VtaFunc::[R], ...::VtaFunc::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc<bool>",					L"VtaFunc<bool>",					L"<=bool, ...::VtaFunc::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc<bool, char>",				L"VtaFunc<bool, char>",				L"::Types<{bool $PR, char $PR}> __cdecl(::Types<{bool __cdecl(char *) * $PR}>) * $PR");
+		AssertExpr(pa, L"VtaFunc<bool, char, float>",		L"VtaFunc<bool, char, float>",		L"::Types<{bool $PR, char $PR, float $PR}> __cdecl(::Types<{bool __cdecl(char *) * $PR, bool __cdecl(float *) * $PR}>) * $PR");
+
+		AssertExpr(pa, L"VtaFunc2",							L"VtaFunc2",						L"<...::VtaFunc2::[TRs], ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc2<>",						L"VtaFunc2<>",						L"<...::VtaFunc2::[TRs], ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc2<bool>",					L"VtaFunc2<bool>",					L"<={bool $PR}, ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc2<bool, char>",				L"VtaFunc2<bool, char>",			L"<={bool $PR, char $PR}, ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
 		// test types of partially applied template functions
 	});
 
