@@ -180,6 +180,8 @@ TEST_FILE
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1, 2.0),				void);
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1.0, 2.f),			void);
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1.f, 2),				void);
+
+		// test 0, 1 arguments
 	});
 
 	TEST_CATEGORY(L"Template argument deduction (variant)")
@@ -188,12 +190,15 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_SIMPLE((Variant(1, 1.0, 1.f, ci, vi, cvi)),			Types<__int32, double, float, __int32, __int32, __int32>);
+		// test 0, 1, 2 arguments
 	});
 
 	TEST_CATEGORY(L"Template argument deduction (kinds)")
 	{
 		using namespace Input__TestOverloadingGenericFunction_TypeInferKinds;
 		COMPILE_PROGRAM(program, pa, input);
+
+		// test 0, 1, 2 arguments
 
 		ASSERT_OVERLOADING_SIMPLE(LRef(Value<bool &>()),									Types<bool>);
 		ASSERT_OVERLOADING_SIMPLE(LRef(Value<bool const &>()),								Types<bool const>);
