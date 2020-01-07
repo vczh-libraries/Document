@@ -113,8 +113,8 @@ TEST_FILE
 
 		AssertExpr(pa, L"Member",							L"Member",							L"<::Member::[T], ::Member::[U]> ::Types<{::Member::[T] $PR, ::Member::[U] $PR}> __cdecl(::Member::[T] (::Member::[U] ::) *) * $PR");
 		AssertExpr(pa, L"Member<>",							L"Member<>",						L"<::Member::[T], ::Member::[U]> ::Types<{::Member::[T] $PR, ::Member::[U] $PR}> __cdecl(::Member::[T] (::Member::[U] ::) *) * $PR");
-		AssertExpr(pa, L"Member<>",							L"Member<>",						L"<::Member::[T], ::Member::[U]> ::Types<{::Member::[T] $PR, ::Member::[U] $PR}> __cdecl(::Member::[T] (::Member::[U] ::) *) * $PR");
-		AssertExpr(pa, L"Member<>",							L"Member<>",						L"<::Member::[T], ::Member::[U]> ::Types<{::Member::[T] $PR, ::Member::[U] $PR}> __cdecl(::Member::[T] (::Member::[U] ::) *) * $PR");
+		AssertExpr(pa, L"Member<bool>",						L"Member<bool>",					L"<=bool, ::Member::[U]> ::Types<{bool $PR, ::Member::[U] $PR}> __cdecl(bool (::Member::[U] ::) *) * $PR");
+		AssertExpr(pa, L"Member<bool, Types<>>",			L"Member<bool, Types<>>",			L"::Types<{bool $PR, ::Types<{}> $PR}> __cdecl(bool (::Types<{}> ::) *) * $PR");
 
 		AssertExpr(pa, L"C",								L"C",								L"<::C::[T]> ::Types<{::C::[T] $PR}> __cdecl(::C::[T] const) * $PR");
 		AssertExpr(pa, L"C<>",								L"C<>",								L"<::C::[T]> ::Types<{::C::[T] $PR}> __cdecl(::C::[T] const) * $PR");
