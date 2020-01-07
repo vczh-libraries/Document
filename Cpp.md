@@ -36,6 +36,9 @@
           - For example, `template<typename..., typename...>`'s first argument accepts all provided arguments, the second of which deducted from parameters.
           - For example, `template<int..., typename...>` with `<1, int>` is invalid, because `int` is not a `int` constant expression.
           - `ResolveGenericParameters` only read informations about parameters to be filled to the first variadic argument (if `allowPartialApply` is false and this is not the argument, it becomes an error)
+      - [ ] When the first function vta is {}, it could be treated as "to be inferred", if function arguments suggest so
+      - [ ] When a function is not applied with arguments, it is treated as {}. In this case, type arguments should all be provided.
+        - Which means there could be at most 1 vta, otherwise type arguments could not be all provided whatever you do.
       - [ ] When it is used to resolve function parameters or class partial specializations, only the last argument could be variadic or ellipsis(function only).
         - Function has no partial specialization.
     - [ ] Refactor `ResolvePendingType` to call `ResolveTemplateArgument`, which resolve all specified template argument according to value argument.

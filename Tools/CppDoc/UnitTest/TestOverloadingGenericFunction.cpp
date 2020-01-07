@@ -82,7 +82,7 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 		
 		AssertExpr(pa, L"Variant",				L"Variant",					L"<...::Variant::[Ts]> any_t $PR");
-		AssertExpr(pa, L"Variant<>",			L"Variant<>",				L"<...::Variant::[Ts]> ::Types<{}> __cdecl() * $PR");
+		AssertExpr(pa, L"Variant<>",			L"Variant<>",				L"::Types<{}> __cdecl() * $PR");
 		AssertExpr(pa, L"Variant<bool>",		L"Variant<bool>",			L"::Types<{bool $PR}> __cdecl(bool) * $PR");
 		AssertExpr(pa, L"Variant<bool, char>",	L"Variant<bool, char>",		L"::Types<{bool $PR, char $PR}> __cdecl(bool, char) * $PR");
 		// test types of partially applied template functions, consider how to pass enough information to the applying function argument phase, could store partially applying in TsysGenericFunction
@@ -107,7 +107,7 @@ TEST_FILE
 
 		AssertExpr(pa, L"Function",							L"Function",						L"<::Function::[R], ...::Function::[TArgs]> ::Types<any_t> __cdecl(any_t) * $PR");
 		AssertExpr(pa, L"Function<>",						L"Function<>",						L"<::Function::[R], ...::Function::[TArgs]> ::Types<any_t> __cdecl(any_t) * $PR");
-		AssertExpr(pa, L"Function<bool>",					L"Function<bool>",					L"<=bool, ...::Function::[TArgs]> ::Types<any_t> __cdecl(any_t) * $PR");
+		AssertExpr(pa, L"Function<bool>",					L"Function<bool>",					L"::Types<{bool $PR}> __cdecl(bool __cdecl() *) * $PR");
 		AssertExpr(pa, L"Function<bool, char>",				L"Function<bool, char>",			L"::Types<{bool $PR, char $PR}> __cdecl(bool __cdecl(char) *) * $PR");
 		AssertExpr(pa, L"Function<bool, char, float>",		L"Function<bool, char, float>",		L"::Types<{bool $PR, char $PR, float $PR}> __cdecl(bool __cdecl(char, float) *) * $PR");
 
@@ -129,18 +129,18 @@ TEST_FILE
 		AssertExpr(pa, L"CV<bool>",							L"CV<bool>",						L"::Types<{bool $PR}> __cdecl(bool const volatile) * $PR");
 
 		AssertExpr(pa, L"VtaPtr",							L"VtaPtr",							L"<...::VtaPtr::[TArgs]> any_t $PR");
-		AssertExpr(pa, L"VtaPtr<>",							L"VtaPtr<>",						L"<...::VtaPtr::[TArgs]> any_t $PR");
-		AssertExpr(pa, L"VtaPtr<bool>",						L"VtaPtr<bool>",					L"::Types<{bool $PR}> __cdecl(bool*) $PR");
-		AssertExpr(pa, L"VtaPtr<bool, char>",				L"VtaPtr<bool, char>",				L"::Types<{bool $PR, char $PR}> __cdecl(bool *, char *) $PR");
+		AssertExpr(pa, L"VtaPtr<>",							L"VtaPtr<>",						L"::Types<{}> __cdecl() * $PR");
+		AssertExpr(pa, L"VtaPtr<bool>",						L"VtaPtr<bool>",					L"::Types<{bool $PR}> __cdecl(bool *) * $PR");
+		AssertExpr(pa, L"VtaPtr<bool, char>",				L"VtaPtr<bool, char>",				L"::Types<{bool $PR, char $PR}> __cdecl(bool *, char *) * $PR");
 
 		AssertExpr(pa, L"VtaTypes",							L"VtaTypes",						L"<...::VtaTypes::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
-		AssertExpr(pa, L"VtaTypes<>",						L"VtaTypes<>",						L"<...::VtaTypes::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaTypes<>",						L"VtaTypes<>",						L"::Types<{}> __cdecl(::Types<{}>) * $PR");
 		AssertExpr(pa, L"VtaTypes<bool>",					L"VtaTypes<bool>",					L"::Types<{bool $PR}> __cdecl(::Types<{bool $PR}>) * $PR");
 		AssertExpr(pa, L"VtaTypes<bool, char>",				L"VtaTypes<bool, char>",			L"::Types<{bool $PR, char $PR}> __cdecl(::Types<{bool $PR, char $PR}>) * $PR");
 
 		AssertExpr(pa, L"VtaFunc",							L"VtaFunc",							L"<::VtaFunc::[R], ...::VtaFunc::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
 		AssertExpr(pa, L"VtaFunc<>",						L"VtaFunc<>",						L"<::VtaFunc::[R], ...::VtaFunc::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
-		AssertExpr(pa, L"VtaFunc<bool>",					L"VtaFunc<bool>",					L"<=bool, ...::VtaFunc::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc<bool>",					L"VtaFunc<bool>",					L"::Types<{bool $PR}> __cdecl(::Types<{}>) * $PR");
 		AssertExpr(pa, L"VtaFunc<bool, char>",				L"VtaFunc<bool, char>",				L"::Types<{bool $PR, char $PR}> __cdecl(::Types<{bool __cdecl(char *) * $PR}>) * $PR");
 		AssertExpr(pa, L"VtaFunc<bool, char, float>",		L"VtaFunc<bool, char, float>",		L"::Types<{bool $PR, char $PR, float $PR}> __cdecl(::Types<{bool __cdecl(char *) * $PR, bool __cdecl(float *) * $PR}>) * $PR");
 
@@ -191,6 +191,7 @@ TEST_FILE
 
 		ASSERT_OVERLOADING_SIMPLE((Variant(1, 1.0, 1.f, ci, vi, cvi)),			Types<__int32, double, float, __int32, __int32, __int32>);
 		// test 0, 1, 2 arguments
+		// when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
 	});
 
 	TEST_CATEGORY(L"Template argument deduction (kinds)")
@@ -198,7 +199,7 @@ TEST_FILE
 		using namespace Input__TestOverloadingGenericFunction_TypeInferKinds;
 		COMPILE_PROGRAM(program, pa, input);
 
-		// test 0, 1, 2 arguments
+		// test 0, 1, 2, 3 arguments
 
 		ASSERT_OVERLOADING_SIMPLE(LRef(Value<bool &>()),									Types<bool>);
 		ASSERT_OVERLOADING_SIMPLE(LRef(Value<bool const &>()),								Types<bool const>);
