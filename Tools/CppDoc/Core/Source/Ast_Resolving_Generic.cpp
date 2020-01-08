@@ -190,6 +190,7 @@ namespace symbol_type_resolving
 		EmptyVta,
 		MultipleVta,
 		Any,
+		Unfilled,
 	};
 
 	struct GenericParameterAssignment
@@ -230,19 +231,26 @@ namespace symbol_type_resolving
 		{
 			return { GenericParameterAssignmentKind::Any,-1,-1 };
 		}
+
+		static GenericParameterAssignment Unfilled()
+		{
+			return { GenericParameterAssignmentKind::Unfilled,-1,-1 };
+		}
 	};
 
 	using GpaList = List<GenericParameterAssignment>;
 
 	void CalculateGpa(
-		GpaList& gpaMappings,
-		ITsys* genericFunction,
-		const TsysGenericFunction& genericFuncInfo,
-		vint inputArgumentCount,
-		SortedList<vint>& boundedAnys,
-		vint offset, bool allowPartialApply
+		GpaList& gpaMappings,							// list to store results
+		const TsysGenericFunction& genericFuncInfo,		// generic type header
+		vint inputArgumentCount,						// number of offered arguments
+		SortedList<vint>& boundedAnys,					// boundedAnys[x] == i + offset means the i-th offered argument is any_t, and it means unknown variadic arguments, instead of an unknown type
+		vint offset,									// offset to use with boundedAnys
+		bool allowPartialApply							// true means it is legal to not offer enough amount of argunents
 	)
 	{
+		// only fill arguments to the first variadic template argument
+		// so if hasVta is true, only the last template argument to fill is variadic
 		bool hasVta = false;
 		vint parameterCount = genericFuncInfo.vtaArguments.Count();
 		for (vint i = 0; i < genericFuncInfo.vtaArguments.Count(); i++)
@@ -261,18 +269,22 @@ namespace symbol_type_resolving
 
 		if (hasVta)
 		{
+			// if the generic declaration has variadic template arguments
 			if (boundedAnys.Count() == 0)
 			{
+				// if there is no unknown variadic arguments
 				for (vint i = 0; i < parameterCount; i++)
 				{
 					if (i < inputArgumentCount)
 					{
 						if (i == parameterCount - 1)
 						{
+							// pack all remaining offered arguments in this position for the variadic template argument
 							gpaMappings.Add(GenericParameterAssignment::MultipleVta(i + offset, inputArgumentCount - i));
 						}
 						else
 						{
+							// use this offered argument in this position
 							gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
 						}
 					}
@@ -280,10 +292,12 @@ namespace symbol_type_resolving
 					{
 						if (i == parameterCount - 1)
 						{
+							// use an empty pack in this position of the variadic template argument
 							gpaMappings.Add(GenericParameterAssignment::EmptyVta());
 						}
 						else
 						{
+							// expect to use the default value in this position
 							gpaMappings.Add(GenericParameterAssignment::DefaultValue());
 						}
 					}
@@ -291,22 +305,28 @@ namespace symbol_type_resolving
 			}
 			else
 			{
+				// if there are unknown variadic arguments
 				vint headCount = boundedAnys[0] - offset;
 				for (vint i = 0; i < parameterCount; i++)
 				{
 					if (i < headCount)
 					{
+						// if there is no unknown variadic arguments before this offered argument, use it in this position
 						if (i == parameterCount - 1)
 						{
+							// pack all remaining offered arguments in this position for the variadic template argument
+							// since there is at least one unknown variadic arguments to pack, use any here
 							gpaMappings.Add(GenericParameterAssignment::Any());
 						}
 						else
 						{
+							// use this offered argument in this position
 							gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
 						}
 					}
 					else
 					{
+						// from the first unknown variadic arguments, fill any to all unfilled template arguments
 						gpaMappings.Add(GenericParameterAssignment::Any());
 					}
 				}
@@ -314,22 +334,27 @@ namespace symbol_type_resolving
 		}
 		else
 		{
+			// if the generic declaration has no variadic template arguments
 			if (boundedAnys.Count() == 0)
 			{
+				// if there is no unknown variadic arguments
 				for (vint i = 0; i < parameterCount; i++)
 				{
 					if (i < inputArgumentCount)
 					{
+						// use this offered argument in this position
 						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
 					}
 					else
 					{
+						// expect to use the default value in this position
 						gpaMappings.Add(GenericParameterAssignment::DefaultValue());
 					}
 				}
 			}
 			else
 			{
+				// if there are unknown variadic arguments
 				vint headCount = boundedAnys[0] - offset;
 				vint tailCount = inputArgumentCount - (boundedAnys[boundedAnys.Count() - 1] - offset) - 1;
 				vint anyParameterCount = parameterCount - headCount - tailCount;
@@ -338,14 +363,17 @@ namespace symbol_type_resolving
 				{
 					if (i < headCount)
 					{
+						// if there is no unknown variadic arguments before this offered argument, use it in this position
 						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
 					}
 					else if (i < headCount + anyParameterCount)
 					{
+						// this offered argument is a unknown variadic arguments list, or is between two list, use any in this position
 						gpaMappings.Add(GenericParameterAssignment::Any());
 					}
 					else
 					{
+						// if there is no unknown variadic argument after this offered argument, use it in this position
 						gpaMappings.Add(GenericParameterAssignment::OneArgument(inputArgumentCount - (parameterCount - i) + offset));
 					}
 				}
@@ -358,15 +386,15 @@ namespace symbol_type_resolving
 	***********************************************************************/
 
 	void ResolveGenericParameters(
-		const ParsingArguments& invokerPa,
-		TemplateArgumentContext& newTaContext,
-		ITsys* genericFunction,
-		Array<ExprTsysItem>& argumentTypes,
-		Array<bool>& isTypes,
-		Array<vint>& argSource,
-		SortedList<vint>& boundedAnys,
-		vint offset,
-		bool allowPartialApply
+		const ParsingArguments& invokerPa,			// context
+		TemplateArgumentContext& newTaContext,		// TAC to store type arguemnt to offered argument map, vta argument will be grouped to Init or Any
+		ITsys* genericFunction,						// generic type header
+		Array<ExprTsysItem>& argumentTypes,			// (index of unpacked)		offered argument (unpacked), starts from argumentTypes[offset]
+		Array<bool>& isTypes,						// (index of packed)		isTypes[j + offset] == true means the j-th offered arguments (packed) is a type instead of a value
+		Array<vint>& argSource,						// (unpacked -> packed)		argSource[i + offset] == j + offset means argumentTypes[i + offset] is from whole or part of the j-th packed offered argument
+		SortedList<vint>& boundedAnys,				// (value of unpacked)		boundedAnys[x] == i + offset means argumentTypes[i + offset] is any_t, and it means unknown variadic arguments, instead of an unknown type
+		vint offset,								// means first offset types are not template arguments or offered arguments, they stored other things
+		bool allowPartialApply						// true means it is legal to not offer enough amount of argunents
 	)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
@@ -384,25 +412,32 @@ namespace symbol_type_resolving
 		vint inputArgumentCount = argumentTypes.Count() - offset;
 		if (boundedAnys.Count() == 0)
 		{
-			if (inputArgumentCount < minCount)
+			// if there is no unknown variadic arguments
+			if (inputArgumentCount < minCount && !allowPartialApply)
 			{
+				// too few arguments
 				throw NotConvertableException();
 			}
-			if (maxCount != -1 && inputArgumentCount > maxCount)
+			if (inputArgumentCount > maxCount && maxCount != -1)
 			{
+				// too many arguments
 				throw NotConvertableException();
 			}
 		}
 		else
 		{
+			// if there are unknown variadic arguments, only check if there are too many offered arguments
 			if (maxCount != -1 && inputArgumentCount - boundedAnys.Count() > maxCount)
 			{
 				throw NotConvertableException();
 			}
 		}
 
+		// calculate how to assign offered arguments to template arguments
+		// gpaMappings will contains decisions for every template arguments
+		// if there are not enough offered arguments, only the first few templates are assigned decisions
 		GpaList gpaMappings;
-		CalculateGpa(gpaMappings, genericFunction, genericFuncInfo, inputArgumentCount, boundedAnys, offset, allowPartialApply);
+		CalculateGpa(gpaMappings, genericFuncInfo, inputArgumentCount, boundedAnys, offset, allowPartialApply);
 
 		auto pa = invokerPa.AdjustForDecl(genericFuncInfo.declSymbol).AppendSingleLevelArgs(newTaContext);
 		for (vint i = 0; i < genericFunction->GetParamCount(); i++)
@@ -415,6 +450,7 @@ namespace symbol_type_resolving
 			{
 			case GenericParameterAssignmentKind::DefaultValue:
 				{
+					// if a default value is expected to fill this template argument
 					if (acceptType)
 					{
 						if (spec->arguments[i].argumentType == CppTemplateArgumentType::Value)
@@ -441,6 +477,7 @@ namespace symbol_type_resolving
 				break;
 			case GenericParameterAssignmentKind::OneArgument:
 				{
+					// if an offered argument is to fill this template argument
 					if (acceptType != isTypes[argSource[gpa.index]])
 					{
 						throw NotConvertableException();
@@ -460,6 +497,7 @@ namespace symbol_type_resolving
 				break;
 			case GenericParameterAssignmentKind::EmptyVta:
 				{
+					// if an empty pack of offered arguments is to fill this variadic template argument
 					Array<ExprTsysItem> items;
 					auto init = pa.tsys->InitOf(items);
 					newTaContext.arguments.Add(pattern, init);
@@ -467,6 +505,7 @@ namespace symbol_type_resolving
 				break;
 			case GenericParameterAssignmentKind::MultipleVta:
 				{
+					// if a pack of offered arguments is to fill this variadic template argument
 					for (vint j = 0; j < gpa.count; j++)
 					{
 						if (acceptType != isTypes[argSource[gpa.index + j]])
@@ -496,7 +535,15 @@ namespace symbol_type_resolving
 				break;
 			case GenericParameterAssignmentKind::Any:
 				{
+					// if any is to fill this (maybe variadic) template argument
 					newTaContext.arguments.Add(pattern, pa.tsys->Any());
+				}
+				break;
+			case GenericParameterAssignmentKind::Unfilled:
+				{
+					// if this template argument is not filled
+					// no default or empty for unfilled arguments, check them here
+					throw NotConvertableException();
 				}
 				break;
 			}
