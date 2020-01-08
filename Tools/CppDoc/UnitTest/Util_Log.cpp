@@ -1612,6 +1612,10 @@ void Log(ITsys* tsys, StreamWriter& writer)
 				{
 					writer.WriteString(L"...");
 				}
+				if (i < genericFunction.filledArguments)
+				{
+					writer.WriteChar(L'=');
+				}
 				if (genericFunction.acceptTypes[i])
 				{
 					Log(tsys->GetParam(i), writer);

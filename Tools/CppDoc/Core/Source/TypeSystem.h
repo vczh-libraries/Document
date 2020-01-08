@@ -191,6 +191,7 @@ struct TsysGenericFunction
 {
 	Symbol*							declSymbol = nullptr;
 	ITsys*							parentDeclType = nullptr;
+	vint							filledArguments = 0;
 	Array<bool>						vtaArguments;
 	Array<bool>						acceptTypes;
 
@@ -199,6 +200,7 @@ struct TsysGenericFunction
 	TsysGenericFunction(const TsysGenericFunction& genericFunction)
 		:declSymbol(genericFunction.declSymbol)
 		, parentDeclType(genericFunction.parentDeclType)
+		, filledArguments(genericFunction.filledArguments)
 	{
 		CopyFrom(vtaArguments, genericFunction.vtaArguments);
 		CopyFrom(acceptTypes, genericFunction.acceptTypes);
@@ -208,6 +210,7 @@ struct TsysGenericFunction
 	{
 		declSymbol = genericFunction.declSymbol;
 		parentDeclType = genericFunction.parentDeclType;
+		filledArguments = genericFunction.filledArguments;
 		CopyFrom(vtaArguments, genericFunction.vtaArguments);
 		CopyFrom(acceptTypes, genericFunction.acceptTypes);
 		return *this;
@@ -219,6 +222,8 @@ struct TsysGenericFunction
 		if (a.declSymbol > b.declSymbol) return 1;
 		if (a.parentDeclType < b.parentDeclType) return -1;
 		if (a.parentDeclType > b.parentDeclType) return 1;
+		if (a.filledArguments < b.filledArguments) return -1;
+		if (a.filledArguments > b.filledArguments) return 1;
 		{
 			vint result = CompareEnumerable(a.vtaArguments, b.vtaArguments);
 			if (result != 0) return result;
