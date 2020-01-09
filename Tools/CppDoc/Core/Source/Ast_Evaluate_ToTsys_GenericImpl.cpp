@@ -139,7 +139,14 @@ namespace symbol_totsys_impl
 						for (vint i = 0; i < params.Count(); i++)
 						{
 							auto pattern = genericFunction->GetParam(i);
-							params[i] = argumentsToApply->arguments[pattern];
+							if (i < partialAppliedArguments)
+							{
+								params[i] = argumentsToApply->arguments[pattern];
+							}
+							else
+							{
+								params[i] = pattern;
+							}
 						}
 
 						for (vint i = 0; i < tsys.Count(); i++)

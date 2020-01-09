@@ -521,7 +521,9 @@ namespace symbol_type_resolving
 					partialAppliedArguments = i;
 					for (vint j = i; j < genericFunction->GetParamCount(); j++)
 					{
-						newTaContext.arguments.Add(pattern, (acceptType ? pattern : nullptr));
+						auto unappliedPattern = genericFunction->GetParam(j);
+						auto unappliedValue = spec->arguments[j].ellipsis ? pa.tsys->Any() : acceptType ? unappliedPattern : nullptr;
+						newTaContext.arguments.Add(unappliedPattern, unappliedValue);
 					}
 					return;
 				}

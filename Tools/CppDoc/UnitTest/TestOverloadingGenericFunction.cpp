@@ -74,6 +74,7 @@ TEST_FILE
 		AssertExpr(pa, L"Simple2",				L"Simple2",					L"<::Simple2::[T]> ::Simple2::[T] __cdecl(::Simple2::[T], ::Simple2::[T]) * $PR", L"void __cdecl(...) * $PR");
 		AssertExpr(pa, L"Simple2<>",			L"Simple2<>",				L"<::Simple2::[T]> ::Simple2::[T] __cdecl(::Simple2::[T], ::Simple2::[T]) * $PR");
 		AssertExpr(pa, L"Simple2<bool>",		L"Simple2<bool>",			L"bool __cdecl(bool, bool) * $PR");
+		// test value argument
 	});
 
 	TEST_CATEGORY(L"Partially apply template arguments (variant)")
@@ -85,7 +86,6 @@ TEST_FILE
 		AssertExpr(pa, L"Variant<>",			L"Variant<>",				L"::Types<{}> __cdecl() * $PR");
 		AssertExpr(pa, L"Variant<bool>",		L"Variant<bool>",			L"::Types<{bool $PR}> __cdecl(bool) * $PR");
 		AssertExpr(pa, L"Variant<bool, char>",	L"Variant<bool, char>",		L"::Types<{bool $PR, char $PR}> __cdecl(bool, char) * $PR");
-		// test types of partially applied template functions, consider how to pass enough information to the applying function argument phase, could store partially applying in TsysGenericFunction
 	});
 
 	TEST_CATEGORY(L"Partially apply template arguments (kinds)")
