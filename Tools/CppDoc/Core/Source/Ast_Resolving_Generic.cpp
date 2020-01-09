@@ -198,7 +198,7 @@ namespace symbol_type_resolving
 			auto argument = spec->arguments[i];
 			if (argument.ellipsis)
 			{
-				if (!allowPartialApply && i != spec->arguments.Count())
+				if (!allowPartialApply && i != spec->arguments.Count() - 1)
 				{
 					throw NotConvertableException();
 				}
@@ -225,13 +225,10 @@ namespace symbol_type_resolving
 
 		// check if there are too much offered arguments
 		vint parametersToFill = firstVta == -1 ? spec->arguments.Count() : firstVta + 1;
-		if (boundedAnys.Count() != 0)
+		// check if there are too many offered arguments
+		if (firstVta == -1 && inputArgumentCount - boundedAnys.Count() > parametersToFill)
 		{
-			// if there are unknown variadic arguments, only check if there are too many offered arguments
-			if (firstVta == -1 && inputArgumentCount - boundedAnys.Count() > parametersToFill)
-			{
-				throw NotConvertableException();
-			}
+			throw NotConvertableException();
 		}
 
 		if (firstVta == -1)
@@ -293,6 +290,10 @@ namespace symbol_type_resolving
 		}
 		else
 		{
+			vint minOffered = firstDefault == -1
+				? firstVta
+				: (firstDefault < firstVta ? firstDefault : firstVta)
+				;
 			// if the generic declaration has variadic template arguments
 			if (boundedAnys.Count() == 0)
 			{
@@ -318,14 +319,16 @@ namespace symbol_type_resolving
 						// if there is no offered argument
 						if (i == firstVta)
 						{
-							if (inputArgumentCount == firstVta)
+							if (inputArgumentCount >= minOffered)
 							{
-								// if this variadic template argument is the only unfilled one, use an empty pack in this position of the variadic template argument
+								// if there is no unfilled template arguments before this variadic template argument
+								// use an empty pack in this position of the variadic template argument
 								gpaMappings.Add(GenericParameterAssignment::EmptyVta());
 							}
 							else
 							{
-								// if there are unfilled template arguments before this variadic template argument, it misses an offered argument
+								// if there are unfilled template arguments before this variadic template argument
+								// it misses an offered argument
 								// if missing offered arguments are not allowed, it crashes before here
 								gpaMappings.Add(GenericParameterAssignment::Unfilled());
 							}
