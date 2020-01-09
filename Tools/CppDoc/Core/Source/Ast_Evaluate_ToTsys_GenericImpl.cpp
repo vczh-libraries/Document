@@ -31,8 +31,10 @@ namespace symbol_totsys_impl
 
 			TemplateArgumentContext taContext;
 			taContext.symbolToApply = genericFunction->GetGenericFunction().declSymbol;
-			ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1, (declSymbol->kind == symbol_component::SymbolKind::FunctionBodySymbol));
-			process(genericFunction, declSymbol, &taContext);
+			bool allowPartialApply = declSymbol->kind == symbol_component::SymbolKind::FunctionBodySymbol;
+			vint partialAppliedArguments = -1;
+			ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1, allowPartialApply, partialAppliedArguments);
+			process(genericFunction, declSymbol, &taContext, partialAppliedArguments);
 		}
 		else if (genericFunction->GetType() == TsysType::Any)
 		{
@@ -63,8 +65,9 @@ namespace symbol_totsys_impl
 	
 	void ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, GenericType* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 	{
-		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa, &result](ITsys* genericFunction, Symbol* declSymbol, TemplateArgumentContext* argumentsToApply)
+		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa, &result](ITsys* genericFunction, Symbol* declSymbol, TemplateArgumentContext* argumentsToApply, vint partialAppliedArguments)
 		{
+			if (partialAppliedArguments != -1) throw NotConvertableException();
 			auto parentDeclType = genericFunction->GetGenericFunction().parentDeclType;
 			switch (declSymbol->kind)
 			{
@@ -102,13 +105,14 @@ namespace symbol_totsys_impl
 
 	void ProcessGenericExpr(const ParsingArguments& pa, ExprTsysList& result, GenericExpr* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 	{
-		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa, &result](ITsys* genericFunction, Symbol* declSymbol, TemplateArgumentContext* argumentsToApply)
+		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa, &result](ITsys* genericFunction, Symbol* declSymbol, TemplateArgumentContext* argumentsToApply, vint partialAppliedArguments)
 		{
 			auto parentDeclType = genericFunction->GetGenericFunction().parentDeclType;
 			switch (declSymbol->kind)
 			{
 			case symbol_component::SymbolKind::FunctionBodySymbol:
 				{
+					if (partialAppliedArguments != -1) throw NotConvertableException();
 					ITsys* classType = nullptr;
 					{
 						auto elementType = genericFunction->GetElement();
@@ -142,6 +146,7 @@ namespace symbol_totsys_impl
 				break;
 			case symbol_component::SymbolKind::ValueAlias:
 				{
+					if (partialAppliedArguments != -1) throw NotConvertableException();
 					auto decl = declSymbol->GetImplDecl_NFb<ValueAliasDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
 					auto& tsys = EvaluateValueAliasSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);

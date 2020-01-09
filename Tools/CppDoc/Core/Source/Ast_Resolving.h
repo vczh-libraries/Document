@@ -115,6 +115,7 @@ namespace symbol_type_resolving
 													Array<vint>& argSource,
 													SortedList<vint>& boundedAnys,
 													vint offset,
-													bool allowPartialApply
+													bool allowPartialApply,
+													vint& partialAppliedArguments
 												);
 }

@@ -185,7 +185,7 @@ namespace symbol_type_resolving
 		vint inputArgumentCount,						// number of offered arguments
 		SortedList<vint>& boundedAnys,					// boundedAnys[x] == i + offset means the i-th offered argument is any_t, and it means unknown variadic arguments, instead of an unknown type
 		vint offset,									// offset to use with boundedAnys
-		bool allowPartialApply							// true means it is legal to not offer enough amount of argunents
+		bool allowPartialApply							// true means it is legal to not offer enough amount of arguments
 	)
 	{
 		// only fill arguments to the first variadic template argument
@@ -244,7 +244,7 @@ namespace symbol_type_resolving
 						// if there is an offered argument, use this offered argument in this position
 						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
 					}
-					else if (firstDefault <= i)
+					else if (firstDefault != -1 && firstDefault <= i)
 					{
 						// if there is a default value, expect to use the default value in this position
 						gpaMappings.Add(GenericParameterAssignment::DefaultValue());
@@ -333,7 +333,7 @@ namespace symbol_type_resolving
 								gpaMappings.Add(GenericParameterAssignment::Unfilled());
 							}
 						}
-						else if (firstDefault <= i)
+						else if (firstDefault != -1 && firstDefault <= i)
 						{
 							// if there is a default value, expect to use the default value in this position
 							gpaMappings.Add(GenericParameterAssignment::DefaultValue());
@@ -395,7 +395,8 @@ namespace symbol_type_resolving
 		Array<vint>& argSource,						// (unpacked -> packed)		argSource[i + offset] == j + offset means argumentTypes[i + offset] is from whole or part of the j-th packed offered argument
 		SortedList<vint>& boundedAnys,				// (value of unpacked)		boundedAnys[x] == i + offset means argumentTypes[i + offset] is any_t, and it means unknown variadic arguments, instead of an unknown type
 		vint offset,								// means first offset types are not template arguments or offered arguments, they stored other things
-		bool allowPartialApply						// true means it is legal to not offer enough amount of argunents
+		bool allowPartialApply,						// true means it is legal to not offer enough amount of arguments
+		vint& partialAppliedArguments				// the number of applied template arguments, -1 if all arguments are filled
 	)
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
@@ -516,11 +517,17 @@ namespace symbol_type_resolving
 			case GenericParameterAssignmentKind::Unfilled:
 				{
 					// if this template argument is not filled
-					// no default or empty for unfilled arguments, check them here
-					throw NotConvertableException();
+					// fill them will template argument themselves
+					partialAppliedArguments = i;
+					for (vint j = i; j < genericFunction->GetParamCount(); j++)
+					{
+						newTaContext.arguments.Add(pattern, (acceptType ? pattern : nullptr));
+					}
+					return;
 				}
 				break;
 			}
 		}
+		partialAppliedArguments = -1;
 	}
 }
