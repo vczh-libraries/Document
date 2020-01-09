@@ -112,7 +112,6 @@ namespace symbol_totsys_impl
 			{
 			case symbol_component::SymbolKind::FunctionBodySymbol:
 				{
-					if (partialAppliedArguments != -1) throw NotConvertableException();
 					ITsys* classType = nullptr;
 					{
 						auto elementType = genericFunction->GetElement();
@@ -130,6 +129,24 @@ namespace symbol_totsys_impl
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
 					auto& tsys = EvaluateFuncSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
+
+					if (partialAppliedArguments != -1)
+					{
+						TsysGenericFunction gfi = genericFunction->GetGenericFunction();
+						gfi.filledArguments = partialAppliedArguments;
+
+						Array<ITsys*> params(genericFunction->GetParamCount());
+						for (vint i = 0; i < params.Count(); i++)
+						{
+							auto pattern = genericFunction->GetParam(i);
+							params[i] = argumentsToApply->arguments[pattern];
+						}
+
+						for (vint i = 0; i < tsys.Count(); i++)
+						{
+							tsys[i] = tsys[i]->GenericFunctionOf(params, gfi);
+						}
+					}
 
 					for (vint i = 0; i < tsys.Count(); i++)
 					{
