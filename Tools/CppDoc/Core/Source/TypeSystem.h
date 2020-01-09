@@ -10,6 +10,7 @@ class Symbol;
 struct TemplateArgumentContext;
 struct ParsingArguments;
 class FunctionType;
+class TemplateSpec;
 class ITsys;
 
 /***********************************************************************
@@ -192,8 +193,7 @@ struct TsysGenericFunction
 	Symbol*							declSymbol = nullptr;
 	ITsys*							parentDeclType = nullptr;
 	vint							filledArguments = 0;
-	Array<bool>						vtaArguments;
-	Array<bool>						acceptTypes;
+	Ptr<TemplateSpec>				spec;
 
 	TsysGenericFunction() = default;
 
@@ -201,9 +201,8 @@ struct TsysGenericFunction
 		:declSymbol(genericFunction.declSymbol)
 		, parentDeclType(genericFunction.parentDeclType)
 		, filledArguments(genericFunction.filledArguments)
+		, spec(genericFunction.spec)
 	{
-		CopyFrom(vtaArguments, genericFunction.vtaArguments);
-		CopyFrom(acceptTypes, genericFunction.acceptTypes);
 	}
 
 	TsysGenericFunction& operator=(const TsysGenericFunction& genericFunction)
@@ -211,8 +210,7 @@ struct TsysGenericFunction
 		declSymbol = genericFunction.declSymbol;
 		parentDeclType = genericFunction.parentDeclType;
 		filledArguments = genericFunction.filledArguments;
-		CopyFrom(vtaArguments, genericFunction.vtaArguments);
-		CopyFrom(acceptTypes, genericFunction.acceptTypes);
+		spec = genericFunction.spec;
 		return *this;
 	}
 
@@ -224,14 +222,8 @@ struct TsysGenericFunction
 		if (a.parentDeclType > b.parentDeclType) return 1;
 		if (a.filledArguments < b.filledArguments) return -1;
 		if (a.filledArguments > b.filledArguments) return 1;
-		{
-			vint result = CompareEnumerable(a.vtaArguments, b.vtaArguments);
-			if (result != 0) return result;
-		}
-		{
-			vint result = CompareEnumerable(a.acceptTypes, b.acceptTypes);
-			if (result != 0) return result;
-		}
+		if (a.spec < b.spec) return -1;
+		if (a.spec > b.spec) return 1;
 		return 0;
 	}
 };

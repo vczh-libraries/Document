@@ -114,9 +114,7 @@ namespace symbol_type_resolving
 			TsysGenericFunction genericFunction;
 			TypeTsysList params;
 
-			genericFunction.declSymbol = decl->symbol;
-			genericFunction.parentDeclType = declPa.parentDeclType;
-			CreateGenericFunctionHeader(declPa, spec, params, genericFunction);
+			CreateGenericFunctionHeader(declPa, decl->symbol, declPa.parentDeclType, spec, params, genericFunction);
 
 			for (vint i = 0; i < evaluatedTypes.Count(); i++)
 			{

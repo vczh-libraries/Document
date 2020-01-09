@@ -1608,7 +1608,7 @@ void Log(ITsys* tsys, StreamWriter& writer)
 			for (vint i = 0; i < tsys->GetParamCount(); i++)
 			{
 				if (i > 0) writer.WriteString(L", ");
-				if (genericFunction.vtaArguments[i])
+				if (genericFunction.spec->arguments[i].ellipsis)
 				{
 					writer.WriteString(L"...");
 				}
@@ -1616,7 +1616,7 @@ void Log(ITsys* tsys, StreamWriter& writer)
 				{
 					writer.WriteChar(L'=');
 				}
-				if (genericFunction.acceptTypes[i])
+				if (genericFunction.spec->arguments[i].argumentType != CppTemplateArgumentType::Value)
 				{
 					Log(tsys->GetParam(i), writer);
 				}

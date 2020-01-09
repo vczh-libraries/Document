@@ -105,7 +105,7 @@ namespace symbol_type_resolving
 
 	extern Ptr<TemplateSpec>					GetTemplateSpecFromSymbol(Symbol* symbol);
 	extern ITsys*								GetTemplateArgumentKey(const TemplateSpec::Argument& argument, ITsysAlloc* tsys);
-	extern void									CreateGenericFunctionHeader(const ParsingArguments& pa, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction);
+	extern void									CreateGenericFunctionHeader(const ParsingArguments& pa, Symbol* declSymbol, ITsys* parentDeclType, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction);
 	extern void									ResolveGenericParameters(
 													const ParsingArguments& invokerPa,
 													TemplateArgumentContext& newTaContext,

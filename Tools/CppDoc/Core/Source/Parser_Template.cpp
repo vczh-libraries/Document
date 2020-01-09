@@ -52,8 +52,7 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 			{
 				TsysGenericFunction genericFunction;
 				TypeTsysList params;
-				genericFunction.declSymbol = argumentSymbol.Obj();
-				symbol_type_resolving::CreateGenericFunctionHeader(pa, argument.templateSpec, params, genericFunction);
+				symbol_type_resolving::CreateGenericFunctionHeader(pa,argumentSymbol.Obj(), nullptr, argument.templateSpec, params, genericFunction);
 				ev.Get().Add(pa.tsys->Any()->GenericFunctionOf(params, genericFunction));
 			}
 			else

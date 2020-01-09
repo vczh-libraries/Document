@@ -46,16 +46,17 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void CreateGenericFunctionHeader(const ParsingArguments& pa, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction)
+	void CreateGenericFunctionHeader(const ParsingArguments& pa, Symbol* declSymbol, ITsys* parentDeclType, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction)
 	{
-		genericFunction.vtaArguments.Resize(spec->arguments.Count());
-		genericFunction.acceptTypes.Resize(spec->arguments.Count());
+		if (!declSymbol) throw NotConvertableException();
+		if (!spec) throw NotConvertableException();
 
+		genericFunction.declSymbol = declSymbol;
+		genericFunction.parentDeclType = parentDeclType;
+		genericFunction.spec = spec;
 		for (vint i = 0; i < spec->arguments.Count(); i++)
 		{
 			const auto& argument = spec->arguments[i];
-			genericFunction.vtaArguments[i] = argument.ellipsis;
-			genericFunction.acceptTypes[i] = (argument.argumentType == CppTemplateArgumentType::Type);
 			params.Add(GetTemplateArgumentKey(argument, pa.tsys.Obj()));
 		}
 	}
@@ -95,87 +96,25 @@ namespace symbol_type_resolving
 		{
 			throw NotConvertableException();
 		}
+
+		auto& pGF = parameter->GetGenericFunction();
+		auto& aGF = argument->GetGenericFunction();
 		for (vint i = 0; i < parameter->GetParamCount(); i++)
 		{
 			auto nestedParameter = parameter->GetParam(i);
 			auto nestedArgument = argument->GetParam(i);
 
-			bool acceptType = parameter->GetGenericFunction().acceptTypes[i];
-			bool isType = argument->GetGenericFunction().acceptTypes[i];
-			if (acceptType != isType)
+			auto pT = pGF.spec->arguments[i].argumentType;
+			auto aT = aGF.spec->arguments[i].argumentType;
+			if (pT != aT)
 			{
 				throw NotConvertableException();
 			}
 
-			if (acceptType)
+			if (pT != CppTemplateArgumentType::Value)
 			{
 				EnsureGenericTypeParameterAndArgumentMatched(nestedParameter, nestedArgument);
 			}
-		}
-	}
-
-	/***********************************************************************
-	GetArgumentCountRange: Calculate the minimum and maximum allowed argument count for a template, -1 means infinity
-	***********************************************************************/
-
-	void GetArgumentCountRange(ITsys* genericFunction, Ptr<TemplateSpec> spec, const TsysGenericFunction& genericFuncInfo, vint& minCount, vint& maxCount)
-	{
-		bool hasVta = From(genericFuncInfo.vtaArguments).Any([](bool x) { return x; });
-		maxCount = hasVta ? -1 : genericFunction->GetParamCount();
-
-		vint firstDefaultIndex = -1;
-		if (spec)
-		{
-			for (vint i = 0; i < spec->arguments.Count(); i++)
-			{
-				const auto& argument = spec->arguments[i];
-				if (argument.ellipsis)
-				{
-					firstDefaultIndex = i;
-					goto FINISH_FINDING_DEFAULT;
-				}
-				else
-				{
-					switch (argument.argumentType)
-					{
-					case CppTemplateArgumentType::HighLevelType:
-					case CppTemplateArgumentType::Type:
-						if (argument.type)
-						{
-							firstDefaultIndex = i;
-							goto FINISH_FINDING_DEFAULT;
-						}
-						break;
-					case CppTemplateArgumentType::Value:
-						if (argument.expr)
-						{
-							firstDefaultIndex = i;
-							goto FINISH_FINDING_DEFAULT;
-						}
-						break;
-					}
-				}
-			}
-		}
-	FINISH_FINDING_DEFAULT:
-
-		if (hasVta)
-		{
-			// when there is a variant argument, the minimum count is the numbers of arguments before this variant argument
-			minCount = firstDefaultIndex;
-			maxCount = -1;
-		}
-		else
-		{
-			if (firstDefaultIndex == -1)
-			{
-				minCount = genericFunction->GetParamCount();
-			}
-			else
-			{
-				minCount = firstDefaultIndex;
-			}
-			maxCount = genericFunction->GetParamCount();
 		}
 	}
 
@@ -250,34 +189,120 @@ namespace symbol_type_resolving
 	)
 	{
 		// only fill arguments to the first variadic template argument
-		// so if hasVta is true, only the last template argument to fill is variadic
-		bool hasVta = false;
-		vint parameterCount = genericFuncInfo.vtaArguments.Count();
-		for (vint i = 0; i < genericFuncInfo.vtaArguments.Count(); i++)
+		vint firstDefault = -1;
+		vint firstVta = -1;
+
+		auto spec = genericFuncInfo.spec;
+		for (vint i = 0; i < spec->arguments.Count(); i++)
 		{
-			if (genericFuncInfo.vtaArguments[i])
+			auto argument = spec->arguments[i];
+			if (argument.ellipsis)
 			{
-				if (!allowPartialApply && i != parameterCount - 1)
+				if (!allowPartialApply && i != spec->arguments.Count())
 				{
 					throw NotConvertableException();
 				}
-				hasVta = true;
-				parameterCount = i + 1;
+				firstVta = i;
 				break;
+			}
+
+			bool hasDefault = argument.argumentType == CppTemplateArgumentType::Value ? argument.expr : argument.type;
+			if (hasDefault)
+			{
+				if (firstDefault == -1)
+				{
+					firstDefault = i;
+				}
+			}
+			else
+			{
+				if (firstDefault != -1)
+				{
+					throw NotConvertableException();
+				}
 			}
 		}
 
-		if (hasVta)
+		// check if there are too much offered arguments
+		vint parametersToFill = firstVta == -1 ? spec->arguments.Count() : firstVta + 1;
+		if (boundedAnys.Count() != 0)
+		{
+			// if there are unknown variadic arguments, only check if there are too many offered arguments
+			if (firstVta == -1 && inputArgumentCount - boundedAnys.Count() > parametersToFill)
+			{
+				throw NotConvertableException();
+			}
+		}
+
+		if (firstVta == -1)
+		{
+			// if the generic declaration has no variadic template arguments
+			if (boundedAnys.Count() == 0)
+			{
+				// if there is no unknown variadic arguments
+				for (vint i = 0; i < parametersToFill; i++)
+				{
+					if (i < inputArgumentCount)
+					{
+						// if there is an offered argument, use this offered argument in this position
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
+					}
+					else if (firstDefault <= i)
+					{
+						// if there is a default value, expect to use the default value in this position
+						gpaMappings.Add(GenericParameterAssignment::DefaultValue());
+					}
+					else if (allowPartialApply)
+					{
+						// if missing offered arguments are allowed
+						gpaMappings.Add(GenericParameterAssignment::Unfilled());
+					}
+					else
+					{
+						// missing offered arguments
+						throw NotConvertableException();
+					}
+				}
+			}
+			else
+			{
+				// if there are unknown variadic arguments
+				vint headCount = boundedAnys[0] - offset;
+				vint tailCount = inputArgumentCount - (boundedAnys[boundedAnys.Count() - 1] - offset) - 1;
+				vint anyParameterCount = parametersToFill - headCount - tailCount;
+
+				for (vint i = 0; i < parametersToFill; i++)
+				{
+					if (i < headCount)
+					{
+						// if there is no unknown variadic arguments before this offered argument, use it in this position
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
+					}
+					else if (i < headCount + anyParameterCount)
+					{
+						// this offered argument is a unknown variadic arguments list, or is between two list, use any in this position
+						gpaMappings.Add(GenericParameterAssignment::Any());
+					}
+					else
+					{
+						// if there is no unknown variadic argument after this offered argument, use it in this position
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(inputArgumentCount - (parametersToFill - i) + offset));
+					}
+				}
+			}
+		}
+		else
 		{
 			// if the generic declaration has variadic template arguments
 			if (boundedAnys.Count() == 0)
 			{
 				// if there is no unknown variadic arguments
-				for (vint i = 0; i < parameterCount; i++)
+				for (vint i = 0; i < parametersToFill; i++)
 				{
 					if (i < inputArgumentCount)
 					{
-						if (i == parameterCount - 1)
+						// if there is an offered argument
+						if (i == firstVta)
 						{
 							// pack all remaining offered arguments in this position for the variadic template argument
 							gpaMappings.Add(GenericParameterAssignment::MultipleVta(i + offset, inputArgumentCount - i));
@@ -290,15 +315,35 @@ namespace symbol_type_resolving
 					}
 					else
 					{
-						if (i == parameterCount - 1)
+						// if there is no offered argument
+						if (i == firstVta)
 						{
-							// use an empty pack in this position of the variadic template argument
-							gpaMappings.Add(GenericParameterAssignment::EmptyVta());
+							if (inputArgumentCount == firstVta)
+							{
+								// if this variadic template argument is the only unfilled one, use an empty pack in this position of the variadic template argument
+								gpaMappings.Add(GenericParameterAssignment::EmptyVta());
+							}
+							else
+							{
+								// if there are unfilled template arguments before this variadic template argument, it misses an offered argument
+								// if missing offered arguments are not allowed, it crashes before here
+								gpaMappings.Add(GenericParameterAssignment::Unfilled());
+							}
+						}
+						else if (firstDefault <= i)
+						{
+							// if there is a default value, expect to use the default value in this position
+							gpaMappings.Add(GenericParameterAssignment::DefaultValue());
+						}
+						else if (allowPartialApply)
+						{
+							// if missing offered arguments are allowed
+							gpaMappings.Add(GenericParameterAssignment::Unfilled());
 						}
 						else
 						{
-							// expect to use the default value in this position
-							gpaMappings.Add(GenericParameterAssignment::DefaultValue());
+							// missing offered arguments
+							throw NotConvertableException();
 						}
 					}
 				}
@@ -307,12 +352,12 @@ namespace symbol_type_resolving
 			{
 				// if there are unknown variadic arguments
 				vint headCount = boundedAnys[0] - offset;
-				for (vint i = 0; i < parameterCount; i++)
+				for (vint i = 0; i < parametersToFill; i++)
 				{
 					if (i < headCount)
 					{
 						// if there is no unknown variadic arguments before this offered argument, use it in this position
-						if (i == parameterCount - 1)
+						if (i == firstVta)
 						{
 							// pack all remaining offered arguments in this position for the variadic template argument
 							// since there is at least one unknown variadic arguments to pack, use any here
@@ -328,53 +373,6 @@ namespace symbol_type_resolving
 					{
 						// from the first unknown variadic arguments, fill any to all unfilled template arguments
 						gpaMappings.Add(GenericParameterAssignment::Any());
-					}
-				}
-			}
-		}
-		else
-		{
-			// if the generic declaration has no variadic template arguments
-			if (boundedAnys.Count() == 0)
-			{
-				// if there is no unknown variadic arguments
-				for (vint i = 0; i < parameterCount; i++)
-				{
-					if (i < inputArgumentCount)
-					{
-						// use this offered argument in this position
-						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
-					}
-					else
-					{
-						// expect to use the default value in this position
-						gpaMappings.Add(GenericParameterAssignment::DefaultValue());
-					}
-				}
-			}
-			else
-			{
-				// if there are unknown variadic arguments
-				vint headCount = boundedAnys[0] - offset;
-				vint tailCount = inputArgumentCount - (boundedAnys[boundedAnys.Count() - 1] - offset) - 1;
-				vint anyParameterCount = parameterCount - headCount - tailCount;
-
-				for (vint i = 0; i < parameterCount; i++)
-				{
-					if (i < headCount)
-					{
-						// if there is no unknown variadic arguments before this offered argument, use it in this position
-						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
-					}
-					else if (i < headCount + anyParameterCount)
-					{
-						// this offered argument is a unknown variadic arguments list, or is between two list, use any in this position
-						gpaMappings.Add(GenericParameterAssignment::Any());
-					}
-					else
-					{
-						// if there is no unknown variadic argument after this offered argument, use it in this position
-						gpaMappings.Add(GenericParameterAssignment::OneArgument(inputArgumentCount - (parameterCount - i) + offset));
 					}
 				}
 			}
@@ -403,35 +401,8 @@ namespace symbol_type_resolving
 		}
 
 		const auto& genericFuncInfo = genericFunction->GetGenericFunction();
-		auto spec = GetTemplateSpecFromSymbol(genericFuncInfo.declSymbol);
-
-		vint minCount = -1;
-		vint maxCount = -1;
-		GetArgumentCountRange(genericFunction, spec, genericFuncInfo, minCount, maxCount);
-
+		auto spec = genericFuncInfo.spec;
 		vint inputArgumentCount = argumentTypes.Count() - offset;
-		if (boundedAnys.Count() == 0)
-		{
-			// if there is no unknown variadic arguments
-			if (inputArgumentCount < minCount && !allowPartialApply)
-			{
-				// too few arguments
-				throw NotConvertableException();
-			}
-			if (inputArgumentCount > maxCount && maxCount != -1)
-			{
-				// too many arguments
-				throw NotConvertableException();
-			}
-		}
-		else
-		{
-			// if there are unknown variadic arguments, only check if there are too many offered arguments
-			if (maxCount != -1 && inputArgumentCount - boundedAnys.Count() > maxCount)
-			{
-				throw NotConvertableException();
-			}
-		}
 
 		// calculate how to assign offered arguments to template arguments
 		// gpaMappings will contains decisions for every template arguments
@@ -444,7 +415,7 @@ namespace symbol_type_resolving
 		{
 			auto gpa = gpaMappings[i];
 			auto pattern = genericFunction->GetParam(i);
-			bool acceptType = genericFuncInfo.acceptTypes[i];
+			bool acceptType = spec->arguments[i].argumentType != CppTemplateArgumentType::Value;
 
 			switch (gpa.kind)
 			{
