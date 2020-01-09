@@ -380,6 +380,19 @@ namespace symbol_type_resolving
 				}
 			}
 		}
+
+		if (parametersToFill < spec->arguments.Count())
+		{
+			// if there are multiple variadic template arguments, they are all unfilled
+			for (vint i = parametersToFill; i < spec->arguments.Count(); i++)
+			{
+				if (!spec->arguments[i].ellipsis)
+				{
+					throw NotConvertableException();
+				}
+				gpaMappings.Add(GenericParameterAssignment::Unfilled());
+			}
+		}
 	}
 
 	/***********************************************************************

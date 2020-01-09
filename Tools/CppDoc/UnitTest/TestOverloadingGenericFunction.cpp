@@ -145,9 +145,9 @@ TEST_FILE
 		AssertExpr(pa, L"VtaFunc<bool, char, float>",		L"VtaFunc<bool, char, float>",		L"::Types<{bool $PR, char $PR, float $PR}> __cdecl(::Types<{bool __cdecl(char *) * $PR, bool __cdecl(float *) * $PR}>) * $PR");
 
 		AssertExpr(pa, L"VtaFunc2",							L"VtaFunc2",						L"<...::VtaFunc2::[TRs], ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
-		AssertExpr(pa, L"VtaFunc2<>",						L"VtaFunc2<>",						L"<...::VtaFunc2::[TRs], ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
-		AssertExpr(pa, L"VtaFunc2<bool>",					L"VtaFunc2<bool>",					L"<={bool $PR}, ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
-		AssertExpr(pa, L"VtaFunc2<bool, char>",				L"VtaFunc2<bool, char>",			L"<={bool $PR, char $PR}, ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc2<>",						L"VtaFunc2<>",						L"<...={}, ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc2<bool>",					L"VtaFunc2<bool>",					L"<...={bool $PR}, ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
+		AssertExpr(pa, L"VtaFunc2<bool, char>",				L"VtaFunc2<bool, char>",			L"<...={bool $PR, char $PR}, ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
 		// test types of partially applied template functions
 	});
 
