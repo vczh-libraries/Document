@@ -105,10 +105,22 @@ namespace symbol_type_resolving
 						funcChoices.Add(TypeConvCat::Exact);
 					}
 				}
+				else if (entityType->GetType() == TsysType::GenericFunction)
+				{
+					if (auto symbol = funcTypes[i].symbol)
+					{
+						if (symbol->kind == symbol_component::SymbolKind::FunctionSymbol || symbol->kind == symbol_component::SymbolKind::FunctionBodySymbol)
+						{
+							if (AddInternal(expandedFuncTypes, { funcType.symbol,funcType.type, entityType }))
+							{
+								funcChoices.Add(choice);
+							}
+						}
+					}
+				}
 				else if (entityType->GetType() == TsysType::Ptr)
 				{
-					entityType = entityType->GetElement();
-					if (entityType->GetType() == TsysType::Function)
+					if (entityType->GetElement()->GetType() == TsysType::Function)
 					{
 						if (AddInternal(expandedFuncTypes, { funcType.symbol,funcType.type, entityType }))
 						{
@@ -130,6 +142,24 @@ namespace symbol_type_resolving
 	bool IsAcceptableWithVariadicInput(const ParsingArguments& pa, ExprTsysItem funcItem, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
 	{
 		return true;
+	}
+
+	Nullable<ExprTsysItem> InferFunctionType(const ParsingArguments& pa, ExprTsysItem funcType, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
+	{
+		switch (funcType.tsys->GetType())
+		{
+		case TsysType::Function:
+			return funcType;
+		case TsysType::LRef:
+		case TsysType::RRef:
+		case TsysType::CV:
+		case TsysType::Ptr:
+			return InferFunctionType(pa, { funcType,funcType.tsys->GetElement() }, argTypes, boundedAnys);
+		case TsysType::GenericFunction:
+			throw NotConvertableException();
+		default:
+			return {};
+		}
 	}
 
 	void VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys, ExprTsysList& result, ExprTsysList* selectedFunctions, bool* anyInvolved)
@@ -166,48 +196,54 @@ namespace symbol_type_resolving
 		}
 
 		ExprTsysList validFuncTypes;
+
 		if (withVariadicInput)
 		{
 			// if number of arguments is unknown, we only check if a function has too few parameters.
 			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
-				auto funcType = funcTypes[i];
-				if (funcType.tsys->GetParamCount() < argTypes.Count() - boundedAnys.Count())
+				if (auto inferredFuncType = InferFunctionType(pa, funcTypes[i], argTypes, boundedAnys))
 				{
-					if (!funcType.tsys->GetFunc().ellipsis)
+					auto funcType = inferredFuncType.Value();
+					if (funcType.tsys->GetParamCount() < argTypes.Count() - boundedAnys.Count())
 					{
-						continue;
+						if (!funcType.tsys->GetFunc().ellipsis)
+						{
+							continue;
+						}
 					}
+					validFuncTypes.Add(funcType);
 				}
-				validFuncTypes.Add(funcType);
 			}
 		}
 		else
 		{
 			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
-				auto funcType = funcTypes[i];
-
-				vint funcParamCount = funcType.tsys->GetParamCount();
-				vint missParamCount = funcParamCount - argTypes.Count();
-				if (missParamCount > 0)
+				if (auto inferredFuncType = InferFunctionType(pa, funcTypes[i], argTypes, boundedAnys))
 				{
-					// if arguments are not enough, we check about parameters with default value
-					if (missParamCount > funcDPs[i])
+					auto funcType = inferredFuncType.Value();
+					vint funcParamCount = funcType.tsys->GetParamCount();
+					vint missParamCount = funcParamCount - argTypes.Count();
+					if (missParamCount > 0)
 					{
-						continue;
+						// if arguments are not enough, we check about parameters with default value
+						if (missParamCount > funcDPs[i])
+						{
+							continue;
+						}
 					}
-				}
-				else if (missParamCount < 0)
-				{
-					// if arguments is too many, we check about ellipsis
-					if (!funcType.tsys->GetFunc().ellipsis)
+					else if (missParamCount < 0)
 					{
-						continue;
+						// if arguments is too many, we check about ellipsis
+						if (!funcType.tsys->GetFunc().ellipsis)
+						{
+							continue;
+						}
 					}
-				}
 
-				validFuncTypes.Add(funcType);
+					validFuncTypes.Add(funcType);
+				}
 			}
 		}
 
@@ -404,6 +440,14 @@ namespace symbol_type_resolving
 		void Visit(GenericType* self)override
 		{
 			self->type->Accept(this);
+			for (vint i = 0; i < self->arguments.Count(); i++)
+			{
+				auto argument = self->arguments[i];
+				if (argument.item.type)
+				{
+					argument.item.type->Accept(this);
+				}
+			}
 		}
 	};
 

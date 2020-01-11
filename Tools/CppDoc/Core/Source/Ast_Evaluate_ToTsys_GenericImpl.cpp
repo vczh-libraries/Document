@@ -128,7 +128,24 @@ namespace symbol_totsys_impl
 
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 					if (!decl->templateSpec) throw NotConvertableException();
-					auto& tsys = EvaluateFuncSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
+
+					Array<ITsys*> decoratedTsys;
+					{
+						auto& tsys = EvaluateFuncSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
+						CopyFrom(decoratedTsys, tsys);
+					}
+
+					for (vint i = 0; i < decoratedTsys.Count(); i++)
+					{
+						if (classType)
+						{
+							decoratedTsys[i] = decoratedTsys[i]->MemberOf(classType)->PtrOf();
+						}
+						else
+						{
+							decoratedTsys[i] = decoratedTsys[i]->PtrOf();
+						}
+					}
 
 					if (partialAppliedArguments != -1)
 					{
@@ -149,22 +166,15 @@ namespace symbol_totsys_impl
 							}
 						}
 
-						for (vint i = 0; i < tsys.Count(); i++)
+						for (vint i = 0; i < decoratedTsys.Count(); i++)
 						{
-							tsys[i] = tsys[i]->GenericFunctionOf(params, gfi);
+							decoratedTsys[i] = decoratedTsys[i]->GenericFunctionOf(params, gfi);
 						}
 					}
 
-					for (vint i = 0; i < tsys.Count(); i++)
+					for (vint i = 0; i < decoratedTsys.Count(); i++)
 					{
-						if (classType)
-						{
-							UseTsys(result, declSymbol, tsys[i]->MemberOf(classType)->PtrOf());
-						}
-						else
-						{
-							UseTsys(result, declSymbol, tsys[i]->PtrOf());
-						}
+						UseTsys(result, declSymbol, decoratedTsys[i]);
 					}
 				}
 				break;

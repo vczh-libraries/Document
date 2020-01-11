@@ -328,7 +328,11 @@ namespace symbol_totsys_impl
 						for (vint j = 0; j < opResult.Count(); j++)
 						{
 							auto item = opResult[j];
-							item.tsys = item.tsys->GetElement();
+							if (item.tsys->GetType() == TsysType::GenericFunction)
+							{
+								throw NotConvertableException();
+							}
+							item.tsys = item.tsys->GetElement()->GetElement();
 							AddNonVar(indirectionItems, item);
 						}
 

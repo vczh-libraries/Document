@@ -463,6 +463,16 @@ public:
 					auto entityType = funcTypes[i].tsys->GetEntity(cv, refType);
 					if (entityType->IsUnknownType())
 					{
+						if (entityType->GetType() == TsysType::GenericFunction)
+						{
+							if (auto symbol = funcTypes[i].symbol)
+							{
+								if (symbol->kind == symbol_component::SymbolKind::FunctionSymbol || symbol->kind == symbol_component::SymbolKind::FunctionBodySymbol)
+								{
+									continue;
+								}
+							}
+						}
 						AddTemp(processResult, pa.tsys->Any());
 					}
 				}

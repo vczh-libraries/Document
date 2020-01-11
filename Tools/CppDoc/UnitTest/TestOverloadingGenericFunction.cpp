@@ -151,7 +151,7 @@ TEST_FILE
 		// test types of partially applied template functions
 	});
 
-	/*TEST_CATEGORY(L"Template argument deduction (simple)")
+	TEST_CATEGORY(L"Template argument deduction (simple)")
 	{
 		using namespace Input__TestOverloadingGenericFunction_TypeInferSimple;
 		COMPILE_PROGRAM(program, pa, input);
@@ -253,5 +253,8 @@ TEST_FILE
 			VtaFunc2(Value<Types<FunctionOf<bool &, float *>, FunctionOf<char &, double *>>>()),
 			Types<bool, char, float, double>
 		);
-	});*/
+	});
+
+	// test generic operators
+	// test known/unknown variadic arguments/parameters
 }
