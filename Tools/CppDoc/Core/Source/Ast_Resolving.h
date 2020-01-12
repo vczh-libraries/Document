@@ -118,4 +118,11 @@ namespace symbol_type_resolving
 													bool allowPartialApply,
 													vint& partialAppliedArguments
 												);
+	extern void									ResolveFunctionParameters(
+													const ParsingArguments& invokerPa,
+													List<ITsys*>& parameterAssignment,
+													Ptr<FunctionType> functionType,
+													Array<ExprTsysItem>& argumentTypes,
+													SortedList<vint>& boundedAnys
+												);
 }

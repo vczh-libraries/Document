@@ -148,7 +148,6 @@ TEST_FILE
 		AssertExpr(pa, L"VtaFunc2<>",						L"VtaFunc2<>",						L"<...={}, ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
 		AssertExpr(pa, L"VtaFunc2<bool>",					L"VtaFunc2<bool>",					L"<...={bool $PR}, ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
 		AssertExpr(pa, L"VtaFunc2<bool, char>",				L"VtaFunc2<bool, char>",			L"<...={bool $PR, char $PR}, ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
-		// test types of partially applied template functions
 	});
 
 	TEST_CATEGORY(L"Template argument deduction (simple)")
@@ -180,10 +179,10 @@ TEST_FILE
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1, 2.0),				void);
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1.0, 2.f),			void);
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1.f, 2),				void);
-
 		// test 0, 1 arguments
 	});
 
+	return;
 	TEST_CATEGORY(L"Template argument deduction (variant)")
 	{
 		using namespace Input__TestOverloadingGenericFunction_TypeInferVariant;

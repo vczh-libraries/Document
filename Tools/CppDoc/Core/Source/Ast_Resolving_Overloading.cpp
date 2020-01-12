@@ -156,7 +156,28 @@ namespace symbol_type_resolving
 		case TsysType::Ptr:
 			return InferFunctionType(pa, { funcType,funcType.tsys->GetElement() }, argTypes, boundedAnys);
 		case TsysType::GenericFunction:
-			throw NotConvertableException();
+			if (funcType.tsys->GetElement()->GetType() == TsysType::Ptr && funcType.tsys->GetElement()->GetElement()->GetType() == TsysType::Function)
+			{
+				if (auto symbol = funcType.symbol)
+				{
+					if (auto decl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+					{
+						if (auto type = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
+						{
+							auto gfi = funcType.tsys->GetGenericFunction();
+							if (gfi.filledArguments != 0) throw NotConvertableException();
+
+							List<ITsys*> parameterAssignment;
+							// cannot pass Ptr<FunctionType> to this function since the last filled argument could be variadic
+							// known variadic function argument should be treated as separated arguments
+							// ParsingArguments need to be adjusted so that we can evaluate each parameter type
+							ResolveFunctionParameters(pa, parameterAssignment, type, argTypes, boundedAnys);
+							throw NotConvertableException();
+						}
+					}
+				}
+			}
+			return {};
 		default:
 			return {};
 		}
