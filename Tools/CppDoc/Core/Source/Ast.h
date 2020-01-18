@@ -155,10 +155,16 @@ public:
 Helpers
 ***********************************************************************/
 
-struct NotConvertableException {};
+// the form or location of the expression is incorrect
 struct IllegalExprException {};
-struct NotResolvableException {};
+
+// unable to recover from type checking
+struct TypeCheckerException {};
+
+// call unsupported method of Symbol, usually because of the symbol category
 struct UnexpectedSymbolCategoryException {};
+
+// stop evaluating function body, because the current context is to evaluating the return type
 struct FinishEvaluatingReturnType {};
 
 struct TypeToTsysConfig

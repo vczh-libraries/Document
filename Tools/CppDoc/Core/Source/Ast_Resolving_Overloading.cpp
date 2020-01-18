@@ -171,7 +171,7 @@ namespace symbol_type_resolving
 							if (type->parameters[j].isVariadic)
 							{
 								// TODO: Support selecting overloading functions with variadic template arguments in the future
-								throw NotConvertableException();
+								throw TypeCheckerException();
 							}
 							if (type->parameters[j].item->initializer)
 							{

@@ -184,7 +184,7 @@ public:
 
 	void Visit(RootType* self)override
 	{
-		throw NotConvertableException();
+		throw TypeCheckerException();
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -243,7 +243,7 @@ public:
 
 void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, bool& isVta, TypeToTsysConfig config)
 {
-	if (!t) throw NotConvertableException();
+	if (!t) throw TypeCheckerException();
 	TypeToTsysVisitor visitor(pa, tsys, nullptr, config);
 	t->Accept(&visitor);
 	isVta = visitor.isVta;
@@ -358,7 +358,7 @@ void TypeToTsysNoVta(const ParsingArguments& pa, Type* t, TypeTsysList& tsys, Ty
 	TypeToTsysInternal(pa, t, tsys, isVta, config);
 	if (isVta)
 	{
-		throw NotConvertableException();
+		throw TypeCheckerException();
 	}
 }
 
@@ -369,11 +369,11 @@ void TypeToTsysNoVta(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& tsys
 
 void TypeToTsysAndReplaceFunctionReturnType(const ParsingArguments& pa, Ptr<Type> t, TypeTsysList& returnTypes, TypeTsysList& tsys, bool memberOf)
 {
-	if (!t) throw NotConvertableException();
+	if (!t) throw TypeCheckerException();
 	TypeToTsysVisitor visitor(pa, tsys, &returnTypes, TypeToTsysConfig::MemberOf(memberOf));
 	t->Accept(&visitor);
 	if (visitor.isVta)
 	{
-		throw NotConvertableException();
+		throw TypeCheckerException();
 	}
 }

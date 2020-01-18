@@ -236,7 +236,7 @@ namespace symbol_type_resolving
 		switch (ev.progress)
 		{
 		case symbol_component::EvaluationProgress::Evaluating:
-			throw NotResolvableException();
+			throw TypeCheckerException();
 		case symbol_component::EvaluationProgress::Evaluated:
 			return Eval(false, symbol, declPa, ev);
 		default:
@@ -265,7 +265,7 @@ namespace symbol_type_resolving
 				{
 					if (!rootVarDecl->initializer)
 					{
-						throw NotResolvableException();
+						throw TypeCheckerException();
 					}
 
 					ExprTsysList types;
@@ -282,7 +282,7 @@ namespace symbol_type_resolving
 				}
 				else
 				{
-					throw NotResolvableException();
+					throw TypeCheckerException();
 				}
 			}
 			else
@@ -333,7 +333,7 @@ namespace symbol_type_resolving
 		auto& ev = GetCorrectEvaluation(pa, funcDecl, funcDecl->templateSpec, argumentsToApply);
 		if (ev.progress != symbol_component::EvaluationProgress::Evaluating)
 		{
-			throw NotResolvableException();
+			throw TypeCheckerException();
 		}
 
 		auto newPa = pa.WithScope(symbol);
@@ -392,7 +392,7 @@ namespace symbol_type_resolving
 				}
 				else
 				{
-					throw NotResolvableException();
+					throw TypeCheckerException();
 				}
 			}
 			else
@@ -512,7 +512,7 @@ namespace symbol_type_resolving
 			{
 				auto symbol = classType->GetDecl();
 				auto classDecl = symbol->GetImplDecl_NFb<ClassDeclaration>();
-				if (!classDecl) throw NotResolvableException();
+				if (!classDecl) throw TypeCheckerException();
 
 				if (classType->GetType() == TsysType::Decl)
 				{
@@ -525,7 +525,7 @@ namespace symbol_type_resolving
 				}
 			}
 		default:
-			throw NotResolvableException();
+			throw TypeCheckerException();
 		}
 	}
 
@@ -608,7 +608,7 @@ namespace symbol_type_resolving
 		case symbol_component::SymbolKind::GenericValueArgument:
 			return symbol->GetEvaluationForUpdating_NFb().Get()[0];
 		default:
-			throw NotResolvableException();
+			throw TypeCheckerException();
 		}
 	}
 }

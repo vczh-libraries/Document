@@ -18,13 +18,13 @@ namespace symbol_type_resolving
 			if (parameter.isVariadic)
 			{
 				// TODO: not implemented
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 			else
 			{
 			}
 		}
-		throw NotConvertableException();
+		throw TypeCheckerException();
 	}
 
 	Nullable<ExprTsysItem> InferFunctionType(const ParsingArguments& pa, ExprTsysItem functionItem, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
@@ -46,7 +46,7 @@ namespace symbol_type_resolving
 					if (auto functionType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 					{
 						auto gfi = functionItem.tsys->GetGenericFunction();
-						if (gfi.filledArguments != 0) throw NotConvertableException();
+						if (gfi.filledArguments != 0) throw TypeCheckerException();
 
 						List<ITsys*> parameterAssignment;
 						// cannot pass Ptr<FunctionType> to this function since the last filled argument could be variadic
@@ -70,7 +70,7 @@ namespace symbol_type_resolving
 								if (argument.ellipsis)
 								{
 									// TODO: not implemented
-									throw NotConvertableException();
+									throw TypeCheckerException();
 								}
 								else
 								{
@@ -92,7 +92,7 @@ namespace symbol_type_resolving
 						else
 						{
 							// unable to handle multiple types
-							throw NotConvertableException();
+							throw TypeCheckerException();
 						}
 					}
 				}

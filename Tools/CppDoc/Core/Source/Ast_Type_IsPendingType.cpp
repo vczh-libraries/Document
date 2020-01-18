@@ -173,14 +173,14 @@ public:
 				return;
 			}
 		}
-		throw NotResolvableException();
+		throw TypeCheckerException();
 	}
 
 	void ShouldEqual(Type* self)
 	{
 		if (IsPendingType(self))
 		{
-			throw NotResolvableException();
+			throw TypeCheckerException();
 		}
 		AssumeEqual(self);
 	}
@@ -241,7 +241,7 @@ public:
 			case CppReferenceType::Ptr:
 				if (entity->GetType() != TsysType::Ptr)
 				{
-					throw NotResolvableException();
+					throw TypeCheckerException();
 				}
 				else
 				{
@@ -255,11 +255,11 @@ public:
 					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), subMatching)->LRefOf();
 					break;
 				case TsysRefType::RRef:
-					throw NotResolvableException();
+					throw TypeCheckerException();
 				case TsysRefType::None:
 					if (matching != PendingMatching::Free)
 					{
-						throw NotResolvableException();
+						throw TypeCheckerException();
 					}
 					cv.isGeneralConst = true;
 					result = Execute(pa, self->type.Obj(), entity->CVOf(cv), subMatching)->LRefOf();
@@ -302,31 +302,31 @@ public:
 		{
 			if (cv.isGeneralConst || cv.isVolatile)
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 			if (ref != TsysRefType::None)
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 		}
 
 		if (entity->GetType() != TsysType::Function)
 		{
-			throw NotResolvableException();
+			throw TypeCheckerException();
 		}
 
 		if (self->callingConvention == TsysCallingConvention::None)
 		{
 			if (entity->GetFunc().callingConvention != TsysCallingConvention::CDecl)
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 		}
 		else
 		{
 			if (entity->GetFunc().callingConvention != self->callingConvention)
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 		}
 
@@ -340,7 +340,7 @@ public:
 		{
 			if (IsPendingType(self->parameters[i].item->type))
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 		}
 
@@ -351,21 +351,21 @@ public:
 		{
 			if (cv.isGeneralConst || cv.isVolatile)
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 			if (ref != TsysRefType::None)
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 		}
 
 		if (entity->GetType() != TsysType::Function)
 		{
-			throw NotResolvableException();
+			throw TypeCheckerException();
 		}
 		if (self->parameters.Count() != entity->GetParamCount())
 		{
-			throw NotResolvableException();
+			throw TypeCheckerException();
 		}
 		for (vint i = 0; i < self->parameters.Count(); i++)
 		{
@@ -376,7 +376,7 @@ public:
 		{
 			if (IsPendingType(self->decoratorReturnType))
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 			else
 			{
@@ -398,7 +398,7 @@ public:
 	{
 		if (IsPendingType(self->classType))
 		{
-			throw NotResolvableException();
+			throw TypeCheckerException();
 		}
 
 		TsysCV cv;
@@ -408,17 +408,17 @@ public:
 		{
 			if (cv.isGeneralConst || cv.isVolatile)
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 			if (ref != TsysRefType::None)
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 		}
 
 		if (entity->GetType() != TsysType::Member)
 		{
-			throw NotResolvableException();
+			throw TypeCheckerException();
 		}
 		Execute(pa, self->classType.Obj(), entity->GetClass(), PendingMatching::Exact);
 
@@ -465,28 +465,28 @@ public:
 			{
 				if (ref != TsysRefType::None)
 				{
-					throw NotResolvableException();
+					throw TypeCheckerException();
 				}
 
 				if (cv.isGeneralConst != self->isConst)
 				{
-					throw NotResolvableException();
+					throw TypeCheckerException();
 				}
 
 				if (cv.isVolatile != self->isVolatile)
 				{
-					throw NotResolvableException();
+					throw TypeCheckerException();
 				}
 			}
 			else
 			{
 				if (cv.isGeneralConst && !self->isConst)
 				{
-					throw NotResolvableException();
+					throw TypeCheckerException();
 				}
 				if (cv.isVolatile && !self->isVolatile)
 				{
-					throw NotResolvableException();
+					throw TypeCheckerException();
 				}
 			}
 			Execute(pa, self->type.Obj(), entity, (matching == PendingMatching::Free ? PendingMatching::ExactExceptDecorator : matching));

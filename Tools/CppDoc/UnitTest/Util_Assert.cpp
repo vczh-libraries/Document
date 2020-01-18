@@ -95,7 +95,7 @@ void AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 		{
 			TypeToTsysNoVta(pa, type, tsys);
 		}
-		catch (const NotConvertableException&) {}
+		catch (const TypeCheckerException&) {}
 	}
 
 	SortedList<WString> actuals;
@@ -139,7 +139,7 @@ void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 			ExprToTsysNoVta(pa, expr, tsys);
 		}
 		catch (const IllegalExprException&) {}
-		catch (const NotConvertableException&) {}
+		catch (const TypeCheckerException&) {}
 	}
 
 	SortedList<WString> actuals;

@@ -48,7 +48,7 @@ namespace symbol_totsys_impl
 					{
 						if (!allowVariadic)
 						{
-							throw NotConvertableException();
+							throw TypeCheckerException();
 						}
 						hasVariadic = true;
 
@@ -59,7 +59,7 @@ namespace symbol_totsys_impl
 							AddTsysToResult(result, replacedType);
 							break;
 						default:
-							throw NotConvertableException();
+							throw TypeCheckerException();
 						}
 					}
 					else
@@ -72,7 +72,7 @@ namespace symbol_totsys_impl
 				{
 					if (!allowVariadic)
 					{
-						throw NotConvertableException();
+						throw TypeCheckerException();
 					}
 					AddTsysToResult(result, pa.tsys->Any());
 					hasVariadic = true;
@@ -85,7 +85,7 @@ namespace symbol_totsys_impl
 			}
 			return;
 		}
-		throw NotConvertableException();
+		throw TypeCheckerException();
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ namespace symbol_totsys_impl
 
 		if (hasVariadic && hasNonVariadic)
 		{
-			throw NotConvertableException();
+			throw TypeCheckerException();
 		}
 		return hasVariadic;
 	}
@@ -124,12 +124,12 @@ namespace symbol_totsys_impl
 			}
 			else
 			{
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 		}
 		else if (resolving->resolvedSymbols.Count() == 0)
 		{
-			throw NotConvertableException();
+			throw TypeCheckerException();
 		}
 
 		isVta = SymbolListToTsys(pa, result, allowVariadic, [&](auto receiver)
@@ -213,7 +213,7 @@ namespace symbol_totsys_impl
 		}
 		else if (resolving->resolvedSymbols.Count() == 0)
 		{
-			throw NotConvertableException();
+			throw TypeCheckerException();
 		}
 
 		else if (pa.functionBodySymbol && pa.functionBodySymbol->GetClassMemberCache_NFb())
@@ -241,7 +241,7 @@ namespace symbol_totsys_impl
 
 			if (hasVariadic && hasNonVariadic)
 			{
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 			isVta = hasVariadic;
 		}
@@ -330,7 +330,7 @@ namespace symbol_totsys_impl
 							auto item = opResult[j];
 							if (item.tsys->GetType() == TsysType::GenericFunction)
 							{
-								throw NotConvertableException();
+								throw TypeCheckerException();
 							}
 							item.tsys = item.tsys->GetElement()->GetElement();
 							AddNonVar(indirectionItems, item);

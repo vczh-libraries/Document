@@ -297,7 +297,7 @@ namespace symbol_type_resolving
 				{
 					if (!allowVariadic)
 					{
-						throw NotConvertableException();
+						throw TypeCheckerException();
 					}
 					hasVariadic = true;
 
@@ -307,7 +307,7 @@ namespace symbol_type_resolving
 					{
 						if (!replacedType)
 						{
-							throw NotConvertableException();
+							throw TypeCheckerException();
 						}
 
 						switch (replacedType->GetType())
@@ -329,7 +329,7 @@ namespace symbol_type_resolving
 							AddTemp(result, pa.tsys->Any());
 							break;
 						default:
-							throw NotConvertableException();
+							throw TypeCheckerException();
 						}
 					}
 					else
@@ -374,7 +374,7 @@ namespace symbol_type_resolving
 			case TsysType::DeclInstant:
 				break;
 			default:
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 
 			auto thisSymbol = currentThis->GetDecl();
@@ -409,7 +409,7 @@ namespace symbol_type_resolving
 			auto adjustedThisItem = AdjustThisItemForSymbol(pa, *thisItem, symbol);
 			if (!adjustedThisItem)
 			{
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 
 			auto baseItem = adjustedThisItem.Value();

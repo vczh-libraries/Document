@@ -232,7 +232,7 @@ namespace symbol_totsys_impl
 								}
 								else if (unboundedVtaCount != count)
 								{
-									throw NotConvertableException();
+									throw TypeCheckerException();
 								}
 							}
 							else
@@ -478,7 +478,7 @@ namespace symbol_totsys_impl
 
 		if (hasBoundedVta && hasUnboundedVta)
 		{
-			throw NotConvertableException();
+			throw TypeCheckerException();
 		}
 
 		if (hasUnboundedVta)
@@ -499,7 +499,7 @@ namespace symbol_totsys_impl
 							}
 							else if (unboundedVtaCount != currentVtaCount)
 							{
-								throw NotConvertableException();
+								throw TypeCheckerException();
 							}
 						}
 					}

@@ -440,11 +440,11 @@ public:
 			auto classDecl = self->symbol->GetParentScope()->GetImplDecl_NFb<ClassDeclaration>();
 			if (!classDecl)
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 			if (self->name.type != CppNameType::Constructor)
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 
 			auto newPa = pa.WithScope(self->symbol);
@@ -570,7 +570,7 @@ void EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration
 			ExprToTsysInternal(pa, decl->initializer->arguments[i].item, types, typesVta);
 			if (typesVta != decl->initializer->arguments[i].isVariadic)
 			{
-				throw NotResolvableException();
+				throw TypeCheckerException();
 			}
 		}
 	}

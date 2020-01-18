@@ -65,7 +65,7 @@ namespace symbol_totsys_impl
 			}
 			break;
 		}
-		throw NotConvertableException();
+		throw TypeCheckerException();
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////

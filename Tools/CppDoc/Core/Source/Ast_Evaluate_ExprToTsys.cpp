@@ -388,7 +388,7 @@ public:
 		{
 			if (argHasBoundedVta)
 			{
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 			isVta = true;
 
@@ -403,7 +403,7 @@ public:
 					}
 					else if (funcVtaCount != funcTsys->GetParamCount())
 					{
-						throw NotConvertableException();
+						throw TypeCheckerException();
 					}
 
 					if (argUnboundedVtaCount == -1)
@@ -412,7 +412,7 @@ public:
 					}
 					if (argUnboundedVtaCount != funcVtaCount)
 					{
-						throw NotConvertableException();
+						throw TypeCheckerException();
 					}
 				}
 			}
@@ -550,7 +550,7 @@ public:
 		{
 			if (self->placementArguments[i].isVariadic)
 			{
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 			ExprTsysList types;
 			ExprToTsysNoVta(pa, self->placementArguments[i].item, types);
@@ -837,6 +837,6 @@ void ExprToTsysNoVta(const ParsingArguments& pa, Ptr<Expr> e, ExprTsysList& tsys
 	ExprToTsysInternal(pa, e, tsys, isVta);
 	if (isVta)
 	{
-		throw NotConvertableException();
+		throw TypeCheckerException();
 	}
 }

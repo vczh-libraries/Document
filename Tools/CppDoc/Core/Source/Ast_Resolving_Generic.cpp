@@ -48,8 +48,8 @@ namespace symbol_type_resolving
 
 	void CreateGenericFunctionHeader(const ParsingArguments& pa, Symbol* declSymbol, ITsys* parentDeclType, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction)
 	{
-		if (!declSymbol) throw NotConvertableException();
-		if (!spec) throw NotConvertableException();
+		if (!declSymbol) throw TypeCheckerException();
+		if (!spec) throw TypeCheckerException();
 
 		genericFunction.declSymbol = declSymbol;
 		genericFunction.parentDeclType = parentDeclType;
@@ -74,19 +74,19 @@ namespace symbol_type_resolving
 		case TsysType::GenericArg:
 			if (argument->GetType() == TsysType::GenericFunction)
 			{
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 			break;
 		case TsysType::GenericFunction:
 			if (argument->GetType() != TsysType::GenericFunction)
 			{
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 			EnsureGenericFunctionParameterAndArgumentMatched(parameter, argument);
 			break;
 		default:
 			// until class specialization begins to develop, this should always not happen
-			throw NotConvertableException();
+			throw TypeCheckerException();
 		}
 	}
 
@@ -94,7 +94,7 @@ namespace symbol_type_resolving
 	{
 		if (parameter->GetParamCount() != argument->GetParamCount())
 		{
-			throw NotConvertableException();
+			throw TypeCheckerException();
 		}
 
 		auto& pGF = parameter->GetGenericFunction();
@@ -108,7 +108,7 @@ namespace symbol_type_resolving
 			auto aT = aGF.spec->arguments[i].argumentType;
 			if (pT != aT)
 			{
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 
 			if (pT != CppTemplateArgumentType::Value)
@@ -201,7 +201,7 @@ namespace symbol_type_resolving
 			{
 				if (!allowPartialApply && i != templateArgumentCount - 1)
 				{
-					throw NotConvertableException();
+					throw TypeCheckerException();
 				}
 				firstVta = i;
 				break;
@@ -218,7 +218,7 @@ namespace symbol_type_resolving
 			{
 				if (firstDefault != -1)
 				{
-					throw NotConvertableException();
+					throw TypeCheckerException();
 				}
 			}
 		}
@@ -228,7 +228,7 @@ namespace symbol_type_resolving
 		// check if there are too many offered arguments
 		if (firstVta == -1 && inputArgumentCount - boundedAnys.Count() > parametersToFill)
 		{
-			throw NotConvertableException();
+			throw TypeCheckerException();
 		}
 
 		if (firstVta == -1)
@@ -257,7 +257,7 @@ namespace symbol_type_resolving
 					else
 					{
 						// missing offered arguments
-						throw NotConvertableException();
+						throw TypeCheckerException();
 					}
 				}
 			}
@@ -346,7 +346,7 @@ namespace symbol_type_resolving
 						else
 						{
 							// missing offered arguments
-							throw NotConvertableException();
+							throw TypeCheckerException();
 						}
 					}
 				}
@@ -388,7 +388,7 @@ namespace symbol_type_resolving
 			{
 				if (!argIsVat(i))
 				{
-					throw NotConvertableException();
+					throw TypeCheckerException();
 				}
 				gpaMappings.Add(GenericParameterAssignment::Unfilled());
 			}
@@ -414,7 +414,7 @@ namespace symbol_type_resolving
 	{
 		if (genericFunction->GetType() != TsysType::GenericFunction)
 		{
-			throw NotConvertableException();
+			throw TypeCheckerException();
 		}
 
 		const auto& genericFuncInfo = genericFunction->GetGenericFunction();
@@ -446,7 +446,7 @@ namespace symbol_type_resolving
 					{
 						if (spec->arguments[i].argumentType == CppTemplateArgumentType::Value)
 						{
-							throw NotConvertableException();
+							throw TypeCheckerException();
 						}
 						TypeTsysList argTypes;
 						TypeToTsysNoVta(pa.WithScope(genericFuncInfo.declSymbol), spec->arguments[i].type, argTypes);
@@ -460,7 +460,7 @@ namespace symbol_type_resolving
 					{
 						if (spec->arguments[i].argumentType != CppTemplateArgumentType::Value)
 						{
-							throw NotConvertableException();
+							throw TypeCheckerException();
 						}
 						newTaContext.arguments.Add(pattern, nullptr);
 					}
@@ -471,7 +471,7 @@ namespace symbol_type_resolving
 					// if an offered argument is to fill this template argument
 					if (acceptType != isTypes[argSource[gpa.index]])
 					{
-						throw NotConvertableException();
+						throw TypeCheckerException();
 					}
 
 					if (acceptType)
@@ -501,7 +501,7 @@ namespace symbol_type_resolving
 					{
 						if (acceptType != isTypes[argSource[gpa.index + j]])
 						{
-							throw NotConvertableException();
+							throw TypeCheckerException();
 						}
 					}
 
@@ -618,7 +618,7 @@ namespace symbol_type_resolving
 				break;
 			case GenericParameterAssignmentKind::Unfilled:
 				// missing arguments are not allowed
-				throw NotConvertableException();
+				throw TypeCheckerException();
 				break;
 			}
 		}

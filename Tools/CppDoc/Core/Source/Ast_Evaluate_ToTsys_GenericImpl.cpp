@@ -26,7 +26,7 @@ namespace symbol_totsys_impl
 			auto declSymbol = genericFunction->GetGenericFunction().declSymbol;
 			if (!declSymbol)
 			{
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 
 			TemplateArgumentContext taContext;
@@ -42,7 +42,7 @@ namespace symbol_totsys_impl
 		}
 		else
 		{
-			throw NotConvertableException();
+			throw TypeCheckerException();
 		}
 	}
 
@@ -67,14 +67,14 @@ namespace symbol_totsys_impl
 	{
 		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa, &result](ITsys* genericFunction, Symbol* declSymbol, TemplateArgumentContext* argumentsToApply, vint partialAppliedArguments)
 		{
-			if (partialAppliedArguments != -1) throw NotConvertableException();
+			if (partialAppliedArguments != -1) throw TypeCheckerException();
 			auto parentDeclType = genericFunction->GetGenericFunction().parentDeclType;
 			switch (declSymbol->kind)
 			{
 			case CLASS_SYMBOL_KIND:
 				{
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardClassDeclaration>();
-					if (!decl->templateSpec) throw NotConvertableException();
+					if (!decl->templateSpec) throw TypeCheckerException();
 					auto& tsys = EvaluateForwardClassSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
 					UseTypeTsysList(result, declSymbol, tsys);
 				}
@@ -82,7 +82,7 @@ namespace symbol_totsys_impl
 			case symbol_component::SymbolKind::TypeAlias:
 				{
 					auto decl = declSymbol->GetImplDecl_NFb<TypeAliasDeclaration>();
-					if (!decl->templateSpec) throw NotConvertableException();
+					if (!decl->templateSpec) throw TypeCheckerException();
 					auto& tsys = EvaluateTypeAliasSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
 					UseTypeTsysList(result, nullptr, tsys);
 				}
@@ -94,7 +94,7 @@ namespace symbol_totsys_impl
 				}
 				break;
 			default:
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 		});
 	}
@@ -127,7 +127,7 @@ namespace symbol_totsys_impl
 					}
 
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-					if (!decl->templateSpec) throw NotConvertableException();
+					if (!decl->templateSpec) throw TypeCheckerException();
 
 					Array<ITsys*> decoratedTsys;
 					{
@@ -180,15 +180,15 @@ namespace symbol_totsys_impl
 				break;
 			case symbol_component::SymbolKind::ValueAlias:
 				{
-					if (partialAppliedArguments != -1) throw NotConvertableException();
+					if (partialAppliedArguments != -1) throw TypeCheckerException();
 					auto decl = declSymbol->GetImplDecl_NFb<ValueAliasDeclaration>();
-					if (!decl->templateSpec) throw NotConvertableException();
+					if (!decl->templateSpec) throw TypeCheckerException();
 					auto& tsys = EvaluateValueAliasSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
 					UseTypeTsysList(result, nullptr, tsys);
 				}
 				break;
 			default:
-				throw NotConvertableException();
+				throw TypeCheckerException();
 			}
 		});
 	}

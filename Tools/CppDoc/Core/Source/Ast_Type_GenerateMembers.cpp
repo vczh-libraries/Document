@@ -122,7 +122,7 @@ bool IsSpecialMemberFeatureEnabled(const ParsingArguments& pa, ITsys* classType,
 	case TsysType::DeclInstant:
 		break;
 	default:
-		throw NotResolvableException();
+		throw TypeCheckerException();
 	}
 
 	auto classSymbol = classType->GetDecl();
@@ -215,9 +215,9 @@ bool IsSpecialMemberEnabledForType(const ParsingArguments& pa, ITsys* type, Spec
 	case TsysType::Member:
 	case TsysType::GenericFunction:
 		// these type cannot be used as a value
-		throw NotResolvableException();
+		throw TypeCheckerException();
 	}
-	throw NotResolvableException();
+	throw TypeCheckerException();
 }
 
 /***********************************************************************

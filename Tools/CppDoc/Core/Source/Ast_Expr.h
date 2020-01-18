@@ -356,7 +356,7 @@ void MatchCategoryExpr(const Ptr<Category_Id_Child_Generic_Expr>& expr, TId&& pr
 	}
 	else
 	{
-		throw NotResolvableException();
+		throw TypeCheckerException();
 	}
 }
 
@@ -373,7 +373,7 @@ void MatchCategoryExpr(const Ptr<Category_Id_Child_Expr>& expr, TId&& processId,
 	}
 	else
 	{
-		throw NotResolvableException();
+		throw TypeCheckerException();
 	}
 }
 
