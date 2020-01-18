@@ -254,7 +254,8 @@ TEST_FILE
 		);
 	});
 
-	// test generic methods
-	// test generic operators
 	// test known/unknown variadic arguments/parameters
+	// test generic methods		(TestOverloadingGenericMethodInfer.cpp)
+	// test generic operators	(TestOverloadingGenericMethodInfer.cpp)
+	// test overloading			(TestOverloadingGenericFunction.cpp)
 }
