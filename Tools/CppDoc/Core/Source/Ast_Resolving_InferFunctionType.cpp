@@ -4,7 +4,8 @@ namespace symbol_type_resolving
 {
 
 	/***********************************************************************
-	InferFunctionType: Perform type inferencing for template function using both offered template and function arguments
+	InferFunctionType:	Perform type inferencing for template function using both offered template and function arguments
+						Ts(*)(X<Ts...>)... or Ts<X<Ts<Y>...>... is not supported, because of nested Ts...
 	***********************************************************************/
 
 	void InferTemplateArgumentsForFunctionType(const ParsingArguments& pa, ExprTsysItem functionItem, Ptr<FunctionType> functionType, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys, TemplateArgumentContext& taContext)
@@ -45,54 +46,61 @@ namespace symbol_type_resolving
 				{
 					if (auto functionType = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
 					{
-						auto gfi = functionItem.tsys->GetGenericFunction();
-						if (gfi.filledArguments != 0) throw TypeCheckerException();
-
-						List<ITsys*> parameterAssignment;
-						// cannot pass Ptr<FunctionType> to this function since the last filled argument could be variadic
-						// known variadic function argument should be treated as separated arguments
-						// ParsingArguments need to be adjusted so that we can evaluate each parameter type
-						ResolveFunctionParameters(pa, parameterAssignment, functionType, argTypes, boundedAnys);
-
-						auto inferPa = pa.AdjustForDecl(gfi.declSymbol, gfi.parentDeclType, false);
-
-						TemplateArgumentContext taContext;
-						for (vint i = 0; i < gfi.spec->arguments.Count(); i++)
+						try
 						{
-							auto argument = gfi.spec->arguments[i];
-							auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
-							if (i < gfi.filledArguments)
+							auto gfi = functionItem.tsys->GetGenericFunction();
+							if (gfi.filledArguments != 0) throw TypeCheckerException();
+
+							List<ITsys*> parameterAssignment;
+							// cannot pass Ptr<FunctionType> to this function since the last filled argument could be variadic
+							// known variadic function argument should be treated as separated arguments
+							// ParsingArguments need to be adjusted so that we can evaluate each parameter type
+							ResolveFunctionParameters(pa, parameterAssignment, functionType, argTypes, boundedAnys);
+
+							auto inferPa = pa.AdjustForDecl(gfi.declSymbol, gfi.parentDeclType, false);
+
+							TemplateArgumentContext taContext;
+							for (vint i = 0; i < gfi.spec->arguments.Count(); i++)
 							{
-								taContext.arguments.Add(pattern, functionItem.tsys->GetParam(i));
+								auto argument = gfi.spec->arguments[i];
+								auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
+								if (i < gfi.filledArguments)
+								{
+									taContext.arguments.Add(pattern, functionItem.tsys->GetParam(i));
+								}
+								else if (argument.argumentType == CppTemplateArgumentType::Value)
+								{
+									if (argument.ellipsis)
+									{
+										// TODO: not implemented
+										throw TypeCheckerException();
+									}
+									else
+									{
+										taContext.arguments.Add(pattern, nullptr);
+									}
+								}
 							}
-							else if (argument.argumentType == CppTemplateArgumentType::Value)
+
+							InferTemplateArgumentsForFunctionType(inferPa, functionItem, functionType, argTypes, boundedAnys, taContext);
+							auto& tsys = EvaluateFuncSymbol(inferPa, decl.Obj(), inferPa.parentDeclType, &taContext);
+							if (tsys.Count() == 0)
 							{
-								if (argument.ellipsis)
-								{
-									// TODO: not implemented
-									throw TypeCheckerException();
-								}
-								else
-								{
-									taContext.arguments.Add(pattern, nullptr);
-								}
+								return {};
+							}
+							else if (tsys.Count() == 1)
+							{
+								return { { functionItem,tsys[0] } };
+							}
+							else
+							{
+								// unable to handle multiple types
+								throw TypeCheckerException();
 							}
 						}
-
-						InferTemplateArgumentsForFunctionType(inferPa, functionItem, functionType, argTypes, boundedAnys, taContext);
-						auto& tsys = EvaluateFuncSymbol(inferPa, decl.Obj(), inferPa.parentDeclType, &taContext);
-						if (tsys.Count() == 0)
+						catch (const TypeCheckerException&)
 						{
 							return {};
-						}
-						else if (tsys.Count() == 1)
-						{
-							return { { functionItem,tsys[0] } };
-						}
-						else
-						{
-							// unable to handle multiple types
-							throw TypeCheckerException();
 						}
 					}
 				}
