@@ -109,7 +109,7 @@ namespace symbol_type_resolving
 				{
 					if (auto symbol = funcTypes[i].symbol)
 					{
-						if (symbol->kind == symbol_component::SymbolKind::FunctionSymbol || symbol->kind == symbol_component::SymbolKind::FunctionBodySymbol)
+						if (auto decl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 						{
 							if (AddInternal(expandedFuncTypes, { funcType.symbol,funcType.type, entityType }))
 							{
@@ -128,6 +128,13 @@ namespace symbol_type_resolving
 						}
 					}
 				}
+				else if (entityType->IsUnknownType())
+				{
+					if (AddInternal(expandedFuncTypes, { funcType.symbol,funcType.type,entityType }))
+					{
+						funcChoices.Add({ TypeConvCat::Exact, false, true });
+					}
+				}
 			}
 		}
 
@@ -142,45 +149,6 @@ namespace symbol_type_resolving
 	bool IsAcceptableWithVariadicInput(const ParsingArguments& pa, ExprTsysItem funcItem, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
 	{
 		return true;
-	}
-
-	Nullable<ExprTsysItem> InferFunctionType(const ParsingArguments& pa, ExprTsysItem funcType, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
-	{
-		switch (funcType.tsys->GetType())
-		{
-		case TsysType::Function:
-			return funcType;
-		case TsysType::LRef:
-		case TsysType::RRef:
-		case TsysType::CV:
-		case TsysType::Ptr:
-			return InferFunctionType(pa, { funcType,funcType.tsys->GetElement() }, argTypes, boundedAnys);
-		case TsysType::GenericFunction:
-			if (funcType.tsys->GetElement()->GetType() == TsysType::Ptr && funcType.tsys->GetElement()->GetElement()->GetType() == TsysType::Function)
-			{
-				if (auto symbol = funcType.symbol)
-				{
-					if (auto decl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
-					{
-						if (auto type = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>())
-						{
-							auto gfi = funcType.tsys->GetGenericFunction();
-							if (gfi.filledArguments != 0) throw NotConvertableException();
-
-							List<ITsys*> parameterAssignment;
-							// cannot pass Ptr<FunctionType> to this function since the last filled argument could be variadic
-							// known variadic function argument should be treated as separated arguments
-							// ParsingArguments need to be adjusted so that we can evaluate each parameter type
-							ResolveFunctionParameters(pa, parameterAssignment, type, argTypes, boundedAnys);
-							throw NotConvertableException();
-						}
-					}
-				}
-			}
-			return {};
-		default:
-			return {};
-		}
 	}
 
 	void VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys, ExprTsysList& result, ExprTsysList* selectedFunctions, bool* anyInvolved)
@@ -217,6 +185,7 @@ namespace symbol_type_resolving
 		}
 
 		ExprTsysList validFuncTypes;
+		bool addedAny = false;
 
 		if (withVariadicInput)
 		{
@@ -226,6 +195,16 @@ namespace symbol_type_resolving
 				if (auto inferredFuncType = InferFunctionType(pa, funcTypes[i], argTypes, boundedAnys))
 				{
 					auto funcType = inferredFuncType.Value();
+					if (funcType.tsys->IsUnknownType())
+					{
+						if (!addedAny)
+						{
+							addedAny = true;
+							AddTemp(result, pa.tsys->Any());
+						}
+						continue;
+					}
+
 					if (funcType.tsys->GetParamCount() < argTypes.Count() - boundedAnys.Count())
 					{
 						if (!funcType.tsys->GetFunc().ellipsis)
@@ -244,6 +223,16 @@ namespace symbol_type_resolving
 				if (auto inferredFuncType = InferFunctionType(pa, funcTypes[i], argTypes, boundedAnys))
 				{
 					auto funcType = inferredFuncType.Value();
+					if (funcType.tsys->IsUnknownType())
+					{
+						if (!addedAny)
+						{
+							addedAny = true;
+							AddTemp(result, pa.tsys->Any());
+						}
+						continue;
+					}
+
 					vint funcParamCount = funcType.tsys->GetParamCount();
 					vint missParamCount = funcParamCount - argTypes.Count();
 					if (missParamCount > 0)
@@ -349,228 +338,6 @@ namespace symbol_type_resolving
 					selectedFunctions->Add(validFuncTypes[i]);
 				}
 				AddTemp(result, validFuncTypes[i].tsys->GetElement());
-			}
-		}
-	}
-
-	/***********************************************************************
-	IsAdlEnabled: Check if argument-dependent lookup is considered according to the unqualified lookup result
-	***********************************************************************/
-
-	bool IsAdlEnabled(const ParsingArguments& pa, Ptr<Resolving> resolving)
-	{
-		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
-		{
-			auto symbol = resolving->resolvedSymbols[i];
-			if (symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
-			{
-				auto parent = symbol->GetParentScope();
-				while (parent)
-				{
-					switch (parent->kind)
-					{
-					case symbol_component::SymbolKind::Root:
-					case symbol_component::SymbolKind::Namespace:
-						parent = parent->GetParentScope();
-						break;
-					default:
-						return false;
-					}
-				}
-			}
-			else
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/***********************************************************************
-	SearchAdlClassesAndNamespaces: Preparing for argument-dependent lookup
-	***********************************************************************/
-
-	class SearchBaseTypeAdlClassesAndNamespacesVisitor : public Object, public virtual ITypeVisitor
-	{
-	public:
-		const ParsingArguments&		pa;
-		SortedList<Symbol*>&		nss;
-		SortedList<Symbol*>&		classes;
-
-		SearchBaseTypeAdlClassesAndNamespacesVisitor(const ParsingArguments& _pa, SortedList<Symbol*>& _nss, SortedList<Symbol*>& _classes)
-			:pa(_pa)
-			, nss(_nss)
-			, classes(_classes)
-		{
-		}
-
-		void Resolve(Ptr<Resolving> resolving)
-		{
-			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
-			{
-				SearchAdlClassesAndNamespaces(pa, resolving->resolvedSymbols[i], nss, classes);
-			}
-		}
-
-		void Visit(PrimitiveType* self)override
-		{
-		}
-
-		void Visit(ReferenceType* self)override
-		{
-		}
-
-		void Visit(ArrayType* self)override
-		{
-		}
-
-		void Visit(CallingConventionType* self)override
-		{
-		}
-
-		void Visit(FunctionType* self)override
-		{
-		}
-
-		void Visit(MemberType* self)override
-		{
-		}
-
-		void Visit(DeclType* self)override
-		{
-		}
-
-		void Visit(DecorateType* self)override
-		{
-		}
-
-		void Visit(RootType* self)override
-		{
-		}
-
-		void Visit(IdType* self)override
-		{
-			Resolve(self->resolving);
-		}
-
-		void Visit(ChildType* self)override
-		{
-			Resolve(self->resolving);
-		}
-
-		void Visit(GenericType* self)override
-		{
-			self->type->Accept(this);
-			for (vint i = 0; i < self->arguments.Count(); i++)
-			{
-				auto argument = self->arguments[i];
-				if (argument.item.type)
-				{
-					argument.item.type->Accept(this);
-				}
-			}
-		}
-	};
-
-	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
-	{
-		auto firstSymbol = symbol;
-		while (symbol)
-		{
-			if (symbol->kind == symbol_component::SymbolKind::Namespace)
-			{
-				if (!nss.Contains(symbol))
-				{
-					nss.Add(symbol);
-				}
-			}
-			else if (auto classDecl = symbol->GetCategory() == symbol_component::SymbolCategory::Normal ? symbol->GetImplDecl_NFb<ClassDeclaration>() : nullptr)
-			{
-				if (!classes.Contains(symbol))
-				{
-					classes.Add(symbol);
-				}
-
-				if (symbol == firstSymbol)
-				{
-					auto classPa = pa.WithScope(symbol);
-
-					SearchBaseTypeAdlClassesAndNamespacesVisitor visitor(classPa, nss, classes);
-					for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
-					{
-						classDecl->baseTypes[i].f1->Accept(&visitor);
-					}
-				}
-			}
-			else
-			{
-				break;
-			}
-			symbol = symbol->GetParentScope();
-		}
-	}
-
-	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
-	{
-		switch (type->GetType())
-		{
-		case TsysType::LRef:
-		case TsysType::RRef:
-		case TsysType::Ptr:
-		case TsysType::Array:
-		case TsysType::CV:
-			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss, classes);
-			break;
-		case TsysType::Function:
-			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss, classes);
-			for (vint i = 0; i < type->GetParamCount(); i++)
-			{
-				SearchAdlClassesAndNamespaces(pa, type->GetParam(i), nss, classes);
-			}
-			break;
-		case TsysType::Member:
-			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss, classes);
-			SearchAdlClassesAndNamespaces(pa, type->GetClass(), nss, classes);
-			break;
-		case TsysType::Decl:
-			SearchAdlClassesAndNamespaces(pa, type->GetDecl(), nss, classes);
-			break;
-		case TsysType::DeclInstant:
-			{
-				SearchAdlClassesAndNamespaces(pa, type->GetDecl(), nss, classes);
-				for (vint i = 0; i < type->GetParamCount(); i++)
-				{
-					SearchAdlClassesAndNamespaces(pa, type->GetParam(i), nss, classes);
-				}
-				const auto& di = type->GetDeclInstant();
-				if (di.parentDeclType)
-				{
-					SearchAdlClassesAndNamespaces(pa, di.parentDeclType, nss, classes);
-				}
-			}
-			break;
-		}
-	}
-
-	/***********************************************************************
-	SearchAdlFunction: Find functions in namespaces
-	***********************************************************************/
-
-	void SearchAdlFunction(const ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result)
-	{
-		for (vint i = 0; i < nss.Count(); i++)
-		{
-			auto ns = nss[i];
-			if (auto pChildren = ns->TryGetChildren_NFb(name))
-			{
-				for (vint j = 0; j < pChildren->Count(); j++)
-				{
-					auto child = pChildren->Get(j).Obj();
-					if (child->kind == symbol_component::SymbolKind::FunctionSymbol)
-					{
-						VisitSymbol(pa, child, result);
-					}
-				}
 			}
 		}
 	}

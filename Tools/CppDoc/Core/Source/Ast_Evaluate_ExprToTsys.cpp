@@ -456,29 +456,8 @@ public:
 					}
 				}
 
-				for (vint i = 0; i < funcTypes.Count(); i++)
-				{
-					TsysCV cv;
-					TsysRefType refType;
-					auto entityType = funcTypes[i].tsys->GetEntity(cv, refType);
-					if (entityType->IsUnknownType())
-					{
-						if (entityType->GetType() == TsysType::GenericFunction)
-						{
-							if (auto symbol = funcTypes[i].symbol)
-							{
-								if (symbol->kind == symbol_component::SymbolKind::FunctionSymbol || symbol->kind == symbol_component::SymbolKind::FunctionBodySymbol)
-								{
-									continue;
-								}
-							}
-						}
-						AddTemp(processResult, pa.tsys->Any());
-					}
-				}
-				FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
-
 				ExprTsysList selectedFunctions;
+				FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
 				VisitOverloadedFunction(pa, funcTypes, args, boundedAnys, processResult, (pa.recorder ? &selectedFunctions : nullptr));
 				AddInternal(totalSelectedFunctions, selectedFunctions);
 			});

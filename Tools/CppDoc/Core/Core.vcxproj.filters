@@ -188,5 +188,11 @@
     <ClCompile Include="Source\Parser_Template.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Ast_Resolving_Adl.cpp">
+      <Filter>Source Files\Ast\Resolving</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_Resolving_InferFunctionType.cpp">
+      <Filter>Source Files\Ast\Resolving</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
