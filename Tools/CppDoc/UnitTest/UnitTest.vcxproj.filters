@@ -120,6 +120,12 @@
     <ClCompile Include="TestOverloadingGenericFunction.cpp">
       <Filter>Source Files\TestOverloading</Filter>
     </ClCompile>
+    <ClCompile Include="TestOverloadingGenericFunctionInfer.cpp">
+      <Filter>Source Files\TestOverloading</Filter>
+    </ClCompile>
+    <ClCompile Include="TestOverloadingGenericMethodInfer.cpp">
+      <Filter>Source Files\TestOverloading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">

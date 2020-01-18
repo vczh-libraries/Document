@@ -160,6 +160,8 @@
     <ClCompile Include="TestOverloadingAdl.cpp" />
     <ClCompile Include="TestOverloadingGenericClass.cpp" />
     <ClCompile Include="TestOverloadingGenericFunction.cpp" />
+    <ClCompile Include="TestOverloadingGenericFunctionInfer.cpp" />
+    <ClCompile Include="TestOverloadingGenericMethodInfer.cpp" />
     <ClCompile Include="TestOverloadingOperator.cpp" />
     <ClCompile Include="TestParseGenericClass.cpp" />
     <ClCompile Include="TestParseGenericFunction.cpp" />
