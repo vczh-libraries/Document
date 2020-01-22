@@ -297,17 +297,21 @@ namespace symbol_type_resolving
 		// don't care about arguments for ellipsis
 		for (vint i = 0; i < functionType->parameters.Count(); i++)
 		{
-			// see if any variadic value arguments can be determined
-			// variadic value argument only care about the number of values
-			auto parameter = functionType->parameters[i];
-			if (parameter.isVariadic)
+			// if default value is used, skip it
+			if (auto assignment = parameterAssignment[i])
 			{
-				// TODO: not implemented
-				throw 0;
-			}
-			else
-			{
-				InferTemplateArgument(pa, parameter.item->type, parameterAssignment[i], taContext, allArgs);
+				// see if any variadic value arguments can be determined
+				// variadic value argument only care about the number of values
+				auto parameter = functionType->parameters[i];
+				if (parameter.isVariadic)
+				{
+					// TODO: not implemented
+					throw 0;
+				}
+				else
+				{
+					InferTemplateArgument(pa, parameter.item->type, assignment, taContext, allArgs);
+				}
 			}
 		}
 	}
@@ -387,6 +391,8 @@ namespace symbol_type_resolving
 							}
 
 							InferTemplateArgumentsForFunctionType(inferPa, functionItem, functionType, parameterAssignment, taContext, allArgs);
+
+							taContext.symbolToApply = gfi.declSymbol;
 							auto& tsys = EvaluateFuncSymbol(inferPa, decl.Obj(), inferPa.parentDeclType, &taContext);
 							if (tsys.Count() == 0)
 							{

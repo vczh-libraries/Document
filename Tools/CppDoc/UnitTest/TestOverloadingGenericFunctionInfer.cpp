@@ -182,7 +182,6 @@ TEST_FILE
 		// test 0, 1 arguments
 	});
 
-	return;
 	TEST_CATEGORY(L"Template argument deduction (variant)")
 	{
 		using namespace Input__TestOverloadingGenericFunction_TypeInferVariant;
@@ -193,6 +192,7 @@ TEST_FILE
 		// when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
 	});
 
+	return;
 	TEST_CATEGORY(L"Template argument deduction (kinds)")
 	{
 		using namespace Input__TestOverloadingGenericFunction_TypeInferKinds;
