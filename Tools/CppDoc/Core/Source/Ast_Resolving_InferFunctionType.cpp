@@ -213,8 +213,45 @@ namespace symbol_type_resolving
 
 		void Visit(IdType* self)override
 		{
-			// TODO: not implemented
-			throw 0;
+			if (self->resolving && self->resolving->resolvedSymbols.Count() == 1)
+			{
+				auto patternSymbol = self->resolving->resolvedSymbols[0];
+				if (allArgs.Keys().Contains(patternSymbol))
+				{
+					// same implementation as GetTemplateArgumentKey
+					if (patternSymbol->ellipsis)
+					{
+						auto pattern = pa.tsys->DeclOf(patternSymbol);
+						// TODO: not implemented
+						throw 0;
+					}
+					else
+					{
+						auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
+
+						// const, volatile, &, && are discarded
+						TsysCV refCV;
+						TsysRefType refType;
+						auto entity = offeredType->GetEntity(refCV, refType);
+
+						vint index = taContext.arguments.Keys().IndexOf(pattern);
+						if (index == -1)
+						{
+							// if this argument is not inferred, use the result
+							taContext.arguments.Add(pattern, entity);
+						}
+						else
+						{
+							// if this argument is inferred, it requires the same result
+							auto inferred = taContext.arguments.Values()[index];
+							if (entity != inferred)
+							{
+								throw TypeCheckerException();
+							}
+						}
+					}
+				}
+			}
 		}
 
 		void Visit(ChildType* self)override
@@ -268,14 +305,13 @@ namespace symbol_type_resolving
 			if (parameter.isVariadic)
 			{
 				// TODO: not implemented
-				throw TypeCheckerException();
+				throw 0;
 			}
 			else
 			{
 				InferTemplateArgument(pa, parameter.item->type, parameterAssignment[i], taContext, allArgs);
 			}
 		}
-		throw TypeCheckerException();
 	}
 
 	Nullable<ExprTsysItem> InferFunctionType(const ParsingArguments& pa, ExprTsysItem functionItem, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
