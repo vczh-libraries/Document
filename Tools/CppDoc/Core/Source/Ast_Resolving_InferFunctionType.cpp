@@ -2,6 +2,19 @@
 
 namespace symbol_type_resolving
 {
+	Symbol* TemplateArgumentPatternToSymbol(ITsys* tsys)
+	{
+		switch (tsys->GetType())
+		{
+		case TsysType::Decl:
+			return tsys->GetDecl();
+		case TsysType::GenericArg:
+			return TemplateArgumentPatternToSymbol(tsys->GetElement());
+		default:
+			throw TypeCheckerException();
+		}
+	}
+
 	/***********************************************************************
 	IsFreeType:	Check if this type contains template arguments that are to be inferred
 	***********************************************************************/
@@ -10,9 +23,9 @@ namespace symbol_type_resolving
 	{
 	public:
 		bool							result = false;
-		const SortedList<ITsys*>&		allArgs;
+		const SortedList<Symbol*>&		allArgs;
 
-		IsFreeTypeVisitor(const SortedList<ITsys*>& _allArgs)
+		IsFreeTypeVisitor(const SortedList<Symbol*>& _allArgs)
 			:allArgs(_allArgs)
 		{
 		}
@@ -78,8 +91,13 @@ namespace symbol_type_resolving
 
 		void Visit(IdType* self)override
 		{
-			// TODO: not implemented
-			throw 0;
+			if (self->resolving && self->resolving->resolvedSymbols.Count() == 1)
+			{
+				if (allArgs.Contains(self->resolving->resolvedSymbols[0]))
+				{
+					result = true;
+				}
+			}
 		}
 
 		void Visit(ChildType* self)override
@@ -100,7 +118,7 @@ namespace symbol_type_resolving
 		}
 	};
 
-	bool IsFreeType(Type* type, const Dictionary<ITsys*, vint>& allArgs)
+	bool IsFreeType(Type* type, const Dictionary<Symbol*, vint>& allArgs)
 	{
 		if (!type) return false;
 		IsFreeTypeVisitor visitor(allArgs.Keys());
@@ -108,7 +126,7 @@ namespace symbol_type_resolving
 		return visitor.result;
 	}
 
-	bool IsFreeType(Ptr<Type> type, const Dictionary<ITsys*, vint>& allArgs)
+	bool IsFreeType(Ptr<Type> type, const Dictionary<Symbol*, vint>& allArgs)
 	{
 		return IsFreeType(type.Obj(), allArgs);
 	}
@@ -123,9 +141,9 @@ namespace symbol_type_resolving
 		ITsys*							offeredType = nullptr;
 		const ParsingArguments&			pa;
 		TemplateArgumentContext&		taContext;
-		Dictionary<ITsys*, vint>&		allArgs;
+		Dictionary<Symbol*, vint>&		allArgs;
 
-		InferTemplateArgumentVisitor(const ParsingArguments& _pa, TemplateArgumentContext& _taContext, Dictionary<ITsys*, vint>& _allArgs)
+		InferTemplateArgumentVisitor(const ParsingArguments& _pa, TemplateArgumentContext& _taContext, Dictionary<Symbol*, vint>& _allArgs)
 			:pa(_pa)
 			, taContext(_taContext)
 			, allArgs(_allArgs)
@@ -217,7 +235,7 @@ namespace symbol_type_resolving
 		Ptr<Type> argumentType,
 		ITsys* offeredType,
 		TemplateArgumentContext& taContext,
-		Dictionary<ITsys*, vint>& allArgs
+		Dictionary<Symbol*, vint>& allArgs
 	)
 	{
 		InferTemplateArgumentVisitor(pa, taContext, allArgs).Execute(argumentType, offeredType);
@@ -238,7 +256,7 @@ namespace symbol_type_resolving
 		Ptr<FunctionType> functionType,
 		List<ITsys*>& parameterAssignment,
 		TemplateArgumentContext& taContext,
-		Dictionary<ITsys*, vint>& allArgs
+		Dictionary<Symbol*, vint>& allArgs
 	)
 	{
 		// don't care about arguments for ellipsis
@@ -285,7 +303,7 @@ namespace symbol_type_resolving
 
 							List<ITsys*> parameterAssignment;
 							TemplateArgumentContext taContext;
-							Dictionary<ITsys*, vint> allArgs;
+							Dictionary<Symbol*, vint> allArgs;
 							auto inferPa = pa.AdjustForDecl(gfi.declSymbol, gfi.parentDeclType, false);
 
 							// cannot pass Ptr<FunctionType> to this function since the last filled argument could be variadic
@@ -297,6 +315,7 @@ namespace symbol_type_resolving
 							{
 								auto argument = gfi.spec->arguments[i];
 								auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
+								auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
 
 								if (i < gfi.filledArguments)
 								{
@@ -304,15 +323,15 @@ namespace symbol_type_resolving
 									taContext.arguments.Add(pattern, value);
 									if (!argument.ellipsis)
 									{
-										allArgs.Add(pattern, COUNT_ASSIGNED);
+										allArgs.Add(patternSymbol, COUNT_ASSIGNED);
 									}
 									else if (value->GetType() == TsysType::Any)
 									{
-										allArgs.Add(pattern, COUNT_ANY);
+										allArgs.Add(patternSymbol, COUNT_ANY);
 									}
 									else
 									{
-										allArgs.Add(pattern, value->GetParamCount());
+										allArgs.Add(patternSymbol, value->GetParamCount());
 									}
 								}
 								else
@@ -329,7 +348,7 @@ namespace symbol_type_resolving
 											taContext.arguments.Add(pattern, nullptr);
 										}
 									}
-									allArgs.Add(pattern, COUNT_UNASSIGNED);
+									allArgs.Add(patternSymbol, COUNT_UNASSIGNED);
 								}
 							}
 
