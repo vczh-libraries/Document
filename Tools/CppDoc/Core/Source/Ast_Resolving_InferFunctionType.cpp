@@ -211,41 +211,38 @@ namespace symbol_type_resolving
 
 		void Visit(IdType* self)override
 		{
-			if (self->resolving && self->resolving->resolvedSymbols.Count() == 1)
+			if (IsFreeType(self, allArgs))
 			{
 				auto patternSymbol = self->resolving->resolvedSymbols[0];
-				if (allArgs.Keys().Contains(patternSymbol))
+				// same implementation as GetTemplateArgumentKey
+				if (patternSymbol->ellipsis)
 				{
-					// same implementation as GetTemplateArgumentKey
-					if (patternSymbol->ellipsis)
+					auto pattern = pa.tsys->DeclOf(patternSymbol);
+					// TODO: not implemented
+					throw 0;
+				}
+				else
+				{
+					auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
+
+					// const, volatile, &, && are discarded
+					TsysCV refCV;
+					TsysRefType refType;
+					auto entity = offeredType->GetEntity(refCV, refType);
+
+					vint index = taContext.arguments.Keys().IndexOf(pattern);
+					if (index == -1)
 					{
-						auto pattern = pa.tsys->DeclOf(patternSymbol);
-						// TODO: not implemented
-						throw 0;
+						// if this argument is not inferred, use the result
+						taContext.arguments.Add(pattern, entity);
 					}
 					else
 					{
-						auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
-
-						// const, volatile, &, && are discarded
-						TsysCV refCV;
-						TsysRefType refType;
-						auto entity = offeredType->GetEntity(refCV, refType);
-
-						vint index = taContext.arguments.Keys().IndexOf(pattern);
-						if (index == -1)
+						// if this argument is inferred, it requires the same result
+						auto inferred = taContext.arguments.Values()[index];
+						if (entity != inferred)
 						{
-							// if this argument is not inferred, use the result
-							taContext.arguments.Add(pattern, entity);
-						}
-						else
-						{
-							// if this argument is inferred, it requires the same result
-							auto inferred = taContext.arguments.Values()[index];
-							if (entity != inferred)
-							{
-								throw TypeCheckerException();
-							}
+							throw TypeCheckerException();
 						}
 					}
 				}
