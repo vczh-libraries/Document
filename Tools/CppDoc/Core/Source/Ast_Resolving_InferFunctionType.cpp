@@ -6,10 +6,8 @@ namespace symbol_type_resolving
 	{
 		switch (tsys->GetType())
 		{
-		case TsysType::Decl:
-			return tsys->GetDecl();
 		case TsysType::GenericArg:
-			return TemplateArgumentPatternToSymbol(tsys->GetElement());
+			return tsys->GetGenericArg().argSymbol;
 		default:
 			throw TypeCheckerException();
 		}
