@@ -164,6 +164,29 @@ namespace symbol_type_resolving
 	InferTemplateArgument:	Perform type inferencing by matching an function argument with its offerred argument
 	***********************************************************************/
 
+	void SetInferredResult(TemplateArgumentContext& taContext, ITsys* pattern, ITsys* type)
+	{
+		vint index = taContext.arguments.Keys().IndexOf(pattern);
+		if (index == -1)
+		{
+			// if this argument is not inferred, use the result
+			taContext.arguments.Add(pattern, type);
+		}
+		else if (type->GetType() != TsysType::Any)
+		{
+			// if this argument is inferred, it requires the same result if both of them are not any_t
+			auto inferred = taContext.arguments.Values()[index];
+			if (inferred->GetType() == TsysType::Any)
+			{
+				taContext.arguments.Set(pattern, type);
+			}
+			else if (type != inferred)
+			{
+				throw TypeCheckerException();
+			}
+		}
+	}
+
 	class InferTemplateArgumentVisitor : public Object, public virtual ITypeVisitor
 	{
 	public:
@@ -256,39 +279,16 @@ namespace symbol_type_resolving
 		void Visit(IdType* self)override
 		{
 			auto patternSymbol = self->resolving->resolvedSymbols[0];
+			auto& outputContext = patternSymbol->ellipsis ? variadicContext : taContext;
+
 			// consistent with GetTemplateArgumentKey
-			if (patternSymbol->ellipsis)
-			{
-				auto pattern = pa.tsys->DeclOf(patternSymbol);
-				// TODO: not implemented
-				throw 0;
-			}
-			else
-			{
-				auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
-				auto& outputContext = patternSymbol->ellipsis ? variadicContext : taContext;
+			auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
 
-				// const, volatile, &, && are discarded
-				TsysCV refCV;
-				TsysRefType refType;
-				auto entity = exactMatch ? offeredType : offeredType->GetEntity(refCV, refType);
-
-				vint index = outputContext.arguments.Keys().IndexOf(pattern);
-				if (index == -1)
-				{
-					// if this argument is not inferred, use the result
-					outputContext.arguments.Add(pattern, entity);
-				}
-				else
-				{
-					// if this argument is inferred, it requires the same result
-					auto inferred = outputContext.arguments.Values()[index];
-					if (entity != inferred)
-					{
-						throw TypeCheckerException();
-					}
-				}
-			}
+			// const, volatile, &, && are discarded
+			TsysCV refCV;
+			TsysRefType refType;
+			auto entity = exactMatch ? offeredType : offeredType->GetEntity(refCV, refType);
+			SetInferredResult(outputContext, pattern, entity);
 		}
 
 		void Visit(ChildType* self)override
@@ -344,18 +344,98 @@ namespace symbol_type_resolving
 
 				SortedList<Type*> involvedTypes;
 				CollectFreeTypes(parameter.item->type, parameter.isVariadic, freeTypeSymbols, involvedTypes);
-				if (parameter.isVariadic)
+
+				// get all affected arguments
+				List<ITsys*> vas;
+				List<ITsys*> nvas;
+				for (vint j = 0; j < involvedTypes.Count(); j++)
 				{
-					// TODO: not implemented
-					throw 0;
+					if (auto idType = dynamic_cast<IdType*>(involvedTypes[j]))
+					{
+						auto patternSymbol = idType->resolving->resolvedSymbols[0];
+						auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
+						if (patternSymbol->ellipsis)
+						{
+							vas.Add(pattern);
+						}
+						else
+						{
+							nvas.Add(pattern);
+						}
+					}
+				}
+
+				if (assignedTsys->GetType() == TsysType::Any)
+				{
+					// if the assigned argument is any_t, infer all affected types to any_t
+					for (vint j = 0; j < vas.Count(); j++)
+					{
+						SetInferredResult(taContext, vas[j], pa.tsys->Any());
+					}
+					for (vint j = 0; j < nvas.Count(); j++)
+					{
+						SetInferredResult(taContext, nvas[j], pa.tsys->Any());
+					}
 				}
 				else
 				{
-					TemplateArgumentContext unusedVariadicContext;
-					InferTemplateArgument(pa, parameter.item->type, assignedTsys, taContext, unusedVariadicContext, freeTypeSymbols, involvedTypes);
-					if (unusedVariadicContext.arguments.Count() > 0)
+					if (parameter.isVariadic)
 					{
-						throw TypeCheckerException();
+						// for variadic parameter
+						vint count = assignedTsys->GetParamCount();
+						if (count == 0)
+						{
+							// if the assigned argument is an empty list, infer all variadic arguments to empty
+							Array<ExprTsysItem> params;
+							auto init = pa.tsys->InitOf(params);
+							for (vint j = 0; j < vas.Count(); j++)
+							{
+								SetInferredResult(taContext, vas[j], init);
+							}
+						}
+						else
+						{
+							// if the assigned argument is a non-empty list
+							Dictionary<ITsys*, Ptr<Array<ExprTsysItem>>> variadicResults;
+							for (vint j = 0; j < vas.Count(); j++)
+							{
+								variadicResults.Add(vas[j], MakePtr<Array<ExprTsysItem>>(count));
+							}
+
+							// run each item in the list
+							for (vint j = 0; j < count; j++)
+							{
+								auto assignedTsysItem = assignedTsys->GetParam(j);
+								TemplateArgumentContext variadicContext;
+								InferTemplateArgument(pa, parameter.item->type, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes);
+								for (vint k = 0; k < variadicContext.arguments.Count(); k++)
+								{
+									auto key = variadicContext.arguments.Keys()[k];
+									auto value = variadicContext.arguments.Values()[k];
+									auto result = variadicResults[key];
+									result->Set(j, { nullptr,ExprTsysType::PRValue,value });
+								}
+							}
+
+							// aggregate them
+							for (vint j = 0; j < vas.Count(); j++)
+							{
+								auto pattern = vas[j];
+								auto& params = *variadicResults[pattern].Obj();
+								auto init = pa.tsys->InitOf(params);
+								SetInferredResult(taContext, pattern, init);
+							}
+						}
+					}
+					else
+					{
+						// for non-variadic parameter, run the assigned argument
+						TemplateArgumentContext unusedVariadicContext;
+						InferTemplateArgument(pa, parameter.item->type, assignedTsys, taContext, unusedVariadicContext, freeTypeSymbols, involvedTypes);
+						if (unusedVariadicContext.arguments.Count() > 0)
+						{
+							throw TypeCheckerException();
+						}
 					}
 				}
 			}
