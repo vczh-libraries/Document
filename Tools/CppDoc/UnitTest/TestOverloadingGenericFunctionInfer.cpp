@@ -187,7 +187,11 @@ TEST_FILE
 		using namespace Input__TestOverloadingGenericFunction_TypeInferVariant;
 		COMPILE_PROGRAM(program, pa, input);
 
-		ASSERT_OVERLOADING_SIMPLE((Variant(1, 1.0, 1.f, ci, vi, cvi)),			Types<__int32, double, float, __int32, __int32, __int32>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			Variant(1, 1.0, 1.f, ci, vi, cvi),
+			L"::Types<{__int32 $PR, double $PR, float $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
+			Types<int, double, float, int, int, int>
+		);
 		// test 0, 1, 2 arguments
 		// when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
 	});

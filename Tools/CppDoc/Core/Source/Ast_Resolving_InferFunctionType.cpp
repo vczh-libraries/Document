@@ -407,7 +407,7 @@ namespace symbol_type_resolving
 							{
 								auto assignedTsysItem = assignedTsys->GetParam(j);
 								TemplateArgumentContext variadicContext;
-								InferTemplateArgument(pa, parameter.item->type, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes);
+								InferTemplateArgument(pa, parameter.item->type, assignedTsysItem, taContext, variadicContext, freeTypeSymbols, involvedTypes);
 								for (vint k = 0; k < variadicContext.arguments.Count(); k++)
 								{
 									auto key = variadicContext.arguments.Keys()[k];
