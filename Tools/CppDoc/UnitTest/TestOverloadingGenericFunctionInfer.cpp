@@ -196,7 +196,6 @@ TEST_FILE
 		// when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
 	});
 
-	return;
 	TEST_CATEGORY(L"Template argument deduction (kinds)")
 	{
 		using namespace Input__TestOverloadingGenericFunction_TypeInferKinds;
@@ -204,56 +203,60 @@ TEST_FILE
 
 		// test 0, 1, 2, 3 arguments
 
-		ASSERT_OVERLOADING_SIMPLE(LRef(Value<bool &>()),									Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(LRef(Value<bool const &>()),								Types<bool const>);
-		ASSERT_OVERLOADING_SIMPLE(LRef(Value<bool volatile &>()),							Types<bool volatile>);
-		ASSERT_OVERLOADING_SIMPLE(LRef(Value<bool const volatile &>()),						Types<bool const volatile>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(LRef(Value<bool &>()),									L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(LRef(Value<bool const &>()),							L"::Types<{bool const $PR}> $PR",						Types<bool const>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(LRef(Value<bool volatile &>()),						L"::Types<{bool volatile $PR}> $PR",					Types<bool volatile>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(LRef(Value<bool const volatile &>()),					L"::Types<{bool const volatile $PR}> $PR",				Types<bool const volatile>);
 
-		ASSERT_OVERLOADING_SIMPLE(RRef(Value<bool &>()),									Types<bool &>);
-		ASSERT_OVERLOADING_SIMPLE(RRef(Value<bool const &>()),								Types<bool const &>);
-		ASSERT_OVERLOADING_SIMPLE(RRef(Value<bool volatile &>()),							Types<bool volatile &>);
-		ASSERT_OVERLOADING_SIMPLE(RRef(Value<bool const volatile &>()),						Types<bool const volatile &>);
-		ASSERT_OVERLOADING_SIMPLE(RRef(Value<bool &&>()),									Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(RRef(Value<bool const &&>()),								Types<bool const>);
-		ASSERT_OVERLOADING_SIMPLE(RRef(Value<bool volatile &&>()),							Types<bool volatile>);
-		ASSERT_OVERLOADING_SIMPLE(RRef(Value<bool const volatile &&>()),					Types<bool const volatile>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(RRef(Value<bool &>()),									L"::Types<{bool & $PR}> $PR",							Types<bool &>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(RRef(Value<bool const &>()),							L"::Types<{bool const & $PR}> $PR",						Types<bool const &>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(RRef(Value<bool volatile &>()),						L"::Types<{bool volatile & $PR}> $PR",					Types<bool volatile &>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(RRef(Value<bool const volatile &>()),					L"::Types<{bool const volatile & $PR}> $PR",			Types<bool const volatile &>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(RRef(Value<bool &&>()),								L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(RRef(Value<bool const &&>()),							L"::Types<{bool const $PR}> $PR",						Types<bool const>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(RRef(Value<bool volatile &&>()),						L"::Types<{bool volatile $PR}> $PR",					Types<bool volatile>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(RRef(Value<bool const volatile &&>()),					L"::Types<{bool const volatile $PR}> $PR",				Types<bool const volatile>);
 
-		ASSERT_OVERLOADING_SIMPLE(Pointer(Value<bool *>()),									Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(Pointer(Value<bool const *>()),							Types<bool const>);
-		ASSERT_OVERLOADING_SIMPLE(Pointer(Value<bool volatile *>()),						Types<bool volatile>);
-		ASSERT_OVERLOADING_SIMPLE(Pointer(Value<bool const volatile *>()),					Types<bool const volatile>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(Pointer(Value<bool *>()),								L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(Pointer(Value<bool const *>()),						L"::Types<{bool const $PR}> $PR",						Types<bool const>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(Pointer(Value<bool volatile *>()),						L"::Types<{bool volatile $PR}> $PR",					Types<bool volatile>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(Pointer(Value<bool const volatile *>()),				L"::Types<{bool const volatile $PR}> $PR",				Types<bool const volatile>);
 		
-		ASSERT_OVERLOADING_SIMPLE(Function(Value<FunctionOf<bool>>()),						Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(Function(Value<FunctionOf<bool, float, double>>()),		Types<bool, float, double>);
-		ASSERT_OVERLOADING_SIMPLE(Member(Value<MemberOf<bool, Types<>>>()),					Types<bool, Types<>>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(Function(Value<FunctionOf<bool>>()),					L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(Function(Value<FunctionOf<bool, float, double>>()),	L"::Types<{bool $PR, float $PR, double $PR}> $PR",		Types<bool, float, double>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(Member(Value<MemberOf<bool, Types<>>>()),				L"::Types<{bool $PR, ::Types<{}> $PR}> $PR",			Types<bool, Types<>>);
 
-		ASSERT_OVERLOADING_SIMPLE(C(Value<bool>()),											Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(C(Value<bool const>()),									Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(C(Value<bool volatile>()),								Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(C(Value<bool const volatile>()),							Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(V(Value<bool>()),											Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(V(Value<bool const>()),									Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(V(Value<bool volatile>()),								Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(V(Value<bool const volatile>()),							Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(CV(Value<bool>()),										Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(CV(Value<bool const>()),									Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(CV(Value<bool volatile>()),								Types<bool>);
-		ASSERT_OVERLOADING_SIMPLE(CV(Value<bool const volatile>()),							Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(C(Value<bool>()),										L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(C(Value<bool const>()),								L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(C(Value<bool volatile>()),								L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(C(Value<bool const volatile>()),						L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(V(Value<bool>()),										L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(V(Value<bool const>()),								L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(V(Value<bool volatile>()),								L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(V(Value<bool const volatile>()),						L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(CV(Value<bool>()),										L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(CV(Value<bool const>()),								L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(CV(Value<bool volatile>()),							L"::Types<{bool $PR}> $PR",								Types<bool>);
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(CV(Value<bool const volatile>()),						L"::Types<{bool $PR}> $PR",								Types<bool>);
 
-		ASSERT_OVERLOADING_SIMPLE(
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			VtaPtr(Value<bool *>(), Value<bool const *>(), Value<bool volatile *>()),
+			L"::Types<{bool $PR, bool const $PR, bool volatile $PR}> $PR",
 			Types<bool, bool const, bool volatile>
 		);
-		ASSERT_OVERLOADING_SIMPLE(
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			VtaTypes(Value<Types<bool *, bool const *, bool volatile *>>()),
+			L"::Types<{bool * $PR, bool const * $PR, bool volatile * $PR>}> $PR",
 			Types<bool *, bool const *, bool volatile *>
 		);
-		ASSERT_OVERLOADING_SIMPLE(
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			VtaFunc(Value<Types<FunctionOf<bool, float *>, FunctionOf<bool, double *>>>()),
+			L"::Types<{bool $PR, float $PR, double $PR}> $PR",
 			Types<bool, float, double>
 		);
-		ASSERT_OVERLOADING_SIMPLE(
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			VtaFunc2(Value<Types<FunctionOf<bool &, float *>, FunctionOf<char &, double *>>>()),
+			L"::Types<{bool $PR, char $PR, float $PR, double $PR>}> $PR",
 			Types<bool, char, float, double>
 		);
 	});
