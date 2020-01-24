@@ -18,24 +18,18 @@ namespace symbol_type_resolving
 						Stops at nested variadic types
 	***********************************************************************/
 
-	const vint FREE_TYPE_UNASSIGNED = -2;
-	const vint FREE_TYPE_ANY = -1;
-	const vint FREE_TYPE_ASSIGNED = 0;
-
 	class CollectFreeTypesVisitor : public Object, public virtual ITypeVisitor
 	{
 	public:
 		bool								involved = false;
-		vint								assignment;
+		bool								insideVariant;
 		const SortedList<Symbol*>&			freeTypeSymbols;
 		SortedList<Type*>&					involvedTypes;
-		Dictionary<Symbol*, vint>&			freeTypeAssignments;
 
-		CollectFreeTypesVisitor(vint _assignment, const SortedList<Symbol*>& _freeTypeSymbols, SortedList<Type*>& _involvedTypes, Dictionary<Symbol*, vint>& _freeTypeAssignments)
-			:assignment(_assignment)
+		CollectFreeTypesVisitor(bool _insideVariant, const SortedList<Symbol*>& _freeTypeSymbols, SortedList<Type*>& _involvedTypes)
+			:insideVariant(_insideVariant)
 			, freeTypeSymbols(_freeTypeSymbols)
 			, involvedTypes(_involvedTypes)
-			, freeTypeAssignments(_freeTypeAssignments)
 		{
 		}
 
@@ -79,7 +73,12 @@ namespace symbol_type_resolving
 			result = Execute(self->returnType) || result;
 			for (vint i = 0; i < self->parameters.Count(); i++)
 			{
-				if (!self->parameters[i].isVariadic)
+				if (self->parameters[i].isVariadic)
+				{
+					// does not support nested variadic arguments
+					throw TypeCheckerException();
+				}
+				else
 				{
 					result = Execute(self->parameters[i].item->type);
 				}
@@ -118,26 +117,6 @@ namespace symbol_type_resolving
 				{
 					involved = true;
 					involvedTypes.Add(self);
-
-					vint normalizedAssignment = symbol->ellipsis ? assignment : FREE_TYPE_ASSIGNED;
-					vint index = freeTypeAssignments.Keys().IndexOf(symbol);
-					if (index == -1)
-					{
-						freeTypeAssignments.Add(symbol, normalizedAssignment);
-					}
-					else
-					{
-						vint value = freeTypeAssignments.Values()[index];
-						if (value == FREE_TYPE_UNASSIGNED || value == normalizedAssignment)
-						{
-							freeTypeAssignments.Set(symbol, normalizedAssignment);
-						}
-						else
-						{
-							// conflict with previous inferred result
-							throw TypeCheckerException();
-						}
-					}
 				}
 			}
 		}
@@ -153,7 +132,12 @@ namespace symbol_type_resolving
 			result = Execute(self->type.Obj()) || result;
 			for (vint i = 0; i < self->arguments.Count(); i++)
 			{
-				if (!self->arguments[i].isVariadic)
+				if (self->arguments[i].isVariadic)
+				{
+					// does not support nested variadic arguments
+					throw TypeCheckerException();
+				}
+				else
 				{
 					result = Execute(self->arguments[i].item.type) || result;
 				}
@@ -162,18 +146,18 @@ namespace symbol_type_resolving
 		}
 	};
 
-	void CollectFreeTypes(Type* type, vint assignment, const SortedList<Symbol*>& freeTypeSymbols, SortedList<Type*>& involvedTypes, Dictionary<Symbol*, vint>& freeTypeAssignments)
+	void CollectFreeTypes(Type* type, bool insideVariant, const SortedList<Symbol*>& freeTypeSymbols, SortedList<Type*>& involvedTypes)
 	{
 		if (type)
 		{
-			CollectFreeTypesVisitor visitor(assignment, freeTypeSymbols, involvedTypes, freeTypeAssignments);
+			CollectFreeTypesVisitor visitor(insideVariant, freeTypeSymbols, involvedTypes);
 			type->Accept(&visitor);
 		}
 	}
 
-	void CollectFreeTypes(Ptr<Type> type, vint assignment, const SortedList<Symbol*>& freeTypeSymbols, SortedList<Type*>& involvedTypes, Dictionary<Symbol*, vint>& freeTypeAssignments)
+	void CollectFreeTypes(Ptr<Type> type, bool insideVariant, const SortedList<Symbol*>& freeTypeSymbols, SortedList<Type*>& involvedTypes)
 	{
-		CollectFreeTypes(type.Obj(), assignment, freeTypeSymbols, involvedTypes, freeTypeAssignments);
+		CollectFreeTypes(type.Obj(), insideVariant, freeTypeSymbols, involvedTypes);
 	}
 
 	/***********************************************************************
@@ -187,16 +171,16 @@ namespace symbol_type_resolving
 		bool								exactMatch = false;
 		const ParsingArguments&				pa;
 		TemplateArgumentContext&			taContext;
+		TemplateArgumentContext&			variadicContext;
 		const SortedList<Symbol*>&			freeTypeSymbols;
 		const SortedList<Type*>&			involvedTypes;
-		const Dictionary<Symbol*, vint>&	freeTypeAssignments;
 
-		InferTemplateArgumentVisitor(const ParsingArguments& _pa, TemplateArgumentContext& _taContext, const SortedList<Symbol*>& _freeTypeSymbols, const SortedList<Type*>& _involvedTypes, const Dictionary<Symbol*, vint>& _freeTypeAssignments)
+		InferTemplateArgumentVisitor(const ParsingArguments& _pa, TemplateArgumentContext& _taContext, TemplateArgumentContext& _variadicContext, const SortedList<Symbol*>& _freeTypeSymbols, const SortedList<Type*>& _involvedTypes)
 			:pa(_pa)
 			, taContext(_taContext)
+			, variadicContext(_variadicContext)
 			, freeTypeSymbols(_freeTypeSymbols)
 			, involvedTypes(_involvedTypes)
-			, freeTypeAssignments(_freeTypeAssignments)
 		{
 		}
 
@@ -210,7 +194,7 @@ namespace symbol_type_resolving
 
 		void Execute(Ptr<Type> argumentType, ITsys* _offeredType)
 		{
-			InferTemplateArgumentVisitor(pa, taContext, freeTypeSymbols, involvedTypes, freeTypeAssignments)
+			InferTemplateArgumentVisitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes)
 				.ExecuteOnce(argumentType, _offeredType, true);
 		}
 
@@ -282,22 +266,23 @@ namespace symbol_type_resolving
 			else
 			{
 				auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
+				auto& outputContext = patternSymbol->ellipsis ? variadicContext : taContext;
 
 				// const, volatile, &, && are discarded
 				TsysCV refCV;
 				TsysRefType refType;
 				auto entity = exactMatch ? offeredType : offeredType->GetEntity(refCV, refType);
 
-				vint index = taContext.arguments.Keys().IndexOf(pattern);
+				vint index = outputContext.arguments.Keys().IndexOf(pattern);
 				if (index == -1)
 				{
 					// if this argument is not inferred, use the result
-					taContext.arguments.Add(pattern, entity);
+					outputContext.arguments.Add(pattern, entity);
 				}
 				else
 				{
 					// if this argument is inferred, it requires the same result
-					auto inferred = taContext.arguments.Values()[index];
+					auto inferred = outputContext.arguments.Values()[index];
 					if (entity != inferred)
 					{
 						throw TypeCheckerException();
@@ -324,12 +309,12 @@ namespace symbol_type_resolving
 		Ptr<Type> argumentType,
 		ITsys* offeredType,
 		TemplateArgumentContext& taContext,
+		TemplateArgumentContext& variadicContext,
 		const SortedList<Symbol*>& freeTypeSymbols,
-		const SortedList<Type*>& involvedTypes,
-		const Dictionary<Symbol*, vint>& freeTypeAssignments
+		const SortedList<Type*>& involvedTypes
 	)
 	{
-		InferTemplateArgumentVisitor(pa, taContext, freeTypeSymbols, involvedTypes, freeTypeAssignments)
+		InferTemplateArgumentVisitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes)
 			.ExecuteOnce(argumentType, offeredType, false);
 	}
 
@@ -344,8 +329,7 @@ namespace symbol_type_resolving
 		Ptr<FunctionType> functionType,
 		List<ITsys*>& parameterAssignment,
 		TemplateArgumentContext& taContext,
-		const SortedList<Symbol*>& freeTypeSymbols,
-		Dictionary<Symbol*, vint>& freeTypeAssignments
+		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
 		// don't care about arguments for ellipsis
@@ -357,21 +341,9 @@ namespace symbol_type_resolving
 				// see if any variadic value arguments can be determined
 				// variadic value argument only care about the number of values
 				auto parameter = functionType->parameters[i];
-				vint assignment = FREE_TYPE_ASSIGNED;
-				if (parameter.isVariadic)
-				{
-					if (assignedTsys->GetType() == TsysType::Any)
-					{
-						assignment = FREE_TYPE_ANY;
-					}
-					else
-					{
-						assignment = assignedTsys->GetParamCount();
-					}
-				}
 
 				SortedList<Type*> involvedTypes;
-				CollectFreeTypes(parameter.item->type, assignment, freeTypeSymbols, involvedTypes, freeTypeAssignments);
+				CollectFreeTypes(parameter.item->type, parameter.isVariadic, freeTypeSymbols, involvedTypes);
 				if (parameter.isVariadic)
 				{
 					// TODO: not implemented
@@ -379,7 +351,12 @@ namespace symbol_type_resolving
 				}
 				else
 				{
-					InferTemplateArgument(pa, parameter.item->type, assignedTsys, taContext, freeTypeSymbols, involvedTypes, freeTypeAssignments);
+					TemplateArgumentContext unusedVariadicContext;
+					InferTemplateArgument(pa, parameter.item->type, assignedTsys, taContext, unusedVariadicContext, freeTypeSymbols, involvedTypes);
+					if (unusedVariadicContext.arguments.Count() > 0)
+					{
+						throw TypeCheckerException();
+					}
 				}
 			}
 		}
@@ -411,7 +388,6 @@ namespace symbol_type_resolving
 							List<ITsys*>						parameterAssignment;
 							TemplateArgumentContext				taContext;
 							SortedList<Symbol*>					freeTypeSymbols;
-							Dictionary<Symbol*, vint>			freeTypeAssignments;
 
 							auto inferPa = pa.AdjustForDecl(gfi.declSymbol, gfi.parentDeclType, false);
 
@@ -428,22 +404,10 @@ namespace symbol_type_resolving
 								auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
 								auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
 								freeTypeSymbols.Add(patternSymbol);
-
-								if (i < gfi.filledArguments)
-								{
-									auto value = functionItem.tsys->GetParam(i);
-									taContext.arguments.Add(pattern, value);
-
-									vint assignment =
-										!argument.ellipsis ? FREE_TYPE_ASSIGNED :
-										value->GetType() == TsysType::Any ? FREE_TYPE_ANY :
-										value->GetParamCount();
-									freeTypeAssignments.Add(patternSymbol, assignment);
-								}
 							}
 
 							// type inferencing
-							InferTemplateArgumentsForFunctionType(inferPa, functionItem, functionType, parameterAssignment, taContext, freeTypeSymbols, freeTypeAssignments);
+							InferTemplateArgumentsForFunctionType(inferPa, functionItem, functionType, parameterAssignment, taContext, freeTypeSymbols);
 
 							// fill template value arguments
 							for (vint i = 0; i < gfi.spec->arguments.Count(); i++)
@@ -453,6 +417,10 @@ namespace symbol_type_resolving
 								{
 									auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
 									auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
+									// TODO: not implemented
+									// InferTemplateArgumentsForFunctionType need to handle this
+									throw 0;
+									/*
 									vint index = freeTypeAssignments.Keys().IndexOf(patternSymbol);
 									if (index == -1)
 									{
@@ -481,6 +449,7 @@ namespace symbol_type_resolving
 									{
 										taContext.arguments.Add(pattern, nullptr);
 									}
+									*/
 								}
 							}
 

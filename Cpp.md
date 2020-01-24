@@ -31,7 +31,7 @@
     - [ ] Only the last function parameter could be variadic, when there is no ellipsis (`ParseSingleDeclarator_Function` function performs a test).
     - [ ] Refactor `ResolveGenericParameters` so that it could also resolve function parameters with variadic or ellipsis.
       - [x] New parameter `allowPartialApply`, will throw when it is false and template arguments are not enough.
-      - [ ] `ResolveGenericParameters` expand provided values or types to argument list eagerly.
+      - [x] `ResolveGenericParameters` expand provided values or types to argument list eagerly.
         - If there are multiple values/types arguments declarated together, all arguments are still offered to the first variadic argument, offered arguments are not grouped by values/types.
           - For example, `template<typename..., typename...>`'s first argument accepts all provided arguments, the second of which deducted from parameters.
           - For example, `template<int..., typename...>` with `<1, int>` is invalid, because `int` is not a `int` constant expression.
