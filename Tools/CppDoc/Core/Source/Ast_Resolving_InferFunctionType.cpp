@@ -405,7 +405,7 @@ namespace symbol_type_resolving
 							// run each item in the list
 							for (vint j = 0; j < count; j++)
 							{
-								auto assignedTsysItem = assignedTsys->GetParam(j);
+								auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
 								TemplateArgumentContext variadicContext;
 								InferTemplateArgument(pa, parameter.item->type, assignedTsysItem, taContext, variadicContext, freeTypeSymbols, involvedTypes);
 								for (vint k = 0; k < variadicContext.arguments.Count(); k++)

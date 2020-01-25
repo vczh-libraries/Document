@@ -585,7 +585,7 @@ namespace symbol_type_resolving
 			case GenericParameterAssignmentKind::OneArgument:
 				{
 					// if an offered argument is to fill this template argument
-					parameterAssignment.Add(argumentTypes[gpa.index].tsys);
+					parameterAssignment.Add(ApplyExprTsysType(argumentTypes[gpa.index].tsys, argumentTypes[gpa.index].type));
 				}
 				break;
 			case GenericParameterAssignmentKind::EmptyVta:
@@ -603,7 +603,6 @@ namespace symbol_type_resolving
 
 					for (vint j = 0; j < gpa.count; j++)
 					{
-						auto item = argumentTypes[gpa.index + j];
 						items[j] = argumentTypes[gpa.index + j];
 					}
 					auto init = invokerPa.tsys->InitOf(items);
