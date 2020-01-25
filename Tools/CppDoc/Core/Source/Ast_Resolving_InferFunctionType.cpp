@@ -210,7 +210,7 @@ namespace symbol_type_resolving
 		void ExecuteInvolvedOnce(Ptr<Type>& argumentType, ITsys* _offeredType, bool _exactMatch = true)
 		{
 			offeredType = _offeredType;
-			exactMatch = exactMatch;
+			exactMatch = _exactMatch;
 			if (!offeredType->IsUnknownType())
 			{
 				argumentType->Accept(this);
