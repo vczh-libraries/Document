@@ -235,7 +235,6 @@ TEST_FILE
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(CV(Value<bool volatile>()),							L"::Types<{bool $PR}> $PR",								Types<bool>);
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(CV(Value<bool const volatile>()),						L"::Types<{bool $PR}> $PR",								Types<bool>);
 		
-		return;
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(Function(Value<FunctionOf<bool>>()),					L"::Types<{bool $PR}> $PR",								Types<bool>);
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(Function(Value<FunctionOf<bool, float, double>>()),	L"::Types<{bool $PR, float $PR, double $PR}> $PR",		Types<bool, float, double>);
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(Member(Value<MemberOf<bool, Types<>>>()),				L"::Types<{bool $PR, ::Types<{}> $PR}> $PR",			Types<bool, Types<>>);

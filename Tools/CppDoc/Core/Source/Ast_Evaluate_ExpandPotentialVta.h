@@ -539,7 +539,7 @@ namespace symbol_totsys_impl
 		{
 			TypeTsysList tsyses;
 			TypeToTsysInternal(pa, type, tsyses, isVta, config);
-			symbol_type_resolving::AddTempValue(result, tsyses);
+			symbol_type_resolving::AddType(result, tsyses);
 		}
 
 		void Apply(ExprTsysList& result, bool& isVta, const Ptr<Expr>& expr, TypeToTsysConfig config)
