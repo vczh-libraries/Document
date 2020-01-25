@@ -57,16 +57,16 @@ namespace symbol_totsys_impl
 		{
 			if (type->GetParamCount() == 1)
 			{
-				AddTemp(result, type->GetElement()->PtrOf());
+				AddTempValue(result, type->GetElement()->PtrOf());
 			}
 			else
 			{
-				AddTemp(result, type->GetElement()->ArrayOf(type->GetParamCount() - 1)->PtrOf());
+				AddTempValue(result, type->GetElement()->ArrayOf(type->GetParamCount() - 1)->PtrOf());
 			}
 		}
 		else
 		{
-			AddTemp(result, type->PtrOf());
+			AddTempValue(result, type->PtrOf());
 		}
 	}
 
@@ -78,11 +78,11 @@ namespace symbol_totsys_impl
 	{
 		if (boundedAnys.Count() > 0)
 		{
-			AddTemp(result, pa.tsys->Any());
+			AddTempValue(result, pa.tsys->Any());
 		}
 		else
 		{
-			AddTemp(result, pa.tsys->InitOf(args));
+			AddTempValue(result, pa.tsys->InitOf(args));
 		}
 	}
 }

@@ -195,7 +195,7 @@ namespace symbol_type_resolving
 						if (!addedAny)
 						{
 							addedAny = true;
-							AddTemp(result, pa.tsys->Any());
+							AddType(result, pa.tsys->Any());
 						}
 						continue;
 					}
@@ -223,7 +223,7 @@ namespace symbol_type_resolving
 						if (!addedAny)
 						{
 							addedAny = true;
-							AddTemp(result, pa.tsys->Any());
+							AddType(result, pa.tsys->Any());
 						}
 						continue;
 					}
@@ -332,7 +332,7 @@ namespace symbol_type_resolving
 				{
 					selectedFunctions->Add(validFuncTypes[i]);
 				}
-				AddTemp(result, validFuncTypes[i].tsys->GetElement());
+				AddTempValue(result, validFuncTypes[i].tsys->GetElement());
 			}
 		}
 	}

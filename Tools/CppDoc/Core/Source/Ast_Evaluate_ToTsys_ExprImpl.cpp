@@ -41,7 +41,7 @@ namespace symbol_totsys_impl
 						reading++;
 					}
 
-					AddTemp(result, pa.tsys->Zero());
+					AddTempValue(result, pa.tsys->Zero());
 					return;
 				}
 			NOT_ZERO:
@@ -53,7 +53,7 @@ namespace symbol_totsys_impl
 				wchar_t _3 = token.reading[token.length - 1];
 				vint us = COUNT_U(1) + COUNT_U(2) + COUNT_U(3);
 				vint ls = COUNT_L(1) + COUNT_L(2) + COUNT_L(3);
-				AddTemp(result, pa.tsys->PrimitiveOf({ (us > 0 ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{ls > 1 ? TsysBytes::_8 : TsysBytes::_4} }));
+				AddTempValue(result, pa.tsys->PrimitiveOf({ (us > 0 ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{ls > 1 ? TsysBytes::_8 : TsysBytes::_4} }));
 #undef COUNT_CHAR
 #undef COUNT_U
 #undef COUNT_L
@@ -65,11 +65,11 @@ namespace symbol_totsys_impl
 				wchar_t _1 = token.reading[token.length - 1];
 				if (_1 == L'f' || _1 == L'F')
 				{
-					AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_4 }));
+					AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_4 }));
 				}
 				else
 				{
-					AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_8 }));
+					AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Float, TsysBytes::_8 }));
 				}
 			}
 			return;
@@ -109,17 +109,17 @@ namespace symbol_totsys_impl
 
 				if ((CppTokens)self->tokens[0].token == CppTokens::CHAR)
 				{
-					AddTemp(result, tsysChar);
+					AddTempValue(result, tsysChar);
 				}
 				else
 				{
-					AddTemp(result, tsysChar->CVOf({ true,false })->ArrayOf(1)->LRefOf());
+					AddTempValue(result, tsysChar->CVOf({ true,false })->ArrayOf(1)->LRefOf());
 				}
 			}
 			return;
 		case CppTokens::EXPR_TRUE:
 		case CppTokens::EXPR_FALSE:
-			AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }));
+			AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }));
 			return;
 		}
 		throw IllegalExprException();
@@ -139,11 +139,11 @@ namespace symbol_totsys_impl
 				{
 					if (pa.taContext)
 					{
-						AddTemp(result, cache->thisType->ReplaceGenericArgs(pa));
+						AddTempValue(result, cache->thisType->ReplaceGenericArgs(pa));
 					}
 					else
 					{
-						AddTemp(result, cache->thisType);
+						AddTempValue(result, cache->thisType);
 					}
 					return;
 				}
@@ -158,7 +158,7 @@ namespace symbol_totsys_impl
 	
 	void ProcessNullptrExpr(const ParsingArguments& pa, ExprTsysList& result, NullptrExpr* self)
 	{
-		AddTemp(result, pa.tsys->Nullptr());
+		AddTempValue(result, pa.tsys->Nullptr());
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -173,7 +173,7 @@ namespace symbol_totsys_impl
 			ExprToTsysNoVta(pa, self->expr, types);
 		}
 
-		AddTemp(result, pa.tsys->Void());
+		AddTempValue(result, pa.tsys->Void());
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -184,11 +184,11 @@ namespace symbol_totsys_impl
 	{
 		if (arg.type == ExprTsysType::LValue)
 		{
-			AddTemp(result, arg.tsys->LRefOf());
+			AddTempValue(result, arg.tsys->LRefOf());
 		}
 		else
 		{
-			AddTemp(result, arg.tsys);
+			AddTempValue(result, arg.tsys);
 		}
 	}
 
@@ -198,7 +198,7 @@ namespace symbol_totsys_impl
 
 	void ProcessCastExpr(const ParsingArguments& pa, ExprTsysList& result, CastExpr* self, ExprTsysItem argType, ExprTsysItem argExpr)
 	{
-		AddTemp(result, argType.tsys);
+		AddTempValue(result, argType.tsys);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -241,7 +241,7 @@ namespace symbol_totsys_impl
 
 		if (entityType->IsUnknownType())
 		{
-			AddTemp(result, pa.tsys->Any());
+			AddTempValue(result, pa.tsys->Any());
 		}
 		else if (entityType->GetType() == TsysType::Decl || entityType->GetType() == TsysType::DeclInstant)
 		{
@@ -286,7 +286,7 @@ namespace symbol_totsys_impl
 		}
 		else if (entityType->GetType() == TsysType::Ptr)
 		{
-			AddTemp(result, entityType->GetElement()->LRefOf());
+			AddTempValue(result, entityType->GetElement()->LRefOf());
 		}
 	}
 
@@ -303,12 +303,12 @@ namespace symbol_totsys_impl
 
 		if (leftEntity->IsUnknownType())
 		{
-			AddTemp(result, pa.tsys->Any());
+			AddTempValue(result, pa.tsys->Any());
 			return true;
 		}
 		if (rightEntity && rightEntity->IsUnknownType())
 		{
-			AddTemp(result, pa.tsys->Any());
+			AddTempValue(result, pa.tsys->Any());
 			return true;
 		}
 
@@ -410,7 +410,7 @@ namespace symbol_totsys_impl
 
 		if (entity->IsUnknownType())
 		{
-			AddTemp(result, pa.tsys->Any());
+			AddTempValue(result, pa.tsys->Any());
 		}
 		else if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
 		{
@@ -423,15 +423,15 @@ namespace symbol_totsys_impl
 			switch (primitive.type)
 			{
 			case TsysPrimitiveType::Bool:
-				AddTemp(result, arg.tsys->LRefOf());
+				AddTempValue(result, arg.tsys->LRefOf());
 				break;
 			default:
-				AddTemp(result, arg.tsys);
+				AddTempValue(result, arg.tsys);
 			}
 		}
 		else if (entity->GetType() == TsysType::Ptr)
 		{
-			AddTemp(result, entity);
+			AddTempValue(result, entity);
 		}
 	}
 
@@ -443,7 +443,7 @@ namespace symbol_totsys_impl
 
 		if (entity->IsUnknownType())
 		{
-			AddTemp(result, pa.tsys->Any());
+			AddTempValue(result, pa.tsys->Any());
 			return;
 		}
 		else if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
@@ -458,7 +458,7 @@ namespace symbol_totsys_impl
 		{
 		case CppPrefixUnaryOp::Increase:
 		case CppPrefixUnaryOp::Decrease:
-			AddTemp(result, arg.tsys->LRefOf());
+			AddTempValue(result, arg.tsys->LRefOf());
 			break;
 		case CppPrefixUnaryOp::Revert:
 		case CppPrefixUnaryOp::Positive:
@@ -471,16 +471,16 @@ namespace symbol_totsys_impl
 				auto promotedEntity = pa.tsys->PrimitiveOf(primitive);
 				if (promotedEntity == entity && primitive.type != TsysPrimitiveType::Float)
 				{
-					AddTemp(result, pa.tsys->PrimitiveOf(primitive)->CVOf(cv));
+					AddTempValue(result, pa.tsys->PrimitiveOf(primitive)->CVOf(cv));
 				}
 				else
 				{
-					AddTemp(result, pa.tsys->PrimitiveOf(primitive));
+					AddTempValue(result, pa.tsys->PrimitiveOf(primitive));
 				}
 			}
 			break;
 		case CppPrefixUnaryOp::Not:
-			AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool, TsysBytes::_1 }));
+			AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool, TsysBytes::_1 }));
 			break;
 		case CppPrefixUnaryOp::AddressOf:
 			if (entity->GetType() == TsysType::Ptr && arg.type == ExprTsysType::PRValue)
@@ -496,33 +496,33 @@ namespace symbol_totsys_impl
 							},
 							[&result, arg](const Ptr<ChildExpr>& childExpr)
 							{
-								AddTemp(result, arg.tsys);
+								AddTempValue(result, arg.tsys);
 							},
 							[&result, arg](const Ptr<GenericExpr>& genericExpr)
 							{
-								AddTemp(result, arg.tsys);
+								AddTempValue(result, arg.tsys);
 							}
 						);
 					}
 					else if (entity->GetElement()->GetType() == TsysType::Function)
 					{
-						AddTemp(result, arg.tsys);
+						AddTempValue(result, arg.tsys);
 					}
 				}
 			}
 			else if (arg.tsys->GetType() == TsysType::LRef || arg.tsys->GetType() == TsysType::RRef)
 			{
-				AddTemp(result, arg.tsys->GetElement()->PtrOf());
+				AddTempValue(result, arg.tsys->GetElement()->PtrOf());
 			}
 			else
 			{
-				AddTemp(result, arg.tsys->PtrOf());
+				AddTempValue(result, arg.tsys->PtrOf());
 			}
 			break;
 		case CppPrefixUnaryOp::Dereference:
 			if (entity->GetType() == TsysType::Ptr || entity->GetType() == TsysType::Array)
 			{
-				AddTemp(result, entity->GetElement()->LRefOf());
+				AddTempValue(result, entity->GetElement()->LRefOf());
 			}
 			break;
 		}
@@ -556,7 +556,7 @@ namespace symbol_totsys_impl
 			}
 			else if (rightEntity->IsUnknownType())
 			{
-				AddTemp(result, pa.tsys->Any());
+				AddTempValue(result, pa.tsys->Any());
 			}
 			return;
 		}
@@ -589,7 +589,7 @@ namespace symbol_totsys_impl
 			case CppBinaryOp::NE:
 			case CppBinaryOp::And:
 			case CppBinaryOp::Or:
-				AddTemp(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }));
+				AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::Bool,TsysBytes::_1 }));
 				break;
 			case CppBinaryOp::Assign:
 			case CppBinaryOp::MulAssign:
@@ -602,7 +602,7 @@ namespace symbol_totsys_impl
 			case CppBinaryOp::AndAssign:
 			case CppBinaryOp::OrAssign:
 			case CppBinaryOp::XorAssign:
-				AddTemp(result, argLeft.tsys->LRefOf());
+				AddTempValue(result, argLeft.tsys->LRefOf());
 				break;
 			case CppBinaryOp::Shl:
 			case CppBinaryOp::Shr:
@@ -613,7 +613,7 @@ namespace symbol_totsys_impl
 					{
 						primitive.type = TsysPrimitiveType::UInt;
 					}
-					AddTemp(result, pa.tsys->PrimitiveOf(primitive));
+					AddTempValue(result, pa.tsys->PrimitiveOf(primitive));
 				}
 				break;
 			default:
@@ -621,21 +621,21 @@ namespace symbol_totsys_impl
 					auto leftP = leftEntity->GetPrimitive();
 					auto rightP = rightEntity->GetPrimitive();
 					auto primitive = ArithmeticConversion(leftP, rightP);
-					AddTemp(result, pa.tsys->PrimitiveOf(primitive));
+					AddTempValue(result, pa.tsys->PrimitiveOf(primitive));
 				}
 			}
 		}
 		else if (leftPrim && rightPtrArr)
 		{
-			AddTemp(result, rightEntity->GetElement()->PtrOf());
+			AddTempValue(result, rightEntity->GetElement()->PtrOf());
 		}
 		else if (leftPtrArr && rightPrim)
 		{
-			AddTemp(result, leftEntity->GetElement()->PtrOf());
+			AddTempValue(result, leftEntity->GetElement()->PtrOf());
 		}
 		else if (leftPtrArr && rightPtrArr)
 		{
-			AddTemp(result, pa.tsys->IntPtr());
+			AddTempValue(result, pa.tsys->IntPtr());
 		}
 	}
 
@@ -655,7 +655,7 @@ namespace symbol_totsys_impl
 		auto rightEntity = rightType->GetEntity(rightCV, rightRefType);
 		if (leftType == rightType)
 		{
-			AddTemp(result, leftType);
+			AddTempValue(result, leftType);
 		}
 		else if (leftEntity == rightEntity)
 		{
@@ -664,7 +664,7 @@ namespace symbol_totsys_impl
 			cv.isVolatile |= rightCV.isVolatile;
 
 			auto refType = leftRefType == rightRefType ? leftRefType : TsysRefType::None;
-			AddTemp(result, CvRefOf(leftEntity, cv, refType));
+			AddTempValue(result, CvRefOf(leftEntity, cv, refType));
 		}
 		else
 		{
@@ -679,10 +679,10 @@ namespace symbol_totsys_impl
 			switch (TypeConv::CompareIgnoreAny(l2r, r2l))
 			{
 			case -1:
-				AddTemp(result, rightType);
+				AddTempValue(result, rightType);
 				break;
 			case 1:
-				AddTemp(result, leftType);
+				AddTempValue(result, leftType);
 				break;
 			case 0:
 				{
@@ -698,19 +698,19 @@ namespace symbol_totsys_impl
 						auto leftP = leftEntity->GetPrimitive();
 						auto rightP = rightEntity->GetPrimitive();
 						auto primitive = ArithmeticConversion(leftP, rightP);
-						AddTemp(result, pa.tsys->PrimitiveOf(primitive));
+						AddTempValue(result, pa.tsys->PrimitiveOf(primitive));
 						return;
 					}
 
 					if (leftPtrArr && rightNull)
 					{
-						AddTemp(result, leftEntity->GetElement()->PtrOf());
+						AddTempValue(result, leftEntity->GetElement()->PtrOf());
 						return;
 					}
 
 					if (leftNull && rightPtrArr)
 					{
-						AddTemp(result, rightEntity->GetElement()->PtrOf());
+						AddTempValue(result, rightEntity->GetElement()->PtrOf());
 						return;
 					}
 

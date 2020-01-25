@@ -193,7 +193,7 @@ namespace symbol_totsys_impl
 			{
 				ResolveChildTypeWithGenericArguments(pa, self, argClass.tsys, visited, receiver);
 			});
-			AddTemp(result, childTypes);
+			AddType(result, childTypes);
 		}
 	}
 
@@ -207,7 +207,7 @@ namespace symbol_totsys_impl
 		{
 			if (allowAny)
 			{
-				AddTemp(result, pa.tsys->Any());
+				AddType(result, pa.tsys->Any());
 			}
 			return;
 		}
@@ -353,7 +353,7 @@ namespace symbol_totsys_impl
 		{
 			if (parentItem.tsys->IsUnknownType())
 			{
-				AddTemp(result, pa.tsys->Any());
+				AddType(result, pa.tsys->Any());
 			}
 			else
 			{
@@ -371,7 +371,7 @@ namespace symbol_totsys_impl
 		{
 			if (argClass.tsys->IsUnknownType())
 			{
-				AddTemp(result, pa.tsys->Any());
+				AddType(result, pa.tsys->Any());
 			}
 			else
 			{

@@ -129,7 +129,7 @@ public:
 		{
 			TypeTsysList tsyses;
 			TypeToTsysInternal(pa, self->type, tsyses, typesVta);
-			AddTemp(types, tsyses);
+			AddType(types, tsyses);
 		}
 		if (self->expr)
 		{
@@ -155,7 +155,7 @@ public:
 		{
 			TypeTsysList tsyses;
 			TypeToTsysInternal(pa, self->type, tsyses, typesVta);
-			AddTemp(types, tsyses);
+			AddType(types, tsyses);
 		}
 		if (self->expr)
 		{
@@ -164,13 +164,13 @@ public:
 
 		if (self->ellipsis)
 		{
-			AddTemp(result, pa.tsys->Size());
+			AddType(result, pa.tsys->Size());
 		}
 		else
 		{
 			isVta = ExpandPotentialVtaMultiResult(pa, result, [this](ExprTsysList& processResult, ExprTsysItem arg)
 			{
-				AddTemp(processResult, pa.tsys->Size());
+				AddType(processResult, pa.tsys->Size());
 			}, Input(types, typesVta));
 		}
 	}
@@ -195,7 +195,7 @@ public:
 		ExprToTsysInternal(pa, self->expr, types, typesVta);
 		isVta = ExpandPotentialVtaMultiResult(pa, result, [this](ExprTsysList& processResult, ExprTsysItem arg)
 		{
-			AddTemp(processResult, pa.tsys->Void());
+			AddType(processResult, pa.tsys->Void());
 		}, Input(types, typesVta));
 	}
 
@@ -229,7 +229,7 @@ public:
 		{
 			if (argClass.tsys->IsUnknownType())
 			{
-				AddTemp(processResult, pa.tsys->Any());
+				AddType(processResult, pa.tsys->Any());
 			}
 			else
 			{
@@ -620,7 +620,7 @@ public:
 			{
 				if (arg1.tsys->IsUnknownType())
 				{
-					AddTemp(processResult, pa.tsys->Any());
+					AddType(processResult, pa.tsys->Any());
 				}
 				else if (arg1.tsys->GetType() == TsysType::Decl || arg1.tsys->GetType() == TsysType::DeclInstant)
 				{
@@ -808,7 +808,7 @@ public:
 
 		TypeTsysList tsys;
 		TypeToTsysNoVta(pa, self->returnType, tsys);
-		AddTemp(result, tsys);
+		AddType(result, tsys);
 	}
 };
 

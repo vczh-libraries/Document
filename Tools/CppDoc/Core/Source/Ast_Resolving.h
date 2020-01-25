@@ -60,8 +60,10 @@ namespace symbol_type_resolving
 	extern bool									AddVar(ExprTsysList& list, const ExprTsysItem& item);
 	extern bool									AddNonVar(ExprTsysList& list, const ExprTsysItem& item);
 	extern void									AddNonVar(ExprTsysList& list, ExprTsysList& items);
-	extern bool									AddTemp(ExprTsysList& list, ITsys* tsys);
-	extern void									AddTemp(ExprTsysList& list, TypeTsysList& items);
+	extern bool									AddTempValue(ExprTsysList& list, ITsys* tsys);
+	extern void									AddTempValue(ExprTsysList& list, TypeTsysList& items);
+	extern bool									AddType(ExprTsysList& list, ITsys* tsys);
+	extern void									AddType(ExprTsysList& list, TypeTsysList& items);
 
 	extern void									CreateUniversalInitializerType(const ParsingArguments& pa, Array<ExprTsysList>& argTypesList, ExprTsysList& result);
 	extern void									CalculateValueFieldType(const ExprTsysItem* thisItem, Symbol* symbol, ITsys* fieldType, bool forFieldDeref, ExprTsysList& result);

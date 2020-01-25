@@ -39,7 +39,7 @@ namespace symbol_type_resolving
 		}
 	}
 
-	bool AddTemp(ExprTsysList& list, ITsys* tsys)
+	bool AddTempValue(ExprTsysList& list, ITsys* tsys)
 	{
 		if (tsys->GetType() == TsysType::RRef)
 		{
@@ -55,11 +55,24 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void AddTemp(ExprTsysList& list, TypeTsysList& items)
+	void AddTempValue(ExprTsysList& list, TypeTsysList& items)
 	{
 		for (vint i = 0; i < items.Count(); i++)
 		{
-			AddTemp(list, items[i]);
+			AddTempValue(list, items[i]);
+		}
+	}
+
+	bool AddType(ExprTsysList& list, ITsys* tsys)
+	{
+		return AddInternal(list, { nullptr,ExprTsysType::PRValue,tsys });
+	}
+
+	void AddType(ExprTsysList& list, TypeTsysList& items)
+	{
+		for (vint i = 0; i < items.Count(); i++)
+		{
+			AddType(list, items[i]);
 		}
 	}
 
@@ -287,7 +300,7 @@ namespace symbol_type_resolving
 			{
 				auto usingDecl = symbol->GetImplDecl_NFb<ValueAliasDeclaration>();
 				auto& evTypes = EvaluateValueAliasSymbol(pa, usingDecl.Obj(), parentDeclType, nullptr);
-				AddTemp(result, evTypes);
+				AddTempValue(result, evTypes);
 				hasNonVariadic = true;
 			}
 			return;
@@ -320,13 +333,13 @@ namespace symbol_type_resolving
 								Array<ExprTsysList> initArgs(replacedType->GetParamCount());
 								for (vint j = 0; j < initArgs.Count(); j++)
 								{
-									AddTemp(initArgs[j], EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa));
+									AddTempValue(initArgs[j], EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa));
 								}
 								CreateUniversalInitializerType(pa, initArgs, result);
 							}
 							break;
 						case TsysType::Any:
-							AddTemp(result, pa.tsys->Any());
+							AddType(result, pa.tsys->Any());
 							break;
 						default:
 							throw TypeCheckerException();
@@ -334,12 +347,12 @@ namespace symbol_type_resolving
 					}
 					else
 					{
-						AddTemp(result, pa.tsys->Any());
+						AddType(result, pa.tsys->Any());
 					}
 				}
 				else
 				{
-					AddTemp(result, EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa));
+					AddTempValue(result, EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa));
 					hasNonVariadic = true;
 				}
 			}
