@@ -364,18 +364,7 @@ namespace symbol_type_resolving
 						}
 					}
 				}
-
-				auto& ev = EvaluateClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
-				auto gft = ev.Get()[0];
-
-				TemplateArgumentContext resultContext;
-				vint unusedApplied = -1;
 				ResolveGenericTypeParameters(pa, parameterAssignment, self, argumentTypes, boundedAnys);
-
-				for (vint i = 0; i < gft->GetParamCount(); i++)
-				{
-					parameterAssignment.Add(resultContext.arguments[gft->GetParam(i)]);
-				}
 			}
 			InferTemplateArgumentsForGenericType(pa, self, parameterAssignment, taContext, freeTypeSymbols);
 		}

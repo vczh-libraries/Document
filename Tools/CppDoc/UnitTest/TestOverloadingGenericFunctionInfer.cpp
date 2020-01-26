@@ -246,7 +246,7 @@ TEST_FILE
 		);
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			VtaTypes(Value<Types<bool *, bool const *, bool volatile *>>()),
-			L"::Types<{bool * $PR, bool const * $PR, bool volatile * $PR>}> $PR",
+			L"::Types<{bool * $PR, bool const * $PR, bool volatile * $PR}> $PR",
 			Types<bool *, bool const *, bool volatile *>
 		);
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
@@ -256,11 +256,12 @@ TEST_FILE
 		);
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			VtaFunc2(Value<Types<FunctionOf<bool &, float *>, FunctionOf<char &, double *>>>()),
-			L"::Types<{bool $PR, char $PR, float $PR, double $PR>}> $PR",
+			L"::Types<{bool $PR, char $PR, float $PR, double $PR}> $PR",
 			Types<bool, char, float, double>
 		);
 	});
 
+	// test matching Types<A..., B...>
 	// test matching BaseClass<arguments>
 	// test matching template template argument (both before or inside <>)
 	// test matching DeclInstant with templates distributed on every class levels

@@ -563,9 +563,9 @@ namespace symbol_type_resolving
 	{
 		// calculate how to assign offered arguments to function arguments
 		// gpaMappings will contains decisions for every template arguments
-		vint functionParameterCount = functionType->parameters.Count() + (functionType->ellipsis ? 1 : 0);
+		vint functionParameterCount = functionType->parameters.Count();
 		GpaList gpaMappings;
-		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, false, functionParameterCount,
+		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, false, functionParameterCount + (functionType->ellipsis ? 1 : 0),
 			[functionType](vint index) { return index == functionType->parameters.Count() ? functionType->ellipsis : functionType->parameters[index].isVariadic; },
 			[functionType](vint index) { return index == functionType->parameters.Count() ? false : (bool)functionType->parameters[index].item->initializer; }
 		);
@@ -615,7 +615,7 @@ namespace symbol_type_resolving
 					parameterAssignment.Add(invokerPa.tsys->Any());
 				}
 				break;
-			case GenericParameterAssignmentKind::Unfilled:
+			default:
 				// missing arguments are not allowed
 				throw TypeCheckerException();
 				break;
@@ -635,6 +635,67 @@ namespace symbol_type_resolving
 		SortedList<vint>& boundedAnys				// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
 	)
 	{
+		// calculate how to assign offered arguments to generic type arguments
+		// gpaMappings will contains decisions for every template arguments
+		vint genericParameterCount = genericType->arguments.Count();
+		GpaList gpaMappings;
+		// set allowPartialApply to true because, arguments of genericType could be incomplete, but argumentTypes are always complete because it comes from a ITsys*
+		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, true, genericParameterCount + 1,
+			[genericType](vint index) { return index == genericType->arguments.Count() ? true : genericType->arguments[index].isVariadic; },
+			[](vint index) { return false; }
+		);
 
+		for (vint i = 0; i < genericParameterCount; i++)
+		{
+			auto gpa = gpaMappings[i];
+
+			switch (gpa.kind)
+			{
+			case GenericParameterAssignmentKind::DefaultValue:
+				{
+					// if a default value is expected to fill this template argument
+					parameterAssignment.Add(nullptr);
+				}
+				break;
+			case GenericParameterAssignmentKind::OneArgument:
+				{
+					// if an offered argument is to fill this template argument
+					parameterAssignment.Add(ApplyExprTsysType(argumentTypes[gpa.index].tsys, argumentTypes[gpa.index].type));
+				}
+				break;
+			case GenericParameterAssignmentKind::EmptyVta:
+				{
+					// if an empty pack of offered arguments is to fill this variadic template argument
+					Array<ExprTsysItem> items;
+					auto init = invokerPa.tsys->InitOf(items);
+					parameterAssignment.Add(init);
+				}
+				break;
+			case GenericParameterAssignmentKind::MultipleVta:
+				{
+					// if a pack of offered arguments is to fill this variadic template argument
+					Array<ExprTsysItem> items(gpa.count);
+
+					for (vint j = 0; j < gpa.count; j++)
+					{
+						items[j] = argumentTypes[gpa.index + j];
+					}
+					auto init = invokerPa.tsys->InitOf(items);
+					parameterAssignment.Add(init);
+				}
+				break;
+			case GenericParameterAssignmentKind::Any:
+				{
+					// if any is to fill this (maybe variadic) template argument
+					parameterAssignment.Add(invokerPa.tsys->Any());
+				}
+				break;
+			default:
+				// default values are not allowed, since no information about it is provided
+				// missing arguments are not allowed
+				throw TypeCheckerException();
+				break;
+			}
+		}
 	}
 }
