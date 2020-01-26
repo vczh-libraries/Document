@@ -25,9 +25,11 @@ namespace symbol_type_resolving
 		bool Execute(Type* type)
 		{
 			if (!type) return false;
+			bool oldInvolved = involved;
+			involved = false;
 			type->Accept(this);
 			bool result = involved;
-			involved = false;
+			involved = oldInvolved;
 			return result;
 		}
 
@@ -42,17 +44,20 @@ namespace symbol_type_resolving
 
 		void Visit(ReferenceType* self)override
 		{
-			if (Execute(self->type)) involvedTypes.Add(self);
+			bool result = Execute(self->type);
+			if ((involved = result)) involvedTypes.Add(self);
 		}
 
 		void Visit(ArrayType* self)override
 		{
-			if (Execute(self->type)) involvedTypes.Add(self);
+			bool result = Execute(self->type);
+			if ((involved = result)) involvedTypes.Add(self);
 		}
 
 		void Visit(CallingConventionType* self)override
 		{
-			if (Execute(self->type)) involvedTypes.Add(self);
+			bool result = Execute(self->type);
+			if ((involved = result)) involvedTypes.Add(self);
 		}
 
 		void Visit(FunctionType* self)override
@@ -70,8 +75,7 @@ namespace symbol_type_resolving
 						throw TypeCheckerException();
 					}
 				}
-				else
-				result = Execute(self->parameters[i].item->type);
+				result = Execute(self->parameters[i].item->type) || result;
 			}
 			if ((involved = result)) involvedTypes.Add(self);
 		}
@@ -113,7 +117,8 @@ namespace symbol_type_resolving
 
 		void Visit(ChildType* self)override
 		{
-			if (Execute(self->classType.Obj())) involvedTypes.Add(self);
+			bool result = Execute(self->classType.Obj());
+			if ((involved = result)) involvedTypes.Add(self);
 		}
 
 		void Visit(GenericType* self)override
