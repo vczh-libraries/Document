@@ -358,16 +358,18 @@ namespace symbol_type_resolving
 						{
 							for (vint j = 0; j < value->GetParamCount(); j++)
 							{
-								argumentTypes[index++] = { nullptr,ExprTsysType::PRValue,value->GetParam(j) };
-								isTypes[index++] = isType;
-								argSource[index++] = i;
+								argumentTypes[index] = { nullptr,ExprTsysType::PRValue,value->GetParam(j) };
+								isTypes[index] = isType;
+								argSource[index] = index;
+								index++;
 							}
 						}
 						else
 						{
-							argumentTypes[index++] = { nullptr,ExprTsysType::PRValue,value };
-							isTypes[index++] = isType;
-							argSource[index++] = i;
+							argumentTypes[index] = { nullptr,ExprTsysType::PRValue,value };
+							isTypes[index] = isType;
+							argSource[index] = i;
+							index++;
 						}
 					}
 				}
