@@ -30,6 +30,7 @@ namespace symbol_type_resolving
 							GenericType* genericType,
 							List<ITsys*>& parameterAssignment,
 							TemplateArgumentContext& taContext,
+							TemplateArgumentContext& variadicContext,
 							const SortedList<Symbol*>& freeTypeSymbols);
 
 	extern void			InferTemplateArgumentsForFunctionType(
@@ -37,6 +38,7 @@ namespace symbol_type_resolving
 							FunctionType* functionType,
 							List<ITsys*>& parameterAssignment,
 							TemplateArgumentContext& taContext,
+							TemplateArgumentContext& variadicContext,
 							const SortedList<Symbol*>& freeTypeSymbols,
 							bool exactMatchForParameters);
 }

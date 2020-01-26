@@ -185,7 +185,7 @@ namespace symbol_type_resolving
 				}
 				ResolveFunctionParameters(pa, parameterAssignment, self, argumentTypes, boundedAnys);
 			}
-			InferTemplateArgumentsForFunctionType(pa, self, parameterAssignment, taContext, freeTypeSymbols, true);
+			InferTemplateArgumentsForFunctionType(pa, self, parameterAssignment, taContext, variadicContext, freeTypeSymbols, true);
 		}
 
 		void Visit(MemberType* self)override
@@ -366,7 +366,7 @@ namespace symbol_type_resolving
 				}
 				ResolveGenericTypeParameters(pa, parameterAssignment, self, argumentTypes, boundedAnys);
 			}
-			InferTemplateArgumentsForGenericType(pa, self, parameterAssignment, taContext, freeTypeSymbols);
+			InferTemplateArgumentsForGenericType(pa, self, parameterAssignment, taContext, variadicContext, freeTypeSymbols);
 		}
 	};
 

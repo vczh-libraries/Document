@@ -54,6 +54,7 @@ namespace symbol_type_resolving
 		bool isVariadic,
 		ITsys* assignedTsys,
 		TemplateArgumentContext& taContext,
+		TemplateArgumentContext& variadicContext,
 		const SortedList<Symbol*>& freeTypeSymbols,
 		bool exactMatchForParameters
 	)
@@ -120,12 +121,12 @@ namespace symbol_type_resolving
 					for (vint j = 0; j < count; j++)
 					{
 						auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
-						TemplateArgumentContext variadicContext;
-						InferTemplateArgument(pa, argumentType, assignedTsysItem, taContext, variadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
-						for (vint k = 0; k < variadicContext.arguments.Count(); k++)
+						TemplateArgumentContext localVariadicContext;
+						InferTemplateArgument(pa, argumentType, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
+						for (vint k = 0; k < localVariadicContext.arguments.Count(); k++)
 						{
-							auto key = variadicContext.arguments.Keys()[k];
-							auto value = variadicContext.arguments.Values()[k];
+							auto key = localVariadicContext.arguments.Keys()[k];
+							auto value = localVariadicContext.arguments.Values()[k];
 							auto result = variadicResults[key];
 							result->Set(j, { nullptr,ExprTsysType::PRValue,value });
 						}
@@ -144,12 +145,7 @@ namespace symbol_type_resolving
 			else
 			{
 				// for non-variadic parameter, run the assigned argument
-				TemplateArgumentContext unusedVariadicContext;
-				InferTemplateArgument(pa, argumentType, assignedTsys, taContext, unusedVariadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
-				if (unusedVariadicContext.arguments.Count() > 0)
-				{
-					throw TypeCheckerException();
-				}
+				InferTemplateArgument(pa, argumentType, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
 			}
 		}
 	}
@@ -163,6 +159,7 @@ namespace symbol_type_resolving
 		GenericType* genericType,
 		List<ITsys*>& parameterAssignment,
 		TemplateArgumentContext& taContext,
+		TemplateArgumentContext& variadicContext,
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
@@ -173,7 +170,7 @@ namespace symbol_type_resolving
 			if (argument.item.type)
 			{
 				auto assignedTsys = parameterAssignment[i];
-				InferTemplateArgumentOfComplexType(pa, argument.item.type, argument.isVariadic, assignedTsys, taContext, freeTypeSymbols, true);
+				InferTemplateArgumentOfComplexType(pa, argument.item.type, argument.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, true);
 			}
 		}
 	}
@@ -187,6 +184,7 @@ namespace symbol_type_resolving
 		FunctionType* functionType,
 		List<ITsys*>& parameterAssignment,
 		TemplateArgumentContext& taContext,
+		TemplateArgumentContext& variadicContext,
 		const SortedList<Symbol*>& freeTypeSymbols,
 		bool exactMatchForParameters
 	)
@@ -200,7 +198,7 @@ namespace symbol_type_resolving
 				// see if any variadic value arguments can be determined
 				// variadic value argument only care about the number of values
 				auto parameter = functionType->parameters[i];
-				InferTemplateArgumentOfComplexType(pa, parameter.item->type, parameter.isVariadic, assignedTsys, taContext, freeTypeSymbols, exactMatchForParameters);
+				InferTemplateArgumentOfComplexType(pa, parameter.item->type, parameter.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, exactMatchForParameters);
 			}
 		}
 	}
@@ -255,7 +253,13 @@ namespace symbol_type_resolving
 							}
 
 							// type inferencing
-							InferTemplateArgumentsForFunctionType(inferPa, functionType.Obj(), parameterAssignment, taContext, freeTypeSymbols, false);
+							TemplateArgumentContext unusedVariadicContext;
+							InferTemplateArgumentsForFunctionType(inferPa, functionType.Obj(), parameterAssignment, taContext, unusedVariadicContext, freeTypeSymbols, false);
+							if (unusedVariadicContext.arguments.Count() > 0)
+							{
+								// someone miss "..." in a function argument
+								throw TypeCheckerException();
+							}
 
 							// fill template value arguments
 							for (vint i = 0; i < gfi.spec->arguments.Count(); i++)
