@@ -262,7 +262,7 @@ TEST_FILE
 	});
 
 	// test matching BaseClass<arguments>
-	// test matching template template argument
+	// test matching template template argument (both before or inside <>)
 	// test matching DeclInstant with templates distributed on every class levels
 	// test known/unknown variadic arguments/parameters
 	// test generic methods		(TestOverloadingGenericMethodInfer.cpp)

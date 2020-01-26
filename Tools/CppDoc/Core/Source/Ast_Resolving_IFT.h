@@ -2,6 +2,8 @@
 
 namespace symbol_type_resolving
 {
+	extern Symbol*		TemplateArgumentPatternToSymbol(ITsys* tsys);
+
 	extern void			CollectFreeTypes(
 							Ptr<Type> type,
 							bool insideVariant,
@@ -23,9 +25,9 @@ namespace symbol_type_resolving
 							ITsys* pattern,
 							ITsys* type);
 
-	extern void			InferTemplateArgumentsForFunctionType(
+	extern void			InferTemplateArgumentsForGenericType(
 							const ParsingArguments& pa,
-							ClassDeclaration* genericType,
+							ForwardClassDeclaration* genericType,
 							List<ITsys*>& parameterAssignment,
 							TemplateArgumentContext& taContext,
 							const SortedList<Symbol*>& freeTypeSymbols);

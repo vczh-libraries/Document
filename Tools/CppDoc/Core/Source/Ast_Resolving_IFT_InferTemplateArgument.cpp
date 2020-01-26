@@ -254,7 +254,16 @@ namespace symbol_type_resolving
 			{
 				throw TypeCheckerException();
 			}
+
 			auto genericSymbol = self->type->resolving->resolvedSymbols[0];
+			auto classDecl = genericSymbol->GetAnyForwardDecl<ClassDeclaration>();
+			if (!classDecl || !classDecl->templateSpec)
+			{
+				// only do type inferencing for instance of template classes
+				// it could be an instance of a template type alias, which is not supported
+				throw TypeCheckerException();
+			}
+
 			if (involvedTypes.Contains(self->type.Obj()))
 			{
 				// TODO: remove this constraint in the future, it could be a template template argument, or a generic class inside another involved class
@@ -275,6 +284,12 @@ namespace symbol_type_resolving
 					// TODO: only check this when self->type is not involved
 					throw TypeCheckerException();
 				}
+
+				if (!entity->GetDeclInstant().taContext)
+				{
+					// TODO: remove this constraint in the future, it is allowed to be empty for type of *this
+					throw TypeCheckerException();
+				}
 			}
 			else
 			{
@@ -293,9 +308,83 @@ namespace symbol_type_resolving
 					// TODO: only check this when self->type is not involved
 					throw TypeCheckerException();
 				}
+
+				if (!entity->GetDeclInstant().taContext)
+				{
+					// TODO: remove this constraint in the future, it is allowed to be empty for type of *this
+					throw TypeCheckerException();
+				}
 			}
-			// TODO: not implemented
-			throw 0;
+
+			List<ITsys*> parameterAssignment;
+			{
+				auto spec = classDecl->templateSpec;
+
+				vint count = 0;
+				for (vint i = 0; i < spec->arguments.Count(); i++)
+				{
+					auto argument = spec->arguments[0];
+					auto value = entity->GetParam(0);
+					if (argument.ellipsis)
+					{
+						if (value->GetType() != TsysType::Init)
+						{
+							// it is impossible to have any_t here
+							throw TypeCheckerException();
+						}
+						count += value->GetParamCount();
+					}
+					else
+					{
+						count++;
+					}
+				}
+
+				Array<ExprTsysItem> argumentTypes(count);
+				Array<bool> isTypes(count);
+				Array<vint> argSource(count);
+				SortedList<vint> boundedAnys;
+
+				{
+					vint index = 0;
+					const auto& di = entity->GetDeclInstant();
+					for (vint i = 0; i < spec->arguments.Count(); i++)
+					{
+						auto argument = spec->arguments[0];
+						auto value = entity->GetParam(0);
+						bool isType = argument.argumentType != CppTemplateArgumentType::Value;
+
+						if (argument.ellipsis)
+						{
+							for (vint j = 0; j < value->GetParamCount(); j++)
+							{
+								argumentTypes[index++] = { nullptr,ExprTsysType::PRValue,value->GetParam(j) };
+								isTypes[index++] = isType;
+								argSource[index++] = i;
+							}
+						}
+						else
+						{
+							argumentTypes[index++] = { nullptr,ExprTsysType::PRValue,value };
+							isTypes[index++] = isType;
+							argSource[index++] = i;
+						}
+					}
+				}
+
+				auto& ev = EvaluateClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
+				auto gft = ev.Get()[0];
+
+				TemplateArgumentContext resultContext;
+				vint unusedApplied = -1;
+				ResolveGenericParameters(pa, resultContext, gft, argumentTypes, isTypes, argSource, boundedAnys, 0, false, unusedApplied);
+
+				for (vint i = 0; i < gft->GetParamCount(); i++)
+				{
+					parameterAssignment.Add(resultContext.arguments[gft->GetParam(i)]);
+				}
+			}
+			InferTemplateArgumentsForGenericType(pa, classDecl.Obj(), parameterAssignment, taContext, freeTypeSymbols);
 		}
 	};
 

@@ -339,6 +339,7 @@ namespace vl
 								then this is a symbol with all template arguments not be replaced, e.g. decltype(*this) inside a template class
 	Init:				{Params}
 	GenericFunction:	<Params>->Element, GenericFunction contains all type arguments
+							Params:argument pattern type for [index>=filledArguments], argument value for [index<filledArguments]
 							For example: <T&&, U*>->Tuple<T, U>, GenericFunction contains T and U.
 							If a pattern accepts a value, the pattern is the declaration of the argument symbol
 	GenericArg:			The GenericArg.argIndex-th type argument in Element

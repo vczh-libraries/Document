@@ -48,14 +48,16 @@ namespace symbol_type_resolving
 	InferTemplateArgumentsForGenericType:	Perform type inferencing for template function parameters
 	***********************************************************************/
 
-	void InferTemplateArgumentsForFunctionType(
+	void InferTemplateArgumentsForGenericType(
 		const ParsingArguments& pa,
-		ClassDeclaration* genericType,
+		ForwardClassDeclaration* genericType,
 		List<ITsys*>& parameterAssignment,
 		TemplateArgumentContext& taContext,
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
+		// TODO: not implemented
+		throw 0;
 	}
 
 	/***********************************************************************
