@@ -189,7 +189,10 @@
     <ClCompile Include="Source\Ast_Resolving_EvaluateSymbol.cpp" />
     <ClCompile Include="Source\Ast_Resolving.cpp" />
     <ClCompile Include="Source\Ast_Resolving_Generic.cpp" />
-    <ClCompile Include="Source\Ast_Resolving_InferFunctionType.cpp" />
+    <ClInclude Include="Source\Ast_Resolving_IFT.h" />
+    <ClCompile Include="Source\Ast_Resolving_IFT_InferFunctionType.cpp" />
+    <ClCompile Include="Source\Ast_Resolving_IFT_CollectFreeTypes.cpp" />
+    <ClCompile Include="Source\Ast_Resolving_IFT_InferTemplateArgument.cpp" />
     <ClCompile Include="Source\Ast_Resolving_Overloading.cpp" />
     <ClCompile Include="Source\Ast_Type_GenerateMembers.cpp" />
     <ClCompile Include="Source\Ast_Type_IsPendingType.cpp" />

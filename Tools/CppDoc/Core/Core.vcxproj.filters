@@ -87,6 +87,9 @@
     <ClInclude Include="..\..\..\Import\VlppRegex.h">
       <Filter>Import</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Ast_Resolving_IFT.h">
+      <Filter>Source Files\Ast\Resolving</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Import\Vlpp.cpp">
@@ -191,7 +194,13 @@
     <ClCompile Include="Source\Ast_Resolving_Adl.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_InferFunctionType.cpp">
+    <ClCompile Include="Source\Ast_Resolving_IFT_InferFunctionType.cpp">
+      <Filter>Source Files\Ast\Resolving</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_Resolving_IFT_CollectFreeTypes.cpp">
+      <Filter>Source Files\Ast\Resolving</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_Resolving_IFT_InferTemplateArgument.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
   </ItemGroup>
