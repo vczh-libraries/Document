@@ -343,8 +343,15 @@ namespace symbol_type_resolving
 
 		void Visit(MemberType* self)override
 		{
-			// TODO: not implemented
-			throw 0;
+			TsysCV cv;
+			TsysRefType refType;
+			auto entity = offeredType->GetEntity(cv, refType);
+			if (entity->GetType() != TsysType::Member)
+			{
+				throw TypeCheckerException();
+			}
+			ExecuteOnce(self->classType, entity->GetClass());
+			ExecuteOnce(self->type, entity->GetElement());
 		}
 
 		void Visit(DeclType* self)override

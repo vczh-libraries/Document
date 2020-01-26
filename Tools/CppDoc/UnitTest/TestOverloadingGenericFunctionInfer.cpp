@@ -261,6 +261,8 @@ TEST_FILE
 		);
 	});
 
+	// test matching template template argument
+	// test matching DeclInstant with templates distributed on every class levels
 	// test known/unknown variadic arguments/parameters
 	// test generic methods		(TestOverloadingGenericMethodInfer.cpp)
 	// test generic operators	(TestOverloadingGenericMethodInfer.cpp)
