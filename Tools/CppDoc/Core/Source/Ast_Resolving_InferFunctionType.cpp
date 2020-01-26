@@ -84,13 +84,14 @@ namespace symbol_type_resolving
 			{
 				if (self->parameters[i].isVariadic)
 				{
-					// does not support nested variadic arguments
-					throw TypeCheckerException();
+					if (insideVariant)
+					{
+						// does not support nested variadic arguments
+						throw TypeCheckerException();
+					}
 				}
 				else
-				{
-					result = Execute(self->parameters[i].item->type);
-				}
+				result = Execute(self->parameters[i].item->type);
 			}
 			if ((involved = result)) involvedTypes.Add(self);
 		}
@@ -143,13 +144,13 @@ namespace symbol_type_resolving
 			{
 				if (self->arguments[i].isVariadic)
 				{
-					// does not support nested variadic arguments
-					throw TypeCheckerException();
+					if (insideVariant)
+					{
+						// does not support nested variadic arguments
+						throw TypeCheckerException();
+					}
 				}
-				else
-				{
-					result = Execute(self->arguments[i].item.type) || result;
-				}
+				result = Execute(self->arguments[i].item.type) || result;
 			}
 			if ((involved = result)) involvedTypes.Add(self);
 		}
@@ -357,7 +358,7 @@ namespace symbol_type_resolving
 					entity = entity->GetElement();
 				}
 			}
-			if (entity->GetType() != TsysType::Member)
+			if (entity->GetType() != TsysType::Function)
 			{
 				throw TypeCheckerException();
 			}
