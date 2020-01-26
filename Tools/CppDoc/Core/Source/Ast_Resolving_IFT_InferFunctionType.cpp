@@ -45,23 +45,142 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	InferTemplateArgumentsForGenericType:	Perform type inferencing for template function parameters
+	InferTemplateArgument:	Perform type inferencing for a template argument
+	***********************************************************************/
+
+	void InferTemplateArgument(
+		const ParsingArguments& pa,
+		Ptr<Type> argumentType,
+		bool isVariadic,
+		ITsys* assignedTsys,
+		TemplateArgumentContext& taContext,
+		const SortedList<Symbol*>& freeTypeSymbols,
+		bool exactMatchForParameters
+	)
+	{
+		SortedList<Type*> involvedTypes;
+		CollectFreeTypes(argumentType, isVariadic, freeTypeSymbols, involvedTypes);
+
+		// get all affected arguments
+		List<ITsys*> vas;
+		List<ITsys*> nvas;
+		for (vint j = 0; j < involvedTypes.Count(); j++)
+		{
+			if (auto idType = dynamic_cast<IdType*>(involvedTypes[j]))
+			{
+				auto patternSymbol = idType->resolving->resolvedSymbols[0];
+				auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
+				if (patternSymbol->ellipsis)
+				{
+					vas.Add(pattern);
+				}
+				else
+				{
+					nvas.Add(pattern);
+				}
+			}
+		}
+
+		// infer all affected types to any_t, result will be overrided if more precise types are inferred
+		for (vint j = 0; j < vas.Count(); j++)
+		{
+			SetInferredResult(taContext, vas[j], pa.tsys->Any());
+		}
+		for (vint j = 0; j < nvas.Count(); j++)
+		{
+			SetInferredResult(taContext, nvas[j], pa.tsys->Any());
+		}
+
+		if (assignedTsys->GetType() != TsysType::Any)
+		{
+			if (isVariadic)
+			{
+				// for variadic parameter
+				vint count = assignedTsys->GetParamCount();
+				if (count == 0)
+				{
+					// if the assigned argument is an empty list, infer all variadic arguments to empty
+					Array<ExprTsysItem> params;
+					auto init = pa.tsys->InitOf(params);
+					for (vint j = 0; j < vas.Count(); j++)
+					{
+						SetInferredResult(taContext, vas[j], init);
+					}
+				}
+				else
+				{
+					// if the assigned argument is a non-empty list
+					Dictionary<ITsys*, Ptr<Array<ExprTsysItem>>> variadicResults;
+					for (vint j = 0; j < vas.Count(); j++)
+					{
+						variadicResults.Add(vas[j], MakePtr<Array<ExprTsysItem>>(count));
+					}
+
+					// run each item in the list
+					for (vint j = 0; j < count; j++)
+					{
+						auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
+						TemplateArgumentContext variadicContext;
+						InferTemplateArgument(pa, argumentType, assignedTsysItem, taContext, variadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
+						for (vint k = 0; k < variadicContext.arguments.Count(); k++)
+						{
+							auto key = variadicContext.arguments.Keys()[k];
+							auto value = variadicContext.arguments.Values()[k];
+							auto result = variadicResults[key];
+							result->Set(j, { nullptr,ExprTsysType::PRValue,value });
+						}
+					}
+
+					// aggregate them
+					for (vint j = 0; j < vas.Count(); j++)
+					{
+						auto pattern = vas[j];
+						auto& params = *variadicResults[pattern].Obj();
+						auto init = pa.tsys->InitOf(params);
+						SetInferredResult(taContext, pattern, init);
+					}
+				}
+			}
+			else
+			{
+				// for non-variadic parameter, run the assigned argument
+				TemplateArgumentContext unusedVariadicContext;
+				InferTemplateArgument(pa, argumentType, assignedTsys, taContext, unusedVariadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
+				if (unusedVariadicContext.arguments.Count() > 0)
+				{
+					throw TypeCheckerException();
+				}
+			}
+		}
+	}
+
+	/***********************************************************************
+	InferTemplateArgumentsForGenericType:	Perform type inferencing for template class offered arguments
 	***********************************************************************/
 
 	void InferTemplateArgumentsForGenericType(
 		const ParsingArguments& pa,
-		ForwardClassDeclaration* genericType,
+		ClassDeclaration* genericType,
 		List<ITsys*>& parameterAssignment,
 		TemplateArgumentContext& taContext,
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
-		// TODO: not implemented
-		throw 0;
+		auto spec = genericType->templateSpec;
+		for (vint i = 0; i < spec->arguments.Count(); i++)
+		{
+			auto argument = spec->arguments[i];
+			// if this is a value argument, skip it
+			if (argument.argumentType != CppTemplateArgumentType::Value)
+			{
+				auto assignedTsys = parameterAssignment[i];
+				InferTemplateArgument(pa, argument.type, argument.ellipsis, assignedTsys, taContext, freeTypeSymbols, true);
+			}
+		}
 	}
 
 	/***********************************************************************
-	InferTemplateArgumentsForFunctionType:	Perform type inferencing for template function parameters
+	InferTemplateArgumentsForFunctionType:	Perform type inferencing for template function offered arguments
 	***********************************************************************/
 
 	void InferTemplateArgumentsForFunctionType(
@@ -82,101 +201,7 @@ namespace symbol_type_resolving
 				// see if any variadic value arguments can be determined
 				// variadic value argument only care about the number of values
 				auto parameter = functionType->parameters[i];
-
-				SortedList<Type*> involvedTypes;
-				CollectFreeTypes(parameter.item->type, parameter.isVariadic, freeTypeSymbols, involvedTypes);
-
-				// get all affected arguments
-				List<ITsys*> vas;
-				List<ITsys*> nvas;
-				for (vint j = 0; j < involvedTypes.Count(); j++)
-				{
-					if (auto idType = dynamic_cast<IdType*>(involvedTypes[j]))
-					{
-						auto patternSymbol = idType->resolving->resolvedSymbols[0];
-						auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
-						if (patternSymbol->ellipsis)
-						{
-							vas.Add(pattern);
-						}
-						else
-						{
-							nvas.Add(pattern);
-						}
-					}
-				}
-
-				// infer all affected types to any_t, result will be overrided if more precise types are inferred
-				for (vint j = 0; j < vas.Count(); j++)
-				{
-					SetInferredResult(taContext, vas[j], pa.tsys->Any());
-				}
-				for (vint j = 0; j < nvas.Count(); j++)
-				{
-					SetInferredResult(taContext, nvas[j], pa.tsys->Any());
-				}
-
-				if (assignedTsys->GetType() != TsysType::Any)
-				{
-					if (parameter.isVariadic)
-					{
-						// for variadic parameter
-						vint count = assignedTsys->GetParamCount();
-						if (count == 0)
-						{
-							// if the assigned argument is an empty list, infer all variadic arguments to empty
-							Array<ExprTsysItem> params;
-							auto init = pa.tsys->InitOf(params);
-							for (vint j = 0; j < vas.Count(); j++)
-							{
-								SetInferredResult(taContext, vas[j], init);
-							}
-						}
-						else
-						{
-							// if the assigned argument is a non-empty list
-							Dictionary<ITsys*, Ptr<Array<ExprTsysItem>>> variadicResults;
-							for (vint j = 0; j < vas.Count(); j++)
-							{
-								variadicResults.Add(vas[j], MakePtr<Array<ExprTsysItem>>(count));
-							}
-
-							// run each item in the list
-							for (vint j = 0; j < count; j++)
-							{
-								auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
-								TemplateArgumentContext variadicContext;
-								InferTemplateArgument(pa, parameter.item->type, assignedTsysItem, taContext, variadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
-								for (vint k = 0; k < variadicContext.arguments.Count(); k++)
-								{
-									auto key = variadicContext.arguments.Keys()[k];
-									auto value = variadicContext.arguments.Values()[k];
-									auto result = variadicResults[key];
-									result->Set(j, { nullptr,ExprTsysType::PRValue,value });
-								}
-							}
-
-							// aggregate them
-							for (vint j = 0; j < vas.Count(); j++)
-							{
-								auto pattern = vas[j];
-								auto& params = *variadicResults[pattern].Obj();
-								auto init = pa.tsys->InitOf(params);
-								SetInferredResult(taContext, pattern, init);
-							}
-						}
-					}
-					else
-					{
-						// for non-variadic parameter, run the assigned argument
-						TemplateArgumentContext unusedVariadicContext;
-						InferTemplateArgument(pa, parameter.item->type, assignedTsys, taContext, unusedVariadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
-						if (unusedVariadicContext.arguments.Count() > 0)
-						{
-							throw TypeCheckerException();
-						}
-					}
-				}
+				InferTemplateArgument(pa, parameter.item->type, parameter.isVariadic, assignedTsys, taContext, freeTypeSymbols, exactMatchForParameters);
 			}
 		}
 	}
