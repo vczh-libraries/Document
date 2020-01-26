@@ -556,7 +556,7 @@ namespace symbol_type_resolving
 	void ResolveFunctionParameters(
 		const ParsingArguments& invokerPa,			// context
 		List<ITsys*>& parameterAssignment,			// store function argument to offered argument map, nullptr indicates the default value is applied
-		Ptr<FunctionType> functionType,				// argument information
+		FunctionType* functionType,					// argument information
 		Array<ExprTsysItem>& argumentTypes,			// (index of unpacked)		offered argument (unpacked)
 		SortedList<vint>& boundedAnys				// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
 	)
@@ -566,8 +566,8 @@ namespace symbol_type_resolving
 		vint functionParameterCount = functionType->parameters.Count() + (functionType->ellipsis ? 1 : 0);
 		GpaList gpaMappings;
 		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, false, functionParameterCount,
-			[&functionType](vint index) { return index == functionType->parameters.Count() ? functionType->ellipsis : functionType->parameters[index].isVariadic; },
-			[&functionType](vint index) { return index == functionType->parameters.Count() ? false : (bool)functionType->parameters[index].item->initializer; }
+			[functionType](vint index) { return index == functionType->parameters.Count() ? functionType->ellipsis : functionType->parameters[index].isVariadic; },
+			[functionType](vint index) { return index == functionType->parameters.Count() ? false : (bool)functionType->parameters[index].item->initializer; }
 		);
 
 		for (vint i = 0; i < functionParameterCount; i++)

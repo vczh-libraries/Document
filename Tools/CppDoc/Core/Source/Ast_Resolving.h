@@ -106,7 +106,12 @@ namespace symbol_type_resolving
 	extern void									SearchAdlFunction(const ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result);
 
 	// InferFunctionType
-	extern Nullable<ExprTsysItem>				InferFunctionType(const ParsingArguments& pa, ExprTsysItem funcType, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys);
+	extern Nullable<ExprTsysItem>				InferFunctionType(
+													const ParsingArguments& pa,
+													ExprTsysItem funcType,
+													Array<ExprTsysItem>& argTypes,
+													SortedList<vint>& boundedAnys
+												);
 
 	// Generic
 
@@ -128,7 +133,7 @@ namespace symbol_type_resolving
 	extern void									ResolveFunctionParameters(
 													const ParsingArguments& invokerPa,
 													List<ITsys*>& parameterAssignment,
-													Ptr<FunctionType> functionType,
+													FunctionType* functionType,
 													Array<ExprTsysItem>& argumentTypes,
 													SortedList<vint>& boundedAnys
 												);

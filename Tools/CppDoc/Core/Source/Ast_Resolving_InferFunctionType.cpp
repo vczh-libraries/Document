@@ -13,6 +13,15 @@ namespace symbol_type_resolving
 		}
 	}
 
+	void InferTemplateArgumentsForFunctionType(
+		const ParsingArguments& pa,
+		FunctionType* functionType,
+		List<ITsys*>& parameterAssignment,
+		TemplateArgumentContext& taContext,
+		const SortedList<Symbol*>& freeTypeSymbols,
+		bool exactMatchForParameters
+	);
+
 	/***********************************************************************
 	CollectFreeTypes:	Collect and check all involved free types from a type
 						Stops at nested variadic types
@@ -337,8 +346,36 @@ namespace symbol_type_resolving
 
 		void Visit(FunctionType* self)override
 		{
-			// TODO: not implemented
-			throw 0;
+			auto entity = offeredType;
+			if (!exactMatch)
+			{
+				TsysCV cv;
+				TsysRefType refType;
+				offeredType->GetEntity(cv, refType);
+				if (entity->GetType() == TsysType::Ptr && entity->GetElement()->GetType() == TsysType::Function)
+				{
+					entity = entity->GetElement();
+				}
+			}
+			if (entity->GetType() != TsysType::Member)
+			{
+				throw TypeCheckerException();
+			}
+
+			ExecuteOnce(self->decoratorReturnType ? self->decoratorReturnType : self->returnType, entity->GetElement());
+
+			List<ITsys*> parameterAssignment;
+			{
+				vint count = entity->GetParamCount();
+				Array<ExprTsysItem> argumentTypes(count);
+				SortedList<vint> boundedAnys;
+				for (vint i = 0; i < count; i++)
+				{
+					argumentTypes[i] = { nullptr,ExprTsysType::PRValue,entity->GetParam(i) };
+				}
+				ResolveFunctionParameters(pa, parameterAssignment, self, argumentTypes, boundedAnys);
+			}
+			InferTemplateArgumentsForFunctionType(pa, self, parameterAssignment, taContext, freeTypeSymbols, true);
 		}
 
 		void Visit(MemberType* self)override
@@ -415,11 +452,12 @@ namespace symbol_type_resolving
 		TemplateArgumentContext& taContext,
 		TemplateArgumentContext& variadicContext,
 		const SortedList<Symbol*>& freeTypeSymbols,
-		const SortedList<Type*>& involvedTypes
+		const SortedList<Type*>& involvedTypes,
+		bool exactMatchForParameters
 	)
 	{
 		InferTemplateArgumentVisitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes)
-			.ExecuteOnce(argumentType, offeredType, false);
+			.ExecuteOnce(argumentType, offeredType, exactMatchForParameters);
 	}
 
 	/***********************************************************************
@@ -429,11 +467,11 @@ namespace symbol_type_resolving
 
 	void InferTemplateArgumentsForFunctionType(
 		const ParsingArguments& pa,
-		ExprTsysItem functionItem,
-		Ptr<FunctionType> functionType,
+		FunctionType* functionType,
 		List<ITsys*>& parameterAssignment,
 		TemplateArgumentContext& taContext,
-		const SortedList<Symbol*>& freeTypeSymbols
+		const SortedList<Symbol*>& freeTypeSymbols,
+		bool exactMatchForParameters
 	)
 	{
 		// don't care about arguments for ellipsis
@@ -509,7 +547,7 @@ namespace symbol_type_resolving
 							{
 								auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
 								TemplateArgumentContext variadicContext;
-								InferTemplateArgument(pa, parameter.item->type, assignedTsysItem, taContext, variadicContext, freeTypeSymbols, involvedTypes);
+								InferTemplateArgument(pa, parameter.item->type, assignedTsysItem, taContext, variadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
 								for (vint k = 0; k < variadicContext.arguments.Count(); k++)
 								{
 									auto key = variadicContext.arguments.Keys()[k];
@@ -533,7 +571,7 @@ namespace symbol_type_resolving
 					{
 						// for non-variadic parameter, run the assigned argument
 						TemplateArgumentContext unusedVariadicContext;
-						InferTemplateArgument(pa, parameter.item->type, assignedTsys, taContext, unusedVariadicContext, freeTypeSymbols, involvedTypes);
+						InferTemplateArgument(pa, parameter.item->type, assignedTsys, taContext, unusedVariadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
 						if (unusedVariadicContext.arguments.Count() > 0)
 						{
 							throw TypeCheckerException();
@@ -576,7 +614,7 @@ namespace symbol_type_resolving
 							// cannot pass Ptr<FunctionType> to this function since the last filled argument could be variadic
 							// known variadic function argument should be treated as separated arguments
 							// ParsingArguments need to be adjusted so that we can evaluate each parameter type
-							ResolveFunctionParameters(pa, parameterAssignment, functionType, argTypes, boundedAnys);
+							ResolveFunctionParameters(pa, parameterAssignment, functionType.Obj(), argTypes, boundedAnys);
 
 							// fill freeTypeSymbols with all template arguments
 							// fill freeTypeAssignments with only assigned template arguments
@@ -589,7 +627,7 @@ namespace symbol_type_resolving
 							}
 
 							// type inferencing
-							InferTemplateArgumentsForFunctionType(inferPa, functionItem, functionType, parameterAssignment, taContext, freeTypeSymbols);
+							InferTemplateArgumentsForFunctionType(inferPa, functionType.Obj(), parameterAssignment, taContext, freeTypeSymbols, false);
 
 							// fill template value arguments
 							for (vint i = 0; i < gfi.spec->arguments.Count(); i++)
