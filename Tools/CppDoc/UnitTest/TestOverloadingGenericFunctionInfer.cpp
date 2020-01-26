@@ -249,10 +249,24 @@ TEST_FILE
 			L"::Types<{bool * $PR, bool const * $PR, bool volatile * $PR}> $PR",
 			Types<bool *, bool const *, bool volatile *>
 		);
+
+		AssertExpr(
+			pa,
+			L"Value<Types<FunctionOf<bool, float *>, FunctionOf<bool, double *>>>()",
+			nullptr,
+			L"::Types<{bool __cdecl(float *) * $PR, bool __cdecl(double *) * $PR}> $PR"
+		);
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			VtaFunc(Value<Types<FunctionOf<bool, float *>, FunctionOf<bool, double *>>>()),
 			L"::Types<{bool $PR, float $PR, double $PR}> $PR",
 			Types<bool, float, double>
+		);
+
+		AssertExpr(
+			pa,
+			L"Value<Types<FunctionOf<bool &, float *>, FunctionOf<char &, double *>>>()",
+			nullptr,
+			L"::Types<{bool & __cdecl(float *) * $PR, char & __cdecl(double *) * $PR}> $PR"
 		);
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			VtaFunc2(Value<Types<FunctionOf<bool &, float *>, FunctionOf<char &, double *>>>()),
@@ -262,7 +276,8 @@ TEST_FILE
 	});
 
 	// test matching Types<A..., B...>
-	// test matching BaseClass<arguments>
+	// test matching (Types*)BaseClass<arguments> with (ITsys*)DerivedClass<arguments>
+	// test matching (Types*)CorrectType::Type with (ITsys*)CorrectType::Type
 	// test matching template template argument (both before or inside <>)
 	// test matching DeclInstant with templates distributed on every class levels
 	// test known/unknown variadic arguments/parameters

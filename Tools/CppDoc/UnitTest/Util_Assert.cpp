@@ -82,7 +82,7 @@ void AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 	{
 		Log(type, writer);
 	});
-	AssertLog(output, log);
+	AssertLog(output, (log ? log : input));
 
 	TypeTsysList tsys;
 	if (count > 0)
@@ -125,7 +125,7 @@ void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 	{
 		Log(expr, writer);
 	});
-	AssertLog(output, log);
+	AssertLog(output, (log ? log : input));
 
 	ExprTsysList tsys;
 	if (count > 0)
