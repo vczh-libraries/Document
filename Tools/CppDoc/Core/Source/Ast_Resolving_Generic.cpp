@@ -553,24 +553,15 @@ namespace symbol_type_resolving
 	ResolveFunctionParameters: Calculate function parameter types by matching arguments to patterens
 	***********************************************************************/
 
-	void ResolveFunctionParameters(
-		const ParsingArguments& invokerPa,			// context
-		List<ITsys*>& parameterAssignment,			// store function argument to offered argument map, nullptr indicates the default value is applied
-		FunctionType* functionType,					// argument information
-		Array<ExprTsysItem>& argumentTypes,			// (index of unpacked)		offered argument (unpacked)
-		SortedList<vint>& boundedAnys				// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
+	void AssignParameterAssignment(
+		const ParsingArguments& invokerPa,
+		vint parameterCount,
+		List<ITsys*>& parameterAssignment,
+		GpaList& gpaMappings,
+		Array<ExprTsysItem>& argumentTypes
 	)
 	{
-		// calculate how to assign offered arguments to function arguments
-		// gpaMappings will contains decisions for every template arguments
-		vint functionParameterCount = functionType->parameters.Count();
-		GpaList gpaMappings;
-		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, false, functionParameterCount + (functionType->ellipsis ? 1 : 0),
-			[functionType](vint index) { return index == functionType->parameters.Count() ? functionType->ellipsis : functionType->parameters[index].isVariadic; },
-			[functionType](vint index) { return index == functionType->parameters.Count() ? false : (bool)functionType->parameters[index].item->initializer; }
-		);
-
-		for (vint i = 0; i < functionParameterCount; i++)
+		for (vint i = 0; i < parameterCount; i++)
 		{
 			auto gpa = gpaMappings[i];
 
@@ -623,6 +614,25 @@ namespace symbol_type_resolving
 		}
 	}
 
+	void ResolveFunctionParameters(
+		const ParsingArguments& invokerPa,			// context
+		List<ITsys*>& parameterAssignment,			// store function argument to offered argument map, nullptr indicates the default value is applied
+		FunctionType* functionType,					// argument information
+		Array<ExprTsysItem>& argumentTypes,			// (index of unpacked)		offered argument (unpacked)
+		SortedList<vint>& boundedAnys				// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
+	)
+	{
+		// calculate how to assign offered arguments to function arguments
+		// gpaMappings will contains decisions for every template arguments
+		vint functionParameterCount = functionType->parameters.Count();
+		GpaList gpaMappings;
+		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, false, functionParameterCount + (functionType->ellipsis ? 1 : 0),
+			[functionType](vint index) { return index == functionType->parameters.Count() ? functionType->ellipsis : functionType->parameters[index].isVariadic; },
+			[functionType](vint index) { return index == functionType->parameters.Count() ? false : (bool)functionType->parameters[index].item->initializer; }
+		);
+		AssignParameterAssignment(invokerPa, functionParameterCount, parameterAssignment, gpaMappings, argumentTypes);
+	}
+
 	/***********************************************************************
 	ResolveGenericTypeParameters: Calculate generic parameter types by matching arguments to patterens
 	***********************************************************************/
@@ -644,58 +654,6 @@ namespace symbol_type_resolving
 			[genericType](vint index) { return index == genericType->arguments.Count() ? true : genericType->arguments[index].isVariadic; },
 			[](vint index) { return false; }
 		);
-
-		for (vint i = 0; i < genericParameterCount; i++)
-		{
-			auto gpa = gpaMappings[i];
-
-			switch (gpa.kind)
-			{
-			case GenericParameterAssignmentKind::DefaultValue:
-				{
-					// if a default value is expected to fill this template argument
-					parameterAssignment.Add(nullptr);
-				}
-				break;
-			case GenericParameterAssignmentKind::OneArgument:
-				{
-					// if an offered argument is to fill this template argument
-					parameterAssignment.Add(ApplyExprTsysType(argumentTypes[gpa.index].tsys, argumentTypes[gpa.index].type));
-				}
-				break;
-			case GenericParameterAssignmentKind::EmptyVta:
-				{
-					// if an empty pack of offered arguments is to fill this variadic template argument
-					Array<ExprTsysItem> items;
-					auto init = invokerPa.tsys->InitOf(items);
-					parameterAssignment.Add(init);
-				}
-				break;
-			case GenericParameterAssignmentKind::MultipleVta:
-				{
-					// if a pack of offered arguments is to fill this variadic template argument
-					Array<ExprTsysItem> items(gpa.count);
-
-					for (vint j = 0; j < gpa.count; j++)
-					{
-						items[j] = argumentTypes[gpa.index + j];
-					}
-					auto init = invokerPa.tsys->InitOf(items);
-					parameterAssignment.Add(init);
-				}
-				break;
-			case GenericParameterAssignmentKind::Any:
-				{
-					// if any is to fill this (maybe variadic) template argument
-					parameterAssignment.Add(invokerPa.tsys->Any());
-				}
-				break;
-			default:
-				// default values are not allowed, since no information about it is provided
-				// missing arguments are not allowed
-				throw TypeCheckerException();
-				break;
-			}
-		}
+		AssignParameterAssignment(invokerPa, genericParameterCount, parameterAssignment, gpaMappings, argumentTypes);
 	}
 }
