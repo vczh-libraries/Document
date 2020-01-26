@@ -45,8 +45,21 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	InferFunctionType:	Perform type inferencing for template function using both offered template and function arguments
-						Ts(*)(X<Ts...>)... or Ts<X<Ts<Y>...>... is not supported, because of nested Ts...
+	InferTemplateArgumentsForGenericType:	Perform type inferencing for template function parameters
+	***********************************************************************/
+
+	void InferTemplateArgumentsForFunctionType(
+		const ParsingArguments& pa,
+		ClassDeclaration* genericType,
+		List<ITsys*>& parameterAssignment,
+		TemplateArgumentContext& taContext,
+		const SortedList<Symbol*>& freeTypeSymbols
+	)
+	{
+	}
+
+	/***********************************************************************
+	InferTemplateArgumentsForFunctionType:	Perform type inferencing for template function parameters
 	***********************************************************************/
 
 	void InferTemplateArgumentsForFunctionType(
@@ -165,6 +178,11 @@ namespace symbol_type_resolving
 			}
 		}
 	}
+
+	/***********************************************************************
+	InferFunctionType:	Perform type inferencing for template function using both offered template and function arguments
+						Ts(*)(X<Ts...>)... or Ts<X<Ts<Y>...>... is not supported, because of nested Ts...
+	***********************************************************************/
 
 	Nullable<ExprTsysItem> InferFunctionType(const ParsingArguments& pa, ExprTsysItem functionItem, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
 	{

@@ -136,17 +136,12 @@ namespace symbol_type_resolving
 		}
 	};
 
-	void CollectFreeTypes(Type* type, bool insideVariant, const SortedList<Symbol*>& freeTypeSymbols, SortedList<Type*>& involvedTypes)
+	void CollectFreeTypes(Ptr<Type> type, bool insideVariant, const SortedList<Symbol*>& freeTypeSymbols, SortedList<Type*>& involvedTypes)
 	{
 		if (type)
 		{
 			CollectFreeTypesVisitor visitor(insideVariant, freeTypeSymbols, involvedTypes);
 			type->Accept(&visitor);
 		}
-	}
-
-	void CollectFreeTypes(Ptr<Type> type, bool insideVariant, const SortedList<Symbol*>& freeTypeSymbols, SortedList<Type*>& involvedTypes)
-	{
-		CollectFreeTypes(type.Obj(), insideVariant, freeTypeSymbols, involvedTypes);
 	}
 }

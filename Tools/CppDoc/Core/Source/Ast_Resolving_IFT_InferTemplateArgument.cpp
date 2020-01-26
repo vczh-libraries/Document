@@ -250,6 +250,50 @@ namespace symbol_type_resolving
 
 		void Visit(GenericType* self)override
 		{
+			if (!self->type->resolving || self->type->resolving->resolvedSymbols.Count() != 1)
+			{
+				throw TypeCheckerException();
+			}
+			auto genericSymbol = self->type->resolving->resolvedSymbols[0];
+			if (involvedTypes.Contains(self->type.Obj()))
+			{
+				// TODO: remove this constraint in the future, it could be a template template argument, or a generic class inside another involved class
+				throw 0;
+			}
+
+			auto entity = offeredType;
+			if (exactMatch)
+			{
+				if (entity->GetType() != TsysType::DeclInstant)
+				{
+					// only DeclInstance could be a instance of a template class
+					throw TypeCheckerException();
+				}
+
+				if (entity->GetDeclInstant().declSymbol != genericSymbol)
+				{
+					// TODO: only check this when self->type is not involved
+					throw TypeCheckerException();
+				}
+			}
+			else
+			{
+				TsysCV refCV;
+				TsysRefType refType;
+				entity = entity->GetEntity(refCV, refType);
+
+				if (entity->GetType() != TsysType::DeclInstant)
+				{
+					// TODO: check base class of entity, it could also be Decl
+					throw TypeCheckerException();
+				}
+
+				if (entity->GetDeclInstant().declSymbol != genericSymbol)
+				{
+					// TODO: only check this when self->type is not involved
+					throw TypeCheckerException();
+				}
+			}
 			// TODO: not implemented
 			throw 0;
 		}
