@@ -27,7 +27,7 @@ namespace symbol_type_resolving
 
 	extern void			InferTemplateArgumentsForGenericType(
 							const ParsingArguments& pa,
-		ClassDeclaration* genericType,
+							GenericType* genericType,
 							List<ITsys*>& parameterAssignment,
 							TemplateArgumentContext& taContext,
 							const SortedList<Symbol*>& freeTypeSymbols);

@@ -160,21 +160,20 @@ namespace symbol_type_resolving
 
 	void InferTemplateArgumentsForGenericType(
 		const ParsingArguments& pa,
-		ClassDeclaration* genericType,
+		GenericType* genericType,
 		List<ITsys*>& parameterAssignment,
 		TemplateArgumentContext& taContext,
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
-		auto spec = genericType->templateSpec;
-		for (vint i = 0; i < spec->arguments.Count(); i++)
+		for (vint i = 0; i < genericType->arguments.Count(); i++)
 		{
-			auto argument = spec->arguments[i];
+			auto argument = genericType->arguments[i];
 			// if this is a value argument, skip it
-			if (argument.argumentType != CppTemplateArgumentType::Value)
+			if (argument.item.type)
 			{
 				auto assignedTsys = parameterAssignment[i];
-				InferTemplateArgument(pa, argument.type, argument.ellipsis, assignedTsys, taContext, freeTypeSymbols, true);
+				InferTemplateArgument(pa, argument.item.type, argument.isVariadic, assignedTsys, taContext, freeTypeSymbols, true);
 			}
 		}
 	}
