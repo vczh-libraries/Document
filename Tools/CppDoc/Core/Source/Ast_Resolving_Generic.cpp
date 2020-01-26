@@ -622,4 +622,19 @@ namespace symbol_type_resolving
 			}
 		}
 	}
+
+	/***********************************************************************
+	ResolveGenericTypeParameters: Calculate generic parameter types by matching arguments to patterens
+	***********************************************************************/
+
+	void ResolveGenericTypeParameters(
+		const ParsingArguments& invokerPa,			// context
+		List<ITsys*>& parameterAssignment,			// store function argument to offered argument map, nullptr indicates the default value is applied
+		GenericType* genericType,					// argument information
+		Array<ExprTsysItem>& argumentTypes,			// (index of unpacked)		offered argument (unpacked)
+		SortedList<vint>& boundedAnys				// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
+	)
+	{
+
+	}
 }

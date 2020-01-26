@@ -341,8 +341,6 @@ namespace symbol_type_resolving
 				}
 
 				Array<ExprTsysItem> argumentTypes(count);
-				Array<bool> isTypes(count);
-				Array<vint> argSource(count);
 				SortedList<vint> boundedAnys;
 
 				{
@@ -352,24 +350,17 @@ namespace symbol_type_resolving
 					{
 						auto argument = spec->arguments[0];
 						auto value = entity->GetParam(0);
-						bool isType = argument.argumentType != CppTemplateArgumentType::Value;
 
 						if (argument.ellipsis)
 						{
 							for (vint j = 0; j < value->GetParamCount(); j++)
 							{
-								argumentTypes[index] = { nullptr,ExprTsysType::PRValue,value->GetParam(j) };
-								isTypes[index] = isType;
-								argSource[index] = index;
-								index++;
+								argumentTypes[index++] = { nullptr,ExprTsysType::PRValue,value->GetParam(j) };
 							}
 						}
 						else
 						{
-							argumentTypes[index] = { nullptr,ExprTsysType::PRValue,value };
-							isTypes[index] = isType;
-							argSource[index] = i;
-							index++;
+							argumentTypes[index++] = { nullptr,ExprTsysType::PRValue,value };
 						}
 					}
 				}
@@ -379,14 +370,14 @@ namespace symbol_type_resolving
 
 				TemplateArgumentContext resultContext;
 				vint unusedApplied = -1;
-				ResolveGenericParameters(pa, resultContext, gft, argumentTypes, isTypes, argSource, boundedAnys, 0, false, unusedApplied);
+				ResolveGenericTypeParameters(pa, parameterAssignment, self, argumentTypes, boundedAnys);
 
 				for (vint i = 0; i < gft->GetParamCount(); i++)
 				{
 					parameterAssignment.Add(resultContext.arguments[gft->GetParam(i)]);
 				}
 			}
-			InferTemplateArgumentsForGenericType(pa, classDecl.Obj(), parameterAssignment, taContext, freeTypeSymbols);
+			InferTemplateArgumentsForGenericType(pa, self, parameterAssignment, taContext, freeTypeSymbols);
 		}
 	};
 

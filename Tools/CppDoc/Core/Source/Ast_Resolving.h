@@ -137,4 +137,11 @@ namespace symbol_type_resolving
 													Array<ExprTsysItem>& argumentTypes,
 													SortedList<vint>& boundedAnys
 												);
+	extern void									ResolveGenericTypeParameters(
+													const ParsingArguments& invokerPa,
+													List<ITsys*>& parameterAssignment,
+													GenericType* genericType,
+													Array<ExprTsysItem>& argumentTypes,
+													SortedList<vint>& boundedAnys
+												);
 }
