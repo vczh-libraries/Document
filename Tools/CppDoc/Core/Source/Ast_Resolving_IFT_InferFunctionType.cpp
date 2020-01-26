@@ -48,7 +48,7 @@ namespace symbol_type_resolving
 	InferTemplateArgument:	Perform type inferencing for a template argument
 	***********************************************************************/
 
-	void InferTemplateArgument(
+	void InferTemplateArgumentOfComplexType(
 		const ParsingArguments& pa,
 		Ptr<Type> argumentType,
 		bool isVariadic,
@@ -173,7 +173,7 @@ namespace symbol_type_resolving
 			if (argument.item.type)
 			{
 				auto assignedTsys = parameterAssignment[i];
-				InferTemplateArgument(pa, argument.item.type, argument.isVariadic, assignedTsys, taContext, freeTypeSymbols, true);
+				InferTemplateArgumentOfComplexType(pa, argument.item.type, argument.isVariadic, assignedTsys, taContext, freeTypeSymbols, true);
 			}
 		}
 	}
@@ -200,7 +200,7 @@ namespace symbol_type_resolving
 				// see if any variadic value arguments can be determined
 				// variadic value argument only care about the number of values
 				auto parameter = functionType->parameters[i];
-				InferTemplateArgument(pa, parameter.item->type, parameter.isVariadic, assignedTsys, taContext, freeTypeSymbols, exactMatchForParameters);
+				InferTemplateArgumentOfComplexType(pa, parameter.item->type, parameter.isVariadic, assignedTsys, taContext, freeTypeSymbols, exactMatchForParameters);
 			}
 		}
 	}
