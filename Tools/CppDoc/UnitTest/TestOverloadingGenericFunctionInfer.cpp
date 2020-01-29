@@ -61,6 +61,49 @@ namespace Input__TestOverloadingGenericFunction_TypeInferKinds
 	);
 }
 
+namespace Input__TestOverloadingGenericFunction_TypeInferChildTypes
+{
+	TEST_DECL(
+		template<typename... Ts>
+		struct Types {};
+
+		template<typename TA, typename TB>
+		struct A
+		{
+			struct _
+			{
+				template<typename TC, typename... Ts>
+				struct B
+				{
+				};
+			};
+		};
+
+		template<typename TA>
+		struct C : A<TA*, TA&>
+		{
+			struct D
+				: A<TA*, TA&>::_::template B<const TA, volatile TA, const volatile TA>
+				, A<TA&, TA*>::_::template B<TA>
+				, A<float, double>::_::B<char, bool, void>
+			{
+			};
+		};
+
+		template<template<typename, typename...> class X, typename TC, typename... Ts>
+		auto UseX(X<TC, Ts...>)->Types<X<TC, Ts...>, TC, Ts...>;
+
+		template<typename TA, typename TB>
+		auto UseA(A<TA, TB>)->Types<TA, TB>;
+
+		template<typename TA, typename TB, typename TC, typename... Ts>
+		auto UseB(typename A<TA, TB>::_::template B<TC, Ts...>)->Types<TA, TB, TC, Ts...>;
+
+		template<typename TC, typename... Ts>
+		auto UseB(A<float, double>::_::B<TC, Ts...>)->Types<TC, Ts...>;
+	);
+}
+
 TEST_FILE
 {
 	TEST_CATEGORY(L"Partially apply template arguments (simple)")
@@ -275,11 +318,61 @@ TEST_FILE
 		);
 	});
 
+	TEST_CATEGORY(L"Template argument deduction (child types)")
+	{
+		using namespace Input__TestOverloadingGenericFunction_TypeInferChildTypes;
+		COMPILE_PROGRAM(program, pa, input);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			UseX(A<float, double> :: _ :: B<bool, char, void>()),
+			L"::Types<{A<{float $PR, double $PR}>::_::B<{bool $PR, char $PR, void $PR> $PR, bool $PR, char $PR, void $PR}> $PR",
+			Types<A<float, double>::_::B<bool, char, void>, bool, char, void>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			UseA(A<float, double>()),
+			L"::Types<{float $PR, double $PR}> $PR",
+			Types<float, double>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			UseB(A<float, double> :: _ :: B<bool, char, void>()),
+			L"::Types<{bool $PR, char $PR, void $PR}> $PR",
+			Types<bool, char, void>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UseB<float, double>(A<float, double> :: _ :: B<bool, char, void>())),
+			L"::Types<{float $PR, double $PR, bool $PR, char $PR, void $PR}> $PR",
+			Types<float, double, bool, char, void>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			UseA(C<float>()),
+			L"::Types<{float * $PR, float & $PR}> $PR",
+			Types<float*, float&>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UseB<float *, float &>(C<float> :: D())),
+			L"::Types<{float * $PR, float & $PR, float const $PR, float volatile $PR, float const volatile $PR}> $PR",
+			Types<float*, float&, const float, volatile float, const volatile float>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UseB<float &, float *>(C<float> :: D())),
+			L"::Types<{float & $PR, float * $PR, float $PR}> $PR",
+			Types<float&, float*, float>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UseB(C<float> :: D())),
+			L"::Types<{char $PR, bool $PR, void $PR}> $PR",
+			Types<char, bool, void>
+		);
+	});
+
 	// test matching Types<A..., B...>
-	// test matching (Types*)BaseClass<arguments> with (ITsys*)DerivedClass<arguments>
-	// test matching (Types*)CorrectType::Type with (ITsys*)CorrectType::Type
-	// test matching template template argument (both before or inside <>)
-	// test matching DeclInstant with templates distributed on every class levels
 	// test known/unknown variadic arguments/parameters
 	// test generic methods		(TestOverloadingGenericMethodInfer.cpp)
 	// test generic operators	(TestOverloadingGenericMethodInfer.cpp)
