@@ -354,8 +354,8 @@ namespace symbol_type_resolving
 				vint count = 0;
 				for (vint i = 0; i < spec->arguments.Count(); i++)
 				{
-					auto argument = spec->arguments[0];
-					auto value = entity->GetParam(0);
+					auto argument = spec->arguments[i];
+					auto value = entity->GetParam(i);
 					if (argument.ellipsis)
 					{
 						if (value->GetType() != TsysType::Init)
@@ -379,8 +379,8 @@ namespace symbol_type_resolving
 					const auto& di = entity->GetDeclInstant();
 					for (vint i = 0; i < spec->arguments.Count(); i++)
 					{
-						auto argument = spec->arguments[0];
-						auto value = entity->GetParam(0);
+						auto argument = spec->arguments[i];
+						auto value = entity->GetParam(i);
 
 						if (argument.ellipsis)
 						{
