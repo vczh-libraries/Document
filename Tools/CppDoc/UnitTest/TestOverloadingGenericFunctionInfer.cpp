@@ -346,6 +346,12 @@ TEST_FILE
 			L"::Types<{float $PR, double $PR, bool $PR, char $PR, void $PR}> $PR",
 			Types<float, double, bool, char, void>
 		);
+	});
+
+	TEST_CATEGORY(L"Template argument deduction (base types)")
+	{
+		using namespace Input__TestOverloadingGenericFunction_TypeInferChildTypes;
+		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			UseA(C<float>()),
