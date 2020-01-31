@@ -238,7 +238,6 @@ namespace symbol_type_resolving
 						try
 						{
 							auto gfi = functionItem.tsys->GetGenericFunction();
-							if (gfi.filledArguments != 0) throw TypeCheckerException();
 
 							List<ITsys*>						parameterAssignment;
 							TemplateArgumentContext				taContext;
@@ -252,13 +251,18 @@ namespace symbol_type_resolving
 							ResolveFunctionParameters(pa, parameterAssignment, functionType.Obj(), argTypes, boundedAnys);
 
 							// fill freeTypeSymbols with all template arguments
-							// fill freeTypeAssignments with only assigned template arguments
+							// fill taContext will knows arguments
 							for (vint i = 0; i < gfi.spec->arguments.Count(); i++)
 							{
 								auto argument = gfi.spec->arguments[i];
 								auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
 								auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
 								freeTypeSymbols.Add(patternSymbol);
+
+								if (i < gfi.filledArguments)
+								{
+									taContext.arguments.Add(pattern, functionItem.tsys->GetParam(i));
+								}
 							}
 
 							// type inferencing
