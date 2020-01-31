@@ -28,18 +28,27 @@ namespace symbol_type_resolving
 
 		void ExecuteInvolvedOnce(Ptr<Type>& argumentType, ITsys* _offeredType, bool _exactMatch = true)
 		{
-			if (!_offeredType->IsUnknownType())
+			if (_offeredType->GetType() == TsysType::GenericFunction)
 			{
-				auto oldot = offeredType;
-				auto oldem = exactMatch;
-
-				offeredType = _offeredType;
-				exactMatch = _exactMatch;
-				argumentType->Accept(this);
-
-				offeredType = oldot;
-				exactMatch = oldem;
+				if (_offeredType->GetElement()->GetType() != TsysType::DeclInstant)
+				{
+					return;
+				}
 			}
+			else if (_offeredType->IsUnknownType())
+			{
+				return;
+			}
+
+			auto oldot = offeredType;
+			auto oldem = exactMatch;
+
+			offeredType = _offeredType;
+			exactMatch = _exactMatch;
+			argumentType->Accept(this);
+
+			offeredType = oldot;
+			exactMatch = oldem;
 		}
 
 		void ExecuteOnce(Ptr<Type>& argumentType, ITsys* _offeredType, bool _exactMatch = true)

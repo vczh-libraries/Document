@@ -325,7 +325,7 @@ TEST_FILE
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			UseX(A<float, double> :: _ :: B<bool, char, void>()),
-			L"::Types<{A<{float $PR, double $PR}>::_::B<{bool $PR, char $PR, void $PR> $PR, bool $PR, char $PR, void $PR}> $PR",
+			L"::Types<{::A<float, double>::_::B<bool, {char $PR, void $PR}> $PR, bool $PR, char $PR, void $PR}> $PR",
 			Types<A<float, double>::_::B<bool, char, void>, bool, char, void>
 		);
 
