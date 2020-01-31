@@ -100,6 +100,7 @@ namespace symbol_type_resolving
 
 		void Visit(RootType* self)override
 		{
+			// do not perform type inferencing against ::
 		}
 
 		void Visit(IdType* self)override
@@ -117,27 +118,55 @@ namespace symbol_type_resolving
 
 		void Visit(ChildType* self)override
 		{
-			bool result = Execute(self->classType.Obj());
-			if ((involved = result)) involvedTypes.Add(self);
+			// do not perform type inferencing against Here::something
 		}
 
 		void Visit(GenericType* self)override
 		{
-			bool result = false;
-			result = Execute(self->type.Obj()) || result;
-			for (vint i = 0; i < self->arguments.Count(); i++)
+			if (self->type->resolving && self->type->resolving->resolvedSymbols.Count() == 1)
 			{
-				if (self->arguments[i].isVariadic)
+				// only perform type inferencing when the generic symbol is a class or a template template argument
+				auto symbol = self->type->resolving->resolvedSymbols[0];
+				switch (symbol->kind)
 				{
-					if (insideVariant)
+				case CLASS_SYMBOL_KIND:
 					{
-						// does not support nested variadic arguments
-						throw TypeCheckerException();
+						auto classDecl = symbol->GetAnyForwardDecl<ClassDeclaration>();
+						if (!classDecl || !classDecl->templateSpec)
+						{
+							return;
+						}
 					}
+					break;
+				case symbol_component::SymbolKind::GenericTypeArgument:
+					{
+						auto tsys = EvaluateGenericArgumentSymbol(symbol);
+						if (tsys->GetType() != TsysType::GenericFunction || !tsys->GetGenericFunction().spec)
+						{
+							return;
+						}
+					}
+					break;
+				default:
+					return;
 				}
-				result = Execute(self->arguments[i].item.type) || result;
+
+				bool result = false;
+				result = Execute(self->type.Obj()) || result;
+				for (vint i = 0; i < self->arguments.Count(); i++)
+				{
+					if (self->arguments[i].isVariadic)
+					{
+						if (insideVariant)
+						{
+							// does not support nested variadic arguments
+							throw TypeCheckerException();
+						}
+					}
+					result = Execute(self->arguments[i].item.type) || result;
+				}
+				if ((involved = result)) involvedTypes.Add(self);
 			}
-			if ((involved = result)) involvedTypes.Add(self);
 		}
 	};
 

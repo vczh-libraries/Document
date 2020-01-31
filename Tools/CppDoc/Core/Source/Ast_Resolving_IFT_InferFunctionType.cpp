@@ -261,6 +261,12 @@ namespace symbol_type_resolving
 								throw TypeCheckerException();
 							}
 
+							// check if there are symbols that has no result
+							if (taContext.arguments.Count() != freeTypeSymbols.Count())
+							{
+								throw TypeCheckerException();
+							}
+
 							// fill template value arguments
 							for (vint i = 0; i < gfi.spec->arguments.Count(); i++)
 							{

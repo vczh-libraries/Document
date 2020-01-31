@@ -203,6 +203,7 @@ namespace symbol_type_resolving
 
 		void Visit(DeclType* self)override
 		{
+			// do not perform type inferencing against decltype(expr)
 		}
 
 		void Visit(DecorateType* self)override
@@ -225,6 +226,7 @@ namespace symbol_type_resolving
 
 		void Visit(RootType* self)override
 		{
+			// do not perform type inferencing against ::
 		}
 
 		void Visit(IdType* self)override
@@ -244,31 +246,30 @@ namespace symbol_type_resolving
 
 		void Visit(ChildType* self)override
 		{
-			// TODO: not implemented
-			throw 0;
+			// do not perform type inferencing against Here::something
 		}
 
 		void Visit(GenericType* self)override
 		{
-			if (!self->type->resolving || self->type->resolving->resolvedSymbols.Count() != 1)
-			{
-				throw TypeCheckerException();
-			}
-
 			auto genericSymbol = self->type->resolving->resolvedSymbols[0];
-			auto classDecl = genericSymbol->GetAnyForwardDecl<ClassDeclaration>();
-			if (!classDecl || !classDecl->templateSpec)
+
+			Ptr<TemplateSpec> spec;
+			if (auto classDecl = genericSymbol->GetAnyForwardDecl<ClassDeclaration>())
 			{
-				// only do type inferencing for instance of template classes
-				// it could be an instance of a template type alias, which is not supported
+				spec = classDecl->templateSpec;
+			}
+			else
+			{
+				spec = EvaluateGenericArgumentSymbol(genericSymbol)->GetGenericFunction().spec;
+			}
+
+			if (!spec)
+			{
+				// this should not happen since CollectFreeTypes should stop the type inferencing before reaching here
 				throw TypeCheckerException();
 			}
 
-			if (involvedTypes.Contains(self->type.Obj()))
-			{
-				// TODO: remove this constraint in the future, it could be a template template argument, or a generic class inside another involved class
-				throw 0;
-			}
+			bool genericSymbolInvolved = involvedTypes.Contains(self->type.Obj());
 
 			auto entity = offeredType;
 			if (exactMatch)
@@ -281,8 +282,10 @@ namespace symbol_type_resolving
 
 				if (entity->GetDeclInstant().declSymbol != genericSymbol)
 				{
-					// TODO: only check this when self->type is not involved
-					throw TypeCheckerException();
+					if (!genericSymbolInvolved)
+					{
+						throw TypeCheckerException();
+					}
 				}
 
 				if (!entity->GetDeclInstant().taContext)
@@ -316,10 +319,14 @@ namespace symbol_type_resolving
 				}
 			}
 
+			if (genericSymbolInvolved)
+			{
+				// TODO: remove this constraint in the future, it could be a template template argument, or a generic class inside another involved class
+				throw 0;
+			}
+
 			List<ITsys*> parameterAssignment;
 			{
-				auto spec = classDecl->templateSpec;
-
 				vint count = 0;
 				for (vint i = 0; i < spec->arguments.Count(); i++)
 				{
