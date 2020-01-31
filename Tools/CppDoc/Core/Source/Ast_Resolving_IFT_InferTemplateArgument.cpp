@@ -272,8 +272,10 @@ namespace symbol_type_resolving
 			bool genericSymbolInvolved = involvedTypes.Contains(self->type.Obj());
 
 			auto entity = offeredType;
-			if (exactMatch)
+			if (exactMatch || genericSymbolInvolved)
 			{
+				// when self->type is a template template argument, base classes are not considered
+
 				if (entity->GetType() != TsysType::DeclInstant)
 				{
 					// only DeclInstance could be a instance of a template class
@@ -282,6 +284,7 @@ namespace symbol_type_resolving
 
 				if (entity->GetDeclInstant().declSymbol != genericSymbol)
 				{
+					// only when self->type is a template template argument, it has a different symbol
 					if (!genericSymbolInvolved)
 					{
 						throw TypeCheckerException();
@@ -300,21 +303,26 @@ namespace symbol_type_resolving
 				TsysRefType refType;
 				entity = entity->GetEntity(refCV, refType);
 
-				if (entity->GetType() != TsysType::DeclInstant)
+				switch (entity->GetType())
 				{
-					// TODO: check base class of entity, it could also be Decl
-					throw TypeCheckerException();
-				}
+				case TsysType::DeclInstant:
+					{
+						if (entity->GetDeclInstant().declSymbol != genericSymbol)
+						{
+							throw TypeCheckerException();
+						}
 
-				if (entity->GetDeclInstant().declSymbol != genericSymbol)
-				{
-					// TODO: only check this when self->type is not involved
+						if (!entity->GetDeclInstant().taContext)
+						{
+							// TODO: remove this constraint in the future, it is allowed to be empty for type of *this
+							throw TypeCheckerException();
+						}
+					}
+					break;
+				case TsysType::Decl:
+					// TODO: check base classes
 					throw TypeCheckerException();
-				}
-
-				if (!entity->GetDeclInstant().taContext)
-				{
-					// TODO: remove this constraint in the future, it is allowed to be empty for type of *this
+				default:
 					throw TypeCheckerException();
 				}
 			}
