@@ -253,11 +253,23 @@ namespace symbol_type_resolving
 			// consistent with GetTemplateArgumentKey
 			auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
 
-			// const, volatile, &, && are discarded
-			TsysCV refCV;
-			TsysRefType refType;
-			auto entity = exactMatch ? offeredType : offeredType->GetEntity(refCV, refType);
-			SetInferredResult(outputContext, pattern, entity);
+			switch (patternSymbol->kind)
+			{
+			case symbol_component::SymbolKind::GenericTypeArgument:
+				{
+					// const, volatile, &, && are discarded
+					TsysCV refCV;
+					TsysRefType refType;
+					auto entity = exactMatch ? offeredType : offeredType->GetEntity(refCV, refType);
+					SetInferredResult(outputContext, pattern, entity);
+				}
+				break;
+			case symbol_component::SymbolKind::GenericValueArgument:
+				{
+					SetInferredResult(outputContext, pattern, nullptr);
+				}
+				break;
+			}
 		}
 
 		void Visit(ChildType* self)override
@@ -287,14 +299,16 @@ namespace symbol_type_resolving
 
 			bool genericSymbolInvolved = involvedTypes.Contains(self->type.Obj());
 
-			auto entity = offeredType;
-			if (exactMatch || genericSymbolInvolved)
+			TsysCV refCV;
+			TsysRefType refType;
+			auto entity = exactMatch || genericSymbolInvolved
+				? offeredType
+				: offeredType->GetEntity(refCV, refType);
 			{
-				// when self->type is a template template argument, base classes are not considered
-
 				if (entity->GetType() != TsysType::DeclInstant)
 				{
 					// only DeclInstance could be a instance of a template class
+					// base class conversion has been considered in InferFunctionType
 					throw TypeCheckerException();
 				}
 
@@ -310,35 +324,6 @@ namespace symbol_type_resolving
 				if (!entity->GetDeclInstant().taContext)
 				{
 					// TODO: remove this constraint in the future, it is allowed to be empty for type of *this
-					throw TypeCheckerException();
-				}
-			}
-			else
-			{
-				TsysCV refCV;
-				TsysRefType refType;
-				entity = entity->GetEntity(refCV, refType);
-
-				switch (entity->GetType())
-				{
-				case TsysType::DeclInstant:
-					{
-						if (entity->GetDeclInstant().declSymbol != genericSymbol)
-						{
-							throw TypeCheckerException();
-						}
-
-						if (!entity->GetDeclInstant().taContext)
-						{
-							// TODO: remove this constraint in the future, it is allowed to be empty for type of *this
-							throw TypeCheckerException();
-						}
-					}
-					break;
-				case TsysType::Decl:
-					// TODO: check base classes
-					throw TypeCheckerException();
-				default:
 					throw TypeCheckerException();
 				}
 			}

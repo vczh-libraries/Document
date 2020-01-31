@@ -38,8 +38,21 @@ namespace symbol_type_resolving
 			// if this argument is not inferred, use the result
 			taContext.arguments.Add(pattern, type);
 		}
-		else if (type->GetType() != TsysType::Any)
+		else
 		{
+			switch (TemplateArgumentPatternToSymbol(pattern)->kind)
+			{
+			case symbol_component::SymbolKind::GenericTypeArgument:
+				{
+					if (type->GetType() == TsysType::Any) return;
+				}
+				break;
+			case symbol_component::SymbolKind::GenericValueArgument:
+				break;
+			default:
+				return;
+			}
+
 			// if this argument is inferred, it requires the same result if both of them are not any_t
 			auto inferred = taContext.arguments.Values()[index];
 			if (inferred->GetType() == TsysType::Any)
@@ -278,50 +291,6 @@ namespace symbol_type_resolving
 							if (taContext.arguments.Count() != freeTypeSymbols.Count())
 							{
 								throw TypeCheckerException();
-							}
-
-							// fill template value arguments
-							for (vint i = 0; i < gfi.spec->arguments.Count(); i++)
-							{
-								auto argument = gfi.spec->arguments[i];
-								if (argument.argumentType == CppTemplateArgumentType::Value)
-								{
-									auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
-									auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
-									// TODO: not implemented
-									// InferTemplateArgumentsForFunctionType need to handle this
-									throw 0;
-									/*
-									vint index = freeTypeAssignments.Keys().IndexOf(patternSymbol);
-									if (index == -1)
-									{
-										throw TypeCheckerException();
-									}
-									else if (argument.ellipsis)
-									{
-										// consistent with ResolveGenericParameters
-										vint assignment = freeTypeAssignments.Values()[index];
-										if (assignment == FREE_TYPE_ANY)
-										{
-											taContext.arguments.Add(pattern, pa.tsys->Any());
-										}
-										else
-										{
-											Array<ExprTsysItem> items(assignment);
-											for (vint j = 0; j < assignment; j++)
-											{
-												items[j] = { nullptr,ExprTsysType::PRValue,nullptr };
-											}
-											auto init = pa.tsys->InitOf(items);
-											taContext.arguments.Add(pattern, init);
-										}
-									}
-									else
-									{
-										taContext.arguments.Add(pattern, nullptr);
-									}
-									*/
-								}
 							}
 
 							taContext.symbolToApply = gfi.declSymbol;

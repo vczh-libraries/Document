@@ -390,17 +390,17 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Initialization list")
 	{
-		// TODO
+		// TODO:
 	});
 
 	TEST_CATEGORY(L"Lambdas")
 	{
-		// TODO
+		// TODO:
 	});
 
 	TEST_CATEGORY(L"Call operators + constructors + universal initialization + default parameters + ellipsis parameters")
 	{
-		// TODO
+		// TODO:
 		// Mix
 		//   invoke operator(CallOP)
 		//   constructor(Ctor)

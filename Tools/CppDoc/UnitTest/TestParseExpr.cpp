@@ -373,7 +373,7 @@ int a;
 
 	TEST_CATEGORY(L"Lambdas")
 	{
-		// TODO
+		// TODO:
 		// TsysType::Lambda
 		// TsysType::CapturedLambda
 		// GetElement() returns a function type
