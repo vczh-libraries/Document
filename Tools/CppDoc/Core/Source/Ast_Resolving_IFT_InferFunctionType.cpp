@@ -12,6 +12,15 @@ namespace symbol_type_resolving
 		{
 		case TsysType::GenericArg:
 			return tsys->GetGenericArg().argSymbol;
+		case TsysType::GenericFunction:
+			{
+				auto symbol = tsys->GetGenericFunction().declSymbol;
+				if (symbol->kind != symbol_component::SymbolKind::GenericTypeArgument)
+				{
+					throw TypeCheckerException();
+				}
+				return symbol;
+			}
 		default:
 			throw TypeCheckerException();
 		}

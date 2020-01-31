@@ -28,11 +28,17 @@ namespace symbol_type_resolving
 
 		void ExecuteInvolvedOnce(Ptr<Type>& argumentType, ITsys* _offeredType, bool _exactMatch = true)
 		{
-			offeredType = _offeredType;
-			exactMatch = _exactMatch;
-			if (!offeredType->IsUnknownType())
+			if (!_offeredType->IsUnknownType())
 			{
+				auto oldot = offeredType;
+				auto oldem = exactMatch;
+
+				offeredType = _offeredType;
+				exactMatch = _exactMatch;
 				argumentType->Accept(this);
+
+				offeredType = oldot;
+				exactMatch = oldem;
 			}
 		}
 
@@ -135,6 +141,7 @@ namespace symbol_type_resolving
 							break;
 						case TsysType::RRef:
 							ExecuteInvolvedOnce(self->type, offeredType->GetElement());
+							break;
 						default:
 							ExecuteInvolvedOnce(self->type, offeredType);
 						}
@@ -329,8 +336,17 @@ namespace symbol_type_resolving
 
 			if (genericSymbolInvolved)
 			{
-				// TODO: remove this constraint in the future, it could be a template template argument, or a generic class inside another involved class
-				throw 0;
+				// entity must be DeclInstant
+				auto& di = entity->GetDeclInstant();
+				if (auto classDecl = di.declSymbol->GetAnyForwardDecl<ClassDeclaration>())
+				{
+					auto& ev = EvaluateClassSymbol(pa, classDecl.Obj(), di.parentDeclType, nullptr);
+					if (ev.Get().Count() == 1 && ev.Get()[0]->GetType() == TsysType::GenericFunction)
+					{
+						Ptr<Type> idType = self->type;
+						ExecuteInvolvedOnce(idType, ev.Get()[0]);
+					}
+				}
 			}
 
 			List<ITsys*> parameterAssignment;
