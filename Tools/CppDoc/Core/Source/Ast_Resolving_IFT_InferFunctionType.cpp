@@ -230,6 +230,17 @@ namespace symbol_type_resolving
 						Ts(*)(X<Ts...>)... or Ts<X<Ts<Y>...>... is not supported, because of nested Ts...
 	***********************************************************************/
 
+	void InferFunctionTypeInternal(const ParsingArguments& pa, FunctionType* functionType, List<ITsys*>& parameterAssignment, TemplateArgumentContext& taContext, SortedList<Symbol*>& freeTypeSymbols)
+	{
+		TemplateArgumentContext unusedVariadicContext;
+		InferTemplateArgumentsForFunctionType(pa, functionType, parameterAssignment, taContext, unusedVariadicContext, freeTypeSymbols, false);
+		if (unusedVariadicContext.arguments.Count() > 0)
+		{
+			// someone miss "..." in a function argument
+			throw TypeCheckerException();
+		}
+	}
+
 	Nullable<ExprTsysItem> InferFunctionType(const ParsingArguments& pa, ExprTsysItem functionItem, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
 	{
 		switch (functionItem.tsys->GetType())
@@ -279,13 +290,7 @@ namespace symbol_type_resolving
 							}
 
 							// type inferencing
-							TemplateArgumentContext unusedVariadicContext;
-							InferTemplateArgumentsForFunctionType(inferPa, functionType.Obj(), parameterAssignment, taContext, unusedVariadicContext, freeTypeSymbols, false);
-							if (unusedVariadicContext.arguments.Count() > 0)
-							{
-								// someone miss "..." in a function argument
-								throw TypeCheckerException();
-							}
+							InferFunctionTypeInternal(inferPa, functionType.Obj(), parameterAssignment, taContext, freeTypeSymbols);
 
 							// check if there are symbols that has no result
 							if (taContext.arguments.Count() != freeTypeSymbols.Count())
