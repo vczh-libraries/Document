@@ -556,7 +556,7 @@ namespace symbol_type_resolving
 	void AssignParameterAssignment(
 		const ParsingArguments& invokerPa,
 		vint parameterCount,
-		List<ITsys*>& parameterAssignment,
+		TypeTsysList& parameterAssignment,
 		GpaList& gpaMappings,
 		Array<ExprTsysItem>& argumentTypes
 	)
@@ -616,7 +616,7 @@ namespace symbol_type_resolving
 
 	void ResolveFunctionParameters(
 		const ParsingArguments& invokerPa,			// context
-		List<ITsys*>& parameterAssignment,			// store function argument to offered argument map, nullptr indicates the default value is applied
+		TypeTsysList& parameterAssignment,			// store function argument to offered argument map, nullptr indicates the default value is applied
 		FunctionType* functionType,					// argument information
 		Array<ExprTsysItem>& argumentTypes,			// (index of unpacked)		offered argument (unpacked)
 		SortedList<vint>& boundedAnys				// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
@@ -639,7 +639,7 @@ namespace symbol_type_resolving
 
 	void ResolveGenericTypeParameters(
 		const ParsingArguments& invokerPa,			// context
-		List<ITsys*>& parameterAssignment,			// store function argument to offered argument map, nullptr indicates the default value is applied
+		TypeTsysList& parameterAssignment,			// store function argument to offered argument map, nullptr indicates the default value is applied
 		GenericType* genericType,					// argument information
 		Array<ExprTsysItem>& argumentTypes,			// (index of unpacked)		offered argument (unpacked)
 		SortedList<vint>& boundedAnys				// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type

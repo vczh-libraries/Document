@@ -265,7 +265,7 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 		}
 		if (genericTypes.Count() == 0) return;
 
-		List<ITsys*> classTypes;
+		TypeTsysList classTypes;
 		{
 			auto rootPa = pa.WithScope(pa.root.Obj());
 			auto current = pa.scopeSymbol;

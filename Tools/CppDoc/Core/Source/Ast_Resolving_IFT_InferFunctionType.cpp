@@ -1,4 +1,5 @@
 #include "Ast_Resolving_IFT.h"
+#include "Ast_Evaluate_ExpandPotentialVta.h"
 
 namespace symbol_type_resolving
 {
@@ -85,8 +86,8 @@ namespace symbol_type_resolving
 		CollectFreeTypes(argumentType, isVariadic, freeTypeSymbols, involvedTypes);
 
 		// get all affected arguments
-		List<ITsys*> vas;
-		List<ITsys*> nvas;
+		TypeTsysList vas;
+		TypeTsysList nvas;
 		for (vint j = 0; j < involvedTypes.Count(); j++)
 		{
 			if (auto idType = dynamic_cast<IdType*>(involvedTypes[j]))
@@ -179,7 +180,7 @@ namespace symbol_type_resolving
 	void InferTemplateArgumentsForGenericType(
 		const ParsingArguments& pa,
 		GenericType* genericType,
-		List<ITsys*>& parameterAssignment,
+		TypeTsysList& parameterAssignment,
 		TemplateArgumentContext& taContext,
 		TemplateArgumentContext& variadicContext,
 		const SortedList<Symbol*>& freeTypeSymbols
@@ -204,7 +205,7 @@ namespace symbol_type_resolving
 	void InferTemplateArgumentsForFunctionType(
 		const ParsingArguments& pa,
 		FunctionType* functionType,
-		List<ITsys*>& parameterAssignment,
+		TypeTsysList& parameterAssignment,
 		TemplateArgumentContext& taContext,
 		TemplateArgumentContext& variadicContext,
 		const SortedList<Symbol*>& freeTypeSymbols,
@@ -234,8 +235,8 @@ namespace symbol_type_resolving
 	{
 		vint				parameterIndex = -1;	// function parameter index
 		vint				variadicIndex = -1;		// -1 for non-variadic function parameter, index in Init type for others
-		vint				start = -1;				// index in List<ITsys*>
-		vint				count = 1;				// 1 for non-variadic function parameter, number of items in List<ITsys*> for others
+		vint				start = -1;				// index in TypeTsysList
+		vint				count = 1;				// 1 for non-variadic function parameter, number of items in TypeTsysList for others
 	};
 
 	static bool operator==(const MatchBaseClassRecord& a, const MatchBaseClassRecord& b)
@@ -247,7 +248,7 @@ namespace symbol_type_resolving
 			;
 	}
 
-	bool CreateMbcr(const ParsingArguments& pa, Ptr<Type>& type, ITsys* value, MatchBaseClassRecord& mbcr, List<ITsys*>& mbcTsys)
+	bool CreateMbcr(const ParsingArguments& pa, Ptr<Type>& type, ITsys* value, MatchBaseClassRecord& mbcr, TypeTsysList& mbcTsys)
 	{
 		// for default value
 		if (!value) return false;
@@ -289,7 +290,7 @@ namespace symbol_type_resolving
 			return false;
 		}
 
-		List<ITsys*> visited;
+		TypeTsysList visited;
 		visited.Add(entityValue);
 
 		mbcr.start = mbcTsys.Count();
@@ -345,10 +346,10 @@ namespace symbol_type_resolving
 		return mbcr.count > 0;
 	}
 
-	void InferFunctionTypeInternal(const ParsingArguments& pa, FunctionType* functionType, List<ITsys*>& parameterAssignment, TemplateArgumentContext& taContext, SortedList<Symbol*>& freeTypeSymbols)
+	void InferFunctionTypeInternal(const ParsingArguments& pa, FunctionType* functionType, TypeTsysList& parameterAssignment, TemplateArgumentContext& taContext, SortedList<Symbol*>& freeTypeSymbols)
 	{
 		List<MatchBaseClassRecord> mbcs;
-		List<ITsys*> mbcTsys;
+		TypeTsysList mbcTsys;
 
 		for (vint i = 0; i < functionType->parameters.Count(); i++)
 		{
@@ -385,16 +386,157 @@ namespace symbol_type_resolving
 
 		if (mbcs.Count() > 0)
 		{
-			// TODO: not implemented
-			throw 0;
-		}
+			// create a fake ending mbcr so that there is no out of range accessing
+			{
+				MatchBaseClassRecord mbcr;
+				mbcr.parameterIndex = -1;
+				mbcs.Add(mbcr);
+			}
 
-		TemplateArgumentContext unusedVariadicContext;
-		InferTemplateArgumentsForFunctionType(pa, functionType, parameterAssignment, taContext, unusedVariadicContext, freeTypeSymbols, false);
-		if (unusedVariadicContext.arguments.Count() > 0)
+			vint parameterCount = 0;
+			Array<vint> vtaCounts(functionType->parameters.Count());
+			for (vint i = 0; i < functionType->parameters.Count(); i++)
+			{
+				if (functionType->parameters[i].isVariadic && parameterAssignment[i] && parameterAssignment[i]->GetType() == TsysType::Init)
+				{
+					vint count = parameterAssignment[i]->GetParamCount();
+					vtaCounts[i] = count;
+					parameterCount += count;
+				}
+				else
+				{
+					vtaCounts[i] = -1;
+					parameterCount++;
+				}
+			}
+
+			Array<TypeTsysList> inputs(parameterCount);
+			Array<bool> isVtas(parameterCount);
+			vint index = 0;
+			vint currentMbcr = 0;
+
+			for (vint i = 0; i < parameterCount; i++)
+			{
+				isVtas[i] = false;
+			}
+
+			for (vint i = 0; i < vtaCounts.Count(); i++)
+			{
+				auto& mbcr = mbcs[currentMbcr];
+				if (vtaCounts[i] == -1)
+				{
+					if (mbcr.parameterIndex == i)
+					{
+						currentMbcr++;
+						for (vint k = 0; k < mbcr.count; k++)
+						{
+							inputs[index].Add(mbcTsys[mbcr.start + k]);
+						}
+					}
+					else
+					{
+						inputs[index].Add(parameterAssignment[i]);
+					}
+					index++;
+				}
+				else
+				{
+					auto init = parameterAssignment[i];
+					for (vint j = 0; j < init->GetParamCount(); j++)
+					{
+						if (mbcr.parameterIndex == i && mbcr.variadicIndex == j)
+						{
+							currentMbcr++;
+							for (vint k = 0; k < mbcr.count; k++)
+							{
+								inputs[index].Add(mbcTsys[mbcr.start + k]);
+							}
+						}
+						else
+						{
+							inputs[index].Add(init->GetParam(j));
+						}
+						index++;
+					}
+				}
+			}
+
+			if (index != parameterCount || currentMbcr != mbcs.Count())
+			{
+				// something is wrong
+				throw 0;
+			}
+
+			List<Ptr<TemplateArgumentContext>> result;
+			ExprTsysList unused;
+			symbol_totsys_impl::ExpandPotentialVtaList(pa, unused, inputs, isVtas, false, -1,
+				[&](ExprTsysList&, Array<ExprTsysItem>& params, vint, Array<vint>&, SortedList<vint>&)
+				{
+					auto tac = MakePtr<TemplateArgumentContext>();
+
+					tac->parent = taContext.parent;
+					tac->symbolToApply = taContext.symbolToApply;
+					CopyFrom(tac->arguments, taContext.arguments);
+
+					List<ITsys*> assignment;
+					vint index = 0;
+					for (vint i = 0; i < vtaCounts.Count(); i++)
+					{
+						if (vtaCounts[i] == -1)
+						{
+							assignment.Add(params[index++].tsys);
+						}
+						else
+						{
+							Array<ExprTsysItem> initParams(vtaCounts[i]);
+							for (vint j = 0; j < initParams.Count(); j++)
+							{
+								initParams[j] = params[index++];
+							}
+							auto init = pa.tsys->InitOf(params);
+							assignment.Add(init);
+						}
+					}
+
+					if (index != params.Count())
+					{
+						// something is wrong;
+						throw 0;
+					}
+
+					TemplateArgumentContext unusedVariadicContext;
+					try
+					{
+						InferTemplateArgumentsForFunctionType(pa, functionType, assignment, *tac.Obj(), unusedVariadicContext, freeTypeSymbols, false);
+						result.Add(tac);
+					}
+					catch (const TypeCheckerException&)
+					{
+						// ignore this candidate if failed to match
+					}
+					if (unusedVariadicContext.arguments.Count() > 0)
+					{
+						// someone miss "..." in a function argument
+						throw TypeCheckerException();
+					}
+				});
+
+			if (result.Count() != 1)
+			{
+				// TODO: not implemented
+				throw 0;
+			}
+			CopyFrom(taContext.arguments, result[0]->arguments);
+		}
+		else
 		{
-			// someone miss "..." in a function argument
-			throw TypeCheckerException();
+			TemplateArgumentContext unusedVariadicContext;
+			InferTemplateArgumentsForFunctionType(pa, functionType, parameterAssignment, taContext, unusedVariadicContext, freeTypeSymbols, false);
+			if (unusedVariadicContext.arguments.Count() > 0)
+			{
+				// someone miss "..." in a function argument
+				throw TypeCheckerException();
+			}
 		}
 	}
 
@@ -420,7 +562,7 @@ namespace symbol_type_resolving
 						{
 							auto gfi = functionItem.tsys->GetGenericFunction();
 
-							List<ITsys*>						parameterAssignment;
+							TypeTsysList						parameterAssignment;
 							TemplateArgumentContext				taContext;
 							SortedList<Symbol*>					freeTypeSymbols;
 

@@ -1,3 +1,6 @@
+#ifndef VCZH_DOCUMENT_CPPDOC_AST_RESOLVING
+#define VCZH_DOCUMENT_CPPDOC_AST_RESOLVING
+
 #include "Ast.h"
 #include "Ast_Decl.h"
 #include "Ast_Type.h"
@@ -132,16 +135,18 @@ namespace symbol_type_resolving
 												);
 	extern void									ResolveFunctionParameters(
 													const ParsingArguments& invokerPa,
-													List<ITsys*>& parameterAssignment,
+													TypeTsysList& parameterAssignment,
 													FunctionType* functionType,
 													Array<ExprTsysItem>& argumentTypes,
 													SortedList<vint>& boundedAnys
 												);
 	extern void									ResolveGenericTypeParameters(
 													const ParsingArguments& invokerPa,
-													List<ITsys*>& parameterAssignment,
+													TypeTsysList& parameterAssignment,
 													GenericType* genericType,
 													Array<ExprTsysItem>& argumentTypes,
 													SortedList<vint>& boundedAnys
 												);
 }
+
+#endif

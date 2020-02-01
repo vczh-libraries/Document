@@ -1,3 +1,6 @@
+#ifndef VCZH_DOCUMENT_CPPDOC_AST_EVALUATE_EPV
+#define VCZH_DOCUMENT_CPPDOC_AST_EVALUATE_EPV
+
 #include "Ast_Resolving.h"
 #include "Ast_Expr.h"
 
@@ -620,3 +623,5 @@ namespace symbol_totsys_impl
 		}
 	};
 }
+
+#endif

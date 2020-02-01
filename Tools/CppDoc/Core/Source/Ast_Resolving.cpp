@@ -368,7 +368,7 @@ namespace symbol_type_resolving
 		TsysRefType thisRef;
 		auto entity = thisType->GetEntity(thisCv, thisRef);
 
-		List<ITsys*> visiting;
+		TypeTsysList visiting;
 		SortedList<ITsys*> visited;
 		visiting.Add(entity);
 

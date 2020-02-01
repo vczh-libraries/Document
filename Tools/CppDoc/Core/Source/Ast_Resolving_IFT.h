@@ -1,3 +1,6 @@
+#ifndef VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_IFT
+#define VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_IFT
+
 #include "Ast_Resolving.h"
 
 namespace symbol_type_resolving
@@ -28,7 +31,7 @@ namespace symbol_type_resolving
 	extern void			InferTemplateArgumentsForGenericType(
 							const ParsingArguments& pa,
 							GenericType* genericType,
-							List<ITsys*>& parameterAssignment,
+		TypeTsysList& parameterAssignment,
 							TemplateArgumentContext& taContext,
 							TemplateArgumentContext& variadicContext,
 							const SortedList<Symbol*>& freeTypeSymbols);
@@ -36,9 +39,11 @@ namespace symbol_type_resolving
 	extern void			InferTemplateArgumentsForFunctionType(
 							const ParsingArguments& pa,
 							FunctionType* functionType,
-							List<ITsys*>& parameterAssignment,
+							TypeTsysList& parameterAssignment,
 							TemplateArgumentContext& taContext,
 							TemplateArgumentContext& variadicContext,
 							const SortedList<Symbol*>& freeTypeSymbols,
 							bool exactMatchForParameters);
 }
+
+#endif

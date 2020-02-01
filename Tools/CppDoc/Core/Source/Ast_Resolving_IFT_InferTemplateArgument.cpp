@@ -190,7 +190,7 @@ namespace symbol_type_resolving
 
 			ExecuteOnce(self->decoratorReturnType ? self->decoratorReturnType : self->returnType, entity->GetElement());
 
-			List<ITsys*> parameterAssignment;
+			TypeTsysList parameterAssignment;
 			{
 				vint count = entity->GetParamCount();
 				Array<ExprTsysItem> argumentTypes(count);
@@ -343,7 +343,7 @@ namespace symbol_type_resolving
 				}
 			}
 
-			List<ITsys*> parameterAssignment;
+			TypeTsysList parameterAssignment;
 			{
 				vint count = 0;
 				for (vint i = 0; i < spec->arguments.Count(); i++)
