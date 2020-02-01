@@ -346,6 +346,8 @@ TEST_FILE
 			L"::Types<{float $PR, double $PR, bool $PR, char $PR, void $PR}> $PR",
 			Types<float, double, bool, char, void>
 		);
+
+		// test variadic function argument
 	});
 
 	TEST_CATEGORY(L"Template argument deduction (base types)")
@@ -376,9 +378,12 @@ TEST_FILE
 			L"::Types<{char $PR, bool $PR, void $PR}> $PR",
 			Types<char, bool, void>
 		);
+
+		// test variadic function argument
 	});
 
 	// test matching Types<A..., B...>
+	// test template value argument (assign non-variadic to nullptr since this is the only choice, and calculate amounts of variadic ones)
 	// test known/unknown variadic arguments/parameters
 	// test generic methods		(TestOverloadingGenericMethodInfer.cpp)
 	// test generic operators	(TestOverloadingGenericMethodInfer.cpp)

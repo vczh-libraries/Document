@@ -230,8 +230,165 @@ namespace symbol_type_resolving
 						Ts(*)(X<Ts...>)... or Ts<X<Ts<Y>...>... is not supported, because of nested Ts...
 	***********************************************************************/
 
+	struct MatchBaseClassRecord
+	{
+		vint				parameterIndex = -1;	// function parameter index
+		vint				variadicIndex = -1;		// -1 for non-variadic function parameter, index in Init type for others
+		vint				start = -1;				// index in List<ITsys*>
+		vint				count = 1;				// 1 for non-variadic function parameter, number of items in List<ITsys*> for others
+	};
+
+	static bool operator==(const MatchBaseClassRecord& a, const MatchBaseClassRecord& b)
+	{
+		return a.parameterIndex == b.parameterIndex
+			&& a.variadicIndex == b.variadicIndex
+			&& a.start == b.start
+			&& a.count == b.count
+			;
+	}
+
+	bool CreateMbcr(const ParsingArguments& pa, Ptr<Type>& type, ITsys* value, MatchBaseClassRecord& mbcr, List<ITsys*>& mbcTsys)
+	{
+		// for default value
+		if (!value) return false;
+
+		TsysCV cv;
+		TsysRefType ref;
+		auto entityValue = value->GetEntity(cv, ref);
+		if (entityValue->GetType() != TsysType::Decl && entityValue->GetType() != TsysType::DeclInstant)
+		{
+			return false;
+		}
+
+		auto entityType = type;
+
+		if (auto refType = entityType.Cast<ReferenceType>())
+		{
+			if (refType->reference != CppReferenceType::Ptr)
+			{
+				entityType = refType->type;
+			}
+		}
+
+		if (auto cvType = entityType.Cast<DecorateType>())
+		{
+			entityType = cvType->type;
+		}
+
+		auto genericType = entityType.Cast<GenericType>();
+		if (!genericType) return false;
+		if (!genericType->type->resolving) return false;
+		if (genericType->type->resolving->resolvedSymbols.Count() != 1) return false;
+
+		auto classSymbol = genericType->type->resolving->resolvedSymbols[0];
+		switch (classSymbol->kind)
+		{
+		case CLASS_SYMBOL_KIND:
+			break;
+		default:
+			return false;
+		}
+
+		List<ITsys*> visited;
+		visited.Add(entityValue);
+
+		mbcr.start = mbcTsys.Count();
+		for (vint i = 0; i < visited.Count(); i++)
+		{
+			auto current = visited[i];
+			switch (current->GetType())
+			{
+			case TsysType::Decl:
+				{
+					// Decl could not match GenericType, search for base classes
+					if (auto classDecl = current->GetDecl()->GetAnyForwardDecl<ClassDeclaration>())
+					{
+						auto& ev = EvaluateClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
+						for (vint j = 0; j < ev.ExtraCount(); j++)
+						{
+							CopyFrom(visited, ev.GetExtra(j), true);
+						}
+					}
+				}
+				break;
+			case TsysType::DeclInstant:
+				{
+					auto& di = current->GetDeclInstant();
+					if (di.declSymbol == classSymbol)
+					{
+						if (i == 0)
+						{
+							// if the parameter is an instance of an expected template class, no conversion is needed
+							return false;
+						}
+						else
+						{
+							// otherwise, add the current type and stop searching for base classes
+							mbcTsys.Add(CvRefOf(current, cv, ref));
+						}
+					}
+					else if (auto classDecl = di.declSymbol->GetAnyForwardDecl<ClassDeclaration>())
+					{
+						// search for base classes
+						auto& ev = EvaluateClassSymbol(pa, classDecl.Obj(), di.parentDeclType, di.taContext.Obj());
+						for (vint j = 0; j < ev.ExtraCount(); j++)
+						{
+							CopyFrom(visited, ev.GetExtra(j), true);
+						}
+					}
+				}
+				break;
+			}
+		}
+
+		mbcr.count = mbcTsys.Count() - mbcr.start;
+		return mbcr.count > 0;
+	}
+
 	void InferFunctionTypeInternal(const ParsingArguments& pa, FunctionType* functionType, List<ITsys*>& parameterAssignment, TemplateArgumentContext& taContext, SortedList<Symbol*>& freeTypeSymbols)
 	{
+		List<MatchBaseClassRecord> mbcs;
+		List<ITsys*> mbcTsys;
+
+		for (vint i = 0; i < functionType->parameters.Count(); i++)
+		{
+			auto argument = functionType->parameters[i];
+			if (argument.isVariadic)
+			{
+				if (auto value = parameterAssignment[i])
+				{
+					if (value->GetType() == TsysType::Init)
+					{
+						for (vint j = 0; j < value->GetParamCount(); j++)
+						{
+							MatchBaseClassRecord mbcr;
+							mbcr.parameterIndex = i;
+							mbcr.variadicIndex = j;
+							if (CreateMbcr(pa, argument.item->type, value->GetParam(j), mbcr, mbcTsys))
+							{
+								mbcs.Add(mbcr);
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				MatchBaseClassRecord mbcr;
+				mbcr.parameterIndex = i;
+				if (CreateMbcr(pa, argument.item->type, parameterAssignment[i], mbcr, mbcTsys))
+				{
+					mbcs.Add(mbcr);
+				}
+			}
+		}
+
+		if (mbcs.Count() > 0)
+		{
+			// TODO: not implemented
+			throw 0;
+		}
+
 		TemplateArgumentContext unusedVariadicContext;
 		InferTemplateArgumentsForFunctionType(pa, functionType, parameterAssignment, taContext, unusedVariadicContext, freeTypeSymbols, false);
 		if (unusedVariadicContext.arguments.Count() > 0)
