@@ -461,7 +461,7 @@ namespace symbol_type_resolving
 				}
 			}
 
-			if (index != parameterCount || currentMbcr != mbcs.Count())
+			if (index != parameterCount || currentMbcr != mbcs.Count() - 1)
 			{
 				// something is wrong
 				throw 0;
