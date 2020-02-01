@@ -187,9 +187,11 @@ namespace symbol_type_resolving
 			// if number of arguments is unknown, we only check if a function has too few parameters.
 			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
-				if (auto inferredFuncType = InferFunctionType(pa, funcTypes[i], argTypes, boundedAnys))
+				ExprTsysList inferredFunctionTypes;
+				InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys);
+				for (vint j = 0; j < inferredFunctionTypes.Count(); j++)
 				{
-					auto funcType = inferredFuncType.Value();
+					auto funcType = inferredFunctionTypes[j];
 					if (funcType.tsys->IsUnknownType())
 					{
 						if (!addedAny)
@@ -215,9 +217,11 @@ namespace symbol_type_resolving
 		{
 			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
-				if (auto inferredFuncType = InferFunctionType(pa, funcTypes[i], argTypes, boundedAnys))
+				ExprTsysList inferredFunctionTypes;
+				InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys);
+				for (vint j = 0; j < inferredFunctionTypes.Count(); j++)
 				{
-					auto funcType = inferredFuncType.Value();
+					auto funcType = inferredFunctionTypes[j];
 					if (funcType.tsys->IsUnknownType())
 					{
 						if (!addedAny)

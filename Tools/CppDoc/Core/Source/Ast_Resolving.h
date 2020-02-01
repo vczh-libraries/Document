@@ -109,8 +109,9 @@ namespace symbol_type_resolving
 	extern void									SearchAdlFunction(const ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result);
 
 	// InferFunctionType
-	extern Nullable<ExprTsysItem>				InferFunctionType(
+	extern void									InferFunctionType(
 													const ParsingArguments& pa,
+													ExprTsysList& inferredFunctionTypes,
 													ExprTsysItem funcType,
 													Array<ExprTsysItem>& argTypes,
 													SortedList<vint>& boundedAnys

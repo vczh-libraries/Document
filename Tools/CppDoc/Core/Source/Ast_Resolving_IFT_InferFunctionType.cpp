@@ -346,7 +346,7 @@ namespace symbol_type_resolving
 		return mbcr.count > 0;
 	}
 
-	void InferFunctionTypeInternal(const ParsingArguments& pa, FunctionType* functionType, TypeTsysList& parameterAssignment, TemplateArgumentContext& taContext, SortedList<Symbol*>& freeTypeSymbols)
+	void InferFunctionTypeInternal(const ParsingArguments& pa, List<Ptr<TemplateArgumentContext>>& inferredArgumentTypes, FunctionType* functionType, TypeTsysList& parameterAssignment, TemplateArgumentContext& taContext, SortedList<Symbol*>& freeTypeSymbols)
 	{
 		List<MatchBaseClassRecord> mbcs;
 		TypeTsysList mbcTsys;
@@ -464,18 +464,15 @@ namespace symbol_type_resolving
 			if (index != parameterCount || currentMbcr != mbcs.Count() - 1)
 			{
 				// something is wrong
-				throw 0;
+				throw IllegalExprException();
 			}
 
-			List<Ptr<TemplateArgumentContext>> result;
 			ExprTsysList unused;
 			symbol_totsys_impl::ExpandPotentialVtaList(pa, unused, inputs, isVtas, false, -1,
 				[&](ExprTsysList&, Array<ExprTsysItem>& params, vint, Array<vint>&, SortedList<vint>&)
 				{
 					auto tac = MakePtr<TemplateArgumentContext>();
-
 					tac->parent = taContext.parent;
-					tac->symbolToApply = taContext.symbolToApply;
 					CopyFrom(tac->arguments, taContext.arguments);
 
 					List<ITsys*> assignment;
@@ -500,15 +497,15 @@ namespace symbol_type_resolving
 
 					if (index != params.Count())
 					{
-						// something is wrong;
-						throw 0;
+						// something is wrong
+						throw IllegalExprException();
 					}
 
 					TemplateArgumentContext unusedVariadicContext;
 					try
 					{
 						InferTemplateArgumentsForFunctionType(pa, functionType, assignment, *tac.Obj(), unusedVariadicContext, freeTypeSymbols, false);
-						result.Add(tac);
+						inferredArgumentTypes.Add(tac);
 					}
 					catch (const TypeCheckerException&)
 					{
@@ -520,18 +517,17 @@ namespace symbol_type_resolving
 						throw TypeCheckerException();
 					}
 				});
-
-			if (result.Count() != 1)
-			{
-				// TODO: not implemented
-				throw 0;
-			}
-			CopyFrom(taContext.arguments, result[0]->arguments);
 		}
 		else
 		{
+			auto tac = MakePtr<TemplateArgumentContext>();
+			tac->parent = taContext.parent;
+			CopyFrom(tac->arguments, taContext.arguments);
+
 			TemplateArgumentContext unusedVariadicContext;
-			InferTemplateArgumentsForFunctionType(pa, functionType, parameterAssignment, taContext, unusedVariadicContext, freeTypeSymbols, false);
+			InferTemplateArgumentsForFunctionType(pa, functionType, parameterAssignment, *tac.Obj(), unusedVariadicContext, freeTypeSymbols, false);
+			inferredArgumentTypes.Add(tac);
+
 			if (unusedVariadicContext.arguments.Count() > 0)
 			{
 				// someone miss "..." in a function argument
@@ -540,17 +536,19 @@ namespace symbol_type_resolving
 		}
 	}
 
-	Nullable<ExprTsysItem> InferFunctionType(const ParsingArguments& pa, ExprTsysItem functionItem, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
+	void InferFunctionType(const ParsingArguments& pa, ExprTsysList& inferredFunctionTypes, ExprTsysItem functionItem, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
 	{
 		switch (functionItem.tsys->GetType())
 		{
 		case TsysType::Function:
-			return functionItem;
+			inferredFunctionTypes.Add(functionItem);
+			break;
 		case TsysType::LRef:
 		case TsysType::RRef:
 		case TsysType::CV:
 		case TsysType::Ptr:
-			return InferFunctionType(pa, { functionItem,functionItem.tsys->GetElement() }, argTypes, boundedAnys);
+			InferFunctionType(pa, inferredFunctionTypes, { functionItem,functionItem.tsys->GetElement() }, argTypes, boundedAnys);
+			break;
 		case TsysType::GenericFunction:
 			if (auto symbol = functionItem.symbol)
 			{
@@ -589,43 +587,37 @@ namespace symbol_type_resolving
 							}
 
 							// type inferencing
-							InferFunctionTypeInternal(inferPa, functionType.Obj(), parameterAssignment, taContext, freeTypeSymbols);
+							List<Ptr<TemplateArgumentContext>> inferredArgumentTypes;
+							InferFunctionTypeInternal(inferPa, inferredArgumentTypes, functionType.Obj(), parameterAssignment, taContext, freeTypeSymbols);
 
-							// check if there are symbols that has no result
-							if (taContext.arguments.Count() != freeTypeSymbols.Count())
+							for (vint i = 0; i < inferredArgumentTypes.Count(); i++)
 							{
-								throw TypeCheckerException();
-							}
-
-							taContext.symbolToApply = gfi.declSymbol;
-							auto& tsys = EvaluateFuncSymbol(inferPa, decl.Obj(), inferPa.parentDeclType, &taContext);
-							if (tsys.Count() == 0)
-							{
-								return {};
-							}
-							else if (tsys.Count() == 1)
-							{
-								return { { functionItem,tsys[0] } };
-							}
-							else
-							{
-								// unable to handle multiple types
-								throw IllegalExprException();
+								// skip all incomplete inferrings
+								auto tac = inferredArgumentTypes[i];
+								if (tac->arguments.Count() == freeTypeSymbols.Count())
+								{
+									tac->symbolToApply = gfi.declSymbol;
+									auto& tsys = EvaluateFuncSymbol(inferPa, decl.Obj(), inferPa.parentDeclType, tac.Obj());
+									for (vint j = 0; j < tsys.Count(); j++)
+									{
+										inferredFunctionTypes.Add({ functionItem,tsys[j] });
+									}
+								}
 							}
 						}
 						catch (const TypeCheckerException&)
 						{
-							return {};
+							// ignore this candidate if failed to match
 						}
+						break;
 					}
 				}
 			}
 		default:
 			if (functionItem.tsys->IsUnknownType())
 			{
-				return functionItem;
+				inferredFunctionTypes.Add(functionItem);
 			}
-			return {};
 		}
 	}
 }
