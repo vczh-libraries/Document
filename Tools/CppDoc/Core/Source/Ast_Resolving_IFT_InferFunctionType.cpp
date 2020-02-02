@@ -124,7 +124,7 @@ namespace symbol_type_resolving
 			SetInferredResult(taContext, vas[j], pa.tsys->Any());
 		}
 
-		if (assignedTsys->GetType() != TsysType::Any)
+		if (!assignedTsys || assignedTsys->GetType() != TsysType::Any)
 		{
 			if (isVariadic)
 			{
