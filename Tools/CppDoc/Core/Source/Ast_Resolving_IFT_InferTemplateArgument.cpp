@@ -134,7 +134,7 @@ namespace symbol_type_resolving
 						case TsysType::RRef:
 							throw TypeCheckerException();
 						default:
-							ExecuteInvolvedOnce(self->type, offeredType->CVOf({ true,false })->LRefOf());
+							ExecuteInvolvedOnce(self->type, offeredType->CVOf({ true,false }));
 						}
 					}
 				}
