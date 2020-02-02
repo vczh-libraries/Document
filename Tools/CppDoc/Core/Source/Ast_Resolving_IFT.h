@@ -10,6 +10,7 @@ namespace symbol_type_resolving
 
 	extern void			CollectFreeTypes(
 							Ptr<Type> type,
+							Ptr<Expr> expr,
 							bool insideVariant,
 							const SortedList<Symbol*>& freeTypeSymbols,
 							SortedList<Type*>& involvedTypes,

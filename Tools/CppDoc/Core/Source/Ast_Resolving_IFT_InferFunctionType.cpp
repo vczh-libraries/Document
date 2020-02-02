@@ -75,7 +75,8 @@ namespace symbol_type_resolving
 
 	void InferTemplateArgumentOfComplexType(
 		const ParsingArguments& pa,
-		Ptr<Type> argumentType,
+		Ptr<Type> typeToInfer,
+		Ptr<Expr> exprToInfer,
 		bool isVariadic,
 		ITsys* assignedTsys,
 		TemplateArgumentContext& taContext,
@@ -86,7 +87,7 @@ namespace symbol_type_resolving
 	{
 		SortedList<Type*> involvedTypes;
 		SortedList<Expr*> involvedExprs;
-		CollectFreeTypes(argumentType, isVariadic, freeTypeSymbols, involvedTypes, involvedExprs);
+		CollectFreeTypes(typeToInfer, exprToInfer, isVariadic, freeTypeSymbols, involvedTypes, involvedExprs);
 
 		// get all affected arguments
 		TypeTsysList vas;
@@ -153,7 +154,15 @@ namespace symbol_type_resolving
 					{
 						auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
 						TemplateArgumentContext localVariadicContext;
-						InferTemplateArgument(pa, argumentType, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
+						if (typeToInfer)
+						{
+							InferTemplateArgument(pa, typeToInfer, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
+						}
+						else
+						{
+							// TODO: not implemented
+							throw 0;
+						}
 						for (vint k = 0; k < localVariadicContext.arguments.Count(); k++)
 						{
 							auto key = localVariadicContext.arguments.Keys()[k];
@@ -176,7 +185,15 @@ namespace symbol_type_resolving
 			else
 			{
 				// for non-variadic parameter, run the assigned argument
-				InferTemplateArgument(pa, argumentType, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
+				if (typeToInfer)
+				{
+					InferTemplateArgument(pa, typeToInfer, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
+				}
+				else
+				{
+					// TODO: not implemented
+					throw 0;
+				}
 			}
 		}
 	}
@@ -198,17 +215,7 @@ namespace symbol_type_resolving
 		{
 			auto argument = genericType->arguments[i];
 			auto assignedTsys = parameterAssignment[i];
-
-			if (argument.item.type)
-			{
-				InferTemplateArgumentOfComplexType(pa, argument.item.type, argument.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, true);
-			}
-
-			if (argument.item.expr)
-			{
-				// TODO: not implemented
-				throw 0;
-			}
+			InferTemplateArgumentOfComplexType(pa, argument.item.type, argument.item.expr, argument.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, true);
 		}
 	}
 
@@ -235,7 +242,7 @@ namespace symbol_type_resolving
 				// see if any variadic value arguments can be determined
 				// variadic value argument only care about the number of values
 				auto parameter = functionType->parameters[i];
-				InferTemplateArgumentOfComplexType(pa, parameter.item->type, parameter.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, exactMatchForParameters);
+				InferTemplateArgumentOfComplexType(pa, parameter.item->type, nullptr, parameter.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, exactMatchForParameters);
 			}
 		}
 	}
