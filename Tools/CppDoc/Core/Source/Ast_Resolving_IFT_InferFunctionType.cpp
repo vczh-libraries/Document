@@ -422,9 +422,9 @@ namespace symbol_type_resolving
 
 			for (vint i = 0; i < vtaCounts.Count(); i++)
 			{
-				auto& mbcr = mbcs[currentMbcr];
 				if (vtaCounts[i] == -1)
 				{
+					auto& mbcr = mbcs[currentMbcr];
 					if (mbcr.parameterIndex == i)
 					{
 						currentMbcr++;
@@ -444,6 +444,7 @@ namespace symbol_type_resolving
 					auto init = parameterAssignment[i];
 					for (vint j = 0; j < init->GetParamCount(); j++)
 					{
+						auto& mbcr = mbcs[currentMbcr];
 						if (mbcr.parameterIndex == i && mbcr.variadicIndex == j)
 						{
 							currentMbcr++;

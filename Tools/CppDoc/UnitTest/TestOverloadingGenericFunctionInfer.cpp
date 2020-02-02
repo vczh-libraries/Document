@@ -101,6 +101,9 @@ namespace Input__TestOverloadingGenericFunction_TypeInferChildTypes
 
 		template<typename TC, typename... Ts>
 		auto UseB(A<float, double>::_::B<TC, Ts...>)->Types<TC, Ts...>;
+
+		template<typename... TAs, typename... TBs>
+		auto UseAV(A<TAs, TBs>...)->Types<TAs..., TBs...>;
 	);
 }
 
@@ -347,7 +350,11 @@ TEST_FILE
 			Types<float, double, bool, char, void>
 		);
 
-		// test variadic function argument
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UseAV<bool *, char *, float *>(A<bool *, bool &>(), A<char *, char &>(), A<float *, float &>())),
+			L"::Types<{bool * $PR, char * $PR, float * $PR, bool & $PR, char & $PR, float & $PR}> $PR",
+			Types<bool*, char*, float*, bool&, char&, float&>
+		);
 	});
 
 	TEST_CATEGORY(L"Template argument deduction (base types)")
@@ -379,7 +386,11 @@ TEST_FILE
 			Types<char, bool, void>
 		);
 
-		// test variadic function argument
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UseAV<bool *, char *, float *>(C<bool>(), C<char>(), C<float>())),
+			L"::Types<{bool * $PR, char * $PR, float * $PR, bool & $PR, char & $PR, float & $PR}> $PR",
+			Types<bool*, char*, float*, bool&, char&, float&>
+		);
 	});
 
 	// test matching Types<A..., B...>
