@@ -153,17 +153,17 @@ Specifiers can be put before any declaration, it will be ignored by the tool
 
 ### DECLARATOR
 
-- [x] `operator` OPERATOR
-- [ ] IDENTIFIER [SPECIALIZATION-SPEC]: Only allowed for functions
-- [x] SPECIFIERS DECLARATOR
-- [x] CALL DECLARATOR
-- [x] `alignas` `(` EXPR `)` DECLARATOR
-- [x] TYPE `::` DECLARATOR
-- [x] `(` DECLARATOR `)`
-- [x] (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
-- [x] (`constexpr` | `const` | `volatile`) DECLARATOR
-- [x] DECLARATOR `[` [EXPR] `]`
-- [x] DECLARATOR FUNCTION-TAIL
+- `operator` OPERATOR
+- IDENTIFIER [SPECIALIZATION-SPEC]: Only allowed for functions
+- SPECIFIERS DECLARATOR
+- CALL DECLARATOR
+- `alignas` `(` EXPR `)` DECLARATOR
+- TYPE `::` DECLARATOR
+- `(` DECLARATOR `)`
+- (`*` [`__ptr32` | `__ptr64`] | `&` | `&&`) DECLARATOR
+- (`constexpr` | `const` | `volatile`) DECLARATOR
+- DECLARATOR `[` [EXPR] `]`
+- DECLARATOR FUNCTION-TAIL
 
 ### TEMPLATE-SPEC
 
