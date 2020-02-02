@@ -1,4 +1,5 @@
 #include "Ast_Resolving_IFT.h"
+#include "Ast_Expr.h"
 
 namespace symbol_type_resolving
 {
@@ -38,6 +39,25 @@ namespace symbol_type_resolving
 			return Execute(type.Obj());
 		}
 
+		bool Execute(Ptr<Expr>& expr)
+		{
+			if (auto idExpr = expr.Cast<IdExpr>())
+			{
+				if (idExpr->resolving && idExpr->resolving->resolvedSymbols.Count() == 1)
+				{
+					auto symbol = idExpr->resolving->resolvedSymbols[0];
+					if (symbol->kind == symbol_component::SymbolKind::GenericValueArgument)
+					{
+						if (freeTypeSymbols.Contains(symbol))
+						{
+							return true;
+						}
+					}
+				}
+			}
+			return false;
+		}
+
 		void Visit(PrimitiveType* self)override
 		{
 		}
@@ -50,7 +70,9 @@ namespace symbol_type_resolving
 
 		void Visit(ArrayType* self)override
 		{
-			bool result = Execute(self->type);
+			bool result = false;
+			result = Execute(self->type) || result;
+			result = Execute(self->expr) || result;
 			if ((involved = result)) involvedTypes.Add(self);
 		}
 
@@ -164,6 +186,7 @@ namespace symbol_type_resolving
 						}
 					}
 					result = Execute(self->arguments[i].item.type) || result;
+					result = Execute(self->arguments[i].item.expr) || result;
 				}
 				if ((involved = result)) involvedTypes.Add(self);
 			}
