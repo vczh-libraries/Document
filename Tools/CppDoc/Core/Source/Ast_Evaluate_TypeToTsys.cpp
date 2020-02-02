@@ -73,12 +73,23 @@ public:
 	void Visit(ArrayType* self)override
 	{
 		TypeTsysList items1;
-		bool isVta1 = false;
+		ExprTsysList items2;
+		bool isVta1 = false, isVta2 = false;
+
 		TypeToTsysInternal(pa, self->type, items1, isVta1);
-		isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem arg1)
+		if (self->expr)
+		{
+			ExprToTsysInternal(pa, self->expr, items2, isVta2);
+		}
+		else
+		{
+			items2.Add({ nullptr,ExprTsysType::PRValue,pa.tsys->Any() });
+		}
+
+		isVta = ExpandPotentialVta(pa, result, [this, self](ExprTsysItem arg1, ExprTsysItem arg2)
 		{
 			return ProcessArrayType(pa, self, arg1);
-		}, Input(items1, isVta1));
+		}, Input(items1, isVta1), Input(items2, isVta2));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////

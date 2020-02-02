@@ -161,6 +161,7 @@ namespace symbol_type_resolving
 
 	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
 	{
+		if (!type) return;
 		switch (type->GetType())
 		{
 		case TsysType::LRef:
