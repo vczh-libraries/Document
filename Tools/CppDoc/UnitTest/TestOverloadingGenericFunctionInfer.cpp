@@ -231,31 +231,31 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Partially apply template arguments (values)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_TypeInferKinds;
+		using namespace Input__TestOverloadingGenericFunction_TypeInferValues;
 		COMPILE_PROGRAM(program, pa, input);
 		
-		AssertExpr(pa, L"UseA",									L"UseA",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UseA<>",								L"UseA<>",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UseA<1>",								L"UseA<1>",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UseA<1, 2>",							L"UseA<1, 2>",							L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
-		AssertExpr(pa, L"UseA<1, 2, 3>",						L"UseA<1, 2, 3>",						L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+		AssertExpr(pa, L"UseA",									L"UseA",								L"<*, *, *> ::Values<{* $PR, * $PR, * $PR}> __cdecl(__int32 [] &, __int32 [] &, __int32 [] &) * $PR");
+		AssertExpr(pa, L"UseA<>",								L"UseA<>",								L"<*, *, *> ::Values<{* $PR, * $PR, * $PR}> __cdecl(__int32 [] &, __int32 [] &, __int32 [] &) * $PR");
+		AssertExpr(pa, L"UseA<1>",								L"UseA<1>",								L"<*, *, *> ::Values<{* $PR, * $PR, * $PR}> __cdecl(__int32 [] &, __int32 [] &, __int32 [] &) * $PR");
+		AssertExpr(pa, L"UseA<1, 2>",							L"UseA<1, 2>",							L"<*, *, *> ::Values<{* $PR, * $PR, * $PR}> __cdecl(__int32 [] &, __int32 [] &, __int32 [] &) * $PR");
+		AssertExpr(pa, L"UseA<1, 2, 3>",						L"UseA<1, 2, 3>",						L"::Values<{* $PR, * $PR, * $PR}> __cdecl(__int32 [] &, __int32 [] &, __int32 [] &) * $PR");
 		
-		AssertExpr(pa, L"UseAs",								L"UseAs",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UseAs<>",								L"UseAs<>",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UseAs<1>",								L"UseAs<1>",							L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UseAs<1, 2>",							L"UseAs<1, 2>",							L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
-		AssertExpr(pa, L"UseAs<1, 2, 3>",						L"UseAs<1, 2, 3>",						L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+		AssertExpr(pa, L"UseAs",								L"UseAs",								L"<*...> any_t $PR");
+		AssertExpr(pa, L"UseAs<>",								L"UseAs<>",								L"::Values<{}> __cdecl() * $PR");
+		AssertExpr(pa, L"UseAs<1>",								L"UseAs<1>",							L"::Values<{* $PR}> __cdecl(__int32 [] &) * $PR");
+		AssertExpr(pa, L"UseAs<1, 2>",							L"UseAs<1, 2>",							L"::Values<{* $PR, * $PR}> __cdecl(__int32 [] &, __int32 [] &) * $PR");
+		AssertExpr(pa, L"UseAs<1, 2, 3>",						L"UseAs<1, 2, 3>",						L"::Values<{* $PR, * $PR, * $PR}> __cdecl(__int32 [] &, __int32 [] &, __int32 [] &) * $PR");
 		
-		AssertExpr(pa, L"UseP",									L"UseP",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UseP<>",								L"UseP<>",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UseP<bool>",							L"UseP<bool>",							L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UseP<bool, char, float, 1>",			L"UseP<bool, char, float, 1>",			L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
-		AssertExpr(pa, L"UseP<bool, char, float, 1, 2, 3>",		L"UseP<bool, char, float, 1, 2, 3>",	L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+		AssertExpr(pa, L"UseP",									L"UseP",								L"<::UseP::[T1], ::UseP::[T2], ::UseP::[T3], *, *, *> ::Types<{::LRef::[T1] $PR, ::LRef::[T2] $PR, ::LRef::[T3] $PR, * $PR, * $PR, * $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseP<>",								L"UseP<>",								L"<::UseP::[T1], ::UseP::[T2], ::UseP::[T3], *, *, *> ::Types<{::LRef::[T1] $PR, ::LRef::[T2] $PR, ::LRef::[T3] $PR, * $PR, * $PR, * $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseP<bool>",							L"UseP<bool>",							L"<bool, ::UseP::[T2], ::UseP::[T3], *, *, *> ::Types<{bool $PR, ::LRef::[T2] $PR, ::LRef::[T3] $PR, * $PR, * $PR, * $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseP<bool, char, float, 1>",			L"UseP<bool, char, float, 1>",			L"<bool, char, float, *, *, *> ::Types<{bool $PR, char $PR, float $PR, * $PR, * $PR, * $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseP<bool, char, float, 1, 2, 3>",		L"UseP<bool, char, float, 1, 2, 3>",	L"<bool, char, float, *, *, *> ::Types<{bool $PR, char $PR, float $PR, * $PR, * $PR, * $PR}> __cdecl(::LRef::[T] &) * $PR");
 		
-		AssertExpr(pa, L"UsePs",								L"UsePs",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UsePs<>",								L"UsePs<>",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UsePs<bool>",							L"UsePs<bool>",							L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
-		AssertExpr(pa, L"UsePs<bool, char, float,>",			L"UsePs<bool, char, float>",			L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+		AssertExpr(pa, L"UsePs",								L"UsePs",								L"<::LRef::[Ts]..., *...> any_t $PR");
+		AssertExpr(pa, L"UsePs<>",								L"UsePs<>",								L"<{}, *...> any_t $PR");
+		AssertExpr(pa, L"UsePs<bool>",							L"UsePs<bool>",							L"<{bool $PR}, *...> any_t $PR");
+		AssertExpr(pa, L"UsePs<bool, char, float,>",			L"UsePs<bool, char, float>",			L"{bool $PR, char $PR, float $PR}, *...> any_t $PR");
 	});
 
 	TEST_CATEGORY(L"Template argument deduction (simple)")
