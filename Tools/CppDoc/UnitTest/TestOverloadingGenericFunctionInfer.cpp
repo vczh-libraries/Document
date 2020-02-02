@@ -510,6 +510,7 @@ TEST_FILE
 	});
 
 	// test matching Types<A..., B...>
+	// test matching Values<...>
 	// test known/unknown variadic arguments/parameters
 	// test generic methods		(TestOverloadingGenericMethodInfer.cpp)
 	// test generic operators	(TestOverloadingGenericMethodInfer.cpp)

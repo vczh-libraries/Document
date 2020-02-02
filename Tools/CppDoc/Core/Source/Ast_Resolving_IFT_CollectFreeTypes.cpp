@@ -119,7 +119,8 @@ namespace symbol_type_resolving
 
 		void Visit(DecorateType* self)override
 		{
-			if (Execute(self->type)) involvedTypes.Add(self);
+			bool result = Execute(self->type);
+			if ((involved = result)) involvedTypes.Add(self);
 		}
 
 		void Visit(RootType* self)override

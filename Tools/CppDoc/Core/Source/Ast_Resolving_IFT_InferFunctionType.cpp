@@ -197,11 +197,17 @@ namespace symbol_type_resolving
 		for (vint i = 0; i < genericType->arguments.Count(); i++)
 		{
 			auto argument = genericType->arguments[i];
-			// if this is a value argument, skip it
+			auto assignedTsys = parameterAssignment[i];
+
 			if (argument.item.type)
 			{
-				auto assignedTsys = parameterAssignment[i];
 				InferTemplateArgumentOfComplexType(pa, argument.item.type, argument.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, true);
+			}
+
+			if (argument.item.expr)
+			{
+				// TODO: not implemented
+				throw 0;
 			}
 		}
 	}
