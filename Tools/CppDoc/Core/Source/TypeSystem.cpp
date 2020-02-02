@@ -227,6 +227,17 @@ Concrete Tsys (ReplaceGenericArgs for type with element)
 Concrete Tsys (GenericArgs)
 ***********************************************************************/
 
+#define ITSYS_GENERIC_REPLACEGENERICARGS															\
+	ITsys* ReplaceGenericArgs(const ParsingArguments& pa)override									\
+	{																								\
+		ITsys* replacedType = nullptr;																\
+		if (pa.TryGetReplacedGenericArg(this, replacedType))										\
+		{																							\
+			return replacedType;																	\
+		}																							\
+		return this;																				\
+	}																								\
+
 #define ITSYS_GENERIC_ARG_CONFIGURATION																\
 	bool IsUnknownType()override																	\
 	{																								\
@@ -240,15 +251,7 @@ Concrete Tsys (GenericArgs)
 	{																								\
 		return true;																				\
 	}																								\
-	ITsys* ReplaceGenericArgs(const ParsingArguments& pa)override									\
-	{																								\
-		ITsys* replacedType = nullptr;																\
-		if (pa.TryGetReplacedGenericArg(this, replacedType))										\
-		{																							\
-			return replacedType;																	\
-		}																							\
-		return this;																				\
-	}																								\
+	ITSYS_GENERIC_REPLACEGENERICARGS																\
 
 /***********************************************************************
 Concrete Tsys (Singleton)
@@ -337,8 +340,9 @@ Concrete Tsys (User Defined)
 class ITSYS_CLASS(Decl)
 {
 	ITSYS_MEMBERS_DATA(Decl, Symbol*, Decl)
-	ITSYS_HAS_GENERIC_TYPE(false)
+	ITSYS_HAS_GENERIC_TYPE((data->kind == symbol_component::SymbolKind::GenericTypeArgument || data->kind == symbol_component::SymbolKind::GenericValueArgument))
 	ITSYS_HAS_UNKNOWN_TYPE(false)
+	ITSYS_GENERIC_REPLACEGENERICARGS
 
 protected:
 	Dictionary<TsysGenericArg, ITsys*>								genericArgs;
@@ -514,7 +518,7 @@ bool HasGenericArgWithParams(List<ITsys*>& params, ITsys* element, const Parsing
 	}
 	for (vint i = 0; i < params.Count(); i++)
 	{
-		if (params[i]->HasGenericArg(pa))
+		if (params[i] && params[i]->HasGenericArg(pa))
 		{
 			return true;
 		}

@@ -1396,6 +1396,11 @@ WString GetSymbolName(Symbol* symbol, Symbol* stopAt)
 
 void Log(ITsys* tsys, StreamWriter& writer)
 {
+	if (!tsys)
+	{
+		writer.WriteString(L"*");
+		return;
+	}
 	switch (tsys->GetType())
 	{
 	case TsysType::Any:
