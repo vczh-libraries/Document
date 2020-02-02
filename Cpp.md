@@ -28,17 +28,8 @@
   - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
   - [ ] Generate `ClassMemberCache` for generated special members
   - [ ] Call a function with some or all template arguments unspecified.
-    - [ ] Only the last function parameter could be variadic, when there is no ellipsis (`ParseSingleDeclarator_Function` function performs a test).
-    - [ ] Refactor `ResolveGenericParameters` so that it could also resolve function parameters with variadic or ellipsis.
-      - [ ] When the first function vta is {}, it could be treated as "to be inferred", if function arguments suggest so
-      - [ ] When a function is not applied with arguments, it is treated as {}. In this case, type arguments should all be provided.
-        - Which means there could be at most 1 vta, otherwise type arguments could not be all provided whatever you do.
-      - [ ] When it is used to resolve function parameters or class partial specializations, only the last argument could be variadic or ellipsis(function only).
-        - Function has no partial specialization.
-    - [ ] Allow multiple template arguments to be variadic as long as they are type inferenced (aka not assigned to directly) at call sites.
-    - [ ] Test resolving complex argument types containing template arguments.
-  - [ ] `...` arguments
-    - [ ] Refactor and rename `ResolveGenericParameters` to also handle function arguments.
+    - [ ] When the first variadic template argument of a function is {}, it could be treated as "to be inferred", if function arguments suggest so.
+    - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`
   - [ ] Full Specialization
     - [ ] Connect functions with forward declarations.
       - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
