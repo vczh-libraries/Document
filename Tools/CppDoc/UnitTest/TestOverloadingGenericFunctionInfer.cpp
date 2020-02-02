@@ -129,6 +129,9 @@ namespace Input__TestOverloadingGenericFunction_TypeInferValues
 		template<int D1, int D2, int D3>
 		auto UseA(int(&)[D1], int(&)[D2], int(&)[D3])->Values<D1, D2, D3>;
 
+		template<int... Ds>
+		auto UseAs(int(&...xs)[Ds])->Values<Ds...>;
+
 		template<typename T1, typename T2, typename T3, int V1, int V2, int V3>
 		auto UseP(const P<T1, V1>&, const P<T2, V2>&, const P<T3, V3>&)->Types<T1, T2, T3, Values<V1, V2, V3>>;
 
@@ -430,6 +433,12 @@ TEST_FILE
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			(UseA(x, y, z)),
+			L"::Values<{* $PR, * $PR, * $PR}> $PR",
+			Values<10, 20, 30>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UseAs(x, y, z)),
 			L"::Values<{* $PR, * $PR, * $PR}> $PR",
 			Values<10, 20, 30>
 		);
