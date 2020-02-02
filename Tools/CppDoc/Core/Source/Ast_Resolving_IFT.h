@@ -2,6 +2,7 @@
 #define VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_IFT
 
 #include "Ast_Resolving.h"
+#include "Ast_Expr.h"
 
 namespace symbol_type_resolving
 {

@@ -11,6 +11,8 @@ namespace symbol_type_resolving
 	{
 		switch (tsys->GetType())
 		{
+		case TsysType::Decl:
+			return tsys->GetDecl();
 		case TsysType::GenericArg:
 			return tsys->GetGenericArg().argSymbol;
 		case TsysType::GenericFunction:

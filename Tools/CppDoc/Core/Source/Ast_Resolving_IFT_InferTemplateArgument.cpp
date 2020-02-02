@@ -63,6 +63,28 @@ namespace symbol_type_resolving
 				.ExecuteOnce(argumentType, _offeredType);
 		}
 
+		void Execute(Ptr<Expr>& expr)
+		{
+			if (auto idExpr = expr.Cast<IdExpr>())
+			{
+				if (idExpr->resolving && idExpr->resolving->resolvedSymbols.Count() == 1)
+				{
+					auto symbol = idExpr->resolving->resolvedSymbols[0];
+					if (symbol->kind == symbol_component::SymbolKind::GenericValueArgument)
+					{
+						if (freeTypeSymbols.Contains(symbol))
+						{
+							auto& outputContext = symbol->ellipsis ? variadicContext : taContext;
+
+							// consistent with GetTemplateArgumentKey
+							auto pattern = pa.tsys->DeclOf(symbol);
+							SetInferredResult(outputContext, pattern, nullptr);
+						}
+					}
+				}
+			}
+		}
+
 		void Visit(PrimitiveType* self)override
 		{
 		}
@@ -163,6 +185,7 @@ namespace symbol_type_resolving
 		void Visit(ArrayType* self)override
 		{
 			VisitArrayOrPtr(self->type, TsysType::Array);
+			Execute(self->expr);
 		}
 
 		void Visit(CallingConventionType* self)override
