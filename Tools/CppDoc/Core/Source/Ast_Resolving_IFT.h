@@ -18,7 +18,8 @@ namespace symbol_type_resolving
 
 	extern void			InferTemplateArgument(
 							const ParsingArguments& pa,
-							Ptr<Type> argumentType,
+							Ptr<Type> typeToInfer,
+							Ptr<Expr> exprToInfer,
 							ITsys* offeredType,
 							TemplateArgumentContext& taContext,
 							TemplateArgumentContext& variadicContext,

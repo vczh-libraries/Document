@@ -154,15 +154,7 @@ namespace symbol_type_resolving
 					{
 						auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
 						TemplateArgumentContext localVariadicContext;
-						if (typeToInfer)
-						{
-							InferTemplateArgument(pa, typeToInfer, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
-						}
-						else
-						{
-							// TODO: not implemented
-							throw 0;
-						}
+						InferTemplateArgument(pa, typeToInfer, exprToInfer, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
 						for (vint k = 0; k < localVariadicContext.arguments.Count(); k++)
 						{
 							auto key = localVariadicContext.arguments.Keys()[k];
@@ -185,15 +177,7 @@ namespace symbol_type_resolving
 			else
 			{
 				// for non-variadic parameter, run the assigned argument
-				if (typeToInfer)
-				{
-					InferTemplateArgument(pa, typeToInfer, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
-				}
-				else
-				{
-					// TODO: not implemented
-					throw 0;
-				}
+				InferTemplateArgument(pa, typeToInfer, exprToInfer, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
 			}
 		}
 	}

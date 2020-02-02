@@ -412,7 +412,8 @@ namespace symbol_type_resolving
 
 	void InferTemplateArgument(
 		const ParsingArguments& pa,
-		Ptr<Type> argumentType,
+		Ptr<Type> typeToInfer,
+		Ptr<Expr> exprToInfer,
 		ITsys* offeredType,
 		TemplateArgumentContext& taContext,
 		TemplateArgumentContext& variadicContext,
@@ -422,7 +423,8 @@ namespace symbol_type_resolving
 		bool exactMatchForParameters
 	)
 	{
-		InferTemplateArgumentVisitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs)
-			.ExecuteOnce(argumentType, offeredType, exactMatchForParameters);
+		InferTemplateArgumentVisitor visitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs);
+		if (typeToInfer) visitor.ExecuteOnce(typeToInfer, offeredType, exactMatchForParameters);
+		if (exprToInfer) visitor.Execute(exprToInfer);
 	}
 }
