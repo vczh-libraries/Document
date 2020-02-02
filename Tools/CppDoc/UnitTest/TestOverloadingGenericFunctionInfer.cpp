@@ -107,6 +107,36 @@ namespace Input__TestOverloadingGenericFunction_TypeInferChildTypes
 	);
 }
 
+namespace Input__TestOverloadingGenericFunction_TypeInferValues
+{
+	TEST_DECL(
+		template<typename... Ts>
+		struct Types {};
+
+		template<int... Vs>
+		struct Values {};
+
+		template<typename T, int V>
+		struct P {};
+
+		template<typename T, int V>
+		struct Q : P<T*, V + 1> {};
+
+		int x[10];
+		int y[20];
+		int z[30];
+
+		template<int D1, int D2, int D3>
+		auto UseA(int(&)[D1], int(&)[D2], int(&)[D3])->Values<D1, D2, D3>;
+
+		template<typename T1, typename T2, typename T3, int V1, int V2, int V3>
+		auto UseP(const P<T1, V1>&, const P<T2, V2>&, const P<T3, V3>&)->Types<T1, T2, T3, Values<V1, V2, V3>>;
+
+		template<typename... Ts, int... Vs>
+		auto UsePs(const P<Ts, Vs>&...)->Types<Ts..., Values<Vs...>>;
+	);
+}
+
 TEST_FILE
 {
 	TEST_CATEGORY(L"Partially apply template arguments (simple)")
@@ -393,8 +423,55 @@ TEST_FILE
 		);
 	});
 
+	TEST_CATEGORY(L"Template argument deduction (values)")
+	{
+		using namespace Input__TestOverloadingGenericFunction_TypeInferValues;
+		COMPILE_PROGRAM(program, pa, input);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UseA(x, y, z)),
+			L"::Values<{* $PR, * $PR, * $PR}> $PR",
+			Values<10, 20, 30>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UseP(P<bool, 1>(), P<char, 2>(), P<float, 3>())),
+			L"::Types<{bool $PR, char $PR, float $PR, ::Values<{* $PR, * $PR, * $PR}> $PR}> $PR",
+			Types<bool, char, float, Values<1, 2, 3>>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UseP<bool, char, float>(P<bool, 1>(), P<char, 2>(), P<float, 3>())),
+			L"::Types<{bool $PR, char $PR, float $PR, ::Values<{* $PR, * $PR, * $PR}> $PR}> $PR",
+			Types<bool, char, float, Values<1, 2, 3>>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UsePs(P<bool, 1>(), P<char, 2>(), P<float, 3>())),
+			L"::Types<{bool $PR, char $PR, float $PR, ::Values<{* $PR, * $PR, * $PR}> $PR}> $PR",
+			Types<bool, char, float, Values<1, 2, 3>>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UsePs<bool, char, float>(P<bool, 1>(), P<char, 2>(), P<float, 3>())),
+			L"::Types<{bool $PR, char $PR, float $PR, ::Values<{* $PR, * $PR, * $PR}> $PR}> $PR",
+			Types<bool, char, float, Values<1, 2, 3>>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UsePs(Q<bool, 1>(), Q<char, 2>(), Q<float, 3>())),
+			L"::Types<{bool * $PR, char * $PR, float * $PR, ::Values<{* $PR, * $PR, * $PR}> $PR}> $PR",
+			Types<bool *, char *, float *, Values<2, 3, 4>>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UsePs<bool *, char *, float *>(Q<bool, 1>(), Q<char, 2>(), Q<float, 3>())),
+			L"::Types<{bool * $PR, char * $PR, float * $PR, ::Values<{* $PR, * $PR, * $PR}> $PR}> $PR",
+			Types<bool *, char *, float *, Values<2, 3, 4>>
+		);
+	});
+
 	// test matching Types<A..., B...>
-	// test template value argument (assign non-variadic to nullptr since this is the only choice, and calculate amounts of variadic ones)
 	// test known/unknown variadic arguments/parameters
 	// test generic methods		(TestOverloadingGenericMethodInfer.cpp)
 	// test generic operators	(TestOverloadingGenericMethodInfer.cpp)
