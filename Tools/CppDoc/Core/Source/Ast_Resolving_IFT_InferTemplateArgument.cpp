@@ -16,13 +16,15 @@ namespace symbol_type_resolving
 		TemplateArgumentContext&			variadicContext;
 		const SortedList<Symbol*>&			freeTypeSymbols;
 		const SortedList<Type*>&			involvedTypes;
+		const SortedList<Expr*>&			involvedExprs;
 
-		InferTemplateArgumentVisitor(const ParsingArguments& _pa, TemplateArgumentContext& _taContext, TemplateArgumentContext& _variadicContext, const SortedList<Symbol*>& _freeTypeSymbols, const SortedList<Type*>& _involvedTypes)
+		InferTemplateArgumentVisitor(const ParsingArguments& _pa, TemplateArgumentContext& _taContext, TemplateArgumentContext& _variadicContext, const SortedList<Symbol*>& _freeTypeSymbols, const SortedList<Type*>& _involvedTypes, const SortedList<Expr*>& _involvedExprs)
 			:pa(_pa)
 			, taContext(_taContext)
 			, variadicContext(_variadicContext)
 			, freeTypeSymbols(_freeTypeSymbols)
 			, involvedTypes(_involvedTypes)
+			, involvedExprs(_involvedExprs)
 		{
 		}
 
@@ -59,30 +61,20 @@ namespace symbol_type_resolving
 
 		void Execute(Ptr<Type>& argumentType, ITsys* _offeredType)
 		{
-			InferTemplateArgumentVisitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes)
+			InferTemplateArgumentVisitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs)
 				.ExecuteOnce(argumentType, _offeredType);
 		}
 
 		void Execute(Ptr<Expr>& expr)
 		{
-			if (auto idExpr = expr.Cast<IdExpr>())
-			{
-				if (idExpr->resolving && idExpr->resolving->resolvedSymbols.Count() == 1)
-				{
-					auto symbol = idExpr->resolving->resolvedSymbols[0];
-					if (symbol->kind == symbol_component::SymbolKind::GenericValueArgument)
-					{
-						if (freeTypeSymbols.Contains(symbol))
-						{
-							auto& outputContext = symbol->ellipsis ? variadicContext : taContext;
+			if (!involvedExprs.Contains(expr.Obj())) return;
+			auto idExpr = expr.Cast<IdExpr>();
+			auto symbol = idExpr->resolving->resolvedSymbols[0];
+			auto& outputContext = symbol->ellipsis ? variadicContext : taContext;
 
-							// consistent with GetTemplateArgumentKey
-							auto pattern = pa.tsys->DeclOf(symbol);
-							SetInferredResult(outputContext, pattern, nullptr);
-						}
-					}
-				}
-			}
+			// consistent with GetTemplateArgumentKey
+			auto pattern = pa.tsys->DeclOf(symbol);
+			SetInferredResult(outputContext, pattern, nullptr);
 		}
 
 		void Visit(PrimitiveType* self)override
@@ -426,10 +418,11 @@ namespace symbol_type_resolving
 		TemplateArgumentContext& variadicContext,
 		const SortedList<Symbol*>& freeTypeSymbols,
 		const SortedList<Type*>& involvedTypes,
+		const SortedList<Expr*>& involvedExprs,
 		bool exactMatchForParameters
 	)
 	{
-		InferTemplateArgumentVisitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes)
+		InferTemplateArgumentVisitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs)
 			.ExecuteOnce(argumentType, offeredType, exactMatchForParameters);
 	}
 }

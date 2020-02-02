@@ -85,11 +85,12 @@ namespace symbol_type_resolving
 	)
 	{
 		SortedList<Type*> involvedTypes;
-		CollectFreeTypes(argumentType, isVariadic, freeTypeSymbols, involvedTypes);
+		SortedList<Expr*> involvedExprs;
+		CollectFreeTypes(argumentType, isVariadic, freeTypeSymbols, involvedTypes, involvedExprs);
 
 		// get all affected arguments
 		TypeTsysList vas;
-		TypeTsysList nvas;
+
 		for (vint j = 0; j < involvedTypes.Count(); j++)
 		{
 			if (auto idType = dynamic_cast<IdType*>(involvedTypes[j]))
@@ -100,9 +101,18 @@ namespace symbol_type_resolving
 				{
 					vas.Add(pattern);
 				}
-				else
+			}
+		}
+
+		for (vint j = 0; j < involvedExprs.Count(); j++)
+		{
+			if (auto idExpr = dynamic_cast<IdExpr*>(involvedExprs[j]))
+			{
+				auto patternSymbol = idExpr->resolving->resolvedSymbols[0];
+				auto pattern = pa.tsys->DeclOf(patternSymbol);
+				if (patternSymbol->ellipsis)
 				{
-					nvas.Add(pattern);
+					vas.Add(pattern);
 				}
 			}
 		}
@@ -111,10 +121,6 @@ namespace symbol_type_resolving
 		for (vint j = 0; j < vas.Count(); j++)
 		{
 			SetInferredResult(taContext, vas[j], pa.tsys->Any());
-		}
-		for (vint j = 0; j < nvas.Count(); j++)
-		{
-			SetInferredResult(taContext, nvas[j], pa.tsys->Any());
 		}
 
 		if (assignedTsys->GetType() != TsysType::Any)
@@ -147,7 +153,7 @@ namespace symbol_type_resolving
 					{
 						auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
 						TemplateArgumentContext localVariadicContext;
-						InferTemplateArgument(pa, argumentType, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
+						InferTemplateArgument(pa, argumentType, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
 						for (vint k = 0; k < localVariadicContext.arguments.Count(); k++)
 						{
 							auto key = localVariadicContext.arguments.Keys()[k];
@@ -170,7 +176,7 @@ namespace symbol_type_resolving
 			else
 			{
 				// for non-variadic parameter, run the assigned argument
-				InferTemplateArgument(pa, argumentType, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes, exactMatchForParameters);
+				InferTemplateArgument(pa, argumentType, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
 			}
 		}
 	}

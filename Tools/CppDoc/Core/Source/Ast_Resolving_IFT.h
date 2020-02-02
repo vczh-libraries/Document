@@ -12,7 +12,8 @@ namespace symbol_type_resolving
 							Ptr<Type> type,
 							bool insideVariant,
 							const SortedList<Symbol*>& freeTypeSymbols,
-							SortedList<Type*>& involvedTypes);
+							SortedList<Type*>& involvedTypes,
+							SortedList<Expr*>& involvedExprs);
 
 	extern void			InferTemplateArgument(
 							const ParsingArguments& pa,
@@ -22,6 +23,7 @@ namespace symbol_type_resolving
 							TemplateArgumentContext& variadicContext,
 							const SortedList<Symbol*>& freeTypeSymbols,
 							const SortedList<Type*>& involvedTypes,
+							const SortedList<Expr*>& involvedExprs,
 							bool exactMatchForParameters);
 
 	extern void			SetInferredResult(

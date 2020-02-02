@@ -14,11 +14,13 @@ namespace symbol_type_resolving
 		bool								insideVariant;
 		const SortedList<Symbol*>&			freeTypeSymbols;
 		SortedList<Type*>&					involvedTypes;
+		SortedList<Expr*>&					involvedExprs;
 
-		CollectFreeTypesVisitor(bool _insideVariant, const SortedList<Symbol*>& _freeTypeSymbols, SortedList<Type*>& _involvedTypes)
+		CollectFreeTypesVisitor(bool _insideVariant, const SortedList<Symbol*>& _freeTypeSymbols, SortedList<Type*>& _involvedTypes, SortedList<Expr*>& _involvedExprs)
 			:insideVariant(_insideVariant)
 			, freeTypeSymbols(_freeTypeSymbols)
 			, involvedTypes(_involvedTypes)
+			, involvedExprs(_involvedExprs)
 		{
 		}
 
@@ -49,6 +51,7 @@ namespace symbol_type_resolving
 					{
 						if (freeTypeSymbols.Contains(symbol))
 						{
+							involvedExprs.Add(expr.Obj());
 							return true;
 						}
 					}
@@ -192,11 +195,11 @@ namespace symbol_type_resolving
 		}
 	};
 
-	void CollectFreeTypes(Ptr<Type> type, bool insideVariant, const SortedList<Symbol*>& freeTypeSymbols, SortedList<Type*>& involvedTypes)
+	void CollectFreeTypes(Ptr<Type> type, bool insideVariant, const SortedList<Symbol*>& freeTypeSymbols, SortedList<Type*>& involvedTypes, SortedList<Expr*>& involvedExprs)
 	{
 		if (type)
 		{
-			CollectFreeTypesVisitor visitor(insideVariant, freeTypeSymbols, involvedTypes);
+			CollectFreeTypesVisitor visitor(insideVariant, freeTypeSymbols, involvedTypes, involvedExprs);
 			type->Accept(&visitor);
 		}
 	}

@@ -229,6 +229,35 @@ TEST_FILE
 		AssertExpr(pa, L"VtaFunc2<bool, char>",				L"VtaFunc2<bool, char>",			L"<...={bool $PR, char $PR}, ...::VtaFunc2::[TArgs]> ::Types<any_t> __cdecl(::Types<any_t>) * $PR");
 	});
 
+	TEST_CATEGORY(L"Partially apply template arguments (values)")
+	{
+		using namespace Input__TestOverloadingGenericFunction_TypeInferKinds;
+		COMPILE_PROGRAM(program, pa, input);
+		
+		AssertExpr(pa, L"UseA",									L"UseA",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseA<>",								L"UseA<>",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseA<1>",								L"UseA<1>",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseA<1, 2>",							L"UseA<1, 2>",							L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+		AssertExpr(pa, L"UseA<1, 2, 3>",						L"UseA<1, 2, 3>",						L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+		
+		AssertExpr(pa, L"UseAs",								L"UseAs",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseAs<>",								L"UseAs<>",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseAs<1>",								L"UseAs<1>",							L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseAs<1, 2>",							L"UseAs<1, 2>",							L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+		AssertExpr(pa, L"UseAs<1, 2, 3>",						L"UseAs<1, 2, 3>",						L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+		
+		AssertExpr(pa, L"UseP",									L"UseP",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseP<>",								L"UseP<>",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseP<bool>",							L"UseP<bool>",							L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UseP<bool, char, float, 1>",			L"UseP<bool, char, float, 1>",			L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+		AssertExpr(pa, L"UseP<bool, char, float, 1, 2, 3>",		L"UseP<bool, char, float, 1, 2, 3>",	L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+		
+		AssertExpr(pa, L"UsePs",								L"UsePs",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UsePs<>",								L"UsePs<>",								L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UsePs<bool>",							L"UsePs<bool>",							L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
+		AssertExpr(pa, L"UsePs<bool, char, float,>",			L"UsePs<bool, char, float>",			L"::Types<{bool $PR}> __cdecl(bool &) * $PR");
+	});
+
 	TEST_CATEGORY(L"Template argument deduction (simple)")
 	{
 		using namespace Input__TestOverloadingGenericFunction_TypeInferSimple;
