@@ -28,6 +28,15 @@ namespace Input__TestOverloadingGenericFunction_TypeInferVariant
 
 		template<typename... Ts>
 		auto Variant(Ts... ts) { return Types<Ts...>(); }
+
+		template<typename... Ts>
+		auto Variant2(Types<Ts...>) { return Types<Ts*...>(); }
+
+		template<typename... Ts, typename ...Us>
+		auto Variant3(Ts..., Us...) { return Types<Ts..., Us...>(); }
+
+		template<typename... Ts, typename ...Us>
+		auto Variant4(Types<Ts..., Us...>) { return Types<Ts*..., Us&...>(); }
 	);
 }
 
@@ -299,9 +308,27 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
-			Variant(1, 1.0, 1.f, ci, vi, cvi),
+			(Variant(1, 1.0, 1.f, ci, vi, cvi)),
 			L"::Types<{__int32 $PR, double $PR, float $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
 			Types<int, double, float, int, int, int>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(Variant2(Types<int, double, float, bool, char, wchar_t>())),
+			L"::Types<{__int32 * $PR, double * $PR, float * $PR, bool * $PR, char * $PR, wchar_t * $PR}> $PR",
+			Types<int*, double*, float*, bool*, char*, wchar_t*>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(Variant3<int, double, float>(1, 1.0, 1.f, ci, vi, cvi)),
+			L"::Types<{__int32 $PR, double $PR, float $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
+			Types<int, double, float, int, int, int>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(Variant4<int, double, float>(Types<int, double, float, bool, char, wchar_t>())),
+			L"::Types<{__int32 * $PR, double * $PR, float * $PR, bool & $PR, char & $PR, wchar_t & $PR}> $PR",
+			Types<int*, double*, float*, bool&, char&, wchar_t&>
 		);
 		// test 0, 1, 2 arguments
 		// when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
@@ -518,8 +545,6 @@ TEST_FILE
 		);
 	});
 
-	// test matching Types<A..., B...>
-	// test matching Values<...>
 	// test known/unknown variadic arguments/parameters
 	// test generic methods		(TestOverloadingGenericMethodInfer.cpp)
 	// test generic operators	(TestOverloadingGenericMethodInfer.cpp)
