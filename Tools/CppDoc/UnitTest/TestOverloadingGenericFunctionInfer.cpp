@@ -137,6 +137,9 @@ namespace Input__TestOverloadingGenericFunction_TypeInferValues
 
 		template<typename... Ts, int... Vs>
 		auto UsePs(const P<Ts, Vs>&...)->Types<Ts..., Values<Vs...>>;
+
+		template<int... Vs>
+		auto UseV(Values<Vs...>)->Types<int[Vs]...>;
 	);
 }
 
@@ -506,6 +509,12 @@ TEST_FILE
 			(UsePs<bool *, char *, float *>(Q<bool, 1>(), Q<char, 2>(), Q<float, 3>())),
 			L"::Types<{bool * $PR, char * $PR, float * $PR, ::Values<{* $PR, * $PR, * $PR}> $PR}> $PR",
 			Types<bool *, char *, float *, Values<2, 3, 4>>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(UseV(Values<1, 2, 3>())),
+			L"::Types<{__int32 [] $PR, __int32 [] $PR, __int32 [] $PR}> $PR",
+			Types<int[1], int[2], int[3]>
 		);
 	});
 
