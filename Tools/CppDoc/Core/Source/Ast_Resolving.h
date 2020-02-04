@@ -146,6 +146,8 @@ namespace symbol_type_resolving
 	extern void									ResolveGenericTypeParameters(
 													const ParsingArguments& invokerPa,
 													TypeTsysList& parameterAssignment,
+													const TemplateArgumentContext& knownArguments,
+													const SortedList<Symbol*>& argumentSymbols,
 													GenericType* genericType,
 													Array<ExprTsysItem>& argumentTypes,
 													SortedList<vint>& boundedAnys

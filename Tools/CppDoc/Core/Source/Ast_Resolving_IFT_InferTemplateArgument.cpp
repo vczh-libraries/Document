@@ -404,7 +404,7 @@ namespace symbol_type_resolving
 						}
 					}
 				}
-				ResolveGenericTypeParameters(pa, parameterAssignment, self, argumentTypes, boundedAnys);
+				ResolveGenericTypeParameters(pa, parameterAssignment, taContext, freeTypeSymbols, self, argumentTypes, boundedAnys);
 			}
 			InferTemplateArgumentsForGenericType(pa, self, parameterAssignment, taContext, variadicContext, freeTypeSymbols);
 		}

@@ -504,6 +504,7 @@ namespace symbol_type_resolving
 
 	/***********************************************************************
 	ResolveFunctionParameters: Calculate function parameter types by matching arguments to patterens
+	ResolveGenericTypeParameters: Calculate generic parameter types by matching arguments to patterens
 	***********************************************************************/
 
 	void AssignParameterAssignment(
@@ -567,6 +568,45 @@ namespace symbol_type_resolving
 		}
 	}
 
+	vint CalculateParameterPackSize(
+		const ParsingArguments& invokerPa,
+		const TemplateArgumentContext& knownArguments,
+		const SortedList<Type*>& involvedTypes,
+		const SortedList<Expr*>& involvedExprs
+	)
+	{
+		vint packSize = -1;
+		bool conflicted = false;
+		CollectInvolvedVariadicArguments(invokerPa, involvedTypes, involvedExprs, [&packSize, &conflicted, &knownArguments](Symbol*, ITsys* pattern)
+		{
+			vint index = knownArguments.arguments.Keys().IndexOf(pattern);
+			if (index == -1) return;
+			auto pack = knownArguments.arguments.Values()[index];
+			if (pack && pack->GetType() == TsysType::Init)
+			{
+				vint newPackSize = pack->GetParamCount();
+				if (packSize == -1)
+				{
+					packSize = newPackSize;
+				}
+				else if (packSize != newPackSize)
+				{
+					conflicted = true;
+				}
+			}
+		});
+
+		if (conflicted)
+		{
+			// all assigned variadic template arguments that are used in a function parameter should have the same pack size
+			throw TypeCheckerException();
+		}
+		else
+		{
+			return packSize;
+		}
+	}
+
 	void ResolveFunctionParameters(
 		const ParsingArguments& invokerPa,				// context
 		TypeTsysList& parameterAssignment,				// store function argument to offered argument map, nullptr indicates the default value is applied
@@ -594,37 +634,7 @@ namespace symbol_type_resolving
 				SortedList<Type*> involvedTypes;
 				SortedList<Expr*> involvedExprs;
 				CollectFreeTypes(parameter.item->type, nullptr, false, argumentSymbols, involvedTypes, involvedExprs);
-
-				vint packSize = -1;
-				bool conflicted = false;
-				CollectInvolvedVariadicArguments(invokerPa, involvedTypes, involvedExprs, [&packSize, &conflicted, &knownArguments](Symbol*, ITsys* pattern)
-				{
-					vint index = knownArguments.arguments.Keys().IndexOf(pattern);
-					if (index == -1) return;
-					auto pack = knownArguments.arguments.Values()[index];
-					if (pack && pack->GetType() == TsysType::Init)
-					{
-						vint newPackSize = pack->GetParamCount();
-						if (packSize == -1)
-						{
-							packSize = newPackSize;
-						}
-						else if (packSize != newPackSize)
-						{
-							conflicted = true;
-						}
-					}
-				});
-
-				if (conflicted)
-				{
-					// all assigned variadic template arguments that are used in a function parameter should have the same pack size
-					throw TypeCheckerException();
-				}
-				else
-				{
-					knownPackSizes[i] = packSize;
-				}
+				knownPackSizes[i] = CalculateParameterPackSize(invokerPa, knownArguments, involvedTypes, involvedExprs);
 			}
 			else
 			{
@@ -642,25 +652,46 @@ namespace symbol_type_resolving
 		AssignParameterAssignment(invokerPa, functionParameterCount, parameterAssignment, gpaMappings, argumentTypes);
 	}
 
-	/***********************************************************************
-	ResolveGenericTypeParameters: Calculate generic parameter types by matching arguments to patterens
-	***********************************************************************/
-
 	void ResolveGenericTypeParameters(
 		const ParsingArguments& invokerPa,			// context
 		TypeTsysList& parameterAssignment,			// store function argument to offered argument map, nullptr indicates the default value is applied
+		const TemplateArgumentContext& knownArguments,	// all assigned template arguments
+		const SortedList<Symbol*>& argumentSymbols,		// symbols of all template arguments
 		GenericType* genericType,					// argument information
 		Array<ExprTsysItem>& argumentTypes,			// (index of unpacked)		offered argument (unpacked)
 		SortedList<vint>& boundedAnys				// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
 	)
 	{
+		vint genericParameterCount = genericType->arguments.Count();
+		vint passedParameterCount = genericParameterCount + 1;
+		Array<vint> knownPackSizes(passedParameterCount);
+		for (vint i = 0; i < knownPackSizes.Count(); i++)
+		{
+			knownPackSizes[i] = -1;
+		}
+
+		// calculate all variadic function arguments that with known pack size
+		for (vint i = 0; i < genericType->arguments.Count(); i++)
+		{
+			auto& argument = genericType->arguments[i];
+			if (argument.isVariadic)
+			{
+				SortedList<Type*> involvedTypes;
+				SortedList<Expr*> involvedExprs;
+				CollectFreeTypes(argument.item.type, argument.item.expr, false, argumentSymbols, involvedTypes, involvedExprs);
+				knownPackSizes[i] = CalculateParameterPackSize(invokerPa, knownArguments, involvedTypes, involvedExprs);
+			}
+			else
+			{
+				knownPackSizes[i] = 1;
+			}
+		}
+
 		// calculate how to assign offered arguments to generic type arguments
 		// gpaMappings will contains decisions for every template arguments
-		vint genericParameterCount = genericType->arguments.Count();
-		GpaList gpaMappings;
-		Array<vint> knownPackSizes;
 		// set allowPartialApply to true because, arguments of genericType could be incomplete, but argumentTypes are always complete because it comes from a ITsys*
-		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, true, genericParameterCount + 1, knownPackSizes,
+		GpaList gpaMappings;
+		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, true, passedParameterCount, knownPackSizes,
 			[genericType](vint index) { return index == genericType->arguments.Count() ? true : genericType->arguments[index].isVariadic; },
 			[](vint index) { return false; }
 		);

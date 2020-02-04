@@ -299,7 +299,7 @@ TEST_FILE
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1, 2.0),				void);
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1.0, 2.f),			void);
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1.f, 2),				void);
-		// test 0, 1 arguments
+		// test 0, 1 template arguments
 	});
 
 	TEST_CATEGORY(L"Template argument deduction (variant)")
@@ -330,7 +330,6 @@ TEST_FILE
 			L"::Types<{__int32 * $PR, double * $PR, float * $PR, bool & $PR, char & $PR, wchar_t & $PR}> $PR",
 			Types<int*, double*, float*, bool&, char&, wchar_t&>
 		);
-		// test 0, 1, 2 arguments
 		// when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
 	});
 
