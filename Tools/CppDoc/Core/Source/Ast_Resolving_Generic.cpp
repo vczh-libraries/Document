@@ -342,8 +342,14 @@ namespace symbol_type_resolving
 
 		if (!givenUp && readingInput < inputArgumentCount)
 		{
-			// too many offered arguments
-			throw TypeCheckerException();
+			// check if all the rest are offered arguments with unknown pack size
+			// since all these offered arguments has not been read, just check the count
+			vint remainingCount = inputArgumentCount - readingInput;
+			if (boundedAnys.Count() != remainingCount)
+			{
+				// too many offered arguments
+				throw TypeCheckerException();
+			}
 		}
 	}
 
