@@ -208,7 +208,7 @@ namespace symbol_type_resolving
 		}
 
 		// first offered argument with unknown pack size
-		vint firstBoundedAny = boundedAnys.Count() > 0 ? boundedAnys[0] : -1;
+		vint firstBoundedAny = boundedAnys.Count() > 0 ? boundedAnys[0] - offset : -1;
 
 		// when given up, fill the rest of arguments with any_t
 		bool givenUp = false;
@@ -257,8 +257,15 @@ namespace symbol_type_resolving
 						else
 						{
 							// give all remaining offered arguments to it
-							gpaMappings.Add(GenericParameterAssignment::MultipleVta(readingInput, inputArgumentCount - readingInput));
-							readingInput = inputArgumentCount;
+							if (readingInput == inputArgumentCount)
+							{
+								gpaMappings.Add(GenericParameterAssignment::EmptyVta());
+							}
+							else
+							{
+								gpaMappings.Add(GenericParameterAssignment::MultipleVta(readingInput + offset, inputArgumentCount - readingInput));
+								readingInput = inputArgumentCount;
+							}
 						}
 					}
 					else
@@ -275,8 +282,15 @@ namespace symbol_type_resolving
 						else if (readingInput + packSize <= inputArgumentCount)
 						{
 							// if there are still enough offered arguments to apply
-							gpaMappings.Add(GenericParameterAssignment::MultipleVta(readingInput, packSize));
-							readingInput += packSize;
+							if (packSize == 0)
+							{
+								gpaMappings.Add(GenericParameterAssignment::EmptyVta());
+							}
+							else
+							{
+								gpaMappings.Add(GenericParameterAssignment::MultipleVta(readingInput + offset, packSize));
+								readingInput += packSize;
+							}
 						}
 						else if (allowPartialApply)
 						{
@@ -304,7 +318,7 @@ namespace symbol_type_resolving
 					else if (readingInput < inputArgumentCount)
 					{
 						// if there is still an offered argument to apply
-						gpaMappings.Add(GenericParameterAssignment::OneArgument(readingInput));
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(readingInput + offset));
 						readingInput++;
 					}
 					else if (argHasDefault(i))
