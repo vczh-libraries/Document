@@ -1,4 +1,5 @@
 #include "Ast_Resolving.h"
+#include "Ast_Resolving_IFT.h"
 
 namespace symbol_type_resolving
 {
@@ -624,11 +625,55 @@ namespace symbol_type_resolving
 		SortedList<vint>& boundedAnys					// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
 	)
 	{
+		vint functionParameterCount = functionType->parameters.Count();
+		vint passedParameterCount = functionParameterCount + (functionType->ellipsis ? 1 : 0);
+		Array<vint> knownPackSizes(passedParameterCount);
+		for (vint i = 0; i < knownPackSizes.Count(); i++)
+		{
+			knownPackSizes[i] = -1;
+		}
+
+		// calculate all variadic function arguments that with known pack size
+		for (vint i = 0; i < functionType->parameters.Count(); i++)
+		{
+			auto& parameter = functionType->parameters[i];
+			if (parameter.isVariadic)
+			{
+				SortedList<Type*> involvedTypes;
+				SortedList<Expr*> involvedExprs;
+				CollectFreeTypes(parameter.item->type, nullptr, false, argumentSymbols, involvedTypes, involvedExprs);
+
+				vint packSize = -1;
+				bool conflicted = false;
+				CollectInvolvedVariadicArguments(invokerPa, involvedTypes, involvedExprs, [&packSize, &conflicted, &knownArguments](Symbol*, ITsys* pattern)
+				{
+					vint index = knownArguments.arguments.Keys().IndexOf(pattern);
+					if (index == -1) return;
+					auto pack = knownArguments.arguments.Values()[index];
+					if (pack && pack->GetType() == TsysType::Init)
+					{
+						vint newPackSize = pack->GetParamCount();
+						if (packSize == -1)
+						{
+							packSize = newPackSize;
+						}
+						else if (packSize != newPackSize)
+						{
+							conflicted = true;
+						}
+					}
+				});
+			}
+			else
+			{
+				knownPackSizes[i] = 1;
+			}
+		}
+
 		// calculate how to assign offered arguments to function arguments
 		// gpaMappings will contains decisions for every template arguments
-		vint functionParameterCount = functionType->parameters.Count();
 		GpaList gpaMappings;
-		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, false, functionParameterCount + (functionType->ellipsis ? 1 : 0),
+		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, false, passedParameterCount,
 			[functionType](vint index) { return index == functionType->parameters.Count() ? functionType->ellipsis : functionType->parameters[index].isVariadic; },
 			[functionType](vint index) { return index == functionType->parameters.Count() ? false : (bool)functionType->parameters[index].item->initializer; }
 		);

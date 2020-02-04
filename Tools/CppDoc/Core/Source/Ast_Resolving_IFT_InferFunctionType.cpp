@@ -91,32 +91,10 @@ namespace symbol_type_resolving
 
 		// get all affected arguments
 		TypeTsysList vas;
-
-		for (vint j = 0; j < involvedTypes.Count(); j++)
+		CollectInvolvedVariadicArguments(pa, involvedTypes, involvedExprs, [&vas](Symbol*, ITsys* pattern)
 		{
-			if (auto idType = dynamic_cast<IdType*>(involvedTypes[j]))
-			{
-				auto patternSymbol = idType->resolving->resolvedSymbols[0];
-				auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
-				if (patternSymbol->ellipsis)
-				{
-					vas.Add(pattern);
-				}
-			}
-		}
-
-		for (vint j = 0; j < involvedExprs.Count(); j++)
-		{
-			if (auto idExpr = dynamic_cast<IdExpr*>(involvedExprs[j]))
-			{
-				auto patternSymbol = idExpr->resolving->resolvedSymbols[0];
-				auto pattern = pa.tsys->DeclOf(patternSymbol);
-				if (patternSymbol->ellipsis)
-				{
-					vas.Add(pattern);
-				}
-			}
-		}
+			vas.Add(pattern);
+		});
 
 		// infer all affected types to any_t, result will be overrided if more precise types are inferred
 		for (vint j = 0; j < vas.Count(); j++)

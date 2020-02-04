@@ -49,6 +49,36 @@ namespace symbol_type_resolving
 							TemplateArgumentContext& variadicContext,
 							const SortedList<Symbol*>& freeTypeSymbols,
 							bool exactMatchForParameters);
+
+	template<typename TCallback>
+	void CollectInvolvedVariadicArguments(const ParsingArguments& pa, const SortedList<Type*>& involvedTypes, const SortedList<Expr*>& involvedExprs, TCallback&& callback)
+	{
+		for (vint j = 0; j < involvedTypes.Count(); j++)
+		{
+			if (auto idType = dynamic_cast<IdType*>(involvedTypes[j]))
+			{
+				auto patternSymbol = idType->resolving->resolvedSymbols[0];
+				auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
+				if (patternSymbol->ellipsis)
+				{
+					callback(patternSymbol, pattern);
+				}
+			}
+		}
+
+		for (vint j = 0; j < involvedExprs.Count(); j++)
+		{
+			if (auto idExpr = dynamic_cast<IdExpr*>(involvedExprs[j]))
+			{
+				auto patternSymbol = idExpr->resolving->resolvedSymbols[0];
+				auto pattern = pa.tsys->DeclOf(patternSymbol);
+				if (patternSymbol->ellipsis)
+				{
+					callback(patternSymbol, pattern);
+				}
+			}
+		}
+	}
 }
 
 #endif
