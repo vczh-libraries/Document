@@ -193,6 +193,16 @@ namespace symbol_type_resolving
 		THasDefault&& argHasDefault						// test if a template argument has a default value
 	)
 	{
+		// fill knownPackSizes if empty
+		if (knownPackSizes.Count() == 0)
+		{
+			knownPackSizes.Resize(templateArgumentCount);
+			for (vint i = 0; i < templateArgumentCount; i++)
+			{
+				knownPackSizes[i] = argIsVat(i) ? -1 : 1;
+			}
+		}
+
 		// only fill arguments to the first variadic template argument
 		vint firstDefault = -1;
 		vint firstVta = -1;
@@ -203,6 +213,8 @@ namespace symbol_type_resolving
 			{
 				if (!allowPartialApply && i != templateArgumentCount - 1)
 				{
+					// if partially applyling is now allowed
+					// there can be only one variadic template argument with unknown pack size
 					throw TypeCheckerException();
 				}
 				firstVta = i;
@@ -233,12 +245,13 @@ namespace symbol_type_resolving
 			throw TypeCheckerException();
 		}
 
-		if (firstVta == -1)
+		if (boundedAnys.Count() == 0)
 		{
-			// if the generic declaration has no variadic template arguments
-			if (boundedAnys.Count() == 0)
+			// if offered arguments include packs with unknown size
+
+			if (firstVta == -1)
 			{
-				// if there is no unknown variadic arguments
+				// if the generic declaration has no variadic template argument with unknown pack size
 				for (vint i = 0; i < parametersToFill; i++)
 				{
 					if (i < inputArgumentCount)
@@ -265,41 +278,12 @@ namespace symbol_type_resolving
 			}
 			else
 			{
-				// if there are unknown variadic arguments
-				vint headCount = boundedAnys[0] - offset;
-				vint tailCount = inputArgumentCount - (boundedAnys[boundedAnys.Count() - 1] - offset) - 1;
-				vint anyParameterCount = parametersToFill - headCount - tailCount;
+				// if the generic declaration has variadic template arguments with unknown pack size
+				vint minOffered = firstDefault == -1
+					? firstVta
+					: (firstDefault < firstVta ? firstDefault : firstVta)
+					;
 
-				for (vint i = 0; i < parametersToFill; i++)
-				{
-					if (i < headCount)
-					{
-						// if there is no unknown variadic arguments before this offered argument, use it in this position
-						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
-					}
-					else if (i < headCount + anyParameterCount)
-					{
-						// this offered argument is a unknown variadic arguments list, or is between two list, use any in this position
-						gpaMappings.Add(GenericParameterAssignment::Any());
-					}
-					else
-					{
-						// if there is no unknown variadic argument after this offered argument, use it in this position
-						gpaMappings.Add(GenericParameterAssignment::OneArgument(inputArgumentCount - (parametersToFill - i) + offset));
-					}
-				}
-			}
-		}
-		else
-		{
-			vint minOffered = firstDefault == -1
-				? firstVta
-				: (firstDefault < firstVta ? firstDefault : firstVta)
-				;
-			// if the generic declaration has variadic template arguments
-			if (boundedAnys.Count() == 0)
-			{
-				// if there is no unknown variadic arguments
 				for (vint i = 0; i < parametersToFill; i++)
 				{
 					if (i < inputArgumentCount)
@@ -353,9 +337,40 @@ namespace symbol_type_resolving
 					}
 				}
 			}
+		}
+		else
+		{
+			// if offered arguments do not include packs with unknown size
+
+			if (firstVta == -1)
+			{
+				// if the generic declaration has no variadic template argument with unknown pack size
+				vint headCount = boundedAnys[0] - offset;
+				vint tailCount = inputArgumentCount - (boundedAnys[boundedAnys.Count() - 1] - offset) - 1;
+				vint anyParameterCount = parametersToFill - headCount - tailCount;
+
+				for (vint i = 0; i < parametersToFill; i++)
+				{
+					if (i < headCount)
+					{
+						// if there is no unknown variadic arguments before this offered argument, use it in this position
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(i + offset));
+					}
+					else if (i < headCount + anyParameterCount)
+					{
+						// this offered argument is a unknown variadic arguments list, or is between two list, use any in this position
+						gpaMappings.Add(GenericParameterAssignment::Any());
+					}
+					else
+					{
+						// if there is no unknown variadic argument after this offered argument, use it in this position
+						gpaMappings.Add(GenericParameterAssignment::OneArgument(inputArgumentCount - (parametersToFill - i) + offset));
+					}
+				}
+			}
 			else
 			{
-				// if there are unknown variadic arguments
+				// if the generic declaration has variadic template arguments with unknown pack size
 				vint headCount = boundedAnys[0] - offset;
 				for (vint i = 0; i < parametersToFill; i++)
 				{
