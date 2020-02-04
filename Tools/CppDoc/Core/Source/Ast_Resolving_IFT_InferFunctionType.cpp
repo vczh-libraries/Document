@@ -570,13 +570,6 @@ namespace symbol_type_resolving
 							TemplateArgumentContext				taContext;
 							SortedList<Symbol*>					freeTypeSymbols;
 
-							auto inferPa = pa.AdjustForDecl(gfi.declSymbol, gfi.parentDeclType, false);
-
-							// cannot pass Ptr<FunctionType> to this function since the last filled argument could be variadic
-							// known variadic function argument should be treated as separated arguments
-							// ParsingArguments need to be adjusted so that we can evaluate each parameter type
-							ResolveFunctionParameters(pa, parameterAssignment, functionType.Obj(), argTypes, boundedAnys);
-
 							// fill freeTypeSymbols with all template arguments
 							// fill taContext will knows arguments
 							for (vint i = 0; i < gfi.spec->arguments.Count(); i++)
@@ -591,6 +584,12 @@ namespace symbol_type_resolving
 									taContext.arguments.Add(pattern, functionItem.tsys->GetParam(i));
 								}
 							}
+
+							// cannot pass Ptr<FunctionType> to this function since the last filled argument could be variadic
+							// known variadic function argument should be treated as separated arguments
+							// ParsingArguments need to be adjusted so that we can evaluate each parameter type
+							auto inferPa = pa.AdjustForDecl(gfi.declSymbol, gfi.parentDeclType, false);
+							ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, functionType.Obj(), argTypes, boundedAnys);
 
 							// type inferencing
 							List<Ptr<TemplateArgumentContext>> inferredArgumentTypes;

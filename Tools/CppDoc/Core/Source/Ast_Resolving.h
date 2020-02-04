@@ -137,6 +137,8 @@ namespace symbol_type_resolving
 	extern void									ResolveFunctionParameters(
 													const ParsingArguments& invokerPa,
 													TypeTsysList& parameterAssignment,
+													const TemplateArgumentContext& knownArguments,
+													const SortedList<Symbol*>& argumentSymbols,
 													FunctionType* functionType,
 													Array<ExprTsysItem>& argumentTypes,
 													SortedList<vint>& boundedAnys

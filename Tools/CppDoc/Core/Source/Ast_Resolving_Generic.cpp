@@ -615,11 +615,13 @@ namespace symbol_type_resolving
 	}
 
 	void ResolveFunctionParameters(
-		const ParsingArguments& invokerPa,			// context
-		TypeTsysList& parameterAssignment,			// store function argument to offered argument map, nullptr indicates the default value is applied
-		FunctionType* functionType,					// argument information
-		Array<ExprTsysItem>& argumentTypes,			// (index of unpacked)		offered argument (unpacked)
-		SortedList<vint>& boundedAnys				// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
+		const ParsingArguments& invokerPa,				// context
+		TypeTsysList& parameterAssignment,				// store function argument to offered argument map, nullptr indicates the default value is applied
+		const TemplateArgumentContext& knownArguments,	// all assigned template arguments
+		const SortedList<Symbol*>& argumentSymbols,		// symbols of all template arguments
+		FunctionType* functionType,						// argument information
+		Array<ExprTsysItem>& argumentTypes,				// (index of unpacked)		offered argument (unpacked)
+		SortedList<vint>& boundedAnys					// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
 	)
 	{
 		// calculate how to assign offered arguments to function arguments
