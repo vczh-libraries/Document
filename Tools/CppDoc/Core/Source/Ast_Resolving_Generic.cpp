@@ -188,6 +188,7 @@ namespace symbol_type_resolving
 		vint offset,									// offset to use with boundedAnys
 		bool allowPartialApply,							// true means it is legal to not offer enough amount of arguments
 		vint templateArgumentCount,						// number of template argument
+		Array<vint>& knownPackSizes,					// pack size of all template arguments, -1 for unknown, empty array to ignore
 		TIsVta&& argIsVat,								// test if a template argument is variadic
 		THasDefault&& argHasDefault						// test if a template argument has a default value
 	)
@@ -426,7 +427,8 @@ namespace symbol_type_resolving
 		// gpaMappings will contains decisions for every template arguments
 		// if there are not enough offered arguments, only the first few templates are assigned decisions
 		GpaList gpaMappings;
-		CalculateGpa(gpaMappings, inputArgumentCount, boundedAnys, offset, allowPartialApply, spec->arguments.Count(),
+		Array<vint> knownPackSizes;
+		CalculateGpa(gpaMappings, inputArgumentCount, boundedAnys, offset, allowPartialApply, spec->arguments.Count(), knownPackSizes,
 			[&spec](vint index) { return spec->arguments[index].ellipsis; },
 			[&spec](vint index) { auto argument = spec->arguments[index]; return argument.argumentType == CppTemplateArgumentType::Value ? argument.expr : argument.type; }
 			);
@@ -663,6 +665,16 @@ namespace symbol_type_resolving
 						}
 					}
 				});
+
+				if (conflicted)
+				{
+					// all assigned variadic template arguments that are used in a function parameter should have the same pack size
+					throw TypeCheckerException();
+				}
+				else
+				{
+					knownPackSizes[i] = packSize;
+				}
 			}
 			else
 			{
@@ -673,7 +685,7 @@ namespace symbol_type_resolving
 		// calculate how to assign offered arguments to function arguments
 		// gpaMappings will contains decisions for every template arguments
 		GpaList gpaMappings;
-		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, false, passedParameterCount,
+		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, false, passedParameterCount, knownPackSizes,
 			[functionType](vint index) { return index == functionType->parameters.Count() ? functionType->ellipsis : functionType->parameters[index].isVariadic; },
 			[functionType](vint index) { return index == functionType->parameters.Count() ? false : (bool)functionType->parameters[index].item->initializer; }
 		);
@@ -696,8 +708,9 @@ namespace symbol_type_resolving
 		// gpaMappings will contains decisions for every template arguments
 		vint genericParameterCount = genericType->arguments.Count();
 		GpaList gpaMappings;
+		Array<vint> knownPackSizes;
 		// set allowPartialApply to true because, arguments of genericType could be incomplete, but argumentTypes are always complete because it comes from a ITsys*
-		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, true, genericParameterCount + 1,
+		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, true, genericParameterCount + 1, knownPackSizes,
 			[genericType](vint index) { return index == genericType->arguments.Count() ? true : genericType->arguments[index].isVariadic; },
 			[](vint index) { return false; }
 		);
