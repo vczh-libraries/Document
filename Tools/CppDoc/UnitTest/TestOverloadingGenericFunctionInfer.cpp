@@ -165,7 +165,6 @@ TEST_FILE
 		AssertExpr(pa, L"Simple2",				L"Simple2",					L"<::Simple2::[T]> ::Simple2::[T] __cdecl(::Simple2::[T], ::Simple2::[T]) * $PR", L"void __cdecl(...) * $PR");
 		AssertExpr(pa, L"Simple2<>",			L"Simple2<>",				L"<::Simple2::[T]> ::Simple2::[T] __cdecl(::Simple2::[T], ::Simple2::[T]) * $PR");
 		AssertExpr(pa, L"Simple2<bool>",		L"Simple2<bool>",			L"bool __cdecl(bool, bool) * $PR");
-		// test value argument
 	});
 
 	TEST_CATEGORY(L"Partially apply template arguments (variant)")
@@ -299,7 +298,6 @@ TEST_FILE
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1, 2.0),				void);
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1.0, 2.f),			void);
 		ASSERT_OVERLOADING_SIMPLE(Simple2(1.f, 2),				void);
-		// test 0, 1 template arguments
 	});
 
 	TEST_CATEGORY(L"Template argument deduction (variant)")
@@ -330,15 +328,12 @@ TEST_FILE
 			L"::Types<{__int32 * $PR, double * $PR, float * $PR, bool & $PR, char & $PR, wchar_t & $PR}> $PR",
 			Types<int*, double*, float*, bool&, char&, wchar_t&>
 		);
-		// when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
 	});
 
 	TEST_CATEGORY(L"Template argument deduction (kinds)")
 	{
 		using namespace Input__TestOverloadingGenericFunction_TypeInferKinds;
 		COMPILE_PROGRAM(program, pa, input);
-
-		// test 0, 1, 2, 3 arguments
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(LRef(Value<bool &>()),									L"::Types<{bool $PR}> $PR",								Types<bool>);
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(LRef(Value<bool const &>()),							L"::Types<{bool const $PR}> $PR",						Types<bool const>);
@@ -544,6 +539,7 @@ TEST_FILE
 		);
 	});
 
+	// when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
 	// test known/unknown variadic arguments/parameters
 	// test generic methods		(TestOverloadingGenericMethodInfer.cpp)
 	// test generic operators	(TestOverloadingGenericMethodInfer.cpp)
