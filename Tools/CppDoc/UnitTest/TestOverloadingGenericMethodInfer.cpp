@@ -21,6 +21,13 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_VERBOSE(
+			(MakeTuple<>() << 1),
+			L"((MakeTuple<>() << 1))",
+			L"::Tuple<{__int32 $PR}> $PR",
+			MakeTuple<int>
+		);
+
+		ASSERT_OVERLOADING_VERBOSE(
 			(MakeTuple<>() << 1 << 1. << 1.f << 'x' << L'x' << true),
 			L"(((((((MakeTuple<>() << 1) << 1.) << 1.f) << 'x') << L'x') << true))",
 			L"::Tuple<{__int32 $PR, double $PR, float $PR, char $PR, wchar_t $PR, bool $PR}> $PR",
