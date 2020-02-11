@@ -886,7 +886,7 @@ Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, const ParsingExprArguments
 		{
 			binaryStack[binaryStack.Count() - 1]->right = newExpr;
 		}
-		binaryStack.Add(newExpr);
+		popped = newExpr;
 	}
 	return binaryStack.Count() > 0 ? Ptr<Expr>(binaryStack[0]) : popped;
 }
