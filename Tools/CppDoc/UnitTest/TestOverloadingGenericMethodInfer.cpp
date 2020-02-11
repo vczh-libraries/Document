@@ -23,15 +23,19 @@ TEST_FILE
 		ASSERT_OVERLOADING_VERBOSE(
 			(MakeTuple<>() << 1),
 			L"((MakeTuple<>() << 1))",
-			L"::Tuple<{__int32 $PR}> $PR",
+			L"::MakeTuple<{__int32 $PR}> $PR",
 			MakeTuple<int>
 		);
 
 		ASSERT_OVERLOADING_VERBOSE(
 			(MakeTuple<>() << 1 << 1. << 1.f << 'x' << L'x' << true),
 			L"(((((((MakeTuple<>() << 1) << 1.) << 1.f) << 'x') << L'x') << true))",
-			L"::Tuple<{__int32 $PR, double $PR, float $PR, char $PR, wchar_t $PR, bool $PR}> $PR",
+			L"::MakeTuple<{__int32 $PR, double $PR, float $PR, char $PR, wchar_t $PR, bool $PR}> $PR",
 			MakeTuple<int, double, float, char, wchar_t, bool>
 		);
 	});
+
+	// test methods/operators
+	// use multiple levels of type arguments in function arguments
+	// call methods/operators on "this"
 }

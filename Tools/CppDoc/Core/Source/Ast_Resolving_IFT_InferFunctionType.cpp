@@ -566,7 +566,8 @@ namespace symbol_type_resolving
 							// cannot pass Ptr<FunctionType> to this function since the last filled argument could be variadic
 							// known variadic function argument should be treated as separated arguments
 							// ParsingArguments need to be adjusted so that we can evaluate each parameter type
-							auto inferPa = pa.AdjustForDecl(gfi.declSymbol, gfi.parentDeclType, false);
+							auto inferPa = pa.AdjustForDecl(gfi.declSymbol);
+							inferPa.parentDeclType = ParsingArguments::AdjustDeclInstantForScope(gfi.declSymbol, gfi.parentDeclType, true);
 							ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, functionType.Obj(), argTypes, boundedAnys);
 
 							// type inferencing

@@ -541,7 +541,5 @@ TEST_FILE
 
 	// when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
 	// test known/unknown variadic arguments/parameters
-	// test generic methods		(TestOverloadingGenericMethodInfer.cpp)
-	// test generic operators	(TestOverloadingGenericMethodInfer.cpp)
 	// test overloading			(TestOverloadingGenericFunction.cpp)
 }
