@@ -7,25 +7,32 @@ namespace Input__TestOverloadingGenericFunction_Method
 		template<typename... Ts>
 		struct MakeTuple
 		{
-			MakeTuple<int, Ts...> operator++();
+			MakeTuple<int, Ts...> operator++() { return {}; }
 
-			MakeTuple<Ts..., double> operator++(int);
-
-			template<typename T>
-			MakeTuple<Ts..., T> operator<<(T);
+			MakeTuple<Ts..., double> operator++(int) { return {}; }
 
 			template<typename T>
-			MakeTuple<Ts..., T> operator[](T);
+			MakeTuple<Ts..., T> operator<<(T) { return {}; }
+
+			template<typename T>
+			MakeTuple<Ts..., T> operator[](T) { return {}; }
 
 			template<typename... Us>
-			MakeTuple<Ts..., Us...> operator+(MakeTuple<Us...>);
+			MakeTuple<Ts..., Us...> operator+(MakeTuple<Us...>) { return {}; }
+
+			template<typename... Us>
+			MakeTuple<Ts..., Us...> With(MakeTuple<Us...>) { return {}; }
 		};
+
+		auto mt1 = MakeTuple<>()['a'][true][1.0];
+		auto mt2 = ++++++MakeTuple<>();
+		auto pt1 = &mt1;
 	);
 }
 
 TEST_FILE
 {
-	TEST_CATEGORY(L"Generic methods (simple)")
+	TEST_CATEGORY(L"Generic operators")
 	{
 		using namespace Input__TestOverloadingGenericFunction_Method;
 		COMPILE_PROGRAM(program, pa, input);
@@ -93,8 +100,36 @@ TEST_FILE
 			MakeTuple<char, bool, double, int, int, int>
 		);
 	});
+	TEST_CATEGORY(L"Generic methods")
+	{
+		using namespace Input__TestOverloadingGenericFunction_Method;
+		COMPILE_PROGRAM(program, pa, input);
 
-	// test methods
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			mt1.With(mt2),
+			L"::MakeTuple<{char $PR, bool $PR, double $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
+			MakeTuple<char, bool, double, int, int, int>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			pt1->With(mt2),
+			L"::MakeTuple<{char $PR, bool $PR, double $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
+			MakeTuple<char, bool, double, int, int, int>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			mt1.operator +(mt2),
+			L"::MakeTuple<{char $PR, bool $PR, double $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
+			MakeTuple<char, bool, double, int, int, int>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			pt1->operator +(mt2),
+			L"::MakeTuple<{char $PR, bool $PR, double $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
+			MakeTuple<char, bool, double, int, int, int>
+		);
+	});
+
 	// test nullptr
 	// use multiple levels of type arguments in function arguments
 	// call methods/operators on "this"
