@@ -95,6 +95,7 @@ TEST_FILE
 	});
 
 	// test methods
+	// test nullptr
 	// use multiple levels of type arguments in function arguments
 	// call methods/operators on "this"
 }
