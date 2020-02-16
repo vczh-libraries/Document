@@ -9,7 +9,7 @@ namespace Input__TestOverloadingGenericFunction_Method
 		{
 			MakeTuple<int, Ts...> operator++();
 
-			MakeTuple<Ts..., int> operator++(int);
+			MakeTuple<Ts..., double> operator++(int);
 
 			template<typename T>
 			MakeTuple<Ts..., T> operator<<(T);
@@ -47,15 +47,15 @@ TEST_FILE
 		ASSERT_OVERLOADING_VERBOSE(
 			(MakeTuple<>()++),
 			L"((MakeTuple<>() ++))",
-			L"::MakeTuple<{__int32 $PR}> $PR",
-			MakeTuple<int>
+			L"::MakeTuple<{double $PR}> $PR",
+			MakeTuple<double>
 		);
 
 		ASSERT_OVERLOADING_VERBOSE(
 			(MakeTuple<>()++++++),
 			L"((((MakeTuple<>() ++) ++) ++))",
-			L"::MakeTuple<{__int32 $PR, __int32 $PR, __int32 $PR}> $PR",
-			MakeTuple<int, int, int>
+			L"::MakeTuple<{double $PR, double $PR, double $PR}> $PR",
+			MakeTuple<double, double, double>
 		);
 
 		ASSERT_OVERLOADING_VERBOSE(

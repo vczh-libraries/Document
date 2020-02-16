@@ -276,6 +276,10 @@ namespace symbol_type_resolving
 					TsysCV refCV;
 					TsysRefType refType;
 					auto entity = exactMatch ? offeredType : offeredType->GetEntity(refCV, refType);
+					if (entity->GetType() == TsysType::Zero)
+					{
+						entity = pa.tsys->Int();
+					}
 					SetInferredResult(outputContext, pattern, entity);
 				}
 				break;
