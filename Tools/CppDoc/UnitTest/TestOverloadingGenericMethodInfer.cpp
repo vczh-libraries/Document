@@ -100,6 +100,7 @@ TEST_FILE
 			MakeTuple<char, bool, double, int, int, int>
 		);
 	});
+
 	TEST_CATEGORY(L"Generic methods")
 	{
 		using namespace Input__TestOverloadingGenericFunction_Method;
@@ -130,7 +131,6 @@ TEST_FILE
 		);
 	});
 
-	// test nullptr
 	// use multiple levels of type arguments in function arguments
 	// call methods/operators on "this"
 }
