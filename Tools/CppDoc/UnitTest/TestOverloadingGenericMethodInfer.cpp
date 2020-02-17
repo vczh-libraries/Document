@@ -22,6 +22,9 @@ namespace Input__TestOverloadingGenericFunction_Method
 
 			template<typename... Us>
 			MakeTuple<Ts..., Us...> With(MakeTuple<Us...>) { return {}; }
+
+			template<typename... Us>
+			MakeTuple<Us...> ExtractFrom(MakeTuple<Ts..., Us...>) { return {}; }
 		};
 
 		template<typename T, typename... Ts>
@@ -34,14 +37,17 @@ namespace Input__TestOverloadingGenericFunction_Method
 
 			template<typename U, typename... Us>
 			auto With(MakeTuple2<U, Us...> mt2) { return mt1.With(mt2.mt1); }
+
+			template<typename... Us>
+			auto ExtractFrom(MakeTuple2<T, Ts..., Us...> mt2) { return mt1.ExtractFrom(mt2.mt1); }
 		};
 
 		auto mt1 = MakeTuple<>()['a'][true][1.0];
 		auto mt2 = ++++++MakeTuple<>();
 		auto pt1 = &mt1;
 
-		auto _mt1 = MakeTuple<>()['a'][true][1.0];
-		auto _mt2 = ++++++MakeTuple<>();
+		auto _mt1 = MakeTuple2<char, bool, double>();
+		auto _mt2 = MakeTuple2<int, int, int>();
 		auto _pt1 = &_mt1;
 	);
 }
@@ -145,6 +151,18 @@ TEST_FILE
 			L"::MakeTuple<{char $PR, bool $PR, double $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
 			MakeTuple<char, bool, double, int, int, int>
 		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			mt1.ExtractFrom(MakeTuple<char, bool, double, int, float, void>()),
+			L"::MakeTuple<{__int32 $PR, float $PR, void $PR}> $PR",
+			MakeTuple<int, float, void>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			pt1->ExtractFrom(MakeTuple<char, bool, double, int, float, void>()),
+			L"::MakeTuple<{__int32 $PR, float $PR, void $PR}> $PR",
+			MakeTuple<int, float, void>
+		);
 	});
 
 	TEST_CATEGORY(L"Generic this")
@@ -170,7 +188,17 @@ TEST_FILE
 			L"::MakeTuple<{char $PR, bool $PR, double $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
 			MakeTuple<char, bool, double, int, int, int>
 		);
-	});
 
-	// TODO: use multiple levels of type arguments in function arguments
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			_mt1.ExtractFrom(MakeTuple2<char, bool, double, int, float, void>()),
+			L"::MakeTuple<{__int32 $PR, float $PR, void $PR}> $PR",
+			MakeTuple<int, float, void>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			_pt1->ExtractFrom(MakeTuple2<char, bool, double, int, float, void>()),
+			L"::MakeTuple<{__int32 $PR, float $PR, void $PR}> $PR",
+			MakeTuple<int, float, void>
+		);
+	});
 }
