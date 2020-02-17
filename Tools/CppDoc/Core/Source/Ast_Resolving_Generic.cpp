@@ -613,6 +613,21 @@ namespace symbol_type_resolving
 		}
 	}
 
+	// adjust pa so that taContext of parentDeclType is used accordingly
+	// this adjustment is only valid for following functions
+	// because only tsys and TryGetReplacedGenericArg is used
+	ParsingArguments AdjustPaForCollecting(const ParsingArguments& pa)
+	{
+		auto invokerPa = pa;
+		if (!pa.taContext && pa.parentDeclType)
+		{
+			auto& di = pa.parentDeclType->GetDeclInstant();
+			invokerPa.parentDeclType = di.parentDeclType;
+			invokerPa.taContext = di.taContext.Obj();
+		}
+		return invokerPa;
+	}
+
 	void ResolveFunctionParameters(
 		const ParsingArguments& invokerPa,				// context
 		TypeTsysList& parameterAssignment,				// store function argument to offered argument map, nullptr indicates the default value is applied
@@ -623,6 +638,8 @@ namespace symbol_type_resolving
 		SortedList<vint>& boundedAnys					// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
 	)
 	{
+		auto adjustedPa = AdjustPaForCollecting(invokerPa);
+
 		vint functionParameterCount = functionType->parameters.Count();
 		vint passedParameterCount = functionParameterCount + (functionType->ellipsis ? 1 : 0);
 		Array<vint> knownPackSizes(passedParameterCount);
@@ -639,8 +656,8 @@ namespace symbol_type_resolving
 			{
 				SortedList<Type*> involvedTypes;
 				SortedList<Expr*> involvedExprs;
-				CollectFreeTypes(invokerPa, true, parameter.item->type, nullptr, false, argumentSymbols, involvedTypes, involvedExprs);
-				knownPackSizes[i] = CalculateParameterPackSize(invokerPa, knownArguments, involvedTypes, involvedExprs);
+				CollectFreeTypes(adjustedPa, true, parameter.item->type, nullptr, false, argumentSymbols, involvedTypes, involvedExprs);
+				knownPackSizes[i] = CalculateParameterPackSize(adjustedPa, knownArguments, involvedTypes, involvedExprs);
 			}
 			else
 			{
@@ -655,7 +672,7 @@ namespace symbol_type_resolving
 			[functionType](vint index) { return index == functionType->parameters.Count() ? functionType->ellipsis : functionType->parameters[index].isVariadic; },
 			[functionType](vint index) { return index == functionType->parameters.Count() ? false : (bool)functionType->parameters[index].item->initializer; }
 		);
-		AssignParameterAssignment(invokerPa, functionParameterCount, parameterAssignment, gpaMappings, argumentTypes);
+		AssignParameterAssignment(adjustedPa, functionParameterCount, parameterAssignment, gpaMappings, argumentTypes);
 	}
 
 	void ResolveGenericTypeParameters(
@@ -668,6 +685,8 @@ namespace symbol_type_resolving
 		SortedList<vint>& boundedAnys					// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
 	)
 	{
+		auto adjustedPa = AdjustPaForCollecting(invokerPa);
+
 		vint genericParameterCount = genericType->arguments.Count();
 		vint passedParameterCount = genericParameterCount + 1;
 		Array<vint> knownPackSizes(passedParameterCount);
@@ -684,8 +703,8 @@ namespace symbol_type_resolving
 			{
 				SortedList<Type*> involvedTypes;
 				SortedList<Expr*> involvedExprs;
-				CollectFreeTypes(invokerPa, true, argument.item.type, argument.item.expr, false, argumentSymbols, involvedTypes, involvedExprs);
-				knownPackSizes[i] = CalculateParameterPackSize(invokerPa, knownArguments, involvedTypes, involvedExprs);
+				CollectFreeTypes(adjustedPa, true, argument.item.type, argument.item.expr, false, argumentSymbols, involvedTypes, involvedExprs);
+				knownPackSizes[i] = CalculateParameterPackSize(adjustedPa, knownArguments, involvedTypes, involvedExprs);
 			}
 			else
 			{
@@ -701,6 +720,6 @@ namespace symbol_type_resolving
 			[genericType](vint index) { return index == genericType->arguments.Count() ? true : genericType->arguments[index].isVariadic; },
 			[](vint index) { return false; }
 		);
-		AssignParameterAssignment(invokerPa, genericParameterCount, parameterAssignment, gpaMappings, argumentTypes);
+		AssignParameterAssignment(adjustedPa, genericParameterCount, parameterAssignment, gpaMappings, argumentTypes);
 	}
 }

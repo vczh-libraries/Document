@@ -149,7 +149,12 @@ namespace symbol_type_resolving
 					case symbol_component::SymbolKind::GenericTypeArgument:
 					case symbol_component::SymbolKind::GenericValueArgument:
 						{
-							auto pattern = EvaluateGenericArgumentSymbol(symbol);
+							// consistent with GetTemplateArgumentKey
+							auto pattern = symbol->kind ==
+								symbol_component::SymbolKind::GenericTypeArgument
+								? EvaluateGenericArgumentSymbol(symbol)
+								: pa.tsys->DeclOf(symbol)
+								;
 							ITsys* patternValue = nullptr;
 							if (pa.TryGetReplacedGenericArg(pattern, patternValue))
 							{
@@ -229,14 +234,7 @@ namespace symbol_type_resolving
 		SortedList<Expr*>& involvedExprs
 	)
 	{
-		ParsingArguments invokerPa = pa;
-		if (!pa.taContext && pa.parentDeclType)
-		{
-			auto& di = pa.parentDeclType->GetDeclInstant();
-			invokerPa.parentDeclType = di.parentDeclType;
-			invokerPa.taContext = di.taContext.Obj();
-		}
-		CollectFreeTypesVisitor visitor(invokerPa, includeParentDeclArguments, insideVariant, freeTypeSymbols, involvedTypes, involvedExprs);
+		CollectFreeTypesVisitor visitor(pa, includeParentDeclArguments, insideVariant, freeTypeSymbols, involvedTypes, involvedExprs);
 		if (type) type->Accept(&visitor);
 		visitor.Execute(expr);
 	}
