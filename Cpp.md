@@ -30,6 +30,12 @@
   - [ ] Call a function with some or all template arguments unspecified.
     - [ ] When the first variadic template argument of a function is {}, it could be treated as "to be inferred", if function arguments suggest so.
     - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`
+    - [ ] Failed test case
+      - `mt2` is not correctly evalated under context `MakeTuple2<char, bool double>::operator+<int, int, int>`. It returns `MakeTuple2<any_t>`.
+        - Suspect that `GetPaFromInvokerPa` called from `EvaluateVarSymbol` does not set `taContext` and `parentDeclType` correctly
+        - Because `newPa.taContext` is `declSymbol`'s parent, but it try to find a parent of `newPa.taContext` that is `declSymbol`, which should fail
+        - We need to iterate `declSymbol`'s parent as well
+        - Find all places that we iterate `taContext` but not `anySymbol`
   - [ ] Full Specialization
     - [ ] Connect functions with forward declarations.
       - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
