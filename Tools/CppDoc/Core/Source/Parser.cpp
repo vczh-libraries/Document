@@ -837,6 +837,9 @@ bool ParsingArguments::TryGetReplacedGenericArg(ITsys* arg, ITsys*& result)const
 
 TemplateArgumentContext* ParsingArguments::AdjustTaContextForScope(Symbol* scopeSymbol, TemplateArgumentContext* taContext)
 {
+	if (!taContext) return nullptr;
+
+	// search the nearest scope associated with a TemplateSpec
 	auto scopeWithTemplateSpec = scopeSymbol;
 	while (scopeWithTemplateSpec)
 	{
@@ -847,16 +850,31 @@ TemplateArgumentContext* ParsingArguments::AdjustTaContextForScope(Symbol* scope
 		scopeWithTemplateSpec = scopeWithTemplateSpec->GetParentScope();
 	}
 
-	if (!scopeWithTemplateSpec)
-	{
-		return nullptr;
-	}
+	if (!scopeWithTemplateSpec) return nullptr;
 
-	while (taContext && taContext->symbolToApply != scopeWithTemplateSpec)
 	{
-		taContext = taContext->parent;
+		// try to confirm taContext->symbolApply is a direct or indirect parent scope of scopeWithTemplateSpec
+		auto loopingScope = scopeWithTemplateSpec;
+		while (loopingScope && taContext->symbolToApply != loopingScope)
+		{
+			loopingScope = loopingScope->GetParentScope();
+		}
+
+		// in this case, taContext is just fine
+		if (loopingScope) return taContext;
 	}
-	return taContext;
+	{
+		// try to confirm scopeWithTemplateSpec is a direct or indirect parent scope of taContext
+		auto loopingTaContext = taContext;
+		while (loopingTaContext && loopingTaContext->symbolToApply != scopeWithTemplateSpec)
+		{
+			loopingTaContext = loopingTaContext->parent;
+		}
+
+		// in this case, we find the correct taContext
+		return loopingTaContext;
+	}
+	return nullptr;
 }
 
 ITsys* ParsingArguments::AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* parentDeclType, bool returnTypeOfScope)
@@ -885,7 +903,7 @@ ITsys* ParsingArguments::AdjustDeclInstantForScope(Symbol* scopeSymbol, ITsys* p
 		const auto& di = parentDeclType->GetDeclInstant();
 		if (di.declSymbol == scopeWithTemplateClass)
 		{
-			if (!returnTypeOfScope)
+			if (!returnTypeOfScope && scopeWithTemplateClass == scopeSymbol)
 			{
 				parentDeclType = di.parentDeclType;
 			}
