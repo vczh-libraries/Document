@@ -24,16 +24,16 @@ namespace Input__TestOverloadingGenericFunction_Method
 			MakeTuple<Ts..., Us...> With(MakeTuple<Us...>) { return {}; }
 		};
 
-		template<typename... Ts>
+		template<typename T, typename... Ts>
 		struct MakeTuple2
 		{
-			MakeTuple<Ts...> mt1;
+			MakeTuple<T, Ts...> mt1;
 
 			template<typename... Us>
 			auto operator+(MakeTuple2<Us...> mt2) { return mt1 + mt2.mt1; }
 
-			template<typename... Us>
-			auto With(MakeTuple2<Us...> mt2) { return mt1.With(mt2.mt1); }
+			template<typename U, typename... Us>
+			auto With(MakeTuple2<U, Us...> mt2) { return mt1.With(mt2.mt1); }
 		};
 
 		auto mt1 = MakeTuple<>()['a'][true][1.0];

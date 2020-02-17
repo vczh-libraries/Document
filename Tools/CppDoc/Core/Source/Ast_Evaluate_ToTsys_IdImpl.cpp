@@ -58,6 +58,12 @@ namespace symbol_totsys_impl
 						case TsysType::Any:
 							AddTsysToResult(result, replacedType);
 							break;
+						case TsysType::GenericArg:
+							if (argumentKey == replacedType)
+							{
+								AddTsysToResult(result, pa.tsys->Any());
+								break;
+							}
 						default:
 							throw TypeCheckerException();
 						}

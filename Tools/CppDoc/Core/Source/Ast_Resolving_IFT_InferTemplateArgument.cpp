@@ -342,7 +342,7 @@ namespace symbol_type_resolving
 
 				if (!entity->GetDeclInstant().taContext)
 				{
-					// TODO: remove this constraint in the future, it is allowed to be empty for type of *this
+					// this should not happen, even *this will have taContext filled with arguments itselves
 					throw TypeCheckerException();
 				}
 			}
