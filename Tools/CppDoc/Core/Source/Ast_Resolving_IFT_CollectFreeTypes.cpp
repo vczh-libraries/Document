@@ -11,13 +11,17 @@ namespace symbol_type_resolving
 	{
 	public:
 		bool								involved = false;
+		const ParsingArguments&				pa;
+		bool								includeParentDeclArguments;
 		bool								insideVariant;
 		const SortedList<Symbol*>&			freeTypeSymbols;
 		SortedList<Type*>&					involvedTypes;
 		SortedList<Expr*>&					involvedExprs;
 
-		CollectFreeTypesVisitor(bool _insideVariant, const SortedList<Symbol*>& _freeTypeSymbols, SortedList<Type*>& _involvedTypes, SortedList<Expr*>& _involvedExprs)
-			:insideVariant(_insideVariant)
+		CollectFreeTypesVisitor(const ParsingArguments& _pa, bool _includeParentDeclArguments, bool _insideVariant, const SortedList<Symbol*>& _freeTypeSymbols, SortedList<Type*>& _involvedTypes, SortedList<Expr*>& _involvedExprs)
+			:pa(_pa)
+			, includeParentDeclArguments(_includeParentDeclArguments)
+			, insideVariant(_insideVariant)
 			, freeTypeSymbols(_freeTypeSymbols)
 			, involvedTypes(_involvedTypes)
 			, involvedExprs(_involvedExprs)
@@ -138,6 +142,24 @@ namespace symbol_type_resolving
 					involved = true;
 					involvedTypes.Add(self);
 				}
+				else if(includeParentDeclArguments)
+				{
+					switch (symbol->kind)
+					{
+					case symbol_component::SymbolKind::GenericTypeArgument:
+					case symbol_component::SymbolKind::GenericValueArgument:
+						{
+							auto pattern = EvaluateGenericArgumentSymbol(symbol);
+							ITsys* patternValue = nullptr;
+							if (pa.TryGetReplacedGenericArg(pattern, patternValue))
+							{
+								involved = true;
+								involvedTypes.Add(self);
+							}
+						}
+						break;
+					}
+				}
 			}
 		}
 
@@ -196,9 +218,25 @@ namespace symbol_type_resolving
 		}
 	};
 
-	void CollectFreeTypes(Ptr<Type> type, Ptr<Expr> expr, bool insideVariant, const SortedList<Symbol*>& freeTypeSymbols, SortedList<Type*>& involvedTypes, SortedList<Expr*>& involvedExprs)
+	void CollectFreeTypes(
+		const ParsingArguments& pa,
+		bool includeParentDeclArguments,
+		Ptr<Type> type,
+		Ptr<Expr> expr,
+		bool insideVariant,
+		const SortedList<Symbol*>& freeTypeSymbols,
+		SortedList<Type*>& involvedTypes,
+		SortedList<Expr*>& involvedExprs
+	)
 	{
-		CollectFreeTypesVisitor visitor(insideVariant, freeTypeSymbols, involvedTypes, involvedExprs);
+		ParsingArguments invokerPa = pa;
+		if (!pa.taContext && pa.parentDeclType)
+		{
+			auto& di = pa.parentDeclType->GetDeclInstant();
+			invokerPa.parentDeclType = di.parentDeclType;
+			invokerPa.taContext = di.taContext.Obj();
+		}
+		CollectFreeTypesVisitor visitor(invokerPa, includeParentDeclArguments, insideVariant, freeTypeSymbols, involvedTypes, involvedExprs);
 		if (type) type->Accept(&visitor);
 		visitor.Execute(expr);
 	}

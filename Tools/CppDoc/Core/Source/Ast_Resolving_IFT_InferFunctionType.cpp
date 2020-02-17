@@ -87,7 +87,7 @@ namespace symbol_type_resolving
 	{
 		SortedList<Type*> involvedTypes;
 		SortedList<Expr*> involvedExprs;
-		CollectFreeTypes(typeToInfer, exprToInfer, isVariadic, freeTypeSymbols, involvedTypes, involvedExprs);
+		CollectFreeTypes(pa, false, typeToInfer, exprToInfer, isVariadic, freeTypeSymbols, involvedTypes, involvedExprs);
 
 		// get all affected arguments
 		TypeTsysList vas;

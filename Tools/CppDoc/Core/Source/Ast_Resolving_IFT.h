@@ -9,6 +9,8 @@ namespace symbol_type_resolving
 	extern Symbol*		TemplateArgumentPatternToSymbol(ITsys* tsys);
 
 	extern void			CollectFreeTypes(
+							const ParsingArguments& pa,
+							bool includeParentDeclArguments,
 							Ptr<Type> type,
 							Ptr<Expr> expr,
 							bool insideVariant,
@@ -36,7 +38,7 @@ namespace symbol_type_resolving
 	extern void			InferTemplateArgumentsForGenericType(
 							const ParsingArguments& pa,
 							GenericType* genericType,
-		TypeTsysList& parameterAssignment,
+							TypeTsysList& parameterAssignment,
 							TemplateArgumentContext& taContext,
 							TemplateArgumentContext& variadicContext,
 							const SortedList<Symbol*>& freeTypeSymbols);
