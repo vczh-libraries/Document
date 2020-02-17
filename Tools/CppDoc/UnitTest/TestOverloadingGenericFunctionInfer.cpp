@@ -539,7 +539,7 @@ TEST_FILE
 		);
 	});
 
-	// when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
-	// test known/unknown variadic arguments/parameters
-	// test overloading			(TestOverloadingGenericFunction.cpp)
+	// TODO: when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
+	// TODO: test known/unknown variadic arguments/parameters
+	// TODO: test overloading			(TestOverloadingGenericFunction.cpp)
 }

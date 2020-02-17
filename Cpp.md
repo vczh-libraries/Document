@@ -41,6 +41,8 @@
     - [ ] `expr->Accept` should have 3 links.
   - [ ] Show progress while parsing cases.
 - [ ] More `template` on value aliases (partial specialization)
+  - [ ] Calculate partial-ordering on specializations.
+  - [ ] Return results from more specific specializations if f(pattern) is matched with any_t.
 - [ ] More `template` on classes (partial specialization).
   - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
   - [ ] Connect methods with forward declarations inside multiple levels of template classes.
