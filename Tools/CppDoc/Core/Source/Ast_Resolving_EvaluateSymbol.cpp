@@ -382,7 +382,17 @@ namespace symbol_type_resolving
 
 					if (eval.evaluatedTypes.Count() == 0)
 					{
-						eval.evaluatedTypes.Add(eval.declPa.tsys->Void());
+						TypeTsysList processedReturnTypes;
+						processedReturnTypes.Add(eval.declPa.tsys->Void());
+
+						TypeToTsysAndReplaceFunctionReturnType(
+							invokerPa,
+							funcDecl->type,
+							processedReturnTypes,
+							eval.evaluatedTypes,
+							IsMemberFunction(funcDecl)
+						);
+
 						return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, argumentsToApply);
 					}
 					else
