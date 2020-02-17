@@ -24,9 +24,25 @@ namespace Input__TestOverloadingGenericFunction_Method
 			MakeTuple<Ts..., Us...> With(MakeTuple<Us...>) { return {}; }
 		};
 
+		template<typename... Ts>
+		struct MakeTuple2
+		{
+			MakeTuple<Ts...> mt1;
+
+			template<typename... Us>
+			auto operator+(MakeTuple2<Us...> mt2) { return mt1 + mt2.mt1; }
+
+			template<typename... Us>
+			auto With(MakeTuple2<Us...> mt2) { return mt1.With(mt2.mt1); }
+		};
+
 		auto mt1 = MakeTuple<>()['a'][true][1.0];
 		auto mt2 = ++++++MakeTuple<>();
 		auto pt1 = &mt1;
+
+		auto _mt1 = MakeTuple<>()['a'][true][1.0];
+		auto _mt2 = ++++++MakeTuple<>();
+		auto _pt1 = &_mt1;
 	);
 }
 
@@ -131,6 +147,30 @@ TEST_FILE
 		);
 	});
 
+	TEST_CATEGORY(L"Generic this")
+	{
+		using namespace Input__TestOverloadingGenericFunction_Method;
+		COMPILE_PROGRAM(program, pa, input);
+
+		ASSERT_OVERLOADING_VERBOSE(
+			_mt1 + _mt2,
+			L"(_mt1 + _mt2)",
+			L"::MakeTuple<{char $PR, bool $PR, double $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
+			MakeTuple<char, bool, double, int, int, int>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			_mt1.With(_mt2),
+			L"::MakeTuple<{char $PR, bool $PR, double $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
+			MakeTuple<char, bool, double, int, int, int>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			_pt1->With(_mt2),
+			L"::MakeTuple<{char $PR, bool $PR, double $PR, __int32 $PR, __int32 $PR, __int32 $PR}> $PR",
+			MakeTuple<char, bool, double, int, int, int>
+		);
+	});
+
 	// use multiple levels of type arguments in function arguments
-	// call methods/operators on "this"
 }
