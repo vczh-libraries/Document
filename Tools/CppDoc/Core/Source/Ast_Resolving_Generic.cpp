@@ -600,11 +600,19 @@ namespace symbol_type_resolving
 	{
 		vint packSize = -1;
 		bool conflicted = false;
-		CollectInvolvedVariadicArguments(invokerPa, involvedTypes, involvedExprs, [&packSize, &conflicted, &knownArguments](Symbol*, ITsys* pattern)
+		CollectInvolvedVariadicArguments(invokerPa, involvedTypes, involvedExprs, [&invokerPa, &packSize, &conflicted, &knownArguments](Symbol*, ITsys* pattern)
 		{
 			vint index = knownArguments.arguments.Keys().IndexOf(pattern);
-			if (index == -1) return;
-			auto pack = knownArguments.arguments.Values()[index];
+			ITsys* pack = nullptr;
+			if (index != -1)
+			{
+				pack = knownArguments.arguments.Values()[index];
+			}
+			else
+			{
+				invokerPa.TryGetReplacedGenericArg(pattern, pack);
+			}
+
 			if (pack && pack->GetType() == TsysType::Init)
 			{
 				vint newPackSize = pack->GetParamCount();
