@@ -136,25 +136,20 @@ namespace symbol_type_resolving
 		{
 			if (self->resolving && self->resolving->resolvedSymbols.Count() == 1)
 			{
-				auto symbol = self->resolving->resolvedSymbols[0];
-				if (freeTypeSymbols.Contains(symbol))
+				auto patternSymbol = self->resolving->resolvedSymbols[0];
+				if (freeTypeSymbols.Contains(patternSymbol))
 				{
 					involved = true;
 					involvedTypes.Add(self);
 				}
 				else if(includeParentDeclArguments)
 				{
-					switch (symbol->kind)
+					switch (patternSymbol->kind)
 					{
 					case symbol_component::SymbolKind::GenericTypeArgument:
 					case symbol_component::SymbolKind::GenericValueArgument:
 						{
-							// consistent with GetTemplateArgumentKey
-							auto pattern = symbol->kind ==
-								symbol_component::SymbolKind::GenericTypeArgument
-								? EvaluateGenericArgumentSymbol(symbol)
-								: pa.tsys->DeclOf(symbol)
-								;
+							auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
 							ITsys* patternValue = nullptr;
 							if (pa.TryGetReplacedGenericArg(pattern, patternValue))
 							{

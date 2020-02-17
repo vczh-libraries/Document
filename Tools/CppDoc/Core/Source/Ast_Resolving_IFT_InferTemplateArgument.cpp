@@ -69,11 +69,11 @@ namespace symbol_type_resolving
 		{
 			if (!involvedExprs.Contains(expr.Obj())) return;
 			auto idExpr = expr.Cast<IdExpr>();
-			auto symbol = idExpr->resolving->resolvedSymbols[0];
-			auto& outputContext = symbol->ellipsis ? variadicContext : taContext;
+			auto patternSymbol = idExpr->resolving->resolvedSymbols[0];
+			auto& outputContext = patternSymbol->ellipsis ? variadicContext : taContext;
 
 			// consistent with GetTemplateArgumentKey
-			auto pattern = pa.tsys->DeclOf(symbol);
+			auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
 			SetInferredResult(outputContext, pattern, nullptr);
 		}
 
@@ -266,7 +266,7 @@ namespace symbol_type_resolving
 			auto& outputContext = patternSymbol->ellipsis ? variadicContext : taContext;
 
 			// consistent with GetTemplateArgumentKey
-			auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
+			auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
 
 			switch (patternSymbol->kind)
 			{

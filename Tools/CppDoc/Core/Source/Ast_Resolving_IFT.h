@@ -60,7 +60,7 @@ namespace symbol_type_resolving
 			if (auto idType = dynamic_cast<IdType*>(involvedTypes[j]))
 			{
 				auto patternSymbol = idType->resolving->resolvedSymbols[0];
-				auto pattern = EvaluateGenericArgumentSymbol(patternSymbol);
+				auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
 				if (patternSymbol->ellipsis)
 				{
 					callback(patternSymbol, pattern);
@@ -73,7 +73,7 @@ namespace symbol_type_resolving
 			if (auto idExpr = dynamic_cast<IdExpr*>(involvedExprs[j]))
 			{
 				auto patternSymbol = idExpr->resolving->resolvedSymbols[0];
-				auto pattern = pa.tsys->DeclOf(patternSymbol);
+				auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
 				if (patternSymbol->ellipsis)
 				{
 					callback(patternSymbol, pattern);

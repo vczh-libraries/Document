@@ -32,7 +32,7 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
-	CreateGenericFunctionHeader: Calculate enough information to create a generic function type
+	GetTemplateArgumentKey: Get an ITsys* for TsysGenericFunction keys
 	***********************************************************************/
 
 	ITsys* GetTemplateArgumentKey(const TemplateSpec::Argument& argument, ITsysAlloc* tsys)
@@ -46,6 +46,23 @@ namespace symbol_type_resolving
 			return tsys->DeclOf(argument.argumentSymbol);
 		}
 	}
+
+	ITsys* GetTemplateArgumentKey(Symbol* argumentSymbol, ITsysAlloc* tsys)
+	{
+		switch (argumentSymbol->kind)
+		{
+		case symbol_component::SymbolKind::GenericTypeArgument:
+			return EvaluateGenericArgumentSymbol(argumentSymbol);
+		case symbol_component::SymbolKind::GenericValueArgument:
+			return tsys->DeclOf(argumentSymbol);
+		default:
+			throw TypeCheckerException();
+		}
+	}
+
+	/***********************************************************************
+	CreateGenericFunctionHeader: Calculate enough information to create a generic function type
+	***********************************************************************/
 
 	void CreateGenericFunctionHeader(const ParsingArguments& pa, Symbol* declSymbol, ITsys* parentDeclType, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction)
 	{
