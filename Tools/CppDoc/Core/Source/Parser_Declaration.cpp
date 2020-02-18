@@ -397,7 +397,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 
 		if (classType != CppClassType::Union)
 		{
-			// TODO: Remove this restriction
+			// TODO: generate members for specialized declarations
 			if (!decl->specializationSpec)
 			{
 				GenerateMembers(declPa, classContextSymbol);
