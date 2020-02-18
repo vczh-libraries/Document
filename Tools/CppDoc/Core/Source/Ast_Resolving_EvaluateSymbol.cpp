@@ -40,7 +40,12 @@ namespace symbol_type_resolving
 			}
 		default:
 			{
+				// when evaluating local symbols for an uninitialized function, pa.taContext could belong to the template class
+				// in this case, we need to stop at the class when the function is initialized
+				// so that it knows that the symbol is not evaluated, instead of returning the evaluated symbol for the unitialized function
 				auto taContext = pa.taContext;
+				auto topTaContextToExamine = ParsingArguments::AdjustTaContextForScope(decl->symbol, taContext);
+
 				while (taContext)
 				{
 					vint index = taContext->symbolEvaluations.Keys().IndexOf(decl->symbol);
@@ -48,6 +53,7 @@ namespace symbol_type_resolving
 					{
 						return *taContext->symbolEvaluations.Values()[index].Obj();
 					}
+					if (taContext == topTaContextToExamine) break;
 					taContext = taContext->parent;
 				}
 
@@ -84,8 +90,7 @@ namespace symbol_type_resolving
 			else
 			{
 				// parentDeclType is not provided, need to check taContext
-				auto ta = newPa.taContext;
-				while (ta)
+				if (auto ta = ParsingArguments::AdjustTaContextForScope(declSymbol, newPa.taContext))
 				{
 					if (ta->symbolToApply == declSymbol)
 					{
@@ -95,9 +100,7 @@ namespace symbol_type_resolving
 						// in this case this symbol will be evaluated to a GenericFunction if it has TemplateSpec
 						// this is for ensuring GetEvaluationKind doesn't return EvaluationKind::Instantiated
 						newPa.taContext = ta->parent;
-						break;
 					}
-					ta = ta->parent;
 				}
 			}
 			return newPa;
