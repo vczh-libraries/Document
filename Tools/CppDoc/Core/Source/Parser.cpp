@@ -771,6 +771,7 @@ ParsingArguments ParsingArguments::AdjustForDecl(Symbol* declSymbol)const
 	auto newPa = WithScope(declSymbol);
 	if (taContext)
 	{
+		// find the nearest common ancestor for declSymbol and taContext
 		auto scope = declSymbol;
 		while (scope)
 		{
