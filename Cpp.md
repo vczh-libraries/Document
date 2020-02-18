@@ -50,9 +50,12 @@
       - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`
     - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
   - [ ] With a `DeclInstant` is created, best possible choices are returned at the same time.
-- [ ] SFINAE on choosing among generic functions or classes.
-- [ ] `std::initialization_list`.
+- [ ] Test SFINAE on choosing among generic functions or classes.
 - [ ] Lambda expressions.
+- [ ] Next Demo! (Vlpp)
+  - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
+  - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
+- [ ] `std::initialization_list`.
 - [ ] `decltype(EXPR)::ChildType`
 - [ ] `::new`
 - [ ] `::delete`
@@ -62,8 +65,6 @@
 ## Finisher Work Items
 
 - [ ] Parse `UnitTest_Cases`
-- [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
-- [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
 - [ ] Generic HTML index. (multiple pages)
 - [ ] Attach document content to declarations.
 - [ ] Enable markdown inside xml elements in comment.
