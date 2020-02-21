@@ -658,6 +658,7 @@ namespace symbol_type_resolving
 		TypeTsysList& parameterAssignment,				// store function argument to offered argument map, nullptr indicates the default value is applied
 		const TemplateArgumentContext& knownArguments,	// all assigned template arguments
 		const SortedList<Symbol*>& argumentSymbols,		// symbols of all template arguments
+		ITsys* lastAssignedVta,							// symbol of the last template argument, if it is assigned and is variadic
 		FunctionType* functionType,						// argument information
 		Array<ExprTsysItem>& argumentTypes,				// (index of unpacked)		offered argument (unpacked)
 		SortedList<vint>& boundedAnys					// (value of unpacked)		for each offered argument that is any_t, and it means unknown variadic arguments, instead of an unknown type
@@ -683,6 +684,23 @@ namespace symbol_type_resolving
 				SortedList<Expr*> involvedExprs;
 				CollectFreeTypes(adjustedPa, true, parameter.item->type, nullptr, false, argumentSymbols, involvedTypes, involvedExprs);
 				knownPackSizes[i] = CalculateParameterPackSize(adjustedPa, knownArguments, involvedTypes, involvedExprs);
+
+				if (lastAssignedVta && i == functionType->parameters.Count() - 1)
+				{
+					// if all involved template argument is the last variadic template argument, set to -1 to allow extra arguments
+					bool allow = true;
+					CollectInvolvedVariadicArguments(invokerPa, involvedTypes, involvedExprs, [&allow, lastAssignedVta](Symbol*, ITsys* pattern)
+					{
+						if (pattern != lastAssignedVta)
+						{
+							allow = false;
+						}
+					});
+					if (allow)
+					{
+						knownPackSizes[i] = -1;
+					}
+				}
 			}
 			else
 			{

@@ -224,7 +224,7 @@ namespace symbol_type_resolving
 				{
 					argumentTypes[i] = { nullptr,ExprTsysType::PRValue,entity->GetParam(i) };
 				}
-				ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, self, argumentTypes, boundedAnys);
+				ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, nullptr, self, argumentTypes, boundedAnys);
 			}
 			InferTemplateArgumentsForFunctionType(pa, self, parameterAssignment, taContext, variadicContext, freeTypeSymbols, true, lastAssignedVta);
 		}

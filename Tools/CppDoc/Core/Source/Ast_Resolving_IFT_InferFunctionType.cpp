@@ -615,7 +615,7 @@ namespace symbol_type_resolving
 							// assign arguments to correct parameters
 							auto inferPa = pa.AdjustForDecl(gfi.declSymbol);
 							inferPa.parentDeclType = ParsingArguments::AdjustDeclInstantForScope(gfi.declSymbol, gfi.parentDeclType, true);
-							ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, functionType.Obj(), argTypes, boundedAnys);
+							ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, lastAssignedVta, functionType.Obj(), argTypes, boundedAnys);
 
 							// type inferencing
 							List<Ptr<TemplateArgumentContext>> inferredArgumentTypes;

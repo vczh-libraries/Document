@@ -140,6 +140,7 @@ namespace symbol_type_resolving
 													TypeTsysList& parameterAssignment,
 													const TemplateArgumentContext& knownArguments,
 													const SortedList<Symbol*>& argumentSymbols,
+													ITsys* lastAssignedVta,
 													FunctionType* functionType,
 													Array<ExprTsysItem>& argumentTypes,
 													SortedList<vint>& boundedAnys
