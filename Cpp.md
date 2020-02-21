@@ -28,33 +28,41 @@
   - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
   - [ ] Generate `ClassMemberCache` for generated special members
   - [ ] Call a function with some or all template arguments unspecified.
-    - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`
-    - [ ] The last variadic template argument, if it is assigned, could be extended to have more types/values
-  - [ ] Full Specialization
+    - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
+    - [ ] The last variadic template argument, if it is assigned, could be extended to have more types/values.
+      - [ ] Add an `ITsys*` (`TsysGenericFunction`) in `TsysFunc`.
+        - This pointer stores information about where the instance of the generic function comes from.
+        - This pointer only valid when all template arguments are filled, and the last one of them is variadic.
+        - `InferFunctionType` will read this pointer for `case TsysType::Function:`, and try to infer the function instead of just return the `ITsys*` of `TsysFunc`.
+- [ ] Partial specialization constructions
+  - [ ] Calculate partial-ordering on specializations.
+  - [ ] Always return results from more specific declarations, but if a pattern is matched with `any_t`, all derived patterns are consider equally specific at this moment.
+    - [ ] Tests for values, functions and classes
+  - [ ] Partial specialization on **values**
+    - [ ] SFINAE test cases
+  - [ ] Partial specialization on **functions** (actually it is full specialization, by reusing partial specialization constructions)
     - [ ] Connect functions with forward declarations.
       - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
     - [ ] When overloading, specialized functions are not considered. When a template function wins, then choose among the primiary and its specializations.
+    - [ ] SFINAE test cases
+  - [ ] Partial specialization on **classes**.
+    - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
+    - [ ] Connect methods with forward declarations inside multiple levels of template classes.
+      - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T*>::B<const U&>::F(){}`
+        - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`
+      - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
+        - [ ] Same for `decltype(HERE)`
+    - [ ] SFINAE test cases
+- [ ] Lambda expressions.
+- [ ] Next Demo! (Vlpp)
+  - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
+  - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
+  - [ ] Show progress while parsing cases.
 - [ ] Next Demo! (UnitTest_Cases::STL)
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.
     - [ ] `expr->Accept` should have 3 links.
-  - [ ] Show progress while parsing cases.
-- [ ] More `template` on value aliases (partial specialization)
-  - [ ] Calculate partial-ordering on specializations.
-  - [ ] Return results from more specific specializations if f(pattern) is matched with any_t.
-- [ ] More `template` on classes (partial specialization).
-  - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
-  - [ ] Connect methods with forward declarations inside multiple levels of template classes.
-    - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T*>::B<const U&>::F(){}`
-      - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`
-    - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
-  - [ ] With a `DeclInstant` is created, best possible choices are returned at the same time.
-- [ ] Test SFINAE on choosing among generic functions or classes.
-- [ ] Lambda expressions.
-- [ ] Next Demo! (Vlpp)
-  - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
-  - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
 - [ ] `std::initialization_list`.
 - [ ] `decltype(EXPR)::ChildType`
 - [ ] `::new`
