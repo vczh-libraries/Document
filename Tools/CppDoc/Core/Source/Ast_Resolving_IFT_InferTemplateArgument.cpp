@@ -17,14 +17,24 @@ namespace symbol_type_resolving
 		const SortedList<Symbol*>&			freeTypeSymbols;
 		const SortedList<Type*>&			involvedTypes;
 		const SortedList<Expr*>&			involvedExprs;
+		ITsys**								lastAssignedVta;
 
-		InferTemplateArgumentVisitor(const ParsingArguments& _pa, TemplateArgumentContext& _taContext, TemplateArgumentContext& _variadicContext, const SortedList<Symbol*>& _freeTypeSymbols, const SortedList<Type*>& _involvedTypes, const SortedList<Expr*>& _involvedExprs)
+		InferTemplateArgumentVisitor(
+			const ParsingArguments& _pa,
+			TemplateArgumentContext& _taContext,
+			TemplateArgumentContext& _variadicContext,
+			const SortedList<Symbol*>& _freeTypeSymbols,
+			const SortedList<Type*>& _involvedTypes,
+			const SortedList<Expr*>& _involvedExprs,
+			ITsys** _lastAssignedVta
+		)
 			:pa(_pa)
 			, taContext(_taContext)
 			, variadicContext(_variadicContext)
 			, freeTypeSymbols(_freeTypeSymbols)
 			, involvedTypes(_involvedTypes)
 			, involvedExprs(_involvedExprs)
+			, lastAssignedVta(_lastAssignedVta)
 		{
 		}
 
@@ -61,7 +71,7 @@ namespace symbol_type_resolving
 
 		void Execute(Ptr<Type>& argumentType, ITsys* _offeredType)
 		{
-			InferTemplateArgumentVisitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs)
+			InferTemplateArgumentVisitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs, lastAssignedVta)
 				.ExecuteOnce(argumentType, _offeredType);
 		}
 
@@ -74,7 +84,7 @@ namespace symbol_type_resolving
 
 			// consistent with GetTemplateArgumentKey
 			auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
-			SetInferredResult(outputContext, pattern, nullptr);
+			SetInferredResult(outputContext, pattern, nullptr, lastAssignedVta);
 		}
 
 		void Visit(PrimitiveType* self)override
@@ -216,7 +226,7 @@ namespace symbol_type_resolving
 				}
 				ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, self, argumentTypes, boundedAnys);
 			}
-			InferTemplateArgumentsForFunctionType(pa, self, parameterAssignment, taContext, variadicContext, freeTypeSymbols, true);
+			InferTemplateArgumentsForFunctionType(pa, self, parameterAssignment, taContext, variadicContext, freeTypeSymbols, true, lastAssignedVta);
 		}
 
 		void Visit(MemberType* self)override
@@ -280,12 +290,12 @@ namespace symbol_type_resolving
 					{
 						entity = pa.tsys->Int();
 					}
-					SetInferredResult(outputContext, pattern, entity);
+					SetInferredResult(outputContext, pattern, entity, lastAssignedVta);
 				}
 				break;
 			case symbol_component::SymbolKind::GenericValueArgument:
 				{
-					SetInferredResult(outputContext, pattern, nullptr);
+					SetInferredResult(outputContext, pattern, nullptr, lastAssignedVta);
 				}
 				break;
 			}
@@ -410,7 +420,7 @@ namespace symbol_type_resolving
 				}
 				ResolveGenericTypeParameters(pa, parameterAssignment, taContext, freeTypeSymbols, self, argumentTypes, boundedAnys);
 			}
-			InferTemplateArgumentsForGenericType(pa, self, parameterAssignment, taContext, variadicContext, freeTypeSymbols);
+			InferTemplateArgumentsForGenericType(pa, self, parameterAssignment, taContext, variadicContext, freeTypeSymbols, lastAssignedVta);
 		}
 	};
 
@@ -424,10 +434,11 @@ namespace symbol_type_resolving
 		const SortedList<Symbol*>& freeTypeSymbols,
 		const SortedList<Type*>& involvedTypes,
 		const SortedList<Expr*>& involvedExprs,
-		bool exactMatchForParameters
+		bool exactMatchForParameters,
+		ITsys** lastAssignedVta
 	)
 	{
-		InferTemplateArgumentVisitor visitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs);
+		InferTemplateArgumentVisitor visitor(pa, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs, lastAssignedVta);
 		if (typeToInfer) visitor.ExecuteOnce(typeToInfer, offeredType, exactMatchForParameters);
 		if (exprToInfer) visitor.Execute(exprToInfer);
 	}

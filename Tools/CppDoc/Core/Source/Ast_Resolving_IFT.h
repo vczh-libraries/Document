@@ -28,12 +28,14 @@ namespace symbol_type_resolving
 							const SortedList<Symbol*>& freeTypeSymbols,
 							const SortedList<Type*>& involvedTypes,
 							const SortedList<Expr*>& involvedExprs,
-							bool exactMatchForParameters);
+							bool exactMatchForParameters,
+							ITsys** lastAssignedVta);
 
 	extern void			SetInferredResult(
 							TemplateArgumentContext& taContext,
 							ITsys* pattern,
-							ITsys* type);
+							ITsys* type,
+							ITsys** lastAssignedVta);
 
 	extern void			InferTemplateArgumentsForGenericType(
 							const ParsingArguments& pa,
@@ -41,7 +43,8 @@ namespace symbol_type_resolving
 							TypeTsysList& parameterAssignment,
 							TemplateArgumentContext& taContext,
 							TemplateArgumentContext& variadicContext,
-							const SortedList<Symbol*>& freeTypeSymbols);
+							const SortedList<Symbol*>& freeTypeSymbols,
+							ITsys** lastAssignedVta);
 
 	extern void			InferTemplateArgumentsForFunctionType(
 							const ParsingArguments& pa,
@@ -50,7 +53,8 @@ namespace symbol_type_resolving
 							TemplateArgumentContext& taContext,
 							TemplateArgumentContext& variadicContext,
 							const SortedList<Symbol*>& freeTypeSymbols,
-							bool exactMatchForParameters);
+							bool exactMatchForParameters,
+							ITsys** lastAssignedVta);
 
 	template<typename TCallback>
 	void CollectInvolvedVariadicArguments(const ParsingArguments& pa, const SortedList<Type*>& involvedTypes, const SortedList<Expr*>& involvedExprs, TCallback&& callback)

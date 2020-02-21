@@ -33,8 +33,14 @@ namespace symbol_type_resolving
 	SetInferredResult:	Set a inferred type for a template argument, and check if it is compatible with previous result
 	***********************************************************************/
 
-	void SetInferredResult(TemplateArgumentContext& taContext, ITsys* pattern, ITsys* type)
+	void SetInferredResult(TemplateArgumentContext& taContext, ITsys* pattern, ITsys* type, ITsys** lastAssignedVta)
 	{
+		bool hitLastAssignedVta = lastAssignedVta && *lastAssignedVta == pattern;
+		if (hitLastAssignedVta && type->GetType() != TsysType::Any)
+		{
+			*lastAssignedVta = nullptr;
+		}
+
 		vint index = taContext.arguments.Keys().IndexOf(pattern);
 		if (index == -1)
 		{
@@ -46,17 +52,17 @@ namespace symbol_type_resolving
 			switch (TemplateArgumentPatternToSymbol(pattern)->kind)
 			{
 			case symbol_component::SymbolKind::GenericTypeArgument:
-				{
-					if (type->GetType() == TsysType::Any) return;
-				}
-				break;
 			case symbol_component::SymbolKind::GenericValueArgument:
+				{
+					if (type && type->GetType() == TsysType::Any) return;
+				}
 				break;
 			default:
 				return;
 			}
 
 			// if this argument is inferred, it requires the same result if both of them are not any_t
+			// unless this is the first assignment to the last variadic template argument, the previously inferred type could be extended
 			auto inferred = taContext.arguments.Values()[index];
 			if (inferred->GetType() == TsysType::Any)
 			{
@@ -64,6 +70,25 @@ namespace symbol_type_resolving
 			}
 			else if (type != inferred)
 			{
+				if (hitLastAssignedVta)
+				{
+					// check if the new type extends the old type
+					if (type && type->GetType() == TsysType::Init && inferred->GetType()==TsysType::Init)
+					{
+						if (type->GetParamCount() >= inferred->GetParamCount())
+						{
+							for (vint i = 0; i < inferred->GetParamCount(); i++)
+							{
+								if (type->GetParam(i) != inferred->GetParam(i))
+								{
+									throw TypeCheckerException();
+								}
+							}
+							taContext.arguments.Set(pattern, type);
+							return;
+						}
+					}
+				}
 				throw TypeCheckerException();
 			}
 		}
@@ -82,7 +107,8 @@ namespace symbol_type_resolving
 		TemplateArgumentContext& taContext,
 		TemplateArgumentContext& variadicContext,
 		const SortedList<Symbol*>& freeTypeSymbols,
-		bool exactMatchForParameters
+		bool exactMatchForParameters,
+		ITsys** lastAssignedVta
 	)
 	{
 		SortedList<Type*> involvedTypes;
@@ -99,7 +125,7 @@ namespace symbol_type_resolving
 		// infer all affected types to any_t, result will be overrided if more precise types are inferred
 		for (vint j = 0; j < vas.Count(); j++)
 		{
-			SetInferredResult(taContext, vas[j], pa.tsys->Any());
+			SetInferredResult(taContext, vas[j], pa.tsys->Any(), nullptr);
 		}
 
 		if (!assignedTsys || assignedTsys->GetType() != TsysType::Any)
@@ -115,7 +141,7 @@ namespace symbol_type_resolving
 					auto init = pa.tsys->InitOf(params);
 					for (vint j = 0; j < vas.Count(); j++)
 					{
-						SetInferredResult(taContext, vas[j], init);
+						SetInferredResult(taContext, vas[j], init, lastAssignedVta);
 					}
 				}
 				else
@@ -132,7 +158,8 @@ namespace symbol_type_resolving
 					{
 						auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
 						TemplateArgumentContext localVariadicContext;
-						InferTemplateArgument(pa, typeToInfer, exprToInfer, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
+						// set lastAssignedVta = nullptr, since now the element of the type list is to be inferred, so that localVariadicContext doesn't allow conflict
+						InferTemplateArgument(pa, typeToInfer, exprToInfer, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters, nullptr);
 						for (vint k = 0; k < localVariadicContext.arguments.Count(); k++)
 						{
 							auto key = localVariadicContext.arguments.Keys()[k];
@@ -148,14 +175,14 @@ namespace symbol_type_resolving
 						auto pattern = vas[j];
 						auto& params = *variadicResults[pattern].Obj();
 						auto init = pa.tsys->InitOf(params);
-						SetInferredResult(taContext, pattern, init);
+						SetInferredResult(taContext, pattern, init, lastAssignedVta);
 					}
 				}
 			}
 			else
 			{
 				// for non-variadic parameter, run the assigned argument
-				InferTemplateArgument(pa, typeToInfer, exprToInfer, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters);
+				InferTemplateArgument(pa, typeToInfer, exprToInfer, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters, lastAssignedVta);
 			}
 		}
 	}
@@ -170,14 +197,15 @@ namespace symbol_type_resolving
 		TypeTsysList& parameterAssignment,
 		TemplateArgumentContext& taContext,
 		TemplateArgumentContext& variadicContext,
-		const SortedList<Symbol*>& freeTypeSymbols
+		const SortedList<Symbol*>& freeTypeSymbols,
+		ITsys** lastAssignedVta
 	)
 	{
 		for (vint i = 0; i < genericType->arguments.Count(); i++)
 		{
 			auto argument = genericType->arguments[i];
 			auto assignedTsys = parameterAssignment[i];
-			InferTemplateArgumentOfComplexType(pa, argument.item.type, argument.item.expr, argument.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, true);
+			InferTemplateArgumentOfComplexType(pa, argument.item.type, argument.item.expr, argument.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, true, lastAssignedVta);
 		}
 	}
 
@@ -192,7 +220,8 @@ namespace symbol_type_resolving
 		TemplateArgumentContext& taContext,
 		TemplateArgumentContext& variadicContext,
 		const SortedList<Symbol*>& freeTypeSymbols,
-		bool exactMatchForParameters
+		bool exactMatchForParameters,
+		ITsys** lastAssignedVta
 	)
 	{
 		// don't care about arguments for ellipsis
@@ -204,7 +233,7 @@ namespace symbol_type_resolving
 				// see if any variadic value arguments can be determined
 				// variadic value argument only care about the number of values
 				auto parameter = functionType->parameters[i];
-				InferTemplateArgumentOfComplexType(pa, parameter.item->type, nullptr, parameter.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, exactMatchForParameters);
+				InferTemplateArgumentOfComplexType(pa, parameter.item->type, nullptr, parameter.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, exactMatchForParameters, lastAssignedVta);
 			}
 		}
 	}
@@ -329,7 +358,15 @@ namespace symbol_type_resolving
 		return mbcr.count > 0;
 	}
 
-	void InferFunctionTypeInternal(const ParsingArguments& pa, List<Ptr<TemplateArgumentContext>>& inferredArgumentTypes, FunctionType* functionType, TypeTsysList& parameterAssignment, TemplateArgumentContext& taContext, SortedList<Symbol*>& freeTypeSymbols)
+	void InferFunctionTypeInternal(
+		const ParsingArguments& pa,
+		List<Ptr<TemplateArgumentContext>>& inferredArgumentTypes,
+		FunctionType* functionType,
+		TypeTsysList& parameterAssignment,
+		TemplateArgumentContext& taContext,
+		SortedList<Symbol*>& freeTypeSymbols,
+		ITsys** lastAssignedVta
+	)
 	{
 		List<MatchBaseClassRecord> mbcs;
 		TypeTsysList mbcTsys;
@@ -488,7 +525,7 @@ namespace symbol_type_resolving
 					TemplateArgumentContext unusedVariadicContext;
 					try
 					{
-						InferTemplateArgumentsForFunctionType(pa, functionType, assignment, *tac.Obj(), unusedVariadicContext, freeTypeSymbols, false);
+						InferTemplateArgumentsForFunctionType(pa, functionType, assignment, *tac.Obj(), unusedVariadicContext, freeTypeSymbols, false, lastAssignedVta);
 						inferredArgumentTypes.Add(tac);
 					}
 					catch (const TypeCheckerException&)
@@ -509,7 +546,7 @@ namespace symbol_type_resolving
 			CopyFrom(tac->arguments, taContext.arguments);
 
 			TemplateArgumentContext unusedVariadicContext;
-			InferTemplateArgumentsForFunctionType(pa, functionType, parameterAssignment, *tac.Obj(), unusedVariadicContext, freeTypeSymbols, false);
+			InferTemplateArgumentsForFunctionType(pa, functionType, parameterAssignment, *tac.Obj(), unusedVariadicContext, freeTypeSymbols, false, lastAssignedVta);
 			inferredArgumentTypes.Add(tac);
 
 			if (unusedVariadicContext.arguments.Count() > 0)
@@ -547,6 +584,7 @@ namespace symbol_type_resolving
 							TypeTsysList						parameterAssignment;
 							TemplateArgumentContext				taContext;
 							SortedList<Symbol*>					freeTypeSymbols;
+							ITsys*								lastAssignedVta = nullptr;
 
 							// fill freeTypeSymbols with all template arguments
 							// fill taContext will knows arguments
@@ -560,6 +598,10 @@ namespace symbol_type_resolving
 								if (i < gfi.filledArguments)
 								{
 									taContext.arguments.Add(pattern, functionItem.tsys->GetParam(i));
+									if (i == gfi.spec->arguments.Count() - 1 && argument.ellipsis)
+									{
+										lastAssignedVta = pattern;
+									}
 								}
 							}
 
@@ -570,7 +612,7 @@ namespace symbol_type_resolving
 
 							// type inferencing
 							List<Ptr<TemplateArgumentContext>> inferredArgumentTypes;
-							InferFunctionTypeInternal(inferPa, inferredArgumentTypes, functionType.Obj(), parameterAssignment, taContext, freeTypeSymbols);
+							InferFunctionTypeInternal(inferPa, inferredArgumentTypes, functionType.Obj(), parameterAssignment, taContext, freeTypeSymbols, &lastAssignedVta);
 
 							for (vint i = 0; i < inferredArgumentTypes.Count(); i++)
 							{
