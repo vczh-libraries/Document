@@ -566,7 +566,7 @@ TEST_FILE
 		);
 	});
 
-	TEST_CATEGORY(L"Template argument deduction (last vta)")
+	TEST_CATEGORY(L"Template argument deduction (last vta type)")
 	{
 		using namespace Input__TestOverloadingGenericFunction_LastVta;
 		COMPILE_PROGRAM(program, pa, input);
@@ -612,6 +612,12 @@ TEST_FILE
 			L"::Types<{::Types<{__int32 $PR, float $PR, double $PR, bool $PR}> $PR, ::Types<{}> $PR}> $PR",
 			Types<Types<int, float, double, bool>, Types<>>
 		);
+	});
+
+	TEST_CATEGORY(L"Template argument deduction (last vta value)")
+	{
+		using namespace Input__TestOverloadingGenericFunction_LastVta;
+		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			(V1(x, y, z)),
