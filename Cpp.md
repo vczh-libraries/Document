@@ -24,9 +24,9 @@
       - `__builtin_nanf(...)` -> float
       - `__builtin_nansf(...)` -> float
 
-- [ ] More `template` on functions. [post](https://en.cppreference.com/w/cpp/language/function_template)
+- [post](https://en.cppreference.com/w/cpp/language/function_template)
+- [ ] More `template` on functions.
   - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
-  - [ ] Generate `ClassMemberCache` for generated special members
   - [ ] Call a function with some or all template arguments unspecified.
     - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
     - [ ] The last variadic template argument, if it is assigned, could be extended to have more types/values.
@@ -54,21 +54,23 @@
         - [ ] Same for `decltype(HERE)`
     - [ ] SFINAE test cases
 - [ ] Lambda expressions.
+- [ ] Next Demo! (Calculator)
+  - [ ] Check carefully around all links.
+    - [ ] Extract `<div>` token rendering functions.
+    - [ ] Template arguments are not located in HTML.
+    - [ ] `expr->Accept` should have 3 links.
 - [ ] Next Demo! (Vlpp)
   - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
   - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
   - [ ] Show progress while parsing cases.
 - [ ] Next Demo! (UnitTest_Cases::STL)
-  - [ ] Check carefully around all links.
-    - [ ] Extract `<div>` token rendering functions.
-    - [ ] Template arguments are not located in HTML.
-    - [ ] `expr->Accept` should have 3 links.
 - [ ] `std::initialization_list`.
 - [ ] `decltype(EXPR)::ChildType`
 - [ ] `::new`
 - [ ] `::delete`
 - [ ] Pass variadic template argument to placement new expression.
 - [ ] `GenerateMembers` on `DeclInstance`.
+  - [ ] Generate `ClassMemberCache` for generated special members
 
 ## Finisher Work Items
 
