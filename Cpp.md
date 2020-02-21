@@ -29,6 +29,7 @@
   - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
   - [ ] Call a function with some or all template arguments unspecified.
     - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
+    - [ ] Test `f<int>(1.0)` for `template<typename T> f(T)`
 - [ ] Partial specialization constructions
   - [ ] Calculate partial-ordering on specializations.
   - [ ] Always return results from more specific declarations, but if a pattern is matched with `any_t`, all derived patterns are consider equally specific at this moment.
