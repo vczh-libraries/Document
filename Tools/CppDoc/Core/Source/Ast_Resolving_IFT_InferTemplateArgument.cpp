@@ -47,7 +47,7 @@ namespace symbol_type_resolving
 					return;
 				}
 			}
-			else if (_offeredType->IsUnknownType())
+			else if (_offeredType->IsUnknownType() || _offeredType->GetType()==TsysType::Nullptr)
 			{
 				return;
 			}
