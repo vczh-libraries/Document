@@ -135,6 +135,52 @@ namespace symbol_totsys_impl
 						CopyFrom(decoratedTsys, tsys);
 					}
 
+					bool addGenericSource = false;
+					if (partialAppliedArguments == -1 && decl->templateSpec->arguments[decl->templateSpec->arguments.Count() - 1].ellipsis)
+					{
+						partialAppliedArguments = decl->templateSpec->arguments.Count();
+						addGenericSource = true;
+					}
+
+					TsysGenericFunction gfi;
+					Array<ITsys*> genericParams;
+					if (partialAppliedArguments != -1)
+					{
+						gfi = genericFunction->GetGenericFunction();
+						gfi.filledArguments = partialAppliedArguments;
+
+						genericParams.Resize(genericFunction->GetParamCount());
+						for (vint i = 0; i < genericParams.Count(); i++)
+						{
+							auto pattern = genericFunction->GetParam(i);
+							if (i < partialAppliedArguments)
+							{
+								genericParams[i] = argumentsToApply->arguments[pattern];
+							}
+							else
+							{
+								genericParams[i] = pattern;
+							}
+						}
+					}
+
+					if (addGenericSource)
+					{
+						for (vint i = 0; i < decoratedTsys.Count(); i++)
+						{
+							auto tsysFunc = decoratedTsys[i];
+							TsysFunc func = tsysFunc->GetFunc();
+							func.genericSource = decoratedTsys[i]->GenericFunctionOf(genericParams, gfi);
+
+							Array<ITsys*> funcParams(tsysFunc->GetParamCount());
+							for (vint i = 0; i < funcParams.Count(); i++)
+							{
+								funcParams[i] = tsysFunc->GetParam(i);
+							}
+							decoratedTsys[i] = tsysFunc->GetElement()->FunctionOf(funcParams, func);
+						}
+					}
+
 					for (vint i = 0; i < decoratedTsys.Count(); i++)
 					{
 						if (classType)
@@ -147,28 +193,11 @@ namespace symbol_totsys_impl
 						}
 					}
 
-					if (partialAppliedArguments != -1)
+					if (partialAppliedArguments != -1 && !addGenericSource)
 					{
-						TsysGenericFunction gfi = genericFunction->GetGenericFunction();
-						gfi.filledArguments = partialAppliedArguments;
-
-						Array<ITsys*> params(genericFunction->GetParamCount());
-						for (vint i = 0; i < params.Count(); i++)
-						{
-							auto pattern = genericFunction->GetParam(i);
-							if (i < partialAppliedArguments)
-							{
-								params[i] = argumentsToApply->arguments[pattern];
-							}
-							else
-							{
-								params[i] = pattern;
-							}
-						}
-
 						for (vint i = 0; i < decoratedTsys.Count(); i++)
 						{
-							decoratedTsys[i] = decoratedTsys[i]->GenericFunctionOf(params, gfi);
+							decoratedTsys[i] = decoratedTsys[i]->GenericFunctionOf(genericParams, gfi);
 						}
 					}
 
