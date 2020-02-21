@@ -160,6 +160,7 @@ struct TsysFunc
 {
 	TsysCallingConvention			callingConvention = TsysCallingConvention::CDecl;
 	bool							ellipsis = false;
+	ITsys*							genericSource = nullptr;
 
 	TsysFunc() = default;
 	TsysFunc(TsysCallingConvention _callingConvention, bool _ellipsis) :callingConvention(_callingConvention), ellipsis(_ellipsis) {}
@@ -170,6 +171,8 @@ struct TsysFunc
 		if (a.callingConvention > b.callingConvention) return 1;
 		if (a.ellipsis < b.ellipsis) return -1;
 		if (a.ellipsis > b.ellipsis) return 1;
+		if (a.genericSource < b.genericSource) return -1;
+		if (a.genericSource > b.genericSource) return 1;
 		return 0;
 	}
 };
@@ -328,12 +331,16 @@ namespace vl
 	Ptr:				Element*
 	Array:				Element[]
 	Function:			(Params)->Element, Func contrains other configuration
+							(callingConvention)
+							(ellipsis):True if the function has "..." as its last argument (does not mean variadic argument)
+							(genericSource): GenericFunction representing how template arguments are filled, not always valid
 	Member:				Element Class::
 	CV:					Element const volatile
 	Decl:				Type symbol of a declaration
 	DeclInstant:		Instantiated template decl
-							Decl:declaration
-							Element:instantiated parent class
+							Decl(declSymbol):declaration
+							Element(parentDeclType):instantiated parent class
+							(taContext):Non-null if this is an instance of a template class
 							Params:template arguments.
 								If there is no template argument, which means, GetDataInstant().taContext == nullptr,
 								then this is a symbol with all template arguments not be replaced, e.g. decltype(*this) inside a template class
@@ -343,6 +350,9 @@ namespace vl
 							For example: <T&&, U*>->Tuple<T, U>, GenericFunction contains T and U.
 							If a pattern accepts a value, the pattern is the declaration of the argument symbol
 	GenericArg:			The GenericArg.argIndex-th type argument in Element
+							Decl:symbol of the template scope object that contains this template argument
+							(argIndex):index of the template argument
+							(argSymbol):symbol of the template argument
 */
 
 enum class TsysType

@@ -562,7 +562,14 @@ namespace symbol_type_resolving
 		switch (functionItem.tsys->GetType())
 		{
 		case TsysType::Function:
-			inferredFunctionTypes.Add(functionItem);
+			if (auto source = functionItem.tsys->GetFunc().genericSource)
+			{
+				InferFunctionType(pa, inferredFunctionTypes, { functionItem,source }, argTypes, boundedAnys);
+			}
+			else
+			{
+				inferredFunctionTypes.Add(functionItem);
+			}
 			break;
 		case TsysType::LRef:
 		case TsysType::RRef:
