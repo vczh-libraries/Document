@@ -374,9 +374,6 @@ int a;
 	TEST_CATEGORY(L"Lambdas")
 	{
 		// TODO:
-		// TsysType::Lambda
-		// TsysType::CapturedLambda
-		// GetElement() returns a function type
-		// GetDecl() returns the scope inside the lambda
+		// Generate TsysType::Struct for lambda
 	});
 }

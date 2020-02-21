@@ -48,6 +48,7 @@
       - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
         - [ ] Same for `decltype(HERE)`
     - [ ] SFINAE test cases
+    - [ ] Generate unique name for declaractions with `specializationSpec`. Name doesn't include a counter, and ensure it is unique.
 - [ ] Lambda expressions.
 - [ ] Next Demo! (Calculator)
   - [ ] Check carefully around all links.
@@ -66,6 +67,7 @@
 - [ ] Pass variadic template argument to placement new expression.
 - [ ] `GenerateMembers` on `DeclInstance`.
   - [ ] Generate `ClassMemberCache` for generated special members
+  - [ ] Generate special members for declarations with `specializationSpec`
 
 ## Finisher Work Items
 
