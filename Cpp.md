@@ -28,8 +28,8 @@
   - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
   - [ ] Generate `ClassMemberCache` for generated special members
   - [ ] Call a function with some or all template arguments unspecified.
-    - [ ] When the first variadic template argument of a function is {}, it could be treated as "to be inferred", if function arguments suggest so.
     - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`
+    - [ ] The last variadic template argument, if it is assigned, could be extended to have more types/values
   - [ ] Full Specialization
     - [ ] Connect functions with forward declarations.
       - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.

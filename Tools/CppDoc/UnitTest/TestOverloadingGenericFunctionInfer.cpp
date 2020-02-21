@@ -152,6 +152,33 @@ namespace Input__TestOverloadingGenericFunction_TypeInferValues
 	);
 }
 
+namespace Input__TestOverloadingGenericFunction_LastVta
+{
+	TEST_DECL(
+		template<typename... Ts>
+		struct Types {};
+
+		template<int... Vs>
+		struct Values {};
+
+		template<typename... Ts>
+		Types<Ts...> T1(Ts...);
+
+		template<typename... Ts, typename ...Us>
+		Types<Types<Ts...>, Types<Us...>> T2(Ts..., Us...);
+
+		template<int... Ts>
+		Values<Ts...> V1(int(&...ts)[Ts]);
+
+		template<int... Ts, int... Us>
+		Types<Values<Ts...>, Values<Us...>> V2(int(&...ts)[Ts], int(&...us)[Us]);
+
+		int x[10];
+		int y[20];
+		int z[30];
+	);
+}
+
 TEST_FILE
 {
 	TEST_CATEGORY(L"Partially apply template arguments (simple)")
@@ -539,7 +566,93 @@ TEST_FILE
 		);
 	});
 
-	// TODO: when the first vta is {}, it could be treated as "to be inferred", if function arguments suggest so
-	// TODO: test known/unknown variadic arguments/parameters
-	// TODO: test overloading			(TestOverloadingGenericFunction.cpp)
+	TEST_CATEGORY(L"Template argument deduction (last vta)")
+	{
+		using namespace Input__TestOverloadingGenericFunction_LastVta;
+		COMPILE_PROGRAM(program, pa, input);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(T1(0, 0.f, 0.0, false)),
+			L"::Types<{__int32 $PR, float $PR, double $PR, bool $PR}> $PR",
+			Types<int, float, double, bool>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(T1<>(0, 0.f, 0.0, false)),
+			L"::Types<{__int32 $PR, float $PR, double $PR, bool $PR}> $PR",
+			Types<int, float, double, bool>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(T1<int>(0, 0.f, 0.0, false)),
+			L"::Types<{__int32 $PR, float $PR, double $PR, bool $PR}> $PR",
+			Types<int, float, double, bool>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(T1<int, float, double, bool>(0, 0.f, 0.0, false)),
+			L"::Types<{__int32 $PR, float $PR, double $PR, bool $PR}> $PR",
+			Types<int, float, double, bool>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(T2<int>(0, 0.f, 0.0, false)),
+			L"::Types<{::Types<{__int32 $PR}> $PR, ::Types<{float $PR, double $PR, bool $PR}> $PR}> $PR",
+			Types<Types<int>, Types<float, double, bool>>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(T2<int, float>(0, 0.f, 0.0, false)),
+			L"::Types<{::Types<{__int32 $PR, float $PR}> $PR, ::Types<{double $PR, bool $PR}> $PR}> $PR",
+			Types<Types<int, float>, Types<double, bool>>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(T2<int, float, double, bool>(0, 0.f, 0.0, false)),
+			L"::Types<{::Types<{__int32 $PR, float $PR, double $PR, bool $PR}> $PR, ::Types<{}> $PR}> $PR",
+			Types<Types<int, float, double, bool>, Types<>>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(V1(x, y, z)),
+			L"::Values<{* $PR, * $PR, * $PR}> $PR",
+			Values<10, 20, 30>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(V1<>(x, y, z)),
+			L"::Values<{* $PR, * $PR, * $PR}> $PR",
+			Values<10, 20, 30>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(V1<10>(x, y, z)),
+			L"::Values<{* $PR, * $PR, * $PR}> $PR",
+			Values<10, 20, 30>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(V1<10, 20, 30>(x, y, z)),
+			L"::Values<{* $PR, * $PR, * $PR}> $PR",
+			Values<10, 20, 30>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(V2<10>(x, y, z)),
+			L"::Types<{::Values<{* $PR}> $PR, ::Values<{* $PR, * $PR}> $PR}> $PR",
+			Types<Values<10>, Values<20, 30>>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(V2<10, 20>(x, y, z)),
+			L"::Types<{::Values<{* $PR, * $PR}> $PR, ::Values<{* $PR}> $PR}> $PR",
+			Types<Values<10, 20>, Values<30>>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(V2<10, 20, 30>(x, y, z)),
+			L"::Types<{::Values<{* $PR, * $PR, * $PR}> $PR, ::Values<{}> $PR}> $PR",
+			Types<Values<10, 20, 30>, Values<>>
+		);
+	});
 }
