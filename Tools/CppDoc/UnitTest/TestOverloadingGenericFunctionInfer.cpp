@@ -179,6 +179,17 @@ namespace Input__TestOverloadingGenericFunction_LastVta
 	);
 }
 
+namespace Input__TestOverloadingGenericFunction_PartiallyFilled
+{
+	TEST_DECL(
+		template<typename... Ts>
+		struct Types {};
+
+		template<typename T, typename... Ts>
+		Types<T, Ts...> F(T, Ts...);
+	);
+}
+
 TEST_FILE
 {
 	TEST_CATEGORY(L"Partially apply template arguments (simple)")
@@ -659,6 +670,30 @@ TEST_FILE
 			(V2<10, 20, 30>(x, y, z)),
 			L"::Types<{::Values<{* $PR, * $PR, * $PR}> $PR, ::Values<{}> $PR}> $PR",
 			Types<Values<10, 20, 30>, Values<>>
+		);
+	});
+
+	TEST_CATEGORY(L"Template argument deduction (partially filled)")
+	{
+		using namespace Input__TestOverloadingGenericFunction_PartiallyFilled;
+		COMPILE_PROGRAM(program, pa, input);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(F(1, 1.f, 1.0)),
+			L"::Types<{__int32 $PR, float $PR, double $PR}> $PR",
+			Types<int, float, double>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(F<double>(1, 1.f, 1.0)),
+			L"::Types<{double $PR, float $PR, double $PR}> $PR",
+			Types<double, float, double>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			(F<double, double>(1, 1.f, 1.0)),
+			L"::Types<{double $PR, float $PR, double $PR}> $PR",
+			Types<double, double, double>
 		);
 	});
 }
