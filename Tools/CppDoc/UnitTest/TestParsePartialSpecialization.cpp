@@ -112,4 +112,7 @@ struct Obj
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);
 	});
+
+	// TODO: parse template value
+	// TODO: partial order evaluation
 }
