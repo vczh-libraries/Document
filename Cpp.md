@@ -34,6 +34,7 @@
   - [ ] Always return results from more specific declarations, but if a pattern is matched with `any_t`, all derived patterns are consider equally specific at this moment.
     - [ ] Tests for values, functions and classes
   - [ ] Partial specialization on **values**
+    - [ ] Specialization is used when evaluating a value, returns all results from matched specialization or primary symbol
     - [ ] SFINAE test cases
   - [ ] Partial specialization on **functions** (actually it is full specialization, by reusing partial specialization constructions)
     - [ ] Connect functions with forward declarations.
@@ -47,6 +48,10 @@
         - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`
       - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
         - [ ] Same for `decltype(HERE)`
+    - [ ] Add `specializationVersion` (default 0) and `specializationSymbols` to `DeclInstant`
+      - [ ] When a new specialization is recognized, the version in the primary symbol increases (default 0, version means the number of all recognized specializations).
+      - [ ] When `specializationSymbols` is used, `specializationVersion` is compared to the primary symbol version to determine if the list need to refresh.
+      - [ ] When `specializationVersion` is -1, it means `specializationSymbols` is hardcoded, usually from `this` in a method of a class specialization.
     - [ ] SFINAE test cases
     - [ ] Generate unique name for declaractions with `specializationSpec`. Name doesn't include a counter, and ensure it is unique.
 - [ ] Lambda expressions.
@@ -55,15 +60,16 @@
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.
     - [ ] `expr->Accept` should have 3 links.
+- [ ] `decltype(EXPR)::ChildType`
+- [ ] `::new`
+- [ ] `::delete`
 - [ ] Next Demo! (Vlpp)
   - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
   - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
   - [ ] Show progress while parsing cases.
-- [ ] Next Demo! (UnitTest_Cases::STL)
+- [ ] Next Demo! (GacUI)
 - [ ] `std::initialization_list`.
-- [ ] `decltype(EXPR)::ChildType`
-- [ ] `::new`
-- [ ] `::delete`
+- [ ] Next Demo! (UnitTest_Cases::STL)
 - [ ] Pass variadic template argument to placement new expression.
 - [ ] `GenerateMembers` on `DeclInstance`.
   - [ ] Generate `ClassMemberCache` for generated special members

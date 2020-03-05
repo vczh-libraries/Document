@@ -50,8 +50,8 @@ All **the compiler** here means the compiler created by this project.
     - Initializer lists
     - Lambda functions and expressions
     - Object construction improvement
-      - Constructor calls another constructor in initializing list (not supported yet)
-      - Using base class' constructors (not supported yet)
+      - Constructor calls another constructor in initializing list
+      - Using base class' constructors
     - Explicit overrides and final **(not care #2)**
       - `final` keyword
     - Extern template **(not care #1)**
