@@ -33,7 +33,7 @@ namespace symbol_type_resolving
 	SetInferredResult:	Set a inferred type for a template argument, and check if it is compatible with previous result
 	***********************************************************************/
 
-	void SetInferredResult(TemplateArgumentContext& taContext, ITsys* pattern, ITsys* type, ITsys** lastAssignedVta, SortedList<ITsys*>& hardcodedPatterns)
+	void SetInferredResult(const ParsingArguments& pa, TemplateArgumentContext& taContext, ITsys* pattern, ITsys* type, ITsys** lastAssignedVta, SortedList<ITsys*>& hardcodedPatterns)
 	{
 		bool hitLastAssignedVta = lastAssignedVta && *lastAssignedVta == pattern;
 		if (hitLastAssignedVta && type->GetType() != TsysType::Any)
@@ -81,17 +81,45 @@ namespace symbol_type_resolving
 							{
 								if (type->GetParam(i) != inferred->GetParam(i))
 								{
-									throw TypeCheckerException();
+									if (!hardcodedPatterns.Contains(pattern))
+									{
+										// only fail when the pattern is not hardcoded.
+										// because there could be implicit type conversion happens later in function overloading resolution.
+										throw TypeCheckerException();
+									}
+									else
+									{
+										if (type->GetParamCount() > inferred->GetParamCount())
+										{
+											// keep the hardcoded prefix.
+											Array<ExprTsysItem> params(type->GetParamCount());
+											for (vint i = 0; i < inferred->GetParamCount(); i++)
+											{
+												params[i] = { inferred->GetInit().headers[i],inferred->GetParam(i) };
+											}
+											for (vint i = inferred->GetParamCount(); i < type->GetParamCount(); i++)
+											{
+												params[i] = { type->GetInit().headers[i],type->GetParam(i) };
+											}
+
+											auto init = pa.tsys->InitOf(params);
+											taContext.arguments.Set(pattern, type);
+										}
+										return;
+									}
 								}
 							}
 							taContext.arguments.Set(pattern, type);
 							return;
 						}
+						throw TypeCheckerException();
 					}
 				}
 
 				if (!hardcodedPatterns.Contains(pattern))
 				{
+					// only fail when the pattern is not hardcoded.
+					// because there could be implicit type conversion happens later in function overloading resolution.
 					throw TypeCheckerException();
 				}
 			}
@@ -130,7 +158,7 @@ namespace symbol_type_resolving
 		// infer all affected types to any_t, result will be overrided if more precise types are inferred
 		for (vint j = 0; j < vas.Count(); j++)
 		{
-			SetInferredResult(taContext, vas[j], pa.tsys->Any(), nullptr, hardcodedPatterns);
+			SetInferredResult(pa, taContext, vas[j], pa.tsys->Any(), nullptr, hardcodedPatterns);
 		}
 
 		if (!assignedTsys || assignedTsys->GetType() != TsysType::Any)
@@ -146,7 +174,7 @@ namespace symbol_type_resolving
 					auto init = pa.tsys->InitOf(params);
 					for (vint j = 0; j < vas.Count(); j++)
 					{
-						SetInferredResult(taContext, vas[j], init, lastAssignedVta, hardcodedPatterns);
+						SetInferredResult(pa, taContext, vas[j], init, lastAssignedVta, hardcodedPatterns);
 					}
 				}
 				else
@@ -180,7 +208,7 @@ namespace symbol_type_resolving
 						auto pattern = vas[j];
 						auto& params = *variadicResults[pattern].Obj();
 						auto init = pa.tsys->InitOf(params);
-						SetInferredResult(taContext, pattern, init, lastAssignedVta, hardcodedPatterns);
+						SetInferredResult(pa, taContext, pattern, init, lastAssignedVta, hardcodedPatterns);
 					}
 				}
 			}

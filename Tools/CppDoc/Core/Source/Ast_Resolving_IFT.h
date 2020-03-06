@@ -35,6 +35,7 @@ namespace symbol_type_resolving
 						);
 
 	extern void			SetInferredResult(
+							const ParsingArguments& pa,
 							TemplateArgumentContext& taContext,
 							ITsys* pattern,
 							ITsys* type,

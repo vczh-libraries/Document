@@ -87,7 +87,7 @@ namespace symbol_type_resolving
 
 			// consistent with GetTemplateArgumentKey
 			auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
-			SetInferredResult(outputContext, pattern, nullptr, lastAssignedVta, hardcodedPatterns);
+			SetInferredResult(pa, outputContext, pattern, nullptr, lastAssignedVta, hardcodedPatterns);
 		}
 
 		void Visit(PrimitiveType* self)override
@@ -293,12 +293,12 @@ namespace symbol_type_resolving
 					{
 						entity = pa.tsys->Int();
 					}
-					SetInferredResult(outputContext, pattern, entity, lastAssignedVta, hardcodedPatterns);
+					SetInferredResult(pa, outputContext, pattern, entity, lastAssignedVta, hardcodedPatterns);
 				}
 				break;
 			case symbol_component::SymbolKind::GenericValueArgument:
 				{
-					SetInferredResult(outputContext, pattern, nullptr, lastAssignedVta, hardcodedPatterns);
+					SetInferredResult(pa, outputContext, pattern, nullptr, lastAssignedVta, hardcodedPatterns);
 				}
 				break;
 			}
