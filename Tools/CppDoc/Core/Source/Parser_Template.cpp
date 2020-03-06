@@ -196,3 +196,27 @@ void ParseGenericArgumentsSkippedLT(const ParsingArguments& pa, Ptr<CppTokenCurs
 		}
 	}
 }
+
+/***********************************************************************
+ParseGenericArgumentsSkippedLT
+***********************************************************************/
+
+void AssignPSPrimary(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Symbol* symbol)
+{
+	switch(symbol->kind)
+	{
+	case CLASS_SYMBOL_KIND:
+	case symbol_component::SymbolKind::ValueAlias:
+		if (!symbol->GetPSPrimary_NF())
+		{
+		}
+		break;
+	case symbol_component::SymbolKind::FunctionSymbol:
+		if (!symbol->GetPSPrimary_NF())
+		{
+		}
+		break;
+	default:
+		throw StopParsingException(cursor);
+	}
+}

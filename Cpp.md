@@ -26,7 +26,6 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] More `template` on functions.
-  - [ ] `SearchForFunctionWithSameSignature` returns all compatible `FunctionSymbol`s
   - [ ] Call a function with some or all template arguments unspecified.
     - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
 - [ ] Partial specialization constructions
@@ -53,7 +52,7 @@
       - [ ] When `specializationSymbols` is used, `specializationVersion` is compared to the primary symbol version to determine if the list need to refresh.
       - [ ] When `specializationVersion` is -1, it means `specializationSymbols` is hardcoded, usually from `this` in a method of a class specialization.
     - [ ] SFINAE test cases
-    - [ ] Generate unique name for declaractions with `specializationSpec`. Name doesn't include a counter, and ensure it is unique.
+    - [ ] `Symbol::GenerateUniqueId` generate unique name for declaractions with `specializationSpec`. Name doesn't include a counter, and ensure it is unique.
 - [ ] Lambda expressions.
 - [ ] Next Demo! (Calculator)
   - [ ] Check carefully around all links.

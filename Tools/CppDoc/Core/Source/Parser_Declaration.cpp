@@ -250,9 +250,15 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		decl->name = cppName;
 		output.Add(decl);
 
-		if (!pa.scopeSymbol->AddForwardDeclToSymbol_NFb(decl, symbolKind))
+		auto createdSymbol = pa.scopeSymbol->AddForwardDeclToSymbol_NFb(decl, symbolKind);
+		if (!createdSymbol)
 		{
 			throw StopParsingException(cursor);
+		}
+
+		if (decl->specializationSpec)
+		{
+			AssignPSPrimary(pa, cursor, createdSymbol);
 		}
 		return nullptr;
 	}
@@ -270,6 +276,11 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		if (!classContextSymbol)
 		{
 			throw StopParsingException(cursor);
+		}
+
+		if (decl->specializationSpec)
+		{
+			AssignPSPrimary(pa, cursor, classContextSymbol);
 		}
 
 		auto declPa = pa.WithScope(classContextSymbol);
@@ -867,6 +878,11 @@ void ParseDeclaration_Function(
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
 		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, specSymbol, declarator->classMemberCache);
 
+		if (decl->specializationSpec)
+		{
+			AssignPSPrimary(pa, cursor, functionSymbol);
+		}
+
 		// remove cyclic referencing
 		GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>()->scopeSymbolToReuse = nullptr;
 
@@ -948,6 +964,11 @@ void ParseDeclaration_Function(
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
 		functionSymbol->CreateFunctionForwardSymbol_F(decl, specSymbol);
 
+		if (decl->specializationSpec)
+		{
+			AssignPSPrimary(pa, cursor, functionSymbol);
+		}
+
 		// remove cyclic referencing
 		GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>()->scopeSymbolToReuse = nullptr;
 	}
@@ -1001,9 +1022,15 @@ void ParseDeclaration_Variable(
 			if (primitiveType->primitive != CppPrimitiveType::_auto) throw StopParsingException(cursor);
 		}
 
-		if (!pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::ValueAlias, specSymbol))
+		auto createdSymbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::ValueAlias, specSymbol);
+		if (!createdSymbol)
 		{
 			throw StopParsingException(cursor);
+		}
+
+		if (decl->specializationSpec)
+		{
+			AssignPSPrimary(pa, cursor, createdSymbol);
 		}
 	}
 	else

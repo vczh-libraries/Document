@@ -148,6 +148,8 @@ namespace symbol_component
 
 	using SymbolGroup = Group<WString, Ptr<Symbol>>;
 
+	// classes and value aliases cannot overload, all FunctionBodySymbol of the same signature has been put under the same FunctionSymbol
+	// so psPrimary does not need to be a list
 	struct SC_PSShared
 	{
 		vint										psVersion = 0;			// sync to psDescendants.Count()
@@ -570,6 +572,7 @@ extern void											ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppToken
 extern void											ValidateForRootTemplateSpec(Ptr<TemplateSpec>& spec, Ptr<CppTokenCursor>& cursor);
 extern void											ParseSpecializationSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<SpecializationSpec>& spec);
 extern void											ParseGenericArgumentsSkippedLT(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, VariadicList<GenericArgument>& arguments, CppTokens ending);
+extern void											AssignPSPrimary(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Symbol* symbol);
 
 // Parser_Declaration.cpp
 extern void											ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output);
