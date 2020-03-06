@@ -340,6 +340,20 @@ void Symbol::SetParent(Symbol* parent)
 	}
 }
 
+symbol_component::SC_PSShared* Symbol::GetPSShared()
+{
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Normal:
+		return &categoryData.normal;
+	case symbol_component::SymbolCategory::Function:
+		return &categoryData.function;
+	default:
+		// FunctionBody's PSShared is in Function
+		throw UnexpectedSymbolCategoryException();
+	}
+}
+
 Symbol::Symbol(symbol_component::SymbolCategory _category, Symbol* _parent)
 	:category(_category)
 	, categoryData(_category)
@@ -512,6 +526,94 @@ Ptr<symbol_component::ClassMemberCache> Symbol::GetClassMemberCache_NFb()
 		return categoryData.functionBody.classMemberCache;
 	default:
 		throw UnexpectedSymbolCategoryException();
+	}
+}
+
+Symbol* Symbol::GetPSPrimary_NF()
+{
+	if (IsPSPrimary_NF())
+	{
+		return this;
+	}
+	else
+	{
+		return GetPSShared()->psPrimary;
+	}
+}
+
+vint Symbol::GetPSPrimaryVersion_NF()
+{
+	return GetPSPrimary_NF()->GetPSShared()->psVersion;
+}
+
+const List<Symbol*>& Symbol::GetPSPrimaryDescendants_NF()
+{
+	return GetPSPrimary_NF()->GetPSShared()->psDescendants;
+}
+
+const List<Symbol*>& Symbol::GetPSParents_NF()
+{
+	return GetPSShared()->psParents;
+}
+
+const List<Symbol*>& Symbol::GetPSChildren_NF()
+{
+	return GetPSShared()->psChildren;
+}
+
+bool Symbol::IsPSPrimary_NF()
+{
+	auto ps = GetPSShared();
+	return !ps->psPrimary && ps->psDescendants.Count() > 0;
+}
+
+void Symbol::AssignPSPrimary_NF(Symbol* primary)
+{
+	switch (kind)
+	{
+	case CLASS_SYMBOL_KIND:
+	case symbol_component::SymbolKind::FunctionSymbol:
+	case symbol_component::SymbolKind::ValueAlias:
+		if (primary->kind != kind)
+		{
+			throw UnexpectedSymbolCategoryException();
+		}
+		break;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
+
+	auto ps = GetPSShared();
+	auto pps = primary->GetPSShared();
+	if (pps->psPrimary || pps->psParents.Count() > 0 || ps->psPrimary || pps->psDescendants.Contains(this))
+	{
+		throw UnexpectedSymbolCategoryException();
+	}
+
+	pps->psDescendants.Add(this);
+	ps->psPrimary = primary;
+}
+
+void Symbol::AssignPSParent(List<Symbol*>& parents)
+{
+	auto ps = GetPSShared();
+	for (vint i = 0; i < parents.Count(); i++)
+	{
+		auto parent = parents[i];
+		auto pps = parent->GetPSShared();
+		if (ps->psPrimary != parent && ps->psPrimary != pps->psPrimary)
+		{
+			throw UnexpectedSymbolCategoryException();
+		}
+	}
+	for (vint i = 0; i < ps->psParents.Count(); i++)
+	{
+		ps->psParents[i]->GetPSShared()->psChildren.Remove(this);
+	}
+	CopyFrom(ps->psParents, parents);
+	for (vint i = 0; i < ps->psParents.Count(); i++)
+	{
+		ps->psParents[i]->GetPSShared()->psChildren.Add(this);
 	}
 }
 

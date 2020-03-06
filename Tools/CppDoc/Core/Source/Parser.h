@@ -148,7 +148,16 @@ namespace symbol_component
 
 	using SymbolGroup = Group<WString, Ptr<Symbol>>;
 
-	struct SC_Normal
+	struct SC_PSShared
+	{
+		vint										psVersion = 0;			// sync to psDescendants.Count()
+		Symbol*										psPrimary = nullptr;	// primary declaration of this partial specialization
+		List<Symbol*>								psDescendants;			// all descedant partial specialization of this primary declaration
+		List<Symbol*>								psParents;				// parent partial specializations in partial order
+		List<Symbol*>								psChildren;				// child partial specializations in partial order
+	};
+
+	struct SC_Normal : SC_PSShared
 	{
 		Symbol*										parent = nullptr;
 		Ptr<Declaration>							implDecl;
@@ -169,7 +178,7 @@ namespace symbol_component
 		Evaluation									evaluation;			// type of this symbol, when all template arguments are unassigned
 	};
 
-	struct SC_Function
+	struct SC_Function : SC_PSShared
 	{
 		Symbol*										parent = nullptr;
 		List<Ptr<Symbol>>							implSymbols;
@@ -225,6 +234,7 @@ private:
 	Symbol*											CreateSymbolInternal(Ptr<Declaration> _decl, const WString& declName, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolKind _kind, symbol_component::SymbolCategory _category);
 	Symbol*											AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol, symbol_component::SymbolCategory _category);
 	void											SetParent(Symbol* parent);
+	symbol_component::SC_PSShared*					GetPSShared();
 
 public:
 	symbol_component::SymbolKind					kind = symbol_component::SymbolKind::Root;
@@ -242,17 +252,26 @@ public:
 	symbol_component::SymbolCategory				GetCategory();
 	void											SetCategory(symbol_component::SymbolCategory _category);
 
-	Symbol*											GetParentScope();				//	Normal	FunctionBody	Function
-	const List<Ptr<Symbol>>&						GetImplSymbols_F();				//							Function
-	const List<Ptr<Symbol>>&						GetForwardSymbols_F();			//							Function
-	Ptr<Declaration>								GetImplDecl_NFb();				//	Normal	FunctionBody
-	symbol_component::Evaluation&					GetEvaluationForUpdating_NFb();	//	Normal	FunctionBody
-	const symbol_component::SymbolGroup&			GetChildren_NFb();				//	Normal	FunctionBody
-	const List<Ptr<Declaration>>&					GetForwardDecls_N();			//	Normal
-	const Ptr<Stat>&								GetStat_N();					//	Normal
-	Symbol*											GetFunctionSymbol_Fb();			//			FunctionBody
-	Ptr<Declaration>								GetForwardDecl_Fb();			//			FunctionBody
-	Ptr<symbol_component::ClassMemberCache>			GetClassMemberCache_NFb();		//			FunctionBody
+	Symbol*											GetParentScope();							//	Normal	FunctionBody	Function
+	const List<Ptr<Symbol>>&						GetImplSymbols_F();							//							Function
+	const List<Ptr<Symbol>>&						GetForwardSymbols_F();						//							Function
+	Ptr<Declaration>								GetImplDecl_NFb();							//	Normal	FunctionBody
+	symbol_component::Evaluation&					GetEvaluationForUpdating_NFb();				//	Normal	FunctionBody
+	const symbol_component::SymbolGroup&			GetChildren_NFb();							//	Normal	FunctionBody
+	const List<Ptr<Declaration>>&					GetForwardDecls_N();						//	Normal
+	const Ptr<Stat>&								GetStat_N();								//	Normal
+	Symbol*											GetFunctionSymbol_Fb();						//			FunctionBody
+	Ptr<Declaration>								GetForwardDecl_Fb();						//			FunctionBody
+	Ptr<symbol_component::ClassMemberCache>			GetClassMemberCache_NFb();					//			FunctionBody
+
+	Symbol*											GetPSPrimary_NF();							//	Normal					Function
+	vint											GetPSPrimaryVersion_NF();					//	Normal					Function
+	const List<Symbol*>&							GetPSPrimaryDescendants_NF();				//	Normal					Function
+	const List<Symbol*>&							GetPSParents_NF();							//	Normal					Function
+	const List<Symbol*>&							GetPSChildren_NF();							//	Normal					Function
+	bool											IsPSPrimary_NF();							//	Normal					Function
+	void											AssignPSPrimary_NF(Symbol* primary);		//	Normal					Function
+	void											AssignPSParent(List<Symbol*>& parents);		//	Normal					Function
 
 	void											SetClassMemberCacheForTemplateSpecScope_N(Ptr<symbol_component::ClassMemberCache> classMemberCache);
 	const List<Ptr<Symbol>>*						TryGetChildren_NFb(const WString& name);
