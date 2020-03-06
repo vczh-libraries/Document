@@ -590,6 +590,7 @@ void Symbol::AssignPSPrimary_NF(Symbol* primary)
 		throw UnexpectedSymbolCategoryException();
 	}
 
+	pps->psVersion++;
 	pps->psDescendants.Add(this);
 	ps->psPrimary = primary;
 }

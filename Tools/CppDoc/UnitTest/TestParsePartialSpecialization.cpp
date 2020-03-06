@@ -44,6 +44,24 @@ using_value Zero<wchar_t>: auto = L'0';
 
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);
+
+		Symbol* primary = nullptr;
+		for (vint i = 0; i < program->decls.Count(); i++)
+		{
+			auto decl = program->decls[i];
+			if (decl->name.name == L"Zero")
+			{
+				if (primary)
+				{
+					TEST_CASE_ASSERT(decl->symbol->GetPSPrimary_NF() == primary);
+				}
+				else
+				{
+					primary = decl->symbol;
+					TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 2);
+				}
+			}
+		}
 	});
 
 	TEST_CATEGORY(L"Classes")
@@ -82,6 +100,24 @@ struct Obj<T (U) *>
 
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);
+
+		Symbol* primary = nullptr;
+		for (vint i = 0; i < program->decls.Count(); i++)
+		{
+			auto decl = program->decls[i];
+			if (decl->name.name == L"Obj")
+			{
+				if (primary)
+				{
+					TEST_CASE_ASSERT(decl->symbol->GetPSPrimary_NF() == primary);
+				}
+				else
+				{
+					primary = decl->symbol;
+					TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 2);
+				}
+			}
+		}
 	});
 
 	TEST_CATEGORY(L"Methods")
