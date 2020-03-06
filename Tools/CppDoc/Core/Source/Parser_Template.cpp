@@ -209,6 +209,17 @@ void AssignPSPrimary(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Sy
 	case symbol_component::SymbolKind::ValueAlias:
 		if (!symbol->GetPSPrimary_NF())
 		{
+			auto decl = symbol->GetAnyForwardDecl<Declaration>();
+			auto candidates = symbol->GetParentScope()->TryGetChildren_NFb(decl->name.name);
+			if (!candidates) throw StopParsingException(cursor);
+			for (vint i = 0; i < candidates->Count(); i++)
+			{
+				auto candidate = candidates->Get(i).Obj();
+				if (candidate->kind != symbol_component::SymbolKind::FunctionSymbol)
+				{
+					symbol->AssignPSPrimary_NF(candidate);
+				}
+			}
 		}
 		break;
 	case symbol_component::SymbolKind::FunctionSymbol:
