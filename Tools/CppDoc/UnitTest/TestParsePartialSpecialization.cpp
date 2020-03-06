@@ -113,6 +113,5 @@ struct Obj
 		AssertProgram(program, output);
 	});
 
-	// TODO: parse template value
 	// TODO: partial order evaluation
 }
