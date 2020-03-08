@@ -91,6 +91,8 @@ All **the compiler** here means the compiler created by this project.
     - Constant evaluation for all non-type template arguments: **Treat all constant values identical**
     - Exception specifications were made part of the function type: **Don't compare exception specifications**
 - **No plan**
+  - Explicit (full) specialization of a member of a template class
+    - For `template<typename T> struct X { void f(); };`, `template<> void X<int>::f(){...}` is not supported.
   - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
     - User-defined literals
     - Multithreading memory model
