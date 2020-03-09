@@ -24,7 +24,7 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 		if (TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
 		{
 			ParseTemplateSpec(newPa, cursor, argument.templateSpecScope, argument.templateSpec);
-			ValidateForRootTemplateSpec(argument.templateSpec, cursor);
+			ValidateForRootTemplateSpec(argument.templateSpec, cursor,false, false);
 		}
 
 		if (TestToken(cursor, CppTokens::TYPENAME) || TestToken(cursor, CppTokens::DECL_CLASS))
@@ -149,14 +149,57 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 ValidateForRootTemplateSpec
 ***********************************************************************/
 
-void ValidateForRootTemplateSpec(Ptr<TemplateSpec>& spec, Ptr<CppTokenCursor>& cursor)
+void ValidateForRootTemplateSpec(Ptr<TemplateSpec>& spec, Ptr<CppTokenCursor>& cursor, bool forPS, bool forFunction)
 {
-	for (vint i = 0; i < spec->arguments.Count() - 1; i++)
+	if (!spec) return;
+	if (forPS)
 	{
-		if (spec->arguments[i].ellipsis)
+		if (forFunction)
 		{
-			// there is no specialization, so only the last parameter can be variadic
-			throw StopParsingException(cursor);
+			if (spec->arguments.Count() > 0)
+			{
+				// function does not support partial specialization
+				throw StopParsingException(cursor);
+			}
+		}
+		else
+		{
+			for (vint i = 0; i < spec->arguments.Count() - 1; i++)
+			{
+				auto argument = spec->arguments[i];
+				switch (argument.argumentType)
+				{
+				case CppTemplateArgumentType::Type:
+				case CppTemplateArgumentType::HighLevelType:
+					if (argument.type)
+					{
+						// no default value for partial specialization
+						throw StopParsingException(cursor);
+					}
+					break;
+				case CppTemplateArgumentType::Value:
+					if (argument.expr)
+					{
+						// no default value for partial specialization
+						throw StopParsingException(cursor);
+					}
+					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		if (!forFunction)
+		{
+			for (vint i = 0; i < spec->arguments.Count() - 1; i++)
+			{
+				if (spec->arguments[i].ellipsis)
+				{
+					// there is no specialization, so only the last parameter can be variadic
+					throw StopParsingException(cursor);
+				}
+			}
 		}
 	}
 }
