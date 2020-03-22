@@ -4,7 +4,7 @@
 #include "Ast_Resolving.h"
 #include "Ast_Expr.h"
 
-namespace symbol_type_resolving
+namespace infer_function_type
 {
 	extern Symbol*		TemplateArgumentPatternToSymbol(ITsys* tsys);
 
@@ -66,6 +66,15 @@ namespace symbol_type_resolving
 							SortedList<ITsys*>& hardcodedPatterns
 						);
 
+
+	extern void			InferFunctionType(
+							const ParsingArguments& pa,
+							ExprTsysList& inferredFunctionTypes,
+							ExprTsysItem funcType,
+							Array<ExprTsysItem>& argTypes,
+							SortedList<vint>& boundedAnys
+						);
+
 	template<typename TCallback>
 	void CollectInvolvedVariadicArguments(const ParsingArguments& pa, const SortedList<Type*>& involvedTypes, const SortedList<Expr*>& involvedExprs, TCallback&& callback)
 	{
@@ -74,7 +83,7 @@ namespace symbol_type_resolving
 			if (auto idType = dynamic_cast<IdType*>(involvedTypes[j]))
 			{
 				auto patternSymbol = idType->resolving->resolvedSymbols[0];
-				auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
+				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
 				if (patternSymbol->ellipsis)
 				{
 					callback(patternSymbol, pattern);
@@ -87,7 +96,7 @@ namespace symbol_type_resolving
 			if (auto idExpr = dynamic_cast<IdExpr*>(involvedExprs[j]))
 			{
 				auto patternSymbol = idExpr->resolving->resolvedSymbols[0];
-				auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
+				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
 				if (patternSymbol->ellipsis)
 				{
 					callback(patternSymbol, pattern);

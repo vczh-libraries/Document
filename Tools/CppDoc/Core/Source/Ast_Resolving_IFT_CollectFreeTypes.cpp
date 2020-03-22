@@ -1,6 +1,8 @@
 #include "Ast_Resolving_IFT.h"
 
-namespace symbol_type_resolving
+using namespace symbol_type_resolving;
+
+namespace infer_function_type
 {
 	/***********************************************************************
 	CollectFreeTypes:	Collect and check all involved free types from a type

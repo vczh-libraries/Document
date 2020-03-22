@@ -1,7 +1,9 @@
-#include "Ast_Resolving_IFT.h"
+#include "Ast_Resolving_AP.h"
 #include "Ast_Evaluate_ExpandPotentialVta.h"
 
-namespace symbol_type_resolving
+using namespace symbol_type_resolving;
+
+namespace infer_function_type
 {
 	/***********************************************************************
 	TemplateArgumentPatternToSymbol:	Get the symbol from a type representing a template argument
@@ -653,7 +655,7 @@ namespace symbol_type_resolving
 							// assign arguments to correct parameters
 							auto inferPa = pa.AdjustForDecl(gfi.declSymbol);
 							inferPa.parentDeclType = ParsingArguments::AdjustDeclInstantForScope(gfi.declSymbol, gfi.parentDeclType, true);
-							ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, lastAssignedVta, functionType.Obj(), argTypes, boundedAnys);
+							assign_parameters::ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, lastAssignedVta, functionType.Obj(), argTypes, boundedAnys);
 
 							// type inferencing
 							List<Ptr<TemplateArgumentContext>> inferredArgumentTypes;

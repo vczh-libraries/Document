@@ -108,52 +108,13 @@ namespace symbol_type_resolving
 	extern void									SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
 	extern void									SearchAdlFunction(const ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result);
 
-	// InferFunctionType
-	extern void									InferFunctionType(
-													const ParsingArguments& pa,
-													ExprTsysList& inferredFunctionTypes,
-													ExprTsysItem funcType,
-													Array<ExprTsysItem>& argTypes,
-													SortedList<vint>& boundedAnys
-												);
-
 	// Generic
 
 	extern Ptr<TemplateSpec>					GetTemplateSpecFromSymbol(Symbol* symbol);
 	extern ITsys*								GetTemplateArgumentKey(const TemplateSpec::Argument& argument, ITsysAlloc* tsys);
 	extern ITsys*								GetTemplateArgumentKey(Symbol* argumentSymbol, ITsysAlloc* tsys);
 	extern void									CreateGenericFunctionHeader(const ParsingArguments& pa, Symbol* declSymbol, ITsys* parentDeclType, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction);
-	extern void									ResolveGenericParameters(
-													const ParsingArguments& invokerPa,
-													TemplateArgumentContext& newTaContext,
-													ITsys* genericFunction,
-													Array<ExprTsysItem>& argumentTypes,
-													Array<bool>& isTypes,
-													Array<vint>& argSource,
-													SortedList<vint>& boundedAnys,
-													vint offset,
-													bool allowPartialApply,
-													vint& partialAppliedArguments
-												);
-	extern void									ResolveFunctionParameters(
-													const ParsingArguments& invokerPa,
-													TypeTsysList& parameterAssignment,
-													const TemplateArgumentContext& knownArguments,
-													const SortedList<Symbol*>& argumentSymbols,
-													ITsys* lastAssignedVta,
-													FunctionType* functionType,
-													Array<ExprTsysItem>& argumentTypes,
-													SortedList<vint>& boundedAnys
-												);
-	extern void									ResolveGenericTypeParameters(
-													const ParsingArguments& invokerPa,
-													TypeTsysList& parameterAssignment,
-													const TemplateArgumentContext& knownArguments,
-													const SortedList<Symbol*>& argumentSymbols,
-													GenericType* genericType,
-													Array<ExprTsysItem>& argumentTypes,
-													SortedList<vint>& boundedAnys
-												);
+	extern void									EnsureGenericTypeParameterAndArgumentMatched(ITsys* parameter, ITsys* argument);
 }
 
 #endif

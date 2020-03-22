@@ -1,3 +1,4 @@
+#include "Ast_Resolving_AP.h"
 #include "Ast_Evaluate_ExpandPotentialVta.h"
 
 using namespace symbol_type_resolving;
@@ -33,7 +34,7 @@ namespace symbol_totsys_impl
 			taContext.symbolToApply = genericFunction->GetGenericFunction().declSymbol;
 			bool allowPartialApply = declSymbol->kind == symbol_component::SymbolKind::FunctionBodySymbol;
 			vint partialAppliedArguments = -1;
-			ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1, allowPartialApply, partialAppliedArguments);
+			assign_parameters::ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1, allowPartialApply, partialAppliedArguments);
 			process(genericFunction, declSymbol, &taContext, partialAppliedArguments);
 		}
 		else if (genericFunction->GetType() == TsysType::Any)

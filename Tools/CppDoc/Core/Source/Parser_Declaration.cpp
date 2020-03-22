@@ -1,6 +1,7 @@
 #include "Parser.h"
-#include "Ast_Expr.h"
-#include "Ast_Resolving.h"
+#include "Ast_Resolving_PSO.h"
+
+using namespace partial_specification_ordering;
 
 /***********************************************************************
 ParseDeclaration_<NAMESPACE>

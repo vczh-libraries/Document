@@ -1,6 +1,8 @@
-#include "Ast_Resolving_IFT.h"
+#include "Ast_Resolving_AP.h"
 
-namespace symbol_type_resolving
+using namespace symbol_type_resolving;
+
+namespace infer_function_type
 {
 	/***********************************************************************
 	InferTemplateArgument:	Perform type inferencing by matching an function argument with its offerred argument
@@ -227,7 +229,7 @@ namespace symbol_type_resolving
 				{
 					argumentTypes[i] = { nullptr,ExprTsysType::PRValue,entity->GetParam(i) };
 				}
-				ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, nullptr, self, argumentTypes, boundedAnys);
+				assign_parameters::ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, nullptr, self, argumentTypes, boundedAnys);
 			}
 			InferTemplateArgumentsForFunctionType(pa, self, parameterAssignment, taContext, variadicContext, freeTypeSymbols, true, lastAssignedVta, hardcodedPatterns);
 		}
@@ -421,7 +423,7 @@ namespace symbol_type_resolving
 						}
 					}
 				}
-				ResolveGenericTypeParameters(pa, parameterAssignment, taContext, freeTypeSymbols, self, argumentTypes, boundedAnys);
+				assign_parameters::ResolveGenericTypeParameters(pa, parameterAssignment, taContext, freeTypeSymbols, self, argumentTypes, boundedAnys);
 			}
 			InferTemplateArgumentsForGenericType(pa, self, parameterAssignment, taContext, variadicContext, freeTypeSymbols, lastAssignedVta, hardcodedPatterns);
 		}

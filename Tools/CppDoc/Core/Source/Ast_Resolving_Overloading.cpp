@@ -1,4 +1,5 @@
 #include "Ast_Resolving.h"
+#include "Ast_Resolving_IFT.h"
 
 namespace symbol_type_resolving
 {
@@ -188,7 +189,7 @@ namespace symbol_type_resolving
 			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
 				ExprTsysList inferredFunctionTypes;
-				InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys);
+				infer_function_type::InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys);
 				for (vint j = 0; j < inferredFunctionTypes.Count(); j++)
 				{
 					auto funcType = inferredFunctionTypes[j];
@@ -218,7 +219,7 @@ namespace symbol_type_resolving
 			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
 				ExprTsysList inferredFunctionTypes;
-				InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys);
+				infer_function_type::InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys);
 				for (vint j = 0; j < inferredFunctionTypes.Count(); j++)
 				{
 					auto funcType = inferredFunctionTypes[j];
