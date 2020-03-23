@@ -35,6 +35,11 @@ namespace partial_specification_ordering
 		{
 			if (psB)
 			{
+				// ensure that they have the same primary symbol
+				if (symbolA->GetPSPrimary_NF() != symbolB->GetPSPrimary_NF())
+				{
+					throw 0;
+				}
 				throw 0;
 			}
 			else
