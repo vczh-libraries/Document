@@ -5,7 +5,21 @@
 
 namespace partial_specification_ordering
 {
-	extern void											AssignPSPrimary(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Symbol* symbol);
+	extern void						AssignPSPrimary(
+										const ParsingArguments& pa,
+										Ptr<CppTokenCursor>& cursor,
+										Symbol* symbol
+									);
+
+	extern bool						IsPSAncestor(
+										const ParsingArguments& pa,
+										Symbol* symbolA,
+										Ptr<TemplateSpec> tA,
+										Ptr<SpecializationSpec> psA,
+										Symbol* symbolB,
+										Ptr<TemplateSpec> tB,
+										Ptr<SpecializationSpec> psB
+									);
 }
 
 #endif

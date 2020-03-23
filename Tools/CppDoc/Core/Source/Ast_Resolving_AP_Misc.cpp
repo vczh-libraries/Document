@@ -6,7 +6,7 @@ using namespace infer_function_type;
 namespace assign_parameters
 {
 	/***********************************************************************
-	AssignParameterAssignment:
+	AssignParameterAssignment: Assign arguments to parameters according to the GPA mapping
 	***********************************************************************/
 
 	void AssignParameterAssignment(
@@ -71,7 +71,9 @@ namespace assign_parameters
 	}
 
 	/***********************************************************************
-	CalculateParameterPackSize:
+	CalculateParameterPackSize: Calculate pack size from involedTypes and involvedExprs from a pattern
+		all variadic template arguments used in a pattern are required to have the same pack size
+		this function returns -1 if the pack size is unknown, and crash if pack size has confliction
 	***********************************************************************/
 
 	vint CalculateParameterPackSize(
@@ -122,11 +124,11 @@ namespace assign_parameters
 	}
 
 	/***********************************************************************
-	AdjustPaForCollecting:
+	AdjustPaForCollecting: Adjust pa so that taContext of parentDeclType is used accordingly
+		this adjustment is only valid for ResolveGenericTypeParameters and ResolveFunctionParameters
+		because only tsys and TryGetReplacedGenericArg is used
 	***********************************************************************/
-	// adjust pa so that taContext of parentDeclType is used accordingly
-	// this adjustment is only valid for following functions
-	// because only tsys and TryGetReplacedGenericArg is used
+
 	ParsingArguments AdjustPaForCollecting(const ParsingArguments& pa)
 	{
 		auto invokerPa = pa;

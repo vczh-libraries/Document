@@ -1,4 +1,5 @@
 #include "Util.h"
+#include <Ast_Resolving_PSO.h>
 
 namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation
 {
@@ -284,7 +285,114 @@ struct Obj
 			}
 		}
 
+		// calculate partial ordering relationship
+
+		const Pair<vint, vint> yes_raw[] = {
+			{4,6},
+			{5,6},
+			{23,6},
+			{4,7},
+			{5,8},
+			{6,9},
+			{7,9},
+			{8,9},
+			{24,9},
+			{10,11},
+			{10,12},
+			{11,13},
+			{12,13},
+			{13,14},
+			{15,16},
+			{15,17},
+			{16,18},
+			{17,19},
+			{19,20},
+			{17,21},
+			{15,22},
+			{23,24},
+			{6,25},
+			{25,26},
+			{9,26},
+			{6,27},
+			{25,28},
+			{9,29},
+			{26,30}
+		};
+
+		Group<vint, vint> parents, children, ancestors;
+
+		for (auto p : yes_raw)
+		{
+			parents.Add(p.value, p.key);
+			children.Add(p.key, p.value);
+		}
+
+		Func<void(vint, vint)> collectAncestors = [&](vint key, vint from)
+		{
+			vint index = parents.Keys().IndexOf(from);
+			if (index == -1) return;
+			auto& values = parents.GetByIndex(index);
+			for (vint i = 0; i < values.Count(); i++)
+			{
+				vint to = values[i];
+				if (!ancestors.Contains(key, to))
+				{
+					ancestors.Add(key, to);
+					collectAncestors(key, to);
+				}
+			}
+		};
+
+		for (vint i = 0; i < parents.Count(); i++)
+		{
+			vint key = parents.Keys()[i];
+			collectAncestors(key, key);
+		}
+
+		for (vint i = 0; i < parents.Count(); i++)
+		{
+			auto& values = const_cast<List<vint>&>(parents.GetByIndex(i));
+			Sort<vint>(&values[0], values.Count(), [](vint a, vint b) { return a - b; });
+		}
+
+		for (vint i = 0; i < ancestors.Count(); i++)
+		{
+			auto& values = const_cast<List<vint>&>(ancestors.GetByIndex(i));
+			Sort<vint>(&values[0], values.Count(), [](vint a, vint b) { return a - b; });
+		}
+
 		// test ordering function by comparing decls
+
+#define ANCESTOR(A, B)	partial_specification_ordering::IsPSAncestor(pa, decls[A]->symbol, decls[A]->templateSpec, decls[A]->specializationSpec, decls[B]->symbol, decls[B]->templateSpec, decls[B]->specializationSpec)
+#define YES(A, B)	TEST_CASE(itow(A)+L" <- " + itow(B)) { TEST_ASSERT(ANCESTOR(A, B) == true); });
+#define NO(A, B)	TEST_CASE(itow(A)+L" <- " + itow(B)) { TEST_ASSERT(ANCESTOR(A, B) == false); });
+
+		for (vint i = 1; i < decls.Count(); i++)
+		{
+			YES(0, i);
+			NO(i, 0);
+		}
+
+		for (vint i = 0; i < decls.Count(); i++)
+		{
+			YES(i, i);
+		}
+
+		for (vint i = 0; i < ancestors.Count(); i++)
+		{
+			vint key = ancestors.Keys()[i];
+			auto& values = ancestors.GetByIndex(i);
+			for (vint j = 0; j < values.Count(); j++)
+			{
+				vint value = values[j];
+				YES(value, key);
+				NO(key, value);
+			}
+		}
+
+#undef YES
+#undef NO
+
 		// test ordering for each declaration
 	});
 }

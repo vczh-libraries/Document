@@ -6,8 +6,7 @@ using namespace infer_function_type;
 namespace assign_parameters
 {
 	/***********************************************************************
-	ResolveFunctionParameters: Calculate function parameter types by matching arguments to patterens
-	ResolveGenericTypeParameters: Calculate generic parameter types by matching arguments to patterens
+	ResolveGenericTypeParameters: Fill parameterAssignment by matching type/value arguments to template arguments
 	***********************************************************************/
 
 	void ResolveGenericTypeParameters(
