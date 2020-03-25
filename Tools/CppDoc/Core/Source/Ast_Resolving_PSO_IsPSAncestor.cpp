@@ -55,7 +55,7 @@ namespace partial_specification_ordering
 
 				try
 				{
-					MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, psA, psB, false, freeTypeSymbols);
+					MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, psA, psB, freeTypeSymbols);
 				}
 				catch (const TypeCheckerException&)
 				{

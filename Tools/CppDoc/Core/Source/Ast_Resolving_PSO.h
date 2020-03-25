@@ -42,7 +42,6 @@ namespace partial_specification_ordering
 											const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 											Ptr<SpecializationSpec> ancestor,
 											Ptr<SpecializationSpec> child,
-											bool insideVariant,
 											const SortedList<Symbol*>& freeTypeSymbols
 										);
 

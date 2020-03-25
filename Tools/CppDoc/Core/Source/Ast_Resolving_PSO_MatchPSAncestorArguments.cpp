@@ -3,6 +3,39 @@
 namespace partial_specification_ordering
 {
 	/***********************************************************************
+	MatchPSAncestorArguments: Match ancestor types with child types, nullptr means value
+	***********************************************************************/
+
+	void MatchPSAncestorArguments(
+		const ParsingArguments& pa,
+		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
+		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
+		VariadicList<Ptr<Type>>& ancestor,
+		VariadicList<Ptr<Type>>& child,
+		bool insideVariant,
+		const SortedList<Symbol*>& freeTypeSymbols
+	)
+	{
+		throw TypeCheckerException();
+	}
+
+	template<typename TSource, typename TGetter>
+	void FillVariadicTypeList(VariadicList<TSource>& ancestor, VariadicList<TSource>& child, VariadicList<Ptr<Type>>& ancestorTypes, VariadicList<Ptr<Type>>& childTypes, TGetter&& getter)
+	{
+		for (vint i = 0; i < ancestor.Count(); i++)
+		{
+			auto& e = ancestor[i];
+			ancestorTypes.Add({ getter(e.item),e.isVariadic });
+		}
+
+		for (vint i = 0; i < child.Count(); i++)
+		{
+			auto& e = child[i];
+			childTypes.Add({ getter(e.item),e.isVariadic });
+		}
+	}
+
+	/***********************************************************************
 	MatchPSAncestorArguments (SpecializationSpec)
 	***********************************************************************/
 
@@ -12,11 +45,14 @@ namespace partial_specification_ordering
 		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 		Ptr<SpecializationSpec> ancestor,
 		Ptr<SpecializationSpec> child,
-		bool insideVariant,
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
-		throw TypeCheckerException();
+		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
+		FillVariadicTypeList(ancestor->arguments, child->arguments, ancestorTypes, childTypes, [](GenericArgument& e) { return e.type; });
+		MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, ancestorTypes, childTypes, false, freeTypeSymbols);
+
+		// retry if some arguments cannot resolve because of <unknown-pack..., y...>
 	}
 
 	/***********************************************************************
@@ -33,7 +69,14 @@ namespace partial_specification_ordering
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
-		throw TypeCheckerException();
+		if (ancestor->ellipsis != child->ellipsis)
+		{
+			throw TypeCheckerException();
+		}
+
+		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
+		FillVariadicTypeList(ancestor->parameters, child->parameters, ancestorTypes, childTypes, [](Ptr<VariableDeclaration>& e) { return e->type; });
+		MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeTypeSymbols);
 	}
 
 	/***********************************************************************
@@ -50,6 +93,8 @@ namespace partial_specification_ordering
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
-		throw TypeCheckerException();
+		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
+		FillVariadicTypeList(ancestor->arguments, child->arguments, ancestorTypes, childTypes, [](GenericArgument& e) { return e.type; });
+		MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeTypeSymbols);
 	}
 }
