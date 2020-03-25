@@ -16,6 +16,10 @@ namespace partial_specification_ordering
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
+		// TODO: support variadic template argument pack
+		for (vint i = 0; i < ancestor.Count(); i++) if (ancestor[i].isVariadic) throw 0;
+		for (vint i = 0; i < child.Count(); i++) if (child[i].isVariadic) throw 0;
+
 		throw TypeCheckerException();
 	}
 
