@@ -239,5 +239,8 @@
     <ClCompile Include="Source\Ast_Resolving_PSO_IsPSAncestor.cpp">
       <Filter>Source Files\Ast\PartialSpecializationOrdering</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Ast_Resolving_PSO_MatchPSAncestorArguments.cpp">
+      <Filter>Source Files\Ast\PartialSpecializationOrdering</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

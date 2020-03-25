@@ -1,5 +1,8 @@
 #include "Ast_Resolving_PSO.h"
 
+using namespace symbol_type_resolving;
+using namespace infer_function_type;
+
 namespace partial_specification_ordering
 {
 	/***********************************************************************
@@ -36,11 +39,35 @@ namespace partial_specification_ordering
 			if (psB)
 			{
 				// ensure that they have the same primary symbol
-				if (symbolA->GetPSPrimary_NF() != symbolB->GetPSPrimary_NF())
+				if (symbolA->GetPSPrimary_NF() != symbolB->GetPSPrimary_NF()) throw TypeCheckerException();
+
+				SortedList<Symbol*>								freeTypeSymbols;
+				const Dictionary<Symbol*, Ptr<MatchPSResult>>	matchingResult, matchingResultVta;
+
+				// fill freeTypeSymbols with all template arguments
+				for (vint i = 0; i < tA->arguments.Count(); i++)
 				{
-					throw 0;
+					auto argument = tA->arguments[i];
+					auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
+					auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
+					freeTypeSymbols.Add(patternSymbol);
 				}
-				throw 0;
+
+				try
+				{
+					MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, psA, psB, false, freeTypeSymbols);
+				}
+				catch (const TypeCheckerException&)
+				{
+					return false;
+				}
+
+				if (matchingResultVta.Count() > 0)
+				{
+					// someone misses "..." in psA
+					throw TypeCheckerException();
+				}
+				return true;
 			}
 			else
 			{

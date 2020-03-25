@@ -203,6 +203,7 @@
     <ClCompile Include="Source\Ast_Resolving_Overloading.cpp" />
     <ClCompile Include="Source\Ast_Resolving_PSO_AssignPSPrimary.cpp" />
     <ClCompile Include="Source\Ast_Resolving_PSO_IsPSAncestor.cpp" />
+    <ClCompile Include="Source\Ast_Resolving_PSO_MatchPSAncestorArguments.cpp" />
     <ClCompile Include="Source\Ast_Type_GenerateMembers.cpp" />
     <ClCompile Include="Source\Ast_Type_IsPendingType.cpp" />
     <ClCompile Include="Source\Ast_Type_IsSameResolvedType.cpp" />
