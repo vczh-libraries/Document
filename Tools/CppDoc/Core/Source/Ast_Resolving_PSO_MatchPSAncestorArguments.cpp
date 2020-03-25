@@ -1,5 +1,7 @@
 #include "Ast_Resolving_PSO.h"
 
+using namespace infer_function_type;
+
 namespace partial_specification_ordering
 {
 	/***********************************************************************
@@ -19,8 +21,17 @@ namespace partial_specification_ordering
 		// TODO: support variadic template argument pack
 		for (vint i = 0; i < ancestor.Count(); i++) if (ancestor[i].isVariadic) throw 0;
 		for (vint i = 0; i < child.Count(); i++) if (child[i].isVariadic) throw 0;
+		if (ancestor.Count() != child.Count()) throw TypeCheckerException();
 
-		throw TypeCheckerException();
+		for (vint i = 0; i < ancestor.Count(); i++)
+		{
+			auto ancestorType = ancestor[i].item;
+			auto childType = child[i].item;
+			SortedList<Type*> involvedTypes;
+			SortedList<Expr*> involvedExprs;
+			CollectFreeTypes(pa, false, ancestorType, nullptr, insideVariant, freeTypeSymbols, involvedTypes, involvedExprs);
+			MatchPSArgument(pa, matchingResult, matchingResultVta, ancestorType, childType, insideVariant, freeTypeSymbols, involvedTypes, involvedExprs);
+		}
 	}
 
 	template<typename TSource, typename TGetter>

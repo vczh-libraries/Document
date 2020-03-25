@@ -36,6 +36,18 @@ namespace partial_specification_ordering
 		VariadicList<GenericArgument>	source;		// for Single and PartOfVariant, source should have exactly one element
 	};
 
+	extern								void MatchPSArgument(
+											const ParsingArguments& pa,
+											const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
+											const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
+											Ptr<Type> ancestor,
+											Ptr<Type> child,
+											bool insideVariant,
+											const SortedList<Symbol*>& freeTypeSymbols,
+											SortedList<Type*>& involvedTypes,
+											SortedList<Expr*>& involvedExprs
+										);
+
 	extern void							MatchPSAncestorArguments(
 											const ParsingArguments& pa,
 											const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,

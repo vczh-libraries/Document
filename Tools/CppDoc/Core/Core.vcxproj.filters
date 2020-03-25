@@ -242,5 +242,8 @@
     <ClCompile Include="Source\Ast_Resolving_PSO_MatchPSAncestorArguments.cpp">
       <Filter>Source Files\Ast\PartialSpecializationOrdering</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Ast_Resolving_PSO_MatchPSArgument.cpp">
+      <Filter>Source Files\Ast\InferFunctionType</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
