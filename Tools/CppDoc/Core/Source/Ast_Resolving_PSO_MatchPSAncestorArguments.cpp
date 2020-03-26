@@ -10,6 +10,7 @@ namespace partial_specification_ordering
 
 	void MatchPSAncestorArguments(
 		const ParsingArguments& pa,
+		bool& skipped,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 		VariadicList<Ptr<Type>>& ancestor,
@@ -18,7 +19,9 @@ namespace partial_specification_ordering
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
-		// TODO: support variadic template argument pack
+		// TODO: calculate known pack size for each variadic item in ancestor
+		// TODO: if there is any variadic item in ancestor that, has unknown pack size, and is not the last item, skip
+		// TODO: if there is any variadic item in child that, is not the last item, fail
 		for (vint i = 0; i < ancestor.Count(); i++) if (ancestor[i].isVariadic) throw 0;
 		for (vint i = 0; i < child.Count(); i++) if (child[i].isVariadic) throw 0;
 		if (ancestor.Count() != child.Count()) throw 0;
@@ -30,7 +33,7 @@ namespace partial_specification_ordering
 			SortedList<Type*> involvedTypes;
 			SortedList<Expr*> involvedExprs;
 			CollectFreeTypes(pa, false, ancestorType, nullptr, insideVariant, freeTypeSymbols, involvedTypes, involvedExprs);
-			MatchPSArgument(pa, matchingResult, matchingResultVta, ancestorType, childType, insideVariant, freeTypeSymbols, involvedTypes, involvedExprs);
+			MatchPSArgument(pa, skipped, matchingResult, matchingResultVta, ancestorType, childType, insideVariant, freeTypeSymbols, involvedTypes, involvedExprs);
 		}
 	}
 
@@ -56,8 +59,6 @@ namespace partial_specification_ordering
 
 	void MatchPSAncestorArguments(
 		const ParsingArguments& pa,
-		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
-		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 		SpecializationSpec* ancestor,
 		SpecializationSpec* child,
 		const SortedList<Symbol*>& freeTypeSymbols
@@ -65,9 +66,19 @@ namespace partial_specification_ordering
 	{
 		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
 		FillVariadicTypeList(ancestor->arguments, child->arguments, ancestorTypes, childTypes, [](GenericArgument& e) { return e.type; });
-		MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, ancestorTypes, childTypes, false, freeTypeSymbols);
 
-		// retry if some arguments cannot resolve because of <unknown-pack..., y...>
+		bool skipped = false;
+		Dictionary<Symbol*, Ptr<MatchPSResult>> matchingResult;
+		Dictionary<Symbol*, Ptr<MatchPSResult>> matchingResultVta;
+		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, false, freeTypeSymbols);
+
+		if (matchingResultVta.Count() > 0)
+		{
+			// someone misses "..." in psA
+			throw TypeCheckerException();
+		}
+
+		// TODO: retry if there is any skipped matching, fail if a retry result in no addition item in matchingResult
 	}
 
 	/***********************************************************************
@@ -76,6 +87,7 @@ namespace partial_specification_ordering
 
 	void MatchPSAncestorArguments(
 		const ParsingArguments& pa,
+		bool& skipped,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 		FunctionType* ancestor,
@@ -92,7 +104,7 @@ namespace partial_specification_ordering
 		// TODO: take care about T[] and T* for parameters
 		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
 		FillVariadicTypeList(ancestor->parameters, child->parameters, ancestorTypes, childTypes, [](Ptr<VariableDeclaration>& e) { return e->type; });
-		MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeTypeSymbols);
+		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeTypeSymbols);
 	}
 
 	/***********************************************************************
@@ -101,6 +113,7 @@ namespace partial_specification_ordering
 
 	void MatchPSAncestorArguments(
 		const ParsingArguments& pa,
+		bool& skipped,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 		GenericType* ancestor,
@@ -111,6 +124,6 @@ namespace partial_specification_ordering
 	{
 		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
 		FillVariadicTypeList(ancestor->arguments, child->arguments, ancestorTypes, childTypes, [](GenericArgument& e) { return e.type; });
-		MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeTypeSymbols);
+		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeTypeSymbols);
 	}
 }

@@ -40,6 +40,7 @@ namespace partial_specification_ordering
 
 	extern								void MatchPSArgument(
 											const ParsingArguments& pa,
+											bool& skipped,
 											Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 											Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 											Ptr<Type> ancestor,
@@ -52,8 +53,6 @@ namespace partial_specification_ordering
 
 	extern void							MatchPSAncestorArguments(
 											const ParsingArguments& pa,
-											Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
-											Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 											SpecializationSpec* ancestor,
 											SpecializationSpec* child,
 											const SortedList<Symbol*>& freeTypeSymbols
@@ -61,6 +60,7 @@ namespace partial_specification_ordering
 
 	extern void							MatchPSAncestorArguments(
 											const ParsingArguments& pa,
+											bool& skipped,
 											Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 											Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 											FunctionType* ancestor,
@@ -71,6 +71,7 @@ namespace partial_specification_ordering
 
 	extern void							MatchPSAncestorArguments(
 											const ParsingArguments& pa,
+											bool& skipped,
 											Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 											Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 											GenericType* ancestor,

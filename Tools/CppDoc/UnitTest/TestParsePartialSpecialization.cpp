@@ -367,28 +367,52 @@ struct Obj
 #define YES(A, B)	TEST_CASE(itow(A)+L" <- " + itow(B)) { TEST_ASSERT(ANCESTOR(A, B) == true); });
 #define NO(A, B)	TEST_CASE(itow(A)+L" <- " + itow(B)) { TEST_ASSERT(ANCESTOR(A, B) == false); });
 
-		for (vint i = 1; i < decls.Count(); i++)
+		TEST_CATEGORY(L"Primary should be an ancestor of any partial specializations")
 		{
-			YES(0, i);
-			NO(i, 0);
-		}
-
-		for (vint i = 0; i < decls.Count(); i++)
-		{
-			YES(i, i);
-		}
-
-		for (vint i = 0; i < ancestors.Count(); i++)
-		{
-			vint key = ancestors.Keys()[i];
-			auto& values = ancestors.GetByIndex(i);
-			for (vint j = 0; j < values.Count(); j++)
+			for (vint i = 1; i < decls.Count(); i++)
 			{
-				vint value = values[j];
-				YES(value, key);
-				NO(key, value);
+				YES(0, i);
+				NO(i, 0);
 			}
-		}
+		});
+
+		TEST_CATEGORY(L"Ancestor relationship should be reflexive")
+		{
+			for (vint i = 0; i < decls.Count(); i++)
+			{
+				YES(i, i);
+			}
+		});
+
+		TEST_CATEGORY(L"Ancestor relationship should be transitive but not symmetric")
+		{
+			for (vint i = 0; i < ancestors.Count(); i++)
+			{
+				vint key = ancestors.Keys()[i];
+				auto& values = ancestors.GetByIndex(i);
+				for (vint j = 0; j < values.Count(); j++)
+				{
+					vint value = values[j];
+					YES(value, key);
+					NO(key, value);
+				}
+			}
+		});
+
+		TEST_CATEGORY(L"All untested pairs should fail the test")
+		{
+			for (vint i = 1; i < ancestors.Count(); i++)
+			{
+				for (vint j = i + 1; j < ancestors.Count(); j++)
+				{
+					if (!ancestors.Contains(i, j) && !ancestors.Contains(j, i))
+					{
+						NO(i, j);
+						NO(j, i);
+					}
+				}
+			}
+		});
 
 #undef YES
 #undef NO

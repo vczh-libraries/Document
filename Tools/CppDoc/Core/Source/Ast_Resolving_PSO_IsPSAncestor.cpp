@@ -42,7 +42,6 @@ namespace partial_specification_ordering
 				if (symbolA->GetPSPrimary_NF() != symbolB->GetPSPrimary_NF()) throw MatchPSFailureException();
 
 				SortedList<Symbol*>								freeTypeSymbols;
-				Dictionary<Symbol*, Ptr<MatchPSResult>>			matchingResult, matchingResultVta;
 
 				// fill freeTypeSymbols with all template arguments
 				for (vint i = 0; i < tA->arguments.Count(); i++)
@@ -55,17 +54,11 @@ namespace partial_specification_ordering
 
 				try
 				{
-					MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, psA.Obj(), psB.Obj(), freeTypeSymbols);
+					MatchPSAncestorArguments(pa, psA.Obj(), psB.Obj(), freeTypeSymbols);
 				}
 				catch (const MatchPSFailureException&)
 				{
 					return false;
-				}
-
-				if (matchingResultVta.Count() > 0)
-				{
-					// someone misses "..." in psA
-					throw MatchPSFailureException();
 				}
 				return true;
 			}
