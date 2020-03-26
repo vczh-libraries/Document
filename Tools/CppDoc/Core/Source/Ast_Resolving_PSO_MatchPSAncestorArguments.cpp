@@ -21,7 +21,7 @@ namespace partial_specification_ordering
 		// TODO: support variadic template argument pack
 		for (vint i = 0; i < ancestor.Count(); i++) if (ancestor[i].isVariadic) throw 0;
 		for (vint i = 0; i < child.Count(); i++) if (child[i].isVariadic) throw 0;
-		if (ancestor.Count() != child.Count()) throw TypeCheckerException();
+		if (ancestor.Count() != child.Count()) throw 0;
 
 		for (vint i = 0; i < ancestor.Count(); i++)
 		{
@@ -58,8 +58,8 @@ namespace partial_specification_ordering
 		const ParsingArguments& pa,
 		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
-		Ptr<SpecializationSpec> ancestor,
-		Ptr<SpecializationSpec> child,
+		SpecializationSpec* ancestor,
+		SpecializationSpec* child,
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
@@ -78,17 +78,18 @@ namespace partial_specification_ordering
 		const ParsingArguments& pa,
 		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
-		Ptr<FunctionType> ancestor,
-		Ptr<FunctionType> child,
+		FunctionType* ancestor,
+		FunctionType* child,
 		bool insideVariant,
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
 		if (ancestor->ellipsis != child->ellipsis)
 		{
-			throw TypeCheckerException();
+			throw MatchPSFailureException();
 		}
 
+		// TODO: take care about T[] and T* for parameters
 		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
 		FillVariadicTypeList(ancestor->parameters, child->parameters, ancestorTypes, childTypes, [](Ptr<VariableDeclaration>& e) { return e->type; });
 		MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeTypeSymbols);
@@ -102,8 +103,8 @@ namespace partial_specification_ordering
 		const ParsingArguments& pa,
 		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
-		Ptr<GenericType> ancestor,
-		Ptr<GenericType> child,
+		GenericType* ancestor,
+		GenericType* child,
 		bool insideVariant,
 		const SortedList<Symbol*>& freeTypeSymbols
 	)

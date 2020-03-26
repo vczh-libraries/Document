@@ -5,6 +5,8 @@
 
 namespace partial_specification_ordering
 {
+	struct MatchPSFailureException {};
+
 	extern void							AssignPSPrimary(
 											const ParsingArguments& pa,
 											Ptr<CppTokenCursor>& cursor,
@@ -52,8 +54,8 @@ namespace partial_specification_ordering
 											const ParsingArguments& pa,
 											const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 											const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
-											Ptr<SpecializationSpec> ancestor,
-											Ptr<SpecializationSpec> child,
+											SpecializationSpec* ancestor,
+											SpecializationSpec* child,
 											const SortedList<Symbol*>& freeTypeSymbols
 										);
 
@@ -61,8 +63,8 @@ namespace partial_specification_ordering
 											const ParsingArguments& pa,
 											const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 											const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
-											Ptr<FunctionType> ancestor,
-											Ptr<FunctionType> child,
+											FunctionType* ancestor,
+											FunctionType* child,
 											bool insideVariant,
 											const SortedList<Symbol*>& freeTypeSymbols
 										);
@@ -71,8 +73,8 @@ namespace partial_specification_ordering
 											const ParsingArguments& pa,
 											const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 											const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
-											Ptr<GenericType> ancestor,
-											Ptr<GenericType> child,
+											GenericType* ancestor,
+											GenericType* child,
 											bool insideVariant,
 											const SortedList<Symbol*>& freeTypeSymbols
 										);

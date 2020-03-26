@@ -25,10 +25,10 @@ namespace partial_specification_ordering
 			{
 			case CppTemplateArgumentType::HighLevelType:
 			case CppTemplateArgumentType::Type:
-				if (psB->arguments[b].item.expr) throw TypeCheckerException();
+				if (psB->arguments[b].item.expr) throw MatchPSFailureException();
 				break;
 			case CppTemplateArgumentType::Value:
-				if (psB->arguments[b].item.type) throw TypeCheckerException();
+				if (psB->arguments[b].item.type) throw MatchPSFailureException();
 				break;
 			}
 		};
@@ -39,7 +39,7 @@ namespace partial_specification_ordering
 			if (psB)
 			{
 				// ensure that they have the same primary symbol
-				if (symbolA->GetPSPrimary_NF() != symbolB->GetPSPrimary_NF()) throw TypeCheckerException();
+				if (symbolA->GetPSPrimary_NF() != symbolB->GetPSPrimary_NF()) throw MatchPSFailureException();
 
 				SortedList<Symbol*>								freeTypeSymbols;
 				const Dictionary<Symbol*, Ptr<MatchPSResult>>	matchingResult, matchingResultVta;
@@ -55,9 +55,9 @@ namespace partial_specification_ordering
 
 				try
 				{
-					MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, psA, psB, freeTypeSymbols);
+					MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, psA.Obj(), psB.Obj(), freeTypeSymbols);
 				}
-				catch (const TypeCheckerException&)
+				catch (const MatchPSFailureException&)
 				{
 					return false;
 				}
@@ -65,7 +65,7 @@ namespace partial_specification_ordering
 				if (matchingResultVta.Count() > 0)
 				{
 					// someone misses "..." in psA
-					throw TypeCheckerException();
+					throw MatchPSFailureException();
 				}
 				return true;
 			}
@@ -123,14 +123,14 @@ namespace partial_specification_ordering
 					// <A1>
 					// <B1, B2, Bs...>
 					// argument amount mismatched
-					throw TypeCheckerException();
+					throw MatchPSFailureException();
 				}
 				else
 				{
 					// <A1>
 					// <B1, B2>
 					// argument amount mismatched
-					throw TypeCheckerException();
+					throw MatchPSFailureException();
 				}
 			}
 			else if (minA > minB)
@@ -149,7 +149,7 @@ namespace partial_specification_ordering
 					// <A1, A2, As...>
 					// <B1>
 					// argument amount mismatched
-					throw TypeCheckerException();
+					throw MatchPSFailureException();
 				}
 				else if (vtaB)
 				{
@@ -165,7 +165,7 @@ namespace partial_specification_ordering
 					// <A1, A2>
 					// <B1>
 					// argument amount mismatched
-					throw TypeCheckerException();
+					throw MatchPSFailureException();
 				}
 			}
 			else
