@@ -66,6 +66,7 @@ namespace partial_specification_ordering
 				if (self->reference == c->reference)
 				{
 					Execute(self->type, c->type);
+					return;
 				}
 			}
 			throw MatchPSFailureException();
@@ -77,6 +78,7 @@ namespace partial_specification_ordering
 			{
 				Execute(self->type, c->type);
 				Execute(self->expr);
+				return;
 			}
 			throw MatchPSFailureException();
 		}
@@ -88,6 +90,7 @@ namespace partial_specification_ordering
 				if (self->callingConvention == c->callingConvention)
 				{
 					Execute(self->type, c->type);
+					return;
 				}
 			}
 			throw MatchPSFailureException();
@@ -101,6 +104,7 @@ namespace partial_specification_ordering
 				auto cr = c->decoratorReturnType ? c->decoratorReturnType : c->returnType;
 				Execute(sr, cr);
 				MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, self, c.Obj(), insideVariant, freeTypeSymbols);
+				return;
 			}
 			throw MatchPSFailureException();
 		}
@@ -111,6 +115,7 @@ namespace partial_specification_ordering
 			{
 				Execute(self->classType, c->classType);
 				Execute(self->type, c->type);
+				return;
 			}
 			throw MatchPSFailureException();
 		}
@@ -131,6 +136,7 @@ namespace partial_specification_ordering
 				if (self->isConst == c->isConst && self->isVolatile == c->isVolatile)
 				{
 					Execute(self->type, c->type);
+					return;
 				}
 			}
 			throw MatchPSFailureException();
@@ -150,7 +156,7 @@ namespace partial_specification_ordering
 			if (involvedTypes.Contains(self))
 			{
 				auto patternSymbol = self->resolving->resolvedSymbols[0];
-				auto& output = patternSymbol->ellipsis ? matchingResult : matchingResultVta;
+				auto& output = patternSymbol->ellipsis ? matchingResultVta : matchingResult;
 
 				switch (patternSymbol->kind)
 				{
@@ -238,6 +244,7 @@ namespace partial_specification_ordering
 			{
 				Execute(self->type, c->type);
 				MatchPSAncestorArguments(pa, matchingResult, matchingResultVta, self, c.Obj(), insideVariant, freeTypeSymbols);
+				return;
 			}
 			throw MatchPSFailureException();
 		}
