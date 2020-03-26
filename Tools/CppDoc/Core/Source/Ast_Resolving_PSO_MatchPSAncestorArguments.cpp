@@ -10,8 +10,8 @@ namespace partial_specification_ordering
 
 	void MatchPSAncestorArguments(
 		const ParsingArguments& pa,
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
+		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
+		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 		VariadicList<Ptr<Type>>& ancestor,
 		VariadicList<Ptr<Type>>& child,
 		bool insideVariant,
@@ -56,8 +56,8 @@ namespace partial_specification_ordering
 
 	void MatchPSAncestorArguments(
 		const ParsingArguments& pa,
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
+		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
+		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 		SpecializationSpec* ancestor,
 		SpecializationSpec* child,
 		const SortedList<Symbol*>& freeTypeSymbols
@@ -76,8 +76,8 @@ namespace partial_specification_ordering
 
 	void MatchPSAncestorArguments(
 		const ParsingArguments& pa,
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
+		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
+		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 		FunctionType* ancestor,
 		FunctionType* child,
 		bool insideVariant,
@@ -101,8 +101,8 @@ namespace partial_specification_ordering
 
 	void MatchPSAncestorArguments(
 		const ParsingArguments& pa,
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
+		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
+		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 		GenericType* ancestor,
 		GenericType* child,
 		bool insideVariant,

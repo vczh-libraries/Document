@@ -6,19 +6,19 @@ namespace partial_specification_ordering
 	class MatchPSArgumentVisitor : public Object, public virtual ITypeVisitor
 	{
 	public:
-		const ParsingArguments&								pa;
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>&		matchingResult;
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>&		matchingResultVta;
-		bool												insideVariant;
-		const SortedList<Symbol*>&							freeTypeSymbols;
-		SortedList<Type*>&									involvedTypes;
-		SortedList<Expr*>&									involvedExprs;
-		Ptr<Type>											childType;
+		const ParsingArguments&							pa;
+		Dictionary<Symbol*, Ptr<MatchPSResult>>&		matchingResult;
+		Dictionary<Symbol*, Ptr<MatchPSResult>>&		matchingResultVta;
+		bool											insideVariant;
+		const SortedList<Symbol*>&						freeTypeSymbols;
+		SortedList<Type*>&								involvedTypes;
+		SortedList<Expr*>&								involvedExprs;
+		Ptr<Type>										childType;
 
 		MatchPSArgumentVisitor(
 			const ParsingArguments& _pa,
-			const Dictionary<Symbol*, Ptr<MatchPSResult>>& _matchingResult,
-			const Dictionary<Symbol*, Ptr<MatchPSResult>>& _matchingResultVta,
+			Dictionary<Symbol*, Ptr<MatchPSResult>>& _matchingResult,
+			Dictionary<Symbol*, Ptr<MatchPSResult>>& _matchingResultVta,
 			bool _insideVariant,
 			const SortedList<Symbol*>& _freeTypeSymbols,
 			SortedList<Type*>& _involvedTypes,
@@ -43,6 +43,7 @@ namespace partial_specification_ordering
 		void Execute(const Ptr<Expr>& expr)
 		{
 			if (!involvedExprs.Contains(expr.Obj())) return;
+			// TODO: dealing with value
 			throw 0;
 		}
 
@@ -116,7 +117,11 @@ namespace partial_specification_ordering
 
 		void Visit(DeclType* self)override
 		{
-			// do not perform type inferencing against decltype(expr)
+			if (auto c = childType.Cast<DeclType>())
+			{
+				return;
+			}
+			throw MatchPSFailureException();
 		}
 
 		void Visit(DecorateType* self)override
@@ -133,12 +138,83 @@ namespace partial_specification_ordering
 
 		void Visit(RootType* self)override
 		{
-			// do not perform type inferencing against ::
+			if (auto c = childType.Cast<RootType>())
+			{
+				return;
+			}
+			throw MatchPSFailureException();
 		}
 
 		void Visit(IdType* self)override
 		{
-			throw 0;
+			if (involvedTypes.Contains(self))
+			{
+				auto patternSymbol = self->resolving->resolvedSymbols[0];
+				auto& output = patternSymbol->ellipsis ? matchingResult : matchingResultVta;
+
+				switch (patternSymbol->kind)
+				{
+				case symbol_component::SymbolKind::GenericTypeArgument:
+					{
+						// TODO: pass information from outside
+						auto result = MakePtr<MatchPSResult>();
+						result->kind = MatchPSKind::Single;
+						result->source.Add({ childType,false });
+
+						vint index = output.Keys().IndexOf(patternSymbol);
+						if (index == -1)
+						{
+							output.Add(patternSymbol, result);
+							return;
+						}
+						else
+						{
+							auto assigned = output.Values()[index];
+							if (result->kind != assigned->kind) goto FAIL;
+							if (result->start != assigned->start) goto FAIL;
+							if (result->stop != assigned->stop) goto FAIL;
+							if (result->source.Count() != assigned->source.Count()) goto FAIL;
+							{
+								Dictionary<WString, WString> equivalentNames;
+								for (vint i = 0; i < result->source.Count(); i++)
+								{
+									auto rt = result->source[i];
+									auto at = assigned->source[i];
+									if(rt.isVariadic!=at.isVariadic) goto FAIL;
+									if (rt.item && at.item)
+									{
+										if (!IsSameResolvedType(rt.item, at.item, equivalentNames)) goto FAIL;
+									}
+									else if (rt.item || at.item)
+									{
+										goto FAIL;
+									}
+								}
+							}
+							return;
+						}
+					}
+					break;
+				case symbol_component::SymbolKind::GenericValueArgument:
+					{
+						// TODO: dealing with value
+						throw 0;
+					}
+					break;
+				}
+			}
+			else if (auto c = childType.Cast<Category_Id_Child_Type>())
+			{
+				if (self->resolving && c->resolving)
+				{
+					if (!From(self->resolving->resolvedSymbols).Intersect(c->resolving->resolvedSymbols).IsEmpty())
+					{
+						return;
+					}
+				}
+			}
+		FAIL:
+			throw MatchPSFailureException();
 		}
 
 		void Visit(ChildType* self)override
@@ -173,8 +249,8 @@ namespace partial_specification_ordering
 
 	void MatchPSArgument(
 		const ParsingArguments& pa,
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
-		const Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
+		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
+		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 		Ptr<Type> ancestor,
 		Ptr<Type> child,
 		bool insideVariant,

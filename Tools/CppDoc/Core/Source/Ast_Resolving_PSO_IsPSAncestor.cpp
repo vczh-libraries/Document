@@ -42,7 +42,7 @@ namespace partial_specification_ordering
 				if (symbolA->GetPSPrimary_NF() != symbolB->GetPSPrimary_NF()) throw MatchPSFailureException();
 
 				SortedList<Symbol*>								freeTypeSymbols;
-				const Dictionary<Symbol*, Ptr<MatchPSResult>>	matchingResult, matchingResultVta;
+				Dictionary<Symbol*, Ptr<MatchPSResult>>			matchingResult, matchingResultVta;
 
 				// fill freeTypeSymbols with all template arguments
 				for (vint i = 0; i < tA->arguments.Count(); i++)
