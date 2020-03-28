@@ -94,22 +94,78 @@ namespace partial_specification_ordering
 		for (vint i = 0; i < ancestor.Count(); i++)
 		{
 			auto ancestorType = ancestor[i].item;
-			auto childType = child[i].item;
 			SortedList<Type*> involvedTypes;
 			SortedList<Expr*> involvedExprs;
 			CollectFreeTypes(pa, false, ancestorType, nullptr, insideVariant, freeAncestorSymbols, involvedTypes, involvedExprs);
+
+			// ancestorType is non-variadic
+			// child[c] is non-variadic
+			// match ancestorType with child[c]
+			auto matchSingleToSingle = [&](vint c)
+			{
+				auto childType = child[c].item;
+				MatchPSArgument(pa, skipped, matchingResult, matchingResultVta, ancestorType, childType, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
+			};
+
+			// ancestorType is non-variadic
+			// child[c] is variadic
+			// match ancestorType with the start-th item in child[c]
+			auto matchSingleToVariadicPart = [&](vint c, vint start)
+			{
+				throw 0;
+			};
+
+			// ancestorType is variadic
+			// child[start] to child[stop-1]
+			// when withExtraVariadicItem == true, child[stop] is variadic
+			// match ancestorType with all of mentioned items in child above
+			auto matchVariadicToMultipleSingle = [&](vint start, vint stop, bool withExtraVariadicItem)
+			{
+				throw 0;
+			};
+
+			// ancestorType is variadic
+			// child[c] is variadic
+			// match ancestorType with the postfix of child[c] starting at start
+			auto matchVariantToVariadicPart = [&](vint c, vint start)
+			{
+				throw 0;
+			};
+
+			// ancestorType is variadic
+			// child[c] is variadic
+			// match ancestorType with child[c]
+			auto matchVariadicToVariadic = [&](vint c)
+			{
+				throw 0;
+			};
 
 			if (ancestorVta == -1)
 			{
 				if (childVta == -1)
 				{
 					// there is no variadic item on both ancestor and child
-					MatchPSArgument(pa, skipped, matchingResult, matchingResultVta, ancestorType, childType, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
+					matchSingleToSingle(i);
 				}
 				else
 				{
 					// only child has variadic item
-					throw 0;
+					auto childPostfix = child.Count() - childVta - 1;
+					if (i < childVta)
+					{
+						// match ancestor item with child item in prefix
+						matchSingleToSingle(i);
+					}
+					else if (ancestor.Count() - i <= childPostfix)
+					{
+						// match ancestor item with child item in postfix
+						matchSingleToSingle(i + (child.Count() - ancestor.Count()));
+					}
+					else
+					{
+						// match ancestor item with one item in child variadic item
+						matchSingleToVariadicPart(childVta, i - childVta);
+					}
 				}
 			}
 			else
@@ -117,12 +173,54 @@ namespace partial_specification_ordering
 				if (childVta == -1)
 				{
 					// only ancestor has variadic item
-					throw 0;
+					auto ancestorPostfix = ancestor.Count() - ancestorVta - 1;
+					if (i < ancestorVta)
+					{
+						// match ancestor item with child item in prefix
+						matchSingleToSingle(i);
+					}
+					else if (ancestor.Count() - i <= ancestorPostfix)
+					{
+						// match ancestor item with child item in postfix
+						matchSingleToSingle(i + (child.Count() - ancestor.Count()));
+					}
+					else
+					{
+						// match ancestor variadic item with multiple child item
+						matchVariadicToMultipleSingle(ancestorVta, child.Count() - ancestorPostfix, false);
+					}
 				}
 				else
 				{
 					// both ancestor and child have variadic item
-					throw 0;
+					if (i < ancestorVta && i < childVta)
+					{
+						// match child item in prefix
+						matchSingleToSingle(i);
+					}
+					else if (ancestorVta < childVta)
+					{
+						// match ancestor variadic item with multiple child item and the child variadic item
+						matchVariadicToMultipleSingle(ancestorVta, childVta, true);
+					}
+					else if (ancestorVta > childVta)
+					{
+						if (i < ancestorVta)
+						{
+							// match ancestor item with one item in child variadic item
+							matchSingleToVariadicPart(childVta, i - childVta);
+						}
+						else
+						{
+							// match ancestor variadic item with a postfix of child variadic item
+							matchVariantToVariadicPart(childVta, ancestorVta - childVta);
+						}
+					}
+					else
+					{
+						// match ancestor variadic item with child variadic item
+						matchVariadicToVariadic(ancestorVta);
+					}
 				}
 			}
 		}

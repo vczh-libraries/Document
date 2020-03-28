@@ -364,8 +364,8 @@ struct Obj
 		// test ordering function by comparing decls
 
 #define ANCESTOR(A, B)	partial_specification_ordering::IsPSAncestor(pa, decls[A]->symbol, decls[A]->templateSpec, decls[A]->specializationSpec, decls[B]->symbol, decls[B]->templateSpec, decls[B]->specializationSpec)
-#define YES(A, B)	TEST_CASE(itow(A)+L" <- " + itow(B)) { TEST_ASSERT(ANCESTOR(A, B) == true); });
-#define NO(A, B)	TEST_CASE(itow(A)+L" <- " + itow(B)) { TEST_ASSERT(ANCESTOR(A, B) == false); });
+#define YES(A, B)	TEST_CASE(L"YES! " + itow(A) + L" <- " + itow(B)) { TEST_ASSERT(ANCESTOR(A, B) == true); });
+#define NO(A, B)	TEST_CASE(L"NO!  " + itow(A) + L" <- " + itow(B)) { TEST_ASSERT(ANCESTOR(A, B) == false); });
 
 		TEST_CATEGORY(L"Primary should be an ancestor of any partial specializations")
 		{
