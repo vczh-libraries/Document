@@ -11,7 +11,8 @@ namespace partial_specification_ordering
 		Dictionary<Symbol*, Ptr<MatchPSResult>>&		matchingResult;
 		Dictionary<Symbol*, Ptr<MatchPSResult>>&		matchingResultVta;
 		bool											insideVariant;
-		const SortedList<Symbol*>&						freeTypeSymbols;
+		const SortedList<Symbol*>&						freeAncestorSymbols;
+		const SortedList<Symbol*>&						freeChildSymbols;
 		SortedList<Type*>&								involvedTypes;
 		SortedList<Expr*>&								involvedExprs;
 		Ptr<Type>										childType;
@@ -22,7 +23,8 @@ namespace partial_specification_ordering
 			Dictionary<Symbol*, Ptr<MatchPSResult>>& _matchingResult,
 			Dictionary<Symbol*, Ptr<MatchPSResult>>& _matchingResultVta,
 			bool _insideVariant,
-			const SortedList<Symbol*>& _freeTypeSymbols,
+			const SortedList<Symbol*>& _freeAncestorSymbols,
+			const SortedList<Symbol*>& _freeChildSymbols,
 			SortedList<Type*>& _involvedTypes,
 			SortedList<Expr*>& _involvedExprs
 		)
@@ -31,7 +33,8 @@ namespace partial_specification_ordering
 			, matchingResult(_matchingResult)
 			, matchingResultVta(_matchingResultVta)
 			, insideVariant(_insideVariant)
-			, freeTypeSymbols(_freeTypeSymbols)
+			, freeAncestorSymbols(_freeAncestorSymbols)
+			, freeChildSymbols(_freeChildSymbols)
 			, involvedTypes(_involvedTypes)
 			, involvedExprs(_involvedExprs)
 		{
@@ -106,7 +109,7 @@ namespace partial_specification_ordering
 				auto sr = self->decoratorReturnType ? self->decoratorReturnType : self->returnType;
 				auto cr = c->decoratorReturnType ? c->decoratorReturnType : c->returnType;
 				Execute(sr, cr);
-				MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, self, c.Obj(), insideVariant, freeTypeSymbols);
+				MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, self, c.Obj(), insideVariant, freeAncestorSymbols, freeChildSymbols);
 				return;
 			}
 			throw MatchPSFailureException();
@@ -226,7 +229,7 @@ namespace partial_specification_ordering
 			if (auto c = childType.Cast<GenericType>())
 			{
 				Execute(self->type, c->type);
-				MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, self, c.Obj(), insideVariant, freeTypeSymbols);
+				MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, self, c.Obj(), insideVariant, freeAncestorSymbols, freeChildSymbols);
 				return;
 			}
 			throw MatchPSFailureException();
@@ -245,12 +248,13 @@ namespace partial_specification_ordering
 		Ptr<Type> ancestor,
 		Ptr<Type> child,
 		bool insideVariant,
-		const SortedList<Symbol*>& freeTypeSymbols,
+		const SortedList<Symbol*>& freeAncestorSymbols,
+		const SortedList<Symbol*>& freeChildSymbols,
 		SortedList<Type*>& involvedTypes,
 		SortedList<Expr*>& involvedExprs
 	)
 	{
-		MatchPSArgumentVisitor visitor(pa, skipped, matchingResult, matchingResultVta, insideVariant, freeTypeSymbols, involvedTypes, involvedExprs);
+		MatchPSArgumentVisitor visitor(pa, skipped, matchingResult, matchingResultVta, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
 		visitor.Execute(ancestor, child);
 	}
 }

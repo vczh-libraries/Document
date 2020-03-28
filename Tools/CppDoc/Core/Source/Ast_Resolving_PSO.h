@@ -66,7 +66,8 @@ namespace partial_specification_ordering
 											Ptr<Type> ancestor,
 											Ptr<Type> child,
 											bool insideVariant,
-											const SortedList<Symbol*>& freeTypeSymbols,
+											const SortedList<Symbol*>& freeAncestorSymbols,
+											const SortedList<Symbol*>& freeChildSymbols,
 											SortedList<Type*>& involvedTypes,
 											SortedList<Expr*>& involvedExprs
 										);
@@ -75,7 +76,8 @@ namespace partial_specification_ordering
 											const ParsingArguments& pa,
 											SpecializationSpec* ancestor,
 											SpecializationSpec* child,
-											const SortedList<Symbol*>& freeTypeSymbols
+											const SortedList<Symbol*>& freeAncestorSymbols,
+											const SortedList<Symbol*>& freeChildSymbols
 										);
 
 	extern void							MatchPSAncestorArguments(
@@ -86,7 +88,8 @@ namespace partial_specification_ordering
 											FunctionType* ancestor,
 											FunctionType* child,
 											bool insideVariant,
-											const SortedList<Symbol*>& freeTypeSymbols
+											const SortedList<Symbol*>& freeAncestorSymbols,
+											const SortedList<Symbol*>& freeChildSymbols
 										);
 
 	extern void							MatchPSAncestorArguments(
@@ -97,7 +100,8 @@ namespace partial_specification_ordering
 											GenericType* ancestor,
 											GenericType* child,
 											bool insideVariant,
-											const SortedList<Symbol*>& freeTypeSymbols
+											const SortedList<Symbol*>& freeAncestorSymbols,
+											const SortedList<Symbol*>& freeChildSymbols
 										);
 	}
 

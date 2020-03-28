@@ -41,20 +41,31 @@ namespace partial_specification_ordering
 				// ensure that they have the same primary symbol
 				if (symbolA->GetPSPrimary_NF() != symbolB->GetPSPrimary_NF()) throw MatchPSFailureException();
 
-				SortedList<Symbol*>								freeTypeSymbols;
+				SortedList<Symbol*> freeAncestorSymbols, freeChildSymbols;
 
-				// fill freeTypeSymbols with all template arguments
+				// fill freeAncestorSymbols with all template arguments
 				for (vint i = 0; i < tA->arguments.Count(); i++)
 				{
 					auto argument = tA->arguments[i];
 					auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
 					auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
-					freeTypeSymbols.Add(patternSymbol);
+					freeAncestorSymbols.Add(patternSymbol);
 				}
+
+				// fill freeChildSymbols with all template arguments
+				for (vint i = 0; i < tB->arguments.Count(); i++)
+				{
+					auto argument = tB->arguments[i];
+					auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
+					auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
+					freeChildSymbols.Add(patternSymbol);
+				}
+
+				// match
 
 				try
 				{
-					MatchPSAncestorArguments(pa, psA.Obj(), psB.Obj(), freeTypeSymbols);
+					MatchPSAncestorArguments(pa, psA.Obj(), psB.Obj(), freeAncestorSymbols, freeChildSymbols);
 				}
 				catch (const MatchPSFailureException&)
 				{
