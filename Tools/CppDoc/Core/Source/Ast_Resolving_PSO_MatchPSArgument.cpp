@@ -167,7 +167,6 @@ namespace partial_specification_ordering
 					{
 						// TODO: pass information from outside
 						auto result = MakePtr<MatchPSResult>();
-						result->kind = MatchPSKind::Single;
 						result->source.Add({ childType,false });
 
 						vint index = output.Keys().IndexOf(patternSymbol);
@@ -179,28 +178,10 @@ namespace partial_specification_ordering
 						else
 						{
 							auto assigned = output.Values()[index];
-							if (result->kind != assigned->kind) goto FAIL;
-							if (result->start != assigned->start) goto FAIL;
-							if (result->stop != assigned->stop) goto FAIL;
-							if (result->source.Count() != assigned->source.Count()) goto FAIL;
+							if (MatchPSResult::Compare(result, assigned))
 							{
-								Dictionary<WString, WString> equivalentNames;
-								for (vint i = 0; i < result->source.Count(); i++)
-								{
-									auto rt = result->source[i];
-									auto at = assigned->source[i];
-									if(rt.isVariadic!=at.isVariadic) goto FAIL;
-									if (rt.item && at.item)
-									{
-										if (!IsSameResolvedType(rt.item, at.item, equivalentNames)) goto FAIL;
-									}
-									else if (rt.item || at.item)
-									{
-										goto FAIL;
-									}
-								}
+								return;
 							}
-							return;
 						}
 					}
 					break;
@@ -222,7 +203,6 @@ namespace partial_specification_ordering
 					}
 				}
 			}
-		FAIL:
 			throw MatchPSFailureException();
 		}
 

@@ -19,9 +19,15 @@ namespace partial_specification_ordering
 		const SortedList<Symbol*>& freeTypeSymbols
 	)
 	{
-		// TODO: calculate known pack size for each variadic item in ancestor
-		// TODO: if there is any variadic item in ancestor that, has unknown pack size, and is not the last item, skip
-		// TODO: if there is any variadic item in child that, is not the last item, fail
+		// TODO:
+		//   calculate known pack size for each variadic item in ancestor
+		//   skip of there are more than one variadic item in ancestor with unknown pack size
+		//   fail if there are more than one variadic item in child
+		// only match when
+		//   <A1, As..., A2>		with <B1, B2, B3, B4>		A1={B2, B3}[0,0]
+		//   <A1, A2, A3, A4>		with <B1, Bs..., B2>		A2=Bs[0,1]; A3=Bs[1,0]
+		//   <A1, A2, As...>		with <B1, B2, B3, Bs...>	As={B3, Bs...}[0,0]
+		//   <A1, A2, A3, As...>	with <B1, B2, Bs...>		A3=Bs[0,-1]; As={Bs}[1,0]
 		for (vint i = 0; i < ancestor.Count(); i++) if (ancestor[i].isVariadic) throw 0;
 		for (vint i = 0; i < child.Count(); i++) if (child[i].isVariadic) throw 0;
 		if (ancestor.Count() != child.Count()) throw 0;

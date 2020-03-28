@@ -420,6 +420,7 @@ struct Obj
 		// test ordering for each declaration
 	});
 
+	// TODO: test actual result with patterns containing variadic items
 	// TODO: test array with vta dimension
 	// TODO: test T[] and T* function parameter
 }

@@ -23,19 +23,39 @@ namespace partial_specification_ordering
 											Ptr<SpecializationSpec> psB
 										);
 
-	enum class MatchPSKind
-	{
-		Single,			// this template argument is not variant
-		Variant,		// this template argument is variant, the result consist of multiple type/value or type/value pack
-		PartOfVariant,	// this template argument is variant, the result is part of another type/value pack
-	};
-
 	struct MatchPSResult
 	{
-		MatchPSKind						kind;
-		vint							start = -1;		// for PartOfVariant, the amount of the skipped prefix from source[0]
-		vint							stop = -1;		// for PartOfVariant, the amount of the skipped postfix from source[0]
-		VariadicList<Ptr<Type>>			source;			// for Single and PartOfVariant, source should have exactly one element
+		// [start, stop] are valid to be not -1 when source[last] contains variadic template arguments
+		// [x,y]: skip an x-elements prefix, skip a y-elements postfix
+		// [x,-1]: skip an x-elements prefix, and pick only one item
+		vint							start = -1;
+		vint							stop = -1;
+		VariadicList<Ptr<Type>>			source;
+
+		static bool Compare(const Ptr<MatchPSResult>& a, const Ptr<MatchPSResult>& b)
+		{
+			if (a->start != b->start) return false;
+			if (a->stop != b->stop) return false;
+			if (a->source.Count() != b->source.Count()) return false;
+			{
+				Dictionary<WString, WString> equivalentNames;
+				for (vint i = 0; i < a->source.Count(); i++)
+				{
+					auto at = a->source[i];
+					auto bt = b->source[i];
+					if (at.isVariadic != bt.isVariadic) return false;
+					if (at.item && bt.item)
+					{
+						if (!IsSameResolvedType(at.item, bt.item, equivalentNames)) return false;
+					}
+					else if (at.item || bt.item)
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
 	};
 
 	extern								void MatchPSArgument(
