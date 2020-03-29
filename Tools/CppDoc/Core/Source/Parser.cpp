@@ -595,27 +595,29 @@ void Symbol::AssignPSPrimary_NF(Symbol* primary)
 	ps->psPrimary = primary;
 }
 
-void Symbol::AssignPSParent(List<Symbol*>& parents)
+void Symbol::ReplacePSParent_NF(Symbol* oldParent, Symbol* newParent)
 {
 	auto ps = GetPSShared();
-	for (vint i = 0; i < parents.Count(); i++)
+	auto ops = oldParent ? oldParent->GetPSShared() : nullptr;
+	auto nps = newParent->GetPSShared();
+
+	if (ops)
 	{
-		auto parent = parents[i];
-		auto pps = parent->GetPSShared();
-		if (ps->psPrimary != parent && ps->psPrimary != pps->psPrimary)
-		{
-			throw UnexpectedSymbolCategoryException();
-		}
+		if (!ps->psParents.Contains(oldParent)) throw UnexpectedSymbolCategoryException();
+		if (ps->psPrimary != oldParent && ps->psPrimary != ops->psPrimary) throw UnexpectedSymbolCategoryException();
 	}
-	for (vint i = 0; i < ps->psParents.Count(); i++)
+
+	if (ps->psParents.Contains(newParent)) throw UnexpectedSymbolCategoryException();
+	if (ps->psPrimary != newParent && ps->psPrimary != nps->psPrimary) throw UnexpectedSymbolCategoryException();
+
+	if (ops)
 	{
-		ps->psParents[i]->GetPSShared()->psChildren.Remove(this);
+		ops->psChildren.Remove(this);
+		ps->psParents.Remove(oldParent);
 	}
-	CopyFrom(ps->psParents, parents);
-	for (vint i = 0; i < ps->psParents.Count(); i++)
-	{
-		ps->psParents[i]->GetPSShared()->psChildren.Add(this);
-	}
+
+	nps->psChildren.Add(this);
+	ps->psParents.Add(newParent);
 }
 
 void Symbol::SetClassMemberCacheForTemplateSpecScope_N(Ptr<symbol_component::ClassMemberCache> classMemberCache)

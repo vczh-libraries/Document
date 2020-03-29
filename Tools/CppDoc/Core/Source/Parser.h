@@ -254,26 +254,26 @@ public:
 	symbol_component::SymbolCategory				GetCategory();
 	void											SetCategory(symbol_component::SymbolCategory _category);
 
-	Symbol*											GetParentScope();							//	Normal	FunctionBody	Function
-	const List<Ptr<Symbol>>&						GetImplSymbols_F();							//							Function
-	const List<Ptr<Symbol>>&						GetForwardSymbols_F();						//							Function
-	Ptr<Declaration>								GetImplDecl_NFb();							//	Normal	FunctionBody
-	symbol_component::Evaluation&					GetEvaluationForUpdating_NFb();				//	Normal	FunctionBody
-	const symbol_component::SymbolGroup&			GetChildren_NFb();							//	Normal	FunctionBody
-	const List<Ptr<Declaration>>&					GetForwardDecls_N();						//	Normal
-	const Ptr<Stat>&								GetStat_N();								//	Normal
-	Symbol*											GetFunctionSymbol_Fb();						//			FunctionBody
-	Ptr<Declaration>								GetForwardDecl_Fb();						//			FunctionBody
-	Ptr<symbol_component::ClassMemberCache>			GetClassMemberCache_NFb();					//			FunctionBody
+	Symbol*											GetParentScope();												//	Normal	FunctionBody	Function
+	const List<Ptr<Symbol>>&						GetImplSymbols_F();												//							Function
+	const List<Ptr<Symbol>>&						GetForwardSymbols_F();											//							Function
+	Ptr<Declaration>								GetImplDecl_NFb();												//	Normal	FunctionBody
+	symbol_component::Evaluation&					GetEvaluationForUpdating_NFb();									//	Normal	FunctionBody
+	const symbol_component::SymbolGroup&			GetChildren_NFb();												//	Normal	FunctionBody
+	const List<Ptr<Declaration>>&					GetForwardDecls_N();											//	Normal
+	const Ptr<Stat>&								GetStat_N();													//	Normal
+	Symbol*											GetFunctionSymbol_Fb();											//			FunctionBody
+	Ptr<Declaration>								GetForwardDecl_Fb();											//			FunctionBody
+	Ptr<symbol_component::ClassMemberCache>			GetClassMemberCache_NFb();										//			FunctionBody
 
-	Symbol*											GetPSPrimary_NF();							//	Normal					Function
-	vint											GetPSPrimaryVersion_NF();					//	Normal					Function
-	const List<Symbol*>&							GetPSPrimaryDescendants_NF();				//	Normal					Function
-	const List<Symbol*>&							GetPSParents_NF();							//	Normal					Function
-	const List<Symbol*>&							GetPSChildren_NF();							//	Normal					Function
-	bool											IsPSPrimary_NF();							//	Normal					Function
-	void											AssignPSPrimary_NF(Symbol* primary);		//	Normal					Function
-	void											AssignPSParent(List<Symbol*>& parents);		//	Normal					Function
+	Symbol*											GetPSPrimary_NF();												//	Normal					Function
+	vint											GetPSPrimaryVersion_NF();										//	Normal					Function
+	const List<Symbol*>&							GetPSPrimaryDescendants_NF();									//	Normal					Function
+	const List<Symbol*>&							GetPSParents_NF();												//	Normal					Function
+	const List<Symbol*>&							GetPSChildren_NF();												//	Normal					Function
+	bool											IsPSPrimary_NF();												//	Normal					Function
+	void											AssignPSPrimary_NF(Symbol* primary);							//	Normal					Function
+	void											ReplacePSParent_NF(Symbol* oldParent, Symbol* newParent);		//	Normal					Function
 
 	void											SetClassMemberCacheForTemplateSpecScope_N(Ptr<symbol_component::ClassMemberCache> classMemberCache);
 	const List<Ptr<Symbol>>*						TryGetChildren_NFb(const WString& name);
