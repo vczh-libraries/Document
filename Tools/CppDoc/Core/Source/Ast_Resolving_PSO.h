@@ -25,12 +25,10 @@ namespace partial_specification_ordering
 
 	struct MatchPSResult
 	{
-		vint							variadicItemIndex = -1;
 		List<Ptr<Type>>					source;
 
 		static bool Compare(const Ptr<MatchPSResult>& a, const Ptr<MatchPSResult>& b)
 		{
-			if (a->variadicItemIndex != b->variadicItemIndex) return false;
 			if (a->source.Count() != b->source.Count()) return false;
 			{
 				Dictionary<WString, WString> equivalentNames;

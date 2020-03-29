@@ -21,7 +21,6 @@ namespace partial_specification_ordering
 	)
 	{
 		vint ancestorVta = -1;
-		vint childVta = -1;
 		Array<vint> ancestorPackSizes(ancestor.Count());
 
 		for (vint i = 0; i < ancestor.Count(); i++)
@@ -73,22 +72,6 @@ namespace partial_specification_ordering
 			else
 			{
 				ancestorPackSizes[i] = 1;
-			}
-		}
-
-		for (vint i = 0; i < child.Count(); i++)
-		{
-			if (child[i].isVariadic)
-			{
-				if (childVta == -1)
-				{
-					childVta = i;
-				}
-				else
-				{
-					// fail if there are more than one variadic item in child
-					throw MatchPSFailureException();
-				}
 			}
 		}
 
@@ -165,7 +148,7 @@ namespace partial_specification_ordering
 				auto assignment = assignments[i];
 				if (!ancestor[i].isVariadic)
 				{
-					if (assignment.start <= childVta && childVta < assignment.stop)
+					if (child[assignment.start].isVariadic)
 					{
 						throw MatchPSFailureException();
 					}
@@ -197,7 +180,7 @@ namespace partial_specification_ordering
 				MatchPSArgument(pa, skipped, matchingResult, replacedResultVta, ancestorType, childType, child[c].isVariadic, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
 			};
 
-			auto assertMatchingResultPass1 = [&](vint variadicItemIndex, vint assignedCount)
+			auto assertMatchingResultPass1 = [&](vint assignedCount)
 			{
 				for (vint i = 0; i < variadicSymbols.Count(); i++)
 				{
@@ -205,7 +188,7 @@ namespace partial_specification_ordering
 					if (index != -1)
 					{
 						auto assigned = matchingResult.Values()[index];
-						if (assigned->variadicItemIndex != variadicItemIndex || assigned->source.Count() != assignedCount)
+						if (assigned->source.Count() != assignedCount)
 						{
 							throw MatchPSFailureException();
 						}
@@ -214,7 +197,7 @@ namespace partial_specification_ordering
 			};
 
 			Dictionary<WString, WString> equivalentNames;
-			auto assertMatchingResultPass2 = [&](vint variadicItemIndex, vint assignedCount, vint matchIndex, Dictionary<Symbol*, Ptr<MatchPSResult>>& replacedResultVta)
+			auto assertMatchingResultPass2 = [&](vint assignedCount, vint matchIndex, Dictionary<Symbol*, Ptr<MatchPSResult>>& replacedResultVta)
 			{
 				for (vint i = 0; i < variadicSymbols.Count(); i++)
 				{
@@ -228,7 +211,6 @@ namespace partial_specification_ordering
 					if (index == -1)
 					{
 						result = MakePtr<MatchPSResult>();
-						result->variadicItemIndex = variadicItemIndex;
 						matchingResult.Add(variadicSymbol, result);
 					}
 					else
@@ -270,24 +252,23 @@ namespace partial_specification_ordering
 			// child[start] to child[stop-1]
 			// when variadicItemIndex != -1, child[start + variadicItemIndex] is variadic
 			// match ancestorType with all of mentioned items in child above
-			auto matchVariadicToMultiple = [&](vint start, vint stop, vint variadicItemIndex)
+			auto matchVariadicToMultiple = [&](vint start, vint stop)
 			{
 				vint assignedCount = stop - start;
-				assertMatchingResultPass1(variadicItemIndex - start, assignedCount);
+				assertMatchingResultPass1(assignedCount);
 
 				for (vint c = start; c < stop; c++)
 				{
 					Dictionary<Symbol*, Ptr<MatchPSResult>> replacedResultVta;
 					matchSingleToSingleComplex(c, replacedResultVta);
-					assertMatchingResultPass2(variadicItemIndex - start, assignedCount, c - start, replacedResultVta);
+					assertMatchingResultPass2(assignedCount, c - start, replacedResultVta);
 				}
 			};
 
 			auto assignment = assignments[i];
 			if (ancestor[i].isVariadic)
 			{
-				vint containedChildVta = assignment.start <= childVta && childVta < assignment.stop ? childVta : -1;
-				matchVariadicToMultiple(assignment.start, assignment.stop, containedChildVta);
+				matchVariadicToMultiple(assignment.start, assignment.stop);
 			}
 			else
 			{
