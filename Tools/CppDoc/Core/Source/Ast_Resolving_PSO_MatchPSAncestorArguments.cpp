@@ -58,13 +58,16 @@ namespace partial_specification_ordering
 				ancestorPackSizes[i] = packSize;
 				if (packSize == -1)
 				{
-					ancestorVta = i;
-				}
-				else
-				{
-					// skip of there are more than one variadic item in ancestor with unknown pack size
-					skipped = true;
-					return;
+					if (ancestorVta == -1)
+					{
+						ancestorVta = i;
+					}
+					else
+					{
+						// skip of there are more than one variadic item in ancestor with unknown pack size
+						skipped = true;
+						return;
+					}
 				}
 			}
 			else
