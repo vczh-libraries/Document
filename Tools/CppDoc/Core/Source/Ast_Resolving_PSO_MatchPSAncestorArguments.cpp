@@ -158,16 +158,17 @@ namespace partial_specification_ordering
 					auto resultType = replacedResultVta.Values()[resultIndex]->source[0];
 
 					Ptr<MatchPSResult> result;
-					vint index = matchingResult.Keys().IndexOf(variadicSymbols[i]);
+					vint index = matchingResult.Keys().IndexOf(variadicSymbol);
 					if (index == -1)
-					{
-						result = matchingResult.Values()[index];
-					}
-					else
 					{
 						result = MakePtr<MatchPSResult>();
 						result->start = start;
 						result->stop = stop;
+						matchingResult.Add(variadicSymbol, result);
+					}
+					else
+					{
+						result = matchingResult.Values()[index];
 					}
 
 					if (result->source.Count() == assignedCount)
