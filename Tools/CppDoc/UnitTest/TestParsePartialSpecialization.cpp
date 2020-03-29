@@ -410,7 +410,15 @@ struct Obj
 				{
 					if (index == -1)
 					{
-						TEST_ASSERT(symbol->GetPSParents_NF().Count() == 0);
+						if (symbol == primary)
+						{
+							TEST_ASSERT(symbol->GetPSParents_NF().Count() == 0);
+						}
+						else
+						{
+							TEST_ASSERT(symbol->GetPSParents_NF().Count() == 1);
+							TEST_ASSERT(symbol->GetPSParents_NF()[0] == primary);
+						}
 					}
 					else
 					{
