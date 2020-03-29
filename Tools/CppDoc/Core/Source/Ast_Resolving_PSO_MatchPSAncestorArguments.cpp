@@ -45,7 +45,8 @@ namespace partial_specification_ordering
 				}
 				else
 				{
-					throw MatchPSFailureException();
+					skipped = true;
+					return;
 				}
 			}
 		}
@@ -314,18 +315,33 @@ namespace partial_specification_ordering
 		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
 		FillVariadicTypeList(ancestor->arguments, child->arguments, ancestorTypes, childTypes, [](GenericArgument& e) { return e.type; });
 
-		bool skipped = false;
+		// retry if there is any skipped matching
+		// fail if a retry result in no addition item in matchingResult
+
 		Dictionary<Symbol*, Ptr<MatchPSResult>> matchingResult;
 		Dictionary<Symbol*, Ptr<MatchPSResult>> matchingResultVta;
-		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, false, freeAncestorSymbols, freeChildSymbols);
-
-		if (matchingResultVta.Count() > 0)
+		while (true)
 		{
-			// someone misses "..." in psA
-			throw TypeCheckerException();
+			bool skipped = false;
+			vint lastCount = matchingResult.Count();
+			MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, false, freeAncestorSymbols, freeChildSymbols);
+			if (skipped)
+			{
+				if (lastCount == matchingResult.Count())
+				{
+					throw MatchPSFailureException();
+				}
+			}
+			else
+			{
+				if (matchingResultVta.Count() > 0)
+				{
+					// someone misses "..." in psA
+					throw TypeCheckerException();
+				}
+				break;
+			}
 		}
-
-		// TODO: retry if there is any skipped matching, fail if a retry result in no addition item in matchingResult
 	}
 
 	/***********************************************************************
