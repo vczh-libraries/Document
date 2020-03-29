@@ -129,7 +129,10 @@ namespace infer_function_type
 		TypeTsysList vas;
 		CollectInvolvedVariadicArguments(pa, involvedTypes, involvedExprs, [&vas](Symbol*, ITsys* pattern)
 		{
-			vas.Add(pattern);
+			if (!vas.Contains(pattern))
+			{
+				vas.Add(pattern);
+			}
 		});
 
 		// infer all affected types to any_t, result will be overrided if more precise types are inferred

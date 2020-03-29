@@ -98,13 +98,27 @@ namespace partial_specification_ordering
 			SortedList<Expr*> involvedExprs;
 			CollectFreeTypes(pa, false, ancestorType, nullptr, insideVariant, freeAncestorSymbols, involvedTypes, involvedExprs);
 
+			SortedList<Symbol*> variadicSymbols;
+			CollectInvolvedVariadicArguments(pa, involvedTypes, involvedExprs, [&](Symbol* patternSymbol, ITsys*)
+			{
+				if (!variadicSymbols.Contains(patternSymbol))
+				{
+					variadicSymbols.Add(patternSymbol);
+				}
+			});
+
 			// ancestorType is non-variadic
 			// child[c] is non-variadic
 			// match ancestorType with child[c]
-			auto matchSingleToSingle = [&](vint c, MatchPSResultHeader matchHeader = {})
+			auto matchSingleToSingleComplex = [&](vint c, MatchPSResultHeader matchHeader, Dictionary<Symbol*, Ptr<MatchPSResult>>& replacedResultVta)
 			{
 				auto childType = child[c].item;
-				MatchPSArgument(pa, skipped, matchHeader, matchingResult, matchingResultVta, ancestorType, childType, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
+				MatchPSArgument(pa, skipped, matchHeader, matchingResult, replacedResultVta, ancestorType, childType, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
+			};
+
+			auto matchSingleToSingle = [&](vint c)
+			{
+				matchSingleToSingleComplex(c, {}, matchingResultVta);
 			};
 
 			// ancestorType is non-variadic
@@ -114,7 +128,72 @@ namespace partial_specification_ordering
 			{
 				MatchPSResultHeader matchHeader;
 				matchHeader.start = start;
-				matchSingleToSingle(c, matchHeader);
+				matchSingleToSingleComplex(c, matchHeader, matchingResultVta);
+			};
+
+			auto assertMatchingResultPass1 = [&](vint start, vint stop, vint assignedCount)
+			{
+				for (vint i = 0; i < variadicSymbols.Count(); i++)
+				{
+					vint index = matchingResult.Keys().IndexOf(variadicSymbols[i]);
+					if (index != -1)
+					{
+						auto assigned = matchingResult.Values()[index];
+						if (assigned->start != start || assigned->stop != stop || assigned->source.Count() != assignedCount)
+						{
+							throw MatchPSFailureException();
+						}
+					}
+				}
+			};
+
+			Dictionary<WString, WString> equivalentNames;
+			auto assertMatchingResultPass2 = [&](vint start, vint stop, vint assignedCount, vint matchIndex, Dictionary<Symbol*, Ptr<MatchPSResult>>& replacedResultVta)
+			{
+				for (vint i = 0; i < variadicSymbols.Count(); i++)
+				{
+					auto variadicSymbol = variadicSymbols[i];
+					vint resultIndex = replacedResultVta.Keys().IndexOf(variadicSymbol);
+					if (resultIndex == -1) throw MatchPSFailureException();
+					auto resultType = replacedResultVta.Values()[resultIndex]->source[0];
+
+					Ptr<MatchPSResult> result;
+					vint index = matchingResult.Keys().IndexOf(variadicSymbols[i]);
+					if (index == -1)
+					{
+						result = matchingResult.Values()[index];
+					}
+					else
+					{
+						result = MakePtr<MatchPSResult>();
+						result->start = start;
+						result->stop = stop;
+					}
+
+					if (result->source.Count() == assignedCount)
+					{
+						auto matchType = result->source[matchIndex];
+						if (matchType.item != resultType.item)
+						{
+							throw MatchPSFailureException();
+						}
+						if (matchType.item && resultType.item)
+						{
+							if (!IsSameResolvedType(matchType.item, resultType.item, equivalentNames))
+							{
+								throw MatchPSFailureException();
+							}
+						}
+						else if (matchType.item || resultType.item)
+						{
+							throw MatchPSFailureException();
+						}
+					}
+					else
+					{
+						result->source.Add(resultType);
+					}
+				}
 			};
 
 			// ancestorType is variadic
@@ -123,7 +202,16 @@ namespace partial_specification_ordering
 			// match ancestorType with all of mentioned items in child above
 			auto matchVariadicToMultipleSingle = [&](vint start, vint stop, bool withExtraVariadicItem)
 			{
-				throw 0;
+				vint assignedCount = (stop - start + (withExtraVariadicItem ? 1 : 0));
+				assertMatchingResultPass1(0, 0, assignedCount);
+
+				for (vint c = start; c <= stop; c++)
+				{
+					if (c == stop && !withExtraVariadicItem) break;
+					Dictionary<Symbol*, Ptr<MatchPSResult>> replacedResultVta;
+					matchSingleToSingleComplex(c, {}, replacedResultVta);
+					assertMatchingResultPass2(start, stop, assignedCount, c - start, replacedResultVta);
+				}
 			};
 
 			// ancestorType is variadic
