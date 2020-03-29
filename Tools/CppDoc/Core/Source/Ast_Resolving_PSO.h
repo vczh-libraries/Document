@@ -23,23 +23,14 @@ namespace partial_specification_ordering
 											Ptr<SpecializationSpec> psB
 										);
 
-	struct MatchPSResultHeader
+	struct MatchPSResult
 	{
-		// [start, stop] are valid to be not -1 when source[last] contains variadic template arguments
-		// [x,y]: skip an x-elements prefix, skip a y-elements postfix
-		// [x,-1]: skip an x-elements prefix, and pick only one item
-		vint							start = -1;
-		vint							stop = -1;
-	};
-
-	struct MatchPSResult : MatchPSResultHeader
-	{
+		vint							variadicItemIndex = -1;
 		List<Ptr<Type>>					source;
 
 		static bool Compare(const Ptr<MatchPSResult>& a, const Ptr<MatchPSResult>& b)
 		{
-			if (a->start != b->start) return false;
-			if (a->stop != b->stop) return false;
+			if (a->variadicItemIndex != b->variadicItemIndex) return false;
 			if (a->source.Count() != b->source.Count()) return false;
 			{
 				Dictionary<WString, WString> equivalentNames;
@@ -64,7 +55,6 @@ namespace partial_specification_ordering
 	extern								void MatchPSArgument(
 											const ParsingArguments& pa,
 											bool& skipped,
-											MatchPSResultHeader matchHeader,
 											Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 											Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 											Ptr<Type> ancestor,

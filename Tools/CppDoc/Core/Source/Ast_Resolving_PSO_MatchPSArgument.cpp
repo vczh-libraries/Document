@@ -8,7 +8,6 @@ namespace partial_specification_ordering
 	public:
 		const ParsingArguments&							pa;
 		bool&											skipped;
-		MatchPSResultHeader								matchHeader;
 		Dictionary<Symbol*, Ptr<MatchPSResult>>&		matchingResult;
 		Dictionary<Symbol*, Ptr<MatchPSResult>>&		matchingResultVta;
 		bool											insideVariant;
@@ -21,7 +20,6 @@ namespace partial_specification_ordering
 		MatchPSArgumentVisitor(
 			const ParsingArguments& _pa,
 			bool& _skipped,
-			MatchPSResultHeader _matchHeader,
 			Dictionary<Symbol*, Ptr<MatchPSResult>>& _matchingResult,
 			Dictionary<Symbol*, Ptr<MatchPSResult>>& _matchingResultVta,
 			bool _insideVariant,
@@ -32,7 +30,6 @@ namespace partial_specification_ordering
 		)
 			:pa(_pa)
 			, skipped(_skipped)
-			, matchHeader(_matchHeader)
 			, matchingResult(_matchingResult)
 			, matchingResultVta(_matchingResultVta)
 			, insideVariant(_insideVariant)
@@ -173,7 +170,6 @@ namespace partial_specification_ordering
 					{
 						// TODO: pass information from outside
 						auto result = MakePtr<MatchPSResult>();
-						*((MatchPSResultHeader*)result.Obj()) = matchHeader;
 						result->source.Add(childType);
 
 						vint index = output.Keys().IndexOf(patternSymbol);
@@ -247,7 +243,6 @@ namespace partial_specification_ordering
 	void MatchPSArgument(
 		const ParsingArguments& pa,
 		bool& skipped,
-		MatchPSResultHeader matchHeader,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
 		Ptr<Type> ancestor,
@@ -259,7 +254,7 @@ namespace partial_specification_ordering
 		SortedList<Expr*>& involvedExprs
 	)
 	{
-		MatchPSArgumentVisitor visitor(pa, skipped, matchHeader, matchingResult, matchingResultVta, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
+		MatchPSArgumentVisitor visitor(pa, skipped, matchingResult, matchingResultVta, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
 		visitor.Execute(ancestor, child);
 	}
 }

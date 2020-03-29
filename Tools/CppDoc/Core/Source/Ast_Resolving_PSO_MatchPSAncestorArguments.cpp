@@ -25,10 +25,12 @@ namespace partial_specification_ordering
 		// fail if there are more than one variadic item in child
 		// only match when
 		//   <A1, A2, A3, A4>		with <B1, B2, B3, B4>
-		//   <A1, As..., A2>		with <B1, B2, B3, B4>		A1={B2, B3}[-1,-1]
-		//   <A1, A2, A3, A4>		with <B1, Bs..., B2>		A2=Bs...[0,-1]; A3=Bs...[1,-1]
-		//   <A1, A2, As...>		with <B1, B2, B3, Bs...>	As={B3, Bs...}[0,0]
-		//   <A1, A2, A3, As...>	with <B1, B2, Bs...>		A3=Bs...[0,-1]; As={Bs...}[1,0]
+		//   <A1, As..., A2>		with <B1, B2, B3, B4>		A1={B2, B3}[-1]
+		//   <A1, A2, As...>		with <B1, B2, B3, Bs...>	As={B3, Bs...}[1]
+		//   <A1, A2, As...>		with <B1, B2, Bs..., B3>	As={Bs..., B3}[0]
+		// followings are not supported
+		//   <A1, A2, A3, A4>		with <B1, Bs..., B2>
+		//   <A1, A2, A3, As...>	with <B1, B2, Bs...>
 
 		vint ancestorVta = -1;
 		vint childVta = -1;
@@ -107,31 +109,13 @@ namespace partial_specification_ordering
 				}
 			});
 
-			// ancestorType is non-variadic
-			// child[c] is non-variadic
-			// match ancestorType with child[c]
-			auto matchSingleToSingleComplex = [&](vint c, MatchPSResultHeader matchHeader, Dictionary<Symbol*, Ptr<MatchPSResult>>& replacedResultVta)
+			auto matchSingleToSingleComplex = [&](vint c, Dictionary<Symbol*, Ptr<MatchPSResult>>& replacedResultVta)
 			{
 				auto childType = child[c].item;
-				MatchPSArgument(pa, skipped, matchHeader, matchingResult, replacedResultVta, ancestorType, childType, child[c].isVariadic, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
+				MatchPSArgument(pa, skipped, matchingResult, replacedResultVta, ancestorType, childType, child[c].isVariadic, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
 			};
 
-			auto matchSingleToSingle = [&](vint c)
-			{
-				matchSingleToSingleComplex(c, {}, matchingResultVta);
-			};
-
-			// ancestorType is non-variadic
-			// child[c] is variadic
-			// match ancestorType with the start-th item in child[c]
-			auto matchSingleToVariadicPart = [&](vint c, vint start)
-			{
-				MatchPSResultHeader matchHeader;
-				matchHeader.start = start;
-				matchSingleToSingleComplex(c, matchHeader, matchingResultVta);
-			};
-
-			auto assertMatchingResultPass1 = [&](vint start, vint stop, vint assignedCount)
+			auto assertMatchingResultPass1 = [&](vint variadicItemIndex, vint assignedCount)
 			{
 				for (vint i = 0; i < variadicSymbols.Count(); i++)
 				{
@@ -139,7 +123,7 @@ namespace partial_specification_ordering
 					if (index != -1)
 					{
 						auto assigned = matchingResult.Values()[index];
-						if (assigned->start != start || assigned->stop != stop || assigned->source.Count() != assignedCount)
+						if (assigned->variadicItemIndex != variadicItemIndex || assigned->source.Count() != assignedCount)
 						{
 							throw MatchPSFailureException();
 						}
@@ -148,7 +132,7 @@ namespace partial_specification_ordering
 			};
 
 			Dictionary<WString, WString> equivalentNames;
-			auto assertMatchingResultPass2 = [&](vint start, vint stop, vint assignedCount, vint matchIndex, Dictionary<Symbol*, Ptr<MatchPSResult>>& replacedResultVta)
+			auto assertMatchingResultPass2 = [&](vint variadicItemIndex, vint assignedCount, vint matchIndex, Dictionary<Symbol*, Ptr<MatchPSResult>>& replacedResultVta)
 			{
 				for (vint i = 0; i < variadicSymbols.Count(); i++)
 				{
@@ -162,8 +146,7 @@ namespace partial_specification_ordering
 					if (index == -1)
 					{
 						result = MakePtr<MatchPSResult>();
-						result->start = start;
-						result->stop = stop;
+						result->variadicItemIndex = variadicItemIndex;
 						matchingResult.Add(variadicSymbol, result);
 					}
 					else
@@ -193,35 +176,29 @@ namespace partial_specification_ordering
 				}
 			};
 
-			// ancestorType is variadic
-			// child[start] to child[stop-1]
-			// when withExtraVariadicItem == true, child[stop] is variadic
-			// match ancestorType with all of mentioned items in child above
-			auto matchVariadicToMultipleSingle = [&](vint start, vint stop, bool withExtraVariadicItem)
+			// ancestorType is non-variadic
+			// child[c] is non-variadic
+			// match ancestorType with child[c]
+			auto matchSingleToSingle = [&](vint c)
 			{
-				vint assignedStart = (withExtraVariadicItem ? 0 : -1);
-				vint assignedStop = (withExtraVariadicItem ? 0 : -1);
-				vint assignedCount = (stop - start + (withExtraVariadicItem ? 1 : 0));
-				assertMatchingResultPass1(assignedStart, assignedStop, assignedCount);
-
-				for (vint c = start; c <= stop; c++)
-				{
-					if (c == stop && !withExtraVariadicItem) break;
-					Dictionary<Symbol*, Ptr<MatchPSResult>> replacedResultVta;
-					matchSingleToSingleComplex(c, {}, replacedResultVta);
-					assertMatchingResultPass2(assignedStart, assignedStop, assignedCount, c - start, replacedResultVta);
-				}
+				matchSingleToSingleComplex(c, matchingResultVta);
 			};
 
 			// ancestorType is variadic
-			// child[c] is variadic
-			// match ancestorType with the postfix of child[c] starting at start
-			auto matchVariantToVariadicPart = [&](vint c, vint start)
+			// child[start] to child[stop-1]
+			// when variadicItemIndex != -1, child[start + variadicItemIndex] is variadic
+			// match ancestorType with all of mentioned items in child above
+			auto matchVariadicToMultiple = [&](vint start, vint stop, vint variadicItemIndex)
 			{
-				assertMatchingResultPass1(start, 0, 1);
-				Dictionary<Symbol*, Ptr<MatchPSResult>> replacedResultVta;
-				matchSingleToSingleComplex(c, {}, replacedResultVta);
-				assertMatchingResultPass2(start, 0, 1, c, replacedResultVta);
+				vint assignedCount = stop - start;
+				assertMatchingResultPass1(variadicItemIndex - start, assignedCount);
+
+				for (vint c = start; c < stop; c++)
+				{
+					Dictionary<Symbol*, Ptr<MatchPSResult>> replacedResultVta;
+					matchSingleToSingleComplex(c, replacedResultVta);
+					assertMatchingResultPass2(variadicItemIndex - start, assignedCount, c - start, replacedResultVta);
+				}
 			};
 
 			if (ancestorVta == -1)
@@ -247,8 +224,8 @@ namespace partial_specification_ordering
 					}
 					else
 					{
-						// match ancestor item with one item in child variadic item
-						matchSingleToVariadicPart(childVta, i - childVta);
+						// multiple ancestor item to one child item is not allowed
+						throw MatchPSFailureException();
 					}
 				}
 			}
@@ -271,39 +248,35 @@ namespace partial_specification_ordering
 					else
 					{
 						// match ancestor variadic item with multiple child item
-						matchVariadicToMultipleSingle(ancestorVta, child.Count() - ancestorPostfix, false);
+						matchVariadicToMultiple(ancestorVta, child.Count() - ancestorPostfix, -1);
 					}
 				}
 				else
 				{
+					auto ancestorPostfix = ancestor.Count() - ancestorVta - 1;
+					auto childPostfix = child.Count() - childVta - 1;
+					
+					if(ancestorVta > childVta || ancestorPostfix < childPostfix)
+					{
+						// fail if ancestor variadic item doesn't contain child variadic item
+						throw MatchPSFailureException();
+					}
+
 					// both ancestor and child have variadic item
-					if (i < ancestorVta && i < childVta)
+					if (i < ancestorVta)
 					{
 						// match child item in prefix
 						matchSingleToSingle(i);
 					}
+					else if (i > ancestorVta)
+					{
+						// match child item in postfix
+						matchSingleToSingle(i + (child.Count() - ancestor.Count()));
+					}
 					else if (ancestorVta < childVta)
 					{
 						// match ancestor variadic item with multiple child item and the child variadic item
-						matchVariadicToMultipleSingle(ancestorVta, childVta, true);
-					}
-					else if (ancestorVta > childVta)
-					{
-						if (i < ancestorVta)
-						{
-							// match ancestor item with one item in child variadic item
-							matchSingleToVariadicPart(childVta, i - childVta);
-						}
-						else
-						{
-							// match ancestor variadic item with a postfix of child variadic item
-							matchVariantToVariadicPart(childVta, ancestorVta - childVta);
-						}
-					}
-					else
-					{
-						// match ancestor variadic item with child variadic item
-						matchVariantToVariadicPart(ancestorVta, 0);
+						matchVariadicToMultiple(ancestorVta, (child.Count() - childPostfix), childVta);
 					}
 				}
 			}
