@@ -263,26 +263,32 @@ struct Obj
 
 		Symbol* primary = nullptr;
 		List<Ptr<ValueAliasDeclaration>> decls;
-		for (vint i = 0; i < program->decls.Count(); i++)
+		TEST_CATEGORY(L"Primary should record all descendants")
 		{
-			auto decl = program->decls[i];
-			if (decl->name.name == L"Value")
+			for (vint i = 0; i < program->decls.Count(); i++)
 			{
-				if (primary)
+				auto decl = program->decls[i];
+				if (decl->name.name == L"Value")
 				{
-					TEST_CASE_ASSERT(decl->symbol->GetPSPrimary_NF() == primary);
-				}
-				else
-				{
-					primary = decl->symbol;
-					TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 30);
-				}
+					if (primary)
+					{
+						TEST_CASE_ASSERT(decl->symbol->GetPSPrimary_NF() == primary);
+						TEST_CASE_ASSERT(primary->GetPSPrimaryDescendants_NF().Contains(decl->symbol));
+					}
+					else
+					{
+						primary = decl->symbol;
+						TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 30);
+					}
 
-				auto valueDecl = decl.Cast<ValueAliasDeclaration>();
-				TEST_CASE_ASSERT(valueDecl);
-				decls.Add(valueDecl);
+					auto valueDecl = decl.Cast<ValueAliasDeclaration>();
+					TEST_CASE_ASSERT(valueDecl);
+					decls.Add(valueDecl);
+				}
 			}
-		}
+
+			TEST_CASE_ASSERT(primary->GetPSPrimaryDescendants_NF().Count() == decls.Count() - 1);
+		});
 
 		// calculate partial ordering relationship
 
@@ -387,7 +393,39 @@ struct Obj
 #undef YES
 #undef NO
 
-		// TODO: test ordering for each declaration
+		// test ordering for each declaration
+
+		TEST_CATEGORY(L"Parent - Child relationship should correct")
+		{
+			for (vint i = 0; i < decls.Count(); i++)
+			{
+				auto symbol = decls[i]->symbol;
+				vint index = parents.Keys().IndexOf(i);
+
+				TEST_CASE(L"Parent: " + itow(i) + L" -> " + (index == -1 ? L"EMPTY" : 
+					From(parents.GetByIndex(index))
+					.Select(itow)
+					.Aggregate([](const WString& a, const WString& b) { return a + L", " + b; })
+					))
+				{
+					if (index == -1)
+					{
+						TEST_ASSERT(symbol->GetPSParents_NF().Count() == 0);
+					}
+					else
+					{
+						auto& ps = parents.GetByIndex(index);
+						TEST_ASSERT(ps.Count() == symbol->GetPSParents_NF().Count());
+						for (vint j = 0; j < ps.Count(); j++)
+						{
+							auto pSymbol = decls[ps[j]]->symbol;
+							TEST_ASSERT(symbol->GetPSParents_NF().Contains(pSymbol));
+							TEST_ASSERT(pSymbol->GetPSChildren_NF().Contains(symbol));
+						}
+					}
+				});
+			}
+		});
 	};
 
 	TEST_CATEGORY(L"Partial Order Evaluation")
