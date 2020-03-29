@@ -44,7 +44,7 @@ namespace partial_specification_ordering
 				if (symbolA->GetPSPrimary_NF() != symbolB->GetPSPrimary_NF()) throw TypeCheckerException();
 
 				// fail if both of them are full specialization
-				if (tA->arguments.Count() == 0 && tB->arguments.Count() == 0) throw MatchPSFailureException();
+				if (tA->arguments.Count() == 0 && tB->arguments.Count() == 0) return false;
 
 				SortedList<Symbol*> freeAncestorSymbols, freeChildSymbols;
 				FillFreeSymbols(pa, tA, freeAncestorSymbols);
