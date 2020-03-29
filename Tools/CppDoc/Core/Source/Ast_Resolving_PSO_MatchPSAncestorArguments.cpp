@@ -20,34 +20,56 @@ namespace partial_specification_ordering
 		const SortedList<Symbol*>& freeChildSymbols
 	)
 	{
-		// calculate known pack size for each variadic item in ancestor
-		// skip of there are more than one variadic item in ancestor with unknown pack size
-		// fail if there are more than one variadic item in child
-		// only match when
-		//   <A1, A2, A3, A4>		with <B1, B2, B3, B4>
-		//   <A1, As..., A2>		with <B1, B2, B3, B4>		A1={B2, B3}[-1]
-		//   <A1, A2, As...>		with <B1, B2, B3, Bs...>	As={B3, Bs...}[1]
-		//   <A1, A2, As...>		with <B1, B2, Bs..., B3>	As={Bs..., B3}[0]
-		// followings are not supported
-		//   <A1, A2, A3, A4>		with <B1, Bs..., B2>
-		//   <A1, A2, A3, As...>	with <B1, B2, Bs...>
-
 		vint ancestorVta = -1;
 		vint childVta = -1;
+		Array<vint> ancestorPackSizes(ancestor.Count());
 
 		for (vint i = 0; i < ancestor.Count(); i++)
 		{
 			if (ancestor[i].isVariadic)
 			{
-				if (ancestorVta == -1)
+				vint packSize = -1;
+
+				// calculate known pack size for each variadic item in ancestor
+				auto ancestorType = ancestor[i].item;
+				SortedList<Type*> involvedTypes;
+				SortedList<Expr*> involvedExprs;
+				CollectFreeTypes(pa, false, ancestorType, nullptr, insideVariant, freeAncestorSymbols, involvedTypes, involvedExprs);
+
+				SortedList<Symbol*> variadicSymbols;
+				CollectInvolvedVariadicArguments(pa, involvedTypes, involvedExprs, [&](Symbol* patternSymbol, ITsys*)
+				{
+					vint index = matchingResult.Keys().IndexOf(patternSymbol);
+					if (index != -1)
+					{
+						vint newPackSize = matchingResult.Values()[index]->source.Count();
+						if (packSize == -1)
+						{
+							packSize = newPackSize;
+						}
+						else if(packSize != newPackSize)
+						{
+							// fail if pack size conflicts
+							throw MatchPSFailureException();
+						}
+					}
+				});
+
+				ancestorPackSizes[i] = packSize;
+				if (packSize == -1)
 				{
 					ancestorVta = i;
 				}
 				else
 				{
+					// skip of there are more than one variadic item in ancestor with unknown pack size
 					skipped = true;
 					return;
 				}
+			}
+			else
+			{
+				ancestorPackSizes[i] = 1;
 			}
 		}
 
@@ -61,41 +83,97 @@ namespace partial_specification_ordering
 				}
 				else
 				{
+					// fail if there are more than one variadic item in child
 					throw MatchPSFailureException();
 				}
 			}
 		}
 
+		// only match when
+		//   <A1, A2, A3, A4>		with <B1, B2, B3, B4>
+		//   <A1, As..., A2>		with <B1, B2, B3, B4>		A1={B2, B3}[-1]
+		//   <A1, A2, As...>		with <B1, B2, B3, Bs...>	As={B3, Bs...}[1]
+		//   <A1, A2, As...>		with <B1, B2, Bs..., B3>	As={Bs..., B3}[0]
+		// followings are not supported
+		//   <A1, A2, A3, A4>		with <B1, Bs..., B2>
+		//   <A1, A2, A3, As...>	with <B1, B2, Bs...>
+
+		struct Assignment
+		{
+			vint			start;
+			vint			stop;
+
+			Assignment()
+			{
+			}
+
+			Assignment(vint _start, vint _stop)
+				:start(_start)
+				, stop(_stop)
+			{
+			}
+		};
+
+		Array<Assignment> assignments(ancestor.Count());
+
 		if (ancestorVta == -1)
 		{
-			if (childVta == -1)
+			// there is no variadic item with unknown pack size in ancestor
+			// the sum of ancestor item pack sizes should match the amount of child items
+
+			vint nextChild = 0;
+			for (vint i = 0; i < ancestor.Count(); i++)
 			{
-				// there is no variadic item on both ancestor and child
-				if (ancestor.Count() != child.Count()) throw MatchPSFailureException();
+				vint newNextChild = nextChild + ancestorPackSizes[i];
+				assignments[i] = { nextChild,newNextChild };
+				nextChild = newNextChild;
 			}
-			else
-			{
-				// only child has variadic item
-				if (ancestor.Count() < child.Count() - 1) throw MatchPSFailureException();
-			}
+			if (nextChild != child.Count()) throw MatchPSFailureException();
 		}
 		else
 		{
-			if (childVta == -1)
+			// there is one variadic item with unknown pack size in ancestor
+			// any ancestor item should not match part of variadic child item
+			// any non-variadic ancestor item should not match variadic child item
+
+			vint nextChildFromLeft = 0;
+			vint nextChildFromRight = child.Count();
+
+			for (vint i = 0; i < ancestorVta; i++)
 			{
-				// only ancestor has variadic item
-				if (ancestor.Count() - 1 > child.Count()) throw MatchPSFailureException();
+				vint newNextChild = nextChildFromLeft + ancestorPackSizes[i];
+				assignments[i] = { nextChildFromLeft,newNextChild };
+				nextChildFromLeft = newNextChild;
 			}
-			else
+
+			for (vint i = ancestor.Count() - 1; i > ancestorVta; i--)
 			{
-				// both ancestor and child have variadic item
-				if (ancestorVta != ancestor.Count() - 1) throw MatchPSFailureException();
-				if (childVta != child.Count() - 1) throw MatchPSFailureException();
+				vint newNextChild = nextChildFromRight - ancestorPackSizes[i];
+				assignments[i] = { newNextChild,nextChildFromRight };
+				nextChildFromRight = newNextChild;
+			}
+
+			if (nextChildFromLeft > nextChildFromRight) throw MatchPSFailureException();
+
+			assignments[ancestorVta] = { nextChildFromLeft,nextChildFromRight };
+
+			for (vint i = 0; i < ancestor.Count(); i++)
+			{
+				auto assignment = assignments[i];
+				if (!ancestor[i].isVariadic)
+				{
+					if (assignment.start <= childVta && childVta < assignment.stop)
+					{
+						throw MatchPSFailureException();
+					}
+				}
 			}
 		}
 
+		// match ancestor items according to assignments
 		for (vint i = 0; i < ancestor.Count(); i++)
 		{
+			// search for all variadic symbols in this ancestor item
 			auto ancestorType = ancestor[i].item;
 			SortedList<Type*> involvedTypes;
 			SortedList<Expr*> involvedExprs;
@@ -202,84 +280,15 @@ namespace partial_specification_ordering
 				}
 			};
 
-			if (ancestorVta == -1)
+			auto assignment = assignments[i];
+			if (ancestor[i].isVariadic)
 			{
-				if (childVta == -1)
-				{
-					// there is no variadic item on both ancestor and child
-					matchSingleToSingle(i);
-				}
-				else
-				{
-					// only child has variadic item
-					auto childPostfix = child.Count() - childVta - 1;
-					if (i < childVta)
-					{
-						// match ancestor item with child item in prefix
-						matchSingleToSingle(i);
-					}
-					else if (ancestor.Count() - i <= childPostfix)
-					{
-						// match ancestor item with child item in postfix
-						matchSingleToSingle(i + (child.Count() - ancestor.Count()));
-					}
-					else
-					{
-						// multiple ancestor item to one child item is not allowed
-						throw MatchPSFailureException();
-					}
-				}
+				vint containedChildVta = assignment.start <= childVta && childVta < assignment.stop ? childVta : -1;
+				matchVariadicToMultiple(assignment.start, assignment.stop, containedChildVta);
 			}
 			else
 			{
-				if (childVta == -1)
-				{
-					// only ancestor has variadic item
-					auto ancestorPostfix = ancestor.Count() - ancestorVta - 1;
-					if (i < ancestorVta)
-					{
-						// match ancestor item with child item in prefix
-						matchSingleToSingle(i);
-					}
-					else if (ancestor.Count() - i <= ancestorPostfix)
-					{
-						// match ancestor item with child item in postfix
-						matchSingleToSingle(i + (child.Count() - ancestor.Count()));
-					}
-					else
-					{
-						// match ancestor variadic item with multiple child item
-						matchVariadicToMultiple(ancestorVta, child.Count() - ancestorPostfix, -1);
-					}
-				}
-				else
-				{
-					auto ancestorPostfix = ancestor.Count() - ancestorVta - 1;
-					auto childPostfix = child.Count() - childVta - 1;
-					
-					if(ancestorVta > childVta || ancestorPostfix < childPostfix)
-					{
-						// fail if ancestor variadic item doesn't contain child variadic item
-						throw MatchPSFailureException();
-					}
-
-					// both ancestor and child have variadic item
-					if (i < ancestorVta)
-					{
-						// match child item in prefix
-						matchSingleToSingle(i);
-					}
-					else if (i > ancestorVta)
-					{
-						// match child item in postfix
-						matchSingleToSingle(i + (child.Count() - ancestor.Count()));
-					}
-					else if (ancestorVta < childVta)
-					{
-						// match ancestor variadic item with multiple child item and the child variadic item
-						matchVariadicToMultiple(ancestorVta, (child.Count() - childPostfix), childVta);
-					}
-				}
+				matchSingleToSingle(assignment.start);
 			}
 		}
 	}
