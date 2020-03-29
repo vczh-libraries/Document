@@ -34,7 +34,7 @@ namespace partial_specification_ordering
 
 	struct MatchPSResult : MatchPSResultHeader
 	{
-		VariadicList<Ptr<Type>>			source;
+		List<Ptr<Type>>					source;
 
 		static bool Compare(const Ptr<MatchPSResult>& a, const Ptr<MatchPSResult>& b)
 		{
@@ -47,12 +47,11 @@ namespace partial_specification_ordering
 				{
 					auto at = a->source[i];
 					auto bt = b->source[i];
-					if (at.isVariadic != bt.isVariadic) return false;
-					if (at.item && bt.item)
+					if (at && bt)
 					{
-						if (!IsSameResolvedType(at.item, bt.item, equivalentNames)) return false;
+						if (!IsSameResolvedType(at, bt, equivalentNames)) return false;
 					}
-					else if (at.item || bt.item)
+					else if (at || bt)
 					{
 						return false;
 					}

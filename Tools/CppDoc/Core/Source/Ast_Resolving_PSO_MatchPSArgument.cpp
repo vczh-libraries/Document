@@ -174,7 +174,7 @@ namespace partial_specification_ordering
 						// TODO: pass information from outside
 						auto result = MakePtr<MatchPSResult>();
 						*((MatchPSResultHeader*)result.Obj()) = matchHeader;
-						result->source.Add({ childType,false });
+						result->source.Add(childType);
 
 						vint index = output.Keys().IndexOf(patternSymbol);
 						if (index == -1)

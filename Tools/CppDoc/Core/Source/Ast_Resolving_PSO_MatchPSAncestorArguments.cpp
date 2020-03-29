@@ -25,10 +25,10 @@ namespace partial_specification_ordering
 		// fail if there are more than one variadic item in child
 		// only match when
 		//   <A1, A2, A3, A4>		with <B1, B2, B3, B4>
-		//   <A1, As..., A2>		with <B1, B2, B3, B4>		A1={B2, B3}[0,0]
-		//   <A1, A2, A3, A4>		with <B1, Bs..., B2>		A2=Bs[0,-1]; A3=Bs[1,-1]
+		//   <A1, As..., A2>		with <B1, B2, B3, B4>		A1={B2, B3}[-1,-1]
+		//   <A1, A2, A3, A4>		with <B1, Bs..., B2>		A2=Bs...[0,-1]; A3=Bs...[1,-1]
 		//   <A1, A2, As...>		with <B1, B2, B3, Bs...>	As={B3, Bs...}[0,0]
-		//   <A1, A2, A3, As...>	with <B1, B2, Bs...>		A3=Bs[0,-1]; As={Bs}[1,0]
+		//   <A1, A2, A3, As...>	with <B1, B2, Bs...>		A3=Bs...[0,-1]; As={Bs...}[1,0]
 
 		vint ancestorVta = -1;
 		vint childVta = -1;
@@ -113,7 +113,7 @@ namespace partial_specification_ordering
 			auto matchSingleToSingleComplex = [&](vint c, MatchPSResultHeader matchHeader, Dictionary<Symbol*, Ptr<MatchPSResult>>& replacedResultVta)
 			{
 				auto childType = child[c].item;
-				MatchPSArgument(pa, skipped, matchHeader, matchingResult, replacedResultVta, ancestorType, childType, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
+				MatchPSArgument(pa, skipped, matchHeader, matchingResult, replacedResultVta, ancestorType, childType, child[c].isVariadic, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
 			};
 
 			auto matchSingleToSingle = [&](vint c)
@@ -173,18 +173,14 @@ namespace partial_specification_ordering
 					if (result->source.Count() == assignedCount)
 					{
 						auto matchType = result->source[matchIndex];
-						if (matchType.item != resultType.item)
+						if (matchType && resultType)
 						{
-							throw MatchPSFailureException();
-						}
-						if (matchType.item && resultType.item)
-						{
-							if (!IsSameResolvedType(matchType.item, resultType.item, equivalentNames))
+							if (!IsSameResolvedType(matchType, resultType, equivalentNames))
 							{
 								throw MatchPSFailureException();
 							}
 						}
-						else if (matchType.item || resultType.item)
+						else if (matchType || resultType)
 						{
 							throw MatchPSFailureException();
 						}
@@ -202,15 +198,17 @@ namespace partial_specification_ordering
 			// match ancestorType with all of mentioned items in child above
 			auto matchVariadicToMultipleSingle = [&](vint start, vint stop, bool withExtraVariadicItem)
 			{
+				vint assignedStart = (withExtraVariadicItem ? 0 : -1);
+				vint assignedStop = (withExtraVariadicItem ? 0 : -1);
 				vint assignedCount = (stop - start + (withExtraVariadicItem ? 1 : 0));
-				assertMatchingResultPass1(0, 0, assignedCount);
+				assertMatchingResultPass1(assignedStart, assignedStop, assignedCount);
 
 				for (vint c = start; c <= stop; c++)
 				{
 					if (c == stop && !withExtraVariadicItem) break;
 					Dictionary<Symbol*, Ptr<MatchPSResult>> replacedResultVta;
 					matchSingleToSingleComplex(c, {}, replacedResultVta);
-					assertMatchingResultPass2(start, stop, assignedCount, c - start, replacedResultVta);
+					assertMatchingResultPass2(assignedStart, assignedStop, assignedCount, c - start, replacedResultVta);
 				}
 			};
 
@@ -219,15 +217,10 @@ namespace partial_specification_ordering
 			// match ancestorType with the postfix of child[c] starting at start
 			auto matchVariantToVariadicPart = [&](vint c, vint start)
 			{
-				throw 0;
-			};
-
-			// ancestorType is variadic
-			// child[c] is variadic
-			// match ancestorType with child[c]
-			auto matchVariadicToVariadic = [&](vint c)
-			{
-				throw 0;
+				assertMatchingResultPass1(start, 0, 1);
+				Dictionary<Symbol*, Ptr<MatchPSResult>> replacedResultVta;
+				matchSingleToSingleComplex(c, {}, replacedResultVta);
+				assertMatchingResultPass2(start, 0, 1, c, replacedResultVta);
 			};
 
 			if (ancestorVta == -1)
@@ -309,7 +302,7 @@ namespace partial_specification_ordering
 					else
 					{
 						// match ancestor variadic item with child variadic item
-						matchVariadicToVariadic(ancestorVta);
+						matchVariantToVariadicPart(ancestorVta, 0);
 					}
 				}
 			}
