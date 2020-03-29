@@ -257,10 +257,9 @@ struct Obj
 		AssertProgram(program, output);
 	});
 
-	TEST_CATEGORY(L"Partial Order Evaluation")
+	auto testPartialOrder = [](Ptr<Program> program, const ParsingArguments& pa, const Pair<vint, vint> yesRaw[], vint yesCount)
 	{
-		using namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation;
-		COMPILE_PROGRAM(program, pa, input);
+		// ensure all partial specializations point to the same primary symbol
 
 		Symbol* primary = nullptr;
 		List<Ptr<ValueAliasDeclaration>> decls;
@@ -287,45 +286,16 @@ struct Obj
 
 		// calculate partial ordering relationship
 
-		const Pair<vint, vint> yes_raw[] = {
-			{4,6},
-			{5,6},
-			{23,6},
-			{4,7},
-			{5,8},
-			{6,9},
-			{7,9},
-			{8,9},
-			{24,9},
-			{10,11},
-			{10,12},
-			{11,13},
-			{12,13},
-			{13,14},
-			{15,16},
-			{15,17},
-			{16,18},
-			{17,19},
-			{19,20},
-			{17,21},
-			{15,22},
-			{23,24},
-			{6,25},
-			{25,26},
-			{9,26},
-			{6,27},
-			{25,28},
-			{9,29},
-			{26,30}
-		};
-
 		Group<vint, vint> parents, children, ancestors;
 
-		for (auto p : yes_raw)
+		for (vint i = 0; i < yesCount; i++)
 		{
+			auto p = yesRaw[i];
 			parents.Add(p.value, p.key);
 			children.Add(p.key, p.value);
 		}
+
+		// flatten partial ordering relationship
 
 		Func<void(vint, vint)> collectAncestors = [&](vint key, vint from)
 		{
@@ -417,10 +387,49 @@ struct Obj
 #undef YES
 #undef NO
 
-		// test ordering for each declaration
+		// TODO: test ordering for each declaration
+	};
+
+	TEST_CATEGORY(L"Partial Order Evaluation")
+	{
+		using namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation;
+		COMPILE_PROGRAM(program, pa, input);
+
+		const Pair<vint, vint> yesRaw[] = {
+			{4,6},
+			{5,6},
+			{23,6},
+			{4,7},
+			{5,8},
+			{6,9},
+			{7,9},
+			{8,9},
+			{24,9},
+			{10,11},
+			{10,12},
+			{11,13},
+			{12,13},
+			{13,14},
+			{15,16},
+			{15,17},
+			{16,18},
+			{17,19},
+			{19,20},
+			{17,21},
+			{15,22},
+			{23,24},
+			{6,25},
+			{25,26},
+			{9,26},
+			{6,27},
+			{25,28},
+			{9,29},
+			{26,30}
+		};
+
+		testPartialOrder(program, pa, yesRaw, _countof(yesRaw));
 	});
 
-	// TODO: test actual result with patterns containing variadic items
 	// TODO: test array with vta dimension
 	// TODO: test T[] and T* function parameter
 }
