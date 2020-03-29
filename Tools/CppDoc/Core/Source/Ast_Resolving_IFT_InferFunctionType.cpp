@@ -2,35 +2,10 @@
 #include "Ast_Evaluate_ExpandPotentialVta.h"
 
 using namespace symbol_type_resolving;
+using namespace assign_parameters;
 
 namespace infer_function_type
 {
-	/***********************************************************************
-	TemplateArgumentPatternToSymbol:	Get the symbol from a type representing a template argument
-	***********************************************************************/
-
-	Symbol* TemplateArgumentPatternToSymbol(ITsys* tsys)
-	{
-		switch (tsys->GetType())
-		{
-		case TsysType::Decl:
-			return tsys->GetDecl();
-		case TsysType::GenericArg:
-			return tsys->GetGenericArg().argSymbol;
-		case TsysType::GenericFunction:
-			{
-				auto symbol = tsys->GetGenericFunction().declSymbol;
-				if (symbol->kind != symbol_component::SymbolKind::GenericTypeArgument)
-				{
-					throw TypeCheckerException();
-				}
-				return symbol;
-			}
-		default:
-			throw TypeCheckerException();
-		}
-	}
-
 	/***********************************************************************
 	SetInferredResult:	Set a inferred type for a template argument, and check if it is compatible with previous result
 	***********************************************************************/
@@ -634,13 +609,8 @@ namespace infer_function_type
 
 							// fill freeTypeSymbols with all template arguments
 							// fill taContext will knows arguments
-							for (vint i = 0; i < gfi.spec->arguments.Count(); i++)
+							FillFreeSymbols(pa, gfi.spec, freeTypeSymbols, [&](vint i, TemplateSpec::Argument& argument, ITsys* pattern, Symbol* patternSymbol)
 							{
-								auto argument = gfi.spec->arguments[i];
-								auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
-								auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
-								freeTypeSymbols.Add(patternSymbol);
-
 								if (i < gfi.filledArguments)
 								{
 									hardcodedPatterns.Add(pattern);
@@ -650,12 +620,12 @@ namespace infer_function_type
 										lastAssignedVta = pattern;
 									}
 								}
-							}
+							});
 
 							// assign arguments to correct parameters
 							auto inferPa = pa.AdjustForDecl(gfi.declSymbol);
 							inferPa.parentDeclType = ParsingArguments::AdjustDeclInstantForScope(gfi.declSymbol, gfi.parentDeclType, true);
-							assign_parameters::ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, lastAssignedVta, functionType.Obj(), argTypes, boundedAnys);
+							ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, lastAssignedVta, functionType.Obj(), argTypes, boundedAnys);
 
 							// type inferencing
 							List<Ptr<TemplateArgumentContext>> inferredArgumentTypes;

@@ -6,6 +6,32 @@ using namespace infer_function_type;
 namespace assign_parameters
 {
 	/***********************************************************************
+	TemplateArgumentPatternToSymbol:	Get the symbol from a type representing a template argument
+	***********************************************************************/
+
+	Symbol* TemplateArgumentPatternToSymbol(ITsys* tsys)
+	{
+		switch (tsys->GetType())
+		{
+		case TsysType::Decl:
+			return tsys->GetDecl();
+		case TsysType::GenericArg:
+			return tsys->GetGenericArg().argSymbol;
+		case TsysType::GenericFunction:
+			{
+				auto symbol = tsys->GetGenericFunction().declSymbol;
+				if (symbol->kind != symbol_component::SymbolKind::GenericTypeArgument)
+				{
+					throw TypeCheckerException();
+				}
+				return symbol;
+			}
+		default:
+			throw TypeCheckerException();
+		}
+	}
+
+	/***********************************************************************
 	AssignParameterAssignment: Assign arguments to parameters according to the GPA mapping
 	***********************************************************************/
 

@@ -6,8 +6,6 @@
 
 namespace infer_function_type
 {
-	extern Symbol*		TemplateArgumentPatternToSymbol(ITsys* tsys);
-
 	extern void			CollectFreeTypes(
 							const ParsingArguments& pa,
 							bool includeParentDeclArguments,

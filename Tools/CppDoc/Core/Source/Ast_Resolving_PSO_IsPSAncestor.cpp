@@ -1,7 +1,9 @@
 #include "Ast_Resolving_PSO.h"
+#include "Ast_Resolving_AP.h"
 
 using namespace symbol_type_resolving;
 using namespace infer_function_type;
+using namespace assign_parameters;
 
 namespace partial_specification_ordering
 {
@@ -39,27 +41,14 @@ namespace partial_specification_ordering
 			if (psB)
 			{
 				// ensure that they have the same primary symbol
-				if (symbolA->GetPSPrimary_NF() != symbolB->GetPSPrimary_NF()) throw MatchPSFailureException();
+				if (symbolA->GetPSPrimary_NF() != symbolB->GetPSPrimary_NF()) throw TypeCheckerException();
+
+				// fail if both of them are full specialization
+				if (tA->arguments.Count() == 0 && tB->arguments.Count() == 0) throw MatchPSFailureException();
 
 				SortedList<Symbol*> freeAncestorSymbols, freeChildSymbols;
-
-				// fill freeAncestorSymbols with all template arguments
-				for (vint i = 0; i < tA->arguments.Count(); i++)
-				{
-					auto argument = tA->arguments[i];
-					auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
-					auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
-					freeAncestorSymbols.Add(patternSymbol);
-				}
-
-				// fill freeChildSymbols with all template arguments
-				for (vint i = 0; i < tB->arguments.Count(); i++)
-				{
-					auto argument = tB->arguments[i];
-					auto pattern = GetTemplateArgumentKey(argument, pa.tsys.Obj());
-					auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
-					freeChildSymbols.Add(patternSymbol);
-				}
+				FillFreeSymbols(pa, tA, freeAncestorSymbols);
+				FillFreeSymbols(pa, tB, freeChildSymbols);
 
 				// match
 
