@@ -26,7 +26,7 @@ namespace partial_specification_ordering
 		// only match when
 		//   <A1, A2, A3, A4>		with <B1, B2, B3, B4>
 		//   <A1, As..., A2>		with <B1, B2, B3, B4>		A1={B2, B3}[0,0]
-		//   <A1, A2, A3, A4>		with <B1, Bs..., B2>		A2=Bs[0,1]; A3=Bs[1,0]
+		//   <A1, A2, A3, A4>		with <B1, Bs..., B2>		A2=Bs[0,-1]; A3=Bs[1,-1]
 		//   <A1, A2, As...>		with <B1, B2, B3, Bs...>	As={B3, Bs...}[0,0]
 		//   <A1, A2, A3, As...>	with <B1, B2, Bs...>		A3=Bs[0,-1]; As={Bs}[1,0]
 
@@ -101,10 +101,10 @@ namespace partial_specification_ordering
 			// ancestorType is non-variadic
 			// child[c] is non-variadic
 			// match ancestorType with child[c]
-			auto matchSingleToSingle = [&](vint c)
+			auto matchSingleToSingle = [&](vint c, MatchPSResultHeader matchHeader = {})
 			{
 				auto childType = child[c].item;
-				MatchPSArgument(pa, skipped, matchingResult, matchingResultVta, ancestorType, childType, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
+				MatchPSArgument(pa, skipped, matchHeader, matchingResult, matchingResultVta, ancestorType, childType, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
 			};
 
 			// ancestorType is non-variadic
@@ -112,7 +112,9 @@ namespace partial_specification_ordering
 			// match ancestorType with the start-th item in child[c]
 			auto matchSingleToVariadicPart = [&](vint c, vint start)
 			{
-				throw 0;
+				MatchPSResultHeader matchHeader;
+				matchHeader.start = start;
+				matchSingleToSingle(c, matchHeader);
 			};
 
 			// ancestorType is variadic
