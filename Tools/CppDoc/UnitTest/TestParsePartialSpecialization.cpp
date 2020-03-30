@@ -11,7 +11,7 @@ namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation
 		constexpr auto Value = 0;
 
 		template<>
-		constexpr auto Value<> = 1;
+		constexpr auto Value<> = 1; // *24
 
 		template<typename A>
 		constexpr auto Value<A> = 2;
@@ -86,7 +86,7 @@ namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation
 		constexpr auto Value<Ts*...> = 23;
 
 		template<typename... Ts>
-		constexpr auto Value<const Ts*...> = 24; // 23
+		constexpr auto Value<const Ts*...> = 24;
 
 		template<typename A>
 		constexpr auto Value<A*, A*> = 25; // *6
@@ -377,9 +377,9 @@ struct Obj
 
 		TEST_CATEGORY(L"All untested pairs should fail the test")
 		{
-			for (vint i = 1; i < ancestors.Count(); i++)
+			for (vint i = 1; i < decls.Count(); i++)
 			{
-				for (vint j = i + 1; j < ancestors.Count(); j++)
+				for (vint j = i + 1; j < decls.Count(); j++)
 				{
 					if (!ancestors.Contains(i, j) && !ancestors.Contains(j, i))
 					{
@@ -464,6 +464,7 @@ struct Obj
 			{17,21},
 			{15,22},
 			{23,24},
+			{24,1},
 			{6,25},
 			{25,26},
 			{9,26},
