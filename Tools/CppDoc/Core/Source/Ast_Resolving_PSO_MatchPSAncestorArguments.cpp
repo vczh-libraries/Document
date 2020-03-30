@@ -119,8 +119,7 @@ namespace partial_specification_ordering
 		else
 		{
 			// there is one variadic item with unknown pack size in ancestor
-			// any ancestor item should not match part of variadic child item
-			// any non-variadic ancestor item should not match variadic child item
+			// the sum of prefix and postfix ancestor item pack sizes should not exceed the amount of child items
 
 			vint nextChildFromLeft = 0;
 			vint nextChildFromRight = child.Count();
@@ -143,15 +142,19 @@ namespace partial_specification_ordering
 
 			assignments[ancestorVta] = { nextChildFromLeft,nextChildFromRight };
 
-			for (vint i = 0; i < ancestor.Count(); i++)
+		}
+
+		// any ancestor item should not match part of variadic child item
+		// any non-variadic ancestor item should not match variadic child item
+
+		for (vint i = 0; i < ancestor.Count(); i++)
+		{
+			auto assignment = assignments[i];
+			if (!ancestor[i].isVariadic)
 			{
-				auto assignment = assignments[i];
-				if (!ancestor[i].isVariadic)
+				if (child[assignment.start].isVariadic)
 				{
-					if (child[assignment.start].isVariadic)
-					{
-						throw MatchPSFailureException();
-					}
+					throw MatchPSFailureException();
 				}
 			}
 		}
