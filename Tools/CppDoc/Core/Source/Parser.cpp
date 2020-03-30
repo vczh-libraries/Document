@@ -610,7 +610,7 @@ void Symbol::RemovePSParent_NF(Symbol* oldParent)
 void Symbol::AddPSParent_NF(Symbol* newParent)
 {
 	auto ps = GetPSShared();
-	if (!ps->psParents.Contains(newParent)) return;
+	if (ps->psParents.Contains(newParent)) return;
 
 	auto pps = newParent->GetPSShared();
 	if (ps->psPrimary != newParent && ps->psPrimary != pps->psPrimary) throw UnexpectedSymbolCategoryException();

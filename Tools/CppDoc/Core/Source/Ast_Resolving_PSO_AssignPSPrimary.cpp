@@ -53,18 +53,21 @@ namespace partial_specification_ordering
 		for (vint i = 0; i < descendants.Count(); i++)
 		{
 			auto descendant = descendants[i];
-			auto descendantDecl = descendant->GetAnyForwardDecl<TDecl>();
-			auto symbolIsParent = IsPSAncestor(pa, symbol, decl->templateSpec, decl->specializationSpec, descendant, descendantDecl->templateSpec, descendantDecl->specializationSpec);
-			auto symbolIsChild = IsPSAncestor(pa, descendant, descendantDecl->templateSpec, descendantDecl->specializationSpec, symbol, decl->templateSpec, decl->specializationSpec);
-			if (symbolIsParent != symbolIsChild)
+			if (symbol != descendant)
 			{
-				if (symbolIsParent)
+				auto descendantDecl = descendant->GetAnyForwardDecl<TDecl>();
+				auto symbolIsParent = IsPSAncestor(pa, symbol, decl->templateSpec, decl->specializationSpec, descendant, descendantDecl->templateSpec, descendantDecl->specializationSpec);
+				auto symbolIsChild = IsPSAncestor(pa, descendant, descendantDecl->templateSpec, descendantDecl->specializationSpec, symbol, decl->templateSpec, decl->specializationSpec);
+				if (symbolIsParent != symbolIsChild)
 				{
-					childCandidates.Add(descendant);
-				}
-				else
-				{
-					parentCandidates.Add(descendant);
+					if (symbolIsParent)
+					{
+						childCandidates.Add(descendant);
+					}
+					else
+					{
+						parentCandidates.Add(descendant);
+					}
 				}
 			}
 		}
