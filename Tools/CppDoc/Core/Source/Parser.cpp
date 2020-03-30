@@ -595,28 +595,27 @@ void Symbol::AssignPSPrimary_NF(Symbol* primary)
 	ps->psPrimary = primary;
 }
 
-void Symbol::ReplacePSParent_NF(Symbol* oldParent, Symbol* newParent)
+void Symbol::RemovePSParent_NF(Symbol* oldParent)
 {
 	auto ps = GetPSShared();
-	auto ops = oldParent ? oldParent->GetPSShared() : nullptr;
-	auto nps = newParent->GetPSShared();
+	if (!ps->psParents.Contains(oldParent)) return;
 
-	if (ops)
-	{
-		if (!ps->psParents.Contains(oldParent)) throw UnexpectedSymbolCategoryException();
-		if (ps->psPrimary != oldParent && ps->psPrimary != ops->psPrimary) throw UnexpectedSymbolCategoryException();
-	}
+	auto pps = oldParent->GetPSShared();
+	if (ps->psPrimary != oldParent && ps->psPrimary != pps->psPrimary) throw UnexpectedSymbolCategoryException();
 
-	if (ps->psParents.Contains(newParent)) throw UnexpectedSymbolCategoryException();
-	if (ps->psPrimary != newParent && ps->psPrimary != nps->psPrimary) throw UnexpectedSymbolCategoryException();
+	pps->psChildren.Remove(this);
+	ps->psParents.Remove(oldParent);
+}
 
-	if (ops)
-	{
-		ops->psChildren.Remove(this);
-		ps->psParents.Remove(oldParent);
-	}
+void Symbol::AddPSParent_NF(Symbol* newParent)
+{
+	auto ps = GetPSShared();
+	if (!ps->psParents.Contains(newParent)) return;
 
-	nps->psChildren.Add(this);
+	auto pps = newParent->GetPSShared();
+	if (ps->psPrimary != newParent && ps->psPrimary != pps->psPrimary) throw UnexpectedSymbolCategoryException();
+
+	pps->psChildren.Add(this);
 	ps->psParents.Add(newParent);
 }
 
