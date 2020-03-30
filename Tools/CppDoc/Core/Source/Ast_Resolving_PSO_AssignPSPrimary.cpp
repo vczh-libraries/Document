@@ -17,7 +17,7 @@ namespace partial_specification_ordering
 				auto s = ss[i];
 				if (!removed.Contains(s))
 				{
-					removed.Contains(s);
+					removed.Add(s);
 				}
 				SearchIndirectRelationship(s, accessed, removed, relationship);
 			}

@@ -29,11 +29,9 @@
   - [ ] Call a function with some or all template arguments unspecified.
     - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
 - [ ] Partial specialization constructions
-  - [ ] Calculate partial-ordering on specializations.
-  - [ ] Always return results from more specific declarations, but if a pattern is matched with `any_t`, all derived patterns are consider equally specific at this moment.
-    - [ ] Tests for values, functions and classes
   - [ ] Partial specialization on **values**
     - [ ] Specialization is used when evaluating a value, returns all results from matched specialization or primary symbol
+      - [ ] Always return results from more specific declarations, but if a pattern is matched with `any_t`, all derived patterns are consider equally specific at this moment.
     - [ ] SFINAE test cases
   - [ ] Partial specialization on **functions** (actually it is full specialization, by reusing partial specialization constructions)
     - [ ] Connect functions with forward declarations.
