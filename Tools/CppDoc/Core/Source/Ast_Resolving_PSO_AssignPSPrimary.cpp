@@ -44,12 +44,14 @@ namespace partial_specification_ordering
 	template<typename TDecl>
 	void AssignPSParent(const ParsingArguments& pa, Symbol* symbol, Symbol* primary)
 	{
+		// add the primary symbol to parent list
 		List<Symbol*> parentCandidates, childCandidates;
 		parentCandidates.Add(symbol->GetPSPrimary_NF());
 
 		auto decl = symbol->GetAnyForwardDecl<TDecl>();
 		auto& descendants = primary->GetPSPrimaryDescendants_NF();
 
+		// find all potential parents and children
 		for (vint i = 0; i < descendants.Count(); i++)
 		{
 			auto descendant = descendants[i];
@@ -72,9 +74,11 @@ namespace partial_specification_ordering
 			}
 		}
 
+		// remove all indirect relationship
 		KeepDirectRelationship(parentCandidates, &Symbol::GetPSParents_NF);
 		KeepDirectRelationship(childCandidates, &Symbol::GetPSChildren_NF);
 
+		// adjust parent-child records
 		for (vint i = 0; i < parentCandidates.Count(); i++)
 		{
 			auto parent = parentCandidates[i];
@@ -101,14 +105,19 @@ namespace partial_specification_ordering
 	template<typename TDecl>
 	void AssignPSPrimaryInternal(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Symbol* symbol)
 	{
+		// only the first call to a symbol takes effect
 		if (!symbol->GetPSPrimary_NF())
 		{
+			// symbol names of partial specializations are decorated
+			// so searching for the declaration name will only return the primary symbol
+			// or sometimes some overloading symbols (e.g. function and struct with the same name)
 			auto decl = symbol->GetAnyForwardDecl<TDecl>();
 			auto candidates = symbol->GetParentScope()->TryGetChildren_NFb(decl->name.name);
 			if (!candidates) throw StopParsingException(cursor);
 			for (vint i = 0; i < candidates->Count(); i++)
 			{
 				auto candidate = candidates->Get(i).Obj();
+				// the primary symbol of a class or value alias will never be a function
 				if (candidate->kind != symbol_component::SymbolKind::FunctionSymbol)
 				{
 					symbol->AssignPSPrimary_NF(candidate);

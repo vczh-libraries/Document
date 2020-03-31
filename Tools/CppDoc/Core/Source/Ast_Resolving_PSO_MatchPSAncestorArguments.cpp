@@ -281,19 +281,48 @@ namespace partial_specification_ordering
 	}
 
 	template<typename TSource, typename TGetter>
-	void FillVariadicTypeList(VariadicList<TSource>& ancestor, VariadicList<TSource>& child, VariadicList<Ptr<Type>>& ancestorTypes, VariadicList<Ptr<Type>>& childTypes, TGetter&& getter)
+	void FillVariadicTypeList(
+		VariadicList<TSource>& items,
+		VariadicList<Ptr<Type>>& types,
+		bool forParameters,
+		TGetter&& getter
+	)
 	{
-		for (vint i = 0; i < ancestor.Count(); i++)
+		for (vint i = 0; i < items.Count(); i++)
 		{
-			auto& e = ancestor[i];
-			ancestorTypes.Add({ getter(e.item),e.isVariadic });
+			auto& e = items[i];
+			auto t = getter(e.item);
+			if (forParameters)
+			{
+				// convert all T* to T[]
+				// the reason not to do the reverse is that
+				// sometimes T[here] could contain variadic template value argument
+				if (auto pointerType = t.Cast<ReferenceType>())
+				{
+					if (pointerType->reference == CppReferenceType::Ptr)
+					{
+						auto arrayType = MakePtr<ArrayType>();
+						arrayType->type = pointerType->type;
+						t = arrayType;
+					}
+				}
+			}
+			types.Add({ t,e.isVariadic });
 		}
+	}
 
-		for (vint i = 0; i < child.Count(); i++)
-		{
-			auto& e = child[i];
-			childTypes.Add({ getter(e.item),e.isVariadic });
-		}
+	template<typename TSource, typename TGetter>
+	void FillVariadicTypeList(
+		VariadicList<TSource>& ancestor,
+		VariadicList<TSource>& child,
+		VariadicList<Ptr<Type>>& ancestorTypes,
+		VariadicList<Ptr<Type>>& childTypes,
+		bool forParameters,
+		TGetter&& getter
+	)
+	{
+		FillVariadicTypeList(ancestor, ancestorTypes, forParameters, ForwardValue<TGetter&&>(getter));
+		FillVariadicTypeList(child, childTypes, forParameters, ForwardValue<TGetter&&>(getter));
 	}
 
 	/***********************************************************************
@@ -309,7 +338,7 @@ namespace partial_specification_ordering
 	)
 	{
 		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
-		FillVariadicTypeList(ancestor->arguments, child->arguments, ancestorTypes, childTypes, [](GenericArgument& e) { return e.type; });
+		FillVariadicTypeList(ancestor->arguments, child->arguments, ancestorTypes, childTypes, false, [](GenericArgument& e) { return e.type; });
 
 		// retry if there is any skipped matching
 		// fail if a retry result in no addition item in matchingResult
@@ -361,9 +390,8 @@ namespace partial_specification_ordering
 			throw MatchPSFailureException();
 		}
 
-		// TODO: take care about T[] and T* for parameters
 		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
-		FillVariadicTypeList(ancestor->parameters, child->parameters, ancestorTypes, childTypes, [](Ptr<VariableDeclaration>& e) { return e->type; });
+		FillVariadicTypeList(ancestor->parameters, child->parameters, ancestorTypes, childTypes, true, [](Ptr<VariableDeclaration>& e) { return e->type; });
 		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeAncestorSymbols, freeChildSymbols);
 	}
 
@@ -384,7 +412,7 @@ namespace partial_specification_ordering
 	)
 	{
 		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
-		FillVariadicTypeList(ancestor->arguments, child->arguments, ancestorTypes, childTypes, [](GenericArgument& e) { return e.type; });
+		FillVariadicTypeList(ancestor->arguments, child->arguments, ancestorTypes, childTypes, false, [](GenericArgument& e) { return e.type; });
 		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeAncestorSymbols, freeChildSymbols);
 	}
 }

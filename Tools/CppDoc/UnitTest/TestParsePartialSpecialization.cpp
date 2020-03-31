@@ -60,25 +60,25 @@ namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation
 		constexpr auto Value<void(*)(Ts..., A*, Us(...us)[]), B, C, A, Ts...> = 15;
 
 		template<typename A, typename B, typename... Ts>
-		constexpr auto Value<void(*)(Ts..., A*, Ts(...us)[]), A, B, A, Ts...> = 16; // 15
+		constexpr auto Value<void(*)(Ts..., A[], Ts*...), A, B, A, Ts...> = 16; // 15
 
 		template<typename A, typename B>
-		constexpr auto Value<void(*)(float, double, A*, char[], wchar_t[]), A, B, A, float, double> = 17; // 15
+		constexpr auto Value<void(*)(float, double, A*, char[], wchar_t*), A, B, A, float, double> = 17; // 15
 
 		template<typename A, typename B>
-		constexpr auto Value<void(*)(float, double, A*, float[], double[]), A, B, A, float, double> = 18; // *16
+		constexpr auto Value<void(*)(float, double, A*, float*, double[]), A, B, A, float, double> = 18; // *16
 
 		template<typename A>
-		constexpr auto Value<void(*)(float, double, A*, char[], wchar_t[]), A, A, A, float, double> = 19; // *17
+		constexpr auto Value<void(*)(float, double, A*, char*, wchar_t*), A, A, A, float, double> = 19; // *17
 
 		template<>
-		constexpr auto Value<void(*)(float, double, bool*, char[], wchar_t[]), bool, bool, bool, float, double> = 20; // *19
+		constexpr auto Value<void(*)(float, double, bool[], char*, wchar_t[]), bool, bool, bool, float, double> = 20; // *19
 
 		template<>
-		constexpr auto Value<void(*)(float, double, bool*, char[], wchar_t[]), bool, int, bool, float, double> = 21; // *17
+		constexpr auto Value<void(*)(float, double, bool[], char[], wchar_t*), bool, int, bool, float, double> = 21; // *17
 
 		template<>
-		constexpr auto Value<void(*)(float, double, bool*, char[], wchar_t[]), char, wchar_t, bool, float, double> = 22; // 15
+		constexpr auto Value<void(*)(float, double, bool[], char*, wchar_t*), char, wchar_t, bool, float, double> = 22; // 15
 
 		//-------------------------------------------------------------
 
@@ -477,6 +477,6 @@ struct Obj
 		testPartialOrder(program, pa, yesRaw, _countof(yesRaw));
 	});
 
+	// TODO: test vta value argument
 	// TODO: test array with vta dimension
-	// TODO: test T[] and T* function parameter
 }
