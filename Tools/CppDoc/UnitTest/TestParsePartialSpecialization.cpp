@@ -1,7 +1,7 @@
 #include "Util.h"
 #include <Ast_Resolving_PSO.h>
 
-namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation
+namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation_Type
 {
 	TEST_DECL(
 		template<typename... Ts>
@@ -105,6 +105,71 @@ namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation
 
 		template<>
 		constexpr auto Value<const float*, const float*> = 30; // *26
+	);
+}
+
+namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation_Value
+{
+	TEST_DECL(
+		template<typename T, typename U, int... vs>
+		constexpr auto Value = 0;
+
+		template<typename T>
+		constexpr auto Value<bool, T, 1> = 1;
+
+		template<typename T>
+		constexpr auto Value<bool, T, 1, 2> = 2;
+
+		template<typename T>
+		constexpr auto Value<bool, T, 1, 2, 3> = 3;
+
+		template<typename T>
+		constexpr auto Value<T, char, 4> = 4;
+
+		template<typename T>
+		constexpr auto Value<T, char, 4, 5> = 5;
+
+		template<typename T>
+		constexpr auto Value<T, char, 4, 5, 6> = 6;
+
+		template<>
+		constexpr auto Value<bool, char, 7> = 7; // 1, 4
+
+		template<>
+		constexpr auto Value<bool, char, 7, 8> = 8; // 2, 5
+
+		template<>
+		constexpr auto Value<bool, char, 7, 8, 9> = 9; // 3, 6
+
+		template<typename T, typename U, int... vs>
+		constexpr auto Value<T(U, int(&...array)[vs]), int> = 10;
+
+		template<typename T>
+		constexpr auto Value<bool(T, int(&)[1]), int> = 11;
+
+		template<typename T>
+		constexpr auto Value<bool(T, int(&)[1], int(&)[2]), int> = 12;
+
+		template<typename T>
+		constexpr auto Value<bool(T, int(&)[1], int(&)[2], int(&)[3]), int> = 13;
+
+		template<typename T>
+		constexpr auto Value<T(char, int(&)[1]), int> = 14;
+
+		template<typename T>
+		constexpr auto Value<T(char, int(&)[1], int(&)[2]), int> = 15;
+
+		template<typename T>
+		constexpr auto Value<T(char, int(&)[1], int(&)[2], int(&)[3]), int> = 16;
+
+		template<>
+		constexpr auto Value<bool(char, int(&)[1]), int> = 17; // 11, 14
+
+		template<>
+		constexpr auto Value<bool(char, int(&)[1], int(&)[2]), int> = 18; // 12, 15
+
+		template<>
+		constexpr auto Value<bool(char, int(&)[1], int(&)[2], int(&)[3]), int> = 19; // 13, 16
 	);
 }
 
@@ -438,7 +503,7 @@ struct Obj
 
 	TEST_CATEGORY(L"Partial Order Evaluation")
 	{
-		using namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation;
+		using namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation_Type;
 		COMPILE_PROGRAM(program, pa, input);
 
 		const Pair<vint, vint> yesRaw[] = {
@@ -477,6 +542,26 @@ struct Obj
 		testPartialOrder(program, pa, yesRaw, _countof(yesRaw));
 	});
 
-	// TODO: test vta value argument
-	// TODO: test array with vta dimension
+	TEST_CATEGORY(L"Partial Order Evaluation (value argument)")
+	{
+		using namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation_Value;
+		COMPILE_PROGRAM(program, pa, input);
+
+		const Pair<vint, vint> yesRaw[] = {
+			{1,7},
+			{2,8},
+			{3,9},
+			{4,7},
+			{5,8},
+			{6,9},
+			{11,17},
+			{12,18},
+			{13,19},
+			{14,17},
+			{15,18},
+			{16,19}
+		};
+
+		testPartialOrder(program, pa, yesRaw, _countof(yesRaw));
+	});
 }
