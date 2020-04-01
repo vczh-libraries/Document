@@ -91,7 +91,7 @@ namespace partial_specification_ordering
 			}
 
 			// ensure that the rest should have both amount and type/value kind matched
-			// TODO: consider about default values in the future, use TypeCheckerException for now
+			// TODO: [Cpp.md] consider about default values in the future, use TypeCheckerException for now
 			if (minA < minB)
 			{
 				if (vtaA && vtaB)
