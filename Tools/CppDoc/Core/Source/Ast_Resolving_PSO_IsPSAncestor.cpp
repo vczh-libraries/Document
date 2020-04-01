@@ -77,7 +77,7 @@ namespace partial_specification_ordering
 			bool vtaA = minA == 0 ? false : tA->arguments[minA - 1].ellipsis;
 
 			vint minB = psB->arguments.Count();
-			bool vtaB = minB == 0 ? false : psB->arguments[minA - 1].isVariadic;
+			bool vtaB = minB == 0 ? false : psB->arguments[minB - 1].isVariadic;
 
 			if (vtaA) minA -= 1;
 			if (vtaB) minB -= 1;
@@ -91,6 +91,7 @@ namespace partial_specification_ordering
 			}
 
 			// ensure that the rest should have both amount and type/value kind matched
+			// TODO: consider about default values in the future, use TypeCheckerException for now
 			if (minA < minB)
 			{
 				if (vtaA && vtaB)
@@ -116,14 +117,14 @@ namespace partial_specification_ordering
 					// <A1>
 					// <B1, B2, Bs...>
 					// argument amount mismatched
-					throw MatchPSFailureException();
+					throw TypeCheckerException();
 				}
 				else
 				{
 					// <A1>
 					// <B1, B2>
 					// argument amount mismatched
-					throw MatchPSFailureException();
+					throw TypeCheckerException();
 				}
 			}
 			else if (minA > minB)
@@ -142,7 +143,7 @@ namespace partial_specification_ordering
 					// <A1, A2, As...>
 					// <B1>
 					// argument amount mismatched
-					throw MatchPSFailureException();
+					throw TypeCheckerException();
 				}
 				else if (vtaB)
 				{
@@ -158,7 +159,7 @@ namespace partial_specification_ordering
 					// <A1, A2>
 					// <B1>
 					// argument amount mismatched
-					throw MatchPSFailureException();
+					throw TypeCheckerException();
 				}
 			}
 			else
