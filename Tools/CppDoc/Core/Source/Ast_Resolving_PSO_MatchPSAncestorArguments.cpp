@@ -13,8 +13,8 @@ namespace partial_specification_ordering
 		bool& skipped,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
-		VariadicList<Ptr<Type>>& ancestor,
-		VariadicList<Ptr<Type>>& child,
+		VariadicList<GenericArgument>& ancestor,
+		VariadicList<GenericArgument>& child,
 		bool insideVariant,
 		const SortedList<Symbol*>& freeAncestorSymbols,
 		const SortedList<Symbol*>& freeChildSymbols
@@ -30,10 +30,10 @@ namespace partial_specification_ordering
 				vint packSize = -1;
 
 				// calculate known pack size for each variadic item in ancestor
-				auto ancestorType = ancestor[i].item;
+				auto ancestorItem = ancestor[i].item;
 				SortedList<Type*> involvedTypes;
 				SortedList<Expr*> involvedExprs;
-				CollectFreeTypes(pa, false, ancestorType, nullptr, insideVariant, freeAncestorSymbols, involvedTypes, involvedExprs);
+				CollectFreeTypes(pa, false, ancestorItem.type, ancestorItem.expr, insideVariant, freeAncestorSymbols, involvedTypes, involvedExprs);
 
 				SortedList<Symbol*> variadicSymbols;
 				CollectInvolvedVariadicArguments(pa, involvedTypes, involvedExprs, [&](Symbol* patternSymbol, ITsys*)
@@ -163,10 +163,10 @@ namespace partial_specification_ordering
 		for (vint i = 0; i < ancestor.Count(); i++)
 		{
 			// search for all variadic symbols in this ancestor item
-			auto ancestorType = ancestor[i].item;
+			auto ancestorItem = ancestor[i].item;
 			SortedList<Type*> involvedTypes;
 			SortedList<Expr*> involvedExprs;
-			CollectFreeTypes(pa, false, ancestorType, nullptr, insideVariant, freeAncestorSymbols, involvedTypes, involvedExprs);
+			CollectFreeTypes(pa, false, ancestorItem.type, ancestorItem.expr, insideVariant, freeAncestorSymbols, involvedTypes, involvedExprs);
 
 			SortedList<Symbol*> variadicSymbols;
 			CollectInvolvedVariadicArguments(pa, involvedTypes, involvedExprs, [&](Symbol* patternSymbol, ITsys*)
@@ -179,8 +179,8 @@ namespace partial_specification_ordering
 
 			auto matchSingleToSingleComplex = [&](vint c, Dictionary<Symbol*, Ptr<MatchPSResult>>& replacedResultVta)
 			{
-				auto childType = child[c].item;
-				MatchPSArgument(pa, skipped, matchingResult, replacedResultVta, ancestorType, childType, child[c].isVariadic, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
+				auto childItem = child[c].item;
+				MatchPSArgument(pa, skipped, matchingResult, replacedResultVta, ancestorItem, childItem, child[c].isVariadic, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
 			};
 
 			auto assertMatchingResultPass1 = [&](vint assignedCount)
@@ -283,7 +283,7 @@ namespace partial_specification_ordering
 	template<typename TSource, typename TGetter>
 	void FillVariadicTypeList(
 		VariadicList<TSource>& items,
-		VariadicList<Ptr<Type>>& types,
+		VariadicList<GenericArgument>& types,
 		bool forParameters,
 		TGetter&& getter
 	)
@@ -291,23 +291,23 @@ namespace partial_specification_ordering
 		for (vint i = 0; i < items.Count(); i++)
 		{
 			auto& e = items[i];
-			auto t = getter(e.item);
+			auto ga = getter(e.item);
 			if (forParameters)
 			{
 				// convert all T* to T[]
 				// the reason not to do the reverse is that
 				// sometimes T[here] could contain variadic template value argument
-				if (auto pointerType = t.Cast<ReferenceType>())
+				if (auto pointerType = ga.type.Cast<ReferenceType>())
 				{
 					if (pointerType->reference == CppReferenceType::Ptr)
 					{
 						auto arrayType = MakePtr<ArrayType>();
 						arrayType->type = pointerType->type;
-						t = arrayType;
+						ga.type = arrayType;
 					}
 				}
 			}
-			types.Add({ t,e.isVariadic });
+			types.Add({ ga,e.isVariadic });
 		}
 	}
 
@@ -315,8 +315,8 @@ namespace partial_specification_ordering
 	void FillVariadicTypeList(
 		VariadicList<TSource>& ancestor,
 		VariadicList<TSource>& child,
-		VariadicList<Ptr<Type>>& ancestorTypes,
-		VariadicList<Ptr<Type>>& childTypes,
+		VariadicList<GenericArgument>& ancestorTypes,
+		VariadicList<GenericArgument>& childTypes,
 		bool forParameters,
 		TGetter&& getter
 	)
@@ -337,8 +337,15 @@ namespace partial_specification_ordering
 		const SortedList<Symbol*>& freeChildSymbols
 	)
 	{
-		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
-		FillVariadicTypeList(ancestor->arguments, child->arguments, ancestorTypes, childTypes, false, [](GenericArgument& e) { return e.type; });
+		VariadicList<GenericArgument> ancestorTypes, childTypes;
+		FillVariadicTypeList(
+			ancestor->arguments,
+			child->arguments,
+			ancestorTypes,
+			childTypes,
+			false,
+			[](GenericArgument& e) { return e; }
+		);
 
 		// retry if there is any skipped matching
 		// fail if a retry result in no addition item in matchingResult
@@ -390,8 +397,20 @@ namespace partial_specification_ordering
 			throw MatchPSFailureException();
 		}
 
-		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
-		FillVariadicTypeList(ancestor->parameters, child->parameters, ancestorTypes, childTypes, true, [](Ptr<VariableDeclaration>& e) { return e->type; });
+		VariadicList<GenericArgument> ancestorTypes, childTypes;
+		FillVariadicTypeList(
+			ancestor->parameters,
+			child->parameters,
+			ancestorTypes,
+			childTypes,
+			true,
+			[](Ptr<VariableDeclaration>& e)
+			{
+				GenericArgument ga;
+				ga.type = e->type;
+				return ga;
+			}
+		);
 		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeAncestorSymbols, freeChildSymbols);
 	}
 
@@ -411,8 +430,15 @@ namespace partial_specification_ordering
 		const SortedList<Symbol*>& freeChildSymbols
 	)
 	{
-		VariadicList<Ptr<Type>> ancestorTypes, childTypes;
-		FillVariadicTypeList(ancestor->arguments, child->arguments, ancestorTypes, childTypes, false, [](GenericArgument& e) { return e.type; });
+		VariadicList<GenericArgument> ancestorTypes, childTypes;
+		FillVariadicTypeList(
+			ancestor->arguments,
+			child->arguments,
+			ancestorTypes,
+			childTypes,
+			false,
+			[](GenericArgument& e) { return e; }
+		);
 		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeAncestorSymbols, freeChildSymbols);
 	}
 }

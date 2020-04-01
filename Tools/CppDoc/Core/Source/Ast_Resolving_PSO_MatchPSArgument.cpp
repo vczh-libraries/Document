@@ -245,8 +245,8 @@ namespace partial_specification_ordering
 		bool& skipped,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResult,
 		Dictionary<Symbol*, Ptr<MatchPSResult>>& matchingResultVta,
-		Ptr<Type> ancestor,
-		Ptr<Type> child,
+		GenericArgument ancestor,
+		GenericArgument child,
 		bool insideVariant,
 		const SortedList<Symbol*>& freeAncestorSymbols,
 		const SortedList<Symbol*>& freeChildSymbols,
@@ -255,6 +255,17 @@ namespace partial_specification_ordering
 	)
 	{
 		MatchPSArgumentVisitor visitor(pa, skipped, matchingResult, matchingResultVta, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
-		visitor.Execute(ancestor, child);
+		if (ancestor.type && child.type)
+		{
+			visitor.Execute(ancestor.type, child.type);
+		}
+		else if (ancestor.expr && child.expr)
+		{
+			visitor.Execute(ancestor.expr);
+		}
+		else
+		{
+			throw MatchPSFailureException();
+		}
 	}
 }
