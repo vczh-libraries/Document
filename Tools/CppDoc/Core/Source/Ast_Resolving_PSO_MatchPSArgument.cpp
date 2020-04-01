@@ -40,6 +40,48 @@ namespace partial_specification_ordering
 		{
 		}
 
+		bool AssignToArgument(Symbol* patternSymbol, const Ptr<MatchPSResult>& result)
+		{
+			auto& output = patternSymbol->ellipsis ? matchingResultVta : matchingResult;
+			vint index = output.Keys().IndexOf(patternSymbol);
+			if (index == -1)
+			{
+				output.Add(patternSymbol, result);
+				return true;
+			}
+			else
+			{
+				auto assigned = output.Values()[index];
+				if (MatchPSResult::Compare(result, assigned))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		bool AssignToValueArgument(Symbol* patternSymbol)
+		{
+			auto& output = patternSymbol->ellipsis ? matchingResultVta : matchingResult;
+			vint index = output.Keys().IndexOf(patternSymbol);
+			if (index == -1)
+			{
+				auto result = MakePtr<MatchPSResult>();
+				result->source.Add(nullptr);
+				output.Add(patternSymbol, result);
+				return true;
+			}
+			else
+			{
+				auto assigned = output.Values()[index];
+				if (assigned->source.Count() == 1 && !assigned->source[0])
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
 		void Execute(const Ptr<Type>& _ancestorType, const Ptr<Type>& _childType)
 		{
 			childType = _childType;
@@ -49,8 +91,14 @@ namespace partial_specification_ordering
 		void Execute(const Ptr<Expr>& expr)
 		{
 			if (!involvedExprs.Contains(expr.Obj())) return;
-			// TODO: dealing with value
-			throw 0;
+			if (auto idExpr = expr.Cast<IdExpr>())
+			{
+				auto patternSymbol = idExpr->resolving->resolvedSymbols[0];
+				if (!AssignToValueArgument(patternSymbol))
+				{
+					throw MatchPSFailureException();
+				}
+			}
 		}
 
 		void Visit(PrimitiveType* self)override
@@ -162,36 +210,25 @@ namespace partial_specification_ordering
 			if (involvedTypes.Contains(self))
 			{
 				auto patternSymbol = self->resolving->resolvedSymbols[0];
-				auto& output = patternSymbol->ellipsis ? matchingResultVta : matchingResult;
 
 				switch (patternSymbol->kind)
 				{
 				case symbol_component::SymbolKind::GenericTypeArgument:
 					{
-						// TODO: pass information from outside
 						auto result = MakePtr<MatchPSResult>();
 						result->source.Add(childType);
-
-						vint index = output.Keys().IndexOf(patternSymbol);
-						if (index == -1)
+						if (AssignToArgument(patternSymbol, result))
 						{
-							output.Add(patternSymbol, result);
 							return;
-						}
-						else
-						{
-							auto assigned = output.Values()[index];
-							if (MatchPSResult::Compare(result, assigned))
-							{
-								return;
-							}
 						}
 					}
 					break;
 				case symbol_component::SymbolKind::GenericValueArgument:
 					{
-						// TODO: dealing with value
-						throw 0;
+						if (AssignToValueArgument(patternSymbol))
+						{
+							return;
+						}
 					}
 					break;
 				}

@@ -145,22 +145,22 @@ namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation_Value
 		constexpr auto Value<T(U, int(&...array)[vs]), int> = 10;
 
 		template<typename T>
-		constexpr auto Value<bool(T, int(&)[1]), int> = 11;
+		constexpr auto Value<bool(T, int(&)[1]), int> = 11; // 10
 
 		template<typename T>
-		constexpr auto Value<bool(T, int(&)[1], int(&)[2]), int> = 12;
+		constexpr auto Value<bool(T, int(&)[1], int(&)[2]), int> = 12; // 10
 
 		template<typename T>
-		constexpr auto Value<bool(T, int(&)[1], int(&)[2], int(&)[3]), int> = 13;
+		constexpr auto Value<bool(T, int(&)[1], int(&)[2], int(&)[3]), int> = 13; // 10
 
 		template<typename T>
-		constexpr auto Value<T(char, int(&)[1]), int> = 14;
+		constexpr auto Value<T(char, int(&)[1]), int> = 14; // 10
 
 		template<typename T>
-		constexpr auto Value<T(char, int(&)[1], int(&)[2]), int> = 15;
+		constexpr auto Value<T(char, int(&)[1], int(&)[2]), int> = 15; // 10
 
 		template<typename T>
-		constexpr auto Value<T(char, int(&)[1], int(&)[2], int(&)[3]), int> = 16;
+		constexpr auto Value<T(char, int(&)[1], int(&)[2], int(&)[3]), int> = 16; // 10
 
 		template<>
 		constexpr auto Value<bool(char, int(&)[1]), int> = 17; // 11, 14
@@ -343,7 +343,6 @@ struct Obj
 					else
 					{
 						primary = decl->symbol;
-						TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 30);
 					}
 
 					auto valueDecl = decl.Cast<ValueAliasDeclaration>();
@@ -352,6 +351,7 @@ struct Obj
 				}
 			}
 
+			TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == decls.Count() - 1);
 			TEST_CASE_ASSERT(primary->GetPSPrimaryDescendants_NF().Count() == decls.Count() - 1);
 		});
 
@@ -554,6 +554,12 @@ struct Obj
 			{4,7},
 			{5,8},
 			{6,9},
+			{10,11},
+			{10,12},
+			{10,13},
+			{10,14},
+			{10,15},
+			{10,16},
 			{11,17},
 			{12,18},
 			{13,19},
