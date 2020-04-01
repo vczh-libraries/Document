@@ -31,6 +31,9 @@
     <Filter Include="Source Files\TestParserGeneric">
       <UniqueIdentifier>{b971998b-4604-4c67-9467-bba9df34b60f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestParserPartialSpecialization">
+      <UniqueIdentifier>{a98aaa1e-98fd-4b83-aa3e-07994ad14d10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -111,9 +114,6 @@
     <ClCompile Include="TestConnectForwardGeneric.cpp">
       <Filter>Source Files\TestParserGeneric</Filter>
     </ClCompile>
-    <ClCompile Include="TestParsePartialSpecialization.cpp">
-      <Filter>Source Files\TestParserGeneric</Filter>
-    </ClCompile>
     <ClCompile Include="TestMisc.cpp">
       <Filter>Source Files\MISC</Filter>
     </ClCompile>
@@ -125,6 +125,24 @@
     </ClCompile>
     <ClCompile Include="TestOverloadingGenericMethodInfer.cpp">
       <Filter>Source Files\TestOverloading</Filter>
+    </ClCompile>
+    <ClCompile Include="TestParsePSOrder.cpp">
+      <Filter>Source Files\TestParserPartialSpecialization</Filter>
+    </ClCompile>
+    <ClCompile Include="TestConnectForwardPS.cpp">
+      <Filter>Source Files\TestParserPartialSpecialization</Filter>
+    </ClCompile>
+    <ClCompile Include="TestParsePSFunction.cpp">
+      <Filter>Source Files\TestParserPartialSpecialization</Filter>
+    </ClCompile>
+    <ClCompile Include="TestParsePSMethod.cpp">
+      <Filter>Source Files\TestParserPartialSpecialization</Filter>
+    </ClCompile>
+    <ClCompile Include="TestParsePSValueAlias.cpp">
+      <Filter>Source Files\TestParserPartialSpecialization</Filter>
+    </ClCompile>
+    <ClCompile Include="TestParsePSClass.cpp">
+      <Filter>Source Files\TestParserPartialSpecialization</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

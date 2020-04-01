@@ -311,6 +311,4 @@ namespace ns
 			}
 		});
 	});
-
-	// TODO: connect forward declarations for declarations with partial specialization
 }

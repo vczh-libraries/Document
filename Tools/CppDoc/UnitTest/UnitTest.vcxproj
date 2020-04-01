@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="TestConnectForward.cpp" />
     <ClCompile Include="TestConnectForwardGeneric.cpp" />
+    <ClCompile Include="TestConnectForwardPS.cpp" />
     <ClCompile Include="TestGeneratedFunctions.cpp" />
     <ClCompile Include="TestIntegralPromotion.cpp" />
     <ClCompile Include="TestMisc.cpp" />
@@ -169,7 +170,11 @@
     <ClCompile Include="TestParseGenericTypeAlias.cpp" />
     <ClCompile Include="TestParseGenericValueAlias.cpp" />
     <ClCompile Include="TestParseMember.cpp" />
-    <ClCompile Include="TestParsePartialSpecialization.cpp" />
+    <ClCompile Include="TestParsePSClass.cpp" />
+    <ClCompile Include="TestParsePSFunction.cpp" />
+    <ClCompile Include="TestParsePSMethod.cpp" />
+    <ClCompile Include="TestParsePSOrder.cpp" />
+    <ClCompile Include="TestParsePSValueAlias.cpp" />
     <ClCompile Include="TestParseVariadicTemplateArgument.cpp" />
     <ClCompile Include="TestTypeConvert.cpp" />
     <ClCompile Include="TestTypeConvertGeneric.cpp" />

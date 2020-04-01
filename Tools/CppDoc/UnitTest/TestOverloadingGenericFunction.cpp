@@ -2,5 +2,5 @@
 
 TEST_FILE
 {
-	// TODO: test overloading			(TestOverloadingGenericFunction.cpp)
+	// TODO: test overloading (template + partial specialization + infer + method)
 }
