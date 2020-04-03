@@ -326,7 +326,13 @@ namespace infer_function_type
 		}
 	}
 
-	void InferFunctionType(const ParsingArguments& pa, ExprTsysList& inferredFunctionTypes, ExprTsysItem functionItem, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys)
+	void InferFunctionType(
+		const ParsingArguments& pa,
+		ExprTsysList& inferredFunctionTypes,
+		ExprTsysItem functionItem,
+		Array<ExprTsysItem>& argTypes,
+		SortedList<vint>& boundedAnys
+	)
 	{
 		switch (functionItem.tsys->GetType())
 		{

@@ -6,72 +6,92 @@
 
 namespace infer_function_type
 {
-	extern void			CollectFreeTypes(
-							const ParsingArguments& pa,
-							bool includeParentDeclArguments,
-							Ptr<Type> type,
-							Ptr<Expr> expr,
-							bool insideVariant,
-							const SortedList<Symbol*>& freeTypeSymbols,
-							SortedList<Type*>& involvedTypes,
-							SortedList<Expr*>& involvedExprs
-						);
+	extern void								CollectFreeTypes(
+												const ParsingArguments& pa,
+												bool includeParentDeclArguments,
+												Ptr<Type> type,
+												Ptr<Expr> expr,
+												bool insideVariant,
+												const SortedList<Symbol*>& freeTypeSymbols,
+												SortedList<Type*>& involvedTypes,
+												SortedList<Expr*>& involvedExprs
+											);
 
-	extern void			InferTemplateArgument(
-							const ParsingArguments& pa,
-							Ptr<Type> typeToInfer,
-							Ptr<Expr> exprToInfer,
-							ITsys* offeredType,
-							TemplateArgumentContext& taContext,
-							TemplateArgumentContext& variadicContext,
-							const SortedList<Symbol*>& freeTypeSymbols,
-							const SortedList<Type*>& involvedTypes,
-							const SortedList<Expr*>& involvedExprs,
-							bool exactMatchForParameters,
-							ITsys** lastAssignedVta,
-							SortedList<ITsys*>& hardcodedPatterns
-						);
+	extern void								InferTemplateArgument(
+												const ParsingArguments& pa,
+												Ptr<Type> typeToInfer,
+												Ptr<Expr> exprToInfer,
+												ITsys* offeredType,
+												TemplateArgumentContext& taContext,
+												TemplateArgumentContext& variadicContext,
+												const SortedList<Symbol*>& freeTypeSymbols,
+												const SortedList<Type*>& involvedTypes,
+												const SortedList<Expr*>& involvedExprs,
+												bool exactMatchForParameters,
+												ITsys** lastAssignedVta,
+												SortedList<ITsys*>& hardcodedPatterns
+											);
 
-	extern void			SetInferredResult(
-							const ParsingArguments& pa,
-							TemplateArgumentContext& taContext,
-							ITsys* pattern,
-							ITsys* type,
-							ITsys** lastAssignedVta,
-							SortedList<ITsys*>& hardcodedPatterns
-						);
+	extern void								SetInferredResult(
+												const ParsingArguments& pa,
+												TemplateArgumentContext& taContext,
+												ITsys* pattern,
+												ITsys* type,
+												ITsys** lastAssignedVta,
+												SortedList<ITsys*>& hardcodedPatterns
+											);
 
-	extern void			InferTemplateArgumentsForGenericType(
-							const ParsingArguments& pa,
-							GenericType* genericType,
-							TypeTsysList& parameterAssignment,
-							TemplateArgumentContext& taContext,
-							TemplateArgumentContext& variadicContext,
-							const SortedList<Symbol*>& freeTypeSymbols,
-							ITsys** lastAssignedVta,
-							SortedList<ITsys*>& hardcodedPatterns
-						);
+	extern void								InferTemplateArgumentsForFunctionType(
+												const ParsingArguments& pa,
+												FunctionType* functionType,
+												TypeTsysList& parameterAssignment,
+												TemplateArgumentContext& taContext,
+												TemplateArgumentContext& variadicContext,
+												const SortedList<Symbol*>& freeTypeSymbols,
+												bool exactMatchForParameters,
+												ITsys** lastAssignedVta,
+												SortedList<ITsys*>& hardcodedPatterns
+											);
 
-	extern void			InferTemplateArgumentsForFunctionType(
-							const ParsingArguments& pa,
-							FunctionType* functionType,
-							TypeTsysList& parameterAssignment,
-							TemplateArgumentContext& taContext,
-							TemplateArgumentContext& variadicContext,
-							const SortedList<Symbol*>& freeTypeSymbols,
-							bool exactMatchForParameters,
-							ITsys** lastAssignedVta,
-							SortedList<ITsys*>& hardcodedPatterns
-						);
+	extern void								InferTemplateArgumentsForGenericType(
+												const ParsingArguments& pa,
+												GenericType* genericType,
+												TypeTsysList& parameterAssignment,
+												TemplateArgumentContext& taContext,
+												TemplateArgumentContext& variadicContext,
+												const SortedList<Symbol*>& freeTypeSymbols,
+												ITsys** lastAssignedVta,
+												SortedList<ITsys*>& hardcodedPatterns
+											);
+
+	extern void								InferTemplateArgumentsForSpecializationSpec(
+												const ParsingArguments& pa,
+												SpecializationSpec* spec,
+												TypeTsysList& parameterAssignment,
+												TemplateArgumentContext& taContext,
+												TemplateArgumentContext& variadicContext,
+												const SortedList<Symbol*>& freeTypeSymbols,
+												ITsys** lastAssignedVta,
+												SortedList<ITsys*>& hardcodedPatterns
+											);
 
 
-	extern void			InferFunctionType(
+	extern void								InferFunctionType(
 							const ParsingArguments& pa,
 							ExprTsysList& inferredFunctionTypes,
 							ExprTsysItem funcType,
 							Array<ExprTsysItem>& argTypes,
 							SortedList<vint>& boundedAnys
 						);
+	extern Ptr<TemplateArgumentContext>		InferPartialSpecialization(
+												const ParsingArguments& pa,
+												Symbol* declSymbol,
+												ITsys* parentDeclType,
+												Ptr<TemplateSpec> templateSpec,
+												Ptr<SpecializationSpec> specializationSpec,
+												Array<ExprTsysItem>& argTypes,
+												SortedList<vint>& boundedAnys
+											);
 
 	template<typename TCallback>
 	void CollectInvolvedVariadicArguments(const ParsingArguments& pa, const SortedList<Type*>& involvedTypes, const SortedList<Expr*>& involvedExprs, TCallback&& callback)

@@ -199,6 +199,7 @@
     <ClCompile Include="Source\Ast_Resolving_AP_ResolveGenericParameters.cpp" />
     <ClCompile Include="Source\Ast_Resolving_IFT_InferFunctionType.cpp" />
     <ClCompile Include="Source\Ast_Resolving_IFT_CollectFreeTypes.cpp" />
+    <ClCompile Include="Source\Ast_Resolving_IFT_InferPartialSpecialization.cpp" />
     <ClCompile Include="Source\Ast_Resolving_IFT_InferTemplateArgument.cpp" />
     <ClCompile Include="Source\Ast_Resolving_IFT_InferTemplateArgumentOfComplexType.cpp" />
     <ClCompile Include="Source\Ast_Resolving_Overloading.cpp" />

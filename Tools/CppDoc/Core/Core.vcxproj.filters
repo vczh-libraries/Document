@@ -248,5 +248,8 @@
     <ClCompile Include="Source\Ast_Resolving_IFT_InferTemplateArgumentOfComplexType.cpp">
       <Filter>Source Files\Ast\InferFunctionType</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Ast_Resolving_IFT_InferPartialSpecialization.cpp">
+      <Filter>Source Files\Ast\InferFunctionType</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

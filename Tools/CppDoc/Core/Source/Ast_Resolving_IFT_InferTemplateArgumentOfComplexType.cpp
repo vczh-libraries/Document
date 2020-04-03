@@ -199,29 +199,6 @@ namespace infer_function_type
 	}
 
 	/***********************************************************************
-	InferTemplateArgumentsForGenericType:	Perform type inferencing for template class offered arguments
-	***********************************************************************/
-
-	void InferTemplateArgumentsForGenericType(
-		const ParsingArguments& pa,
-		GenericType* genericType,
-		TypeTsysList& parameterAssignment,
-		TemplateArgumentContext& taContext,
-		TemplateArgumentContext& variadicContext,
-		const SortedList<Symbol*>& freeTypeSymbols,
-		ITsys** lastAssignedVta,
-		SortedList<ITsys*>& hardcodedPatterns
-	)
-	{
-		for (vint i = 0; i < genericType->arguments.Count(); i++)
-		{
-			auto argument = genericType->arguments[i];
-			auto assignedTsys = parameterAssignment[i];
-			InferTemplateArgumentOfComplexType(pa, argument.item.type, argument.item.expr, argument.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, true, lastAssignedVta, hardcodedPatterns);
-		}
-	}
-
-	/***********************************************************************
 	InferTemplateArgumentsForFunctionType:	Perform type inferencing for template function offered arguments
 	***********************************************************************/
 
@@ -248,6 +225,52 @@ namespace infer_function_type
 				auto parameter = functionType->parameters[i];
 				InferTemplateArgumentOfComplexType(pa, parameter.item->type, nullptr, parameter.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, exactMatchForParameters, lastAssignedVta, hardcodedPatterns);
 			}
+		}
+	}
+
+	/***********************************************************************
+	InferTemplateArgumentsForGenericType:	Perform type inferencing for template class offered arguments
+	***********************************************************************/
+
+	void InferTemplateArgumentsForGenericType(
+		const ParsingArguments& pa,
+		GenericType* genericType,
+		TypeTsysList& parameterAssignment,
+		TemplateArgumentContext& taContext,
+		TemplateArgumentContext& variadicContext,
+		const SortedList<Symbol*>& freeTypeSymbols,
+		ITsys** lastAssignedVta,
+		SortedList<ITsys*>& hardcodedPatterns
+	)
+	{
+		for (vint i = 0; i < genericType->arguments.Count(); i++)
+		{
+			auto argument = genericType->arguments[i];
+			auto assignedTsys = parameterAssignment[i];
+			InferTemplateArgumentOfComplexType(pa, argument.item.type, argument.item.expr, argument.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, true, lastAssignedVta, hardcodedPatterns);
+		}
+	}
+
+	/***********************************************************************
+	InferTemplateArgumentsForSpecializationSpec:	Perform type inferencing for template class offered arguments
+	***********************************************************************/
+
+	void InferTemplateArgumentsForSpecializationSpec(
+		const ParsingArguments& pa,
+		SpecializationSpec* spec,
+		TypeTsysList& parameterAssignment,
+		TemplateArgumentContext& taContext,
+		TemplateArgumentContext& variadicContext,
+		const SortedList<Symbol*>& freeTypeSymbols,
+		ITsys** lastAssignedVta,
+		SortedList<ITsys*>& hardcodedPatterns
+	)
+	{
+		for (vint i = 0; i < spec->arguments.Count(); i++)
+		{
+			auto argument = spec->arguments[i];
+			auto assignedTsys = parameterAssignment[i];
+			InferTemplateArgumentOfComplexType(pa, argument.item.type, argument.item.expr, argument.isVariadic, assignedTsys, taContext, variadicContext, freeTypeSymbols, true, lastAssignedVta, hardcodedPatterns);
 		}
 	}
 }
