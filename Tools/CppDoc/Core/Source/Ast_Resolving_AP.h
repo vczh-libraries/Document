@@ -63,6 +63,16 @@ namespace assign_parameters
 										SortedList<vint>& boundedAnys
 									);
 
+	extern void						ResolveSpecializationSpecParameters(
+										const ParsingArguments& invokerPa,
+										TypeTsysList& parameterAssignment,
+										const TemplateArgumentContext& knownArguments,
+										const SortedList<Symbol*>& argumentSymbols,
+										SpecializationSpec* spec,
+										Array<ExprTsysItem>& argumentTypes,
+										SortedList<vint>& boundedAnys
+									);
+
 	template<typename TCallback>
 	void FillFreeSymbols(const ParsingArguments& pa, const Ptr<TemplateSpec>& spec, SortedList<Symbol*>& freeSymbols, TCallback&& callback = ([](vint, TemplateSpec::Argument&, ITsys*, Symbol*) {}))
 	{
