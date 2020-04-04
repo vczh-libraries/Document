@@ -77,19 +77,21 @@ namespace infer_function_type
 
 
 	extern void								InferFunctionType(
-							const ParsingArguments& pa,
-							ExprTsysList& inferredFunctionTypes,
-							ExprTsysItem funcType,
-							Array<ExprTsysItem>& argTypes,
-							SortedList<vint>& boundedAnys
-						);
+												const ParsingArguments& pa,
+												ExprTsysList& inferredFunctionTypes,
+												ExprTsysItem funcType,
+												Array<ExprTsysItem>& argTypes,
+												SortedList<vint>& boundedAnys
+											);
+
 	extern Ptr<TemplateArgumentContext>		InferPartialSpecialization(
 												const ParsingArguments& pa,
 												Symbol* declSymbol,
 												ITsys* parentDeclType,
 												Ptr<TemplateSpec> templateSpec,
 												Ptr<SpecializationSpec> specializationSpec,
-												Array<ExprTsysItem>& argTypes,
+												Ptr<TemplateSpec> primaryTemplateSpec,
+												TemplateArgumentContext* argumentsToApply,
 												SortedList<vint>& boundedAnys
 											);
 

@@ -12,7 +12,8 @@ namespace infer_function_type
 		ITsys* parentDeclType,
 		Ptr<TemplateSpec> templateSpec,
 		Ptr<SpecializationSpec> specializationSpec,
-		Array<ExprTsysItem>& argTypes,
+		Ptr<TemplateSpec> primaryTemplateSpec,
+		TemplateArgumentContext* argumentsToApply,
 		SortedList<vint>& boundedAnys
 	)
 	{
@@ -32,11 +33,12 @@ namespace infer_function_type
 			auto taContext = MakePtr<TemplateArgumentContext>();
 			taContext->parent = inferPa.taContext;
 
-			// assign arguments to correct parameters
-			ResolveSpecializationSpecParameters(pa, parameterAssignment, *taContext.Obj(), freeTypeSymbols, specializationSpec.Obj(), argTypes, boundedAnys);
-
 			// type inferencing
-			for (vint i = 0; i < specializationSpec->arguments.Count(); i++)
+			for (vint i = 0; i < primaryTemplateSpec->arguments.Count(); i++)
+			{
+				auto pattern = GetTemplateArgumentKey(primaryTemplateSpec->arguments[i], pa.tsys.Obj());
+				parameterAssignment.Add(argumentsToApply->arguments[pattern]);
+			}
 			{
 				TemplateArgumentContext unusedVariadicContext;
 				SortedList<ITsys*> unusedHardcodedPatterns;
