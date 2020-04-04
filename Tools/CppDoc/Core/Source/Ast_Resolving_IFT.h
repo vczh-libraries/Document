@@ -92,8 +92,8 @@ namespace infer_function_type
 												ITsys* parentDeclType,
 												Ptr<TemplateSpec> templateSpec,
 												Ptr<SpecializationSpec> specializationSpec,
-												Ptr<TemplateSpec> primaryTemplateSpec,
-												TemplateArgumentContext* argumentsToApply
+												Array<ExprTsysItem>& argumentTypes,
+												SortedList<vint>& boundedAnys
 											);
 
 	extern bool								IsValuableTaContextWithMatchedPSChildren(
@@ -136,8 +136,8 @@ namespace infer_function_type
 		Dictionary<Symbol*, Ptr<TemplateArgumentContext>>& result,
 		Symbol* declSymbol,
 		ITsys* parentDeclType,
-		Ptr<TemplateSpec> primaryTemplateSpec,
-		TemplateArgumentContext* argumentsToApply,
+		Array<ExprTsysItem>& argumentTypes,
+		SortedList<vint>& boundedAnys,
 		SortedList<Symbol*>& accessed
 	)
 	{
@@ -153,7 +153,7 @@ namespace infer_function_type
 			Ptr<TemplateArgumentContext> taContext;
 			if (decl->specializationSpec)
 			{
-				taContext = InferPartialSpecialization(pa, declSymbol, parentDeclType, decl->templateSpec, decl->specializationSpec, primaryTemplateSpec, argumentsToApply);
+				taContext = InferPartialSpecialization(pa, declSymbol, parentDeclType, decl->templateSpec, decl->specializationSpec, argumentTypes, boundedAnys);
 				if (!taContext)
 				{
 					return false;
@@ -164,7 +164,7 @@ namespace infer_function_type
 			vint counter = 0;
 			for (vint i = 0; i < children.Count(); i++)
 			{
-				if (InferPartialSpecializationPrimaryInternal<TDecl>(pa, result, children[i], parentDeclType, primaryTemplateSpec, argumentsToApply, accessed))
+				if (InferPartialSpecializationPrimaryInternal<TDecl>(pa, result, children[i], parentDeclType, argumentTypes, boundedAnys, accessed))
 				{
 					counter++;
 				}
@@ -199,7 +199,60 @@ namespace infer_function_type
 	{
 		SortedList<Symbol*> accessed;
 		auto decl = primarySymbol->GetAnyForwardDecl<TDecl>();
-		InferPartialSpecializationPrimaryInternal<TDecl>(pa, result, primarySymbol, parentDeclType, decl->templateSpec, argumentsToApply, accessed);
+		SortedList<vint> boundedAnys;
+
+		vint count = 0;
+		for (vint i = 0; i < decl->templateSpec->arguments.Count(); i++)
+		{
+			auto argument = decl->templateSpec->arguments[i];
+			if (argument.ellipsis)
+			{
+				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(decl->templateSpec->arguments[i], pa.tsys.Obj());
+				auto tsys = argumentsToApply->arguments[pattern];
+				if (tsys->GetType() == TsysType::Any)
+				{
+					boundedAnys.Add(count);
+					count++;
+				}
+				else
+				{
+					count += tsys->GetParamCount();
+				}
+			}
+			else
+			{
+				count++;
+			}
+		}
+
+		Array<ExprTsysItem> argumentTypes(count);
+		count = 0;
+		for (vint i = 0; i < decl->templateSpec->arguments.Count(); i++)
+		{
+			auto argument = decl->templateSpec->arguments[i];
+			auto pattern = symbol_type_resolving::GetTemplateArgumentKey(decl->templateSpec->arguments[i], pa.tsys.Obj());
+			auto tsys = argumentsToApply->arguments[pattern];
+			if (argument.ellipsis)
+			{
+				if (tsys->GetType() == TsysType::Any)
+				{
+					argumentTypes[count++] = { {}, tsys };
+				}
+				else
+				{
+					for (vint j = 0; j < tsys->GetParamCount(); j++)
+					{
+						argumentTypes[count++] = { {}, tsys->GetParam(j) };
+					}
+				}
+			}
+			else
+			{
+				argumentTypes[count++] = { {}, tsys };
+			}
+		}
+
+		InferPartialSpecializationPrimaryInternal<TDecl>(pa, result, primarySymbol, parentDeclType, argumentTypes, boundedAnys, accessed);
 	}
 }
 
