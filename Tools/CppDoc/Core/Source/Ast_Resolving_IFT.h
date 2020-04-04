@@ -138,17 +138,16 @@ namespace infer_function_type
 		ITsys* parentDeclType,
 		Array<ExprTsysItem>& argumentTypes,
 		SortedList<vint>& boundedAnys,
-		SortedList<Symbol*>& accessed
+		Dictionary<Symbol*, bool>& accessed
 	)
 	{
-		if (accessed.Contains(declSymbol))
+		vint index = accessed.Keys().IndexOf(declSymbol);
+		if (index != -1)
 		{
-			return result.Keys().Contains(declSymbol);
+			return accessed.Values()[index];
 		}
 		else
 		{
-			accessed.Add(declSymbol);
-
 			auto decl = declSymbol->GetAnyForwardDecl<TDecl>();
 			Ptr<TemplateArgumentContext> taContext;
 			if (decl->specializationSpec)
@@ -156,6 +155,7 @@ namespace infer_function_type
 				taContext = InferPartialSpecialization(pa, declSymbol, parentDeclType, decl->templateSpec, decl->specializationSpec, argumentTypes, boundedAnys);
 				if (!taContext)
 				{
+					accessed.Add(declSymbol, false);
 					return false;
 				}
 			}
@@ -184,6 +184,8 @@ namespace infer_function_type
 					result.Add(declSymbol, taContext);
 				}
 			}
+
+			accessed.Add(declSymbol, true);
 			return true;
 		}
 	}
@@ -197,7 +199,6 @@ namespace infer_function_type
 		TemplateArgumentContext* argumentsToApply
 	)
 	{
-		SortedList<Symbol*> accessed;
 		auto decl = primarySymbol->GetAnyForwardDecl<TDecl>();
 		SortedList<vint> boundedAnys;
 
@@ -252,6 +253,7 @@ namespace infer_function_type
 			}
 		}
 
+		Dictionary<Symbol*, bool> accessed;
 		InferPartialSpecializationPrimaryInternal<TDecl>(pa, result, primarySymbol, parentDeclType, argumentTypes, boundedAnys, accessed);
 	}
 }
