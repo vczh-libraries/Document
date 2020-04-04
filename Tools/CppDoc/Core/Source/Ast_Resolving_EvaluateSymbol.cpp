@@ -1,4 +1,6 @@
-#include "Ast_Resolving.h"
+#include "Ast_Resolving_IFT.h"
+
+using namespace infer_function_type;
 
 namespace symbol_type_resolving
 {
@@ -569,6 +571,35 @@ namespace symbol_type_resolving
 	EvaluateValueAliasSymbol: Evaluate the declared value for an alias
 	***********************************************************************/
 
+	void EvaluateValueAliasSymbolInternal(
+		const ParsingArguments& declPa,
+		TypeTsysList& result,
+		ValueAliasDeclaration* usingDecl
+	)
+	{
+		if (usingDecl->needResolveTypeFromInitializer)
+		{
+			ExprTsysList tsys;
+			ExprToTsysNoVta(declPa, usingDecl->expr, tsys);
+			for (vint i = 0; i < tsys.Count(); i++)
+			{
+				auto entityType = tsys[i].tsys;
+				if (entityType->GetType() == TsysType::Zero)
+				{
+					entityType = declPa.tsys->Int();
+				}
+				if (!result.Contains(entityType))
+				{
+					result.Add(entityType);
+				}
+			}
+		}
+		else
+		{
+			TypeToTsysNoVta(declPa, usingDecl->type, result);
+		}
+	}
+
 	TypeTsysList& EvaluateValueAliasSymbol(
 		const ParsingArguments& invokerPa,
 		ValueAliasDeclaration* usingDecl,
@@ -579,26 +610,33 @@ namespace symbol_type_resolving
 		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, argumentsToApply);
 		if (eval)
 		{
-			if (usingDecl->needResolveTypeFromInitializer)
+			Dictionary<Symbol*, Ptr<TemplateArgumentContext>> psResult;
+			if (argumentsToApply)
 			{
-				ExprTsysList tsys;
-				ExprToTsysNoVta(eval.declPa, usingDecl->expr, tsys);
-				for (vint i = 0; i < tsys.Count(); i++)
+				auto psPa = eval.declPa;
+				psPa.taContext = psPa.taContext->parent;
+				InferPartialSpecializationPrimary<ValueAliasDeclaration>(psPa, psResult, eval.symbol, psPa.parentDeclType, argumentsToApply);
+
+				if (psResult.Count() == 0 || IsValuableTaContextWithMatchedPSChildren(argumentsToApply))
 				{
-					auto entityType = tsys[i].tsys;
-					if (entityType->GetType() == TsysType::Zero)
-					{
-						entityType = eval.declPa.tsys->Int();
-					}
-					if (!eval.evaluatedTypes.Contains(entityType))
-					{
-						eval.evaluatedTypes.Add(entityType);
-					}
+					EvaluateValueAliasSymbolInternal(eval.declPa, eval.evaluatedTypes, usingDecl);
+				}
+
+				for (vint i = 0; i < psResult.Count(); i++)
+				{
+					auto declSymbol = psResult.Keys()[i];
+					auto decl = declSymbol->GetAnyForwardDecl<ValueAliasDeclaration>();
+					auto taContext = psResult.Values()[i];
+
+					auto declPa = psPa;
+					taContext->parent = declPa.taContext;
+					declPa.taContext = taContext.Obj();
+					EvaluateValueAliasSymbolInternal(declPa, eval.evaluatedTypes, decl.Obj());
 				}
 			}
 			else
 			{
-				TypeToTsysNoVta(eval.declPa, usingDecl->type, eval.evaluatedTypes);
+				EvaluateValueAliasSymbolInternal(eval.declPa, eval.evaluatedTypes, usingDecl);
 			}
 
 			for (vint i = 0; i < eval.evaluatedTypes.Count(); i++)

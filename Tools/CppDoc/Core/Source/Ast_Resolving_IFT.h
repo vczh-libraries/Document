@@ -96,6 +96,10 @@ namespace infer_function_type
 												TemplateArgumentContext* argumentsToApply
 											);
 
+	extern bool								IsValuableTaContextWithMatchedPSChildren(
+												TemplateArgumentContext* taContext
+											);
+
 	template<typename TCallback>
 	void CollectInvolvedVariadicArguments(const ParsingArguments& pa, const SortedList<Type*>& involvedTypes, const SortedList<Expr*>& involvedExprs, TCallback&& callback)
 	{
@@ -143,6 +147,8 @@ namespace infer_function_type
 		}
 		else
 		{
+			accessed.Add(declSymbol);
+
 			auto decl = declSymbol->GetAnyForwardDecl<TDecl>();
 			Ptr<TemplateArgumentContext> taContext;
 			if (decl->specializationSpec)
@@ -158,43 +164,26 @@ namespace infer_function_type
 			vint counter = 0;
 			for (vint i = 0; i < children.Count(); i++)
 			{
-				if (InferPartialSpecializationPrimaryInternal(pa, result, children[i], parentDeclType, primaryTemplateSpec, argumentsToApply, accessed))
+				if (InferPartialSpecializationPrimaryInternal<TDecl>(pa, result, children[i], parentDeclType, primaryTemplateSpec, argumentsToApply, accessed))
 				{
 					counter++;
 				}
 			}
 
-			if (counter > 0)
+			if (taContext)
 			{
-				bool addResult = false;
-				for (vint i = 0; i < taContext->arguments.Count(); i++)
+				if (counter > 0)
 				{
-					auto patternSymbol = TemplateArgumentPatternToSymbol(taContext->arguments.Keys()[i]);
-					auto tsys = taContext->arguments.Values()[i];
-					if (patternSymbol->ellipsis)
+					if (IsValuableTaContextWithMatchedPSChildren(taContext.Obj()))
 					{
-						for (vint j = 0; j < tsys->GetParamCount(); j++)
-						{
-							auto tsysItem = tsys->GetParam(j);
-							if (tsysItem->GetType() == TsysType::Any || tsysItem->GetType() == TsysType::GenericArg)
-							{
-								goto ADD_RESULT;
-							}
-						}
-					}
-					else
-					{
-						if (tsys->GetType() == TsysType::Any || tsys->GetType() == TsysType::GenericArg)
-						{
-							goto ADD_RESULT;
-						}
+						result.Add(declSymbol, taContext);
 					}
 				}
-				goto SKIP_ADDING_RESULT;
+				else
+				{
+					result.Add(declSymbol, taContext);
+				}
 			}
-		ADD_RESULT:
-			result.Add(declSymbol, taContext);
-		SKIP_ADDING_RESULT:
 			return true;
 		}
 	}
@@ -210,7 +199,7 @@ namespace infer_function_type
 	{
 		SortedList<Symbol*> accessed;
 		auto decl = primarySymbol->GetAnyForwardDecl<TDecl>();
-		InferPartialSpecializationPrimaryInternal(pa, result, primarySymbol, parentDeclType, decl->templateSpec, argumentsToApply);
+		InferPartialSpecializationPrimaryInternal<TDecl>(pa, result, primarySymbol, parentDeclType, decl->templateSpec, argumentsToApply, accessed);
 	}
 }
 

@@ -6,6 +6,10 @@ using namespace assign_parameters;
 
 namespace infer_function_type
 {
+	/***********************************************************************
+	InferPartialSpecialization:	Perform type inferencing for partial specialization symbol
+	***********************************************************************/
+
 	Ptr<TemplateArgumentContext> InferPartialSpecialization(
 		const ParsingArguments& pa,
 		Symbol* declSymbol,
@@ -72,5 +76,37 @@ namespace infer_function_type
 			// ignore this candidate if failed to match
 		}
 		return nullptr;
+	}
+
+	/***********************************************************************
+	IsValuableTaContextWithMatchedPSChildren:	
+	***********************************************************************/
+
+	bool IsValuableTaContextWithMatchedPSChildren(TemplateArgumentContext* taContext)
+	{
+		for (vint i = 0; i < taContext->arguments.Count(); i++)
+		{
+			auto patternSymbol = TemplateArgumentPatternToSymbol(taContext->arguments.Keys()[i]);
+			auto tsys = taContext->arguments.Values()[i];
+			if (patternSymbol->ellipsis)
+			{
+				for (vint j = 0; j < tsys->GetParamCount(); j++)
+				{
+					auto tsysItem = tsys->GetParam(j);
+					if (tsysItem->GetType() == TsysType::Any || tsysItem->GetType() == TsysType::GenericArg)
+					{
+						return true;
+					}
+				}
+			}
+			else
+			{
+				if (tsys->GetType() == TsysType::Any || tsys->GetType() == TsysType::GenericArg)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
