@@ -602,6 +602,10 @@ class ITSYS_CLASS(Init)
 	ITSYS_MEMBERS_WITHPARAMS_WITHOUT_ELEMENT(Init, TsysInit, const TsysInit&, Init)
 	ITSYS_REPLACE_GENERIC_ARGS_WITHPARAMS(nullptr)
 
+	ITsys* LRefOf()																						override { return this; }
+	ITsys* RRefOf()																						override { return this; }
+	ITsys* CVOf(TsysCV cv)																				override { return this; }
+
 private:
 	ITsys*					ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params);
 };

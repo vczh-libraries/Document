@@ -601,6 +601,11 @@ namespace symbol_type_resolving
 				TypeToTsysNoVta(eval.declPa, usingDecl->type, eval.evaluatedTypes);
 			}
 
+			for (vint i = 0; i < eval.evaluatedTypes.Count(); i++)
+			{
+				eval.evaluatedTypes[i] = eval.evaluatedTypes[i]->CVOf({ true,false })->LRefOf();
+			}
+
 			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, argumentsToApply);
 		}
 		else

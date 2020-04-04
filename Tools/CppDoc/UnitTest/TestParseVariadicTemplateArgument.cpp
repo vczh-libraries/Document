@@ -126,29 +126,29 @@ using Func3 = R(*)(TArgs(*...)(TArgs));
 		auto input = LR"(
 struct A
 {
-	void*			operator++();
-	A				operator++(int);
-	float			operator+(int);
-	double			operator,(int);
-	A*				operator*(A);
+	void*			operator++()const;
+	A				operator++(int)const;
+	float			operator+(int)const;
+	double			operator,(int)const;
+	A*				operator*(A)const;
 };
 
 struct B
 {
-	char*			operator++();
-	B				operator++(int);
-	int*			operator+(int);
-	bool*			operator,(int);
-	B*				operator*(B);
+	char*			operator++()const;
+	B				operator++(int)const;
+	int*			operator+(int)const;
+	bool*			operator,(int)const;
+	B*				operator*(B)const;
 };
 
 struct C1
 {
-	int*			operator[](int);
-	bool*			operator[](bool);
-	char*			operator[](char);
-	double*			operator[](double);
-	C1*				operator[](C1);
+	int*			operator[](int)const;
+	bool*			operator[](bool)const;
+	char*			operator[](char)const;
+	double*			operator[](double)const;
+	C1*				operator[](C1)const;
 
 	int				x;
 	static int		y;
@@ -156,7 +156,7 @@ struct C1
 
 struct C2
 {
-	C2*				operator[](C2);
+	C2*				operator[](C2)const;
 
 	bool			x;
 	static bool		y;
@@ -164,7 +164,7 @@ struct C2
 
 struct C3
 {
-	C3*				operator[](C3);
+	C3*				operator[](C3)const;
 
 	char			x;
 	static char		y;
@@ -172,7 +172,7 @@ struct C3
 
 struct C4
 {
-	C4*				operator[](C4);
+	C4*				operator[](C4)const;
 
 	double			x;
 	static double	y;
@@ -188,10 +188,10 @@ template<typename ...TArgs>
 using Parenthesis = void(*)(decltype((Value<TArgs>))...);
 
 template<typename ...TArgs>
-using PrefixUnary = void(*)(decltype(++Value<TArgs>)...);
+using PrefixUnary = void(*)(decltype(++((TArgs&)Value<TArgs>))...);
 
 template<typename ...TArgs>
-using PostfixUnary = void(*)(decltype(Value<TArgs>++)...);
+using PostfixUnary = void(*)(decltype(((TArgs&)Value<TArgs>)++)...);
 
 template<typename ...TArgs>
 using Binary1 = void(*)(decltype(Value<TArgs>+1)...);
@@ -257,16 +257,16 @@ using FieldChild3 = void(*)(decltype(Value<TArgs*>->TArgs::x)...);
 		AssertType(pa, L"Cast<int, bool, char, double>",				L"Cast<int, bool, char, double>",				L"void __cdecl(__int32, bool, char, double) *"																				);
 	
 		AssertType(pa, L"Parenthesis<>",								L"Parenthesis<>",								L"void __cdecl() *"																											);
-		AssertType(pa, L"Parenthesis<int>",								L"Parenthesis<int>",							L"void __cdecl(__int32) *"																									);
-		AssertType(pa, L"Parenthesis<int, bool, char, double>",			L"Parenthesis<int, bool, char, double>",		L"void __cdecl(__int32, bool, char, double) *"																				);
+		AssertType(pa, L"Parenthesis<int>",								L"Parenthesis<int>",							L"void __cdecl(__int32 const &) *"																							);
+		AssertType(pa, L"Parenthesis<int, bool, char, double>",			L"Parenthesis<int, bool, char, double>",		L"void __cdecl(__int32 const &, bool const &, char const &, double const &) *"												);
 	
 		AssertType(pa, L"PrefixUnary<>",								L"PrefixUnary<>",								L"void __cdecl() *"																											);
 		AssertType(pa, L"PrefixUnary<int>",								L"PrefixUnary<int>",							L"void __cdecl(__int32 &) *"																								);
 		AssertType(pa, L"PrefixUnary<int, char, A, B>",					L"PrefixUnary<int, char, A, B>",				L"void __cdecl(__int32 &, char &, void *, char *) *"																		);
 	
 		AssertType(pa, L"PostfixUnary<>",								L"PostfixUnary<>",								L"void __cdecl() *"																											);
-		AssertType(pa, L"PostfixUnary<int>",							L"PostfixUnary<int>",							L"void __cdecl(__int32) *"																									);
-		AssertType(pa, L"PostfixUnary<int, char, A, B>",				L"PostfixUnary<int, char, A, B>",				L"void __cdecl(__int32, char, ::A, ::B) *"																					);
+		AssertType(pa, L"PostfixUnary<int>",							L"PostfixUnary<int>",							L"void __cdecl(__int32 &) *"																								);
+		AssertType(pa, L"PostfixUnary<int, char, A, B>",				L"PostfixUnary<int, char, A, B>",				L"void __cdecl(__int32 &, char &, ::A, ::B) *"																				);
 	
 		AssertType(pa, L"Binary1<>",									L"Binary1<>",									L"void __cdecl() *"																											);
 		AssertType(pa, L"Binary1<int>",									L"Binary1<int>",								L"void __cdecl(__int32) *"																									);
@@ -297,16 +297,16 @@ using FieldChild3 = void(*)(decltype(Value<TArgs*>->TArgs::x)...);
 		AssertType(pa, L"Child<C1, C2, C3, C4>",						L"Child<C1, C2, C3, C4>",						L"void __cdecl(__int32 (::C1 ::) *, bool (::C2 ::) *, char (::C3 ::) *, double (::C4 ::) *, __int32, bool, char, double) *"	);
 	
 		AssertType(pa, L"FieldId1<>",									L"FieldId1<>",									L"void __cdecl() *"																											);
-		AssertType(pa, L"FieldId1<C1>",									L"FieldId1<C1>",								L"void __cdecl(__int32) *"																									);
-		AssertType(pa, L"FieldId1<C1, C2, C3, C4>",						L"FieldId1<C1, C2, C3, C4>",					L"void __cdecl(__int32, bool, char, double) *"																				);
+		AssertType(pa, L"FieldId1<C1>",									L"FieldId1<C1>",								L"void __cdecl(__int32 const) *"																							);
+		AssertType(pa, L"FieldId1<C1, C2, C3, C4>",						L"FieldId1<C1, C2, C3, C4>",					L"void __cdecl(__int32 const, bool const, char const, double const) *"														);
 	
 		AssertType(pa, L"FieldId2<>",									L"FieldId2<>",									L"void __cdecl() *"																											);
-		AssertType(pa, L"FieldId2<C1>",									L"FieldId2<C1>",								L"void __cdecl(__int32) *"																									);
-		AssertType(pa, L"FieldId2<C1, C2, C3, C4>",						L"FieldId2<C1, C2, C3, C4>",					L"void __cdecl(__int32, bool, char, double) *"																				);
+		AssertType(pa, L"FieldId2<C1>",									L"FieldId2<C1>",								L"void __cdecl(__int32 const) *"																							);
+		AssertType(pa, L"FieldId2<C1, C2, C3, C4>",						L"FieldId2<C1, C2, C3, C4>",					L"void __cdecl(__int32 const, bool const, char const, double const) *"														);
 	
 		AssertType(pa, L"FieldId3<>",									L"FieldId3<>",									L"void __cdecl() *"																											);
-		AssertType(pa, L"FieldId3<C1>",									L"FieldId3<C1>",								L"void __cdecl(__int32) *"																									);
-		AssertType(pa, L"FieldId3<C1, C2, C3, C4>",						L"FieldId3<C1, C2, C3, C4>",					L"void __cdecl(__int32, bool, char, double) *"																				);
+		AssertType(pa, L"FieldId3<C1>",									L"FieldId3<C1>",								L"void __cdecl(__int32 const) *"																							);
+		AssertType(pa, L"FieldId3<C1, C2, C3, C4>",						L"FieldId3<C1, C2, C3, C4>",					L"void __cdecl(__int32 const, bool const, char const, double const) *"														);
 	
 		AssertType(pa, L"FieldChild1<>",								L"FieldChild1<>",								L"void __cdecl() *"																											);
 		AssertType(pa, L"FieldChild1<C1>",								L"FieldChild1<C1>",								L"void __cdecl(__int32) *"																									);
@@ -446,28 +446,32 @@ auto Func4 = H(-Args...);
 )";
 		COMPILE_PROGRAM(program, pa, input);
 	
-		AssertExpr(pa, L"Func1",										L"Func1",										L"<...::Func1::[TArgs]> any_t $PR"																							);
-		AssertExpr(pa, L"Func2",										L"Func2",										L"<...::Func2::[TArgs]> any_t $PR"																							);
-		AssertExpr(pa, L"Func3",										L"Func3",										L"<...::Func3::[TArgs]> any_t $PR"																							);
-		AssertExpr(pa, L"Func4",										L"Func4",										L"<...*> __int32 $PR", L"<...*> bool $PR", L"<...*> char $PR", L"<...*> double $PR", L"<...*> void $PR"						);
+		AssertExpr(pa, L"Func1",										L"Func1",										L"<...::Func1::[TArgs]> any_t $PR"									);
+		AssertExpr(pa, L"Func2",										L"Func2",										L"<...::Func2::[TArgs]> any_t $PR"									);
+		AssertExpr(pa, L"Func3",										L"Func3",										L"<...::Func3::[TArgs]> any_t $PR"									);
+		AssertExpr(pa, L"Func4",										L"Func4",										L"<...*> __int32 const & $PR",
+																														L"<...*> bool const & $PR",
+																														L"<...*> char const & $PR",
+																														L"<...*> double const & $PR",
+																														L"<...*> void const & $PR"											);
 	
-		AssertExpr(pa, L"Func1<>",										L"Func1<>",										L"{} $PR"																													);
-		AssertExpr(pa, L"Func1<a::A>",									L"Func1<a :: A>",								L"{__int32 $PR} $PR"																										);
-		AssertExpr(pa, L"Func1<a::A, b::B, c::C, d::D>",				L"Func1<a :: A, b :: B, c :: C, d :: D>",		L"{__int32 $PR, bool $PR, char $PR, double $PR} $PR"																		);
+		AssertExpr(pa, L"Func1<>",										L"Func1<>",										L"{} $PR"															);
+		AssertExpr(pa, L"Func1<a::A>",									L"Func1<a :: A>",								L"{__int32 $PR} $PR"												);
+		AssertExpr(pa, L"Func1<a::A, b::B, c::C, d::D>",				L"Func1<a :: A, b :: B, c :: C, d :: D>",		L"{__int32 $PR, bool $PR, char $PR, double $PR} $PR"				);
 	
-		AssertExpr(pa, L"Func2<>",										L"Func2<>",										L"{} $PR"																													);
-		AssertExpr(pa, L"Func2<a::A>",									L"Func2<a :: A>",								L"{__int32 * $PR} $PR"																										);
-		AssertExpr(pa, L"Func2<a::A, b::B, c::C, d::D>",				L"Func2<a :: A, b :: B, c :: C, d :: D>",		L"{__int32 * $PR, bool * $PR, char * $PR, double * $PR} $PR"																);
+		AssertExpr(pa, L"Func2<>",										L"Func2<>",										L"{} $PR"															);
+		AssertExpr(pa, L"Func2<a::A>",									L"Func2<a :: A>",								L"{__int32 * $PR} $PR"												);
+		AssertExpr(pa, L"Func2<a::A, b::B, c::C, d::D>",				L"Func2<a :: A, b :: B, c :: C, d :: D>",		L"{__int32 * $PR, bool * $PR, char * $PR, double * $PR} $PR"		);
 	
-		AssertExpr(pa, L"Func3<>",										L"Func3<>",										L"{} $PR"																													);
-		AssertExpr(pa, L"Func3<a::A>",									L"Func3<a :: A>",								L"{__int32 * $PR} $PR"																										);
-		AssertExpr(pa, L"Func3<a::A, b::B, c::C, d::D>",				L"Func3<a :: A, b :: B, c :: C, d :: D>",		L"{__int32 * $PR, bool * $PR, char * $PR, double * $PR} $PR"																);
+		AssertExpr(pa, L"Func3<>",										L"Func3<>",										L"{} $PR"															);
+		AssertExpr(pa, L"Func3<a::A>",									L"Func3<a :: A>",								L"{__int32 * $PR} $PR"												);
+		AssertExpr(pa, L"Func3<a::A, b::B, c::C, d::D>",				L"Func3<a :: A, b :: B, c :: C, d :: D>",		L"{__int32 * $PR, bool * $PR, char * $PR, double * $PR} $PR"		);
 	
-		AssertExpr(pa, L"Func4<>",										L"Func4<>",										L"__int32 $PR"																												);
-		AssertExpr(pa, L"Func4<1>",										L"Func4<1>",									L"bool $PR"																													);
-		AssertExpr(pa, L"Func4<1,2>",									L"Func4<1, 2>",									L"char $PR"																													);
-		AssertExpr(pa, L"Func4<1,2,3>",									L"Func4<1, 2, 3>",								L"double $PR"																												);
-		AssertExpr(pa, L"Func4<1,2,3,4>",								L"Func4<1, 2, 3, 4>",							L"void $PR"																													);
+		AssertExpr(pa, L"Func4<>",										L"Func4<>",										L"__int32 const & $PR"														);
+		AssertExpr(pa, L"Func4<1>",										L"Func4<1>",									L"bool const & $PR"															);
+		AssertExpr(pa, L"Func4<1,2>",									L"Func4<1, 2>",									L"char const & $PR"															);
+		AssertExpr(pa, L"Func4<1,2,3>",									L"Func4<1, 2, 3>",								L"double const & $PR"														);
+		AssertExpr(pa, L"Func4<1,2,3,4>",								L"Func4<1, 2, 3, 4>",							L"void const & $PR"															);
 	});
 
 	TEST_CATEGORY(L"Variadic template arguments with default for types")
@@ -585,72 +589,72 @@ template<typename T, typename... Ts>								auto ApplyTwoVta_1 =	TwoVta<T, Ts...
 )";
 		COMPILE_PROGRAM(program, pa, input);
 	
-		AssertExpr(pa, L"One",										L"One",											L"<::One::[T]> {::One::[T] $PR} $PR"												);
-		AssertExpr(pa, L"Two",										L"Two",											L"<::Two::[T], ::Two::[U]> {::Two::[T] $PR, ::Two::[U] $PR} $PR"					);
-		AssertExpr(pa, L"Vta",										L"Vta",											L"<...::Vta::[TArgs]> any_t $PR"													);
-		AssertExpr(pa, L"OneVta",									L"OneVta",										L"<::OneVta::[T], ...::OneVta::[TArgs]> any_t $PR"									);
-		AssertExpr(pa, L"TwoVta",									L"TwoVta",										L"<::TwoVta::[T], ::TwoVta::[U], ...::TwoVta::[TArgs]> any_t $PR"					);
+		AssertExpr(pa, L"One",										L"One",											L"<::One::[T]> {::One::[T] $PR} $PR"													);
+		AssertExpr(pa, L"Two",										L"Two",											L"<::Two::[T], ::Two::[U]> {::Two::[T] $PR, ::Two::[U] $PR} $PR"						);
+		AssertExpr(pa, L"Vta",										L"Vta",											L"<...::Vta::[TArgs]> any_t $PR"														);
+		AssertExpr(pa, L"OneVta",									L"OneVta",										L"<::OneVta::[T], ...::OneVta::[TArgs]> any_t $PR"										);
+		AssertExpr(pa, L"TwoVta",									L"TwoVta",										L"<::TwoVta::[T], ::TwoVta::[U], ...::TwoVta::[TArgs]> any_t $PR"						);
 	
-		AssertExpr(pa, L"ApplyOne",									L"ApplyOne",									L"<...::ApplyOne::[Ts]> {any_t $PR} $PR"											);
-		AssertExpr(pa, L"ApplyTwo",									L"ApplyTwo",									L"<...::ApplyTwo::[Ts]> {any_t $PR, any_t $PR} $PR"									);
-		AssertExpr(pa, L"ApplyVta",									L"ApplyVta",									L"<...::ApplyVta::[Ts]> any_t $PR"													);
-		AssertExpr(pa, L"ApplyOneVta",								L"ApplyOneVta",									L"<...::ApplyOneVta::[Ts]> any_t $PR"												);
-		AssertExpr(pa, L"ApplyTwoVta",								L"ApplyTwoVta",									L"<...::ApplyTwoVta::[Ts]> any_t $PR"												);
+		AssertExpr(pa, L"ApplyOne",									L"ApplyOne",									L"<...::ApplyOne::[Ts]> {any_t $PR} $PR"												);
+		AssertExpr(pa, L"ApplyTwo",									L"ApplyTwo",									L"<...::ApplyTwo::[Ts]> {any_t $PR, any_t $PR} $PR"										);
+		AssertExpr(pa, L"ApplyVta",									L"ApplyVta",									L"<...::ApplyVta::[Ts]> any_t $PR"														);
+		AssertExpr(pa, L"ApplyOneVta",								L"ApplyOneVta",									L"<...::ApplyOneVta::[Ts]> any_t $PR"													);
+		AssertExpr(pa, L"ApplyTwoVta",								L"ApplyTwoVta",									L"<...::ApplyTwoVta::[Ts]> any_t $PR"													);
 	
-		AssertExpr(pa, L"ApplyOne_1",								L"ApplyOne_1",									L"<::ApplyOne_1::[T], ...::ApplyOne_1::[Ts]> {::ApplyOne_1::[T] $PR} $PR"			);
-		AssertExpr(pa, L"ApplyTwo_1",								L"ApplyTwo_1",									L"<::ApplyTwo_1::[T], ...::ApplyTwo_1::[Ts]> {::ApplyTwo_1::[T] $PR, any_t $PR} $PR");
-		AssertExpr(pa, L"ApplyVta_1",								L"ApplyVta_1",									L"<::ApplyVta_1::[T], ...::ApplyVta_1::[Ts]> any_t $PR"								);
-		AssertExpr(pa, L"ApplyOneVta_1",							L"ApplyOneVta_1",								L"<::ApplyOneVta_1::[T], ...::ApplyOneVta_1::[Ts]> any_t $PR"						);
-		AssertExpr(pa, L"ApplyTwoVta_1",							L"ApplyTwoVta_1",								L"<::ApplyTwoVta_1::[T], ...::ApplyTwoVta_1::[Ts]> any_t $PR"						);
+		AssertExpr(pa, L"ApplyOne_1",								L"ApplyOne_1",									L"<::ApplyOne_1::[T], ...::ApplyOne_1::[Ts]> {::ApplyOne_1::[T] $PR} $PR"				);
+		AssertExpr(pa, L"ApplyTwo_1",								L"ApplyTwo_1",									L"<::ApplyTwo_1::[T], ...::ApplyTwo_1::[Ts]> {::ApplyTwo_1::[T] $PR, any_t $PR} $PR"	);
+		AssertExpr(pa, L"ApplyVta_1",								L"ApplyVta_1",									L"<::ApplyVta_1::[T], ...::ApplyVta_1::[Ts]> any_t $PR"									);
+		AssertExpr(pa, L"ApplyOneVta_1",							L"ApplyOneVta_1",								L"<::ApplyOneVta_1::[T], ...::ApplyOneVta_1::[Ts]> any_t $PR"							);
+		AssertExpr(pa, L"ApplyTwoVta_1",							L"ApplyTwoVta_1",								L"<::ApplyTwoVta_1::[T], ...::ApplyTwoVta_1::[Ts]> any_t $PR"							);
 	
-		AssertExpr(pa, L"ApplyOne<>",								L"ApplyOne<>",									L"{__int32 * $PR} $PR"																);
-		AssertExpr(pa, L"ApplyOne<int>",							L"ApplyOne<int>",								L"{__int32 $PR} $PR"																);
-		AssertExpr(pa, L"ApplyOne<int, char>",						L"ApplyOne<int, char>"																												);
-		AssertExpr(pa, L"ApplyOne<int, char, bool>",				L"ApplyOne<int, char, bool>"																										);
+		AssertExpr(pa, L"ApplyOne<>",								L"ApplyOne<>",									L"{__int32 * $PR} $PR"																	);
+		AssertExpr(pa, L"ApplyOne<int>",							L"ApplyOne<int>",								L"{__int32 $PR} $PR"																	);
+		AssertExpr(pa, L"ApplyOne<int, char>",						L"ApplyOne<int, char>"																													);
+		AssertExpr(pa, L"ApplyOne<int, char, bool>",				L"ApplyOne<int, char, bool>"																											);
 
-		AssertExpr(pa, L"ApplyTwo<>",								L"ApplyTwo<>",									L"{__int32 * $PR, char * $PR} $PR"													);
-		AssertExpr(pa, L"ApplyTwo<int>",							L"ApplyTwo<int>",								L"{__int32 $PR, char * $PR} $PR"													);
-		AssertExpr(pa, L"ApplyTwo<int, char>",						L"ApplyTwo<int, char>",							L"{__int32 $PR, char $PR} $PR"														);
-		AssertExpr(pa, L"ApplyTwo<int, char, bool>",				L"ApplyTwo<int, char, bool>"																										);
+		AssertExpr(pa, L"ApplyTwo<>",								L"ApplyTwo<>",									L"{__int32 * $PR, char * $PR} $PR"														);
+		AssertExpr(pa, L"ApplyTwo<int>",							L"ApplyTwo<int>",								L"{__int32 $PR, char * $PR} $PR"														);
+		AssertExpr(pa, L"ApplyTwo<int, char>",						L"ApplyTwo<int, char>",							L"{__int32 $PR, char $PR} $PR"															);
+		AssertExpr(pa, L"ApplyTwo<int, char, bool>",				L"ApplyTwo<int, char, bool>"																											);
 
-		AssertExpr(pa, L"ApplyVta<>",								L"ApplyVta<>",									L"{} $PR"																			);
-		AssertExpr(pa, L"ApplyVta<int>",							L"ApplyVta<int>",								L"{__int32 $PR} $PR"																);
-		AssertExpr(pa, L"ApplyVta<int, char>",						L"ApplyVta<int, char>",							L"{__int32 $PR, char $PR} $PR"														);
-		AssertExpr(pa, L"ApplyVta<int, char, bool>",				L"ApplyVta<int, char, bool>",					L"{__int32 $PR, char $PR, bool $PR} $PR"											);
+		AssertExpr(pa, L"ApplyVta<>",								L"ApplyVta<>",									L"{} $PR"																				);
+		AssertExpr(pa, L"ApplyVta<int>",							L"ApplyVta<int>",								L"{__int32 $PR} $PR"																	);
+		AssertExpr(pa, L"ApplyVta<int, char>",						L"ApplyVta<int, char>",							L"{__int32 $PR, char $PR} $PR"															);
+		AssertExpr(pa, L"ApplyVta<int, char, bool>",				L"ApplyVta<int, char, bool>",					L"{__int32 $PR, char $PR, bool $PR} $PR"												);
 
-		AssertExpr(pa, L"ApplyOneVta<>",							L"ApplyOneVta<>",								L"{__int32 * $PR} $PR"																);
-		AssertExpr(pa, L"ApplyOneVta<int>",							L"ApplyOneVta<int>",							L"{__int32 $PR} $PR"																);
-		AssertExpr(pa, L"ApplyOneVta<int, char>",					L"ApplyOneVta<int, char>",						L"{__int32 $PR, char $PR} $PR"														);
-		AssertExpr(pa, L"ApplyOneVta<int, char, bool>",				L"ApplyOneVta<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR} $PR"											);
+		AssertExpr(pa, L"ApplyOneVta<>",							L"ApplyOneVta<>",								L"{__int32 * $PR} $PR"																	);
+		AssertExpr(pa, L"ApplyOneVta<int>",							L"ApplyOneVta<int>",							L"{__int32 $PR} $PR"																	);
+		AssertExpr(pa, L"ApplyOneVta<int, char>",					L"ApplyOneVta<int, char>",						L"{__int32 $PR, char $PR} $PR"															);
+		AssertExpr(pa, L"ApplyOneVta<int, char, bool>",				L"ApplyOneVta<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR} $PR"												);
 
-		AssertExpr(pa, L"ApplyTwoVta<>",							L"ApplyTwoVta<>",								L"{__int32 * $PR, char * $PR} $PR"													);
-		AssertExpr(pa, L"ApplyTwoVta<int>",							L"ApplyTwoVta<int>",							L"{__int32 $PR, char * $PR} $PR"													);
-		AssertExpr(pa, L"ApplyTwoVta<int, char>",					L"ApplyTwoVta<int, char>",						L"{__int32 $PR, char $PR} $PR"														);
-		AssertExpr(pa, L"ApplyTwoVta<int, char, bool>",				L"ApplyTwoVta<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR} $PR"											);
+		AssertExpr(pa, L"ApplyTwoVta<>",							L"ApplyTwoVta<>",								L"{__int32 * $PR, char * $PR} $PR"														);
+		AssertExpr(pa, L"ApplyTwoVta<int>",							L"ApplyTwoVta<int>",							L"{__int32 $PR, char * $PR} $PR"														);
+		AssertExpr(pa, L"ApplyTwoVta<int, char>",					L"ApplyTwoVta<int, char>",						L"{__int32 $PR, char $PR} $PR"															);
+		AssertExpr(pa, L"ApplyTwoVta<int, char, bool>",				L"ApplyTwoVta<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR} $PR"												);
 	
-		AssertExpr(pa, L"ApplyOne_1<>",								L"ApplyOne_1<>"																														);
-		AssertExpr(pa, L"ApplyOne_1<int>",							L"ApplyOne_1<int>",								L"{__int32 $PR} $PR"																);
-		AssertExpr(pa, L"ApplyOne_1<int, char>",					L"ApplyOne_1<int, char>"																											);
-		AssertExpr(pa, L"ApplyOne_1<int, char, bool>",				L"ApplyOne_1<int, char, bool>"																										);
+		AssertExpr(pa, L"ApplyOne_1<>",								L"ApplyOne_1<>"																															);
+		AssertExpr(pa, L"ApplyOne_1<int>",							L"ApplyOne_1<int>",								L"{__int32 $PR} $PR"																	);
+		AssertExpr(pa, L"ApplyOne_1<int, char>",					L"ApplyOne_1<int, char>"																												);
+		AssertExpr(pa, L"ApplyOne_1<int, char, bool>",				L"ApplyOne_1<int, char, bool>"																											);
 
-		AssertExpr(pa, L"ApplyTwo_1<>",								L"ApplyTwo_1<>"																														);
-		AssertExpr(pa, L"ApplyTwo_1<int>",							L"ApplyTwo_1<int>",								L"{__int32 $PR, char * $PR} $PR"													);
-		AssertExpr(pa, L"ApplyTwo_1<int, char>",					L"ApplyTwo_1<int, char>",						L"{__int32 $PR, char $PR} $PR"														);
-		AssertExpr(pa, L"ApplyTwo_1<int, char, bool>",				L"ApplyTwo_1<int, char, bool>"																										);
+		AssertExpr(pa, L"ApplyTwo_1<>",								L"ApplyTwo_1<>"																															);
+		AssertExpr(pa, L"ApplyTwo_1<int>",							L"ApplyTwo_1<int>",								L"{__int32 $PR, char * $PR} $PR"														);
+		AssertExpr(pa, L"ApplyTwo_1<int, char>",					L"ApplyTwo_1<int, char>",						L"{__int32 $PR, char $PR} $PR"															);
+		AssertExpr(pa, L"ApplyTwo_1<int, char, bool>",				L"ApplyTwo_1<int, char, bool>"																											);
 
-		AssertExpr(pa, L"ApplyVta_1<>",								L"ApplyVta_1<>"																														);
-		AssertExpr(pa, L"ApplyVta_1<int>",							L"ApplyVta_1<int>",								L"{__int32 $PR} $PR"																);
-		AssertExpr(pa, L"ApplyVta_1<int, char>",					L"ApplyVta_1<int, char>",						L"{__int32 $PR, char $PR} $PR"														);
-		AssertExpr(pa, L"ApplyVta_1<int, char, bool>",				L"ApplyVta_1<int, char, bool>",					L"{__int32 $PR, char $PR, bool $PR} $PR"											);
+		AssertExpr(pa, L"ApplyVta_1<>",								L"ApplyVta_1<>"																															);
+		AssertExpr(pa, L"ApplyVta_1<int>",							L"ApplyVta_1<int>",								L"{__int32 $PR} $PR"																	);
+		AssertExpr(pa, L"ApplyVta_1<int, char>",					L"ApplyVta_1<int, char>",						L"{__int32 $PR, char $PR} $PR"															);
+		AssertExpr(pa, L"ApplyVta_1<int, char, bool>",				L"ApplyVta_1<int, char, bool>",					L"{__int32 $PR, char $PR, bool $PR} $PR"												);
 
-		AssertExpr(pa, L"ApplyOneVta_1<>",							L"ApplyOneVta_1<>"																													);
-		AssertExpr(pa, L"ApplyOneVta_1<int>",						L"ApplyOneVta_1<int>",							L"{__int32 $PR} $PR"																);
-		AssertExpr(pa, L"ApplyOneVta_1<int, char>",					L"ApplyOneVta_1<int, char>",					L"{__int32 $PR, char $PR} $PR"														);
-		AssertExpr(pa, L"ApplyOneVta_1<int, char, bool>",			L"ApplyOneVta_1<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR} $PR"											);
+		AssertExpr(pa, L"ApplyOneVta_1<>",							L"ApplyOneVta_1<>"																														);
+		AssertExpr(pa, L"ApplyOneVta_1<int>",						L"ApplyOneVta_1<int>",							L"{__int32 $PR} $PR"																	);
+		AssertExpr(pa, L"ApplyOneVta_1<int, char>",					L"ApplyOneVta_1<int, char>",					L"{__int32 $PR, char $PR} $PR"															);
+		AssertExpr(pa, L"ApplyOneVta_1<int, char, bool>",			L"ApplyOneVta_1<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR} $PR"												);
 
-		AssertExpr(pa, L"ApplyTwoVta_1<>",							L"ApplyTwoVta_1<>"																													);
-		AssertExpr(pa, L"ApplyTwoVta_1<int>",						L"ApplyTwoVta_1<int>",							L"{__int32 $PR, char * $PR} $PR"													);
-		AssertExpr(pa, L"ApplyTwoVta_1<int, char>",					L"ApplyTwoVta_1<int, char>",					L"{__int32 $PR, char $PR} $PR"														);
-		AssertExpr(pa, L"ApplyTwoVta_1<int, char, bool>",			L"ApplyTwoVta_1<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR} $PR"											);
+		AssertExpr(pa, L"ApplyTwoVta_1<>",							L"ApplyTwoVta_1<>"																														);
+		AssertExpr(pa, L"ApplyTwoVta_1<int>",						L"ApplyTwoVta_1<int>",							L"{__int32 $PR, char * $PR} $PR"														);
+		AssertExpr(pa, L"ApplyTwoVta_1<int, char>",					L"ApplyTwoVta_1<int, char>",					L"{__int32 $PR, char $PR} $PR"															);
+		AssertExpr(pa, L"ApplyTwoVta_1<int, char, bool>",			L"ApplyTwoVta_1<int, char, bool>",				L"{__int32 $PR, char $PR, bool $PR} $PR"												);
 	});
 }
