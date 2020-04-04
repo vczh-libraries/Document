@@ -6,6 +6,8 @@
 
 namespace infer_function_type
 {
+	extern Symbol*							TemplateArgumentPatternToSymbol(ITsys* tsys);
+
 	extern void								CollectFreeTypes(
 												const ParsingArguments& pa,
 												bool includeParentDeclArguments,
@@ -91,8 +93,7 @@ namespace infer_function_type
 												Ptr<TemplateSpec> templateSpec,
 												Ptr<SpecializationSpec> specializationSpec,
 												Ptr<TemplateSpec> primaryTemplateSpec,
-												TemplateArgumentContext* argumentsToApply,
-												SortedList<vint>& boundedAnys
+												TemplateArgumentContext* argumentsToApply
 											);
 
 	template<typename TCallback>
@@ -123,6 +124,93 @@ namespace infer_function_type
 				}
 			}
 		}
+	}
+
+	template<typename TDecl>
+	bool InferPartialSpecializationPrimaryInternal(
+		const ParsingArguments& pa,
+		Dictionary<Symbol*, Ptr<TemplateArgumentContext>>& result,
+		Symbol* declSymbol,
+		ITsys* parentDeclType,
+		Ptr<TemplateSpec> primaryTemplateSpec,
+		TemplateArgumentContext* argumentsToApply,
+		SortedList<Symbol*>& accessed
+	)
+	{
+		if (accessed.Contains(declSymbol))
+		{
+			return result.Keys().Contains(declSymbol);
+		}
+		else
+		{
+			auto decl = declSymbol->GetAnyForwardDecl<TDecl>();
+			Ptr<TemplateArgumentContext> taContext;
+			if (decl->specializationSpec)
+			{
+				taContext = InferPartialSpecialization(pa, declSymbol, parentDeclType, decl->templateSpec, decl->specializationSpec, primaryTemplateSpec, argumentsToApply);
+				if (!taContext)
+				{
+					return false;
+				}
+			}
+
+			auto& children = declSymbol->GetPSChildren_NF();
+			vint counter = 0;
+			for (vint i = 0; i < children.Count(); i++)
+			{
+				if (InferPartialSpecializationPrimaryInternal(pa, result, children[i], parentDeclType, primaryTemplateSpec, argumentsToApply, accessed))
+				{
+					counter++;
+				}
+			}
+
+			if (counter > 0)
+			{
+				bool addResult = false;
+				for (vint i = 0; i < taContext->arguments.Count(); i++)
+				{
+					auto patternSymbol = TemplateArgumentPatternToSymbol(taContext->arguments.Keys()[i]);
+					auto tsys = taContext->arguments.Values()[i];
+					if (patternSymbol->ellipsis)
+					{
+						for (vint j = 0; j < tsys->GetParamCount(); j++)
+						{
+							auto tsysItem = tsys->GetParam(j);
+							if (tsysItem->GetType() == TsysType::Any || tsysItem->GetType() == TsysType::GenericArg)
+							{
+								goto ADD_RESULT;
+							}
+						}
+					}
+					else
+					{
+						if (tsys->GetType() == TsysType::Any || tsys->GetType() == TsysType::GenericArg)
+						{
+							goto ADD_RESULT;
+						}
+					}
+				}
+				goto SKIP_ADDING_RESULT;
+			}
+		ADD_RESULT:
+			result.Add(declSymbol, taContext);
+		SKIP_ADDING_RESULT:
+			return true;
+		}
+	}
+
+	template<typename TDecl>
+	void InferPartialSpecializationPrimary(
+		const ParsingArguments& pa,
+		Dictionary<Symbol*, Ptr<TemplateArgumentContext>>& result,
+		Symbol* primarySymbol,
+		ITsys* parentDeclType,
+		TemplateArgumentContext* argumentsToApply
+	)
+	{
+		SortedList<Symbol*> accessed;
+		auto decl = primarySymbol->GetAnyForwardDecl<TDecl>();
+		InferPartialSpecializationPrimaryInternal(pa, result, primarySymbol, parentDeclType, decl->templateSpec, argumentsToApply);
 	}
 }
 

@@ -13,8 +13,7 @@ namespace infer_function_type
 		Ptr<TemplateSpec> templateSpec,
 		Ptr<SpecializationSpec> specializationSpec,
 		Ptr<TemplateSpec> primaryTemplateSpec,
-		TemplateArgumentContext* argumentsToApply,
-		SortedList<vint>& boundedAnys
+		TemplateArgumentContext* argumentsToApply
 	)
 	{
 		try

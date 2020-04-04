@@ -8,8 +8,6 @@ namespace assign_parameters
 	struct GenericParameterAssignment;
 	using GpaList = List<GenericParameterAssignment>;
 
-	extern Symbol*					TemplateArgumentPatternToSymbol(ITsys* tsys);
-
 	extern void						AssignParameterAssignment(
 										const ParsingArguments& invokerPa,
 										vint parameterCount,
@@ -80,7 +78,7 @@ namespace assign_parameters
 		{
 			auto argument = spec->arguments[i];
 			auto pattern = symbol_type_resolving::GetTemplateArgumentKey(argument, pa.tsys.Obj());
-			auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
+			auto patternSymbol = infer_function_type::TemplateArgumentPatternToSymbol(pattern);
 			freeSymbols.Add(patternSymbol);
 			callback(i, argument, pattern, patternSymbol);
 		}
