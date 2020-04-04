@@ -42,17 +42,17 @@ TEST_FILE
 		using namespace Input__TestParsePSValueAlias_FullInstantiation;
 		COMPILE_PROGRAM(program, pa, input);
 
-		ASSERT_OVERLOADING_SIMPLE((Value<bool, void, int>),										bool const &		);
-		ASSERT_OVERLOADING_SIMPLE((Value<char, wchar_t, int>),									bool const &		);
-		ASSERT_OVERLOADING_SIMPLE((Value<bool *, void *, char, wchar_t>),						char const &		);
-		ASSERT_OVERLOADING_SIMPLE((Value<char, wchar_t>),										wchar_t const &		);
-		ASSERT_OVERLOADING_SIMPLE((Value<bool, void, char *, wchar_t *>),						wchar_t const &		);
-		ASSERT_OVERLOADING_SIMPLE((Value<bool *, void *>),										float const &		);
-		ASSERT_OVERLOADING_SIMPLE((Value<bool *, void *, char *, wchar_t *, int *>),			float const &		);
-		ASSERT_OVERLOADING_SIMPLE((Value<bool *, void *, char *, wchar_t *>),					double const &		);
-		ASSERT_OVERLOADING_SIMPLE((Value<char *, wchar_t *, bool *, void *>),					char * const &		);
-		ASSERT_OVERLOADING_SIMPLE((Value<bool *, void *, float *, double *>),					wchar_t * const &	);
-		ASSERT_OVERLOADING_SIMPLE((Value<char *, wchar_t *, float *, double *>),				bool * const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool, void, int>),										bool const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<char, wchar_t, int>),									bool const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool *, void *, char, wchar_t>),						char const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<char, wchar_t>),										wchar_t const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool, void, char *, wchar_t *>),						wchar_t const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool *, void *>),										float const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool *, void *, char *, wchar_t *, int *>),				float const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool *, void *, char *, wchar_t *>),					double const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<char *, wchar_t *, bool *, void *>),					char * const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool *, void *, float *, double *>),					wchar_t * const &	);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<char *, wchar_t *, float *, double *>),					bool * const &		);
 	});
 
 	TEST_CATEGORY(L"Full instantiation in template class")
