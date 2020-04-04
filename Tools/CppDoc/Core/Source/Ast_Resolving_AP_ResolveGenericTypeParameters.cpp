@@ -5,9 +5,9 @@ using namespace infer_function_type;
 
 namespace assign_parameters
 {
-
 	void ResolveGenericArgumentParameters(
 		const ParsingArguments& invokerPa,					// context
+		bool forGenericType,								// true for GenericType, false for SpecializationSpec
 		TypeTsysList& parameterAssignment,					// store generic argument to offered argument map, nullptr indicates the default value is applied
 		const TemplateArgumentContext& knownArguments,		// all assigned template arguments
 		const SortedList<Symbol*>& argumentSymbols,			// symbols of all template arguments
@@ -19,7 +19,7 @@ namespace assign_parameters
 		auto adjustedPa = AdjustPaForCollecting(invokerPa);
 
 		vint genericParameterCount = genericArguments.Count();
-		vint passedParameterCount = genericParameterCount + 1;
+		vint passedParameterCount = forGenericType ? genericParameterCount + 1 : genericParameterCount;
 		Array<vint> knownPackSizes(passedParameterCount);
 		for (vint i = 0; i < knownPackSizes.Count(); i++)
 		{
@@ -45,9 +45,12 @@ namespace assign_parameters
 
 		// calculate how to assign offered arguments to generic type arguments
 		// gpaMappings will contains decisions for every template arguments
-		// set allowPartialApply to true because, arguments of genericType could be incomplete, but argumentTypes are always complete because it comes from a ITsys*
+		// for GenericType:
+		//   set allowPartialApply to true because, arguments of genericType could be incomplete, but argumentTypes are always complete because it comes from a ITsys*
+		// for SpecializationSpec
+		//   set allowPartialApply to false because, arguments of SpecializationSpec are always complete
 		GpaList gpaMappings;
-		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, true, passedParameterCount, knownPackSizes,
+		CalculateGpa(gpaMappings, argumentTypes.Count(), boundedAnys, 0, forGenericType, passedParameterCount, knownPackSizes,
 			[&genericArguments](vint index) { return index == genericArguments.Count() ? true : genericArguments[index].isVariadic; },
 			[](vint index) { return false; }
 		);
@@ -68,7 +71,7 @@ namespace assign_parameters
 		SortedList<vint>& boundedAnys
 	)
 	{
-		ResolveGenericArgumentParameters(invokerPa, parameterAssignment, knownArguments, argumentSymbols, genericType->arguments, argumentTypes, boundedAnys);
+		ResolveGenericArgumentParameters(invokerPa, true, parameterAssignment, knownArguments, argumentSymbols, genericType->arguments, argumentTypes, boundedAnys);
 	}
 
 	/***********************************************************************
@@ -85,6 +88,6 @@ namespace assign_parameters
 		SortedList<vint>& boundedAnys
 	)
 	{
-		ResolveGenericArgumentParameters(invokerPa, parameterAssignment, knownArguments, argumentSymbols, spec->arguments, argumentTypes, boundedAnys);
+		ResolveGenericArgumentParameters(invokerPa, false, parameterAssignment, knownArguments, argumentSymbols, spec->arguments, argumentTypes, boundedAnys);
 	}
 }
