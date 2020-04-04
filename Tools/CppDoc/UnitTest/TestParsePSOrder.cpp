@@ -1,7 +1,7 @@
 #include "Util.h"
 #include <Ast_Resolving_PSO.h>
 
-namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation_Type
+namespace Input__TestParsePSOrder_PartialOrderEvaluation_Type
 {
 	TEST_DECL(
 		template<typename... Ts>
@@ -108,7 +108,7 @@ namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation_Type
 	);
 }
 
-namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation_Value
+namespace Input__TestParsePSOrder_PartialOrderEvaluation_Value
 {
 	TEST_DECL(
 		template<typename T, typename U, int... vs>
@@ -503,7 +503,7 @@ struct Obj
 
 	TEST_CATEGORY(L"Partial Order Evaluation")
 	{
-		using namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation_Type;
+		using namespace Input__TestParsePSOrder_PartialOrderEvaluation_Type;
 		COMPILE_PROGRAM(program, pa, input);
 
 		const Pair<vint, vint> yesRaw[] = {
@@ -544,7 +544,7 @@ struct Obj
 
 	TEST_CATEGORY(L"Partial Order Evaluation (value argument)")
 	{
-		using namespace Input__TestParsePartialSpecialization_PartialOrderEvaluation_Value;
+		using namespace Input__TestParsePSOrder_PartialOrderEvaluation_Value;
 		COMPILE_PROGRAM(program, pa, input);
 
 		const Pair<vint, vint> yesRaw[] = {
