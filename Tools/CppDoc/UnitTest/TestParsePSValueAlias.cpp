@@ -304,4 +304,9 @@ TEST_FILE
 	{
 		// TODO:
 	});
+
+	TEST_CATEGORY(L"SFAINE")
+	{
+		// TODO:
+	});
 }
