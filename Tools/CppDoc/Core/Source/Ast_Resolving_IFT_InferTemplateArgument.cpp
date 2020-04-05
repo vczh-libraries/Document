@@ -227,7 +227,7 @@ namespace infer_function_type
 				SortedList<vint> boundedAnys;
 				for (vint i = 0; i < count; i++)
 				{
-					argumentTypes[i] = { nullptr,ExprTsysType::PRValue,entity->GetParam(i) };
+					argumentTypes[i] = { {},entity->GetParam(i) };
 				}
 				assign_parameters::ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, nullptr, self, argumentTypes, boundedAnys);
 			}
@@ -414,7 +414,7 @@ namespace infer_function_type
 						{
 							for (vint j = 0; j < value->GetParamCount(); j++)
 							{
-								argumentTypes[index++] = { nullptr,ExprTsysType::PRValue,value->GetParam(j) };
+								argumentTypes[index++] = { value->GetInit().headers[j],value->GetParam(j) };
 							}
 						}
 						else

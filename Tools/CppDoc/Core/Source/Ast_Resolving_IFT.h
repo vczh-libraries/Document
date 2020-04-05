@@ -243,7 +243,7 @@ namespace infer_function_type
 				{
 					for (vint j = 0; j < tsys->GetParamCount(); j++)
 					{
-						argumentTypes[count++] = { {}, tsys->GetParam(j) };
+						argumentTypes[count++] = { tsys->GetInit().headers[j], tsys->GetParam(j) };
 					}
 				}
 			}
