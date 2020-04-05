@@ -67,6 +67,77 @@ namespace Input__TestParsePSValueAlias_FullInstantiation
 	);
 }
 
+namespace Input__TestParsePSValueAlias_MemberInstantiation
+{
+	TEST_DECL(
+		template<typename A, typename... Ts> struct FuncType;
+
+		template<typename TFloat, typename TDouble>
+		struct Struct
+		{
+			template<typename A, typename B, typename... Ts>
+			static bool const Value = false;
+
+			template<typename A, typename B, typename... Ts>
+			static char const Value<A*, B*, Ts...> = 'c';
+
+			template<typename A, typename B, typename... Ts>
+			static wchar_t const Value<A, B, Ts*...> = L'c';
+
+			template<typename A, typename B, typename... Ts>
+			static float const Value<A*, B*, Ts*...> = 0.f;
+
+			template<typename A, typename B, typename C, typename D>
+			static double const Value<A*, B*, C*, D*> = 0.0;
+
+			template<typename A, typename B>
+			static char* const Value<char*, wchar_t*, A*, B*> = nullptr;
+
+			template<typename A, typename B>
+			static wchar_t* const Value<A*, B*, TFloat*, TDouble*> = nullptr;
+
+			template<>
+			static bool* const Value<char*, wchar_t*, TFloat*, TDouble*> = nullptr;
+
+			template<typename A, typename B>
+			static char** const Value<A(*)(TFloat), B(*)(TDouble)> = nullptr;
+
+			template<typename A, typename B>
+			static wchar_t** const Value<char(*)(A), wchar_t(*)(B)> = nullptr;
+
+			template<>
+			static bool** const Value<char(*)(TFloat), wchar_t(*)(TDouble)> = nullptr;
+
+			template<typename A, typename B>
+			static TFloat** const Value<A(*)(B), A(*)(B), A(*)(B), A(*)(B)> = nullptr;
+
+			template<typename A, typename B>
+			static TDouble** const Value<A(*)(B), B(*)(A), A(*)(A), B(*)(B)> = nullptr;
+
+			template<typename A, typename B, typename... Ts>
+			static void** const Value<A(*)(Ts...), B(*)(Ts...), A(*)(B(*...bs)(Ts))> = nullptr;
+
+			template<typename A, typename B>
+			static char** const Value<FuncType<A, TFloat>, FuncType<B, TDouble>> = nullptr;
+
+			template<typename A, typename B>
+			static wchar_t** const Value<FuncType<char, A>, FuncType<wchar_t, B>> = nullptr;
+
+			template<>
+			static bool** const Value<FuncType<char, TFloat>, FuncType<wchar_t, TDouble>> = nullptr;
+
+			template<typename A, typename B>
+			static TFloat** const Value<FuncType<A, B>, FuncType<A, B>, FuncType<A, B>, FuncType<A, B>> = nullptr;
+
+			template<typename A, typename B>
+			static TDouble** const Value<FuncType<A, B>, FuncType<B, A>, FuncType<A, A>, FuncType<B, B>> = nullptr;
+
+			template<typename A, typename B, typename... Ts>
+			static void** const Value<FuncType<A, Ts...>, FuncType<B, Ts...>, FuncType<A, FuncType<B, Ts>...>> = nullptr;
+		};
+	);
+}
+
 TEST_FILE
 {
 	TEST_CATEGORY(L"Full instantiation")
@@ -74,7 +145,11 @@ TEST_FILE
 		using namespace Input__TestParsePSValueAlias_FullInstantiation;
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertExpr(pa, L"Value",		L"Value",				L"<::Value::[A], ::Value::[B], ...::Value::[Ts]> any_t $PR"	);
+		AssertExpr(pa,
+			L"Value",
+			L"Value",
+			L"<::Value::[A], ::Value::[B], ...::Value::[Ts]> any_t $PR"
+		);
 
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool, void, int>),										bool const &		);
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<char, wchar_t, int>),									bool const &		);
@@ -147,7 +222,82 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Full instantiation in template class")
 	{
-		// TODO:
+		using namespace Input__TestParsePSValueAlias_MemberInstantiation;
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa,
+			L"Struct<float, double>::Value",
+			L"Struct<float, double> :: Value",
+			L"<::Struct::Value::[A], ::Struct::Value::[B], ...::Struct::Value::[Ts]> any_t $PR"
+		);
+
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Struct<float, double> :: Value<bool, void, int>),										bool const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Struct<float, double> :: Value<char, wchar_t, int>),									bool const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Struct<float, double> :: Value<bool *, void *, char, wchar_t>),						char const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Struct<float, double> :: Value<char, wchar_t>),										wchar_t const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Struct<float, double> :: Value<bool, void, char *, wchar_t *>),						wchar_t const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Struct<float, double> :: Value<bool *, void *>),										float const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Struct<float, double> :: Value<bool *, void *, char *, wchar_t *, int *>),				float const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Struct<float, double> :: Value<bool *, void *, char *, wchar_t *>),					double const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Struct<float, double> :: Value<char *, wchar_t *, bool *, void *>),					char * const &		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Struct<float, double> :: Value<bool *, void *, float *, double *>),					wchar_t * const &	);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE((Struct<float, double> :: Value<char *, wchar_t *, float *, double *>),					bool * const &		);
+
+		ASSERT_OVERLOADING_LVALUE(
+			(Struct<float, double> :: Value<float(*)(float), double(*)(double)>),
+			L"(Struct<float, double> :: Value<float (float) *, double (double) *>)",
+			char * * const &
+		);
+		ASSERT_OVERLOADING_LVALUE(
+			(Struct<float, double> :: Value<char(*)(char), wchar_t(*)(wchar_t)>),
+			L"(Struct<float, double> :: Value<char (char) *, wchar_t (wchar_t) *>)",
+			wchar_t * * const &
+		);
+		ASSERT_OVERLOADING_LVALUE(
+			(Struct<float, double> :: Value<char(*)(float), wchar_t(*)(double)>),
+			L"(Struct<float, double> :: Value<char (float) *, wchar_t (double) *>)",
+			bool * * const &
+		);
+		ASSERT_OVERLOADING_LVALUE(
+			(Struct<float, double> :: Value<char(*)(float), char(*)(float), char(*)(float), char(*)(float)>),
+			L"(Struct<float, double> :: Value<char (float) *, char (float) *, char (float) *, char (float) *>)",
+			float * * const &
+		);
+		ASSERT_OVERLOADING_LVALUE(
+			(Struct<float, double> :: Value<char(*)(float), float(*)(char), char(*)(char), float(*)(float)>),
+			L"(Struct<float, double> :: Value<char (float) *, float (char) *, char (char) *, float (float) *>)",
+			double * * const &
+		);
+		ASSERT_OVERLOADING_LVALUE(
+			(Struct<float, double> :: Value<char(*)(float, double), wchar_t(*)(float, double), char(*)(wchar_t(*)(float), wchar_t(*)(double))>),
+			L"(Struct<float, double> :: Value<char (float, double) *, wchar_t (float, double) *, char (wchar_t (float) *, wchar_t (double) *) *>)",
+			void * * const &
+		);
+
+		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+			(Struct<float, double> :: Value<FuncType<float, float>, FuncType<double, double>>),
+			char * * const &
+		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+			(Struct<float, double> :: Value<FuncType<char, char>, FuncType<wchar_t, wchar_t>>),
+			wchar_t * * const &
+		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+			(Struct<float, double> :: Value<FuncType<char, float>, FuncType<wchar_t, double>>),
+			bool * * const &
+		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+			(Struct<float, double> :: Value<FuncType<char, float>, FuncType<char, float>, FuncType<char, float>, FuncType<char, float>>),
+			float * * const &
+		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+			(Struct<float, double> :: Value<FuncType<char, float>, FuncType<float, char>, FuncType<char, char>, FuncType<float, float>>),
+			double * * const &
+		);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+			(Struct<float, double> :: Value<FuncType<char, float, double>, FuncType<wchar_t, float, double>, FuncType<char, FuncType<wchar_t, float>, FuncType<wchar_t, double>>>),
+			void * * const &
+		);
 	});
 
 	TEST_CATEGORY(L"Partial instantiation in class")
