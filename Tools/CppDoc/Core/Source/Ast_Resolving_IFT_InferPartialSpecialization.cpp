@@ -58,7 +58,7 @@ namespace infer_function_type
 					TypeTsysList tsys;
 					auto assignedTsys = parameterAssignment[i];
 
-					bool isVta = argument.isVariadic;
+					bool isVta = false;
 					TypeToTsysInternal(verifyPa, argument.item.type, tsys, isVta);
 					if (!tsys.Contains(assignedTsys))
 					{

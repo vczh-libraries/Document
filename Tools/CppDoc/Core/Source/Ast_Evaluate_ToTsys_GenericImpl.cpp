@@ -77,7 +77,7 @@ namespace symbol_totsys_impl
 					auto decl = declSymbol->GetAnyForwardDecl<ForwardClassDeclaration>();
 					if (!decl->templateSpec) throw TypeCheckerException();
 					auto& tsys = EvaluateForwardClassSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
-					UseTypeTsysList(result, declSymbol, tsys);
+					UseTypeTsysList(result, nullptr, tsys);
 				}
 				break;
 			case symbol_component::SymbolKind::TypeAlias:
@@ -214,7 +214,7 @@ namespace symbol_totsys_impl
 					auto decl = declSymbol->GetImplDecl_NFb<ValueAliasDeclaration>();
 					if (!decl->templateSpec) throw TypeCheckerException();
 					auto& tsys = EvaluateValueAliasSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
-					UseTypeTsysList(result, nullptr, tsys);
+					UseTypeTsysList(result, declSymbol, tsys);
 				}
 				break;
 			default:
