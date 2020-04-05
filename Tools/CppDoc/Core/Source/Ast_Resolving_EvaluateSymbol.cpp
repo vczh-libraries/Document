@@ -610,11 +610,15 @@ namespace symbol_type_resolving
 		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, argumentsToApply);
 		if (eval)
 		{
-			Dictionary<Symbol*, Ptr<TemplateArgumentContext>> psResult;
-			if (argumentsToApply)
+			if (!eval.symbol->IsPSPrimary_NF())
+			{
+				EvaluateValueAliasSymbolInternal(eval.declPa, eval.evaluatedTypes, usingDecl);
+			}
+			else if (argumentsToApply)
 			{
 				auto psPa = eval.declPa;
 				psPa.taContext = psPa.taContext->parent;
+				Dictionary<Symbol*, Ptr<TemplateArgumentContext>> psResult;
 				InferPartialSpecializationPrimary<ValueAliasDeclaration>(psPa, psResult, eval.symbol, psPa.parentDeclType, argumentsToApply);
 
 				if (psResult.Count() == 0 || IsValuableTaContextWithMatchedPSChildren(argumentsToApply))
@@ -636,7 +640,9 @@ namespace symbol_type_resolving
 			}
 			else
 			{
-				EvaluateValueAliasSymbolInternal(eval.declPa, eval.evaluatedTypes, usingDecl);
+				TypeTsysList result;
+				EvaluateValueAliasSymbolInternal(eval.declPa, result, usingDecl);
+				eval.evaluatedTypes.Add(invokerPa.tsys->Any());
 			}
 
 			for (vint i = 0; i < eval.evaluatedTypes.Count(); i++)

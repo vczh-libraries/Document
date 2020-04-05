@@ -74,7 +74,8 @@ TEST_FILE
 		using namespace Input__TestParsePSValueAlias_FullInstantiation;
 		COMPILE_PROGRAM(program, pa, input);
 
-		// TODO: test uninstantiated template type
+		AssertExpr(pa, L"Value",		L"Value",				L"<::Value::[A], ::Value::[B], ...::Value::[Ts]> any_t $PR"	);
+
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool, void, int>),										bool const &		);
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<char, wchar_t, int>),									bool const &		);
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool *, void *, char, wchar_t>),						char const &		);
