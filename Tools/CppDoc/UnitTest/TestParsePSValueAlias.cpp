@@ -29,6 +29,24 @@ namespace Input__TestParsePSValueAlias_FullInstantiation
 
 		template<typename A>
 		constexpr auto XXX = false;
+
+		template<typename A, typename B>
+		constexpr auto Value<A(*)(float), B(*)(double)> = (char**)nullptr;
+
+		template<typename A, typename B>
+		constexpr auto Value<char(*)(A), wchar_t(*)(B)> = (wchar_t**)nullptr;
+
+		template<>
+		constexpr auto Value<char(*)(float), wchar_t(*)(double)> = (bool**)nullptr;
+
+		template<typename A, typename B>
+		constexpr auto Value<A(*)(B), A(*)(B), A(*)(B), A(*)(B)> = (float**)nullptr;
+
+		template<typename A, typename B>
+		constexpr auto Value<A(*)(B), B(*)(A), A(*)(A), B(*)(B)> = (double**)nullptr;
+
+		template<typename A, typename B, typename... Ts>
+		constexpr auto Value<A(*)(Ts...), B(*)(Ts...), A(*)(B(*...bs)(Ts))> = (void**)nullptr;
 	);
 }
 
@@ -40,8 +58,8 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 
 		// TODO: test uninstantiated template type
-		// TODO: matching functions and generic types
-		// TODO: matching patterns that requires retry
+		// TODO: match generic types
+		// TODO: match patterns that requires retry
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool, void, int>),										bool const &		);
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<char, wchar_t, int>),									bool const &		);
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool *, void *, char, wchar_t>),						char const &		);
@@ -53,6 +71,37 @@ TEST_FILE
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<char *, wchar_t *, bool *, void *>),					char * const &		);
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool *, void *, float *, double *>),					wchar_t * const &	);
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<char *, wchar_t *, float *, double *>),					bool * const &		);
+
+		ASSERT_OVERLOADING_LVALUE(
+			(Value<float(*)(float), double(*)(double)>),
+			L"(Value<float (float) *, double (double) *>)",
+			char * * const &
+		);
+		ASSERT_OVERLOADING_LVALUE(
+			(Value<char(*)(char), wchar_t(*)(wchar_t)>),
+			L"(Value<char (char) *, wchar_t (wchar_t) *>)",
+			wchar_t * * const &
+		);
+		ASSERT_OVERLOADING_LVALUE(
+			(Value<char(*)(float), wchar_t(*)(double)>),
+			L"(Value<char (float) *, wchar_t (double) *>)",
+			bool * * const &
+		);
+		ASSERT_OVERLOADING_LVALUE(
+			(Value<char(*)(float), char(*)(float), char(*)(float), char(*)(float)>),
+			L"(Value<char (float) *, char (float) *, char (float) *, char (float) *>)",
+			float * * const &
+		);
+		ASSERT_OVERLOADING_LVALUE(
+			(Value<char(*)(float), float(*)(char), char(*)(char), float(*)(float)>),
+			L"(Value<char (float) *, float (char) *, char (char) *, float (float) *>)",
+			double * * const &
+		);
+		ASSERT_OVERLOADING_LVALUE(
+			(Value<char(*)(float, double), wchar_t(*)(float, double), char(*)(wchar_t(*)(float), wchar_t(*)(double))>),
+			L"(Value<char (float, double) *, wchar_t (float, double) *, char (wchar_t (float) *, wchar_t (double) *) *>)",
+			void * * const &
+		);
 	});
 
 	TEST_CATEGORY(L"Full instantiation in template class")
