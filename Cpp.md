@@ -51,9 +51,9 @@
       - [ ] When `specializationSymbols` is used, `specializationVersion` is compared to the primary symbol version to determine if the list need to refresh.
       - [ ] When `specializationVersion` is -1, it means `specializationSymbols` is hardcoded, usually from `this` in a method of a class specialization.
     - [ ] SFINAE test cases
-    - [ ] Generate unique name for each symbol
-      - [ ] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
-      - [ ] `Symbol::DecorateNameForSpecializationSpec` generates unique name for declaractions with `specializationSpec`.
+  - [ ] Generate unique name for each symbol
+    - [ ] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
+    - [ ] `Symbol::DecorateNameForSpecializationSpec` generates unique name for declaractions with `specializationSpec`.
 - [ ] Lambda expressions.
 - [ ] Next Demo! (Calculator)
   - [ ] Check carefully around all links.
