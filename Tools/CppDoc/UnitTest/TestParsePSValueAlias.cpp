@@ -29,9 +29,6 @@ namespace Input__TestParsePSValueAlias_FullInstantiation
 		template<>
 		constexpr auto Value<char*, wchar_t*, float*, double*> = (bool*)nullptr;
 
-		template<typename A>
-		constexpr auto XXX = false;
-
 		template<typename A, typename B>
 		constexpr auto Value<A(*)(float), B(*)(double)> = (char**)nullptr;
 
@@ -78,7 +75,6 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 
 		// TODO: test uninstantiated template type
-		// TODO: match patterns that requires retry
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool, void, int>),										bool const &		);
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<char, wchar_t, int>),									bool const &		);
 		ASSERT_OVERLOADING_SIMPLE_LVALUE((Value<bool *, void *, char, wchar_t>),						char const &		);

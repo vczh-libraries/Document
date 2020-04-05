@@ -180,7 +180,7 @@ namespace infer_function_type
 				{
 				case CLASS_SYMBOL_KIND:
 					{
-						auto classDecl = symbol->GetAnyForwardDecl<ClassDeclaration>();
+						auto classDecl = symbol->GetAnyForwardDecl<ForwardClassDeclaration>();
 						if (!classDecl || !classDecl->templateSpec)
 						{
 							return;

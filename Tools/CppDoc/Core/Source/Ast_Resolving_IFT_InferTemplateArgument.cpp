@@ -316,7 +316,7 @@ namespace infer_function_type
 			auto genericSymbol = self->type->resolving->resolvedSymbols[0];
 
 			Ptr<TemplateSpec> spec;
-			if (auto classDecl = genericSymbol->GetAnyForwardDecl<ClassDeclaration>())
+			if (auto classDecl = genericSymbol->GetAnyForwardDecl<ForwardClassDeclaration>())
 			{
 				spec = classDecl->templateSpec;
 			}
@@ -366,13 +366,13 @@ namespace infer_function_type
 			{
 				// entity must be DeclInstant
 				auto& di = entity->GetDeclInstant();
-				if (auto classDecl = di.declSymbol->GetAnyForwardDecl<ClassDeclaration>())
+				if (auto classDecl = di.declSymbol->GetAnyForwardDecl<ForwardClassDeclaration>())
 				{
-					auto& ev = EvaluateClassSymbol(pa, classDecl.Obj(), di.parentDeclType, nullptr);
-					if (ev.Get().Count() == 1 && ev.Get()[0]->GetType() == TsysType::GenericFunction)
+					auto& classTsys = EvaluateForwardClassSymbol(pa, classDecl.Obj(), di.parentDeclType, nullptr);
+					if (classTsys.Count() == 1 && classTsys[0]->GetType() == TsysType::GenericFunction)
 					{
 						Ptr<Type> idType = self->type;
-						ExecuteInvolvedOnce(idType, ev.Get()[0]);
+						ExecuteInvolvedOnce(idType, classTsys[0]);
 					}
 				}
 			}
