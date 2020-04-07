@@ -302,7 +302,47 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Partial instantiation in class")
 	{
-		// TODO:
+		const wchar_t* input = LR"(
+template<typename T, typename U>
+constexpr auto Value = false;
+
+template<typename T, typename U>
+constexpr auto Value<T*, U> = 0.f;
+
+template<typename T, typename U>
+constexpr auto Value<T, U*> = 0.0;
+
+template<typename T, typename U>
+constexpr auto Value<T*, U*> = 'c';
+
+template<typename T, typename U>
+constexpr auto A = Value<T*, U>;
+
+template<typename T, typename U>
+constexpr auto B = Value<T, U*>;
+
+template<typename T, typename U>
+constexpr auto C = Value<T*, U*>;
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa,	L"A",	L"A",
+			L"<::A::[T], ::A::[U]> float const & $PR",
+			L"<::A::[T], ::A::[U]> double const & $PR",
+			L"<::A::[T], ::A::[U]> char const & $PR"
+		);
+
+		AssertExpr(pa,	L"B",	L"B",
+			L"<::B::[T], ::B::[U]> float const & $PR",
+			L"<::B::[T], ::B::[U]> double const & $PR",
+			L"<::B::[T], ::B::[U]> char const & $PR"
+		);
+
+		AssertExpr(pa,	L"C",	L"C",
+			L"<::C::[T], ::C::[U]> float const & $PR",
+			L"<::C::[T], ::C::[U]> double const & $PR",
+			L"<::C::[T], ::C::[U]> char const & $PR"
+		);
 	});
 
 	TEST_CATEGORY(L"SFAINE")
