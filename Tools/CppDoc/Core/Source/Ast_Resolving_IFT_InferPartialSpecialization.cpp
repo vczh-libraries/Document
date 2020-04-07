@@ -23,7 +23,6 @@ namespace infer_function_type
 		try
 		{
 			TypeTsysList						parameterAssignment;
-			TemplateArgumentContext				knownArguments;
 			SortedList<Symbol*>					freeTypeSymbols;
 			ITsys*								lastAssignedVta = nullptr;
 
@@ -38,10 +37,16 @@ namespace infer_function_type
 			taContext->parent = inferPa.taContext;
 
 			// assign parameters
-			ResolveSpecializationSpecParameters(inferPa, parameterAssignment, knownArguments, freeTypeSymbols, specializationSpec.Obj(), argumentTypes, boundedAnys);
+			ResolveSpecializationSpecParameters(inferPa, parameterAssignment, *taContext.Obj(), freeTypeSymbols, specializationSpec.Obj(), argumentTypes, boundedAnys);
 
 			// type inferencing
 			{
+				for (vint i = 0; i < templateSpec->arguments.Count(); i++)
+				{
+					auto argument = templateSpec->arguments[i];
+					auto pattern = symbol_type_resolving::GetTemplateArgumentKey(argument, pa.tsys.Obj());
+					taContext->arguments.Add(pattern, pa.tsys->Any());;
+				}
 				TemplateArgumentContext unusedVariadicContext;
 				SortedList<ITsys*> unusedHardcodedPatterns;
 				InferTemplateArgumentsForSpecializationSpec(inferPa, specializationSpec.Obj(), parameterAssignment, *taContext.Obj(), unusedVariadicContext, freeTypeSymbols, &lastAssignedVta, unusedHardcodedPatterns);
