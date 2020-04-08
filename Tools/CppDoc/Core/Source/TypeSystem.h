@@ -154,6 +154,9 @@ struct TsysCV
 
 	TsysCV() = default;
 	TsysCV(bool c, bool v) :isGeneralConst(c), isVolatile(v) {}
+
+	bool operator==(const TsysCV& b) const { return isGeneralConst == b.isGeneralConst && isVolatile == b.isVolatile; }
+	bool operator!=(const TsysCV& b) const { return isGeneralConst != b.isGeneralConst || isVolatile != b.isVolatile; }
 };
 
 struct TsysFunc
