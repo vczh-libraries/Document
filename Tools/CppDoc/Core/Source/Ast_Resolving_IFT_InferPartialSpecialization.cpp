@@ -10,6 +10,12 @@ namespace infer_function_type
 	InferPartialSpecialization:	Perform type inferencing for partial specialization symbol
 	***********************************************************************/
 
+	bool IsPSEquivalentType(ITsys* a, ITsys* b)
+	{
+		if (a == b) return true;
+		return false;
+	}
+
 	Ptr<TemplateArgumentContext> InferPartialSpecialization(
 		const ParsingArguments& pa,
 		Symbol* declSymbol,
@@ -65,7 +71,7 @@ namespace infer_function_type
 
 					bool isVta = false;
 					TypeToTsysInternal(verifyPa, argument.item.type, tsys, isVta);
-					if (!tsys.Contains(assignedTsys))
+					if (!From(tsys).Any([=](ITsys* a) { return IsPSEquivalentType(a, assignedTsys); }))
 					{
 						return nullptr;
 					}
