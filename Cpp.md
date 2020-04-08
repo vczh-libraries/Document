@@ -25,9 +25,6 @@
       - `__builtin_nansf(...)` -> float
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
-- [ ] More `template` on functions.
-  - [ ] Call a function with some or all template arguments unspecified.
-    - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
 - [ ] Partial specialization constructions
   - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
   - [ ] Partial specialization on **values**
@@ -39,6 +36,7 @@
       - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
     - [ ] When overloading, specialized functions are not considered. When a template function wins, then choose among the primiary and its specializations.
     - [ ] SFINAE test cases
+    - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
   - [ ] Partial specialization on **classes**.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
     - [ ] Connect methods with forward declarations inside multiple levels of template classes.
