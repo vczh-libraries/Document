@@ -10,19 +10,32 @@ namespace infer_function_type
 	InferPartialSpecialization:	Perform type inferencing for partial specialization symbol
 	***********************************************************************/
 
-	// assuming template type argument equals to any_t, test if two types are the same
+	bool IsPSEquivalentToAny(ITsys* t)
+	{
+		switch (t->GetType())
+		{
+		case TsysType::GenericArg:
+			return true;
+		case TsysType::LRef:
+		case TsysType::RRef:
+		case TsysType::Ptr:
+		case TsysType::Array:
+		case TsysType::Member:
+		case TsysType::CV:
+			return IsPSEquivalentToAny(t->GetElement());
+		default:
+			return false;
+		}
+	}
+
 	bool IsPSEquivalentType(ITsys* a, ITsys* b)
 	{
 		if (a == b) return true;
+		if (a->GetType() == TsysType::Any) return IsPSEquivalentToAny(b);
+		if (b->GetType() == TsysType::Any) return IsPSEquivalentToAny(a);
 		
 		switch (a->GetType())
 		{
-		case TsysType::Any:
-			// when b is any_t, it doesn't reach here
-			return b->GetType() == TsysType::GenericArg;
-		case TsysType::GenericArg:
-			// if b is not any, then they equal only when two ITsys* pointers equal
-			return b->GetType() == TsysType::Any;
 		case TsysType::LRef:
 		case TsysType::RRef:
 		case TsysType::Ptr:
@@ -36,7 +49,6 @@ namespace infer_function_type
 		case TsysType::Init:
 			if (b->GetType() != TsysType::Init) return false;
 			if (a->GetParamCount() != b->GetParamCount()) return false;
-			if (!IsPSEquivalentType(a->GetElement(), b->GetElement())) return false;
 			for (vint i = 0; i < a->GetParamCount(); i++)
 			{
 				if (!IsPSEquivalentType(a->GetParam(i), b->GetParam(i))) return false;
@@ -64,6 +76,7 @@ namespace infer_function_type
 				}
 			}
 			return true;
+		case TsysType::GenericArg:
 		case TsysType::Zero:
 		case TsysType::Nullptr:
 		case TsysType::Primitive:

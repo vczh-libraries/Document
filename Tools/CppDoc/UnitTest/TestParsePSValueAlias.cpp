@@ -327,12 +327,14 @@ constexpr auto C = Value<T*, U*>;
 		COMPILE_PROGRAM(program, pa, input);
 
 		AssertExpr(pa,	L"A",	L"A",
+			L"<::A::[T], ::A::[U]> bool const & $PR",
 			L"<::A::[T], ::A::[U]> float const & $PR",
 			L"<::A::[T], ::A::[U]> double const & $PR",
 			L"<::A::[T], ::A::[U]> char const & $PR"
 		);
 
 		AssertExpr(pa,	L"B",	L"B",
+			L"<::B::[T], ::B::[U]> bool const & $PR",
 			L"<::B::[T], ::B::[U]> float const & $PR",
 			L"<::B::[T], ::B::[U]> double const & $PR",
 			L"<::B::[T], ::B::[U]> char const & $PR"
