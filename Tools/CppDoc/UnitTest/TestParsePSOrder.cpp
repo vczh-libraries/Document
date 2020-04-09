@@ -179,7 +179,7 @@ TEST_FILE
 	{
 		auto input = LR"(
 template<typename T> void Function(T){}
-template<> int Function<int>(int);
+template<> int Function<float>(float);
 template<> double Function<double>(double);
 )";
 
@@ -189,7 +189,7 @@ Function: void (T)
 {
 }
 template<>
-__forward Function<int>: int (int);
+__forward Function<float>: int (float);
 template<>
 __forward Function<double>: double (double);
 )";
@@ -226,15 +226,18 @@ using_value Zero<wchar_t>: auto = L'0';
 			{
 				if (primary)
 				{
+					auto& parents = decl->symbol->GetPSParents_NF();
 					TEST_CASE_ASSERT(decl->symbol->GetPSPrimary_NF() == primary);
+					TEST_CASE_ASSERT(parents.Count() == 1);
+					TEST_CASE_ASSERT(parents[0] == primary);
 				}
 				else
 				{
 					primary = decl->symbol;
-					TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 2);
 				}
 			}
 		}
+		TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 2);
 	});
 
 	TEST_CATEGORY(L"Classes")
@@ -246,7 +249,7 @@ struct Obj
 };
 
 template<typename T>
-struct Obj<T*>
+struct Obj<T&>
 {
 };
 
@@ -262,7 +265,7 @@ struct Obj
 {
 };
 template<typename T>
-struct Obj<T *>
+struct Obj<T &>
 {
 };
 template<typename T, typename U>
@@ -282,15 +285,18 @@ struct Obj<T (U) *>
 			{
 				if (primary)
 				{
+					auto& parents = decl->symbol->GetPSParents_NF();
 					TEST_CASE_ASSERT(decl->symbol->GetPSPrimary_NF() == primary);
+					TEST_CASE_ASSERT(parents.Count() == 1);
+					TEST_CASE_ASSERT(parents[0] == primary);
 				}
 				else
 				{
 					primary = decl->symbol;
-					TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 2);
 				}
 			}
 		}
+		TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 2);
 	});
 
 	TEST_CATEGORY(L"Methods")
@@ -303,7 +309,10 @@ struct Obj
 	void Method(T, U);
 
 	template<>
-	int Method<int>(T, int);
+	int Method<float>(T, float);
+
+	template<>
+	int Method<double>(T, double);
 };
 )";
 
@@ -314,7 +323,9 @@ struct Obj
 	public template<typename U>
 	__forward Method: void (T, U);
 	public template<>
-	__forward Method<int>: int (T, int);
+	__forward Method<float>: int (T, float);
+	public template<>
+	__forward Method<double>: int (T, double);
 };
 )";
 
