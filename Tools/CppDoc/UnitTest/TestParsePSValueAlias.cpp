@@ -349,6 +349,27 @@ constexpr auto C = Value<T*, U*>;
 
 	TEST_CATEGORY(L"SFAINE")
 	{
-		// TODO:
+		const wchar_t* input = LR"(
+struct A { using X = A*; };
+struct B { using Y = A*; };
+struct C { using Z = A*; };
+
+template<typename T, typename U = T*>
+constexpr auto Value = false;
+
+template<typename T>
+constexpr auto Value<T*, typename T::X> = 0.f;
+
+template<typename T>
+constexpr auto Value<T*, typename T::Y> = 0.0;
+
+template<typename T>
+constexpr auto Value<T*, typename T::Z> = 'c';
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa,	L"Value<A*>",	L"Value<A *>",	L"float const & $PR"	);
+		AssertExpr(pa,	L"Value<B*>",	L"Value<B *>",	L"double const & $PR"	);
+		AssertExpr(pa,	L"Value<C*>",	L"Value<C *>",	L"char const & $PR"		);
 	});
 }
