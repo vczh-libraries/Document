@@ -350,11 +350,11 @@ constexpr auto C = Value<T*, U*>;
 	TEST_CATEGORY(L"SFAINE")
 	{
 		const wchar_t* input = LR"(
-struct A { using X = A*; };
-struct B { using Y = A*; };
-struct C { using Z = A*; };
+struct A { using X = A*&; };
+struct B { using Y = B*&; };
+struct C { using Z = C*&; };
 
-template<typename T, typename U = T*>
+template<typename T, typename U = T&>
 constexpr auto Value = false;
 
 template<typename T>
