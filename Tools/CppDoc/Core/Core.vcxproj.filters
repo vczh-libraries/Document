@@ -108,6 +108,9 @@
     <ClInclude Include="Source\Ast_Resolving_AP_CalculateGpa.h">
       <Filter>Source Files\Ast\AssignParameters</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Parser_Declaration.h">
+      <Filter>Source Files\Parser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Import\Vlpp.cpp">
@@ -250,6 +253,24 @@
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_IFT_InferPartialSpecialization.cpp">
       <Filter>Source Files\Ast\InferFunctionType</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_Namespace.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_TypeDef.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_Using.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_Class.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_Enum.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_FuncVar.cpp">
+      <Filter>Source Files\Parser</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

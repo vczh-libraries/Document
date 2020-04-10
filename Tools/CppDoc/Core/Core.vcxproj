@@ -168,6 +168,7 @@
     <ClInclude Include="Source\Lexer.h" />
     <ClInclude Include="Source\LexerTokenDef.h" />
     <ClInclude Include="Source\Parser.h" />
+    <ClInclude Include="Source\Parser_Declaration.h" />
     <ClInclude Include="Source\TypeSystem.h" />
     <ClInclude Include="Source\Utility.h" />
   </ItemGroup>
@@ -214,6 +215,12 @@
     <ClCompile Include="Source\Lexer.cpp" />
     <ClCompile Include="Source\Parser.cpp" />
     <ClCompile Include="Source\Parser_Declaration.cpp" />
+    <ClCompile Include="Source\Parser_Declaration_Class.cpp" />
+    <ClCompile Include="Source\Parser_Declaration_Enum.cpp" />
+    <ClCompile Include="Source\Parser_Declaration_FuncVar.cpp" />
+    <ClCompile Include="Source\Parser_Declaration_Namespace.cpp" />
+    <ClCompile Include="Source\Parser_Declaration_TypeDef.cpp" />
+    <ClCompile Include="Source\Parser_Declaration_Using.cpp" />
     <ClCompile Include="Source\Parser_Declarator.cpp" />
     <ClCompile Include="Source\Parser_Expr.cpp" />
     <ClCompile Include="Source\Parser_Misc.cpp" />
