@@ -1,4 +1,5 @@
 #include "Ast_Resolving_PSO.h"
+#include "Ast_Resolving_AP.h"
 
 namespace partial_specification_ordering
 {
@@ -103,6 +104,106 @@ namespace partial_specification_ordering
 	***********************************************************************/
 
 	template<typename TDecl>
+	bool CheckPSPrimary(const ParsingArguments& pa, Ptr<TDecl> decl, Symbol* symbol, Symbol* primary)
+	{
+		// the primary symbol of a class or value alias will never be a function
+		if (primary->kind != symbol_component::SymbolKind::FunctionSymbol)
+		{
+			symbol->AssignPSPrimary_NF(primary);
+			AssignPSParent<TDecl>(pa, symbol, primary);
+			return true;
+		}
+		return false;
+	}
+
+	template<>
+	bool CheckPSPrimary<ForwardFunctionDeclaration>(const ParsingArguments& pa, Ptr<ForwardFunctionDeclaration> decl, Symbol* symbol, Symbol* primary)
+	{
+		if (primary->kind == symbol_component::SymbolKind::FunctionSymbol)
+		{
+			// only the last template argument of the primary function can be variant
+			auto primaryDecl = primary->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+			auto tspec = primaryDecl->templateSpec;
+			if (!tspec) return false;
+			if (tspec->arguments.Count() == 0) return false;
+			for (vint i = 0; i < tspec->arguments.Count() - 1; i++)
+			{
+				if (tspec->arguments[i].ellipsis) return false;
+			}
+
+			// check argument count
+			auto sspec = decl->specializationSpec;
+			bool vta = tspec->arguments[tspec->arguments.Count() - 1].ellipsis;
+			if (vta)
+			{
+				if (sspec->arguments.Count() < tspec->arguments.Count() - 1) return false;
+			}
+			else
+			{
+				if (sspec->arguments.Count() != tspec->arguments.Count()) return false;
+			}
+
+			// assign decl->specializationSpec to primaryDecl->templateSpec
+			Dictionary<Symbol*, Ptr<MatchPSResult>> matchingResult, matchingResultVta;
+			for (vint i = 0; i < tspec->arguments.Count(); i++)
+			{
+				auto targ = tspec->arguments[i];
+				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(targ, pa.tsys.Obj());
+				auto patternSymbol = infer_function_type::TemplateArgumentPatternToSymbol(pattern);
+				auto result = MakePtr<MatchPSResult>();
+				matchingResult.Add(patternSymbol, result);
+
+				vint smin = i;
+				vint smax = i;
+				if (targ.ellipsis)
+				{
+					// has already ensured that targ is the last one
+					smax = sspec->arguments.Count() - 1;
+				}
+
+				for (vint j = smin; j <= smax; j++)
+				{
+					auto sarg = sspec->arguments[j];
+					switch (targ.argumentType)
+					{
+					case CppTemplateArgumentType::HighLevelType:
+					case CppTemplateArgumentType::Type:
+						if (!sarg.item.type) return false;
+						result->source.Add(sarg.item.type);
+						break;
+					case CppTemplateArgumentType::Value:
+						if (!sarg.item.expr) return false;
+						result->source.Add(nullptr);
+						break;
+					}
+				}
+			}
+
+			// match function type
+			auto ptype = GetTypeWithoutMemberAndCC(primaryDecl->type).Cast<FunctionType>();
+			auto stype = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>();
+			bool skipped = false;
+			SortedList<Symbol*> freeAncestorSymbols, freeChildSymbols;
+			assign_parameters::FillFreeSymbols(pa, tspec, freeAncestorSymbols);
+			try
+			{
+				MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ptype.Obj(), stype.Obj(), false, freeAncestorSymbols, freeChildSymbols);
+				if (!skipped)
+				{
+					// function cannot be partial specialization
+					symbol->AssignPSPrimary_NF(primary);
+					symbol->AddPSParent_NF(primary);
+					return true;
+				}
+			}
+			catch (const MatchPSFailureException&)
+			{
+			}
+		}
+		return false;
+	}
+
+	template<typename TDecl>
 	void AssignPSPrimaryInternal(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Symbol* symbol)
 	{
 		// only the first call to a symbol takes effect
@@ -117,11 +218,8 @@ namespace partial_specification_ordering
 			for (vint i = 0; i < candidates->Count(); i++)
 			{
 				auto candidate = candidates->Get(i).Obj();
-				// the primary symbol of a class or value alias will never be a function
-				if (candidate->kind != symbol_component::SymbolKind::FunctionSymbol)
+				if (CheckPSPrimary<TDecl>(pa, decl, symbol, candidate))
 				{
-					symbol->AssignPSPrimary_NF(candidate);
-					AssignPSParent<TDecl>(pa, symbol, candidate);
 					break;
 				}
 			}
@@ -143,9 +241,7 @@ namespace partial_specification_ordering
 			AssignPSPrimaryInternal<ValueAliasDeclaration>(pa, cursor, symbol);
 			break;
 		case symbol_component::SymbolKind::FunctionSymbol:
-			if (!symbol->GetPSPrimary_NF())
-			{
-			}
+			AssignPSPrimaryInternal<ForwardFunctionDeclaration>(pa, cursor, symbol);
 			break;
 		default:
 			throw StopParsingException(cursor);
