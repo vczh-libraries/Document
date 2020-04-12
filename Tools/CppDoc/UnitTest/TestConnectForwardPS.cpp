@@ -175,9 +175,8 @@ G<char>: void (char *)
 		{
 			for (vint j = 0; j < 8; j++)
 			{
-				auto symbol = ffs[i][j]->symbol;
-				TEST_CASE_ASSERT(symbol == fs[i][j]->symbol);
-				symbol = symbol->GetFunctionSymbol_Fb();
+				auto symbol = ffs[i][j]->symbol->GetFunctionSymbol_Fb();
+				TEST_CASE_ASSERT(symbol == fs[i][j]->symbol->GetFunctionSymbol_Fb());
 
 				if (j < 2)
 				{
