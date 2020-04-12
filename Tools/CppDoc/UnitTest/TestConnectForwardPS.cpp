@@ -26,10 +26,10 @@ template<>								void G<bool*, float&, double&>			(bool*, bool(*)(float), bool(
 template<>								void G<void*, char&, wchar_t&, bool&>	(void*, void(*)(char), void(*)(wchar_t), void(*)(bool));
 template<>								void G<char>							(char*);
 
-template<typename T, typename... Ts>	void F									(T*, T(*...)(Ts&)){}
-template<typename T, typename... Ts>	void F									(T, T(*...)(Ts)){}
-template<typename T, typename... Ts>	void G									(T*, T(*...)(Ts&)){}
-template<typename T, typename... Ts>	void G									(T, T(*...)(Ts)){}
+template<typename U, typename... Us>	void F									(U*, U(*...)(Us&)){}
+template<typename U, typename... Us>	void F									(U, U(*...)(Us)){}
+template<typename U, typename... Us>	void G									(U*, U(*...)(Us&)){}
+template<typename U, typename... Us>	void G									(U, U(*...)(Us)){}
 
 template<>								void F<bool, float, double>				(bool*, bool(*)(float&), bool(*)(double&)){}
 template<>								void F<void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
@@ -81,20 +81,20 @@ template<>
 __forward G<void *, char &, wchar_t &, bool &>: void (void *, void (char) *, void (wchar_t) *, void (bool) *);
 template<>
 __forward G<char>: void (char *);
-template<typename T, typename ...Ts>
-F: void (T *, T (Ts &) *...)
+template<typename U, typename ...Us>
+F: void (U *, U (Us &) *...)
 {
 }
-template<typename T, typename ...Ts>
-F: void (T, T (Ts) *...)
+template<typename U, typename ...Us>
+F: void (U, U (Us) *...)
 {
 }
-template<typename T, typename ...Ts>
-G: void (T *, T (Ts &) *...)
+template<typename U, typename ...Us>
+G: void (U *, U (Us &) *...)
 {
 }
-template<typename T, typename ...Ts>
-G: void (T, T (Ts) *...)
+template<typename U, typename ...Us>
+G: void (U, U (Us) *...)
 {
 }
 template<>
