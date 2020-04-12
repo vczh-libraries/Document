@@ -5,49 +5,66 @@ using namespace partial_specification_ordering;
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, const List<Ptr<Symbol>>* pSymbols, Ptr<CppTokenCursor>& cursor)
+{
+	for (vint i = 0; i < pSymbols->Count(); i++)
+	{
+		auto symbol = pSymbols->Get(i).Obj();
+		switch (symbol->kind)
+		{
+		case symbol_component::SymbolKind::FunctionSymbol:
+			{
+				auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+				if (IsCompatibleFunctionDeclInSameScope(decl, declToCompare))
+				{
+					return symbol;
+				}
+			}
+			break;
+		case CSTYLE_TYPE_SYMBOL_KIND:
+			// function can only override enum/class/struct/union
+			break;
+		default:
+			throw StopParsingException(cursor);
+		}
+	}
+	return nullptr;
+}
+
 Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
 {
 	if (!decl->needResolveTypeFromStatement)
 	{
-		if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
+		if (decl->specializationSpec)
 		{
-			for (vint i = 0; i < pSymbols->Count(); i++)
+			// sync with Symbol::DecorateNameForSpecializationSpec
+			// AssignPSPrimary is not called (because the return value is unknown)
+			// so GetPSPrimaryDescendants_NF will never get the expected result
+			vint i = 1;
+			while (true)
 			{
-				auto symbol = pSymbols->Get(i).Obj();
-				switch (symbol->kind)
+				auto name = decl->name.name + L"<" + itow(i) + L">";
+				if (auto pSymbols = context->TryGetChildren_NFb(name))
 				{
-				case symbol_component::SymbolKind::FunctionSymbol:
+					if (auto result = SearchForFunctionWithSameSignature(context, decl, pSymbols, cursor))
 					{
-						if (decl->specializationSpec)
-						{
-							if(symbol->IsPSPrimary_NF())
-							{
-								auto& psc = symbol->GetPSChildren_NF();
-								for (vint j = 0; j < psc.Count(); j++)
-								{
-									auto declToCompare = psc[j]->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-									if (IsCompatibleFunctionDeclInSameScope(decl, declToCompare))
-									{
-										return symbol;
-									}
-								}
-							}
-						}
-						else
-						{
-							auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-							if (IsCompatibleFunctionDeclInSameScope(decl, declToCompare))
-							{
-								return symbol;
-							}
-						}
+						return result;
 					}
+				}
+				else
+				{
 					break;
-				case CSTYLE_TYPE_SYMBOL_KIND:
-					// function can only override enum/class/struct/union
-					break;
-				default:
-					throw StopParsingException(cursor);
+				}
+				i++;
+			}
+		}
+		else
+		{
+			if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
+			{
+				if (auto result = SearchForFunctionWithSameSignature(context, decl, pSymbols, cursor))
+				{
+					return result;
 				}
 			}
 		}

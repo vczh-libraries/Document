@@ -125,6 +125,7 @@ void AddSymbolChildren(Symbol* symbol, List<Ptr<Symbol>>& existingChildren)
 WString Symbol::DecorateNameForSpecializationSpec(const WString& symbolName, Ptr<SpecializationSpec> spec)
 {
 	// TODO: [Cpp.md] Choose a good name for specializationSpec, no counter so that the name is stable
+	// sycn with SearchForFunctionWithSameSignature
 	vint i = 1;
 	while (true)
 	{

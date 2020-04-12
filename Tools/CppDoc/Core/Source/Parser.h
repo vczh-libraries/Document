@@ -152,7 +152,7 @@ namespace symbol_component
 	// so psPrimary does not need to be a list
 	struct SC_PSShared
 	{
-		vint										psVersion = 0;			// sync to psDescendants.Count()
+		vint										psVersion = 0;			// sync with psDescendants.Count()
 		Symbol*										psPrimary = nullptr;	// primary declaration of this partial specialization
 		List<Symbol*>								psDescendants;			// all descedant partial specialization of this primary declaration
 		List<Symbol*>								psParents;				// parent partial specializations in partial order

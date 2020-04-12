@@ -28,8 +28,7 @@
 - [ ] Partial specialization constructions
   - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
   - [ ] Partial specialization on **functions** (actually it is full specialization, by reusing partial specialization constructions)
-    - [ ] Connect functions with forward declarations.
-      - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
+    - [x] Connect functions with forward declarations.
     - [ ] When overloading, specialized functions are not considered. When a template function wins, then choose among the primiary and its specializations.
     - [ ] SFINAE test cases
     - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
