@@ -208,10 +208,12 @@ void ParseDeclaration_Function(
 		throw StopParsingException(cursor);
 	}
 
+	// extract multiple levels of container classes
 	List<Ptr<TemplateSpec>> containerClassSpecs;
 	List<ClassDeclaration*> containerClassDecls;
 	auto functionSpec = AssignContainerClassDeclsToSpecs(specs, declarator, containerClassSpecs, containerClassDecls, cursor);
 
+	// check for constraints of partial specialization
 	if (declarator->specializationSpec)
 	{
 		if (!functionSpec) throw StopParsingException(cursor);
@@ -234,6 +236,7 @@ void ParseDeclaration_Function(
 		FILL_FUNCTION;
 		output.Add(decl);
 
+		// adjust classMemberCache
 		if (declarator->classMemberCache)
 		{
 			TsysCV cv;
@@ -249,9 +252,11 @@ void ParseDeclaration_Function(
 			}
 		}
 
+		// match declaration and implementation
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
 		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, specSymbol, declarator->classMemberCache);
 
+		// find the primary symbol for partial specialization
 		if (decl->specializationSpec)
 		{
 			AssignPSPrimary(pa, cursor, functionSymbol);
@@ -283,9 +288,11 @@ void ParseDeclaration_Function(
 		output.Add(decl);
 		RequireToken(cursor, CppTokens::SEMICOLON);
 
+		// match declaration and implementation
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
 		functionSymbol->CreateFunctionForwardSymbol_F(decl, specSymbol);
 
+		// find the primary symbol for partial specialization
 		if (decl->specializationSpec)
 		{
 			AssignPSPrimary(pa, cursor, functionSymbol);
