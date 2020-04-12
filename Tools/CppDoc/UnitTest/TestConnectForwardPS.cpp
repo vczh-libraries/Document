@@ -16,7 +16,7 @@ template<>								void F<char>							(char*);
 
 template<>								void F<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&));
 template<>								void F<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
-template<>								void F<char>							(char*);
+template<>								void F<char*>							(char*);
 
 template<>								void G<bool, float, double>				(bool*, bool(*)(float&), bool(*)(double&));
 template<>								void G<void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
@@ -24,7 +24,7 @@ template<>								void G<char>							(char*);
 
 template<>								void G<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&));
 template<>								void G<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
-template<>								void G<char>							(char*);
+template<>								void G<char*>							(char*);
 
 template<typename U, typename... Us>	void F									(U*, U(*...)(Us&)){}
 template<typename U, typename... Us>	void F									(U, U(*...)(Us)){}
@@ -37,7 +37,7 @@ template<>								void F<char>							(char*){}
 
 template<>								void F<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&)){}
 template<>								void F<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
-template<>								void F<char>							(char*){}
+template<>								void F<char*>							(char*){}
 
 template<>								void G<bool, float, double>				(bool*, bool(*)(float&), bool(*)(double&)){}
 template<>								void G<void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
@@ -45,7 +45,7 @@ template<>								void G<char>							(char*){}
 
 template<>								void G<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&)){}
 template<>								void G<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
-template<>								void G<char>							(char*){}
+template<>								void G<char*>							(char*){}
 )";
 
 		auto output = LR"(
@@ -68,7 +68,7 @@ __forward F<bool *, float &, double &>: void (bool *, bool (float &) *, bool (do
 template<>
 __forward F<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *);
 template<>
-__forward F<char>: void (char *);
+__forward F<char *>: void (char *);
 template<>
 __forward G<bool, float, double>: void (bool *, bool (float &) *, bool (double &) *);
 template<>
@@ -80,7 +80,7 @@ __forward G<bool *, float &, double &>: void (bool *, bool (float &) *, bool (do
 template<>
 __forward G<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *);
 template<>
-__forward G<char>: void (char *);
+__forward G<char *>: void (char *);
 template<typename U, typename ...Us>
 F: void (U *, U (Us &) *...)
 {
@@ -118,7 +118,7 @@ F<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar
 {
 }
 template<>
-F<char>: void (char *)
+F<char *>: void (char *)
 {
 }
 template<>
@@ -142,7 +142,7 @@ G<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar
 {
 }
 template<>
-G<char>: void (char *)
+G<char *>: void (char *)
 {
 }
 )";
@@ -199,7 +199,7 @@ G<char>: void (char *)
 							}
 							else
 							{
-								auto symbol = ffs[i][2 + j * 3 + k]->symbol->GetFunctionSymbol_Fb();
+								auto symbol = ffs[i][1 + j * 3 + k]->symbol->GetFunctionSymbol_Fb();
 								TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == primary);
 								TEST_CASE_ASSERT(symbol->GetPSParents_NF().Count() == 1);
 								TEST_CASE_ASSERT(symbol->GetPSParents_NF()[0] == primary);
