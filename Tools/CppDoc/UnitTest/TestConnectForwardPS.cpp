@@ -14,16 +14,16 @@ template<>								void F<bool, float, double>				(bool*, bool(*)(float&), bool(*
 template<>								void F<void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
 template<>								void F<char>							(char*);
 
-template<>								void F<bool*, float&, double&>			(bool*, bool(*)(float), bool(*)(double));
-template<>								void F<void*, char&, wchar_t&, bool&>	(void*, void(*)(char), void(*)(wchar_t), void(*)(bool));
+template<>								void F<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&));
+template<>								void F<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
 template<>								void F<char>							(char*);
 
 template<>								void G<bool, float, double>				(bool*, bool(*)(float&), bool(*)(double&));
 template<>								void G<void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
 template<>								void G<char>							(char*);
 
-template<>								void G<bool*, float&, double&>			(bool*, bool(*)(float), bool(*)(double));
-template<>								void G<void*, char&, wchar_t&, bool&>	(void*, void(*)(char), void(*)(wchar_t), void(*)(bool));
+template<>								void G<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&));
+template<>								void G<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
 template<>								void G<char>							(char*);
 
 template<typename U, typename... Us>	void F									(U*, U(*...)(Us&)){}
@@ -35,16 +35,16 @@ template<>								void F<bool, float, double>				(bool*, bool(*)(float&), bool(*
 template<>								void F<void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
 template<>								void F<char>							(char*){}
 
-template<>								void F<bool*, float&, double&>			(bool*, bool(*)(float), bool(*)(double)){}
-template<>								void F<void*, char&, wchar_t&, bool&>	(void*, void(*)(char), void(*)(wchar_t), void(*)(bool)){}
+template<>								void F<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&)){}
+template<>								void F<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
 template<>								void F<char>							(char*){}
 
 template<>								void G<bool, float, double>				(bool*, bool(*)(float&), bool(*)(double&)){}
 template<>								void G<void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
 template<>								void G<char>							(char*){}
 
-template<>								void G<bool*, float&, double&>			(bool*, bool(*)(float), bool(*)(double)){}
-template<>								void G<void*, char&, wchar_t&, bool&>	(void*, void(*)(char), void(*)(wchar_t), void(*)(bool)){}
+template<>								void G<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&)){}
+template<>								void G<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
 template<>								void G<char>							(char*){}
 )";
 
@@ -64,9 +64,9 @@ __forward F<void, char, wchar_t, bool>: void (void *, void (char &) *, void (wch
 template<>
 __forward F<char>: void (char *);
 template<>
-__forward F<bool *, float &, double &>: void (bool *, bool (float) *, bool (double) *);
+__forward F<bool *, float &, double &>: void (bool *, bool (float &) *, bool (double &) *);
 template<>
-__forward F<void *, char &, wchar_t &, bool &>: void (void *, void (char) *, void (wchar_t) *, void (bool) *);
+__forward F<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *);
 template<>
 __forward F<char>: void (char *);
 template<>
@@ -76,9 +76,9 @@ __forward G<void, char, wchar_t, bool>: void (void *, void (char &) *, void (wch
 template<>
 __forward G<char>: void (char *);
 template<>
-__forward G<bool *, float &, double &>: void (bool *, bool (float) *, bool (double) *);
+__forward G<bool *, float &, double &>: void (bool *, bool (float &) *, bool (double &) *);
 template<>
-__forward G<void *, char &, wchar_t &, bool &>: void (void *, void (char) *, void (wchar_t) *, void (bool) *);
+__forward G<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *);
 template<>
 __forward G<char>: void (char *);
 template<typename U, typename ...Us>
@@ -110,11 +110,11 @@ F<char>: void (char *)
 {
 }
 template<>
-F<bool *, float &, double &>: void (bool *, bool (float) *, bool (double) *)
+F<bool *, float &, double &>: void (bool *, bool (float &) *, bool (double &) *)
 {
 }
 template<>
-F<void *, char &, wchar_t &, bool &>: void (void *, void (char) *, void (wchar_t) *, void (bool) *)
+F<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *)
 {
 }
 template<>
@@ -134,11 +134,11 @@ G<char>: void (char *)
 {
 }
 template<>
-G<bool *, float &, double &>: void (bool *, bool (float) *, bool (double) *)
+G<bool *, float &, double &>: void (bool *, bool (float &) *, bool (double &) *)
 {
 }
 template<>
-G<void *, char &, wchar_t &, bool &>: void (void *, void (char) *, void (wchar_t) *, void (bool) *)
+G<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *)
 {
 }
 template<>
@@ -181,15 +181,22 @@ G<char>: void (char *)
 				if (j < 2)
 				{
 					TEST_CASE_ASSERT(symbol->IsPSPrimary_NF());
+					TEST_CASE_ASSERT(symbol->GetPSPrimaryDescendants_NF().Count() == 3);
 					TEST_CASE_ASSERT(symbol->GetPSChildren_NF().Count() == 3);
 				}
 				else if (j < 5)
 				{
-					TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == ffs[i][0]->symbol->GetFunctionSymbol_Fb());
+					auto primary = ffs[i][0]->symbol->GetFunctionSymbol_Fb();
+					TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == primary);
+					TEST_CASE_ASSERT(symbol->GetPSParents_NF().Count() == 1);
+					TEST_CASE_ASSERT(symbol->GetPSParents_NF()[0] == primary);
 				}
 				else if (j < 8)
 				{
-					TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == ffs[i][1]->symbol->GetFunctionSymbol_Fb());
+					auto primary = ffs[i][1]->symbol->GetFunctionSymbol_Fb();
+					TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == primary);
+					TEST_CASE_ASSERT(symbol->GetPSParents_NF().Count() == 1);
+					TEST_CASE_ASSERT(symbol->GetPSParents_NF()[0] == primary);
 				}
 			}
 		}
