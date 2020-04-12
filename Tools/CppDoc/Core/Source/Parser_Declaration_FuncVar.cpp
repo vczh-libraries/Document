@@ -41,35 +41,14 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void ParseDeclaration_Function(
-	const ParsingArguments& pa,
-	Ptr<Symbol> specSymbol,
+Ptr<TemplateSpec> AssignContainerClassDeclsToSpecs(
 	List<Ptr<TemplateSpec>>& specs,
 	Ptr<Declarator> declarator,
-	Ptr<FunctionType> funcType,
-	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_PARAMETER)
-	CppMethodType methodType,
-	Ptr<CppTokenCursor>& cursor,
-	List<Ptr<Declaration>>& output
+	List<Ptr<TemplateSpec>>& containerClassSpecs,
+	List<ClassDeclaration*>& containerClassDecls,
+	Ptr<CppTokenCursor>& cursor
 )
 {
-#define FILL_FUNCTION\
-	decl->name = declarator->name;\
-	decl->type = declarator->type;\
-	decl->methodType = methodType;\
-	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_FILL_DECLARATOR)\
-	decl->needResolveTypeFromStatement = needResolveTypeFromStatement\
-
-	bool hasStat = TestToken(cursor, CppTokens::COLON, false) || TestToken(cursor, CppTokens::LBRACE, false);
-	bool needResolveTypeFromStatement = IsPendingType(funcType->returnType) && (!funcType->decoratorReturnType || IsPendingType(funcType->decoratorReturnType));
-	if (needResolveTypeFromStatement && !hasStat)
-	{
-		throw StopParsingException(cursor);
-	}
-
-	Ptr<TemplateSpec> functionSpec;
-	List<Ptr<TemplateSpec>> containerClassSpecs;
-	List<ClassDeclaration*> containerClassDecls;
 	if (declarator->classMemberCache && !declarator->classMemberCache->symbolDefinedInsideClass)
 	{
 		vint used = 0;
@@ -99,18 +78,123 @@ void ParseDeclaration_Function(
 		switch (specs.Count() - used)
 		{
 		case 0:
-			break;
+			return nullptr;
 		case 1:
-			functionSpec = specs[used];
-			break;
+			return specs[used];
 		default:
 			throw StopParsingException(cursor);
 		}
 	}
 	else
 	{
-		functionSpec = EnsureNoMultipleTemplateSpec(specs, cursor);
+		return EnsureNoMultipleTemplateSpec(specs, cursor);
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+void BuildFunctionParameters(
+	const ParsingArguments& pa,
+	Ptr<FunctionType> funcType,
+	Symbol* functionBodySymbol,
+	Ptr<CppTokenCursor>& cursor
+)
+{
+	if (funcType->parameters.Count() > 0)
+	{
+		for (vint i = 0; i < funcType->parameters.Count(); i++)
+		{
+			auto parameter = funcType->parameters[i];
+			if (parameter.item->name)
+			{
+				if (functionBodySymbol->TryGetChildren_NFb(parameter.item->name.name))
+				{
+					goto SKIP_BUILDING_SYMBOLS;
+				}
+			}
+		}
+		BuildSymbols(pa, funcType->parameters, cursor);
+	SKIP_BUILDING_SYMBOLS:;
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+void DelayParseFunctionStatement(
+	const ParsingArguments& pa,
+	Ptr<FunctionDeclaration> decl,
+	Ptr<CppTokenCursor>& cursor
+)
+{
+	decl->delayParse = MakePtr<DelayParse>();
+	decl->delayParse->pa = pa;
+	cursor->Clone(decl->delayParse->reader, decl->delayParse->begin);
+
+	vint counter = 0;
+	while (true)
+	{
+		if (TestToken(cursor, CppTokens::LBRACE))
+		{
+			counter++;
+		}
+		else if (TestToken(cursor, CppTokens::RBRACE))
+		{
+			counter--;
+			if (counter == 0)
+			{
+				if (cursor)
+				{
+					decl->delayParse->end = cursor->token;
+				}
+				else
+				{
+					memset(&decl->delayParse->end, 0, sizeof(RegexToken));
+				}
+				break;
+			}
+		}
+		else
+		{
+			SkipToken(cursor);
+			if (!cursor)
+			{
+				throw StopParsingException(cursor);
+			}
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+void ParseDeclaration_Function(
+	const ParsingArguments& pa,
+	Ptr<Symbol> specSymbol,
+	List<Ptr<TemplateSpec>>& specs,
+	Ptr<Declarator> declarator,
+	Ptr<FunctionType> funcType,
+	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_PARAMETER)
+	CppMethodType methodType,
+	Ptr<CppTokenCursor>& cursor,
+	List<Ptr<Declaration>>& output
+)
+{
+#define FILL_FUNCTION\
+	decl->name = declarator->name;\
+	decl->type = declarator->type;\
+	decl->methodType = methodType;\
+	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_FILL_DECLARATOR)\
+	decl->needResolveTypeFromStatement = needResolveTypeFromStatement\
+
+	bool hasStat = TestToken(cursor, CppTokens::COLON, false) || TestToken(cursor, CppTokens::LBRACE, false);
+	bool needResolveTypeFromStatement = IsPendingType(funcType->returnType) && (!funcType->decoratorReturnType || IsPendingType(funcType->decoratorReturnType));
+	if (needResolveTypeFromStatement && !hasStat)
+	{
+		throw StopParsingException(cursor);
+	}
+
+	List<Ptr<TemplateSpec>> containerClassSpecs;
+	List<ClassDeclaration*> containerClassDecls;
+	auto functionSpec = AssignContainerClassDeclsToSpecs(specs, declarator, containerClassSpecs, containerClassDecls, cursor);
 
 	if (declarator->specializationSpec)
 	{
@@ -160,65 +244,13 @@ void ParseDeclaration_Function(
 		// remove cyclic referencing
 		GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>()->scopeSymbolToReuse = nullptr;
 
-		{
-			auto newPa = pa.WithScope(functionBodySymbol);
+		auto newPa = pa.WithScope(functionBodySymbol);
 
-			// variable symbols could have been created during parsing
-			if (funcType->parameters.Count() > 0)
-			{
-				for (vint i = 0; i < funcType->parameters.Count(); i++)
-				{
-					auto parameter = funcType->parameters[i];
-					if (parameter.item->name)
-					{
-						if (functionBodySymbol->TryGetChildren_NFb(parameter.item->name.name))
-						{
-							goto SKIP_BUILDING_SYMBOLS;
-						}
-					}
-				}
-				BuildSymbols(newPa, funcType->parameters, cursor);
-			SKIP_BUILDING_SYMBOLS:;
-			}
+		// variable symbols could have been created during parsing
+		BuildFunctionParameters(newPa, funcType, functionBodySymbol, cursor);
 
-			// delay parse the statement
-			decl->delayParse = MakePtr<DelayParse>();
-			decl->delayParse->pa = newPa;
-			cursor->Clone(decl->delayParse->reader, decl->delayParse->begin);
-
-			vint counter = 0;
-			while (true)
-			{
-				if (TestToken(cursor, CppTokens::LBRACE))
-				{
-					counter++;
-				}
-				else if (TestToken(cursor, CppTokens::RBRACE))
-				{
-					counter--;
-					if (counter == 0)
-					{
-						if (cursor)
-						{
-							decl->delayParse->end = cursor->token;
-						}
-						else
-						{
-							memset(&decl->delayParse->end, 0, sizeof(RegexToken));
-						}
-						break;
-					}
-				}
-				else
-				{
-					SkipToken(cursor);
-					if (!cursor)
-					{
-						throw StopParsingException(cursor);
-					}
-				}
-			}
-		}
+		// delay parse the statement
+		DelayParseFunctionStatement(newPa, decl, cursor);
 	}
 	else
 	{
