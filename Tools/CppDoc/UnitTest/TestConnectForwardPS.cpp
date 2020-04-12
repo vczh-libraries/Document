@@ -177,6 +177,8 @@ G<char>: void (char *)
 			{
 				auto symbol = ffs[i][j]->symbol;
 				TEST_CASE_ASSERT(symbol == fs[i][j]->symbol);
+				symbol = symbol->GetFunctionSymbol_Fb();
+
 				if (j < 2)
 				{
 					TEST_CASE_ASSERT(symbol->IsPSPrimary_NF());
@@ -184,11 +186,11 @@ G<char>: void (char *)
 				}
 				else if (j < 5)
 				{
-					TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == ffs[i][0]->symbol);
+					TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == ffs[i][0]->symbol->GetFunctionSymbol_Fb());
 				}
 				else if (j < 8)
 				{
-					TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == ffs[i][1]->symbol);
+					TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == ffs[i][1]->symbol->GetFunctionSymbol_Fb());
 				}
 			}
 		}
