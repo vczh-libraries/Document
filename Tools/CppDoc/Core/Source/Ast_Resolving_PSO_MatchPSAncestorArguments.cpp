@@ -279,6 +279,26 @@ namespace partial_specification_ordering
 			}
 		}
 	}
+	/***********************************************************************
+	FixFunctionParameterType: Change pointer type to array type without the dimension expression
+	***********************************************************************/
+
+	Ptr<Type> FixFunctionParameterType(Ptr<Type> t)
+	{
+		// convert all T* to T[]
+		// the reason not to do the reverse is that
+		// sometimes T[here] could contain variadic template value argument
+		if (auto pointerType = t.Cast<ReferenceType>())
+		{
+			if (pointerType->reference == CppReferenceType::Ptr)
+			{
+				auto arrayType = MakePtr<ArrayType>();
+				arrayType->type = pointerType->type;
+				return arrayType;
+			}
+		}
+		return t;
+	}
 
 	template<typename TSource, typename TGetter>
 	void FillVariadicTypeList(
@@ -294,18 +314,7 @@ namespace partial_specification_ordering
 			auto ga = getter(e.item);
 			if (forParameters)
 			{
-				// convert all T* to T[]
-				// the reason not to do the reverse is that
-				// sometimes T[here] could contain variadic template value argument
-				if (auto pointerType = ga.type.Cast<ReferenceType>())
-				{
-					if (pointerType->reference == CppReferenceType::Ptr)
-					{
-						auto arrayType = MakePtr<ArrayType>();
-						arrayType->type = pointerType->type;
-						ga.type = arrayType;
-					}
-				}
+				ga.type = FixFunctionParameterType(ga.type);
 			}
 			types.Add({ ga,e.isVariadic });
 		}

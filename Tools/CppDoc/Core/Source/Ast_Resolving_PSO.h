@@ -64,6 +64,8 @@ namespace partial_specification_ordering
 											SortedList<Expr*>& involvedExprs
 										);
 
+	extern Ptr<Type>					FixFunctionParameterType(Ptr<Type> t);
+
 	extern void							MatchPSAncestorArguments(
 											const ParsingArguments& pa,
 											SpecializationSpec* ancestor,

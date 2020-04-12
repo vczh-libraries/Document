@@ -80,7 +80,7 @@ template<>											void G<char*, char>							(char*){}
 					for (vint j = 0; j < 8; j++)
 					{
 						auto symbol = ffs[i][j]->symbol->GetFunctionSymbol_Fb();
-						//TEST_CASE_ASSERT(symbol == fs[i][j]->symbol->GetFunctionSymbol_Fb());
+						TEST_CASE_ASSERT(symbol == fs[i][j]->symbol->GetFunctionSymbol_Fb());
 					}
 				});
 

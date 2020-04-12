@@ -184,10 +184,15 @@ namespace partial_specification_ordering
 			auto stype = GetTypeWithoutMemberAndCC(decl->type).Cast<FunctionType>();
 			bool skipped = false;
 			SortedList<Symbol*> freeAncestorSymbols, freeChildSymbols;
+			SortedList<Type*> involvedTypes;
+			SortedList<Expr*> involvedExprs;
+
 			assign_parameters::FillFreeSymbols(pa, tspec, freeAncestorSymbols);
+			infer_function_type::CollectFreeTypes(pa, false, ptype, nullptr, false, freeAncestorSymbols, involvedTypes, involvedExprs);
+
 			try
 			{
-				MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ptype.Obj(), stype.Obj(), false, freeAncestorSymbols, freeChildSymbols);
+				MatchPSArgument(pa, skipped, matchingResult, matchingResultVta, { ptype,nullptr }, { stype,nullptr }, false, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
 				if (!skipped)
 				{
 					// function cannot be partial specialization
