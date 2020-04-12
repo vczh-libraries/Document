@@ -7,31 +7,47 @@ using namespace partial_specification_ordering;
 
 Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
 {
-	if (!decl->needResolveTypeFromStatement && !decl->specializationSpec)
+	if (!decl->needResolveTypeFromStatement)
 	{
 		if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
 		{
 			for (vint i = 0; i < pSymbols->Count(); i++)
 			{
 				auto symbol = pSymbols->Get(i).Obj();
-				if (symbol->kind == symbol_component::SymbolKind::FunctionSymbol)
+				switch (symbol->kind)
 				{
-					auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-					if (IsCompatibleFunctionDeclInSameScope(decl, declToCompare))
+				case symbol_component::SymbolKind::FunctionSymbol:
 					{
-						return symbol;
+						if (decl->specializationSpec)
+						{
+							if(symbol->IsPSPrimary_NF())
+							{
+								auto& psc = symbol->GetPSChildren_NF();
+								for (vint j = 0; j < psc.Count(); j++)
+								{
+									auto declToCompare = psc[j]->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+									if (IsCompatibleFunctionDeclInSameScope(decl, declToCompare))
+									{
+										return symbol;
+									}
+								}
+							}
+						}
+						else
+						{
+							auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+							if (IsCompatibleFunctionDeclInSameScope(decl, declToCompare))
+							{
+								return symbol;
+							}
+						}
 					}
-				}
-				else
-				{
-					switch (symbol->kind)
-					{
-					case CSTYLE_TYPE_SYMBOL_KIND:
-						// function can only override enum/class/struct/union
-						break;
-					default:
-						throw StopParsingException(cursor);
-					}
+					break;
+				case CSTYLE_TYPE_SYMBOL_KIND:
+					// function can only override enum/class/struct/union
+					break;
+				default:
+					throw StopParsingException(cursor);
 				}
 			}
 		}

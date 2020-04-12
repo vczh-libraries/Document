@@ -592,6 +592,40 @@ bool IsCompatibleTemplateSpec(Ptr<TemplateSpec> specNew, Ptr<TemplateSpec> specO
 	return !specNew && !specOld;
 }
 
+bool IsCompatibleSpecializationSpec(Ptr<SpecializationSpec> specNew, Ptr<SpecializationSpec> specOld, Dictionary<WString, WString>& equivalentNames)
+{
+	if (specNew && specOld)
+	{
+		if (specNew->arguments.Count() != specOld->arguments.Count()) return false;
+		for (vint i = 0; i < specNew->arguments.Count(); i++)
+		{
+			const auto& argNew = specNew->arguments[i];
+			const auto& argOld = specOld->arguments[i];
+			if (argNew.isVariadic != argOld.isVariadic) return false;
+			if (argNew.item.type && argOld.item.type)
+			{
+				if (!IsSameResolvedType(argNew.item.type, argOld.item.type, equivalentNames))
+				{
+					return false;
+				}
+			}
+			else if (argNew.item.expr && argOld.item.expr)
+			{
+				if (!IsSameResolvedExpr(argNew.item.expr, argOld.item.expr, equivalentNames))
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	return !specNew && !specOld;
+}
+
 bool IsCompatibleFunctionDeclInSameScope(Ptr<ForwardFunctionDeclaration> declNew, Ptr<ForwardFunctionDeclaration> declOld)
 {
 	if (declNew->name.name != declOld->name.name) return false;
@@ -600,6 +634,10 @@ bool IsCompatibleFunctionDeclInSameScope(Ptr<ForwardFunctionDeclaration> declNew
 
 	Dictionary<WString, WString> equivalentNames;
 	if (!IsCompatibleTemplateSpec(declNew->templateSpec, declOld->templateSpec, equivalentNames))
+	{
+		return false;
+	}
+	if (!IsCompatibleSpecializationSpec(declNew->specializationSpec, declOld->specializationSpec, equivalentNames))
 	{
 		return false;
 	}
