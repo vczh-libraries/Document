@@ -23,11 +23,13 @@ namespace partial_specification_ordering
 											Ptr<SpecializationSpec> psB
 										);
 
+	extern Ptr<Type>					FixFunctionParameterType(Ptr<Type> t);
+
 	struct MatchPSResult
 	{
 		List<Ptr<Type>>					source;
 
-		static bool Compare(const Ptr<MatchPSResult>& a, const Ptr<MatchPSResult>& b)
+		static bool Compare(const Ptr<MatchPSResult>& a, const Ptr<MatchPSResult>& b, bool forParameter)
 		{
 			if (a->source.Count() != b->source.Count()) return false;
 			{
@@ -36,6 +38,11 @@ namespace partial_specification_ordering
 				{
 					auto at = a->source[i];
 					auto bt = b->source[i];
+					if (forParameter)
+					{
+						at = FixFunctionParameterType(at);
+						bt = FixFunctionParameterType(bt);
+					}
 					if (at && bt)
 					{
 						if (!IsSameResolvedType(at, bt, equivalentNames)) return false;
@@ -61,10 +68,9 @@ namespace partial_specification_ordering
 											const SortedList<Symbol*>& freeAncestorSymbols,
 											const SortedList<Symbol*>& freeChildSymbols,
 											SortedList<Type*>& involvedTypes,
-											SortedList<Expr*>& involvedExprs
+											SortedList<Expr*>& involvedExprs,
+											bool forParameter
 										);
-
-	extern Ptr<Type>					FixFunctionParameterType(Ptr<Type> t);
 
 	extern void							MatchPSAncestorArguments(
 											const ParsingArguments& pa,

@@ -15,7 +15,9 @@ namespace partial_specification_ordering
 		const SortedList<Symbol*>&						freeChildSymbols;
 		SortedList<Type*>&								involvedTypes;
 		SortedList<Expr*>&								involvedExprs;
+
 		Ptr<Type>										childType;
+		bool											forParameter = false;
 
 		MatchPSArgumentVisitor(
 			const ParsingArguments& _pa,
@@ -40,7 +42,7 @@ namespace partial_specification_ordering
 		{
 		}
 
-		bool AssignToArgument(Symbol* patternSymbol, const Ptr<MatchPSResult>& result)
+		bool AssignToArgument(Symbol* patternSymbol, const Ptr<MatchPSResult>& result, bool forParameter)
 		{
 			auto& output = patternSymbol->ellipsis ? matchingResultVta : matchingResult;
 			vint index = output.Keys().IndexOf(patternSymbol);
@@ -52,7 +54,7 @@ namespace partial_specification_ordering
 			else
 			{
 				auto assigned = output.Values()[index];
-				if (MatchPSResult::Compare(result, assigned))
+				if (MatchPSResult::Compare(result, assigned, forParameter))
 				{
 					return true;
 				}
@@ -82,9 +84,10 @@ namespace partial_specification_ordering
 			return false;
 		}
 
-		void Execute(const Ptr<Type>& _ancestorType, const Ptr<Type>& _childType)
+		void Execute(const Ptr<Type>& _ancestorType, const Ptr<Type>& _childType, bool _forParameter = false)
 		{
 			childType = _childType;
+			forParameter = _forParameter;
 			_ancestorType->Accept(this);
 		}
 
@@ -217,7 +220,7 @@ namespace partial_specification_ordering
 					{
 						auto result = MakePtr<MatchPSResult>();
 						result->source.Add(childType);
-						if (AssignToArgument(patternSymbol, result))
+						if (AssignToArgument(patternSymbol, result, forParameter))
 						{
 							return;
 						}
@@ -288,13 +291,14 @@ namespace partial_specification_ordering
 		const SortedList<Symbol*>& freeAncestorSymbols,
 		const SortedList<Symbol*>& freeChildSymbols,
 		SortedList<Type*>& involvedTypes,
-		SortedList<Expr*>& involvedExprs
+		SortedList<Expr*>& involvedExprs,
+		bool forParameter
 	)
 	{
 		MatchPSArgumentVisitor visitor(pa, skipped, matchingResult, matchingResultVta, insideVariant, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
 		if (ancestor.type && child.type)
 		{
-			visitor.Execute(ancestor.type, child.type);
+			visitor.Execute(ancestor.type, child.type, forParameter);
 		}
 		else if (ancestor.expr && child.expr)
 		{

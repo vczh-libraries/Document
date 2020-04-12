@@ -192,7 +192,7 @@ namespace partial_specification_ordering
 
 			try
 			{
-				MatchPSArgument(pa, skipped, matchingResult, matchingResultVta, { ptype,nullptr }, { stype,nullptr }, false, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
+				MatchPSArgument(pa, skipped, matchingResult, matchingResultVta, { ptype,nullptr }, { stype,nullptr }, false, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs, false);
 				if (!skipped)
 				{
 					// function cannot be partial specialization

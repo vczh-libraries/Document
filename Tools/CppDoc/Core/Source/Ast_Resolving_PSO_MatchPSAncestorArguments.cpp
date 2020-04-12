@@ -17,7 +17,8 @@ namespace partial_specification_ordering
 		VariadicList<GenericArgument>& child,
 		bool insideVariant,
 		const SortedList<Symbol*>& freeAncestorSymbols,
-		const SortedList<Symbol*>& freeChildSymbols
+		const SortedList<Symbol*>& freeChildSymbols,
+		bool forParameter
 	)
 	{
 		vint ancestorVta = -1;
@@ -180,7 +181,7 @@ namespace partial_specification_ordering
 			auto matchSingleToSingleComplex = [&](vint c, Dictionary<Symbol*, Ptr<MatchPSResult>>& replacedResultVta)
 			{
 				auto childItem = child[c].item;
-				MatchPSArgument(pa, skipped, matchingResult, replacedResultVta, ancestorItem, childItem, child[c].isVariadic, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs);
+				MatchPSArgument(pa, skipped, matchingResult, replacedResultVta, ancestorItem, childItem, child[c].isVariadic, freeAncestorSymbols, freeChildSymbols, involvedTypes, involvedExprs, forParameter);
 			};
 
 			auto assertMatchingResultPass1 = [&](vint assignedCount)
@@ -365,7 +366,7 @@ namespace partial_specification_ordering
 		{
 			bool skipped = false;
 			vint lastCount = matchingResult.Count();
-			MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, false, freeAncestorSymbols, freeChildSymbols);
+			MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, false, freeAncestorSymbols, freeChildSymbols, false);
 			if (skipped)
 			{
 				if (lastCount == matchingResult.Count())
@@ -420,7 +421,7 @@ namespace partial_specification_ordering
 				return ga;
 			}
 		);
-		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeAncestorSymbols, freeChildSymbols);
+		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeAncestorSymbols, freeChildSymbols, true);
 	}
 
 	/***********************************************************************
@@ -448,6 +449,6 @@ namespace partial_specification_ordering
 			false,
 			[](GenericArgument& e) { return e; }
 		);
-		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeAncestorSymbols, freeChildSymbols);
+		MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, ancestorTypes, childTypes, insideVariant, freeAncestorSymbols, freeChildSymbols, false);
 	}
 }
