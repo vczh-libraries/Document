@@ -5,150 +5,50 @@ TEST_FILE
 	TEST_CATEGORY(L"Functions")
 	{
 		auto input = LR"(
-template<typename T, typename... Ts>	void F									(T*, T(*...)(Ts&));
-template<typename T, typename... Ts>	void F									(T, T(*...)(Ts));
-template<typename T, typename... Ts>	void G									(T*, T(*...)(Ts&));
-template<typename T, typename... Ts>	void G									(T, T(*...)(Ts));
+template<typename T, typename U, typename... Ts>	void F										(T*, U(*...)(Ts&));
+template<typename T, typename U, typename... Ts>	void F										(T, U(*...)(Ts));
+template<typename T, typename U, typename... Ts>	void G										(T*, U(*...)(Ts&));
+template<typename T, typename U, typename... Ts>	void G										(T, U(*...)(Ts));
 
-template<>								void F<bool, float, double>				(bool*, bool(*)(float&), bool(*)(double&));
-template<>								void F<void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
-template<>								void F<char>							(char*);
+template<>											void F<bool, bool, float, double>			(bool*, bool(*)(float&), bool(*)(double&));
+template<>											void F<void, void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
+template<>											void F<char, char>							(char*);
 
-template<>								void F<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&));
-template<>								void F<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
-template<>								void F<char*>							(char*);
+template<>											void F<bool*, bool, float&, double&>		(bool*, bool(*)(float&), bool(*)(double&));
+template<>											void F<void*, void, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
+template<>											void F<char*, char>							(char*);
 
-template<>								void G<bool, float, double>				(bool*, bool(*)(float&), bool(*)(double&));
-template<>								void G<void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
-template<>								void G<char>							(char*);
+template<>											void G<bool, bool, float, double>			(bool*, bool(*)(float&), bool(*)(double&));
+template<>											void G<void, void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
+template<>											void G<char, char>							(char*);
 
-template<>								void G<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&));
-template<>								void G<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
-template<>								void G<char*>							(char*);
+template<>											void G<bool*, bool, float&, double&>		(bool*, bool(*)(float&), bool(*)(double&));
+template<>											void G<void*, void, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&));
+template<>											void G<char*, char>							(char*);
 
-template<typename U, typename... Us>	void F									(U*, U(*...)(Us&)){}
-template<typename U, typename... Us>	void F									(U, U(*...)(Us)){}
-template<typename U, typename... Us>	void G									(U*, U(*...)(Us&)){}
-template<typename U, typename... Us>	void G									(U, U(*...)(Us)){}
+template<typename U, typename V, typename... Us>	void F										(U*, V(*...)(Us&)){}
+template<typename U, typename V, typename... Us>	void F										(U, V(*...)(Us)){}
+template<typename U, typename V, typename... Us>	void G										(U*, V(*...)(Us&)){}
+template<typename U, typename V, typename... Us>	void G										(U, V(*...)(Us)){}
 
-template<>								void F<bool, float, double>				(bool*, bool(*)(float&), bool(*)(double&)){}
-template<>								void F<void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
-template<>								void F<char>							(char*){}
+template<>											void F<bool, bool, float, double>			(bool*, bool(*)(float&), bool(*)(double&)){}
+template<>											void F<void, void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
+template<>											void F<char, char>							(char*){}
 
-template<>								void F<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&)){}
-template<>								void F<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
-template<>								void F<char*>							(char*){}
+template<>											void F<bool*, bool, float&, double&>		(bool*, bool(*)(float&), bool(*)(double&)){}
+template<>											void F<void*, void, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
+template<>											void F<char*, char>							(char*){}
 
-template<>								void G<bool, float, double>				(bool*, bool(*)(float&), bool(*)(double&)){}
-template<>								void G<void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
-template<>								void G<char>							(char*){}
+template<>											void G<bool, bool, float, double>			(bool*, bool(*)(float&), bool(*)(double&)){}
+template<>											void G<void, void, char, wchar_t, bool>		(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
+template<>											void G<char, char>							(char*){}
 
-template<>								void G<bool*, float&, double&>			(bool*, bool(*)(float&), bool(*)(double&)){}
-template<>								void G<void*, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
-template<>								void G<char*>							(char*){}
-)";
-
-		auto output = LR"(
-template<typename T, typename ...Ts>
-__forward F: void (T *, T (Ts &) *...);
-template<typename T, typename ...Ts>
-__forward F: void (T, T (Ts) *...);
-template<typename T, typename ...Ts>
-__forward G: void (T *, T (Ts &) *...);
-template<typename T, typename ...Ts>
-__forward G: void (T, T (Ts) *...);
-template<>
-__forward F<bool, float, double>: void (bool *, bool (float &) *, bool (double &) *);
-template<>
-__forward F<void, char, wchar_t, bool>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *);
-template<>
-__forward F<char>: void (char *);
-template<>
-__forward F<bool *, float &, double &>: void (bool *, bool (float &) *, bool (double &) *);
-template<>
-__forward F<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *);
-template<>
-__forward F<char *>: void (char *);
-template<>
-__forward G<bool, float, double>: void (bool *, bool (float &) *, bool (double &) *);
-template<>
-__forward G<void, char, wchar_t, bool>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *);
-template<>
-__forward G<char>: void (char *);
-template<>
-__forward G<bool *, float &, double &>: void (bool *, bool (float &) *, bool (double &) *);
-template<>
-__forward G<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *);
-template<>
-__forward G<char *>: void (char *);
-template<typename U, typename ...Us>
-F: void (U *, U (Us &) *...)
-{
-}
-template<typename U, typename ...Us>
-F: void (U, U (Us) *...)
-{
-}
-template<typename U, typename ...Us>
-G: void (U *, U (Us &) *...)
-{
-}
-template<typename U, typename ...Us>
-G: void (U, U (Us) *...)
-{
-}
-template<>
-F<bool, float, double>: void (bool *, bool (float &) *, bool (double &) *)
-{
-}
-template<>
-F<void, char, wchar_t, bool>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *)
-{
-}
-template<>
-F<char>: void (char *)
-{
-}
-template<>
-F<bool *, float &, double &>: void (bool *, bool (float &) *, bool (double &) *)
-{
-}
-template<>
-F<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *)
-{
-}
-template<>
-F<char *>: void (char *)
-{
-}
-template<>
-G<bool, float, double>: void (bool *, bool (float &) *, bool (double &) *)
-{
-}
-template<>
-G<void, char, wchar_t, bool>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *)
-{
-}
-template<>
-G<char>: void (char *)
-{
-}
-template<>
-G<bool *, float &, double &>: void (bool *, bool (float &) *, bool (double &) *)
-{
-}
-template<>
-G<void *, char &, wchar_t &, bool &>: void (void *, void (char &) *, void (wchar_t &) *, void (bool &) *)
-{
-}
-template<>
-G<char *>: void (char *)
-{
-}
+template<>											void G<bool*, bool, float&, double&>		(bool*, bool(*)(float&), bool(*)(double&)){}
+template<>											void G<void*, void, char&, wchar_t&, bool&>	(void*, void(*)(char&), void(*)(wchar_t&), void(*)(bool&)){}
+template<>											void G<char*, char>							(char*){}
 )";
 
 		COMPILE_PROGRAM(program, pa, input);
-		AssertProgram(program, output);
 
 		List<Ptr<ForwardFunctionDeclaration>> ffs[2];
 		List<Ptr<FunctionDeclaration>> fs[2];
