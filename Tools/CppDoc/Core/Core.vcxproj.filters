@@ -31,9 +31,6 @@
     <Filter Include="Source Files\Ast\Type">
       <UniqueIdentifier>{76bf9cf5-59ce-4ce4-9da3-67938a98a1be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Ast\Evaluation">
-      <UniqueIdentifier>{a42f734e-8eec-4c50-a26f-1fab1e70dbc9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Ast\Resolving">
       <UniqueIdentifier>{02864258-8464-4ada-896b-8c2852870da2}</UniqueIdentifier>
     </Filter>
@@ -45,6 +42,12 @@
     </Filter>
     <Filter Include="Source Files\Ast\AssignParameters">
       <UniqueIdentifier>{091928bc-c27c-4b1a-87e7-56510348c68a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Ast\EvaluateSymbol">
+      <UniqueIdentifier>{2ea27cc1-ff29-4856-b9b2-d79758192e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Ast\EvaluateTypeExpr">
+      <UniqueIdentifier>{a42f734e-8eec-4c50-a26f-1fab1e70dbc9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -88,7 +91,7 @@
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClInclude>
     <ClInclude Include="Source\Ast_Evaluate_ExpandPotentialVta.h">
-      <Filter>Source Files\Ast\Evaluation</Filter>
+      <Filter>Source Files\Ast\EvaluateTypeExpr</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Import\VlppOS.h">
       <Filter>Import</Filter>
@@ -110,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="Source\Parser_Declaration.h">
       <Filter>Source Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Ast_EvaluateSymbol.h">
+      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,13 +165,13 @@
       <Filter>Source Files\Ast\Type</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Evaluate.cpp">
-      <Filter>Source Files\Ast\Evaluation</Filter>
+      <Filter>Source Files\Ast\EvaluateTypeExpr</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Evaluate_ExprToTsys.cpp">
-      <Filter>Source Files\Ast\Evaluation</Filter>
+      <Filter>Source Files\Ast\EvaluateTypeExpr</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Evaluate_TypeToTsys.cpp">
-      <Filter>Source Files\Ast\Evaluation</Filter>
+      <Filter>Source Files\Ast\EvaluateTypeExpr</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_Overloading.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
@@ -177,22 +183,19 @@
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_TypeImpl.cpp">
-      <Filter>Source Files\Ast\Evaluation</Filter>
+      <Filter>Source Files\Ast\EvaluateTypeExpr</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_IdImpl.cpp">
-      <Filter>Source Files\Ast\Evaluation</Filter>
+      <Filter>Source Files\Ast\EvaluateTypeExpr</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_ExprImpl.cpp">
-      <Filter>Source Files\Ast\Evaluation</Filter>
+      <Filter>Source Files\Ast\EvaluateTypeExpr</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_VariadicImpl.cpp">
-      <Filter>Source Files\Ast\Evaluation</Filter>
+      <Filter>Source Files\Ast\EvaluateTypeExpr</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_GenericImpl.cpp">
-      <Filter>Source Files\Ast\Evaluation</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_EvaluateSymbol.cpp">
-      <Filter>Source Files\Ast\Resolving</Filter>
+      <Filter>Source Files\Ast\EvaluateTypeExpr</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
@@ -271,6 +274,24 @@
     </ClCompile>
     <ClCompile Include="Source\Parser_Declaration_FuncVar.cpp">
       <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_EvaluateSymbol.cpp">
+      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_EvaluateSymbol_Class.cpp">
+      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_EvaluateSymbol_Func.cpp">
+      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_EvaluateSymbol_TypeAlias.cpp">
+      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_EvaluateSymbol_ValueAlias.cpp">
+      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ast_EvaluateSymbol_Var.cpp">
+      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

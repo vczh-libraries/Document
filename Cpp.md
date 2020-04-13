@@ -26,42 +26,46 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Partial specialization constructions
-  - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
   - [ ] Partial specialization on **functions** (actually it is full specialization, by reusing partial specialization constructions)
     - [x] Connect functions with forward declarations.
     - [ ] When overloading, specialized functions are not considered. When a template function wins, then choose among the primiary and its specializations.
-    - [ ] SFINAE test cases
+    - [ ] SFINAE test cases.
     - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
   - [ ] Partial specialization on **classes**.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
-    - [ ] Connect methods with forward declarations inside multiple levels of template classes.
-      - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T*>::B<const U&>::F(){}`
-        - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`
-      - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
-        - [ ] Same for `decltype(HERE)`
-    - [ ] Add `specializationVersion` (default 0) and `specializationSymbols` to `DeclInstant`
+    - [ ] Add `specializationVersion` (default 0) and `specializationSymbols` to `DeclInstant`.
       - [ ] When a new specialization is recognized, the version in the primary symbol increases (default 0, version means the number of all recognized specializations).
       - [ ] When `specializationSymbols` is used, `specializationVersion` is compared to the primary symbol version to determine if the list need to refresh.
       - [ ] When `specializationVersion` is -1, it means `specializationSymbols` is hardcoded, usually from `this` in a method of a class specialization.
-    - [ ] SFINAE test cases
-  - [ ] Variable also need multiple `Ptr<TemplateSpec>` when the declaration is implementing a static variable in nested generic classes.
-  - [ ] Generate unique name for each symbol
-    - [ ] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
-    - [ ] `Symbol::DecorateNameForSpecializationSpec` generates unique name for declaractions with `specializationSpec`.
-- [ ] Lambda expressions.
+    - [ ] SFINAE test cases.
+  - [ ] Partial specialization on **methods**.
+    - [ ] Connect methods with forward declarations inside multiple levels of template classes.
+      - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T*>::B<const U&>::F(){}`.
+        - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`.
+      - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
+        - [ ] Same for `decltype(HERE)`.
+    - [ ] SFINAE test cases.
 - [ ] Next Demo! (Calculator)
+  - [ ] Refactor the HTML generation part to becomes a library.
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.
     - [ ] `expr->Accept` should have 3 links.
-- [ ] `decltype(EXPR)::ChildType`
-- [ ] `::new`
-- [ ] `::delete`
+- [ ] Lambda expressions.
 - [ ] Next Demo! (Vlpp)
   - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
   - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
   - [ ] Show progress while parsing cases.
 - [ ] Next Demo! (GacUI)
+- [ ] More on **templates**
+  - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
+  - [ ] Variable also need multiple `Ptr<TemplateSpec>` when the declaration is implementing a static variable in nested generic classes.
+  - [ ] Generate unique name for each symbol
+    - [ ] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
+    - [ ] `Symbol::DecorateNameForSpecializationSpec` generates unique name for declaractions with `specializationSpec`.
+- [ ] `decltype(EXPR)::ChildType`
+- [ ] `::new`
+- [ ] `::delete`
 - [ ] `std::initialization_list`.
 - [ ] Next Demo! (UnitTest_Cases::STL)
 - [ ] Pass variadic template argument to placement new expression.
