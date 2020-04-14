@@ -386,12 +386,14 @@ namespace infer_function_type
 					auto value = entity->GetParam(i);
 					if (argument.ellipsis)
 					{
-						if (value->GetType() != TsysType::Init)
+						if (value->GetType() == TsysType::Init)
 						{
-							// it is impossible to have any_t here
-							throw TypeCheckerException();
+							count += value->GetParamCount();
 						}
-						count += value->GetParamCount();
+						else
+						{
+							count += 1;
+						}
 					}
 					else
 					{
@@ -412,9 +414,17 @@ namespace infer_function_type
 
 						if (argument.ellipsis)
 						{
-							for (vint j = 0; j < value->GetParamCount(); j++)
+							if (value->GetType() == TsysType::Init)
 							{
-								argumentTypes[index++] = { value->GetInit().headers[j],value->GetParam(j) };
+								for (vint j = 0; j < value->GetParamCount(); j++)
+								{
+									argumentTypes[index++] = { value->GetInit().headers[j],value->GetParam(j) };
+								}
+							}
+							else
+							{
+								boundedAnys.Add(index);
+								argumentTypes[index++] = { nullptr,ExprTsysType::PRValue,value };
 							}
 						}
 						else

@@ -64,7 +64,7 @@ TEST_FILE
 					}
 					else
 					{
-						auto primary = decl->symbol;
+						primary = decl->symbol;
 						TEST_CASE_ASSERT(primary->IsPSPrimary_NF());
 						TEST_CASE_ASSERT(primary->GetPSPrimaryDescendants_NF().Count() == 4);
 					}
