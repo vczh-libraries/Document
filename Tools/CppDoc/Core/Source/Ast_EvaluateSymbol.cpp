@@ -147,7 +147,7 @@ namespace symbol_type_resolving
 	ProcessArguments: Create the context to evaluate the content inside an instantiated template declaration
 	***********************************************************************/
 
-	Eval ProcessArguments(const ParsingArguments& invokerPa, Declaration* decl, Ptr<TemplateSpec> spec, ITsys*& parentDeclType, TemplateArgumentContext* argumentsToApply)
+	Eval ProcessArguments(const ParsingArguments& invokerPa, Declaration* decl, Ptr<TemplateSpec> spec, ITsys*& parentDeclType, TemplateArgumentContext* argumentsToApply, bool allowEvaluating)
 	{
 		if (parentDeclType)
 		{
@@ -227,8 +227,17 @@ namespace symbol_type_resolving
 
 		switch (ev.progress)
 		{
+		case symbol_component::EvaluationProgress::RecursiveFound:
 		case symbol_component::EvaluationProgress::Evaluating:
-			throw TypeCheckerException();
+			if (allowEvaluating)
+			{
+				ev.progress = symbol_component::EvaluationProgress::RecursiveFound;
+				return Eval(true, symbol, declPa, ev);
+			}
+			else
+			{
+				throw TypeCheckerException();
+			}
 		case symbol_component::EvaluationProgress::Evaluated:
 			return Eval(false, symbol, declPa, ev);
 		default:

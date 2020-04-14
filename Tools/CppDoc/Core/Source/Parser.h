@@ -48,7 +48,7 @@ namespace symbol_component
 		NotEvaluated,
 		Evaluating,
 		Evaluated,
-		Undecided,
+		RecursiveFound,
 	};
 
 	enum class SymbolKind

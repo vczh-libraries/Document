@@ -34,5 +34,5 @@ namespace symbol_type_resolving
 	extern symbol_component::Evaluation&	GetCorrectEvaluation(const ParsingArguments& pa, Declaration* decl, Ptr<TemplateSpec> spec, TemplateArgumentContext* argumentsToApply);
 	extern ParsingArguments					GetPaFromInvokerPa(const ParsingArguments& pa, Symbol* declSymbol, TemplateArgumentContext* parentTaContext, TemplateArgumentContext* argumentsToApply);
 	extern TypeTsysList&					FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& declPa, Declaration* decl, Ptr<TemplateSpec> spec, TemplateArgumentContext* argumentsToApply);
-	extern Eval								ProcessArguments(const ParsingArguments& invokerPa, Declaration* decl, Ptr<TemplateSpec> spec, ITsys*& parentDeclType, TemplateArgumentContext* argumentsToApply);
+	extern Eval								ProcessArguments(const ParsingArguments& invokerPa, Declaration* decl, Ptr<TemplateSpec> spec, ITsys*& parentDeclType, TemplateArgumentContext* argumentsToApply, bool allowEvaluating = false);
 }
