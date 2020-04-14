@@ -48,12 +48,8 @@ namespace symbol_type_resolving
 			}
 
 			eval.ev.progress = symbol_component::EvaluationProgress::Evaluated;
-			return eval.evaluatedTypes;
 		}
-		else
-		{
-			isVariadic = eval.ev.isVariadic;
-			return eval.evaluatedTypes;
-		}
+		isVariadic = eval.ev.isVariadic;
+		return eval.evaluatedTypes;
 	}
 }
