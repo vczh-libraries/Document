@@ -412,8 +412,12 @@ namespace infer_function_type
 
 							// assign arguments to correct parameters
 							auto inferPa = pa.AdjustForDecl(gfi.declSymbol);
+							if (inferPa.taContext && inferPa.taContext->symbolToApply == gfi.declSymbol)
+							{
+								inferPa.taContext = inferPa.taContext->parent;
+							}
 							inferPa.parentDeclType = ParsingArguments::AdjustDeclInstantForScope(gfi.declSymbol, gfi.parentDeclType, true);
-							ResolveFunctionParameters(pa, parameterAssignment, taContext, freeTypeSymbols, lastAssignedVta, functionType.Obj(), argTypes, boundedAnys);
+							ResolveFunctionParameters(inferPa, parameterAssignment, taContext, freeTypeSymbols, lastAssignedVta, functionType.Obj(), argTypes, boundedAnys);
 
 							// type inferencing
 							List<Ptr<TemplateArgumentContext>> inferredArgumentTypes;
