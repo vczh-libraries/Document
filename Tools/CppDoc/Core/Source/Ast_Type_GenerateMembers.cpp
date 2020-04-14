@@ -249,7 +249,8 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 				continue;
 			}
 
-			auto& types = symbol_type_resolving::EvaluateVarSymbol(pa, varDecl.Obj(), nullptr);
+			bool isVariadic = false;
+			auto& types = symbol_type_resolving::EvaluateVarSymbol(pa, varDecl.Obj(), nullptr, isVariadic);
 			for (vint j = 0; j < types.Count(); j++)
 			{
 				if (!IsSpecialMemberEnabledForType(pa, types[j], kind))

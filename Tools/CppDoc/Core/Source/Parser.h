@@ -98,6 +98,7 @@ namespace symbol_component
 		Evaluation(Evaluation&&) = delete;
 
 		EvaluationProgress							progress = EvaluationProgress::NotEvaluated;
+		bool										isVariadic = false;
 
 		void										Allocate();
 		void										AllocateExtra(vint extraCount);

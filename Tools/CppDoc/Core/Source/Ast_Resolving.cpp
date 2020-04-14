@@ -187,8 +187,9 @@ namespace symbol_type_resolving
 		{
 		case symbol_component::SymbolKind::Variable:
 			{
+				bool isVariadic = false;
 				auto varDecl = symbol->GetAnyForwardDecl<ForwardVariableDeclaration>();
-				auto& evTypes = EvaluateVarSymbol(pa, varDecl.Obj(), parentDeclType);
+				auto& evTypes = EvaluateVarSymbol(pa, varDecl.Obj(), parentDeclType, isVariadic);
 				bool isStaticSymbol = IsStaticSymbol<ForwardVariableDeclaration>(symbol);
 				bool isMember = classScope && !isStaticSymbol;
 				if (!thisItem && isMember)
@@ -233,7 +234,9 @@ namespace symbol_type_resolving
 						}
 					}
 				}
-				hasNonVariadic = true;
+				if (!allowVariadic && isVariadic) throw TypeCheckerException();
+				hasNonVariadic = !isVariadic;
+				hasVariadic = isVariadic;
 			}
 			return;
 		case symbol_component::SymbolKind::FunctionSymbol:

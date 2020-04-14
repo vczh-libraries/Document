@@ -76,6 +76,8 @@ namespace symbol_type_resolving
 		auto eval = ProcessArguments(invokerPa, funcDecl, funcDecl->templateSpec, parentDeclType, argumentsToApply);
 		if (eval)
 		{
+			// Since types of full specialized functions should be exactly the same with the primary
+			// so nothing is needed for type inferencing
 			if (funcDecl->needResolveTypeFromStatement)
 			{
 				if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))

@@ -9,7 +9,8 @@ namespace symbol_type_resolving
 	TypeTsysList& EvaluateVarSymbol(
 		const ParsingArguments& invokerPa,
 		ForwardVariableDeclaration* varDecl,
-		ITsys* parentDeclType
+		ITsys* parentDeclType,
+		bool& isVariadic
 	)
 	{
 		auto eval = ProcessArguments(invokerPa, varDecl, nullptr, parentDeclType, nullptr);
@@ -25,7 +26,7 @@ namespace symbol_type_resolving
 					}
 
 					ExprTsysList types;
-					ExprToTsysNoVta(eval.declPa, rootVarDecl->initializer->arguments[0].item, types);
+					ExprToTsysInternal(eval.declPa, rootVarDecl->initializer->arguments[0].item, types, eval.ev.isVariadic);
 
 					for (vint k = 0; k < types.Count(); k++)
 					{
@@ -43,7 +44,7 @@ namespace symbol_type_resolving
 			}
 			else
 			{
-				TypeToTsysNoVta(eval.declPa, varDecl->type, eval.evaluatedTypes);
+				TypeToTsysInternal(eval.declPa, varDecl->type, eval.evaluatedTypes, eval.ev.isVariadic);
 			}
 
 			eval.ev.progress = symbol_component::EvaluationProgress::Evaluated;
@@ -51,6 +52,7 @@ namespace symbol_type_resolving
 		}
 		else
 		{
+			isVariadic = eval.ev.isVariadic;
 			return eval.evaluatedTypes;
 		}
 	}
