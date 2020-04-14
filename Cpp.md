@@ -28,7 +28,8 @@
 - [ ] Partial specialization constructions
   - [ ] Partial specialization on **functions** (actually it is full specialization, by reusing partial specialization constructions)
     - [x] Connect functions with forward declarations.
-    - [ ] When overloading, specialized functions are not considered. When a template function wins, then choose among the primiary and its specializations.
+    - [x] When overloading, specialized functions are not considered.
+      - Since types of full specialized functions should be exactly the same with the primary, so nothing is needed for type inferencing
     - [ ] SFINAE test cases.
     - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
   - [ ] Partial specialization on **classes**.
