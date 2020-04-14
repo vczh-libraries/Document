@@ -31,7 +31,6 @@
     - [x] When overloading, specialized functions are not considered.
       - Since types of full specialized functions should be exactly the same with the primary, so nothing is needed for type inferencing
     - [ ] SFINAE test cases.
-    - [ ] `GenericExpr` allows partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
   - [ ] Partial specialization on **classes**.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
     - [ ] Add `specializationVersion` (default 0) and `specializationSymbols` to `DeclInstant`.
@@ -59,12 +58,14 @@
   - [ ] Show progress while parsing cases.
 - [ ] Next Demo! (GacUI)
 - [ ] More on **templates**
+  - [ ] `GenericExpr` allows to be partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
   - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
   - [ ] Variable also need multiple `Ptr<TemplateSpec>` when the declaration is implementing a static variable in nested generic classes.
   - [ ] Generate unique name for each symbol
     - [ ] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
     - [ ] `Symbol::DecorateNameForSpecializationSpec` generates unique name for declaractions with `specializationSpec`.
-- [ ] `decltype(EXPR)::ChildType`
+- [ ] `ResolveChildSymbol` on `decltype(EXPR)::ChildType`
+- [ ] `MatchPSArgument` on `decltype(EXPR)`, success when the type to match is not `decltype(EXPR)`, or two expression match.
 - [ ] `::new`
 - [ ] `::delete`
 - [ ] `std::initialization_list`.

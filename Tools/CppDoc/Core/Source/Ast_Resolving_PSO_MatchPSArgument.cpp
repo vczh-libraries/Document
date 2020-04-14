@@ -181,9 +181,9 @@ namespace partial_specification_ordering
 		{
 			if (auto c = childType.Cast<DeclType>())
 			{
+				// TODO: [cpp.md] two expression should match
 				return;
 			}
-			throw MatchPSFailureException();
 		}
 
 		void Visit(DecorateType* self)override

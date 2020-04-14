@@ -60,11 +60,11 @@ TEST_FILE
 				{
 					if (primary)
 					{
-						TEST_CASE_ASSERT(decl->symbol->GetPSPrimary_NF() == primary);
+						TEST_CASE_ASSERT(decl->symbol->GetFunctionSymbol_Fb()->GetPSPrimary_NF() == primary);
 					}
 					else
 					{
-						primary = decl->symbol;
+						primary = decl->symbol->GetFunctionSymbol_Fb();
 						TEST_CASE_ASSERT(primary->IsPSPrimary_NF());
 						TEST_CASE_ASSERT(primary->GetPSPrimaryDescendants_NF().Count() == 4);
 					}
