@@ -54,6 +54,20 @@ namespace Input__TestOverloadingGenericFunction_Method
 
 TEST_FILE
 {
+	TEST_CATEGORY(L"Variable types")
+	{
+		using namespace Input__TestOverloadingGenericFunction_Method;
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa,	L"mt1",		L"mt1",		L"::MakeTuple<{char $PR, bool $PR, double $PR}> $L"			);
+		AssertExpr(pa,	L"mt2",		L"mt2",		L"::MakeTuple<{__int32 $PR, __int32 $PR, __int32 $PR}> $L"	);
+		AssertExpr(pa,	L"pt1",		L"pt1",		L"::MakeTuple<{char $PR, bool $PR, double $PR}> * $L"		);
+
+		AssertExpr(pa,	L"_mt1",	L"_mt1",	L"::MakeTuple2<char, {bool $PR, double $PR}> $L"			);
+		AssertExpr(pa,	L"_mt2",	L"_mt2",	L"::MakeTuple2<__int32, {__int32 $PR, __int32 $PR}> $L"		);
+		AssertExpr(pa,	L"_pt1",	L"_pt1",	L"::MakeTuple2<char, {bool $PR, double $PR}> * $L"			);
+	});
+
 	TEST_CATEGORY(L"Generic operators")
 	{
 		using namespace Input__TestOverloadingGenericFunction_Method;
