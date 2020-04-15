@@ -32,11 +32,20 @@
       - Since types of full specialized functions should be exactly the same with the primary, so nothing is needed for type inferencing
     - [ ] SFINAE test cases.
   - [ ] Partial specialization on **classes**.
+    - [ ] Ignore forward declaration of class partial specialization, because it provides no additional value.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
-    - [ ] Add `specializationVersion` (default 0) and `specializationSymbols` to `DeclInstant`.
-      - [ ] When a new specialization is recognized, the version in the primary symbol increases (default 0, version means the number of all recognized specializations).
-      - [ ] When `specializationSymbols` is used, `specializationVersion` is compared to the primary symbol version to determine if the list need to refresh.
-      - [ ] When `specializationVersion` is -1, it means `specializationSymbols` is hardcoded, usually from `this` in a method of a class specialization.
+    - [ ] Add `psValue` (default 0) and `psTsys` to `DeclInstant`.
+      - [ ] `psTsys` is a list, containing `DeclInstant` to instances of partial specialization class symbols.
+        - [ ] `psVersion` of instances is -2.
+        - [ ] When comparing two `DeclInstance`, or doing type inferencing, if `psVersion` of any instance is -2, `psTsys[0]` is used instead.
+        - [ ] When doing other things, like evaluating types of members from an instance of partial specialization, no conversion to primary is needed.
+      - [ ] When `psTsys` is used, `psVersion` is compared to the primary symbol version to determine if the list need to refresh.
+      - [ ] When `psVersion` is -1, it means `psTsys` is hardcoded, usually from `this` in a method of a class specialization.
+      - [ ] When `psVersion` is -2, it means the current type is an instance of partial specialization, and `psTsys` stores the primary type.
+    - [ ] Function test cases
+      - [ ] Using pointers to member or `this` of a partial specialization instances as parameters.
+      - [ ] Function overloading.
+      - [ ] Function type inferencing.
     - [ ] SFINAE test cases.
   - [ ] Partial specialization on **methods**.
     - [ ] Connect methods with forward declarations inside multiple levels of template classes.
