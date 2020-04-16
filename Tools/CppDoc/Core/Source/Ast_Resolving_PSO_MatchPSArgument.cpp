@@ -260,8 +260,9 @@ namespace partial_specification_ordering
 						return;
 					}
 				}
+				throw MatchPSFailureException();
 			}
-			throw MatchPSFailureException();
+			// could be typename A::B
 		}
 
 		void Visit(GenericType* self)override
@@ -270,9 +271,8 @@ namespace partial_specification_ordering
 			{
 				Execute(self->type, c->type);
 				MatchPSAncestorArguments(pa, skipped, matchingResult, matchingResultVta, self, c.Obj(), insideVariant, freeAncestorSymbols, freeChildSymbols);
-				return;
 			}
-			throw MatchPSFailureException();
+			// could be typename A::template B<C>
 		}
 	};
 

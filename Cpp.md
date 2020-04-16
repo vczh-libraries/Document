@@ -26,11 +26,6 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Partial specialization constructions
-  - [ ] Partial specialization on **functions** (actually it is full specialization, by reusing partial specialization constructions)
-    - [x] Connect functions with forward declarations.
-    - [x] When overloading, specialized functions are not considered.
-      - Since types of full specialized functions should be exactly the same with the primary, so nothing is needed for type inferencing
-    - [ ] SFINAE test cases.
   - [ ] Partial specialization on **classes**.
     - [ ] Ignore forward declaration of class partial specialization, because it provides no additional value.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
