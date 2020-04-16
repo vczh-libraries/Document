@@ -32,6 +32,40 @@ namespace INPUT__TestParsePSFunction_Functions
 	);
 }
 
+namespace INPUT__TestParsePSFunction_SFINAE
+{
+	TEST_DECL(
+		struct A { using X = A*; };
+		struct B { using Y = B*; };
+		struct C { using Z = C*; };
+
+		template<typename T>
+		char F(T, typename T::X);
+
+		template<typename T>
+		wchar_t F(T, typename T::Y);
+
+		template<typename T>
+		bool F(T, typename T::Z);
+
+		template<>
+		char F<A>(A, A*);
+
+		template<>
+		wchar_t F<B>(B, B*);
+
+		template<>
+		bool F<C>(C, C*);
+
+		template<typename T>
+		void F(T, ...);
+
+		A a;
+		B b;
+		C c;
+	);
+}
+
 TEST_FILE
 {
 	TEST_CATEGORY(L"Return type trait")
@@ -116,5 +150,47 @@ TEST_FILE
 		ASSERT_OVERLOADING_SIMPLE(F('c', L'c', pf),			float	);
 		ASSERT_OVERLOADING_SIMPLE(F('c', L'c', pf, pd),		double	);
 		ASSERT_OVERLOADING_SIMPLE(F('c', L'c', pf, pd, pb),	bool	);
+	});
+
+	TEST_CATEGORY(L"SFINAE")
+	{
+		using namespace INPUT__TestParsePSFunction_SFINAE;
+		COMPILE_PROGRAM(program, pa, input);
+
+		List<Symbol*> fs;
+		for (vint i = 0; i < program->decls.Count(); i++)
+		{
+			if (auto decl = program->decls[i].Cast<ForwardFunctionDeclaration>())
+			{
+				if (decl->name.name == L"F")
+				{
+					fs.Add(decl->symbol->GetFunctionSymbol_Fb());
+				}
+			}
+		}
+
+		TEST_CASE_ASSERT(fs.Count() == 7);
+		for (vint i = 0; i < 6; i++)
+		{
+			if (i < 3)
+			{
+				TEST_CASE_ASSERT(fs[i]->IsPSPrimary_NF());
+				TEST_CASE_ASSERT(fs[i]->GetPSPrimaryDescendants_NF().Count() == 1);
+			}
+			else
+			{
+				TEST_CASE_ASSERT(fs[i]->GetPSPrimary_NF() == fs[i - 3]);
+			}
+		}
+
+		ASSERT_OVERLOADING(F(a, &a),	L"F(a, (& a))",		char	);
+		ASSERT_OVERLOADING(F(a, &b),	L"F(a, (& b))",		void	);
+		ASSERT_OVERLOADING(F(a, &c),	L"F(a, (& c))",		void	);
+		ASSERT_OVERLOADING(F(b, &a),	L"F(b, (& a))",		void	);
+		ASSERT_OVERLOADING(F(b, &b),	L"F(b, (& b))",		wchar_t	);
+		ASSERT_OVERLOADING(F(b, &c),	L"F(b, (& c))",		void	);
+		ASSERT_OVERLOADING(F(c, &a),	L"F(c, (& a))",		void	);
+		ASSERT_OVERLOADING(F(c, &b),	L"F(c, (& b))",		void	);
+		ASSERT_OVERLOADING(F(c, &c),	L"F(c, (& c))",		bool	);
 	});
 }
