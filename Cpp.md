@@ -30,13 +30,13 @@
     - [ ] Ignore forward declaration of class partial specialization, because it provides no additional value.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
     - [ ] Add `psValue` (default 0) and `psTsys` to `DeclInstant`.
-      - [ ] `psTsys` is a list, containing `DeclInstant` to instances of partial specialization class symbols.
-        - [ ] `psVersion` of instances is -2.
-        - [ ] When comparing two `DeclInstance`, or doing type inferencing, if `psVersion` of any instance is -2, `psTsys[0]` is used instead.
-        - [ ] When doing other things, like enumerating base types, or evaluating types of members from an instance of partial specialization, no conversion to primary is needed.
+      - [ ] `psTsys` is a list, containing `DeclInstant` of all eligible instances of partial specializations (including itself if eligible).
+        - [ ] When comparing two `DeclInstance` or matching for type inferencing, if `psVersion` of any instance is -1, `psTsys[0]` is used instead.
+        - [ ] When enumerating base types or members of an `DeclInstance`.
+          - [ ] Consider only itself when this type has no partial specialization, or `psVersion` is -1.
+          - [ ] Consider everything in `psTsys` otherwise.
       - [ ] When `psTsys` is used, `psVersion` is compared to the primary symbol version to determine if the list need to refresh.
-      - [ ] When `psVersion` is -1, it means `psTsys` is hardcoded, usually from `this` in a method of a class specialization.
-      - [ ] When `psVersion` is -2, it means the current type is an instance of partial specialization, and `psTsys` stores the primary type.
+      - [ ] `psVersion` of any instance is -1, and `psTsys[0]` stores the primary type.
     - [ ] Function test cases
       - [ ] Using pointers to member or `this` of a partial specialization instances as parameters.
       - [ ] Function overloading.
