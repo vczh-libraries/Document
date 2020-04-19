@@ -27,9 +27,18 @@
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Partial specialization constructions
   - [ ] Partial specialization on **classes**.
+    - [ ] Refactor
+      - [ ] `Resolving::resolvedSymbols` becomes `List<{ITsys*, Symbol*}>`, the `ITsys*` part stores the type to which the `Symbol*` part belongs to.
+      - [ ] Limit the use to `Symbol::TryGetChildren_NFb`. If a type is needed instead of just the symbol, use other functions like `VisitMemberForField`.
+      - [ ] `void Visit(FunctionDeclaration* self)` in `Ast_Evaluate.cpp` will be affected because here it fills `resolvedSymbols`. Search for other places.
+      - [ ] Remove `ResolveSymbol` and `ResolveChildSymbol`, use `VisitSymbol(For(Scope|Field))?` instead.
+      - [ ] Rename `EvaluateClassType` to something like `EvaluateClassBaseTypes`, which considers `psTsys` for all possible base classes, unlike `EvaluateClassSymbol` which only evaluates base classes for that symbol.
+      - [ ] At the end, only `VisitSymbol*` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.
+      - [ ] Copy `TestParseGenericMember.cpp` to `TestParsePSMemberPrimary.cpp` and `TestParsePSMemberPS.cpp`, testing member evaluation from primary symbol and its partial specializations.
+      - [ ] `TestParsePSClass.cpp` tests all other things, like function type inferencing with partial specialized instances as parameters.
     - [ ] Ignore forward declaration of class partial specialization, because it provides no additional value.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
-    - [ ] Add `psValue` (default 0) and `psTsys` to `DeclInstant`.
+    - [ ] Add `psVersion` (default 0) and `psTsys` to `DeclInstant`.
       - [ ] `psTsys` is a list, containing `DeclInstant` of all eligible instances of partial specializations (including itself if eligible).
         - [ ] When comparing two `DeclInstance` or matching for type inferencing, if `psVersion` of any instance is -1, `psTsys[0]` is used instead.
         - [ ] When enumerating base types or members of an `DeclInstance`.
