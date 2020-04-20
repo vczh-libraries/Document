@@ -156,8 +156,8 @@
     <ClInclude Include="..\..\..\Import\VlppRegex.h" />
     <ClInclude Include="Source\Ast.h" />
     <ClInclude Include="Source\Ast_Decl.h" />
-    <ClInclude Include="Source\Ast_EvaluateSymbol.h" />
-    <ClInclude Include="Source\Ast_EvaluateSymbol_Shared.h" />
+    <ClInclude Include="Source\EvaluateSymbol.h" />
+    <ClInclude Include="Source\EvaluateSymbol_Shared.h" />
     <ClInclude Include="Source\Ast_Expr.h" />
     <ClInclude Include="Source\Ast_Resolving.h" />
     <ClInclude Include="Source\Ast_Evaluate_ExpandPotentialVta.h" />
@@ -187,11 +187,11 @@
     <ClCompile Include="..\..\..\Import\VlppRegex.cpp" />
     <ClCompile Include="Source\Ast.cpp" />
     <ClCompile Include="Source\Ast_Evaluate.cpp" />
-    <ClCompile Include="Source\Ast_EvaluateSymbol_Class.cpp" />
-    <ClCompile Include="Source\Ast_EvaluateSymbol_Func.cpp" />
-    <ClCompile Include="Source\Ast_EvaluateSymbol_TypeAlias.cpp" />
-    <ClCompile Include="Source\Ast_EvaluateSymbol_ValueAlias.cpp" />
-    <ClCompile Include="Source\Ast_EvaluateSymbol_Var.cpp" />
+    <ClCompile Include="Source\EvaluateSymbol_Class.cpp" />
+    <ClCompile Include="Source\EvaluateSymbol_Func.cpp" />
+    <ClCompile Include="Source\EvaluateSymbol_TypeAlias.cpp" />
+    <ClCompile Include="Source\EvaluateSymbol_ValueAlias.cpp" />
+    <ClCompile Include="Source\EvaluateSymbol_Var.cpp" />
     <ClCompile Include="Source\Ast_Evaluate_ExprToTsys.cpp" />
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_ExprImpl.cpp" />
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_GenericImpl.cpp" />
@@ -202,7 +202,7 @@
     <ClCompile Include="Source\AP_Misc.cpp" />
     <ClCompile Include="Source\AP_ResolveFunctionParameters.cpp" />
     <ClCompile Include="Source\AP_ResolveGenericTypeParameters.cpp" />
-    <ClCompile Include="Source\Ast_EvaluateSymbol.cpp" />
+    <ClCompile Include="Source\EvaluateSymbol.cpp" />
     <ClCompile Include="Source\Ast_Resolving.cpp" />
     <ClCompile Include="Source\Symbol.cpp" />
     <ClCompile Include="Source\Symbol_TemplateSpec.cpp" />

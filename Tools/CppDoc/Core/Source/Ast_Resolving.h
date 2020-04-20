@@ -6,7 +6,7 @@
 #include "Ast_Type.h"
 #include "Parser.h"
 
-#include "Ast_EvaluateSymbol.h"
+#include "EvaluateSymbol.h"
 #include "Symbol_TemplateSpec.h"
 
 namespace symbol_type_resolving

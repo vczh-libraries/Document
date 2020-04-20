@@ -1,4 +1,4 @@
-#include "Ast_EvaluateSymbol_Shared.h"
+#include "EvaluateSymbol_Shared.h"
 #include "IFT.h"
 
 using namespace infer_function_type;

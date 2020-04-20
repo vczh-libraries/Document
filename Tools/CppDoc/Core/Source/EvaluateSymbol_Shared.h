@@ -1,7 +1,7 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_AST_EVALUATESYMBOL_SHARED
 #define VCZH_DOCUMENT_CPPDOC_AST_EVALUATESYMBOL_SHARED
 
-#include "Ast_EvaluateSymbol.h"
+#include "EvaluateSymbol.h"
 
 namespace symbol_type_resolving
 {

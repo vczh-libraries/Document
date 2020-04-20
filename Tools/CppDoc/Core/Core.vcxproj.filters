@@ -105,14 +105,8 @@
     <ClInclude Include="Source\Parser_Declaration.h">
       <Filter>Source Files\Parser</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Ast_EvaluateSymbol.h">
-      <Filter>Source Files\EvaluateSymbol</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Symbol_TemplateSpec.h">
       <Filter>Source Files\Symbol</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Ast_EvaluateSymbol_Shared.h">
-      <Filter>Source Files\EvaluateSymbol</Filter>
     </ClInclude>
     <ClInclude Include="Source\Symbol.h">
       <Filter>Source Files\Symbol</Filter>
@@ -128,6 +122,12 @@
     </ClInclude>
     <ClInclude Include="Source\PSO.h">
       <Filter>Source Files\PartialSpecializationOrdering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EvaluateSymbol.h">
+      <Filter>Source Files\EvaluateSymbol</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EvaluateSymbol_Shared.h">
+      <Filter>Source Files\EvaluateSymbol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -245,24 +245,6 @@
     <ClCompile Include="Source\Parser_Declaration_FuncVar.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Ast_EvaluateSymbol.cpp">
-      <Filter>Source Files\EvaluateSymbol</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_EvaluateSymbol_Class.cpp">
-      <Filter>Source Files\EvaluateSymbol</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_EvaluateSymbol_Func.cpp">
-      <Filter>Source Files\EvaluateSymbol</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_EvaluateSymbol_TypeAlias.cpp">
-      <Filter>Source Files\EvaluateSymbol</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_EvaluateSymbol_ValueAlias.cpp">
-      <Filter>Source Files\EvaluateSymbol</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_EvaluateSymbol_Var.cpp">
-      <Filter>Source Files\EvaluateSymbol</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Symbol_TemplateSpec.cpp">
       <Filter>Source Files\Symbol</Filter>
     </ClCompile>
@@ -307,6 +289,24 @@
     </ClCompile>
     <ClCompile Include="Source\PSO_MatchPSArgument.cpp">
       <Filter>Source Files\PartialSpecializationOrdering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EvaluateSymbol.cpp">
+      <Filter>Source Files\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EvaluateSymbol_Class.cpp">
+      <Filter>Source Files\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EvaluateSymbol_Func.cpp">
+      <Filter>Source Files\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EvaluateSymbol_TypeAlias.cpp">
+      <Filter>Source Files\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EvaluateSymbol_ValueAlias.cpp">
+      <Filter>Source Files\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EvaluateSymbol_Var.cpp">
+      <Filter>Source Files\EvaluateSymbol</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
