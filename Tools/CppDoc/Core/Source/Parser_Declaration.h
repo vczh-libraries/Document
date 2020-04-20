@@ -1,5 +1,5 @@
 #include "Parser.h"
-#include "Ast_Resolving_PSO.h"
+#include "PSO.h"
 #include "Ast_Decl.h"
 
 extern bool						IsCStyleTypeReference(Ptr<CppTokenCursor>& cursor);

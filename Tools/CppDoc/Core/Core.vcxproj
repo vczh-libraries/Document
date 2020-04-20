@@ -163,7 +163,7 @@
     <ClInclude Include="Source\Ast_Evaluate_ExpandPotentialVta.h" />
     <ClInclude Include="Source\AP.h" />
     <ClInclude Include="Source\AP_CalculateGpa.h" />
-    <ClInclude Include="Source\Ast_Resolving_PSO.h" />
+    <ClInclude Include="Source\PSO.h" />
     <ClInclude Include="Source\Ast_Stat.h" />
     <ClInclude Include="Source\Ast_Type.h" />
     <ClInclude Include="Source\IncludeAll.h" />
@@ -214,10 +214,10 @@
     <ClCompile Include="Source\IFT_InferTemplateArgument.cpp" />
     <ClCompile Include="Source\IFT_InferTemplateArgumentOfComplexType.cpp" />
     <ClCompile Include="Source\Ast_Resolving_Overloading.cpp" />
-    <ClCompile Include="Source\Ast_Resolving_PSO_AssignPSPrimary.cpp" />
-    <ClCompile Include="Source\Ast_Resolving_PSO_IsPSAncestor.cpp" />
-    <ClCompile Include="Source\Ast_Resolving_PSO_MatchPSAncestorArguments.cpp" />
-    <ClCompile Include="Source\Ast_Resolving_PSO_MatchPSArgument.cpp" />
+    <ClCompile Include="Source\PSO_AssignPSPrimary.cpp" />
+    <ClCompile Include="Source\PSO_IsPSAncestor.cpp" />
+    <ClCompile Include="Source\PSO_MatchPSAncestorArguments.cpp" />
+    <ClCompile Include="Source\PSO_MatchPSArgument.cpp" />
     <ClCompile Include="Source\Ast_Type_GenerateMembers.cpp" />
     <ClCompile Include="Source\Ast_Type_IsPendingType.cpp" />
     <ClCompile Include="Source\Ast_Type_IsSameResolvedType.cpp" />

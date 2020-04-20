@@ -1,4 +1,4 @@
-#include "Ast_Resolving_PSO.h"
+#include "PSO.h"
 #include "Ast_Expr.h"
 
 namespace partial_specification_ordering

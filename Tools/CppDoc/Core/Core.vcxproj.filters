@@ -102,9 +102,6 @@
     <ClInclude Include="..\..\..\Import\VlppRegex.h">
       <Filter>Import</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Ast_Resolving_PSO.h">
-      <Filter>Source Files\PartialSpecializationOrdering</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Parser_Declaration.h">
       <Filter>Source Files\Parser</Filter>
     </ClInclude>
@@ -128,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="Source\AP_CalculateGpa.h">
       <Filter>Source Files\AssignParameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PSO.h">
+      <Filter>Source Files\PartialSpecializationOrdering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,18 +227,6 @@
     <ClCompile Include="Source\Ast_Resolving_Adl.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_PSO_AssignPSPrimary.cpp">
-      <Filter>Source Files\PartialSpecializationOrdering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_PSO_IsPSAncestor.cpp">
-      <Filter>Source Files\PartialSpecializationOrdering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_PSO_MatchPSAncestorArguments.cpp">
-      <Filter>Source Files\PartialSpecializationOrdering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_PSO_MatchPSArgument.cpp">
-      <Filter>Source Files\PartialSpecializationOrdering</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Parser_Declaration_Namespace.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
@@ -307,6 +295,18 @@
     </ClCompile>
     <ClCompile Include="Source\AP_ResolveGenericTypeParameters.cpp">
       <Filter>Source Files\AssignParameters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PSO_AssignPSPrimary.cpp">
+      <Filter>Source Files\PartialSpecializationOrdering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PSO_IsPSAncestor.cpp">
+      <Filter>Source Files\PartialSpecializationOrdering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PSO_MatchPSAncestorArguments.cpp">
+      <Filter>Source Files\PartialSpecializationOrdering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PSO_MatchPSArgument.cpp">
+      <Filter>Source Files\PartialSpecializationOrdering</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

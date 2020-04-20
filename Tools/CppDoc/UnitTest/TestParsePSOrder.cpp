@@ -1,5 +1,5 @@
 #include "Util.h"
-#include <Ast_Resolving_PSO.h>
+#include <PSO.h>
 
 namespace Input__TestParsePSOrder_PartialOrderEvaluation_Type
 {

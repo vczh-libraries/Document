@@ -1,5 +1,5 @@
-#ifndef VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_IFT
-#define VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_IFT
+#ifndef VCZH_DOCUMENT_CPPDOC_IFT
+#define VCZH_DOCUMENT_CPPDOC_IFT
 
 #include "Symbol_TemplateSpec.h"
 #include "Ast_Type.h"
