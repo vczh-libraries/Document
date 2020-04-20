@@ -1,7 +1,9 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_PSO
 #define VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_PSO
 
-#include "Ast_Resolving_IFT.h"
+#include "Lexer.h"
+#include "Symbol.h"
+#include "Ast_Type.h"
 
 namespace partial_specification_ordering
 {

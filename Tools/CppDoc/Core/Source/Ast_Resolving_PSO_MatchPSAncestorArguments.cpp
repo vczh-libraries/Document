@@ -1,4 +1,5 @@
 #include "Ast_Resolving_PSO.h"
+#include "Ast_Resolving_IFT.h"
 
 using namespace infer_function_type;
 

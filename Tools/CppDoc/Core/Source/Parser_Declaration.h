@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Ast_Resolving_PSO.h"
+#include "Ast_Decl.h"
 
 extern bool						IsCStyleTypeReference(Ptr<CppTokenCursor>& cursor);
 extern void						EnsureNoTemplateSpec(List<Ptr<TemplateSpec>>& specs, Ptr<CppTokenCursor>& cursor);

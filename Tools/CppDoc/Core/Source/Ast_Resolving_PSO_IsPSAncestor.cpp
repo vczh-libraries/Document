@@ -1,9 +1,9 @@
 #include "Ast_Resolving_PSO.h"
 #include "Ast_Resolving_AP.h"
+#include "Ast_Resolving_IFT.h"
 
-using namespace symbol_type_resolving;
-using namespace infer_function_type;
 using namespace assign_parameters;
+using namespace infer_function_type;
 
 namespace partial_specification_ordering
 {

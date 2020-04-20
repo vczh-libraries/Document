@@ -1,6 +1,11 @@
 #include "Ast_Resolving_PSO.h"
 #include "Ast_Resolving_AP.h"
+#include "Ast_Resolving_IFT.h"
 #include "Parser.h"
+
+using namespace symbol_type_resolving;
+using namespace assign_parameters;
+using namespace infer_function_type;
 
 namespace partial_specification_ordering
 {
@@ -149,8 +154,8 @@ namespace partial_specification_ordering
 			for (vint i = 0; i < tspec->arguments.Count(); i++)
 			{
 				auto targ = tspec->arguments[i];
-				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(targ, pa.tsys.Obj());
-				auto patternSymbol = infer_function_type::TemplateArgumentPatternToSymbol(pattern);
+				auto pattern = GetTemplateArgumentKey(targ, pa.tsys.Obj());
+				auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
 				auto result = MakePtr<MatchPSResult>();
 				matchingResult.Add(patternSymbol, result);
 
@@ -188,8 +193,8 @@ namespace partial_specification_ordering
 			SortedList<Type*> involvedTypes;
 			SortedList<Expr*> involvedExprs;
 
-			assign_parameters::FillFreeSymbols(pa, tspec, freeAncestorSymbols);
-			infer_function_type::CollectFreeTypes(pa, false, ptype, nullptr, false, freeAncestorSymbols, involvedTypes, involvedExprs);
+			FillFreeSymbols(pa, tspec, freeAncestorSymbols);
+			CollectFreeTypes(pa, false, ptype, nullptr, false, freeAncestorSymbols, involvedTypes, involvedExprs);
 
 			try
 			{
