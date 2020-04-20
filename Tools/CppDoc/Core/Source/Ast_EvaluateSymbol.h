@@ -1,4 +1,7 @@
-#include "Parser.h"
+#ifndef VCZH_DOCUMENT_CPPDOC_AST_EVALUATESYMBOL
+#define VCZH_DOCUMENT_CPPDOC_AST_EVALUATESYMBOL
+
+#include "Symbol.h"
 #include "Ast_Decl.h"
 
 namespace symbol_type_resolving
@@ -63,3 +66,5 @@ namespace symbol_type_resolving
 	extern ITsys*								EvaluateGenericArgumentSymbol(Symbol* symbol);
 	extern symbol_component::Evaluation&		EvaluateClassType(const ParsingArguments& invokerPa, ITsys* classType);
 }
+
+#endif

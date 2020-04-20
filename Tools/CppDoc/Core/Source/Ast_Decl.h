@@ -2,8 +2,8 @@
 #define VCZH_DOCUMENT_CPPDOC_AST_DECL
 
 #include "Ast.h"
-
-class DelayParse;
+#include "Lexer.h"
+#include "Symbol.h"
 
 /***********************************************************************
 Visitor
@@ -77,6 +77,15 @@ class SpecializationSpec : public Object
 {
 public:
 	VariadicList<GenericArgument>					arguments;
+};
+
+class DelayParse : public Object
+{
+public:
+	ParsingArguments								pa;
+	Ptr<CppTokenReader>								reader;
+	Ptr<CppTokenCursor>								begin;
+	RegexToken										end;
 };
 
 /***********************************************************************

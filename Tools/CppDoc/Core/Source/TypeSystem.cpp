@@ -1,4 +1,5 @@
-#include "Ast_Resolving.h"
+#include "TypeSystem.h"
+#include "Symbol_TemplateSpec.h"
 
 class TsysAlloc;
 

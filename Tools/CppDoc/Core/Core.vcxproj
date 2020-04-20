@@ -171,6 +171,7 @@
     <ClInclude Include="Source\LexerTokenDef.h" />
     <ClInclude Include="Source\Parser.h" />
     <ClInclude Include="Source\Parser_Declaration.h" />
+    <ClInclude Include="Source\Symbol.h" />
     <ClInclude Include="Source\Symbol_TemplateSpec.h" />
     <ClInclude Include="Source\TypeSystem.h" />
     <ClInclude Include="Source\Utility.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="Source\Ast_Resolving_AP_ResolveGenericTypeParameters.cpp" />
     <ClCompile Include="Source\Ast_EvaluateSymbol.cpp" />
     <ClCompile Include="Source\Ast_Resolving.cpp" />
+    <ClCompile Include="Source\Symbol.cpp" />
     <ClCompile Include="Source\Symbol_TemplateSpec.cpp" />
     <ClInclude Include="Source\Ast_Resolving_IFT.h" />
     <ClCompile Include="Source\Ast_Resolving_AP_ResolveGenericParameters.cpp" />

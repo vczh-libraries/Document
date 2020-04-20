@@ -126,6 +126,9 @@
     <ClInclude Include="Source\Ast_EvaluateSymbol_Shared.h">
       <Filter>Source Files\EvaluateSymbol</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Symbol.h">
+      <Filter>Source Files\Symbol</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Import\Vlpp.cpp">
@@ -300,6 +303,9 @@
       <Filter>Source Files\EvaluateSymbol</Filter>
     </ClCompile>
     <ClCompile Include="Source\Symbol_TemplateSpec.cpp">
+      <Filter>Source Files\Symbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Symbol.cpp">
       <Filter>Source Files\Symbol</Filter>
     </ClCompile>
   </ItemGroup>

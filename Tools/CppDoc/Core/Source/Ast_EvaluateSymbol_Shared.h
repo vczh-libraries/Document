@@ -1,3 +1,6 @@
+#ifndef VCZH_DOCUMENT_CPPDOC_AST_EVALUATESYMBOL_SHARED
+#define VCZH_DOCUMENT_CPPDOC_AST_EVALUATESYMBOL_SHARED
+
 #include "Ast_EvaluateSymbol.h"
 
 namespace symbol_type_resolving
@@ -36,3 +39,5 @@ namespace symbol_type_resolving
 	extern TypeTsysList&						FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& declPa, Declaration* decl, Ptr<TemplateSpec> spec, TemplateArgumentContext* argumentsToApply);
 	extern Eval									ProcessArguments(const ParsingArguments& invokerPa, Declaration* decl, Ptr<TemplateSpec> spec, ITsys*& parentDeclType, TemplateArgumentContext* argumentsToApply, bool allowEvaluating = false);
 }
+
+#endif

@@ -1,5 +1,6 @@
 #include "Ast_Resolving_PSO.h"
 #include "Ast_Resolving_AP.h"
+#include "Parser.h"
 
 namespace partial_specification_ordering
 {

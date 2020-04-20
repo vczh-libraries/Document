@@ -1,8 +1,8 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_SYMBOL_TEMPLATESPEC
 #define VCZH_DOCUMENT_CPPDOC_SYMBOL_TEMPLATESPEC
 
+#include "Symbol.h"
 #include "Ast_Decl.h"
-#include "Parser.h"
 
 namespace symbol_type_resolving
 {
