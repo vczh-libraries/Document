@@ -157,6 +157,7 @@
     <ClInclude Include="Source\Ast.h" />
     <ClInclude Include="Source\Ast_Decl.h" />
     <ClInclude Include="Source\Ast_EvaluateSymbol.h" />
+    <ClInclude Include="Source\Ast_EvaluateSymbol_Shared.h" />
     <ClInclude Include="Source\Ast_Expr.h" />
     <ClInclude Include="Source\Ast_Resolving.h" />
     <ClInclude Include="Source\Ast_Evaluate_ExpandPotentialVta.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Source\LexerTokenDef.h" />
     <ClInclude Include="Source\Parser.h" />
     <ClInclude Include="Source\Parser_Declaration.h" />
+    <ClInclude Include="Source\Symbol_TemplateSpec.h" />
     <ClInclude Include="Source\TypeSystem.h" />
     <ClInclude Include="Source\Utility.h" />
   </ItemGroup>
@@ -201,7 +203,7 @@
     <ClCompile Include="Source\Ast_Resolving_AP_ResolveGenericTypeParameters.cpp" />
     <ClCompile Include="Source\Ast_EvaluateSymbol.cpp" />
     <ClCompile Include="Source\Ast_Resolving.cpp" />
-    <ClCompile Include="Source\Ast_Resolving_Generic.cpp" />
+    <ClCompile Include="Source\Symbol_TemplateSpec.cpp" />
     <ClInclude Include="Source\Ast_Resolving_IFT.h" />
     <ClCompile Include="Source\Ast_Resolving_AP_ResolveGenericParameters.cpp" />
     <ClCompile Include="Source\Ast_Resolving_IFT_InferFunctionType.cpp" />

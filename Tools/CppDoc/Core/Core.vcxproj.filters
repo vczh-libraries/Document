@@ -43,11 +43,14 @@
     <Filter Include="Source Files\Ast\AssignParameters">
       <UniqueIdentifier>{091928bc-c27c-4b1a-87e7-56510348c68a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Ast\EvaluateSymbol">
-      <UniqueIdentifier>{2ea27cc1-ff29-4856-b9b2-d79758192e1d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Ast\EvaluateTypeExpr">
       <UniqueIdentifier>{a42f734e-8eec-4c50-a26f-1fab1e70dbc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Symbol">
+      <UniqueIdentifier>{0d677b93-c4f4-4e3c-ae8a-6d2abf6bda8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EvaluateSymbol">
+      <UniqueIdentifier>{2ea27cc1-ff29-4856-b9b2-d79758192e1d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,7 +118,13 @@
       <Filter>Source Files\Parser</Filter>
     </ClInclude>
     <ClInclude Include="Source\Ast_EvaluateSymbol.h">
-      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+      <Filter>Source Files\EvaluateSymbol</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Symbol_TemplateSpec.h">
+      <Filter>Source Files\Symbol</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Ast_EvaluateSymbol_Shared.h">
+      <Filter>Source Files\EvaluateSymbol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -178,9 +187,6 @@
     </ClCompile>
     <ClCompile Include="Source\Ast_Type_GenerateMembers.cpp">
       <Filter>Source Files\Ast\Type</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_Generic.cpp">
-      <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Evaluate_ToTsys_TypeImpl.cpp">
       <Filter>Source Files\Ast\EvaluateTypeExpr</Filter>
@@ -276,22 +282,25 @@
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_EvaluateSymbol.cpp">
-      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+      <Filter>Source Files\EvaluateSymbol</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_EvaluateSymbol_Class.cpp">
-      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+      <Filter>Source Files\EvaluateSymbol</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_EvaluateSymbol_Func.cpp">
-      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+      <Filter>Source Files\EvaluateSymbol</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_EvaluateSymbol_TypeAlias.cpp">
-      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+      <Filter>Source Files\EvaluateSymbol</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_EvaluateSymbol_ValueAlias.cpp">
-      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+      <Filter>Source Files\EvaluateSymbol</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_EvaluateSymbol_Var.cpp">
-      <Filter>Source Files\Ast\EvaluateSymbol</Filter>
+      <Filter>Source Files\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Symbol_TemplateSpec.cpp">
+      <Filter>Source Files\Symbol</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -6,58 +6,11 @@
 #include "Ast_Type.h"
 #include "Parser.h"
 
+#include "Ast_EvaluateSymbol.h"
+#include "Symbol_TemplateSpec.h"
+
 namespace symbol_type_resolving
 {
-	template<typename TForward>
-	bool IsStaticSymbol(Symbol* symbol)
-	{
-		bool isStatic = false;
-		switch (symbol->GetCategory())
-		{
-		case symbol_component::SymbolCategory::Normal:
-			if (auto decl = symbol->GetImplDecl_NFb<TForward>())
-			{
-				isStatic |= decl->decoratorStatic;
-			}
-			{
-				const auto& decls = symbol->GetForwardDecls_N();
-				for (vint i = 0; i < decls.Count(); i++)
-				{
-					if (auto decl = decls[i].Cast<TForward>())
-					{
-						isStatic |= decl->decoratorStatic;
-					}
-				}
-			}
-			break;
-		case symbol_component::SymbolCategory::FunctionBody:
-			if (auto decl = symbol->GetAnyForwardDecl<TForward>())
-			{
-				isStatic |= decl->decoratorStatic;
-			}
-			break;
-		case symbol_component::SymbolCategory::Function:
-			{
-				const auto& symbols = symbol->GetForwardSymbols_F();
-				for (vint i = 0; i < symbols.Count(); i++)
-				{
-					isStatic |= IsStaticSymbol<TForward>(symbols[i].Obj());
-				}
-			}
-			{
-				const auto& symbols = symbol->GetImplSymbols_F();
-				for (vint i = 0; i < symbols.Count(); i++)
-				{
-					isStatic |= IsStaticSymbol<TForward>(symbols[i].Obj());
-				}
-			}
-			break;
-		default:
-			throw UnexpectedSymbolCategoryException();
-		}
-		return isStatic;
-	}
-
 	extern bool									AddInternal(ExprTsysList& list, const ExprTsysItem& item);
 	extern void									AddInternal(ExprTsysList& list, ExprTsysList& items);
 	extern bool									AddVar(ExprTsysList& list, const ExprTsysItem& item);
@@ -83,18 +36,6 @@ namespace symbol_type_resolving
 	extern void									Promote(TsysPrimitive& primitive);
 	extern TsysPrimitive						ArithmeticConversion(TsysPrimitive leftP, TsysPrimitive rightP);
 
-	// EvaluateSymbol
-
-	extern TypeTsysList&						EvaluateVarSymbol				(const ParsingArguments& invokerPa,	ForwardVariableDeclaration* varDecl,	ITsys* parentDeclType,				bool& isVariadic							);
-	extern void									SetFuncTypeByReturnStat			(const ParsingArguments& pa,		FunctionDeclaration* funcDecl,			TypeTsysList& returnTypes,			TemplateArgumentContext* argumentsToApply	);
-	extern TypeTsysList&						EvaluateFuncSymbol				(const ParsingArguments& invokerPa,	ForwardFunctionDeclaration* funcDecl,	ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
-	extern TypeTsysList&						EvaluateForwardClassSymbol		(const ParsingArguments& invokerPa,	ForwardClassDeclaration* classDecl,		ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
-	extern symbol_component::Evaluation&		EvaluateClassSymbol				(const ParsingArguments& invokerPa,	ClassDeclaration* classDecl,			ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
-	extern TypeTsysList&						EvaluateTypeAliasSymbol			(const ParsingArguments& invokerPa,	TypeAliasDeclaration* usingDecl,		ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
-	extern TypeTsysList&						EvaluateValueAliasSymbol		(const ParsingArguments& invokerPa,	ValueAliasDeclaration* usingDecl,		ITsys* parentDeclType,				TemplateArgumentContext* argumentsToApply	);
-	extern ITsys*								EvaluateGenericArgumentSymbol	(Symbol* symbol);
-	extern symbol_component::Evaluation&		EvaluateClassType				(const ParsingArguments& invokerPa, ITsys* classType);
-
 	// Overloading
 
 	extern void									FilterFieldsAndBestQualifiedFunctions(TsysCV thisCV, TsysRefType thisRef, ExprTsysList& funcTypes);
@@ -107,14 +48,6 @@ namespace symbol_type_resolving
 	extern void									SearchAdlClassesAndNamespaces(const ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
 	extern void									SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
 	extern void									SearchAdlFunction(const ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result);
-
-	// Generic
-
-	extern Ptr<TemplateSpec>					GetTemplateSpecFromSymbol(Symbol* symbol);
-	extern ITsys*								GetTemplateArgumentKey(const TemplateSpec::Argument& argument, ITsysAlloc* tsys);
-	extern ITsys*								GetTemplateArgumentKey(Symbol* argumentSymbol, ITsysAlloc* tsys);
-	extern void									CreateGenericFunctionHeader(const ParsingArguments& pa, Symbol* declSymbol, ITsys* parentDeclType, Ptr<TemplateSpec> spec, TypeTsysList& params, TsysGenericFunction& genericFunction);
-	extern void									EnsureGenericTypeParameterAndArgumentMatched(ITsys* parameter, ITsys* argument);
 }
 
 #endif

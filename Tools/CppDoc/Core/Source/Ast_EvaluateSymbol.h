@@ -1,38 +1,65 @@
-#include "Ast_Resolving_IFT.h"
+#include "Parser.h"
+#include "Ast_Decl.h"
 
 namespace symbol_type_resolving
 {
-	struct Eval
+	template<typename TForward>
+	bool IsStaticSymbol(Symbol* symbol)
 	{
-	public:
-		bool								notEvaluated;
-		Symbol*								symbol;
-		ParsingArguments					declPa;
-		symbol_component::Evaluation&		ev;
-		TypeTsysList&						evaluatedTypes;
-
-		Eval(
-			bool							_notEvaluated,
-			Symbol*							_symbol,
-			ParsingArguments				_declPa,
-			symbol_component::Evaluation&	_ev
-		)
-			: notEvaluated(_notEvaluated)
-			, symbol(_symbol)
-			, declPa(_declPa)
-			, ev(_ev)
-			, evaluatedTypes(_ev.Get())
+		bool isStatic = false;
+		switch (symbol->GetCategory())
 		{
+		case symbol_component::SymbolCategory::Normal:
+			if (auto decl = symbol->GetImplDecl_NFb<TForward>())
+			{
+				isStatic |= decl->decoratorStatic;
+			}
+			{
+				const auto& decls = symbol->GetForwardDecls_N();
+				for (vint i = 0; i < decls.Count(); i++)
+				{
+					if (auto decl = decls[i].Cast<TForward>())
+					{
+						isStatic |= decl->decoratorStatic;
+					}
+				}
+			}
+			break;
+		case symbol_component::SymbolCategory::FunctionBody:
+			if (auto decl = symbol->GetAnyForwardDecl<TForward>())
+			{
+				isStatic |= decl->decoratorStatic;
+			}
+			break;
+		case symbol_component::SymbolCategory::Function:
+			{
+				const auto& symbols = symbol->GetForwardSymbols_F();
+				for (vint i = 0; i < symbols.Count(); i++)
+				{
+					isStatic |= IsStaticSymbol<TForward>(symbols[i].Obj());
+				}
+			}
+			{
+				const auto& symbols = symbol->GetImplSymbols_F();
+				for (vint i = 0; i < symbols.Count(); i++)
+				{
+					isStatic |= IsStaticSymbol<TForward>(symbols[i].Obj());
+				}
+			}
+			break;
+		default:
+			throw UnexpectedSymbolCategoryException();
 		}
+		return isStatic;
+	}
 
-		operator bool()
-		{
-			return notEvaluated;
-		}
-	};
-
-	extern symbol_component::Evaluation&	GetCorrectEvaluation(const ParsingArguments& pa, Declaration* decl, Ptr<TemplateSpec> spec, TemplateArgumentContext* argumentsToApply);
-	extern ParsingArguments					GetPaFromInvokerPa(const ParsingArguments& pa, Symbol* declSymbol, TemplateArgumentContext* parentTaContext, TemplateArgumentContext* argumentsToApply);
-	extern TypeTsysList&					FinishEvaluatingPotentialGenericSymbol(const ParsingArguments& declPa, Declaration* decl, Ptr<TemplateSpec> spec, TemplateArgumentContext* argumentsToApply);
-	extern Eval								ProcessArguments(const ParsingArguments& invokerPa, Declaration* decl, Ptr<TemplateSpec> spec, ITsys*& parentDeclType, TemplateArgumentContext* argumentsToApply, bool allowEvaluating = false);
+	extern TypeTsysList&						EvaluateVarSymbol(const ParsingArguments& invokerPa, ForwardVariableDeclaration* varDecl, ITsys* parentDeclType, bool& isVariadic);
+	extern void									SetFuncTypeByReturnStat(const ParsingArguments& pa, FunctionDeclaration* funcDecl, TypeTsysList& returnTypes, TemplateArgumentContext* argumentsToApply);
+	extern TypeTsysList&						EvaluateFuncSymbol(const ParsingArguments& invokerPa, ForwardFunctionDeclaration* funcDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
+	extern TypeTsysList&						EvaluateForwardClassSymbol(const ParsingArguments& invokerPa, ForwardClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
+	extern symbol_component::Evaluation&		EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
+	extern TypeTsysList&						EvaluateTypeAliasSymbol(const ParsingArguments& invokerPa, TypeAliasDeclaration* usingDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
+	extern TypeTsysList&						EvaluateValueAliasSymbol(const ParsingArguments& invokerPa, ValueAliasDeclaration* usingDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
+	extern ITsys*								EvaluateGenericArgumentSymbol(Symbol* symbol);
+	extern symbol_component::Evaluation&		EvaluateClassType(const ParsingArguments& invokerPa, ITsys* classType);
 }

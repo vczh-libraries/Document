@@ -1,7 +1,8 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_IFT
 #define VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_IFT
 
-#include "Ast_Resolving.h"
+#include "Symbol_TemplateSpec.h"
+#include "Ast_Type.h"
 #include "Ast_Expr.h"
 
 namespace infer_function_type

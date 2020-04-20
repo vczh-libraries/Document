@@ -1,4 +1,5 @@
 #include "Ast_Resolving_IFT.h"
+#include "Ast_EvaluateSymbol.h"
 
 using namespace symbol_type_resolving;
 

@@ -1,4 +1,4 @@
-#include "Ast_EvaluateSymbol.h"
+#include "Ast_EvaluateSymbol_Shared.h"
 
 namespace symbol_type_resolving
 {

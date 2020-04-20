@@ -1,7 +1,5 @@
-#include "Ast_Resolving.h"
-#include "Ast_Resolving_IFT.h"
-
-using namespace infer_function_type;
+#include "Symbol_TemplateSpec.h"
+#include "Ast_EvaluateSymbol.h"
 
 namespace symbol_type_resolving
 {
