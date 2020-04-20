@@ -1,5 +1,6 @@
 #include "Symbol.h"
 #include "Symbol_TemplateSpec.h"
+#include "Ast.h"
 
 namespace symbol_component
 {

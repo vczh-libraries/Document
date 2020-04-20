@@ -1,5 +1,6 @@
 #include "Ast_EvaluateSymbol_Shared.h"
 #include "Symbol_TemplateSpec.h"
+#include "Ast.h"
 
 namespace symbol_type_resolving
 {

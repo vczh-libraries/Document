@@ -1,10 +1,28 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_SYMBOL
 #define VCZH_DOCUMENT_CPPDOC_SYMBOL
 
-#include "Ast.h"
+#include "TypeSystem.h"
 
+struct CppName;
 class Symbol;
+class SpecializationSpec;
+class Declaration;
+class ForwardFunctionDeclaration;
 class FunctionDeclaration;
+class Stat;
+class Program;
+
+// the form or location of the expression is incorrect
+struct IllegalExprException {};
+
+// unable to recover from type checking
+struct TypeCheckerException {};
+
+// call unsupported method of Symbol, usually because of the symbol category
+struct UnexpectedSymbolCategoryException {};
+
+// stop evaluating function body, because the current context is to evaluating the return type
+struct FinishEvaluatingReturnType {};
 
 /***********************************************************************
 Symbol
