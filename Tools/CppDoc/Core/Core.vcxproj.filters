@@ -34,9 +34,6 @@
     <Filter Include="Source Files\Ast\Resolving">
       <UniqueIdentifier>{02864258-8464-4ada-896b-8c2852870da2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Ast\InferFunctionType">
-      <UniqueIdentifier>{71852068-2cec-4826-9305-d548fcff1c37}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Ast\PartialSpecializationOrdering">
       <UniqueIdentifier>{9c972d79-8638-4308-96a5-cf14b609f939}</UniqueIdentifier>
     </Filter>
@@ -51,6 +48,9 @@
     </Filter>
     <Filter Include="Source Files\EvaluateSymbol">
       <UniqueIdentifier>{2ea27cc1-ff29-4856-b9b2-d79758192e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InferFunctionType">
+      <UniqueIdentifier>{71852068-2cec-4826-9305-d548fcff1c37}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,7 +103,7 @@
       <Filter>Import</Filter>
     </ClInclude>
     <ClInclude Include="Source\Ast_Resolving_IFT.h">
-      <Filter>Source Files\Ast\InferFunctionType</Filter>
+      <Filter>Source Files\InferFunctionType</Filter>
     </ClInclude>
     <ClInclude Include="Source\Ast_Resolving_PSO.h">
       <Filter>Source Files\Ast\PartialSpecializationOrdering</Filter>
@@ -228,13 +228,13 @@
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_IFT_CollectFreeTypes.cpp">
-      <Filter>Source Files\Ast\InferFunctionType</Filter>
+      <Filter>Source Files\InferFunctionType</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_IFT_InferFunctionType.cpp">
-      <Filter>Source Files\Ast\InferFunctionType</Filter>
+      <Filter>Source Files\InferFunctionType</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_IFT_InferTemplateArgument.cpp">
-      <Filter>Source Files\Ast\InferFunctionType</Filter>
+      <Filter>Source Files\InferFunctionType</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_AP_ResolveGenericParameters.cpp">
       <Filter>Source Files\Ast\AssignParameters</Filter>
@@ -261,10 +261,10 @@
       <Filter>Source Files\Ast\PartialSpecializationOrdering</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_IFT_InferTemplateArgumentOfComplexType.cpp">
-      <Filter>Source Files\Ast\InferFunctionType</Filter>
+      <Filter>Source Files\InferFunctionType</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_IFT_InferPartialSpecialization.cpp">
-      <Filter>Source Files\Ast\InferFunctionType</Filter>
+      <Filter>Source Files\InferFunctionType</Filter>
     </ClCompile>
     <ClCompile Include="Source\Parser_Declaration_Namespace.cpp">
       <Filter>Source Files\Parser</Filter>
