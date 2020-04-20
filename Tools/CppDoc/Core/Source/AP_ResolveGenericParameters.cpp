@@ -1,4 +1,4 @@
-#include "Ast_Resolving_AP_CalculateGpa.h"
+#include "AP_CalculateGpa.h"
 
 using namespace symbol_type_resolving;
 

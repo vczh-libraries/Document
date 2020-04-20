@@ -1,7 +1,7 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_AP_CALCULATEGPA
 #define VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_AP_CALCULATEGPA
 
-#include "Ast_Resolving_AP.h"
+#include "AP.h"
 
 namespace assign_parameters
 {

@@ -105,12 +105,6 @@
     <ClInclude Include="Source\Ast_Resolving_PSO.h">
       <Filter>Source Files\PartialSpecializationOrdering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Ast_Resolving_AP.h">
-      <Filter>Source Files\AssignParameters</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Ast_Resolving_AP_CalculateGpa.h">
-      <Filter>Source Files\AssignParameters</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Parser_Declaration.h">
       <Filter>Source Files\Parser</Filter>
     </ClInclude>
@@ -128,6 +122,12 @@
     </ClInclude>
     <ClInclude Include="Source\IFT.h">
       <Filter>Source Files\InferFunctionType</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AP.h">
+      <Filter>Source Files\AssignParameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AP_CalculateGpa.h">
+      <Filter>Source Files\AssignParameters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,18 +227,6 @@
     <ClCompile Include="Source\Ast_Resolving_Adl.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_AP_ResolveGenericParameters.cpp">
-      <Filter>Source Files\AssignParameters</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_AP_ResolveGenericTypeParameters.cpp">
-      <Filter>Source Files\AssignParameters</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_AP_Misc.cpp">
-      <Filter>Source Files\AssignParameters</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_AP_ResolveFunctionParameters.cpp">
-      <Filter>Source Files\AssignParameters</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_PSO_AssignPSPrimary.cpp">
       <Filter>Source Files\PartialSpecializationOrdering</Filter>
     </ClCompile>
@@ -307,6 +295,18 @@
     </ClCompile>
     <ClCompile Include="Source\IFT_InferTemplateArgumentOfComplexType.cpp">
       <Filter>Source Files\InferFunctionType</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AP_Misc.cpp">
+      <Filter>Source Files\AssignParameters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AP_ResolveFunctionParameters.cpp">
+      <Filter>Source Files\AssignParameters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AP_ResolveGenericParameters.cpp">
+      <Filter>Source Files\AssignParameters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AP_ResolveGenericTypeParameters.cpp">
+      <Filter>Source Files\AssignParameters</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
