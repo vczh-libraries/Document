@@ -1,7 +1,6 @@
 #include "Ast_Resolving_AP_CalculateGpa.h"
 
 using namespace symbol_type_resolving;
-using namespace infer_function_type;
 
 namespace assign_parameters
 {
