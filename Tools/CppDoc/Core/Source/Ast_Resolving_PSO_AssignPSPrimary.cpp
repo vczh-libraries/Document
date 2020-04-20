@@ -1,6 +1,6 @@
 #include "Ast_Resolving_PSO.h"
 #include "Ast_Resolving_AP.h"
-#include "Ast_Resolving_IFT.h"
+#include "IFT.h"
 #include "Parser.h"
 
 using namespace symbol_type_resolving;

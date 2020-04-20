@@ -1,5 +1,5 @@
 #include "Ast_Resolving.h"
-#include "Ast_Resolving_IFT.h"
+#include "IFT.h"
 
 namespace symbol_type_resolving
 {

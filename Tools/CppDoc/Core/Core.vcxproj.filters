@@ -102,9 +102,6 @@
     <ClInclude Include="..\..\..\Import\VlppRegex.h">
       <Filter>Import</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Ast_Resolving_IFT.h">
-      <Filter>Source Files\InferFunctionType</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Ast_Resolving_PSO.h">
       <Filter>Source Files\PartialSpecializationOrdering</Filter>
     </ClInclude>
@@ -128,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="Source\Symbol.h">
       <Filter>Source Files\Symbol</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IFT.h">
+      <Filter>Source Files\InferFunctionType</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,15 +227,6 @@
     <ClCompile Include="Source\Ast_Resolving_Adl.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_IFT_CollectFreeTypes.cpp">
-      <Filter>Source Files\InferFunctionType</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_IFT_InferFunctionType.cpp">
-      <Filter>Source Files\InferFunctionType</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_IFT_InferTemplateArgument.cpp">
-      <Filter>Source Files\InferFunctionType</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_AP_ResolveGenericParameters.cpp">
       <Filter>Source Files\AssignParameters</Filter>
     </ClCompile>
@@ -259,12 +250,6 @@
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_PSO_MatchPSArgument.cpp">
       <Filter>Source Files\PartialSpecializationOrdering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_IFT_InferTemplateArgumentOfComplexType.cpp">
-      <Filter>Source Files\InferFunctionType</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Ast_Resolving_IFT_InferPartialSpecialization.cpp">
-      <Filter>Source Files\InferFunctionType</Filter>
     </ClCompile>
     <ClCompile Include="Source\Parser_Declaration_Namespace.cpp">
       <Filter>Source Files\Parser</Filter>
@@ -307,6 +292,21 @@
     </ClCompile>
     <ClCompile Include="Source\Symbol.cpp">
       <Filter>Source Files\Symbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IFT_CollectFreeTypes.cpp">
+      <Filter>Source Files\InferFunctionType</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IFT_InferFunctionType.cpp">
+      <Filter>Source Files\InferFunctionType</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IFT_InferPartialSpecialization.cpp">
+      <Filter>Source Files\InferFunctionType</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IFT_InferTemplateArgument.cpp">
+      <Filter>Source Files\InferFunctionType</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IFT_InferTemplateArgumentOfComplexType.cpp">
+      <Filter>Source Files\InferFunctionType</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

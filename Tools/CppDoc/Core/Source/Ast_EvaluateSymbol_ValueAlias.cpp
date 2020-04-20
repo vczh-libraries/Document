@@ -1,5 +1,5 @@
 #include "Ast_EvaluateSymbol_Shared.h"
-#include "Ast_Resolving_IFT.h"
+#include "IFT.h"
 
 using namespace infer_function_type;
 

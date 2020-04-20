@@ -1,7 +1,7 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_AP
 #define VCZH_DOCUMENT_CPPDOC_AST_RESOLVING_AP
 
-#include "Ast_Resolving_IFT.h"
+#include "IFT.h"
 
 namespace assign_parameters
 {

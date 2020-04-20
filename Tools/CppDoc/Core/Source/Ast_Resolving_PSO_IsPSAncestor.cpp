@@ -1,6 +1,6 @@
 #include "Ast_Resolving_PSO.h"
 #include "Ast_Resolving_AP.h"
-#include "Ast_Resolving_IFT.h"
+#include "IFT.h"
 
 using namespace assign_parameters;
 using namespace infer_function_type;
