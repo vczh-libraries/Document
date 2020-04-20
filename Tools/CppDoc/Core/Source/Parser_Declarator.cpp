@@ -2,6 +2,7 @@
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
 #include "Ast_Resolving.h"
+#include "EvaluateSymbol.h"
 
 /***********************************************************************
 ReplaceOutOfDeclaratorTypeVisitor

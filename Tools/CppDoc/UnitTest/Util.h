@@ -1,9 +1,11 @@
 #ifndef VCZH_DOCUMENT_CPPDOCTEST_TESTPARSE
 #define VCZH_DOCUMENT_CPPDOCTEST_TESTPARSE
 
-#include <Parser.h>
 #include <VlppOS.h>
+#include <Parser.h>
 #include <Ast_Resolving.h>
+#include <Symbol_TemplateSpec.h>
+#include <EvaluateSymbol.h>
 
 using namespace vl::stream;
 using namespace vl::filesystem;

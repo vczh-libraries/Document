@@ -1,4 +1,5 @@
 #include "Ast_Resolving.h"
+#include "Symbol_Visit.h"
 
 namespace symbol_type_resolving
 {

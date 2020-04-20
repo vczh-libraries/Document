@@ -2,7 +2,9 @@
 #define VCZH_DOCUMENT_CPPDOC_AST_EVALUATE_EPV
 
 #include "Ast_Resolving.h"
+#include "Symbol_Visit.h"
 #include "Ast_Expr.h"
+#include "Ast_Type.h"
 
 namespace symbol_totsys_impl
 {

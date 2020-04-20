@@ -1,8 +1,6 @@
 #include "Ast.h"
 #include "Ast_Type.h"
-#include "Ast_Decl.h"
-#include "Ast_Resolving.h"
-#include "Parser.h"
+#include "EvaluateSymbol.h"
 
 /***********************************************************************
 GetSpecialMember

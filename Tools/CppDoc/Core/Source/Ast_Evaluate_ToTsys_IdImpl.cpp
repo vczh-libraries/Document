@@ -1,4 +1,6 @@
 #include "Ast_Evaluate_ExpandPotentialVta.h"
+#include "EvaluateSymbol.h"
+#include "Symbol_TemplateSpec.h"
 
 using namespace symbol_type_resolving;
 

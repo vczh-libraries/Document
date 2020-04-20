@@ -1,4 +1,6 @@
-#include "Ast_Resolving.h"
+#include "Symbol_Resolve.h"
+#include "EvaluateSymbol.h"
+#include "Ast_Type.h"
 
 /***********************************************************************
 IsPotentialTypeDeclVisitor

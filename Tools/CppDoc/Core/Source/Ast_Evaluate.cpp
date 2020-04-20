@@ -1,6 +1,7 @@
+#include "Ast_Resolving.h"
+#include "EvaluateSymbol.h"
 #include "Ast_Stat.h"
 #include "Ast_Expr.h"
-#include "Ast_Resolving.h"
 
 /***********************************************************************
 EvaluateStatVisitor

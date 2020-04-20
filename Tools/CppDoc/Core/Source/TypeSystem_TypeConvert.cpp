@@ -1,4 +1,5 @@
 #include "Ast_Resolving.h"
+#include "EvaluateSymbol.h"
 
 using TCITestedSet = Dictionary<Tuple<ITsys*, ITsys*>, Nullable<TypeConv>>;
 TypeConv TestTypeConversionInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested, bool returnIllegalIfStackOverflow);

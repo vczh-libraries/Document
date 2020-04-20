@@ -129,6 +129,12 @@
     <ClInclude Include="Source\EvaluateSymbol_Shared.h">
       <Filter>Source Files\EvaluateSymbol</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Symbol_Resolve.h">
+      <Filter>Source Files\Symbol</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Symbol_Visit.h">
+      <Filter>Source Files\Symbol</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Import\Vlpp.cpp">
@@ -169,9 +175,6 @@
     </ClCompile>
     <ClCompile Include="Source\Ast_Type_IsSameResolvedType.cpp">
       <Filter>Source Files\Ast\Type</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Parser_ResolveSymbol.cpp">
-      <Filter>Source Files\Parser</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast_Type_IsPendingType.cpp">
       <Filter>Source Files\Ast\Type</Filter>
@@ -307,6 +310,12 @@
     </ClCompile>
     <ClCompile Include="Source\EvaluateSymbol_Var.cpp">
       <Filter>Source Files\EvaluateSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Symbol_Resolve.cpp">
+      <Filter>Source Files\Symbol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Symbol_Visit.cpp">
+      <Filter>Source Files\Symbol</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,8 @@
 #include <VlppOS.h>
 #include "Ast_Expr.h"
 #include "Ast_Resolving.h"
+#include "Symbol_Visit.h"
+#include "Symbol_TemplateSpec.h"
 
 /***********************************************************************
 FillOperatorAndSkip

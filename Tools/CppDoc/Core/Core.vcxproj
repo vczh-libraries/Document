@@ -172,7 +172,9 @@
     <ClInclude Include="Source\Parser.h" />
     <ClInclude Include="Source\Parser_Declaration.h" />
     <ClInclude Include="Source\Symbol.h" />
+    <ClInclude Include="Source\Symbol_Resolve.h" />
     <ClInclude Include="Source\Symbol_TemplateSpec.h" />
+    <ClInclude Include="Source\Symbol_Visit.h" />
     <ClInclude Include="Source\TypeSystem.h" />
     <ClInclude Include="Source\Utility.h" />
   </ItemGroup>
@@ -234,10 +236,11 @@
     <ClCompile Include="Source\Parser_Declarator.cpp" />
     <ClCompile Include="Source\Parser_Expr.cpp" />
     <ClCompile Include="Source\Parser_Misc.cpp" />
-    <ClCompile Include="Source\Parser_ResolveSymbol.cpp" />
+    <ClCompile Include="Source\Symbol_Resolve.cpp" />
     <ClCompile Include="Source\Parser_Stat.cpp" />
     <ClCompile Include="Source\Parser_Template.cpp" />
     <ClCompile Include="Source\Parser_Type.cpp" />
+    <ClCompile Include="Source\Symbol_Visit.cpp" />
     <ClCompile Include="Source\TypeSystem.cpp" />
     <ClCompile Include="Source\TypeSystem_Helpers.cpp" />
     <ClCompile Include="Source\TypeSystem_TypeConvert.cpp" />

@@ -1,5 +1,6 @@
 #include "AP.h"
 #include "Ast_Evaluate_ExpandPotentialVta.h"
+#include "EvaluateSymbol.h"
 
 using namespace symbol_type_resolving;
 using namespace assign_parameters;
