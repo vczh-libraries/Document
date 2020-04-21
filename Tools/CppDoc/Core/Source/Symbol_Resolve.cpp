@@ -222,6 +222,8 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			}
 		}
 
+		if (policy == SearchPolicy::DirectChildSymbolFromOutside) break;
+
 		if (scope->usingNss.Count() > 0)
 		{
 			for (vint i = 0; i < scope->usingNss.Count(); i++)
@@ -450,4 +452,13 @@ ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> cla
 	PREPARE_RSA;
 	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ChildSymbolFromOutside, rsa);
 	return rsa.result;
+}
+
+/***********************************************************************
+ResolveDirectChildSymbol
+***********************************************************************/
+
+ResolveSymbolResult ResolveDirectChildSymbol(const ParsingArguments& pa, CppName& name, ResolveSymbolResult input)
+{
+	return ResolveSymbol(pa, name, SearchPolicy::DirectChildSymbolFromOutside, input);
 }

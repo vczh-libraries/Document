@@ -1,5 +1,6 @@
 #include "Ast_Resolving.h"
 #include "EvaluateSymbol.h"
+#include "Symbol_Resolve.h"
 
 using TCITestedSet = Dictionary<Tuple<ITsys*, ITsys*>, Nullable<TypeConv>>;
 TypeConv TestTypeConversionInternal(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, TCITestedSet& tested, bool returnIllegalIfStackOverflow);
@@ -638,34 +639,40 @@ UserDefined (fromType:Operator)
 		if (!fromClass) return false;
 
 		auto fromSymbol = fromClass->symbol;
-		auto pTypeOps = fromSymbol->TryGetChildren_NFb(L"$__type");
-		if (!pTypeOps) return false;
-
-		auto toType = CvRefOf(toEntity, toCV, toRef);
 		auto newPa = pa.WithScope(fromSymbol);
-		for (vint i = 0; i < pTypeOps->Count(); i++)
+		CppName opName;
+		opName.type = CppNameType::Operator;
+		opName.name = L"$__type";
+		auto resolvedOps = ResolveDirectChildSymbol(newPa, opName);
+
+		if (resolvedOps.values)
 		{
-			auto typeOpSymbol = pTypeOps->Get(i);
-			auto typeOpDecl = typeOpSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+			auto toType = CvRefOf(toEntity, toCV, toRef);
+			auto& opSymbols = resolvedOps.values->resolvedSymbols;
+			for (vint i = 0; i < opSymbols.Count(); i++)
 			{
-				if (typeOpDecl->decoratorExplicit) continue;
-				if (typeOpDecl->decoratorDelete) continue;
-				auto typeOpType = GetTypeWithoutMemberAndCC(typeOpDecl->type).Cast<FunctionType>();
-				if (!typeOpType) continue;
-				if (typeOpType->parameters.Count() != 0) continue;
-				if (TestFunctionQualifier(fromCV, fromRef, typeOpType).cat == TypeConvCat::Illegal) continue;
-			}
-
-			auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, typeOpDecl.Obj(), (fromEntity->GetType() == TsysType::DeclInstant ? fromEntity : nullptr), nullptr);
-
-			for (vint j = 0; j < evTypes.Count(); j++)
-			{
-				auto tsys = evTypes[j];
+				auto typeOpSymbol = opSymbols[i];
+				auto typeOpDecl = typeOpSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 				{
-					auto newFromType = tsys->GetElement()->RRefOf();
-					if (TestTypeConversionInternal(newPa, toType, newFromType, tested, true).cat != TypeConvCat::Illegal)
+					if (typeOpDecl->decoratorExplicit) continue;
+					if (typeOpDecl->decoratorDelete) continue;
+					auto typeOpType = GetTypeWithoutMemberAndCC(typeOpDecl->type).Cast<FunctionType>();
+					if (!typeOpType) continue;
+					if (typeOpType->parameters.Count() != 0) continue;
+					if (TestFunctionQualifier(fromCV, fromRef, typeOpType).cat == TypeConvCat::Illegal) continue;
+				}
+
+				auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, typeOpDecl.Obj(), (fromEntity->GetType() == TsysType::DeclInstant ? fromEntity : nullptr), nullptr);
+
+				for (vint j = 0; j < evTypes.Count(); j++)
+				{
+					auto tsys = evTypes[j];
 					{
-						return true;
+						auto newFromType = tsys->GetElement()->RRefOf();
+						if (TestTypeConversionInternal(newPa, toType, newFromType, tested, true).cat != TypeConvCat::Illegal)
+						{
+							return true;
+						}
 					}
 				}
 			}
@@ -697,31 +704,37 @@ UserDefined (toType:Ctor)
 			}
 		}
 
-		auto pCtors = toSymbol->TryGetChildren_NFb(L"$__ctor");
-		if (!pCtors) return false;
-
 		auto newPa = pa.WithScope(toSymbol);
-		for (vint i = 0; i < pCtors->Count(); i++)
-		{
-			auto ctorSymbol = pCtors->Get(i);
-			auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-			{
-				if (ctorDecl->decoratorExplicit) continue;
-				if (ctorDecl->decoratorDelete) continue;
-				auto ctorType = GetTypeWithoutMemberAndCC(ctorDecl->type).Cast<FunctionType>();
-				if (!ctorType) continue;
-				if (ctorType->parameters.Count() != 1) continue;
-			}
-			auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
+		CppName opName;
+		opName.type = CppNameType::Constructor;
+		opName.name = L"$__ctor";
+		auto resolvedOps = ResolveDirectChildSymbol(newPa, opName);
 
-			for (vint j = 0; j < evTypes.Count(); j++)
+		if (resolvedOps.values)
+		{
+			auto& opSymbols = resolvedOps.values->resolvedSymbols;
+			for (vint i = 0; i < opSymbols.Count(); i++)
 			{
-				auto tsys = evTypes[j];
+				auto ctorSymbol = opSymbols[i];
+				auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 				{
-					auto newToType = tsys->GetParam(0);
-					if (TestTypeConversionInternal(newPa, newToType, fromType, tested, true).cat != TypeConvCat::Illegal)
+					if (ctorDecl->decoratorExplicit) continue;
+					if (ctorDecl->decoratorDelete) continue;
+					auto ctorType = GetTypeWithoutMemberAndCC(ctorDecl->type).Cast<FunctionType>();
+					if (!ctorType) continue;
+					if (ctorType->parameters.Count() != 1) continue;
+				}
+				auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
+
+				for (vint j = 0; j < evTypes.Count(); j++)
+				{
+					auto tsys = evTypes[j];
 					{
-						return true;
+						auto newToType = tsys->GetParam(0);
+						if (TestTypeConversionInternal(newPa, newToType, fromType, tested, true).cat != TypeConvCat::Illegal)
+						{
+							return true;
+						}
 					}
 				}
 			}
@@ -774,22 +787,33 @@ Init
 			if (toRef != TsysRefType::LRef || toCV.isGeneralConst)
 			{
 				auto toSymbol = toDecl->symbol;
-				auto pCtors = toSymbol->TryGetChildren_NFb(L"$__ctor");
-				if (!pCtors) return TypeConvCat::Illegal;
+				auto newPa = pa.WithScope(toSymbol);
+				CppName opName;
+				opName.type = CppNameType::Constructor;
+				opName.name = L"$__ctor";
+				auto resolvedOps = ResolveDirectChildSymbol(newPa, opName);
 
 				ExprTsysList funcTypes;
-				for (vint i = 0; i < pCtors->Count(); i++)
+				if (resolvedOps.values)
 				{
-					auto ctorSymbol = pCtors->Get(i);
-					auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-					if (ctorDecl->decoratorDelete) continue;
-					auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
-
-					for (vint j = 0; j < evTypes.Count(); j++)
+					auto& opSymbols = resolvedOps.values->resolvedSymbols;
+					for (vint i = 0; i < opSymbols.Count(); i++)
 					{
-						auto tsys = evTypes[j];
-						funcTypes.Add({ ctorSymbol.Obj(),ExprTsysType::PRValue,tsys });
+						auto ctorSymbol = opSymbols[i];
+						auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+						if (ctorDecl->decoratorDelete) continue;
+						auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
+
+						for (vint j = 0; j < evTypes.Count(); j++)
+						{
+							auto tsys = evTypes[j];
+							funcTypes.Add({ ctorSymbol,ExprTsysType::PRValue,tsys });
+						}
 					}
+				}
+				else
+				{
+					return TypeConvCat::Illegal;
 				}
 
 				Array<ExprTsysItem> argTypesList(fromEntity->GetParamCount());
