@@ -22,24 +22,24 @@ enum class SearchPolicy
 		| _AccessClassBaseType
 		,
 
-	// when in any scope, search for scope::<NAME>, if scope is a class, never search in any base class
+	// when in any scope, search for Something::<NAME>, if scope is a class, never search in any base class
 	ScopedChild_NoBaseType
 		= _NoFeature
 		,
 
-	// when in any scope, search for scope::<NAME>
+	// when in any scope, search for Something::<NAME>
 	ScopedChild
 		= _AccessClassBaseType
 		,
 
-	// when in Class, search for <NAME> of Class
+	// when in class C, search for <NAME>, which is a member of C
 	ClassMember_FromInside
 		= _ClassNameAsType
 		| _AllowTemplateArgument
 		| _AccessClassBaseType
 		,
 
-	// when not in Class, search for <NAME>
+	// when not in class C, search for <NAME>, which is a member of C
 	ClassMember_FromOutside
 		= _ClassNameAsType
 		| _AccessClassBaseType
