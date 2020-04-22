@@ -223,8 +223,6 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 		if (rsa.found) break;
 
-		if (policy == SearchPolicy::DirectChildSymbolFromOutside) break;
-
 		if (auto cache = scope->GetClassMemberCache_NFb())
 		{
 			auto childPolicy
@@ -245,6 +243,8 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 		}
 
 		if (rsa.found) break;
+
+		if (policy == SearchPolicy::DirectChildSymbolFromOutside) break;
 
 		if (!currentClassDecl)
 		{
