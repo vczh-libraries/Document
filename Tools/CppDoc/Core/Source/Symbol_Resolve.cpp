@@ -54,6 +54,11 @@ enum class SearchPolicy
 		,
 };
 
+constexpr bool operator& (SearchPolicy a, SearchPolicy b)
+{
+	return ((vint)a & (vint)b) > 0;
+}
+
 /***********************************************************************
 IsPotentialTypeDeclVisitor
 ***********************************************************************/
@@ -139,12 +144,15 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 	while (scope)
 	{
 		auto currentClassDecl = scope->GetImplDecl_NFb<ClassDeclaration>();
-		if (currentClassDecl && currentClassDecl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbolFromOutside && policy != SearchPolicy::DirectChildSymbolFromOutside)
+		if (currentClassDecl && currentClassDecl->name.name == rsa.name.name)
 		{
-			// A::A could never be the type A
-			// But searching A inside A will get the type A
-			rsa.found = true;
-			AddSymbolToResolve(rsa.result.types, currentClassDecl->symbol);
+			if (policy & SearchPolicy::_ClassNameAsType)
+			{
+				// A::A could never be the type A
+				// But searching A inside A will get the type A
+				rsa.found = true;
+				AddSymbolToResolve(rsa.result.types, currentClassDecl->symbol);
+			}
 		}
 
 		if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
@@ -229,7 +237,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 					// template type argument
 					case symbol_component::SymbolKind::GenericTypeArgument:
-						if (policy == SearchPolicy::ChildSymbolFromMemberInside || policy == SearchPolicy::SymbolAccessableInScope)
+						if (policy & SearchPolicy::_AllowTemplateArgument)
 						{
 							rsa.found = true;
 							AddSymbolToResolve(rsa.result.types, symbol);
@@ -238,7 +246,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 					// template value argument
 					case symbol_component::SymbolKind::GenericValueArgument:
-						if (policy == SearchPolicy::ChildSymbolFromMemberInside || policy == SearchPolicy::SymbolAccessableInScope)
+						if (policy & SearchPolicy::_AllowTemplateArgument)
 						{
 							rsa.found = true;
 							AddSymbolToResolve(rsa.result.values, symbol);
@@ -284,34 +292,44 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 		if (policy == SearchPolicy::DirectChildSymbolFromOutside) break;
 
-		if (!currentClassDecl)
+		if (currentClassDecl)
 		{
-			if (auto cache = scope->GetClassMemberCache_NFb())
+			if (policy & SearchPolicy::_AccessClassBaseType)
 			{
-				scope = cache->parentScope;
+				for (vint i = 0; i < currentClassDecl->baseTypes.Count(); i++)
+				{
+					auto basePolicy
+						= policy == SearchPolicy::ChildSymbolFromOutside || policy == SearchPolicy::SymbolAccessableInScope
+						? SearchPolicy::ChildSymbolFromOutside
+						: SearchPolicy::ChildSymbolFromSubClass
+						;
+					auto baseType = currentClassDecl->baseTypes[i].f1;
+					ResolveChildSymbolInternal(pa, baseType, basePolicy, rsa);
+				}
+			}
+
+			if (policy & SearchPolicy::_AccessClassParentScope)
+			{
+				// classMemberCache does not exist
+				scope = scope->GetParentScope();
 			}
 			else
 			{
-				scope = scope->GetParentScope();
+				scope = nullptr;
 			}
 		}
 		else
 		{
-			for (vint i = 0; i < currentClassDecl->baseTypes.Count(); i++)
+			if (policy & SearchPolicy::_AccessNamespaceParentScope)
 			{
-				auto basePolicy
-					= policy == SearchPolicy::ChildSymbolFromOutside || policy == SearchPolicy::SymbolAccessableInScope
-					? SearchPolicy::ChildSymbolFromOutside
-					: SearchPolicy::ChildSymbolFromSubClass
-					;
-				auto baseType = currentClassDecl->baseTypes[i].f1;
-				ResolveChildSymbolInternal(pa, baseType, basePolicy, rsa);
-			}
-
-			if (policy == SearchPolicy::SymbolAccessableInScope)
-			{
-				// classMemberCache does not exist
-				scope = scope->GetParentScope();
+				if (auto cache = scope->GetClassMemberCache_NFb())
+				{
+					scope = cache->parentScope;
+				}
+				else
+				{
+					scope = scope->GetParentScope();
+				}
 			}
 			else
 			{
