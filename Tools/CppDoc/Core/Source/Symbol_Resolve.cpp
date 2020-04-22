@@ -436,6 +436,22 @@ ResolveSymbolResult ResolveSymbol(const ParsingArguments& pa, CppName& name, Sea
 }
 
 /***********************************************************************
+ResolveSymbolInContext
+***********************************************************************/
+
+ResolveSymbolResult ResolveSymbolInContext(const ParsingArguments& pa, CppName& name, bool cStyleTypeReference)
+{
+	if (cStyleTypeReference)
+	{
+		return ResolveSymbol(pa, name, SearchPolicy::SymbolAccessableInScope_CStyleTypeReference);
+	}
+	else
+	{
+		return ResolveSymbol(pa, name, SearchPolicy::SymbolAccessableInScope);
+	}
+}
+
+/***********************************************************************
 ResolveChildSymbol
 ***********************************************************************/
 

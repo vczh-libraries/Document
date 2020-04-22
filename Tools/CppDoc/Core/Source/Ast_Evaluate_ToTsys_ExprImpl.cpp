@@ -351,7 +351,7 @@ namespace symbol_totsys_impl
 		{
 			ExprTsysList opTypes;
 
-			auto opFuncs = ResolveSymbol(pa, opName, SearchPolicy::SymbolAccessableInScope);
+			auto opFuncs = ResolveSymbolInContext(pa, opName, false);
 			if (opFuncs.values)
 			{
 				for (vint j = 0; j < opFuncs.values->resolvedSymbols.Count(); j++)

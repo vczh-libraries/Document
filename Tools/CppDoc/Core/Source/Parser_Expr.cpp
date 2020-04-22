@@ -91,7 +91,7 @@ Ptr<IdExpr> ParseIdExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	CppName cppName;
 	if (ParseCppName(cppName, cursor))
 	{
-		auto rsr = ResolveSymbol(pa, cppName, SearchPolicy::SymbolAccessableInScope);
+		auto rsr = ResolveSymbolInContext(pa, cppName, false);
 		if (!rsr.types)
 		{
 			if (!rsr.values && !TestToken(cursor, CppTokens::LPARENTHESIS, false))
