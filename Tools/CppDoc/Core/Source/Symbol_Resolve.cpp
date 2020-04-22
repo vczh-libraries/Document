@@ -242,57 +242,26 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 	while (scope)
 	{
 		auto currentClassDecl = scope->GetImplDecl_NFb<ClassDeclaration>();
-		if (currentClassDecl && currentClassDecl->name.name == rsa.name.name)
-		{
-			if (policy & SearchPolicy::_ClassNameAsType)
-			{
-				// A::A could never be the type A
-				// But searching A inside A will get the type A
-				rsa.found = true;
-				AddSymbolToResolve(rsa.result.types, currentClassDecl->symbol);
-			}
-		}
-
-		if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
-		{
-			PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
-		}
-
-		if (scope->usingNss.Count() > 0)
-		{
-			for (vint i = 0; i < scope->usingNss.Count(); i++)
-			{
-				auto usingNs = scope->usingNss[i];
-				auto newPa = pa.WithScope(usingNs);
-				ResolveSymbolInternal(newPa, SearchPolicy::ScopedChild, rsa);
-			}
-		}
-
-		if (rsa.found) break;
-
-		if (auto cache = scope->GetClassMemberCache_NFb())
-		{
-			auto childPolicy
-				= cache->symbolDefinedInsideClass
-				? SearchPolicy::ClassMember_FromInside
-				: SearchPolicy::ClassMember_FromOutside
-				;
-			for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
-			{
-				auto classType = cache->containerClassTypes[i];
-				auto newPa
-					= classType->GetType() == TsysType::Decl
-					? pa.AdjustForDecl(classType->GetDecl())
-					: pa.AdjustForDecl(classType->GetDecl(), classType->GetDeclInstant().parentDeclType, true)
-					;
-				ResolveSymbolInternal(newPa, childPolicy, rsa);
-			}
-		}
-
-		if (rsa.found) break;
-
 		if (currentClassDecl)
 		{
+			if (currentClassDecl->name.name == rsa.name.name)
+			{
+				if (policy & SearchPolicy::_ClassNameAsType)
+				{
+					// A::A could never be the type A
+					// But searching A inside A will get the type A
+					rsa.found = true;
+					AddSymbolToResolve(rsa.result.types, currentClassDecl->symbol);
+				}
+			}
+
+			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
+			{
+				PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+			}
+
+			if (rsa.found) break;
+
 			if (policy & SearchPolicy::_AccessClassBaseType)
 			{
 				for (vint i = 0; i < currentClassDecl->baseTypes.Count(); i++)
@@ -306,6 +275,46 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 					ResolveChildSymbolInternal(pa, baseType, basePolicy, rsa);
 				}
 			}
+		}
+		else
+		{
+			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
+			{
+				PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+			}
+
+			if (scope->usingNss.Count() > 0)
+			{
+				for (vint i = 0; i < scope->usingNss.Count(); i++)
+				{
+					auto usingNs = scope->usingNss[i];
+					auto newPa = pa.WithScope(usingNs);
+					ResolveSymbolInternal(newPa, SearchPolicy::ScopedChild, rsa);
+				}
+			}
+
+			if (rsa.found) break;
+
+			if (auto cache = scope->GetClassMemberCache_NFb())
+			{
+				auto childPolicy
+					= cache->symbolDefinedInsideClass
+					? SearchPolicy::ClassMember_FromInside
+					: SearchPolicy::ClassMember_FromOutside
+					;
+				for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
+				{
+					auto classType = cache->containerClassTypes[i];
+					auto newPa
+						= classType->GetType() == TsysType::Decl
+						? pa.AdjustForDecl(classType->GetDecl())
+						: pa.AdjustForDecl(classType->GetDecl(), classType->GetDeclInstant().parentDeclType, true)
+						;
+					ResolveSymbolInternal(newPa, childPolicy, rsa);
+				}
+			}
+
+			if (rsa.found) break;
 		}
 
 		if (policy & SearchPolicy::_AccessParentScope)
