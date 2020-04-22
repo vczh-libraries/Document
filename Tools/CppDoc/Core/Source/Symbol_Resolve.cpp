@@ -275,6 +275,8 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 					ResolveChildSymbolInternal(pa, baseType, basePolicy, rsa);
 				}
 			}
+
+			if (rsa.found) break;
 		}
 		else
 		{
