@@ -3,6 +3,21 @@
 #include "Ast_Type.h"
 
 /***********************************************************************
+SearchPolicy
+***********************************************************************/
+
+enum class SearchPolicy
+{
+	SymbolAccessableInScope,							// search a name in a bounding scope of the current checking place
+	SymbolAccessableInScope_CStyleTypeReference,		// like above but it is explicitly required to be a type using "struct X"
+	DirectChildSymbolFromOutside,						// search scope::name, not touching symbols in base types
+	ChildSymbolFromOutside,								// search scope::name
+	ChildSymbolFromSubClass,							// search the base class from the following two policy
+	ChildSymbolFromMemberInside,						// search a name in a class containing the current member, when the member is declared inside the class
+	ChildSymbolFromMemberOutside,						// search a name in a class containing the current member, when the member is declared outside the class
+};
+
+/***********************************************************************
 IsPotentialTypeDeclVisitor
 ***********************************************************************/
 
@@ -425,30 +440,21 @@ void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType,
 }
 
 /***********************************************************************
-ResolveSymbol
-***********************************************************************/
-
-ResolveSymbolResult ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy)
-{
-	ResolveSymbolArguments rsa(name);
-	ResolveSymbolInternal(pa, policy, rsa);
-	return rsa.result;
-}
-
-/***********************************************************************
 ResolveSymbolInContext
 ***********************************************************************/
 
 ResolveSymbolResult ResolveSymbolInContext(const ParsingArguments& pa, CppName& name, bool cStyleTypeReference)
 {
+	ResolveSymbolArguments rsa(name);
 	if (cStyleTypeReference)
 	{
-		return ResolveSymbol(pa, name, SearchPolicy::SymbolAccessableInScope_CStyleTypeReference);
+		ResolveSymbolInternal(pa, SearchPolicy::SymbolAccessableInScope_CStyleTypeReference, rsa);
 	}
 	else
 	{
-		return ResolveSymbol(pa, name, SearchPolicy::SymbolAccessableInScope);
+		ResolveSymbolInternal(pa, SearchPolicy::SymbolAccessableInScope, rsa);
 	}
+	return rsa.result;
 }
 
 /***********************************************************************
@@ -460,7 +466,9 @@ ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, ITsys* tsysDe
 	if (tsysDecl->GetType() == TsysType::Decl || tsysDecl->GetType() == TsysType::DeclInstant)
 	{
 		auto newPa = pa.WithScope(tsysDecl->GetDecl());
-		return ResolveSymbol(newPa, name, SearchPolicy::ChildSymbolFromOutside);
+		ResolveSymbolArguments rsa(name);
+		ResolveSymbolInternal(newPa, SearchPolicy::ChildSymbolFromOutside, rsa);
+		return rsa.result;
 	}
 	return {};
 }
@@ -478,5 +486,7 @@ ResolveDirectChildSymbol
 
 ResolveSymbolResult ResolveDirectChildSymbol(const ParsingArguments& pa, CppName& name)
 {
-	return ResolveSymbol(pa, name, SearchPolicy::DirectChildSymbolFromOutside);
+	ResolveSymbolArguments rsa(name);
+	ResolveSymbolInternal(pa, SearchPolicy::DirectChildSymbolFromOutside, rsa);
+	return rsa.result;
 }
