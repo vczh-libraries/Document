@@ -622,12 +622,12 @@ public:
 				{
 					AddType(processResult, pa.tsys->Any());
 				}
-				else if (arg1.tsys->GetType() == TsysType::Decl || arg1.tsys->GetType() == TsysType::DeclInstant)
+				else
 				{
-					auto newPa = pa.WithScope(arg1.tsys->GetDecl());
-					auto rsr = ResolveSymbol(newPa, childExpr->name, SearchPolicy::ChildSymbolFromOutside);
+					auto rsr = ResolveChildSymbol(pa, arg1.tsys, childExpr->name);
 					if (rsr.values)
 					{
+						auto newPa = pa.WithScope(arg1.tsys->GetDecl());
 						for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
 						{
 							auto symbol = rsr.values->resolvedSymbols[i];

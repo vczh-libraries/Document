@@ -328,15 +328,9 @@ namespace symbol_type_resolving
 		TsysCV cv;
 		TsysRefType refType;
 		auto entity = parentItem.tsys->GetEntity(cv, refType);
-		if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
-		{
-			auto symbol = entity->GetDecl();
-			auto fieldPa = pa.WithScope(symbol);
-			auto rar = ResolveSymbol(fieldPa, name, SearchPolicy::ChildSymbolFromOutside);
-			if (totalRar) totalRar->Merge(rar);
-			return rar.values;
-		}
-		return nullptr;
+		auto rar = ResolveChildSymbol(pa, entity, name);
+		if (totalRar) totalRar->Merge(rar);
+		return rar.values;
 	}
 
 	/***********************************************************************

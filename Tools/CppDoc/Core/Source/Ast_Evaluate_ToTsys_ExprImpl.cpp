@@ -316,14 +316,12 @@ namespace symbol_totsys_impl
 		opName.type = CppNameType::Operator;
 		opName.name = L"operator " + resolvableName.name;
 
-		if (leftEntity->GetType() == TsysType::Decl || leftEntity->GetType() == TsysType::DeclInstant)
 		{
-			auto newPa = pa.WithScope(leftEntity->GetDecl());
-			auto opMethods = ResolveSymbol(newPa, opName, SearchPolicy::ChildSymbolFromOutside);
-
+			auto opMethods = ResolveChildSymbol(pa, leftEntity, opName);
 			if (opMethods.values)
 			{
 				ExprTsysList opTypes;
+				auto newPa = pa.WithScope(leftEntity->GetDecl());
 				for (vint j = 0; j < opMethods.values->resolvedSymbols.Count(); j++)
 				{
 					auto symbol = opMethods.values->resolvedSymbols[j];

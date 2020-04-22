@@ -439,6 +439,16 @@ ResolveSymbolResult ResolveSymbol(const ParsingArguments& pa, CppName& name, Sea
 ResolveChildSymbol
 ***********************************************************************/
 
+ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, ITsys* tsysDecl, CppName& name)
+{
+	if (tsysDecl->GetType() == TsysType::Decl || tsysDecl->GetType() == TsysType::DeclInstant)
+	{
+		auto newPa = pa.WithScope(tsysDecl->GetDecl());
+		return ResolveSymbol(newPa, name, SearchPolicy::ChildSymbolFromOutside);
+	}
+	return {};
+}
+
 ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name)
 {
 	ResolveSymbolArguments rsa(name);

@@ -156,30 +156,21 @@ namespace symbol_totsys_impl
 	template<typename TReceiver>
 	void ResolveChildTypeWithGenericArguments(const ParsingArguments& pa, ChildType* self, ITsys* classType, SortedList<Symbol*>& visited, TReceiver&& receiver)
 	{
-		switch (classType->GetType())
+		auto rsr = ResolveChildSymbol(pa, classType, self->name);
+		if (rsr.types)
 		{
-		case TsysType::Decl:
-		case TsysType::DeclInstant:
+			auto newPa = pa.WithScope(classType->GetDecl());
+			for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
 			{
-				auto newPa = pa.WithScope(classType->GetDecl());
-				auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbolFromOutside);
-
-				if (rsr.types)
+				auto symbol = rsr.types->resolvedSymbols[i];
+				if (!visited.Contains(symbol))
 				{
-					for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
-					{
-						auto symbol = rsr.types->resolvedSymbols[i];
-						if (!visited.Contains(symbol))
-						{
-							visited.Add(symbol);
+					visited.Add(symbol);
 
-							auto adjusted = AdjustThisItemForSymbol(newPa, { nullptr,ExprTsysType::PRValue,classType }, symbol).Value();
-							receiver((adjusted.tsys->GetType() == TsysType::DeclInstant ? adjusted.tsys : nullptr), symbol);
-						}
-					}
+					auto adjusted = AdjustThisItemForSymbol(newPa, { nullptr,ExprTsysType::PRValue,classType }, symbol).Value();
+					receiver((adjusted.tsys->GetType() == TsysType::DeclInstant ? adjusted.tsys : nullptr), symbol);
 				}
 			}
-			break;
 		}
 	}
 
@@ -262,24 +253,20 @@ namespace symbol_totsys_impl
 	Ptr<Resolving> ResolveChildExprWithGenericArguments(const ParsingArguments& pa, ChildExpr* self, ITsys* classType, SortedList<Symbol*>& visited)
 	{
 		Ptr<Resolving> resolving;
-		if (classType->GetType() == TsysType::Decl || classType->GetType() == TsysType::DeclInstant)
+		auto rsr = ResolveChildSymbol(pa, classType, self->name);
+		if (rsr.values)
 		{
-			auto newPa = pa.WithScope(classType->GetDecl());
-			auto rsr = ResolveSymbol(newPa, self->name, SearchPolicy::ChildSymbolFromOutside);
-			if (rsr.values)
+			for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
 			{
-				for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
+				auto symbol = rsr.values->resolvedSymbols[i];
+				if (!visited.Contains(symbol))
 				{
-					auto symbol = rsr.values->resolvedSymbols[i];
-					if (!visited.Contains(symbol))
+					visited.Add(symbol);
+					if (!resolving)
 					{
-						visited.Add(symbol);
-						if (!resolving)
-						{
-							resolving = MakePtr<Resolving>();
-						}
-						resolving->resolvedSymbols.Add(symbol);
+						resolving = MakePtr<Resolving>();
 					}
+					resolving->resolvedSymbols.Add(symbol);
 				}
 			}
 		}
