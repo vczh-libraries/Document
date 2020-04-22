@@ -9,7 +9,6 @@ SearchPolicy
 enum class SearchPolicy
 {
 	SymbolAccessableInScope,							// search a name in a bounding scope of the current checking place
-	SymbolAccessableInScope_CStyleTypeReference,		// like above but it is explicitly required to be a type using "struct X"
 	DirectChildSymbolFromOutside,						// search scope::name, not touching symbols in base types
 	ChildSymbolFromOutside,								// search scope::name
 	ChildSymbolFromSubClass,							// search the base class from the following two policy
@@ -53,6 +52,7 @@ ResolveSymbolArguments
 struct ResolveSymbolArguments
 {
 	ResolveSymbolResult			result;
+	bool						cStyleTypeReference = false;
 	bool						found = false;
 	CppName&					name;
 	SortedList<Symbol*>			searchedScopes;
@@ -101,23 +101,6 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 	while (scope)
 	{
 		auto currentClassDecl = scope->GetImplDecl_NFb<ClassDeclaration>();
-		bool switchFromSymbolAccessableInScope = false;
-		bool switchFromSymbolAccessableInScope_CStyleTypeReference = false;
-		if (currentClassDecl)
-		{
-			switch (policy)
-			{
-			case SearchPolicy::SymbolAccessableInScope:
-				policy = SearchPolicy::ChildSymbolFromMemberInside;
-				switchFromSymbolAccessableInScope = true;
-				break;
-			case SearchPolicy::SymbolAccessableInScope_CStyleTypeReference:
-				policy = SearchPolicy::ChildSymbolFromMemberInside;
-				switchFromSymbolAccessableInScope_CStyleTypeReference = true;
-				break;
-			}
-		}
-
 		if (currentClassDecl && currentClassDecl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbolFromOutside)
 		{
 			// A::A could never be the type A
@@ -146,14 +129,13 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 				}
 			}
 
-			bool specifiedCStyleTypeReference = policy == SearchPolicy::SymbolAccessableInScope_CStyleTypeReference || switchFromSymbolAccessableInScope_CStyleTypeReference;
 			bool acceptCStyleType = false;
 			bool acceptOthers = false;
 
 			if (hasCStyleType && hasOthers)
 			{
-				acceptCStyleType = specifiedCStyleTypeReference;
-				acceptOthers = !specifiedCStyleTypeReference;
+				acceptCStyleType = rsa.cStyleTypeReference;
+				acceptOthers = !rsa.cStyleTypeReference;
 			}
 			else if (hasCStyleType)
 			{
@@ -161,7 +143,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			}
 			else if (hasOthers)
 			{
-				acceptOthers = !specifiedCStyleTypeReference;
+				acceptOthers = !rsa.cStyleTypeReference;
 			}
 			else
 			{
@@ -264,10 +246,8 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 		if (rsa.found) break;
 
-		switch (policy)
+		if (!currentClassDecl)
 		{
-		case SearchPolicy::SymbolAccessableInScope:
-		case SearchPolicy::SymbolAccessableInScope_CStyleTypeReference:
 			if (auto cache = scope->GetClassMemberCache_NFb())
 			{
 				scope = cache->parentScope;
@@ -276,45 +256,29 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			{
 				scope = scope->GetParentScope();
 			}
-			break;
-		case SearchPolicy::ChildSymbolFromOutside:
-		case SearchPolicy::ChildSymbolFromSubClass:
-		case SearchPolicy::ChildSymbolFromMemberInside:
-		case SearchPolicy::ChildSymbolFromMemberOutside:
+		}
+		else
+		{
+			for (vint i = 0; i < currentClassDecl->baseTypes.Count(); i++)
 			{
-				// could be just a forward declaration
-				if (currentClassDecl)
-				{
-					for (vint i = 0; i < currentClassDecl->baseTypes.Count(); i++)
-					{
-						auto baseType = currentClassDecl->baseTypes[i].f1;
-						ResolveChildSymbolInternal(
-							pa,
-							baseType,
-							(policy == SearchPolicy::ChildSymbolFromOutside ? SearchPolicy::ChildSymbolFromOutside : SearchPolicy::ChildSymbolFromSubClass),
-							rsa
-							);
-					}
-				}
-
-				if (switchFromSymbolAccessableInScope)
-				{
-					// classMemberCache does not exist
-					policy = SearchPolicy::SymbolAccessableInScope;
-					scope = scope->GetParentScope();
-				}
-				else if (switchFromSymbolAccessableInScope_CStyleTypeReference)
-				{
-					// classMemberCache does not exist
-					policy = SearchPolicy::SymbolAccessableInScope_CStyleTypeReference;
-					scope = scope->GetParentScope();
-				}
-				else
-				{
-					scope = nullptr;
-				}
+				auto basePolicy
+					= policy == SearchPolicy::ChildSymbolFromOutside || policy == SearchPolicy::SymbolAccessableInScope
+					? SearchPolicy::ChildSymbolFromOutside
+					: SearchPolicy::ChildSymbolFromSubClass
+					;
+				auto baseType = currentClassDecl->baseTypes[i].f1;
+				ResolveChildSymbolInternal(pa, baseType, basePolicy, rsa);
 			}
-			break;
+
+			if (policy == SearchPolicy::SymbolAccessableInScope)
+			{
+				// classMemberCache does not exist
+				scope = scope->GetParentScope();
+			}
+			else
+			{
+				scope = nullptr;
+			}
 		}
 	}
 
@@ -446,14 +410,8 @@ ResolveSymbolInContext
 ResolveSymbolResult ResolveSymbolInContext(const ParsingArguments& pa, CppName& name, bool cStyleTypeReference)
 {
 	ResolveSymbolArguments rsa(name);
-	if (cStyleTypeReference)
-	{
-		ResolveSymbolInternal(pa, SearchPolicy::SymbolAccessableInScope_CStyleTypeReference, rsa);
-	}
-	else
-	{
-		ResolveSymbolInternal(pa, SearchPolicy::SymbolAccessableInScope, rsa);
-	}
+	rsa.cStyleTypeReference = cStyleTypeReference;
+	ResolveSymbolInternal(pa, SearchPolicy::SymbolAccessableInScope, rsa);
 	return rsa.result;
 }
 
