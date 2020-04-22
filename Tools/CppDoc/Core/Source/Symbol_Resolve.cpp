@@ -8,12 +8,50 @@ SearchPolicy
 
 enum class SearchPolicy
 {
-	SymbolAccessableInScope,							// search a name in a bounding scope of the current checking place
-	DirectChildSymbolFromOutside,						// search scope::name, not touching symbols in base types
-	ChildSymbolFromOutside,								// search scope::name
-	ChildSymbolFromSubClass,							// search the base class from the following two policy
-	ChildSymbolFromMemberInside,						// search a name in a class containing the current member, when the member is declared inside the class
-	ChildSymbolFromMemberOutside,						// search a name in a class containing the current member, when the member is declared outside the class
+	_NoFeature = 0,
+	_ClassNameAsType = 1,
+	_AllowTemplateArgument = 2,
+	_AccessNamespaceParentScope = 4,
+	_AccessClassParentScope = 8,
+	_AccessClassBaseType = 16,
+
+	// search a name in a bounding scope of the current checking place
+	SymbolAccessableInScope
+		= _ClassNameAsType
+		| _AllowTemplateArgument
+		| _AccessNamespaceParentScope
+		| _AccessClassParentScope
+		| _AccessClassBaseType
+		,
+
+	// search scope::name, not touching symbols in base types
+	DirectChildSymbolFromOutside
+		= _NoFeature
+		,
+
+	// search scope::name
+	ChildSymbolFromOutside
+		= _AccessClassBaseType
+		,
+
+	// search the base class from the following two policy
+	ChildSymbolFromSubClass
+		= _ClassNameAsType
+		| _AccessClassBaseType
+		,
+
+	// search a name in a class containing the current member, when the member is declared inside the class
+	ChildSymbolFromMemberInside
+		= _ClassNameAsType
+		| _AllowTemplateArgument
+		| _AccessClassBaseType
+		,
+
+	// search a name in a class containing the current member, when the member is declared outside the class
+	ChildSymbolFromMemberOutside
+		= _ClassNameAsType
+		| _AccessClassBaseType
+		,
 };
 
 /***********************************************************************
