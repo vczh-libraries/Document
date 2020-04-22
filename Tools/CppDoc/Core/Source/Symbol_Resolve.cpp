@@ -101,7 +101,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 	while (scope)
 	{
 		auto currentClassDecl = scope->GetImplDecl_NFb<ClassDeclaration>();
-		if (currentClassDecl && currentClassDecl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbolFromOutside)
+		if (currentClassDecl && currentClassDecl->name.name == rsa.name.name && policy != SearchPolicy::ChildSymbolFromOutside && policy != SearchPolicy::DirectChildSymbolFromOutside)
 		{
 			// A::A could never be the type A
 			// But searching A inside A will get the type A
@@ -211,8 +211,6 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			}
 		}
 
-		if (policy == SearchPolicy::DirectChildSymbolFromOutside) break;
-
 		if (scope->usingNss.Count() > 0)
 		{
 			for (vint i = 0; i < scope->usingNss.Count(); i++)
@@ -224,6 +222,8 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 		}
 
 		if (rsa.found) break;
+
+		if (policy == SearchPolicy::DirectChildSymbolFromOutside) break;
 
 		if (auto cache = scope->GetClassMemberCache_NFb())
 		{
