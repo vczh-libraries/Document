@@ -118,6 +118,112 @@ void AddSymbolToResolve(Ptr<Resolving>& resolving, Symbol* symbol)
 }
 
 /***********************************************************************
+PickResolvedSymbols
+***********************************************************************/
+
+void PickResolvedSymbols(const List<Ptr<Symbol>>* pSymbols, bool allowTemplateArgument, ResolveSymbolArguments& rsa)
+{
+	bool hasCStyleType = false;
+	bool hasOthers = false;
+	for (vint i = 0; i < pSymbols->Count(); i++)
+	{
+		auto symbol = pSymbols->Get(i).Obj();
+		switch (symbol->kind)
+		{
+		case symbol_component::SymbolKind::Enum:
+		case symbol_component::SymbolKind::Class:
+		case symbol_component::SymbolKind::Struct:
+		case symbol_component::SymbolKind::Union:
+			hasCStyleType = true;
+			break;
+		default:
+			hasOthers = true;
+		}
+	}
+
+	bool acceptCStyleType = false;
+	bool acceptOthers = false;
+
+	if (hasCStyleType && hasOthers)
+	{
+		acceptCStyleType = rsa.cStyleTypeReference;
+		acceptOthers = !rsa.cStyleTypeReference;
+	}
+	else if (hasCStyleType)
+	{
+		acceptCStyleType = true;
+	}
+	else if (hasOthers)
+	{
+		acceptOthers = !rsa.cStyleTypeReference;
+	}
+	else
+	{
+		throw L"This could not happen, because pSymbols should be nullptr in this case.";
+	}
+
+	if (acceptCStyleType)
+	{
+		for (vint i = 0; i < pSymbols->Count(); i++)
+		{
+			auto symbol = pSymbols->Get(i).Obj();
+			switch (symbol->kind)
+			{
+				// type symbols
+			case CSTYLE_TYPE_SYMBOL_KIND:
+				rsa.found = true;
+				AddSymbolToResolve(rsa.result.types, symbol);
+				break;
+			}
+		}
+	}
+
+	if (acceptOthers)
+	{
+		for (vint i = 0; i < pSymbols->Count(); i++)
+		{
+			auto symbol = pSymbols->Get(i).Obj();
+			switch (symbol->kind)
+			{
+				// type symbols
+			case symbol_component::SymbolKind::TypeAlias:
+			case symbol_component::SymbolKind::Namespace:
+				rsa.found = true;
+				AddSymbolToResolve(rsa.result.types, symbol);
+				break;
+
+				// value symbols
+			case symbol_component::SymbolKind::EnumItem:
+			case symbol_component::SymbolKind::FunctionSymbol:
+			case symbol_component::SymbolKind::Variable:
+			case symbol_component::SymbolKind::ValueAlias:
+				rsa.found = true;
+				AddSymbolToResolve(rsa.result.values, symbol);
+				break;
+
+				// template type argument
+			case symbol_component::SymbolKind::GenericTypeArgument:
+				if (allowTemplateArgument)
+				{
+					rsa.found = true;
+					AddSymbolToResolve(rsa.result.types, symbol);
+				}
+				break;
+
+				// template value argument
+			case symbol_component::SymbolKind::GenericValueArgument:
+				if (allowTemplateArgument)
+				{
+					rsa.found = true;
+					AddSymbolToResolve(rsa.result.values, symbol);
+				}
+				break;
+			}
+		}
+	}
+}
+
+/***********************************************************************
 ResolveSymbolInternal
 ***********************************************************************/
 
@@ -149,104 +255,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 
 		if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 		{
-			bool hasCStyleType = false;
-			bool hasOthers = false;
-			for (vint i = 0; i < pSymbols->Count(); i++)
-			{
-				auto symbol = pSymbols->Get(i).Obj();
-				switch (symbol->kind)
-				{
-				case symbol_component::SymbolKind::Enum:
-				case symbol_component::SymbolKind::Class:
-				case symbol_component::SymbolKind::Struct:
-				case symbol_component::SymbolKind::Union:
-					hasCStyleType = true;
-					break;
-				default:
-					hasOthers = true;
-				}
-			}
-
-			bool acceptCStyleType = false;
-			bool acceptOthers = false;
-
-			if (hasCStyleType && hasOthers)
-			{
-				acceptCStyleType = rsa.cStyleTypeReference;
-				acceptOthers = !rsa.cStyleTypeReference;
-			}
-			else if (hasCStyleType)
-			{
-				acceptCStyleType = true;
-			}
-			else if (hasOthers)
-			{
-				acceptOthers = !rsa.cStyleTypeReference;
-			}
-			else
-			{
-				throw L"This could not happen, because pSymbols should be nullptr in this case.";
-			}
-
-			if (acceptCStyleType)
-			{
-				for (vint i = 0; i < pSymbols->Count(); i++)
-				{
-					auto symbol = pSymbols->Get(i).Obj();
-					switch (symbol->kind)
-					{
-					// type symbols
-					case CSTYLE_TYPE_SYMBOL_KIND:
-						rsa.found = true;
-						AddSymbolToResolve(rsa.result.types, symbol);
-						break;
-					}
-				}
-			}
-
-			if (acceptOthers)
-			{
-				for (vint i = 0; i < pSymbols->Count(); i++)
-				{
-					auto symbol = pSymbols->Get(i).Obj();
-					switch (symbol->kind)
-					{
-					// type symbols
-					case symbol_component::SymbolKind::TypeAlias:
-					case symbol_component::SymbolKind::Namespace:
-						rsa.found = true;
-						AddSymbolToResolve(rsa.result.types, symbol);
-						break;
-
-					// value symbols
-					case symbol_component::SymbolKind::EnumItem:
-					case symbol_component::SymbolKind::FunctionSymbol:
-					case symbol_component::SymbolKind::Variable:
-					case symbol_component::SymbolKind::ValueAlias:
-						rsa.found = true;
-						AddSymbolToResolve(rsa.result.values, symbol);
-						break;
-
-					// template type argument
-					case symbol_component::SymbolKind::GenericTypeArgument:
-						if (policy & SearchPolicy::_AllowTemplateArgument)
-						{
-							rsa.found = true;
-							AddSymbolToResolve(rsa.result.types, symbol);
-						}
-						break;
-
-					// template value argument
-					case symbol_component::SymbolKind::GenericValueArgument:
-						if (policy & SearchPolicy::_AllowTemplateArgument)
-						{
-							rsa.found = true;
-							AddSymbolToResolve(rsa.result.values, symbol);
-						}
-						break;
-					}
-				}
-			}
+			PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
 		}
 
 		if (scope->usingNss.Count() > 0)
