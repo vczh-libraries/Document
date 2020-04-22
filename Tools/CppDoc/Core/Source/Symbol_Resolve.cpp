@@ -37,24 +37,16 @@ ResolveSymbolArguments
 
 struct ResolveSymbolArguments
 {
+	ResolveSymbolResult			result;
+	bool						found = false;
 	CppName&					name;
-	ResolveSymbolResult&		result;
-	bool&						found;
-	SortedList<Symbol*>&		searchedScopes;
+	SortedList<Symbol*>			searchedScopes;
 
-	ResolveSymbolArguments(CppName& _name, ResolveSymbolResult& _result, bool& _found, SortedList<Symbol*>& _searchedScopes)
+	ResolveSymbolArguments(CppName& _name)
 		:name(_name)
-		, result(_result)
-		, found(_found)
-		, searchedScopes(_searchedScopes)
 	{
 	}
 };
-
-#define PREPARE_RSA														\
-	bool found = false;													\
-	SortedList<Symbol*> searchedScopes;									\
-	ResolveSymbolArguments rsa(name, input, found, searchedScopes)		\
 
 void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType, SearchPolicy policy, ResolveSymbolArguments& rsa);
 
@@ -316,17 +308,6 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 }
 
 /***********************************************************************
-ResolveSymbol
-***********************************************************************/
-
-ResolveSymbolResult ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy, ResolveSymbolResult input)
-{
-	PREPARE_RSA;
-	ResolveSymbolInternal(pa, policy, rsa);
-	return rsa.result;
-}
-
-/***********************************************************************
 ResolveChildSymbolInternal
 ***********************************************************************/
 
@@ -444,12 +425,23 @@ void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType,
 }
 
 /***********************************************************************
+ResolveSymbol
+***********************************************************************/
+
+ResolveSymbolResult ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy)
+{
+	ResolveSymbolArguments rsa(name);
+	ResolveSymbolInternal(pa, policy, rsa);
+	return rsa.result;
+}
+
+/***********************************************************************
 ResolveChildSymbol
 ***********************************************************************/
 
-ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, ResolveSymbolResult input)
+ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name)
 {
-	PREPARE_RSA;
+	ResolveSymbolArguments rsa(name);
 	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ChildSymbolFromOutside, rsa);
 	return rsa.result;
 }
@@ -458,7 +450,7 @@ ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> cla
 ResolveDirectChildSymbol
 ***********************************************************************/
 
-ResolveSymbolResult ResolveDirectChildSymbol(const ParsingArguments& pa, CppName& name, ResolveSymbolResult input)
+ResolveSymbolResult ResolveDirectChildSymbol(const ParsingArguments& pa, CppName& name)
 {
-	return ResolveSymbol(pa, name, SearchPolicy::DirectChildSymbolFromOutside, input);
+	return ResolveSymbol(pa, name, SearchPolicy::DirectChildSymbolFromOutside);
 }

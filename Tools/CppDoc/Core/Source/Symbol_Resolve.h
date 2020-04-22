@@ -27,8 +27,8 @@ struct ResolveSymbolResult
 	void											Merge(const ResolveSymbolResult& rar);
 };
 
-extern ResolveSymbolResult							ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy, ResolveSymbolResult input = {});
-extern ResolveSymbolResult							ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name, ResolveSymbolResult input = {});
-extern ResolveSymbolResult							ResolveDirectChildSymbol(const ParsingArguments& pa, CppName& name, ResolveSymbolResult input = {});
+extern ResolveSymbolResult							ResolveSymbol(const ParsingArguments& pa, CppName& name, SearchPolicy policy);
+extern ResolveSymbolResult							ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name);
+extern ResolveSymbolResult							ResolveDirectChildSymbol(const ParsingArguments& pa, CppName& name);
 
 #endif
