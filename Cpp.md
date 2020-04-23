@@ -81,7 +81,6 @@
   - [ ] Generate unique name for each symbol
     - [ ] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
     - [ ] `Symbol::DecorateNameForSpecializationSpec` generates unique name for declaractions with `specializationSpec`.
-- [ ] `ResolveChildSymbol` on `decltype(EXPR)::ChildType`
 - [ ] `MatchPSArgument` on `decltype(EXPR)`, success when the type to match is not `decltype(EXPR)`, or two expression match.
 - [ ] `::new`
 - [ ] `::delete`

@@ -427,35 +427,27 @@ public:
 	{
 	}
 
-	void ResolveChildTypeOfResolving(Ptr<Resolving> parentResolving)
+	void ResolveChildSymbolOfType(Type* type)
 	{
-		if (parentResolving)
+		TypeTsysList tsyses;
+		bool isVta = false;
+		TypeToTsysInternal(pa, type, tsyses, isVta);
+		for (vint i = 0; i < tsyses.Count(); i++)
 		{
-			auto& symbols = parentResolving->resolvedSymbols;
-			for (vint i = 0; i < symbols.Count(); i++)
+			auto tsys = tsyses[i];
+			if (tsys->GetType() == TsysType::Init)
 			{
-				auto symbol = symbols[i];
-				if (symbol->GetCategory() == symbol_component::SymbolCategory::Normal)
+				if (isVta)
 				{
-					if (auto usingDecl = symbol->GetImplDecl_NFb<TypeAliasDeclaration>())
+					for (vint j = 0; j < tsys->GetParamCount(); j++)
 					{
-						auto& types = symbol_type_resolving::EvaluateTypeAliasSymbol(pa, usingDecl.Obj(), nullptr, nullptr);
-						for (vint i = 0; i < types.Count(); i++)
-						{
-							auto tsys = types[i];
-							if (tsys->GetType() == TsysType::GenericFunction)
-							{
-								tsys = tsys->GetElement();
-							}
-							if (tsys->GetType() == TsysType::Decl || tsys->GetType() == TsysType::DeclInstant)
-							{
-								symbol = tsys->GetDecl();
-								continue;
-							}
-						}
+						ResolveSymbolInTypeInternal(pa, tsys->GetParam(j), policy, rsa);
 					}
 				}
-				ResolveSymbolInternal(pa.WithScope(symbol), policy, rsa);
+			}
+			else
+			{
+				ResolveSymbolInTypeInternal(pa, tsys, policy, rsa);
 			}
 		}
 	}
@@ -489,8 +481,7 @@ public:
 	{
 		if (self->expr)
 		{
-			// TODO: [Cpp.md] decltype(EXPR)::ChildType
-			throw 0;
+			ResolveChildSymbolOfType(self);
 		}
 	}
 
@@ -506,12 +497,12 @@ public:
 
 	void Visit(IdType* self)override
 	{
-		ResolveChildTypeOfResolving(self->resolving);
+		ResolveChildSymbolOfType(self);
 	}
 
 	void Visit(ChildType* self)override
 	{
-		ResolveChildTypeOfResolving(self->resolving);
+		ResolveChildSymbolOfType(self);
 	}
 
 	void Visit(GenericType* self)override
