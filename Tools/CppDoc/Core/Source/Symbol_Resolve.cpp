@@ -542,10 +542,17 @@ ResolveSymbolResult ResolveSymbolInContext(const ParsingArguments& pa, CppName& 
 ResolveChildSymbol
 ***********************************************************************/
 
-ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, ITsys* tsysDecl, CppName& name)
+ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, ITsys* tsysDecl, CppName& name, bool searchInBaseTypes)
 {
 	ResolveSymbolArguments rsa(name);
-	ResolveSymbolInTypeInternal(pa, tsysDecl, SearchPolicy::ScopedChild, rsa);
+	if (searchInBaseTypes)
+	{
+		ResolveSymbolInTypeInternal(pa, tsysDecl, SearchPolicy::ScopedChild, rsa);
+	}
+	else
+	{
+		ResolveSymbolInTypeInternal(pa, tsysDecl, SearchPolicy::ScopedChild_NoBaseType, rsa);
+	}
 	return rsa.result;
 }
 
@@ -553,16 +560,5 @@ ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> cla
 {
 	ResolveSymbolArguments rsa(name);
 	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ScopedChild, rsa);
-	return rsa.result;
-}
-
-/***********************************************************************
-ResolveDirectChildSymbol
-***********************************************************************/
-
-ResolveSymbolResult ResolveDirectChildSymbol(const ParsingArguments& pa, CppName& name)
-{
-	ResolveSymbolArguments rsa(name);
-	ResolveSymbolInternal(pa, SearchPolicy::ScopedChild_NoBaseType, rsa);
 	return rsa.result;
 }

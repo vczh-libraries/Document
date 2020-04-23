@@ -635,20 +635,16 @@ UserDefined (fromType:Operator)
 
 	bool IsFromTypeOperator(const ParsingArguments& pa, ENTITY_VARS(, , _), bool& cvInvolved, bool& anyInvolved, TCITestedSet& tested)
 	{
-		auto fromClass = TryGetDeclFromType<ClassDeclaration>(fromEntity);
-		if (!fromClass) return false;
-
-		auto fromSymbol = fromClass->symbol;
-		auto newPa = pa.WithScope(fromSymbol);
 		CppName opName;
 		opName.type = CppNameType::Operator;
 		opName.name = L"$__type";
-		auto resolvedOps = ResolveDirectChildSymbol(newPa, opName);
+		auto resolvedOps = ResolveChildSymbol(pa, fromEntity, opName, false);
 
 		if (resolvedOps.values)
 		{
 			auto toType = CvRefOf(toEntity, toCV, toRef);
 			auto& opSymbols = resolvedOps.values->resolvedSymbols;
+
 			for (vint i = 0; i < opSymbols.Count(); i++)
 			{
 				auto typeOpSymbol = opSymbols[i];
@@ -669,7 +665,7 @@ UserDefined (fromType:Operator)
 					auto tsys = evTypes[j];
 					{
 						auto newFromType = tsys->GetElement()->RRefOf();
-						if (TestTypeConversionInternal(newPa, toType, newFromType, tested, true).cat != TypeConvCat::Illegal)
+						if (TestTypeConversionInternal(pa, toType, newFromType, tested, true).cat != TypeConvCat::Illegal)
 						{
 							return true;
 						}
@@ -689,13 +685,9 @@ UserDefined (toType:Ctor)
 	{
 		if (toRef == TsysRefType::LRef && !toCV.isGeneralConst) return false;
 
-		auto toClass = TryGetDeclFromType<ClassDeclaration>(toEntity);
-		if (!toClass) return false;
-
 		auto toType = CvRefOf(toEntity, toCV, toRef);
 		auto fromType = CvRefOf(fromEntity, fromCV, fromRef);
 
-		auto toSymbol = toClass->symbol;
 		{
 			auto newFromType = toEntity->RRefOf();
 			if (TestTypeConversionInternal(pa, toType, newFromType, tested, true).cat == TypeConvCat::Illegal)
@@ -704,11 +696,10 @@ UserDefined (toType:Ctor)
 			}
 		}
 
-		auto newPa = pa.WithScope(toSymbol);
 		CppName opName;
 		opName.type = CppNameType::Constructor;
 		opName.name = L"$__ctor";
-		auto resolvedOps = ResolveDirectChildSymbol(newPa, opName);
+		auto resolvedOps = ResolveChildSymbol(pa, toEntity, opName, false);
 
 		if (resolvedOps.values)
 		{
@@ -731,7 +722,7 @@ UserDefined (toType:Ctor)
 					auto tsys = evTypes[j];
 					{
 						auto newToType = tsys->GetParam(0);
-						if (TestTypeConversionInternal(newPa, newToType, fromType, tested, true).cat != TypeConvCat::Illegal)
+						if (TestTypeConversionInternal(pa, newToType, fromType, tested, true).cat != TypeConvCat::Illegal)
 						{
 							return true;
 						}
@@ -786,12 +777,10 @@ Init
 		{
 			if (toRef != TsysRefType::LRef || toCV.isGeneralConst)
 			{
-				auto toSymbol = toDecl->symbol;
-				auto newPa = pa.WithScope(toSymbol);
 				CppName opName;
 				opName.type = CppNameType::Constructor;
 				opName.name = L"$__ctor";
-				auto resolvedOps = ResolveDirectChildSymbol(newPa, opName);
+				auto resolvedOps = ResolveChildSymbol(pa, toEntity, opName, false);
 
 				ExprTsysList funcTypes;
 				if (resolvedOps.values)

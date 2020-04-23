@@ -17,8 +17,7 @@ struct ResolveSymbolResult
 };
 
 extern ResolveSymbolResult							ResolveSymbolInContext(const ParsingArguments& pa, CppName& name, bool cStyleTypeReference);
-extern ResolveSymbolResult							ResolveChildSymbol(const ParsingArguments& pa, ITsys* tsysDecl, CppName& name);
+extern ResolveSymbolResult							ResolveChildSymbol(const ParsingArguments& pa, ITsys* tsysDecl, CppName& name, bool searchInBaseTypes = true);
 extern ResolveSymbolResult							ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name);
-extern ResolveSymbolResult							ResolveDirectChildSymbol(const ParsingArguments& pa, CppName& name);
 
 #endif
