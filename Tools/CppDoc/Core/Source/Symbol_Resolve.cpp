@@ -313,41 +313,9 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 	while (scope)
 	{
 		auto currentClassDecl = scope->GetImplDecl_NFb<ClassDeclaration>();
-		if (currentClassDecl)
+		if (scope->GetAnyForwardDecl<ForwardClassDeclaration>() || scope->GetAnyForwardDecl<ForwardEnumDeclaration>())
 		{
-			if (currentClassDecl->name.name == rsa.name.name)
-			{
-				if (policy & SearchPolicy::_ClassNameAsType)
-				{
-					// A::A could never be the type A
-					// But searching A inside A will get the type A
-					rsa.found = true;
-					AddSymbolToResolve(rsa.result.types, currentClassDecl->symbol);
-				}
-			}
-
-			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
-			{
-				PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
-			}
-
-			if (rsa.found) break;
-
-			if (policy & SearchPolicy::_AccessClassBaseType)
-			{
-				for (vint i = 0; i < currentClassDecl->baseTypes.Count(); i++)
-				{
-					auto basePolicy
-						= policy == SearchPolicy::ScopedChild || policy == SearchPolicy::InContext
-						? SearchPolicy::ScopedChild
-						: SearchPolicy::ClassMember_FromOutside
-						;
-					auto baseType = currentClassDecl->baseTypes[i].f1;
-					ResolveChildSymbolInternal(pa, baseType, basePolicy, rsa);
-				}
-			}
-
-			if (rsa.found) break;
+			throw L"This could not happen, because type scopes should be skipped by ClassMemberCache.";
 		}
 		else
 		{
@@ -378,12 +346,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 				for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
 				{
 					auto classType = cache->containerClassTypes[i];
-					auto newPa
-						= classType->GetType() == TsysType::Decl
-						? pa.AdjustForDecl(classType->GetDecl())
-						: pa.AdjustForDecl(classType->GetDecl(), classType->GetDeclInstant().parentDeclType, true)
-						;
-					ResolveSymbolInternal(newPa, childPolicy, rsa);
+					ResolveSymbolInTypeInternal(pa, classType, childPolicy, rsa);
 				}
 			}
 
