@@ -91,6 +91,7 @@ struct ResolveSymbolArguments
 	bool						found = false;
 	CppName&					name;
 	SortedList<Symbol*>			searchedScopes;
+	SortedList<ITsys*>			searchedTypes;
 
 	ResolveSymbolArguments(CppName& _name)
 		:name(_name)
@@ -224,6 +225,76 @@ void PickResolvedSymbols(const List<Ptr<Symbol>>* pSymbols, bool allowTemplateAr
 }
 
 /***********************************************************************
+ResolveSymbolInTypeInternal
+***********************************************************************/
+
+void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, SearchPolicy policy, ResolveSymbolArguments& rsa)
+{
+	TsysCV cv;
+	TsysRefType ref;
+	auto entity = tsys->GetEntity(cv, ref);
+
+	if (rsa.searchedTypes.Contains(entity))
+	{
+		return;
+	}
+	else
+	{
+		rsa.searchedTypes.Add(entity);
+	}
+
+	if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
+	{
+		auto scope = entity->GetDecl();
+		if (auto classDecl = scope->GetImplDecl_NFb<ClassDeclaration>())
+		{
+			if (classDecl->name.name == rsa.name.name)
+			{
+				if (policy & SearchPolicy::_ClassNameAsType)
+				{
+					// A::A could never be the type A
+					// But searching A inside A will get the type A
+					rsa.found = true;
+					AddSymbolToResolve(rsa.result.types, classDecl->symbol);
+				}
+			}
+
+			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
+			{
+				PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+			}
+
+			if (rsa.found) return;
+
+			if (policy & SearchPolicy::_AccessClassBaseType)
+			{
+				auto& ev = symbol_type_resolving::EvaluateClassType(pa, tsys);
+				for (vint i = 0; i < ev.ExtraCount(); i++)
+				{
+					auto& extra = ev.GetExtra(i);
+					for (vint j = 0; j < extra.Count(); j++)
+					{
+						auto basePolicy
+							= policy == SearchPolicy::ScopedChild || policy == SearchPolicy::InContext
+							? SearchPolicy::ScopedChild
+							: SearchPolicy::ClassMember_FromOutside
+							;
+						ResolveSymbolInTypeInternal(pa, extra[j], basePolicy, rsa);
+					}
+				}
+			}
+		}
+		else if (auto enumDecl = scope->GetImplDecl_NFb<EnumDeclaration>())
+		{
+			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
+			{
+				PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+			}
+		}
+	}
+}
+
+/***********************************************************************
 ResolveSymbolInternal
 ***********************************************************************/
 
@@ -336,9 +407,6 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 			scope = nullptr;
 		}
 	}
-
-#undef FOUND
-#undef RESOLVED_SYMBOLS_COUNT
 }
 
 /***********************************************************************
@@ -476,14 +544,9 @@ ResolveChildSymbol
 
 ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, ITsys* tsysDecl, CppName& name)
 {
-	if (tsysDecl->GetType() == TsysType::Decl || tsysDecl->GetType() == TsysType::DeclInstant)
-	{
-		auto newPa = pa.WithScope(tsysDecl->GetDecl());
-		ResolveSymbolArguments rsa(name);
-		ResolveSymbolInternal(newPa, SearchPolicy::ScopedChild, rsa);
-		return rsa.result;
-	}
-	return {};
+	ResolveSymbolArguments rsa(name);
+	ResolveSymbolInTypeInternal(pa, tsysDecl, SearchPolicy::ScopedChild, rsa);
+	return rsa.result;
 }
 
 ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name)
