@@ -295,24 +295,13 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 }
 
 /***********************************************************************
-ResolveSymbolInternal
+ResolveSymbolInStaticScopeInternal
 ***********************************************************************/
 
-void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, ResolveSymbolArguments& rsa)
+void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scope, SearchPolicy policy, ResolveSymbolArguments& rsa)
 {
-	auto scope = pa.scopeSymbol;
-	if (rsa.searchedScopes.Contains(scope))
-	{
-		return;
-	}
-	else
-	{
-		rsa.searchedScopes.Add(scope);
-	}
-
 	while (scope)
 	{
-		auto currentClassDecl = scope->GetImplDecl_NFb<ClassDeclaration>();
 		if (scope->GetAnyForwardDecl<ForwardClassDeclaration>() || scope->GetAnyForwardDecl<ForwardEnumDeclaration>())
 		{
 			throw L"This could not happen, because type scopes should be skipped by ClassMemberCache.";
@@ -329,8 +318,7 @@ void ResolveSymbolInternal(const ParsingArguments& pa, SearchPolicy policy, Reso
 				for (vint i = 0; i < scope->usingNss.Count(); i++)
 				{
 					auto usingNs = scope->usingNss[i];
-					auto newPa = pa.WithScope(usingNs);
-					ResolveSymbolInternal(newPa, SearchPolicy::ScopedChild, rsa);
+					ResolveSymbolInStaticScopeInternal(pa, usingNs, SearchPolicy::ScopedChild, rsa);
 				}
 			}
 
@@ -455,7 +443,7 @@ public:
 
 	void Visit(RootType* self)override
 	{
-		ResolveSymbolInternal(pa.WithScope(pa.root.Obj()), SearchPolicy::ScopedChild, rsa);
+		ResolveSymbolInStaticScopeInternal(pa, pa.root.Obj(), SearchPolicy::ScopedChild, rsa);
 	}
 
 	void Visit(IdType* self)override
@@ -488,7 +476,7 @@ ResolveSymbolResult ResolveSymbolInContext(const ParsingArguments& pa, CppName& 
 {
 	ResolveSymbolArguments rsa(name);
 	rsa.cStyleTypeReference = cStyleTypeReference;
-	ResolveSymbolInternal(pa, SearchPolicy::InContext, rsa);
+	ResolveSymbolInStaticScopeInternal(pa, pa.scopeSymbol, SearchPolicy::InContext, rsa);
 	return rsa.result;
 }
 

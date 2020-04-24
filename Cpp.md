@@ -29,14 +29,9 @@
   - [ ] Partial specialization on **classes**.
     - [ ] Refactor
       - [ ] `Resolving::resolvedSymbols` becomes `List<{ITsys*, Symbol*}>`, the `ITsys*` part stores the type to which the `Symbol*` part belongs to.
+        - [ ] `Symbol_Resolve.cpp` functions also return `List<{ITsys*, Symbol*}>`.
+        - [ ] Remove `AdjustThisItemForSymbol`.
       - [ ] `void Visit(FunctionDeclaration* self)` in `Ast_Evaluate.cpp` will be affected because here it fills `resolvedSymbols`. Search for other places.
-      - [ ] Refactor `ResolveSymbolInternal` to
-        - [ ] 1. find a symbol defined in a class, as a separated function that can be called in all 3 cases
-          - Accept policy except `InContext`
-          - This function will contain partial specialization instance picking
-        - [ ] 2. find a symbol defined in global or a namespaces
-        - [ ] 3. find a symbol defined in anywhere else inside a function
-        - [ ] continue searching in other necessary scopes
       - [ ] At the end, only `VisitSymbol*` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.
       - [ ] Copy `TestParseGenericMember.cpp` to `TestParsePSMemberPrimary.cpp` and `TestParsePSMemberPS.cpp`, testing member evaluation from primary symbol and its partial specializations.
       - [ ] `TestParsePSClass.cpp` tests all other things, like function type inferencing with partial specialized instances as parameters.
