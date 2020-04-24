@@ -11,11 +11,21 @@ enum class SearchPolicy
 	_NoFeature = 0,
 	_ClassNameAsType = 1,
 	_AllowTemplateArgument = 2,
-	_AccessParentScope = 4,
-	_AccessClassBaseType = 8,
+	_AllowClassMember = 4,
+	_AccessParentScope = 8,
+	_AccessClassBaseType = 16,
 
 	// when in a scope S, search for <NAME> that is accessible in S
 	InContext
+		= _ClassNameAsType
+		| _AllowTemplateArgument
+		| _AllowClassMember
+		| _AccessParentScope
+		| _AccessClassBaseType
+		,
+
+	// when in a scope S, search for <NAME> that is accessible in S, skip all class contexts
+	InNamespaceContext
 		= _ClassNameAsType
 		| _AllowTemplateArgument
 		| _AccessParentScope
@@ -24,24 +34,27 @@ enum class SearchPolicy
 
 	// when in any scope, search for Something::<NAME>, if scope is a class, never search in any base class
 	ScopedChild_NoBaseType
-		= _NoFeature
+		= _AllowClassMember
 		,
 
 	// when in any scope, search for Something::<NAME>
 	ScopedChild
-		= _AccessClassBaseType
+		= _AllowClassMember
+		| _AccessClassBaseType
 		,
 
 	// when in class C, search for <NAME>, which is a member of C
 	ClassMember_FromInside
 		= _ClassNameAsType
 		| _AllowTemplateArgument
+		| _AllowClassMember
 		| _AccessClassBaseType
 		,
 
 	// when not in class C, search for <NAME>, which is a member of C
 	ClassMember_FromOutside
 		= _ClassNameAsType
+		| _AllowClassMember
 		| _AccessClassBaseType
 		,
 };
@@ -309,11 +322,14 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 
 		if (auto classDecl = scope->GetAnyForwardDecl<ForwardClassDeclaration>())
 		{
-			auto& tsyses = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
-			for (vint i = 0; i < tsyses.Count(); i++)
+			if (policy & SearchPolicy::_AllowClassMember)
 			{
-				auto tsys = tsyses[i];
-				ResolveSymbolInTypeInternal(pa, tsys, policy, rsa);
+				auto& tsyses = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
+				for (vint i = 0; i < tsyses.Count(); i++)
+				{
+					auto tsys = tsyses[i];
+					ResolveSymbolInTypeInternal(pa, tsys, policy, rsa);
+				}
 			}
 		}
 		else
@@ -336,7 +352,7 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 
 			cache = scope->GetClassMemberCache_NFb();
 
-			if (cache)
+			if (cache && policy & SearchPolicy::_AllowClassMember)
 			{
 				auto childPolicy
 					= cache->symbolDefinedInsideClass
@@ -381,6 +397,18 @@ ResolveSymbolResult ResolveSymbolInContext(const ParsingArguments& pa, CppName& 
 	ResolveSymbolArguments rsa(name);
 	rsa.cStyleTypeReference = cStyleTypeReference;
 	ResolveSymbolInStaticScopeInternal(pa, pa.scopeSymbol, SearchPolicy::InContext, rsa);
+	return rsa.result;
+}
+
+/***********************************************************************
+ResolveSymbolInNamespaceContext
+***********************************************************************/
+
+ResolveSymbolResult ResolveSymbolInNamespaceContext(const ParsingArguments& pa, CppName& name, bool cStyleTypeReference)
+{
+	ResolveSymbolArguments rsa(name);
+	rsa.cStyleTypeReference = cStyleTypeReference;
+	ResolveSymbolInStaticScopeInternal(pa, pa.scopeSymbol, SearchPolicy::InNamespaceContext, rsa);
 	return rsa.result;
 }
 
