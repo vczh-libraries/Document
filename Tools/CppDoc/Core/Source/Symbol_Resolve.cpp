@@ -99,8 +99,6 @@ struct ResolveSymbolArguments
 	}
 };
 
-void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType, SearchPolicy policy, ResolveSymbolArguments& rsa);
-
 /***********************************************************************
 AddSymbolToResolve
 ***********************************************************************/
@@ -361,7 +359,37 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 }
 
 /***********************************************************************
-ResolveChildSymbolInternal
+ResolveSymbolInContext
+***********************************************************************/
+
+ResolveSymbolResult ResolveSymbolInContext(const ParsingArguments& pa, CppName& name, bool cStyleTypeReference)
+{
+	ResolveSymbolArguments rsa(name);
+	rsa.cStyleTypeReference = cStyleTypeReference;
+	ResolveSymbolInStaticScopeInternal(pa, pa.scopeSymbol, SearchPolicy::InContext, rsa);
+	return rsa.result;
+}
+
+/***********************************************************************
+ResolveChildSymbol on ITsys*
+***********************************************************************/
+
+ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, ITsys* tsysDecl, CppName& name, bool searchInBaseTypes)
+{
+	ResolveSymbolArguments rsa(name);
+	if (searchInBaseTypes)
+	{
+		ResolveSymbolInTypeInternal(pa, tsysDecl, SearchPolicy::ScopedChild, rsa);
+	}
+	else
+	{
+		ResolveSymbolInTypeInternal(pa, tsysDecl, SearchPolicy::ScopedChild_NoBaseType, rsa);
+	}
+	return rsa.result;
+}
+
+/***********************************************************************
+ResolveChildSymbol on Ptr<Type>
 ***********************************************************************/
 
 class ResolveChildSymbolTypeVisitor : public Object, public virtual ITypeVisitor
@@ -462,45 +490,10 @@ public:
 	}
 };
 
-void ResolveChildSymbolInternal(const ParsingArguments& pa, Ptr<Type> classType, SearchPolicy policy, ResolveSymbolArguments& rsa)
-{
-	ResolveChildSymbolTypeVisitor visitor(pa, policy, rsa);
-	classType->Accept(&visitor);
-}
-
-/***********************************************************************
-ResolveSymbolInContext
-***********************************************************************/
-
-ResolveSymbolResult ResolveSymbolInContext(const ParsingArguments& pa, CppName& name, bool cStyleTypeReference)
-{
-	ResolveSymbolArguments rsa(name);
-	rsa.cStyleTypeReference = cStyleTypeReference;
-	ResolveSymbolInStaticScopeInternal(pa, pa.scopeSymbol, SearchPolicy::InContext, rsa);
-	return rsa.result;
-}
-
-/***********************************************************************
-ResolveChildSymbol
-***********************************************************************/
-
-ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, ITsys* tsysDecl, CppName& name, bool searchInBaseTypes)
-{
-	ResolveSymbolArguments rsa(name);
-	if (searchInBaseTypes)
-	{
-		ResolveSymbolInTypeInternal(pa, tsysDecl, SearchPolicy::ScopedChild, rsa);
-	}
-	else
-	{
-		ResolveSymbolInTypeInternal(pa, tsysDecl, SearchPolicy::ScopedChild_NoBaseType, rsa);
-	}
-	return rsa.result;
-}
-
 ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> classType, CppName& name)
 {
 	ResolveSymbolArguments rsa(name);
-	ResolveChildSymbolInternal(pa, classType, SearchPolicy::ScopedChild, rsa);
+	ResolveChildSymbolTypeVisitor visitor(pa, SearchPolicy::ScopedChild, rsa);
+	classType->Accept(&visitor);
 	return rsa.result;
 }
