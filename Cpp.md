@@ -29,10 +29,11 @@
   - [ ] Partial specialization on **classes**.
     - [ ] Refactor
       - [ ] `Resolving::resolvedSymbols` becomes `List<{ITsys*, Symbol*}>`, the `ITsys*` part stores the type to which the `Symbol*` part belongs to.
+        - [ ] `AST::resolving` is not reliable due to partial specialization, find a way to cache them properly.
         - [ ] `Symbol_Resolve.cpp` functions also return `List<{ITsys*, Symbol*}>`.
         - [ ] Remove `AdjustThisItemForSymbol`.
-      - [ ] `void Visit(FunctionDeclaration* self)` in `Ast_Evaluate.cpp` will be affected because here it fills `resolvedSymbols`. Search for other places.
-      - [ ] At the end, only `VisitSymbol*` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.
+        - [ ] `void Visit(FunctionDeclaration* self)` in `Ast_Evaluate.cpp` will be affected because here it fills `resolvedSymbols`. Search for other places.
+      - [ ] At the end, only `ResolveSymbolInTypeInternal` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.
       - [ ] Copy `TestParseGenericMember.cpp` to `TestParsePSMemberPrimary.cpp` and `TestParsePSMemberPS.cpp`, testing member evaluation from primary symbol and its partial specializations.
       - [ ] `TestParsePSClass.cpp` tests all other things, like function type inferencing with partial specialized instances as parameters.
     - [ ] Ignore forward declaration of class partial specialization, because it provides no additional value.

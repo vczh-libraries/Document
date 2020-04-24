@@ -85,7 +85,8 @@ namespace symbol_type_resolving
 		auto eval = ProcessArguments(invokerPa, classDecl, classDecl->templateSpec, parentDeclType, argumentsToApply);
 		if (eval.ev.progress == symbol_component::EvaluationProgress::Evaluated)
 		{
-			if (eval.ev.ExtraCount() != 0 || classDecl->baseTypes.Count() == 0)
+			// TODO: find out why this function is called when classDecl->baseTypes is not filled completely
+			if (eval.ev.ExtraCount() == classDecl->baseTypes.Count())
 			{
 				return eval.ev;
 			}

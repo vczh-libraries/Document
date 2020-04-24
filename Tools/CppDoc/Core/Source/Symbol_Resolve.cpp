@@ -331,6 +331,8 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 					ResolveSymbolInTypeInternal(pa, tsys, policy, rsa);
 				}
 			}
+
+			if (rsa.found) break;
 		}
 		else
 		{
