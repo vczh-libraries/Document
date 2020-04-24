@@ -77,32 +77,6 @@ namespace symbol_totsys_impl
 	// Utilities
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	inline bool IsResolvedToType(Ptr<Type> type)
-	{
-		if (type.Cast<RootType>())
-		{
-			return false;
-		}
-
-		if (auto catIdChildType = type.Cast<Category_Id_Child_Type>())
-		{
-			if (catIdChildType->resolving)
-			{
-				auto& symbols = catIdChildType->resolving->resolvedSymbols;
-				for (vint i = 0; i < symbols.Count(); i++)
-				{
-					if (symbols[i]->kind != symbol_component::SymbolKind::Namespace)
-					{
-						return true;
-					}
-				}
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	inline ExprTsysItem GetExprTsysItem(ITsys* arg)
 	{
 		return { nullptr,ExprTsysType::PRValue,arg };

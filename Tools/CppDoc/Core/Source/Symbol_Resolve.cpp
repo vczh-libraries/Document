@@ -228,6 +228,11 @@ ResolveSymbolInTypeInternal
 
 void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, SearchPolicy policy, ResolveSymbolArguments& rsa)
 {
+	if (tsys->GetType() == TsysType::GenericFunction)
+	{
+		tsys = tsys->GetElement();
+	}
+
 	TsysCV cv;
 	TsysRefType ref;
 	auto entity = tsys->GetEntity(cv, ref);
@@ -300,44 +305,53 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 {
 	while (scope)
 	{
-		if (scope->GetAnyForwardDecl<ForwardClassDeclaration>() || scope->GetAnyForwardDecl<ForwardEnumDeclaration>())
-		{
-			throw L"This could not happen, because type scopes should be skipped by ClassMemberCache.";
-		}
+		Ptr<symbol_component::ClassMemberCache> cache;
 
-		if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
+		if (auto classDecl = scope->GetAnyForwardDecl<ForwardClassDeclaration>())
 		{
-			PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
-		}
-
-		if (scope->usingNss.Count() > 0)
-		{
-			for (vint i = 0; i < scope->usingNss.Count(); i++)
+			auto& tsyses = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
+			for (vint i = 0; i < tsyses.Count(); i++)
 			{
-				auto usingNs = scope->usingNss[i];
-				ResolveSymbolInStaticScopeInternal(pa, usingNs, SearchPolicy::ScopedChild, rsa);
+				auto tsys = tsyses[i];
+				ResolveSymbolInTypeInternal(pa, tsys, policy, rsa);
 			}
 		}
-
-		if (rsa.found) break;
-
-		auto cache = scope->GetClassMemberCache_NFb();
-
-		if (cache)
+		else
 		{
-			auto childPolicy
-				= cache->symbolDefinedInsideClass
-				? SearchPolicy::ClassMember_FromInside
-				: SearchPolicy::ClassMember_FromOutside
-				;
-			for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
+			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 			{
-				auto classType = cache->containerClassTypes[i];
-				ResolveSymbolInTypeInternal(pa, classType, childPolicy, rsa);
+				PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
 			}
-		}
 
-		if (rsa.found) break;
+			if (scope->usingNss.Count() > 0)
+			{
+				for (vint i = 0; i < scope->usingNss.Count(); i++)
+				{
+					auto usingNs = scope->usingNss[i];
+					ResolveSymbolInStaticScopeInternal(pa, usingNs, SearchPolicy::ScopedChild, rsa);
+				}
+			}
+
+			if (rsa.found) break;
+
+			cache = scope->GetClassMemberCache_NFb();
+
+			if (cache)
+			{
+				auto childPolicy
+					= cache->symbolDefinedInsideClass
+					? SearchPolicy::ClassMember_FromInside
+					: SearchPolicy::ClassMember_FromOutside
+					;
+				for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
+				{
+					auto classType = cache->containerClassTypes[i];
+					ResolveSymbolInTypeInternal(pa, classType, childPolicy, rsa);
+				}
+			}
+
+			if (rsa.found) break;
+		}
 
 		if (policy & SearchPolicy::_AccessParentScope)
 		{
@@ -406,6 +420,27 @@ public:
 	{
 	}
 
+	static bool IsResolvedToType(Ptr<Resolving>& resolving)
+	{
+		if (resolving)
+		{
+			auto& symbols = resolving->resolvedSymbols;
+			for (vint i = 0; i < symbols.Count(); i++)
+			{
+				if (symbols[i]->kind != symbol_component::SymbolKind::Namespace)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		else
+		{
+			// namespaces are always resolved
+			return true;
+		}
+	}
+
 	void ResolveChildSymbolOfType(Type* type)
 	{
 		TypeTsysList tsyses;
@@ -437,6 +472,7 @@ public:
 
 	void Visit(ReferenceType* self)override
 	{
+		ResolveChildSymbolOfType(self);
 	}
 
 	void Visit(ArrayType* self)override
@@ -445,7 +481,7 @@ public:
 
 	void Visit(CallingConventionType* self)override
 	{
-		self->type->Accept(this);
+		ResolveChildSymbolOfType(self);
 	}
 
 	void Visit(FunctionType* self)override
@@ -466,7 +502,7 @@ public:
 
 	void Visit(DecorateType* self)override
 	{
-		self->type->Accept(this);
+		ResolveChildSymbolOfType(self);
 	}
 
 	void Visit(RootType* self)override
@@ -474,19 +510,34 @@ public:
 		ResolveSymbolInStaticScopeInternal(pa, pa.root.Obj(), SearchPolicy::ScopedChild, rsa);
 	}
 
+	void VisitIdOrChildType(Type* self, Ptr<Resolving>& resolving)
+	{
+		if (IsResolvedToType(resolving))
+		{
+			ResolveChildSymbolOfType(self);
+		}
+		else
+		{
+			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+			{
+				ResolveSymbolInStaticScopeInternal(pa, resolving->resolvedSymbols[i], SearchPolicy::ScopedChild, rsa);
+			}
+		}
+	}
+
 	void Visit(IdType* self)override
 	{
-		ResolveChildSymbolOfType(self);
+		VisitIdOrChildType(self, self->resolving);
 	}
 
 	void Visit(ChildType* self)override
 	{
-		ResolveChildSymbolOfType(self);
+		VisitIdOrChildType(self, self->resolving);
 	}
 
 	void Visit(GenericType* self)override
 	{
-		self->type->Accept(this);
+		ResolveChildSymbolOfType(self);
 	}
 };
 
@@ -496,4 +547,23 @@ ResolveSymbolResult ResolveChildSymbol(const ParsingArguments& pa, Ptr<Type> cla
 	ResolveChildSymbolTypeVisitor visitor(pa, SearchPolicy::ScopedChild, rsa);
 	classType->Accept(&visitor);
 	return rsa.result;
+}
+
+/***********************************************************************
+IsResolvedToType
+***********************************************************************/
+
+bool IsResolvedToType(Ptr<Type> type)
+{
+	if (type.Cast<RootType>())
+	{
+		return false;
+	}
+
+	if (auto catIdChildType = type.Cast<Category_Id_Child_Type>())
+	{
+		return ResolveChildSymbolTypeVisitor::IsResolvedToType(catIdChildType->resolving);
+	}
+
+	return true;
 }
