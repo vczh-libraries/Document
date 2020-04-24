@@ -304,45 +304,45 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 		{
 			throw L"This could not happen, because type scopes should be skipped by ClassMemberCache.";
 		}
-		else
+
+		if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 		{
-			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
-			{
-				PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
-			}
-
-			if (scope->usingNss.Count() > 0)
-			{
-				for (vint i = 0; i < scope->usingNss.Count(); i++)
-				{
-					auto usingNs = scope->usingNss[i];
-					ResolveSymbolInStaticScopeInternal(pa, usingNs, SearchPolicy::ScopedChild, rsa);
-				}
-			}
-
-			if (rsa.found) break;
-
-			if (auto cache = scope->GetClassMemberCache_NFb())
-			{
-				auto childPolicy
-					= cache->symbolDefinedInsideClass
-					? SearchPolicy::ClassMember_FromInside
-					: SearchPolicy::ClassMember_FromOutside
-					;
-				for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
-				{
-					auto classType = cache->containerClassTypes[i];
-					ResolveSymbolInTypeInternal(pa, classType, childPolicy, rsa);
-				}
-			}
-
-			if (rsa.found) break;
+			PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
 		}
+
+		if (scope->usingNss.Count() > 0)
+		{
+			for (vint i = 0; i < scope->usingNss.Count(); i++)
+			{
+				auto usingNs = scope->usingNss[i];
+				ResolveSymbolInStaticScopeInternal(pa, usingNs, SearchPolicy::ScopedChild, rsa);
+			}
+		}
+
+		if (rsa.found) break;
+
+		auto cache = scope->GetClassMemberCache_NFb();
+
+		if (cache)
+		{
+			auto childPolicy
+				= cache->symbolDefinedInsideClass
+				? SearchPolicy::ClassMember_FromInside
+				: SearchPolicy::ClassMember_FromOutside
+				;
+			for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
+			{
+				auto classType = cache->containerClassTypes[i];
+				ResolveSymbolInTypeInternal(pa, classType, childPolicy, rsa);
+			}
+		}
+
+		if (rsa.found) break;
 
 		if (policy & SearchPolicy::_AccessParentScope)
 		{
 			// classMemberCache does not exist in class scope
-			if (auto cache = scope->GetClassMemberCache_NFb())
+			if (cache)
 			{
 				scope = cache->parentScope;
 			}
