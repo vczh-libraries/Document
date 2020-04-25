@@ -29,11 +29,19 @@
   - [ ] Partial specialization on **classes**.
     - [ ] Refactor
       - [ ] `Resolving::resolvedSymbols` becomes `List<{ITsys*, Symbol*}>`, the `ITsys*` part stores the type to which the `Symbol*` part belongs to.
-        - [ ] `AST::resolving` is not reliable due to partial specialization, find a way to cache them properly.
-          - [ ] Consider about removing `resolving` from ASTs.
+        - [ ] `AST::resolving` is not reliable due to partial specialization, only use it to determine if a symbol is a namespace or not, clear usage in:
+          - [ ] `Ast_Evaluate_ExprToTsys.cpp`.
+          - [ ] `Ast_Evaluate_TypeToTsys.cpp`.
+          - [ ] `Ast_Resolving_Adl.cpp`: Remove `SearchBaseTypeAdlClassesAndNamespacesVisitor`, calculate ADL from `ITsys*` instead of `Ptr<Type>`.
+          - [ ] Create helper functions to determine, to remove the spreading of `AST->resolving` usages.
+            - [ ] If an AST node refers to a namespace.
+            - [ ] `CompareResolving` in `Ast_Type_IsSameResolvedType.cpp` is wrong, it should returns true when two `resolvedSymbols` have non-empty intersection.
+              - [ ] Use this functions also in function type inferencing and partial specialization matching.
+              - [ ] `IsSameResolvedTypeVisitor::TestResolving` is duplicated.
+            - [ ] Get `patternSymbol` and `pattern` (optional) from an AST node.
+            - [ ] Test if the only symbol in `resolvedSymbols` has a certain kind.
         - [ ] `Symbol_Resolve.cpp` functions also return `List<{ITsys*, Symbol*}>`.
         - [ ] Remove `AdjustThisItemForSymbol`.
-        - [ ] `void Visit(FunctionDeclaration* self)` in `Ast_Evaluate.cpp` will be affected because here it fills `resolvedSymbols`. Search for other places.
       - [ ] At the end, only `ResolveSymbolInTypeInternal` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.
       - [ ] Copy `TestParseGenericMember.cpp` to `TestParsePSMemberPrimary.cpp` and `TestParsePSMemberPS.cpp`, testing member evaluation from primary symbol and its partial specializations.
       - [ ] `TestParsePSClass.cpp` tests all other things, like function type inferencing with partial specialized instances as parameters.
