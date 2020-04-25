@@ -30,6 +30,7 @@
     - [ ] Refactor
       - [ ] `Resolving::resolvedSymbols` becomes `List<{ITsys*, Symbol*}>`, the `ITsys*` part stores the type to which the `Symbol*` part belongs to.
         - [ ] `AST::resolving` is not reliable due to partial specialization, find a way to cache them properly.
+          - [ ] Consider about removing `resolving` from ASTs.
         - [ ] `Symbol_Resolve.cpp` functions also return `List<{ITsys*, Symbol*}>`.
         - [ ] Remove `AdjustThisItemForSymbol`.
         - [ ] `void Visit(FunctionDeclaration* self)` in `Ast_Evaluate.cpp` will be affected because here it fills `resolvedSymbols`. Search for other places.
