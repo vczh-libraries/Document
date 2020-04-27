@@ -33,9 +33,6 @@
           - [ ] `Ast_Evaluate_ExprToTsys.cpp`.
           - [ ] `Ast_Evaluate_TypeToTsys.cpp`.
           - [ ] `Ast_Resolving_Adl.cpp`: Remove `SearchBaseTypeAdlClassesAndNamespacesVisitor`, calculate ADL from `ITsys*` instead of `Ptr<Type>`.
-          - [ ] Create helper functions to determine, to remove the spreading of `AST->resolving` usages.
-            - [ ] Get `patternSymbol` and `pattern` (optional) from an AST node.
-            - [ ] Test if the only symbol in `resolvedSymbols` has a certain kind.
         - [ ] `Symbol_Resolve.cpp` functions also return `List<{ITsys*, Symbol*}>`.
         - [ ] Remove `AdjustThisItemForSymbol`.
       - [ ] At the end, only `ResolveSymbolInTypeInternal` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.

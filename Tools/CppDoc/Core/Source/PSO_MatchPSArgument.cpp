@@ -97,7 +97,7 @@ namespace partial_specification_ordering
 			if (!involvedExprs.Contains(expr.Obj())) return;
 			if (auto idExpr = expr.Cast<IdExpr>())
 			{
-				auto patternSymbol = idExpr->resolving->resolvedSymbols[0];
+				auto patternSymbol = Resolving::EnsureSingleSymbol(idExpr->resolving);
 				if (!AssignToValueArgument(patternSymbol))
 				{
 					throw MatchPSFailureException();
@@ -213,7 +213,7 @@ namespace partial_specification_ordering
 		{
 			if (involvedTypes.Contains(self))
 			{
-				auto patternSymbol = self->resolving->resolvedSymbols[0];
+				auto patternSymbol = Resolving::EnsureSingleSymbol(self->resolving);
 
 				switch (patternSymbol->kind)
 				{
