@@ -205,7 +205,13 @@ public:
 
 	void Visit(IdType* self)override
 	{
-		CreateIdReferenceType(pa, self->resolving, false, true, result, isVta);
+		auto resolving = self->resolving;
+		if (!pa.IsGeneralEvaluation())
+		{
+			resolving = ResolveSymbolInContext(pa, self->name, self->cStyleTypeReference).types;
+		}
+
+		CreateIdReferenceType(pa, resolving, false, true, result, isVta);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -216,7 +222,13 @@ public:
 	{
 		if (!IsResolvedToType(self->classType))
 		{
-			CreateIdReferenceType(pa, self->resolving, true, false, result, isVta);
+			auto resolving = self->resolving;
+			if (!pa.IsGeneralEvaluation())
+			{
+				resolving = ResolveChildSymbol(pa, self->classType, self->name).types;
+			}
+
+			CreateIdReferenceType(pa, resolving, true, false, result, isVta);
 			return;
 		}
 

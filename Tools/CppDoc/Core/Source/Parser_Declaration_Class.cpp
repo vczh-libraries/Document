@@ -103,6 +103,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 
 		if (TestToken(cursor, CppTokens::COLON))
 		{
+			auto& ev = decl->symbol->GetEvaluationForUpdating_NFb().skipEvaluatingBaseTypes = true;
 			while (!TestToken(cursor, CppTokens::LBRACE, false))
 			{
 				auto accessor = defaultAccessor;
@@ -131,6 +132,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 					RequireToken(cursor, CppTokens::COMMA);
 				}
 			}
+			decl->symbol->GetEvaluationForUpdating_NFb().skipEvaluatingBaseTypes = false;
 		}
 
 		// ... { { (public: | protected: | private: | DECLARATION) } };

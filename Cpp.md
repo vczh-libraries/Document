@@ -29,9 +29,6 @@
   - [ ] Partial specialization on **classes**.
     - [ ] Refactor
       - [ ] `Resolving::resolvedSymbols` becomes `List<{ITsys*, Symbol*}>`, the `ITsys*` part stores the type to which the `Symbol*` part belongs to.
-        - [ ] `AST::resolving` is not reliable due to partial specialization, only use it to determine if a symbol is a namespace or not, clear usage in:
-          - [ ] `Ast_Evaluate_ExprToTsys.cpp`.
-          - [ ] `Ast_Evaluate_TypeToTsys.cpp`.
         - [ ] `Symbol_Resolve.cpp` functions also return `List<{ITsys*, Symbol*}>`.
         - [ ] Remove `AdjustThisItemForSymbol`.
       - [ ] At the end, only `ResolveSymbolInTypeInternal` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.

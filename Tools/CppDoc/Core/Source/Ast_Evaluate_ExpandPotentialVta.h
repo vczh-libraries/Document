@@ -13,7 +13,7 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	// Ast_Evaluate_ToTsys_IdImpl.cpp (identifier)
-	void					CreateIdReferenceType(const ParsingArguments& pa, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta);
+	void					CreateIdReferenceType(const ParsingArguments& pa, const Ptr<Resolving>& resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta);
 	void					ProcessChildType(const ParsingArguments& pa, ChildType* self, ExprTsysItem argClass, ExprTsysList& result);
 
 	// Ast_Evaluate_ToTsys_TypeImpl.cpp (literal)
@@ -37,7 +37,7 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	// Ast_Evaluate_ToTsys_IdImpl.cpp (identifier)
-	void					CreateIdReferenceExpr(const ParsingArguments& pa, Ptr<Resolving> resolving, ExprTsysList& result, const ExprTsysItem* childExprClassItem, bool allowAny, bool allowVariadic, bool& isVta);
+	void					CreateIdReferenceExpr(const ParsingArguments& pa, const Ptr<Resolving>& resolving, ExprTsysList& result, const ExprTsysItem* childExprClassItem, bool allowAny, bool allowVariadic, bool& isVta);
 	void					ProcessChildExpr(const ParsingArguments& pa, ExprTsysList& result, ChildExpr* self, ExprTsysItem argClass);
 	void					ProcessFieldAccessExprForIdExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, const Ptr<IdExpr>& idExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed);
 	void					ProcessFieldAccessExprForChildExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed);

@@ -121,7 +121,7 @@ namespace symbol_totsys_impl
 	// CreateIdReferenceType
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void CreateIdReferenceType(const ParsingArguments& pa, Ptr<Resolving> resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta)
+	void CreateIdReferenceType(const ParsingArguments& pa, const Ptr<Resolving>& resolving, bool allowAny, bool allowVariadic, TypeTsysList& result, bool& isVta)
 	{
 		if (!resolving)
 		{
@@ -200,7 +200,7 @@ namespace symbol_totsys_impl
 	// CreateIdReferenceExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void CreateIdReferenceExpr(const ParsingArguments& pa, Ptr<Resolving> resolving, ExprTsysList& result, const ExprTsysItem* childExprClassItem, bool allowAny, bool allowVariadic, bool& isVta)
+	void CreateIdReferenceExpr(const ParsingArguments& pa, const Ptr<Resolving>& resolving, ExprTsysList& result, const ExprTsysItem* childExprClassItem, bool allowAny, bool allowVariadic, bool& isVta)
 	{
 		if (!resolving)
 		{

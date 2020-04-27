@@ -83,24 +83,37 @@ namespace symbol_type_resolving
 	{
 		EvaluateForwardClassSymbol(invokerPa, classDecl, parentDeclType, argumentsToApply);
 		auto eval = ProcessArguments(invokerPa, classDecl, classDecl->templateSpec, parentDeclType, argumentsToApply);
-		if (eval.ev.progress == symbol_component::EvaluationProgress::Evaluated)
+
+		if (!eval.ev.skipEvaluatingBaseTypes)
 		{
-			// TODO: find out why this function is called when classDecl->baseTypes is not filled completely
-			if (eval.ev.ExtraCount() == classDecl->baseTypes.Count())
+			if (eval.ev.progress == symbol_component::EvaluationProgress::Evaluated)
 			{
-				return eval.ev;
+				if (eval.ev.ExtraCount() == classDecl->baseTypes.Count())
+				{
+					return eval.ev;
+				}
 			}
+
+			eval.ev.skipEvaluatingBaseTypes = true;
+
+			Array<Ptr<TypeTsysList>> baseTsys(classDecl->baseTypes.Count());
+			for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
+			{
+				auto tsysList = MakePtr<TypeTsysList>();
+				baseTsys[i] = tsysList;
+				TypeToTsysNoVta(eval.declPa, classDecl->baseTypes[i].f1, *tsysList.Obj());
+			}
+
+			eval.ev.progress = symbol_component::EvaluationProgress::Evaluating;
+			eval.ev.AllocateExtra(classDecl->baseTypes.Count());
+			for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
+			{
+				eval.ev.ReplaceExtra(i, baseTsys[i]);
+			}
+			eval.ev.progress = symbol_component::EvaluationProgress::Evaluated;
+
+			eval.ev.skipEvaluatingBaseTypes = false;
 		}
-
-		eval.ev.progress = symbol_component::EvaluationProgress::Evaluating;
-		eval.ev.AllocateExtra(classDecl->baseTypes.Count());
-
-		for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
-		{
-			TypeToTsysNoVta(eval.declPa, classDecl->baseTypes[i].f1, eval.ev.GetExtra(i));
-		}
-
-		eval.ev.progress = symbol_component::EvaluationProgress::Evaluated;
 		return eval.ev;
 	}
 

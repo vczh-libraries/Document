@@ -110,6 +110,10 @@ namespace symbol_component
 		Evaluation(const Evaluation&) = delete;
 		Evaluation(Evaluation&&) = delete;
 
+		// this flag is set only in ParseDeclaration_Class_NotConsumeSemicolon and EvaluateClassSymbol
+		// EvaluateClassSymbol will skip evaluating base types when it is true
+		bool										skipEvaluatingBaseTypes = false;
+
 		EvaluationProgress							progress = EvaluationProgress::NotEvaluated;
 		bool										isVariadic = false;
 
@@ -119,6 +123,7 @@ namespace symbol_component
 		vint										ExtraCount();
 		TypeTsysList&								Get();
 		TypeTsysList&								GetExtra(vint index);
+		void										ReplaceExtra(vint index, Ptr<TypeTsysList> tsysList);
 	};
 
 	enum class SymbolCategory

@@ -43,6 +43,11 @@ Evaluation
 		return *extraTypeLists[index].Obj();
 	}
 
+	void Evaluation::ReplaceExtra(vint index, Ptr<TypeTsysList> tsysList)
+	{
+		extraTypeLists[index] = tsysList;
+	}
+
 /***********************************************************************
 SC_Data
 ***********************************************************************/

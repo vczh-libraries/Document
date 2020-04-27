@@ -205,7 +205,13 @@ public:
 
 	void Visit(IdExpr* self)override
 	{
-		CreateIdReferenceExpr(pa, self->resolving, result, nullptr, false, true, isVta);
+		auto resolving = self->resolving;
+		if (!pa.IsGeneralEvaluation())
+		{
+			resolving = ResolveSymbolInContext(pa, self->name, false).values;
+		}
+
+		CreateIdReferenceExpr(pa, resolving, result, nullptr, false, true, isVta);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -216,8 +222,14 @@ public:
 	{
 		if (!IsResolvedToType(self->classType))
 		{
+			auto resolving = self->resolving;
+			if (!pa.IsGeneralEvaluation())
+			{
+				resolving = ResolveChildSymbol(pa, self->classType, self->name).values;
+			}
+
 			bool childIsVta = false;
-			CreateIdReferenceExpr(pa, self->resolving, result, nullptr, true, false, childIsVta);
+			CreateIdReferenceExpr(pa, resolving, result, nullptr, true, false, childIsVta);
 			return;
 		}
 
