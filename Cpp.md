@@ -30,13 +30,15 @@
     - [ ] Refactor
       - [ ] `Resolving::resolvedSymbols` becomes `List<{ITsys*, Symbol*}>`, the `ITsys*` part stores the type to which the `Symbol*` part belongs to.
         - [ ] `Symbol_Resolve.cpp` functions also return `List<{ITsys*, Symbol*}>`.
-        - [ ] Remove `AdjustThisItemForSymbol`.
+        - [ ] Change `AdjustThisItemForSymbol` to perform `(DecoratedThisType, RealThisType, Symbol) -> DecoratedRealThisType`.
       - [ ] At the end, only `ResolveSymbolInTypeInternal` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.
       - [ ] Copy `TestParseGenericMember.cpp` to `TestParsePSMemberPrimary.cpp` and `TestParsePSMemberPS.cpp`, testing member evaluation from primary symbol and its partial specializations.
       - [ ] `TestParsePSClass.cpp` tests all other things, like function type inferencing with partial specialized instances as parameters.
     - [ ] Ignore forward declaration of class partial specialization, because it provides no additional value.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
-    - [ ] Add `psVersion` (default 0) and `psTsys` to `DeclInstant`.
+    - [ ] Add `psVersion` (default 0) and `psTsys` to `Evaluation` that associated with any `Decl` or `DeclInstant`.
+      - [ ] Add `EvaluateClassPS` to retrive the partial specialization instances
+        - [ ] Rename `GetExtra`, `ReplaceExtra` and `ExtraCount` to add a second list.
       - [ ] `psTsys` is a list, containing `DeclInstant` of all eligible instances of partial specializations (including itself if eligible).
         - [ ] When comparing two `DeclInstance` or matching for type inferencing, if `psVersion` of any instance is -1, `psTsys[0]` is used instead.
         - [ ] When enumerating base types or members of an `DeclInstance`.
