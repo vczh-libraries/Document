@@ -241,7 +241,7 @@ namespace partial_specification_ordering
 			{
 				if (self->resolving && c->resolving)
 				{
-					if (!From(self->resolving->resolvedSymbols).Intersect(c->resolving->resolvedSymbols).IsEmpty())
+					if (Resolving::ContainsSameSymbol(self->resolving, c->resolving))
 					{
 						return;
 					}
@@ -256,7 +256,7 @@ namespace partial_specification_ordering
 			{
 				if (self->resolving && c->resolving)
 				{
-					if (!From(self->resolving->resolvedSymbols).Intersect(c->resolving->resolvedSymbols).IsEmpty())
+					if (Resolving::ContainsSameSymbol(self->resolving, c->resolving))
 					{
 						return;
 					}

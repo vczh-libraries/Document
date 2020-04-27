@@ -3,19 +3,6 @@
 #include "Ast_Decl.h"
 #include "Ast_Expr.h"
 
-
-bool CompareResolving(Ptr<Resolving> r1, Ptr<Resolving> r2)
-{
-	if (r1 && r2)
-	{
-		return CompareEnumerable(r1->resolvedSymbols, r2->resolvedSymbols) == 0;
-	}
-	else
-	{
-		return !r1 && !r2;
-	}
-}
-
 /***********************************************************************
 IsSameResolvedExpr
 ***********************************************************************/
@@ -139,13 +126,13 @@ public:
 			else
 			{
 				if (self->name.name != idExpr->name.name) return;
-				result = CompareResolving(self->resolving, idExpr->resolving);
+				result = Resolving::ContainsSameSymbol(self->resolving, idExpr->resolving);
 			}
 		}
 		else if (auto childExpr = peerExpr.Cast<ChildExpr>())
 		{
 			if (self->name.name != childExpr->name.name) return;
-			result = CompareResolving(self->resolving, childExpr->resolving);
+			result = Resolving::ContainsSameSymbol(self->resolving, childExpr->resolving);
 		}
 	}
 
@@ -154,7 +141,7 @@ public:
 		if (auto idExpr = peerExpr.Cast<IdExpr>())
 		{
 			if (self->name.name != idExpr->name.name) return;
-			result = CompareResolving(self->resolving, idExpr->resolving);
+			result = Resolving::ContainsSameSymbol(self->resolving, idExpr->resolving);
 		}
 		else if (auto childExpr = peerExpr.Cast<ChildExpr>())
 		{
@@ -342,17 +329,6 @@ public:
 	{
 	}
 
-	void TestResolving(Ptr<Resolving> resolving)
-	{
-		if (auto type = peerType.Cast<Category_Id_Child_Type>())
-		{
-			if (type->resolving)
-			{
-				result = CompareEnumerable(resolving->resolvedSymbols, type->resolving->resolvedSymbols) == 0;
-			}
-		}
-	}
-
 	void Visit(PrimitiveType* self)override
 	{
 		if (auto type = peerType.Cast<PrimitiveType>())
@@ -474,13 +450,13 @@ public:
 			else
 			{
 				if (self->name.name != idType->name.name) return;
-				result = CompareResolving(self->resolving, idType->resolving);
+				result = Resolving::ContainsSameSymbol(self->resolving, idType->resolving);
 			}
 		}
 		else if (auto childType = peerType.Cast<ChildType>())
 		{
 			if (self->name.name != childType->name.name) return;
-			result = CompareResolving(self->resolving, childType->resolving);
+			result = Resolving::ContainsSameSymbol(self->resolving, childType->resolving);
 		}
 	}
 
@@ -489,7 +465,7 @@ public:
 		if (auto idType = peerType.Cast<IdType>())
 		{
 			if (self->name.name != idType->name.name) return;
-			result = CompareResolving(self->resolving, idType->resolving);
+			result = Resolving::ContainsSameSymbol(self->resolving, idType->resolving);
 		}
 		else if (auto childType = peerType.Cast<ChildType>())
 		{

@@ -35,9 +35,6 @@
           - [ ] `Ast_Resolving_Adl.cpp`: Remove `SearchBaseTypeAdlClassesAndNamespacesVisitor`, calculate ADL from `ITsys*` instead of `Ptr<Type>`.
           - [ ] Create helper functions to determine, to remove the spreading of `AST->resolving` usages.
             - [ ] If an AST node refers to a namespace.
-            - [ ] `CompareResolving` in `Ast_Type_IsSameResolvedType.cpp` is wrong, it should returns true when two `resolvedSymbols` have non-empty intersection.
-              - [ ] Use this functions also in function type inferencing and partial specialization matching.
-              - [ ] `IsSameResolvedTypeVisitor::TestResolving` is duplicated.
             - [ ] Get `patternSymbol` and `pattern` (optional) from an AST node.
             - [ ] Test if the only symbol in `resolvedSymbols` has a certain kind.
         - [ ] `Symbol_Resolve.cpp` functions also return `List<{ITsys*, Symbol*}>`.

@@ -5,6 +5,26 @@
 #include "Ast_Stat.h"
 #include "Parser.h"
 
+/***********************************************************************
+Resolving
+***********************************************************************/
+
+bool Resolving::ContainsSameSymbol(const Ptr<Resolving>& a, const Ptr<Resolving>& b)
+{
+	if (a && b)
+	{
+		return !From(a->resolvedSymbols).Intersect(b->resolvedSymbols).IsEmpty();
+	}
+	else
+	{
+		return !a && !b;
+	}
+}
+
+/***********************************************************************
+AST
+***********************************************************************/
+
 #define CPPDOC_ACCEPT(NAME) void NAME::Accept(ITypeVisitor* visitor) { visitor->Visit(this); }
 CPPDOC_TYPE_LIST(CPPDOC_ACCEPT)
 #undef CPPDOC_ACCEPT

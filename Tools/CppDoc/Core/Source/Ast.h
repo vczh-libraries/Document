@@ -46,6 +46,8 @@ class Resolving : public Object
 {
 public:
 	List<Symbol*>			resolvedSymbols;
+
+	static bool				ContainsSameSymbol(const Ptr<Resolving>& a, const Ptr<Resolving>& b);
 };
 
 /***********************************************************************
