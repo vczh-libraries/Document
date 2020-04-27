@@ -33,8 +33,7 @@ namespace symbol_type_resolving
 	// Adl
 
 	extern bool									IsAdlEnabled(const ParsingArguments& pa, Ptr<Resolving> resolving);
-	extern void									SearchAdlClassesAndNamespaces(const ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
-	extern void									SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes);
+	extern void									SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss);
 	extern void									SearchAdlFunction(const ParsingArguments& pa, SortedList<Symbol*>& nss, const WString& name, ExprTsysList& result);
 }
 

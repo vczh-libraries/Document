@@ -1,5 +1,6 @@
 #include "Ast_Resolving.h"
 #include "Symbol_Visit.h"
+#include "EvaluateSymbol.h"
 
 namespace symbol_type_resolving
 {
@@ -40,89 +41,7 @@ namespace symbol_type_resolving
 	SearchAdlClassesAndNamespaces: Preparing for argument-dependent lookup
 	***********************************************************************/
 
-	class SearchBaseTypeAdlClassesAndNamespacesVisitor : public Object, public virtual ITypeVisitor
-	{
-	public:
-		const ParsingArguments&		pa;
-		SortedList<Symbol*>&		nss;
-		SortedList<Symbol*>&		classes;
-
-		SearchBaseTypeAdlClassesAndNamespacesVisitor(const ParsingArguments& _pa, SortedList<Symbol*>& _nss, SortedList<Symbol*>& _classes)
-			:pa(_pa)
-			, nss(_nss)
-			, classes(_classes)
-		{
-		}
-
-		void Resolve(Ptr<Resolving> resolving)
-		{
-			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
-			{
-				SearchAdlClassesAndNamespaces(pa, resolving->resolvedSymbols[i], nss, classes);
-			}
-		}
-
-		void Visit(PrimitiveType* self)override
-		{
-		}
-
-		void Visit(ReferenceType* self)override
-		{
-		}
-
-		void Visit(ArrayType* self)override
-		{
-		}
-
-		void Visit(CallingConventionType* self)override
-		{
-		}
-
-		void Visit(FunctionType* self)override
-		{
-		}
-
-		void Visit(MemberType* self)override
-		{
-		}
-
-		void Visit(DeclType* self)override
-		{
-		}
-
-		void Visit(DecorateType* self)override
-		{
-		}
-
-		void Visit(RootType* self)override
-		{
-		}
-
-		void Visit(IdType* self)override
-		{
-			Resolve(self->resolving);
-		}
-
-		void Visit(ChildType* self)override
-		{
-			Resolve(self->resolving);
-		}
-
-		void Visit(GenericType* self)override
-		{
-			self->type->Accept(this);
-			for (vint i = 0; i < self->arguments.Count(); i++)
-			{
-				auto argument = self->arguments[i];
-				if (argument.item.type)
-				{
-					argument.item.type->Accept(this);
-				}
-			}
-		}
-	};
-
-	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
+	void AddAdlNamespace(const ParsingArguments& pa, Symbol* symbol, SortedList<Symbol*>& nss)
 	{
 		auto firstSymbol = symbol;
 		while (symbol)
@@ -134,33 +53,11 @@ namespace symbol_type_resolving
 					nss.Add(symbol);
 				}
 			}
-			else if (auto classDecl = symbol->GetCategory() == symbol_component::SymbolCategory::Normal ? symbol->GetImplDecl_NFb<ClassDeclaration>() : nullptr)
-			{
-				if (!classes.Contains(symbol))
-				{
-					classes.Add(symbol);
-				}
-
-				if (symbol == firstSymbol)
-				{
-					auto classPa = pa.WithScope(symbol);
-
-					SearchBaseTypeAdlClassesAndNamespacesVisitor visitor(classPa, nss, classes);
-					for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
-					{
-						classDecl->baseTypes[i].f1->Accept(&visitor);
-					}
-				}
-			}
-			else
-			{
-				break;
-			}
 			symbol = symbol->GetParentScope();
 		}
 	}
 
-	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& classes)
+	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss)
 	{
 		if (!type) return;
 		switch (type->GetType())
@@ -170,33 +67,46 @@ namespace symbol_type_resolving
 		case TsysType::Ptr:
 		case TsysType::Array:
 		case TsysType::CV:
-			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss, classes);
+			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss);
 			break;
 		case TsysType::Function:
-			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss, classes);
+			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss);
 			for (vint i = 0; i < type->GetParamCount(); i++)
 			{
-				SearchAdlClassesAndNamespaces(pa, type->GetParam(i), nss, classes);
+				SearchAdlClassesAndNamespaces(pa, type->GetParam(i), nss);
 			}
 			break;
 		case TsysType::Member:
-			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss, classes);
-			SearchAdlClassesAndNamespaces(pa, type->GetClass(), nss, classes);
-			break;
-		case TsysType::Decl:
-			SearchAdlClassesAndNamespaces(pa, type->GetDecl(), nss, classes);
+			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss);
+			SearchAdlClassesAndNamespaces(pa, type->GetClass(), nss);
 			break;
 		case TsysType::DeclInstant:
 			{
-				SearchAdlClassesAndNamespaces(pa, type->GetDecl(), nss, classes);
 				for (vint i = 0; i < type->GetParamCount(); i++)
 				{
-					SearchAdlClassesAndNamespaces(pa, type->GetParam(i), nss, classes);
+					SearchAdlClassesAndNamespaces(pa, type->GetParam(i), nss);
 				}
 				const auto& di = type->GetDeclInstant();
 				if (di.parentDeclType)
 				{
-					SearchAdlClassesAndNamespaces(pa, di.parentDeclType, nss, classes);
+					SearchAdlClassesAndNamespaces(pa, di.parentDeclType, nss);
+				}
+			}
+			break;
+		case TsysType::Decl:
+			{
+				AddAdlNamespace(pa, type->GetDecl(), nss);
+				if (type->GetDecl()->GetImplDecl_NFb<ClassDeclaration>())
+				{
+					auto& ev = symbol_type_resolving::EvaluateClassType(pa, type);
+					for (vint i = 0; i < ev.ExtraCount(); i++)
+					{
+						auto& tsys = ev.GetExtra(i);
+						for (vint j = 0; j < tsys.Count(); j++)
+						{
+							SearchAdlClassesAndNamespaces(pa, tsys[j], nss);
+						}
+					}
 				}
 			}
 			break;

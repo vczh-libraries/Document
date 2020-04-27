@@ -32,7 +32,6 @@
         - [ ] `AST::resolving` is not reliable due to partial specialization, only use it to determine if a symbol is a namespace or not, clear usage in:
           - [ ] `Ast_Evaluate_ExprToTsys.cpp`.
           - [ ] `Ast_Evaluate_TypeToTsys.cpp`.
-          - [ ] `Ast_Resolving_Adl.cpp`: Remove `SearchBaseTypeAdlClassesAndNamespacesVisitor`, calculate ADL from `ITsys*` instead of `Ptr<Type>`.
         - [ ] `Symbol_Resolve.cpp` functions also return `List<{ITsys*, Symbol*}>`.
         - [ ] Remove `AdjustThisItemForSymbol`.
       - [ ] At the end, only `ResolveSymbolInTypeInternal` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.

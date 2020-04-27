@@ -363,11 +363,11 @@ namespace symbol_totsys_impl
 			}
 			if (!opFuncs.values || IsAdlEnabled(pa, opFuncs.values))
 			{
-				SortedList<Symbol*> nss, classes;
-				SearchAdlClassesAndNamespaces(pa, leftEntity, nss, classes);
+				SortedList<Symbol*> nss;
+				SearchAdlClassesAndNamespaces(pa, leftEntity, nss);
 				if (rightEntity)
 				{
-					SearchAdlClassesAndNamespaces(pa, rightEntity, nss, classes);
+					SearchAdlClassesAndNamespaces(pa, rightEntity, nss);
 				}
 				SearchAdlFunction(pa, nss, opName.name, opTypes);
 			}

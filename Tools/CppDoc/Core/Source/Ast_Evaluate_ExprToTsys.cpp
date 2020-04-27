@@ -447,10 +447,10 @@ public:
 				{
 					if (!idExpr->resolving || IsAdlEnabled(pa, idExpr->resolving))
 					{
-						SortedList<Symbol*> nss, classes;
+						SortedList<Symbol*> nss;
 						for (vint i = 0; i < args.Count(); i++)
 						{
-							SearchAdlClassesAndNamespaces(pa, args[i].tsys, nss, classes);
+							SearchAdlClassesAndNamespaces(pa, args[i].tsys, nss);
 						}
 						SearchAdlFunction(pa, nss, idExpr->name.name, funcTypes);
 					}
