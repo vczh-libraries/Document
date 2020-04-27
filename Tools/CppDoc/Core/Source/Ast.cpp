@@ -42,6 +42,27 @@ bool Resolving::IsResolvedToType(const Ptr<Resolving>& resolving)
 	}
 }
 
+Symbol* Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving)
+{
+	if (resolving && resolving->resolvedSymbols.Count() == 1)
+	{
+		return resolving->resolvedSymbols[0];
+	}
+	return nullptr;
+}
+
+Symbol* Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving, symbol_component::SymbolKind kind)
+{
+	if (auto symbol = EnsureSingleSymbol(resolving))
+	{
+		if (symbol->kind == kind)
+		{
+			return symbol;
+		}
+	}
+	return nullptr;
+}
+
 /***********************************************************************
 AST
 ***********************************************************************/

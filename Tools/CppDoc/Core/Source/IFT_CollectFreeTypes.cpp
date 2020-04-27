@@ -51,16 +51,12 @@ namespace infer_function_type
 		{
 			if (auto idExpr = expr.Cast<IdExpr>())
 			{
-				if (idExpr->resolving && idExpr->resolving->resolvedSymbols.Count() == 1)
+				if (auto symbol = Resolving::EnsureSingleSymbol(idExpr->resolving, symbol_component::SymbolKind::GenericValueArgument))
 				{
-					auto symbol = idExpr->resolving->resolvedSymbols[0];
-					if (symbol->kind == symbol_component::SymbolKind::GenericValueArgument)
+					if (freeTypeSymbols.Contains(symbol))
 					{
-						if (freeTypeSymbols.Contains(symbol))
-						{
-							involvedExprs.Add(expr.Obj());
-							return true;
-						}
+						involvedExprs.Add(expr.Obj());
+						return true;
 					}
 				}
 			}
@@ -137,9 +133,8 @@ namespace infer_function_type
 
 		void Visit(IdType* self)override
 		{
-			if (self->resolving && self->resolving->resolvedSymbols.Count() == 1)
+			if (auto patternSymbol = Resolving::EnsureSingleSymbol(self->resolving))
 			{
-				auto patternSymbol = self->resolving->resolvedSymbols[0];
 				if (freeTypeSymbols.Contains(patternSymbol))
 				{
 					involved = true;
@@ -173,10 +168,9 @@ namespace infer_function_type
 
 		void Visit(GenericType* self)override
 		{
-			if (self->type->resolving && self->type->resolving->resolvedSymbols.Count() == 1)
+			if (auto symbol = Resolving::EnsureSingleSymbol(self->type->resolving))
 			{
 				// only perform type inferencing when the generic symbol is a class or a template template argument
-				auto symbol = self->type->resolving->resolvedSymbols[0];
 				switch (symbol->kind)
 				{
 				case CLASS_SYMBOL_KIND:

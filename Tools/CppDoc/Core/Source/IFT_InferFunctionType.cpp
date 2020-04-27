@@ -85,10 +85,10 @@ namespace infer_function_type
 
 		auto genericType = entityType.Cast<GenericType>();
 		if (!genericType) return false;
-		if (!genericType->type->resolving) return false;
-		if (genericType->type->resolving->resolvedSymbols.Count() != 1) return false;
 
-		auto classSymbol = genericType->type->resolving->resolvedSymbols[0];
+		auto classSymbol = Resolving::EnsureSingleSymbol(genericType->type->resolving);
+		if (!classSymbol) return false;
+
 		switch (classSymbol->kind)
 		{
 		case CLASS_SYMBOL_KIND:

@@ -49,6 +49,8 @@ public:
 
 	static bool				ContainsSameSymbol(const Ptr<Resolving>& a, const Ptr<Resolving>& b);
 	static bool				IsResolvedToType(const Ptr<Resolving>& resolving);
+	static Symbol*			EnsureSingleSymbol(const Ptr<Resolving>& resolving);
+	static Symbol*			EnsureSingleSymbol(const Ptr<Resolving>& resolving, symbol_component::SymbolKind kind);
 };
 
 /***********************************************************************

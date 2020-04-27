@@ -108,7 +108,7 @@ namespace infer_function_type
 		{
 			if (auto idType = dynamic_cast<IdType*>(involvedTypes[j]))
 			{
-				auto patternSymbol = idType->resolving->resolvedSymbols[0];
+				auto patternSymbol = Resolving::EnsureSingleSymbol(idType->resolving);
 				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
 				if (patternSymbol->ellipsis)
 				{
@@ -121,7 +121,7 @@ namespace infer_function_type
 		{
 			if (auto idExpr = dynamic_cast<IdExpr*>(involvedExprs[j]))
 			{
-				auto patternSymbol = idExpr->resolving->resolvedSymbols[0];
+				auto patternSymbol = Resolving::EnsureSingleSymbol(idExpr->resolving);
 				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
 				if (patternSymbol->ellipsis)
 				{

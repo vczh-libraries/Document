@@ -85,7 +85,7 @@ namespace infer_function_type
 		{
 			if (!involvedExprs.Contains(expr.Obj())) return;
 			auto idExpr = expr.Cast<IdExpr>();
-			auto patternSymbol = idExpr->resolving->resolvedSymbols[0];
+			auto patternSymbol = Resolving::EnsureSingleSymbol(idExpr->resolving);
 			auto& outputContext = patternSymbol->ellipsis ? variadicContext : taContext;
 			auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
 			SetInferredResult(pa, outputContext, pattern, nullptr, lastAssignedVta, hardcodedPatterns);
@@ -276,7 +276,7 @@ namespace infer_function_type
 
 		void Visit(IdType* self)override
 		{
-			auto patternSymbol = self->resolving->resolvedSymbols[0];
+			auto patternSymbol = Resolving::EnsureSingleSymbol(self->resolving);
 			auto& outputContext = patternSymbol->ellipsis ? variadicContext : taContext;
 			auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
 
@@ -310,7 +310,7 @@ namespace infer_function_type
 
 		void Visit(GenericType* self)override
 		{
-			auto genericSymbol = self->type->resolving->resolvedSymbols[0];
+			auto genericSymbol = Resolving::EnsureSingleSymbol(self->type->resolving);
 
 			Ptr<TemplateSpec> spec;
 			if (auto classDecl = genericSymbol->GetAnyForwardDecl<ForwardClassDeclaration>())
