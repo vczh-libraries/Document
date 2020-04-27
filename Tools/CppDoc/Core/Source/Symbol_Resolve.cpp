@@ -450,27 +450,6 @@ public:
 	{
 	}
 
-	static bool IsResolvedToType(Ptr<Resolving>& resolving)
-	{
-		if (resolving)
-		{
-			auto& symbols = resolving->resolvedSymbols;
-			for (vint i = 0; i < symbols.Count(); i++)
-			{
-				if (symbols[i]->kind != symbol_component::SymbolKind::Namespace)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-		else
-		{
-			// namespaces are always resolved
-			return true;
-		}
-	}
-
 	void ResolveChildSymbolOfType(Type* type)
 	{
 		TypeTsysList tsyses;
@@ -542,7 +521,7 @@ public:
 
 	void VisitIdOrChildType(Type* self, Ptr<Resolving>& resolving)
 	{
-		if (IsResolvedToType(resolving))
+		if (Resolving::IsResolvedToType(resolving))
 		{
 			ResolveChildSymbolOfType(self);
 		}
@@ -592,7 +571,7 @@ bool IsResolvedToType(Ptr<Type> type)
 
 	if (auto catIdChildType = type.Cast<Category_Id_Child_Type>())
 	{
-		return ResolveChildSymbolTypeVisitor::IsResolvedToType(catIdChildType->resolving);
+		return Resolving::IsResolvedToType(catIdChildType->resolving);
 	}
 
 	return true;

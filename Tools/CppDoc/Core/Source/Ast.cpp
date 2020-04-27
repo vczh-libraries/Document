@@ -21,6 +21,27 @@ bool Resolving::ContainsSameSymbol(const Ptr<Resolving>& a, const Ptr<Resolving>
 	}
 }
 
+bool Resolving::IsResolvedToType(const Ptr<Resolving>& resolving)
+{
+	if (resolving)
+	{
+		auto& symbols = resolving->resolvedSymbols;
+		for (vint i = 0; i < symbols.Count(); i++)
+		{
+			if (symbols[i]->kind != symbol_component::SymbolKind::Namespace)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	else
+	{
+		// namespaces are always resolved
+		return true;
+	}
+}
+
 /***********************************************************************
 AST
 ***********************************************************************/

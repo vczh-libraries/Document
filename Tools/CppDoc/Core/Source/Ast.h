@@ -48,6 +48,7 @@ public:
 	List<Symbol*>			resolvedSymbols;
 
 	static bool				ContainsSameSymbol(const Ptr<Resolving>& a, const Ptr<Resolving>& b);
+	static bool				IsResolvedToType(const Ptr<Resolving>& resolving);
 };
 
 /***********************************************************************
