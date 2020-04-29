@@ -184,6 +184,10 @@ TEST_FILE
 		using namespace Input__TestOverloadingGenericFunction_Method;
 		COMPILE_PROGRAM(program, pa, input);
 
+		// bug could be in AdjustThisItemForSymbol
+		// when a member of a generic class is resolved
+		// and an instance of that class is expected as a base type from the given this type
+
 		ASSERT_OVERLOADING_VERBOSE(
 			_mt1 + _mt2,
 			L"(_mt1 + _mt2)",
