@@ -66,7 +66,7 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 	auto type = MakePtr<IdType>();
 	type->name = decl->name;
 	type->resolving = MakePtr<Resolving>();
-	type->resolving->resolvedSymbols.Add(decl->symbol);
+	Resolving::AddSymbol(pa, type->resolving, decl->symbol);
 
 	List<Ptr<Declarator>> declarators;
 	ParseNonMemberDeclarator(pa, pda_Typedefs(), type, cursor, declarators);

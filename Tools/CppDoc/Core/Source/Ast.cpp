@@ -4,6 +4,7 @@
 #include "Ast_Expr.h"
 #include "Ast_Stat.h"
 #include "Parser.h"
+#include "EvaluateSymbol.h"
 
 /***********************************************************************
 Resolving
@@ -59,6 +60,23 @@ Symbol* Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving, symbol_co
 		return symbol;
 	}
 	return nullptr;
+}
+
+void Resolving::AddSymbol(const ParsingArguments& pa, const Ptr<Resolving>& resolving, Symbol* symbol)
+{
+	auto parent = symbol->GetParentScope();
+	switch (parent->kind)
+	{
+	case CLASS_SYMBOL_KIND:
+		{
+			auto classDecl = parent->GetAnyForwardDecl<ForwardClassDeclaration>();
+			auto& tsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
+			resolving->items.Add({ tsys[0],symbol });
+		}
+		break;
+	default:
+		resolving->items.Add({ nullptr,symbol });
+	}
 }
 
 /***********************************************************************

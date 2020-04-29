@@ -261,13 +261,13 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 	return false;
 }
 
-Ptr<VariableDeclaration> GenerateCopyParameter(Symbol* classSymbol)
+Ptr<VariableDeclaration> GenerateCopyParameter(const ParsingArguments& pa, Symbol* classSymbol)
 {
 	auto idType = MakePtr<IdType>();
 	idType->name.name = classSymbol->name;
 	idType->name.type = CppNameType::Normal;
 	idType->resolving = MakePtr<Resolving>();
-	idType->resolving->resolvedSymbols.Add(classSymbol);
+	Resolving::AddSymbol(pa, idType->resolving, classSymbol);
 
 	auto decoratedType = MakePtr<DecorateType>();
 	decoratedType->type = idType;
@@ -282,13 +282,13 @@ Ptr<VariableDeclaration> GenerateCopyParameter(Symbol* classSymbol)
 	return parameter;
 }
 
-Ptr<Type> GenerateRefType(Symbol* classSymbol, CppReferenceType ref)
+Ptr<Type> GenerateRefType(const ParsingArguments& pa, Symbol* classSymbol, CppReferenceType ref)
 {
 	auto idType = MakePtr<IdType>();
 	idType->name.name = classSymbol->name;
 	idType->name.type = CppNameType::Normal;
 	idType->resolving = MakePtr<Resolving>();
-	idType->resolving->resolvedSymbols.Add(classSymbol);
+	Resolving::AddSymbol(pa, idType->resolving, classSymbol);
 
 	auto refType = MakePtr<ReferenceType>();
 	refType->type = idType;
@@ -296,10 +296,10 @@ Ptr<Type> GenerateRefType(Symbol* classSymbol, CppReferenceType ref)
 	return refType;
 }
 
-Ptr<VariableDeclaration> GenerateMoveParameter(Symbol* classSymbol)
+Ptr<VariableDeclaration> GenerateMoveParameter(const ParsingArguments& pa, Symbol* classSymbol)
 {
 	auto parameter = MakePtr<VariableDeclaration>();
-	parameter->type = GenerateRefType(classSymbol, CppReferenceType::RRef);
+	parameter->type = GenerateRefType(pa, classSymbol, CppReferenceType::RRef);
 	return parameter;
 }
 
@@ -322,7 +322,7 @@ Ptr<ForwardFunctionDeclaration> GenerateCtor(Symbol* classSymbol, bool deleted, 
 	return decl;
 }
 
-Ptr<ForwardFunctionDeclaration> GenerateAssignOp(Symbol* classSymbol, bool deleted, Ptr<VariableDeclaration> parameter)
+Ptr<ForwardFunctionDeclaration> GenerateAssignOp(const ParsingArguments& pa, Symbol* classSymbol, bool deleted, Ptr<VariableDeclaration> parameter)
 {
 	auto decl = MakePtr<ForwardFunctionDeclaration>();
 	decl->name.name = L"operator =";
@@ -332,7 +332,7 @@ Ptr<ForwardFunctionDeclaration> GenerateAssignOp(Symbol* classSymbol, bool delet
 		auto funcType = MakePtr<FunctionType>();
 		decl->type = funcType;
 		
-		funcType->returnType = GenerateRefType(classSymbol, CppReferenceType::LRef);
+		funcType->returnType = GenerateRefType(pa, classSymbol, CppReferenceType::LRef);
 		funcType->parameters.Add({ parameter,false });
 	}
 	if (!deleted) decl->decoratorDefault = true;
@@ -399,7 +399,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 					}
 				}
 
-				generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateCopyParameter(classSymbol)));
+				generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateCopyParameter(pa, classSymbol)));
 				generatedEnabledCopyCtor = !deleted;
 			}
 			if (!symbolMoveCtor)
@@ -415,7 +415,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 
 				if (!deleted || !(enabledCopyCtor || generatedEnabledCopyCtor))
 				{
-					generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateMoveParameter(classSymbol)));
+					generatedMembers.Add(GenerateCtor(classSymbol, deleted, GenerateMoveParameter(pa, classSymbol)));
 				}
 			}
 
@@ -432,7 +432,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 						}
 					}
 
-					generatedMembers.Add(GenerateAssignOp(classSymbol, deleted, GenerateCopyParameter(classSymbol)));
+					generatedMembers.Add(GenerateAssignOp(pa, classSymbol, deleted, GenerateCopyParameter(pa, classSymbol)));
 					generatedEnabledCopyAssignOp = !deleted;
 				}
 				if (!symbolMoveAssignOp)
@@ -448,7 +448,7 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 
 					if (!deleted || !(enabledCopyAssignOp || generatedEnabledCopyAssignOp))
 					{
-						generatedMembers.Add(GenerateAssignOp(classSymbol, deleted, GenerateMoveParameter(classSymbol)));
+						generatedMembers.Add(GenerateAssignOp(pa, classSymbol, deleted, GenerateMoveParameter(pa, classSymbol)));
 					}
 				}
 			}

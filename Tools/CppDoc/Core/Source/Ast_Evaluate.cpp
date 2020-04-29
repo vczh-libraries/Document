@@ -460,7 +460,7 @@ public:
 					if (varSymbol->kind != symbol_component::SymbolKind::Variable) goto SKIP_RESOLVING_FIELD;
 
 					item.f0->resolving = MakePtr<Resolving>();
-					item.f0->resolving->resolvedSymbols.Add(varSymbol);
+					Resolving::AddSymbol(pa, item.f0->resolving, varSymbol);
 				}
 			SKIP_RESOLVING_FIELD:;
 				ExprTsysList types;

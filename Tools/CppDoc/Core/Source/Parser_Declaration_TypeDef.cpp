@@ -16,7 +16,7 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		createdType = MakePtr<IdType>();
 		createdType->name = classDecl->name;
 		createdType->resolving = MakePtr<Resolving>();
-		createdType->resolving->resolvedSymbols.Add(classDecl->symbol);
+		Resolving::AddSymbol(pa, createdType->resolving, classDecl->symbol);
 		ParseNonMemberDeclarator(pa, pda_Typedefs(), createdType, cursor, declarators);
 	}
 	else if (!cStyleTypeReference && TestToken(cursor, CppTokens::DECL_ENUM, false))
@@ -27,7 +27,7 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		createdType = MakePtr<IdType>();
 		createdType->name = enumDecl->name;
 		createdType->resolving = MakePtr<Resolving>();
-		createdType->resolving->resolvedSymbols.Add(enumDecl->symbol);
+		Resolving::AddSymbol(pa, createdType->resolving, enumDecl->symbol);
 		ParseNonMemberDeclarator(pa, pda_Typedefs(), createdType, cursor, declarators);
 	}
 	else

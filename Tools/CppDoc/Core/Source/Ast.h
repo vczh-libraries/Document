@@ -79,6 +79,7 @@ public:
 	static bool				IsResolvedToType(const Ptr<Resolving>& resolving);
 	static Symbol*			EnsureSingleSymbol(const Ptr<Resolving>& resolving);
 	static Symbol*			EnsureSingleSymbol(const Ptr<Resolving>& resolving, symbol_component::SymbolKind kind);
+	static void				AddSymbol(const ParsingArguments& pa, const Ptr<Resolving>& resolving, Symbol* symbol);
 };
 
 /***********************************************************************
