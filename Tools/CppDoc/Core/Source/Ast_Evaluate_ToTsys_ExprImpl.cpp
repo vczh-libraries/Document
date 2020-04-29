@@ -326,7 +326,7 @@ namespace symbol_totsys_impl
 				{
 					auto ritem = opMethods.values->items[j];
 					auto adjusted = AdjustThisItemForSymbol(newPa, *leftType, ritem);
-					VisitSymbolForField(pa, &adjusted, ritem.symbol, opTypes);
+					VisitSymbolForField(pa, &adjusted, ritem, opTypes);
 				}
 				FilterFieldsAndBestQualifiedFunctions(leftCV, leftRef, opTypes);
 
@@ -357,8 +357,8 @@ namespace symbol_totsys_impl
 				for (vint j = 0; j < opFuncs.values->items.Count(); j++)
 				{
 					// prevent from getting non-static operators inside a class
-					auto funcSymbol = opFuncs.values->items[j].symbol;
-					VisitSymbol(pa, funcSymbol, opTypes);
+					auto funcItem = opFuncs.values->items[j];
+					VisitSymbol(pa, funcItem, opTypes);
 				}
 			}
 			if (!opFuncs.values || IsAdlEnabled(pa, opFuncs.values))

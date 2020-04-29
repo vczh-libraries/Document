@@ -644,7 +644,7 @@ public:
 						{
 							auto ritem = rsr.values->items[i];
 							auto adjusted = AdjustThisItemForSymbol(newPa, arg1, ritem);
-							VisitSymbolForScope(newPa, &adjusted, ritem.symbol, processResult);
+							VisitSymbolForScope(newPa, &adjusted, ritem, processResult);
 						}
 					}
 				}

@@ -232,9 +232,9 @@ namespace symbol_type_resolving
 		throw IllegalExprException();
 	}
 
-	void VisitSymbolInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, VisitMemberKind visitMemberKind, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
+	void VisitSymbolInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, ResolvedItem item, VisitMemberKind visitMemberKind, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
-		switch (symbol->GetParentScope()->kind)
+		switch (item.symbol->GetParentScope()->kind)
 		{
 		case CLASS_SYMBOL_KIND:
 			break;
@@ -244,40 +244,39 @@ namespace symbol_type_resolving
 
 		if (thisItem)
 		{
-			auto adjustedThisItem = AdjustThisItemForSymbol(pa, *thisItem, symbol);
-			if (!adjustedThisItem)
+			auto adjustedThisItem = AdjustThisItemForSymbol(pa, *thisItem, item);
+			if (!adjustedThisItem.tsys)
 			{
 				throw TypeCheckerException();
 			}
 
-			auto baseItem = adjustedThisItem.Value();
-			VisitSymbolInternalWithCorrectThisItem(pa, &baseItem, symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
+			VisitSymbolInternalWithCorrectThisItem(pa, &adjustedThisItem, item.symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
 		}
 		else
 		{
-			VisitSymbolInternalWithCorrectThisItem(pa, nullptr, symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
+			VisitSymbolInternalWithCorrectThisItem(pa, nullptr, item.symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
 		}
 	}
 
-	void VisitSymbol(const ParsingArguments& pa, Symbol* symbol, ExprTsysList& result)
+	void VisitSymbol(const ParsingArguments& pa, ResolvedItem item, ExprTsysList& result)
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		VisitSymbolInternal(pa, nullptr, symbol, VisitMemberKind::InScope, result, false, hasVariadic, hasNonVariadic);
+		VisitSymbolInternal(pa, nullptr, item, VisitMemberKind::InScope, result, false, hasVariadic, hasNonVariadic);
 	}
 
-	void VisitSymbolForScope(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result)
+	void VisitSymbolForScope(const ParsingArguments& pa, const ExprTsysItem* thisItem, ResolvedItem item, ExprTsysList& result)
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		VisitSymbolInternal(pa, thisItem, symbol, VisitMemberKind::MemberAfterType, result, false, hasVariadic, hasNonVariadic);
+		VisitSymbolInternal(pa, thisItem, item, VisitMemberKind::MemberAfterType, result, false, hasVariadic, hasNonVariadic);
 	}
 
-	void VisitSymbolForField(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result)
+	void VisitSymbolForField(const ParsingArguments& pa, const ExprTsysItem* thisItem, ResolvedItem item, ExprTsysList& result)
 	{
 		bool hasVariadic = false;
 		bool hasNonVariadic = false;
-		VisitSymbolInternal(pa, thisItem, symbol, VisitMemberKind::MemberAfterValue, result, false, hasVariadic, hasNonVariadic);
+		VisitSymbolInternal(pa, thisItem, item, VisitMemberKind::MemberAfterValue, result, false, hasVariadic, hasNonVariadic);
 	}
 
 	/***********************************************************************
@@ -301,28 +300,28 @@ namespace symbol_type_resolving
 	void VisitResolvedMemberInternal(const ParsingArguments& pa, const ExprTsysItem* thisItem, Ptr<Resolving> resolving, ExprTsysList& result, bool allowVariadic, bool& hasVariadic, bool& hasNonVariadic)
 	{
 		ExprTsysList varTypes, funcTypes;
-		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+		for (vint i = 0; i < resolving->items.Count(); i++)
 		{
 			auto targetTypeList = &result;
-			auto symbol = resolving->resolvedSymbols[i];
+			auto ritem = resolving->items[i];
 			
 			bool parentScopeIsClass = false;
-			if (auto parent = symbol->GetParentScope())
+			if (auto parent = ritem.symbol->GetParentScope())
 			{
 				switch (parent->kind)
 				{
 				case CLASS_SYMBOL_KIND:
 					parentScopeIsClass = true;
-					switch (symbol->kind)
+					switch (ritem.symbol->kind)
 					{
 					case symbol_component::SymbolKind::Variable:
-						if (!IsStaticSymbol<ForwardVariableDeclaration>(symbol))
+						if (!IsStaticSymbol<ForwardVariableDeclaration>(ritem.symbol))
 						{
 							targetTypeList = &varTypes;
 						}
 						break;
 					case symbol_component::SymbolKind::FunctionSymbol:
-						if (!IsStaticSymbol<ForwardFunctionDeclaration>(symbol))
+						if (!IsStaticSymbol<ForwardFunctionDeclaration>(ritem.symbol))
 						{
 							targetTypeList = &funcTypes;
 						}
@@ -333,7 +332,7 @@ namespace symbol_type_resolving
 			}
 
 			auto thisItemForSymbol = parentScopeIsClass ? thisItem : nullptr;
-			VisitSymbolInternal(pa, thisItemForSymbol, resolving->resolvedSymbols[i], (thisItemForSymbol ? VisitMemberKind::MemberAfterValue : VisitMemberKind::InScope), *targetTypeList, allowVariadic, hasVariadic, hasNonVariadic);
+			VisitSymbolInternal(pa, thisItemForSymbol, ritem, (thisItemForSymbol ? VisitMemberKind::MemberAfterValue : VisitMemberKind::InScope), *targetTypeList, allowVariadic, hasVariadic, hasNonVariadic);
 		}
 
 		if (varTypes.Count() > 0)
@@ -386,10 +385,10 @@ namespace symbol_type_resolving
 		opName.name = name;
 		if (auto resolving = FindMembersByName(pa, opName, nullptr, parentItem))
 		{
-			for (vint j = 0; j < resolving->resolvedSymbols.Count(); j++)
+			for (vint j = 0; j < resolving->items.Count(); j++)
 			{
-				auto symbol = resolving->resolvedSymbols[j];
-				VisitSymbolForField(pa, &parentItem, symbol, result);
+				auto ritem = resolving->items[j];
+				VisitSymbolForField(pa, &parentItem, ritem, result);
 			}
 			FindQualifiedFunctors(pa, cv, refType, result, false);
 		}
