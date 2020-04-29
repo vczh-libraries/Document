@@ -28,9 +28,6 @@
 - [ ] Partial specialization constructions
   - [ ] Partial specialization on **classes**.
     - [ ] Refactor
-      - [ ] `Resolving::resolvedSymbols` becomes `List<{ITsys*, Symbol*}>`, the `ITsys*` part stores the type to which the `Symbol*` part belongs to.
-        - [ ] `Symbol_Resolve.cpp` functions also return `List<{ITsys*, Symbol*}>`.
-        - [ ] Change `AdjustThisItemForSymbol` to perform `(DecoratedThisType, RealThisType, Symbol) -> DecoratedRealThisType`.
       - [ ] At the end, only `ResolveSymbolInTypeInternal` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.
       - [ ] Copy `TestParseGenericMember.cpp` to `TestParsePSMemberPrimary.cpp` and `TestParsePSMemberPS.cpp`, testing member evaluation from primary symbol and its partial specializations.
         - [ ] Also `TestParserGenericClass.cpp` to `TestParsePSClassPrimary` and `TestParsePSClassPS.cpp`.
