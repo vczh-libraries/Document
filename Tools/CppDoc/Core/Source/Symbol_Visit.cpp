@@ -12,7 +12,7 @@ namespace symbol_type_resolving
 	{
 		auto thisType = ApplyExprTsysType(thisItem.tsys, thisItem.type);
 		auto replacedThisType = ReplaceThisType(thisType, item.tsys);
-		return { nullptr,thisItem.type,thisItem.tsys };
+		return { nullptr,thisItem.type,replacedThisType };
 	}
 
 	/***********************************************************************
