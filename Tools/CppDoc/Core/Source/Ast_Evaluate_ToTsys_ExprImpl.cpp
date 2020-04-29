@@ -732,28 +732,34 @@ namespace symbol_totsys_impl
 		return false;
 	}
 
-	void AddSymbolToResolving(const ParsingArguments& pa, Ptr<Resolving>* resolving, Symbol* symbol)
+	void AddSymbolToResolving(const ParsingArguments& pa, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
 	{
+		if (first)
+		{
+			*resolving = MakePtr<Resolving>();
+		}
+		first = false;
+
 		Resolving::AddSymbol(pa, *resolving, symbol);
 	}
 
-	bool AddSymbolToNameResolving(const ParsingArguments& pa, const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol)
+	bool AddSymbolToNameResolving(const ParsingArguments& pa, const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
 	{
 		bool isOperator = IsOperator(symbol);
 		if (!isOperator || name.type == CppNameType::Operator)
 		{
-			AddSymbolToResolving(pa, resolving, symbol);
+			AddSymbolToResolving(pa, resolving, symbol, first);
 			return true;
 		}
 		return false;
 	}
 
-	bool AddSymbolToOperatorResolving(const ParsingArguments& pa, const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol)
+	bool AddSymbolToOperatorResolving(const ParsingArguments& pa, const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
 	{
 		bool isOperator = IsOperator(symbol);
 		if (isOperator)
 		{
-			AddSymbolToResolving(pa, resolving, symbol);
+			AddSymbolToResolving(pa, resolving, symbol, first);
 			return true;
 		}
 		return false;
@@ -762,18 +768,20 @@ namespace symbol_totsys_impl
 	void AddSymbolsToResolvings(const ParsingArguments& pa, const CppName* name, Ptr<Resolving>* nameResolving, const CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp)
 	{
 		if (!pa.IsGeneralEvaluation()) return;
+		bool firstName = true;
+		bool firstOp = true;
 
 		for (vint i = 0; i < symbols.Count(); i++)
 		{
 			if (auto symbol = symbols[i].symbol)
 			{
-				if (name && AddSymbolToNameResolving(pa, *name, nameResolving, symbol))
+				if (name && AddSymbolToNameResolving(pa, *name, nameResolving, symbol, firstName))
 				{
 					addedName = true;
 					continue;
 				}
 
-				if (op && AddSymbolToOperatorResolving(pa, *op, opResolving, symbol))
+				if (op && AddSymbolToOperatorResolving(pa, *op, opResolving, symbol, firstOp))
 				{
 					addedOp = true;
 				}
