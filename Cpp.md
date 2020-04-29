@@ -33,6 +33,7 @@
         - [ ] Change `AdjustThisItemForSymbol` to perform `(DecoratedThisType, RealThisType, Symbol) -> DecoratedRealThisType`.
       - [ ] At the end, only `ResolveSymbolInTypeInternal` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.
       - [ ] Copy `TestParseGenericMember.cpp` to `TestParsePSMemberPrimary.cpp` and `TestParsePSMemberPS.cpp`, testing member evaluation from primary symbol and its partial specializations.
+        - [ ] Also `TestParserGenericClass.cpp` to `TestParsePSClassPrimary` and `TestParsePSClassPS.cpp`.
       - [ ] `TestParsePSClass.cpp` tests all other things, like function type inferencing with partial specialized instances as parameters.
     - [ ] Ignore forward declaration of class partial specialization, because it provides no additional value.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
