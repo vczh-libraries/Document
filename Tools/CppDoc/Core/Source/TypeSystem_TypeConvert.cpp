@@ -643,11 +643,11 @@ UserDefined (fromType:Operator)
 		if (resolvedOps.values)
 		{
 			auto toType = CvRefOf(toEntity, toCV, toRef);
-			auto& opSymbols = resolvedOps.values->resolvedSymbols;
+			auto& opSymbols = resolvedOps.values->items;
 
 			for (vint i = 0; i < opSymbols.Count(); i++)
 			{
-				auto typeOpSymbol = opSymbols[i];
+				auto typeOpSymbol = opSymbols[i].symbol;
 				auto typeOpDecl = typeOpSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 				{
 					if (typeOpDecl->decoratorExplicit) continue;
@@ -703,10 +703,10 @@ UserDefined (toType:Ctor)
 
 		if (resolvedOps.values)
 		{
-			auto& opSymbols = resolvedOps.values->resolvedSymbols;
+			auto& opSymbols = resolvedOps.values->items;
 			for (vint i = 0; i < opSymbols.Count(); i++)
 			{
-				auto ctorSymbol = opSymbols[i];
+				auto ctorSymbol = opSymbols[i].symbol;
 				auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 				{
 					if (ctorDecl->decoratorExplicit) continue;
@@ -785,10 +785,10 @@ Init
 				ExprTsysList funcTypes;
 				if (resolvedOps.values)
 				{
-					auto& opSymbols = resolvedOps.values->resolvedSymbols;
+					auto& opSymbols = resolvedOps.values->items;
 					for (vint i = 0; i < opSymbols.Count(); i++)
 					{
-						auto ctorSymbol = opSymbols[i];
+						auto ctorSymbol = opSymbols[i].symbol;
 						auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 						if (ctorDecl->decoratorDelete) continue;
 						auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
