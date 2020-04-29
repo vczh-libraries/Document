@@ -65,7 +65,6 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 {
 	auto type = MakePtr<IdType>();
 	type->name = decl->name;
-	type->resolving = MakePtr<Resolving>();
 	Resolving::AddSymbol(pa, type->resolving, decl->symbol);
 
 	List<Ptr<Declarator>> declarators;

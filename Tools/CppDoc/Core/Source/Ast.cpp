@@ -62,8 +62,13 @@ Symbol* Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving, symbol_co
 	return nullptr;
 }
 
-void Resolving::AddSymbol(const ParsingArguments& pa, const Ptr<Resolving>& resolving, Symbol* symbol)
+void Resolving::AddSymbol(const ParsingArguments& pa, Ptr<Resolving>& resolving, Symbol* symbol)
 {
+	if (!resolving)
+	{
+		resolving = MakePtr<Resolving>();
+	}
+
 	auto parent = symbol->GetParentScope();
 	switch (parent->kind)
 	{

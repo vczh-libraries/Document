@@ -266,7 +266,6 @@ Ptr<VariableDeclaration> GenerateCopyParameter(const ParsingArguments& pa, Symbo
 	auto idType = MakePtr<IdType>();
 	idType->name.name = classSymbol->name;
 	idType->name.type = CppNameType::Normal;
-	idType->resolving = MakePtr<Resolving>();
 	Resolving::AddSymbol(pa, idType->resolving, classSymbol);
 
 	auto decoratedType = MakePtr<DecorateType>();
@@ -287,7 +286,6 @@ Ptr<Type> GenerateRefType(const ParsingArguments& pa, Symbol* classSymbol, CppRe
 	auto idType = MakePtr<IdType>();
 	idType->name.name = classSymbol->name;
 	idType->name.type = CppNameType::Normal;
-	idType->resolving = MakePtr<Resolving>();
 	Resolving::AddSymbol(pa, idType->resolving, classSymbol);
 
 	auto refType = MakePtr<ReferenceType>();

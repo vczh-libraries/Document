@@ -162,7 +162,6 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 				}
 				if (auto contextSymbol = pa.root->AddForwardDeclToSymbol_NFb(forwardDecl, symbolKind))
 				{
-					type->resolving = MakePtr<Resolving>();
 					Resolving::AddSymbol(pa, type->resolving, contextSymbol);
 				}
 				else

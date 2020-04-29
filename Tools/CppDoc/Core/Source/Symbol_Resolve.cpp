@@ -272,7 +272,34 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 					// A::A could never be the type A
 					// But searching A inside A will get the type A
 					rsa.found = true;
-					AddSymbolToResolve(rsa.result.types, { thisItem,classDecl->symbol });
+
+					switch (entity->GetType())
+					{
+					case TsysType::Decl:
+						Resolving::AddSymbol(pa, rsa.result.types, classDecl->symbol);
+						break;
+					case TsysType::DeclInstant:
+						{
+							auto& di = entity->GetDeclInstant();
+							if (di.parentDeclType)
+							{
+								if (di.parentDeclType->GetDecl() == classDecl->symbol->GetParentScope())
+								{
+									auto parentClass = pa.tsys->DeclInstantOf(classDecl->symbol->GetParentScope(), nullptr, di.parentDeclType);
+									AddSymbolToResolve(rsa.result.types, { parentClass,classDecl->symbol });
+								}
+								else
+								{
+									AddSymbolToResolve(rsa.result.types, { di.parentDeclType,classDecl->symbol });
+								}
+							}
+							else
+							{
+								Resolving::AddSymbol(pa, rsa.result.types, classDecl->symbol);
+							}
+						}
+						break;
+					}
 				}
 			}
 
