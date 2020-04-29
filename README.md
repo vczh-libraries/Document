@@ -106,7 +106,7 @@ All **the compiler** here means the compiler created by this project.
     - Hexadecimal floating-point literals
     - Some extensions on over-aligned memory allocation
     - Class template argument deduction (CTAD), introducing constructor deduction guides, eg. allowing `std::pair(5.0, false)` instead of requiring explicit constructor arguments types `std::pair<double, bool>(5.0, false)` or an additional   helper template function std::make_pair(5.0, false).
-    - Structured binding declarations, allowing `auto [a, b] = getTwoReturnValues();`for   more information.
+    - Structured binding declarations, allowing `auto [a, b] = getTwoReturnValues();`.
     - Fold expressions, for variadic templates
 
 ## Limitations
