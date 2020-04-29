@@ -133,7 +133,7 @@ void AddSymbolToResolve(Ptr<Resolving>& resolving, ResolvedItem item)
 PickResolvedSymbols
 ***********************************************************************/
 
-void PickResolvedSymbols(const List<Ptr<Symbol>>* pSymbols, bool allowTemplateArgument, ResolveSymbolArguments& rsa)
+void PickResolvedSymbols(ITsys* thisItem, const List<Ptr<Symbol>>* pSymbols, bool allowTemplateArgument, ResolveSymbolArguments& rsa)
 {
 	bool hasCStyleType = false;
 	bool hasOthers = false;
@@ -184,7 +184,7 @@ void PickResolvedSymbols(const List<Ptr<Symbol>>* pSymbols, bool allowTemplateAr
 				// type symbols
 			case CSTYLE_TYPE_SYMBOL_KIND:
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.types, symbol);
+				AddSymbolToResolve(rsa.result.types, { thisItem, symbol });
 				break;
 			}
 		}
@@ -201,7 +201,7 @@ void PickResolvedSymbols(const List<Ptr<Symbol>>* pSymbols, bool allowTemplateAr
 			case symbol_component::SymbolKind::TypeAlias:
 			case symbol_component::SymbolKind::Namespace:
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.types, symbol);
+				AddSymbolToResolve(rsa.result.types, { thisItem, symbol });
 				break;
 
 				// value symbols
@@ -210,7 +210,7 @@ void PickResolvedSymbols(const List<Ptr<Symbol>>* pSymbols, bool allowTemplateAr
 			case symbol_component::SymbolKind::Variable:
 			case symbol_component::SymbolKind::ValueAlias:
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.values, symbol);
+				AddSymbolToResolve(rsa.result.values, { thisItem, symbol });
 				break;
 
 				// template type argument
@@ -218,7 +218,7 @@ void PickResolvedSymbols(const List<Ptr<Symbol>>* pSymbols, bool allowTemplateAr
 				if (allowTemplateArgument)
 				{
 					rsa.found = true;
-					AddSymbolToResolve(rsa.result.types, symbol);
+					AddSymbolToResolve(rsa.result.types, { thisItem, symbol });
 				}
 				break;
 
@@ -227,7 +227,7 @@ void PickResolvedSymbols(const List<Ptr<Symbol>>* pSymbols, bool allowTemplateAr
 				if (allowTemplateArgument)
 				{
 					rsa.found = true;
-					AddSymbolToResolve(rsa.result.values, symbol);
+					AddSymbolToResolve(rsa.result.values, { thisItem, symbol });
 				}
 				break;
 			}
@@ -241,6 +241,7 @@ ResolveSymbolInTypeInternal
 
 void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, SearchPolicy policy, ResolveSymbolArguments& rsa)
 {
+	auto thisItem = tsys;
 	if (tsys->GetType() == TsysType::GenericFunction)
 	{
 		tsys = tsys->GetElement();
@@ -271,13 +272,13 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 					// A::A could never be the type A
 					// But searching A inside A will get the type A
 					rsa.found = true;
-					AddSymbolToResolve(rsa.result.types, classDecl->symbol);
+					AddSymbolToResolve(rsa.result.types, { thisItem,classDecl->symbol });
 				}
 			}
 
 			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 			{
-				PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+				PickResolvedSymbols(thisItem, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
 			}
 
 			if (rsa.found) return;
@@ -304,7 +305,7 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 		{
 			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 			{
-				PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+				PickResolvedSymbols(thisItem, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
 			}
 		}
 	}
@@ -338,7 +339,7 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 		{
 			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 			{
-				PickResolvedSymbols(pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+				PickResolvedSymbols(nullptr, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
 			}
 
 			if (scope->usingNss.Count() > 0)
