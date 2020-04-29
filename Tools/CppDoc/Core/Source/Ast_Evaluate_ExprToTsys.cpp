@@ -640,11 +640,11 @@ public:
 					if (rsr.values)
 					{
 						auto newPa = pa.WithScope(arg1.tsys->GetDecl());
-						for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
+						for (vint i = 0; i < rsr.values->items.Count(); i++)
 						{
-							auto symbol = rsr.values->resolvedSymbols[i];
-							auto adjusted = AdjustThisItemForSymbol(newPa, arg1, symbol).Value();
-							VisitSymbolForScope(newPa, &adjusted, symbol, processResult);
+							auto ritem = rsr.values->items[i];
+							auto adjusted = AdjustThisItemForSymbol(newPa, arg1, ritem);
+							VisitSymbolForScope(newPa, &adjusted, ritem.symbol, processResult);
 						}
 					}
 				}

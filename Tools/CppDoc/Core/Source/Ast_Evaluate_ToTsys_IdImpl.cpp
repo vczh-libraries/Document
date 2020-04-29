@@ -135,16 +135,16 @@ namespace symbol_totsys_impl
 				throw TypeCheckerException();
 			}
 		}
-		else if (resolving->resolvedSymbols.Count() == 0)
+		else if (resolving->items.Count() == 0)
 		{
 			throw TypeCheckerException();
 		}
 
 		isVta = SymbolListToTsys(pa, result, allowVariadic, [&](auto receiver)
 		{
-			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+			for (vint i = 0; i < resolving->items.Count(); i++)
 			{
-				receiver(nullptr, resolving->resolvedSymbols[i]);
+				receiver(nullptr, resolving->items[i]);
 			}
 		});
 	}
@@ -210,7 +210,7 @@ namespace symbol_totsys_impl
 			}
 			return;
 		}
-		else if (resolving->resolvedSymbols.Count() == 0)
+		else if (resolving->items.Count() == 0)
 		{
 			throw TypeCheckerException();
 		}
@@ -250,23 +250,23 @@ namespace symbol_totsys_impl
 	// ResolveChildExprWithGenericArguments
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	Ptr<Resolving> ResolveChildExprWithGenericArguments(const ParsingArguments& pa, ChildExpr* self, ITsys* classType, SortedList<Symbol*>& visited)
+	Ptr<Resolving> ResolveChildExprWithGenericArguments(const ParsingArguments& pa, ChildExpr* self, ITsys* classType, SortedList<ResolvedItem>& visited)
 	{
 		Ptr<Resolving> resolving;
 		auto rsr = ResolveChildSymbol(pa, classType, self->name);
 		if (rsr.values)
 		{
-			for (vint i = 0; i < rsr.values->resolvedSymbols.Count(); i++)
+			for (vint i = 0; i < rsr.values->items.Count(); i++)
 			{
-				auto symbol = rsr.values->resolvedSymbols[i];
-				if (!visited.Contains(symbol))
+				auto ritem = rsr.values->items[i];
+				if (!visited.Contains(ritem))
 				{
-					visited.Add(symbol);
+					visited.Add(ritem);
 					if (!resolving)
 					{
 						resolving = MakePtr<Resolving>();
 					}
-					resolving->resolvedSymbols.Add(symbol);
+					resolving->items.Add(ritem);
 				}
 			}
 		}
@@ -279,7 +279,7 @@ namespace symbol_totsys_impl
 
 	void ProcessChildExpr(const ParsingArguments& pa, ExprTsysList& result, ChildExpr* self, ExprTsysItem argClass)
 	{
-		SortedList<Symbol*> visited;
+		SortedList<ResolvedItem> visited;
 		if (auto resolving = ResolveChildExprWithGenericArguments(pa, self, argClass.tsys, visited))
 		{
 			bool childIsVta = false;
@@ -370,7 +370,7 @@ namespace symbol_totsys_impl
 			}
 			else
 			{
-				SortedList<Symbol*> visited;
+				SortedList<ResolvedItem> visited;
 				if (auto resolving = ResolveChildExprWithGenericArguments(pa, childExpr.Obj(), argClass.tsys, visited))
 				{
 					ExprTsysItem classItem = parentItem;

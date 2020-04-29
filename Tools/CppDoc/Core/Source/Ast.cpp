@@ -42,23 +42,23 @@ bool Resolving::IsResolvedToType(const Ptr<Resolving>& resolving)
 	}
 }
 
-ResolvedItem Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving)
+Symbol* Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving)
 {
 	if (resolving && resolving->items.Count() == 1)
 	{
-		return resolving->items[0];
+		return resolving->items[0].symbol;
 	}
-	return {};
+	return nullptr;
 }
 
-ResolvedItem Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving, symbol_component::SymbolKind kind)
+Symbol* Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving, symbol_component::SymbolKind kind)
 {
-	auto item = EnsureSingleSymbol(resolving);
-	if (item.symbol && item.symbol->kind == kind)
+	auto symbol = EnsureSingleSymbol(resolving);
+	if (symbol && symbol->kind == kind)
 	{
-		return item;
+		return symbol;
 	}
-	return {};
+	return nullptr;
 }
 
 /***********************************************************************

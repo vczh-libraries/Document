@@ -145,7 +145,7 @@ public:
 	{
 		if (self->resolving)
 		{
-			result = GetUnscopedSymbolDisplayNameInHtml(self->resolving->resolvedSymbols[0], renderTypeArguments) + result;
+			result = GetUnscopedSymbolDisplayNameInHtml(self->resolving->items[0].symbol, renderTypeArguments) + result;
 		}
 		else
 		{
@@ -158,7 +158,7 @@ public:
 		WString nameType;
 		if (self->resolving)
 		{
-			nameType = GetUnscopedSymbolDisplayNameInHtml(self->resolving->resolvedSymbols[0], renderTypeArguments);
+			nameType = GetUnscopedSymbolDisplayNameInHtml(self->resolving->items[0].symbol, renderTypeArguments);
 		}
 		else
 		{

@@ -135,9 +135,9 @@ ClassDeclaration* EnsureMemberTypeResolved(Ptr<MemberType> memberType, Ptr<CppTo
 
 	if (!catIdChildType) throw StopParsingException(cursor);
 	if (!catIdChildType->resolving) throw StopParsingException(cursor);
-	if (catIdChildType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
+	if (catIdChildType->resolving->items.Count() != 1) throw StopParsingException(cursor);
 
-	auto symbol = catIdChildType->resolving->resolvedSymbols[0];
+	auto symbol = catIdChildType->resolving->items[0].symbol;
 	auto containingClass
 		= symbol->GetCategory() == symbol_component::SymbolCategory::Normal
 		? symbol->GetImplDecl_NFb<ClassDeclaration>().Obj()

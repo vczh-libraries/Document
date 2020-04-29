@@ -181,18 +181,18 @@ Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& 
 	bool allowRollback = false;
 	if (catIdChildExpr->resolving)
 	{
-		List<Symbol*> genericSymbols;
-		for (vint i = 0; i < catIdChildExpr->resolving->resolvedSymbols.Count(); i++)
+		List<ResolvedItem> genericItems;
+		for (vint i = 0; i < catIdChildExpr->resolving->items.Count(); i++)
 		{
-			auto symbol = catIdChildExpr->resolving->resolvedSymbols[i];
-			if (symbol_type_resolving::GetTemplateSpecFromSymbol(symbol))
+			auto ritem = catIdChildExpr->resolving->items[i];
+			if (symbol_type_resolving::GetTemplateSpecFromSymbol(ritem.symbol))
 			{
-				genericSymbols.Add(symbol);
+				genericItems.Add(ritem);
 			}
 		}
 
-		if (genericSymbols.Count() == 0) return catIdChildExpr;
-		CopyFrom(catIdChildExpr->resolving->resolvedSymbols, genericSymbols);
+		if (genericItems.Count() == 0) return catIdChildExpr;
+		CopyFrom(catIdChildExpr->resolving->items, genericItems);
 	}
 	else if (!templateKeyword)
 	{

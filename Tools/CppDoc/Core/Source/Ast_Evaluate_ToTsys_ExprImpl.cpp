@@ -322,11 +322,11 @@ namespace symbol_totsys_impl
 			{
 				ExprTsysList opTypes;
 				auto newPa = pa.WithScope(leftEntity->GetDecl());
-				for (vint j = 0; j < opMethods.values->resolvedSymbols.Count(); j++)
+				for (vint j = 0; j < opMethods.values->items.Count(); j++)
 				{
-					auto symbol = opMethods.values->resolvedSymbols[j];
-					auto adjusted = AdjustThisItemForSymbol(newPa, *leftType, symbol).Value();
-					VisitSymbolForField(pa, &adjusted, symbol, opTypes);
+					auto ritem = opMethods.values->items[j];
+					auto adjusted = AdjustThisItemForSymbol(newPa, *leftType, ritem);
+					VisitSymbolForField(pa, &adjusted, ritem.symbol, opTypes);
 				}
 				FilterFieldsAndBestQualifiedFunctions(leftCV, leftRef, opTypes);
 
@@ -354,10 +354,10 @@ namespace symbol_totsys_impl
 			auto opFuncs = ResolveSymbolInNamespaceContext(pa, opName, false);
 			if (opFuncs.values)
 			{
-				for (vint j = 0; j < opFuncs.values->resolvedSymbols.Count(); j++)
+				for (vint j = 0; j < opFuncs.values->items.Count(); j++)
 				{
 					// prevent from getting non-static operators inside a class
-					auto funcSymbol = opFuncs.values->resolvedSymbols[j];
+					auto funcSymbol = opFuncs.values->items[j].symbol;
 					VisitSymbol(pa, funcSymbol, opTypes);
 				}
 			}

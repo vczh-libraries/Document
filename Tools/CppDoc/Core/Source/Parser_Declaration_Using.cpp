@@ -21,8 +21,8 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<Symbol> specSymbol, 
 		if (auto catIdChildType = decl->ns.Cast<Category_Id_Child_Type>())
 		{
 			if (!catIdChildType->resolving) throw StopParsingException(cursor);
-			if (catIdChildType->resolving->resolvedSymbols.Count() != 1) throw StopParsingException(cursor);
-			auto symbol = catIdChildType->resolving->resolvedSymbols[0];
+			if (catIdChildType->resolving->items.Count() != 1) throw StopParsingException(cursor);
+			auto symbol = catIdChildType->resolving->items[0].symbol;
 
 			switch (symbol->kind)
 			{
@@ -103,9 +103,9 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<Symbol> specSymbol, 
 			}
 
 			if (!resolving) throw StopParsingException(cursor);
-			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+			for (vint i = 0; i < resolving->items.Count(); i++)
 			{
-				auto rawSymbolPtr = resolving->resolvedSymbols[i];
+				auto rawSymbolPtr = resolving->items[i].symbol;
 				auto pSiblings = rawSymbolPtr->GetParentScope()->TryGetChildren_NFb(rawSymbolPtr->name);
 				auto symbol = pSiblings->Get(pSiblings->IndexOf(rawSymbolPtr));
 

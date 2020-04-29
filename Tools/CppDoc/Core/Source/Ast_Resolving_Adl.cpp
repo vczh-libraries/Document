@@ -10,9 +10,9 @@ namespace symbol_type_resolving
 
 	bool IsAdlEnabled(const ParsingArguments& pa, Ptr<Resolving> resolving)
 	{
-		for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+		for (vint i = 0; i < resolving->items.Count(); i++)
 		{
-			auto symbol = resolving->resolvedSymbols[i];
+			auto symbol = resolving->items[i].symbol;
 			if (symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 			{
 				auto parent = symbol->GetParentScope();

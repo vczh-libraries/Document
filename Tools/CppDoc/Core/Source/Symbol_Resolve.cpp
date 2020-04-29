@@ -77,12 +77,12 @@ void ResolveSymbolResult::Merge(Ptr<Resolving>& to, Ptr<Resolving> from)
 		to = MakePtr<Resolving>();
 	}
 
-	for (vint i = 0; i < from->resolvedSymbols.Count(); i++)
+	for (vint i = 0; i < from->items.Count(); i++)
 	{
-		auto symbol = from->resolvedSymbols[i];
-		if (!to->resolvedSymbols.Contains(symbol))
+		auto ritem = from->items[i];
+		if (!to->items.Contains(ritem))
 		{
-			to->resolvedSymbols.Add(symbol);
+			to->items.Add(ritem);
 		}
 	}
 }
@@ -116,16 +116,16 @@ struct ResolveSymbolArguments
 AddSymbolToResolve
 ***********************************************************************/
 
-void AddSymbolToResolve(Ptr<Resolving>& resolving, Symbol* symbol)
+void AddSymbolToResolve(Ptr<Resolving>& resolving, ResolvedItem item)
 {
 	if (!resolving)
 	{
 		resolving = new Resolving;
 	}
 
-	if (!resolving->resolvedSymbols.Contains(symbol))
+	if (!resolving->items.Contains(item))
 	{
-		resolving->resolvedSymbols.Add(symbol);
+		resolving->items.Add(item);
 	}
 }
 
@@ -527,9 +527,9 @@ public:
 		}
 		else
 		{
-			for (vint i = 0; i < resolving->resolvedSymbols.Count(); i++)
+			for (vint i = 0; i < resolving->items.Count(); i++)
 			{
-				ResolveSymbolInStaticScopeInternal(pa, resolving->resolvedSymbols[i], SearchPolicy::ScopedChild, rsa);
+				ResolveSymbolInStaticScopeInternal(pa, resolving->items[i].symbol, SearchPolicy::ScopedChild, rsa);
 			}
 		}
 	}

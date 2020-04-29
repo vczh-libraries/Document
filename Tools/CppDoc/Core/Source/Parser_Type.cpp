@@ -77,9 +77,9 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 
 			if (type->cStyleTypeReference)
 			{
-				for (vint i = 0; i < type->resolving->resolvedSymbols.Count(); i++)
+				for (vint i = 0; i < type->resolving->items.Count(); i++)
 				{
-					auto symbol = type->resolving->resolvedSymbols[i];
+					auto symbol = type->resolving->items[i].symbol;
 					switch (idKind)
 					{
 					case CppTokens::DECL_ENUM:
