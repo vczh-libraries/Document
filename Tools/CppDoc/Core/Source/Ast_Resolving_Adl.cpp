@@ -129,7 +129,7 @@ namespace symbol_type_resolving
 					auto child = pChildren->Get(j).Obj();
 					if (child->kind == symbol_component::SymbolKind::FunctionSymbol)
 					{
-						VisitSymbol(pa, child, result);
+						VisitSymbol(pa, { nullptr,child }, result);
 					}
 				}
 			}
