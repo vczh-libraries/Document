@@ -8,50 +8,11 @@ namespace symbol_type_resolving
 	AdjustThisItemForSymbol: Fix thisItem according to symbol
 	***********************************************************************/
 
-	Nullable<ExprTsysItem> AdjustThisItemForSymbol(const ParsingArguments& pa, ExprTsysItem thisItem, Symbol* symbol)
+	ExprTsysItem AdjustThisItemForSymbol(const ParsingArguments& pa, ExprTsysItem thisItem, ResolvedItem item)
 	{
 		auto thisType = ApplyExprTsysType(thisItem.tsys, thisItem.type);
-		TsysCV thisCv;
-		TsysRefType thisRef;
-		auto entity = thisType->GetEntity(thisCv, thisRef);
-
-		TypeTsysList visiting;
-		SortedList<ITsys*> visited;
-		visiting.Add(entity);
-
-		for (vint i = 0; i < visiting.Count(); i++)
-		{
-			auto currentThis = visiting[i];
-			if (visited.Contains(currentThis))
-			{
-				continue;
-			}
-			visited.Add(currentThis);
-
-			switch (currentThis->GetType())
-			{
-			case TsysType::Decl:
-			case TsysType::DeclInstant:
-				break;
-			default:
-				throw TypeCheckerException();
-			}
-
-			auto thisSymbol = currentThis->GetDecl();
-			if (symbol->GetParentScope() == thisSymbol)
-			{
-				ExprTsysItem baseItem(thisSymbol, thisItem.type, CvRefOf(currentThis, thisCv, thisRef));
-				return baseItem;
-			}
-
-			auto& ev = symbol_type_resolving::EvaluateClassType(pa, currentThis);
-			for (vint j = 0; j < ev.ExtraCount(); j++)
-			{
-				CopyFrom(visiting, ev.GetExtra(j), true);
-			}
-		}
-
-		return {};
+		auto replacedThisType = ReplaceThisType(thisType, item.tsys);
+		return { nullptr,thisItem.type,thisItem.tsys };
 	}
 
 	/***********************************************************************

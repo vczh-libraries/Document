@@ -42,10 +42,32 @@ struct CppName
 	operator bool()const { return name.Length() != 0; }
 };
 
+struct ResolvedItem
+{
+	ITsys*					tsys;
+	Symbol*					symbol;
+
+	static vint Compare(const ResolvedItem& a, const ResolvedItem& b)
+	{
+		if (a.tsys < b.tsys) return -1;
+		if (a.tsys > b.tsys) return 1;
+		if (a.symbol < b.symbol) return -1;
+		if (a.symbol > b.symbol) return 1;
+		return 0;
+	}
+
+	bool operator==	(const ResolvedItem& item)const { return Compare(*this, item) == 0; }
+	bool operator!=	(const ResolvedItem& item)const { return Compare(*this, item) != 0; }
+	bool operator<	(const ResolvedItem& item)const { return Compare(*this, item) < 0; }
+	bool operator<=	(const ResolvedItem& item)const { return Compare(*this, item) <= 0; }
+	bool operator>	(const ResolvedItem& item)const { return Compare(*this, item) > 0; }
+	bool operator>=	(const ResolvedItem& item)const { return Compare(*this, item) >= 0; }
+};
+
 class Resolving : public Object
 {
 public:
-	List<Symbol*>			resolvedSymbols;
+	List<ResolvedItem>		items;
 
 	static bool				ContainsSameSymbol(const Ptr<Resolving>& a, const Ptr<Resolving>& b);
 	static bool				IsResolvedToType(const Ptr<Resolving>& resolving);

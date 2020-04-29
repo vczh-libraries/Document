@@ -5,7 +5,7 @@
 
 namespace symbol_type_resolving
 {
-	extern Nullable<ExprTsysItem>				AdjustThisItemForSymbol(const ParsingArguments& pa, ExprTsysItem thisItem, Symbol* symbol);
+	extern Nullable<ExprTsysItem>				AdjustThisItemForSymbol(const ParsingArguments& pa, ExprTsysItem thisItem, ResolvedItem item);
 	extern void									VisitSymbol(const ParsingArguments& pa, Symbol* symbol, ExprTsysList& result);
 	extern void									VisitSymbolForScope(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result);
 	extern void									VisitSymbolForField(const ParsingArguments& pa, const ExprTsysItem* thisItem, Symbol* symbol, ExprTsysList& result);
