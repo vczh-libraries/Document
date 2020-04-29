@@ -144,7 +144,7 @@ namespace symbol_totsys_impl
 		{
 			for (vint i = 0; i < resolving->items.Count(); i++)
 			{
-				receiver(nullptr, resolving->items[i]);
+				receiver(nullptr, resolving->items[i].symbol);
 			}
 		});
 	}
@@ -154,21 +154,21 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	template<typename TReceiver>
-	void ResolveChildTypeWithGenericArguments(const ParsingArguments& pa, ChildType* self, ITsys* classType, SortedList<Symbol*>& visited, TReceiver&& receiver)
+	void ResolveChildTypeWithGenericArguments(const ParsingArguments& pa, ChildType* self, ITsys* classType, SortedList<ResolvedItem>& visited, TReceiver&& receiver)
 	{
 		auto rsr = ResolveChildSymbol(pa, classType, self->name);
 		if (rsr.types)
 		{
 			auto newPa = pa.WithScope(classType->GetDecl());
-			for (vint i = 0; i < rsr.types->resolvedSymbols.Count(); i++)
+			for (vint i = 0; i < rsr.types->items.Count(); i++)
 			{
-				auto symbol = rsr.types->resolvedSymbols[i];
-				if (!visited.Contains(symbol))
+				auto ritem = rsr.types->items[i];
+				if (!visited.Contains(ritem))
 				{
-					visited.Add(symbol);
+					visited.Add(ritem);
 
-					auto adjusted = AdjustThisItemForSymbol(newPa, { nullptr,ExprTsysType::PRValue,classType }, symbol).Value();
-					receiver((adjusted.tsys->GetType() == TsysType::DeclInstant ? adjusted.tsys : nullptr), symbol);
+					auto adjusted = AdjustThisItemForSymbol(newPa, { nullptr,ExprTsysType::PRValue,classType }, ritem);
+					receiver((adjusted.tsys->GetType() == TsysType::DeclInstant ? adjusted.tsys : nullptr), ritem.symbol);
 				}
 			}
 		}
@@ -187,7 +187,7 @@ namespace symbol_totsys_impl
 		else
 		{
 			TypeTsysList childTypes;
-			SortedList<Symbol*> visited;
+			SortedList<ResolvedItem> visited;
 			SymbolListToTsys(pa, childTypes, false, [&](auto receiver)
 			{
 				ResolveChildTypeWithGenericArguments(pa, self, argClass.tsys, visited, receiver);
