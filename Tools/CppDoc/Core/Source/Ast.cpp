@@ -13,7 +13,7 @@ bool Resolving::ContainsSameSymbol(const Ptr<Resolving>& a, const Ptr<Resolving>
 {
 	if (a && b)
 	{
-		return !From(a->resolvedSymbols).Intersect(b->resolvedSymbols).IsEmpty();
+		return !From(a->items).Intersect(b->items).IsEmpty();
 	}
 	else
 	{
@@ -25,10 +25,10 @@ bool Resolving::IsResolvedToType(const Ptr<Resolving>& resolving)
 {
 	if (resolving)
 	{
-		auto& symbols = resolving->resolvedSymbols;
-		for (vint i = 0; i < symbols.Count(); i++)
+		auto& items = resolving->items;
+		for (vint i = 0; i < items.Count(); i++)
 		{
-			if (symbols[i]->kind != symbol_component::SymbolKind::Namespace)
+			if (items[i].symbol->kind != symbol_component::SymbolKind::Namespace)
 			{
 				return true;
 			}
@@ -42,25 +42,23 @@ bool Resolving::IsResolvedToType(const Ptr<Resolving>& resolving)
 	}
 }
 
-Symbol* Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving)
+ResolvedItem Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving)
 {
-	if (resolving && resolving->resolvedSymbols.Count() == 1)
+	if (resolving && resolving->items.Count() == 1)
 	{
-		return resolving->resolvedSymbols[0];
+		return resolving->items[0];
 	}
-	return nullptr;
+	return {};
 }
 
-Symbol* Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving, symbol_component::SymbolKind kind)
+ResolvedItem Resolving::EnsureSingleSymbol(const Ptr<Resolving>& resolving, symbol_component::SymbolKind kind)
 {
-	if (auto symbol = EnsureSingleSymbol(resolving))
+	auto item = EnsureSingleSymbol(resolving);
+	if (item.symbol && item.symbol->kind == kind)
 	{
-		if (symbol->kind == kind)
-		{
-			return symbol;
-		}
+		return item;
 	}
-	return nullptr;
+	return {};
 }
 
 /***********************************************************************

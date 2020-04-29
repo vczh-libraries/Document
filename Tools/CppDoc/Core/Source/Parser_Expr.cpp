@@ -105,7 +105,7 @@ Ptr<IdExpr> ParseIdExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			expr->resolving = rsr.values;
 			if (pa.recorder && expr->resolving)
 			{
-				pa.recorder->Index(expr->name, expr->resolving->resolvedSymbols);
+				pa.recorder->Index(expr->name, expr->resolving->items);
 			}
 			return expr;
 		}
@@ -132,7 +132,7 @@ Ptr<ChildExpr> TryParseChildExpr(const ParsingArguments& pa, Ptr<Type> classType
 			expr->resolving = rsr.values;
 			if (pa.recorder && expr->resolving)
 			{
-				pa.recorder->Index(expr->name, expr->resolving->resolvedSymbols);
+				pa.recorder->Index(expr->name, expr->resolving->items);
 			}
 			return expr;
 		}

@@ -335,18 +335,18 @@ public:
 			{
 				if (totalRar.values)
 				{
-					pa.recorder->Index(idExpr->name, totalRar.values->resolvedSymbols);
+					pa.recorder->Index(idExpr->name, totalRar.values->items);
 				}
 				if (totalRar.types)
 				{
-					pa.recorder->ExpectValueButType(idExpr->name, totalRar.types->resolvedSymbols);
+					pa.recorder->ExpectValueButType(idExpr->name, totalRar.types->items);
 				}
 			}
 		}
 
 		if (operatorIndexed)
 		{
-			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
+			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
 		}
 	}
 
@@ -370,7 +370,7 @@ public:
 
 		if (indexed)
 		{
-			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
+			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
 		}
 	}
 
@@ -523,11 +523,11 @@ public:
 			AddSymbolsToResolvings(pa, name, nameResolving, &self->opName, &self->opResolving, totalSelectedFunctions, addedName, addedOp);
 			if (addedName)
 			{
-				pa.recorder->IndexOverloadingResolution(*name, (*nameResolving)->resolvedSymbols);
+				pa.recorder->IndexOverloadingResolution(*name, (*nameResolving)->items);
 			}
 			if (addedOp)
 			{
-				pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
+				pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
 			}
 		}
 	}
@@ -614,7 +614,7 @@ public:
 
 		if (indexed)
 		{
-			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
+			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
 		}
 	}
 
@@ -712,7 +712,7 @@ public:
 
 		if (indexed)
 		{
-			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
+			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
 		}
 	}
 
@@ -736,7 +736,7 @@ public:
 
 		if (indexed)
 		{
-			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->resolvedSymbols);
+			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
 		}
 	}
 

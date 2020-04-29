@@ -72,7 +72,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 			type->resolving = resolving;
 			if (pa.recorder)
 			{
-				pa.recorder->Index(type->name, type->resolving->resolvedSymbols);
+				pa.recorder->Index(type->name, type->resolving->items);
 			}
 
 			if (type->cStyleTypeReference)
@@ -220,7 +220,7 @@ Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Category_Id_Chi
 			type->resolving = resolving;
 			if (pa.recorder && type->resolving)
 			{
-				pa.recorder->Index(type->name, type->resolving->resolvedSymbols);
+				pa.recorder->Index(type->name, type->resolving->items);
 			}
 			return type;
 		}

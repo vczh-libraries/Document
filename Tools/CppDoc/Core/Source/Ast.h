@@ -22,8 +22,6 @@ class GenericExpr;
 Symbol
 ***********************************************************************/
 
-class Symbol;
-
 enum class CppNameType
 {
 	Normal,
@@ -44,8 +42,16 @@ struct CppName
 
 struct ResolvedItem
 {
-	ITsys*					tsys;
-	Symbol*					symbol;
+	ITsys*					tsys = nullptr;
+	Symbol*					symbol = nullptr;
+
+	ResolvedItem() = default;
+
+	ResolvedItem(ITsys* _tsys, Symbol* _symbol)
+		:tsys(_tsys)
+		, symbol(_symbol)
+	{
+	}
 
 	static vint Compare(const ResolvedItem& a, const ResolvedItem& b)
 	{
@@ -71,8 +77,8 @@ public:
 
 	static bool				ContainsSameSymbol(const Ptr<Resolving>& a, const Ptr<Resolving>& b);
 	static bool				IsResolvedToType(const Ptr<Resolving>& resolving);
-	static Symbol*			EnsureSingleSymbol(const Ptr<Resolving>& resolving);
-	static Symbol*			EnsureSingleSymbol(const Ptr<Resolving>& resolving, symbol_component::SymbolKind kind);
+	static ResolvedItem		EnsureSingleSymbol(const Ptr<Resolving>& resolving);
+	static ResolvedItem		EnsureSingleSymbol(const Ptr<Resolving>& resolving, symbol_component::SymbolKind kind);
 };
 
 /***********************************************************************
