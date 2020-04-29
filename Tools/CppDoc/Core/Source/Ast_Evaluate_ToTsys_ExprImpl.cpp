@@ -732,7 +732,7 @@ namespace symbol_totsys_impl
 		return false;
 	}
 
-	void AddSymbolToResolving(Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
+	void AddSymbolToResolving(const ParsingArguments& pa, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
 	{
 		if (first)
 		{
@@ -740,30 +740,26 @@ namespace symbol_totsys_impl
 		}
 		first = false;
 
-		auto& resolvedSymbols = (*resolving)->resolvedSymbols;
-		if (!resolvedSymbols.Contains(symbol))
-		{
-			resolvedSymbols.Add(symbol);
-		}
+		Resolving::AddSymbol(pa, *resolving, symbol);
 	}
 
-	bool AddSymbolToNameResolving(const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
+	bool AddSymbolToNameResolving(const ParsingArguments& pa, const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
 	{
 		bool isOperator = IsOperator(symbol);
 		if (!isOperator || name.type == CppNameType::Operator)
 		{
-			AddSymbolToResolving(resolving, symbol, first);
+			AddSymbolToResolving(pa, resolving, symbol, first);
 			return true;
 		}
 		return false;
 	}
 
-	bool AddSymbolToOperatorResolving(const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
+	bool AddSymbolToOperatorResolving(const ParsingArguments& pa, const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
 	{
 		bool isOperator = IsOperator(symbol);
 		if (isOperator)
 		{
-			AddSymbolToResolving(resolving, symbol, first);
+			AddSymbolToResolving(pa, resolving, symbol, first);
 			return true;
 		}
 		return false;
@@ -779,13 +775,13 @@ namespace symbol_totsys_impl
 		{
 			if (auto symbol = symbols[i].symbol)
 			{
-				if (name && AddSymbolToNameResolving(*name, nameResolving, symbol, firstName))
+				if (name && AddSymbolToNameResolving(pa, *name, nameResolving, symbol, firstName))
 				{
 					addedName = true;
 					continue;
 				}
 
-				if (op && AddSymbolToOperatorResolving(*op, opResolving, symbol, firstOp))
+				if (op && AddSymbolToOperatorResolving(pa, *op, opResolving, symbol, firstOp))
 				{
 					addedOp = true;
 				}
