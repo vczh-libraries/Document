@@ -101,17 +101,17 @@ public:
 	{
 	}
 
-	void Index(CppName& name, List<Symbol*>& resolvedSymbols)
+	void Index(CppName& name, List<ResolvedItem>& resolvedSymbols)
 	{
-		callback(name, (List<Symbol*>&)resolvedSymbols, false);
+		callback(name, (List<ResolvedItem>&)resolvedSymbols, false);
 	}
 
-	void IndexOverloadingResolution(CppName& name, List<Symbol*>& resolvedSymbols)
+	void IndexOverloadingResolution(CppName& name, List<ResolvedItem>& resolvedSymbols)
 	{
-		callback(name, (List<Symbol*>&)resolvedSymbols, true);
+		callback(name, (List<ResolvedItem>&)resolvedSymbols, true);
 	}
 
-	void ExpectValueButType(CppName& name, List<Symbol*>& resolvedSymbols)
+	void ExpectValueButType(CppName& name, List<ResolvedItem>& resolvedSymbols)
 	{
 		TEST_ASSERT(false);
 	}
@@ -124,7 +124,7 @@ Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
 }
 
 #define BEGIN_ASSERT_SYMBOL \
-	CreateTestIndexRecorder([&](CppName& name, List<Symbol*>& resolvedSymbols, bool reIndex)\
+	CreateTestIndexRecorder([&](CppName& name, List<ResolvedItem>& resolvedSymbols, bool reIndex)\
 	{\
 		TEST_ASSERT(name.tokenCount > 0);\
 
@@ -136,7 +136,7 @@ template<typename T>
 bool AssertSymbol(
 	SortedList<vint>& accessed,
 	CppName& name,
-	List<Symbol*>& resolvedSymbols,
+	List<ResolvedItem>& resolvedSymbols,
 	bool reIndex,
 	bool _reIndex,
 	vint _index,
@@ -151,7 +151,7 @@ bool AssertSymbol(
 	{
 		TEST_ASSERT(name.name == _name);
 		TEST_ASSERT(resolvedSymbols.Count() == 1);
-		auto symbol = resolvedSymbols[0];
+		auto symbol = resolvedSymbols[0].symbol;
 		auto decl = symbol->GetAnyForwardDecl<T>();
 		TEST_ASSERT(decl);
 		TEST_ASSERT(decl->name.name == _name || decl->name.name == L"operator " + _name);
@@ -167,7 +167,7 @@ template<>
 inline bool AssertSymbol<void>(
 	SortedList<vint>& accessed,
 	CppName& name,
-	List<Symbol*>& resolvedSymbols,
+	List<ResolvedItem>& resolvedSymbols,
 	bool reIndex,
 	bool _reIndex,
 	vint _index,
@@ -182,7 +182,7 @@ inline bool AssertSymbol<void>(
 	{
 		TEST_ASSERT(name.name == _name);
 		TEST_ASSERT(resolvedSymbols.Count() == 1);
-		auto symbol = resolvedSymbols[0];
+		auto symbol = resolvedSymbols[0].symbol;
 		switch (symbol->kind)
 		{
 		case symbol_component::SymbolKind::GenericTypeArgument:
