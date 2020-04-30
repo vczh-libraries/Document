@@ -27,10 +27,13 @@
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Partial specialization constructions
   - [ ] Partial specialization on **classes**.
-    - [ ] Refactor
-      - [ ] At the end, only `ResolveSymbolInTypeInternal` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.
-      - [ ] Copy `TestParseGenericMember.cpp` to `TestParsePSMemberPrimary.cpp` and `TestParsePSMemberPS.cpp`, testing member evaluation from primary symbol and its partial specializations.
-        - [ ] Also `TestParserGenericClass.cpp` to `TestParsePSClassPrimary` and `TestParsePSClassPS.cpp`.
+    - [ ] Refactor, only `ResolveSymbolInTypeInternal` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.
+      - [ ] Prepare test cases
+        - [ ] Generate unique name for each symbol
+          - [ ] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
+          - [ ] `Symbol::DecorateNameForSpecializationSpec` generates unique name for declaractions with `specializationSpec`.
+        - [ ] Copy `TestParseGenericMember.cpp` to `TestParsePSMemberPrimary.cpp` and `TestParsePSMemberPS.cpp`, testing member evaluation from primary symbol and its partial specializations.
+        - [ ] Copy `TestParserGenericClass.cpp` to `TestParsePSClassPrimary` and `TestParsePSClassPS.cpp`.
       - [ ] `TestParsePSClass.cpp` tests all other things, like function type inferencing with partial specialized instances as parameters.
     - [ ] Ignore forward declaration of class partial specialization, because it provides no additional value.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
@@ -72,9 +75,6 @@
   - [ ] `GenericExpr` allows to be partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
   - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
   - [ ] Variable also need multiple `Ptr<TemplateSpec>` when the declaration is implementing a static variable in nested generic classes.
-  - [ ] Generate unique name for each symbol
-    - [ ] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
-    - [ ] `Symbol::DecorateNameForSpecializationSpec` generates unique name for declaractions with `specializationSpec`.
 - [ ] `MatchPSArgument` on `decltype(EXPR)`, success when the type to match is not `decltype(EXPR)`, or two expression match.
 - [ ] `::new`
 - [ ] `::delete`
