@@ -32,9 +32,6 @@
         - [ ] Generate unique name for each symbol
           - [ ] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
           - [ ] `Symbol::DecorateNameForSpecializationSpec` generates unique name for declaractions with `specializationSpec`.
-        - [ ] Copy `TestParseGenericMember.cpp` to `TestParsePSMemberPrimary.cpp` and `TestParsePSMemberPS.cpp`, testing member evaluation from primary symbol and its partial specializations.
-        - [ ] Copy `TestParserGenericClass.cpp` to `TestParsePSClassPrimary` and `TestParsePSClassPS.cpp`.
-      - [ ] `TestParsePSClass.cpp` tests all other things, like function type inferencing with partial specialized instances as parameters.
     - [ ] Ignore forward declaration of class partial specialization, because it provides no additional value.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
     - [ ] Add `psVersion` (default 0) and `psTsys` to `Evaluation` that associated with any `Decl` or `DeclInstant`.
