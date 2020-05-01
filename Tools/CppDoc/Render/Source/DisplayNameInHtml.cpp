@@ -1,4 +1,5 @@
 #include "Render.h"
+#include <Symbol_TemplateSpec.h>
 
 /***********************************************************************
 GetTypeDisplayNameInHtml

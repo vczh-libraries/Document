@@ -33,14 +33,14 @@ IndexRecorder::IndexRecorder(IndexResult& _result)
 {
 }
 
-void IndexRecorder::IndexInternal(CppName& name, List<Symbol*>& resolvedSymbols, IndexReason reason)
+void IndexRecorder::IndexInternal(CppName& name, List<ResolvedItem>& resolvedSymbols, IndexReason reason)
 {
 	auto key = IndexToken::GetToken(name);
 	if (name.tokenCount > 0)
 	{
 		for (vint i = 0; i < resolvedSymbols.Count(); i++)
 		{
-			auto symbol = resolvedSymbols[i];
+			auto symbol = resolvedSymbols[i].symbol;
 			if (!result.index[(vint)reason].Contains(key, symbol))
 			{
 				result.index[(vint)reason].Add(key, symbol);
@@ -50,17 +50,17 @@ void IndexRecorder::IndexInternal(CppName& name, List<Symbol*>& resolvedSymbols,
 	}
 }
 
-void IndexRecorder::Index(CppName& name, List<Symbol*>& resolvedSymbols)
+void IndexRecorder::Index(CppName& name, List<ResolvedItem>& resolvedSymbols)
 {
 	IndexInternal(name, resolvedSymbols, IndexReason::Resolved);
 }
 
-void IndexRecorder::IndexOverloadingResolution(CppName& name, List<Symbol*>& resolvedSymbols)
+void IndexRecorder::IndexOverloadingResolution(CppName& name, List<ResolvedItem>& resolvedSymbols)
 {
 	IndexInternal(name, resolvedSymbols, IndexReason::OverloadedResolution);
 }
 
-void IndexRecorder::ExpectValueButType(CppName& name, List<Symbol*>& resolvedSymbols)
+void IndexRecorder::ExpectValueButType(CppName& name, List<ResolvedItem>& resolvedSymbols)
 {
 	IndexInternal(name, resolvedSymbols, IndexReason::NeedValueButType);
 }

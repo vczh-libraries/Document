@@ -74,10 +74,10 @@ public:
 
 	IndexRecorder(IndexResult& _result);
 
-	void											IndexInternal(CppName& name, List<Symbol*>& resolvedSymbols, IndexReason reason);
-	void											Index(CppName& name, List<Symbol*>& resolvedSymbols)override;
-	void											IndexOverloadingResolution(CppName& name, List<Symbol*>& resolvedSymbols)override;
-	void											ExpectValueButType(CppName& name, List<Symbol*>& resolvedSymbols)override;
+	void											IndexInternal(CppName& name, List<ResolvedItem>& resolvedSymbols, IndexReason reason);
+	void											Index(CppName& name, List<ResolvedItem>& resolvedSymbols)override;
+	void											IndexOverloadingResolution(CppName& name, List<ResolvedItem>& resolvedSymbols)override;
+	void											ExpectValueButType(CppName& name, List<ResolvedItem>& resolvedSymbols)override;
 };
 
 /***********************************************************************
