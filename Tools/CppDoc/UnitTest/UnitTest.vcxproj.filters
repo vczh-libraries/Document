@@ -144,6 +144,18 @@
     <ClCompile Include="TestParsePSClass.cpp">
       <Filter>Source Files\TestParserPartialSpecialization</Filter>
     </ClCompile>
+    <ClCompile Include="TestParsePSClassInstancePrimary.cpp">
+      <Filter>Source Files\TestParserPartialSpecialization</Filter>
+    </ClCompile>
+    <ClCompile Include="TestParsePSClassInstancePS.cpp">
+      <Filter>Source Files\TestParserPartialSpecialization</Filter>
+    </ClCompile>
+    <ClCompile Include="TestParsePSClassMemberPrimary.cpp">
+      <Filter>Source Files\TestParserPartialSpecialization</Filter>
+    </ClCompile>
+    <ClCompile Include="TestParsePSClassMemberPS.cpp">
+      <Filter>Source Files\TestParserPartialSpecialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">

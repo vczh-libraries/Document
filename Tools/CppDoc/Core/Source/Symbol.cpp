@@ -128,7 +128,10 @@ void AddSymbolChildren(Symbol* symbol, List<Ptr<Symbol>>& existingChildren)
 
 WString Symbol::DecorateNameForSpecializationSpec(const WString& symbolName, Ptr<SpecializationSpec> spec)
 {
-	// TODO: [Cpp.md] Choose a good name for specializationSpec, no counter so that the name is stable
+	// TODO: [Cpp.md] `Symbol::DecorateNameForSpecializationSpec` generates unique name for declaractions with `specializationSpec`.
+	//       Generate a postfix according to spec
+	//       and only use a counter when there is still a conflict
+
 	// sycn with SearchForFunctionWithSameSignature
 	vint i = 1;
 	while (true)
@@ -771,6 +774,9 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 			break;
 		default:
 			{
+				// TODO: [Cpp.md] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
+				//       Generate a postfix according to return type and argument types for Function category
+				//       and only use a counter when there is still a conflict
 				vint counter = 1;
 				while (true)
 				{

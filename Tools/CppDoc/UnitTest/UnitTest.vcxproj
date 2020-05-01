@@ -171,6 +171,10 @@
     <ClCompile Include="TestParseGenericValueAlias.cpp" />
     <ClCompile Include="TestParseMember.cpp" />
     <ClCompile Include="TestParsePSClass.cpp" />
+    <ClCompile Include="TestParsePSClassInstancePrimary.cpp" />
+    <ClCompile Include="TestParsePSClassInstancePS.cpp" />
+    <ClCompile Include="TestParsePSClassMemberPrimary.cpp" />
+    <ClCompile Include="TestParsePSClassMemberPS.cpp" />
     <ClCompile Include="TestParsePSFunction.cpp" />
     <ClCompile Include="TestParsePSMethod.cpp" />
     <ClCompile Include="TestParsePSOrder.cpp" />
