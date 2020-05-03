@@ -28,9 +28,6 @@
 - [ ] Partial specialization constructions
   - [ ] Partial specialization on **classes**.
     - [ ] Refactor, only `ResolveSymbolInTypeInternal` and `EvaluateClassType` needs to worry about `psVersion` and `psTsys`.
-      - [ ] Prepare test cases
-        - [ ] Generate unique name for each symbol
-          - [ ] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
     - [ ] Ignore forward declaration of class partial specialization, because it provides no additional value.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
     - [ ] Add `psVersion` (default 0) and `psTsys` to `Evaluation` that associated with any `Decl` or `DeclInstant`.

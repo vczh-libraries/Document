@@ -1,5 +1,6 @@
 #include <VlppOS.h>
 #include "Symbol.h"
+#include "Parser.h"
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
 
@@ -111,12 +112,19 @@ namespace symbol_idgen
 		void Visit(ArrayType* self)override
 		{
 			Log(self->type);
-			writer.WriteString(L" [");
-			if (self->expr)
+			if (forParameter)
 			{
-				writer.WriteString(L"*");
+				writer.WriteString(L" *");
 			}
-			writer.WriteString(L"]");
+			else
+			{
+				writer.WriteString(L" [");
+				if (self->expr)
+				{
+					writer.WriteString(L"*");
+				}
+				writer.WriteString(L"]");
+			}
 		}
 
 		void Visit(CallingConventionType* self)override
@@ -130,12 +138,12 @@ namespace symbol_idgen
 			{
 				Log(self->decoratorReturnType);
 			}
-			else
+			else if (self->returnType)
 			{
 				Log(self->returnType);
 			}
 
-			writer.WriteString(L" (");
+			writer.WriteString(L"(");
 			for (vint i = 0; i < self->parameters.Count(); i++)
 			{
 				if (i != 0)
@@ -279,13 +287,23 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 			break;
 		default:
 			{
-				// TODO: [Cpp.md] `Symbol::GenerateUniqueId` generates unique name for overloaded functions. Optional: Name doesn't include a counter.
-				//       Generate a postfix according to return type and argument types for Function category
-				//       and only use a counter when there is still a conflict
 				vint dupCounter = 1;
+				WString postfix;
+
+				if (auto funcDecl = GetAnyForwardDecl<ForwardFunctionDeclaration>())
+				{
+					auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type);
+					postfix = GenerateToStream([&](StreamWriter& writer)
+					{
+						writer.WriteString(L"@");
+						symbol_idgen::IdGenTypeVisitor visitor(writer);
+						visitor.Log(funcType);
+					});
+				}
+
 				while (true)
 				{
-					WString id = prefix + name + (dupCounter == 1 ? WString::Empty : itow(dupCounter));
+					WString id = prefix + name + postfix + (dupCounter == 1 ? WString::Empty : itow(dupCounter));
 					if (!ids.Keys().Contains(id))
 					{
 						ids.Add((uniqueId = id), this);

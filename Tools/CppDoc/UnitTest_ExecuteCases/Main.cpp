@@ -97,7 +97,7 @@ int main()
 {
 	List<File> preprocessedFiles;
 	preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
-	preprocessedFiles.Add(File(L"../UnitTest_Cases/STL.i"));
+	// preprocessedFiles.Add(File(L"../UnitTest_Cases/STL.i"));
 
 	Console::WriteLine(L"Cleaning ...");
 	FOREACH(File, file, preprocessedFiles)

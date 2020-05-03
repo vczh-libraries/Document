@@ -47,33 +47,33 @@
 <div class="disabled">    _Success_(return == 0)</div>
 <div class="disabled">    _Check_return_opt_</div>
 <div class="expandable"><div class="disabled">    _CRT_MEMCPY_S_INLINE errno_t __CRTDECL memcpy_s(</div>
-<div class="expanded">    <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$memcpy_s[impl0]"><div><div class="token cpp_function">memcpy_s</div></div></div>(</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]"><div><div class="token cpp_function">memcpy_s</div></div></div>(</div></div>
 <div class="expandable"><div class="disabled">        _Out_writes_bytes_to_opt_(_DestinationSize, _SourceSize) void*       const _Destination,</div>
-<div class="expanded">          <div class="token cpp_keyword ">void</div>*       <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s[impl0]::_Destination"><div><div class="token cpp_argument">_Destination</div></div></div>,</div></div>
+<div class="expanded">          <div class="token cpp_keyword ">void</div>*       <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination"><div><div class="token cpp_argument">_Destination</div></div></div>,</div></div>
 <div class="expandable"><div class="disabled">        _In_                                                     rsize_t     const _DestinationSize,</div>
-<div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s[impl0]::_DestinationSize"><div><div class="token cpp_argument">_DestinationSize</div></div></div>,</div></div>
+<div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize"><div><div class="token cpp_argument">_DestinationSize</div></div></div>,</div></div>
 <div class="expandable"><div class="disabled">        _In_reads_bytes_opt_(_SourceSize)                        void const* const _Source,</div>
-<div class="expanded">                                 <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s[impl0]::_Source"><div><div class="token cpp_argument">_Source</div></div></div>,</div></div>
+<div class="expanded">                                 <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source"><div><div class="token cpp_argument">_Source</div></div></div>,</div></div>
 <div class="expandable"><div class="disabled">        _In_                                                     rsize_t     const _SourceSize</div>
-<div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s[impl0]::_SourceSize"><div><div class="token cpp_argument">_SourceSize</div></div></div></div></div>
+<div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize"><div><div class="token cpp_argument">_SourceSize</div></div></div></div></div>
         )
     {
-        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div> == <div class="token cpp_number ">0</div>)
+        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div> == <div class="token cpp_number ">0</div>)
         {
             <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
         }
 
 <div class="expandable"><div class="disabled">        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Destination != NULL, EINVAL);</div>
-<div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memcpy_s[impl0]::_Expr_val"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Expr_val'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
+<div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno@int *()'], ['_errno@int *()'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo@void()'], ['_invalid_parameter_noinfo@void()'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
 <div class="expandable"><div class="disabled">        if (_Source == NULL || _DestinationSize &lt; _SourceSize)</div>
-<div class="expanded">        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div> == <div class="token cpp_number ">0</div> || <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div> &lt; <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>)</div></div>
+<div class="expanded">        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div> == <div class="token cpp_number ">0</div> || <div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div> &lt; <div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>)</div></div>
         {
-            <div class="ref" onclick="jumpToSymbol(['memset'], ['memset'])"><div class="token cpp_function">memset</div></div>(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div>);
+            <div class="ref" onclick="jumpToSymbol(['memset@void *(void *, int, ::size_t)'], ['memset@void *(void *, int, ::size_t)'])"><div class="token cpp_function">memset</div></div>(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div>);
 
 <div class="expandable"><div class="disabled">            _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Source != NULL,                 EINVAL);</div>
-<div class="expanded">            { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memcpy_s[impl0]::_Expr_val2"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Expr_val2'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
+<div class="expanded">            { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val2"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val2'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno@int *()'], ['_errno@int *()'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo@void()'], ['_invalid_parameter_noinfo@void()'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
 <div class="expandable"><div class="disabled">            _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_DestinationSize &gt;= _SourceSize, ERANGE);</div>
-<div class="expanded">            { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memcpy_s[impl0]::_Expr_val3"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div> &gt;= <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Expr_val3'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">34</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">34</div>; } };</div></div>
+<div class="expanded">            { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val3"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div> &gt;= <div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val3'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno@int *()'], ['_errno@int *()'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">34</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo@void()'], ['_invalid_parameter_noinfo@void()'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">34</div>; } };</div></div>
 
             <div class="token cpp_comment ">// Unreachable, but required to suppress /analyze warnings:</div>
 <div class="expandable"><div class="disabled">            return EINVAL;</div>
@@ -81,38 +81,38 @@
         }
 <div class="expandable"><div class="disabled">#pragma warning(suppress:4996) // Deprecation</div>
 <div class="expanded">#pragma warning(suppress:<div class="token cpp_number ">4996</div>) </div></div>
-        <div class="ref" onclick="jumpToSymbol(['memcpy'], ['memcpy'])"><div class="token cpp_function">memcpy</div></div>(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memcpy_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>);
+        <div class="ref" onclick="jumpToSymbol(['memcpy@void *(void *, void const *, ::size_t)'], ['memcpy@void *(void *, void const *, ::size_t)'])"><div class="token cpp_function">memcpy</div></div>(<div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>);
         <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
     }
 
 <div class="disabled">    _Check_return_wat_</div>
 <div class="expandable"><div class="disabled">    _CRT_MEMCPY_S_INLINE errno_t __CRTDECL memmove_s(</div>
-<div class="expanded">    <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$memmove_s[impl0]"><div><div class="token cpp_function">memmove_s</div></div></div>(</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]"><div><div class="token cpp_function">memmove_s</div></div></div>(</div></div>
 <div class="expandable"><div class="disabled">        _Out_writes_bytes_to_opt_(_DestinationSize, _SourceSize) void*       const _Destination,</div>
-<div class="expanded">          <div class="token cpp_keyword ">void</div>*       <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s[impl0]::_Destination"><div><div class="token cpp_argument">_Destination</div></div></div>,</div></div>
+<div class="expanded">          <div class="token cpp_keyword ">void</div>*       <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination"><div><div class="token cpp_argument">_Destination</div></div></div>,</div></div>
 <div class="expandable"><div class="disabled">        _In_                                                     rsize_t     const _DestinationSize,</div>
-<div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s[impl0]::_DestinationSize"><div><div class="token cpp_argument">_DestinationSize</div></div></div>,</div></div>
+<div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize"><div><div class="token cpp_argument">_DestinationSize</div></div></div>,</div></div>
 <div class="expandable"><div class="disabled">        _In_reads_bytes_opt_(_SourceSize)                        void const* const _Source,</div>
-<div class="expanded">                                 <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s[impl0]::_Source"><div><div class="token cpp_argument">_Source</div></div></div>,</div></div>
+<div class="expanded">                                 <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source"><div><div class="token cpp_argument">_Source</div></div></div>,</div></div>
 <div class="expandable"><div class="disabled">        _In_                                                     rsize_t     const _SourceSize</div>
-<div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s[impl0]::_SourceSize"><div><div class="token cpp_argument">_SourceSize</div></div></div></div></div>
+<div class="expanded">                                                              <div class="ref" onclick="jumpToSymbol([], ['rsize_t'])"><div class="token cpp_type">rsize_t</div></div>     <div class="token cpp_keyword ">const</div> <div class="def" id="NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize"><div><div class="token cpp_argument">_SourceSize</div></div></div></div></div>
         )
     {
-        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div> == <div class="token cpp_number ">0</div>)
+        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div> == <div class="token cpp_number ">0</div>)
         {
             <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
         }
 
 <div class="expandable"><div class="disabled">        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Destination != NULL,            EINVAL);</div>
-<div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memmove_s[impl0]::_Expr_val"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Expr_val'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
+<div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno@int *()'], ['_errno@int *()'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo@void()'], ['_invalid_parameter_noinfo@void()'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
 <div class="expandable"><div class="disabled">        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_Source != NULL,                 EINVAL);</div>
-<div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memmove_s[impl0]::_Expr_val2"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Expr_val2'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
+<div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val2"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div> != <div class="token cpp_number ">0</div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val2'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno@int *()'], ['_errno@int *()'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">22</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo@void()'], ['_invalid_parameter_noinfo@void()'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">22</div>; } };</div></div>
 <div class="expandable"><div class="disabled">        _CRT_MEMCPY_S_VALIDATE_RETURN_ERRCODE(_DestinationSize &gt;= _SourceSize, ERANGE);</div>
-<div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memmove_s[impl0]::_Expr_val3"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div> &gt;= <div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Expr_val3'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno'], ['_errno'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">34</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo'], ['_invalid_parameter_noinfo'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">34</div>; } };</div></div>
+<div class="expanded">        { <div class="token cpp_keyword ">int</div> <div class="def" id="NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val3"><div>_Expr_val</div></div>=!!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize'])"><div class="token cpp_argument">_DestinationSize</div></div> &gt;= <div class="ref" onclick="jumpToSymbol([], ['memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>); <div class="token cpp_keyword ">if</div> (!(<div class="ref" onclick="jumpToSymbol([], ['memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val3'])">_Expr_val</div>)) { (*<div class="ref" onclick="jumpToSymbol(['_errno@int *()'], ['_errno@int *()'])"><div class="token cpp_function">_errno</div></div>()) = <div class="token cpp_number ">34</div>; <div class="ref" onclick="jumpToSymbol(['_invalid_parameter_noinfo@void()'], ['_invalid_parameter_noinfo@void()'])"><div class="token cpp_function">_invalid_parameter_noinfo</div></div>(); <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">34</div>; } };</div></div>
 
 <div class="expandable"><div class="disabled">#pragma warning(suppress:4996) // Deprecation</div>
 <div class="expanded">#pragma warning(suppress:<div class="token cpp_number ">4996</div>) </div></div>
-        <div class="ref" onclick="jumpToSymbol(['memmove'], ['memmove'])"><div class="token cpp_function">memmove</div></div>(<div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memmove_s[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>);
+        <div class="ref" onclick="jumpToSymbol(['memmove@void *(void *, void const *, ::size_t)'], ['memmove@void *(void *, void const *, ::size_t)'])"><div class="token cpp_function">memmove</div></div>(<div class="ref" onclick="jumpToSymbol([], ['memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination'])"><div class="token cpp_argument">_Destination</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source'])"><div class="token cpp_argument">_Source</div></div>, <div class="ref" onclick="jumpToSymbol([], ['memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize'])"><div class="token cpp_argument">_SourceSize</div></div>);
         <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
     }
 
@@ -126,20 +126,20 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    '_errno': {
+    '_errno@int *()': {
         'displayNameInHtml': '<span class="cpp_function">_errno</span>()',
         'impls': [],
         'decls': [
-            'FB$_errno[decl0]',
-            'FB$_errno[decl1]',
-            'FB$_errno[decl2]'
+            'FB$_errno@int *()[decl0]',
+            'FB$_errno@int *()[decl1]',
+            'FB$_errno@int *()[decl2]'
         ]
     },
-    '_invalid_parameter_noinfo': {
+    '_invalid_parameter_noinfo@void()': {
         'displayNameInHtml': '<span class="cpp_function">_invalid_parameter_noinfo</span>()',
         'impls': [],
         'decls': [
-            'FB$_invalid_parameter_noinfo[decl0]'
+            'FB$_invalid_parameter_noinfo@void()[decl0]'
         ]
     },
     'errno_t': {
@@ -149,123 +149,123 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'memcpy': {
+    'memcpy@void *(void *, void const *, ::size_t)': {
         'displayNameInHtml': '<span class="cpp_function">memcpy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
         'decls': [
-            'FB$memcpy[decl0]'
+            'FB$memcpy@void *(void *, void const *, ::size_t)[decl0]'
         ]
     },
-    'memcpy_s[impl0]::_Destination': {
+    'memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination': {
         'displayNameInHtml': '_Destination',
         'impls': [
-            'NI$memcpy_s[impl0]::_Destination'
+            'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination'
         ],
         'decls': []
     },
-    'memcpy_s[impl0]::_DestinationSize': {
+    'memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize': {
         'displayNameInHtml': '_DestinationSize',
         'impls': [
-            'NI$memcpy_s[impl0]::_DestinationSize'
+            'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize'
         ],
         'decls': []
     },
-    'memcpy_s[impl0]::_Expr_val': {
+    'memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val': {
         'displayNameInHtml': '_Expr_val',
         'impls': [
-            'NI$memcpy_s[impl0]::_Expr_val'
+            'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val'
         ],
         'decls': []
     },
-    'memcpy_s[impl0]::_Expr_val2': {
+    'memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val2': {
         'displayNameInHtml': '_Expr_val',
         'impls': [
-            'NI$memcpy_s[impl0]::_Expr_val2'
+            'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val2'
         ],
         'decls': []
     },
-    'memcpy_s[impl0]::_Expr_val3': {
+    'memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val3': {
         'displayNameInHtml': '_Expr_val',
         'impls': [
-            'NI$memcpy_s[impl0]::_Expr_val3'
+            'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val3'
         ],
         'decls': []
     },
-    'memcpy_s[impl0]::_Source': {
+    'memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source': {
         'displayNameInHtml': '_Source',
         'impls': [
-            'NI$memcpy_s[impl0]::_Source'
+            'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source'
         ],
         'decls': []
     },
-    'memcpy_s[impl0]::_SourceSize': {
+    'memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize': {
         'displayNameInHtml': '_SourceSize',
         'impls': [
-            'NI$memcpy_s[impl0]::_SourceSize'
+            'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize'
         ],
         'decls': []
     },
-    'memmove': {
+    'memmove@void *(void *, void const *, ::size_t)': {
         'displayNameInHtml': '<span class="cpp_function">memmove</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
         'decls': [
-            'FB$memmove[decl0]'
+            'FB$memmove@void *(void *, void const *, ::size_t)[decl0]'
         ]
     },
-    'memmove_s[impl0]::_Destination': {
+    'memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination': {
         'displayNameInHtml': '_Destination',
         'impls': [
-            'NI$memmove_s[impl0]::_Destination'
+            'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination'
         ],
         'decls': []
     },
-    'memmove_s[impl0]::_DestinationSize': {
+    'memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize': {
         'displayNameInHtml': '_DestinationSize',
         'impls': [
-            'NI$memmove_s[impl0]::_DestinationSize'
+            'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize'
         ],
         'decls': []
     },
-    'memmove_s[impl0]::_Expr_val': {
+    'memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val': {
         'displayNameInHtml': '_Expr_val',
         'impls': [
-            'NI$memmove_s[impl0]::_Expr_val'
+            'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val'
         ],
         'decls': []
     },
-    'memmove_s[impl0]::_Expr_val2': {
+    'memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val2': {
         'displayNameInHtml': '_Expr_val',
         'impls': [
-            'NI$memmove_s[impl0]::_Expr_val2'
+            'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val2'
         ],
         'decls': []
     },
-    'memmove_s[impl0]::_Expr_val3': {
+    'memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val3': {
         'displayNameInHtml': '_Expr_val',
         'impls': [
-            'NI$memmove_s[impl0]::_Expr_val3'
+            'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val3'
         ],
         'decls': []
     },
-    'memmove_s[impl0]::_Source': {
+    'memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source': {
         'displayNameInHtml': '_Source',
         'impls': [
-            'NI$memmove_s[impl0]::_Source'
+            'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source'
         ],
         'decls': []
     },
-    'memmove_s[impl0]::_SourceSize': {
+    'memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize': {
         'displayNameInHtml': '_SourceSize',
         'impls': [
-            'NI$memmove_s[impl0]::_SourceSize'
+            'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize'
         ],
         'decls': []
     },
-    'memset': {
+    'memset@void *(void *, int, ::size_t)': {
         'displayNameInHtml': '<span class="cpp_function">memset</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
         'impls': [],
         'decls': [
-            'FB$memset[decl0]'
+            'FB$memset@void *(void *, int, ::size_t)[decl0]'
         ]
     },
     'rsize_t': {
@@ -277,28 +277,28 @@ referencedSymbols = {
     }
 };
 symbolToFiles = {
-    'FB$_errno[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
-    'FB$_errno[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
-    'FB$_errno[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
-    'FB$_invalid_parameter_noinfo[decl0]': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'FB$memcpy[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
-    'FB$memmove[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
-    'FB$memset[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$_errno@int *()[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'FB$_errno@int *()[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
+    'FB$_errno@int *()[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_invalid_parameter_noinfo@void()[decl0]': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'FB$memcpy@void *(void *, void const *, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$memmove@void *(void *, void const *, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$memset@void *(void *, int, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
     'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'NI$memcpy_s[impl0]::_Destination': null,
-    'NI$memcpy_s[impl0]::_DestinationSize': null,
-    'NI$memcpy_s[impl0]::_Expr_val': null,
-    'NI$memcpy_s[impl0]::_Expr_val2': null,
-    'NI$memcpy_s[impl0]::_Expr_val3': null,
-    'NI$memcpy_s[impl0]::_Source': null,
-    'NI$memcpy_s[impl0]::_SourceSize': null,
-    'NI$memmove_s[impl0]::_Destination': null,
-    'NI$memmove_s[impl0]::_DestinationSize': null,
-    'NI$memmove_s[impl0]::_Expr_val': null,
-    'NI$memmove_s[impl0]::_Expr_val2': null,
-    'NI$memmove_s[impl0]::_Expr_val3': null,
-    'NI$memmove_s[impl0]::_Source': null,
-    'NI$memmove_s[impl0]::_SourceSize': null,
+    'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination': null,
+    'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize': null,
+    'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val': null,
+    'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val2': null,
+    'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val3': null,
+    'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source': null,
+    'NI$memcpy_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize': null,
+    'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Destination': null,
+    'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_DestinationSize': null,
+    'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val': null,
+    'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val2': null,
+    'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Expr_val3': null,
+    'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_Source': null,
+    'NI$memmove_s@::errno_t(void * const, ::rsize_t const, void const * const, ::rsize_t const)[impl0]::_SourceSize': null,
     'NI$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' }
 };
 turnOnSymbol();
