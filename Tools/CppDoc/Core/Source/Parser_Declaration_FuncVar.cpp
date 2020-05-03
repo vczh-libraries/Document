@@ -5,11 +5,11 @@ using namespace partial_specification_ordering;
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, const List<Ptr<Symbol>>* pSymbols, Ptr<CppTokenCursor>& cursor)
+Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, const List<Ptr<Symbol>>& candidates, Ptr<CppTokenCursor>& cursor)
 {
-	for (vint i = 0; i < pSymbols->Count(); i++)
+	for (vint i = 0; i < candidates.Count(); i++)
 	{
-		auto symbol = pSymbols->Get(i).Obj();
+		auto symbol = candidates[i].Obj();
 		switch (symbol->kind)
 		{
 		case symbol_component::SymbolKind::FunctionSymbol:
@@ -40,29 +40,27 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 			// sync with Symbol::DecorateNameForSpecializationSpec
 			// AssignPSPrimary is not called (because the return value is unknown)
 			// so GetPSPrimaryDescendants_NF will never get the expected result
-			vint i = 1;
-			while (true)
+
+			auto prefix = decl->name.name + L"<";
+			auto& children = context->GetChildren_NFb();
+			for (vint i = 0; i < children.Count(); i++)
 			{
-				auto name = decl->name.name + L"<" + itow(i) + L">";
-				if (auto pSymbols = context->TryGetChildren_NFb(name))
+				auto key = children.Keys()[i];
+				if (key.Length() > prefix.Length() && key.Left(prefix.Length()) == prefix)
 				{
-					if (auto result = SearchForFunctionWithSameSignature(context, decl, pSymbols, cursor))
+					auto& candidates = children.GetByIndex(i);
+					if (auto result = SearchForFunctionWithSameSignature(context, decl, candidates, cursor))
 					{
 						return result;
 					}
 				}
-				else
-				{
-					break;
-				}
-				i++;
 			}
 		}
 		else
 		{
 			if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
 			{
-				if (auto result = SearchForFunctionWithSameSignature(context, decl, pSymbols, cursor))
+				if (auto result = SearchForFunctionWithSameSignature(context, decl, *pSymbols, cursor))
 				{
 					return result;
 				}

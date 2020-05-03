@@ -23,23 +23,38 @@ namespace symbol_idgen
 		{
 		}
 
-		static WString LogToString(Ptr<Type> type)
-		{
-			return GenerateToStream(
-				[=](StreamWriter& writer)
-				{
-					IdGenTypeVisitor visitor(writer);
-					visitor.Log(type);
-				}
-			);
-		}
-
 		void Log(Ptr<Type> type, bool _forParameter = false)
 		{
 			auto oldFP = forParameter;
 			forParameter = _forParameter;
 			type->Accept(this);
 			forParameter = oldFP;
+		}
+
+		void Log(VariadicList<GenericArgument>& arguments)
+		{
+			for (vint i = 0; i < arguments.Count(); i++)
+			{
+				if (i != 0)
+				{
+					writer.WriteString(L", ");
+				}
+
+				auto argument = arguments[i];
+				if (argument.item.type)
+				{
+					Log(argument.item.type);
+				}
+				else
+				{
+					writer.WriteString(L"*");
+				}
+
+				if (argument.isVariadic)
+				{
+					writer.WriteString(L"...");
+				}
+			}
 		}
 
 		void Visit(PrimitiveType* self)override
@@ -210,28 +225,7 @@ namespace symbol_idgen
 		{
 			Log(Ptr<Type>(self->type));
 			writer.WriteString(L"<");
-			for (vint i = 0; i < self->arguments.Count(); i++)
-			{
-				if (i != 0)
-				{
-					writer.WriteString(L", ");
-				}
-
-				auto argument = self->arguments[i];
-				if (argument.item.type)
-				{
-					Log(argument.item.type);
-				}
-				else
-				{
-					writer.WriteString(L"*");
-				}
-
-				if (argument.isVariadic)
-				{
-					writer.WriteString(L"...");
-				}
-			}
+			Log(self->arguments);
 			writer.WriteString(L">");
 		}
 	};
@@ -239,18 +233,23 @@ namespace symbol_idgen
 
 WString Symbol::DecorateNameForSpecializationSpec(const WString& symbolName, Ptr<SpecializationSpec> spec)
 {
-	// TODO: [Cpp.md] `Symbol::DecorateNameForSpecializationSpec` generates unique name for declaractions with `specializationSpec`.
-	//       Generate a postfix according to spec
-	//       and only use a counter when there is still a conflict
-
 	// sycn with SearchForFunctionWithSameSignature
+
+	auto postfix = GenerateToStream([&](StreamWriter& writer)
+	{
+		writer.WriteString(L"<");
+		symbol_idgen::IdGenTypeVisitor visitor(writer);
+		visitor.Log(spec->arguments);
+		writer.WriteString(L">");
+	});
+
 	vint dupCounter = 1;
 	while (true)
 	{
-		auto name = symbolName + L"<" + itow(dupCounter) + L">";
-		if (!TryGetChildren_NFb(name))
+		WString id = symbolName + postfix + (dupCounter == 1 ? WString::Empty : itow(dupCounter));
+		if (!TryGetChildren_NFb(id))
 		{
-			return name;
+			return id;
 		}
 		dupCounter++;
 	}
