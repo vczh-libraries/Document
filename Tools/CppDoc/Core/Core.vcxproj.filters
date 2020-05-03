@@ -317,5 +317,8 @@
     <ClCompile Include="Source\Symbol_Visit.cpp">
       <Filter>Source Files\Symbol</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Symbol_IdGen.cpp">
+      <Filter>Source Files\Symbol</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

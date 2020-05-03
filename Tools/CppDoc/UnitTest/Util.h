@@ -11,6 +11,30 @@ using namespace vl::stream;
 using namespace vl::filesystem;
 
 extern Ptr<RegexLexer>		GlobalCppLexer();
+
+class LogIndentation
+{
+public:
+	StreamWriter&			writer;
+	vint					indentation;
+
+	LogIndentation(StreamWriter& _writer, vint _indentation)
+		:writer(_writer)
+		, indentation(_indentation)
+	{
+	}
+
+	void WriteIndentation()
+	{
+		for (vint i = 0; i < indentation; i++)
+		{
+			writer.WriteString(L"\t");
+		}
+	}
+};
+
+extern void					Log(Ptr<Initializer> initializer, StreamWriter& writer);
+extern void					Log(VariadicList<GenericArgument>& arguments, const wchar_t* open, const wchar_t* close, StreamWriter& writer);
 extern void					Log(Ptr<Type> type, StreamWriter& writer);
 extern void					Log(Ptr<Expr> expr, StreamWriter& writer);
 extern void					Log(Ptr<Stat> stat, StreamWriter& writer, vint indentation);

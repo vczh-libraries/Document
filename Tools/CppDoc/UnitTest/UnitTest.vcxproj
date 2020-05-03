@@ -191,6 +191,10 @@
     <ClCompile Include="TestParseStat.cpp" />
     <ClCompile Include="TestParseType.cpp" />
     <ClCompile Include="Util_Assert.cpp" />
+    <ClCompile Include="Util_LogDecl.cpp" />
+    <ClCompile Include="Util_LogExpr.cpp" />
+    <ClCompile Include="Util_LogStat.cpp" />
+    <ClCompile Include="Util_LogType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">

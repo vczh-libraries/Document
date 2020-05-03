@@ -156,6 +156,18 @@
     <ClCompile Include="TestParsePSClassMemberPS.cpp">
       <Filter>Source Files\TestParserPartialSpecialization</Filter>
     </ClCompile>
+    <ClCompile Include="Util_LogType.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util_LogDecl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util_LogExpr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util_LogStat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">

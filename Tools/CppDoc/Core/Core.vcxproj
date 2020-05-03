@@ -207,6 +207,7 @@
     <ClCompile Include="Source\EvaluateSymbol.cpp" />
     <ClCompile Include="Source\Ast_Resolving.cpp" />
     <ClCompile Include="Source\Symbol.cpp" />
+    <ClCompile Include="Source\Symbol_IdGen.cpp" />
     <ClCompile Include="Source\Symbol_TemplateSpec.cpp" />
     <ClInclude Include="Source\IFT.h" />
     <ClCompile Include="Source\AP_ResolveGenericParameters.cpp" />
