@@ -245,7 +245,7 @@ WString Symbol::DecorateNameForSpecializationSpec(const WString& symbolName, Ptr
 
 	auto postfix = GenerateToStream([&](StreamWriter& writer)
 	{
-		writer.WriteString(L"<");
+		writer.WriteString(L"@<");
 		symbol_idgen::IdGenTypeVisitor visitor(writer);
 		visitor.Log(spec->arguments);
 		writer.WriteString(L">");
