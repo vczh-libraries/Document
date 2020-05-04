@@ -9,7 +9,7 @@ template<typename T>
 struct Ptr {};
 
 template<typename U>
-struct Ptr<U[]>
+struct Ptr<U[]> {};
 )";
 
 		COMPILE_PROGRAM(program, pa, input);

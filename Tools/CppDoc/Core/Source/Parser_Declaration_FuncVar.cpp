@@ -41,7 +41,7 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 			// AssignPSPrimary is not called (because the return value is unknown)
 			// so GetPSPrimaryDescendants_NF will never get the expected result
 
-			auto prefix = decl->name.name + L"<";
+			auto prefix = decl->name.name + L"@<";
 			auto& children = context->GetChildren_NFb();
 			for (vint i = 0; i < children.Count(); i++)
 			{
