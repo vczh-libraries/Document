@@ -368,8 +368,8 @@ struct Y : X<char, bool, float, double>
 template<typename T>
 T* E();
 
-template<typename T>
-T** E<T*>();
+template<>
+void* E<void*>();
 
 auto				_A1 = &Y::A;
 auto				_B1 = &Y::B;
@@ -980,29 +980,30 @@ auto c = &X<int>::Method<double>;
 		auto recorder = BEGIN_ASSERT_SYMBOL
 			ASSERT_SYMBOL			(0, L"T", 5, 1, void, 1, 18)
 			ASSERT_SYMBOL			(1, L"U", 5, 11, void, -1, -1)
-			ASSERT_SYMBOL			(2, L"A", 15, 0, void, -1, -1)
-			ASSERT_SYMBOL			(3, L"X", 15, 3, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL			(4, L"A", 15, 5, void, -1, -1)
-			ASSERT_SYMBOL			(5, L"B", 15, 16, void, -1, -1)
-			ASSERT_SYMBOL			(6, L"X", 17, 0, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL			(7, L"x", 18, 10, VariableDeclaration, 17, 7)
-			ASSERT_SYMBOL			(8, L"Method", 18, 12, FunctionDeclaration, 15, 9)
-			ASSERT_SYMBOL			(9, L"x", 19, 10, VariableDeclaration, 17, 7)
-			ASSERT_SYMBOL			(10, L"Method", 19, 12, FunctionDeclaration, 15, 9)
-			ASSERT_SYMBOL			(11, L"x", 20, 10, VariableDeclaration, 17, 7)
-			ASSERT_SYMBOL			(12, L"X", 20, 12, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL			(13, L"Method", 20, 20, FunctionDeclaration, 15, 9)
-			ASSERT_SYMBOL			(14, L"x", 21, 10, VariableDeclaration, 17, 7)
-			ASSERT_SYMBOL			(15, L"X", 21, 12, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL			(16, L"Method", 21, 20, FunctionDeclaration, 15, 9)
-			ASSERT_SYMBOL			(17, L"X", 22, 10, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL			(18, L"Method", 22, 18, FunctionDeclaration, 15, 9)
-			ASSERT_SYMBOL_OVERLOAD	(19, L"Method", 19, 12, ForwardFunctionDeclaration, 5, 4)
-			ASSERT_SYMBOL_OVERLOAD	(20, L"Method", 21, 20, ForwardFunctionDeclaration, 5, 4)
+			ASSERT_SYMBOL			(2, L"T", 9, 9, void, -1, -1)
+			ASSERT_SYMBOL			(3, L"A", 15, 0, void, -1, -1)
+			ASSERT_SYMBOL			(4, L"X", 15, 3, ClassDeclaration, 2, 7)
+			ASSERT_SYMBOL			(5, L"A", 15, 5, void, -1, -1)
+			ASSERT_SYMBOL			(6, L"B", 15, 16, void, -1, -1)
+			ASSERT_SYMBOL			(7, L"X", 17, 0, ClassDeclaration, 2, 7)
+			ASSERT_SYMBOL			(8, L"x", 18, 10, VariableDeclaration, 17, 7)
+			ASSERT_SYMBOL			(9, L"Method", 18, 12, FunctionDeclaration, 15, 9)
+			ASSERT_SYMBOL			(10, L"x", 19, 10, VariableDeclaration, 17, 7)
+			ASSERT_SYMBOL			(11, L"Method", 19, 12, FunctionDeclaration, 15, 9)
+			ASSERT_SYMBOL			(12, L"x", 20, 10, VariableDeclaration, 17, 7)
+			ASSERT_SYMBOL			(13, L"X", 20, 12, ClassDeclaration, 2, 7)
+			ASSERT_SYMBOL			(14, L"Method", 20, 20, FunctionDeclaration, 15, 9)
+			ASSERT_SYMBOL			(15, L"x", 21, 10, VariableDeclaration, 17, 7)
+			ASSERT_SYMBOL			(16, L"X", 21, 12, ClassDeclaration, 2, 7)
+			ASSERT_SYMBOL			(17, L"Method", 21, 20, FunctionDeclaration, 15, 9)
+			ASSERT_SYMBOL			(18, L"X", 22, 10, ClassDeclaration, 2, 7)
+			ASSERT_SYMBOL			(19, L"Method", 22, 18, FunctionDeclaration, 15, 9)
+			ASSERT_SYMBOL_OVERLOAD	(20, L"Method", 19, 12, ForwardFunctionDeclaration, 5, 4)
+			ASSERT_SYMBOL_OVERLOAD	(21, L"Method", 21, 20, ForwardFunctionDeclaration, 5, 4)
 		END_ASSERT_SYMBOL;
 
 		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
-		TEST_CASE_ASSERT(accessed.Count() == 21);
+		TEST_CASE_ASSERT(accessed.Count() == 22);
 	});
 
 	TEST_CATEGORY(L"Members in base classes")

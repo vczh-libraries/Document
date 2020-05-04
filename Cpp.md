@@ -57,6 +57,7 @@
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.
+    - [ ] There are 3 `TEST_CATEGORY(L"Re-index")` containing `ASSERT_SYMBOL(..., void, -1. -1)`, make them not `-1`.
     - [ ] `expr->Accept` should have 3 links.
 - [ ] Lambda expressions.
 - [ ] Next Demo! (Vlpp)
