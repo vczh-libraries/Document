@@ -92,32 +92,32 @@ Z<void*, char*>* pz = nullptr;
 	TEST_CATEGORY(L"Fields from qualifiers")
 	{
 		auto input = LR"(
-	template<typename Tx, typename Ty>
-	struct X
-	{
-		Tx x;
-		Ty y;
-	};
+template<typename Tx, typename Ty>
+struct X
+{
+	Tx x;
+	Ty y;
+};
 
-	X<int, double> x;
-	X<int, double>& lx;
-	X<int, double>&& rx;
+X<int, double> x;
+X<int, double>& lx;
+X<int, double>&& rx;
 
-	const X<int, double> cx;
-	const X<int, double>& clx;
-	const X<int, double>&& crx;
+const X<int, double> cx;
+const X<int, double>& clx;
+const X<int, double>&& crx;
 
-	X<int, double> F();
-	X<int, double>& lF();
-	X<int, double>&& rF();
+X<int, double> F();
+X<int, double>& lF();
+X<int, double>&& rF();
 
-	const X<int, double> cF();
-	const X<int, double>& clF();
-	const X<int, double>&& crF();
+const X<int, double> cF();
+const X<int, double>& clF();
+const X<int, double>&& crF();
 
-	X<int, double>* px;
-	const X<int, double>* cpx;
-	)";
+X<int, double>* px;
+const X<int, double>* cpx;
+)";
 		COMPILE_PROGRAM(program, pa, input);
 
 		AssertExpr(pa, L"x",						L"x",							L"::X<__int32, double> $L"					);

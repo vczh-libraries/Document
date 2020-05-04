@@ -3,7 +3,7 @@
 TEST_FILE
 {
 	// TODO:
-	//   Copy test cases from TestParseGenericMember.cpp
+	//   Copy test cases from TestParsePSClassMemberPrimary.cpp
 	//   Test against the PS instance of classes with partial specializations
 
 	TEST_CATEGORY(L"Fields / Functions / Arrays")
