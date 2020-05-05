@@ -168,7 +168,6 @@ namespace symbol_type_resolving
 		if (psr->version == TsysPSRecord::PSInstanceVersion)
 		{
 			// TODO: evaluate psr->primary;
-			return psr;
 		}
 		else
 		{
@@ -184,6 +183,12 @@ namespace symbol_type_resolving
 
 			Dictionary<Symbol*, Ptr<TemplateArgumentContext>> psResult;
 			infer_function_type::InferPartialSpecializationPrimary<ForwardClassDeclaration>(invokerPa, psResult, cd->symbol, pdt, ata);
+
+			if (psResult.Count() == 0 || infer_function_type::IsValuableTaContextWithMatchedPSChildren(ata))
+			{
+				psr->instances.Add(classType);
+			}
+
 			for (vint i = 0; i < psResult.Count(); i++)
 			{
 				auto psSymbol = psResult.Keys()[i];
@@ -196,5 +201,7 @@ namespace symbol_type_resolving
 				}
 			}
 		}
+
+		return psr;
 	}
 }

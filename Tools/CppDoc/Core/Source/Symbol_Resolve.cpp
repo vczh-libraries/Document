@@ -337,6 +337,10 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 		{
 			symbol_type_resolving::EnumerateClassPSInstances(pa, entity, [&](ITsys* psEntity)
 			{
+				if (psEntity->GetType() == TsysType::GenericFunction)
+				{
+					psEntity = psEntity->GetElement();
+				}
 				ResolveSymbolInClassInternal(pa, CvRefOf(psEntity, cv, ref), psEntity, policy, rsa);
 			});
 		}
