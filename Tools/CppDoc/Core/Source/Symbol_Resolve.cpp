@@ -312,7 +312,11 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 
 			if (policy & SearchPolicy::_AccessClassBaseType)
 			{
-				auto& ev = symbol_type_resolving::EvaluateClassType(pa, tsys);
+				ClassDeclaration* cd = nullptr;
+				ITsys* pdt = nullptr;
+				TemplateArgumentContext* ata = nullptr;
+				symbol_type_resolving::ExtractClassType(tsys, cd, pdt, ata);
+				auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, cd, pdt, ata);
 				for (vint i = 0; i < ev.ExtraCount(); i++)
 				{
 					auto& extra = ev.GetExtra(i);

@@ -117,7 +117,12 @@ namespace symbol_type_resolving
 		return eval.ev;
 	}
 
-	symbol_component::Evaluation& EvaluateClassType(const ParsingArguments& invokerPa, ITsys* classType)
+	void ExtractClassType(
+		ITsys* classType,
+		ClassDeclaration*& classDecl,
+		ITsys*& parentDeclType,
+		TemplateArgumentContext*& argumentsToApply
+	)
 	{
 		switch (classType->GetType())
 		{
@@ -125,18 +130,21 @@ namespace symbol_type_resolving
 		case TsysType::DeclInstant:
 			{
 				auto symbol = classType->GetDecl();
-				auto classDecl = symbol->GetImplDecl_NFb<ClassDeclaration>();
+				classDecl = symbol->GetImplDecl_NFb<ClassDeclaration>().Obj();
 				if (!classDecl) throw TypeCheckerException();
 
 				if (classType->GetType() == TsysType::Decl)
 				{
-					return EvaluateClassSymbol(invokerPa, classDecl.Obj(), nullptr, nullptr);
+					parentDeclType = nullptr;
+					argumentsToApply = nullptr;
 				}
 				else
 				{
 					const auto& di = classType->GetDeclInstant();
-					return EvaluateClassSymbol(invokerPa, classDecl.Obj(), di.parentDeclType, di.taContext.Obj());
+					parentDeclType = di.parentDeclType;
+					argumentsToApply = di.taContext.Obj();
 				}
+				return;
 			}
 		default:
 			throw TypeCheckerException();

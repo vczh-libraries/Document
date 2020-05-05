@@ -98,7 +98,11 @@ namespace symbol_type_resolving
 				AddAdlNamespace(pa, type->GetDecl(), nss);
 				if (type->GetDecl()->GetImplDecl_NFb<ClassDeclaration>())
 				{
-					auto& ev = symbol_type_resolving::EvaluateClassType(pa, type);
+					ClassDeclaration* cd = nullptr;
+					ITsys* pdt = nullptr;
+					TemplateArgumentContext* ata = nullptr;
+					symbol_type_resolving::ExtractClassType(type, cd, pdt, ata);
+					auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, cd, pdt, ata);
 					for (vint i = 0; i < ev.ExtraCount(); i++)
 					{
 						auto& tsys = ev.GetExtra(i);

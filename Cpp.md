@@ -34,8 +34,9 @@
       - [ ] Refresh `primary` when it is null and `version` is -1.
       - [ ] Refresh `instances` when `version` is not up-to-date.
       - [ ] `ResolveSymbolInTypeInternal` calls this function before `TryGetChildren_NFb`.
-      - [ ] Replace `EvaluateClassType` to another function, returning arguments for calling `EvaluateClassSymbol`.
+      - [x] Replace `EvaluateClassType` to another function, returning arguments for calling `EvaluateClassSymbol`.
       - [ ] Add a new function to enumerate base types involving `EvaluateClassPSRecord`.
+        - [ ] Search for `.GetExtra(`.
     - [ ] When comparing two `Decl` or `DeclInstance` or matching for type inferencing, if `version` of any instance is -1, `primary` is used instead.
     - [ ] When enumerating base types or members of an `Decl` or `DeclInstance`.
       - [ ] Consider only itself when `GetPSRecord` is null, or `version` is -1.

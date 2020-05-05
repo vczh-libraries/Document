@@ -582,7 +582,12 @@ UserDefined (Inheriting)
 		visitedFroms.Add(fromType);
 
 		if (IsExactEntityMatch(toType, fromType, anyInvolved)) return true;
-		auto& ev = symbol_type_resolving::EvaluateClassType(pa, fromType);
+
+		ClassDeclaration* cd = nullptr;
+		ITsys* pdt = nullptr;
+		TemplateArgumentContext* ata = nullptr;
+		symbol_type_resolving::ExtractClassType(fromType, cd, pdt, ata);
+		auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, cd, pdt, ata);
 		for (vint i = 0; i < ev.ExtraCount(); i++)
 		{
 			auto& baseTypes = ev.GetExtra(i);
