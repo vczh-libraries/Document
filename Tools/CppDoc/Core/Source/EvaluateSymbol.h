@@ -59,11 +59,12 @@ namespace symbol_type_resolving
 	extern TypeTsysList&						EvaluateVarSymbol(const ParsingArguments& invokerPa, ForwardVariableDeclaration* varDecl, ITsys* parentDeclType, bool& isVariadic);
 	extern void									SetFuncTypeByReturnStat(const ParsingArguments& pa, FunctionDeclaration* funcDecl, TypeTsysList& returnTypes, TemplateArgumentContext* argumentsToApply);
 	extern TypeTsysList&						EvaluateFuncSymbol(const ParsingArguments& invokerPa, ForwardFunctionDeclaration* funcDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
-	extern TypeTsysList&						EvaluateForwardClassSymbol(const ParsingArguments& invokerPa, ForwardClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
-	extern symbol_component::Evaluation&		EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
 	extern TypeTsysList&						EvaluateTypeAliasSymbol(const ParsingArguments& invokerPa, TypeAliasDeclaration* usingDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
 	extern TypeTsysList&						EvaluateValueAliasSymbol(const ParsingArguments& invokerPa, ValueAliasDeclaration* usingDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
 	extern ITsys*								EvaluateGenericArgumentSymbol(Symbol* symbol);
+
+	extern TypeTsysList&						EvaluateForwardClassSymbol(const ParsingArguments& invokerPa, ForwardClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
+	extern symbol_component::Evaluation&		EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
 	extern symbol_component::Evaluation&		EvaluateClassType(const ParsingArguments& invokerPa, ITsys* classType);
 }
 
