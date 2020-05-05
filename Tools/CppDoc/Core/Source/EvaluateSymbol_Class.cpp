@@ -1,5 +1,6 @@
 #include "EvaluateSymbol_Shared.h"
 #include "Symbol_TemplateSpec.h"
+#include "IFT.h"
 
 namespace symbol_type_resolving
 {
@@ -117,6 +118,10 @@ namespace symbol_type_resolving
 		return eval.ev;
 	}
 
+	/***********************************************************************
+	ExtractClassType: Convert ITsys* to arguments for EvaluateClassSymbol
+	***********************************************************************/
+
 	void ExtractClassType(
 		ITsys* classType,
 		ClassDeclaration*& classDecl,
@@ -148,6 +153,48 @@ namespace symbol_type_resolving
 			}
 		default:
 			throw TypeCheckerException();
+		}
+	}
+
+	/***********************************************************************
+	EvaluateClassPSRecord: Get an up-to-date TsysPSRecord from an ITsys*
+	***********************************************************************/
+
+	TsysPSRecord* EvaluateClassPSRecord(const ParsingArguments& invokerPa, ITsys* classType)
+	{
+		auto psr = classType->GetPSRecord();
+		if (!psr) return nullptr;
+
+		if (psr->version == TsysPSRecord::PSInstanceVersion)
+		{
+			// TODO: evaluate psr->primary;
+			return psr;
+		}
+		else
+		{
+			ClassDeclaration* cd = nullptr;
+			ITsys* pdt = nullptr;
+			TemplateArgumentContext* ata = nullptr;
+			ExtractClassType(classType, cd, pdt, ata);
+
+			vint version = cd->symbol->GetPSPrimaryVersion_NF();
+			if (psr->version == version) return psr;
+			psr->version = version;
+			psr->instances.Clear();
+
+			Dictionary<Symbol*, Ptr<TemplateArgumentContext>> psResult;
+			infer_function_type::InferPartialSpecializationPrimary<ForwardClassDeclaration>(invokerPa, psResult, cd->symbol, pdt, ata);
+			for (vint i = 0; i < psResult.Count(); i++)
+			{
+				auto psSymbol = psResult.Keys()[i];
+				auto psCd = psSymbol->GetAnyForwardDecl<ForwardClassDeclaration>().Obj();
+				auto psAta = psResult.Values()[i].Obj();
+				auto& ev = EvaluateForwardClassSymbol(invokerPa, psCd, pdt, psAta);
+				if (!psr->instances.Contains(ev.Get(0)))
+				{
+					psr->instances.Add(ev.Get(0));
+				}
+			}
 		}
 	}
 }

@@ -27,12 +27,11 @@
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Partial specialization constructions
   - [ ] Partial specialization on **classes**.
-    - [ ] Ignore forward declaration of class partial specialization, because it provides no additional value.
     - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
     - [ ] `EvaluateClassPSRecord`
       - [x] Add `ITsys::GetPSRecord`, containing `version`, `primary` and `instances`.
         - [ ] Refresh `primary` when it is null and `version` is -1.
-        - [ ] Refresh `instances` when `version` is not up-to-date.
+        - [x] Refresh `instances` when `version` is not up-to-date.
       - [ ] `ResolveSymbolInTypeInternal` calls this function before `TryGetChildren_NFb`.
     - [ ] When comparing two `Decl` or `DeclInstance` or matching for type inferencing, if `version` of any instance is -1, `primary` is used instead.
     - [ ] When enumerating base types or members of an `Decl` or `DeclInstance`.

@@ -66,6 +66,30 @@ namespace symbol_type_resolving
 	extern TypeTsysList&						EvaluateForwardClassSymbol(const ParsingArguments& invokerPa, ForwardClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
 	extern symbol_component::Evaluation&		EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
 	extern void									ExtractClassType(ITsys* classType, ClassDeclaration*& classDecl, ITsys*& parentDeclType, TemplateArgumentContext*& argumentsToApply);
+	extern TsysPSRecord*						EvaluateClassPSRecord(const ParsingArguments& invokerPa, ITsys* classType);
+
+	template<typename TCallback>
+	void EnumerateClassPSInstances(const ParsingArguments& invokerPa, ITsys* classType, TCallback&& callback)
+	{
+		if (auto psr = EvaluateClassPSRecord(invokerPa, classType))
+		{
+			if (psr->version == TsysPSRecord::PSInstanceVersion)
+			{
+				callback(classType);
+			}
+			else
+			{
+				for (vint i = 0; i < psr->instances.Count(); i++)
+				{
+					callback(psr->instances[i]);
+				}
+			}
+		}
+		else
+		{
+			callback(classType);
+		}
+	}
 
 	template<typename TCallback>
 	void EnumerateClassSymbolBaseTypes(const ParsingArguments& invokerPa, ClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply, TCallback&& callback)

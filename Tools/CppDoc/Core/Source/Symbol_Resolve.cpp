@@ -239,9 +239,79 @@ void PickResolvedSymbols(ITsys* thisItem, const List<Ptr<Symbol>>* pSymbols, boo
 ResolveSymbolInTypeInternal
 ***********************************************************************/
 
+void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, SearchPolicy policy, ResolveSymbolArguments& rsa);
+
+void ResolveSymbolInClassInternal(const ParsingArguments& pa, ITsys* tsys, ITsys* entity, SearchPolicy policy, ResolveSymbolArguments& rsa)
+{
+	auto scope = entity->GetDecl();
+	if (auto classDecl = scope->GetImplDecl_NFb<ClassDeclaration>())
+	{
+		if (classDecl->name.name == rsa.name.name)
+		{
+			if (policy & SearchPolicy::_ClassNameAsType)
+			{
+				// A::A could never be the type A
+				// But searching A inside A will get the type A
+				rsa.found = true;
+
+				switch (entity->GetType())
+				{
+				case TsysType::Decl:
+					Resolving::AddSymbol(pa, rsa.result.types, classDecl->symbol);
+					break;
+				case TsysType::DeclInstant:
+					{
+						auto& di = entity->GetDeclInstant();
+						if (di.parentDeclType)
+						{
+							if (di.parentDeclType->GetDecl() == classDecl->symbol->GetParentScope())
+							{
+								auto parentClass = pa.tsys->DeclInstantOf(classDecl->symbol->GetParentScope(), nullptr, di.parentDeclType);
+								AddSymbolToResolve(rsa.result.types, { parentClass,classDecl->symbol });
+							}
+							else
+							{
+								AddSymbolToResolve(rsa.result.types, { di.parentDeclType,classDecl->symbol });
+							}
+						}
+						else
+						{
+							Resolving::AddSymbol(pa, rsa.result.types, classDecl->symbol);
+						}
+					}
+					break;
+				}
+			}
+		}
+
+		if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
+		{
+			PickResolvedSymbols(tsys, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+		}
+
+		if (rsa.found) return;
+
+		if (policy & SearchPolicy::_AccessClassBaseType)
+		{
+			ClassDeclaration* cd = nullptr;
+			ITsys* pdt = nullptr;
+			TemplateArgumentContext* ata = nullptr;
+			symbol_type_resolving::ExtractClassType(tsys, cd, pdt, ata);
+			symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, cd, pdt, ata, [&](ITsys* classType, ITsys* baseType)
+			{
+				auto basePolicy
+					= policy == SearchPolicy::ScopedChild || policy == SearchPolicy::InContext
+					? SearchPolicy::ScopedChild
+					: SearchPolicy::ClassMember_FromOutside
+					;
+				ResolveSymbolInTypeInternal(pa, baseType, basePolicy, rsa);
+			});
+		}
+	}
+}
+
 void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, SearchPolicy policy, ResolveSymbolArguments& rsa)
 {
-	auto thisItem = tsys;
 	if (tsys->GetType() == TsysType::GenericFunction)
 	{
 		tsys = tsys->GetElement();
@@ -265,73 +335,16 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 		auto scope = entity->GetDecl();
 		if (auto classDecl = scope->GetImplDecl_NFb<ClassDeclaration>())
 		{
-			if (classDecl->name.name == rsa.name.name)
+			symbol_type_resolving::EnumerateClassPSInstances(pa, entity, [&](ITsys* psEntity)
 			{
-				if (policy & SearchPolicy::_ClassNameAsType)
-				{
-					// A::A could never be the type A
-					// But searching A inside A will get the type A
-					rsa.found = true;
-
-					switch (entity->GetType())
-					{
-					case TsysType::Decl:
-						Resolving::AddSymbol(pa, rsa.result.types, classDecl->symbol);
-						break;
-					case TsysType::DeclInstant:
-						{
-							auto& di = entity->GetDeclInstant();
-							if (di.parentDeclType)
-							{
-								if (di.parentDeclType->GetDecl() == classDecl->symbol->GetParentScope())
-								{
-									auto parentClass = pa.tsys->DeclInstantOf(classDecl->symbol->GetParentScope(), nullptr, di.parentDeclType);
-									AddSymbolToResolve(rsa.result.types, { parentClass,classDecl->symbol });
-								}
-								else
-								{
-									AddSymbolToResolve(rsa.result.types, { di.parentDeclType,classDecl->symbol });
-								}
-							}
-							else
-							{
-								Resolving::AddSymbol(pa, rsa.result.types, classDecl->symbol);
-							}
-						}
-						break;
-					}
-				}
-			}
-
-			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
-			{
-				PickResolvedSymbols(thisItem, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
-			}
-
-			if (rsa.found) return;
-
-			if (policy & SearchPolicy::_AccessClassBaseType)
-			{
-				ClassDeclaration* cd = nullptr;
-				ITsys* pdt = nullptr;
-				TemplateArgumentContext* ata = nullptr;
-				symbol_type_resolving::ExtractClassType(tsys, cd, pdt, ata);
-				symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, cd, pdt, ata, [&](ITsys* classType, ITsys* baseType)
-				{
-					auto basePolicy
-						= policy == SearchPolicy::ScopedChild || policy == SearchPolicy::InContext
-						? SearchPolicy::ScopedChild
-						: SearchPolicy::ClassMember_FromOutside
-						;
-					ResolveSymbolInTypeInternal(pa, baseType, basePolicy, rsa);
-				});
-			}
+				ResolveSymbolInClassInternal(pa, CvRefOf(psEntity, cv, ref), psEntity, policy, rsa);
+			});
 		}
 		else if (auto enumDecl = scope->GetImplDecl_NFb<EnumDeclaration>())
 		{
 			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 			{
-				PickResolvedSymbols(thisItem, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+				PickResolvedSymbols(tsys, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
 			}
 		}
 	}
