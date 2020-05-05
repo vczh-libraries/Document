@@ -102,15 +102,10 @@ namespace symbol_type_resolving
 					ITsys* pdt = nullptr;
 					TemplateArgumentContext* ata = nullptr;
 					symbol_type_resolving::ExtractClassType(type, cd, pdt, ata);
-					auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, cd, pdt, ata);
-					for (vint i = 0; i < ev.ExtraCount(); i++)
+					symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, cd, pdt, ata, [&](ITsys* classType, ITsys* baseType)
 					{
-						auto& tsys = ev.GetExtra(i);
-						for (vint j = 0; j < tsys.Count(); j++)
-						{
-							SearchAdlClassesAndNamespaces(pa, tsys[j], nss);
-						}
-					}
+						SearchAdlClassesAndNamespaces(pa, baseType, nss);
+					});
 				}
 			}
 			break;

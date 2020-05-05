@@ -224,18 +224,20 @@ GenerateMembers
 
 bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclaration* classDecl, SpecialMemberKind kind, bool passIfFieldHasInitializer)
 {
-	auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, classDecl, nullptr, nullptr);
-	auto classSymbol = classDecl->symbol;
-	for (vint i = 0; i < ev.ExtraCount(); i++)
+	struct ExitException {};
+	try
 	{
-		auto& types = ev.GetExtra(i);
-		for (vint j = 0; j < types.Count(); j++)
+		symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, classDecl, nullptr, nullptr, [&](ITsys* classType, ITsys* baseType)
 		{
-			if (!IsSpecialMemberEnabledForType(pa, types[j], kind))
+			if (!IsSpecialMemberEnabledForType(pa, baseType, kind))
 			{
-				return true;
+				throw ExitException();
 			}
-		}
+		});
+	}
+	catch (const ExitException&)
+	{
+		return true;
 	}
 
 	for (vint i = 0; i < classDecl->decls.Count(); i++)

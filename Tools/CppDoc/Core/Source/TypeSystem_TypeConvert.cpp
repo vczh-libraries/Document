@@ -587,17 +587,21 @@ UserDefined (Inheriting)
 		ITsys* pdt = nullptr;
 		TemplateArgumentContext* ata = nullptr;
 		symbol_type_resolving::ExtractClassType(fromType, cd, pdt, ata);
-		auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, cd, pdt, ata);
-		for (vint i = 0; i < ev.ExtraCount(); i++)
+
+		struct ExitException {};
+		try
 		{
-			auto& baseTypes = ev.GetExtra(i);
-			for (vint j = 0; j < baseTypes.Count(); j++)
+			symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, cd, pdt, ata, [&](ITsys* classType, ITsys* baseType)
 			{
-				if (IsInheritingInternal(pa, toType, baseTypes[j], visitedFroms, false, anyInvolved))
+				if (IsInheritingInternal(pa, toType, baseType, visitedFroms, false, anyInvolved))
 				{
-					return true;
+					throw ExitException();
 				}
-			}
+			});
+		}
+		catch (const ExitException&)
+		{
+			return true;
 		}
 		return false;
 	}

@@ -316,20 +316,15 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 				ITsys* pdt = nullptr;
 				TemplateArgumentContext* ata = nullptr;
 				symbol_type_resolving::ExtractClassType(tsys, cd, pdt, ata);
-				auto& ev = symbol_type_resolving::EvaluateClassSymbol(pa, cd, pdt, ata);
-				for (vint i = 0; i < ev.ExtraCount(); i++)
+				symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, cd, pdt, ata, [&](ITsys* classType, ITsys* baseType)
 				{
-					auto& extra = ev.GetExtra(i);
-					for (vint j = 0; j < extra.Count(); j++)
-					{
-						auto basePolicy
-							= policy == SearchPolicy::ScopedChild || policy == SearchPolicy::InContext
-							? SearchPolicy::ScopedChild
-							: SearchPolicy::ClassMember_FromOutside
-							;
-						ResolveSymbolInTypeInternal(pa, extra[j], basePolicy, rsa);
-					}
-				}
+					auto basePolicy
+						= policy == SearchPolicy::ScopedChild || policy == SearchPolicy::InContext
+						? SearchPolicy::ScopedChild
+						: SearchPolicy::ClassMember_FromOutside
+						;
+					ResolveSymbolInTypeInternal(pa, baseType, basePolicy, rsa);
+				});
 			}
 		}
 		else if (auto enumDecl = scope->GetImplDecl_NFb<EnumDeclaration>())

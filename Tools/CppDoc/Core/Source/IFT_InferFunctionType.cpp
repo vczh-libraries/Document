@@ -111,11 +111,13 @@ namespace infer_function_type
 					// Decl could not match GenericType, search for base classes
 					if (auto classDecl = current->GetDecl()->GetAnyForwardDecl<ClassDeclaration>())
 					{
-						auto& ev = EvaluateClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
-						for (vint j = 0; j < ev.ExtraCount(); j++)
+						symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, classDecl.Obj(), nullptr, nullptr, [&](ITsys* classType, ITsys* baseType)
 						{
-							CopyFrom(visited, ev.GetExtra(j), true);
-						}
+							if (!visited.Contains(baseType))
+							{
+								visited.Add(baseType);
+							}
+						});
 					}
 				}
 				break;
@@ -138,11 +140,13 @@ namespace infer_function_type
 					else if (auto classDecl = di.declSymbol->GetAnyForwardDecl<ClassDeclaration>())
 					{
 						// search for base classes
-						auto& ev = EvaluateClassSymbol(pa, classDecl.Obj(), di.parentDeclType, di.taContext.Obj());
-						for (vint j = 0; j < ev.ExtraCount(); j++)
+						symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, classDecl.Obj(), di.parentDeclType, di.taContext.Obj(), [&](ITsys* classType, ITsys* baseType)
 						{
-							CopyFrom(visited, ev.GetExtra(j), true);
-						}
+							if (!visited.Contains(baseType))
+							{
+								visited.Add(baseType);
+							}
+						});
 					}
 				}
 				break;
