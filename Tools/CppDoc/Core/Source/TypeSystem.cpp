@@ -71,18 +71,19 @@ protected:
 public:
 	TsysBase(TsysAlloc* _tsys) :tsys(_tsys) {}
 
-	TsysPrimitive													GetPrimitive()				{ throw L"Not Implemented!"; }
-	TsysCV															GetCV()						{ throw L"Not Implemented!"; }
-	ITsys*															GetElement()				{ throw L"Not Implemented!"; }
-	ITsys*															GetClass()					{ throw L"Not Implemented!"; }
-	ITsys*															GetParam(vint index)		{ throw L"Not Implemented!"; }
-	vint															GetParamCount()				{ throw L"Not Implemented!"; }
-	TsysFunc														GetFunc()					{ throw L"Not Implemented!"; }
-	const TsysInit&													GetInit()					{ throw L"Not Implemented!"; }
-	const TsysGenericFunction&										GetGenericFunction()		{ throw L"Not Implemented!"; }
-	TsysGenericArg													GetGenericArg()				{ throw L"Not Implemented!"; }
-	Symbol*															GetDecl()					{ throw L"Not Implemented!"; }
-	const TsysDeclInstant&											GetDeclInstant()			{ throw L"Not Implemented!"; }
+	TsysPrimitive													GetPrimitive()						override { throw L"Not Implemented!"; }
+	TsysCV															GetCV()								override { throw L"Not Implemented!"; }
+	ITsys*															GetElement()						override { throw L"Not Implemented!"; }
+	ITsys*															GetClass()							override { throw L"Not Implemented!"; }
+	ITsys*															GetParam(vint index)				override { throw L"Not Implemented!"; }
+	vint															GetParamCount()						override { throw L"Not Implemented!"; }
+	TsysFunc														GetFunc()							override { throw L"Not Implemented!"; }
+	const TsysInit&													GetInit()							override { throw L"Not Implemented!"; }
+	const TsysGenericFunction&										GetGenericFunction()				override { throw L"Not Implemented!"; }
+	TsysGenericArg													GetGenericArg()						override { throw L"Not Implemented!"; }
+	Symbol*															GetDecl()							override { throw L"Not Implemented!"; }
+	const TsysDeclInstant&											GetDeclInstant()					override { throw L"Not Implemented!"; }
+	TsysPSRecord*													GetPSRecord()						override { throw L"Not Implemented!"; }
 
 	ITsys* LRefOf()																						override;
 	ITsys* RRefOf()																						override;
@@ -346,10 +347,12 @@ class ITSYS_CLASS(Decl)
 	ITSYS_GENERIC_REPLACEGENERICARGS
 
 protected:
-	Dictionary<TsysGenericArg, ITsys*>								genericArgs;
+	Dictionary<TsysGenericArg, ITsys*>				genericArgs;
+	Ptr<TsysPSRecord>								psRecord;
 
 public:
 	ITsys*											GenericArgOf(TsysGenericArg genericArg)override;
+	TsysPSRecord*									GetPSRecord()override;
 };
 
 class ITSYS_CLASS(GenericArg)
@@ -629,6 +632,12 @@ class ITSYS_CLASS(DeclInstant)
 
 private:
 	ITsys*					ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params);
+
+protected:
+	Ptr<TsysPSRecord>		psRecord;
+
+public:
+	TsysPSRecord*			GetPSRecord()override;
 };
 
 #undef ITSYS_MEMBERS_DATA
@@ -993,6 +1002,19 @@ ITsys* ITsys_Decl::GenericArgOf(TsysGenericArg genericArg)
 	return itsys;
 }
 
+TsysPSRecord* ITsys_Decl::GetPSRecord()
+{
+	if (!psRecord)
+	{
+		if (data->IsPSPrimary_NF())
+		{
+			psRecord = MakePtr<TsysPSRecord>();
+		}
+	}
+
+	return psRecord.Obj();
+}
+
 /***********************************************************************
 ITsys_Function (Impl)
 ***********************************************************************/
@@ -1023,4 +1045,22 @@ ITsys_Init (DeclInstant)
 ITsys* ITsys_DeclInstant::ReplaceGenericArgsCallback(ITsys* element, Array<ITsys*>& params)
 {
 	return tsys->DeclInstantOf(data.declSymbol, (params.Count() == 0 ? nullptr : &params), element);
+}
+
+TsysPSRecord* ITsys_DeclInstant::GetPSRecord()
+{
+	if (!psRecord)
+	{
+		if (data.declSymbol->IsPSPrimary_NF())
+		{
+			psRecord = MakePtr<TsysPSRecord>();
+		}
+		else if (data.declSymbol->GetPSPrimary_NF())
+		{
+			psRecord = MakePtr<TsysPSRecord>();
+			psRecord->version = TsysPSRecord::PSInstanceVersion;
+		}
+	}
+
+	return psRecord.Obj();
 }

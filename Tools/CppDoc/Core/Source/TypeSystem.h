@@ -279,6 +279,15 @@ struct TsysDeclInstant
 	bool operator>=	(const TsysDeclInstant& arg)const { return Compare(*this, arg) >= 0; }
 };
 
+struct TsysPSRecord
+{
+	static const vint PSInstanceVersion = -1;
+
+	vint							version = 0;
+	ITsys*							primary = nullptr;
+	TypeTsysList					instances;
+};
+
 namespace vl
 {
 	template<>
@@ -306,23 +315,23 @@ namespace vl
 	};
 }
 
-#define TSYS_TYPE_LIST(F)															\
-	F(Any)																			\
-	F(Zero)																			\
-	F(Nullptr)																		\
-	F(Primitive)		/* Primitive											*/	\
-	F(LRef)				/* Element												*/	\
-	F(RRef)				/* Element												*/	\
-	F(Ptr)				/* Element												*/	\
-	F(Array)			/* Element, ParamCount									*/	\
-	F(Function)			/* Element, ParamCount, Param, Func						*/	\
-	F(Member)			/* Element, Class										*/	\
-	F(CV)				/* CV													*/	\
-	F(Decl)				/* Decl													*/	\
-	F(DeclInstant)		/* Decl, DeclInstant, ParamCount, Param, Element		*/	\
-	F(Init)				/* ParamCount, Param, Init								*/	\
-	F(GenericFunction)	/* Element(Decl), ParamCount, Param, GenericFunction	*/	\
-	F(GenericArg)		/* Element(Decl), GenericArg							*/	\
+#define TSYS_TYPE_LIST(F)																	\
+	F(Any)																					\
+	F(Zero)																					\
+	F(Nullptr)																				\
+	F(Primitive)		/* Primitive													*/	\
+	F(LRef)				/* Element														*/	\
+	F(RRef)				/* Element														*/	\
+	F(Ptr)				/* Element														*/	\
+	F(Array)			/* Element, ParamCount											*/	\
+	F(Function)			/* Element, ParamCount, Param, Func								*/	\
+	F(Member)			/* Element, Class												*/	\
+	F(CV)				/* CV															*/	\
+	F(Decl)				/* Decl, PSRecord												*/	\
+	F(DeclInstant)		/* Decl, PSRecord, DeclInstant, ParamCount, Param, Element		*/	\
+	F(Init)				/* ParamCount, Param, Init										*/	\
+	F(GenericFunction)	/* Element(Decl), ParamCount, Param, GenericFunction			*/	\
+	F(GenericArg)		/* Element(Decl), GenericArg									*/	\
 
 /*
 	Any:				a type that could be any type
@@ -340,8 +349,11 @@ namespace vl
 	Member:				Element Class::
 	CV:					Element const volatile
 	Decl:				Type symbol of a declaration
+							Decl(declSymbol):declaration
+							PSRecord: Available if this is an instance of a partial specialized class
 	DeclInstant:		Instantiated template decl
 							Decl(declSymbol):declaration
+							PSRecord: Available if this is the primary or an instance of a partial specialized class
 							Element(parentDeclType):instantiated parent class
 							(taContext):Non-null if this is an instance of a template class
 							Params:template arguments.
@@ -388,6 +400,7 @@ public:
 	virtual TsysGenericArg				GetGenericArg() = 0;
 	virtual Symbol*						GetDecl() = 0;
 	virtual const TsysDeclInstant&		GetDeclInstant() = 0;
+	virtual TsysPSRecord*				GetPSRecord() = 0;
 
 	virtual ITsys*						LRefOf() = 0;
 	virtual ITsys*						RRefOf() = 0;
