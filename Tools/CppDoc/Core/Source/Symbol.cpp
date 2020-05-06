@@ -948,3 +948,20 @@ Symbol* FindParentClassSymbol(Symbol* symbol, bool includeThisSymbol)
 	}
 	return nullptr;
 }
+
+Symbol* FindParentTemplateClassSymbol(Symbol* symbol)
+{
+	auto parentClassSymbol = FindParentClassSymbol(symbol, false);
+	while (parentClassSymbol)
+	{
+		if (auto parentClassDecl = parentClassSymbol->GetAnyForwardDecl<ForwardClassDeclaration>())
+		{
+			if (parentClassDecl->templateSpec)
+			{
+				return parentClassSymbol;
+			}
+		}
+		parentClassSymbol = FindParentClassSymbol(parentClassSymbol, false);
+	}
+	return nullptr;
+}

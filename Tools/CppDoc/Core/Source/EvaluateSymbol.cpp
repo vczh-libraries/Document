@@ -82,6 +82,10 @@ namespace symbol_type_resolving
 		{
 			if (parentTaContext)
 			{
+				if (argumentsToApply == parentTaContext)
+				{
+					throw 0;
+				}
 				argumentsToApply->parent = parentTaContext;
 			}
 			newPa.taContext = argumentsToApply;
@@ -176,24 +180,7 @@ namespace symbol_type_resolving
 		}
 
 		auto symbol = decl->symbol;
-		Symbol* parentTemplateClassSymbol = nullptr;
-		{
-			auto parentClassSymbol = FindParentClassSymbol(symbol, false);
-			while (parentClassSymbol)
-			{
-				if (auto parentClassDecl = parentClassSymbol->GetAnyForwardDecl<ForwardClassDeclaration>())
-				{
-					if (parentClassDecl->templateSpec)
-					{
-						parentTemplateClassSymbol = parentClassSymbol;
-						goto FINISH_PARENT_TEMPLATE;
-					}
-				}
-				parentClassSymbol = FindParentClassSymbol(parentClassSymbol, false);
-			}
-		}
-	FINISH_PARENT_TEMPLATE:
-
+		Symbol* parentTemplateClassSymbol = FindParentTemplateClassSymbol(symbol);
 		ITsys* parentTemplateClass = nullptr;
 		if (parentTemplateClassSymbol)
 		{

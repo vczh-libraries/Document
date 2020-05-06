@@ -368,7 +368,23 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 		{
 			if (policy & SearchPolicy::_AllowClassMember)
 			{
-				auto& tsyses = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
+				// if pa is in a context of an instanciated generic class
+				// find the correct parentDeclType
+				auto parentTemplateClassSymbol = FindParentTemplateClassSymbol(scope);
+				auto pdt = pa.parentDeclType;
+				if (parentTemplateClassSymbol)
+				{
+					while (pdt && pdt->GetDecl() != parentTemplateClassSymbol)
+					{
+						pdt = pdt->GetDeclInstant().parentDeclType;
+					}
+				}
+				else
+				{
+					pdt = nullptr;
+				}
+
+				auto& tsyses = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), pdt, nullptr);
 				for (vint i = 0; i < tsyses.Count(); i++)
 				{
 					auto tsys = tsyses[i];

@@ -461,5 +461,6 @@ Parser Functions
 ***********************************************************************/
 
 extern Symbol*										FindParentClassSymbol(Symbol* symbol, bool includeThisSymbol);
+extern Symbol*										FindParentTemplateClassSymbol(Symbol* symbol);
 
 #endif
