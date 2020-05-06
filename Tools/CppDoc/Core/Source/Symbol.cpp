@@ -956,7 +956,7 @@ Symbol* FindParentTemplateClassSymbol(Symbol* symbol)
 	{
 		if (auto parentClassDecl = parentClassSymbol->GetAnyForwardDecl<ForwardClassDeclaration>())
 		{
-			if (parentClassDecl->templateSpec)
+			if (parentClassDecl->templateSpec && parentClassDecl->templateSpec->arguments.Count() > 0)
 			{
 				return parentClassSymbol;
 			}
