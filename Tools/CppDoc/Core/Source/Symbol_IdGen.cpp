@@ -197,12 +197,21 @@ namespace symbol_idgen
 
 		void Log(Symbol* symbol)
 		{
-			if (auto parent = symbol->GetParentScope())
+			if (symbol->kind == symbol_component::SymbolKind::GenericTypeArgument)
 			{
-				Log(parent);
-				writer.WriteString(L"::");
+				writer.WriteString(L"[");
+				writer.WriteString(symbol->name);
+				writer.WriteString(L"]");
 			}
-			writer.WriteString(symbol->name);
+			else
+			{
+				if (auto parent = symbol->GetParentScope())
+				{
+					Log(parent);
+					writer.WriteString(L"::");
+				}
+				writer.WriteString(symbol->name);
+			}
 		}
 
 		void Visit(IdType* self)override

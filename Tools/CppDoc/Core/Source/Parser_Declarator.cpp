@@ -669,7 +669,10 @@ void FillSymbolToClassMemberCache(const ParsingArguments& pa, Symbol* classSymbo
 			if (classType->GetType() == TsysType::GenericFunction)
 			{
 				classType = classType->GetElement();
-				classType->MakePSRecordPrimaryThis();
+				if (classDecl->templateSpec && !classDecl->specializationSpec)
+				{
+					classType->MakePSRecordPrimaryThis();
+				}
 			}
 			cache->containerClassTypes.Add(classType);
 		}
