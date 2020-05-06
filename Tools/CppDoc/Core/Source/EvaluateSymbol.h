@@ -97,14 +97,34 @@ namespace symbol_type_resolving
 	{
 		auto& ev = EvaluateClassSymbol(invokerPa, classDecl, parentDeclType, argumentsToApply);
 		auto classType = ev.Get()[0];
-		for (vint i = 0; i < ev.ExtraCount(); i++)
+		if (classType->GetType() == TsysType::GenericFunction)
 		{
-			auto& tsys = ev.GetExtra(i);
-			for (vint j = 0; j < tsys.Count(); j++)
-			{
-				callback(classType, tsys[j]);
-			}
+			classType = classType->GetElement();
 		}
+
+		EnumerateClassPSInstances(invokerPa, classType, [&](ITsys* psEntity)
+		{
+			ClassDeclaration* cd = nullptr;
+			ITsys* pdt = nullptr;
+			TemplateArgumentContext* ata = nullptr;
+			ExtractClassType(psEntity, cd, pdt, ata);
+
+			auto& evPs = EvaluateClassSymbol(invokerPa, cd, pdt, ata);
+			auto ctPs = evPs.Get()[0];
+			if (ctPs->GetType() == TsysType::GenericFunction)
+			{
+				ctPs = ctPs->GetElement();
+			}
+
+			for (vint i = 0; i < evPs.ExtraCount(); i++)
+			{
+				auto& tsys = evPs.GetExtra(i);
+				for (vint j = 0; j < tsys.Count(); j++)
+				{
+					callback(ctPs, tsys[j]);
+				}
+			}
+		});
 	}
 }
 
