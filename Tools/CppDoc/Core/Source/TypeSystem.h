@@ -441,7 +441,7 @@ public:
 
 	virtual ITsys*				PrimitiveOf(TsysPrimitive primitive) = 0;
 	virtual ITsys*				DeclOf(Symbol* decl) = 0;
-	virtual ITsys*				DeclInstantOf(Symbol* decl, IEnumerable<ITsys*>* params, ITsys* parentDeclType) = 0;
+	virtual ITsys*				DeclInstantOf(Symbol* decl, Array<ITsys*>* params, ITsys* parentDeclType) = 0;
 	virtual ITsys*				InitOf(Array<ExprTsysItem>& params) = 0;
 
 	virtual vint				AllocateAnonymousCounter() = 0;

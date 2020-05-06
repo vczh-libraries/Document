@@ -812,9 +812,19 @@ public:
 		return itsys;
 	}
 
-	ITsys* DeclInstantOf(Symbol* decl, IEnumerable<ITsys*>* params, ITsys* parentDeclType)override
+	ITsys* DeclInstantOf(Symbol* decl, Array<ITsys*>* params, ITsys* parentDeclType)override
 	{
 		auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(decl);
+		if (spec && spec->arguments.Count() == 0)
+		{
+			spec = nullptr;
+		}
+
+		if (params && params->Count() == 0)
+		{
+			params = nullptr;
+		}
+
 		if (spec ^ (params != nullptr))
 		{
 			throw L"Template class should have template argument provided.";

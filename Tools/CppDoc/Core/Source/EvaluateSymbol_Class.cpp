@@ -37,7 +37,7 @@ namespace symbol_type_resolving
 
 		if (eval)
 		{
-			if (classDecl->templateSpec)
+			if (classDecl->templateSpec && classDecl->templateSpec->arguments.Count() > 0)
 			{
 				Array<ITsys*> params(classDecl->templateSpec->arguments.Count());
 				for (vint i = 0; i < classDecl->templateSpec->arguments.Count(); i++)

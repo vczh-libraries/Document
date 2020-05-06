@@ -289,11 +289,11 @@ TEST_FILE
 		auto n3 = root->AddImplDeclToSymbol_NFb(f3, symbol_component::SymbolKind::Class);
 		auto n4 = root->AddImplDeclToSymbol_NFb(f4, symbol_component::SymbolKind::Class);
 
-		List<ITsys*> p1, p2;
-		p1.Add(tsys->Void());
-		p1.Add(tsys->Nullptr());
-		p2.Add(tsys->Nullptr());
-		p2.Add(tsys->Void());
+		Array<ITsys*> p1(2), p2(2);
+		p1[0] = tsys->Void();
+		p1[1] = tsys->Nullptr();
+		p2[0] = tsys->Nullptr();
+		p2[1] = tsys->Void();
 
 		auto b1 = tsys->DeclInstantOf(bn1, &p1, nullptr);
 		auto b2 = tsys->DeclInstantOf(bn2, &p2, nullptr);
