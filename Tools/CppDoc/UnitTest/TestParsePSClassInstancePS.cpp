@@ -72,16 +72,16 @@ struct GA<int>
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertType(pa,		L"GA",								L"GA",									L"<::GA::[TA]> ::GA<::GA::[TA]>"										);
-		AssertType(pa,		L"GA<int>::CB",						L"GA<int> :: CB",						L"::GA@<int>::CB"														);
-		AssertType(pa,		L"GA<int>::GB",						L"GA<int> :: GB",						L"<::GA::GB::[TB]> ::GA@<int>::GB<::GA::GB::[TB]>"						);
-		AssertType(pa,		L"GA<int>::GB<bool>",				L"GA<int> :: GB<bool>",					L"::GA@<int>::GB@<bool>"												);
-		AssertType(pa,		L"GA<int>::CB::CC",					L"GA<int> :: CB :: CC",					L"::GA@<int>::CB::CC"													);
-		AssertType(pa,		L"GA<int>::CB::GC",					L"GA<int> :: CB :: GC",					L"<::GA::CB::GC::[TC]> ::GA@<int>::CB::GC<::GA::CB::GC::[TC]>"			);
-		AssertType(pa,		L"GA<int>::CB::GC<float>",			L"GA<int> :: CB :: GC<float>",			L"::GA@<int>::CB::GC<float>"											);
-		AssertType(pa,		L"GA<int>::GB<bool>::CC",			L"GA<int> :: GB<bool> :: CC",			L"::GA@<int>::GB@<bool>::CC"											);
-		AssertType(pa,		L"GA<int>::GB<bool>::GC",			L"GA<int> :: GB<bool> :: GC",			L"<::GA::GB::GC::[TC]> ::GA@<int>::GB@<bool>::GC<::GA::GB::GC::[TC]>"	);
-		AssertType(pa,		L"GA<int>::GB<bool>::GC<float>",	L"GA<int> :: GB<bool> :: GC<float>",	L"::GA@<int>::GB@<bool>::GC<float>"										);
+		AssertType(pa,		L"GA",								L"GA",									L"<::GA::[TA]> ::GA<::GA::[TA]>"																);
+		AssertType(pa,		L"GA<int>::CB",						L"GA<int> :: CB",						L"::GA@<int>::CB"																				);
+		AssertType(pa,		L"GA<int>::GB",						L"GA<int> :: GB",						L"<::GA@<int>::GB::[TB]> ::GA@<int>::GB<::GA@<int>::GB::[TB]>"									);
+		AssertType(pa,		L"GA<int>::GB<bool>",				L"GA<int> :: GB<bool>",					L"::GA@<int>::GB<bool>"																			);
+		AssertType(pa,		L"GA<int>::CB::CC",					L"GA<int> :: CB :: CC",					L"::GA@<int>::CB::CC"																			);
+		AssertType(pa,		L"GA<int>::CB::GC",					L"GA<int> :: CB :: GC",					L"<::GA@<int>::CB::GC::[TC]> ::GA@<int>::CB::GC<::GA@<int>::CB::GC::[TC]>"						);
+		AssertType(pa,		L"GA<int>::CB::GC<float>",			L"GA<int> :: CB :: GC<float>",			L"::GA@<int>::CB::GC<float>"																	);
+		AssertType(pa,		L"GA<int>::GB<bool>::CC",			L"GA<int> :: GB<bool> :: CC",			L"::GA@<int>::GB@<bool>::CC"																	);
+		AssertType(pa,		L"GA<int>::GB<bool>::GC",			L"GA<int> :: GB<bool> :: GC",			L"<::GA@<int>::GB@<bool>::GC::[TC]> ::GA@<int>::GB@<bool>::GC<::GA@<int>::GB@<bool>::GC::[TC]>"	);
+		AssertType(pa,		L"GA<int>::GB<bool>::GC<float>",	L"GA<int> :: GB<bool> :: GC<float>",	L"::GA@<int>::GB@<bool>::GC<float>"																);
 	});
 
 	TEST_CATEGORY(L"Nested type aliases used from outside")
@@ -153,16 +153,16 @@ struct GA<int>
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertType(pa,		L"GA",									L"GA",										L"<::GA::[TA]> ::GA<::GA::[TA]>"											);
-		AssertType(pa,		L"GA<int>::__CB",						L"GA<int> :: __CB",							L"::GA@<int>::CB"															);
-		AssertType(pa,		L"GA<int>::__GB",						L"GA<int> :: __GB",							L"<::GA::__GB::[TB]> ::GA@<int>::GB<::GA::__GB::[TB]>"						);
-		AssertType(pa,		L"GA<int>::__GB<bool>",					L"GA<int> :: __GB<bool>",					L"::GA@<int>::GB@<bool>"													);
-		AssertType(pa,		L"GA<int>::__CB::__CC",					L"GA<int> :: __CB :: __CC",					L"::GA@<int>::CB::CC"														);
-		AssertType(pa,		L"GA<int>::__CB::__GC",					L"GA<int> :: __CB :: __GC",					L"<::GA::CB::__GC::[TC]> ::GA@<int>::CB::GC<::GA::CB::__GC::[TC]>"			);
-		AssertType(pa,		L"GA<int>::__CB::__GC<float>",			L"GA<int> :: __CB :: __GC<float>",			L"::GA@<int>::CB::GC<float>"												);
-		AssertType(pa,		L"GA<int>::__GB<bool>::__CC",			L"GA<int> :: __GB<bool> :: __CC",			L"::GA@<int>::GB@<bool>::CC"												);
-		AssertType(pa,		L"GA<int>::__GB<bool>::__GC",			L"GA<int> :: __GB<bool> :: __GC",			L"<::GA::GB::__GC::[TC]> ::GA@<int>::GB@<bool>::GC<::GA::GB::__GC::[TC]>"	);
-		AssertType(pa,		L"GA<int>::__GB<bool>::__GC<float>",	L"GA<int> :: __GB<bool> :: __GC<float>",	L"::GA@<int>::GB@<bool>::GC<float>"											);
+		AssertType(pa,		L"GA",									L"GA",										L"<::GA::[TA]> ::GA<::GA::[TA]>"																	);
+		AssertType(pa,		L"GA<int>::__CB",						L"GA<int> :: __CB",							L"::GA@<int>::CB"																					);
+		AssertType(pa,		L"GA<int>::__GB",						L"GA<int> :: __GB",							L"<::GA@<int>::__GB::[TB]> ::GA@<int>::GB<::GA@<int>::__GB::[TB]>"									);
+		AssertType(pa,		L"GA<int>::__GB<bool>",					L"GA<int> :: __GB<bool>",					L"::GA@<int>::GB<bool>"																				);
+		AssertType(pa,		L"GA<int>::__CB::__CC",					L"GA<int> :: __CB :: __CC",					L"::GA@<int>::CB::CC"																				);
+		AssertType(pa,		L"GA<int>::__CB::__GC",					L"GA<int> :: __CB :: __GC",					L"<::GA@<int>::CB::__GC::[TC]> ::GA@<int>::CB::GC<::GA@<int>::CB::__GC::[TC]>"						);
+		AssertType(pa,		L"GA<int>::__CB::__GC<float>",			L"GA<int> :: __CB :: __GC<float>",			L"::GA@<int>::CB::GC<float>"																		);
+		AssertType(pa,		L"GA<int>::__GB<bool>::__CC",			L"GA<int> :: __GB<bool> :: __CC",			L"::GA@<int>::GB@<bool>::CC"																		);
+		AssertType(pa,		L"GA<int>::__GB<bool>::__GC",			L"GA<int> :: __GB<bool> :: __GC",			L"<::GA@<int>::GB@<bool>::__GC::[TC]> ::GA@<int>::GB@<bool>::GC<::GA@<int>::GB@<bool>::__GC::[TC]>"	);
+		AssertType(pa,		L"GA<int>::__GB<bool>::__GC<float>",	L"GA<int> :: __GB<bool> :: __GC<float>",	L"::GA@<int>::GB@<bool>::GC<float>"																	);
 	});
 
 	TEST_CATEGORY(L"This in base types")
