@@ -63,6 +63,10 @@ namespace symbol_type_resolving
 			{
 				eval.evaluatedTypes[0] = eval.evaluatedTypes[0]->ReplaceGenericArgs(eval.declPa);
 			}
+			else if (classDecl->templateSpec && !classDecl->specializationSpec)
+			{
+				eval.evaluatedTypes[0]->MakePSRecordPrimaryThis();
+			}
 			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, classDecl, classDecl->templateSpec, argumentsToApply);
 		}
 		else
@@ -165,39 +169,43 @@ namespace symbol_type_resolving
 		auto psr = classType->GetPSRecord();
 		if (!psr) return nullptr;
 
-		if (psr->version == TsysPSRecord::PSInstanceVersion)
+		switch (psr->version)
 		{
+		case TsysPSRecord::PSPrimaryThisVersion:
+			break;
+		case TsysPSRecord::PSInstanceVersion:
 			// TODO: evaluate psr->primary;
-		}
-		else
-		{
-			ClassDeclaration* cd = nullptr;
-			ITsys* pdt = nullptr;
-			TemplateArgumentContext* ata = nullptr;
-			ExtractClassType(classType, cd, pdt, ata);
-
-			vint version = cd->symbol->GetPSPrimaryVersion_NF();
-			if (psr->version == version) return psr;
-			psr->version = version;
-			psr->instances.Clear();
-
-			Dictionary<Symbol*, Ptr<TemplateArgumentContext>> psResult;
-			infer_function_type::InferPartialSpecializationPrimary<ForwardClassDeclaration>(invokerPa, psResult, cd->symbol, pdt, ata);
-
-			if (psResult.Count() == 0 || infer_function_type::IsValuableTaContextWithMatchedPSChildren(ata))
+			break;
+		default:
 			{
-				psr->instances.Add(classType);
-			}
+				ClassDeclaration* cd = nullptr;
+				ITsys* pdt = nullptr;
+				TemplateArgumentContext* ata = nullptr;
+				ExtractClassType(classType, cd, pdt, ata);
 
-			for (vint i = 0; i < psResult.Count(); i++)
-			{
-				auto psSymbol = psResult.Keys()[i];
-				auto psCd = psSymbol->GetAnyForwardDecl<ForwardClassDeclaration>().Obj();
-				auto psAta = psResult.Values()[i].Obj();
-				auto& ev = EvaluateForwardClassSymbol(invokerPa, psCd, pdt, psAta);
-				if (!psr->instances.Contains(ev.Get(0)))
+				vint version = cd->symbol->GetPSPrimaryVersion_NF();
+				if (psr->version == version) return psr;
+				psr->version = version;
+				psr->instances.Clear();
+
+				Dictionary<Symbol*, Ptr<TemplateArgumentContext>> psResult;
+				infer_function_type::InferPartialSpecializationPrimary<ForwardClassDeclaration>(invokerPa, psResult, cd->symbol, pdt, ata);
+
+				if (psResult.Count() == 0 || infer_function_type::IsValuableTaContextWithMatchedPSChildren(ata))
 				{
-					psr->instances.Add(ev.Get(0));
+					psr->instances.Add(classType);
+				}
+
+				for (vint i = 0; i < psResult.Count(); i++)
+				{
+					auto psSymbol = psResult.Keys()[i];
+					auto psCd = psSymbol->GetAnyForwardDecl<ForwardClassDeclaration>().Obj();
+					auto psAta = psResult.Values()[i].Obj();
+					auto& ev = EvaluateForwardClassSymbol(invokerPa, psCd, pdt, psAta);
+					if (!psr->instances.Contains(ev.Get(0)))
+					{
+						psr->instances.Add(ev.Get(0));
+					}
 				}
 			}
 		}

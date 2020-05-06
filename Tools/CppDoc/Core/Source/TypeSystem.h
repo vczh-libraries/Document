@@ -281,7 +281,11 @@ struct TsysDeclInstant
 
 struct TsysPSRecord
 {
+	// this ITsys* is an instance of a partial specialization class
 	static const vint PSInstanceVersion = -1;
+
+	// this ITsys* is the primary partial specialized class, but keep instances to empty
+	static const vint PSPrimaryThisVersion = -2;
 
 	vint							version = 0;
 	ITsys*							primary = nullptr;
@@ -401,6 +405,7 @@ public:
 	virtual Symbol*						GetDecl() = 0;
 	virtual const TsysDeclInstant&		GetDeclInstant() = 0;
 	virtual TsysPSRecord*				GetPSRecord() = 0;
+	virtual void						MakePSRecordPrimaryThis() = 0;
 
 	virtual ITsys*						LRefOf() = 0;
 	virtual ITsys*						RRefOf() = 0;

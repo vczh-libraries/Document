@@ -73,12 +73,13 @@ namespace symbol_type_resolving
 	{
 		if (auto psr = EvaluateClassPSRecord(invokerPa, classType))
 		{
-			if (psr->version == TsysPSRecord::PSInstanceVersion)
+			switch (psr->version)
 			{
+			case TsysPSRecord::PSInstanceVersion:
+			case TsysPSRecord::PSPrimaryThisVersion:
 				callback(classType);
-			}
-			else
-			{
+				break;
+			default:
 				for (vint i = 0; i < psr->instances.Count(); i++)
 				{
 					callback(psr->instances[i]);

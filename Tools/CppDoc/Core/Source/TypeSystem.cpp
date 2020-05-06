@@ -84,6 +84,7 @@ public:
 	Symbol*															GetDecl()							override { throw L"Not Implemented!"; }
 	const TsysDeclInstant&											GetDeclInstant()					override { throw L"Not Implemented!"; }
 	TsysPSRecord*													GetPSRecord()						override { throw L"Not Implemented!"; }
+	void															MakePSRecordPrimaryThis()			override { throw L"Not Implemented!"; }
 
 	ITsys* LRefOf()																						override;
 	ITsys* RRefOf()																						override;
@@ -638,6 +639,7 @@ protected:
 
 public:
 	TsysPSRecord*			GetPSRecord()override;
+	void					MakePSRecordPrimaryThis()override;
 };
 
 #undef ITSYS_MEMBERS_DATA
@@ -1063,4 +1065,17 @@ TsysPSRecord* ITsys_DeclInstant::GetPSRecord()
 	}
 
 	return psRecord.Obj();
+}
+
+void ITsys_DeclInstant::MakePSRecordPrimaryThis()
+{
+	if (!psRecord)
+	{
+		psRecord = MakePtr<TsysPSRecord>();
+		psRecord->version = TsysPSRecord::PSPrimaryThisVersion;
+	}
+	else if (psRecord && psRecord->version != TsysPSRecord::PSPrimaryThisVersion)
+	{
+		throw L"GetPSRecord has been called before!";
+	}
 }
