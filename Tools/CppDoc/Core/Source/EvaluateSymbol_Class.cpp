@@ -63,10 +63,6 @@ namespace symbol_type_resolving
 			{
 				eval.evaluatedTypes[0] = eval.evaluatedTypes[0]->ReplaceGenericArgs(eval.declPa);
 			}
-			else if (classDecl->templateSpec && !classDecl->specializationSpec)
-			{
-				eval.evaluatedTypes[0]->MakePSRecordPrimaryThis();
-			}
 			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, classDecl, classDecl->templateSpec, argumentsToApply);
 		}
 		else

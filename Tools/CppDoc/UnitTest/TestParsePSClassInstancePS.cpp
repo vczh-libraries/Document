@@ -2,7 +2,6 @@
 
 TEST_FILE
 {
-	return;
 	TEST_CATEGORY(L"Normal")
 	{
 		auto input = LR"(

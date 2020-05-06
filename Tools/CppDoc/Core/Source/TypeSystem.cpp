@@ -1072,10 +1072,8 @@ void ITsys_DeclInstant::MakePSRecordPrimaryThis()
 	if (!psRecord)
 	{
 		psRecord = MakePtr<TsysPSRecord>();
-		psRecord->version = TsysPSRecord::PSPrimaryThisVersion;
 	}
-	else if (psRecord && psRecord->version != TsysPSRecord::PSPrimaryThisVersion)
-	{
-		throw L"GetPSRecord has been called before!";
-	}
+	psRecord->version = TsysPSRecord::PSPrimaryThisVersion;
+	psRecord->primary = nullptr;
+	psRecord->instances.Clear();
 }

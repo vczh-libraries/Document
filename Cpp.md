@@ -48,6 +48,7 @@
         - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`.
       - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
         - [ ] Same for `decltype(HERE)`.
+      - [ ] Calls to `MakePSRecordPrimaryThis` should be updated since the type could be an instance of partial specialization class.
     - [ ] SFINAE test cases.
 - [ ] Next Demo! (Calculator)
   - [ ] Refactor the HTML generation part to becomes a library.
