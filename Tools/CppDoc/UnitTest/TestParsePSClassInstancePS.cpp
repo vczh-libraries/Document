@@ -337,7 +337,12 @@ struct x<T*>
 	};
 
 	template<typename T>
-	struct D : y<float>::B, y<double>::C
+	struct D
+	{
+	};
+
+	template<>
+	struct D<char> : y<float>::B, y<double>::C
 	{
 		auto _D()					{ return this; }
 		auto _D() const				{ return this; }
