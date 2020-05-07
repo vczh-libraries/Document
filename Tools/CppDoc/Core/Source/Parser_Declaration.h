@@ -84,6 +84,14 @@ extern void						ParseDeclaration_Typedef(
 #define FUNCVAR_ARGUMENT(NAME) decorator##NAME,
 #define FUNCVAR_FILL_DECLARATOR(NAME) decl->decorator##NAME = decorator##NAME;
 
+extern Ptr<TemplateSpec>		AssignContainerClassDeclsToSpecs(
+									List<Ptr<TemplateSpec>>& specs,
+									Ptr<Declarator> declarator,
+									List<Ptr<TemplateSpec>>& containerClassSpecs,
+									List<ClassDeclaration*>& containerClassDecls,
+									Ptr<CppTokenCursor>& cursor
+								);
+
 extern void						ParseDeclaration_Function(
 									const ParsingArguments& pa,
 									Ptr<Symbol> specSymbol,

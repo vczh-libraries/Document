@@ -206,6 +206,8 @@
     <ClCompile Include="Source\AP_ResolveGenericTypeParameters.cpp" />
     <ClCompile Include="Source\EvaluateSymbol.cpp" />
     <ClCompile Include="Source\Ast_Resolving.cpp" />
+    <ClCompile Include="Source\Parser_Declaration_FuncVar_Func.cpp" />
+    <ClCompile Include="Source\Parser_Declaration_FuncVar_Var.cpp" />
     <ClCompile Include="Source\Symbol.cpp" />
     <ClCompile Include="Source\Symbol_IdGen.cpp" />
     <ClCompile Include="Source\Symbol_TemplateSpec.cpp" />
