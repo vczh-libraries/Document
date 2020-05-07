@@ -134,6 +134,11 @@ public:
 				writer.WriteString(L"...");
 			}
 		}
+
+		if (self->ellipsis)
+		{
+			writer.WriteString(L" ...");
+		}
 		writer.WriteChar(L')');
 
 		if (self->qualifierConstExpr) writer.WriteString(L" constexpr");

@@ -158,6 +158,11 @@ namespace symbol_idgen
 					writer.WriteString(L"...");
 				}
 			}
+
+			if (self->ellipsis)
+			{
+				writer.WriteString(L" ...");
+			}
 			writer.WriteChar(L')');
 		}
 

@@ -169,24 +169,28 @@ namespace infer_function_type
 	{
 		for (vint i = 0; i < taContext->arguments.Count(); i++)
 		{
-			auto patternSymbol = TemplateArgumentPatternToSymbol(taContext->arguments.Keys()[i]);
-			auto tsys = taContext->arguments.Values()[i];
-			if (patternSymbol->ellipsis)
+			if (auto tsys = taContext->arguments.Values()[i])
 			{
-				for (vint j = 0; j < tsys->GetParamCount(); j++)
+				auto patternSymbol = TemplateArgumentPatternToSymbol(taContext->arguments.Keys()[i]);
+				if (patternSymbol->ellipsis)
 				{
-					auto tsysItem = tsys->GetParam(j);
-					if (tsysItem->GetType() == TsysType::Any || tsysItem->GetType() == TsysType::GenericArg)
+					for (vint j = 0; j < tsys->GetParamCount(); j++)
+					{
+						if (auto tsysItem = tsys->GetParam(j))
+						{
+							if (tsysItem->GetType() == TsysType::Any || tsysItem->GetType() == TsysType::GenericArg)
+							{
+								return true;
+							}
+						}
+					}
+				}
+				else
+				{
+					if (tsys->GetType() == TsysType::Any || tsys->GetType() == TsysType::GenericArg)
 					{
 						return true;
 					}
-				}
-			}
-			else
-			{
-				if (tsys->GetType() == TsysType::Any || tsys->GetType() == TsysType::GenericArg)
-				{
-					return true;
 				}
 			}
 		}

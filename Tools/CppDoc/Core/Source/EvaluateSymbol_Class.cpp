@@ -170,7 +170,7 @@ namespace symbol_type_resolving
 		case TsysPSRecord::PSPrimaryThisVersion:
 			break;
 		case TsysPSRecord::PSInstanceVersion:
-			// TODO: evaluate psr->primary;
+			// TODO: [Cpp.md] Refresh `primary` when it is null and `version` is -1
 			break;
 		default:
 			{
