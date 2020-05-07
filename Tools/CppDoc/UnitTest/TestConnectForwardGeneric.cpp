@@ -242,11 +242,7 @@ struct X;
 		});
 	});
 
-	TEST_CATEGORY(L"Fields")
-	{
-	});
-
-	TEST_CATEGORY(L"Methods")
+	TEST_CATEGORY(L"Members")
 	{
 		auto input = LR"(
 namespace ns
@@ -261,6 +257,7 @@ namespace ns
 				template<typename U, int Y>
 				struct D
 				{
+					static const int field;
 					void Method(T, U);
 					template<typename V> void Method(T, U*, V, V*);
 					template<typename V> void Method(T*, U, V*, V);
@@ -272,6 +269,7 @@ namespace ns
 
 namespace ns
 {
+	template<int _1, typename X>	template<typename Y, int _2>							int A::B<_1, X>::C::D<Y, _2>::field = 0;
 	template<int _1, typename X>	template<typename Y, int _2>							void A::B<_1, X>::C::D<Y, _2>::Method(X, Y){}
 	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	void A::B<_1, X>::C::D<Y, _2>::Method(X, Y*, Z, Z*){}
 	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	void A::B<_1, X>::C::D<Y, _2>::Method(X*, Y, Z*, Z){}
@@ -297,21 +295,34 @@ namespace ns
 			auto& outClassMembers = pa.root
 				->TryGetChildren_NFb(L"ns")->Get(0)
 				->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
-			TEST_ASSERT(outClassMembers.Count() == 3);
+			TEST_ASSERT(outClassMembers.Count() == 4);
 
-			for (vint i = 0; i < 3; i++)
+			for (vint i = 0; i < 4; i++)
 			{
 				auto inClassDecl = inClassMembers[i];
 				auto outClassDecl = outClassMembers[i];
 
 				auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
-				TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
 
-				TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
-				TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
+				if (i == 0)
+				{
+					TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
 
-				TEST_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
-				TEST_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
+					TEST_ASSERT(symbol->GetImplDecl_NFb() == outClassDecl);
+
+					TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 1);
+					TEST_ASSERT(symbol->GetForwardDecls_N()[0] == inClassDecl);
+				}
+				else
+				{
+					TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
+
+					TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
+					TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
+
+					TEST_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
+					TEST_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
+				}
 			}
 		});
 	});
