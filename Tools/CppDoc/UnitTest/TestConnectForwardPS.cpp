@@ -111,6 +111,11 @@ template<>											void G<char*, char>							(char*){}
 		}
 	});
 
+	TEST_CATEGORY(L"Fields")
+	{
+		// TODO:
+	});
+
 	TEST_CATEGORY(L"Methods")
 	{
 		// TODO:

@@ -242,7 +242,11 @@ struct X;
 		});
 	});
 
-	TEST_CATEGORY(L"Class members")
+	TEST_CATEGORY(L"Fields")
+	{
+	});
+
+	TEST_CATEGORY(L"Methods")
 	{
 		auto input = LR"(
 namespace ns
