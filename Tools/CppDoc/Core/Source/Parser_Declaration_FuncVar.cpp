@@ -220,16 +220,36 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 	{
 		for (vint i = 0; i < declarators.Count(); i++)
 		{
-			ParseDeclaration_Variable(
-				pa,
-				declarators[i]->scopeSymbolToReuse,
-				classSpecs,
-				declSpec,
-				declarators[i],
-				FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_ARGUMENT)
-				cursor,
-				output
-			);
+			// for variables, names should not be constructor names, destructor names, type conversion operator names, or other operator names
+			if (declarators[i]->name.type != CppNameType::Normal)
+			{
+				throw StopParsingException(cursor);
+			}
+
+			if (declSpec)
+			{
+				ParseDeclaration_ValueAlias(
+					pa,
+					declarators[i]->scopeSymbolToReuse,
+					declSpec,
+					declarators[i],
+					FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_ARGUMENT)
+					cursor,
+					output
+				);
+			}
+			else
+			{
+				ParseDeclaration_Variable(
+					pa,
+					declarators[i]->scopeSymbolToReuse,
+					classSpecs,
+					declarators[i],
+					FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_ARGUMENT)
+					cursor,
+					output
+				);
+			}
 		}
 		RequireToken(cursor, CppTokens::SEMICOLON);
 	}

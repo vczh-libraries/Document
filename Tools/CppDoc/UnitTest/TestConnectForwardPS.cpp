@@ -111,7 +111,7 @@ template<>											void G<char*, char>							(char*){}
 		}
 	});
 
-	TEST_CATEGORY(L"Fields")
+	TEST_CATEGORY(L"Members")
 	{
 		// TODO:
 	});

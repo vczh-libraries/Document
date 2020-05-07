@@ -77,7 +77,6 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 			pa,
 			nullptr,
 			classSpecs,
-			nullptr,
 			declarators[i],
 			false, false, false, false, false, false, false, false, false,
 			cursor,
