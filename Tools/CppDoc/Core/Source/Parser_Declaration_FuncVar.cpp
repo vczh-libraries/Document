@@ -80,6 +80,37 @@ Ptr<TemplateSpec> AssignContainerClassDeclsToSpecs(
 	Ptr<CppTokenCursor>& cursor
 )
 {
+	if (declarator->classMemberCache)
+	{
+		for (vint i = 0; i < declarator->classMemberCache->containerClassTypes.Count(); i++)
+		{
+			auto classType = declarator->classMemberCache->containerClassTypes[i];
+			if (classType->GetType() == TsysType::GenericFunction)
+			{
+				classType = classType->GetElement();
+			}
+
+			auto classDecl = classType->GetDecl()->GetAnyForwardDecl<ForwardClassDeclaration>();
+			switch (classType->GetType())
+			{
+			case TsysType::Decl:
+				if (classDecl->templateSpec && !classDecl->specializationSpec)
+				{
+					classType->MakePSRecordPrimaryThis();
+				}
+				break;
+			case TsysType::DeclInstant:
+				if (!classDecl->specializationSpec)
+				{
+					classType->MakePSRecordPrimaryThis();
+				}
+				break;
+			default:
+				throw L"Unexpected container class type!";
+			}
+		}
+	}
+
 	if (declarator->classMemberCache && !declarator->classMemberCache->symbolDefinedInsideClass)
 	{
 		vint used = 0;

@@ -669,10 +669,6 @@ void FillSymbolToClassMemberCache(const ParsingArguments& pa, Symbol* classSymbo
 			if (classType->GetType() == TsysType::GenericFunction)
 			{
 				classType = classType->GetElement();
-				if (classDecl->templateSpec && !classDecl->specializationSpec)
-				{
-					classType->MakePSRecordPrimaryThis();
-				}
 			}
 			cache->containerClassTypes.Add(classType);
 		}
@@ -705,7 +701,6 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 				// if current is a generic class or a non-generic class inside a generic class
 				{
 					// add the current class type
-					current->MakePSRecordPrimaryThis();
 					cache->containerClassTypes.Add(current);
 
 					if (auto parentClass = FindParentClassSymbol(current->GetDecl(), false))
