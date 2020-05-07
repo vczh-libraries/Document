@@ -6,7 +6,8 @@ using namespace partial_specification_ordering;
 void ParseDeclaration_Variable(
 	const ParsingArguments& pa,
 	Ptr<Symbol> specSymbol,
-	List<Ptr<TemplateSpec>>& specs,
+	List<ClassSpec>& classSpecs,
+	Ptr<TemplateSpec> varSpec,
 	Ptr<Declarator> declarator,
 	FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_PARAMETER)
 	Ptr<CppTokenCursor>& cursor,
@@ -18,11 +19,6 @@ void ParseDeclaration_Variable(
 	{
 		throw StopParsingException(cursor);
 	}
-
-	// extract multiple levels of container classes
-	List<Ptr<TemplateSpec>> containerClassSpecs;
-	List<ClassDeclaration*> containerClassDecls;
-	auto varSpec = AssignContainerClassDeclsToSpecs(specs, declarator, containerClassSpecs, containerClassDecls, cursor);
 
 	if (varSpec)
 	{
@@ -84,8 +80,21 @@ void ParseDeclaration_Variable(
 			throw StopParsingException(cursor);
 		}
 
+		bool isForwardDecl = false;
+		if (!declarator->classMemberCache || declarator->classMemberCache->symbolDefinedInsideClass)
+		{
+			if (decoratorExtern)
+			{
+				isForwardDecl = true;
+			}
+			else if (decoratorStatic && !declarator->initializer)
+			{
+				isForwardDecl = true;
+			}
+		}
+
 		auto context = declarator->classMemberCache ? declarator->classMemberCache->containerClassTypes[0]->GetDecl() : pa.scopeSymbol;
-		if (decoratorExtern || (decoratorStatic && !declarator->initializer))
+		if (isForwardDecl)
 		{
 			// if there is extern, or static without an initializer, then it is a forward variable declaration
 			if (declarator->classMemberCache && !declarator->classMemberCache->symbolDefinedInsideClass)
@@ -106,6 +115,7 @@ void ParseDeclaration_Variable(
 		{
 			// it is a variable declaration
 			auto decl = MakePtr<VariableDeclaration>();
+			CopyFrom(decl->classSpecs, classSpecs);
 			FILL_VARIABLE;
 			decl->initializer = declarator->initializer;
 			output.Add(decl);

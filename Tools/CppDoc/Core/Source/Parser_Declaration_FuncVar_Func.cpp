@@ -148,7 +148,8 @@ void DelayParseFunctionStatement(
 void ParseDeclaration_Function(
 	const ParsingArguments& pa,
 	Ptr<Symbol> specSymbol,
-	List<Ptr<TemplateSpec>>& specs,
+	List<ClassSpec>& classSpecs,
+	Ptr<TemplateSpec> functionSpec,
 	Ptr<Declarator> declarator,
 	Ptr<FunctionType> funcType,
 	FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_PARAMETER)
@@ -171,11 +172,6 @@ void ParseDeclaration_Function(
 		throw StopParsingException(cursor);
 	}
 
-	// extract multiple levels of container classes
-	List<Ptr<TemplateSpec>> containerClassSpecs;
-	List<ClassDeclaration*> containerClassDecls;
-	auto functionSpec = AssignContainerClassDeclsToSpecs(specs, declarator, containerClassSpecs, containerClassDecls, cursor);
-
 	// check for constraints of partial specialization
 	if (declarator->specializationSpec)
 	{
@@ -191,10 +187,7 @@ void ParseDeclaration_Function(
 		auto decl = MakePtr<FunctionDeclaration>();
 		decl->templateSpec = functionSpec;
 		decl->specializationSpec = declarator->specializationSpec;
-		for (vint i = 0; i < containerClassSpecs.Count(); i++)
-		{
-			decl->classSpecs.Add({ containerClassSpecs[i],containerClassDecls[i] });
-		}
+		CopyFrom(decl->classSpecs, classSpecs);
 
 		FILL_FUNCTION;
 		output.Add(decl);

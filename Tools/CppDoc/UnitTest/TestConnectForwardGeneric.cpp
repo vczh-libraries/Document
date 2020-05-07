@@ -302,10 +302,9 @@ namespace ns
 				auto inClassDecl = inClassMembers[i];
 				auto outClassDecl = outClassMembers[i];
 
-				auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
-
 				if (i == 0)
 				{
+					auto symbol = inClassDecl->symbol;
 					TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
 
 					TEST_ASSERT(symbol->GetImplDecl_NFb() == outClassDecl);
@@ -315,6 +314,7 @@ namespace ns
 				}
 				else
 				{
+					auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
 					TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
 
 					TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);

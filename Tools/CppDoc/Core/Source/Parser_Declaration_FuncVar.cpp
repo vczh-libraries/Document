@@ -164,6 +164,21 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 		}
 	}
 
+	// extract multiple levels of container classes
+	if (specs.Count() > 0 && declarators.Count() > 1)
+	{
+		throw StopParsingException(cursor);
+	}
+
+	List<Ptr<TemplateSpec>> containerClassSpecs;
+	List<ClassDeclaration*> containerClassDecls;
+	List<ClassSpec> classSpecs;
+	auto declSpec = AssignContainerClassDeclsToSpecs(specs, declarators[0], containerClassSpecs, containerClassDecls, cursor);
+	for (vint i = 0; i < containerClassSpecs.Count(); i++)
+	{
+		classSpecs.Add({ containerClassSpecs[i],containerClassDecls[i] });
+	}
+
 	if (funcType)
 	{
 		// for functions
@@ -191,7 +206,8 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 		ParseDeclaration_Function(
 			pa,
 			declarators[0]->scopeSymbolToReuse,
-			specs,
+			classSpecs,
+			declSpec,
 			declarators[0],
 			funcType,
 			FUNCVAR_DECORATORS_FOR_FUNCTION(FUNCVAR_ARGUMENT)
@@ -202,16 +218,13 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 	}
 	else
 	{
-		if (specs.Count() > 0 && declarators.Count() > 1)
-		{
-			throw StopParsingException(cursor);
-		}
 		for (vint i = 0; i < declarators.Count(); i++)
 		{
 			ParseDeclaration_Variable(
 				pa,
 				declarators[i]->scopeSymbolToReuse,
-				specs,
+				classSpecs,
+				declSpec,
 				declarators[i],
 				FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_ARGUMENT)
 				cursor,
