@@ -67,6 +67,7 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 	type->name = decl->name;
 	Resolving::AddSymbol(pa, type->resolving, decl->symbol);
 
+	List<Ptr<TemplateSpec>> specs;
 	List<Ptr<Declarator>> declarators;
 	ParseNonMemberDeclarator(pa, pda_Typedefs(), type, cursor, declarators);
 
@@ -75,7 +76,7 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 		ParseDeclaration_Variable(
 			pa,
 			nullptr,
-			nullptr,
+			specs,
 			declarators[i],
 			false, false, false, false, false, false, false, false, false,
 			cursor,

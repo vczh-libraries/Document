@@ -6,7 +6,7 @@ using namespace partial_specification_ordering;
 void ParseDeclaration_Variable(
 	const ParsingArguments& pa,
 	Ptr<Symbol> specSymbol,
-	Ptr<TemplateSpec> spec,
+	List<Ptr<TemplateSpec>>& specs,
 	Ptr<Declarator> declarator,
 	FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_PARAMETER)
 	Ptr<CppTokenCursor>& cursor,
@@ -19,17 +19,26 @@ void ParseDeclaration_Variable(
 		throw StopParsingException(cursor);
 	}
 
-	if (spec)
+	// extract multiple levels of container classes
+	List<Ptr<TemplateSpec>> containerClassSpecs;
+	List<ClassDeclaration*> containerClassDecls;
+	auto varSpec = AssignContainerClassDeclsToSpecs(specs, declarator, containerClassSpecs, containerClassDecls, cursor);
+
+	if (varSpec)
 	{
+		if (declarator->classMemberCache && !declarator->classMemberCache->symbolDefinedInsideClass)
+		{
+			throw StopParsingException(cursor);
+		}
 		if (!declarator->initializer || declarator->initializer->initializerType != CppInitializerType::Equal)
 		{
 			throw StopParsingException(cursor);
 		}
 
-		ValidateForRootTemplateSpec(spec, cursor, declarator->specializationSpec, false);
+		ValidateForRootTemplateSpec(varSpec, cursor, declarator->specializationSpec, false);
 
 		auto decl = MakePtr<ValueAliasDeclaration>();
-		decl->templateSpec = spec;
+		decl->templateSpec = varSpec;
 		decl->specializationSpec = declarator->specializationSpec;
 		decl->name = declarator->name;
 		decl->type = declarator->type;

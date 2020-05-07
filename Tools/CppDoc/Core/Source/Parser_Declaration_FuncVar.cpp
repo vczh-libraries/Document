@@ -202,8 +202,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 	}
 	else
 	{
-		auto spec = EnsureNoMultipleTemplateSpec(specs, cursor);
-		if (spec && declarators.Count() > 1)
+		if (specs.Count() > 0 && declarators.Count() > 1)
 		{
 			throw StopParsingException(cursor);
 		}
@@ -212,7 +211,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 			ParseDeclaration_Variable(
 				pa,
 				declarators[i]->scopeSymbolToReuse,
-				spec,
+				specs,
 				declarators[i],
 				FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_ARGUMENT)
 				cursor,

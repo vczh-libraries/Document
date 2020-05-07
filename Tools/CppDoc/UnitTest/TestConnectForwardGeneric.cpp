@@ -290,7 +290,7 @@ namespace ns
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			CopyFrom(inClassMembers, From(inClassMembersUnfiltered).Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; }));
-			TEST_ASSERT(inClassMembers.Count() == 3);
+			TEST_ASSERT(inClassMembers.Count() == 4);
 
 			auto& outClassMembers = pa.root
 				->TryGetChildren_NFb(L"ns")->Get(0)

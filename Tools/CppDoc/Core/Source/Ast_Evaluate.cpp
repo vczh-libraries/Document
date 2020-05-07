@@ -561,7 +561,10 @@ void EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctio
 void EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration* decl)
 {
 	bool isVariadic = false;
-	symbol_type_resolving::EvaluateVarSymbol(pa, decl, pa.parentDeclType, isVariadic);
+	if (!decl->type.Cast<MemberType>())
+	{
+		symbol_type_resolving::EvaluateVarSymbol(pa, decl, pa.parentDeclType, isVariadic);
+	}
 	if (isVariadic) throw TypeCheckerException();
 	if (!decl->needResolveTypeFromInitializer && decl->initializer)
 	{

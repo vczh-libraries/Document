@@ -107,7 +107,7 @@ extern void						ParseDeclaration_Function(
 extern void						ParseDeclaration_Variable(
 									const ParsingArguments& pa,
 									Ptr<Symbol> specSymbol,
-									Ptr<TemplateSpec> spec,
+									List<Ptr<TemplateSpec>>& specs,
 									Ptr<Declarator> declarator,
 									FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_PARAMETER)
 									Ptr<CppTokenCursor>& cursor,
