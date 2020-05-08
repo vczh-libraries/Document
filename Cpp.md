@@ -39,9 +39,9 @@
     - [ ] SFINAE test cases.
   - [ ] Partial specialization on **methods**.
     - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T*>::B<const U&>::F(){}`.
-      - matches `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`.
-    - [ ] When there are constant arguments, the shape of the expression should match, considering `NameExpr` and `ChildExpr` identical.
-      - [ ] Same for `decltype(HERE)`.
+      - [ ] Match `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`.
+      - [ ] Move `containerClassTypes` resolving completely from `Parser_Declarator.cpp` to `Parser_Declaration_FuncVar.cpp`.
+      - [ ] Use `IsCompatibleTemplateSpec` and `IsCompatibleSpecializationSpec` in `Ast_Type_IsSameResolvedType.cpp`.
     - [ ] Calls to `MakePSRecordPrimaryThis` should be updated since the type could be an instance of partial specialization class.
       - [ ] Consider about recording all information of `containerClassTypes`, and pass the declarator again, to make precise choices.
     - [ ] SFINAE test cases.

@@ -92,7 +92,7 @@ namespace symbol_idgen
 			case CppPrimitiveType::_double:			writer.WriteString(L"double");		break;
 			case CppPrimitiveType::_long_double:	writer.WriteString(L"long double");	break;
 			default:
-				throw 0;
+				throw L"Unexpected type!";
 			}
 		}
 
@@ -105,7 +105,7 @@ namespace symbol_idgen
 			case CppReferenceType::LRef:			writer.WriteString(L" &");	break;
 			case CppReferenceType::RRef:			writer.WriteString(L" &&");	break;
 			default:
-				throw 0;
+				throw L"Unexpected type!";
 			}
 		}
 

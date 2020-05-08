@@ -84,7 +84,7 @@ namespace symbol_type_resolving
 			{
 				if (argumentsToApply == parentTaContext)
 				{
-					throw 0;
+					throw L"parentTaContext and argumentsToApply should be different";
 				}
 				argumentsToApply->parent = parentTaContext;
 			}
