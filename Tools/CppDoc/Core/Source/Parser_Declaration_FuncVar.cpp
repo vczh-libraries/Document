@@ -6,8 +6,7 @@
 Ptr<TemplateSpec> AssignContainerClassDeclsToSpecs(
 	List<Ptr<TemplateSpec>>& specs,
 	Ptr<Declarator> declarator,
-	List<Ptr<TemplateSpec>>& containerClassSpecs,
-	List<ClassDeclaration*>& containerClassDecls,
+	List<ClassSpec>& classSpecs,
 	Ptr<CppTokenCursor>& cursor
 )
 {
@@ -32,8 +31,7 @@ Ptr<TemplateSpec> AssignContainerClassDeclsToSpecs(
 					auto declArg = thisDecl->templateSpec->arguments[j];
 					if (specArg.argumentType != declArg.argumentType) throw StopParsingException(cursor);
 				}
-				containerClassSpecs.Add(thisSpec);
-				containerClassDecls.Add(thisDecl.Obj());
+				classSpecs.Add({ thisSpec,thisDecl.Obj() });
 			}
 		}
 
@@ -139,14 +137,8 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 		throw StopParsingException(cursor);
 	}
 
-	List<Ptr<TemplateSpec>> containerClassSpecs;
-	List<ClassDeclaration*> containerClassDecls;
 	List<ClassSpec> classSpecs;
-	auto declSpec = AssignContainerClassDeclsToSpecs(specs, declarators[0], containerClassSpecs, containerClassDecls, cursor);
-	for (vint i = 0; i < containerClassSpecs.Count(); i++)
-	{
-		classSpecs.Add({ containerClassSpecs[i],containerClassDecls[i] });
-	}
+	auto declSpec = AssignContainerClassDeclsToSpecs(specs, declarators[0], classSpecs, cursor);
 
 	if (funcType)
 	{
