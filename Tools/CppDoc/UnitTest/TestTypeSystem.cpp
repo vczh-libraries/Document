@@ -1,5 +1,6 @@
 #include <Ast_Resolving.h>
 #include <Symbol_TemplateSpec.h>
+#include <Parser_Declarator.h>
 
 TEST_FILE
 {

@@ -1,4 +1,5 @@
 #include "Ast_Evaluate_ExpandPotentialVta.h"
+#include "Parser_Declarator.h"
 
 using namespace symbol_type_resolving;
 

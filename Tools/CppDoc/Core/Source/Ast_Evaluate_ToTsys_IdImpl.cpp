@@ -1,4 +1,5 @@
 #include "Ast_Evaluate_ExpandPotentialVta.h"
+#include "Parser_Declarator.h"
 #include "EvaluateSymbol.h"
 #include "Symbol_TemplateSpec.h"
 

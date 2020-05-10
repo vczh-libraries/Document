@@ -73,6 +73,46 @@ PDA_HEADER(Decls)			(bool allowBitField, bool allowComma)	{	return {	nullptr,	{}
 PDA_HEADER(Typedefs)		()										{	return {	nullptr,	{},			nullptr,	nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Zero,		false,			false,			false,		false,	false	}; } // Declarations after typedef keyword
 #undef PDA_HEADER
 
+namespace symbol_component
+{
+	struct ClassMemberCache
+	{
+		/*
+		for void A::B::C::F(){}, it will be [C, B, A]
+		*/
+		List<ITsys*>				containerClassTypes;
+
+		/*
+		template headers for each member in containerClassTypes
+		any item could be null when the mapped class type is not a template class
+		*/
+		List<Ptr<TemplateSpec>>		containerClassSpecs;
+
+		/*
+		the single remaining template header that is unused, could be null for non-template member
+		*/
+		Ptr<TemplateSpec>			declSpec;
+
+		/*
+		true for members defined inside a class, so that type arguments reachable in classSymbols are reachable here
+		false for outside
+		*/
+		bool						symbolDefinedInsideClass;
+
+		/*
+		The scope to jump to after all symbols in classSymbols are scanned
+		for members defined inside a class, this is the parent scope of the most outside class
+		for members defined outside a class, this is the scope where the member is defined
+		*/
+		Symbol*						parentScope;
+
+		// applicable where this cache is in a function
+		ITsys*						thisType = nullptr;
+		Symbol*						funcSymbol = nullptr;
+		Ptr<FunctionDeclaration>	funcDecl;
+	};
+}
+
 extern bool											IsInTemplateHeader(const ParsingArguments& pa);
 extern Ptr<symbol_component::ClassMemberCache>		CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, Ptr<CppTokenCursor>& cursor);
 extern Ptr<symbol_component::ClassMemberCache>		CreatePartialClassMemberCache(const ParsingArguments& pa, Ptr<Type> classType, List<Ptr<TemplateSpec>>* specs, Ptr<CppTokenCursor>& cursor);
