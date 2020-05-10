@@ -80,6 +80,7 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 	{
 		auto pda = pda_Decls(pa.scopeSymbol->GetImplDecl_NFb<ClassDeclaration>(), specs.Count() > 0);
 		pda.classOfMemberInside = containingClass;
+		pda.specsOfMemberOutside = &specs;
 		pda.scopeSymbolToReuse = specSymbol;
 
 		auto newPa = specSymbol ? pa.WithScope(specSymbol.Obj()) : pa;

@@ -768,11 +768,11 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	}
 	else if (pdc.classOfMemberOutside)
 	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberOutside, cursor);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberOutside, pdc.specsOfMemberOutside, cursor);
 	}
 	else if (auto memberType = declarator->type.Cast<MemberType>())
 	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, memberType->classType, cursor);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, memberType->classType, pdc.specsOfMemberOutside, cursor);
 	}
 
 	InjectClassMemberCacheIfNecessary(pa, pdc, declarator, cursor, [&](const ParsingArguments& newPa)
