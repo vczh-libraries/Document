@@ -107,9 +107,9 @@ namespace symbol_component
 		Symbol*						parentScope;
 
 		// applicable where this cache is in a function
-		ITsys*						thisType = nullptr;
-		Symbol*						funcSymbol = nullptr;
-		Ptr<FunctionDeclaration>	funcDecl;
+		ITsys*						thisType = nullptr;		// Parser_Declaration_FuncVar_Func.cpp
+		Symbol*						funcSymbol = nullptr;	// Symbol.cpp
+		Ptr<FunctionDeclaration>	funcDecl;				// Symbol.cpp
 	};
 }
 
