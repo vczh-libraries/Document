@@ -135,6 +135,26 @@ struct ParseDeclaratorContext
 };
 
 /***********************************************************************
+EnsureClassType
+***********************************************************************/
+
+ITsys* EnsureClassType(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppTokenCursor>& cursor, ClassDeclaration** decl = nullptr)
+{
+	TypeTsysList classTsys;
+	TypeToTsysNoVta(pa, classType, classTsys);
+	if (classTsys.Count() != 1) throw StopParsingException(cursor);
+
+	auto tsys = classTsys[0];
+	if (tsys->GetType() != TsysType::Decl && tsys->GetType() != TsysType::DeclInstant) throw StopParsingException(cursor);
+
+	auto classDecl = tsys->GetDecl()->GetImplDecl_NFb<ClassDeclaration>().Obj();
+	if (!classDecl) throw StopParsingException(cursor);
+
+	if (decl) *decl = classDecl;
+	return tsys;
+}
+
+/***********************************************************************
 ParseDeclaratorName
 ***********************************************************************/
 
@@ -158,12 +178,7 @@ bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>
 			{
 				if (auto memberType = targetType.Cast<MemberType>())
 				{
-					TypeTsysList classTsys;
-					TypeToTsysNoVta(pa, memberType->classType, classTsys);
-					if (classTsys.Count() != 1) throw StopParsingException(cursor);
-					auto tsys = classTsys[0];
-					if (tsys->GetType() != TsysType::Decl && tsys->GetType() != TsysType::DeclInstant) throw StopParsingException(cursor);
-					containingClass = tsys->GetDecl()->GetImplDecl_NFb<ClassDeclaration>().Obj();
+					EnsureClassType(pa, memberType->classType, cursor, &containingClass);
 				}
 			}
 			if (!containingClass)
@@ -760,13 +775,8 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	}
 	else if (auto memberType = declarator->type.Cast<MemberType>())
 	{
-		TypeTsysList tsys;
-		TypeToTsysNoVta(pa, memberType->classType, tsys);
-		if (tsys.Count() != 1)
-		{
-			throw StopParsingException(cursor);
-		}
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, nullptr, tsys[0], false);
+		auto classTsys = EnsureClassType(pa, memberType->classType, cursor);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, nullptr, classTsys, false);
 	}
 
 	InjectClassMemberCacheIfNecessary(pa, pdc, declarator, cursor, [&](const ParsingArguments& newPa)
@@ -898,13 +908,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			bool outsideOfClass = false;
 			if (typeOpMemberType && !opPdc.containingClass)
 			{
-				TypeTsysList classTsys;
-				TypeToTsysNoVta(pa, typeOpMemberType->classType, classTsys);
-				if (classTsys.Count() != 1) throw StopParsingException(cursor);
-				auto tsys = classTsys[0];
-				if (tsys->GetType() != TsysType::Decl && tsys->GetType() != TsysType::DeclInstant) throw StopParsingException(cursor);
-				opPdc.containingClass = tsys->GetDecl()->GetImplDecl_NFb<ClassDeclaration>().Obj();
-				if (!opPdc.containingClass) throw StopParsingException(cursor);
+				EnsureClassType(pa, typeOpMemberType->classType, cursor, &opPdc.containingClass);
 				outsideOfClass = true;
 			}
 			opPdc.dr = DeclaratorRestriction::Zero;
