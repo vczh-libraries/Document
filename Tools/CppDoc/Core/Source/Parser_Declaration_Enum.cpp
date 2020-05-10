@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Parser_Declaration.h"
+#include "Parser_Declarator.h"
 
 Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArguments& pa, bool forTypeDef, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {

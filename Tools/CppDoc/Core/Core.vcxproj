@@ -163,6 +163,7 @@
     <ClInclude Include="Source\Ast_Evaluate_ExpandPotentialVta.h" />
     <ClInclude Include="Source\AP.h" />
     <ClInclude Include="Source\AP_CalculateGpa.h" />
+    <ClInclude Include="Source\Parser_Declarator.h" />
     <ClInclude Include="Source\PSO.h" />
     <ClInclude Include="Source\Ast_Stat.h" />
     <ClInclude Include="Source\Ast_Type.h" />

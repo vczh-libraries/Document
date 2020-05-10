@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "Parser_Declarator.h"
 #include "Symbol_Visit.h"
 #include "Ast_Type.h"
 #include "Ast_Decl.h"

@@ -1,7 +1,7 @@
 #include "Parser.h"
+#include "Parser_Declarator.h"
 #include "Ast_Decl.h"
 #include "Ast_Expr.h"
-#include "Ast_Resolving.h"
 
 /***********************************************************************
 EnsureFunctionBodyParsed

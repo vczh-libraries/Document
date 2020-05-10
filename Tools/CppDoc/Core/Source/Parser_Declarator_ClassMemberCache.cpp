@@ -1,4 +1,6 @@
 #include "Parser.h"
+#include "Parser_Declarator.h"
+#include "Ast_Decl.h"
 #include "EvaluateSymbol.h"
 
 bool IsInTemplateHeader(const ParsingArguments& pa)

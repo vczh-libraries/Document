@@ -52,6 +52,12 @@
     <Filter Include="Source Files\PartialSpecializationOrdering">
       <UniqueIdentifier>{9c972d79-8638-4308-96a5-cf14b609f939}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Parser\Declaration">
+      <UniqueIdentifier>{de726dac-2ab0-443c-a7e1-b30a0210b5b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parser\Declarator">
+      <UniqueIdentifier>{ad75deed-53ed-45d1-b046-f834f03b3e1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\IncludeAll.h">
@@ -102,9 +108,6 @@
     <ClInclude Include="..\..\..\Import\VlppRegex.h">
       <Filter>Import</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Parser_Declaration.h">
-      <Filter>Source Files\Parser</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Symbol_TemplateSpec.h">
       <Filter>Source Files\Symbol</Filter>
     </ClInclude>
@@ -135,6 +138,12 @@
     <ClInclude Include="Source\Symbol_Visit.h">
       <Filter>Source Files\Symbol</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Parser_Declaration.h">
+      <Filter>Source Files\Parser\Declaration</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Parser_Declarator.h">
+      <Filter>Source Files\Parser\Declarator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Import\Vlpp.cpp">
@@ -153,12 +162,6 @@
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
     <ClCompile Include="Source\Parser.cpp">
-      <Filter>Source Files\Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Parser_Declarator.cpp">
-      <Filter>Source Files\Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Parser_Declaration.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ast.cpp">
@@ -229,24 +232,6 @@
     </ClCompile>
     <ClCompile Include="Source\Ast_Resolving_Adl.cpp">
       <Filter>Source Files\Ast\Resolving</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Parser_Declaration_Namespace.cpp">
-      <Filter>Source Files\Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Parser_Declaration_TypeDef.cpp">
-      <Filter>Source Files\Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Parser_Declaration_Using.cpp">
-      <Filter>Source Files\Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Parser_Declaration_Class.cpp">
-      <Filter>Source Files\Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Parser_Declaration_Enum.cpp">
-      <Filter>Source Files\Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Parser_Declaration_FuncVar.cpp">
-      <Filter>Source Files\Parser</Filter>
     </ClCompile>
     <ClCompile Include="Source\Symbol_TemplateSpec.cpp">
       <Filter>Source Files\Symbol</Filter>
@@ -320,17 +305,41 @@
     <ClCompile Include="Source\Symbol_IdGen.cpp">
       <Filter>Source Files\Symbol</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Parser_Declaration_FuncVar_Func.cpp">
-      <Filter>Source Files\Parser</Filter>
+    <ClCompile Include="Source\Parser_Declaration.cpp">
+      <Filter>Source Files\Parser\Declaration</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Parser_Declaration_FuncVar_Var.cpp">
-      <Filter>Source Files\Parser</Filter>
+    <ClCompile Include="Source\Parser_Declaration_Class.cpp">
+      <Filter>Source Files\Parser\Declaration</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_Enum.cpp">
+      <Filter>Source Files\Parser\Declaration</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_FuncVar.cpp">
+      <Filter>Source Files\Parser\Declaration</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_FuncVar_Func.cpp">
+      <Filter>Source Files\Parser\Declaration</Filter>
     </ClCompile>
     <ClCompile Include="Source\Parser_Declaration_FuncVar_ValueAlias.cpp">
-      <Filter>Source Files\Parser</Filter>
+      <Filter>Source Files\Parser\Declaration</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_FuncVar_Var.cpp">
+      <Filter>Source Files\Parser\Declaration</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_Namespace.cpp">
+      <Filter>Source Files\Parser\Declaration</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_TypeDef.cpp">
+      <Filter>Source Files\Parser\Declaration</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declaration_Using.cpp">
+      <Filter>Source Files\Parser\Declaration</Filter>
     </ClCompile>
     <ClCompile Include="Source\Parser_Declarator_ClassMemberCache.cpp">
-      <Filter>Source Files\Parser</Filter>
+      <Filter>Source Files\Parser\Declarator</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declarator.cpp">
+      <Filter>Source Files\Parser\Declarator</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

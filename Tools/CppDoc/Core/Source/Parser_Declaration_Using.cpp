@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Parser_Declaration.h"
+#include "Parser_Declarator.h"
 #include "Ast_Expr.h"
 
 void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<Symbol> specSymbol, Ptr<TemplateSpec> spec, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)

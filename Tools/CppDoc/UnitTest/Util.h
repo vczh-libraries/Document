@@ -3,6 +3,7 @@
 
 #include <VlppOS.h>
 #include <Parser.h>
+#include <Parser_Declarator.h>
 #include <Ast_Resolving.h>
 #include <Symbol_TemplateSpec.h>
 #include <EvaluateSymbol.h>

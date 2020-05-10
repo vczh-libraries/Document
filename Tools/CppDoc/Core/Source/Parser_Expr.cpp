@@ -1,4 +1,5 @@
 #include <VlppOS.h>
+#include "Parser_Declarator.h"
 #include "Ast_Expr.h"
 #include "Ast_Resolving.h"
 #include "Symbol_Visit.h"

@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Parser_Declaration.h"
+#include "Parser_Declarator.h"
 
 void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
