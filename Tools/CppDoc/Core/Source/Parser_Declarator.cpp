@@ -4,6 +4,9 @@
 #include "Ast_Resolving.h"
 #include "EvaluateSymbol.h"
 
+extern bool		IsInTemplateHeader(const ParsingArguments& pa);
+extern ITsys*	EnsureClassType(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppTokenCursor>& cursor, ClassDeclaration** decl = nullptr);
+
 /***********************************************************************
 ReplaceOutOfDeclaratorTypeVisitor
 ***********************************************************************/
@@ -135,26 +138,6 @@ struct ParseDeclaratorContext
 };
 
 /***********************************************************************
-EnsureClassType
-***********************************************************************/
-
-ITsys* EnsureClassType(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppTokenCursor>& cursor, ClassDeclaration** decl = nullptr)
-{
-	TypeTsysList classTsys;
-	TypeToTsysNoVta(pa, classType, classTsys);
-	if (classTsys.Count() != 1) throw StopParsingException(cursor);
-
-	auto tsys = classTsys[0];
-	if (tsys->GetType() != TsysType::Decl && tsys->GetType() != TsysType::DeclInstant) throw StopParsingException(cursor);
-
-	auto classDecl = tsys->GetDecl()->GetImplDecl_NFb<ClassDeclaration>().Obj();
-	if (!classDecl) throw StopParsingException(cursor);
-
-	if (decl) *decl = classDecl;
-	return tsys;
-}
-
-/***********************************************************************
 ParseDeclaratorName
 ***********************************************************************/
 
@@ -172,6 +155,30 @@ bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>
 			// special method can only appear
 			//   when a declaration is right inside a class
 			//   or it is a class member declaration out of a class
+
+			WString containingClassName;
+			if (pdc.classOfMemberInside)
+			{
+				containingClassName = pdc.classOfMemberInside->name.name;
+			}
+			else if (pdc.classOfMemberOutside)
+			{
+				if (auto classDecl = pdc.classOfMemberOutside->GetDecl()->GetImplDecl_NFb<ClassDeclaration>())
+				{
+					containingClassName = classDecl->name.name;
+				}
+			}
+			else if (auto memberType = targetType.Cast<MemberType>())
+			{
+				if (auto idType = memberType->classType.Cast<IdType>())
+				{
+					containingClassName = idType->name.name;
+				}
+				else if (auto childType = memberType->classType.Cast<ChildType>())
+				{
+					containingClassName = childType->name.name;
+				}
+			}
 
 			auto containingClass = pdc.classOfMemberInside;
 			if (!containingClass)
@@ -647,8 +654,6 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 ParseSingleDeclarator
 ***********************************************************************/
 
-extern bool IsInTemplateHeader(const ParsingArguments& pa);
-
 template<typename TCallback>
 void InjectClassMemberCacheIfNecessary(const ParsingArguments& pa, const ParseDeclaratorContext& pdc, Ptr<Declarator> declarator, Ptr<CppTokenCursor>& cursor, TCallback&& callback)
 {
@@ -775,16 +780,16 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	// recognize a class member declaration
 	if (pdc.classOfMemberInside)
 	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberInside->symbol);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberInside->symbol, cursor);
 	}
 	else if (pdc.classOfMemberOutside)
 	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberOutside);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberOutside, cursor);
 	}
 	else if (auto memberType = declarator->type.Cast<MemberType>())
 	{
 		auto classTsys = EnsureClassType(pa, memberType->classType, cursor);
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, classTsys);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, classTsys, cursor);
 	}
 
 	InjectClassMemberCacheIfNecessary(pa, pdc, declarator, cursor, [&](const ParsingArguments& newPa)
