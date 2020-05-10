@@ -26,17 +26,18 @@ void FillSymbolToClassMemberCache(const ParsingArguments& pa, Symbol* classSymbo
 	}
 }
 
-Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, ITsys* classType, bool symbolDefinedInsideClass)
+Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, ITsys* classType)
 {
 	auto cache = MakePtr<symbol_component::ClassMemberCache>();
-	cache->symbolDefinedInsideClass = symbolDefinedInsideClass;
 
 	if(classSymbol && !classType)
 	{
+		cache->symbolDefinedInsideClass = true;
 		FillSymbolToClassMemberCache(pa, classSymbol, cache.Obj());
 	}
 	else if (!classSymbol && classType)
 	{
+		cache->symbolDefinedInsideClass = false;
 		auto current = classType;
 		while (current)
 		{
@@ -88,7 +89,7 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 		throw L"Only one of classSymbol and classType can and should be nullptr.";
 	}
 
-	if (symbolDefinedInsideClass)
+	if (classSymbol)
 	{
 		cache->parentScope = cache->containerClassTypes[cache->containerClassTypes.Count() - 1]->GetDecl()->GetParentScope();
 	}

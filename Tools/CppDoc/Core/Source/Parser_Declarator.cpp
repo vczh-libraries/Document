@@ -690,7 +690,7 @@ void InjectClassMemberCacheIfNecessary(const ParsingArguments& pa, const ParseDe
 	}
 }
 
-Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, bool parsingTypeConversionOperatorOutsideOfClass, Ptr<CppTokenCursor>& cursor)
+Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, const ParseDeclaratorContext& pdc, Ptr<CppTokenCursor>& cursor)
 {
 	Ptr<Declarator> declarator;
 
@@ -746,7 +746,7 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 		{
 			try
 			{
-				declarator = ParseSingleDeclarator(pa, targetType, pdc, false, cursor);
+				declarator = ParseSingleDeclarator(pa, targetType, pdc, cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 			}
 			catch (const StopParsingException&)
@@ -775,16 +775,16 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	// recognize a class member declaration
 	if (pdc.classOfMemberInside)
 	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberInside->symbol, nullptr, !parsingTypeConversionOperatorOutsideOfClass);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberInside->symbol, nullptr);
 	}
 	else if (pdc.classOfMemberOutside)
 	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, nullptr, pdc.classOfMemberOutside, false);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, nullptr, pdc.classOfMemberOutside);
 	}
 	else if (auto memberType = declarator->type.Cast<MemberType>())
 	{
 		auto classTsys = EnsureClassType(pa, memberType->classType, cursor);
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, nullptr, classTsys, false);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, nullptr, classTsys);
 	}
 
 	InjectClassMemberCacheIfNecessary(pa, pdc, declarator, cursor, [&](const ParsingArguments& newPa)
@@ -914,16 +914,14 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			opPdc.classOfMemberInside = pdc.classOfMemberInside;
 			opPdc.classOfMemberOutside = pdc.classOfMemberOutside;
 			opPdc.scopeSymbolToReuse = pdc.scopeSymbolToReuse;
-			bool outsideOfClass = false;
 			if (typeOpMemberType && !opPdc.classOfMemberInside && !opPdc.classOfMemberOutside)
 			{
 				opPdc.classOfMemberOutside = EnsureClassType(pa, typeOpMemberType->classType, cursor);
-				outsideOfClass = true;
 			}
 			opPdc.dr = DeclaratorRestriction::Zero;
 
 			typeResult = ParseLongType(pa, cursor);
-			declarator = ParseSingleDeclarator(pa, typeResult, { opPdc,false }, outsideOfClass, cursor);
+			declarator = ParseSingleDeclarator(pa, typeResult, { opPdc,false }, cursor);
 			declarator->name = cppName;
 			if (typeOpMemberType)
 			{
@@ -942,7 +940,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			// if we have already recognize a type, we can parse multiple declarators with initializers
 			auto newPdc = pdc;
 			newPdc.dr = pdc.dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : pdc.dr;
-			declarator = ParseSingleDeclarator(pa, typeResult, newPdc, false, cursor);
+			declarator = ParseSingleDeclarator(pa, typeResult, newPdc, cursor);
 		}
 
 		InjectClassMemberCacheIfNecessary(pa, pdc, declarator, cursor, [&](const ParsingArguments& newPa)
