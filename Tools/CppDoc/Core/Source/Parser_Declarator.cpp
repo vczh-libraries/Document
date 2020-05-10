@@ -119,34 +119,6 @@ ReplaceOutOfDeclaratorTypeVisitor<T> MakeReplacer(Ptr<CppTokenCursor>& _cursor, 
 }
 
 /***********************************************************************
-EnsureMemberTypeResolved
-***********************************************************************/
-
-ClassDeclaration* EnsureMemberTypeResolved(Ptr<MemberType> memberType, Ptr<CppTokenCursor>& cursor)
-{
-	auto catIdChildType = memberType->classType.Cast<Category_Id_Child_Type>();
-	if (!catIdChildType)
-	{
-		if (auto genericType = memberType->classType.Cast<GenericType>())
-		{
-			catIdChildType = genericType->type;
-		}
-	}
-
-	if (!catIdChildType) throw StopParsingException(cursor);
-	if (!catIdChildType->resolving) throw StopParsingException(cursor);
-	if (catIdChildType->resolving->items.Count() != 1) throw StopParsingException(cursor);
-
-	auto symbol = catIdChildType->resolving->items[0].symbol;
-	auto containingClass
-		= symbol->GetCategory() == symbol_component::SymbolCategory::Normal
-		? symbol->GetImplDecl_NFb<ClassDeclaration>().Obj()
-		: nullptr;
-	if (!containingClass) throw StopParsingException(cursor);
-	return containingClass;
-}
-
-/***********************************************************************
 ParseDeclaratorContext
 ***********************************************************************/
 
@@ -186,7 +158,12 @@ bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>
 			{
 				if (auto memberType = targetType.Cast<MemberType>())
 				{
-					containingClass = EnsureMemberTypeResolved(memberType, cursor);
+					TypeTsysList classTsys;
+					TypeToTsysNoVta(pa, memberType->classType, classTsys);
+					if (classTsys.Count() != 1) throw StopParsingException(cursor);
+					auto tsys = classTsys[0];
+					if (tsys->GetType() != TsysType::Decl && tsys->GetType() != TsysType::DeclInstant) throw StopParsingException(cursor);
+					containingClass = tsys->GetDecl()->GetImplDecl_NFb<ClassDeclaration>().Obj();
 				}
 			}
 			if (!containingClass)
@@ -921,7 +898,13 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			bool outsideOfClass = false;
 			if (typeOpMemberType && !opPdc.containingClass)
 			{
-				opPdc.containingClass = EnsureMemberTypeResolved(typeOpMemberType, cursor);
+				TypeTsysList classTsys;
+				TypeToTsysNoVta(pa, typeOpMemberType->classType, classTsys);
+				if (classTsys.Count() != 1) throw StopParsingException(cursor);
+				auto tsys = classTsys[0];
+				if (tsys->GetType() != TsysType::Decl && tsys->GetType() != TsysType::DeclInstant) throw StopParsingException(cursor);
+				opPdc.containingClass = tsys->GetDecl()->GetImplDecl_NFb<ClassDeclaration>().Obj();
+				if (!opPdc.containingClass) throw StopParsingException(cursor);
 				outsideOfClass = true;
 			}
 			opPdc.dr = DeclaratorRestriction::Zero;
