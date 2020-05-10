@@ -355,6 +355,7 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 
 				// prepare TemplateArgumentContext and create the type
 				TemplateArgumentContext taContext;
+				taContext.symbolToApply = classSymbol;
 				for (vint i = 0; i < thisSpec->arguments.Count(); i++)
 				{
 					auto& tArg = thisSpec->arguments[i];
