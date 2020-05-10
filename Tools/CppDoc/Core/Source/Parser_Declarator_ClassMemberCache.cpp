@@ -26,6 +26,37 @@ void FillSymbolToClassMemberCache(const ParsingArguments& pa, Symbol* classSymbo
 	}
 }
 
+void FixClassMemberCacheTypes(Ptr<symbol_component::ClassMemberCache> classMemberCache)
+{
+	for (vint i = 0; i < classMemberCache->containerClassTypes.Count(); i++)
+	{
+		auto classType = classMemberCache->containerClassTypes[i];
+		if (classType->GetType() == TsysType::GenericFunction)
+		{
+			classType = classType->GetElement();
+		}
+
+		auto classDecl = classType->GetDecl()->GetAnyForwardDecl<ForwardClassDeclaration>();
+		switch (classType->GetType())
+		{
+		case TsysType::Decl:
+			if (classDecl->templateSpec && !classDecl->specializationSpec)
+			{
+				classType->MakePSRecordPrimaryThis();
+			}
+			break;
+		case TsysType::DeclInstant:
+			if (!classDecl->specializationSpec)
+			{
+				classType->MakePSRecordPrimaryThis();
+			}
+			break;
+		default:
+			throw L"Unexpected container class type!";
+		}
+	}
+}
+
 Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol)
 {
 	auto cache = MakePtr<symbol_component::ClassMemberCache>();
@@ -34,6 +65,7 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 	FillSymbolToClassMemberCache(pa, classSymbol, cache.Obj());
 	cache->parentScope = cache->containerClassTypes[cache->containerClassTypes.Count() - 1]->GetDecl()->GetParentScope();
 
+	FixClassMemberCacheTypes(cache);
 	return cache;
 }
 
@@ -99,5 +131,6 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 		cache->parentScope = pa.scopeSymbol;
 	}
 
+	FixClassMemberCacheTypes(cache);
 	return cache;
 }
