@@ -474,11 +474,11 @@ ResolveSymbolResult ResolveSymbolInContext(const ParsingArguments& pa, CppName& 
 ResolveSymbolInNamespaceContext
 ***********************************************************************/
 
-ResolveSymbolResult ResolveSymbolInNamespaceContext(const ParsingArguments& pa, CppName& name, bool cStyleTypeReference)
+ResolveSymbolResult ResolveSymbolInNamespaceContext(const ParsingArguments& pa, Symbol* ns, CppName& name, bool cStyleTypeReference)
 {
 	ResolveSymbolArguments rsa(name);
 	rsa.cStyleTypeReference = cStyleTypeReference;
-	ResolveSymbolInStaticScopeInternal(pa, pa.scopeSymbol, SearchPolicy::InNamespaceContext, rsa);
+	ResolveSymbolInStaticScopeInternal(pa, ns, SearchPolicy::InNamespaceContext, rsa);
 	return rsa.result;
 }
 

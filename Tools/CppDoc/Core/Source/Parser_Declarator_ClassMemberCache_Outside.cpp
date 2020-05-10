@@ -2,6 +2,7 @@
 #include "Parser_Declarator.h"
 #include "Ast_Decl.h"
 #include "Ast_Type.h"
+#include "Symbol_Resolve.h"
 #include "EvaluateSymbol.h"
 
 bool IsInTemplateHeader(const ParsingArguments& pa)
@@ -165,7 +166,7 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 		cache->parentScope = pa.scopeSymbol;
 	}
 
-	Symbol* containingNamespace = nullptr;
+	Symbol* currentNamespace = nullptr;
 	List<QualifiedIdComponent> qics;
 	{
 		// break class type to qualified identifier components
@@ -178,7 +179,7 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 			if (auto genericType = currentClassType.Cast<GenericType>())
 			{
 				qic.genericType = genericType;
-				classType = genericType->type;
+				currentClassType = genericType->type;
 			}
 
 			if (auto childType = currentClassType.Cast<ChildType>())
@@ -188,11 +189,11 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 					qic.childType = childType;
 					qics.Add(qic);
 
-					classType = childType->classType;
+					currentClassType = childType->classType;
 				}
 				else
 				{
-					containingNamespace = childType->resolving->items[0].symbol;
+					currentNamespace = childType->resolving->items[0].symbol;
 					break;
 				}
 			}
@@ -203,17 +204,17 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 					qic.idType = idType;
 					qics.Add(qic);
 
-					containingNamespace = cache->parentScope;
+					currentNamespace = cache->parentScope;
 				}
 				else
 				{
-					containingNamespace = idType->resolving->items[0].symbol;
+					currentNamespace = idType->resolving->items[0].symbol;
 				}
 				break;
 			}
 			else if (currentClassType.Cast<RootType>())
 			{
-				containingNamespace = pa.root.Obj();
+				currentNamespace = pa.root.Obj();
 				break;
 			}
 			else
@@ -222,8 +223,93 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 			}
 		}
 
-		if (!containingNamespace || qics.Count() == 0)
+		if (!currentNamespace || qics.Count() == 0)
 		{
+			throw StopParsingException(cursor);
+		}
+	}
+
+	ITsys* currentClass = nullptr;
+	ITsys* currentParentDeclType = nullptr;
+	vint consumedSpecs = 0;
+	{
+		// resolving each level of type
+
+		for (vint i = qics.Count() - 1; i >= 0; i--)
+		{
+			const auto& qic = qics[i];
+			auto& name = qic.idType ? qic.idType->name : qic.childType->name;
+			auto rsr =
+				currentNamespace
+				? ResolveSymbolInNamespaceContext(pa, currentNamespace, name, false)
+				: ResolveChildSymbol(pa, currentClass, name)
+				;
+			if (!rsr.types || rsr.types->items.Count() != 1)
+			{
+				// a type must be resolved
+				throw StopParsingException(cursor);
+			}
+
+			auto classSymbol = rsr.types->items[0].symbol;
+			if (currentNamespace)
+			{
+				if (classSymbol->GetParentScope() != currentNamespace)
+				{
+					// the resolved type must be declared as a direct child symbol of this namespace
+					throw StopParsingException(cursor);
+				}
+			}
+			else
+			{
+				if (classSymbol->GetParentScope() != currentClass->GetDecl())
+				{
+					// the resolved type must be declared as a direct child symbol of this type
+					throw StopParsingException(cursor);
+				}
+			}
+
+			auto classDecl = classSymbol->GetImplDecl_NFb<ClassDeclaration>();
+			if (!classDecl)
+			{
+				// the resolved type must be a class, and it cannot just have a forward declaration
+				throw StopParsingException(cursor);
+			}
+
+			if (classDecl->templateSpec)
+			{
+				throw 0;
+			}
+			else
+			{
+				auto& classTsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), currentParentDeclType, nullptr);
+				auto nextClass = classTsys[0];
+
+				cache->containerClassTypes.Insert(0, nextClass);
+				if (specs)
+				{
+					cache->containerClassSpecs.Insert(0, {});
+				}
+				else
+				{
+					cache->containerClassSpecs.Insert(0, {});
+				}
+
+				currentNamespace = nullptr;
+				currentClass = nextClass;
+			}
+		}
+	}
+
+	if (specs)
+	{
+		switch ((*specs).Count() - consumedSpecs)
+		{
+		case 0:
+			break;
+		case 1:
+			cache->declSpec = (*specs)[consumedSpecs];
+			break;
+		default:
 			throw StopParsingException(cursor);
 		}
 	}

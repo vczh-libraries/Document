@@ -352,7 +352,7 @@ namespace symbol_totsys_impl
 		{
 			ExprTsysList opTypes;
 
-			auto opFuncs = ResolveSymbolInNamespaceContext(pa, opName, false);
+			auto opFuncs = ResolveSymbolInNamespaceContext(pa, pa.scopeSymbol, opName, false);
 			if (opFuncs.values)
 			{
 				for (vint j = 0; j < opFuncs.values->items.Count(); j++)
