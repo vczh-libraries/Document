@@ -55,7 +55,8 @@ extern Ptr<Type>									ParseShortType(const ParsingArguments& pa, ShortTypeTyp
 extern Ptr<Type>									ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
 
 #define PARSING_DECLARATOR_ARGUMENTS(PREFIX, DELIMITER)												\
-	ClassDeclaration*								PREFIX##containingClass			DELIMITER		\
+	ClassDeclaration*								PREFIX##classOfMemberInside		DELIMITER		\
+	ITsys*											PREFIX##classOfMemberOutside	DELIMITER		\
 	Ptr<Symbol>										PREFIX##scopeSymbolToReuse		DELIMITER		\
 	bool											PREFIX##forParameter			DELIMITER		\
 	DeclaratorRestriction							PREFIX##dr						DELIMITER		\
@@ -67,7 +68,8 @@ extern Ptr<Type>									ParseLongType(const ParsingArguments& pa, Ptr<CppTokenC
 	bool											PREFIX##allowSpecializationSpec					\
 
 #define PARSING_DECLARATOR_COPY(PREFIX)										\
-	containingClass(PREFIX##containingClass)								\
+	classOfMemberInside(PREFIX##classOfMemberInside)						\
+	, classOfMemberOutside(PREFIX##classOfMemberOutside)					\
 	, scopeSymbolToReuse(PREFIX##scopeSymbolToReuse)						\
 	, forParameter(PREFIX##forParameter)									\
 	, dr(PREFIX##dr)														\
@@ -93,14 +95,14 @@ struct ParsingDeclaratorArguments
 
 #define PDA_HEADER(NAME) inline ParsingDeclaratorArguments	pda_##NAME
 //																					class		symbol		param			declarator-count					initializer-count					bitfield		ellipsis		comma		=a>b	spec
-PDA_HEADER(Type)			()										{	return {	nullptr,	nullptr,	false,			DeclaratorRestriction::Zero,		InitializerRestriction::Zero,		false,			false,			false,		false,	false	}; } // Type
-PDA_HEADER(VarType)			()										{	return {	nullptr,	nullptr,	false,			DeclaratorRestriction::Optional,	InitializerRestriction::Zero,		false,			false,			false,		false,	false	}; } // Type or Variable without Initializer
-PDA_HEADER(VarInit)			()										{	return {	nullptr,	nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Optional,	false,			false,			false,		true,	false	}; } // Variable with Initializer
-PDA_HEADER(VarNoInit)		()										{	return {	nullptr,	nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Zero,		false,			false,			false,		false,	false	}; } // Variable without Initializer
-PDA_HEADER(Param)			(bool forParameter)						{	return {	nullptr,	nullptr,	forParameter,	DeclaratorRestriction::Optional,	InitializerRestriction::Optional,	false,			forParameter,	false,		true,	false	}; } // Parameter
-PDA_HEADER(TemplateParam)	()										{	return {	nullptr,	nullptr,	false,			DeclaratorRestriction::Optional,	InitializerRestriction::Optional,	false,			true,			false,		false,	false	}; } // Parameter
-PDA_HEADER(Decls)			(bool allowBitField, bool allowComma)	{	return {	nullptr,	nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Optional,	allowBitField,	false,			allowComma,	true,	true	}; } // Declarations
-PDA_HEADER(Typedefs)		()										{	return {	nullptr,	nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Zero,		false,			false,			false,		false,	false	}; } // Declarations after typedef keyword
+PDA_HEADER(Type)			()										{	return {	nullptr,	nullptr,	nullptr,	false,			DeclaratorRestriction::Zero,		InitializerRestriction::Zero,		false,			false,			false,		false,	false	}; } // Type
+PDA_HEADER(VarType)			()										{	return {	nullptr,	nullptr,	nullptr,	false,			DeclaratorRestriction::Optional,	InitializerRestriction::Zero,		false,			false,			false,		false,	false	}; } // Type or Variable without Initializer
+PDA_HEADER(VarInit)			()										{	return {	nullptr,	nullptr,	nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Optional,	false,			false,			false,		true,	false	}; } // Variable with Initializer
+PDA_HEADER(VarNoInit)		()										{	return {	nullptr,	nullptr,	nullptr,	false,			DeclaratorRestriction::One,			InitializerRestriction::Zero,		false,			false,			false,		false,	false	}; } // Variable without Initializer
+PDA_HEADER(Param)			(bool forParameter)						{	return {	nullptr,	nullptr,	nullptr,	forParameter,	DeclaratorRestriction::Optional,	InitializerRestriction::Optional,	false,			forParameter,	false,		true,	false	}; } // Parameter
+PDA_HEADER(TemplateParam)	()										{	return {	nullptr,	nullptr,	nullptr,	false,			DeclaratorRestriction::Optional,	InitializerRestriction::Optional,	false,			true,			false,		false,	false	}; } // Parameter
+PDA_HEADER(Decls)			(bool allowBitField, bool allowComma)	{	return {	nullptr,	nullptr,	nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Optional,	allowBitField,	false,			allowComma,	true,	true	}; } // Declarations
+PDA_HEADER(Typedefs)		()										{	return {	nullptr,	nullptr,	nullptr,	false,			DeclaratorRestriction::Many,		InitializerRestriction::Zero,		false,			false,			false,		false,	false	}; } // Declarations after typedef keyword
 #undef PDA_HEADER
 
 extern Ptr<symbol_component::ClassMemberCache>		CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, ITsys* classType, bool symbolDefinedInsideClass);

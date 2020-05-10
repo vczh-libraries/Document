@@ -173,10 +173,14 @@ bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>
 			//   when a declaration is right inside a class
 			//   or it is a class member declaration out of a class
 
-			auto containingClass = pdc.containingClass;
+			auto containingClass = pdc.classOfMemberInside;
 			if (!containingClass)
 			{
-				if (auto memberType = targetType.Cast<MemberType>())
+				if (pdc.classOfMemberOutside)
+				{
+					containingClass = pdc.classOfMemberOutside->GetDecl()->GetImplDecl_NFb<ClassDeclaration>().Obj();
+				}
+				else if (auto memberType = targetType.Cast<MemberType>())
 				{
 					EnsureClassType(pa, memberType->classType, cursor, &containingClass);
 				}
@@ -769,9 +773,13 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	}
 
 	// recognize a class member declaration
-	if (pdc.containingClass)
+	if (pdc.classOfMemberInside)
 	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.containingClass->symbol, nullptr, !parsingTypeConversionOperatorOutsideOfClass);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberInside->symbol, nullptr, !parsingTypeConversionOperatorOutsideOfClass);
+	}
+	else if (pdc.classOfMemberOutside)
+	{
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, nullptr, pdc.classOfMemberOutside, false);
 	}
 	else if (auto memberType = declarator->type.Cast<MemberType>())
 	{
@@ -903,12 +911,13 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			SkipToken(cursor);
 
 			auto opPdc = pda_Decls(false, false);
-			opPdc.containingClass = pdc.containingClass;
+			opPdc.classOfMemberInside = pdc.classOfMemberInside;
+			opPdc.classOfMemberOutside = pdc.classOfMemberOutside;
 			opPdc.scopeSymbolToReuse = pdc.scopeSymbolToReuse;
 			bool outsideOfClass = false;
-			if (typeOpMemberType && !opPdc.containingClass)
+			if (typeOpMemberType && !opPdc.classOfMemberInside && !opPdc.classOfMemberOutside)
 			{
-				EnsureClassType(pa, typeOpMemberType->classType, cursor, &opPdc.containingClass);
+				opPdc.classOfMemberOutside = EnsureClassType(pa, typeOpMemberType->classType, cursor);
 				outsideOfClass = true;
 			}
 			opPdc.dr = DeclaratorRestriction::Zero;
