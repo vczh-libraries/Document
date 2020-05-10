@@ -5,7 +5,6 @@
 #include "EvaluateSymbol.h"
 
 extern bool		IsInTemplateHeader(const ParsingArguments& pa);
-extern ITsys*	EnsureClassType(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppTokenCursor>& cursor, ClassDeclaration** decl = nullptr);
 
 /***********************************************************************
 ReplaceOutOfDeclaratorTypeVisitor
@@ -161,47 +160,32 @@ bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>
 			{
 				containingClassName = pdc.classOfMemberInside->name.name;
 			}
-			else if (pdc.classOfMemberOutside)
+			else
 			{
-				if (auto classDecl = pdc.classOfMemberOutside->GetDecl()->GetImplDecl_NFb<ClassDeclaration>())
+				auto classType = pdc.classOfMemberOutside;
+				if (!classType)
 				{
-					containingClassName = classDecl->name.name;
+					if (auto memberType = targetType.Cast<MemberType>())
+					{
+						classType = memberType->classType;
+					}
 				}
-			}
-			else if (auto memberType = targetType.Cast<MemberType>())
-			{
-				if (auto idType = memberType->classType.Cast<IdType>())
+
+				if (auto idType = classType.Cast<IdType>())
 				{
 					containingClassName = idType->name.name;
 				}
-				else if (auto childType = memberType->classType.Cast<ChildType>())
+				else if (auto childType = classType.Cast<ChildType>())
 				{
 					containingClassName = childType->name.name;
 				}
-			}
-
-			auto containingClass = pdc.classOfMemberInside;
-			if (!containingClass)
-			{
-				if (pdc.classOfMemberOutside)
-				{
-					containingClass = pdc.classOfMemberOutside->GetDecl()->GetImplDecl_NFb<ClassDeclaration>().Obj();
-				}
-				else if (auto memberType = targetType.Cast<MemberType>())
-				{
-					EnsureClassType(pa, memberType->classType, cursor, &containingClass);
-				}
-			}
-			if (!containingClass)
-			{
-				throw StopParsingException(cursor);
 			}
 
 			switch (cppName.type)
 			{
 			case CppNameType::Normal:
 				// IDENTIFIER should be a constructor name for a special method
-				if (cppName.name == containingClass->name.name && TestToken(cursor, CppTokens::LPARENTHESIS, false))
+				if (cppName.name == containingClassName && TestToken(cursor, CppTokens::LPARENTHESIS, false))
 				{
 					cppName.name = L"$__ctor";
 					cppName.type = CppNameType::Constructor;
@@ -216,7 +200,7 @@ bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>
 				throw StopParsingException(cursor);
 			case CppNameType::Destructor:
 				// ~IDENTIFIER should be a destructor name for a special method
-				if (cppName.name != L"~" + containingClass->name.name)
+				if (cppName.name != L"~" + containingClassName)
 				{
 					throw StopParsingException(cursor);
 				}
@@ -788,8 +772,7 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	}
 	else if (auto memberType = declarator->type.Cast<MemberType>())
 	{
-		auto classTsys = EnsureClassType(pa, memberType->classType, cursor);
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, classTsys, cursor);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, memberType->classType, cursor);
 	}
 
 	InjectClassMemberCacheIfNecessary(pa, pdc, declarator, cursor, [&](const ParsingArguments& newPa)
@@ -921,7 +904,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 			opPdc.scopeSymbolToReuse = pdc.scopeSymbolToReuse;
 			if (typeOpMemberType && !opPdc.classOfMemberInside && !opPdc.classOfMemberOutside)
 			{
-				opPdc.classOfMemberOutside = EnsureClassType(pa, typeOpMemberType->classType, cursor);
+				opPdc.classOfMemberOutside = typeOpMemberType->classType;
 			}
 			opPdc.dr = DeclaratorRestriction::Zero;
 

@@ -6,7 +6,7 @@ bool IsInTemplateHeader(const ParsingArguments& pa)
 	return pa.scopeSymbol->kind == symbol_component::SymbolKind::Root && pa.scopeSymbol->GetParentScope();
 }
 
-ITsys* EnsureClassType(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppTokenCursor>& cursor, ClassDeclaration** decl = nullptr)
+ITsys* EnsureClassType(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppTokenCursor>& cursor)
 {
 	TypeTsysList classTsys;
 	TypeToTsysNoVta(pa, classType, classTsys);
@@ -18,7 +18,6 @@ ITsys* EnsureClassType(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppT
 	auto classDecl = tsys->GetDecl()->GetImplDecl_NFb<ClassDeclaration>().Obj();
 	if (!classDecl) throw StopParsingException(cursor);
 
-	if (decl) *decl = classDecl;
 	return tsys;
 }
 
@@ -76,8 +75,8 @@ void FixClassMemberCacheTypes(Ptr<symbol_component::ClassMemberCache> classMembe
 Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, Ptr<CppTokenCursor>& cursor)
 {
 	auto cache = MakePtr<symbol_component::ClassMemberCache>();
-
 	cache->symbolDefinedInsideClass = true;
+
 	FillSymbolToClassMemberCache(pa, classSymbol, cache.Obj());
 	cache->parentScope = cache->containerClassTypes[cache->containerClassTypes.Count() - 1]->GetDecl()->GetParentScope();
 
@@ -85,12 +84,12 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 	return cache;
 }
 
-Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, ITsys* classType, Ptr<CppTokenCursor>& cursor)
+Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Ptr<Type> classType, Ptr<CppTokenCursor>& cursor)
 {
 	auto cache = MakePtr<symbol_component::ClassMemberCache>();
-
 	cache->symbolDefinedInsideClass = false;
-	auto current = classType;
+
+	auto current = EnsureClassType(pa, classType, cursor);
 	while (current)
 	{
 		switch (current->GetType())
