@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Parser_Declaration.h"
+#include "Parser_Declarator.h"
 
 using namespace partial_specification_ordering;
 
