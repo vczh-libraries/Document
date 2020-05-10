@@ -71,7 +71,7 @@ void AssignContainerClassDeclsToSpecs(
 extern void FillSymbolToClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, symbol_component::ClassMemberCache* cache);
 extern void FixClassMemberCacheTypes(Ptr<symbol_component::ClassMemberCache> classMemberCache);
 
-Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Ptr<Type> classType, List<Ptr<TemplateSpec>>* specs, Ptr<CppTokenCursor>& cursor)
+Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache2(const ParsingArguments& pa, Ptr<Type> classType, List<Ptr<TemplateSpec>>* specs, Ptr<CppTokenCursor>& cursor)
 {
 	auto cache = MakePtr<symbol_component::ClassMemberCache>();
 	cache->symbolDefinedInsideClass = false;
@@ -136,5 +136,51 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 	List<Ptr<TemplateSpec>> noSpecs;
 	FixClassMemberCacheTypes(cache);
 	AssignContainerClassDeclsToSpecs(cache, (specs ? *specs : noSpecs), cursor);
+	return cache;
+}
+
+Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Ptr<Type> classType, List<Ptr<TemplateSpec>>* specs, Ptr<CppTokenCursor>& cursor)
+{
+	auto cacheToCompare = CreatePartialClassMemberCache2(pa, classType, specs, cursor);
+
+
+	auto cache = MakePtr<symbol_component::ClassMemberCache>();
+	cache->symbolDefinedInsideClass = false;
+	{
+		if (cache->containerClassTypes.Count() != cacheToCompare->containerClassTypes.Count())
+		{
+			throw 0;
+		}
+		for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
+		{
+			if (cache->containerClassTypes[i] != cacheToCompare->containerClassTypes[i])
+			{
+				throw 0;
+			}
+		}
+		if (cache->containerClassSpecs.Count() != cacheToCompare->containerClassSpecs.Count())
+		{
+			throw 0;
+		}
+		for (vint i = 0; i < cache->containerClassSpecs.Count(); i++)
+		{
+			if (cache->containerClassSpecs[i] != cacheToCompare->containerClassSpecs[i])
+			{
+				throw 0;
+			}
+		}
+		if (cache->declSpec != cacheToCompare->declSpec)
+		{
+			throw 0;
+		}
+		if (cache->symbolDefinedInsideClass != cacheToCompare->symbolDefinedInsideClass)
+		{
+			throw 0;
+		}
+		if (cache->parentScope != cacheToCompare->parentScope)
+		{
+			throw 0;
+		}
+	}
 	return cache;
 }
