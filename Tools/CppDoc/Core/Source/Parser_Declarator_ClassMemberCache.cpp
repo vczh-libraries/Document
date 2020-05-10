@@ -190,11 +190,9 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 	{
 		cache->parentScope = pa.scopeSymbol;
 	}
-
+	
+	List<Ptr<TemplateSpec>> noSpecs;
 	FixClassMemberCacheTypes(cache);
-	if (specs)
-	{
-		AssignContainerClassDeclsToSpecs(cache, *specs, cursor);
-	}
+	AssignContainerClassDeclsToSpecs(cache, (specs ? *specs : noSpecs), cursor);
 	return cache;
 }

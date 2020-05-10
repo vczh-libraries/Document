@@ -110,6 +110,10 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 			declSpec = cache->declSpec;
 		}
 	}
+	else
+	{
+		declSpec = EnsureNoMultipleTemplateSpec(specs, cursor);
+	}
 
 	if (funcType)
 	{

@@ -5,7 +5,7 @@ using namespace partial_specification_ordering;
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, const List<Ptr<Symbol>>& candidates, Ptr<CppTokenCursor>& cursor)
+Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<symbol_component::ClassMemberCache> cache, Ptr<ForwardFunctionDeclaration> decl, const List<Ptr<Symbol>>& candidates, Ptr<CppTokenCursor>& cursor)
 {
 	for (vint i = 0; i < candidates.Count(); i++)
 	{
@@ -15,7 +15,7 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 		case symbol_component::SymbolKind::FunctionSymbol:
 			{
 				auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-				if (IsCompatibleFunctionDeclInSameScope(decl, declToCompare))
+				if (IsCompatibleFunctionDeclInSameScope(cache, decl, declToCompare))
 				{
 					return symbol;
 				}
@@ -31,7 +31,7 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 	return nullptr;
 }
 
-Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
+Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<symbol_component::ClassMemberCache> cache, Ptr<ForwardFunctionDeclaration> decl, Ptr<CppTokenCursor>& cursor)
 {
 	if (!decl->needResolveTypeFromStatement)
 	{
@@ -49,7 +49,7 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 				if (key.Length() > prefix.Length() && key.Left(prefix.Length()) == prefix)
 				{
 					auto& candidates = children.GetByIndex(i);
-					if (auto result = SearchForFunctionWithSameSignature(context, decl, candidates, cursor))
+					if (auto result = SearchForFunctionWithSameSignature(context, cache, decl, candidates, cursor))
 					{
 						return result;
 					}
@@ -60,7 +60,7 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<ForwardFunctionD
 		{
 			if (auto pSymbols = context->TryGetChildren_NFb(decl->name.name))
 			{
-				if (auto result = SearchForFunctionWithSameSignature(context, decl, *pSymbols, cursor))
+				if (auto result = SearchForFunctionWithSameSignature(context, cache, decl, *pSymbols, cursor))
 				{
 					return result;
 				}
@@ -209,7 +209,7 @@ void ParseDeclaration_Function(
 		}
 
 		// match declaration and implementation
-		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
+		auto functionSymbol = SearchForFunctionWithSameSignature(context, declarator->classMemberCache, decl, cursor);
 		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, specSymbol, declarator->classMemberCache);
 
 		// find the primary symbol for partial specialization
@@ -245,7 +245,7 @@ void ParseDeclaration_Function(
 		RequireToken(cursor, CppTokens::SEMICOLON);
 
 		// match declaration and implementation
-		auto functionSymbol = SearchForFunctionWithSameSignature(context, decl, cursor);
+		auto functionSymbol = SearchForFunctionWithSameSignature(context, declarator->classMemberCache, decl, cursor);
 		functionSymbol->CreateFunctionForwardSymbol_F(decl, specSymbol);
 
 		// find the primary symbol for partial specialization

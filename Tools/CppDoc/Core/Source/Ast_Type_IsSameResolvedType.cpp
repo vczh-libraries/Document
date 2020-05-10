@@ -602,7 +602,7 @@ bool IsCompatibleSpecializationSpec(Ptr<SpecializationSpec> specNew, Ptr<Special
 	return !specNew && !specOld;
 }
 
-bool IsCompatibleFunctionDeclInSameScope(Ptr<ForwardFunctionDeclaration> declNew, Ptr<ForwardFunctionDeclaration> declOld)
+bool IsCompatibleFunctionDeclInSameScope(Ptr<symbol_component::ClassMemberCache> cacheNew, Ptr<ForwardFunctionDeclaration> declNew, Ptr<ForwardFunctionDeclaration> declOld)
 {
 	if (declNew->name.name != declOld->name.name) return false;
 	if (declNew->needResolveTypeFromStatement || declOld->needResolveTypeFromStatement) return false;
@@ -619,12 +619,12 @@ bool IsCompatibleFunctionDeclInSameScope(Ptr<ForwardFunctionDeclaration> declNew
 	}
 	if (auto funcDecl = declNew.Cast<FunctionDeclaration>())
 	{
-		if (auto cache = funcDecl->symbol->GetClassMemberCache_NFb())
+		if (cacheNew && cacheNew->containerClassSpecs.Count() > 0)
 		{
-			for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
+			for (vint i = 0; i < cacheNew->containerClassTypes.Count(); i++)
 			{
-				auto tsys = cache->containerClassTypes[i];
-				auto spec = cache->containerClassSpecs[i];
+				auto tsys = cacheNew->containerClassTypes[i];
+				auto spec = cacheNew->containerClassSpecs[i];
 				if (spec)
 				{
 					auto classSpec = tsys->GetDecl()->GetImplDecl_NFb<ClassDeclaration>()->templateSpec;
