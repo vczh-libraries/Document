@@ -775,16 +775,16 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	// recognize a class member declaration
 	if (pdc.classOfMemberInside)
 	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberInside->symbol, nullptr);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberInside->symbol);
 	}
 	else if (pdc.classOfMemberOutside)
 	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, nullptr, pdc.classOfMemberOutside);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberOutside);
 	}
 	else if (auto memberType = declarator->type.Cast<MemberType>())
 	{
 		auto classTsys = EnsureClassType(pa, memberType->classType, cursor);
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, nullptr, classTsys);
+		declarator->classMemberCache = CreatePartialClassMemberCache(pa, classTsys);
 	}
 
 	InjectClassMemberCacheIfNecessary(pa, pdc, declarator, cursor, [&](const ParsingArguments& newPa)
