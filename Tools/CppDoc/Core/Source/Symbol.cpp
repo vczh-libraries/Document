@@ -705,7 +705,7 @@ Symbol* Symbol::AddForwardDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_compon
 	return symbol;
 }
 
-Symbol* Symbol::AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol)
+Symbol* Symbol::AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol, Ptr<symbol_component::ClassMemberCache> classMemberCache)
 {
 	// Create a symbol if the name is not used
 	// Or add _decl to the existing symbol of the specified name, ensuring that the symbol has a correct kind
@@ -715,6 +715,7 @@ Symbol* Symbol::AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component
 	// Fail if an implementation has been assigned
 	if (symbol->categoryData.normal.implDecl) return nullptr;
 	symbol->categoryData.normal.implDecl = _decl;
+	symbol->categoryData.normal.classMemberCache = classMemberCache;
 	return symbol;
 }
 

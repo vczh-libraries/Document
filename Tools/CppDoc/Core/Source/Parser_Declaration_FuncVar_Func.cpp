@@ -148,7 +148,7 @@ void DelayParseFunctionStatement(
 void ParseDeclaration_Function(
 	const ParsingArguments& pa,
 	Ptr<Symbol> specSymbol,
-	List<ClassSpec>& classSpecs,
+	List<Ptr<TemplateSpec>>& classSpecs,
 	Ptr<TemplateSpec> functionSpec,
 	Ptr<Declarator> declarator,
 	Ptr<FunctionType> funcType,

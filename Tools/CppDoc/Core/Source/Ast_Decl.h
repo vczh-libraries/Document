@@ -196,14 +196,12 @@ public:
 Forwardable Declarations
 ***********************************************************************/
 
-using ClassSpec = Tuple<Ptr<TemplateSpec>, ClassDeclaration*>;
-
 class VariableDeclaration : public ForwardVariableDeclaration
 {
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	List<ClassSpec>									classSpecs;
+	List<Ptr<TemplateSpec>>							classSpecs;
 	Ptr<Initializer>								initializer;
 };
 
@@ -214,7 +212,7 @@ public:
 
 	using InitItem = Tuple<Ptr<IdExpr>, Ptr<Expr>>;
 
-	List<ClassSpec>									classSpecs;
+	List<Ptr<TemplateSpec>>							classSpecs;
 	List<InitItem>									initList;
 	Ptr<Stat>										statement;
 	Ptr<DelayParse>									delayParse;

@@ -38,6 +38,17 @@ namespace symbol_component
 		List<ITsys*>				containerClassTypes;
 
 		/*
+		template headers for each member in containerClassTypes
+		any item could be null when the mapped class type is not a template class
+		*/
+		List<Ptr<TemplateSpec>>		containerClassSpecs;
+
+		/*
+		the single remaining template header that is unused, could be null for non-template member
+		*/
+		Ptr<TemplateSpec>			declSpec;
+
+		/*
 		true for members defined inside a class, so that type arguments reachable in classSymbols are reachable here
 		false for outside
 		*/
@@ -311,7 +322,7 @@ public:
 	Symbol*											CreateFunctionForwardSymbol_F(Ptr<ForwardFunctionDeclaration> _decl, Ptr<Symbol> templateSpecSymbol);
 	Symbol*											CreateFunctionImplSymbol_F(Ptr<FunctionDeclaration> _decl, Ptr<Symbol> templateSpecSymbol, Ptr<symbol_component::ClassMemberCache> classMemberCache);
 	Symbol*											AddForwardDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind);
-	Symbol*											AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol = nullptr);
+	Symbol*											AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol = nullptr, Ptr<symbol_component::ClassMemberCache> classMemberCache = nullptr);
 	Symbol*											CreateStatSymbol_NFb(Ptr<Stat> _stat);
 
 	template<typename T>

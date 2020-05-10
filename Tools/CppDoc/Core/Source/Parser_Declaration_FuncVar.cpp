@@ -3,56 +3,6 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-Ptr<TemplateSpec> AssignContainerClassDeclsToSpecs(
-	List<Ptr<TemplateSpec>>& specs,
-	Ptr<Declarator> declarator,
-	List<ClassSpec>& classSpecs,
-	Ptr<CppTokenCursor>& cursor
-)
-{
-	if (declarator->classMemberCache && !declarator->classMemberCache->symbolDefinedInsideClass)
-	{
-		vint used = 0;
-		auto& thisTypes = declarator->classMemberCache->containerClassTypes;
-		for (vint i = thisTypes.Count() - 1; i >= 0; i--)
-		{
-			auto thisType = thisTypes[i];
-			auto thisDecl = thisType->GetDecl()->GetImplDecl_NFb<ClassDeclaration>();
-			if (!thisDecl) throw StopParsingException(cursor);
-
-			if (thisDecl->templateSpec)
-			{
-				if (used >= specs.Count()) throw StopParsingException(cursor);
-				auto thisSpec = specs[used++];
-				if (thisSpec->arguments.Count() != thisDecl->templateSpec->arguments.Count()) throw StopParsingException(cursor);
-				for (vint j = 0; j < thisSpec->arguments.Count(); j++)
-				{
-					auto specArg = thisSpec->arguments[j];
-					auto declArg = thisDecl->templateSpec->arguments[j];
-					if (specArg.argumentType != declArg.argumentType) throw StopParsingException(cursor);
-				}
-				classSpecs.Add({ thisSpec,thisDecl.Obj() });
-			}
-		}
-
-		switch (specs.Count() - used)
-		{
-		case 0:
-			return nullptr;
-		case 1:
-			return specs[used];
-		default:
-			throw StopParsingException(cursor);
-		}
-	}
-	else
-	{
-		return EnsureNoMultipleTemplateSpec(specs, cursor);
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol, List<Ptr<TemplateSpec>>& specs, bool decoratorFriend, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	// parse declarators for functions and variables
@@ -138,8 +88,28 @@ void ParseDeclaration_FuncVar(const ParsingArguments& pa, Ptr<Symbol> specSymbol
 		throw StopParsingException(cursor);
 	}
 
-	List<ClassSpec> classSpecs;
-	auto declSpec = AssignContainerClassDeclsToSpecs(specs, declarators[0], classSpecs, cursor);
+	List<Ptr<TemplateSpec>> classSpecs;
+	Ptr<TemplateSpec> declSpec;
+
+	if (declarators[0]->classMemberCache)
+	{
+		auto cache = declarators[0]->classMemberCache;
+		if (cache->symbolDefinedInsideClass)
+		{
+			declSpec = EnsureNoMultipleTemplateSpec(specs, cursor);
+		}
+		else
+		{
+			for (vint i = cache->containerClassSpecs.Count() - 1; i >= 0; i--)
+			{
+				if (auto spec = cache->containerClassSpecs[i])
+				{
+					classSpecs.Add(spec);
+				}
+			}
+			declSpec = cache->declSpec;
+		}
+	}
 
 	if (funcType)
 	{

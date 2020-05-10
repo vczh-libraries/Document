@@ -95,7 +95,7 @@ extern Ptr<TemplateSpec>		AssignContainerClassDeclsToSpecs(
 extern void						ParseDeclaration_Function(
 									const ParsingArguments& pa,
 									Ptr<Symbol> specSymbol,
-									List<ClassSpec>& classSpecs,
+									List<Ptr<TemplateSpec>>& classSpecs,
 									Ptr<TemplateSpec> functionSpec,
 									Ptr<Declarator> declarator,
 									Ptr<FunctionType> funcType,
@@ -118,7 +118,7 @@ extern void						ParseDeclaration_ValueAlias(
 extern void						ParseDeclaration_Variable(
 									const ParsingArguments& pa,
 									Ptr<Symbol> specSymbol,
-									List<ClassSpec>& classSpecs,
+									List<Ptr<TemplateSpec>>& classSpecs,
 									Ptr<Declarator> declarator,
 									FUNCVAR_DECORATORS_FOR_VARIABLE(FUNCVAR_PARAMETER)
 									Ptr<CppTokenCursor>& cursor,

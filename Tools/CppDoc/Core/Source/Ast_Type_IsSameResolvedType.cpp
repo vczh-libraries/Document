@@ -619,11 +619,20 @@ bool IsCompatibleFunctionDeclInSameScope(Ptr<ForwardFunctionDeclaration> declNew
 	}
 	if (auto funcDecl = declNew.Cast<FunctionDeclaration>())
 	{
-		for (vint i = 0; i < funcDecl->classSpecs.Count(); i++)
+		if (auto cache = funcDecl->symbol->GetClassMemberCache_NFb())
 		{
-			if (!IsCompatibleTemplateSpec(funcDecl->classSpecs[i].f0, funcDecl->classSpecs[i].f1->templateSpec, equivalentNames))
+			for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
 			{
-				return false;
+				auto tsys = cache->containerClassTypes[i];
+				auto spec = cache->containerClassSpecs[i];
+				if (spec)
+				{
+					auto classSpec = tsys->GetDecl()->GetImplDecl_NFb<ClassDeclaration>()->templateSpec;
+					if (!IsCompatibleTemplateSpec(spec, classSpec, equivalentNames))
+					{
+						return false;
+					}
+				}
 			}
 		}
 	}

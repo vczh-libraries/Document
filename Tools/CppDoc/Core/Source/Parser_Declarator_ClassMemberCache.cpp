@@ -72,6 +72,51 @@ void FixClassMemberCacheTypes(Ptr<symbol_component::ClassMemberCache> classMembe
 	}
 }
 
+void AssignContainerClassDeclsToSpecs(
+	Ptr<symbol_component::ClassMemberCache> classMemberCache,
+	List<Ptr<TemplateSpec>>& specs,
+	Ptr<CppTokenCursor>& cursor
+)
+{
+	vint used = 0;
+	auto& thisTypes = classMemberCache->containerClassTypes;
+	for (vint i = thisTypes.Count() - 1; i >= 0; i--)
+	{
+		auto thisType = thisTypes[i];
+		auto thisDecl = thisType->GetDecl()->GetImplDecl_NFb<ClassDeclaration>();
+		if (!thisDecl) throw StopParsingException(cursor);
+
+		if (thisDecl->templateSpec)
+		{
+			if (used >= specs.Count()) throw StopParsingException(cursor);
+			auto thisSpec = specs[used++];
+			if (thisSpec->arguments.Count() != thisDecl->templateSpec->arguments.Count()) throw StopParsingException(cursor);
+			for (vint j = 0; j < thisSpec->arguments.Count(); j++)
+			{
+				auto specArg = thisSpec->arguments[j];
+				auto declArg = thisDecl->templateSpec->arguments[j];
+				if (specArg.argumentType != declArg.argumentType) throw StopParsingException(cursor);
+			}
+			classMemberCache->containerClassSpecs.Add(thisSpec);
+		}
+		else
+		{
+			classMemberCache->containerClassSpecs.Add({});
+		}
+	}
+
+	switch (specs.Count() - used)
+	{
+	case 0:
+		break;
+	case 1:
+		classMemberCache->declSpec = specs[used];
+		break;
+	default:
+		throw StopParsingException(cursor);
+	}
+}
+
 Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, Ptr<CppTokenCursor>& cursor)
 {
 	auto cache = MakePtr<symbol_component::ClassMemberCache>();
@@ -147,5 +192,9 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 	}
 
 	FixClassMemberCacheTypes(cache);
+	if (specs)
+	{
+		AssignContainerClassDeclsToSpecs(cache, *specs, cursor);
+	}
 	return cache;
 }

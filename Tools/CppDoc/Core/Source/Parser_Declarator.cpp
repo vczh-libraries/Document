@@ -4,8 +4,6 @@
 #include "Ast_Resolving.h"
 #include "EvaluateSymbol.h"
 
-extern bool		IsInTemplateHeader(const ParsingArguments& pa);
-
 /***********************************************************************
 ReplaceOutOfDeclaratorTypeVisitor
 ***********************************************************************/
@@ -637,6 +635,8 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 /***********************************************************************
 ParseSingleDeclarator
 ***********************************************************************/
+
+extern bool IsInTemplateHeader(const ParsingArguments& pa);
 
 template<typename TCallback>
 void InjectClassMemberCacheIfNecessary(const ParsingArguments& pa, const ParseDeclaratorContext& pdc, Ptr<Declarator> declarator, Ptr<CppTokenCursor>& cursor, TCallback&& callback)
