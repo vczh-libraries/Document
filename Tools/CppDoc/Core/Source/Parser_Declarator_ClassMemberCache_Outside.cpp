@@ -1,6 +1,7 @@
 #include "Parser.h"
 #include "Parser_Declarator.h"
 #include "Ast_Decl.h"
+#include "Ast_Type.h"
 #include "EvaluateSymbol.h"
 
 bool IsInTemplateHeader(const ParsingArguments& pa)
@@ -139,13 +140,94 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache2(const Par
 	return cache;
 }
 
+struct QualifiedIdComponent
+{
+	Ptr<IdType>			idType;
+	Ptr<ChildType>		childType;
+	Ptr<GenericType>	genericType;
+};
+
 Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Ptr<Type> classType, List<Ptr<TemplateSpec>>* specs, Ptr<CppTokenCursor>& cursor)
 {
 	auto cacheToCompare = CreatePartialClassMemberCache2(pa, classType, specs, cursor);
 
-
 	auto cache = MakePtr<symbol_component::ClassMemberCache>();
 	cache->symbolDefinedInsideClass = false;
+
+	if (IsInTemplateHeader(pa))
+	{
+		// in this case, the cache will be put in pa.scopeSymbol
+		// so we should point parentScope to its parent, to get rid of a dead loop
+		cache->parentScope = pa.scopeSymbol->GetParentScope();
+	}
+	else
+	{
+		cache->parentScope = pa.scopeSymbol;
+	}
+
+	Symbol* containingNamespace = nullptr;
+	List<QualifiedIdComponent> qics;
+	{
+		// break class type to qualified identifier components
+
+		auto currentClassType = classType;
+		while (true)
+		{
+			QualifiedIdComponent qic;
+
+			if (auto genericType = currentClassType.Cast<GenericType>())
+			{
+				qic.genericType = genericType;
+				classType = genericType->type;
+			}
+
+			if (auto childType = currentClassType.Cast<ChildType>())
+			{
+				if (Resolving::IsResolvedToType(childType->resolving))
+				{
+					qic.childType = childType;
+					qics.Add(qic);
+
+					classType = childType->classType;
+				}
+				else
+				{
+					containingNamespace = childType->resolving->items[0].symbol;
+					break;
+				}
+			}
+			else if (auto idType = currentClassType.Cast<IdType>())
+			{
+				if (Resolving::IsResolvedToType(idType->resolving))
+				{
+					qic.idType = idType;
+					qics.Add(qic);
+
+					containingNamespace = cache->parentScope;
+				}
+				else
+				{
+					containingNamespace = idType->resolving->items[0].symbol;
+				}
+				break;
+			}
+			else if (currentClassType.Cast<RootType>())
+			{
+				containingNamespace = pa.root.Obj();
+				break;
+			}
+			else
+			{
+				throw StopParsingException(cursor);
+			}
+		}
+
+		if (!containingNamespace || qics.Count() == 0)
+		{
+			throw StopParsingException(cursor);
+		}
+	}
+
 	{
 		if (cache->containerClassTypes.Count() != cacheToCompare->containerClassTypes.Count())
 		{
