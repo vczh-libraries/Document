@@ -4,6 +4,7 @@
 #include "Ast_Type.h"
 #include "Ast_Expr.h"
 #include "Symbol_Resolve.h"
+#include "Symbol_TemplateSpec.h"
 #include "EvaluateSymbol.h"
 
 bool IsInTemplateHeader(const ParsingArguments& pa)
@@ -354,6 +355,55 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 
 				// prepare TemplateArgumentContext and create the type
 				TemplateArgumentContext taContext;
+				for (vint i = 0; i < thisSpec->arguments.Count(); i++)
+				{
+					auto& tArg = thisSpec->arguments[i];
+					auto& cArg = classSpec->arguments[i];
+					auto cKey = symbol_type_resolving::GetTemplateArgumentKey(cArg.argumentSymbol, pa.tsys.Obj());
+
+					switch (tArg.argumentType)
+					{
+					case CppTemplateArgumentType::HighLevelType:
+					case CppTemplateArgumentType::Type:
+						if (tArg.ellipsis)
+						{
+							taContext.arguments.Add(cKey, pa.tsys->Any());
+						}
+						else
+						{
+							auto tValue = symbol_type_resolving::GetTemplateArgumentKey(tArg.argumentSymbol, pa.tsys.Obj());
+							taContext.arguments.Add(cKey, tValue);
+						}
+						break;
+					case CppTemplateArgumentType::Value:
+						if (tArg.ellipsis)
+						{
+							taContext.arguments.Add(cKey, pa.tsys->Any());
+						}
+						else
+						{
+							taContext.arguments.Add(cKey, nullptr);
+						}
+						break;
+					}
+				}
+
+				// evaluate the type
+				auto& classTsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), currentParentDeclType, &taContext);
+				auto nextClass = classTsys[0];
+
+				// even when the class has no partial specialization, it could be added later
+				// so it needs to call nextClass->MakePSRecordPrimaryThis
+				nextClass->MakePSRecordPrimaryThis();
+				cache->containerClassTypes.Insert(0, nextClass);
+				cache->containerClassSpecs.Insert(0, thisSpec);
+
+				// the class is an instance of a template class
+				// types of its child classes depent on this type
+				currentParentDeclType = nextClass;
+
+				currentNamespace = nullptr;
+				currentClass = nextClass;
 			}
 			else
 			{

@@ -46,8 +46,8 @@ namespace symbol_type_resolving
 			}
 		default:
 			{
-				// when evaluating local symbols for an uninitialized function, pa.taContext could belong to the template class
-				// in this case, we need to stop at the class when the function is initialized
+				// when evaluating local symbols for an uninstanciated function, pa.taContext could belong to the template class
+				// in this case, we need to stop at the class when the function is uninstanciated
 				// so that it knows that the symbol is not evaluated, instead of returning the evaluated symbol for the unitialized function
 				auto taContext = pa.taContext;
 				auto topTaContextToExamine = ParsingArguments::AdjustTaContextForScope(decl->symbol, taContext);
