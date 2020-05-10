@@ -329,5 +329,8 @@
     <ClCompile Include="Source\Parser_Declaration_FuncVar_ValueAlias.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Parser_Declarator_ClassMemberCache.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
