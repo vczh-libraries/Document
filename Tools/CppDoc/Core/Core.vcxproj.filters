@@ -335,10 +335,13 @@
     <ClCompile Include="Source\Parser_Declaration_Using.cpp">
       <Filter>Source Files\Parser\Declaration</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Parser_Declarator_ClassMemberCache.cpp">
+    <ClCompile Include="Source\Parser_Declarator.cpp">
       <Filter>Source Files\Parser\Declarator</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Parser_Declarator.cpp">
+    <ClCompile Include="Source\Parser_Declarator_ClassMemberCache_Inside.cpp">
+      <Filter>Source Files\Parser\Declarator</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser_Declarator_ClassMemberCache_Outside.cpp">
       <Filter>Source Files\Parser\Declarator</Filter>
     </ClCompile>
   </ItemGroup>
