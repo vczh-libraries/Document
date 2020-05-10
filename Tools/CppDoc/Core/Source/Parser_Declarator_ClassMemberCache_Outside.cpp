@@ -2,6 +2,7 @@
 #include "Parser_Declarator.h"
 #include "Ast_Decl.h"
 #include "Ast_Type.h"
+#include "Ast_Expr.h"
 #include "Symbol_Resolve.h"
 #include "EvaluateSymbol.h"
 
@@ -277,10 +278,88 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 
 			if (classDecl->templateSpec)
 			{
-				throw 0;
+				// for template class
+				// it must be used with template arguments
+				// and a template header must be available
+				if (!qic.genericType)
+				{
+					throw StopParsingException(cursor);
+				}
+				if (!specs)
+				{
+					throw StopParsingException(cursor);
+				}
+				if (consumedSpecs == (*specs).Count())
+				{
+					throw StopParsingException(cursor);
+				}
+
+				// the template header used in the member must be compatible with one in the class
+				auto thisSpec = (*specs)[consumedSpecs++];
+				auto classSpec = classDecl->templateSpec;
+				{
+					Dictionary<WString, WString> equivalentNames;
+					if (!IsCompatibleTemplateSpec(thisSpec, classSpec, equivalentNames))
+					{
+						throw StopParsingException(cursor);
+					}
+				}
+
+				// template arguments for this class must be compatible with the template header
+				if (qic.genericType->arguments.Count() != thisSpec->arguments.Count())
+				{
+					throw StopParsingException(cursor);
+				}
+				for (vint i = 0; i < qic.genericType->arguments.Count(); i++)
+				{
+					auto& gArg = qic.genericType->arguments[i];
+					auto& tArg = thisSpec->arguments[i];
+
+					if (gArg.isVariadic != tArg.ellipsis)
+					{
+						throw StopParsingException(cursor);
+					}
+
+					switch (tArg.argumentType)
+					{
+					case CppTemplateArgumentType::HighLevelType:
+					case CppTemplateArgumentType::Type:
+						if (auto idType = gArg.item.type.Cast<IdType>())
+						{
+							if (idType->name.name != tArg.name.name)
+							{
+								throw StopParsingException(cursor);
+							}
+						}
+						else
+						{
+							throw StopParsingException(cursor);
+						}
+						break;
+					case CppTemplateArgumentType::Value:
+						if (auto idExpr = gArg.item.expr.Cast<IdExpr>())
+						{
+							if (idExpr->name.name != tArg.name.name)
+							{
+								throw StopParsingException(cursor);
+							}
+						}
+						else
+						{
+							throw StopParsingException(cursor);
+						}
+						break;
+					}
+				}
+
+				// prepare TemplateArgumentContext and create the type
+				TemplateArgumentContext taContext;
 			}
 			else
 			{
+				// for non-template class
+				// since it is resolved by name, it could not be an instance of a partial specialization
+				// no need to call nextClass->MakePSRecordPrimaryThis
 				auto& classTsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), currentParentDeclType, nullptr);
 				auto nextClass = classTsys[0];
 

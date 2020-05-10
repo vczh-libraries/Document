@@ -526,7 +526,7 @@ bool IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2, Dictionary<WString, WString>
 }
 
 /***********************************************************************
-IsCompatibleFunctionDecl
+IsCompatibleTemplateSpec
 ***********************************************************************/
 
 bool IsCompatibleTemplateSpec(Ptr<TemplateSpec> specNew, Ptr<TemplateSpec> specOld, Dictionary<WString, WString>& equivalentNames)
@@ -569,6 +569,10 @@ bool IsCompatibleTemplateSpec(Ptr<TemplateSpec> specNew, Ptr<TemplateSpec> specO
 	return !specNew && !specOld;
 }
 
+/***********************************************************************
+IsCompatibleSpecializationSpec
+***********************************************************************/
+
 bool IsCompatibleSpecializationSpec(Ptr<SpecializationSpec> specNew, Ptr<SpecializationSpec> specOld, Dictionary<WString, WString>& equivalentNames)
 {
 	if (specNew && specOld)
@@ -602,6 +606,10 @@ bool IsCompatibleSpecializationSpec(Ptr<SpecializationSpec> specNew, Ptr<Special
 	}
 	return !specNew && !specOld;
 }
+
+/***********************************************************************
+IsCompatibleFunctionDecl
+***********************************************************************/
 
 bool IsCompatibleFunctionDeclInSameScope(Ptr<symbol_component::ClassMemberCache> cacheNew, Ptr<ForwardFunctionDeclaration> declNew, Ptr<ForwardFunctionDeclaration> declOld)
 {

@@ -218,6 +218,8 @@ struct TypeToTsysConfig
 
 extern bool					IsSameResolvedExpr(Ptr<Expr> e1, Ptr<Expr> e2, Dictionary<WString, WString>& equivalentNames);
 extern bool					IsSameResolvedType(Ptr<Type> t1, Ptr<Type> t2, Dictionary<WString, WString>& equivalentNames);
+extern bool					IsCompatibleTemplateSpec(Ptr<TemplateSpec> specNew, Ptr<TemplateSpec> specOld, Dictionary<WString, WString>& equivalentNames);
+extern bool					IsCompatibleSpecializationSpec(Ptr<SpecializationSpec> specNew, Ptr<SpecializationSpec> specOld, Dictionary<WString, WString>& equivalentNames);
 extern bool					IsCompatibleFunctionDeclInSameScope(Ptr<symbol_component::ClassMemberCache> cacheNew, Ptr<ForwardFunctionDeclaration> declNew, Ptr<ForwardFunctionDeclaration> declOld);
 extern bool					IsPendingType(Type* type);
 extern bool					IsPendingType(Ptr<Type> type);
