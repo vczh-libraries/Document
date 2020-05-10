@@ -97,11 +97,11 @@ void AssignContainerClassDeclsToSpecs(
 				auto declArg = thisDecl->templateSpec->arguments[j];
 				if (specArg.argumentType != declArg.argumentType) throw StopParsingException(cursor);
 			}
-			classMemberCache->containerClassSpecs.Add(thisSpec);
+			classMemberCache->containerClassSpecs.Insert(0, thisSpec);
 		}
 		else
 		{
-			classMemberCache->containerClassSpecs.Add({});
+			classMemberCache->containerClassSpecs.Insert(0, {});
 		}
 	}
 
