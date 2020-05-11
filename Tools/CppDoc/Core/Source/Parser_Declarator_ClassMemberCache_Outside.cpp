@@ -19,7 +19,7 @@ struct QualifiedIdComponent
 	Ptr<GenericType>	genericType;
 };
 
-Symbol* BreakTypeIntoQualifiedIdComponent(const ParsingArguments& pa, Ptr< symbol_component::ClassMemberCache> cache, Ptr<Type> classType, List<QualifiedIdComponent>& qics, Ptr<CppTokenCursor>& cursor)
+Symbol* BreakTypeIntoQualifiedIdComponent(const ParsingArguments& pa, Ptr<symbol_component::ClassMemberCache> cache, Ptr<Type> classType, List<QualifiedIdComponent>& qics, Ptr<CppTokenCursor>& cursor)
 {
 	// break class type to qualified identifier components
 
@@ -72,6 +72,38 @@ Symbol* BreakTypeIntoQualifiedIdComponent(const ParsingArguments& pa, Ptr< symbo
 			throw StopParsingException(cursor);
 		}
 	}
+}
+
+void StepIntoTemplateClass()
+{
+
+}
+
+ITsys* StepIntoNonTemplateClass(
+	const ParsingArguments& pa,
+	Ptr<symbol_component::ClassMemberCache> cache,
+	ClassDeclaration* classDecl,
+	List<Ptr<TemplateSpec>>* specs,
+	ITsys* currentParentDeclType
+)
+{
+	// for non-template class
+	// since it is resolved by name, it could not be an instance of a partial specialization
+	// no need to call nextClass->MakePSRecordPrimaryThis
+	auto& classTsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl, currentParentDeclType, nullptr);
+	auto nextClass = classTsys[0];
+
+	cache->containerClassTypes.Insert(0, nextClass);
+	if (specs)
+	{
+		cache->containerClassSpecs.Insert(0, {});
+	}
+	else
+	{
+		cache->containerClassSpecs.Insert(0, {});
+	}
+
+	return nextClass;
 }
 
 Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Ptr<Type> classType, List<Ptr<TemplateSpec>>* specs, Ptr<CppTokenCursor>& cursor)
@@ -271,24 +303,8 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 			}
 			else
 			{
-				// for non-template class
-				// since it is resolved by name, it could not be an instance of a partial specialization
-				// no need to call nextClass->MakePSRecordPrimaryThis
-				auto& classTsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), currentParentDeclType, nullptr);
-				auto nextClass = classTsys[0];
-
-				cache->containerClassTypes.Insert(0, nextClass);
-				if (specs)
-				{
-					cache->containerClassSpecs.Insert(0, {});
-				}
-				else
-				{
-					cache->containerClassSpecs.Insert(0, {});
-				}
-
 				currentNamespace = nullptr;
-				currentClass = nextClass;
+				currentClass = StepIntoNonTemplateClass(pa, cache, classDecl.Obj(), specs, currentParentDeclType);
 			}
 		}
 	}
