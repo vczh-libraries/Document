@@ -290,9 +290,44 @@ ITsys* StepIntoTemplateClass(
 	}
 	else
 	{
+		if (primaryClassDecl->symbol->IsPSPrimary_NF())
+		{
+			auto& psSymbols = primaryClassDecl->symbol->GetPSPrimaryDescendants_NF();
+			for (vint i = 0; i < psSymbols.Count(); i++)
+			{
+				auto psSymbol = psSymbols[i];
+				if (auto psClassDecl = psSymbol->GetImplDecl_NFb<ClassDeclaration>())
+				{
+					auto psClassSpec = psClassDecl->templateSpec;
+					auto psSpec = psClassDecl->specializationSpec;
+					if (MatchPSTemplate(pa, thisSpec, psClassSpec, qic.genericType, psSpec))
+					{
+						// prepare TemplateArgumentContext and create the type
+						TemplateArgumentContext taContext;
+						taContext.symbolToApply = psSymbol;
+						PrepareTemplateArgumentContext(pa, thisSpec, psClassSpec, taContext);
+
+						// evaluate the type
+						auto& classTsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, psClassDecl.Obj(), currentParentDeclType, &taContext);
+						nextClass = classTsys[0];
+
+						// PSRecord of an instance of a partial specialized class will be generated
+						if (psClassSpec->arguments.Count() > 0)
+						{
+							// only when this partial specialization is a template class
+							// types of its child classes depent on this type
+							currentParentDeclType = nextClass;
+						}
+
+						goto GOT_NEXT_CLASS;
+					}
+				}
+			}
+		}
 		throw StopParsingException(cursor);
 	}
 
+GOT_NEXT_CLASS:
 	cache->containerClassTypes.Insert(0, nextClass);
 	cache->containerClassSpecs.Insert(0, thisSpec);
 	return nextClass;
