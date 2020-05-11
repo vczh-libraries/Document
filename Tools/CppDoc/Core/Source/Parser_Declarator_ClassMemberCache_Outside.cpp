@@ -80,26 +80,23 @@ Symbol* BreakTypeIntoQualifiedIdComponent(const ParsingArguments& pa, Ptr<symbol
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-void MatchPrimaryTemplate(
+bool MatchPrimaryTemplate(
 	const ParsingArguments& pa,
 	Ptr<TemplateSpec> thisSpec,
 	Ptr<TemplateSpec> classSpec,
-	Ptr<GenericType> genericType,
-	Ptr<CppTokenCursor>& cursor
+	Ptr<GenericType> genericType
 )
 {
+	Dictionary<WString, WString> equivalentNames;
+	if (!IsCompatibleTemplateSpec(thisSpec, classSpec, equivalentNames))
 	{
-		Dictionary<WString, WString> equivalentNames;
-		if (!IsCompatibleTemplateSpec(thisSpec, classSpec, equivalentNames))
-		{
-			throw StopParsingException(cursor);
-		}
+		return false;
 	}
 
 	// template arguments for this class must be compatible with the template header
 	if (genericType->arguments.Count() != thisSpec->arguments.Count())
 	{
-		throw StopParsingException(cursor);
+		return false;
 	}
 	for (vint i = 0; i < genericType->arguments.Count(); i++)
 	{
@@ -108,7 +105,7 @@ void MatchPrimaryTemplate(
 
 		if (gArg.isVariadic != tArg.ellipsis)
 		{
-			throw StopParsingException(cursor);
+			return false;
 		}
 
 		switch (tArg.argumentType)
@@ -119,12 +116,12 @@ void MatchPrimaryTemplate(
 			{
 				if (idType->name.name != tArg.name.name)
 				{
-					throw StopParsingException(cursor);
+					return false;
 				}
 			}
 			else
 			{
-				throw StopParsingException(cursor);
+				return false;
 			}
 			break;
 		case CppTemplateArgumentType::Value:
@@ -132,16 +129,18 @@ void MatchPrimaryTemplate(
 			{
 				if (idExpr->name.name != tArg.name.name)
 				{
-					throw StopParsingException(cursor);
+					return false;
 				}
 			}
 			else
 			{
-				throw StopParsingException(cursor);
+				return false;
 			}
 			break;
 		}
 	}
+
+	return true;
 }
 
 void PrepareTemplateArgumentContext(
@@ -215,7 +214,10 @@ ITsys* StepIntoTemplateClass(
 	// the template header used in the member must be compatible with one in the class
 	auto thisSpec = (*specs)[consumedSpecs++];
 	auto classSpec = classDecl->templateSpec;
-	MatchPrimaryTemplate(pa, thisSpec, classSpec, qic.genericType, cursor);
+	if (!MatchPrimaryTemplate(pa, thisSpec, classSpec, qic.genericType))
+	{
+		throw StopParsingException(cursor);
+	}
 
 	// prepare TemplateArgumentContext and create the type
 	TemplateArgumentContext taContext;
