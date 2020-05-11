@@ -6,8 +6,6 @@
 ## Refactoring Work Items
 
 - [ ] Add exception messages so that the final application won't crash leaving nothing.
-- [ ] `CreateIdReferenceExpr`: Remove dependency to `Ptr<Resolving>`
-- [ ] `FindMembersByName`: Remove dependency to `ResolveSymbolResult`
 
 ## TODO
 
