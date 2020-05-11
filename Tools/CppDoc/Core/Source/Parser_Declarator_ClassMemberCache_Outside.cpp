@@ -7,10 +7,14 @@
 #include "Symbol_TemplateSpec.h"
 #include "EvaluateSymbol.h"
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 bool IsInTemplateHeader(const ParsingArguments& pa)
 {
 	return pa.scopeSymbol->kind == symbol_component::SymbolKind::Root && pa.scopeSymbol->GetParentScope();
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 struct QualifiedIdComponent
 {
@@ -74,10 +78,147 @@ Symbol* BreakTypeIntoQualifiedIdComponent(const ParsingArguments& pa, Ptr<symbol
 	}
 }
 
-void StepIntoTemplateClass()
-{
+////////////////////////////////////////////////////////////////////////////////////////////////
 
+ITsys* StepIntoTemplateClass(
+	const ParsingArguments& pa,
+	Ptr<symbol_component::ClassMemberCache> cache,
+	const QualifiedIdComponent& qic,
+	ClassDeclaration* classDecl,
+	List<Ptr<TemplateSpec>>* specs,
+	vint& consumedSpecs,
+	ITsys*& currentParentDeclType,
+	Ptr<CppTokenCursor>& cursor
+)
+{
+	// for template class
+	// it must be used with template arguments
+	// and a template header must be available
+	if (!qic.genericType)
+	{
+		throw StopParsingException(cursor);
+	}
+	if (!specs)
+	{
+		throw StopParsingException(cursor);
+	}
+	if (consumedSpecs == (*specs).Count())
+	{
+		throw StopParsingException(cursor);
+	}
+
+	// the template header used in the member must be compatible with one in the class
+	auto thisSpec = (*specs)[consumedSpecs++];
+	auto classSpec = classDecl->templateSpec;
+	{
+		Dictionary<WString, WString> equivalentNames;
+		if (!IsCompatibleTemplateSpec(thisSpec, classSpec, equivalentNames))
+		{
+			throw StopParsingException(cursor);
+		}
+	}
+
+	// template arguments for this class must be compatible with the template header
+	if (qic.genericType->arguments.Count() != thisSpec->arguments.Count())
+	{
+		throw StopParsingException(cursor);
+	}
+	for (vint i = 0; i < qic.genericType->arguments.Count(); i++)
+	{
+		auto& gArg = qic.genericType->arguments[i];
+		auto& tArg = thisSpec->arguments[i];
+
+		if (gArg.isVariadic != tArg.ellipsis)
+		{
+			throw StopParsingException(cursor);
+		}
+
+		switch (tArg.argumentType)
+		{
+		case CppTemplateArgumentType::HighLevelType:
+		case CppTemplateArgumentType::Type:
+			if (auto idType = gArg.item.type.Cast<IdType>())
+			{
+				if (idType->name.name != tArg.name.name)
+				{
+					throw StopParsingException(cursor);
+				}
+			}
+			else
+			{
+				throw StopParsingException(cursor);
+			}
+			break;
+		case CppTemplateArgumentType::Value:
+			if (auto idExpr = gArg.item.expr.Cast<IdExpr>())
+			{
+				if (idExpr->name.name != tArg.name.name)
+				{
+					throw StopParsingException(cursor);
+				}
+			}
+			else
+			{
+				throw StopParsingException(cursor);
+			}
+			break;
+		}
+	}
+
+	// prepare TemplateArgumentContext and create the type
+	TemplateArgumentContext taContext;
+	taContext.symbolToApply = classDecl->symbol;
+	for (vint i = 0; i < thisSpec->arguments.Count(); i++)
+	{
+		auto& tArg = thisSpec->arguments[i];
+		auto& cArg = classSpec->arguments[i];
+		auto cKey = symbol_type_resolving::GetTemplateArgumentKey(cArg.argumentSymbol, pa.tsys.Obj());
+
+		switch (tArg.argumentType)
+		{
+		case CppTemplateArgumentType::HighLevelType:
+		case CppTemplateArgumentType::Type:
+			if (tArg.ellipsis)
+			{
+				taContext.arguments.Add(cKey, pa.tsys->Any());
+			}
+			else
+			{
+				auto tValue = symbol_type_resolving::GetTemplateArgumentKey(tArg.argumentSymbol, pa.tsys.Obj());
+				taContext.arguments.Add(cKey, tValue);
+			}
+			break;
+		case CppTemplateArgumentType::Value:
+			if (tArg.ellipsis)
+			{
+				taContext.arguments.Add(cKey, pa.tsys->Any());
+			}
+			else
+			{
+				taContext.arguments.Add(cKey, nullptr);
+			}
+			break;
+		}
+	}
+
+	// evaluate the type
+	auto& classTsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl, currentParentDeclType, &taContext);
+	auto nextClass = classTsys[0];
+
+	// even when the class has no partial specialization, it could be added later
+	// so it needs to call nextClass->MakePSRecordPrimaryThis
+	nextClass->MakePSRecordPrimaryThis();
+	cache->containerClassTypes.Insert(0, nextClass);
+	cache->containerClassSpecs.Insert(0, thisSpec);
+
+	// the class is an instance of a template class
+	// types of its child classes depent on this type
+	currentParentDeclType = nextClass;
+
+	return nextClass;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 ITsys* StepIntoNonTemplateClass(
 	const ParsingArguments& pa,
@@ -105,6 +246,8 @@ ITsys* StepIntoNonTemplateClass(
 
 	return nextClass;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Ptr<Type> classType, List<Ptr<TemplateSpec>>* specs, Ptr<CppTokenCursor>& cursor)
 {
@@ -174,138 +317,13 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 
 			if (classDecl->templateSpec)
 			{
-				// for template class
-				// it must be used with template arguments
-				// and a template header must be available
-				if (!qic.genericType)
-				{
-					throw StopParsingException(cursor);
-				}
-				if (!specs)
-				{
-					throw StopParsingException(cursor);
-				}
-				if (consumedSpecs == (*specs).Count())
-				{
-					throw StopParsingException(cursor);
-				}
-
-				// the template header used in the member must be compatible with one in the class
-				auto thisSpec = (*specs)[consumedSpecs++];
-				auto classSpec = classDecl->templateSpec;
-				{
-					Dictionary<WString, WString> equivalentNames;
-					if (!IsCompatibleTemplateSpec(thisSpec, classSpec, equivalentNames))
-					{
-						throw StopParsingException(cursor);
-					}
-				}
-
-				// template arguments for this class must be compatible with the template header
-				if (qic.genericType->arguments.Count() != thisSpec->arguments.Count())
-				{
-					throw StopParsingException(cursor);
-				}
-				for (vint i = 0; i < qic.genericType->arguments.Count(); i++)
-				{
-					auto& gArg = qic.genericType->arguments[i];
-					auto& tArg = thisSpec->arguments[i];
-
-					if (gArg.isVariadic != tArg.ellipsis)
-					{
-						throw StopParsingException(cursor);
-					}
-
-					switch (tArg.argumentType)
-					{
-					case CppTemplateArgumentType::HighLevelType:
-					case CppTemplateArgumentType::Type:
-						if (auto idType = gArg.item.type.Cast<IdType>())
-						{
-							if (idType->name.name != tArg.name.name)
-							{
-								throw StopParsingException(cursor);
-							}
-						}
-						else
-						{
-							throw StopParsingException(cursor);
-						}
-						break;
-					case CppTemplateArgumentType::Value:
-						if (auto idExpr = gArg.item.expr.Cast<IdExpr>())
-						{
-							if (idExpr->name.name != tArg.name.name)
-							{
-								throw StopParsingException(cursor);
-							}
-						}
-						else
-						{
-							throw StopParsingException(cursor);
-						}
-						break;
-					}
-				}
-
-				// prepare TemplateArgumentContext and create the type
-				TemplateArgumentContext taContext;
-				taContext.symbolToApply = classSymbol;
-				for (vint i = 0; i < thisSpec->arguments.Count(); i++)
-				{
-					auto& tArg = thisSpec->arguments[i];
-					auto& cArg = classSpec->arguments[i];
-					auto cKey = symbol_type_resolving::GetTemplateArgumentKey(cArg.argumentSymbol, pa.tsys.Obj());
-
-					switch (tArg.argumentType)
-					{
-					case CppTemplateArgumentType::HighLevelType:
-					case CppTemplateArgumentType::Type:
-						if (tArg.ellipsis)
-						{
-							taContext.arguments.Add(cKey, pa.tsys->Any());
-						}
-						else
-						{
-							auto tValue = symbol_type_resolving::GetTemplateArgumentKey(tArg.argumentSymbol, pa.tsys.Obj());
-							taContext.arguments.Add(cKey, tValue);
-						}
-						break;
-					case CppTemplateArgumentType::Value:
-						if (tArg.ellipsis)
-						{
-							taContext.arguments.Add(cKey, pa.tsys->Any());
-						}
-						else
-						{
-							taContext.arguments.Add(cKey, nullptr);
-						}
-						break;
-					}
-				}
-
-				// evaluate the type
-				auto& classTsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), currentParentDeclType, &taContext);
-				auto nextClass = classTsys[0];
-
-				// even when the class has no partial specialization, it could be added later
-				// so it needs to call nextClass->MakePSRecordPrimaryThis
-				nextClass->MakePSRecordPrimaryThis();
-				cache->containerClassTypes.Insert(0, nextClass);
-				cache->containerClassSpecs.Insert(0, thisSpec);
-
-				// the class is an instance of a template class
-				// types of its child classes depent on this type
-				currentParentDeclType = nextClass;
-
-				currentNamespace = nullptr;
-				currentClass = nextClass;
+				currentClass = StepIntoTemplateClass(pa, cache, qic, classDecl.Obj(), specs, consumedSpecs, currentParentDeclType, cursor);
 			}
 			else
 			{
-				currentNamespace = nullptr;
 				currentClass = StepIntoNonTemplateClass(pa, cache, classDecl.Obj(), specs, currentParentDeclType);
 			}
+			currentNamespace = nullptr;
 		}
 	}
 
