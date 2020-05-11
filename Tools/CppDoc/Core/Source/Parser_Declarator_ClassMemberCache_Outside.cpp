@@ -19,6 +19,61 @@ struct QualifiedIdComponent
 	Ptr<GenericType>	genericType;
 };
 
+Symbol* BreakTypeIntoQualifiedIdComponent(const ParsingArguments& pa, Ptr< symbol_component::ClassMemberCache> cache, Ptr<Type> classType, List<QualifiedIdComponent>& qics, Ptr<CppTokenCursor>& cursor)
+{
+	// break class type to qualified identifier components
+
+	auto currentClassType = classType;
+	while (true)
+	{
+		QualifiedIdComponent qic;
+
+		if (auto genericType = currentClassType.Cast<GenericType>())
+		{
+			qic.genericType = genericType;
+			currentClassType = genericType->type;
+		}
+
+		if (auto childType = currentClassType.Cast<ChildType>())
+		{
+			if (Resolving::IsResolvedToType(childType->resolving))
+			{
+				qic.childType = childType;
+				qics.Add(qic);
+
+				currentClassType = childType->classType;
+			}
+			else
+			{
+				return childType->resolving->items[0].symbol;
+			}
+		}
+		else if (auto idType = currentClassType.Cast<IdType>())
+		{
+			if (Resolving::IsResolvedToType(idType->resolving))
+			{
+				qic.idType = idType;
+				qics.Add(qic);
+
+				return cache->parentScope;
+			}
+			else
+			{
+				return idType->resolving->items[0].symbol;
+			}
+			break;
+		}
+		else if (currentClassType.Cast<RootType>())
+		{
+			return pa.root.Obj();
+		}
+		else
+		{
+			throw StopParsingException(cursor);
+		}
+	}
+}
+
 Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Ptr<Type> classType, List<Ptr<TemplateSpec>>* specs, Ptr<CppTokenCursor>& cursor)
 {
 	auto cache = MakePtr<symbol_component::ClassMemberCache>();
@@ -35,72 +90,13 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 		cache->parentScope = pa.scopeSymbol;
 	}
 
-	Symbol* currentNamespace = nullptr;
 	List<QualifiedIdComponent> qics;
-	{
-		// break class type to qualified identifier components
-
-		auto currentClassType = classType;
-		while (true)
-		{
-			QualifiedIdComponent qic;
-
-			if (auto genericType = currentClassType.Cast<GenericType>())
-			{
-				qic.genericType = genericType;
-				currentClassType = genericType->type;
-			}
-
-			if (auto childType = currentClassType.Cast<ChildType>())
-			{
-				if (Resolving::IsResolvedToType(childType->resolving))
-				{
-					qic.childType = childType;
-					qics.Add(qic);
-
-					currentClassType = childType->classType;
-				}
-				else
-				{
-					currentNamespace = childType->resolving->items[0].symbol;
-					break;
-				}
-			}
-			else if (auto idType = currentClassType.Cast<IdType>())
-			{
-				if (Resolving::IsResolvedToType(idType->resolving))
-				{
-					qic.idType = idType;
-					qics.Add(qic);
-
-					currentNamespace = cache->parentScope;
-				}
-				else
-				{
-					currentNamespace = idType->resolving->items[0].symbol;
-				}
-				break;
-			}
-			else if (currentClassType.Cast<RootType>())
-			{
-				currentNamespace = pa.root.Obj();
-				break;
-			}
-			else
-			{
-				throw StopParsingException(cursor);
-			}
-		}
-
-		if (!currentNamespace || qics.Count() == 0)
-		{
-			throw StopParsingException(cursor);
-		}
-	}
-
 	ITsys* currentClass = nullptr;
 	ITsys* currentParentDeclType = nullptr;
 	vint consumedSpecs = 0;
+
+	auto currentNamespace = BreakTypeIntoQualifiedIdComponent(pa, cache, classType, qics, cursor);
+
 	{
 		// resolving each level of type
 
