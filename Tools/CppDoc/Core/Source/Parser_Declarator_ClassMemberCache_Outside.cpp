@@ -164,6 +164,7 @@ bool MatchPSTemplate(
 	{
 		return false;
 	}
+
 	for (vint i = 0; i < genericType->arguments.Count(); i++)
 	{
 		auto& gArg = genericType->arguments[i];

@@ -113,7 +113,6 @@ template<>											void G<char*, char>							(char*){}
 
 	TEST_CATEGORY(L"Members")
 	{
-		return;
 		auto input = LR"(
 namespace ns
 {
@@ -179,9 +178,9 @@ namespace ns
 	template<int _1, typename X>								template<typename Y, int _2>								template<typename Z>	void A::B<_1, X>::C::D<Y, _2>::Method(X*, Y, Z*, Z){}
 
 	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>								bool A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::field = false;
-	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>								void A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::Method(X, Y){}
-	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>	void A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::Method(X, Y*, Z, Z*){}
-	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>	void A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::Method(X*, Y, Z*, Z){}
+	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>								void A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::Method(X, Y1){}
+	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>	void A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::Method(X, Y2*, Z, Z*){}
+	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>	void A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::Method(X*, Y3, Z*, Z){}
 
 	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>														bool A::B<_1, X1(*)(X2, X3)>::C::D<Y, _2>::field = false;
 	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>														void A::B<_1, X1(*)(X2, X3)>::C::D<Y, _2>::Method(X1, Y){}
@@ -189,9 +188,9 @@ namespace ns
 	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<typename Z>	void A::B<_1, X1(*)(X2, X3)>::C::D<Y, _2>::Method(X3*, Y, Z*, Z){}
 
 	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>								bool A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::field = false;
-	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>								void A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::Method(X1, Y){}
-	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>	void A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::Method(X2, Y*, Z, Z*){}
-	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>	void A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::Method(X3*, Y, Z*, Z){}
+	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>								void A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::Method(X1, Y1){}
+	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>	void A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::Method(X2, Y2*, Z, Z*){}
+	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>	void A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::Method(X3*, Y3, Z*, Z){}
 }
 )";
 		COMPILE_PROGRAM(program, pa, input);
@@ -256,7 +255,7 @@ namespace ns
 						auto inClassDecl = inClassMembers[i];
 						auto outClassDecl = outClassMembers[i];
 
-						if (i == 0)
+						if (m == 0)
 						{
 							auto symbol = inClassDecl->symbol;
 							TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
