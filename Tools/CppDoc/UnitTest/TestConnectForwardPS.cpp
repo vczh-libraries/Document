@@ -219,7 +219,7 @@ namespace ns
 			auto& inClassMembersUnfiltered3 = pa.root
 				->TryGetChildren_NFb(L"ns")->Get(0)
 				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B")->Get(0)
+				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0)
 				->TryGetChildren_NFb(L"C")->Get(0)
 				->TryGetChildren_NFb(L"D")->Get(0)
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;

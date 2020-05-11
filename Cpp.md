@@ -37,14 +37,10 @@
       - [ ] Function overloading.
       - [ ] Function type inferencing.
     - [ ] SFINAE test cases.
+    - [ ] Test cases with different value arguments in partial specialization.
   - [ ] Partial specialization on **methods**.
-    - [ ] Parse `template<typename T> template<typename U> template<typename V> void A<T*>::B<const U&>::F(){}`.
-      - [ ] Match `template<typename X>class A<X*> { template<typename Y>class B<const Y&> { void template<typename Z>F(); }; };`.
-      - [ ] `CreatePartialClassMemberCache(Ptr<Type>)` resolve the type and match template headers instead of calling `TypeToTsysNoVta`.
-      - [ ] If multiple types are resolved, use the first one.
-    - [ ] Calls to `MakePSRecordPrimaryThis` should be updated since the type could be an instance of partial specialization class.
-      - [ ] Consider about recording all information of `containerClassTypes`, and pass the declarator again, to make precise choices.
     - [ ] SFINAE test cases.
+    - [ ] Test cases with different value arguments in partial specialization.
 - [ ] Next Demo! (Calculator)
   - [ ] Refactor the HTML generation part to becomes a library.
   - [ ] Check carefully around all links.
