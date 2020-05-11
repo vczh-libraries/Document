@@ -87,6 +87,7 @@ bool MatchPrimaryTemplate(
 	Ptr<GenericType> genericType
 )
 {
+	// the template header used in the member must be compatible with one in the class
 	Dictionary<WString, WString> equivalentNames;
 	if (!IsCompatibleTemplateSpec(thisSpec, classSpec, equivalentNames))
 	{
@@ -143,6 +144,59 @@ bool MatchPrimaryTemplate(
 	return true;
 }
 
+bool MatchPSTemplate(
+	const ParsingArguments& pa,
+	Ptr<TemplateSpec> thisSpec,
+	Ptr<TemplateSpec> classSpec,
+	Ptr<GenericType> genericType,
+	Ptr<SpecializationSpec> psSpec
+)
+{
+	// the template header used in the member must be compatible with one in the class
+	Dictionary<WString, WString> equivalentNames;
+	if (!IsCompatibleTemplateSpec(thisSpec, classSpec, equivalentNames))
+	{
+		return false;
+	}
+
+	// template arguments for this class must be compatible with the specialization spec
+	if (genericType->arguments.Count() != psSpec->arguments.Count())
+	{
+		return false;
+	}
+	for (vint i = 0; i < genericType->arguments.Count(); i++)
+	{
+		auto& gArg = genericType->arguments[i];
+		auto& sArg = psSpec->arguments[i];
+
+		if (gArg.isVariadic != sArg.isVariadic)
+		{
+			return false;
+		}
+
+		if (gArg.item.type && sArg.item.type)
+		{
+			if (!IsSameResolvedType(gArg.item.type, sArg.item.type, equivalentNames))
+			{
+				return false;
+			}
+		}
+		else if (gArg.item.expr && sArg.item.expr)
+		{
+			if (!IsSameResolvedExpr(gArg.item.expr, sArg.item.expr, equivalentNames))
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void PrepareTemplateArgumentContext(
 	const ParsingArguments& pa,
 	Ptr<TemplateSpec> thisSpec,
@@ -188,7 +242,7 @@ ITsys* StepIntoTemplateClass(
 	const ParsingArguments& pa,
 	Ptr<symbol_component::ClassMemberCache> cache,
 	const QualifiedIdComponent& qic,
-	ClassDeclaration* classDecl,
+	ClassDeclaration* primaryClassDecl,
 	List<Ptr<TemplateSpec>>* specs,
 	vint& consumedSpecs,
 	ITsys*& currentParentDeclType,
@@ -211,33 +265,36 @@ ITsys* StepIntoTemplateClass(
 		throw StopParsingException(cursor);
 	}
 
-	// the template header used in the member must be compatible with one in the class
 	auto thisSpec = (*specs)[consumedSpecs++];
-	auto classSpec = classDecl->templateSpec;
-	if (!MatchPrimaryTemplate(pa, thisSpec, classSpec, qic.genericType))
+	ITsys* nextClass = nullptr;
+
+	auto primaryClassSpec = primaryClassDecl->templateSpec;
+	if (MatchPrimaryTemplate(pa, thisSpec, primaryClassSpec, qic.genericType))
+	{
+		// prepare TemplateArgumentContext and create the type
+		TemplateArgumentContext taContext;
+		taContext.symbolToApply = primaryClassDecl->symbol;
+		PrepareTemplateArgumentContext(pa, thisSpec, primaryClassSpec, taContext);
+
+		// evaluate the type
+		auto& classTsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, primaryClassDecl, currentParentDeclType, &taContext);
+		nextClass = classTsys[0];
+
+		// even when the class has no partial specialization, it could be added later
+		// so it needs to call nextClass->MakePSRecordPrimaryThis
+		nextClass->MakePSRecordPrimaryThis();
+
+		// the class is an instance of a template class
+		// types of its child classes depent on this type
+		currentParentDeclType = nextClass;
+	}
+	else
 	{
 		throw StopParsingException(cursor);
 	}
 
-	// prepare TemplateArgumentContext and create the type
-	TemplateArgumentContext taContext;
-	taContext.symbolToApply = classDecl->symbol;
-	PrepareTemplateArgumentContext(pa, thisSpec, classSpec, taContext);
-
-	// evaluate the type
-	auto& classTsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl, currentParentDeclType, &taContext);
-	auto nextClass = classTsys[0];
-
-	// even when the class has no partial specialization, it could be added later
-	// so it needs to call nextClass->MakePSRecordPrimaryThis
-	nextClass->MakePSRecordPrimaryThis();
 	cache->containerClassTypes.Insert(0, nextClass);
 	cache->containerClassSpecs.Insert(0, thisSpec);
-
-	// the class is an instance of a template class
-	// types of its child classes depent on this type
-	currentParentDeclType = nextClass;
-
 	return nextClass;
 }
 
