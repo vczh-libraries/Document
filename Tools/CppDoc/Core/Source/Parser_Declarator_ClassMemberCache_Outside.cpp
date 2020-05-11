@@ -80,36 +80,14 @@ Symbol* BreakTypeIntoQualifiedIdComponent(const ParsingArguments& pa, Ptr<symbol
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-ITsys* StepIntoTemplateClass(
+void MatchPrimaryTemplate(
 	const ParsingArguments& pa,
-	Ptr<symbol_component::ClassMemberCache> cache,
-	const QualifiedIdComponent& qic,
-	ClassDeclaration* classDecl,
-	List<Ptr<TemplateSpec>>* specs,
-	vint& consumedSpecs,
-	ITsys*& currentParentDeclType,
+	Ptr<TemplateSpec> thisSpec,
+	Ptr<TemplateSpec> classSpec,
+	Ptr<GenericType> genericType,
 	Ptr<CppTokenCursor>& cursor
 )
 {
-	// for template class
-	// it must be used with template arguments
-	// and a template header must be available
-	if (!qic.genericType)
-	{
-		throw StopParsingException(cursor);
-	}
-	if (!specs)
-	{
-		throw StopParsingException(cursor);
-	}
-	if (consumedSpecs == (*specs).Count())
-	{
-		throw StopParsingException(cursor);
-	}
-
-	// the template header used in the member must be compatible with one in the class
-	auto thisSpec = (*specs)[consumedSpecs++];
-	auto classSpec = classDecl->templateSpec;
 	{
 		Dictionary<WString, WString> equivalentNames;
 		if (!IsCompatibleTemplateSpec(thisSpec, classSpec, equivalentNames))
@@ -119,13 +97,13 @@ ITsys* StepIntoTemplateClass(
 	}
 
 	// template arguments for this class must be compatible with the template header
-	if (qic.genericType->arguments.Count() != thisSpec->arguments.Count())
+	if (genericType->arguments.Count() != thisSpec->arguments.Count())
 	{
 		throw StopParsingException(cursor);
 	}
-	for (vint i = 0; i < qic.genericType->arguments.Count(); i++)
+	for (vint i = 0; i < genericType->arguments.Count(); i++)
 	{
-		auto& gArg = qic.genericType->arguments[i];
+		auto& gArg = genericType->arguments[i];
 		auto& tArg = thisSpec->arguments[i];
 
 		if (gArg.isVariadic != tArg.ellipsis)
@@ -164,10 +142,15 @@ ITsys* StepIntoTemplateClass(
 			break;
 		}
 	}
+}
 
-	// prepare TemplateArgumentContext and create the type
-	TemplateArgumentContext taContext;
-	taContext.symbolToApply = classDecl->symbol;
+void PrepareTemplateArgumentContext(
+	const ParsingArguments& pa,
+	Ptr<TemplateSpec> thisSpec,
+	Ptr<TemplateSpec> classSpec,
+	TemplateArgumentContext& taContext
+)
+{
 	for (vint i = 0; i < thisSpec->arguments.Count(); i++)
 	{
 		auto& tArg = thisSpec->arguments[i];
@@ -200,6 +183,44 @@ ITsys* StepIntoTemplateClass(
 			break;
 		}
 	}
+}
+
+ITsys* StepIntoTemplateClass(
+	const ParsingArguments& pa,
+	Ptr<symbol_component::ClassMemberCache> cache,
+	const QualifiedIdComponent& qic,
+	ClassDeclaration* classDecl,
+	List<Ptr<TemplateSpec>>* specs,
+	vint& consumedSpecs,
+	ITsys*& currentParentDeclType,
+	Ptr<CppTokenCursor>& cursor
+)
+{
+	// for template class
+	// it must be used with template arguments
+	// and a template header must be available
+	if (!qic.genericType)
+	{
+		throw StopParsingException(cursor);
+	}
+	if (!specs)
+	{
+		throw StopParsingException(cursor);
+	}
+	if (consumedSpecs == (*specs).Count())
+	{
+		throw StopParsingException(cursor);
+	}
+
+	// the template header used in the member must be compatible with one in the class
+	auto thisSpec = (*specs)[consumedSpecs++];
+	auto classSpec = classDecl->templateSpec;
+	MatchPrimaryTemplate(pa, thisSpec, classSpec, qic.genericType, cursor);
+
+	// prepare TemplateArgumentContext and create the type
+	TemplateArgumentContext taContext;
+	taContext.symbolToApply = classDecl->symbol;
+	PrepareTemplateArgumentContext(pa, thisSpec, classSpec, taContext);
 
 	// evaluate the type
 	auto& classTsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl, currentParentDeclType, &taContext);
