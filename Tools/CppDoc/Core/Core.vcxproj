@@ -167,7 +167,6 @@
     <ClInclude Include="Source\PSO.h" />
     <ClInclude Include="Source\Ast_Stat.h" />
     <ClInclude Include="Source\Ast_Type.h" />
-    <ClInclude Include="Source\IncludeAll.h" />
     <ClInclude Include="Source\Lexer.h" />
     <ClInclude Include="Source\LexerTokenDef.h" />
     <ClInclude Include="Source\Parser.h" />
