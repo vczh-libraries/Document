@@ -251,31 +251,34 @@ namespace ns
 				{
 					for (vint m = 0; m < 4; m++)
 					{
-						vint i = c * 4 + m;
-						auto inClassDecl = inClassMembers[i];
-						auto outClassDecl = outClassMembers[i];
-
-						if (m == 0)
+						TEST_CATEGORY(L"Member " + itow(m))
 						{
-							auto symbol = inClassDecl->symbol;
-							TEST_CASE_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
+							vint i = c * 4 + m;
+							auto inClassDecl = inClassMembers[i];
+							auto outClassDecl = outClassMembers[i];
 
-							TEST_CASE_ASSERT(symbol->GetImplDecl_NFb() == outClassDecl);
+							if (m == 0)
+							{
+								auto symbol = inClassDecl->symbol;
+								TEST_CASE_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
 
-							TEST_CASE_ASSERT(symbol->GetForwardDecls_N().Count() == 1);
-							TEST_CASE_ASSERT(symbol->GetForwardDecls_N()[0] == inClassDecl);
-						}
-						else
-						{
-							auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
-							TEST_CASE_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
+								TEST_CASE_ASSERT(symbol->GetImplDecl_NFb() == outClassDecl);
 
-							TEST_CASE_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
-							TEST_CASE_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
+								TEST_CASE_ASSERT(symbol->GetForwardDecls_N().Count() == 1);
+								TEST_CASE_ASSERT(symbol->GetForwardDecls_N()[0] == inClassDecl);
+							}
+							else
+							{
+								auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
+								TEST_CASE_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
 
-							TEST_CASE_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
-							TEST_CASE_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
-						}
+								TEST_CASE_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
+								TEST_CASE_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
+
+								TEST_CASE_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
+								TEST_CASE_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
+							}
+						});
 					}
 				});
 			}
@@ -423,32 +426,35 @@ namespace ns
 					Symbol* primary = nullptr;
 					for (vint m = 0; m < 4; m++)
 					{
-						vint i = c * 4 + m;
-						auto inClassDecl = inClassMembers[i];
-						auto outClassDecl = outClassMembers[i];
-
-						auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
-						TEST_CASE_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
-
-						TEST_CASE_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
-						TEST_CASE_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
-
-						TEST_CASE_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
-						TEST_CASE_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
-
-						if (m == 0)
+						TEST_CATEGORY(L"Member " + itow(m))
 						{
-							primary = symbol;
-							TEST_CASE_ASSERT(primary->IsPSPrimary_NF() == true);
-							TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 3);
-							TEST_CASE_ASSERT(primary->GetPSPrimaryDescendants_NF().Count() == 3);
-						}
-						else
-						{
-							TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == primary);
-							TEST_CASE_ASSERT(symbol->GetPSParents_NF().Count() == 1);
-							TEST_CASE_ASSERT(symbol->GetPSParents_NF()[0] == primary);
-						}
+							vint i = c * 4 + m;
+							auto inClassDecl = inClassMembers[i];
+							auto outClassDecl = outClassMembers[i];
+
+							auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
+							TEST_CASE_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
+
+							TEST_CASE_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
+							TEST_CASE_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
+
+							TEST_CASE_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
+							TEST_CASE_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
+
+							if (m == 0)
+							{
+								primary = symbol;
+								TEST_CASE_ASSERT(primary->IsPSPrimary_NF() == true);
+								TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 3);
+								TEST_CASE_ASSERT(primary->GetPSPrimaryDescendants_NF().Count() == 3);
+							}
+							else
+							{
+								TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == primary);
+								TEST_CASE_ASSERT(symbol->GetPSParents_NF().Count() == 1);
+								TEST_CASE_ASSERT(symbol->GetPSParents_NF()[0] == primary);
+							}
+						});
 					}
 				});
 			}
