@@ -247,7 +247,7 @@ namespace ns
 
 			for (vint c = 0; c < 4; c++)
 			{
-				TEST_CASE(L"Category " + itow(c))
+				TEST_CATEGORY(L"Category " + itow(c))
 				{
 					for (vint m = 0; m < 4; m++)
 					{
@@ -258,23 +258,23 @@ namespace ns
 						if (m == 0)
 						{
 							auto symbol = inClassDecl->symbol;
-							TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
+							TEST_CASE_ASSERT(symbol->kind == symbol_component::SymbolKind::Variable);
 
-							TEST_ASSERT(symbol->GetImplDecl_NFb() == outClassDecl);
+							TEST_CASE_ASSERT(symbol->GetImplDecl_NFb() == outClassDecl);
 
-							TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 1);
-							TEST_ASSERT(symbol->GetForwardDecls_N()[0] == inClassDecl);
+							TEST_CASE_ASSERT(symbol->GetForwardDecls_N().Count() == 1);
+							TEST_CASE_ASSERT(symbol->GetForwardDecls_N()[0] == inClassDecl);
 						}
 						else
 						{
 							auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
-							TEST_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
+							TEST_CASE_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
 
-							TEST_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
-							TEST_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
+							TEST_CASE_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
+							TEST_CASE_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
 
-							TEST_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
-							TEST_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
+							TEST_CASE_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
+							TEST_CASE_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
 						}
 					}
 				});
@@ -284,6 +284,174 @@ namespace ns
 
 	TEST_CATEGORY(L"Methods")
 	{
-		// TODO:
+		auto input = LR"(
+namespace ns
+{
+	struct A
+	{
+		template<int X, typename T>
+		struct B
+		{
+			struct C
+			{
+				template<typename U, int Y>
+				struct D
+				{
+					template<typename V, typename... Vs>	V Method(Vs...);
+					template<>								void Method<void, T, U>(T, U);
+					template<typename V>					void Method<void, T, U*, V, V*>(T, U*, V, V*);
+					template<typename V>					void Method<void, T*, U, V*, V>(T*, U, V*, V);
+				};
+
+				template<int Y, typename U1, typename U2, typename U3>
+				struct D<U1(*)(U2, U3), Y>
+				{
+					template<typename V, typename... Vs>	V Method(Vs...);
+					template<>								void Method<void, T, U1>(T, U1);
+					template<typename V>					void Method<void, T, U2*, V, V*>(T, U2*, V, V*);
+					template<typename V>					void Method<void, T*, U3, V*, V>(T*, U3, V*, V);
+				};
+			};
+		};
+
+		template<typename T1, typename T2, typename T3, int X>
+		struct B<X, T1(*)(T2, T3)>
+		{
+			struct C
+			{
+				template<typename U, int Y>
+				struct D
+				{
+					template<typename V, typename... Vs>	V Method(Vs...);
+					template<>								void Method<void, T1, U>(T1, U);
+					template<typename V>					void Method<void, T2, U*, V, V*>(T2, U*, V, V*);
+					template<typename V>					void Method<void, T3*, U, V*, V>(T3*, U, V*, V);
+				};
+
+				template<int Y, typename U1, typename U2, typename U3>
+				struct D<U1(*)(U2, U3), Y>
+				{
+					template<typename V, typename... Vs>	V Method(Vs...);
+					template<>								void Method<void, T1, U1>(T1, U1);
+					template<typename V>					void Method<void, T2, U2*, V, V*>(T2, U2*, V, V*);
+					template<typename V>					void Method<void, T3*, U3, V*, V>(T3*, U3, V*, V);
+				};
+			};
+		};
+	};
+}
+
+namespace ns
+{
+	template<int _1, typename X>								template<typename Y, int _2>								template<typename Z, typename Zs...>	Z A::B<_1, X>::C::D<Y, _2>::Method(Zs...);
+	template<int _1, typename X>								template<typename Y, int _2>								template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X, Y>(X, Y){}
+	template<int _1, typename X>								template<typename Y, int _2>								template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X, Y*, Z, Z*>(X, Y*, Z, Z*){}
+	template<int _1, typename X>								template<typename Y, int _2>								template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X*, Y, Z*, Z>(X*, Y, Z*, Z){}
+
+	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z, typename Zs...>	Z A::B<_1, X>::C::D<Y, _2>::Method(Zs...);
+	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X, Y1>(X, Y1){}
+	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X, Y2*, Z, Z*>(X, Y2*, Z, Z*){}
+	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X*, Y3, Z*, Z>(X*, Y3, Z*, Z){}
+
+	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<typename Z, typename Zs...>	Z A::B<_1, X>::C::D<Y, _2>::Method(Zs...);
+	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X1, Y>(X1, Y){}
+	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X2, Y*, Z, Z*>(X2, Y*, Z, Z*){}
+	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X3*, Y, Z*, Z>(X3*, Y, Z*, Z){}
+
+	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z, typename Zs...>	Z A::B<_1, X>::C::D<Y, _2>::Method(Zs...);
+	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X1, Y1>(X1, Y1){}
+	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X2, Y2*, Z, Z*>(X2, Y2*, Z, Z*){}
+	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X3*, Y3, Z*, Z>(X3*, Y3, Z*, Z){}
+}
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		TEST_CATEGORY(L"Checking connections")
+		{
+			using Item = Tuple<CppClassAccessor, Ptr<Declaration>>;
+			List<Ptr<Declaration>> inClassMembers;
+
+			auto& inClassMembersUnfiltered1 = pa.root
+				->TryGetChildren_NFb(L"ns")->Get(0)
+				->TryGetChildren_NFb(L"A")->Get(0)
+				->TryGetChildren_NFb(L"B")->Get(0)
+				->TryGetChildren_NFb(L"C")->Get(0)
+				->TryGetChildren_NFb(L"D")->Get(0)
+				->GetImplDecl_NFb<ClassDeclaration>()->decls;
+
+			auto& inClassMembersUnfiltered2 = pa.root
+				->TryGetChildren_NFb(L"ns")->Get(0)
+				->TryGetChildren_NFb(L"A")->Get(0)
+				->TryGetChildren_NFb(L"B")->Get(0)
+				->TryGetChildren_NFb(L"C")->Get(0)
+				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0)
+				->GetImplDecl_NFb<ClassDeclaration>()->decls;
+
+			auto& inClassMembersUnfiltered3 = pa.root
+				->TryGetChildren_NFb(L"ns")->Get(0)
+				->TryGetChildren_NFb(L"A")->Get(0)
+				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0)
+				->TryGetChildren_NFb(L"C")->Get(0)
+				->TryGetChildren_NFb(L"D")->Get(0)
+				->GetImplDecl_NFb<ClassDeclaration>()->decls;
+
+			auto& inClassMembersUnfiltered4 = pa.root
+				->TryGetChildren_NFb(L"ns")->Get(0)
+				->TryGetChildren_NFb(L"A")->Get(0)
+				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0)
+				->TryGetChildren_NFb(L"C")->Get(0)
+				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0)
+				->GetImplDecl_NFb<ClassDeclaration>()->decls;
+
+#define FILTER_CONDITION .Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; })
+			CopyFrom(inClassMembers, From(inClassMembersUnfiltered1) FILTER_CONDITION, true);
+			CopyFrom(inClassMembers, From(inClassMembersUnfiltered2) FILTER_CONDITION, true);
+			CopyFrom(inClassMembers, From(inClassMembersUnfiltered3) FILTER_CONDITION, true);
+			CopyFrom(inClassMembers, From(inClassMembersUnfiltered4) FILTER_CONDITION, true);
+#undef FILTER_CONDITION
+			TEST_CASE_ASSERT(inClassMembers.Count() == 16);
+
+			auto& outClassMembers = pa.root
+				->TryGetChildren_NFb(L"ns")->Get(0)
+				->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
+			TEST_CASE_ASSERT(outClassMembers.Count() == 16);
+
+			for (vint c = 0; c < 4; c++)
+			{
+				TEST_CATEGORY(L"Category " + itow(c))
+				{
+					Symbol* primary = nullptr;
+					for (vint m = 0; m < 4; m++)
+					{
+						vint i = c * 4 + m;
+						auto inClassDecl = inClassMembers[i];
+						auto outClassDecl = outClassMembers[i];
+
+						auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
+						TEST_CASE_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
+
+						TEST_CASE_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
+						TEST_CASE_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
+
+						TEST_CASE_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
+						TEST_CASE_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
+
+						if (m == 0)
+						{
+							primary = symbol;
+							TEST_CASE_ASSERT(primary->IsPSPrimary_NF() == true);
+							TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 3);
+							TEST_CASE_ASSERT(primary->GetPSPrimaryDescendants_NF().Count() == 3);
+						}
+						else
+						{
+							TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == primary);
+							TEST_CASE_ASSERT(symbol->GetPSParents_NF().Count() == 1);
+							TEST_CASE_ASSERT(symbol->GetPSParents_NF()[0] == primary);
+						}
+					}
+				});
+			}
+		});
 	});
 }

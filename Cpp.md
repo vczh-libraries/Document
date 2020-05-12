@@ -25,20 +25,21 @@
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Partial specialization constructions
   - [ ] Partial specialization on **classes**.
-    - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
     - [ ] `EvaluateClassPSRecord`
       - [x] Add `ITsys::GetPSRecord`, containing `version`, `primary` and `instances`.
         - [ ] Refresh `primary` when it is null and `version` is -1.
     - [ ] When comparing two `Decl` or `DeclInstance` or matching for type inferencing, if `version` of any instance is -1, `primary` is used instead.
-    - [ ] Function test cases
+    - [ ] Test
       - [ ] Using pointers to member or `this` of a partial specialization instances as parameters.
       - [ ] Function overloading.
       - [ ] Function type inferencing.
-    - [ ] SFINAE test cases.
-    - [ ] Test cases with different value arguments in partial specialization.
+      - [ ] SFINAE test cases.
+      - [ ] Test cases with different value arguments in partial specialization.
+      - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
   - [ ] Partial specialization on **methods**.
-    - [ ] SFINAE test cases.
-    - [ ] Test cases with different value arguments in partial specialization.
+    - [ ] Test
+      - [ ] SFINAE test cases.
+      - [ ] Test cases with different value arguments in partial specialization.
 - [ ] Next Demo! (Calculator)
   - [ ] Refactor the HTML generation part to becomes a library.
   - [ ] Check carefully around all links.
