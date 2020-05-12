@@ -226,6 +226,10 @@ namespace partial_specification_ordering
 					if (result->source.Count() == assignedCount)
 					{
 						auto matchType = result->source[matchIndex];
+						if (forParameter)
+						{
+							matchType = FixFunctionParameterType(matchType);
+						}
 						if (matchType && resultType)
 						{
 							if (!IsSameResolvedType(matchType, resultType, equivalentNames))
