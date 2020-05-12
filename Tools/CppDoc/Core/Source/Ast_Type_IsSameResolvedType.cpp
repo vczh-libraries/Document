@@ -618,37 +618,41 @@ bool IsCompatibleFunctionDeclInSameScope(Ptr<symbol_component::ClassMemberCache>
 	if (declNew->methodType != declOld->methodType) return false;
 
 	Dictionary<WString, WString> equivalentNames;
-	if (!IsCompatibleTemplateSpec(declNew->templateSpec, declOld->templateSpec, equivalentNames))
+
+	// collect template argument renaming from containing class template headers
+	if (cacheNew && cacheNew->containerClassSpecs.Count() > 0)
 	{
-		return false;
-	}
-	if (!IsCompatibleSpecializationSpec(declNew->specializationSpec, declOld->specializationSpec, equivalentNames))
-	{
-		return false;
-	}
-	if (auto funcDecl = declNew.Cast<FunctionDeclaration>())
-	{
-		if (cacheNew && cacheNew->containerClassSpecs.Count() > 0)
+		for (vint i = 0; i < cacheNew->containerClassTypes.Count(); i++)
 		{
-			for (vint i = 0; i < cacheNew->containerClassTypes.Count(); i++)
+			auto tsys = cacheNew->containerClassTypes[i];
+			auto spec = cacheNew->containerClassSpecs[i];
+			if (spec)
 			{
-				auto tsys = cacheNew->containerClassTypes[i];
-				auto spec = cacheNew->containerClassSpecs[i];
-				if (spec)
+				auto classSpec = tsys->GetDecl()->GetImplDecl_NFb<ClassDeclaration>()->templateSpec;
+				if (!IsCompatibleTemplateSpec(spec, classSpec, equivalentNames))
 				{
-					auto classSpec = tsys->GetDecl()->GetImplDecl_NFb<ClassDeclaration>()->templateSpec;
-					if (!IsCompatibleTemplateSpec(spec, classSpec, equivalentNames))
-					{
-						return false;
-					}
+					return false;
 				}
 			}
 		}
 	}
 
+	// collect template argument renaming from the function template header
+	if (!IsCompatibleTemplateSpec(declNew->templateSpec, declOld->templateSpec, equivalentNames))
+	{
+		return false;
+	}
+
+	// check if specialization specs are compatible
+	if (!IsCompatibleSpecializationSpec(declNew->specializationSpec, declOld->specializationSpec, equivalentNames))
+	{
+		return false;
+	}
+
 	auto typeNew = declNew->type;
 	auto typeOld = declOld->type;
 
+	// don't care about containing classes and calling convention for the incoming function
 	while (true)
 	{
 		if (auto memberType = typeNew.Cast<MemberType>())
@@ -665,6 +669,7 @@ bool IsCompatibleFunctionDeclInSameScope(Ptr<symbol_component::ClassMemberCache>
 		}
 	}
 
+	// don't care about containing classes and calling convention for the function to compare
 	while (true)
 	{
 		if (auto memberType = typeOld.Cast<MemberType>())
@@ -688,15 +693,19 @@ bool IsCompatibleFunctionDeclInSameScope(Ptr<symbol_component::ClassMemberCache>
 		return false;
 	}
 
+	// check if function configurations are compatible
 	if (!IsSameResolvedTypeVisitor::IsFunctionTypeConfigCompatible(funcNew.Obj(), funcOld.Obj()))
 	{
 		return false;
 	}
 
+	// check if function return types are compatible
 	if (!IsSameResolvedType(funcNew->returnType, funcOld->returnType, equivalentNames))
 	{
 		return false;
 	}
+
+	// check if function parameter types are compatible, and collect parameter renamings
 	for (vint i = 0; i < funcNew->parameters.Count(); i++)
 	{
 		auto newParam = funcNew->parameters[i].item;
@@ -710,9 +719,12 @@ bool IsCompatibleFunctionDeclInSameScope(Ptr<symbol_component::ClassMemberCache>
 			return false;
 		}
 	}
+
+	// check if function return types are compatible
 	if (!IsSameResolvedType(funcNew->decoratorReturnType, funcOld->decoratorReturnType, equivalentNames))
 	{
 		return false;
 	}
+
 	return true;
 }
