@@ -299,8 +299,8 @@ namespace ns
 				{
 					template<typename V, typename... Vs>	V Method(Vs...);
 					template<>								void Method<void, T, U>(T, U);
-					template<typename V>					void Method<void, T, U*, V, V*>(T, U*, V, V*);
-					template<typename V>					void Method<void, T*, U, V*, V>(T*, U, V*, V);
+					template<>								void Method<void, T, U*, bool, bool*>(T, U*, bool, bool*);
+					template<>								void Method<void, T*, U, bool*, bool>(T*, U, bool*, bool);
 				};
 
 				template<int Y, typename U1, typename U2, typename U3>
@@ -308,8 +308,8 @@ namespace ns
 				{
 					template<typename V, typename... Vs>	V Method(Vs...);
 					template<>								void Method<void, T, U1>(T, U1);
-					template<typename V>					void Method<void, T, U2*, V, V*>(T, U2*, V, V*);
-					template<typename V>					void Method<void, T*, U3, V*, V>(T*, U3, V*, V);
+					template<>								void Method<void, T, U2*, bool, bool*>(T, U2*, bool, bool*);
+					template<>								void Method<void, T*, U3, bool*, bool>(T*, U3, bool*, bool);
 				};
 			};
 		};
@@ -324,8 +324,8 @@ namespace ns
 				{
 					template<typename V, typename... Vs>	V Method(Vs...);
 					template<>								void Method<void, T1, U>(T1, U);
-					template<typename V>					void Method<void, T2, U*, V, V*>(T2, U*, V, V*);
-					template<typename V>					void Method<void, T3*, U, V*, V>(T3*, U, V*, V);
+					template<>								void Method<void, T2, U*, bool, bool*>(T2, U*, bool, bool*);
+					template<>								void Method<void, T3*, U, bool*, bool>(T3*, U, bool*, bool);
 				};
 
 				template<int Y, typename U1, typename U2, typename U3>
@@ -333,8 +333,8 @@ namespace ns
 				{
 					template<typename V, typename... Vs>	V Method(Vs...);
 					template<>								void Method<void, T1, U1>(T1, U1);
-					template<typename V>					void Method<void, T2, U2*, V, V*>(T2, U2*, V, V*);
-					template<typename V>					void Method<void, T3*, U3, V*, V>(T3*, U3, V*, V);
+					template<>								void Method<void, T2, U2*, bool, bool*>(T2, U2*, bool, bool*);
+					template<>								void Method<void, T3*, U3, bool*, bool>(T3*, U3, bool*, bool);
 				};
 			};
 		};
@@ -345,23 +345,23 @@ namespace ns
 {
 	template<int _1, typename X>								template<typename Y, int _2>								template<typename Z, typename Zs...>	Z A::B<_1, X>::C::D<Y, _2>::Method(Zs...);
 	template<int _1, typename X>								template<typename Y, int _2>								template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X, Y>(X, Y){}
-	template<int _1, typename X>								template<typename Y, int _2>								template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X, Y*, Z, Z*>(X, Y*, Z, Z*){}
-	template<int _1, typename X>								template<typename Y, int _2>								template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X*, Y, Z*, Z>(X*, Y, Z*, Z){}
+	template<int _1, typename X>								template<typename Y, int _2>								template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X, Y*, bool, bool*>(X, Y*, bool, bool*){}
+	template<int _1, typename X>								template<typename Y, int _2>								template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X*, Y, bool*, bool>(X*, Y, bool*, bool){}
 
 	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z, typename Zs...>	Z A::B<_1, X>::C::D<Y, _2>::Method(Zs...);
 	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X, Y1>(X, Y1){}
-	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X, Y2*, Z, Z*>(X, Y2*, Z, Z*){}
-	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X*, Y3, Z*, Z>(X*, Y3, Z*, Z){}
+	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X, Y2*, bool, bool*>(X, Y2*, bool, bool*){}
+	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X*, Y3, bool*, bool>(X*, Y3, bool*, bool){}
 
 	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<typename Z, typename Zs...>	Z A::B<_1, X>::C::D<Y, _2>::Method(Zs...);
 	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X1, Y>(X1, Y){}
-	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X2, Y*, Z, Z*>(X2, Y*, Z, Z*){}
-	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X3*, Y, Z*, Z>(X3*, Y, Z*, Z){}
+	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X2, Y*, bool, bool*>(X2, Y*, bool, bool*){}
+	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X3*, Y, bool*, bool>(X3*, Y, bool*, bool){}
 
 	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z, typename Zs...>	Z A::B<_1, X>::C::D<Y, _2>::Method(Zs...);
 	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X1, Y1>(X1, Y1){}
-	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X2, Y2*, Z, Z*>(X2, Y2*, Z, Z*){}
-	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z>					void A::B<_1, X>::C::D<Y, _2>::Method<void, X3*, Y3, Z*, Z>(X3*, Y3, Z*, Z){}
+	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X2, Y2*, bool, bool*>(X2, Y2*, bool, bool*){}
+	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<>								void A::B<_1, X>::C::D<Y, _2>::Method<void, X3*, Y3, bool*, bool>(X3*, Y3, bool*, bool){}
 }
 )";
 		COMPILE_PROGRAM(program, pa, input);
