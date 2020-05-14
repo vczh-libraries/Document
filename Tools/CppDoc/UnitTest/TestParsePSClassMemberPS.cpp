@@ -649,5 +649,40 @@ Field<U> A<int>::E(char, ...)const
 
 	TEST_CATEGORY(L"Members in base classes")
 	{
+		auto input = LR"(
+template<typename T>
+struct Id
+{
+	using Type = T;
+	using Self = Id;
+	T Get();
+};
+
+template<typename T>
+struct Id<T*> : Id<T>
+{
+};
+
+template<typename T>
+struct Id<const T> : Id<T>
+{
+};
+
+template<typename T>
+struct Ptr : Id<T*>
+{
+};
+
+template<typename T>
+struct ConstPtr : Ptr<const T>
+{
+};
+)";
+
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertType(pa, L"ConstPtr<int>::Type", L"ConstPtr<int> :: Type", L"__int32");
+		AssertType(pa, L"ConstPtr<int>::Self", L"ConstPtr<int> :: Self", L"::Id<__int32>");
+		AssertExpr(pa, L"ConstPtr<int>().Get()", L"ConstPtr<int>().Get()", L"__int32 $PR");
 	});
 }
