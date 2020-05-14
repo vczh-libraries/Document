@@ -25,9 +25,7 @@
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Partial specialization constructions
   - [ ] Partial specialization on **classes**.
-    - [ ] `EvaluateClassPSRecord`
-      - [x] Add `ITsys::GetPSRecord`, containing `version`, `primary` and `instances`.
-        - [ ] Refresh `primary` when it is null and `version` is -1.
+    - [ ] `EvaluateClassPSRecord` refresh `primary` when it is null and `version` is -1.
     - [ ] When comparing two `Decl` or `DeclInstance` or matching for type inferencing, if `version` of any instance is -1, `primary` is used instead.
     - [ ] Test
       - [ ] Calling `B` in an instantiated `template<...> struct A<...> { template<...> struct B<...> {} };`, except all arguments in both A and B are preserved.
@@ -47,6 +45,7 @@
     - [ ] Extract `<div>` token rendering functions.
     - [ ] Template arguments are not located in HTML.
     - [ ] There are 3 `TEST_CATEGORY(L"Re-index")` containing `ASSERT_SYMBOL(..., void, -1. -1)`, make them not `-1`.
+    - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
     - [ ] `expr->Accept` should have 3 links.
 - [ ] Lambda expressions.
 - [ ] Next Demo! (Vlpp)
