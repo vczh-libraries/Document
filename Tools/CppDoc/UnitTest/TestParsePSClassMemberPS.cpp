@@ -279,8 +279,65 @@ const Z<int, double>* const pcz;
 		AssertExpr(pa, L"pcz->operator[](0)",		L"pcz->operator [](0)",			L"::X<__int32 volatile, double const> $PR"					);
 	});
 
+	auto TestParseGenericMember_InsideFunction = [](const ParsingArguments& pa, const WString& className, const WString& methodName)
+	{
+		auto classSymbol = pa.scopeSymbol->TryGetChildren_NFb(className)->Get(0);
+		auto functionSymbol = classSymbol->TryGetChildren_NFb(methodName)->Get(0);
+		auto functionBodySymbol = functionSymbol->GetImplSymbols_F()[0];
+		return functionBodySymbol->TryGetChildren_NFb(L"$")->Get(0).Obj();
+	};
+
 	TEST_CATEGORY(L"Qualifiers and this")
 	{
+		auto input = LR"(
+template<typename Tx, typename Ty>
+struct X
+{
+	Tx x;
+	Ty y;
+};
+
+template<typename Tx, typename Ty>
+struct Z
+{
+};
+
+template<typename Tx, typename Ty>
+struct Z<const Tx, volatile Ty>
+{
+	X<volatile Tx, const Ty>* operator->()const;
+	volatile X<const Tx, volatile Ty>* operator->();
+	X<volatile Tx, const Ty> operator()(int)const;
+	X<const Tx, volatile Ty> operator()(int);
+	X<volatile Tx, const Ty> operator[](int)const;
+	X<const Tx, volatile Ty> operator[](int);
+
+	void M(){}
+	void C()const{}
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		{
+			auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"Z@<[Tx] const, [Ty] volatile>", L"M"));
+
+			AssertExpr(spa, L"operator->()",			L"operator ->()",				L"::X<::Z@<[Tx] const, [Ty] volatile>::[Tx] const, ::Z@<[Tx] const, [Ty] volatile>::[Ty] volatile> volatile * $PR"		);
+			AssertExpr(spa, L"operator()(0)",			L"operator ()(0)",				L"::X<::Z@<[Tx] const, [Ty] volatile>::[Tx] const, ::Z@<[Tx] const, [Ty] volatile>::[Ty] volatile> $PR"					);
+			AssertExpr(spa, L"operator[](0)",			L"operator [](0)",				L"::X<::Z@<[Tx] const, [Ty] volatile>::[Tx] const, ::Z@<[Tx] const, [Ty] volatile>::[Ty] volatile> $PR"					);
+			AssertExpr(spa, L"(*this)->x",				L"((* this))->x",				L"::Z@<[Tx] const, [Ty] volatile>::[Tx] const volatile $L"																);
+			AssertExpr(spa, L"(*this)(0)",				L"((* this))(0)",				L"::X<::Z@<[Tx] const, [Ty] volatile>::[Tx] const, ::Z@<[Tx] const, [Ty] volatile>::[Ty] volatile> $PR"					);
+			AssertExpr(spa, L"(*this)[0]",				L"((* this))[0]",				L"::X<::Z@<[Tx] const, [Ty] volatile>::[Tx] const, ::Z@<[Tx] const, [Ty] volatile>::[Ty] volatile> $PR"					);
+		}
+		{
+			auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"Z@<[Tx] const, [Ty] volatile>", L"C"));
+
+			AssertExpr(spa, L"operator->()",			L"operator ->()",				L"::X<::Z@<[Tx] const, [Ty] volatile>::[Tx] volatile, ::Z@<[Tx] const, [Ty] volatile>::[Ty] const> * $PR"				);
+			AssertExpr(spa, L"operator()(0)",			L"operator ()(0)",				L"::X<::Z@<[Tx] const, [Ty] volatile>::[Tx] volatile, ::Z@<[Tx] const, [Ty] volatile>::[Ty] const> $PR"					);
+			AssertExpr(spa, L"operator[](0)",			L"operator [](0)",				L"::X<::Z@<[Tx] const, [Ty] volatile>::[Tx] volatile, ::Z@<[Tx] const, [Ty] volatile>::[Ty] const> $PR"					);
+			AssertExpr(spa, L"(*this)->x",				L"((* this))->x",				L"::Z@<[Tx] const, [Ty] volatile>::[Tx] volatile $L"																	);
+			AssertExpr(spa, L"(*this)(0)",				L"((* this))(0)",				L"::X<::Z@<[Tx] const, [Ty] volatile>::[Tx] volatile, ::Z@<[Tx] const, [Ty] volatile>::[Ty] const> $PR"					);
+			AssertExpr(spa, L"(*this)[0]",				L"((* this))[0]",				L"::X<::Z@<[Tx] const, [Ty] volatile>::[Tx] volatile, ::Z@<[Tx] const, [Ty] volatile>::[Ty] const> $PR"					);
+		}
 	});
 
 	TEST_CATEGORY(L"Address of members")
