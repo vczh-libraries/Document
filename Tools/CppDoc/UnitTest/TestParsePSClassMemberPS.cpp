@@ -181,6 +181,102 @@ const X<int, double>* cpx;
 
 	TEST_CATEGORY(L"Qualifiers")
 	{
+		auto input = LR"(
+template<typename Tx, typename Ty>
+struct X
+{
+	Tx x;
+	Ty y;
+};
+
+template<typename Tx, typename Ty>
+struct X<volatile Tx, const Ty>
+{
+	Tx x;
+	Ty y;
+};
+
+template<typename Tx, typename Ty>
+struct X<const Tx, volatile Ty>
+{
+	Tx x;
+	Ty y;
+};
+
+template<typename Tx, typename Ty>
+struct Z
+{
+	X<volatile Tx, const Ty>* operator->()const;
+	volatile X<const Tx, volatile Ty>* operator->();
+	X<volatile Tx, const Ty> operator()(int)const;
+	X<const Tx, volatile Ty> operator()(int);
+	X<volatile Tx, const Ty> operator[](int)const;
+	X<const Tx, volatile Ty> operator[](int);
+};
+
+Z<int, double> z;
+const Z<int, double> cz;
+
+Z<int, double>& lz;
+const Z<int, double>& lcz;
+
+Z<int, double>&& rz;
+const Z<int, double>&& rcz;
+
+Z<int, double>* const pz;
+const Z<int, double>* const pcz;
+	)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa, L"z.operator->()",			L"z.operator ->()",				L"::X<__int32 const, double volatile> volatile * $PR"		);
+		AssertExpr(pa, L"z.operator()(0)",			L"z.operator ()(0)",			L"::X<__int32 const, double volatile> $PR"					);
+		AssertExpr(pa, L"z.operator[](0)",			L"z.operator [](0)",			L"::X<__int32 const, double volatile> $PR"					);
+		AssertExpr(pa, L"z->x",						L"z->x",						L"__int32 volatile $L"										);
+		AssertExpr(pa, L"z(0)",						L"z(0)",						L"::X<__int32 const, double volatile> $PR"					);
+		AssertExpr(pa, L"z[0]",						L"z[0]",						L"::X<__int32 const, double volatile> $PR"					);
+
+		AssertExpr(pa, L"cz.operator->()",			L"cz.operator ->()",			L"::X<__int32 volatile, double const> * $PR"				);
+		AssertExpr(pa, L"cz.operator()(0)",			L"cz.operator ()(0)",			L"::X<__int32 volatile, double const> $PR"					);
+		AssertExpr(pa, L"cz.operator[](0)",			L"cz.operator [](0)",			L"::X<__int32 volatile, double const> $PR"					);
+		AssertExpr(pa, L"cz->x",					L"cz->x",						L"__int32 $L"												);
+		AssertExpr(pa, L"cz(0)",					L"cz(0)",						L"::X<__int32 volatile, double const> $PR"					);
+		AssertExpr(pa, L"cz[0]",					L"cz[0]",						L"::X<__int32 volatile, double const> $PR"					);
+
+		AssertExpr(pa, L"lz.operator->()",			L"lz.operator ->()",			L"::X<__int32 const, double volatile> volatile * $PR"		);
+		AssertExpr(pa, L"lz.operator()(0)",			L"lz.operator ()(0)",			L"::X<__int32 const, double volatile> $PR"					);
+		AssertExpr(pa, L"lz.operator[](0)",			L"lz.operator [](0)",			L"::X<__int32 const, double volatile> $PR"					);
+		AssertExpr(pa, L"lz->x",					L"lz->x",						L"__int32 volatile $L"										);
+		AssertExpr(pa, L"lz(0)",					L"lz(0)",						L"::X<__int32 const, double volatile> $PR"					);
+		AssertExpr(pa, L"lz[0]",					L"lz[0]",						L"::X<__int32 const, double volatile> $PR"					);
+
+		AssertExpr(pa, L"lcz.operator->()",			L"lcz.operator ->()",			L"::X<__int32 volatile, double const> * $PR"				);
+		AssertExpr(pa, L"lcz.operator()(0)",		L"lcz.operator ()(0)",			L"::X<__int32 volatile, double const> $PR"					);
+		AssertExpr(pa, L"lcz.operator[](0)",		L"lcz.operator [](0)",			L"::X<__int32 volatile, double const> $PR"					);
+		AssertExpr(pa, L"lcz->x",					L"lcz->x",						L"__int32 $L"												);
+		AssertExpr(pa, L"lcz(0)",					L"lcz(0)",						L"::X<__int32 volatile, double const> $PR"					);
+		AssertExpr(pa, L"lcz[0]",					L"lcz[0]",						L"::X<__int32 volatile, double const> $PR"					);
+
+		AssertExpr(pa, L"rz.operator->()",			L"rz.operator ->()",			L"::X<__int32 const, double volatile> volatile * $PR"		);
+		AssertExpr(pa, L"rz.operator()(0)",			L"rz.operator ()(0)",			L"::X<__int32 const, double volatile> $PR"					);
+		AssertExpr(pa, L"rz.operator[](0)",			L"rz.operator [](0)",			L"::X<__int32 const, double volatile> $PR"					);
+		AssertExpr(pa, L"rz->x",					L"rz->x",						L"__int32 volatile $L"										);
+		AssertExpr(pa, L"rz(0)",					L"rz(0)",						L"::X<__int32 const, double volatile> $PR"					);
+		AssertExpr(pa, L"rz[0]",					L"rz[0]",						L"::X<__int32 const, double volatile> $PR"					);
+
+		AssertExpr(pa, L"rcz.operator->()",			L"rcz.operator ->()",			L"::X<__int32 volatile, double const> * $PR"				);
+		AssertExpr(pa, L"rcz.operator()(0)",		L"rcz.operator ()(0)",			L"::X<__int32 volatile, double const> $PR"					);
+		AssertExpr(pa, L"rcz.operator[](0)",		L"rcz.operator [](0)",			L"::X<__int32 volatile, double const> $PR"					);
+		AssertExpr(pa, L"rcz->x",					L"rcz->x",						L"__int32 $L"												);
+		AssertExpr(pa, L"rcz(0)",					L"rcz(0)",						L"::X<__int32 volatile, double const> $PR"					);
+		AssertExpr(pa, L"rcz[0]",					L"rcz[0]",						L"::X<__int32 volatile, double const> $PR"					);
+
+		AssertExpr(pa, L"pz->operator->()",			L"pz->operator ->()",			L"::X<__int32 const, double volatile> volatile * $PR"		);
+		AssertExpr(pa, L"pz->operator()(0)",		L"pz->operator ()(0)",			L"::X<__int32 const, double volatile> $PR"					);
+		AssertExpr(pa, L"pz->operator[](0)",		L"pz->operator [](0)",			L"::X<__int32 const, double volatile> $PR"					);
+
+		AssertExpr(pa, L"pcz->operator->()",		L"pcz->operator ->()",			L"::X<__int32 volatile, double const> * $PR"				);
+		AssertExpr(pa, L"pcz->operator()(0)",		L"pcz->operator ()(0)",			L"::X<__int32 volatile, double const> $PR"					);
+		AssertExpr(pa, L"pcz->operator[](0)",		L"pcz->operator [](0)",			L"::X<__int32 volatile, double const> $PR"					);
 	});
 
 	TEST_CATEGORY(L"Qualifiers and this")
