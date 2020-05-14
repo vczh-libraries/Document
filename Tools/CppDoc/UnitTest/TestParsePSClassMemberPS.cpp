@@ -573,6 +573,74 @@ Field<float> A<int, double>::E(...)const
 
 	TEST_CATEGORY(L"Referencing generic members")
 	{
+		WString input1 = LR"(
+template<typename X>
+struct Field;
+
+template<typename T>
+struct A
+{
+};
+
+template<>
+struct A<int>
+{
+	template<typename U> Field<U> C(char);
+	template<typename U> Field<U> E(char, ...)const;
+};
+
+A<int> a;
+A<int>* pa;
+const A<int> ca;
+volatile A<int>* pva;
+)";
+
+		WString input2 = input1 + LR"(
+template<>
+template<typename U>
+Field<U> A<int>::C(char)
+{
+}
+
+template<>
+template<typename U>
+Field<U> A<int>::E(char, ...)const
+{
+}
+)";
+
+		const wchar_t* inputs[] = { input1.Buffer(),input2.Buffer() };
+		for (vint i = 0; i < 2; i++)
+		{
+			COMPILE_PROGRAM(program, pa, inputs[i]);
+
+			AssertExpr(pa, L"a.C<double>",							L"a.C<double>",							L"::Field<double> __thiscall(char) * $PR"		);
+			AssertExpr(pa, L"a.E<double>",							L"a.E<double>",							L"::Field<double> __cdecl(char, ...) * $PR"		);
+			AssertExpr(pa, L"pa->C<double>",						L"pa->C<double>",						L"::Field<double> __thiscall(char) * $PR"		);
+			AssertExpr(pa, L"pa->E<double>",						L"pa->E<double>",						L"::Field<double> __cdecl(char, ...) * $PR"		);
+			AssertExpr(pa, L"ca.C<double>",							L"ca.C<double>"																			);
+			AssertExpr(pa, L"ca.E<double>",							L"ca.E<double>",						L"::Field<double> __cdecl(char, ...) * $PR"		);
+			AssertExpr(pa, L"pva->C<double>",						L"pva->C<double>"																		);
+			AssertExpr(pa, L"pva->E<double>",						L"pva->E<double>"																		);
+
+			AssertExpr(pa, L"a.A<int>::C<double>",					L"a.A<int> :: C<double>",				L"::Field<double> __thiscall(char) * $PR"		);
+			AssertExpr(pa, L"a.A<int>::E<double>",					L"a.A<int> :: E<double>",				L"::Field<double> __cdecl(char, ...) * $PR"		);
+			AssertExpr(pa, L"pa->A<int>::C<double>",				L"pa->A<int> :: C<double>",				L"::Field<double> __thiscall(char) * $PR"		);
+			AssertExpr(pa, L"pa->A<int>::E<double>",				L"pa->A<int> :: E<double>",				L"::Field<double> __cdecl(char, ...) * $PR"		);
+			AssertExpr(pa, L"ca.A<int>::C<double>",					L"ca.A<int> :: C<double>"																);
+			AssertExpr(pa, L"ca.A<int>::E<double>",					L"ca.A<int> :: E<double>",				L"::Field<double> __cdecl(char, ...) * $PR"		);
+			AssertExpr(pa, L"pva->A<int>::C<double>",				L"pva->A<int> :: C<double>"																);
+			AssertExpr(pa, L"pva->A<int>::E<double>",				L"pva->A<int> :: E<double>"																);
+
+			AssertExpr(pa, L"a.*&A<int>::C<double>",				L"(a .* (& A<int> :: C<double>))",		L"::Field<double> __thiscall(char) * $PR"		);
+			AssertExpr(pa, L"a.*&A<int>::E<double>",				L"(a .* (& A<int> :: E<double>))",		L"::Field<double> __cdecl(char, ...) * $PR"		);
+			AssertExpr(pa, L"pa->*&A<int>::C<double>",				L"(pa ->* (& A<int> :: C<double>))",	L"::Field<double> __thiscall(char) * $PR"		);
+			AssertExpr(pa, L"pa->*&A<int>::E<double>",				L"(pa ->* (& A<int> :: E<double>))",	L"::Field<double> __cdecl(char, ...) * $PR"		);
+			AssertExpr(pa, L"ca.*&A<int>::C<double>",				L"(ca .* (& A<int> :: C<double>))",		L"::Field<double> __thiscall(char) * $PR"		);
+			AssertExpr(pa, L"ca.*&A<int>::E<double>",				L"(ca .* (& A<int> :: E<double>))",		L"::Field<double> __cdecl(char, ...) * $PR"		);
+			AssertExpr(pa, L"pva->*&A<int>::C<double>",				L"(pva ->* (& A<int> :: C<double>))",	L"::Field<double> __thiscall(char) * $PR"		);
+			AssertExpr(pa, L"pva->*&A<int>::E<double>",				L"(pva ->* (& A<int> :: E<double>))",	L"::Field<double> __cdecl(char, ...) * $PR"		);
+		}
 	});
 
 	TEST_CATEGORY(L"Re-index")
