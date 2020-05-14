@@ -191,20 +191,25 @@ Helpers
 
 struct TypeToTsysConfig
 {
-	bool					idExprToInstant = true;
+	bool					idTypeNoPrimaryClass = true;
+	bool					idTypeNoGenericFunction = true;
 	bool					memberOf = false;
 	TsysCallingConvention	cc = TsysCallingConvention::None;
 
 	TypeToTsysConfig() = default;
-	TypeToTsysConfig(bool _idExprToInstant, bool _memberOf, TsysCallingConvention _cc)
-		:idExprToInstant(_idExprToInstant), memberOf(_memberOf), cc(_cc)
+	TypeToTsysConfig(bool _idTypeNoPrimaryClass, bool _idTypeNoGenericFunction, bool _memberOf, TsysCallingConvention _cc)
+		:idTypeNoPrimaryClass(_idTypeNoPrimaryClass)
+		, idTypeNoGenericFunction(_idTypeNoGenericFunction)
+		, memberOf(_memberOf)
+		, cc(_cc)
 	{
 	}
 
-	static TypeToTsysConfig ExpectTemplate()
+	static TypeToTsysConfig ToBeAppliedTemplateArguments()
 	{
 		TypeToTsysConfig config;
-		config.idExprToInstant = false;
+		config.idTypeNoPrimaryClass = false;
+		config.idTypeNoGenericFunction = false;
 		return config;
 	}
 

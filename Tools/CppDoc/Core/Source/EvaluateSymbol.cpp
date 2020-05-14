@@ -130,7 +130,7 @@ namespace symbol_type_resolving
 		auto& ev = GetCorrectEvaluation(declPa, decl, spec, argumentsToApply);
 		auto& evaluatedTypes = ev.Get();
 
-		if (spec && !argumentsToApply)
+		if (spec && spec->arguments.Count() > 0 && !argumentsToApply)
 		{
 			TsysGenericFunction genericFunction;
 			TypeTsysList params;

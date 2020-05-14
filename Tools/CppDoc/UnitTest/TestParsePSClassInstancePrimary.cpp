@@ -8,7 +8,7 @@ TEST_FILE
 template<typename T>
 struct Ptr {};
 
-template<typename U>
+template<>
 struct Ptr<int> {};
 )";
 

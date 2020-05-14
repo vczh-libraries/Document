@@ -30,7 +30,8 @@
         - [ ] Refresh `primary` when it is null and `version` is -1.
     - [ ] When comparing two `Decl` or `DeclInstance` or matching for type inferencing, if `version` of any instance is -1, `primary` is used instead.
     - [ ] Test
-      - [ ] Using pointers to member or `this` of a partial specialization instances as parameters.
+      - [ ] Calling `B` in an instantiated `template<...> struct A<...> { template<...> struct B<...> {} };`, except all arguments in both A and B are preserved.
+      - [ ] Using pointers to member or `this` of a partial specialization instances as parameters, especially when type conversion or type inferencing are needed.
       - [ ] Function overloading.
       - [ ] Function type inferencing.
       - [ ] SFINAE test cases.
