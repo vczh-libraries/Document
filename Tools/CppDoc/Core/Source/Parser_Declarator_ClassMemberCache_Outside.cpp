@@ -243,7 +243,7 @@ ITsys* StepIntoTemplateClass(
 	const ParsingArguments& pa,
 	Ptr<symbol_component::ClassMemberCache> cache,
 	const QualifiedIdComponent& qic,
-	ClassDeclaration* primaryClassDecl,
+	ForwardClassDeclaration* primaryClassDecl,
 	List<Ptr<TemplateSpec>>* specs,
 	vint& consumedSpecs,
 	ITsys*& currentParentDeclType,
@@ -339,7 +339,7 @@ GOT_NEXT_CLASS:
 ITsys* StepIntoNonTemplateClass(
 	const ParsingArguments& pa,
 	Ptr<symbol_component::ClassMemberCache> cache,
-	ClassDeclaration* classDecl,
+	ForwardClassDeclaration* classDecl,
 	List<Ptr<TemplateSpec>>* specs,
 	ITsys* currentParentDeclType
 )
@@ -424,7 +424,7 @@ Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const Pars
 				}
 			}
 
-			auto classDecl = classSymbol->GetImplDecl_NFb<ClassDeclaration>();
+			auto classDecl = classSymbol->GetAnyForwardDecl<ForwardClassDeclaration>();
 			if (!classDecl)
 			{
 				// the resolved type must be a class, and it cannot just have a forward declaration

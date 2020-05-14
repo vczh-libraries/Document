@@ -466,6 +466,293 @@ auto&				_D6 = _D5;
 
 	TEST_CATEGORY(L"Address of members and this")
 	{
+		auto input = LR"(
+template<typename X>
+struct Field;
+
+template<typename T>
+struct S;
+
+template<typename T>
+struct S<T*>
+{
+	Field<T> f;
+	Field<T>& r;
+	const Field<T> c;
+	static Field<T> s;
+
+	template<typename U>	void			M1			(U p)					;
+	template<typename U>	void			C1			(U p)const				;
+	template<typename U>	void			V1			(U p)volatile			;
+	template<typename U>	void			CV1			(U p)const volatile		;
+	template<typename U>	static void		F1			(U p)					;
+
+	template<>				void			M1<char>	(char p)				{}
+	template<>				void			C1<char>	(char p)const			{}
+	template<>				void			V1<char>	(char p)volatile		{}
+	template<>				void			CV1<char>	(char p)const volatile	{}
+	template<>				static void		F1<char>	(char p)				{}
+
+	template<typename U>	void			M2			(U p)					;
+	template<typename U>	void			C2			(U p)const				;
+	template<typename U>	void			V2			(U p)volatile			;
+	template<typename U>	void			CV2			(U p)const volatile		;
+	template<typename U>	static void		F2			(U p)					;
+
+	template<>				void			M2<char>	(char p)				;
+	template<>				void			C2<char>	(char p)const			;
+	template<>				void			V2<char>	(char p)volatile		;
+	template<>				void			CV2<char>	(char p)const volatile	;
+	template<>				static void		F2<char>	(char p)				;
+};
+
+template<typename A>	template<>	void S<A*>::M2<char>(char p)					{}
+template<typename A>	template<>	void S<A*>::C2<char>(char p)const				{}
+template<typename A>	template<>	void S<A*>::V2<char>(char p)volatile			{}
+template<typename A>	template<>	void S<A*>::CV2<char>(char p)const volatile		{}
+template<typename A>	template<>	void S<A*>::F2<char>(char p)					{}
+)";
+		COMPILE_PROGRAM(program, pa, input);
+		for (vint i = 1; i <= 2; i++)
+		{
+			TEST_CATEGORY(L"M" + itow(i))
+			{
+				auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"S@<[T] *>", L"M" + itow(i) + L"@<char>"));
+				WString classArg = i == 1 ? L"::S@<[T] *>::[T]" : L"::S@<[T] *>::M2@<char>::[A]";
+				WString fieldArg = L"::Field<" + classArg + L">";
+
+				AssertExpr(spa, L"this",					L"this",						(L"::S@<[T] *><" + classArg + L"> * $PR").Buffer()					);
+				AssertExpr(spa, L"p",						L"p",							L"char $L"															);
+
+				AssertExpr(spa, L"f",						L"f",							(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"S::f",					L"S :: f",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&f",						L"(& f)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::f",					L"(& S :: f)",					(fieldArg + L" (::S<" + classArg + L"> ::) * $PR").Buffer()			);
+				AssertExpr(spa, L"this->f",					L"this->f",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"this->S::f",				L"this->S :: f",				(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&this->f",				L"(& this->f)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			(fieldArg + L" * $PR").Buffer()										);
+
+				AssertExpr(spa, L"r",						L"r",							(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"S::r",					L"S :: r",						(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"&r",						L"(& r)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::r",					L"(& S :: r)",					(fieldArg + L" & (::S<" + classArg + L"> ::) * $PR").Buffer()		);
+				AssertExpr(spa, L"this->r",					L"this->r",						(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"this->S::r",				L"this->S :: r",				(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"&this->r",				L"(& this->r)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			(fieldArg + L" * $PR").Buffer()										);
+
+				AssertExpr(spa, L"c",						L"c",							(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"S::c",					L"S :: c",						(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"&c",						L"(& c)",						(fieldArg + L" const * $PR").Buffer()								);
+				AssertExpr(spa, L"&S::c",					L"(& S :: c)",					(fieldArg + L" const (::S<" + classArg + L"> ::) * $PR").Buffer()	);
+				AssertExpr(spa, L"this->c",					L"this->c",						(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"this->S::c",				L"this->S :: c",				(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"&this->c",				L"(& this->c)",					(fieldArg + L" const * $PR").Buffer()								);
+				AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			(fieldArg + L" const * $PR").Buffer()								);
+
+				AssertExpr(spa, L"s",						L"s",							(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"S::s",					L"S :: s",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&s",						L"(& s)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::s",					L"(& S :: s)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"this->s",					L"this->s",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"this->S::s",				L"this->S :: s",				(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&this->s",				L"(& this->s)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			(fieldArg + L" * $PR").Buffer()										);
+			});
+		}
+		for (vint i = 1; i <= 2; i++)
+		{
+			TEST_CATEGORY(L"C" + itow(i))
+			{
+				auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"S@<[T] *>", L"C" + itow(i) + L"@<char>"));
+				WString classArg = i == 1 ? L"::S::[T]" : L"::S@<[T] *>::C2@<char>::[A]";
+				WString fieldArg = L"::Field<char>";
+
+				AssertExpr(spa, L"this",					L"this",						(L"::S@<[T] *><" + classArg + L"> const * $PR").Buffer()			);
+				AssertExpr(spa, L"p",						L"p",							L"char $L"															);
+
+				AssertExpr(spa, L"f",						L"f",							(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"S::f",					L"S :: f",						(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"&f",						L"(& f)",						(fieldArg + L" const * $PR").Buffer()								);
+				AssertExpr(spa, L"&S::f",					L"(& S :: f)",					(fieldArg + L" (::S<" + classArg + L"> ::) * $PR").Buffer()			);
+				AssertExpr(spa, L"this->f",					L"this->f",						(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"this->S::f",				L"this->S :: f",				(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"&this->f",				L"(& this->f)",					(fieldArg + L" const * $PR").Buffer()								);
+				AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			(fieldArg + L" const * $PR").Buffer()								);
+
+				AssertExpr(spa, L"r",						L"r",							(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"S::r",					L"S :: r",						(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"&r",						L"(& r)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::r",					L"(& S :: r)",					(fieldArg + L" & (::S<" + classArg + L"> ::) * $PR").Buffer()		);
+				AssertExpr(spa, L"this->r",					L"this->r",						(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"this->S::r",				L"this->S :: r",				(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"&this->r",				L"(& this->r)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			(fieldArg + L" * $PR").Buffer()										);
+
+				AssertExpr(spa, L"c",						L"c",							(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"S::c",					L"S :: c",						(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"&c",						L"(& c)",						(fieldArg + L" const * $PR").Buffer()								);
+				AssertExpr(spa, L"&S::c",					L"(& S :: c)",					(fieldArg + L" const (::S<" + classArg + L"> ::) * $PR").Buffer()	);
+				AssertExpr(spa, L"this->c",					L"this->c",						(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"this->S::c",				L"this->S :: c",				(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"&this->c",				L"(& this->c)",					(fieldArg + L" const * $PR").Buffer()								);
+				AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			(fieldArg + L" const * $PR").Buffer()								);
+
+				AssertExpr(spa, L"s",						L"s",							(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"S::s",					L"S :: s",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&s",						L"(& s)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::s",					L"(& S :: s)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"this->s",					L"this->s",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"this->S::s",				L"this->S :: s",				(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&this->s",				L"(& this->s)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			(fieldArg + L" * $PR").Buffer()										);
+			});
+		}
+		for (vint i = 1; i <= 2; i++)
+		{
+			TEST_CATEGORY(L"V" + itow(i))
+			{
+				auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"S@<[T] *>", L"V" + itow(i) + L"@<char>"));
+				WString classArg = i == 1 ? L"::S::[T]" : L"::S@<[T] *>::V2@<char>::[A]";
+				WString fieldArg = L"::Field<char>";
+
+				AssertExpr(spa, L"this",					L"this",						(L"::S@<[T] *><" + classArg + L"> volatile * $PR").Buffer()			);
+				AssertExpr(spa, L"p",						L"p",							L"char $L"															);
+
+				AssertExpr(spa, L"f",						L"f",							(fieldArg + L" volatile $L").Buffer()								);
+				AssertExpr(spa, L"S::f",					L"S :: f",						(fieldArg + L" volatile $L").Buffer()								);
+				AssertExpr(spa, L"&f",						L"(& f)",						(fieldArg + L" volatile * $PR").Buffer()							);
+				AssertExpr(spa, L"&S::f",					L"(& S :: f)",					(fieldArg + L" (::S<" + classArg + L"> ::) * $PR").Buffer()			);
+				AssertExpr(spa, L"this->f",					L"this->f",						(fieldArg + L" volatile $L").Buffer()								);
+				AssertExpr(spa, L"this->S::f",				L"this->S :: f",				(fieldArg + L" volatile $L").Buffer()								);
+				AssertExpr(spa, L"&this->f",				L"(& this->f)",					(fieldArg + L" volatile * $PR").Buffer()							);
+				AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			(fieldArg + L" volatile * $PR").Buffer()							);
+
+				AssertExpr(spa, L"r",						L"r",							(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"S::r",					L"S :: r",						(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"&r",						L"(& r)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::r",					L"(& S :: r)",					(fieldArg + L" & (::S<" + classArg + L"> ::) * $PR").Buffer()		);
+				AssertExpr(spa, L"this->r",					L"this->r",						(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"this->S::r",				L"this->S :: r",				(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"&this->r",				L"(& this->r)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			(fieldArg + L" * $PR").Buffer()										);
+
+				AssertExpr(spa, L"c",						L"c",							(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"S::c",					L"S :: c",						(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"&c",						L"(& c)",						(fieldArg + L" const volatile * $PR").Buffer()						);
+				AssertExpr(spa, L"&S::c",					L"(& S :: c)",					(fieldArg + L" const (::S<" + classArg + L"> ::) * $PR").Buffer()	);
+				AssertExpr(spa, L"this->c",					L"this->c",						(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"this->S::c",				L"this->S :: c",				(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"&this->c",				L"(& this->c)",					(fieldArg + L" const volatile * $PR").Buffer()						);
+				AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			(fieldArg + L" const volatile * $PR").Buffer()						);
+
+				AssertExpr(spa, L"s",						L"s",							(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"S::s",					L"S :: s",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&s",						L"(& s)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::s",					L"(& S :: s)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"this->s",					L"this->s",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"this->S::s",				L"this->S :: s",				(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&this->s",				L"(& this->s)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			(fieldArg + L" * $PR").Buffer()										);
+			});
+		}
+		for (vint i = 1; i <= 2; i++)
+		{
+			TEST_CATEGORY(L"CV" + itow(i))
+			{
+				auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"S@<[T] *>", L"CV" + itow(i) + L"@<char>"));
+				WString classArg = i == 1 ? L"::S::[T]" : L"::S@<[T] *>::CV2@<char>::[A]";
+				WString fieldArg = L"::Field<char>";
+
+				AssertExpr(spa, L"this",					L"this",						(L"::S@<[T] *><" + classArg + L"> const volatile * $PR").Buffer()	);
+				AssertExpr(spa, L"p",						L"p",							L"char $L"															);
+
+				AssertExpr(spa, L"f",						L"f",							(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"S::f",					L"S :: f",						(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"&f",						L"(& f)",						(fieldArg + L" const volatile * $PR").Buffer()						);
+				AssertExpr(spa, L"&S::f",					L"(& S :: f)",					(fieldArg + L" (::S<" + classArg + L"> ::) * $PR").Buffer()			);
+				AssertExpr(spa, L"this->f",					L"this->f",						(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"this->S::f",				L"this->S :: f",				(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"&this->f",				L"(& this->f)",					(fieldArg + L" const volatile * $PR").Buffer()						);
+				AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			(fieldArg + L" const volatile * $PR").Buffer()						);
+
+				AssertExpr(spa, L"r",						L"r",							(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"S::r",					L"S :: r",						(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"&r",						L"(& r)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::r",					L"(& S :: r)",					(fieldArg + L" & (::S<" + classArg + L"> ::) * $PR").Buffer()		);
+				AssertExpr(spa, L"this->r",					L"this->r",						(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"this->S::r",				L"this->S :: r",				(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"&this->r",				L"(& this->r)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			(fieldArg + L" * $PR").Buffer()										);
+
+				AssertExpr(spa, L"c",						L"c",							(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"S::c",					L"S :: c",						(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"&c",						L"(& c)",						(fieldArg + L" const volatile * $PR").Buffer()						);
+				AssertExpr(spa, L"&S::c",					L"(& S :: c)",					(fieldArg + L" const (::S<" + classArg + L"> ::) * $PR").Buffer()	);
+				AssertExpr(spa, L"this->c",					L"this->c",						(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"this->S::c",				L"this->S :: c",				(fieldArg + L" const volatile $L").Buffer()							);
+				AssertExpr(spa, L"&this->c",				L"(& this->c)",					(fieldArg + L" const volatile * $PR").Buffer()						);
+				AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			(fieldArg + L" const volatile * $PR").Buffer()						);
+
+				AssertExpr(spa, L"s",						L"s",							(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"S::s",					L"S :: s",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&s",						L"(& s)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::s",					L"(& S :: s)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"this->s",					L"this->s",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"this->S::s",				L"this->S :: s",				(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&this->s",				L"(& this->s)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			(fieldArg + L" * $PR").Buffer()										);
+			});
+		}
+		for (vint i = 1; i <= 2; i++)
+		{
+			TEST_CATEGORY(L"F" + itow(i))
+			{
+				auto spa = pa.WithScope(TestParseGenericMember_InsideFunction(pa, L"S@<[T] *>", L"F" + itow(i) + L"@<char>"));
+				WString classArg = i == 1 ? L"::S::[T]" : L"::S@<[T] *>::F2@<char>::[A]";
+				WString fieldArg = L"::Field<char>";
+
+				AssertExpr(spa, L"this",					L"this",						(L"::S@<[T] *><" + classArg + L"> * $PR").Buffer()					);
+				AssertExpr(spa, L"p",						L"p",							L"char $L"															);
+
+				AssertExpr(spa, L"f",						L"f",							(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"S::f",					L"S :: f",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&f",						L"(& f)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::f",					L"(& S :: f)",					(fieldArg + L" (::S<" + classArg + L"> ::) * $PR").Buffer()			);
+				AssertExpr(spa, L"this->f",					L"this->f",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"this->S::f",				L"this->S :: f",				(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&this->f",				L"(& this->f)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::f",				L"(& this->S :: f)",			(fieldArg + L" * $PR").Buffer()										);
+
+				AssertExpr(spa, L"r",						L"r",							(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"S::r",					L"S :: r",						(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"&r",						L"(& r)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::r",					L"(& S :: r)",					(fieldArg + L" & (::S<" + classArg + L"> ::) * $PR").Buffer()		);
+				AssertExpr(spa, L"this->r",					L"this->r",						(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"this->S::r",				L"this->S :: r",				(fieldArg + L" & $L").Buffer()										);
+				AssertExpr(spa, L"&this->r",				L"(& this->r)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::r",				L"(& this->S :: r)",			(fieldArg + L" * $PR").Buffer()										);
+
+				AssertExpr(spa, L"c",						L"c",							(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"S::c",					L"S :: c",						(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"&c",						L"(& c)",						(fieldArg + L" const * $PR").Buffer()								);
+				AssertExpr(spa, L"&S::c",					L"(& S :: c)",					(fieldArg + L" const (::S<" + classArg + L"> ::) * $PR").Buffer()	);
+				AssertExpr(spa, L"this->c",					L"this->c",						(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"this->S::c",				L"this->S :: c",				(fieldArg + L" const $L").Buffer()									);
+				AssertExpr(spa, L"&this->c",				L"(& this->c)",					(fieldArg + L" const * $PR").Buffer()								);
+				AssertExpr(spa, L"&this->S::c",				L"(& this->S :: c)",			(fieldArg + L" const * $PR").Buffer()								);
+
+				AssertExpr(spa, L"s",						L"s",							(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"S::s",					L"S :: s",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&s",						L"(& s)",						(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&S::s",					L"(& S :: s)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"this->s",					L"this->s",						(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"this->S::s",				L"this->S :: s",				(fieldArg + L" $L").Buffer()										);
+				AssertExpr(spa, L"&this->s",				L"(& this->s)",					(fieldArg + L" * $PR").Buffer()										);
+				AssertExpr(spa, L"&this->S::s",				L"(& this->S :: s)",			(fieldArg + L" * $PR").Buffer()										);
+			});
+		}
 	});
 
 	TEST_CATEGORY(L"Referencing members")
