@@ -47,7 +47,8 @@ namespace symbol_type_resolving
 			thisEntity = GetThisEntity(thisItem->tsys);
 			if (thisEntity->GetType() == TsysType::DeclInstant)
 			{
-				parentDeclType = thisEntity;
+				auto& di = thisEntity->GetDeclInstant();
+				parentDeclType = di.taContext ? thisEntity : di.parentDeclType;
 			}
 		}
 

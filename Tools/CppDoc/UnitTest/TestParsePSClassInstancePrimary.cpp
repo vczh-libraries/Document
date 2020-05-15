@@ -14,8 +14,8 @@ struct Ptr<int> {};
 
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertType(pa,		L"Ptr",			L"Ptr",			L"<::Ptr::[T]> ::Ptr<::Ptr::[T]>");
-		AssertType(pa,		L"Ptr<int>",	L"Ptr<int>",	L"::Ptr<__int32>");
+		AssertType(pa,		L"Ptr",			L"Ptr",			L"<::Ptr::[T]> ::Ptr<::Ptr::[T]>"	);
+		AssertType(pa,		L"Ptr<int>",	L"Ptr<int>",	L"::Ptr<__int32>"					);
 	});
 
 	TEST_CATEGORY(L"Nested classes used from outside")
