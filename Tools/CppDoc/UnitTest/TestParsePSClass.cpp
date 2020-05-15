@@ -220,12 +220,12 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_SIMPLE_LVALUE(
-			Scope<1>::F(),
+			Scope<1> :: F(),
 			void *
 		);
 
 		ASSERT_OVERLOADING_SIMPLE_LVALUE(
-			Scope<2>::F(),
+			Scope<2> :: F(),
 			char *
 		);
 	});
@@ -235,26 +235,26 @@ TEST_FILE
 		using namespace INPUT__TestParsePSClass_ClassRef;
 		COMPILE_PROGRAM(program, pa, input);
 
-		ASSERT_OVERLOADING(
-			A<char>::B<double>::F(),
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			A<char> :: B<double> :: F(),
 			L"::A<char>::B<double>",
 			A<char>::B<double>
 		);
 
-		ASSERT_OVERLOADING(
-			A<char>::B<double*>::F(),
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			A<char> :: B<double *> :: F(),
 			L"::A<char>::B@<double *>",
 			A<char>::B<double*>
 		);
 
-		ASSERT_OVERLOADING(
-			A<char*>::B<double>::F(),
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			A<char *> :: B<double> :: F(),
 			L"::A@<char *>::B<double>",
 			A<char*>::B<double>
 		);
 
-		ASSERT_OVERLOADING(
-			A<char*>::B<double*>::F(),
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			A<char *> :: B<double *> :: F(),
 			L"::A@<char *>::B@<double *>",
 			A<char*>::B<double*>
 		);
