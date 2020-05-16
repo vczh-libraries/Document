@@ -51,6 +51,7 @@
 - [ ] More on **templates**
   - [ ] `GenericExpr` allows to be partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
   - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
+  - [ ] `IFT_InferTemplateArgument.cpp` `Visit(GenericType* self)` able to process multiple primary instances.
 - [ ] `MatchPSArgument` on `decltype(EXPR)`, success when the type to match is not `decltype(EXPR)`, or two expression match.
 - [ ] `::new`
 - [ ] `::delete`

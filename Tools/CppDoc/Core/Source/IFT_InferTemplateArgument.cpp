@@ -308,33 +308,13 @@ namespace infer_function_type
 			// do not perform type inferencing against Here::something
 		}
 
-		void Visit(GenericType* self)override
+		void VisitGenericType(
+			GenericType* self,
+			Symbol* genericSymbol,
+			const Ptr<TemplateSpec>& spec,
+			ITsys* entity,
+			bool genericSymbolInvolved)
 		{
-			auto genericSymbol = Resolving::EnsureSingleSymbol(self->type->resolving);
-
-			Ptr<TemplateSpec> spec;
-			if (auto classDecl = genericSymbol->GetAnyForwardDecl<ForwardClassDeclaration>())
-			{
-				spec = classDecl->templateSpec;
-			}
-			else
-			{
-				spec = EvaluateGenericArgumentSymbol(genericSymbol)->GetGenericFunction().spec;
-			}
-
-			if (!spec)
-			{
-				// this should not happen since CollectFreeTypes should stop the type inferencing before reaching here
-				throw TypeCheckerException();
-			}
-
-			bool genericSymbolInvolved = involvedTypes.Contains(self->type.Obj());
-
-			TsysCV refCV;
-			TsysRefType refType;
-			auto entity = exactMatch || genericSymbolInvolved
-				? offeredType
-				: offeredType->GetEntity(refCV, refType);
 			{
 				if (entity->GetType() != TsysType::DeclInstant)
 				{
@@ -433,6 +413,55 @@ namespace infer_function_type
 				assign_parameters::ResolveGenericTypeParameters(pa, parameterAssignment, taContext, freeTypeSymbols, self, argumentTypes, boundedAnys);
 			}
 			InferTemplateArgumentsForGenericType(pa, self, parameterAssignment, taContext, variadicContext, freeTypeSymbols, lastAssignedVta, hardcodedPatterns);
+		}
+
+		void Visit(GenericType* self)override
+		{
+			auto genericSymbol = Resolving::EnsureSingleSymbol(self->type->resolving);
+
+			Ptr<TemplateSpec> spec;
+			if (auto classDecl = genericSymbol->GetAnyForwardDecl<ForwardClassDeclaration>())
+			{
+				spec = classDecl->templateSpec;
+			}
+			else
+			{
+				spec = EvaluateGenericArgumentSymbol(genericSymbol)->GetGenericFunction().spec;
+			}
+
+			if (!spec)
+			{
+				// this should not happen since CollectFreeTypes should stop the type inferencing before reaching here
+				throw TypeCheckerException();
+			}
+
+			bool genericSymbolInvolved = involvedTypes.Contains(self->type.Obj());
+
+			TsysCV refCV;
+			TsysRefType refType;
+			auto entityUnensured = exactMatch || genericSymbolInvolved
+				? offeredType
+				: offeredType->GetEntity(refCV, refType);
+
+			bool enumerated = false;
+			EnumerateClassPrimaryInstances(pa, entityUnensured, false, [&](ITsys* entity)
+			{
+				if (!enumerated)
+				{
+					enumerated = true;
+					VisitGenericType(self, genericSymbol, spec, entity, genericSymbolInvolved);
+				}
+				else
+				{
+					throw L"No primary instance is enumerated!";
+				}
+				return false;
+			});
+
+			if (!enumerated)
+			{
+				throw L"No primary instance is enumerated!";
+			}
 		}
 	};
 
