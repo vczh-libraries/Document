@@ -131,40 +131,22 @@ namespace infer_function_type
 
 			if (!found)
 			{
-				switch (current->GetType())
+				switch (current->GetDecl()->kind)
 				{
-				case TsysType::Decl:
+				case CLASS_SYMBOL_KIND:
 					{
-						// Decl could not match GenericType, search for base classes
-						if (auto classDecl = current->GetDecl()->GetAnyForwardDecl<ClassDeclaration>())
+						ClassDeclaration* cd = nullptr;
+						ITsys* pdt = nullptr;
+						TemplateArgumentContext* ata = nullptr;
+						ExtractClassType(current, cd, pdt, ata);
+						symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, cd, pdt, ata, [&](ITsys* classType, ITsys* baseType)
 						{
-							symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, classDecl.Obj(), nullptr, nullptr, [&](ITsys* classType, ITsys* baseType)
+							if (!visited.Contains(baseType))
 							{
-								if (!visited.Contains(baseType))
-								{
-									visited.Add(baseType);
-								}
-								return false;
-							});
-						}
-					}
-					break;
-				case TsysType::DeclInstant:
-					{
-						auto& di = current->GetDeclInstant();
-						if (auto classDecl = di.declSymbol->GetAnyForwardDecl<ClassDeclaration>())
-						{
-							auto& di = current->GetDeclInstant();
-							// search for base classes
-							symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, classDecl.Obj(), di.parentDeclType, di.taContext.Obj(), [&](ITsys* classType, ITsys* baseType)
-							{
-								if (!visited.Contains(baseType))
-								{
-									visited.Add(baseType);
-								}
-								return false;
-							});
-						}
+								visited.Add(baseType);
+							}
+							return false;
+						});
 					}
 					break;
 				}
