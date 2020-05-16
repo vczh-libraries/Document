@@ -86,7 +86,14 @@ namespace symbol_type_resolving
 				{
 					throw L"parentTaContext and argumentsToApply should be different";
 				}
-				argumentsToApply->parent = parentTaContext;
+				if (!argumentsToApply->parent)
+				{
+					argumentsToApply->parent = parentTaContext;
+				}
+				else if (argumentsToApply->parent != parentTaContext)
+				{
+					throw L"argumentsToApply->parent is not safe to change";
+				}
 			}
 			newPa.taContext = argumentsToApply;
 			return newPa;

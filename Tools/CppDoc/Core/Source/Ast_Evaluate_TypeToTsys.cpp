@@ -317,9 +317,9 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 			}
 		}
 
-		if (config.idTypeNoPrimaryClass)
+		if (config.idTypeNoGenericFunction)
 		{
-			// when config.idTypeNoPrimaryClass == true
+			// when config.idTypeNoGenericFunction == true
 			// if an IdType evaluates to a GenericFunction of a template class
 			// it removes the GenericFunction layer and get its DeclInstant instead
 			// because we want any A except A<...> to be converted to A<T>, when the code is in class template<typename T> class T.
@@ -341,7 +341,7 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 			if (genericTypes.Count() == 0) return;
 
 			// find a containing classes
-			TypeTsysList classTypes;
+			Dictionary<Symbol*, TemplateArgumentContext*> genericContainerClasses;
 			{
 				auto rootPa = pa.WithScope(pa.root.Obj());
 				auto current = pa.scopeSymbol;
@@ -352,11 +352,12 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 						for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
 						{
 							auto classType = cache->containerClassTypes[i];
-							if (classType->GetDecl()->GetAnyForwardDecl<ForwardClassDeclaration>()->templateSpec)
+							auto classSymbol = classType->GetDecl();
+							if (auto spec = classSymbol->GetAnyForwardDecl<ForwardClassDeclaration>()->templateSpec)
 							{
-								if (!classTypes.Contains(classType))
+								if (spec->arguments.Count() > 0)
 								{
-									classTypes.Add(classType);
+									genericContainerClasses.Add(classSymbol, classType->GetDeclInstant().taContext.Obj());
 								}
 							}
 						}
@@ -369,21 +370,9 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 						case CLASS_SYMBOL_KIND:
 							{
 								auto decl = current->GetAnyForwardDecl<ForwardClassDeclaration>();
-								if (decl->templateSpec)
+								if (decl->templateSpec && decl->templateSpec->arguments.Count() > 0)
 								{
-									auto& ev = EvaluateForwardClassSymbol(rootPa, decl.Obj(), nullptr, nullptr);
-									for (vint i = 0; i < ev.Count(); i++)
-									{
-										auto classType = ev[i];
-										if (classType->GetType() == TsysType::GenericFunction)
-										{
-											classType = classType->GetElement();
-										}
-										if (!classTypes.Contains(classType))
-										{
-											classTypes.Add(classType);
-										}
-									}
+									genericContainerClasses.Add(current, nullptr);
 								}
 							}
 							break;
@@ -392,33 +381,49 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 					}
 				}
 			}
+			if (genericContainerClasses.Count() == 0) return;
 
 			// if there is any GenericFunction to any of containing classes
 			// convert it to DeclInstant
-			if (classTypes.Count() > 0)
+			
+			for (vint i = 0; i < genericTypes.Count(); i++)
 			{
-				for (vint i = 0; i < genericTypes.Count(); i++)
+				auto& targetTsys = tsys[genericTypes[i]];
+				auto targetDecl = targetTsys->GetElement()->GetDecl();
+				auto classDecl = targetDecl->GetAnyForwardDecl<ForwardClassDeclaration>();
+				if (classDecl)
 				{
-					auto& targetTsys = tsys[genericTypes[i]];
-					auto targetDecl = targetTsys->GetElement()->GetDecl();
-					auto classDecl = targetDecl->GetAnyForwardDecl<ForwardClassDeclaration>();
-					if (classDecl)
+					vint index = genericContainerClasses.Keys().IndexOf(targetDecl);
+					if (index != -1)
 					{
-						auto& evTypes = EvaluateForwardClassSymbol(rootPa, classDecl.Obj(), nullptr, nullptr);
-						if (evTypes[0] == targetTsys)
+						auto diTsys = targetTsys->GetElement();
+						auto& di = diTsys->GetDeclInstant();
+						auto ata = pa.taContext;
+						while (ata && ata->symbolToApply != targetDecl)
 						{
-							for (vint j = 0; j < classTypes.Count(); j++)
+							ata = ata->parent;
+						}
+
+						if (!ata)
+						{
+							ata = genericContainerClasses.Values()[index];
+						}
+
+						if (ata)
+						{
+							auto& evTypes = EvaluateForwardClassSymbol(rootPa, classDecl.Obj(), di.parentDeclType, ata);
+							auto evTsys = evTypes[0];
+							if (evTsys->GetType() == TsysType::GenericFunction)
 							{
-								auto classType = classTypes[j];
-								if (classType->GetDecl() == targetDecl)
-								{
-									targetTsys = classType->ReplaceGenericArgs(pa);
-									goto FINISH;
-								}
+								evTsys = evTsys->GetElement();
 							}
+							targetTsys = evTsys;
+						}
+						else
+						{
+							targetTsys = targetTsys->GetElement();
 						}
 					}
-				FINISH:;
 				}
 			}
 		}
