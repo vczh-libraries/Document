@@ -94,20 +94,28 @@ namespace infer_function_type
 
 	bool IsPSEquivalentType(const ParsingArguments& pa, ITsys* a, ITsys* b)
 	{
-		bool exit = false;
-		EnumerateClassPrimaryInstances(pa, a, true, [&](ITsys* primaryA)
+		if (a == b) return true;
+		if (a && b)
 		{
-			EnumerateClassPrimaryInstances(pa, b, true, [&](ITsys* primaryB)
+			bool exit = false;
+			EnumerateClassPrimaryInstances(pa, a, true, [&](ITsys* primaryA)
 			{
-				if (IsPSEquivalentTypeEnsuredPrimary(pa, primaryA, primaryB))
+				EnumerateClassPrimaryInstances(pa, b, true, [&](ITsys* primaryB)
 				{
-					exit = true;
-				}
+					if (IsPSEquivalentTypeEnsuredPrimary(pa, primaryA, primaryB))
+					{
+						exit = true;
+					}
+					return exit;
+				});
 				return exit;
 			});
 			return exit;
-		});
-		return exit;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	Ptr<TemplateArgumentContext> InferPartialSpecialization(

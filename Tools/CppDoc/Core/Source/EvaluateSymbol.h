@@ -139,8 +139,6 @@ namespace symbol_type_resolving
 	template<typename TCallback>
 	void EnumerateClassPrimaryInstances(const ParsingArguments& invokerPa, ITsys* classType, bool allowNonDecl, TCallback&& callback)
 	{
-		callback(classType);
-		return;
 		switch (classType->GetType())
 		{
 		case TsysType::Decl:

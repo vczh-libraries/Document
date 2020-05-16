@@ -335,7 +335,7 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 	if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
 	{
 		auto scope = entity->GetDecl();
-		if (auto classDecl = scope->GetImplDecl_NFb<ClassDeclaration>())
+		if (auto classDecl = scope->GetImplDecl_NFb<ForwardClassDeclaration>())
 		{
 			symbol_type_resolving::EnumerateClassPSInstances(pa, entity, [&](ITsys* psEntity)
 			{
