@@ -107,14 +107,14 @@ namespace INPUT__TestParsePSClass_ClassRef
 		template<typename T>
 		struct A
 		{
-			template<typename T>
+			template<typename U>
 			struct B
 			{
 				static auto F() { return B(); }
 			};
 
-			template<typename T>
-			struct B<T*>
+			template<typename U>
+			struct B<U*>
 			{
 				static auto F() { return B(); }
 			};
@@ -123,14 +123,14 @@ namespace INPUT__TestParsePSClass_ClassRef
 		template<typename T>
 		struct A<T*>
 		{
-			template<typename T>
+			template<typename U>
 			struct B
 			{
 				static auto F() { return B(); }
 			};
 
-			template<typename T>
-			struct B<T*>
+			template<typename U>
+			struct B<U*>
 			{
 				static auto F() { return B(); }
 			};
@@ -207,19 +207,19 @@ TEST_FILE
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			A<char> :: B<double *> :: F(),
-			L"::A<char>::B@<double *> $PR",
+			L"::A<char>::B@<[U] *><double> $PR",
 			A<char>::B<double*>
 		);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			A<char *> :: B<double> :: F(),
-			L"::A@<char *>::B<double> $PR",
+			L"::A@<[T] *><char>::B<double> $PR",
 			A<char*>::B<double>
 		);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			A<char *> :: B<double *> :: F(),
-			L"::A@<char *>::B@<double *> $PR",
+			L"::A@<[T] *><char>::B@<[U] *><double> $PR",
 			A<char*>::B<double*>
 		);
 	});
