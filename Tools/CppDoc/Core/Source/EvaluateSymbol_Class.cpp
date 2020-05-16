@@ -123,9 +123,10 @@ namespace symbol_type_resolving
 	ExtractClassType: Convert ITsys* to arguments for EvaluateClassSymbol
 	***********************************************************************/
 
-	void ExtractClassType(
+	template<typename TClassDecl>
+	void ExtractClassTypeInternal(
 		ITsys* classType,
-		ClassDeclaration*& classDecl,
+		TClassDecl*& classDecl,
 		ITsys*& parentDeclType,
 		TemplateArgumentContext*& argumentsToApply
 	)
@@ -136,7 +137,7 @@ namespace symbol_type_resolving
 		case TsysType::DeclInstant:
 			{
 				auto symbol = classType->GetDecl();
-				classDecl = symbol->GetImplDecl_NFb<ClassDeclaration>().Obj();
+				classDecl = symbol->GetAnyForwardDecl<TClassDecl>().Obj();
 				if (!classDecl) throw TypeCheckerException();
 
 				if (classType->GetType() == TsysType::Decl)
@@ -157,6 +158,16 @@ namespace symbol_type_resolving
 		}
 	}
 
+	void ExtractClassType(
+		ITsys* classType,
+		ClassDeclaration*& classDecl,
+		ITsys*& parentDeclType,
+		TemplateArgumentContext*& argumentsToApply
+	)
+	{
+		ExtractClassTypeInternal(classType, classDecl, parentDeclType, argumentsToApply);
+	}
+
 	/***********************************************************************
 	EvaluateClassPSRecord: Get an up-to-date TsysPSRecord from an ITsys*
 	***********************************************************************/
@@ -174,10 +185,10 @@ namespace symbol_type_resolving
 			break;
 		default:
 			{
-				ClassDeclaration* cd = nullptr;
+				ForwardClassDeclaration* cd = nullptr;
 				ITsys* pdt = nullptr;
 				TemplateArgumentContext* ata = nullptr;
-				ExtractClassType(classType, cd, pdt, ata);
+				ExtractClassTypeInternal(classType, cd, pdt, ata);
 
 				vint version = cd->symbol->GetPSPrimaryVersion_NF();
 				if (psr->version == version) return psr;
@@ -219,27 +230,21 @@ namespace symbol_type_resolving
 		{
 			psr->version = TsysPSRecord::PSInstanceVersionEvaluated;
 
-			auto classDecl = classType->GetDecl()->GetAnyForwardDecl<ForwardClassDeclaration>();
-			ITsys* parentDeclType = nullptr;
-			TemplateArgumentContext* taContext = nullptr;
+			ForwardClassDeclaration* cd = nullptr;
+			ITsys* pdt = nullptr;
+			TemplateArgumentContext* ata = nullptr;
+			ExtractClassTypeInternal(classType, cd, pdt, ata);
 
-			if (classType->GetType() == TsysType::DeclInstant)
-			{
-				auto& di = classType->GetDeclInstant();
-				parentDeclType = di.parentDeclType;
-				taContext = di.taContext.Obj();
-			}
-
-			auto psPa = invokerPa.AdjustForDecl(classDecl->symbol, parentDeclType, true);
-			if (taContext) psPa.taContext = taContext;
+			auto psPa = invokerPa.AdjustForDecl(cd->symbol, pdt, true);
+			if (ata) psPa.taContext = ata;
 
 			auto genericType = MakePtr<GenericType>();
 			{
-				CopyFrom(genericType->arguments, classDecl->specializationSpec->arguments);
+				CopyFrom(genericType->arguments, cd->specializationSpec->arguments);
 
 				auto idType = MakePtr<IdType>();
 				idType->cStyleTypeReference = true;
-				idType->name = classDecl->name;
+				idType->name = cd->name;
 				idType->resolving = ResolveSymbolInContext(psPa, idType->name, idType->cStyleTypeReference).types;
 			}
 

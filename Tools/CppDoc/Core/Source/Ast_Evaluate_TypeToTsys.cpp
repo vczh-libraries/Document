@@ -401,7 +401,7 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 				{
 					auto& targetTsys = tsys[genericTypes[i]];
 					auto targetDecl = targetTsys->GetElement()->GetDecl();
-					auto classDecl = targetDecl->GetImplDecl_NFb<ForwardClassDeclaration>();
+					auto classDecl = targetDecl->GetAnyForwardDecl<ForwardClassDeclaration>();
 					if (classDecl)
 					{
 						auto& evTypes = EvaluateForwardClassSymbol(rootPa, classDecl.Obj(), nullptr, nullptr);
