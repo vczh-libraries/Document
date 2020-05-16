@@ -160,7 +160,6 @@ namespace INPUT__TestParsePSClass_ClassRef
 
 TEST_FILE
 {
-	return;
 	TEST_CATEGORY(L"To Primary 1")
 	{
 		using namespace INPUT__TestParsePSClass_ToPrimary1;

@@ -99,7 +99,7 @@ namespace infer_function_type
 		{
 			EnumerateClassPrimaryInstances(pa, b, true, [&](ITsys* primaryB)
 			{
-				if (pa, primaryA, primaryB)
+				if (IsPSEquivalentTypeEnsuredPrimary(pa, primaryA, primaryB))
 				{
 					exit = true;
 				}
