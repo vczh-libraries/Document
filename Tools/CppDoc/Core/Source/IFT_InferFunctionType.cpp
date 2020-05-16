@@ -103,32 +103,44 @@ namespace infer_function_type
 		mbcr.start = mbcTsys.Count();
 		for (vint i = 0; i < visited.Count(); i++)
 		{
+			bool exitWithFalse = false;
 			bool found = false;
 			auto current = visited[i];
 
-			switch (current->GetType())
+			EnumerateClassPrimaryInstances(pa, current, false, [&](ITsys* currentPrimary)
 			{
-			case TsysType::DeclInstant:
+				switch (currentPrimary->GetType())
 				{
-					auto& di = current->GetDeclInstant();
-					if (di.declSymbol == classSymbol)
+				case TsysType::DeclInstant:
 					{
-						if (i == 0)
+						auto& di = currentPrimary->GetDeclInstant();
+						if (di.declSymbol == classSymbol)
 						{
-							// if the parameter is an instance of an expected template class, no conversion is needed
-							return false;
-						}
-						else
-						{
-							// otherwise, add the current type and stop searching for base classes
-							mbcTsys.Add(CvRefOf(current, cv, ref));
-							found = true;
+							if (i == 0)
+							{
+								// if the parameter is an instance of an expected template class, no conversion is needed
+								exitWithFalse = true;
+								return true;
+							}
+							else
+							{
+								// otherwise, add the current type and stop searching for base classes
+								mbcTsys.Add(CvRefOf(currentPrimary, cv, ref));
+								found = true;
+							}
 						}
 					}
+					break;
 				}
-				break;
+				return false;
+			});
+
+			if (exitWithFalse)
+			{
+				return false;
 			}
 
+			// even if we use the primary symbol to match, we still use current to evaluate base classes, if it is an instance of a partial specialization class
 			if (!found)
 			{
 				switch (current->GetDecl()->kind)
