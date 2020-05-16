@@ -27,6 +27,7 @@
   - [ ] Partial specialization on **classes**.
     - [ ] `EvaluateClassPSRecord` refresh `primary` when it is null and `version` is -1.
     - [ ] Test
+      - [ ] `Class Reference 2` test `IdType` from members outside of classes.
       - [ ] SFINAE test cases.
       - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
   - [ ] Partial specialization on **methods**.
