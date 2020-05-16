@@ -111,12 +111,14 @@ namespace INPUT__TestParsePSClass_ClassRef
 			struct B
 			{
 				static auto F() { return B(); }
+				static auto G() { return A(); }
 			};
 
 			template<typename U>
 			struct B<U*>
 			{
 				static auto F() { return B(); }
+				static auto G() { return A(); }
 			};
 		};
 
@@ -127,12 +129,14 @@ namespace INPUT__TestParsePSClass_ClassRef
 			struct B
 			{
 				static auto F() { return B(); }
+				static auto G() { return A(); }
 			};
 
 			template<typename U>
 			struct B<U*>
 			{
 				static auto F() { return B(); }
+				static auto G() { return A(); }
 			};
 		};
 	);
@@ -221,6 +225,30 @@ TEST_FILE
 			A<char *> :: B<double *> :: F(),
 			L"::A@<[T] *><char>::B@<[U] *><double> $PR",
 			A<char*>::B<double*>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			A<char> :: B<double> :: G(),
+			L"::A<char> $PR",
+			A<char>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			A<char> :: B<double *> :: G(),
+			L"::A<char> $PR",
+			A<char>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			A<char *> :: B<double> :: G(),
+			L"::A@<[T] *><char> $PR",
+			A<char*>
+		);
+
+		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
+			A<char *> :: B<double *> :: G(),
+			L"::A@<[T] *><char> $PR",
+			A<char*>
 		);
 	});
 }
