@@ -118,7 +118,9 @@ ResolvePendingType
 enum class PendingMatching
 {
 	Free,						// totally free
-	ExactExceptDecorator,		// enable const->non const etc
+	AutoRef,					// match a type for a reference, disallow array to pointer conversion
+	AutoCv,						// match a type for const volatile
+	AutoCvRef,					// match a type for a const volatile reference
 	Exact,						// exactly match
 };
 
@@ -201,9 +203,25 @@ public:
 			switch (matching)
 			{
 			case PendingMatching::Free:
-				result = entity;
+			case PendingMatching::AutoCv:
+				if (entity->GetType() == TsysType::Array)
+				{
+					if (entity->GetParamCount() == 1)
+					{
+						result = entity->GetElement()->PtrOf();
+					}
+					else
+					{
+						result = entity->GetElement()->ArrayOf(entity->GetParamCount() - 1)->PtrOf();
+					}
+				}
+				else
+				{
+					result = entity;
+				}
 				break;
-			case PendingMatching::ExactExceptDecorator:
+			case PendingMatching::AutoRef:
+			case PendingMatching::AutoCvRef:
 				result = entity->CVOf(cv);
 				break;
 			case PendingMatching::Exact:
@@ -234,7 +252,25 @@ public:
 			TsysCV cv;
 			TsysRefType ref;
 			auto entity = resolved->GetEntity(cv, ref);
-			auto subMatching = matching == PendingMatching::Free ? PendingMatching::ExactExceptDecorator : matching;
+			auto subMatching = matching;
+			switch (matching)
+			{
+			case PendingMatching::Free:
+				subMatching = PendingMatching::AutoRef;
+				break;
+			case PendingMatching::AutoRef:
+				subMatching = PendingMatching::AutoRef;
+				break;
+			case PendingMatching::AutoCv:
+				subMatching = PendingMatching::AutoCvRef;
+				break;
+			case PendingMatching::AutoCvRef:
+				subMatching = PendingMatching::AutoCvRef;
+				break;
+			case PendingMatching::Exact:
+				subMatching = PendingMatching::Exact;
+				break;
+			}
 
 			switch (self->reference)
 			{
@@ -489,10 +525,30 @@ public:
 					throw TypeCheckerException();
 				}
 			}
-			Execute(pa, self->type.Obj(), entity, (matching == PendingMatching::Free ? PendingMatching::ExactExceptDecorator : matching));
+
+			auto subMatching = matching;
+			switch (matching)
+			{
+			case PendingMatching::Free:
+				subMatching = PendingMatching::AutoCv;
+				break;
+			case PendingMatching::AutoRef:
+				subMatching = PendingMatching::AutoCvRef;
+				break;
+			case PendingMatching::AutoCv:
+				subMatching = PendingMatching::AutoCv;
+				break;
+			case PendingMatching::AutoCvRef:
+				subMatching = PendingMatching::AutoCvRef;
+				break;
+			case PendingMatching::Exact:
+				subMatching = PendingMatching::Exact;
+				break;
+			}
+			result = Execute(pa, self->type.Obj(), entity, subMatching);
 			cv.isGeneralConst |= self->isConst;
 			cv.isVolatile |= self->isVolatile;
-			result = entity->CVOf(cv);
+			result = result->CVOf(cv);
 		}
 		else
 		{

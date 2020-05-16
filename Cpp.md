@@ -31,6 +31,7 @@
       - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
   - [ ] Partial specialization on **methods**.
     - [ ] Test
+      - [ ] Connect forward with template value argument
       - [ ] SFINAE test cases.
       - [ ] Test cases with different value arguments in partial specialization.
 - [ ] Next Demo! (Calculator)

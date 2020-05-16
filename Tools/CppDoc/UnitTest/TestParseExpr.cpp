@@ -223,10 +223,16 @@ auto&			a2 = x;
 const auto		a3 = x;
 const auto&		a4 = x;
 
-auto			b1 = "text";
-auto&			b2 = "text";
-const auto		b3 = "text";
-const auto&		b4 = "text";
+int				y[10][10];
+auto			b1 = y;
+auto&			b2 = y;
+const auto		b3 = y;
+const auto&		b4 = y;
+
+auto			c1 = "text";
+auto&			c2 = "text";
+const auto		c3 = "text";
+const auto&		c4 = "text";
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
@@ -234,10 +240,16 @@ const auto&		b4 = "text";
 		AssertExpr(pa, L"a2",			L"a2",				L"__int32 [] & $L"					);
 		AssertExpr(pa, L"a3",			L"a3",				L"__int32 * const $L"				);
 		AssertExpr(pa, L"a4",			L"a4",				L"__int32 const [] & $L"			);
-		AssertExpr(pa, L"b1",			L"b1",				L"char const * $L"					);
-		AssertExpr(pa, L"b2",			L"b2",				L"char const [] & $L"				);
-		AssertExpr(pa, L"b3",			L"b3",				L"char const * const $L"			);
-		AssertExpr(pa, L"b4",			L"b4",				L"char const [] & $L"				);
+
+		AssertExpr(pa, L"b1",			L"b1",				L"__int32 [] * $L"					);
+		AssertExpr(pa, L"b2",			L"b2",				L"__int32 [,] & $L"					);
+		AssertExpr(pa, L"b3",			L"b3",				L"__int32 [] * const $L"			);
+		AssertExpr(pa, L"b4",			L"b4",				L"__int32 const [,] & $L"			);
+
+		AssertExpr(pa, L"c1",			L"c1",				L"char const * $L"					);
+		AssertExpr(pa, L"c2",			L"c2",				L"char const [] & $L"				);
+		AssertExpr(pa, L"c3",			L"c3",				L"char const * const $L"			);
+		AssertExpr(pa, L"c4",			L"c4",				L"char const [] & $L"				);
 	});
 
 	TEST_CATEGORY(L"decltype + functions")

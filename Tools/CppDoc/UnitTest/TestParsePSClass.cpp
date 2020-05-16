@@ -101,26 +101,6 @@ namespace INPUT__TestParsePSClass_ToPrimary4
 	);
 }
 
-namespace INPUT__TestParsePSClass_Constant
-{
-	TEST_DECL(
-		template<int i>
-		struct Scope;
-
-		template<>
-		struct Scope<1>
-		{
-			static void* F() { return nullptr; }
-		};
-
-		template<>
-		struct Scope<2>
-		{
-			static char* F() { return nullptr; }
-		};
-	);
-}
-
 namespace INPUT__TestParsePSClass_ClassRef
 {
 	TEST_DECL(
@@ -165,7 +145,7 @@ TEST_FILE
 		using namespace INPUT__TestParsePSClass_ToPrimary1;
 		COMPILE_PROGRAM(program, pa, input);
 
-		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+		ASSERT_OVERLOADING_SIMPLE(
 			Scope<void *>().RunMatch(),
 			char const *
 		);
@@ -176,7 +156,7 @@ TEST_FILE
 		using namespace INPUT__TestParsePSClass_ToPrimary2;
 		COMPILE_PROGRAM(program, pa, input);
 
-		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+		ASSERT_OVERLOADING_SIMPLE(
 			Scope<void *>().RunMatch(),
 			char const *
 		);
@@ -187,12 +167,12 @@ TEST_FILE
 		using namespace INPUT__TestParsePSClass_ToPrimary3;
 		COMPILE_PROGRAM(program, pa, input);
 
-		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+		ASSERT_OVERLOADING_SIMPLE(
 			Scope<void *>().RunMatch1(),
 			void *
 		);
 
-		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+		ASSERT_OVERLOADING_SIMPLE(
 			Scope<void *>().RunMatch2(),
 			void *
 		);
@@ -203,30 +183,14 @@ TEST_FILE
 		using namespace INPUT__TestParsePSClass_ToPrimary4;
 		COMPILE_PROGRAM(program, pa, input);
 
-		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+		ASSERT_OVERLOADING_SIMPLE(
 			Scope<void *>().RunMatch1(),
 			void *
 		);
 
-		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+		ASSERT_OVERLOADING_SIMPLE(
 			Scope<void *>().RunMatch2(),
 			void *
-		);
-	});
-
-	TEST_CATEGORY(L"Constant")
-	{
-		using namespace INPUT__TestParsePSClass_Constant;
-		COMPILE_PROGRAM(program, pa, input);
-
-		ASSERT_OVERLOADING_SIMPLE_LVALUE(
-			Scope<1> :: F(),
-			void *
-		);
-
-		ASSERT_OVERLOADING_SIMPLE_LVALUE(
-			Scope<2> :: F(),
-			char *
 		);
 	});
 
@@ -237,25 +201,25 @@ TEST_FILE
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			A<char> :: B<double> :: F(),
-			L"::A<char>::B<double>",
+			L"::A<char>::B<double> $PR",
 			A<char>::B<double>
 		);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			A<char> :: B<double *> :: F(),
-			L"::A<char>::B@<double *>",
+			L"::A<char>::B@<double *> $PR",
 			A<char>::B<double*>
 		);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			A<char *> :: B<double> :: F(),
-			L"::A@<char *>::B<double>",
+			L"::A@<char *>::B<double> $PR",
 			A<char*>::B<double>
 		);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			A<char *> :: B<double *> :: F(),
-			L"::A@<char *>::B@<double *>",
+			L"::A@<char *>::B@<double *> $PR",
 			A<char*>::B<double*>
 		);
 	});
