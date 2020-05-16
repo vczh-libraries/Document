@@ -265,14 +265,15 @@ void ResolveSymbolInClassInternal(const ParsingArguments& pa, ITsys* tsys, ITsys
 						auto& di = entity->GetDeclInstant();
 						if (di.parentDeclType)
 						{
-							if (di.parentDeclType->GetDecl() == classDecl->symbol->GetParentScope())
+							auto parentSymbol = classDecl->symbol->GetParentScope();
+							if (di.parentDeclType->GetDecl() == parentSymbol)
 							{
-								auto parentClass = pa.tsys->DeclInstantOf(classDecl->symbol->GetParentScope(), nullptr, di.parentDeclType);
-								AddSymbolToResolve(rsa.result.types, { parentClass,classDecl->symbol });
+								AddSymbolToResolve(rsa.result.types, { di.parentDeclType,classDecl->symbol });
 							}
 							else
 							{
-								AddSymbolToResolve(rsa.result.types, { di.parentDeclType,classDecl->symbol });
+								auto parentClass = pa.tsys->DeclInstantOf(classDecl->symbol->GetParentScope(), nullptr, di.parentDeclType);
+								AddSymbolToResolve(rsa.result.types, { parentClass,classDecl->symbol });
 							}
 						}
 						else
