@@ -1070,7 +1070,7 @@ TsysPSRecord* ITsys_DeclInstant::GetPSRecord()
 		else if (data.declSymbol->GetPSPrimary_NF())
 		{
 			psRecord = MakePtr<TsysPSRecord>();
-			psRecord->version = TsysPSRecord::PSInstanceVersion;
+			psRecord->version = TsysPSRecord::PSInstanceVersionUnevaluated;
 		}
 	}
 
@@ -1084,6 +1084,5 @@ void ITsys_DeclInstant::MakePSRecordPrimaryThis()
 		psRecord = MakePtr<TsysPSRecord>();
 	}
 	psRecord->version = TsysPSRecord::PSPrimaryThisVersion;
-	psRecord->primary = nullptr;
-	psRecord->instances.Clear();
+	psRecord->evaluatedTypes.Clear();
 }

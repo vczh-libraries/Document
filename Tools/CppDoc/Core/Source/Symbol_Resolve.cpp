@@ -306,6 +306,7 @@ void ResolveSymbolInClassInternal(const ParsingArguments& pa, ITsys* tsys, ITsys
 					: SearchPolicy::ClassMember_FromOutside
 					;
 				ResolveSymbolInTypeInternal(pa, baseType, basePolicy, rsa);
+				return false;
 			});
 		}
 	}
@@ -343,6 +344,7 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 					psEntity = psEntity->GetElement();
 				}
 				ResolveSymbolInClassInternal(pa, CvRefOf(psEntity, cv, ref), psEntity, policy, rsa);
+				return false;
 			});
 		}
 		else if (auto enumDecl = scope->GetImplDecl_NFb<EnumDeclaration>())

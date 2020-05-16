@@ -588,22 +588,16 @@ UserDefined (Inheriting)
 		TemplateArgumentContext* ata = nullptr;
 		symbol_type_resolving::ExtractClassType(fromType, cd, pdt, ata);
 
-		struct ExitException {};
-		try
+		bool exit = false;
+		symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, cd, pdt, ata, [&](ITsys* classType, ITsys* baseType)
 		{
-			symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, cd, pdt, ata, [&](ITsys* classType, ITsys* baseType)
+			if (IsInheritingInternal(pa, toType, baseType, visitedFroms, false, anyInvolved))
 			{
-				if (IsInheritingInternal(pa, toType, baseType, visitedFroms, false, anyInvolved))
-				{
-					throw ExitException();
-				}
-			});
-		}
-		catch (const ExitException&)
-		{
-			return true;
-		}
-		return false;
+				exit = true;
+			}
+			return exit;
+		});
+		return exit;
 	}
 
 	bool IsInheriting(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, bool& anyInvolved)

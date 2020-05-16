@@ -67,6 +67,7 @@ namespace symbol_type_resolving
 	extern symbol_component::Evaluation&		EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
 	extern void									ExtractClassType(ITsys* classType, ClassDeclaration*& classDecl, ITsys*& parentDeclType, TemplateArgumentContext*& argumentsToApply);
 	extern TsysPSRecord*						EvaluateClassPSRecord(const ParsingArguments& invokerPa, ITsys* classType);
+	extern void									EnsurePSRecordPrimaryEvaluated(const ParsingArguments& invokerPa, ITsys* classType, TsysPSRecord* psr);
 
 	template<typename TCallback>
 	void EnumerateClassPSInstances(const ParsingArguments& invokerPa, ITsys* classType, TCallback&& callback)
@@ -75,14 +76,18 @@ namespace symbol_type_resolving
 		{
 			switch (psr->version)
 			{
-			case TsysPSRecord::PSInstanceVersion:
+			case TsysPSRecord::PSInstanceVersionUnevaluated:
+			case TsysPSRecord::PSInstanceVersionEvaluated:
 			case TsysPSRecord::PSPrimaryThisVersion:
 				callback(classType);
 				break;
 			default:
-				for (vint i = 0; i < psr->instances.Count(); i++)
+				for (vint i = 0; i < psr->evaluatedTypes.Count(); i++)
 				{
-					callback(psr->instances[i]);
+					if (callback(psr->evaluatedTypes[i]))
+					{
+						return;
+					}
 				}
 			}
 		}
@@ -121,10 +126,52 @@ namespace symbol_type_resolving
 				auto& tsys = evPs.GetExtra(i);
 				for (vint j = 0; j < tsys.Count(); j++)
 				{
-					callback(ctPs, tsys[j]);
+					if (callback(ctPs, tsys[j]))
+					{
+						return true;
+					}
 				}
 			}
+			return false;
 		});
+	}
+
+	template<typename TCallback>
+	void EnumerateClassPrimaryInstances(const ParsingArguments& invokerPa, ITsys* classType, bool allowNonDecl, TCallback&& callback)
+	{
+		callback(classType);
+		return;
+		switch (classType->GetType())
+		{
+		case TsysType::Decl:
+		case TsysType::DeclInstant:
+			if (auto psr = classType->GetPSRecord())
+			{
+				EnsurePSRecordPrimaryEvaluated(invokerPa, classType, psr);
+				if (psr->version == TsysPSRecord::PSInstanceVersionEvaluated)
+				{
+					for (vint i = 0; i < psr->evaluatedTypes.Count(); i++)
+					{
+						if (callback(psr->evaluatedTypes[i]))
+						{
+							return;
+						}
+					}
+					return;
+				}
+			}
+			callback(classType);
+			break;
+		default:
+			if (allowNonDecl)
+			{
+				callback(classType);
+			}
+			else
+			{
+				throw TypeCheckerException();
+			}
+		}
 	}
 }
 

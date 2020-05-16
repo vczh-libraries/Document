@@ -105,6 +105,7 @@ namespace symbol_type_resolving
 					symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, cd, pdt, ata, [&](ITsys* classType, ITsys* baseType)
 					{
 						SearchAdlClassesAndNamespaces(pa, baseType, nss);
+						return false;
 					});
 				}
 			}

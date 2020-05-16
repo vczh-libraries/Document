@@ -282,14 +282,14 @@ struct TsysDeclInstant
 struct TsysPSRecord
 {
 	// this ITsys* is an instance of a partial specialization class
-	static const vint PSInstanceVersion = -1;
+	static const vint PSInstanceVersionUnevaluated = -1;
+	static const vint PSInstanceVersionEvaluated = -2;
 
 	// this ITsys* is the primary partial specialized class, but keep instances to empty
-	static const vint PSPrimaryThisVersion = -2;
+	static const vint PSPrimaryThisVersion = -3;
 
 	vint							version = 0;
-	ITsys*							primary = nullptr;
-	TypeTsysList					instances;
+	TypeTsysList					evaluatedTypes;
 };
 
 namespace vl

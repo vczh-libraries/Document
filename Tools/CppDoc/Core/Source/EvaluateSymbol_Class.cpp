@@ -1,5 +1,6 @@
 #include "EvaluateSymbol_Shared.h"
 #include "Symbol_TemplateSpec.h"
+#include "Symbol_Resolve.h"
 #include "IFT.h"
 
 namespace symbol_type_resolving
@@ -167,10 +168,9 @@ namespace symbol_type_resolving
 
 		switch (psr->version)
 		{
+		case TsysPSRecord::PSInstanceVersionUnevaluated:
+		case TsysPSRecord::PSInstanceVersionEvaluated:
 		case TsysPSRecord::PSPrimaryThisVersion:
-			break;
-		case TsysPSRecord::PSInstanceVersion:
-			// TODO: [Cpp.md] Refresh `primary` when it is null and `version` is -1
 			break;
 		default:
 			{
@@ -182,14 +182,14 @@ namespace symbol_type_resolving
 				vint version = cd->symbol->GetPSPrimaryVersion_NF();
 				if (psr->version == version) return psr;
 				psr->version = version;
-				psr->instances.Clear();
+				psr->evaluatedTypes.Clear();
 
 				Dictionary<Symbol*, Ptr<TemplateArgumentContext>> psResult;
 				infer_function_type::InferPartialSpecializationPrimary<ForwardClassDeclaration>(invokerPa, psResult, cd->symbol, pdt, ata);
 
 				if (psResult.Count() == 0 || infer_function_type::IsValuableTaContextWithMatchedPSChildren(ata))
 				{
-					psr->instances.Add(classType);
+					psr->evaluatedTypes.Add(classType);
 				}
 
 				for (vint i = 0; i < psResult.Count(); i++)
@@ -198,14 +198,52 @@ namespace symbol_type_resolving
 					auto psCd = psSymbol->GetAnyForwardDecl<ForwardClassDeclaration>().Obj();
 					auto psAta = psResult.Values()[i].Obj();
 					auto& ev = EvaluateForwardClassSymbol(invokerPa, psCd, pdt, psAta);
-					if (!psr->instances.Contains(ev.Get(0)))
+					if (!psr->evaluatedTypes.Contains(ev.Get(0)))
 					{
-						psr->instances.Add(ev.Get(0));
+						psr->evaluatedTypes.Add(ev.Get(0));
 					}
 				}
 			}
 		}
 
 		return psr;
+	}
+
+	/***********************************************************************
+	EnsurePSRecordPrimaryEvaluated: Ensure PSInstanceVersionEvaluated if it is PSInstanceVersionUnevaluated
+	***********************************************************************/
+
+	void EnsurePSRecordPrimaryEvaluated(const ParsingArguments& invokerPa, ITsys* classType, TsysPSRecord* psr)
+	{
+		if (psr->version == TsysPSRecord::PSInstanceVersionUnevaluated)
+		{
+			psr->version = TsysPSRecord::PSInstanceVersionEvaluated;
+
+			auto classDecl = classType->GetDecl()->GetAnyForwardDecl<ForwardClassDeclaration>();
+			ITsys* parentDeclType = nullptr;
+			TemplateArgumentContext* taContext = nullptr;
+
+			if (classType->GetType() == TsysType::DeclInstant)
+			{
+				auto& di = classType->GetDeclInstant();
+				parentDeclType = di.parentDeclType;
+				taContext = di.taContext.Obj();
+			}
+
+			auto psPa = invokerPa.AdjustForDecl(classDecl->symbol, parentDeclType, true);
+			if (taContext) psPa.taContext = taContext;
+
+			auto genericType = MakePtr<GenericType>();
+			{
+				CopyFrom(genericType->arguments, classDecl->specializationSpec->arguments);
+
+				auto idType = MakePtr<IdType>();
+				idType->cStyleTypeReference = true;
+				idType->name = classDecl->name;
+				idType->resolving = ResolveSymbolInContext(psPa, idType->name, idType->cStyleTypeReference).types;
+			}
+
+			TypeToTsysNoVta(psPa, genericType, psr->evaluatedTypes);
+		}
 	}
 }

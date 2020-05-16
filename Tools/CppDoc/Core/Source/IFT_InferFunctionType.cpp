@@ -117,6 +117,7 @@ namespace infer_function_type
 							{
 								visited.Add(baseType);
 							}
+							return false;
 						});
 					}
 				}
@@ -146,6 +147,7 @@ namespace infer_function_type
 							{
 								visited.Add(baseType);
 							}
+							return false;
 						});
 					}
 				}

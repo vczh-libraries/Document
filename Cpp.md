@@ -50,7 +50,6 @@
 - [ ] More on **templates**
   - [ ] `GenericExpr` allows to be partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
   - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
-  - [ ] Variable also need multiple `Ptr<TemplateSpec>` when the declaration is implementing a static variable in nested generic classes.
 - [ ] `MatchPSArgument` on `decltype(EXPR)`, success when the type to match is not `decltype(EXPR)`, or two expression match.
 - [ ] `::new`
 - [ ] `::delete`
