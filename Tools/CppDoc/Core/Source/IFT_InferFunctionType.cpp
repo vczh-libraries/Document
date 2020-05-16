@@ -103,25 +103,11 @@ namespace infer_function_type
 		mbcr.start = mbcTsys.Count();
 		for (vint i = 0; i < visited.Count(); i++)
 		{
+			bool found = false;
 			auto current = visited[i];
+
 			switch (current->GetType())
 			{
-			case TsysType::Decl:
-				{
-					// Decl could not match GenericType, search for base classes
-					if (auto classDecl = current->GetDecl()->GetAnyForwardDecl<ClassDeclaration>())
-					{
-						symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, classDecl.Obj(), nullptr, nullptr, [&](ITsys* classType, ITsys* baseType)
-						{
-							if (!visited.Contains(baseType))
-							{
-								visited.Add(baseType);
-							}
-							return false;
-						});
-					}
-				}
-				break;
 			case TsysType::DeclInstant:
 				{
 					auto& di = current->GetDeclInstant();
@@ -136,22 +122,52 @@ namespace infer_function_type
 						{
 							// otherwise, add the current type and stop searching for base classes
 							mbcTsys.Add(CvRefOf(current, cv, ref));
+							found = true;
 						}
-					}
-					else if (auto classDecl = di.declSymbol->GetAnyForwardDecl<ClassDeclaration>())
-					{
-						// search for base classes
-						symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, classDecl.Obj(), di.parentDeclType, di.taContext.Obj(), [&](ITsys* classType, ITsys* baseType)
-						{
-							if (!visited.Contains(baseType))
-							{
-								visited.Add(baseType);
-							}
-							return false;
-						});
 					}
 				}
 				break;
+			}
+
+			if (!found)
+			{
+				switch (current->GetType())
+				{
+				case TsysType::Decl:
+					{
+						// Decl could not match GenericType, search for base classes
+						if (auto classDecl = current->GetDecl()->GetAnyForwardDecl<ClassDeclaration>())
+						{
+							symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, classDecl.Obj(), nullptr, nullptr, [&](ITsys* classType, ITsys* baseType)
+							{
+								if (!visited.Contains(baseType))
+								{
+									visited.Add(baseType);
+								}
+								return false;
+							});
+						}
+					}
+					break;
+				case TsysType::DeclInstant:
+					{
+						auto& di = current->GetDeclInstant();
+						if (auto classDecl = di.declSymbol->GetAnyForwardDecl<ClassDeclaration>())
+						{
+							auto& di = current->GetDeclInstant();
+							// search for base classes
+							symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, classDecl.Obj(), di.parentDeclType, di.taContext.Obj(), [&](ITsys* classType, ITsys* baseType)
+							{
+								if (!visited.Contains(baseType))
+								{
+									visited.Add(baseType);
+								}
+								return false;
+							});
+						}
+					}
+					break;
+				}
 			}
 		}
 
