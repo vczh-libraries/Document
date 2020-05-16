@@ -145,7 +145,24 @@ namespace symbol_totsys_impl
 		{
 			for (vint i = 0; i < resolving->items.Count(); i++)
 			{
-				receiver(nullptr, resolving->items[i].symbol);
+				auto ritem = resolving->items[i];
+				auto pdt = ritem.tsys;
+				if (pdt)
+				{
+					if (pdt->GetType() == TsysType::DeclInstant)
+					{
+						auto& di = pdt->GetDeclInstant();
+						if (!di.taContext)
+						{
+							pdt = di.parentDeclType;
+						}
+					}
+					else
+					{
+						pdt = nullptr;
+					}
+				}
+				receiver(pdt, ritem.symbol);
 			}
 		});
 	}
