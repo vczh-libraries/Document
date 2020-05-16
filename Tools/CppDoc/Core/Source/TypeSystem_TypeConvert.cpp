@@ -187,15 +187,16 @@ Utilities
 Exact
 ***********************************************************************/
 
-	bool IsExactEntityMatch(ITsys* toEntity, ITsys* fromEntity, bool ofPointer, bool& cvInvolved, bool& anyInvolved);
+	bool IsExactEntityMatch(const ParsingArguments& pa, ITsys* toEntity, ITsys* fromEntity, bool& anyInvolved);
+	bool IsExactEntityMatch(const ParsingArguments& pa, ITsys* toEntity, ITsys* fromEntity, bool ofPointer, bool& cvInvolved, bool& anyInvolved);
 
-	bool IsExactEntityMatch(ITsys* toEntity, ITsys* fromEntity, bool& anyInvolved)
+	bool IsExactEntityMatch(const ParsingArguments& pa, ITsys* toEntity, ITsys* fromEntity, bool& anyInvolved)
 	{
 		bool cvInvolved = false;
-		return IsExactEntityMatch(toEntity, fromEntity, false, cvInvolved, anyInvolved);
+		return IsExactEntityMatch(pa, toEntity, fromEntity, false, cvInvolved, anyInvolved);
 	}
 
-	bool IsExactEntityMatch(ITsys* toEntity, ITsys* fromEntity, bool ofPointer, bool& cvInvolved, bool& anyInvolved)
+	bool IsExactEntityMatchEnsuredPrimary(const ParsingArguments& pa, ITsys* toEntity, ITsys* fromEntity, bool ofPointer, bool& cvInvolved, bool& anyInvolved)
 	{
 		if (IsUnknownType(toEntity) || IsUnknownType(fromEntity))
 		{
@@ -226,7 +227,7 @@ Exact
 				if (ofPointer)
 				{
 					bool _anyInvolved = false;
-					if (IsExactEntityMatch(toEntity->GetElement(), fromEntity, _anyInvolved))
+					if (IsExactEntityMatch(pa, toEntity->GetElement(), fromEntity, _anyInvolved))
 					{
 						anyInvolved |= _anyInvolved;
 						return true;
@@ -248,13 +249,13 @@ Exact
 			}
 		case TsysType::LRef:
 		case TsysType::RRef:
-			return IsExactEntityMatch(toEntity->GetElement(), fromEntity->GetElement(), anyInvolved);
+			return IsExactEntityMatch(pa, toEntity->GetElement(), fromEntity->GetElement(), anyInvolved);
 		case TsysType::Ptr:
 			{
 				auto toElement = toEntity->GetElement();
 				auto fromElement = fromEntity->GetElement();
 				bool _anyInvolved = false;
-				if (!IsExactEntityMatch(toElement, fromElement, _anyInvolved)) return false;
+				if (!IsExactEntityMatch(pa, toElement, fromElement, _anyInvolved)) return false;
 				if (IsUnknownType(toElement) && fromElement->GetType() == TsysType::Member)
 				{
 					return false;
@@ -268,6 +269,7 @@ Exact
 			}
 		case TsysType::Array:
 			return IsExactEntityMatch(
+				pa,
 				ArrayRemoveOneDim(toEntity),
 				ArrayRemoveOneDim(fromEntity),
 				ofPointer,
@@ -276,25 +278,25 @@ Exact
 			);
 		case TsysType::Function:
 			{
-				if (!IsExactEntityMatch(toEntity->GetElement(), fromEntity->GetElement(), anyInvolved)) return false;
+				if (!IsExactEntityMatch(pa, toEntity->GetElement(), fromEntity->GetElement(), anyInvolved)) return false;
 				if (toEntity->GetParamCount() != fromEntity->GetParamCount()) return false;
 				vint count = toEntity->GetParamCount();
 				for (vint i = 0; i < count; i++)
 				{
-					if (!IsExactEntityMatch(toEntity->GetParam(i), fromEntity->GetParam(i), anyInvolved)) return false;
+					if (!IsExactEntityMatch(pa, toEntity->GetParam(i), fromEntity->GetParam(i), anyInvolved)) return false;
 				}
 				return true;
 			}
 		case TsysType::Member:
 			return
-				IsExactEntityMatch(toEntity->GetElement(), fromEntity->GetElement(), anyInvolved) &&
-				IsExactEntityMatch(toEntity->GetClass(), fromEntity->GetClass(), anyInvolved);
+				IsExactEntityMatch(pa, toEntity->GetElement(), fromEntity->GetElement(), anyInvolved) &&
+				IsExactEntityMatch(pa, toEntity->GetClass(), fromEntity->GetClass(), anyInvolved);
 		case TsysType::CV:
 			{
 				auto toElement = toEntity->GetElement();
 				auto fromElement = fromEntity->GetElement();
 				bool _anyInvolved = false;
-				if (!IsExactEntityMatch(toElement, fromElement, _anyInvolved)) return false;
+				if (!IsExactEntityMatch(pa, toElement, fromElement, _anyInvolved)) return false;
 
 				auto toCV = toEntity->GetCV();
 				auto fromCV = fromEntity->GetCV();
@@ -330,13 +332,13 @@ Exact
 
 				if (toDI.parentDeclType && fromDI.parentDeclType)
 				{
-					if (!IsExactEntityMatch(toDI.parentDeclType, fromDI.parentDeclType, anyInvolved)) return false;
+					if (!IsExactEntityMatch(pa, toDI.parentDeclType, fromDI.parentDeclType, anyInvolved)) return false;
 				}
 
 				vint count = toEntity->GetParamCount();
 				for (vint i = 0; i < count; i++)
 				{
-					if (!IsExactEntityMatch(toEntity->GetParam(i), fromEntity->GetParam(i), anyInvolved)) return false;
+					if (!IsExactEntityMatch(pa, toEntity->GetParam(i), fromEntity->GetParam(i), anyInvolved)) return false;
 				}
 				return true;
 			}
@@ -350,6 +352,7 @@ Exact
 				for (vint i = 0; i < count; i++)
 				{
 					if (!IsExactEntityMatch(
+						pa,
 						ApplyExprTsysType(toEntity->GetParam(i), toI.headers[i].type),
 						ApplyExprTsysType(fromEntity->GetParam(i), fromI.headers[i].type),
 						anyInvolved
@@ -364,10 +367,28 @@ Exact
 		return false;
 	}
 
-	TypeConv PerformExactEntityMatch(ENTITY_VARS(, , _))
+	bool IsExactEntityMatch(const ParsingArguments& pa, ITsys* toEntity, ITsys* fromEntity, bool ofPointer, bool& cvInvolved, bool& anyInvolved)
+	{
+		bool exit = false;
+		symbol_type_resolving::EnumerateClassPrimaryInstances(pa, toEntity, true, [&](ITsys* toPrimary)
+		{
+			symbol_type_resolving::EnumerateClassPrimaryInstances(pa, fromEntity, true, [&](ITsys* fromPrimary)
+			{
+				if (IsExactEntityMatchEnsuredPrimary(pa, toPrimary, fromPrimary, ofPointer, cvInvolved, anyInvolved))
+				{
+					exit = true;
+				}
+				return exit;
+			});
+			return exit;
+		});
+		return exit;
+	}
+
+	TypeConv PerformExactEntityMatch(const ParsingArguments& pa, ENTITY_VARS(, , _))
 	{
 		bool anyInvolved = false;
-		if (IsExactEntityMatch(toEntity, fromEntity, anyInvolved))
+		if (IsExactEntityMatch(pa, toEntity, fromEntity, anyInvolved))
 		{
 			if (anyInvolved)
 			{
@@ -433,7 +454,7 @@ Exact
 Trivial
 ***********************************************************************/
 
-	TypeConv PerformEnumToIntTrivialConversion(ENTITY_VARS(, , _))
+	TypeConv PerformEnumToIntTrivialConversion(const ParsingArguments& pa, ENTITY_VARS(, , _))
 	{
 		if (toEntity->GetType() == TsysType::Primitive && fromEntity->GetType() == TsysType::Decl)
 		{
@@ -452,7 +473,7 @@ Trivial
 		return TypeConvCat::Illegal;
 	}
 
-	TypeConv PerformToPtrTrivialConversion(ENTITY_VARS(, , _))
+	TypeConv PerformToPtrTrivialConversion(const ParsingArguments& pa, ENTITY_VARS(, , _))
 	{
 		bool cvInvolved = false;
 		bool allowInheritanceOnly = false;
@@ -468,7 +489,7 @@ Trivial
 		}
 
 		bool anyInvolved = false;
-		if (IsExactEntityMatch(toElementEntity, fromElementEntity, true, cvInvolved, anyInvolved))
+		if (IsExactEntityMatch(pa, toElementEntity, fromElementEntity, true, cvInvolved, anyInvolved))
 		{
 			bool toU = IsUnknownType(toElementEntity);
 			bool fromU = IsUnknownType(fromElementEntity);
@@ -524,7 +545,7 @@ Trivial
 IntegralPromotion
 ***********************************************************************/
 
-	bool IsNumericPromotion(ITsys* toType, ITsys* fromType)
+	bool IsNumericPromotion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
 		if (toType->GetType() != TsysType::Primitive) return false;
 		auto toP = toType->GetPrimitive();
@@ -549,7 +570,7 @@ IntegralPromotion
 Standard
 ***********************************************************************/
 
-	bool IsNumericConversion(ITsys* toType, ITsys* fromType)
+	bool IsNumericConversion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType)
 	{
 		if (toType->GetType() != TsysType::Primitive) return false;
 		if (fromType->GetType() != TsysType::Primitive) return false;
@@ -581,7 +602,7 @@ UserDefined (Inheriting)
 		if (visitedFroms.Contains(fromType)) return false;
 		visitedFroms.Add(fromType);
 
-		if (IsExactEntityMatch(toType, fromType, anyInvolved)) return true;
+		if (IsExactEntityMatch(pa, toType, fromType, anyInvolved)) return true;
 
 		ClassDeclaration* cd = nullptr;
 		ITsys* pdt = nullptr;
@@ -741,7 +762,7 @@ UserDefined (toType:Ctor)
 ToVoidPtr
 ***********************************************************************/
 
-	bool IsToVoidPtrConversion(ITsys* toType, ITsys* fromType, bool& cvInvolved)
+	bool IsToVoidPtrConversion(const ParsingArguments& pa, ITsys* toType, ITsys* fromType, bool& cvInvolved)
 	{
 		ENTITY_VARS(Element, , ;);
 		if (!AllowConvertingToPointer(toType, fromType, ENTITY_PASS(Element), false))
@@ -896,15 +917,15 @@ TestTypeConversionImpl
 #pragma warning (disable: 4003)
 
 		{
-			auto result = PerformExactEntityMatch(ENTITY_PASS());
+			auto result = PerformExactEntityMatch(pa, ENTITY_PASS());
 			if (result.cat != TypeConvCat::Illegal) return result;
 		}
 		{
-			auto result = PerformEnumToIntTrivialConversion(ENTITY_PASS());
+			auto result = PerformEnumToIntTrivialConversion(pa, ENTITY_PASS());
 			if (result.cat != TypeConvCat::Illegal) return result;
 		}
 		{
-			auto result = PerformToPtrTrivialConversion(ENTITY_PASS());
+			auto result = PerformToPtrTrivialConversion(pa, ENTITY_PASS());
 			if (result.cat != TypeConvCat::Illegal) return result;
 		}
 
@@ -938,12 +959,12 @@ TestTypeConversionImpl
 			{
 				if (!allowInheritanceOnly)
 				{
-					if (IsNumericPromotion(toEntity, fromEntity))
+					if (IsNumericPromotion(pa, toEntity, fromEntity))
 					{
 						return { TypeConvCat::IntegralPromotion,cvInvolved,false };
 					}
 
-					if (IsNumericConversion(toEntity, fromEntity))
+					if (IsNumericConversion(pa, toEntity, fromEntity))
 					{
 						return { TypeConvCat::Standard,cvInvolved,false };
 					}
@@ -953,7 +974,7 @@ TestTypeConversionImpl
 						return { TypeConvCat::Standard,cvInvolved,anyInvolved };
 					}
 
-					if (IsToVoidPtrConversion(toEntity, fromEntity, cvInvolved))
+					if (IsToVoidPtrConversion(pa, toEntity, fromEntity, cvInvolved))
 					{
 						return { TypeConvCat::ToVoidPtr,cvInvolved,false };
 					}
