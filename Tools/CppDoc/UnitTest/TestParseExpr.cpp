@@ -214,6 +214,32 @@ decltype((x))	c3 = (x);
 		AssertExpr(pa, L"c3",			L"c3",				L"__int32 const & $L"				);
 	});
 
+	TEST_CATEGORY(L"decltype + arrays")
+	{
+		auto input = LR"(
+int				x[10];
+auto			a1 = x;
+auto&			a2 = x;
+const auto		a3 = x;
+const auto&		a4 = x;
+
+auto			b1 = "text";
+auto&			b2 = "text";
+const auto		b3 = "text";
+const auto&		b4 = "text";
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa, L"a1",			L"a1",				L"__int32 * $L"						);
+		AssertExpr(pa, L"a2",			L"a2",				L"__int32 [] & $L"					);
+		AssertExpr(pa, L"a3",			L"a3",				L"__int32 * const $L"				);
+		AssertExpr(pa, L"a4",			L"a4",				L"__int32 const [] & $L"			);
+		AssertExpr(pa, L"b1",			L"b1",				L"char const * $L"					);
+		AssertExpr(pa, L"b2",			L"b2",				L"char const [] & $L"				);
+		AssertExpr(pa, L"b3",			L"b3",				L"char const * const $L"			);
+		AssertExpr(pa, L"b4",			L"b4",				L"char const [] & $L"				);
+	});
+
 	TEST_CATEGORY(L"decltype + functions")
 	{
 		auto input = LR"(

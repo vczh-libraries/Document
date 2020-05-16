@@ -246,6 +246,7 @@ namespace symbol_type_resolving
 				idType->cStyleTypeReference = true;
 				idType->name = cd->name;
 				idType->resolving = ResolveSymbolInContext(psPa, idType->name, idType->cStyleTypeReference).types;
+				genericType->type = idType;
 			}
 
 			TypeToTsysNoVta(psPa, genericType, psr->evaluatedTypes);

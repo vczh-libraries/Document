@@ -440,6 +440,12 @@ class ITSYS_CLASS(Array)
 {
 	ITSYS_MEMBERS_DATA_WITHELEMENT(Array, vint, ParamCount)
 	ITSYS_REPLACE_GENERIC_ARGS_WITH_ELEMENT(ArrayOf, data)
+
+public:
+	ITsys* CVOf(TsysCV cv)override
+	{
+		return element->CVOf(cv)->ArrayOf(data);
+	}
 };
 
 class ITSYS_CLASS(CV)

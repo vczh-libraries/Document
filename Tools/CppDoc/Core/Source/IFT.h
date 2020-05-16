@@ -87,6 +87,12 @@ namespace infer_function_type
 												SortedList<vint>& boundedAnys
 											);
 
+	extern bool								IsPSEquivalentType(
+												const ParsingArguments& pa,
+												ITsys* a,
+												ITsys* b
+											);
+
 	extern Ptr<TemplateArgumentContext>		InferPartialSpecialization(
 												const ParsingArguments& pa,
 												Symbol* declSymbol,

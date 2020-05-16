@@ -43,7 +43,7 @@ namespace infer_function_type
 			{
 				taContext.arguments.Set(pattern, type);
 			}
-			else if (type != inferred)
+			else if (!IsPSEquivalentType(pa, type, inferred))
 			{
 				if (hitLastAssignedVta)
 				{
