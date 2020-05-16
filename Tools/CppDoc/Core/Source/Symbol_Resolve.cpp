@@ -436,6 +436,7 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 				{
 					auto classType = cache->containerClassTypes[i]->ReplaceGenericArgs(pa);
 					ResolveSymbolInTypeInternal(pa, classType, childPolicy, rsa);
+					if (rsa.found) break;
 				}
 			}
 
