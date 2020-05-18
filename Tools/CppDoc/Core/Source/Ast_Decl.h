@@ -60,14 +60,14 @@ class TemplateSpec : public Object
 public:
 	struct Argument
 	{
-		bool										ellipsis = false;
-		CppName										name;
-		Symbol*										argumentSymbol = nullptr;
+		bool										ellipsis = false;			// variadic template argument
+		CppName										name;						// name of the argument
+		Symbol*										argumentSymbol = nullptr;	// symbol of the argument
 		CppTemplateArgumentType						argumentType;
-		Ptr<Symbol>									templateSpecScope;
-		Ptr<TemplateSpec>							templateSpec;
-		Ptr<Type>									type;
-		Ptr<Expr>									expr;
+		Ptr<Symbol>									templateSpecScope;			// for HighLevelType
+		Ptr<TemplateSpec>							templateSpec;				// for HighLevelType
+		Ptr<Type>									type;						// default value of type argument, or type of value argument
+		Ptr<Expr>									expr;						// default value of value argument
 	};
 
 	List<Argument>									arguments;

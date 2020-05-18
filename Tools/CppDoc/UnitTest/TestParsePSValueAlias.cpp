@@ -347,7 +347,7 @@ constexpr auto C = Value<T*, U*>;
 		);
 	});
 
-	TEST_CATEGORY(L"SFAINE")
+	TEST_CATEGORY(L"SFINAE")
 	{
 		const wchar_t* input = LR"(
 struct A { using X = A*&; };

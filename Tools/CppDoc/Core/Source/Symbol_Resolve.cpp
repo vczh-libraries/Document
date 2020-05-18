@@ -219,7 +219,7 @@ void PickResolvedSymbols(ITsys* thisItem, const List<Ptr<Symbol>>* pSymbols, boo
 				if (allowTemplateArgument)
 				{
 					rsa.found = true;
-					AddSymbolToResolve(rsa.result.types, { thisItem, symbol });
+					AddSymbolToResolve(rsa.result.types, { nullptr, symbol });
 				}
 				break;
 
@@ -228,8 +228,33 @@ void PickResolvedSymbols(ITsys* thisItem, const List<Ptr<Symbol>>* pSymbols, boo
 				if (allowTemplateArgument)
 				{
 					rsa.found = true;
-					AddSymbolToResolve(rsa.result.values, { thisItem, symbol });
+					AddSymbolToResolve(rsa.result.values, { nullptr, symbol });
 				}
+				break;
+			}
+		}
+	}
+}
+
+void PickTemplateArgumentSymbols(const List<Ptr<Symbol>>* pSymbols, ResolveSymbolArguments& rsa)
+{
+	if (!rsa.cStyleTypeReference)
+	{
+		for (vint i = 0; i < pSymbols->Count(); i++)
+		{
+			auto symbol = pSymbols->Get(i).Obj();
+			switch (symbol->kind)
+			{
+				// template type argument
+			case symbol_component::SymbolKind::GenericTypeArgument:
+				rsa.found = true;
+				AddSymbolToResolve(rsa.result.types, { nullptr, symbol });
+				break;
+
+				// template value argument
+			case symbol_component::SymbolKind::GenericValueArgument:
+				rsa.found = true;
+				AddSymbolToResolve(rsa.result.values, { nullptr, symbol });
 				break;
 			}
 		}
@@ -370,7 +395,49 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 
 		if (auto classDecl = scope->GetAnyForwardDecl<ForwardClassDeclaration>())
 		{
-			if (policy & SearchPolicy::_AllowClassMember)
+			if (policy & SearchPolicy::_AllowTemplateArgument)
+			{
+				// if we can find a template argument, then don't need to continue searching for class members
+				if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
+				{
+					PickTemplateArgumentSymbols(pSymbols, rsa);
+				}
+
+				if (rsa.found) break;
+
+				// for a class forward declaration, symbols are not in the class's scope
+				if (classDecl->keepTemplateArgumentAlive)
+				{
+					if (auto pSymbols = classDecl->keepTemplateArgumentAlive->TryGetChildren_NFb(rsa.name.name))
+					{
+						PickTemplateArgumentSymbols(pSymbols, rsa);
+					}
+				}
+
+				if (rsa.found) break;
+			}
+
+			// check if pa.taContext has enough template arguments for this class
+			// if not, then it could be evaluating the default template argument, skip class members
+			bool readyForClassMember = true;
+			if(classDecl->templateSpec && classDecl->templateSpec->arguments.Count() > 0)
+			{
+				auto ata = pa.taContext;
+				while (ata)
+				{
+					if (ata->symbolToApply == classDecl->symbol)
+					{
+						if (ata->arguments.Count() < classDecl->templateSpec->arguments.Count())
+						{
+							readyForClassMember = false;
+							break;
+						}
+					}
+					ata = ata->parent;
+				}
+			}
+
+			if (readyForClassMember && (policy & SearchPolicy::_AllowClassMember))
 			{
 				// if pa is in a context of an instanciated generic class
 				// find the correct parentDeclType and argumentsToApply

@@ -251,4 +251,30 @@ TEST_FILE
 			A<char*>
 		);
 	});
+
+	TEST_CATEGORY(L"SFINAE")
+	{
+		const wchar_t* input = LR"(
+struct A { using X = A*&; };
+struct B { using Y = B*&; };
+struct C { using Z = C*&; };
+
+template<typename T, typename U = T&>
+struct Type;
+
+template<typename T>
+struct Type<T*, typename T::X> { static const auto Value = 0.f; };
+
+template<typename T>
+struct Type<T*, typename T::Y> { static const auto Value = 0.0; };
+
+template<typename T>
+struct Type<T*, typename T::Z> { static const auto Value = 'c'; };
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa,	L"Type<A*>::Value",		L"Type<A *> :: Value",		L"float const $L"	);
+		AssertExpr(pa,	L"Type<B*>::Value",		L"Type<B *> :: Value",		L"double const $L"	);
+		AssertExpr(pa,	L"Type<C*>::Value",		L"Type<C *> :: Value",		L"char const $L"	);
+	});
 }

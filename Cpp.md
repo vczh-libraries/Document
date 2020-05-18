@@ -25,14 +25,13 @@
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Partial specialization constructions
   - [ ] Partial specialization on **classes**.
-    - [ ] `EvaluateClassPSRecord` refresh `primary` when it is null and `version` is -1.
     - [ ] Test
-      - [ ] `Class Reference 2` test `IdType` from members outside of classes.
-      - [ ] SFINAE test cases.
-      - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its type again.
+      - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its members.
+        - [ ] `TsysGenericFunction::spec` could be pointing to the forward declaration's spec, while we want the implementation one.
   - [ ] Partial specialization on **methods**.
     - [ ] Test
       - [ ] Connect forward with template value argument
+      - [ ] `Class Reference 2` test `IdType` from members outside of classes.
       - [ ] SFINAE test cases.
       - [ ] Test cases with different value arguments in partial specialization.
 - [ ] Next Demo! (Calculator)
