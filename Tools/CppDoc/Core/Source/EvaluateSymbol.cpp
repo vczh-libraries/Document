@@ -206,7 +206,7 @@ namespace symbol_type_resolving
 			else
 			{
 				auto parentClassDecl = parentTemplateClassSymbol->GetAnyForwardDecl<ForwardClassDeclaration>();
-				auto parentPa = invokerPa.AdjustForDecl(parentTemplateClassSymbol, nullptr, true);
+				auto parentPa = invokerPa.AdjustForDecl(parentTemplateClassSymbol, nullptr);
 				parentTemplateClass = EvaluateForwardClassSymbol(parentPa, parentClassDecl.Obj(), nullptr, nullptr)[0]->GetElement();
 			}
 		}

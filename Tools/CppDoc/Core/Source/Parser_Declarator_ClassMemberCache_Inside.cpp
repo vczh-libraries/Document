@@ -10,7 +10,7 @@ void FillSymbolToClassMemberCache(const ParsingArguments& pa, Symbol* classSymbo
 	{
 		if (auto classDecl = current->GetAnyForwardDecl<ForwardClassDeclaration>())
 		{
-			auto declPa = pa.AdjustForDecl(current, nullptr, true);
+			auto declPa = pa.AdjustForDecl(current, nullptr);
 			auto& ev = symbol_type_resolving::EvaluateForwardClassSymbol(declPa, classDecl.Obj(), nullptr, nullptr);
 			auto classType = ev[0];
 			if (classType->GetType() == TsysType::GenericFunction)

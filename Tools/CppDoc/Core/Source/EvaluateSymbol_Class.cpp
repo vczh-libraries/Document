@@ -235,7 +235,7 @@ namespace symbol_type_resolving
 			TemplateArgumentContext* ata = nullptr;
 			ExtractClassTypeInternal(classType, cd, pdt, ata);
 
-			auto psPa = invokerPa.AdjustForDecl(cd->symbol, pdt, true);
+			auto psPa = invokerPa.AdjustForDecl(cd->symbol, pdt);
 			if (ata) psPa.taContext = ata;
 
 			auto genericType = MakePtr<GenericType>();

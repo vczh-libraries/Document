@@ -422,7 +422,7 @@ struct ParsingArguments
 	ParsingArguments								WithScope(Symbol* _scopeSymbol)const;
 	ParsingArguments								AppendSingleLevelArgs(TemplateArgumentContext& taContext)const;
 	ParsingArguments								AdjustForDecl(Symbol* declSymbol)const;
-	ParsingArguments								AdjustForDecl(Symbol* declSymbol, ITsys* parentDeclType, bool forceOverrideForNull)const;
+	ParsingArguments								AdjustForDecl(Symbol* declSymbol, ITsys* parentDeclType)const;
 
 	EvaluationKind									GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const;
 	bool											IsGeneralEvaluation()const;

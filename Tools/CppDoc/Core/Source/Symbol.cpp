@@ -810,13 +810,10 @@ ParsingArguments ParsingArguments::AdjustForDecl(Symbol* declSymbol)const
 	return newPa;
 }
 
-ParsingArguments ParsingArguments::AdjustForDecl(Symbol* declSymbol, ITsys* parentDeclType, bool forceOverrideForNull)const
+ParsingArguments ParsingArguments::AdjustForDecl(Symbol* declSymbol, ITsys* parentDeclType)const
 {
 	auto pa = AdjustForDecl(declSymbol);
-	if (forceOverrideForNull || parentDeclType)
-	{
-		pa.parentDeclType = AdjustDeclInstantForScope(pa.scopeSymbol, parentDeclType, false);
-	}
+	pa.parentDeclType = AdjustDeclInstantForScope(pa.scopeSymbol, parentDeclType, false);
 	return pa;
 }
 
