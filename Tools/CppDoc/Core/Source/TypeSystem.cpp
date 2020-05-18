@@ -94,7 +94,6 @@ public:
 	ITsys* MemberOf(ITsys* classType)																	override;
 	ITsys* CVOf(TsysCV cv)																				override;
 	ITsys* GenericFunctionOf(IEnumerable<ITsys*>& params, const TsysGenericFunction& genericFunction)	override;
-	ITsys* GenericArgOf(TsysGenericArg genericArg)														override { throw L"Not Implemented!"; }
 
 	ITsys* GetEntity(TsysCV& cv, TsysRefType& refType)override
 	{
@@ -279,7 +278,6 @@ public:
 	ITsys* ArrayOf(vint dimensions)																		override { return this; }
 	ITsys* MemberOf(ITsys* classType)																	override { return this; }
 	ITsys* CVOf(TsysCV cv)																				override { return this; }
-	ITsys* GenericArgOf(TsysGenericArg genericArg)														override { return this; }
 
 };
 
@@ -348,24 +346,16 @@ class ITSYS_CLASS(Decl)
 	ITSYS_GENERIC_REPLACEGENERICARGS
 
 protected:
-	Dictionary<TsysGenericArg, ITsys*>				genericArgs;
 	Ptr<TsysPSRecord>								psRecord;
 
 public:
-	ITsys*											GenericArgOf(TsysGenericArg genericArg)override;
 	TsysPSRecord*									GetPSRecord()override;
 };
 
 class ITSYS_CLASS(GenericArg)
 {
-	ITSYS_MEMBERS_DATA_WITHELEMENT(GenericArg, TsysGenericArg, GenericArg)
+	ITSYS_MEMBERS_DATA(GenericArg, TsysGenericArg, GenericArg)
 	ITSYS_GENERIC_ARG_CONFIGURATION
-
-public:
-	Symbol* GetDecl()override
-	{
-		return element->GetDecl();
-	}
 };
 
 /***********************************************************************
@@ -732,6 +722,7 @@ protected:
 	Dictionary<Symbol*, ITsys_Decl*>						decls;
 	WithParamsList<ITsys_DeclInstant, TsysDeclInstant>		declInstantOf;
 	WithParamsList<ITsys_Init, TsysInit>					initOf;
+	Dictionary<TsysGenericArg, ITsys*>						genericArgs;
 	vint													anonymousCounter = 0;
 
 public:
@@ -925,6 +916,16 @@ public:
 		return ParamsOf(tsys, data, initOf, nullptr, this, &TsysAlloc::_init);
 	}
 
+	ITsys* GenericArgOf(TsysGenericArg genericArg)override
+	{
+		vint index = genericArgs.Keys().IndexOf(genericArg);
+		if (index != -1) return genericArgs.Values()[index];
+
+		auto itsys = _genericArg.Alloc(this, genericArg);
+		genericArgs.Add(genericArg, itsys);
+		return itsys;
+	}
+
 	vint AllocateAnonymousCounter()
 	{
 		return anonymousCounter++;
@@ -1009,16 +1010,6 @@ ITsys* TsysBase::GenericFunctionOf(IEnumerable<ITsys*>& params, const TsysGeneri
 /***********************************************************************
 ITsys_Decl (Impl)
 ***********************************************************************/
-
-ITsys* ITsys_Decl::GenericArgOf(TsysGenericArg genericArg)
-{
-	vint index = genericArgs.Keys().IndexOf(genericArg);
-	if (index != -1) return genericArgs.Values()[index];
-
-	auto itsys = tsys->_genericArg.Alloc(tsys, this, genericArg);
-	genericArgs.Add(genericArg, itsys);
-	return itsys;
-}
 
 TsysPSRecord* ITsys_Decl::GetPSRecord()
 {

@@ -61,7 +61,7 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 				TsysGenericArg arg;
 				arg.argIndex = spec->arguments.Count();
 				arg.argSymbol = argumentSymbol.Obj();
-				ev.Get().Add(pa.tsys->DeclOf(specSymbol.Obj())->GenericArgOf(arg));
+				ev.Get().Add(pa.tsys->GenericArgOf(arg));
 			}
 
 			if (argument.name)

@@ -324,18 +324,18 @@ namespace vl
 	F(Zero)																					\
 	F(Nullptr)																				\
 	F(Primitive)		/* Primitive													*/	\
-	F(LRef)				/* Element														*/	\
-	F(RRef)				/* Element														*/	\
-	F(Ptr)				/* Element														*/	\
-	F(Array)			/* Element, ParamCount											*/	\
-	F(Function)			/* Element, ParamCount, Param, Func								*/	\
-	F(Member)			/* Element, Class												*/	\
-	F(CV)				/* CV															*/	\
+	F(LRef)				/* Element &													*/	\
+	F(RRef)				/* Element &&													*/	\
+	F(Ptr)				/* Element *													*/	\
+	F(Array)			/* Element [ParamCount]											*/	\
+	F(Function)			/* Element (ParamCount Param), Func								*/	\
+	F(Member)			/* Class :: Element												*/	\
+	F(CV)				/* Element CV													*/	\
 	F(Decl)				/* Decl, PSRecord												*/	\
-	F(DeclInstant)		/* Decl, PSRecord, DeclInstant, ParamCount, Param, Element		*/	\
-	F(Init)				/* ParamCount, Param, Init										*/	\
-	F(GenericFunction)	/* Element(Decl), ParamCount, Param, GenericFunction			*/	\
-	F(GenericArg)		/* Element(Decl), GenericArg									*/	\
+	F(DeclInstant)		/* Element :: Decl <ParamCount Param>, PSRecord, DeclInstant	*/	\
+	F(Init)				/* {ParamCount Param}, Init										*/	\
+	F(GenericFunction)	/* <ParamCount Param> => Element(Decl), , GenericFunction		*/	\
+	F(GenericArg)		/* GenericArg													*/	\
 
 /*
 	Any:				a type that could be any type
@@ -415,7 +415,6 @@ public:
 	virtual ITsys*						MemberOf(ITsys* classType) = 0;
 	virtual ITsys*						CVOf(TsysCV cv) = 0;
 	virtual ITsys*						GenericFunctionOf(IEnumerable<ITsys*>& params, const TsysGenericFunction& genericFunction) = 0;
-	virtual ITsys*						GenericArgOf(TsysGenericArg genericArg) = 0;
 
 	virtual ITsys*						GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
 	virtual bool						IsUnknownType() = 0;
@@ -443,6 +442,7 @@ public:
 	virtual ITsys*				DeclOf(Symbol* decl) = 0;
 	virtual ITsys*				DeclInstantOf(Symbol* decl, Array<ITsys*>* params, ITsys* parentDeclType) = 0;
 	virtual ITsys*				InitOf(Array<ExprTsysItem>& params) = 0;
+	virtual ITsys*				GenericArgOf(TsysGenericArg genericArg) = 0;
 
 	virtual vint				AllocateAnonymousCounter() = 0;
 

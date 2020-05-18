@@ -189,7 +189,7 @@ TEST_FILE
 		auto tdecl = tsys->DeclOf(n.Obj());
 
 		TsysGenericArg arg = { 0,nullptr };
-		auto targ = tsys->DeclOf(n.Obj())->GenericArgOf(arg);
+		auto targ = tsys->GenericArgOf(arg);
 
 		TsysGenericFunction gf;
 
@@ -207,20 +207,18 @@ TEST_FILE
 
 	TEST_CASE(L"Test generic argument type creation")
 	{
-		auto n = MakePtr<Symbol>();
 		auto narg1 = MakePtr<Symbol>();
 		auto narg2 = MakePtr<Symbol>();
 		auto tsys = ITsysAlloc::Create();
 		TsysGenericArg arg1 = { 0,narg1.Obj() };
 		TsysGenericArg arg2 = { 0,narg2.Obj() };
-		auto targ1 = tsys->DeclOf(n.Obj())->GenericArgOf(arg1);
-		auto targ2 = tsys->DeclOf(n.Obj())->GenericArgOf(arg2);
+		auto targ1 = tsys->GenericArgOf(arg1);
+		auto targ2 = tsys->GenericArgOf(arg2);
 
-		TEST_ASSERT(targ1->GetElement()->GetDecl() == n.Obj());
-		TEST_ASSERT(targ2->GetElement()->GetDecl() == n.Obj());
-		TEST_ASSERT(targ1->GetElement() == targ2->GetElement());
-		TEST_ASSERT(tsys->DeclOf(n.Obj())->GenericArgOf(arg1) == targ1);
-		TEST_ASSERT(tsys->DeclOf(n.Obj())->GenericArgOf(arg1) != targ2);
+		TEST_ASSERT(targ1->GetGenericArg() == arg1);
+		TEST_ASSERT(targ2->GetGenericArg() == arg2);
+		TEST_ASSERT(tsys->GenericArgOf(arg1) == targ1);
+		TEST_ASSERT(tsys->GenericArgOf(arg1) != targ2);
 	});
 
 	TEST_CASE(L"Test generic declaration instance type creation")
@@ -244,7 +242,7 @@ TEST_FILE
 			tgArg.argSymbol = sa1.Obj();
 
 			sa1->GetEvaluationForUpdating_NFb().Allocate();
-			sa1->GetEvaluationForUpdating_NFb().Get().Add(tsys->DeclOf(sa1.Obj())->GenericArgOf(tgArg));
+			sa1->GetEvaluationForUpdating_NFb().Get().Add(tsys->GenericArgOf(tgArg));
 		}
 		{
 			TemplateSpec::Argument arg;
@@ -253,11 +251,11 @@ TEST_FILE
 			spec->arguments.Add(arg);
 
 			TsysGenericArg tgArg;
-			tgArg.argIndex = 0;
+			tgArg.argIndex = 1;
 			tgArg.argSymbol = sa2.Obj();
 
 			sa2->GetEvaluationForUpdating_NFb().Allocate();
-			sa2->GetEvaluationForUpdating_NFb().Get().Add(tsys->DeclOf(sa2.Obj())->GenericArgOf(tgArg));
+			sa2->GetEvaluationForUpdating_NFb().Get().Add(tsys->GenericArgOf(tgArg));
 		}
 
 		auto bf1 = MakePtr<ClassDeclaration>();

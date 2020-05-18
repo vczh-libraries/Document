@@ -333,7 +333,7 @@ void Log(ITsys* tsys, StreamWriter& writer)
 	case TsysType::GenericArg:
 		{
 			auto genericArg = tsys->GetGenericArg();
-			Log(tsys->GetElement(), writer);
+			writer.WriteString(GetSymbolName(genericArg.argSymbol->GetParentScope(), nullptr));
 			writer.WriteString(L"::[");
 			writer.WriteString(genericArg.argSymbol->name);
 			writer.WriteChar(L']');
