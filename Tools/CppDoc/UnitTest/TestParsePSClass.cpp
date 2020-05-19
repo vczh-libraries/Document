@@ -277,4 +277,23 @@ struct Type<T*, typename T::Z> { static const auto Value = 'c'; };
 		AssertExpr(pa,	L"Type<B*>::Value",		L"Type<B *> :: Value",		L"double const $L"	);
 		AssertExpr(pa,	L"Type<C*>::Value",		L"Type<C *> :: Value",		L"char const $L"	);
 	});
+
+	TEST_CATEGORY(L"Declaration after evaluation")
+	{
+		auto input = LR"(
+template<typename T>
+struct X;
+
+X<int> x;
+
+template<typename U>
+struct X<int>
+{
+	int* y;
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa,		L"x.y",			L"x.y",				L"__int32 * $L"	);
+	});
 }

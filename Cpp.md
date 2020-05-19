@@ -24,10 +24,6 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Partial specialization constructions
-  - [ ] Partial specialization on **classes**.
-    - [ ] Test
-      - [ ] Test scenario: first see the forward declaration of a generic class and evaluate its type, and then see the implementation and evaluate its members.
-        - [ ] `TsysGenericFunction::spec` could be pointing to the forward declaration's spec, while we want the implementation one.
   - [ ] Partial specialization on **methods**.
     - [ ] Test
       - [ ] Connect forward with template value argument
