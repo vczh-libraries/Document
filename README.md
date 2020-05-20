@@ -53,7 +53,7 @@ All **the compiler** here means the compiler created by this project.
       - Constructor calls another constructor in initializing list
       - Using base class' constructors
     - Explicit overrides and final **(not care #2)**
-      - `final` keyword
+      - `final` keyword on methods
     - Extern template **(not care #1)**
       - `extern` keyword before `template` keyword
     - Type `long long int`

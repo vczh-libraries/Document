@@ -254,11 +254,11 @@ ParseNameType
 
 Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typenameKind, Ptr<CppTokenCursor>& cursor)
 {
-	bool templateKeyword = false;
 	Ptr<Category_Id_Child_Generic_Root_Type> typeResult;
 	if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 	{
 		// :: NAME
+		bool templateKeyword = false;
 		if (auto type = TryParseChildType(pa, MakePtr<RootType>(), ShortTypeTypenameKind::No, templateKeyword, cursor))
 		{
 			typeResult = TryParseGenericType(pa, type, cursor);
@@ -329,13 +329,16 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 		auto oldCursor = cursor;
 		if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 		{
-			if (templateKeyword)
-			{
-				throw StopParsingException(cursor);
-			}
+			bool templateKeyword = false;
 			if (auto type = TryParseChildType(pa, typeResult, typenameKind, templateKeyword, cursor))
 			{
-				typeResult = TryParseGenericType(pa, type, cursor);
+				auto genericType = TryParseGenericType(pa, type, cursor);
+				if (templateKeyword && genericType == type)
+				{
+					// ":: template X" not followed by "<"
+					throw StopParsingException(cursor);
+				}
+				typeResult = genericType;
 				continue;
 			}
 		}

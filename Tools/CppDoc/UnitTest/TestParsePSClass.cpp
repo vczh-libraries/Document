@@ -300,16 +300,38 @@ TEST_FILE
 template<typename T>
 struct X;
 
-X<int> x;
+template<typename U, typename V = void>
+struct Y
+{
+	using Type = U&;
+};
 
 template<typename U>
-struct X<int>
+struct Y<U, typename X<U>::Type>
 {
-	int* y;
+	using Type = U*;
+};
+
+template<typename T>
+struct X
+{
+	using Type = T*;
+};
+
+template<>
+struct X<void>
+{
+	using Type = void;
+};
+
+template<typename T>
+struct Z
+{
+	Y<T>::Type x;
 };
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertExpr(pa,		L"x.y",			L"x.y",				L"__int32 * $L"	);
+		AssertExpr(pa,		L"Z<void>().x",	L"Z<void>().x",	L"void * $PR");
 	});
 }
