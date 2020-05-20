@@ -24,7 +24,6 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Test cases
-  - [ ] `template<typename T> struct X;` -> evaluate  `X<?>` so that the generic type result is stored -> `template<typename U> struct X : Y{};` will first find `Y` in `X<U>`, crash in `GetCorrectEvaluation`.
   - [ ] type alias recursion
   - [ ] value alias recursion
 - [ ] Next Demo! (Calculator)

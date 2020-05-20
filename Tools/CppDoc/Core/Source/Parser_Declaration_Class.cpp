@@ -95,6 +95,20 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 			throw StopParsingException(cursor);
 		}
 
+		if (classContextSymbol->GetEvaluationForUpdating_NFb().progress == symbol_component::EvaluationProgress::Evaluated)
+		{
+			// this will happen when EvaluateForwardClassDeclaration is called on a template class that only has forward declarations
+			// the type evaluated from the template spec of the first seen ForwardClassDeclaration is stored
+			// but from now on Symbol::GetAnyForwardDecl returns the creating ClassDeclaration
+			// there will be some issue on agreeing which template arguments are used in the GenericFunction of this class
+			// so just delete the record
+
+			auto& ev = classContextSymbol->GetEvaluationForUpdating_NFb();
+			ev.Get().Clear();
+			ev.progress = symbol_component::EvaluationProgress::NotEvaluated;
+			// there will be no base class record for ForwardClassDeclaration
+		}
+
 		if (decl->specializationSpec)
 		{
 			AssignPSPrimary(pa, cursor, classContextSymbol);
