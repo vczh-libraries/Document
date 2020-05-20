@@ -148,21 +148,21 @@
         };
 
         <div class="token cpp_keyword ">template</div> &lt;<div class="token cpp_keyword ">typename</div> _Ty&gt;
-        <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$__vcrt_va_list_is_reference<::::_Ty &>"><div><div class="token cpp_type">__vcrt_va_list_is_reference</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['__vcrt_va_list_is_reference<::::_Ty &>::_Ty'])"><div class="token cpp_type">_Ty</div></div>&amp;&gt;
+        <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$__vcrt_va_list_is_reference@<[_Ty] &>"><div><div class="token cpp_type">__vcrt_va_list_is_reference</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['__vcrt_va_list_is_reference@<[_Ty] &>::_Ty'])"><div class="token cpp_type">_Ty</div></div>&amp;&gt;
         {
-            <div class="token cpp_keyword ">enum</div> : <div class="token cpp_keyword ">bool</div> { <div class="def" id="NI$__vcrt_va_list_is_reference<::::_Ty &>::<anonymous>1::__the_value"><div><div class="token cpp_enum">__the_value</div></div></div> = <div class="token cpp_keyword ">true</div> };
+            <div class="token cpp_keyword ">enum</div> : <div class="token cpp_keyword ">bool</div> { <div class="def" id="NI$__vcrt_va_list_is_reference@<[_Ty] &>::<anonymous>1::__the_value"><div><div class="token cpp_enum">__the_value</div></div></div> = <div class="token cpp_keyword ">true</div> };
         };
 
         <div class="token cpp_keyword ">template</div> &lt;<div class="token cpp_keyword ">typename</div> _Ty&gt;
-        <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$__vcrt_va_list_is_reference<::::_Ty &&>"><div><div class="token cpp_type">__vcrt_va_list_is_reference</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['__vcrt_va_list_is_reference<::::_Ty &&>::_Ty'])"><div class="token cpp_type">_Ty</div></div>&amp;&amp;&gt;
+        <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$__vcrt_va_list_is_reference@<[_Ty] &&>"><div><div class="token cpp_type">__vcrt_va_list_is_reference</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['__vcrt_va_list_is_reference@<[_Ty] &&>::_Ty'])"><div class="token cpp_type">_Ty</div></div>&amp;&amp;&gt;
         {
-            <div class="token cpp_keyword ">enum</div> : <div class="token cpp_keyword ">bool</div> { <div class="def" id="NI$__vcrt_va_list_is_reference<::::_Ty &&>::<anonymous>2::__the_value"><div><div class="token cpp_enum">__the_value</div></div></div> = <div class="token cpp_keyword ">true</div> };
+            <div class="token cpp_keyword ">enum</div> : <div class="token cpp_keyword ">bool</div> { <div class="def" id="NI$__vcrt_va_list_is_reference@<[_Ty] &&>::<anonymous>2::__the_value"><div><div class="token cpp_enum">__the_value</div></div></div> = <div class="token cpp_keyword ">true</div> };
         };
 
         <div class="token cpp_keyword ">template</div> &lt;<div class="token cpp_keyword ">typename</div> _Ty&gt;
         <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$__vcrt_assert_va_start_is_not_reference"><div><div class="token cpp_type">__vcrt_assert_va_start_is_not_reference</div></div></div>
         {
-            <div class="token cpp_keyword ">static_assert</div>(!<div class="ref" onclick="jumpToSymbol([], ['__vcrt_va_list_is_reference'])"><div class="token cpp_type">__vcrt_va_list_is_reference</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['__vcrt_assert_va_start_is_not_reference::_Ty'])"><div class="token cpp_type">_Ty</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['__vcrt_va_list_is_reference::<anonymous>0::__the_value'])"><div class="token cpp_enum">__the_value</div></div>,
+            <div class="token cpp_keyword ">static_assert</div>(!<div class="ref" onclick="jumpToSymbol([], ['__vcrt_va_list_is_reference'])"><div class="token cpp_type">__vcrt_va_list_is_reference</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['__vcrt_assert_va_start_is_not_reference::_Ty'])"><div class="token cpp_type">_Ty</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['__vcrt_va_list_is_reference::<anonymous>0::__the_value', '__vcrt_va_list_is_reference@<[_Ty] &&>::<anonymous>2::__the_value', '__vcrt_va_list_is_reference@<[_Ty] &>::<anonymous>1::__the_value'])"><div class="token cpp_enum">__the_value</div></div>,
                 <div class="token cpp_string ">&quot;va_start argument must not have reference type and must not be parenthesized&quot;</div>);
         };
     } <div class="token cpp_comment ">// extern &quot;C++&quot;</div>
@@ -199,12 +199,26 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__vcrt_va_list_is_reference<::::_Ty &&>::_Ty': {
+    '__vcrt_va_list_is_reference@<[_Ty] &&>::<anonymous>2::__the_value': {
+        'displayNameInHtml': '<span class="cpp_type">__vcrt_va_list_is_reference</span>&lt;<span class="cpp_type">_Ty</span> &&&gt;::<span class="cpp_type">&lt;anonymous&gt;2</span>::<span class="cpp_enum">__the_value</span>',
+        'impls': [
+            'NI$__vcrt_va_list_is_reference@<[_Ty] &&>::<anonymous>2::__the_value'
+        ],
+        'decls': []
+    },
+    '__vcrt_va_list_is_reference@<[_Ty] &&>::_Ty': {
         'displayNameInHtml': '<span class="cpp_type">_Ty</span>',
         'impls': [],
         'decls': []
     },
-    '__vcrt_va_list_is_reference<::::_Ty &>::_Ty': {
+    '__vcrt_va_list_is_reference@<[_Ty] &>::<anonymous>1::__the_value': {
+        'displayNameInHtml': '<span class="cpp_type">__vcrt_va_list_is_reference</span>&lt;<span class="cpp_type">_Ty</span> &&gt;::<span class="cpp_type">&lt;anonymous&gt;1</span>::<span class="cpp_enum">__the_value</span>',
+        'impls': [
+            'NI$__vcrt_va_list_is_reference@<[_Ty] &>::<anonymous>1::__the_value'
+        ],
+        'decls': []
+    },
+    '__vcrt_va_list_is_reference@<[_Ty] &>::_Ty': {
         'displayNameInHtml': '<span class="cpp_type">_Ty</span>',
         'impls': [],
         'decls': []
@@ -212,7 +226,9 @@ referencedSymbols = {
 };
 symbolToFiles = {
     'NI$__vcrt_va_list_is_reference': null,
-    'NI$__vcrt_va_list_is_reference::<anonymous>0::__the_value': null
+    'NI$__vcrt_va_list_is_reference::<anonymous>0::__the_value': null,
+    'NI$__vcrt_va_list_is_reference@<[_Ty] &&>::<anonymous>2::__the_value': null,
+    'NI$__vcrt_va_list_is_reference@<[_Ty] &>::<anonymous>1::__the_value': null
 };
 turnOnSymbol();
 </script>

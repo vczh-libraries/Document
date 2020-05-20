@@ -30,7 +30,7 @@
 	<div class="token cpp_keyword ">while</div> (<div class="token cpp_keyword ">true</div>)
 	{
 <div class="expandable"><div class="disabled">		scanf_s(&quot;%1023s&quot;, input, (unsigned)MAX_BUFFER);</div>
-<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['scanf_s@int(char const * const)'], ['scanf_s@int(char const * const)'])"><div class="token cpp_function">scanf_s</div></div>(<div class="token cpp_string ">&quot;%1023s&quot;</div>, <div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::input'])">input</div>, (<div class="token cpp_keyword ">unsigned</div>)<div class="token cpp_number ">1024</div>);</div></div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['scanf_s@int(char const * const ...)'], ['scanf_s@int(char const * const ...)'])"><div class="token cpp_function">scanf_s</div></div>(<div class="token cpp_string ">&quot;%1023s&quot;</div>, <div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::input'])">input</div>, (<div class="token cpp_keyword ">unsigned</div>)<div class="token cpp_number ">1024</div>);</div></div>
 		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol(['strcmp@int(char const *, char const *)'], ['strcmp@int(char const *, char const *)'])"><div class="token cpp_function">strcmp</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::input'])">input</div>, <div class="token cpp_string ">&quot;exit&quot;</div>) == <div class="token cpp_number ">0</div>)
 		{
 			<div class="token cpp_keyword ">break</div>;
@@ -38,7 +38,7 @@
 
 		<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$main@int()[impl0]::expr"><div>expr</div></div> = <div class="ref" onclick="jumpToSymbol(['calculator::Parse@::calculator::Expr::Ptr(char const *)'], ['calculator::Parse@::calculator::Expr::Ptr(char const *)'])"><div class="token cpp_function">Parse</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::input'])">input</div>);
 		<div class="ref" onclick="jumpToSymbol(['calculator::Print@void(::calculator::Expr::Ptr const &)'], ['calculator::Print@void(::calculator::Expr::Ptr const &)'])"><div class="token cpp_function">Print</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::expr'])">expr</div>);
-		<div class="ref" onclick="jumpToSymbol(['printf@int(char const * const)'], ['printf@int(char const * const)'])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot; = %g\n&quot;</div>, <div class="ref" onclick="jumpToSymbol(['calculator::Evaluate@double(::calculator::Expr::Ptr const &)'], ['calculator::Evaluate@double(::calculator::Expr::Ptr const &)'])"><div class="token cpp_function">Evaluate</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::expr'])">expr</div>));
+		<div class="ref" onclick="jumpToSymbol(['printf@int(char const * const ...)'], ['printf@int(char const * const ...)'])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot; = %g\n&quot;</div>, <div class="ref" onclick="jumpToSymbol(['calculator::Evaluate@double(::calculator::Expr::Ptr const &)'], ['calculator::Evaluate@double(::calculator::Expr::Ptr const &)'])"><div class="token cpp_function">Evaluate</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::expr'])">expr</div>));
 	}
 	<div class="ref" onclick="jumpToSymbol(['JustForFun@void(int const * [*] &(::calculator::Expr const volatile &&, int (::calculator::Expr::Ptr ::) *) * const &)'], ['JustForFun@void()', 'JustForFun@void(int const * [*] &(::calculator::Expr const volatile &&, int (::calculator::Expr::Ptr ::) *) * const &)'])"><div class="token cpp_function">JustForFun</div></div>(<div class="token cpp_keyword ">nullptr</div>);
 	<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
@@ -125,17 +125,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'printf@int(char const * const)': {
+    'printf@int(char const * const ...)': {
         'displayNameInHtml': '<span class="cpp_function">printf</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
         'impls': [
-            'FB$printf@int(char const * const)[impl0]'
+            'FB$printf@int(char const * const ...)[impl0]'
         ],
         'decls': []
     },
-    'scanf_s@int(char const * const)': {
+    'scanf_s@int(char const * const ...)': {
         'displayNameInHtml': '<span class="cpp_function">scanf_s</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
         'impls': [
-            'FB$scanf_s@int(char const * const)[impl0]'
+            'FB$scanf_s@int(char const * const ...)[impl0]'
         ],
         'decls': []
     },
@@ -156,8 +156,8 @@ symbolToFiles = {
     'FB$calculator::Parse@::calculator::Expr::Ptr(char const *)[impl0]': { 'htmlFileName': 'Calculator.cpp2', 'displayName': 'Calculator.cpp' },
     'FB$calculator::Print@void(::calculator::Expr::Ptr const &)[decl0]': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
     'FB$calculator::Print@void(::calculator::Expr::Ptr const &)[impl0]': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
-    'FB$printf@int(char const * const)[impl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
-    'FB$scanf_s@int(char const * const)[impl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
+    'FB$printf@int(char const * const ...)[impl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
+    'FB$scanf_s@int(char const * const ...)[impl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
     'FB$strcmp@int(char const *, char const *)[decl0]': { 'htmlFileName': 'string.h', 'displayName': 'string.h' },
     'NF[0]$calculator': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
     'NF[1]$calculator': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
