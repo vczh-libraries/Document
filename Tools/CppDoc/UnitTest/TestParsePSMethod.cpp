@@ -106,18 +106,32 @@ template<typename X>	template<typename Y>	void A<X*>::B<Y*>::G()	{}
 			L"A<char*>::B<double*>",
 		};
 
-		const wchar_t* as[] = {
+		const wchar_t* asf[] = {
 			L"::A<char>",
 			L"::A<char>",
 			L"::A@<[T] *><char>",
 			L"::A@<[T] *><char>",
 		};
 
-		const wchar_t* bs[] = {
+		const wchar_t* asg[] = {
+			L"::A<::A::B::G::[X]>",
+			L"::A<::A::B@<[U] *>::G::[X]>",
+			L"::A@<[T] *><::A@<[T] *>::B::G::[X]>",
+			L"::A@<[T] *><::A@<[T] *>::B@<[U] *>::G::[X]>",
+		};
+
+		const wchar_t* bsf[] = {
 			L"::A<char>::B<double>",
 			L"::A<char>::B@<[U] *><double>",
 			L"::A@<[T] *><char>::B<double>",
 			L"::A@<[T] *><char>::B@<[U] *><double>",
+		};
+
+		const wchar_t* bsg[] = {
+			L"::A<::A::B::G::[X]>::B<::A::B::G::[Y]>",
+			L"::A<::A::B@<[U] *>::G::[X]>::B@<[U] *><::A::B@<[U] *>::G::[Y]>",
+			L"::A@<[T] *><::A@<[T] *>::B::G::[X]>::B<::A@<[T] *>::B::G::[Y]>",
+			L"::A@<[T] *><::A@<[T] *>::B@<[U] *>::G::[X]>::B@<[U] *><::A@<[T] *>::B@<[U] *>::G::[Y]>",
 		};
 
 		for (vint i = 0; i < sizeof(codes) / sizeof(*codes); i++)
@@ -149,19 +163,18 @@ template<typename X>	template<typename Y>	void A<X*>::B<Y*>::G()	{}
 					auto funcPa = pa.AdjustForDecl(statSymbol.Obj(), psTsys);
 					funcPa.taContext = di.taContext.Obj();
 
-					AssertType(funcPa,	L"A",	L"A",	as[i]);
-					AssertType(funcPa,	L"B",	L"B",	bs[i]);
+					AssertType(funcPa,	L"A",	L"A",	asf[i]);
+					AssertType(funcPa,	L"B",	L"B",	bsf[i]);
 				}
 				{
 					auto statSymbol = psTsys->GetDecl()
 						->TryGetChildren_NFb(L"G")->Get(0)
 						->GetImplSymbols_F()[0]
 						->TryGetChildren_NFb(L"$")->Get(0);
-					auto funcPa = pa.AdjustForDecl(statSymbol.Obj(), psTsys);
-					funcPa.taContext = di.taContext.Obj();
+					auto funcPa = pa.AdjustForDecl(statSymbol.Obj());
 
-					AssertType(funcPa,	L"A",	L"A",	as[i]);
-					AssertType(funcPa,	L"B",	L"B",	bs[i]);
+					AssertType(funcPa,	L"A",	L"A",	asg[i]);
+					AssertType(funcPa,	L"B",	L"B",	bsg[i]);
 				}
 			});
 		}
