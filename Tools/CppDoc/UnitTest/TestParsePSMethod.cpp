@@ -148,8 +148,8 @@ template<typename X>	template<typename Y>	void A<X*>::B<Y*>::G()	{}
 						->TryGetChildren_NFb(L"$")->Get(0);
 					auto funcPa = pa.AdjustForDecl(statSymbol.Obj(), di.parentDeclType);
 
-					AssertExpr(funcPa,	L"A",	L"A",	as[i]);
-					AssertExpr(funcPa,	L"B",	L"B",	bs[i]);
+					AssertType(funcPa,	L"A",	L"A",	as[i]);
+					AssertType(funcPa,	L"B",	L"B",	bs[i]);
 				}
 				{
 					auto statSymbol = psTsys->GetDecl()
@@ -158,8 +158,8 @@ template<typename X>	template<typename Y>	void A<X*>::B<Y*>::G()	{}
 						->TryGetChildren_NFb(L"$")->Get(0);
 					auto funcPa = pa.AdjustForDecl(statSymbol.Obj(), di.parentDeclType);
 
-					AssertExpr(funcPa, L"A", L"A", as[i]);
-					AssertExpr(funcPa, L"B", L"B", bs[i]);
+					AssertType(funcPa,	L"A",	L"A",	as[i]);
+					AssertType(funcPa,	L"B",	L"B",	bs[i]);
 				}
 			});
 		}
