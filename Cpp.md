@@ -26,7 +26,6 @@
 - [ ] Partial specialization constructions
   - [ ] Partial specialization on **methods**.
     - [ ] Test
-      - [ ] Connect forward with template value argument
       - [ ] `Class Reference 2` test `IdType` from members outside of classes.
       - [ ] SFINAE test cases.
       - [ ] Test cases with different value arguments in partial specialization.
