@@ -375,16 +375,24 @@ volatile const x<void*>::D<char> cvd;
 template<typename T>
 struct X;
 
-X<int> x;
-
 template<typename U>
-struct X
+struct Y
 {
 	U* y;
+};
+
+template<typename T, int = X<T>::value>
+struct Z
+{
+};
+
+template<typename V>
+struct X : Y<V>
+{
 };
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertExpr(pa,		L"x.y",			L"x.y",				L"__int32 * $L"	);
+		AssertExpr(pa,		L"X<int>().y",			L"X<int>().y",				L"__int32 * $PR"	);
 	});
 }
