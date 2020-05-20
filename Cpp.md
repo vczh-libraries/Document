@@ -23,9 +23,10 @@
       - `__builtin_nansf(...)` -> float
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
-- [ ] Test cases
-  - [ ] type alias recursion
-  - [ ] value alias recursion
+- [ ] Next Demo! (STL)
+  - [ ] Test cases
+    - [ ] type alias recursion
+    - [ ] value alias recursion
 - [ ] Next Demo! (Calculator)
   - [ ] Refactor the HTML generation part to becomes a library.
   - [ ] Check carefully around all links.
