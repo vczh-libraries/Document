@@ -27,7 +27,6 @@
   - [ ] Partial specialization on **methods**.
     - [ ] Test
       - [ ] `Class Reference 2` test `IdType` from members outside of classes.
-      - [ ] SFINAE test cases.
       - [ ] Test cases with different value arguments in partial specialization.
 - [ ] Next Demo! (Calculator)
   - [ ] Refactor the HTML generation part to becomes a library.

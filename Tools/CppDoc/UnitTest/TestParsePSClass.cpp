@@ -142,6 +142,27 @@ namespace INPUT__TestParsePSClass_ClassRef
 	);
 }
 
+namespace INPUT__TestParsePSClass_SFINAE
+{
+	TEST_DECL(
+		struct A { using X = A*&; };
+		struct B { using Y = B*&; };
+		struct C { using Z = C*&; };
+
+		template<typename T, typename U = T&>
+		struct Struct;
+
+		template<typename T>
+		struct Struct<T*, typename T::X> { static const auto Value = true; };
+
+		template<typename T>
+		struct Struct<T*, typename T::Y> { static const auto Value = 1; };
+
+		template<typename T>
+		struct Struct<T*, typename T::Z> { static const auto Value = 'c'; };
+	);
+}
+
 TEST_FILE
 {
 	TEST_CATEGORY(L"To Primary 1")
@@ -254,28 +275,23 @@ TEST_FILE
 
 	TEST_CATEGORY(L"SFINAE")
 	{
-		const wchar_t* input = LR"(
-struct A { using X = A*&; };
-struct B { using Y = B*&; };
-struct C { using Z = C*&; };
-
-template<typename T, typename U = T&>
-struct Type;
-
-template<typename T>
-struct Type<T*, typename T::X> { static const auto Value = 0.f; };
-
-template<typename T>
-struct Type<T*, typename T::Y> { static const auto Value = 0.0; };
-
-template<typename T>
-struct Type<T*, typename T::Z> { static const auto Value = 'c'; };
-)";
+		using namespace INPUT__TestParsePSClass_SFINAE;
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertExpr(pa,	L"Type<A*>::Value",		L"Type<A *> :: Value",		L"float const $L"	);
-		AssertExpr(pa,	L"Type<B*>::Value",		L"Type<B *> :: Value",		L"double const $L"	);
-		AssertExpr(pa,	L"Type<C*>::Value",		L"Type<C *> :: Value",		L"char const $L"	);
+		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+			Struct<A *> :: Value,
+			bool const &
+		);
+
+		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+			Struct<B *> :: Value,
+			__int32 const &
+		);
+
+		ASSERT_OVERLOADING_SIMPLE_LVALUE(
+			Struct<C *> :: Value,
+			char const &
+		);
 	});
 
 	TEST_CATEGORY(L"Declaration after evaluation")
