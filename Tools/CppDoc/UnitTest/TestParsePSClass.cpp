@@ -280,17 +280,17 @@ TEST_FILE
 
 		ASSERT_OVERLOADING_SIMPLE_LVALUE(
 			Struct<A *> :: Value,
-			bool const &
+			bool const
 		);
 
 		ASSERT_OVERLOADING_SIMPLE_LVALUE(
 			Struct<B *> :: Value,
-			__int32 const &
+			__int32 const
 		);
 
 		ASSERT_OVERLOADING_SIMPLE_LVALUE(
 			Struct<C *> :: Value,
-			char const &
+			char const
 		);
 	});
 

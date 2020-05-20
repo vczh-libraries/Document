@@ -269,7 +269,7 @@ void RunOverloading()
 }
 
 #define ASSERT_OVERLOADING_VERBOSE(INPUT, OUTPUT, OUTPUT_TSYS, ...)\
-	RunOverloading<__VA_ARGS__, decltype((INPUT))>, \
+	RunOverloading<__VA_ARGS__, decltype(INPUT)>, \
 	AssertExpr(pa, L#INPUT, OUTPUT, OUTPUT_TSYS)\
 
 #define ASSERT_OVERLOADING_FORMATTED_VERBOSE(INPUT, OUTPUT_TSYS, ...)\
