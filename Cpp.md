@@ -23,10 +23,6 @@
       - `__builtin_nansf(...)` -> float
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
-- [ ] Partial specialization constructions
-  - [ ] Partial specialization on **methods**.
-    - [ ] Test
-      - [ ] Test cases with different value arguments in partial specialization.
 - [ ] Next Demo! (Calculator)
   - [ ] Refactor the HTML generation part to becomes a library.
   - [ ] Check carefully around all links.
