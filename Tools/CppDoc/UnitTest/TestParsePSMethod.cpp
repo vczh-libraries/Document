@@ -53,7 +53,6 @@ namespace INPUT__TestParsePSMethod_SFINAE
 
 TEST_FILE
 {
-
 	TEST_CATEGORY(L"SFINAE")
 	{
 		using namespace INPUT__TestParsePSMethod_SFINAE;
