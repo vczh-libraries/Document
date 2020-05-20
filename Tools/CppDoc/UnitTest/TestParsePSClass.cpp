@@ -303,13 +303,19 @@ struct X;
 template<typename U, typename V = void>
 struct Y
 {
-	using Type = U&;
+	static const auto Value = true;
 };
 
 template<typename U>
 struct Y<U, typename X<U>::Type>
 {
-	using Type = U*;
+	static const auto Value = 'c';
+};
+
+template<typename T, int = Y<T>::Value>
+struct Z
+{
+	static const auto Value = Y<T>::Value;
 };
 
 template<typename T>
@@ -324,14 +330,14 @@ struct X<void>
 	using Type = void;
 };
 
-template<typename T>
-struct Z
+template<typename T, int = Z<T>::Value>
+struct W
 {
-	Y<T>::Type x;
+	static const auto Value = Z<T>::Value;
 };
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertExpr(pa,		L"Z<void>().x",	L"Z<void>().x",	L"void * $PR");
+		AssertExpr(pa,		L"W<void>::Value",	L"W<void> :: Value",	L"char const $L");
 	});
 }
