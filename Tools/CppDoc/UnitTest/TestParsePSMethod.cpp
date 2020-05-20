@@ -146,7 +146,8 @@ template<typename X>	template<typename Y>	void A<X*>::B<Y*>::G()	{}
 						->TryGetChildren_NFb(L"F")->Get(0)
 						->GetImplSymbols_F()[0]
 						->TryGetChildren_NFb(L"$")->Get(0);
-					auto funcPa = pa.AdjustForDecl(statSymbol.Obj(), di.parentDeclType);
+					auto funcPa = pa.AdjustForDecl(statSymbol.Obj(), psTsys);
+					funcPa.taContext = di.taContext.Obj();
 
 					AssertType(funcPa,	L"A",	L"A",	as[i]);
 					AssertType(funcPa,	L"B",	L"B",	bs[i]);
@@ -156,7 +157,8 @@ template<typename X>	template<typename Y>	void A<X*>::B<Y*>::G()	{}
 						->TryGetChildren_NFb(L"G")->Get(0)
 						->GetImplSymbols_F()[0]
 						->TryGetChildren_NFb(L"$")->Get(0);
-					auto funcPa = pa.AdjustForDecl(statSymbol.Obj(), di.parentDeclType);
+					auto funcPa = pa.AdjustForDecl(statSymbol.Obj(), psTsys);
+					funcPa.taContext = di.taContext.Obj();
 
 					AssertType(funcPa,	L"A",	L"A",	as[i]);
 					AssertType(funcPa,	L"B",	L"B",	bs[i]);
