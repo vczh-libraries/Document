@@ -45,47 +45,61 @@ namespace symbol_type_resolving
 		TemplateArgumentContext* argumentsToApply
 	)
 	{
-		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, argumentsToApply);
+		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, argumentsToApply, true);
 		if (eval)
 		{
-			if (!eval.symbol->IsPSPrimary_NF())
+			if (eval.ev.progress == symbol_component::EvaluationProgress::RecursiveFound)
 			{
-				EvaluateValueAliasSymbolInternal(eval.declPa, eval.evaluatedTypes, usingDecl);
-			}
-			else if (argumentsToApply)
-			{
-				auto psPa = eval.declPa;
-				psPa.taContext = psPa.taContext->parent;
-				Dictionary<Symbol*, Ptr<TemplateArgumentContext>> psResult;
-				InferPartialSpecializationPrimary<ValueAliasDeclaration>(psPa, psResult, eval.symbol, psPa.parentDeclType, argumentsToApply);
-
-				if (psResult.Count() == 0 || IsValuableTaContextWithMatchedPSChildren(argumentsToApply))
-				{
-					EvaluateValueAliasSymbolInternal(eval.declPa, eval.evaluatedTypes, usingDecl);
-				}
-
-				for (vint i = 0; i < psResult.Count(); i++)
-				{
-					auto declSymbol = psResult.Keys()[i];
-					auto decl = declSymbol->GetAnyForwardDecl<ValueAliasDeclaration>();
-					auto taContext = psResult.Values()[i];
-
-					auto declPa = psPa;
-					taContext->parent = declPa.taContext;
-					declPa.taContext = taContext.Obj();
-					EvaluateValueAliasSymbolInternal(declPa, eval.evaluatedTypes, decl.Obj());
-				}
+				// recursive call is found, the return type is any_t
+				eval.evaluatedTypes.Add(eval.declPa.tsys->Any());
 			}
 			else
 			{
-				TypeTsysList result;
-				EvaluateValueAliasSymbolInternal(eval.declPa, result, usingDecl);
-				eval.evaluatedTypes.Add(invokerPa.tsys->Any());
-			}
+				TypeTsysList processedTypes;
 
-			for (vint i = 0; i < eval.evaluatedTypes.Count(); i++)
-			{
-				eval.evaluatedTypes[i] = eval.evaluatedTypes[i]->CVOf({ true,false })->LRefOf();
+				if (!eval.symbol->IsPSPrimary_NF())
+				{
+					EvaluateValueAliasSymbolInternal(eval.declPa, processedTypes, usingDecl);
+				}
+				else if (argumentsToApply)
+				{
+					auto psPa = eval.declPa;
+					psPa.taContext = psPa.taContext->parent;
+					Dictionary<Symbol*, Ptr<TemplateArgumentContext>> psResult;
+					InferPartialSpecializationPrimary<ValueAliasDeclaration>(psPa, psResult, eval.symbol, psPa.parentDeclType, argumentsToApply);
+
+					if (psResult.Count() == 0 || IsValuableTaContextWithMatchedPSChildren(argumentsToApply))
+					{
+						EvaluateValueAliasSymbolInternal(eval.declPa, processedTypes, usingDecl);
+					}
+
+					for (vint i = 0; i < psResult.Count(); i++)
+					{
+						auto declSymbol = psResult.Keys()[i];
+						auto decl = declSymbol->GetAnyForwardDecl<ValueAliasDeclaration>();
+						auto taContext = psResult.Values()[i];
+
+						auto declPa = psPa;
+						taContext->parent = declPa.taContext;
+						declPa.taContext = taContext.Obj();
+						EvaluateValueAliasSymbolInternal(declPa, processedTypes, decl.Obj());
+					}
+				}
+				else
+				{
+					TypeTsysList result;
+					EvaluateValueAliasSymbolInternal(eval.declPa, result, usingDecl);
+					processedTypes.Add(invokerPa.tsys->Any());
+				}
+
+				// EvaluateValueAliasSymbolInternal could have filled eval.evaluatedTypes when recursion happens
+				eval.evaluatedTypes.Clear();
+				CopyFrom(eval.evaluatedTypes, processedTypes);
+
+				for (vint i = 0; i < eval.evaluatedTypes.Count(); i++)
+				{
+					eval.evaluatedTypes[i] = eval.evaluatedTypes[i]->CVOf({ true,false })->LRefOf();
+				}
 			}
 
 			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, argumentsToApply);

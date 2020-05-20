@@ -13,10 +13,23 @@ namespace symbol_type_resolving
 		TemplateArgumentContext* argumentsToApply
 	)
 	{
-		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, argumentsToApply);
+		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, argumentsToApply, true);
 		if (eval)
 		{
-			TypeToTsysNoVta(eval.declPa, usingDecl->type, eval.evaluatedTypes);
+			if (eval.ev.progress == symbol_component::EvaluationProgress::RecursiveFound)
+			{
+				// recursive call is found, the return type is any_t
+				eval.evaluatedTypes.Add(eval.declPa.tsys->Any());
+			}
+			else
+			{
+				TypeTsysList processedTypes;
+				TypeToTsysNoVta(eval.declPa, usingDecl->type, processedTypes);
+
+				// TypeToTsysNoVta could have filled eval.evaluatedTypes when recursion happens
+				eval.evaluatedTypes.Clear();
+				CopyFrom(eval.evaluatedTypes, processedTypes);
+			}
 			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, argumentsToApply);
 		}
 		else

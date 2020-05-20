@@ -797,6 +797,7 @@ public:
 	void Visit(BuiltinFuncAccessExpr* self)override
 	{
 		isVta = false;
+		vint vtaCount = -1;
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
 			auto argument = self->arguments[i];
@@ -805,11 +806,45 @@ public:
 			{
 				TypeTsysList tsys;
 				TypeToTsysInternal(pa, argument.item.type, tsys, tsysVta);
+
+				if (tsysVta && !argument.isVariadic)
+				{
+					isVta = true;
+					if (vtaCount == -1)
+					{
+						for (vint j = 0; j < tsys.Count(); j++)
+						{
+							auto candidate = tsys[j];
+							if (candidate->GetType() == TsysType::Init)
+							{
+								vtaCount = candidate->GetParamCount();
+								break;
+							}
+						}
+					}
+				}
 			}
 			else
 			{
 				ExprTsysList tsys;
 				ExprToTsysInternal(pa, argument.item.expr, tsys, tsysVta);
+
+				if (tsysVta && !argument.isVariadic)
+				{
+					isVta = true;
+					if (vtaCount == -1)
+					{
+						for (vint j = 0; j < tsys.Count(); j++)
+						{
+							auto candidate = tsys[j].tsys;
+							if (candidate->GetType() == TsysType::Init)
+							{
+								vtaCount = candidate->GetParamCount();
+								break;
+							}
+						}
+					}
+				}
 			}
 
 			if (!argument.isVariadic)
@@ -820,7 +855,27 @@ public:
 
 		TypeTsysList tsys;
 		TypeToTsysNoVta(pa, self->returnType, tsys);
-		AddType(result, tsys);
+
+		if (isVta)
+		{
+			if (vtaCount == -1)
+			{
+				AddType(result, pa.tsys->Any());
+			}
+			else
+			{
+				Array<ExprTsysList> params(vtaCount);
+				for (vint i = 0; i < vtaCount; i++)
+				{
+					AddType(params[i], tsys);
+				}
+				CreateUniversalInitializerType(pa, params, result);
+			}
+		}
+		else
+		{
+			AddType(result, tsys);
+		}
 	}
 };
 

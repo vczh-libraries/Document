@@ -203,13 +203,20 @@ namespace infer_function_type
 				auto patternSymbol = TemplateArgumentPatternToSymbol(taContext->arguments.Keys()[i]);
 				if (patternSymbol->ellipsis)
 				{
-					for (vint j = 0; j < tsys->GetParamCount(); j++)
+					if (tsys->GetType() == TsysType::Any)
 					{
-						if (auto tsysItem = tsys->GetParam(j))
+						return true;
+					}
+					else
+					{
+						for (vint j = 0; j < tsys->GetParamCount(); j++)
 						{
-							if (tsysItem->GetType() == TsysType::Any || tsysItem->GetType() == TsysType::GenericArg)
+							if (auto tsysItem = tsys->GetParam(j))
 							{
-								return true;
+								if (tsysItem->GetType() == TsysType::Any || tsysItem->GetType() == TsysType::GenericArg)
+								{
+									return true;
+								}
 							}
 						}
 					}

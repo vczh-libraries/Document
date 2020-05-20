@@ -294,7 +294,9 @@ public:
 	{
 		if (auto expr = peerExpr.Cast<BuiltinFuncAccessExpr>())
 		{
-			result = IsSameResolvedType(self->returnType, expr->returnType, equivalentNames);
+			if (!IsSameResolvedType(self->returnType, expr->returnType, equivalentNames)) return;
+			if (!TestGenericArguments(self->arguments, expr->arguments)) return;
+			result = true;
 		}
 	}
 };
