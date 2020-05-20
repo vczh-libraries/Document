@@ -135,9 +135,14 @@ template<typename X>	template<typename Y>	void A<X*>::B<Y*>::G()	{}
 				TEST_CASE_ASSERT(tsys.Count() == 1);
 				TEST_CASE_ASSERT(tsys[0]->GetType() == TsysType::DeclInstant);
 
-				auto& di = tsys[0]->GetDeclInstant();
+				auto psr = symbol_type_resolving::EvaluateClassPSRecord(pa, tsys[0]);
+				TEST_CASE_ASSERT(psr);
+				TEST_CASE_ASSERT(psr->evaluatedTypes.Count() == 1);
+
+				auto psTsys = psr->evaluatedTypes[0];
+				auto& di = psTsys->GetDeclInstant();
 				{
-					auto statSymbol = tsys[0]->GetDecl()
+					auto statSymbol = psTsys->GetDecl()
 						->TryGetChildren_NFb(L"F")->Get(0)
 						->GetImplSymbols_F()[0]
 						->TryGetChildren_NFb(L"$")->Get(0);
@@ -147,7 +152,7 @@ template<typename X>	template<typename Y>	void A<X*>::B<Y*>::G()	{}
 					AssertExpr(funcPa,	L"B",	L"B",	bs[i]);
 				}
 				{
-					auto statSymbol = tsys[0]->GetDecl()
+					auto statSymbol = psTsys->GetDecl()
 						->TryGetChildren_NFb(L"G")->Get(0)
 						->GetImplSymbols_F()[0]
 						->TryGetChildren_NFb(L"$")->Get(0);
