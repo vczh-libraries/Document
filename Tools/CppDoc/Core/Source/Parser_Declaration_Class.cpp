@@ -41,8 +41,6 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		cppName.type = CppNameType::Normal;
 	}
 
-	TestToken(cursor, CppTokens::DECL_FINAL);
-
 	Ptr<SpecializationSpec> specializationSpec;
 	if (spec)
 	{
@@ -50,6 +48,8 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		ParseSpecializationSpec(specPa, cursor, specializationSpec);
 	}
 	ValidateForRootTemplateSpec(spec, cursor, specializationSpec, false);
+
+	TestToken(cursor, CppTokens::DECL_FINAL);
 
 	if (TestToken(cursor, CppTokens::SEMICOLON, false))
 	{
