@@ -24,6 +24,7 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (STL)
+  - [ ] Remove `ReplaceGenericArgs`
   - [ ] Test cases
     - [ ] type alias recursion
     - [ ] value alias recursion
