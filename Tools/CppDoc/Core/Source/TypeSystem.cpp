@@ -884,7 +884,6 @@ public:
 
 					auto taContext = MakePtr<TemplateArgumentContext>(decl, spec->arguments.Count());
 					taContext->parent = parentTaContext.Obj();
-					taContext->symbolToApply = decl;
 					FOREACH_INDEXER(ITsys*, param, index, *params)
 					{
 						taContext->arguments.Add(

@@ -383,8 +383,11 @@ enum class EvaluationKind
 
 struct TemplateArgumentContext
 {
-	TemplateArgumentContext*									parent = nullptr;
+private:
 	Symbol*														symbolToApply = nullptr;
+
+public:
+	TemplateArgumentContext*									parent = nullptr;
 
 	//	Keys:
 	//		Type, Value											:	GenericArg(TemplateArgument)
@@ -400,6 +403,21 @@ struct TemplateArgumentContext
 	TemplateArgumentContext(Symbol* _symbolToApply, vint argumentCount)
 		:symbolToApply(_symbolToApply)
 	{
+	}
+
+	TemplateArgumentContext(TemplateArgumentContext* prototypeContext, bool copyArguments)
+		:symbolToApply(prototypeContext->symbolToApply)
+		, parent(prototypeContext->parent)
+	{
+		if (copyArguments)
+		{
+			CopyFrom(arguments, prototypeContext->arguments);
+		}
+	}
+
+	Symbol* GetSymbolToApply()
+	{
+		return symbolToApply;
 	}
 };
 

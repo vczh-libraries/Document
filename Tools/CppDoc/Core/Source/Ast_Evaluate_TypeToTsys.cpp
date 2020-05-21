@@ -399,7 +399,7 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 						auto diTsys = targetTsys->GetElement();
 						auto& di = diTsys->GetDeclInstant();
 						auto ata = pa.taContext;
-						while (ata && ata->symbolToApply != targetDecl)
+						while (ata && ata->GetSymbolToApply() != targetDecl)
 						{
 							ata = ata->parent;
 						}

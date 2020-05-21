@@ -279,9 +279,7 @@ namespace infer_function_type
 			symbol_totsys_impl::ExpandPotentialVtaList(pa, unused, inputs, isVtas, false, -1,
 				[&](ExprTsysList&, Array<ExprTsysItem>& params, vint, Array<vint>&, SortedList<vint>&)
 				{
-					auto tac = MakePtr<TemplateArgumentContext>(taContext.symbolToApply, taContext.arguments.Count());
-					tac->parent = taContext.parent;
-					CopyFrom(tac->arguments, taContext.arguments);
+					auto tac = MakePtr<TemplateArgumentContext>(&taContext, true);
 
 					List<ITsys*> assignment;
 					vint index = 0;
@@ -323,9 +321,7 @@ namespace infer_function_type
 		}
 		else
 		{
-			auto tac = MakePtr<TemplateArgumentContext>(taContext.symbolToApply, taContext.arguments.Count());
-			tac->parent = taContext.parent;
-			CopyFrom(tac->arguments, taContext.arguments);
+			auto tac = MakePtr<TemplateArgumentContext>(&taContext, true);
 
 			TemplateArgumentContext unusedVariadicContext(nullptr, 0);
 			InferTemplateArgumentsForFunctionType(pa, functionType, parameterAssignment, *tac.Obj(), unusedVariadicContext, freeTypeSymbols, false, lastAssignedVta, hardcodedPatterns);
@@ -393,7 +389,7 @@ namespace infer_function_type
 
 							// assign arguments to correct parameters
 							auto inferPa = pa.AdjustForDecl(gfi.declSymbol);
-							if (inferPa.taContext && inferPa.taContext->symbolToApply == gfi.declSymbol)
+							if (inferPa.taContext && inferPa.taContext->GetSymbolToApply() == gfi.declSymbol)
 							{
 								inferPa.taContext = inferPa.taContext->parent;
 							}
@@ -410,7 +406,6 @@ namespace infer_function_type
 								auto tac = inferredArgumentTypes[i];
 								if (tac->arguments.Count() == freeTypeSymbols.Count())
 								{
-									tac->symbolToApply = gfi.declSymbol;
 									auto& tsys = EvaluateFuncSymbol(inferPa, decl.Obj(), inferPa.parentDeclType, tac.Obj());
 									for (vint j = 0; j < tsys.Count(); j++)
 									{

@@ -170,7 +170,7 @@ namespace infer_function_type
 					for (vint j = 0; j < count; j++)
 					{
 						auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
-						TemplateArgumentContext localVariadicContext(taContext.symbolToApply, taContext.arguments.Count());
+						TemplateArgumentContext localVariadicContext(&taContext, false);
 						// set lastAssignedVta = nullptr, since now the element of the type list is to be inferred, so that localVariadicContext doesn't allow conflict
 						InferTemplateArgument(pa, typeToInfer, exprToInfer, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters, nullptr, hardcodedPatterns);
 						for (vint k = 0; k < localVariadicContext.arguments.Count(); k++)

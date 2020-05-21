@@ -113,7 +113,7 @@ namespace symbol_type_resolving
 				// parentDeclType is not provided, need to check taContext
 				if (auto ta = ParsingArguments::AdjustTaContextForScope(declSymbol, newPa.taContext))
 				{
-					if (ta->symbolToApply == declSymbol)
+					if (ta->GetSymbolToApply() == declSymbol)
 					{
 						// for all taContext that after this ta
 						// those type arguments are useless because they replace internal symbols

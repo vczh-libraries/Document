@@ -325,7 +325,7 @@ TEST_FILE
 		TEST_ASSERT(t2->GetParam(1) == tsys->Void());
 		TEST_ASSERT(data2.taContext->arguments.Count() == 2);
 		TEST_ASSERT(data2.taContext->parent == b1->GetDeclInstant().taContext.Obj());
-		TEST_ASSERT(data2.taContext->symbolToApply == n2);
+		TEST_ASSERT(data2.taContext->GetSymbolToApply() == n2);
 
 		auto k1 = symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[0], tsys.Obj());
 		auto k2 = symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[1], tsys.Obj());

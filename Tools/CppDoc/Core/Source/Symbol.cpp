@@ -795,7 +795,7 @@ ParsingArguments ParsingArguments::AdjustForDecl(Symbol* declSymbol)const
 			auto ta = taContext;
 			while (ta)
 			{
-				if (ta->symbolToApply == scope)
+				if (ta->GetSymbolToApply() == scope)
 				{
 					newPa.taContext = ta;
 					return newPa;
@@ -819,7 +819,7 @@ ParsingArguments ParsingArguments::AdjustForDecl(Symbol* declSymbol, ITsys* pare
 
 EvaluationKind ParsingArguments::GetEvaluationKind(Declaration* decl, Ptr<TemplateSpec> spec)const
 {
-	if (spec && taContext && decl->symbol == taContext->symbolToApply)
+	if (spec && taContext && decl->symbol == taContext->GetSymbolToApply())
 	{
 		return EvaluationKind::Instantiated;
 	}
@@ -870,7 +870,7 @@ TemplateArgumentContext* ParsingArguments::AdjustTaContextForScope(Symbol* scope
 	{
 		// try to confirm taContext->symbolApply is a direct or indirect parent scope of scopeWithTemplateSpec
 		auto loopingScope = scopeWithTemplateSpec;
-		while (loopingScope && taContext->symbolToApply != loopingScope)
+		while (loopingScope && taContext->GetSymbolToApply() != loopingScope)
 		{
 			loopingScope = loopingScope->GetParentScope();
 		}
@@ -881,7 +881,7 @@ TemplateArgumentContext* ParsingArguments::AdjustTaContextForScope(Symbol* scope
 	{
 		// try to confirm scopeWithTemplateSpec is a direct or indirect parent scope of taContext
 		auto loopingTaContext = taContext;
-		while (loopingTaContext && loopingTaContext->symbolToApply != scopeWithTemplateSpec)
+		while (loopingTaContext && loopingTaContext->GetSymbolToApply() != scopeWithTemplateSpec)
 		{
 			loopingTaContext = loopingTaContext->parent;
 		}

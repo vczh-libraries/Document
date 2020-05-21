@@ -425,7 +425,7 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 				auto ata = pa.taContext;
 				while (ata)
 				{
-					if (ata->symbolToApply == classDecl->symbol)
+					if (ata->GetSymbolToApply() == classDecl->symbol)
 					{
 						if (ata->arguments.Count() < classDecl->templateSpec->arguments.Count())
 						{
@@ -457,7 +457,7 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 					pdt = nullptr;
 				}
 
-				while (ata && ata->symbolToApply != scope)
+				while (ata && ata->GetSymbolToApply() != scope)
 				{
 					ata = ata->parent;
 				}
