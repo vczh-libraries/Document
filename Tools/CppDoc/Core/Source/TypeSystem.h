@@ -236,15 +236,18 @@ struct TsysGenericFunction
 
 struct TsysGenericArg
 {
-	vint							argIndex = -1;
 	Symbol*							argSymbol = nullptr;
+	vint							argIndex = -1;
+	TemplateSpec*					spec;
 
 	static vint Compare(const TsysGenericArg& a, const TsysGenericArg& b)
 	{
-		if (a.argIndex < b.argIndex) return -1;
-		if (a.argIndex > b.argIndex) return 1;
 		if (a.argSymbol < b.argSymbol) return -1;
 		if (a.argSymbol > b.argSymbol) return 1;
+		if (a.argIndex < b.argIndex) return -1;
+		if (a.argIndex > b.argIndex) return 1;
+		if (a.spec < b.spec) return -1;
+		if (a.spec > b.spec) return 1;
 		return 0;
 	}
 

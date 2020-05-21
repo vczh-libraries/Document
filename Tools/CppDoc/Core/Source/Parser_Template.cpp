@@ -57,8 +57,9 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 			ITsys* argumentKey = nullptr;
 			{
 				TsysGenericArg arg;
-				arg.argIndex = spec->arguments.Count();
 				arg.argSymbol = argumentSymbol.Obj();
+				arg.argIndex = spec->arguments.Count();
+				arg.spec = spec.Obj();
 				argumentKey = pa.tsys->GenericArgOf(arg);
 			}
 
@@ -145,8 +146,9 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 			ITsys* argumentKey = nullptr;
 			{
 				TsysGenericArg arg;
-				arg.argIndex = spec->arguments.Count();
 				arg.argSymbol = argumentSymbol.Obj();
+				arg.argIndex = spec->arguments.Count();
+				arg.spec = spec.Obj();
 				argumentKey = pa.tsys->GenericArgOf(arg);
 			}
 

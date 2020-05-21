@@ -913,7 +913,10 @@ public:
 	ITsys* GenericArgOf(TsysGenericArg genericArg)override
 	{
 		vint index = genericArgs.Keys().IndexOf(genericArg);
-		if (index != -1) return genericArgs.Values()[index];
+		if (index != -1)
+		{
+			return genericArgs.Values()[index];
+		}
 
 		auto itsys = _genericArg.Alloc(this, genericArg);
 		genericArgs.Add(genericArg, itsys);

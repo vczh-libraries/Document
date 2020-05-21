@@ -179,6 +179,25 @@ namespace symbol_type_resolving
 			return;
 		case symbol_component::SymbolKind::GenericValueArgument:
 			{
+				Ptr<Type> typeOfArgument;
+				{
+					auto ga = GetTemplateArgumentKey(symbol)->GetGenericArg();
+					typeOfArgument = ga.spec->arguments[ga.argIndex].type;
+				}
+
+				TypeTsysList tsysOfArgument;
+				bool tsysOfArgumentInitialized = false;
+
+				auto evaluateValueArgument = [&]()->TypeTsysList&
+				{
+					if (!tsysOfArgumentInitialized)
+					{
+						tsysOfArgumentInitialized = true;
+						TypeToTsysNoVta(pa, typeOfArgument, tsysOfArgument);
+					}
+					return tsysOfArgument;
+				};
+
 				if (symbol->ellipsis)
 				{
 					if (!allowVariadic)
@@ -206,7 +225,7 @@ namespace symbol_type_resolving
 								Array<ExprTsysList> initArgs(replacedType->GetParamCount());
 								for (vint j = 0; j < initArgs.Count(); j++)
 								{
-									AddTempValue(initArgs[j], EvaluateGenericArgumentType(symbol)->ReplaceGenericArgs(pa));
+									AddTempValue(initArgs[j], evaluateValueArgument());
 								}
 								CreateUniversalInitializerType(pa, initArgs, result);
 							}
@@ -225,7 +244,7 @@ namespace symbol_type_resolving
 				}
 				else
 				{
-					AddTempValue(result, EvaluateGenericArgumentType(symbol)->ReplaceGenericArgs(pa));
+					AddTempValue(result, evaluateValueArgument());
 					hasNonVariadic = true;
 				}
 			}
@@ -306,7 +325,7 @@ namespace symbol_type_resolving
 		{
 			auto targetTypeList = &result;
 			auto ritem = resolving->items[i];
-			
+
 			bool parentScopeIsClass = false;
 			if (auto parent = ritem.symbol->GetParentScope())
 			{

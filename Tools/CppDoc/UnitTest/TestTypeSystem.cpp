@@ -188,7 +188,7 @@ TEST_FILE
 		auto tsys = ITsysAlloc::Create();
 		auto tdecl = tsys->DeclOf(n.Obj());
 
-		TsysGenericArg arg = { 0,nullptr };
+		TsysGenericArg arg = { nullptr,0,nullptr };
 		auto targ = tsys->GenericArgOf(arg);
 
 		TsysGenericFunction gf;
@@ -210,8 +210,8 @@ TEST_FILE
 		auto narg1 = MakePtr<Symbol>();
 		auto narg2 = MakePtr<Symbol>();
 		auto tsys = ITsysAlloc::Create();
-		TsysGenericArg arg1 = { 0,narg1.Obj() };
-		TsysGenericArg arg2 = { 0,narg2.Obj() };
+		TsysGenericArg arg1 = { narg1.Obj(),0,nullptr };
+		TsysGenericArg arg2 = { narg2.Obj(),0,nullptr };
 		auto targ1 = tsys->GenericArgOf(arg1);
 		auto targ2 = tsys->GenericArgOf(arg2);
 
