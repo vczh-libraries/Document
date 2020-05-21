@@ -227,7 +227,7 @@ inline bool AssertSymbol<void>(
 		else
 		{
 			auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(symbol->GetParentScope());
-			auto argTsys = symbol_type_resolving::EvaluateGenericArgumentKey(symbol);
+			auto argTsys = symbol_type_resolving::GetTemplateArgumentKey(symbol);
 			auto argIndex = argTsys->GetGenericArg().argIndex;
 			auto arg = spec->arguments[argIndex];
 			TEST_ASSERT(arg.name.name == _name);

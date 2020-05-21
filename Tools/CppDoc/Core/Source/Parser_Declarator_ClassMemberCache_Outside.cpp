@@ -209,7 +209,7 @@ void PrepareTemplateArgumentContext(
 	{
 		auto& tArg = thisSpec->arguments[i];
 		auto& cArg = classSpec->arguments[i];
-		auto cKey = symbol_type_resolving::GetTemplateArgumentKey(cArg.argumentSymbol, pa.tsys.Obj());
+		auto cKey = symbol_type_resolving::GetTemplateArgumentKey(cArg.argumentSymbol);
 
 		switch (tArg.argumentType)
 		{

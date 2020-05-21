@@ -43,7 +43,7 @@ namespace symbol_totsys_impl
 			return;
 		case symbol_component::SymbolKind::GenericTypeArgument:
 			{
-				auto argumentKey = GetTemplateArgumentKey(symbol, pa.tsys.Obj());
+				auto argumentKey = GetTemplateArgumentKey(symbol);
 				ITsys* replacedType = nullptr;
 				if(pa.TryGetReplacedGenericArg(argumentKey, replacedType))
 				{

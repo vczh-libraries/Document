@@ -113,7 +113,7 @@ namespace infer_function_type
 			if (auto idType = dynamic_cast<IdType*>(involvedTypes[j]))
 			{
 				auto patternSymbol = Resolving::EnsureSingleSymbol(idType->resolving);
-				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
+				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(patternSymbol);
 				if (patternSymbol->ellipsis)
 				{
 					callback(patternSymbol, pattern);
@@ -126,7 +126,7 @@ namespace infer_function_type
 			if (auto idExpr = dynamic_cast<IdExpr*>(involvedExprs[j]))
 			{
 				auto patternSymbol = Resolving::EnsureSingleSymbol(idExpr->resolving);
-				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
+				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(patternSymbol);
 				if (patternSymbol->ellipsis)
 				{
 					callback(patternSymbol, pattern);
@@ -213,7 +213,7 @@ namespace infer_function_type
 			auto argument = decl->templateSpec->arguments[i];
 			if (argument.ellipsis)
 			{
-				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(decl->templateSpec->arguments[i], pa.tsys.Obj());
+				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(decl->templateSpec->arguments[i]);
 				auto tsys = argumentsToApply->GetValueByKey(pattern);
 				if (tsys->GetType() == TsysType::Any)
 				{
@@ -236,7 +236,7 @@ namespace infer_function_type
 		for (vint i = 0; i < decl->templateSpec->arguments.Count(); i++)
 		{
 			auto argument = decl->templateSpec->arguments[i];
-			auto pattern = symbol_type_resolving::GetTemplateArgumentKey(decl->templateSpec->arguments[i], pa.tsys.Obj());
+			auto pattern = symbol_type_resolving::GetTemplateArgumentKey(decl->templateSpec->arguments[i]);
 			auto tsys = argumentsToApply->GetValueByKey(pattern);
 			if (argument.ellipsis)
 			{

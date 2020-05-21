@@ -153,7 +153,7 @@ namespace infer_function_type
 				for (vint i = 0; i < templateSpec->arguments.Count(); i++)
 				{
 					auto argument = templateSpec->arguments[i];
-					auto pattern = symbol_type_resolving::GetTemplateArgumentKey(argument, pa.tsys.Obj());
+					auto pattern = symbol_type_resolving::GetTemplateArgumentKey(argument);
 					taContext->SetValueByKey(pattern, pa.tsys->Any());;
 				}
 				TemplateArgumentContext unusedVariadicContext(nullptr, 0);

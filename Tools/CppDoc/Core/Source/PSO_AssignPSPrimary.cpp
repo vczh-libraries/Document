@@ -154,7 +154,7 @@ namespace partial_specification_ordering
 			for (vint i = 0; i < tspec->arguments.Count(); i++)
 			{
 				auto targ = tspec->arguments[i];
-				auto pattern = GetTemplateArgumentKey(targ, pa.tsys.Obj());
+				auto pattern = GetTemplateArgumentKey(targ);
 				auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
 				auto result = MakePtr<MatchPSResult>();
 				matchingResult.Add(patternSymbol, result);

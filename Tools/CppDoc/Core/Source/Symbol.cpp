@@ -789,7 +789,7 @@ ITsys* TemplateArgumentContext::GetKey(vint index)const
 	}
 	
 	auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(symbolToApply);
-	return symbol_type_resolving::EvaluateGenericArgumentKey(spec->arguments[index].argumentSymbol);
+	return symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[index].argumentSymbol);
 }
 
 ITsys* TemplateArgumentContext::GetValue(vint index)const

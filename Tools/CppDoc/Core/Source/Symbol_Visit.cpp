@@ -187,7 +187,7 @@ namespace symbol_type_resolving
 					}
 					hasVariadic = true;
 
-					auto argumentKey = GetTemplateArgumentKey(symbol, pa.tsys.Obj());
+					auto argumentKey = GetTemplateArgumentKey(symbol);
 					ITsys* replacedType = nullptr;
 					if (pa.TryGetReplacedGenericArg(argumentKey, replacedType))
 					{

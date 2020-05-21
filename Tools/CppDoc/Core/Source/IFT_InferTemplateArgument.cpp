@@ -88,7 +88,7 @@ namespace infer_function_type
 			auto idExpr = expr.Cast<IdExpr>();
 			auto patternSymbol = Resolving::EnsureSingleSymbol(idExpr->resolving);
 			auto& outputContext = patternSymbol->ellipsis ? variadicContext : taContext;
-			auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
+			auto pattern = GetTemplateArgumentKey(patternSymbol);
 			SetInferredResult(pa, outputContext, pattern, nullptr, lastAssignedVta, hardcodedPatterns);
 		}
 
@@ -279,7 +279,7 @@ namespace infer_function_type
 		{
 			auto patternSymbol = Resolving::EnsureSingleSymbol(self->resolving);
 			auto& outputContext = patternSymbol->ellipsis ? variadicContext : taContext;
-			auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
+			auto pattern = GetTemplateArgumentKey(patternSymbol);
 
 			switch (patternSymbol->kind)
 			{

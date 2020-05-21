@@ -30,7 +30,7 @@ namespace symbol_type_resolving
 				cacheKey.parentDeclTypeAndParams->Set(0, pa.parentDeclType);
 				for (vint i = 0; i < spec->arguments.Count(); i++)
 				{
-					auto key = GetTemplateArgumentKey(spec->arguments[i], pa.tsys.Obj());
+					auto key = GetTemplateArgumentKey(spec->arguments[i]);
 					cacheKey.parentDeclTypeAndParams->Set(i + 1, argumentsToApply->GetValueByKey(key));
 				}
 
@@ -252,18 +252,6 @@ namespace symbol_type_resolving
 		case symbol_component::SymbolKind::GenericTypeArgument:
 		case symbol_component::SymbolKind::GenericValueArgument:
 			return symbol->GetEvaluationForUpdating_NFb().Get()[0];
-		default:
-			throw TypeCheckerException();
-		}
-	}
-
-	ITsys* EvaluateGenericArgumentKey(Symbol* symbol)
-	{
-		switch (symbol->kind)
-		{
-		case symbol_component::SymbolKind::GenericTypeArgument:
-		case symbol_component::SymbolKind::GenericValueArgument:
-			return symbol->GetEvaluationForUpdating_NFb().GetExtra(0)[0];
 		default:
 			throw TypeCheckerException();
 		}

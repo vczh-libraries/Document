@@ -338,8 +338,8 @@ TEST_FILE
 		TEST_ASSERT(data2.taContext->parent == b1->GetDeclInstant().taContext.Obj());
 		TEST_ASSERT(data2.taContext->GetSymbolToApply() == n2);
 
-		auto k1 = symbol_type_resolving::GetTemplateArgumentKey(f2->templateSpec->arguments[0], tsys.Obj());
-		auto k2 = symbol_type_resolving::GetTemplateArgumentKey(f2->templateSpec->arguments[1], tsys.Obj());
+		auto k1 = symbol_type_resolving::GetTemplateArgumentKey(f2->templateSpec->arguments[0]);
+		auto k2 = symbol_type_resolving::GetTemplateArgumentKey(f2->templateSpec->arguments[1]);
 		TEST_ASSERT(data2.taContext->GetValueByKey(k1) == tsys->Nullptr());
 		TEST_ASSERT(data2.taContext->GetValueByKey(k2) == tsys->Void());
 	});

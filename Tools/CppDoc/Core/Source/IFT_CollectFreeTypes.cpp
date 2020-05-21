@@ -147,7 +147,7 @@ namespace infer_function_type
 					case symbol_component::SymbolKind::GenericTypeArgument:
 					case symbol_component::SymbolKind::GenericValueArgument:
 						{
-							auto pattern = GetTemplateArgumentKey(patternSymbol, pa.tsys.Obj());
+							auto pattern = GetTemplateArgumentKey(patternSymbol);
 							ITsys* patternValue = nullptr;
 							if (pa.TryGetReplacedGenericArg(pattern, patternValue))
 							{

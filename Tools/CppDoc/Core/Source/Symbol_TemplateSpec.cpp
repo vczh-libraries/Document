@@ -35,14 +35,21 @@ namespace symbol_type_resolving
 	GetTemplateArgumentKey: Get an ITsys* for TsysGenericFunction keys
 	***********************************************************************/
 
-	ITsys* GetTemplateArgumentKey(const TemplateSpec::Argument& argument, ITsysAlloc* tsys)
+	ITsys* GetTemplateArgumentKey(const TemplateSpec::Argument& argument)
 	{
-		return EvaluateGenericArgumentKey(argument.argumentSymbol);
+		return GetTemplateArgumentKey(argument.argumentSymbol);
 	}
 
-	ITsys* GetTemplateArgumentKey(Symbol* argumentSymbol, ITsysAlloc* tsys)
+	ITsys* GetTemplateArgumentKey(Symbol* argumentSymbol)
 	{
-		return EvaluateGenericArgumentKey(argumentSymbol);
+		switch (argumentSymbol->kind)
+		{
+		case symbol_component::SymbolKind::GenericTypeArgument:
+		case symbol_component::SymbolKind::GenericValueArgument:
+			return argumentSymbol->GetEvaluationForUpdating_NFb().GetExtra(0)[0];
+		default:
+			throw TypeCheckerException();
+		}
 	}
 
 	/***********************************************************************
@@ -75,7 +82,7 @@ namespace symbol_type_resolving
 		for (vint i = 0; i < spec->arguments.Count(); i++)
 		{
 			const auto& argument = spec->arguments[i];
-			params.Add(GetTemplateArgumentKey(argument, pa.tsys.Obj()));
+			params.Add(GetTemplateArgumentKey(argument));
 		}
 	}
 

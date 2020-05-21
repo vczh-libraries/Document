@@ -78,7 +78,7 @@ namespace assign_parameters
 		for (vint i = 0; i < spec->arguments.Count(); i++)
 		{
 			auto argument = spec->arguments[i];
-			auto pattern = symbol_type_resolving::GetTemplateArgumentKey(argument, pa.tsys.Obj());
+			auto pattern = symbol_type_resolving::GetTemplateArgumentKey(argument);
 			auto patternSymbol = symbol_type_resolving::TemplateArgumentPatternToSymbol(pattern);
 			freeSymbols.Add(patternSymbol);
 			callback(i, argument, pattern, patternSymbol);

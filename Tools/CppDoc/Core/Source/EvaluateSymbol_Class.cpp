@@ -24,7 +24,7 @@ namespace symbol_type_resolving
 				auto tsys = eval.evaluatedTypes[i];
 				if (tsys->GetType() == TsysType::GenericFunction)
 				{
-					auto expect = GetTemplateArgumentKey(classDecl->templateSpec->arguments[0], eval.declPa.tsys.Obj());
+					auto expect = GetTemplateArgumentKey(classDecl->templateSpec->arguments[0]);
 					auto actual = tsys->GetParam(0);
 					if (expect != actual)
 					{
@@ -46,7 +46,7 @@ namespace symbol_type_resolving
 					auto argumentSymbol = classDecl->templateSpec->arguments[i].argumentSymbol;
 					if (argumentsToApply)
 					{
-						auto pattern = EvaluateGenericArgumentKey(argumentSymbol);
+						auto pattern = GetTemplateArgumentKey(argumentSymbol);
 						params[i] = ReplaceGenericArg(eval.declPa, pattern);
 						if (params[i] != pattern)
 						{
