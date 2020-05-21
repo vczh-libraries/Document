@@ -16,5 +16,13 @@ ReplaceGenericArg
 
 ITsys* ReplaceGenericArg(const ParsingArguments& pa, ITsys* genericArgType)
 {
-	return genericArgType->ReplaceGenericArgs(pa);
+	ITsys* result = nullptr;
+	if (pa.TryGetReplacedGenericArg(genericArgType, result))
+	{
+		return result;
+	}
+	else
+	{
+		return genericArgType;
+	}
 }
