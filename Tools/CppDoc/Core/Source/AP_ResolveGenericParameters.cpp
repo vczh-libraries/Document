@@ -1,4 +1,5 @@
 #include "AP_CalculateGpa.h"
+#include "EvaluateSymbol.h"
 
 using namespace symbol_type_resolving;
 
@@ -87,7 +88,10 @@ namespace assign_parameters
 					if (acceptType)
 					{
 						auto item = argumentTypes[gpa.index];
-						EnsureGenericTypeParameterAndArgumentMatched(pattern, item.tsys);
+						EnsureGenericTypeParameterAndArgumentMatched(
+							EvaluateGenericArgumentType(pattern->GetGenericArg().argSymbol),
+							item.tsys
+						);
 						newTaContext.arguments.Add(pattern, item.tsys);
 					}
 					else
@@ -122,7 +126,10 @@ namespace assign_parameters
 						if (acceptType)
 						{
 							auto item = argumentTypes[gpa.index + j];
-							EnsureGenericTypeParameterAndArgumentMatched(pattern, item.tsys);
+							EnsureGenericTypeParameterAndArgumentMatched(
+								EvaluateGenericArgumentType(pattern->GetGenericArg().argSymbol),
+								item.tsys
+							);
 							items[j] = item;
 						}
 						else

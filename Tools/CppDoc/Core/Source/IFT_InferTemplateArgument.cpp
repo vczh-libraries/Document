@@ -420,14 +420,10 @@ namespace infer_function_type
 		{
 			auto genericSymbol = Resolving::EnsureSingleSymbol(self->type->resolving);
 
-			Ptr<TemplateSpec> spec;
-			if (auto classDecl = genericSymbol->GetAnyForwardDecl<ForwardClassDeclaration>())
+			auto spec = GetTemplateSpecFromSymbol(genericSymbol);
+			if (!spec)
 			{
-				spec = classDecl->templateSpec;
-			}
-			else
-			{
-				spec = EvaluateGenericArgumentSymbol(genericSymbol)->GetGenericFunction().spec;
+				spec = EvaluateGenericArgumentType(genericSymbol)->GetGenericFunction().spec;
 			}
 
 			if (!spec)

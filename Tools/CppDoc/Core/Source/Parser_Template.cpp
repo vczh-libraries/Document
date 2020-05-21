@@ -30,8 +30,10 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 
 		if (TestToken(cursor, CppTokens::TYPENAME) || TestToken(cursor, CppTokens::DECL_CLASS))
 		{
+			// parse
 			argument.argumentType = CppTemplateArgumentType::Type;
 			argument.ellipsis = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+
 			if (ParseCppName(argument.name, cursor))
 			{
 				if (specSymbol->TryGetChildren_NFb(argument.name.name))
@@ -40,15 +42,25 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 				}
 			}
 
+			// create symbol
 			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : MakePtr<Symbol>(specSymbol.Obj());
-			argument.argumentSymbol = argumentSymbol.Obj();
-
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
 			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;
+			argument.argumentSymbol = argumentSymbol.Obj();
+
+			// create key
+			ITsys* argumentKey = nullptr;
+			{
+				TsysGenericArg arg;
+				arg.argIndex = spec->arguments.Count();
+				arg.argSymbol = argumentSymbol.Obj();
+				argumentKey = pa.tsys->GenericArgOf(arg);
+			}
+
+			// store type
 			auto& ev = argumentSymbol->GetEvaluationForUpdating_NFb();
 			ev.Allocate();
-
 			if (argument.templateSpec)
 			{
 				TsysGenericFunction genericFunction;
@@ -58,12 +70,14 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 			}
 			else
 			{
-				TsysGenericArg arg;
-				arg.argIndex = spec->arguments.Count();
-				arg.argSymbol = argumentSymbol.Obj();
-				ev.Get().Add(pa.tsys->GenericArgOf(arg));
+				ev.Get().Add(argumentKey);
 			}
 
+			// store key
+			ev.AllocateExtra(1);
+			ev.GetExtra(0).Add(argumentKey);
+
+			// add symbol
 			if (argument.name)
 			{
 				specSymbol->AddChild_NFb(argumentSymbol->name, argumentSymbol);
@@ -89,11 +103,13 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 				throw StopParsingException(cursor);
 			}
 
+			// parse
 			auto declarator = ParseNonMemberDeclarator(newPa, pda_TemplateParam(), cursor);
 			argument.argumentType = CppTemplateArgumentType::Value;
 			argument.name = declarator->name;
 			argument.type = declarator->type;
 			argument.ellipsis = declarator->ellipsis;
+
 			if (declarator->initializer)
 			{
 				if (declarator->initializer->initializerType != CppInitializerType::Equal)
@@ -114,11 +130,23 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 				}
 			}
 
+			// create symbol
 			auto argumentSymbol = MakePtr<Symbol>(specSymbol.Obj());
-			argument.argumentSymbol = argumentSymbol.Obj();
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
 			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;
+			argument.argumentSymbol = argumentSymbol.Obj();
+
+			// create key
+			ITsys* argumentKey = nullptr;
+			{
+				TsysGenericArg arg;
+				arg.argIndex = spec->arguments.Count();
+				arg.argSymbol = argumentSymbol.Obj();
+				argumentKey = pa.tsys->GenericArgOf(arg);
+			}
+
+			// store type
 			auto& ev = argumentSymbol->GetEvaluationForUpdating_NFb();
 			ev.Allocate();
 			TypeToTsysNoVta(newPa, argument.type, ev.Get());
@@ -127,6 +155,11 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 				ev.Get().Add(pa.tsys->Any());
 			}
 
+			// store key
+			ev.AllocateExtra(1);
+			ev.GetExtra(0).Add(argumentKey);
+			
+			// add symbol
 			if (argument.name)
 			{
 				specSymbol->AddChild_NFb(argumentSymbol->name, argumentSymbol);

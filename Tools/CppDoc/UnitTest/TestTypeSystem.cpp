@@ -241,8 +241,11 @@ TEST_FILE
 			tgArg.argIndex = 0;
 			tgArg.argSymbol = sa1.Obj();
 
-			sa1->GetEvaluationForUpdating_NFb().Allocate();
-			sa1->GetEvaluationForUpdating_NFb().Get().Add(tsys->GenericArgOf(tgArg));
+			auto& ev = sa1->GetEvaluationForUpdating_NFb();
+			ev.Allocate();
+			ev.Get().Add(tsys->GenericArgOf(tgArg));
+			ev.AllocateExtra(1);
+			ev.GetExtra(0).Add(tsys->GenericArgOf(tgArg));
 		}
 		{
 			TemplateSpec::Argument arg;
@@ -254,8 +257,11 @@ TEST_FILE
 			tgArg.argIndex = 1;
 			tgArg.argSymbol = sa2.Obj();
 
-			sa2->GetEvaluationForUpdating_NFb().Allocate();
-			sa2->GetEvaluationForUpdating_NFb().Get().Add(tsys->GenericArgOf(tgArg));
+			auto& ev = sa2->GetEvaluationForUpdating_NFb();
+			ev.Allocate();
+			ev.Get().Add(tsys->GenericArgOf(tgArg));
+			ev.AllocateExtra(1);
+			ev.GetExtra(0).Add(tsys->GenericArgOf(tgArg));
 		}
 
 		auto bf1 = MakePtr<ClassDeclaration>();

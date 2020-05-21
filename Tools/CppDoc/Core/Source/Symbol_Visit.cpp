@@ -1,4 +1,5 @@
 #include "Symbol_Visit.h"
+#include "Symbol_TemplateSpec.h"
 #include "EvaluateSymbol.h"
 #include "Ast_Resolving.h"
 
@@ -186,7 +187,7 @@ namespace symbol_type_resolving
 					}
 					hasVariadic = true;
 
-					auto argumentKey = pa.tsys->DeclOf(symbol);
+					auto argumentKey = GetTemplateArgumentKey(symbol, pa.tsys.Obj());
 					ITsys* replacedType = nullptr;
 					if (pa.TryGetReplacedGenericArg(argumentKey, replacedType))
 					{
@@ -205,7 +206,7 @@ namespace symbol_type_resolving
 								Array<ExprTsysList> initArgs(replacedType->GetParamCount());
 								for (vint j = 0; j < initArgs.Count(); j++)
 								{
-									AddTempValue(initArgs[j], EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa));
+									AddTempValue(initArgs[j], EvaluateGenericArgumentType(symbol)->ReplaceGenericArgs(pa));
 								}
 								CreateUniversalInitializerType(pa, initArgs, result);
 							}
@@ -224,7 +225,7 @@ namespace symbol_type_resolving
 				}
 				else
 				{
-					AddTempValue(result, EvaluateGenericArgumentSymbol(symbol)->ReplaceGenericArgs(pa));
+					AddTempValue(result, EvaluateGenericArgumentType(symbol)->ReplaceGenericArgs(pa));
 					hasNonVariadic = true;
 				}
 			}

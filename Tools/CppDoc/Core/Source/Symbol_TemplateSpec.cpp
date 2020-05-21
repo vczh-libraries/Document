@@ -37,27 +37,12 @@ namespace symbol_type_resolving
 
 	ITsys* GetTemplateArgumentKey(const TemplateSpec::Argument& argument, ITsysAlloc* tsys)
 	{
-		if (argument.argumentType == CppTemplateArgumentType::Type)
-		{
-			return EvaluateGenericArgumentSymbol(argument.argumentSymbol);
-		}
-		else
-		{
-			return tsys->DeclOf(argument.argumentSymbol);
-		}
+		return EvaluateGenericArgumentKey(argument.argumentSymbol);
 	}
 
 	ITsys* GetTemplateArgumentKey(Symbol* argumentSymbol, ITsysAlloc* tsys)
 	{
-		switch (argumentSymbol->kind)
-		{
-		case symbol_component::SymbolKind::GenericTypeArgument:
-			return EvaluateGenericArgumentSymbol(argumentSymbol);
-		case symbol_component::SymbolKind::GenericValueArgument:
-			return tsys->DeclOf(argumentSymbol);
-		default:
-			throw TypeCheckerException();
-		}
+		return EvaluateGenericArgumentKey(argumentSymbol);
 	}
 
 	/***********************************************************************
@@ -68,19 +53,8 @@ namespace symbol_type_resolving
 	{
 		switch (tsys->GetType())
 		{
-		case TsysType::Decl:
-			return tsys->GetDecl();
 		case TsysType::GenericArg:
 			return tsys->GetGenericArg().argSymbol;
-		case TsysType::GenericFunction:
-			{
-				auto symbol = tsys->GetGenericFunction().declSymbol;
-				if (symbol->kind != symbol_component::SymbolKind::GenericTypeArgument)
-				{
-					throw TypeCheckerException();
-				}
-				return symbol;
-			}
 		default:
 			throw TypeCheckerException();
 		}
@@ -157,7 +131,10 @@ namespace symbol_type_resolving
 
 			if (pT != CppTemplateArgumentType::Value)
 			{
-				EnsureGenericTypeParameterAndArgumentMatched(nestedParameter, nestedArgument);
+				EnsureGenericTypeParameterAndArgumentMatched(
+					EvaluateGenericArgumentType(nestedParameter->GetGenericArg().argSymbol),
+					EvaluateGenericArgumentType(nestedArgument->GetGenericArg().argSymbol)
+				);
 			}
 		}
 	}

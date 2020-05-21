@@ -88,7 +88,7 @@ namespace symbol_totsys_impl
 				}
 				else
 				{
-					AddTsysToResult(result, argumentKey);
+					AddTsysToResult(result, EvaluateGenericArgumentType(symbol));
 					hasNonVariadic = true;
 				}
 			}

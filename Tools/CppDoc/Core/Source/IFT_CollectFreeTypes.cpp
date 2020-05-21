@@ -184,7 +184,7 @@ namespace infer_function_type
 					break;
 				case symbol_component::SymbolKind::GenericTypeArgument:
 					{
-						auto tsys = EvaluateGenericArgumentSymbol(symbol);
+						auto tsys = EvaluateGenericArgumentType(symbol);
 						if (tsys->GetType() != TsysType::GenericFunction || !tsys->GetGenericFunction().spec)
 						{
 							return;

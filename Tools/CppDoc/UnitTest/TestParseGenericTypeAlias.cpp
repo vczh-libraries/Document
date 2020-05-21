@@ -88,7 +88,7 @@ using Impl2 = T(*)(decltype(Value), int);
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertType(pa, L"Container",				L"Container",						L"<::Container::[T], <::Container::[U]::[U], *> any_t> any_t"		);
+		AssertType(pa, L"Container",				L"Container",						L"<::Container::[T], ::Container::[U]> any_t"						);
 		AssertType(pa, L"Impl",						L"Impl",							L"<::Impl::[T], *> ::Impl::[T] __cdecl(::Impl::[T], __int32) *"		);
 		AssertType(pa, L"Impl2",					L"Impl2",							L"<::Impl2::[T], *> ::Impl2::[T] __cdecl(::Impl2::[T], __int32) *"	);
 		AssertType(pa, L"Container<double, Impl>",	L"Container<double, Impl>",			L"double __cdecl(double, __int32) *"								);
@@ -117,12 +117,12 @@ using Z = T<U>;
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertType(pa, L"X",						L"X",								L"<::X::[T]> any_t"							);
-		AssertType(pa, L"Y",						L"Y",								L"<::Y::[T]> any_t"							);
-		AssertType(pa, L"Z",						L"Z",								L"<<::Z::[T]::[]> any_t, ::Z::[U]> any_t"	);
-		AssertType(pa, L"X<S>",						L"X<S>",							L"__int32"									);
-		AssertType(pa, L"Y<S>",						L"Y<S>",							L"::S *"									);
-		AssertType(pa, L"Z<S::Y, bool>",			L"Z<S :: Y, bool>",					L"bool *"									);
+		AssertType(pa, L"X",						L"X",								L"<::X::[T]> any_t"				);
+		AssertType(pa, L"Y",						L"Y",								L"<::Y::[T]> any_t"				);
+		AssertType(pa, L"Z",						L"Z",								L"<::Z::[T], ::Z::[U]> any_t"	);
+		AssertType(pa, L"X<S>",						L"X<S>",							L"__int32"						);
+		AssertType(pa, L"Y<S>",						L"Y<S>",							L"::S *"						);
+		AssertType(pa, L"Z<S::Y, bool>",			L"Z<S :: Y, bool>",					L"bool *"						);
 	});
 
 	TEST_CATEGORY(L"Default value")

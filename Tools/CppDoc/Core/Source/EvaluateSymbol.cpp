@@ -245,13 +245,25 @@ namespace symbol_type_resolving
 	EvaluateGenericArgumentSymbol: Evaluate the declared value for a generic argument
 	***********************************************************************/
 
-	ITsys* EvaluateGenericArgumentSymbol(Symbol* symbol)
+	ITsys* EvaluateGenericArgumentType(Symbol* symbol)
 	{
 		switch (symbol->kind)
 		{
 		case symbol_component::SymbolKind::GenericTypeArgument:
 		case symbol_component::SymbolKind::GenericValueArgument:
 			return symbol->GetEvaluationForUpdating_NFb().Get()[0];
+		default:
+			throw TypeCheckerException();
+		}
+	}
+
+	ITsys* EvaluateGenericArgumentKey(Symbol* symbol)
+	{
+		switch (symbol->kind)
+		{
+		case symbol_component::SymbolKind::GenericTypeArgument:
+		case symbol_component::SymbolKind::GenericValueArgument:
+			return symbol->GetEvaluationForUpdating_NFb().GetExtra(0)[0];
 		default:
 			throw TypeCheckerException();
 		}
