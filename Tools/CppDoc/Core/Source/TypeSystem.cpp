@@ -253,7 +253,6 @@ Concrete Tsys (GenericArgs)
 	{																								\
 		return true;																				\
 	}																								\
-	ITSYS_GENERIC_REPLACEGENERICARGS																\
 
 /***********************************************************************
 Concrete Tsys (Singleton)
@@ -343,7 +342,6 @@ class ITSYS_CLASS(Decl)
 	ITSYS_MEMBERS_DATA(Decl, Symbol*, Decl)
 	ITSYS_HAS_GENERIC_TYPE((data->kind == symbol_component::SymbolKind::GenericTypeArgument || data->kind == symbol_component::SymbolKind::GenericValueArgument))
 	ITSYS_HAS_UNKNOWN_TYPE(false)
-	ITSYS_GENERIC_REPLACEGENERICARGS
 
 protected:
 	Ptr<TsysPSRecord>								psRecord;
@@ -356,6 +354,7 @@ class ITSYS_CLASS(GenericArg)
 {
 	ITSYS_MEMBERS_DATA(GenericArg, TsysGenericArg, GenericArg)
 	ITSYS_GENERIC_ARG_CONFIGURATION
+	ITSYS_GENERIC_REPLACEGENERICARGS
 };
 
 /***********************************************************************
