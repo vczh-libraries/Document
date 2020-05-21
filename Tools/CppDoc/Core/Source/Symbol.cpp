@@ -2,6 +2,7 @@
 #include "Symbol_TemplateSpec.h"
 #include "Ast.h"
 #include "Parser_Declarator.h"
+#include "EvaluateSymbol.h"
 
 namespace symbol_component
 {
@@ -731,6 +732,142 @@ Symbol* Symbol::CreateStatSymbol_NFb(Ptr<Stat> _stat)
 
 	_stat->symbol = symbol.Obj();
 	return symbol.Obj();
+}
+
+/***********************************************************************
+TemplateArgumentContext
+***********************************************************************/
+
+void TemplateArgumentContext::InitArguments(vint argumentCount)
+{
+	assignedArguments.Resize(argumentCount);
+	assignedKeys.Resize(argumentCount);
+	for (vint i = 0; i < argumentCount; i++)
+	{
+		assignedArguments[i] = nullptr;
+		assignedKeys[i] = false;
+	}
+}
+
+TemplateArgumentContext::TemplateArgumentContext(Symbol* _symbolToApply, vint argumentCount)
+	:symbolToApply(_symbolToApply)
+{
+	InitArguments(argumentCount);
+}
+
+TemplateArgumentContext::TemplateArgumentContext(TemplateArgumentContext* prototypeContext, bool copyArguments)
+	:symbolToApply(prototypeContext->symbolToApply)
+	, parent(prototypeContext->parent)
+{
+	if (copyArguments)
+	{
+		CopyFrom(assignedArguments, prototypeContext->assignedArguments);
+		CopyFrom(assignedKeys, prototypeContext->assignedKeys);
+		availableCount = prototypeContext->availableCount;
+	}
+	else
+	{
+		InitArguments(prototypeContext->assignedArguments.Count());
+	}
+}
+
+Symbol* TemplateArgumentContext::GetSymbolToApply()const
+{
+	return symbolToApply;
+}
+
+vint TemplateArgumentContext::GetArgumentCount()const
+{
+	return assignedArguments.Count();
+}
+
+ITsys* TemplateArgumentContext::GetKey(vint index)const
+{
+	if (!IsArgumentAvailable(index))
+	{
+		throw L"Argument index is not available!";
+	}
+	
+	auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(symbolToApply);
+	return symbol_type_resolving::EvaluateGenericArgumentKey(spec->arguments[index].argumentSymbol);
+}
+
+ITsys* TemplateArgumentContext::GetValue(vint index)const
+{
+	if (!IsArgumentAvailable(index))
+	{
+		throw L"Argument index is not available!";
+	}
+	return assignedArguments[index];
+}
+
+ITsys* TemplateArgumentContext::GetValueByKey(ITsys* key)const
+{
+	auto ga = key->GetGenericArg();
+	if (ga.argSymbol->declSymbolForGenericArg != symbolToApply)
+	{
+		throw L"Argument is not available!";
+	}
+	return GetValue(ga.argIndex);
+}
+
+vint TemplateArgumentContext::GetAvailableArgumentCount()const
+{
+	return availableCount;
+}
+
+bool TemplateArgumentContext::IsArgumentAvailable(vint index)const
+{
+	return 0 <= index && index < assignedKeys.Count() && assignedKeys[index];
+}
+
+bool TemplateArgumentContext::TryGetValueByKey(ITsys* key, ITsys*& value)const
+{
+	value = nullptr;
+	auto ga = key->GetGenericArg();
+	if (ga.argSymbol->declSymbolForGenericArg != symbolToApply)
+	{
+		return false;
+	}
+	if (!assignedKeys[ga.argIndex])
+	{
+		return false;
+	}
+	return assignedArguments[ga.argIndex];
+}
+
+void TemplateArgumentContext::SetValueByKey(ITsys* key, ITsys* value)
+{
+	auto ga = key->GetGenericArg();
+	if (ga.argSymbol->declSymbolForGenericArg != symbolToApply)
+	{
+		throw L"Cannot write this argument to a wrong TemplateArgumentContext!";
+	}
+	if (assignedKeys[ga.argIndex])
+	{
+		throw L"This argument has been set!";
+	}
+	assignedArguments[ga.argIndex] = value;
+	if (!assignedKeys[ga.argIndex])
+	{
+		availableCount++;
+		assignedKeys[ga.argIndex] = true;
+	}
+}
+
+void TemplateArgumentContext::ReplaceValueByKey(ITsys* key, ITsys* value)
+{
+	auto ga = key->GetGenericArg();
+	if (ga.argSymbol->declSymbolForGenericArg != symbolToApply)
+	{
+		throw L"Cannot write this argument to a wrong TemplateArgumentContext!";
+	}
+	assignedArguments[ga.argIndex] = value;
+	if (!assignedKeys[ga.argIndex])
+	{
+		availableCount++;
+		assignedKeys[ga.argIndex] = true;
+	}
 }
 
 /***********************************************************************

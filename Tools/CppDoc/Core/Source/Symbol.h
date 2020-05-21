@@ -385,98 +385,38 @@ enum class EvaluationKind
 struct TemplateArgumentContext
 {
 private:
-	Symbol*														symbolToApply = nullptr;
-	Dictionary<ITsys*, ITsys*>									arguments;
+	Symbol*											symbolToApply = nullptr;
+	Array<ITsys*>									assignedArguments;
+	Array<bool>										assignedKeys;
+	vint											availableCount = 0;
 
+	void											InitArguments(vint argumentCount);
 public:
-	TemplateArgumentContext*									parent = nullptr;
+	TemplateArgumentContext*						parent = nullptr;
 
 	//	Keys:
-	//		Type, Value											:	GenericArg(TemplateArgument)
+	//		Type, Value								:	GenericArg(TemplateArgument)
 	//	Values:
-	//		Single												:	Anything (nullptr for value argument)
-	//		MultipleValues										:	{Values ...}
-	//		UnknownAmountOfMultipleValues						:	any_t
+	//		Single									:	Anything (nullptr for value argument)
+	//		MultipleValues							:	{Values ...}
+	//		UnknownAmountOfMultipleValues			:	any_t
 
 	//	evaluation result if template arguments of this symbol are unassigned, but template arguments of parent scopes are assigned
 	Dictionary<Symbol*, Ptr<symbol_component::Evaluation>>		symbolEvaluations;
 
-	TemplateArgumentContext(Symbol* _symbolToApply, vint argumentCount)
-		:symbolToApply(_symbolToApply)
-	{
-	}
+	TemplateArgumentContext(Symbol* _symbolToApply, vint argumentCount);
+	TemplateArgumentContext(TemplateArgumentContext* prototypeContext, bool copyArguments);
 
-	TemplateArgumentContext(TemplateArgumentContext* prototypeContext, bool copyArguments)
-		:symbolToApply(prototypeContext->symbolToApply)
-		, parent(prototypeContext->parent)
-	{
-		if (copyArguments)
-		{
-			CopyFrom(arguments, prototypeContext->arguments);
-		}
-	}
-
-	__forceinline Symbol* GetSymbolToApply()const
-	{
-		return symbolToApply;
-	}
-
-	__forceinline vint GetArgumentCount()const
-	{
-		return arguments.Count();
-	}
-
-	__forceinline ITsys* GetKey(vint index)const
-	{
-		return arguments.Keys()[index];
-	}
-
-	__forceinline ITsys* GetValue(vint index)const
-	{
-		return arguments.Values()[index];
-	}
-
-	__forceinline ITsys* GetValueByKey(ITsys* key)const
-	{
-		return arguments[key];
-	}
-
-	__forceinline vint GetAvailableArgumentCount()const
-	{
-		return arguments.Count();
-	}
-
-	__forceinline bool IsArgumentAvailable(vint index)const
-	{
-		return 0 <= index && index < arguments.Count();
-	}
-
-	__forceinline bool TryGetValueByKey(ITsys* key, ITsys*& value)const
-	{
-		value = nullptr;
-		vint index = arguments.Keys().IndexOf(key);
-		if (index == -1) return false;
-		value = arguments.Values()[index];
-		return true;
-	}
-
-	__forceinline void SetValueByKey(ITsys* key, ITsys* value)
-	{
-		if (key->GetGenericArg().argSymbol->declSymbolForGenericArg != symbolToApply)
-		{
-			throw L"Cannot write this argument to a wrong TemplateArgumentContext!";
-		}
-		arguments.Add(key, value);
-	}
-
-	__forceinline void ReplaceValueByKey(ITsys* key, ITsys* value)
-	{
-		if (key->GetGenericArg().argSymbol->declSymbolForGenericArg != symbolToApply)
-		{
-			throw L"Cannot write this argument to a wrong TemplateArgumentContext!";
-		}
-		arguments.Set(key, value);
-	}
+	Symbol*											GetSymbolToApply()const;
+	vint											GetArgumentCount()const;
+	ITsys*											GetKey(vint index)const;
+	ITsys*											GetValue(vint index)const;
+	ITsys*											GetValueByKey(ITsys* key)const;
+	vint											GetAvailableArgumentCount()const;
+	bool											IsArgumentAvailable(vint index)const;
+	bool											TryGetValueByKey(ITsys* key, ITsys*& value)const;
+	void											SetValueByKey(ITsys* key, ITsys* value);
+	void											ReplaceValueByKey(ITsys* key, ITsys* value);
 };
 
 struct ParsingArguments

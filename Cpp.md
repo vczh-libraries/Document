@@ -29,7 +29,7 @@
     - [x] Assign `symbolToApply` to all generic argument symbol.
     - [x] Hide `arguments`, provide `GetArgumentCount`, `GetKey`, `GetValue`, `GetValueByKey`, `SetValueByKey`.
     - [x] Check `symbolToApply` in `SetValueByKey`.
-    - [ ] Change `arguments` from `Dictionary` to `Array`.
+    - [x] Change `arguments` from `Dictionary` to `Array`.
   - [ ] Test cases
     - [ ] type alias recursion
     - [ ] value alias recursion
