@@ -1,7 +1,8 @@
 #ifndef VCZH_DOCUMENT_CPPDOC_AP
 #define VCZH_DOCUMENT_CPPDOC_AP
 
-#include "IFT.h"
+#include "Symbol_TemplateSpec.h"
+#include "Ast_Type.h"
 
 namespace assign_parameters
 {
@@ -78,7 +79,7 @@ namespace assign_parameters
 		{
 			auto argument = spec->arguments[i];
 			auto pattern = symbol_type_resolving::GetTemplateArgumentKey(argument, pa.tsys.Obj());
-			auto patternSymbol = infer_function_type::TemplateArgumentPatternToSymbol(pattern);
+			auto patternSymbol = symbol_type_resolving::TemplateArgumentPatternToSymbol(pattern);
 			freeSymbols.Add(patternSymbol);
 			callback(i, argument, pattern, patternSymbol);
 		}

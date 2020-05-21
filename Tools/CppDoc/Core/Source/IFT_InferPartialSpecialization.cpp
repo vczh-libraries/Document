@@ -1,3 +1,4 @@
+#include "IFT.h"
 #include "AP.h"
 #include "EvaluateSymbol.h"
 #include "Ast_Evaluate_ExpandPotentialVta.h"

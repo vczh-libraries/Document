@@ -1,5 +1,7 @@
+#include "IFT.h"
 #include "AP.h"
 
+using namespace symbol_type_resolving;
 using namespace assign_parameters;
 
 namespace infer_function_type

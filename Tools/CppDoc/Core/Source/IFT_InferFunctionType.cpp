@@ -1,3 +1,4 @@
+#include "IFT.h"
 #include "AP.h"
 #include "Ast_Evaluate_ExpandPotentialVta.h"
 #include "EvaluateSymbol.h"
@@ -7,32 +8,6 @@ using namespace assign_parameters;
 
 namespace infer_function_type
 {
-	/***********************************************************************
-	TemplateArgumentPatternToSymbol:	Get the symbol from a type representing a template argument
-	***********************************************************************/
-
-	Symbol* TemplateArgumentPatternToSymbol(ITsys* tsys)
-	{
-		switch (tsys->GetType())
-		{
-		case TsysType::Decl:
-			return tsys->GetDecl();
-		case TsysType::GenericArg:
-			return tsys->GetGenericArg().argSymbol;
-		case TsysType::GenericFunction:
-			{
-				auto symbol = tsys->GetGenericFunction().declSymbol;
-				if (symbol->kind != symbol_component::SymbolKind::GenericTypeArgument)
-				{
-					throw TypeCheckerException();
-				}
-				return symbol;
-			}
-		default:
-			throw TypeCheckerException();
-		}
-	}
-
 	/***********************************************************************
 	InferFunctionType:	Perform type inferencing for template function using both offered template and function arguments
 						Ts(*)(X<Ts...>)... or Ts<X<Ts<Y>...>... is not supported, because of nested Ts...
