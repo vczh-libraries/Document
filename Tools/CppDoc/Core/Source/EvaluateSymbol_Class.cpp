@@ -81,6 +81,7 @@ namespace symbol_type_resolving
 					eval.evaluatedTypes.Add(eval.declPa.tsys->DeclOf(eval.symbol));
 				}
 			}
+
 			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, classDecl, classDecl->templateSpec, argumentsToApply);
 		}
 		else
