@@ -261,6 +261,11 @@ namespace ns
 					void Method(T, U);
 					template<typename V> void Method(T, U*, V, V*);
 					template<typename V> void Method(T*, U, V*, V);
+
+					D(T, U);
+					~D();
+					template<typename V> D(T, U*, V, V*);
+					template<typename V> D(T*, U, V*, V);
 				};
 			};
 		};
@@ -273,6 +278,10 @@ namespace ns
 	template<int _1, typename X>	template<typename Y, int _2>							void A::B<_1, X>::C::D<Y, _2>::Method(X, Y){}
 	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	void A::B<_1, X>::C::D<Y, _2>::Method(X, Y*, Z, Z*){}
 	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	void A::B<_1, X>::C::D<Y, _2>::Method(X*, Y, Z*, Z){}
+	template<int _1, typename X>	template<typename Y, int _2>							A::B<_1, X>::C::D<Y, _2>::D(X, Y){}
+	template<int _1, typename X>	template<typename Y, int _2>							A::B<_1, X>::C::D<Y, _2>::~D(){}
+	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	A::B<_1, X>::C::D<Y, _2>::D(X, Y*, Z, Z*){}
+	template<int _1, typename X>	template<typename Y, int _2>	template<typename Z>	A::B<_1, X>::C::D<Y, _2>::D(X*, Y, Z*, Z){}
 }
 )";
 		COMPILE_PROGRAM(program, pa, input);
@@ -290,12 +299,12 @@ namespace ns
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			CopyFrom(inClassMembers, From(inClassMembersUnfiltered).Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; }));
-			TEST_ASSERT(inClassMembers.Count() == 4);
+			TEST_ASSERT(inClassMembers.Count() == 8);
 
 			auto& outClassMembers = pa.root
 				->TryGetChildren_NFb(L"ns")->Get(0)
 				->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
-			TEST_ASSERT(outClassMembers.Count() == 4);
+			TEST_ASSERT(outClassMembers.Count() == 8);
 
 			for (vint i = 0; i < 4; i++)
 			{
