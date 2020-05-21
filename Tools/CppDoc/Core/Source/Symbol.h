@@ -462,11 +462,19 @@ public:
 
 	__forceinline void SetValueByKey(ITsys* key, ITsys* value)
 	{
+		if (key->GetGenericArg().argSymbol->declSymbolForGenericArg != symbolToApply)
+		{
+			throw L"Cannot write this argument to a wrong TemplateArgumentContext!";
+		}
 		arguments.Add(key, value);
 	}
 
 	__forceinline void ReplaceValueByKey(ITsys* key, ITsys* value)
 	{
+		if (key->GetGenericArg().argSymbol->declSymbolForGenericArg != symbolToApply)
+		{
+			throw L"Cannot write this argument to a wrong TemplateArgumentContext!";
+		}
 		arguments.Set(key, value);
 	}
 };

@@ -225,73 +225,84 @@ TEST_FILE
 	{
 		auto tsys = ITsysAlloc::Create();
 
-		auto sa1 = MakePtr<Symbol>();
-		sa1->kind = symbol_component::SymbolKind::GenericTypeArgument;
-		auto sa2 = MakePtr<Symbol>();
-		sa2->kind = symbol_component::SymbolKind::GenericTypeArgument;
-
-		auto spec = MakePtr<TemplateSpec>();
+		auto createSpec = [&tsys](Symbol* declSymbol)
 		{
-			TemplateSpec::Argument arg;
-			arg.argumentSymbol = sa1.Obj();
-			arg.argumentType = CppTemplateArgumentType::Type;
-			spec->arguments.Add(arg);
+			auto sa1 = MakePtr<Symbol>();
+			sa1->kind = symbol_component::SymbolKind::GenericTypeArgument;
+			sa1->name = L"sa1";
+			declSymbol->AddChild_NFb(sa1->name, sa1);
 
-			TsysGenericArg tgArg;
-			tgArg.argIndex = 0;
-			tgArg.argSymbol = sa1.Obj();
+			auto sa2 = MakePtr<Symbol>();
+			sa2->kind = symbol_component::SymbolKind::GenericTypeArgument;
+			sa2->name = L"sa2";
+			declSymbol->AddChild_NFb(sa2->name, sa2);
 
-			auto& ev = sa1->GetEvaluationForUpdating_NFb();
-			ev.Allocate();
-			ev.Get().Add(tsys->GenericArgOf(tgArg));
-			ev.AllocateExtra(1);
-			ev.GetExtra(0).Add(tsys->GenericArgOf(tgArg));
-		}
-		{
-			TemplateSpec::Argument arg;
-			arg.argumentSymbol = sa2.Obj();
-			arg.argumentType = CppTemplateArgumentType::Type;
-			spec->arguments.Add(arg);
+			auto spec = MakePtr<TemplateSpec>();
+			{
+				TemplateSpec::Argument arg;
+				arg.argumentSymbol = sa1.Obj();
+				arg.argumentType = CppTemplateArgumentType::Type;
+				spec->arguments.Add(arg);
 
-			TsysGenericArg tgArg;
-			tgArg.argIndex = 1;
-			tgArg.argSymbol = sa2.Obj();
+				TsysGenericArg tgArg;
+				tgArg.argIndex = 0;
+				tgArg.argSymbol = sa1.Obj();
 
-			auto& ev = sa2->GetEvaluationForUpdating_NFb();
-			ev.Allocate();
-			ev.Get().Add(tsys->GenericArgOf(tgArg));
-			ev.AllocateExtra(1);
-			ev.GetExtra(0).Add(tsys->GenericArgOf(tgArg));
-		}
+				auto& ev = sa1->GetEvaluationForUpdating_NFb();
+				ev.Allocate();
+				ev.Get().Add(tsys->GenericArgOf(tgArg));
+				ev.AllocateExtra(1);
+				ev.GetExtra(0).Add(tsys->GenericArgOf(tgArg));
+			}
+			{
+				TemplateSpec::Argument arg;
+				arg.argumentSymbol = sa2.Obj();
+				arg.argumentType = CppTemplateArgumentType::Type;
+				spec->arguments.Add(arg);
+
+				TsysGenericArg tgArg;
+				tgArg.argIndex = 1;
+				tgArg.argSymbol = sa2.Obj();
+
+				auto& ev = sa2->GetEvaluationForUpdating_NFb();
+				ev.Allocate();
+				ev.Get().Add(tsys->GenericArgOf(tgArg));
+				ev.AllocateExtra(1);
+				ev.GetExtra(0).Add(tsys->GenericArgOf(tgArg));
+			}
+
+			spec->AssignDeclSymbol(declSymbol);
+			return spec;
+		};
+
+		auto root = MakePtr<Symbol>();
 
 		auto bf1 = MakePtr<ClassDeclaration>();
 		bf1->name.name = L"BF1";
-		bf1->templateSpec = spec;
+		auto bn1 = root->AddImplDeclToSymbol_NFb(bf1, symbol_component::SymbolKind::Class);
+		bf1->templateSpec = createSpec(bn1);
 
 		auto bf2 = MakePtr<ClassDeclaration>();
 		bf2->name.name = L"BF2";
-		bf2->templateSpec = spec;
+		auto bn2 = root->AddImplDeclToSymbol_NFb(bf2, symbol_component::SymbolKind::Class);
+		bf2->templateSpec = createSpec(bn2);
 
 		auto f1 = MakePtr<ClassDeclaration>();
 		f1->name.name = L"F1";
-		f1->templateSpec = spec;
+		auto n1 = root->AddImplDeclToSymbol_NFb(f1, symbol_component::SymbolKind::Class);
+		f1->templateSpec = createSpec(n1);
 
 		auto f2 = MakePtr<ClassDeclaration>();
 		f2->name.name = L"F2";
-		f2->templateSpec = spec;
+		auto n2 = root->AddImplDeclToSymbol_NFb(f2, symbol_component::SymbolKind::Class);
+		f2->templateSpec = createSpec(n2);
 
 		auto f3 = MakePtr<ClassDeclaration>();
 		f3->name.name = L"F3";
+		auto n3 = root->AddImplDeclToSymbol_NFb(f3, symbol_component::SymbolKind::Class);
 
 		auto f4 = MakePtr<ClassDeclaration>();
 		f4->name.name = L"F4";
-
-		auto root = MakePtr<Symbol>();
-		auto bn1 = root->AddImplDeclToSymbol_NFb(bf1, symbol_component::SymbolKind::Class);
-		auto bn2 = root->AddImplDeclToSymbol_NFb(bf2, symbol_component::SymbolKind::Class);
-		auto n1 = root->AddImplDeclToSymbol_NFb(f1, symbol_component::SymbolKind::Class);
-		auto n2 = root->AddImplDeclToSymbol_NFb(f2, symbol_component::SymbolKind::Class);
-		auto n3 = root->AddImplDeclToSymbol_NFb(f3, symbol_component::SymbolKind::Class);
 		auto n4 = root->AddImplDeclToSymbol_NFb(f4, symbol_component::SymbolKind::Class);
 
 		Array<ITsys*> p1(2), p2(2);
@@ -327,8 +338,8 @@ TEST_FILE
 		TEST_ASSERT(data2.taContext->parent == b1->GetDeclInstant().taContext.Obj());
 		TEST_ASSERT(data2.taContext->GetSymbolToApply() == n2);
 
-		auto k1 = symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[0], tsys.Obj());
-		auto k2 = symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[1], tsys.Obj());
+		auto k1 = symbol_type_resolving::GetTemplateArgumentKey(f2->templateSpec->arguments[0], tsys.Obj());
+		auto k2 = symbol_type_resolving::GetTemplateArgumentKey(f2->templateSpec->arguments[1], tsys.Obj());
 		TEST_ASSERT(data2.taContext->GetValueByKey(k1) == tsys->Nullptr());
 		TEST_ASSERT(data2.taContext->GetValueByKey(k2) == tsys->Void());
 	});
