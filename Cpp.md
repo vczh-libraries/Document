@@ -24,8 +24,8 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (STL)
-  - [ ] Remove `ReplaceGenericArgs`
   - [ ] Test cases
+    - [ ] connect forward: constructor in template class, template constructor, partial specialization
     - [ ] type alias recursion
     - [ ] value alias recursion
 - [ ] Next Demo! (Calculator)

@@ -100,6 +100,36 @@ void BuildFunctionParameters(
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+void DelayParseSkipToClosingCursor(
+	Ptr<CppTokenCursor>& cursor
+)
+{
+	vint counter = 0;
+	while (true)
+	{
+		if (TestToken(cursor, CppTokens::LBRACE) || TestToken(cursor, CppTokens::LPARENTHESIS))
+		{
+			counter++;
+		}
+		else if (TestToken(cursor, CppTokens::RBRACE) || TestToken(cursor, CppTokens::RPARENTHESIS))
+		{
+			counter--;
+			if (counter == 0)
+			{
+				return;
+			}
+		}
+		else
+		{
+			SkipToken(cursor);
+			if (!cursor)
+			{
+				throw StopParsingException(cursor);
+			}
+		}
+	}
+}
+
 void DelayParseFunctionStatement(
 	const ParsingArguments& pa,
 	Ptr<FunctionDeclaration> decl,
@@ -110,36 +140,28 @@ void DelayParseFunctionStatement(
 	decl->delayParse->pa = pa;
 	cursor->Clone(decl->delayParse->reader, decl->delayParse->begin);
 
-	vint counter = 0;
 	while (true)
 	{
-		if (TestToken(cursor, CppTokens::LBRACE))
+		if (TestToken(cursor, CppTokens::COLON, false) || TestToken(cursor, CppTokens::COMMA, false))
 		{
-			counter++;
+			DelayParseSkipToClosingCursor(cursor);
 		}
-		else if (TestToken(cursor, CppTokens::RBRACE))
+		else if (TestToken(cursor, CppTokens::LBRACE, false))
 		{
-			counter--;
-			if (counter == 0)
+			DelayParseSkipToClosingCursor(cursor);
+			if (cursor)
 			{
-				if (cursor)
-				{
-					decl->delayParse->end = cursor->token;
-				}
-				else
-				{
-					memset(&decl->delayParse->end, 0, sizeof(RegexToken));
-				}
-				break;
+				decl->delayParse->end = cursor->token;
 			}
+			else
+			{
+				memset(&decl->delayParse->end, 0, sizeof(RegexToken));
+			}
+			break;
 		}
 		else
 		{
-			SkipToken(cursor);
-			if (!cursor)
-			{
-				throw StopParsingException(cursor);
-			}
+			throw StopParsingException(cursor);
 		}
 	}
 }
