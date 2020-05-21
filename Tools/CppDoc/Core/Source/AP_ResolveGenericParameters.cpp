@@ -64,7 +64,7 @@ namespace assign_parameters
 
 						for (vint j = 0; j < argTypes.Count(); j++)
 						{
-							newTaContext.arguments.Add(pattern, argTypes[j]);
+							newTaContext.SetValueByKey(pattern, argTypes[j]);
 						}
 					}
 					else
@@ -73,7 +73,7 @@ namespace assign_parameters
 						{
 							throw TypeCheckerException();
 						}
-						newTaContext.arguments.Add(pattern, nullptr);
+						newTaContext.SetValueByKey(pattern, nullptr);
 					}
 				}
 				break;
@@ -92,11 +92,11 @@ namespace assign_parameters
 							EvaluateGenericArgumentType(pattern->GetGenericArg().argSymbol),
 							item.tsys
 						);
-						newTaContext.arguments.Add(pattern, item.tsys);
+						newTaContext.SetValueByKey(pattern, item.tsys);
 					}
 					else
 					{
-						newTaContext.arguments.Add(pattern, nullptr);
+						newTaContext.SetValueByKey(pattern, nullptr);
 					}
 				}
 				break;
@@ -105,7 +105,7 @@ namespace assign_parameters
 					// if an empty pack of offered arguments is to fill this variadic template argument
 					Array<ExprTsysItem> items;
 					auto init = pa.tsys->InitOf(items);
-					newTaContext.arguments.Add(pattern, init);
+					newTaContext.SetValueByKey(pattern, init);
 				}
 				break;
 			case GenericParameterAssignmentKind::MultipleVta:
@@ -138,13 +138,13 @@ namespace assign_parameters
 						}
 					}
 					auto init = pa.tsys->InitOf(items);
-					newTaContext.arguments.Add(pattern, init);
+					newTaContext.SetValueByKey(pattern, init);
 				}
 				break;
 			case GenericParameterAssignmentKind::Any:
 				{
 					// if any is to fill this (maybe variadic) template argument
-					newTaContext.arguments.Add(pattern, pa.tsys->Any());
+					newTaContext.SetValueByKey(pattern, pa.tsys->Any());
 				}
 				break;
 			case GenericParameterAssignmentKind::Unfilled:
@@ -156,7 +156,7 @@ namespace assign_parameters
 					{
 						auto unappliedPattern = genericFunction->GetParam(j);
 						auto unappliedValue = spec->arguments[j].ellipsis ? pa.tsys->Any() : acceptType ? unappliedPattern : nullptr;
-						newTaContext.arguments.Add(unappliedPattern, unappliedValue);
+						newTaContext.SetValueByKey(unappliedPattern, unappliedValue);
 					}
 					return;
 				}

@@ -214,7 +214,7 @@ namespace infer_function_type
 			if (argument.ellipsis)
 			{
 				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(decl->templateSpec->arguments[i], pa.tsys.Obj());
-				auto tsys = argumentsToApply->arguments[pattern];
+				auto tsys = argumentsToApply->GetValueByKey(pattern);
 				if (tsys->GetType() == TsysType::Any)
 				{
 					boundedAnys.Add(count);
@@ -237,7 +237,7 @@ namespace infer_function_type
 		{
 			auto argument = decl->templateSpec->arguments[i];
 			auto pattern = symbol_type_resolving::GetTemplateArgumentKey(decl->templateSpec->arguments[i], pa.tsys.Obj());
-			auto tsys = argumentsToApply->arguments[pattern];
+			auto tsys = argumentsToApply->GetValueByKey(pattern);
 			if (argument.ellipsis)
 			{
 				if (tsys->GetType() == TsysType::Any)

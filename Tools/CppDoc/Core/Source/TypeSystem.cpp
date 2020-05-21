@@ -886,7 +886,7 @@ public:
 					taContext->parent = parentTaContext.Obj();
 					FOREACH_INDEXER(ITsys*, param, index, *params)
 					{
-						taContext->arguments.Add(
+						taContext->SetValueByKey(
 							symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[index], this),
 							param
 							);

@@ -156,7 +156,7 @@ namespace symbol_totsys_impl
 							auto pattern = genericFunction->GetParam(i);
 							if (i < partialAppliedArguments)
 							{
-								genericParams[i] = argumentsToApply->arguments[pattern];
+								genericParams[i] = argumentsToApply->GetValueByKey(pattern);
 							}
 							else
 							{

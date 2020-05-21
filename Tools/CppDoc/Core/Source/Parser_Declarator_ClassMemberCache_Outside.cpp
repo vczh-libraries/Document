@@ -217,22 +217,22 @@ void PrepareTemplateArgumentContext(
 		case CppTemplateArgumentType::Type:
 			if (tArg.ellipsis)
 			{
-				taContext.arguments.Add(cKey, pa.tsys->Any());
+				taContext.SetValueByKey(cKey, pa.tsys->Any());
 			}
 			else
 			{
 				auto tValue = symbol_type_resolving::GetTemplateArgumentKey(tArg.argumentSymbol, pa.tsys.Obj());
-				taContext.arguments.Add(cKey, tValue);
+				taContext.SetValueByKey(cKey, tValue);
 			}
 			break;
 		case CppTemplateArgumentType::Value:
 			if (tArg.ellipsis)
 			{
-				taContext.arguments.Add(cKey, pa.tsys->Any());
+				taContext.SetValueByKey(cKey, pa.tsys->Any());
 			}
 			else
 			{
-				taContext.arguments.Add(cKey, nullptr);
+				taContext.SetValueByKey(cKey, nullptr);
 			}
 			break;
 		}

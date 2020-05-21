@@ -27,7 +27,7 @@
   - [ ] `TemplateArgumentContext` refactoring
     - [x] Hide `symbolToApply`, provide `GetSymbolToApply`, provide copy function(always resize, optionally copy arguments).
     - [x] Assign `symbolToApply` to all generic argument symbol.
-    - [ ] Hide `arguments`, provide `GetArgumentCount`, `GetKey`, `GetValue`, `GetValueByKey`, `SetValueByKey`.
+    - [x] Hide `arguments`, provide `GetArgumentCount`, `GetKey`, `GetValue`, `GetValueByKey`, `SetValueByKey`.
     - [ ] Check `symbolToApply` in `SetValueByKey`.
     - [ ] Change `arguments` from `Dictionary` to `Array`.
   - [ ] Test cases

@@ -379,7 +379,7 @@ namespace infer_function_type
 								if (i < gfi.filledArguments)
 								{
 									hardcodedPatterns.Add(pattern);
-									taContext.arguments.Add(pattern, functionItem.tsys->GetParam(i));
+									taContext.SetValueByKey(pattern, functionItem.tsys->GetParam(i));
 									if (i == gfi.spec->arguments.Count() - 1 && argument.ellipsis)
 									{
 										lastAssignedVta = pattern;
@@ -404,7 +404,7 @@ namespace infer_function_type
 							{
 								// skip all incomplete inferrings
 								auto tac = inferredArgumentTypes[i];
-								if (tac->arguments.Count() == freeTypeSymbols.Count())
+								if (tac->GetAvailableArgumentCount() == freeTypeSymbols.Count())
 								{
 									auto& tsys = EvaluateFuncSymbol(inferPa, decl.Obj(), inferPa.parentDeclType, tac.Obj());
 									for (vint j = 0; j < tsys.Count(); j++)

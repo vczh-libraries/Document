@@ -289,7 +289,7 @@ using Context = T;
 			{
 				TypeTsysList tsys;
 				TemplateArgumentContext taContext(contextSymbol, 1);
-				taContext.arguments.Add(genericTypes[0], pa.tsys->Int());
+				taContext.SetValueByKey(genericTypes[0], pa.tsys->Int());
 				intTypes[i] = genericTypes[i]->ReplaceGenericArgs(pa.AppendSingleLevelArgs(taContext));
 			}
 
@@ -297,7 +297,7 @@ using Context = T;
 			{
 				TypeTsysList tsys;
 				TemplateArgumentContext taContext(contextSymbol, 1);
-				taContext.arguments.Add(genericTypes[0], pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"S")->Get(0).Obj()));
+				taContext.SetValueByKey(genericTypes[0], pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"S")->Get(0).Obj()));
 				structTypes[i] = genericTypes[i]->ReplaceGenericArgs(pa.AppendSingleLevelArgs(taContext));
 			}
 		});

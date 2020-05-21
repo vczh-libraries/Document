@@ -323,14 +323,14 @@ TEST_FILE
 		TEST_ASSERT(t2->GetParamCount() == 2);
 		TEST_ASSERT(t2->GetParam(0) == tsys->Nullptr());
 		TEST_ASSERT(t2->GetParam(1) == tsys->Void());
-		TEST_ASSERT(data2.taContext->arguments.Count() == 2);
+		TEST_ASSERT(data2.taContext->GetArgumentCount() == 2);
 		TEST_ASSERT(data2.taContext->parent == b1->GetDeclInstant().taContext.Obj());
 		TEST_ASSERT(data2.taContext->GetSymbolToApply() == n2);
 
 		auto k1 = symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[0], tsys.Obj());
 		auto k2 = symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[1], tsys.Obj());
-		TEST_ASSERT(data2.taContext->arguments[k1] == tsys->Nullptr());
-		TEST_ASSERT(data2.taContext->arguments[k2] == tsys->Void());
+		TEST_ASSERT(data2.taContext->GetValueByKey(k1) == tsys->Nullptr());
+		TEST_ASSERT(data2.taContext->GetValueByKey(k2) == tsys->Void());
 	});
 
 	TEST_CASE(L"Test type flag")

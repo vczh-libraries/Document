@@ -31,7 +31,7 @@ namespace symbol_type_resolving
 				for (vint i = 0; i < spec->arguments.Count(); i++)
 				{
 					auto key = GetTemplateArgumentKey(spec->arguments[i], pa.tsys.Obj());
-					cacheKey.parentDeclTypeAndParams->Set(i + 1, argumentsToApply->arguments[key]);
+					cacheKey.parentDeclTypeAndParams->Set(i + 1, argumentsToApply->GetValueByKey(key));
 				}
 
 				vint index = decl->symbol->genericCaches.IndexOf(cacheKey);

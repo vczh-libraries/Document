@@ -386,6 +386,7 @@ struct TemplateArgumentContext
 {
 private:
 	Symbol*														symbolToApply = nullptr;
+	Dictionary<ITsys*, ITsys*>									arguments;
 
 public:
 	TemplateArgumentContext*									parent = nullptr;
@@ -396,7 +397,6 @@ public:
 	//		Single												:	Anything (nullptr for value argument)
 	//		MultipleValues										:	{Values ...}
 	//		UnknownAmountOfMultipleValues						:	any_t
-	Dictionary<ITsys*, ITsys*>									arguments;
 
 	//	evaluation result if template arguments of this symbol are unassigned, but template arguments of parent scopes are assigned
 	Dictionary<Symbol*, Ptr<symbol_component::Evaluation>>		symbolEvaluations;
@@ -416,9 +416,58 @@ public:
 		}
 	}
 
-	Symbol* GetSymbolToApply()
+	__forceinline Symbol* GetSymbolToApply()const
 	{
 		return symbolToApply;
+	}
+
+	__forceinline vint GetArgumentCount()const
+	{
+		return arguments.Count();
+	}
+
+	__forceinline ITsys* GetKey(vint index)const
+	{
+		return arguments.Keys()[index];
+	}
+
+	__forceinline ITsys* GetValue(vint index)const
+	{
+		return arguments.Values()[index];
+	}
+
+	__forceinline ITsys* GetValueByKey(ITsys* key)const
+	{
+		return arguments[key];
+	}
+
+	__forceinline vint GetAvailableArgumentCount()const
+	{
+		return arguments.Count();
+	}
+
+	__forceinline bool IsArgumentAvailable(vint index)const
+	{
+		return 0 <= index && index < arguments.Count();
+	}
+
+	__forceinline bool TryGetValueByKey(ITsys* key, ITsys*& value)const
+	{
+		value = nullptr;
+		vint index = arguments.Keys().IndexOf(key);
+		if (index == -1) return false;
+		value = arguments.Values()[index];
+		return true;
+	}
+
+	__forceinline void SetValueByKey(ITsys* key, ITsys* value)
+	{
+		arguments.Add(key, value);
+	}
+
+	__forceinline void ReplaceValueByKey(ITsys* key, ITsys* value)
+	{
+		arguments.Set(key, value);
 	}
 };
 

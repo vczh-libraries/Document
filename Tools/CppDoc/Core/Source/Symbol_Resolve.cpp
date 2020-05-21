@@ -427,11 +427,11 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 				{
 					if (ata->GetSymbolToApply() == classDecl->symbol)
 					{
-						if (ata->arguments.Count() < classDecl->templateSpec->arguments.Count())
+						if (ata->GetAvailableArgumentCount() < classDecl->templateSpec->arguments.Count())
 						{
 							readyForClassMember = false;
-							break;
 						}
+						break;
 					}
 					ata = ata->parent;
 				}

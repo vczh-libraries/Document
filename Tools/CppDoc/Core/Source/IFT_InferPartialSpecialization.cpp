@@ -154,7 +154,7 @@ namespace infer_function_type
 				{
 					auto argument = templateSpec->arguments[i];
 					auto pattern = symbol_type_resolving::GetTemplateArgumentKey(argument, pa.tsys.Obj());
-					taContext->arguments.Add(pattern, pa.tsys->Any());;
+					taContext->SetValueByKey(pattern, pa.tsys->Any());;
 				}
 				TemplateArgumentContext unusedVariadicContext(nullptr, 0);
 				SortedList<ITsys*> unusedHardcodedPatterns;
@@ -197,36 +197,42 @@ namespace infer_function_type
 
 	bool IsValuableTaContextWithMatchedPSChildren(TemplateArgumentContext* taContext)
 	{
-		for (vint i = 0; i < taContext->arguments.Count(); i++)
+		for (vint i = 0; i < taContext->GetArgumentCount(); i++)
 		{
-			if (auto tsys = taContext->arguments.Values()[i])
+			if (taContext->IsArgumentAvailable(i))
 			{
-				auto patternSymbol = TemplateArgumentPatternToSymbol(taContext->arguments.Keys()[i]);
-				if (patternSymbol->ellipsis)
+				auto key = taContext->GetKey(i);
+				auto tsys = taContext->GetValue(i);
+				if (tsys)
 				{
-					if (tsys->GetType() == TsysType::Any)
+					auto patternSymbol = TemplateArgumentPatternToSymbol(key);
+
+					if (patternSymbol->ellipsis)
 					{
-						return true;
-					}
-					else
-					{
-						for (vint j = 0; j < tsys->GetParamCount(); j++)
+						if (tsys->GetType() == TsysType::Any)
 						{
-							if (auto tsysItem = tsys->GetParam(j))
+							return true;
+						}
+						else
+						{
+							for (vint j = 0; j < tsys->GetParamCount(); j++)
 							{
-								if (tsysItem->GetType() == TsysType::Any || tsysItem->GetType() == TsysType::GenericArg)
+								if (auto tsysItem = tsys->GetParam(j))
 								{
-									return true;
+									if (tsysItem->GetType() == TsysType::Any || tsysItem->GetType() == TsysType::GenericArg)
+									{
+										return true;
+									}
 								}
 							}
 						}
 					}
-				}
-				else
-				{
-					if (tsys->GetType() == TsysType::Any || tsys->GetType() == TsysType::GenericArg)
+					else
 					{
-						return true;
+						if (tsys->GetType() == TsysType::Any || tsys->GetType() == TsysType::GenericArg)
+						{
+							return true;
+						}
 					}
 				}
 			}

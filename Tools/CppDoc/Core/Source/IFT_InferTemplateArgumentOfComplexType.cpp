@@ -18,11 +18,11 @@ namespace infer_function_type
 			*lastAssignedVta = nullptr;
 		}
 
-		vint index = taContext.arguments.Keys().IndexOf(pattern);
-		if (index == -1)
+		ITsys* inferred = nullptr;
+		if (!taContext.TryGetValueByKey(pattern, inferred))
 		{
 			// if this argument is not inferred, use the result
-			taContext.arguments.Add(pattern, type);
+			taContext.SetValueByKey(pattern, type);
 		}
 		else
 		{
@@ -40,10 +40,9 @@ namespace infer_function_type
 
 			// if this argument is inferred, it requires the same result if both of them are not any_t
 			// unless this is the first assignment to the last variadic template argument, the previously inferred type could be extended
-			auto inferred = taContext.arguments.Values()[index];
 			if (inferred->GetType() == TsysType::Any)
 			{
-				taContext.arguments.Set(pattern, type);
+				taContext.ReplaceValueByKey(pattern, type);
 			}
 			else if (!IsPSEquivalentType(pa, type, inferred))
 			{
@@ -80,13 +79,13 @@ namespace infer_function_type
 											}
 
 											auto init = pa.tsys->InitOf(params);
-											taContext.arguments.Set(pattern, type);
+											taContext.ReplaceValueByKey(pattern, type);
 										}
 										return;
 									}
 								}
 							}
-							taContext.arguments.Set(pattern, type);
+							taContext.ReplaceValueByKey(pattern, type);
 							return;
 						}
 						throw TypeCheckerException();
@@ -173,12 +172,15 @@ namespace infer_function_type
 						TemplateArgumentContext localVariadicContext(&taContext, false);
 						// set lastAssignedVta = nullptr, since now the element of the type list is to be inferred, so that localVariadicContext doesn't allow conflict
 						InferTemplateArgument(pa, typeToInfer, exprToInfer, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters, nullptr, hardcodedPatterns);
-						for (vint k = 0; k < localVariadicContext.arguments.Count(); k++)
+						for (vint k = 0; k < localVariadicContext.GetArgumentCount(); k++)
 						{
-							auto key = localVariadicContext.arguments.Keys()[k];
-							auto value = localVariadicContext.arguments.Values()[k];
-							auto result = variadicResults[key];
-							result->Set(j, { nullptr,ExprTsysType::PRValue,value });
+							if (localVariadicContext.IsArgumentAvailable(k))
+							{
+								auto key = localVariadicContext.GetKey(k);
+								auto value = localVariadicContext.GetValue(k);
+								auto result = variadicResults[key];
+								result->Set(j, { nullptr,ExprTsysType::PRValue,value });
+							}
 						}
 					}
 

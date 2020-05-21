@@ -839,13 +839,14 @@ bool ParsingArguments::TryGetReplacedGenericArg(ITsys* arg, ITsys*& result)const
 	auto current = taContext;
 	while (current)
 	{
-		vint index = current->arguments.Keys().IndexOf(arg);
-		if (index != -1)
+		if (current->TryGetValueByKey(arg, result))
 		{
-			result = current->arguments.Values()[index];
 			return true;
 		}
-		current = current->parent;
+		else
+		{
+			current = current->parent;
+		}
 	}
 	return false;
 }

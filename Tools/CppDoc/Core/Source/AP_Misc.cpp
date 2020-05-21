@@ -87,13 +87,8 @@ namespace assign_parameters
 		bool conflicted = false;
 		CollectInvolvedVariadicArguments(invokerPa, involvedTypes, involvedExprs, [&invokerPa, &packSize, &conflicted, &knownArguments](Symbol*, ITsys* pattern)
 		{
-			vint index = knownArguments.arguments.Keys().IndexOf(pattern);
 			ITsys* pack = nullptr;
-			if (index != -1)
-			{
-				pack = knownArguments.arguments.Values()[index];
-			}
-			else
+			if (!knownArguments.TryGetValueByKey(pattern, pack))
 			{
 				invokerPa.TryGetReplacedGenericArg(pattern, pack);
 			}
