@@ -249,6 +249,7 @@
     <ClCompile Include="Source\Symbol_Visit.cpp" />
     <ClCompile Include="Source\TypeSystem.cpp" />
     <ClCompile Include="Source\TypeSystem_Helpers.cpp" />
+    <ClCompile Include="Source\TypeSystem_Replace.cpp" />
     <ClCompile Include="Source\TypeSystem_TypeConvert.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>

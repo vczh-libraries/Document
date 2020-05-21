@@ -501,7 +501,7 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 					;
 				for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
 				{
-					auto classType = cache->containerClassTypes[i]->ReplaceGenericArgs(pa);
+					auto classType = ReplaceGenericArgsInClass(pa, cache->containerClassTypes[i]);
 					ResolveSymbolInTypeInternal(pa, classType, childPolicy, rsa);
 					if (rsa.found) break;
 				}

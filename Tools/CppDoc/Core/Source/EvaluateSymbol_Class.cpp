@@ -47,7 +47,7 @@ namespace symbol_type_resolving
 					if (argumentsToApply)
 					{
 						auto pattern = EvaluateGenericArgumentKey(argumentSymbol);
-						params[i] = pattern->ReplaceGenericArgs(eval.declPa);
+						params[i] = ReplaceGenericArg(eval.declPa, pattern);
 						if (params[i] != pattern)
 						{
 							continue;

@@ -495,5 +495,7 @@ extern ITsys*					GetThisEntity(ITsys* thisType);
 extern ITsys*					ReplaceThisType(ITsys* thisType, ITsys* entity);
 extern TypeConv					TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType);
 extern TypeConv					TestTypeConversion(const ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem);
+extern ITsys*					ReplaceGenericArgsInClass(const ParsingArguments& pa, ITsys* decoratedClassType);
+extern ITsys*					ReplaceGenericArg(const ParsingArguments& pa, ITsys* genericArgType);
 
 #endif

@@ -244,7 +244,7 @@ namespace symbol_totsys_impl
 			{
 				if (pa.taContext)
 				{
-					thisType = thisType->ReplaceGenericArgs(pa);
+					thisType = ReplaceGenericArgsInClass(pa, thisType);
 				}
 			}
 			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());

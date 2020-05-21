@@ -307,7 +307,7 @@ void TypeToTsysInternal(const ParsingArguments& pa, Type* t, TypeTsysList& tsys,
 								if (auto classDecl = primarySymbol->GetAnyForwardDecl<ForwardClassDeclaration>())
 								{
 									auto& evTypes = EvaluateForwardClassSymbol(rootPa, classDecl.Obj(), parentDeclType, nullptr);
-									tsys[i] = evTypes.Get(0)->ReplaceGenericArgs(pa);
+									tsys[i] = ReplaceGenericArgsInClass(pa, evTypes.Get(0));
 								}
 							}
 						}
