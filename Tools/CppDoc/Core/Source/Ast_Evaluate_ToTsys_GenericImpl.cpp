@@ -31,8 +31,7 @@ namespace symbol_totsys_impl
 				throw TypeCheckerException();
 			}
 
-			TemplateArgumentContext taContext;
-			taContext.symbolToApply = genericFunction->GetGenericFunction().declSymbol;
+			TemplateArgumentContext taContext(genericFunction->GetGenericFunction().declSymbol, genericFunction->GetParamCount());
 			bool allowPartialApply = declSymbol->kind == symbol_component::SymbolKind::FunctionBodySymbol;
 			vint partialAppliedArguments = -1;
 			assign_parameters::ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1, allowPartialApply, partialAppliedArguments);

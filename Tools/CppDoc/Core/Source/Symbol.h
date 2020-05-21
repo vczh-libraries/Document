@@ -387,8 +387,7 @@ struct TemplateArgumentContext
 	Symbol*														symbolToApply = nullptr;
 
 	//	Keys:
-	//		Type												:	GenericArg(Decl(TemplateArgument))
-	//		Value												:	Decl(TemplateArgument)
+	//		Type, Value											:	GenericArg(TemplateArgument)
 	//	Values:
 	//		Single												:	Anything (nullptr for value argument)
 	//		MultipleValues										:	{Values ...}
@@ -397,6 +396,11 @@ struct TemplateArgumentContext
 
 	//	evaluation result if template arguments of this symbol are unassigned, but template arguments of parent scopes are assigned
 	Dictionary<Symbol*, Ptr<symbol_component::Evaluation>>		symbolEvaluations;
+
+	TemplateArgumentContext(Symbol* _symbolToApply, vint argumentCount)
+		:symbolToApply(_symbolToApply)
+	{
+	}
 };
 
 struct ParsingArguments

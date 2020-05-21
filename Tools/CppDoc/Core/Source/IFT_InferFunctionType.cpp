@@ -279,7 +279,7 @@ namespace infer_function_type
 			symbol_totsys_impl::ExpandPotentialVtaList(pa, unused, inputs, isVtas, false, -1,
 				[&](ExprTsysList&, Array<ExprTsysItem>& params, vint, Array<vint>&, SortedList<vint>&)
 				{
-					auto tac = MakePtr<TemplateArgumentContext>();
+					auto tac = MakePtr<TemplateArgumentContext>(taContext.symbolToApply, taContext.arguments.Count());
 					tac->parent = taContext.parent;
 					CopyFrom(tac->arguments, taContext.arguments);
 
@@ -309,7 +309,7 @@ namespace infer_function_type
 						throw IllegalExprException();
 					}
 
-					TemplateArgumentContext unusedVariadicContext;
+					TemplateArgumentContext unusedVariadicContext(nullptr, 0);
 					try
 					{
 						InferTemplateArgumentsForFunctionType(pa, functionType, assignment, *tac.Obj(), unusedVariadicContext, freeTypeSymbols, false, lastAssignedVta, hardcodedPatterns);
@@ -319,28 +319,17 @@ namespace infer_function_type
 					{
 						// ignore this candidate if failed to match
 					}
-					if (unusedVariadicContext.arguments.Count() > 0)
-					{
-						// someone miss "..." in a function argument
-						throw TypeCheckerException();
-					}
 				});
 		}
 		else
 		{
-			auto tac = MakePtr<TemplateArgumentContext>();
+			auto tac = MakePtr<TemplateArgumentContext>(taContext.symbolToApply, taContext.arguments.Count());
 			tac->parent = taContext.parent;
 			CopyFrom(tac->arguments, taContext.arguments);
 
-			TemplateArgumentContext unusedVariadicContext;
+			TemplateArgumentContext unusedVariadicContext(nullptr, 0);
 			InferTemplateArgumentsForFunctionType(pa, functionType, parameterAssignment, *tac.Obj(), unusedVariadicContext, freeTypeSymbols, false, lastAssignedVta, hardcodedPatterns);
 			inferredArgumentTypes.Add(tac);
-
-			if (unusedVariadicContext.arguments.Count() > 0)
-			{
-				// someone miss "..." in a function argument
-				throw TypeCheckerException();
-			}
 		}
 	}
 
@@ -382,7 +371,7 @@ namespace infer_function_type
 							auto gfi = functionItem.tsys->GetGenericFunction();
 
 							TypeTsysList						parameterAssignment;
-							TemplateArgumentContext				taContext;
+							TemplateArgumentContext				taContext(gfi.declSymbol, functionItem.tsys->GetParamCount());
 							SortedList<Symbol*>					freeTypeSymbols;
 							ITsys*								lastAssignedVta = nullptr;
 							SortedList<ITsys*>					hardcodedPatterns;

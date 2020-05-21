@@ -273,8 +273,7 @@ ITsys* StepIntoTemplateClass(
 	if (MatchPrimaryTemplate(pa, thisSpec, primaryClassSpec, qic.genericType))
 	{
 		// prepare TemplateArgumentContext and create the type
-		TemplateArgumentContext taContext;
-		taContext.symbolToApply = primaryClassDecl->symbol;
+		TemplateArgumentContext taContext(primaryClassDecl->symbol, primaryClassDecl->templateSpec->arguments.Count());
 		PrepareTemplateArgumentContext(pa, thisSpec, primaryClassSpec, taContext);
 
 		// evaluate the type
@@ -304,8 +303,7 @@ ITsys* StepIntoTemplateClass(
 					if (MatchPSTemplate(pa, thisSpec, psClassSpec, qic.genericType, psSpec))
 					{
 						// prepare TemplateArgumentContext and create the type
-						TemplateArgumentContext taContext;
-						taContext.symbolToApply = psSymbol;
+						TemplateArgumentContext taContext(psSymbol, psClassSpec->arguments.Count());
 						PrepareTemplateArgumentContext(pa, thisSpec, psClassSpec, taContext);
 
 						// evaluate the type

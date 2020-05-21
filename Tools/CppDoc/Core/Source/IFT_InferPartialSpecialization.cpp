@@ -142,7 +142,7 @@ namespace infer_function_type
 			auto inferPa = pa.AdjustForDecl(declSymbol);
 			inferPa.parentDeclType = ParsingArguments::AdjustDeclInstantForScope(declSymbol, parentDeclType, true);
 
-			auto taContext = MakePtr<TemplateArgumentContext>();
+			auto taContext = MakePtr<TemplateArgumentContext>(declSymbol, templateSpec->arguments.Count());
 			taContext->parent = inferPa.taContext;
 
 			// assign parameters
@@ -156,7 +156,7 @@ namespace infer_function_type
 					auto pattern = symbol_type_resolving::GetTemplateArgumentKey(argument, pa.tsys.Obj());
 					taContext->arguments.Add(pattern, pa.tsys->Any());;
 				}
-				TemplateArgumentContext unusedVariadicContext;
+				TemplateArgumentContext unusedVariadicContext(nullptr, 0);
 				SortedList<ITsys*> unusedHardcodedPatterns;
 				InferTemplateArgumentsForSpecializationSpec(inferPa, specializationSpec.Obj(), parameterAssignment, *taContext.Obj(), unusedVariadicContext, freeTypeSymbols, &lastAssignedVta, unusedHardcodedPatterns);
 			}

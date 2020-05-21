@@ -868,6 +868,11 @@ public:
 
 			if (params)
 			{
+				if (params->Count() != spec->arguments.Count())
+				{
+					throw L"The number of template argument should match the definition.";
+				}
+
 				auto& declInstant = const_cast<TsysDeclInstant&>(itsys->GetDeclInstant());
 				if (!declInstant.taContext)
 				{
@@ -877,24 +882,15 @@ public:
 						parentTaContext = parentDeclType->GetDeclInstant().taContext;
 					}
 
-					auto taContext = MakePtr<TemplateArgumentContext>();
+					auto taContext = MakePtr<TemplateArgumentContext>(decl, spec->arguments.Count());
 					taContext->parent = parentTaContext.Obj();
 					taContext->symbolToApply = decl;
-					
 					FOREACH_INDEXER(ITsys*, param, index, *params)
 					{
-						if (index >= spec->arguments.Count())
-						{
-							throw L"The number of template argument should match the definition.";
-						}
 						taContext->arguments.Add(
 							symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[index], this),
 							param
 							);
-					}
-					if (taContext->arguments.Count() != spec->arguments.Count())
-					{
-						throw L"The number of template argument should match the definition.";
 					}
 					declInstant.taContext = taContext;
 				}
