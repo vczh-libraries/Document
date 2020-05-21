@@ -421,9 +421,6 @@ public:
 
 	virtual ITsys*						GetEntity(TsysCV& cv, TsysRefType& refType) = 0;
 	virtual bool						IsUnknownType() = 0;
-	virtual bool						HasGenericArg(const ParsingArguments& pa) = 0;
-	virtual bool						HasUnknownType() = 0;
-	virtual ITsys*						ReplaceGenericArgs(const ParsingArguments& pa) = 0;
 };
 
 /***********************************************************************

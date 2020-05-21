@@ -263,11 +263,13 @@ using Context = T;
 					L"****" L"****" L"****" L"****" L"    " L"    " L"    " L"    " L"       *        *",
 		};
 
+		Ptr<Type> parsedTypes[TypeCount];
 		ITsys* genericTypes[TypeCount];
 		ITsys* intTypes[TypeCount];
 		ITsys* structTypes[TypeCount];
 
 		auto contextSymbol = pa.scopeSymbol->TryGetChildren_NFb(L"Context")->Get(0).Obj();
+		auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(contextSymbol);
 		auto spa = pa.WithScope(contextSymbol);
 
 		TEST_CASE(L"Parsing types")
@@ -276,29 +278,59 @@ using Context = T;
 			{
 				TOKEN_READER(typeCodes[i]);
 				auto cursor = reader.GetFirstToken();
-				auto type = ParseType(spa, cursor);
+				parsedTypes[i] = ParseType(spa, cursor);
 				TEST_ASSERT(!cursor);
 
 				TypeTsysList tsys;
-				TypeToTsysNoVta(spa, type, tsys);
+				TypeToTsysNoVta(spa, parsedTypes[i], tsys);
 				TEST_ASSERT(tsys.Count() == 1);
 				genericTypes[i] = tsys[0];
 			}
 
 			for (vint i = 0; i < TypeCount; i++)
 			{
+				TemplateArgumentContext taContext(contextSymbol, 2);
+				taContext.SetValueByKey(
+					symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[0]),
+					pa.tsys->Int()
+				);
+				taContext.SetValueByKey(
+					symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[1]),
+					nullptr
+				);
+
 				TypeTsysList tsys;
-				TemplateArgumentContext taContext(contextSymbol, 1);
-				taContext.SetValueByKey(genericTypes[0], pa.tsys->Int());
-				intTypes[i] = genericTypes[i]->ReplaceGenericArgs(pa.AppendSingleLevelArgs(taContext));
+				TypeToTsysNoVta(
+					pa.AdjustForDecl(contextSymbol).AppendSingleLevelArgs(taContext),
+					parsedTypes[i],
+					tsys
+				);
+
+				TEST_ASSERT(tsys.Count() == 1);
+				intTypes[i] = tsys[0];
 			}
 
 			for (vint i = 0; i < TypeCount; i++)
 			{
+				TemplateArgumentContext taContext(contextSymbol, 2);
+				taContext.SetValueByKey(
+					symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[0]),
+					pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"S")->Get(0).Obj())
+				);
+				taContext.SetValueByKey(
+					symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[1]),
+					nullptr
+				);
+
 				TypeTsysList tsys;
-				TemplateArgumentContext taContext(contextSymbol, 1);
-				taContext.SetValueByKey(genericTypes[0], pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"S")->Get(0).Obj()));
-				structTypes[i] = genericTypes[i]->ReplaceGenericArgs(pa.AppendSingleLevelArgs(taContext));
+				TypeToTsysNoVta(
+					pa.AdjustForDecl(contextSymbol).AppendSingleLevelArgs(taContext),
+					parsedTypes[i],
+					tsys
+				);
+
+				TEST_ASSERT(tsys.Count() == 1);
+				structTypes[i] = tsys[0];
 			}
 		});
 
