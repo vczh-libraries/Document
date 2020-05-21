@@ -24,6 +24,10 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (STL)
+  - [ ] `TemplateArgumentContext` refactoring
+    - [ ] Hide `symbolToApply` and `arguments`, provide `GetSymbolToApply`, `GetArgumentCount`, `GetKey`, `GetValue`, `GetValueByKey`, `SetValueByKey`, and copy function(always resize, optionally copy arguments).
+    - [ ] Assign `symbolToApply` to all generic argument symbol, check `symbolToApply` in `SetValueByKey`.
+    - [ ] Change `arguments` from `Dictionary` to `Array`.
   - [ ] Test cases
     - [ ] type alias recursion
     - [ ] value alias recursion
