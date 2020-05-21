@@ -90,8 +90,11 @@ namespace symbol_totsys_impl
 				break;
 			case symbol_component::SymbolKind::GenericTypeArgument:
 				{
-					auto tsys = genericFunction->GetElement()->ReplaceGenericArgs(pa.AppendSingleLevelArgs(*argumentsToApply));
-					UseTsys(result, nullptr, tsys);
+					if (genericFunction->GetElement()->GetType() != TsysType::Any)
+					{
+						throw L"Type of template template argument must be a generic function to any_t!";
+					}
+					UseTsys(result, nullptr, pa.tsys->Any());
 				}
 				break;
 			default:
