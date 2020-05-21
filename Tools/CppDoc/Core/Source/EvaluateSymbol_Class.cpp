@@ -43,7 +43,29 @@ namespace symbol_type_resolving
 				Array<ITsys*> params(classDecl->templateSpec->arguments.Count());
 				for (vint i = 0; i < classDecl->templateSpec->arguments.Count(); i++)
 				{
-					params[i] = GetTemplateArgumentKey(classDecl->templateSpec->arguments[i], eval.declPa.tsys.Obj());
+					auto argumentSymbol = classDecl->templateSpec->arguments[i].argumentSymbol;
+					if (argumentsToApply)
+					{
+						auto pattern = EvaluateGenericArgumentKey(argumentSymbol);
+						params[i] = pattern->ReplaceGenericArgs(eval.declPa);
+						if (params[i] != pattern)
+						{
+							continue;
+						}
+					}
+
+					if(argumentSymbol->ellipsis)
+					{
+						params[i] = eval.declPa.tsys->Any();
+					}
+					else if(argumentSymbol->kind==symbol_component::SymbolKind::GenericTypeArgument)
+					{
+						params[i] = EvaluateGenericArgumentType(argumentSymbol);
+					}
+					else
+					{
+						params[i] = nullptr;
+					}
 				}
 				auto diTsys = eval.declPa.tsys->DeclInstantOf(eval.symbol, &params, eval.declPa.parentDeclType);
 				eval.evaluatedTypes.Add(diTsys);
@@ -58,11 +80,6 @@ namespace symbol_type_resolving
 				{
 					eval.evaluatedTypes.Add(eval.declPa.tsys->DeclOf(eval.symbol));
 				}
-			}
-
-			if (argumentsToApply)
-			{
-				eval.evaluatedTypes[0] = eval.evaluatedTypes[0]->ReplaceGenericArgs(eval.declPa);
 			}
 			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, classDecl, classDecl->templateSpec, argumentsToApply);
 		}

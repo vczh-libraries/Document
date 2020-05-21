@@ -221,7 +221,7 @@ void PrepareTemplateArgumentContext(
 			}
 			else
 			{
-				auto tValue = symbol_type_resolving::GetTemplateArgumentKey(tArg.argumentSymbol, pa.tsys.Obj());
+				auto tValue = symbol_type_resolving::EvaluateGenericArgumentType(tArg.argumentSymbol);
 				taContext.SetValueByKey(cKey, tValue);
 			}
 			break;
