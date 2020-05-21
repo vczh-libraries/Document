@@ -184,6 +184,24 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			output.Add(decl);
 			return;
 		}
+		else
+		{
+			auto oldCursor = cursor;
+			try
+			{
+				auto decl = MakePtr<FriendClassDeclaration>();
+				EnsureNoTemplateSpec(specs, cursor);
+
+				decl->usedClass = ParseType(pa, cursor);
+				RequireToken(cursor, CppTokens::SEMICOLON);
+				output.Add(decl);
+				return;
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+			}
+		}
 	}
 	bool cStyleTypeReference = IsCStyleTypeReference(cursor);
 

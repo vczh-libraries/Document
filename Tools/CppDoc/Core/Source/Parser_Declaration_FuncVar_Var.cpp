@@ -26,7 +26,27 @@ void ParseDeclaration_Variable(
 	bool needResolveTypeFromInitializer = IsPendingType(declarator->type);
 	if (needResolveTypeFromInitializer && (!declarator->initializer || declarator->initializer->initializerType != CppInitializerType::Equal))
 	{
-		throw StopParsingException(cursor);
+		if (!declarator->initializer)
+		{
+			throw StopParsingException(cursor);
+		}
+		else
+		{
+			switch (declarator->initializer->initializerType)
+			{
+			case CppInitializerType::Constructor:
+			case CppInitializerType::Universal:
+				if (declarator->initializer->arguments.Count() != 1)
+				{
+					throw StopParsingException(cursor);
+				}
+				else
+				{
+					declarator->initializer->initializerType = CppInitializerType::Equal;
+				}
+				break;
+			}
+		}
 	}
 
 	bool isForwardDecl = false;

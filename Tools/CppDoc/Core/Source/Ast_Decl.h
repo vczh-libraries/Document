@@ -196,7 +196,7 @@ public:
 	IDeclarationVisitor_ACCEPT;
 
 	Ptr<TemplateSpec>								templateSpec;
-	CppClassType									classType;
+	Nullable<CppClassType>							classType;
 	Ptr<Type>										usedClass;
 };
 

@@ -207,17 +207,24 @@ public:
 	void Visit(FriendClassDeclaration* self) override
 	{
 		WriteTemplateSpecIfExists(self->templateSpec);
-		switch (self->classType)
+		if (self->classType)
 		{
-		case CppClassType::Class:
-			writer.WriteString(L"friend class ");
-			break;
-		case CppClassType::Struct:
-			writer.WriteString(L"friend struct ");
-			break;
-		case CppClassType::Union:
-			writer.WriteString(L"friend union ");
-			break;
+			switch (self->classType.Value())
+			{
+			case CppClassType::Class:
+				writer.WriteString(L"friend class ");
+				break;
+			case CppClassType::Struct:
+				writer.WriteString(L"friend struct ");
+				break;
+			case CppClassType::Union:
+				writer.WriteString(L"friend union ");
+				break;
+			}
+		}
+		else
+		{
+			writer.WriteString(L"friend ");
 		}
 		Log(self->usedClass, writer);
 		if (semicolon) writer.WriteLine(L";");
@@ -225,6 +232,10 @@ public:
 
 	void Visit(VariableDeclaration* self)override
 	{
+		for (vint i = 0; i < self->classSpecs.Count(); i++)
+		{
+			WriteTemplateSpecIfExists(self->classSpecs[i]);
+		}
 		WriteHeader(self);
 		if (self->initializer)
 		{
@@ -235,6 +246,10 @@ public:
 
 	void Visit(FunctionDeclaration* self)override
 	{
+		for (vint i = 0; i < self->classSpecs.Count(); i++)
+		{
+			WriteTemplateSpecIfExists(self->classSpecs[i]);
+		}
 		WriteTemplateSpecIfExists(self->templateSpec);
 		WriteHeader(self);
 		writer.WriteLine(L"");
