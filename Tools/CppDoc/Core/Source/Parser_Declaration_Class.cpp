@@ -73,6 +73,11 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 			throw StopParsingException(cursor);
 		}
 
+		if (decl->templateSpec)
+		{
+			decl->templateSpec->AssignDeclSymbol(createdSymbol);
+		}
+
 		if (decl->specializationSpec)
 		{
 			AssignPSPrimary(pa, cursor, createdSymbol);
@@ -107,6 +112,11 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 			ev.Get().Clear();
 			ev.progress = symbol_component::EvaluationProgress::NotEvaluated;
 			// there will be no base class record for ForwardClassDeclaration
+		}
+
+		if (decl->templateSpec)
+		{
+			decl->templateSpec->AssignDeclSymbol(classContextSymbol);
 		}
 
 		if (decl->specializationSpec)

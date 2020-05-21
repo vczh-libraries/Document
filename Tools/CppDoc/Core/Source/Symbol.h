@@ -235,7 +235,8 @@ private:
 
 public:
 	symbol_component::SymbolKind					kind = symbol_component::SymbolKind::Root;
-	bool											ellipsis = false;		// for variant template argument and function argument
+	bool											ellipsis = false;							// for variant template argument and function argument
+	Symbol*											declSymbolForGenericArg = nullptr;			// for template argument
 	WString											name;
 	WString											uniqueId;
 	List<Symbol*>									usingNss;

@@ -55,7 +55,8 @@ void ParseDeclaration_Variable(
 		FILL_VARIABLE;
 		output.Add(decl);
 
-		if (!context->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Variable))
+		auto createdSymbol = context->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Variable);
+		if (!createdSymbol)
 		{
 			throw StopParsingException(cursor);
 		}
@@ -69,9 +70,15 @@ void ParseDeclaration_Variable(
 		decl->initializer = declarator->initializer;
 		output.Add(decl);
 
-		if (!context->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Variable, nullptr, declarator->classMemberCache))
+		auto createdSymbol = context->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Variable, nullptr, declarator->classMemberCache);
+		if (!createdSymbol)
 		{
 			throw StopParsingException(cursor);
+		}
+
+		for (vint i = 0; i < decl->classSpecs.Count(); i++)
+		{
+			decl->classSpecs[i]->AssignDeclSymbol(createdSymbol);
 		}
 	}
 #undef FILL_VARIABLE

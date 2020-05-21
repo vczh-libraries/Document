@@ -213,6 +213,15 @@ void ParseDeclaration_Function(
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, declarator->classMemberCache, decl, cursor);
 		auto functionBodySymbol = functionSymbol->CreateFunctionImplSymbol_F(decl, specSymbol, declarator->classMemberCache);
 
+		if (decl->templateSpec)
+		{
+			decl->templateSpec->AssignDeclSymbol(functionBodySymbol);
+		}
+		for (vint i = 0; i < decl->classSpecs.Count(); i++)
+		{
+			decl->classSpecs[i]->AssignDeclSymbol(functionBodySymbol);
+		}
+
 		// find the primary symbol for partial specialization
 		if (decl->specializationSpec)
 		{
@@ -238,6 +247,11 @@ void ParseDeclaration_Function(
 			throw StopParsingException(cursor);
 		}
 
+		if (classSpecs.Count() > 0)
+		{
+			throw StopParsingException(cursor);
+		}
+
 		auto decl = MakePtr<ForwardFunctionDeclaration>();
 		decl->templateSpec = functionSpec;
 		decl->specializationSpec = declarator->specializationSpec;
@@ -247,7 +261,12 @@ void ParseDeclaration_Function(
 
 		// match declaration and implementation
 		auto functionSymbol = SearchForFunctionWithSameSignature(context, declarator->classMemberCache, decl, cursor);
-		functionSymbol->CreateFunctionForwardSymbol_F(decl, specSymbol);
+		auto functionBodySymbol = functionSymbol->CreateFunctionForwardSymbol_F(decl, specSymbol);
+
+		if (decl->templateSpec)
+		{
+			decl->templateSpec->AssignDeclSymbol(functionBodySymbol);
+		}
 
 		// find the primary symbol for partial specialization
 		if (decl->specializationSpec)

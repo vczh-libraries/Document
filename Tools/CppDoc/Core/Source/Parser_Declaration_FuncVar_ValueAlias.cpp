@@ -48,6 +48,11 @@ void ParseDeclaration_ValueAlias(
 		throw StopParsingException(cursor);
 	}
 
+	if (decl->templateSpec)
+	{
+		decl->templateSpec->AssignDeclSymbol(createdSymbol);
+	}
+
 	if (decl->specializationSpec)
 	{
 		AssignPSPrimary(pa, cursor, createdSymbol);

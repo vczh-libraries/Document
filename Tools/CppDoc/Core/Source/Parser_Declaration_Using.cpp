@@ -64,12 +64,19 @@ void ParseDeclaration_Using(const ParsingArguments& pa, Ptr<Symbol> specSymbol, 
 			decl->templateSpec = spec;
 			decl->name = cppName;
 			decl->type = ParseType(newPa, cursor);
+			output.Add(decl);
+
 			RequireToken(cursor, CppTokens::SEMICOLON);
 
-			output.Add(decl);
-			if (!pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias, specSymbol))
+			auto createdSymbol = pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias, specSymbol);
+			if (!createdSymbol)
 			{
 				throw StopParsingException(cursor);
+			}
+
+			if (decl->templateSpec)
+			{
+				decl->templateSpec->AssignDeclSymbol(createdSymbol);
 			}
 
 			return;

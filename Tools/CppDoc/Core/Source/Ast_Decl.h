@@ -71,6 +71,14 @@ public:
 	};
 
 	List<Argument>									arguments;
+
+	void AssignDeclSymbol(Symbol* declSymbol)
+	{
+		for (vint i = 0; i < arguments.Count(); i++)
+		{
+			arguments[i].argumentSymbol->declSymbolForGenericArg = declSymbol;
+		}
+	}
 };
 
 class SpecializationSpec : public Object

@@ -48,6 +48,10 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;
 			argument.argumentSymbol = argumentSymbol.Obj();
+			if (argument.templateSpec)
+			{
+				argument.templateSpec->AssignDeclSymbol(argumentSymbol.Obj());
+			}
 
 			// create key
 			ITsys* argumentKey = nullptr;
