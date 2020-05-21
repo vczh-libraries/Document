@@ -833,7 +833,8 @@ bool TemplateArgumentContext::TryGetValueByKey(ITsys* key, ITsys*& value)const
 	{
 		return false;
 	}
-	return assignedArguments[ga.argIndex];
+	value = assignedArguments[ga.argIndex];
+	return true;
 }
 
 void TemplateArgumentContext::SetValueByKey(ITsys* key, ITsys* value)
