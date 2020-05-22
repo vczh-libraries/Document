@@ -527,17 +527,17 @@ namespace ns
 	template<int _1, typename X>								template<typename Y, int _2>								template<typename Z, typename... Zs>	A::B<_1, X>::C::D<Y, _2>::D(Z, Zs...){}
 	template<int _1, typename X>								template<typename Y, int _2>								template<typename Z, typename... Zs>	A::B<_1, X>::C::D<Y, _2>::D(X, Y, Z, Zs...){}
 
-	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>												A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::D(Zs...){}
-	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>												A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::~D){}
+	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>												A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::D(){}
+	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>												A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::~D(){}
 	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z, typename... Zs>	A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::D(Z, Zs...){}
 	template<int _1, typename X>								template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z, typename... Zs>	A::B<_1, X>::C::D<Y1(*)(Y2, Y3), _2>::D(X, Y1, Y2, Y3, Z, Zs...){}
 
-	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>																		A::B<_1, X1(*)(X2, X3)>::C::D<Y, _2>::D(Zs...){}
+	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>																		A::B<_1, X1(*)(X2, X3)>::C::D<Y, _2>::D(){}
 	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>																		A::B<_1, X1(*)(X2, X3)>::C::D<Y, _2>::~D(){}
 	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<typename Z, typename... Zs>	A::B<_1, X1(*)(X2, X3)>::C::D<Y, _2>::D(Z, Zs...){}
 	template<typename X1, typename X2, typename X3, int _1>		template<typename Y, int _2>								template<typename Z, typename... Zs>	A::B<_1, X1(*)(X2, X3)>::C::D<Y, _2>::D(X1, X2, X3, Y, Z, Zs...){}
 
-	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>												A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::D(Zs...){}
+	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>												A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::D(){}
 	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>												A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::~D(){}
 	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z, typename... Zs>	A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::D(Z, Zs...){}
 	template<typename X1, typename X2, typename X3, int _1>		template<int _2, typename Y1, typename Y2, typename Y3>		template<typename Z, typename... Zs>	A::B<_1, X1(*)(X2, X3)>::C::D<Y1(*)(Y2, Y3), _2>::D(X1, X2, X3, Y1, Y2, Y3, Z, Zs...){}
@@ -599,7 +599,6 @@ namespace ns
 			{
 				TEST_CATEGORY(L"Category " + itow(c))
 				{
-					Symbol* primary = nullptr;
 					for (vint m = 0; m < 4; m++)
 					{
 						TEST_CATEGORY(L"Member " + itow(m))
@@ -616,20 +615,6 @@ namespace ns
 
 							TEST_CASE_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
 							TEST_CASE_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
-
-							if (m == 0)
-							{
-								primary = symbol;
-								TEST_CASE_ASSERT(primary->IsPSPrimary_NF() == true);
-								TEST_CASE_ASSERT(primary->GetPSPrimaryVersion_NF() == 3);
-								TEST_CASE_ASSERT(primary->GetPSPrimaryDescendants_NF().Count() == 3);
-							}
-							else
-							{
-								TEST_CASE_ASSERT(symbol->GetPSPrimary_NF() == primary);
-								TEST_CASE_ASSERT(symbol->GetPSParents_NF().Count() == 1);
-								TEST_CASE_ASSERT(symbol->GetPSParents_NF()[0] == primary);
-							}
 						});
 					}
 				});
