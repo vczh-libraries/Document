@@ -168,6 +168,11 @@ bool ParseDeclaratorName(const ParsingArguments& pa, CppName& cppName, Ptr<Type>
 					}
 				}
 
+				if (auto genericType = classType.Cast<GenericType>())
+				{
+					classType = genericType->type;
+				}
+
 				if (auto idType = classType.Cast<IdType>())
 				{
 					containingClassName = idType->name.name;
