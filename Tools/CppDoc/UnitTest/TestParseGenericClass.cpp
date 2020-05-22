@@ -395,4 +395,32 @@ struct X : Y<V>
 
 		AssertExpr(pa,		L"X<int>().y",			L"X<int>().y",				L"__int32 * $PR"	);
 	});
+
+	TEST_CATEGORY(L"Evaluate base template class member type")
+	{
+		auto input = LR"(
+template<typename T>
+struct X
+{
+	using Ptr = T*;
+};
+
+template<typename T>
+struct Y
+{
+	using PtrPtr = X<T*>;
+};
+
+template<typename T>
+struct Z : Y<T*>
+{
+	using typename Y<T*>::PtrPtr;
+
+	using PtrPtrPtr = typename PtrPtr::Ptr;
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertType(pa, L"Z<int>::PtrPtrPtr",		L"Z<int> :: PtrPtrPtr",		L"__int32 * * *");
+	});
 }
