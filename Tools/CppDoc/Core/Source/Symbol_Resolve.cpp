@@ -133,14 +133,21 @@ void AddSymbolToResolve(Ptr<Resolving>& resolving, ITsys* thisItem, Symbol* chil
 
 void AddSymbolToResolve(Ptr<Resolving>& resolving, ITsys* thisItem, const symbol_component::ChildSymbol& childSymbol)
 {
-	if (!resolving)
+	if (childSymbol.parentDeclType)
 	{
-		resolving = new Resolving;
-	}
+		if (!resolving)
+		{
+			resolving = new Resolving;
+		}
 
-	if (!resolving->items.Contains(item))
+		if (!resolving->items.Contains(item))
+		{
+			resolving->items.Add(item);
+		}
+	}
+	else
 	{
-		resolving->items.Add(item);
+		AddSymbolToResolve(resolving, thisItem, childSymbol.childSymbol.Obj());
 	}
 }
 

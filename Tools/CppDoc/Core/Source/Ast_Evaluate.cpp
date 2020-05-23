@@ -461,7 +461,7 @@ public:
 					if (pVars->Count() != 1) goto SKIP_RESOLVING_FIELD;
 
 					auto& varSymbol = pVars->Get(0);
-					if (varSymbol.parentDeclType)
+					if (varSymbol.parentType)
 					{
 						goto SKIP_RESOLVING_FIELD;
 					}

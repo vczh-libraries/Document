@@ -25,9 +25,6 @@
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (STL)
   - [ ] Test cases
-    - [ ] Make `Evaluate base template class member type` crash.
-      - `using A::B` cause symbol `B` to be inserted to the context class, causing `ResolveSymbolInClassInternal` not being able to pass the correct `thisItem` to `PickResolvedSymbols` (even not possible to calculate).
-      - Need to keep `A` in `using A::B` somewhere.
     - [ ] type alias recursion
     - [ ] value alias recursion
 - [ ] Next Demo! (Calculator)

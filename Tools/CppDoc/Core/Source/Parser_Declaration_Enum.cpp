@@ -80,14 +80,21 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 
 			if (!enumClass)
 			{
-				auto tsysEnum = pa.tsys->DeclOf(contextSymbol);
+				auto typeEnum = MakePtr<IdType>();
+				{
+					typeEnum->cStyleTypeReference = true;
+					typeEnum->name = decl->name;
+					typeEnum->resolving = MakePtr<Resolving>();
+					typeEnum->resolving->items.Add({ nullptr,contextSymbol });
+				}
+
 				if (pa.scopeSymbol->TryGetChildren_NFb(enumItem->name.name))
 				{
 					throw StopParsingException(cursor);
 				}
 				pa.scopeSymbol->AddChild_NFb(
 					enumItem->name.name,
-					tsysEnum,
+					typeEnum,
 					contextSymbol->TryGetChildren_NFb(enumItem->name.name)->Get(0).childSymbol
 				);
 			}

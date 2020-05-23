@@ -229,7 +229,7 @@ namespace partial_specification_ordering
 			for (vint i = 0; i < candidates->Count(); i++)
 			{
 				auto& candidate = candidates->Get(i);
-				if (!candidate.parentDeclType)
+				if (!candidate.parentType)
 				{
 					if (CheckPSPrimary<TDecl>(pa, decl, symbol, candidate.childSymbol.Obj()))
 					{

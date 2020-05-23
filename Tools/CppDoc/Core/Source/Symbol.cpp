@@ -110,7 +110,7 @@ SC_Data
 Symbol
 ***********************************************************************/
 
-void CopySymbolChildren(Symbol* symbol, List<Ptr<Symbol>>& existingChildren)
+void CopySymbolChildren(Symbol* symbol, List<symbol_component::ChildSymbol>& existingChildren)
 {
 	const auto& children = symbol->GetChildren_NFb();
 	for (vint i = 0; i < children.Count(); i++)
@@ -119,12 +119,12 @@ void CopySymbolChildren(Symbol* symbol, List<Ptr<Symbol>>& existingChildren)
 	}
 }
 
-void AddSymbolChildren(Symbol* symbol, List<Ptr<Symbol>>& existingChildren)
+void AddSymbolChildren(Symbol* symbol, List<symbol_component::ChildSymbol>& existingChildren)
 {
 	for (vint i = 0; i < existingChildren.Count(); i++)
 	{
 		auto child = existingChildren[i];
-		symbol->AddChildAndSetParent_NFb(child->name, nullptr, child);
+		symbol->AddChildAndSetParent_NFb(child.childSymbol->name, nullptr, child.childSymbol);
 	}
 }
 
@@ -133,12 +133,11 @@ void Symbol::ReuseTemplateSpecSymbol(Ptr<Symbol> templateSpecSymbol, symbol_comp
 	// change templateSpecSymbol to _category only if it is not
 	if (_category != symbol_component::SymbolCategory::Normal)
 	{
-		List<Ptr<Symbol>> existingChildren;
+		List<symbol_component::ChildSymbol> existingChildren;
 		CopySymbolChildren(templateSpecSymbol.Obj(), existingChildren);
 		
 		// reset category and clear everything
 		templateSpecSymbol->SetCategory(_category);
-
 		AddSymbolChildren(templateSpecSymbol.Obj(), existingChildren);
 	}
 }
@@ -281,7 +280,7 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 				return nullptr;
 			}
 
-			List<Ptr<Symbol>> existingChildren;
+			List<symbol_component::ChildSymbol> existingChildren;
 			CopySymbolChildren(templateSpecSymbol.Obj(), existingChildren);
 			AddSymbolChildren(targetSymbol, existingChildren);
 			_decl->symbol = targetSymbol;
@@ -636,10 +635,10 @@ const List<symbol_component::ChildSymbol>* Symbol::TryGetChildren_NFb(const WStr
 	return &children.GetByIndex(index);
 }
 
-void Symbol::AddChild_NFb(const WString& name, ITsys* parentDeclType, const Ptr<Symbol>& child)
+void Symbol::AddChild_NFb(const WString& name, Ptr<Type> parentType, const Ptr<Symbol>& child)
 {
 	auto& children = const_cast<symbol_component::SymbolGroup&>(GetChildren_NFb());
-	symbol_component::ChildSymbol childSymbol(parentDeclType, child);
+	symbol_component::ChildSymbol childSymbol(parentType, child);
 
 	if (auto pSymbols = TryGetChildren_NFb(name))
 	{
@@ -652,9 +651,9 @@ void Symbol::AddChild_NFb(const WString& name, ITsys* parentDeclType, const Ptr<
 	children.Add(name, childSymbol);
 }
 
-void Symbol::AddChildAndSetParent_NFb(const WString& name, ITsys* parentDeclType, const Ptr<Symbol>& child)
+void Symbol::AddChildAndSetParent_NFb(const WString& name, Ptr<Type> parentType, const Ptr<Symbol>& child)
 {
-	AddChild_NFb(name, parentDeclType, child);
+	AddChild_NFb(name, parentType, child);
 	child->SetParent(this);
 }
 

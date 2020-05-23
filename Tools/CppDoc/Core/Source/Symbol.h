@@ -10,6 +10,7 @@ class Declaration;
 class ForwardFunctionDeclaration;
 class FunctionDeclaration;
 class Stat;
+class Type;
 class Program;
 
 // the form or location of the expression is incorrect
@@ -144,21 +145,21 @@ namespace symbol_component
 	struct ChildSymbol
 	{
 		// for symbol that is not imported from other types
-		ITsys*										parentDeclType = nullptr;
+		Ptr<Type>									parentType = nullptr;
 		Ptr<Symbol>									childSymbol = nullptr;
 
 		ChildSymbol() = default;
 
-		ChildSymbol(ITsys* _parentDeclType, Ptr<Symbol> _childSymbol)
-			:parentDeclType(_parentDeclType)
+		ChildSymbol(Ptr<Type> _parentType, Ptr<Symbol> _childSymbol)
+			:parentType(_parentType)
 			, childSymbol(_childSymbol)
 		{
 		}
 
 		static vint Compare(const ChildSymbol& a, const ChildSymbol& b)
 		{
-			if (a.parentDeclType < b.parentDeclType) return -1;
-			if (a.parentDeclType > b.parentDeclType) return 1;
+			if (a.parentType < b.parentType) return -1;
+			if (a.parentType > b.parentType) return 1;
 			if (a.childSymbol < b.childSymbol) return -1;
 			if (a.childSymbol > b.childSymbol) return 1;
 			return 0;
@@ -289,8 +290,8 @@ public:
 
 	void											SetClassMemberCacheForTemplateSpecScope_N(Ptr<symbol_component::ClassMemberCache> classMemberCache);
 	const List<symbol_component::ChildSymbol>*		TryGetChildren_NFb(const WString& name);
-	void											AddChild_NFb(const WString& name, ITsys* parentDeclType, const Ptr<Symbol>& child);
-	void											AddChildAndSetParent_NFb(const WString& name, ITsys* parentDeclType, const Ptr<Symbol>& child);
+	void											AddChild_NFb(const WString& name, Ptr<Type> parentType, const Ptr<Symbol>& child);
+	void											AddChildAndSetParent_NFb(const WString& name, Ptr<Type> parentType, const Ptr<Symbol>& child);
 	void											RemoveChildAndResetParent_NFb(const WString& name, Symbol* child);
 
 	template<typename T>
