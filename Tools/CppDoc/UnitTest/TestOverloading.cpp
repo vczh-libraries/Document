@@ -393,7 +393,12 @@ TEST_FILE
 		// TODO:
 	});
 
-	TEST_CATEGORY(L"Lambdas")
+	TEST_CATEGORY(L"Lambda expressions")
+	{
+		// TODO:
+	});
+
+	TEST_CATEGORY(L"Generic expressions without template headers")
 	{
 		// TODO:
 	});

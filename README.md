@@ -96,7 +96,7 @@ All **the compiler** here means the compiler created by this project.
   - Specializations defined not in the scope where the primary declaration is in
     - For `template<typname T> struct X { template<typename U> struct Y {}; };`, `template<typename T> template<typename U> struct X<T*>::Y {};` is not supported.
   - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
-    - User-defined literals
+    - User-defined literals (parse definition, reject usage)
     - Multithreading memory model
     - Allow garbage collected implementations
   - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
