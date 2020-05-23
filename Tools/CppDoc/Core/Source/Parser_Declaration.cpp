@@ -164,6 +164,28 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		}
 	}
 
+	{
+		auto oldCursor = cursor;
+		if (TestToken(cursor, CppTokens::INLINE))
+		{
+			if (TestToken(cursor, CppTokens::DECL_NAMESPACE, false))
+			{
+				ParseDeclaration_Namespace(pa, cursor, output);
+				return;
+			}
+			else
+			{
+				cursor = oldCursor;
+			}
+		}
+	}
+
+	if (TestToken(cursor, CppTokens::DECL_NAMESPACE, false))
+	{
+		ParseDeclaration_Namespace(pa, cursor, output);
+		return;
+	}
+
 	Ptr<Symbol> specSymbol;
 	List<Ptr<TemplateSpec>> specs;
 	while(TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
@@ -270,12 +292,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		}
 	}
 
-	if (TestToken(cursor, CppTokens::DECL_NAMESPACE, false))
-	{
-		EnsureNoTemplateSpec(specs, cursor);
-		ParseDeclaration_Namespace(pa, cursor, output);
-	}
-	else if (!cStyleTypeReference && TestToken(cursor, CppTokens::DECL_ENUM, false))
+	if (!cStyleTypeReference && TestToken(cursor, CppTokens::DECL_ENUM, false))
 	{
 		EnsureNoTemplateSpec(specs, cursor);
 		if (auto enumDecl = ParseDeclaration_Enum_NotConsumeSemicolon(pa, false, cursor, output))
@@ -286,8 +303,10 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			}
 		}
 		RequireToken(cursor, CppTokens::SEMICOLON);
+		return;
 	}
-	else if (!cStyleTypeReference && (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false)))
+
+	if (!cStyleTypeReference && (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false)))
 	{
 		auto spec = EnsureNoMultipleTemplateSpec(specs, cursor);
 		if (auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, specSymbol, spec, false, cursor, output))
@@ -298,21 +317,24 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			}
 		}
 		RequireToken(cursor, CppTokens::SEMICOLON);
+		return;
 	}
-	else if (TestToken(cursor, CppTokens::DECL_USING, false))
+	
+	if (TestToken(cursor, CppTokens::DECL_USING, false))
 	{
 		auto spec = EnsureNoMultipleTemplateSpec(specs, cursor);
 		ParseDeclaration_Using(pa, specSymbol, spec, cursor, output);
+		return;
 	}
-	else if(TestToken(cursor,CppTokens::DECL_TYPEDEF, false))
+	
+	if(TestToken(cursor,CppTokens::DECL_TYPEDEF, false))
 	{
 		EnsureNoTemplateSpec(specs, cursor);
 		ParseDeclaration_Typedef(pa, cursor, output);
+		return;
 	}
-	else
-	{
-		ParseDeclaration_FuncVar(pa, specSymbol, specs, decoratorFriend, cursor, output);
-	}
+
+	ParseDeclaration_FuncVar(pa, specSymbol, specs, decoratorFriend, cursor, output);
 }
 
 /***********************************************************************
