@@ -455,6 +455,6 @@ struct W
 		COMPILE_PROGRAM(program, pa, input);
 
 		AssertExpr(pa, L"W<X1, char>::Z1",		L"W<X1, char> :: Z1",		L"bool const $L"		);
-		AssertExpr(pa, L"W<X1, char>::Z2",		L"W<X1, char> :: Z2",		L"double const $L"		);
+		AssertExpr(pa, L"W<X1, X2<char>>::Z2",	L"W<X1, X2<char>> :: Z2",	L"double const $L"		);
 	});
 }
