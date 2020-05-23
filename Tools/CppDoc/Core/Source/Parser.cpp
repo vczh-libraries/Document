@@ -114,9 +114,24 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 					throw StopParsingException(delayParse->begin);
 				}
 
-				RequireToken(delayParse->begin, CppTokens::LPARENTHESIS);
-				item.f1 = ParseExpr(delayParse->pa, pea_Full(), delayParse->begin);
-				RequireToken(delayParse->begin, CppTokens::RPARENTHESIS);
+				if (TestToken(delayParse->begin, CppTokens::LBRACE))
+				{
+					RequireToken(delayParse->begin, CppTokens::LBRACE);
+					if (!TestToken(delayParse->begin, CppTokens::RBRACE))
+					{
+						item.f1 = ParseExpr(delayParse->pa, pea_Full(), delayParse->begin);
+						RequireToken(delayParse->begin, CppTokens::RBRACE);
+					}
+				}
+				else
+				{
+					RequireToken(delayParse->begin, CppTokens::LPARENTHESIS);
+					if (!TestToken(delayParse->begin, CppTokens::RPARENTHESIS))
+					{
+						item.f1 = ParseExpr(delayParse->pa, pea_Full(), delayParse->begin);
+						RequireToken(delayParse->begin, CppTokens::RPARENTHESIS);
+					}
+				}
 
 				funcDecl->initList.Add(item);
 

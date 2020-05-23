@@ -472,9 +472,12 @@ public:
 
 					Resolving::AddSymbol(pa, item.f0->resolving, varSymbol.childSymbol.Obj());
 				}
-			SKIP_RESOLVING_FIELD:;
-				ExprTsysList types;
-				ExprToTsysNoVta(newPa, item.f1, types);
+			SKIP_RESOLVING_FIELD:
+				if (item.f1)
+				{
+					ExprTsysList types;
+					ExprToTsysNoVta(newPa, item.f1, types);
+				}
 			}
 		}
 

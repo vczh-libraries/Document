@@ -260,7 +260,10 @@ public:
 			writer.WriteString(i == 0 ? L"\t: " : L"\t, ");
 			writer.WriteString(item.f0->name.name);
 			writer.WriteString(L"(");
-			Log(item.f1, writer);
+			if (item.f1)
+			{
+				Log(item.f1, writer);
+			}
 			writer.WriteLine(L")");
 		}
 		WriteIndentation();
