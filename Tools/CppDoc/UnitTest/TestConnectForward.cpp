@@ -69,7 +69,7 @@ namespace a::b
 			auto _a = pa.root->TryGetChildren_NFb(L"a")->Get(0).childSymbol;
 			TEST_ASSERT(_a->TryGetChildren_NFb(L"b")->Count() == 1);
 			auto _b = _a->TryGetChildren_NFb(L"b")->Get(0).childSymbol;
-			TEST_ASSERT(_b->TryGetChildren_NFb(L"A")->Count() == 1);
+			TEST_ASSERT(_b->TryGetChildren_NFb(L"x")->Count() == 1);
 			auto _x = _b->TryGetChildren_NFb(L"x")->Get(0).childSymbol.Obj();
 
 			TEST_ASSERT(_x->kind == symbol_component::SymbolKind::Variable);
@@ -110,7 +110,7 @@ namespace a::b
 			auto _a = pa.root->TryGetChildren_NFb(L"a")->Get(0).childSymbol;
 			TEST_ASSERT(_a->TryGetChildren_NFb(L"b")->Count() == 1);
 			auto _b = _a->TryGetChildren_NFb(L"b")->Get(0).childSymbol;
-			TEST_ASSERT(_b->TryGetChildren_NFb(L"A")->Count() == 1);
+			TEST_ASSERT(_b->TryGetChildren_NFb(L"Add")->Count() == 1);
 			auto _Add = _b->TryGetChildren_NFb(L"Add")->Get(0).childSymbol.Obj();
 
 			TEST_ASSERT(_Add->kind == symbol_component::SymbolKind::FunctionSymbol);
@@ -188,7 +188,7 @@ namespace a::b
 				auto _a = pa.root->TryGetChildren_NFb(L"a")->Get(0).childSymbol;
 				TEST_ASSERT(_a->TryGetChildren_NFb(L"b")->Count() == 1);
 				auto _b = _a->TryGetChildren_NFb(L"b")->Get(0).childSymbol;
-				TEST_ASSERT(_b->TryGetChildren_NFb(L"A")->Count() == 1);
+				TEST_ASSERT(_b->TryGetChildren_NFb(L"X")->Count() == 1);
 				auto _X = _b->TryGetChildren_NFb(L"X")->Get(0).childSymbol.Obj();
 
 				switch (i)

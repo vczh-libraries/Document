@@ -132,7 +132,7 @@ void AddSymbolToResolve(Ptr<Resolving>& resolving, ITsys* thisItem, Symbol* chil
 	}
 }
 
-void AddSymbolToResolve(Ptr<Resolving>& resolving, List<ResolvedItem>& ritems)
+void AddResolvedItemsToResolve(Ptr<Resolving>& resolving, List<ResolvedItem>& ritems)
 {
 	if (!resolving)
 	{
@@ -149,24 +149,24 @@ void AddSymbolToResolve(Ptr<Resolving>& resolving, List<ResolvedItem>& ritems)
 	}
 }
 
-void AddSymbolToResolve(const ParsingArguments& pa, Ptr<Resolving>& resolving, ITsys* thisItem, const symbol_component::ChildSymbol& childSymbol)
+void AddChildSymbolToResolve(const ParsingArguments& pa, Ptr<Resolving>& resolving, ITsys* thisItem, const symbol_component::ChildSymbol& childSymbol)
 {
 	if (childSymbol.childType)
 	{
-		auto newPa = symbol_type_resolving::GetPaInsideClass(pa, thisItem);
+		auto newPa = thisItem ? symbol_type_resolving::GetPaInsideClass(pa, thisItem) : pa;
 		auto rsr = ResolveChildSymbol(newPa, childSymbol.childType->classType, childSymbol.childType->name);
 		if (rsr.types)
 		{
-			AddSymbolToResolve(resolving, rsr.types->items);
+			AddResolvedItemsToResolve(resolving, rsr.types->items);
 		}
 	}
 	else if (childSymbol.childExpr)
 	{
-		auto newPa = symbol_type_resolving::GetPaInsideClass(pa, thisItem);
+		auto newPa = thisItem ? symbol_type_resolving::GetPaInsideClass(pa, thisItem) : pa;
 		auto rsr = ResolveChildSymbol(newPa, childSymbol.childExpr->classType, childSymbol.childExpr->name);
-		if (rsr.types)
+		if (rsr.values)
 		{
-			AddSymbolToResolve(resolving, rsr.types->items);
+			AddResolvedItemsToResolve(resolving, rsr.values->items);
 		}
 	}
 	else
@@ -230,7 +230,7 @@ void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List
 				// type symbols
 			case CSTYLE_TYPE_SYMBOL_KIND:
 				rsa.found = true;
-				AddSymbolToResolve(pa, rsa.result.types, thisItem, symbol);
+				AddChildSymbolToResolve(pa, rsa.result.types, thisItem, symbol);
 				break;
 			}
 		}
@@ -247,7 +247,7 @@ void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List
 			case symbol_component::SymbolKind::TypeAlias:
 			case symbol_component::SymbolKind::Namespace:
 				rsa.found = true;
-				AddSymbolToResolve(pa, rsa.result.types, thisItem, symbol);
+				AddChildSymbolToResolve(pa, rsa.result.types, thisItem, symbol);
 				break;
 
 				// value symbols
@@ -256,7 +256,7 @@ void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List
 			case symbol_component::SymbolKind::Variable:
 			case symbol_component::SymbolKind::ValueAlias:
 				rsa.found = true;
-				AddSymbolToResolve(pa, rsa.result.values, thisItem, symbol);
+				AddChildSymbolToResolve(pa, rsa.result.values, thisItem, symbol);
 				break;
 
 				// template type argument
@@ -521,7 +521,7 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 		{
 			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 			{
-				PickResolvedSymbols(pa, nullptr, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+				PickResolvedSymbols(pa.AdjustForDecl(scope), nullptr, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
 			}
 
 			if (scope->usingNss.Count() > 0)
