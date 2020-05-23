@@ -169,6 +169,7 @@
     <ClCompile Include="TestParseGenericMember.cpp" />
     <ClCompile Include="TestParseGenericTypeAlias.cpp" />
     <ClCompile Include="TestParseGenericValueAlias.cpp" />
+    <ClCompile Include="TestParseLambda.cpp" />
     <ClCompile Include="TestParseMember.cpp" />
     <ClCompile Include="TestParsePSClass.cpp" />
     <ClCompile Include="TestParsePSClassInstancePrimary.cpp" />

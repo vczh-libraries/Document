@@ -393,17 +393,7 @@ TEST_FILE
 		// TODO:
 	});
 
-	TEST_CATEGORY(L"Lambda expressions")
-	{
-		// TODO:
-	});
-
-	TEST_CATEGORY(L"Generic expressions without template headers")
-	{
-		// TODO:
-	});
-
-	TEST_CATEGORY(L"Call operators + constructors + universal initialization + default parameters + ellipsis parameters")
+	TEST_CATEGORY(L"Overloading priority")
 	{
 		// TODO:
 		// Mix
@@ -411,6 +401,7 @@ TEST_FILE
 		//   constructor(Ctor)
 		//   universal initialization(UI)
 		//   default paramter and variant argument together(DPVA)
+		//   template function
 	});
 }
 

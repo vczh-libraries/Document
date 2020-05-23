@@ -168,6 +168,9 @@
     <ClCompile Include="Util_LogStat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestParseLambda.cpp">
+      <Filter>Source Files\TestParser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">
