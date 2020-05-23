@@ -321,7 +321,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		{
 			// IDENTIFIER: STATEMENT
 			auto oldCursor = cursor;
-			bool isLabel = TestToken(cursor, CppTokens::ID) && TestToken(cursor, CppTokens::COLON);
+			bool isLabel = TestToken(cursor, CppTokens::ID) && !TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false) && TestToken(cursor, CppTokens::COLON);
 			cursor = oldCursor;
 			if (isLabel)
 			{

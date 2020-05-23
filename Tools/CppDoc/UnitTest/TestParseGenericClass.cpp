@@ -423,4 +423,38 @@ struct Z : Y<T*>
 
 		AssertType(pa, L"Z<int>::PtrPtrPtr",		L"Z<int> :: PtrPtrPtr",		L"__int32 * * *");
 	});
+
+	TEST_CATEGORY(L"Nested ChildExpr from unknown type")
+	{
+		auto input = LR"(
+struct X1
+{
+	struct Y1
+	{
+		static const bool Z1;
+	};
+};
+
+template<typename T>
+struct X2
+{
+	template<typename U>
+	struct Y2
+	{
+		static const decltype(T() + U()) Z2;
+	};
+};
+
+template<typename A, typename B>
+struct W
+{
+	static const auto Z1 = A::Y1::Z1;
+	static const auto Z2 = B::template Y2<double>::Z2;
+}
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa, L"W<X1, char>::Z1",		L"W<X1, char> :: Z1",		L"bool const $L"		);
+		AssertExpr(pa, L"W<X1, char>::Z2",		L"W<X1, char> :: Z2",		L"double const $L"		);
+	});
 }
