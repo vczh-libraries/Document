@@ -11,7 +11,7 @@ Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<symbol_component
 	for (vint i = 0; i < candidates.Count(); i++)
 	{
 		auto& candidate = candidates[i];
-		if (!candidate.parentType)
+		if (!candidate.childExpr && !candidate.childType)
 		{
 			auto symbol = candidate.childSymbol.Obj();
 			switch (symbol->kind)

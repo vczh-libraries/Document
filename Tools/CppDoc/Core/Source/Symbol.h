@@ -10,7 +10,8 @@ class Declaration;
 class ForwardFunctionDeclaration;
 class FunctionDeclaration;
 class Stat;
-class Type;
+class ChildType;
+class ChildExpr;
 class Program;
 
 // the form or location of the expression is incorrect
@@ -145,21 +146,36 @@ namespace symbol_component
 	struct ChildSymbol
 	{
 		// for symbol that is not imported from other types
-		Ptr<Type>									parentType = nullptr;
-		Ptr<Symbol>									childSymbol = nullptr;
+		Ptr<ChildType>								childType;
+		Ptr<ChildExpr>								childExpr;
+		Ptr<Symbol>									childSymbol;
 
-		ChildSymbol() = default;
+		ChildSymbol();
+		~ChildSymbol();
 
-		ChildSymbol(Ptr<Type> _parentType, Ptr<Symbol> _childSymbol)
-			:parentType(_parentType)
+		ChildSymbol(Ptr<Symbol> _childSymbol)
+			:childSymbol(_childSymbol)
+		{
+		}
+
+		ChildSymbol(Ptr<ChildType> _childType, Ptr<Symbol> _childSymbol)
+			:childType(_childType)
+			, childSymbol(_childSymbol)
+		{
+		}
+
+		ChildSymbol(Ptr<ChildExpr> _childExpr, Ptr<Symbol> _childSymbol)
+			:childExpr(_childExpr)
 			, childSymbol(_childSymbol)
 		{
 		}
 
 		static vint Compare(const ChildSymbol& a, const ChildSymbol& b)
 		{
-			if (a.parentType < b.parentType) return -1;
-			if (a.parentType > b.parentType) return 1;
+			if (a.childType < b.childType) return -1;
+			if (a.childType > b.childType) return 1;
+			if (a.childExpr < b.childExpr) return -1;
+			if (a.childExpr > b.childExpr) return 1;
 			if (a.childSymbol < b.childSymbol) return -1;
 			if (a.childSymbol > b.childSymbol) return 1;
 			return 0;
@@ -290,8 +306,8 @@ public:
 
 	void											SetClassMemberCacheForTemplateSpecScope_N(Ptr<symbol_component::ClassMemberCache> classMemberCache);
 	const List<symbol_component::ChildSymbol>*		TryGetChildren_NFb(const WString& name);
-	void											AddChild_NFb(const WString& name, Ptr<Type> parentType, const Ptr<Symbol>& child);
-	void											AddChildAndSetParent_NFb(const WString& name, Ptr<Type> parentType, const Ptr<Symbol>& child);
+	void											AddChild_NFb(const WString& name, const symbol_component::ChildSymbol& childSymbol);
+	void											AddChildAndSetParent_NFb(const WString& name, Ptr<Symbol> child);
 	void											RemoveChildAndResetParent_NFb(const WString& name, Symbol* child);
 
 	template<typename T>

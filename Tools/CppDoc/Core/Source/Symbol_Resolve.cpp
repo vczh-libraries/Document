@@ -1,6 +1,7 @@
 #include "Symbol_Resolve.h"
 #include "EvaluateSymbol.h"
 #include "Ast_Type.h"
+#include "Ast_Expr.h"
 #include "Parser_Declarator.h"
 
 /***********************************************************************
@@ -131,18 +132,41 @@ void AddSymbolToResolve(Ptr<Resolving>& resolving, ITsys* thisItem, Symbol* chil
 	}
 }
 
-void AddSymbolToResolve(Ptr<Resolving>& resolving, ITsys* thisItem, const symbol_component::ChildSymbol& childSymbol)
+void AddSymbolToResolve(Ptr<Resolving>& resolving, List<ResolvedItem>& ritems)
 {
-	if (childSymbol.parentDeclType)
+	if (!resolving)
 	{
-		if (!resolving)
-		{
-			resolving = new Resolving;
-		}
+		resolving = new Resolving;
+	}
 
-		if (!resolving->items.Contains(item))
+	for (vint i = 0; i < ritems.Count(); i++)
+	{
+		auto& ritem = ritems[i];
+		if (!resolving->items.Contains(ritem))
 		{
-			resolving->items.Add(item);
+			resolving->items.Add(ritem);
+		}
+	}
+}
+
+void AddSymbolToResolve(const ParsingArguments& pa, Ptr<Resolving>& resolving, ITsys* thisItem, const symbol_component::ChildSymbol& childSymbol)
+{
+	if (childSymbol.childType)
+	{
+		auto newPa = symbol_type_resolving::GetPaInsideClass(pa, thisItem);
+		auto rsr = ResolveChildSymbol(newPa, childSymbol.childType->classType, childSymbol.childType->name);
+		if (rsr.types)
+		{
+			AddSymbolToResolve(resolving, rsr.types->items);
+		}
+	}
+	else if (childSymbol.childExpr)
+	{
+		auto newPa = symbol_type_resolving::GetPaInsideClass(pa, thisItem);
+		auto rsr = ResolveChildSymbol(newPa, childSymbol.childExpr->classType, childSymbol.childExpr->name);
+		if (rsr.types)
+		{
+			AddSymbolToResolve(resolving, rsr.types->items);
 		}
 	}
 	else
@@ -155,7 +179,7 @@ void AddSymbolToResolve(Ptr<Resolving>& resolving, ITsys* thisItem, const symbol
 PickResolvedSymbols
 ***********************************************************************/
 
-void PickResolvedSymbols(ITsys* thisItem, const List<symbol_component::ChildSymbol>* pSymbols, bool allowTemplateArgument, ResolveSymbolArguments& rsa)
+void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List<symbol_component::ChildSymbol>* pSymbols, bool allowTemplateArgument, ResolveSymbolArguments& rsa)
 {
 	bool hasCStyleType = false;
 	bool hasOthers = false;
@@ -206,7 +230,7 @@ void PickResolvedSymbols(ITsys* thisItem, const List<symbol_component::ChildSymb
 				// type symbols
 			case CSTYLE_TYPE_SYMBOL_KIND:
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.types, thisItem, symbol);
+				AddSymbolToResolve(pa, rsa.result.types, thisItem, symbol);
 				break;
 			}
 		}
@@ -223,7 +247,7 @@ void PickResolvedSymbols(ITsys* thisItem, const List<symbol_component::ChildSymb
 			case symbol_component::SymbolKind::TypeAlias:
 			case symbol_component::SymbolKind::Namespace:
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.types, thisItem, symbol);
+				AddSymbolToResolve(pa, rsa.result.types, thisItem, symbol);
 				break;
 
 				// value symbols
@@ -232,7 +256,7 @@ void PickResolvedSymbols(ITsys* thisItem, const List<symbol_component::ChildSymb
 			case symbol_component::SymbolKind::Variable:
 			case symbol_component::SymbolKind::ValueAlias:
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.values, thisItem, symbol);
+				AddSymbolToResolve(pa, rsa.result.values, thisItem, symbol);
 				break;
 
 				// template type argument
@@ -240,7 +264,7 @@ void PickResolvedSymbols(ITsys* thisItem, const List<symbol_component::ChildSymb
 				if (allowTemplateArgument)
 				{
 					rsa.found = true;
-					AddSymbolToResolve(rsa.result.types, nullptr, symbol);
+					AddSymbolToResolve(rsa.result.types, nullptr, symbol.childSymbol.Obj());
 				}
 				break;
 
@@ -249,7 +273,7 @@ void PickResolvedSymbols(ITsys* thisItem, const List<symbol_component::ChildSymb
 				if (allowTemplateArgument)
 				{
 					rsa.found = true;
-					AddSymbolToResolve(rsa.result.values, nullptr, symbol);
+					AddSymbolToResolve(rsa.result.values, nullptr, symbol.childSymbol.Obj());
 				}
 				break;
 			}
@@ -334,7 +358,7 @@ void ResolveSymbolInClassInternal(const ParsingArguments& pa, ITsys* tsys, ITsys
 
 		if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 		{
-			PickResolvedSymbols(tsys, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+			PickResolvedSymbols(pa, tsys, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
 		}
 
 		if (rsa.found) return;
@@ -398,7 +422,7 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 		{
 			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 			{
-				PickResolvedSymbols(tsys, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+				PickResolvedSymbols(pa, tsys, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
 			}
 		}
 	}
@@ -497,7 +521,7 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 		{
 			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 			{
-				PickResolvedSymbols(nullptr, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+				PickResolvedSymbols(pa, nullptr, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
 			}
 
 			if (scope->usingNss.Count() > 0)

@@ -36,7 +36,7 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, ITsys*
 		for (vint i = 0; i < pMembers->Count(); i++)
 		{
 			auto& childSymbol = pMembers->Get(i);
-			if (!childSymbol.parentType)
+			if (!childSymbol.childExpr && !childSymbol.childType)
 			{
 				auto member = childSymbol.childSymbol.Obj();
 				auto forwardFunc = member->GetAnyForwardDecl<ForwardFunctionDeclaration>();

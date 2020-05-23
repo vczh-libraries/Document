@@ -1,6 +1,7 @@
 #include "Parser.h"
 #include "Parser_Declaration.h"
 #include "Parser_Declarator.h"
+#include "Ast_Expr.h"
 
 Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArguments& pa, bool forTypeDef, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
@@ -73,19 +74,27 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 			auto enumItem = MakePtr<EnumItemDeclaration>();
 			if (!ParseCppName(enumItem->name, cursor)) throw StopParsingException(cursor);
 			decl->items.Add(enumItem);
-			if (!contextSymbol->AddImplDeclToSymbol_NFb(enumItem, symbol_component::SymbolKind::EnumItem))
+
+			auto enumItemSymbol = contextSymbol->AddImplDeclToSymbol_NFb(enumItem, symbol_component::SymbolKind::EnumItem);
+			if (!enumItemSymbol)
 			{
 				throw StopParsingException(cursor);
 			}
 
 			if (!enumClass)
 			{
-				auto typeEnum = MakePtr<IdType>();
+				auto exprEnumItem = MakePtr<ChildExpr>();
 				{
+					auto typeEnum = MakePtr<IdType>();
 					typeEnum->cStyleTypeReference = true;
 					typeEnum->name = decl->name;
 					typeEnum->resolving = MakePtr<Resolving>();
 					typeEnum->resolving->items.Add({ nullptr,contextSymbol });
+
+					exprEnumItem->classType = typeEnum;
+					exprEnumItem->name = enumItem->name;
+					exprEnumItem->resolving = MakePtr<Resolving>();
+					exprEnumItem->resolving->items.Add({ nullptr,enumItemSymbol });
 				}
 
 				if (pa.scopeSymbol->TryGetChildren_NFb(enumItem->name.name))
@@ -94,8 +103,10 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 				}
 				pa.scopeSymbol->AddChild_NFb(
 					enumItem->name.name,
-					typeEnum,
-					contextSymbol->TryGetChildren_NFb(enumItem->name.name)->Get(0).childSymbol
+					{
+						exprEnumItem,
+						contextSymbol->TryGetChildren_NFb(enumItem->name.name)->Get(0).childSymbol
+					}
 				);
 			}
 

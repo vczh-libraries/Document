@@ -1,6 +1,8 @@
 #include "Symbol.h"
 #include "Symbol_TemplateSpec.h"
 #include "Ast.h"
+#include "Ast_Type.h"
+#include "Ast_Expr.h"
 #include "Parser_Declarator.h"
 #include "EvaluateSymbol.h"
 
@@ -104,6 +106,18 @@ SC_Data
 			throw UnexpectedSymbolCategoryException();
 		}
 	}
+
+/***********************************************************************
+ChildSymbol
+***********************************************************************/
+
+	ChildSymbol::ChildSymbol()
+	{
+	}
+
+	ChildSymbol::~ChildSymbol()
+	{
+	}
 }
 
 /***********************************************************************
@@ -124,7 +138,7 @@ void AddSymbolChildren(Symbol* symbol, List<symbol_component::ChildSymbol>& exis
 	for (vint i = 0; i < existingChildren.Count(); i++)
 	{
 		auto child = existingChildren[i];
-		symbol->AddChildAndSetParent_NFb(child.childSymbol->name, nullptr, child.childSymbol);
+		symbol->AddChildAndSetParent_NFb(child.childSymbol->name, child.childSymbol);
 	}
 }
 
@@ -190,7 +204,7 @@ Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, const WString& decl
 	}
 	else
 	{
-		AddChildAndSetParent_NFb(symbol->name, nullptr, symbol);
+		AddChildAndSetParent_NFb(symbol->name, symbol);
 	}
 
 	_decl->symbol = symbol.Obj();
@@ -302,7 +316,7 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 			ReuseTemplateSpecSymbol(templateSpecSymbol, _category);
 			templateSpecSymbol->name = declName;
 			templateSpecSymbol->kind = kind;
-			AddChildAndSetParent_NFb(templateSpecSymbol->name, nullptr, templateSpecSymbol);
+			AddChildAndSetParent_NFb(templateSpecSymbol->name, templateSpecSymbol);
 			_decl->symbol = templateSpecSymbol.Obj();
 			return templateSpecSymbol.Obj();
 		}
@@ -635,10 +649,9 @@ const List<symbol_component::ChildSymbol>* Symbol::TryGetChildren_NFb(const WStr
 	return &children.GetByIndex(index);
 }
 
-void Symbol::AddChild_NFb(const WString& name, Ptr<Type> parentType, const Ptr<Symbol>& child)
+void Symbol::AddChild_NFb(const WString& name, const symbol_component::ChildSymbol& childSymbol)
 {
 	auto& children = const_cast<symbol_component::SymbolGroup&>(GetChildren_NFb());
-	symbol_component::ChildSymbol childSymbol(parentType, child);
 
 	if (auto pSymbols = TryGetChildren_NFb(name))
 	{
@@ -651,9 +664,9 @@ void Symbol::AddChild_NFb(const WString& name, Ptr<Type> parentType, const Ptr<S
 	children.Add(name, childSymbol);
 }
 
-void Symbol::AddChildAndSetParent_NFb(const WString& name, Ptr<Type> parentType, const Ptr<Symbol>& child)
+void Symbol::AddChildAndSetParent_NFb(const WString& name, Ptr<Symbol> child)
 {
-	AddChild_NFb(name, parentType, child);
+	AddChild_NFb(name, child);
 	child->SetParent(this);
 }
 
@@ -665,9 +678,15 @@ void Symbol::RemoveChildAndResetParent_NFb(const WString& name, Symbol* child)
 		throw L"Only direct child can be removed!";
 	}
 	child->SetParent(nullptr);
-	if (!children.Remove(name, { nullptr,child }))
+
+	auto pChildren = TryGetChildren_NFb(name);
+	for (vint i = pChildren->Count() - 1; i >= 0; i--)
 	{
-		throw L"Failed to remove!";
+		auto childSymbol = pChildren->Get(i);
+		if (!childSymbol.childExpr && !childSymbol.childType && childSymbol.childSymbol == child)
+		{
+			children.Remove(name, childSymbol);
+		}
 	}
 }
 
@@ -682,7 +701,7 @@ Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
 	{
 		symbol->name = DecorateNameForSpecializationSpec(symbol->name, _decl->specializationSpec);
 	}
-	AddChildAndSetParent_NFb(symbol->name, nullptr, symbol);
+	AddChildAndSetParent_NFb(symbol->name, symbol);
 	return symbol.Obj();
 }
 
@@ -744,7 +763,7 @@ Symbol* Symbol::CreateStatSymbol_NFb(Ptr<Stat> _stat)
 	symbol->name = L"$";
 	symbol->kind = symbol_component::SymbolKind::Statement;
 	symbol->categoryData.normal.statement = _stat;
-	AddChildAndSetParent_NFb(symbol->name, nullptr, symbol);
+	AddChildAndSetParent_NFb(symbol->name, symbol);
 
 	_stat->symbol = symbol.Obj();
 	return symbol.Obj();

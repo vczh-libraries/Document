@@ -242,7 +242,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 				{
 					throw StopParsingException(cursor);
 				}
-				pa.scopeSymbol->AddChildAndSetParent_NFb(child.childSymbol->name, nullptr, child.childSymbol);
+				pa.scopeSymbol->AddChildAndSetParent_NFb(child.childSymbol->name, child.childSymbol);
 			}
 			pa.scopeSymbol->RemoveChildAndResetParent_NFb(classContextSymbol->name, classContextSymbol);
 

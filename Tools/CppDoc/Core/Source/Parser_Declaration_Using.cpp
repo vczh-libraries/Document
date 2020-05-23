@@ -79,21 +79,20 @@ void ParseDeclaration_UsingMember(const ParsingArguments& pa, Ptr<CppTokenCursor
 	output.Add(decl);
 
 	Ptr<Resolving> resolving;
-	Ptr<Type> classType;
+	Ptr<ChildExpr> childExpr;
+	Ptr<ChildType> childType;
 	if (decl->expr)
 	{
-		if (auto childExpr = decl->expr.Cast<ChildExpr>())
+		if (childExpr = decl->expr.Cast<ChildExpr>())
 		{
 			resolving = childExpr->resolving;
-			classType = childExpr->classType;
 		}
 	}
 	else if (decl->type)
 	{
-		if (auto childType = decl->type.Cast<ChildType>())
+		if (childType = decl->type.Cast<ChildType>())
 		{
 			resolving = childType->resolving;
-			classType = childType->classType;
 		}
 	}
 
@@ -108,7 +107,14 @@ void ParseDeclaration_UsingMember(const ParsingArguments& pa, Ptr<CppTokenCursor
 			auto& cs = pSiblings->Get(j);
 			if (cs.childSymbol == rawSymbolPtr)
 			{
-				pa.scopeSymbol->AddChild_NFb(cs.childSymbol->name, classType, cs.childSymbol);
+				if (childExpr)
+				{
+					pa.scopeSymbol->AddChild_NFb(cs.childSymbol->name, { childExpr,cs.childSymbol });
+				}
+				else
+				{
+					pa.scopeSymbol->AddChild_NFb(cs.childSymbol->name, { childType,cs.childSymbol });
+				}
 			}
 		}
 	}

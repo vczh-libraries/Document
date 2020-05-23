@@ -66,6 +66,7 @@ namespace symbol_type_resolving
 	extern TypeTsysList&						EvaluateForwardClassSymbol(const ParsingArguments& invokerPa, ForwardClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
 	extern symbol_component::Evaluation&		EvaluateClassSymbol(const ParsingArguments& invokerPa, ClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
 	extern void									ExtractClassType(ITsys* classType, ClassDeclaration*& classDecl, ITsys*& parentDeclType, TemplateArgumentContext*& argumentsToApply);
+	extern ParsingArguments						GetPaInsideClass(const ParsingArguments& invokerPa, ITsys* classType);
 	extern TsysPSRecord*						EvaluateClassPSRecord(const ParsingArguments& invokerPa, ITsys* classType);
 	extern void									EnsurePSRecordPrimaryEvaluated(const ParsingArguments& invokerPa, ITsys* classType, TsysPSRecord* psr);
 

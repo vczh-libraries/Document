@@ -187,6 +187,37 @@ namespace symbol_type_resolving
 	}
 
 	/***********************************************************************
+	GetPaInsideClass: Get a ParsingArguments for evaluating class members
+	***********************************************************************/
+
+	ParsingArguments GetPaInsideClass(const ParsingArguments& invokerPa, ITsys* classType)
+	{
+		switch (classType->GetType())
+		{
+		case TsysType::Decl:
+			return invokerPa.AdjustForDecl(classType->GetDecl());
+		case TsysType::DeclInstant:
+			{
+				auto& di = classType->GetDeclInstant();
+				if (di.taContext)
+				{
+					auto pa = invokerPa.AdjustForDecl(classType->GetDecl(), classType);
+					pa.taContext = di.taContext.Obj();
+					return pa;
+				}
+				else
+				{
+					auto pa = invokerPa.AdjustForDecl(classType->GetDecl(), di.parentDeclType);
+					pa.taContext = di.parentDeclType->GetDeclInstant().taContext.Obj();
+					return pa;
+				}
+			}
+		default:
+			throw TypeCheckerException();
+		}
+	}
+
+	/***********************************************************************
 	EvaluateClassPSRecord: Get an up-to-date TsysPSRecord from an ITsys*
 	***********************************************************************/
 
@@ -248,13 +279,8 @@ namespace symbol_type_resolving
 		{
 			psr->version = TsysPSRecord::PSInstanceVersionEvaluated;
 
-			ForwardClassDeclaration* cd = nullptr;
-			ITsys* pdt = nullptr;
-			TemplateArgumentContext* ata = nullptr;
-			ExtractClassTypeInternal(classType, cd, pdt, ata);
-
-			auto psPa = invokerPa.AdjustForDecl(cd->symbol, pdt);
-			if (ata) psPa.taContext = ata;
+			auto cd = classType->GetDecl()->GetAnyForwardDecl<ForwardClassDeclaration>().Obj();
+			auto psPa = GetPaInsideClass(invokerPa, classType);
 
 			auto genericType = MakePtr<GenericType>();
 			{
