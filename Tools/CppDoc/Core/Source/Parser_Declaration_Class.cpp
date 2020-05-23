@@ -132,6 +132,10 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 			while (!TestToken(cursor, CppTokens::LBRACE, false))
 			{
 				auto accessor = defaultAccessor;
+
+				// ignore virtual
+				TestToken(cursor, CppTokens::VIRTUAL);
+
 				if (TestToken(cursor, CppTokens::PUBLIC))
 				{
 					accessor = CppClassAccessor::Public;
@@ -144,6 +148,9 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 				{
 					accessor = CppClassAccessor::Private;
 				}
+
+				// ignore virtual
+				TestToken(cursor, CppTokens::VIRTUAL);
 
 				auto type = ParseShortType(declPa, ShortTypeTypenameKind::Implicit, cursor);
 				decl->baseTypes.Add({ accessor,type });
