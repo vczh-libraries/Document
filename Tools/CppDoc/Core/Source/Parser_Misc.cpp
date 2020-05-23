@@ -70,14 +70,36 @@ ParseCppName
 ***********************************************************************/
 
 // operator PREDEFINED-OPERATOR
-// ~IDENTIFIER
-// IDENTIFIER
-// operator new
-// operator new[]
-// operator delete
-// operator delete[]
+// ~IDENTIFIER			: destructor
+// IDENTIFIER			: constructor / identifier
+// operator new			:
+// operator new[]		:
+// operator delete		:
+// operator delete[]	:
+// operator "" TOKEN	: user-defined literals, but here it is ignored and become a normal name
 bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialMethod)
 {
+	{
+		auto oldCursor = cursor;
+		if (TestToken(cursor, CppTokens::OPERATOR) && TestToken(cursor, CppTokens::STRING))
+		{
+			auto idToken = cursor;
+			SkipToken(cursor);
+
+			name.type = CppNameType::Normal;
+			name.tokenCount = 3;
+			name.name = L"operator \"\" " + WString(idToken->token.reading, idToken->token.length);
+			name.nameTokens[0] = oldCursor->token;
+			name.nameTokens[1] = oldCursor->Next()->token;
+			name.nameTokens[2] = oldCursor->Next()->Next()->token;
+			return true;
+		}
+		else
+		{
+			cursor = oldCursor;
+		}
+	}
+
 	if (TestToken(cursor, CppTokens::OPERATOR, false))
 	{
 		auto& token = cursor->token;
@@ -179,7 +201,8 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 #undef OPERATOR_NAME_2
 #undef OPERATOR_NAME_3
 	}
-	else if (TestToken(cursor, CppTokens::REVERT, CppTokens::ID, false))
+
+	if (TestToken(cursor, CppTokens::REVERT, CppTokens::ID, false))
 	{
 		if (!forceSpecialMethod)
 		{
@@ -194,7 +217,8 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		SkipToken(cursor);
 		return true;
 	}
-	else if (TestToken(cursor, CppTokens::ID, false))
+
+	if (TestToken(cursor, CppTokens::ID, false))
 	{
 		name.type = CppNameType::Normal;
 		name.tokenCount = 1;
@@ -203,6 +227,7 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		SkipToken(cursor);
 		return true;
 	}
+
 	return false;
 }
 

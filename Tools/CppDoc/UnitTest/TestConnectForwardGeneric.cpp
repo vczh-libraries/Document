@@ -350,4 +350,12 @@ template int X<int>::y;
 )";
 		COMPILE_PROGRAM(program, pa, input);
 	});
+
+	TEST_CATEGORY(L"Ignored declarations")
+	{
+		auto input = LR"(
+int operator "" suffix(const char* str, int len);
+)";
+		COMPILE_PROGRAM(program, pa, input);
+	});
 }
