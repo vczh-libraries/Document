@@ -456,7 +456,7 @@ public:
 			{
 				auto& item = self->initList[i];
 				{
-					auto pVars = classDecl->symbol->TryGetChildren_NFb(item.f0->name.name);
+					auto pVars = classDecl->symbol->TryGetChildren_NFb(item->field->name.name);
 					if (!pVars) goto SKIP_RESOLVING_FIELD;
 					if (pVars->Count() != 1) goto SKIP_RESOLVING_FIELD;
 
@@ -470,13 +470,14 @@ public:
 						goto SKIP_RESOLVING_FIELD;
 					}
 
-					Resolving::AddSymbol(pa, item.f0->resolving, varSymbol.childSymbol.Obj());
+					Resolving::AddSymbol(pa, item->field->resolving, varSymbol.childSymbol.Obj());
 				}
 			SKIP_RESOLVING_FIELD:
-				if (item.f1)
+				for (vint j = 0; j < item->arguments.Count(); j++)
 				{
 					ExprTsysList types;
-					ExprToTsysNoVta(newPa, item.f1, types);
+					bool isVta = false;
+					ExprToTsysInternal(newPa, item->arguments[j].item, types, isVta);
 				}
 			}
 		}

@@ -258,13 +258,18 @@ public:
 			auto& item = self->initList[i];
 			WriteIndentation();
 			writer.WriteString(i == 0 ? L"\t: " : L"\t, ");
-			writer.WriteString(item.f0->name.name);
-			writer.WriteString(L"(");
-			if (item.f1)
+			writer.WriteString(item->field->name.name);
+			writer.WriteString(item->universalInitialization ? L"{" : L"(");
+			for (vint i = 0; i < item->arguments.Count(); i++)
 			{
-				Log(item.f1, writer);
+				if (i > 0) writer.WriteString(L", ");
+				Log(item->arguments[i].item, writer);
+				if (item->arguments[i].isVariadic)
+				{
+					writer.WriteString(L"...");
+				}
 			}
-			writer.WriteLine(L")");
+			writer.WriteLine(item->universalInitialization ? L"}" : L")");
 		}
 		WriteIndentation();
 		Log(self->statement, writer, indentation + 1);

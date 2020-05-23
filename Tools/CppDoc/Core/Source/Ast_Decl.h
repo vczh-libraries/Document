@@ -218,10 +218,15 @@ class FunctionDeclaration : public ForwardFunctionDeclaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	using InitItem = Tuple<Ptr<IdExpr>, Ptr<Expr>>;
+	struct InitItem
+	{
+		Ptr<IdExpr>									field;
+		bool										universalInitialization = false;
+		VariadicList<Ptr<Expr>>						arguments;
+	};
 
 	List<Ptr<TemplateSpec>>							classSpecs;
-	List<InitItem>									initList;
+	List<Ptr<InitItem>>								initList;
 	Ptr<Stat>										statement;
 	Ptr<DelayParse>									delayParse;
 };

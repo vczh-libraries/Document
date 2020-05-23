@@ -24,6 +24,8 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (STL)
+  - [ ] `::new`
+  - [ ] `::delete`
   - [ ] Test cases
     - [ ] type alias recursion
     - [ ] value alias recursion
@@ -46,8 +48,6 @@
   - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
   - [ ] `IFT_InferTemplateArgument.cpp` `Visit(GenericType* self)` able to process multiple primary instances.
 - [ ] `MatchPSArgument` on `decltype(EXPR)`, success when the type to match is not `decltype(EXPR)`, or two expression match.
-- [ ] `::new`
-- [ ] `::delete`
 - [ ] `std::initialization_list`.
 - [ ] Next Demo! (UnitTest_Cases::STL)
 - [ ] Pass variadic template argument to placement new expression.

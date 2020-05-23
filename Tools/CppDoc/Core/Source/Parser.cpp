@@ -103,36 +103,61 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 		{
 			while (true)
 			{
-				FunctionDeclaration::InitItem item;
-				item.f0 = MakePtr<IdExpr>();
-				if (!ParseCppName(item.f0->name, delayParse->begin))
+				auto item = MakePtr<FunctionDeclaration::InitItem>();
+				item->field = MakePtr<IdExpr>();
+				if (!ParseCppName(item->field->name, delayParse->begin))
 				{
 					throw StopParsingException(delayParse->begin);
 				}
-				if (item.f0->name.type != CppNameType::Normal)
+				if (item->field->name.type != CppNameType::Normal)
 				{
 					throw StopParsingException(delayParse->begin);
 				}
 
 				if (TestToken(delayParse->begin, CppTokens::LBRACE))
 				{
-					RequireToken(delayParse->begin, CppTokens::LBRACE);
-					if (!TestToken(delayParse->begin, CppTokens::RBRACE))
-					{
-						item.f1 = ParseExpr(delayParse->pa, pea_Full(), delayParse->begin);
-						RequireToken(delayParse->begin, CppTokens::RBRACE);
-					}
+					item->universalInitialization = true;
 				}
 				else
 				{
 					RequireToken(delayParse->begin, CppTokens::LPARENTHESIS);
-					if (!TestToken(delayParse->begin, CppTokens::RPARENTHESIS))
+					item->universalInitialization = false;
+				}
+
+				if (item->universalInitialization)
+				{
+					if (TestToken(delayParse->begin, CppTokens::RBRACE))
 					{
-						item.f1 = ParseExpr(delayParse->pa, pea_Full(), delayParse->begin);
-						RequireToken(delayParse->begin, CppTokens::RPARENTHESIS);
+						goto SKIP_ARGUMENTS;
+					}
+				}
+				else
+				{
+					if (TestToken(delayParse->begin, CppTokens::RPARENTHESIS))
+					{
+						goto SKIP_ARGUMENTS;
 					}
 				}
 
+				while (true)
+				{
+					auto argument = ParseExpr(delayParse->pa, pea_Argument(), delayParse->begin);
+					bool isVariadic = TestToken(delayParse->begin, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+					item->arguments.Add({ argument,isVariadic });
+					if (!TestToken(delayParse->begin, CppTokens::COMMA))
+					{
+						if (item->universalInitialization)
+						{
+							RequireToken(delayParse->begin, CppTokens::RBRACE);
+						}
+						else
+						{
+							RequireToken(delayParse->begin, CppTokens::RPARENTHESIS);
+						}
+						goto SKIP_ARGUMENTS;
+					}
+				}
+			SKIP_ARGUMENTS:
 				funcDecl->initList.Add(item);
 
 				if (!TestToken(delayParse->begin, CppTokens::COMMA))
