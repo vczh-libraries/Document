@@ -764,17 +764,20 @@ READY_FOR_ARRAY_OR_FUNCTION:
 	}
 
 	// recognize a class member declaration
-	if (pdc.classOfMemberInside)
+	if (pdc.allowClassMemberCache)
 	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberInside->symbol, cursor);
-	}
-	else if (pdc.classOfMemberOutside)
-	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberOutside, pdc.specsOfMemberOutside, cursor);
-	}
-	else if (auto memberType = declarator->type.Cast<MemberType>())
-	{
-		declarator->classMemberCache = CreatePartialClassMemberCache(pa, memberType->classType, pdc.specsOfMemberOutside, cursor);
+		if (pdc.classOfMemberInside)
+		{
+			declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberInside->symbol, cursor);
+		}
+		else if (pdc.classOfMemberOutside)
+		{
+			declarator->classMemberCache = CreatePartialClassMemberCache(pa, pdc.classOfMemberOutside, pdc.specsOfMemberOutside, cursor);
+		}
+		else if (auto memberType = declarator->type.Cast<MemberType>())
+		{
+			declarator->classMemberCache = CreatePartialClassMemberCache(pa, memberType->classType, pdc.specsOfMemberOutside, cursor);
+		}
 	}
 
 	InjectClassMemberCacheIfNecessary(pa, pdc, declarator, cursor, [&](const ParsingArguments& newPa)

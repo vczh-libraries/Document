@@ -335,4 +335,19 @@ namespace ns
 			}
 		});
 	});
+
+	TEST_CATEGORY(L"Discarded declarations")
+	{
+		auto input = LR"(
+template<typename T>
+struct X
+{
+	T y;
+};
+
+template class X<int>;
+template int X<int>::y;
+)";
+		COMPILE_PROGRAM(program, pa, input);
+	});
 }

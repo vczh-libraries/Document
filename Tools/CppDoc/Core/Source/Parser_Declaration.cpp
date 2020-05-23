@@ -156,7 +156,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 				{
 					// template DECLARATOR;
 					List<Ptr<Declarator>> declarators;
-					ParseMemberDeclarator(pa, pda_Decls(false, false), cursor, declarators);
+					ParseMemberDeclarator(pa, pda_ForceFP(), cursor, declarators);
 					RequireToken(cursor, CppTokens::SEMICOLON);
 				}
 				return;
