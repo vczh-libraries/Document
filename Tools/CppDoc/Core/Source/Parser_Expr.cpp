@@ -115,120 +115,191 @@ Ptr<IdExpr> ParseIdExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 }
 
 /***********************************************************************
-TryParseChildExpr
+ParseGenericOrChildExpr
 ***********************************************************************/
 
-Ptr<ChildExpr> TryParseChildExpr(const ParsingArguments& pa, Ptr<Type> classType, bool& templateKeyword, Ptr<CppTokenCursor>& cursor)
+void CheckResolvingForGenericExpr(const ParsingArguments& pa, Ptr<Resolving> resolving, bool templateKeyword, bool& allowGenericPresence, bool& allowGenericAbsence)
 {
-	templateKeyword = TestToken(cursor, CppTokens::DECL_TEMPLATE);
-	CppName cppName;
-	if (ParseCppName(cppName, cursor))
+	if (resolving)
 	{
-		auto rsr = ResolveChildSymbol(pa, classType, cppName);
-		if (!rsr.types)
+		for (vint i = 0; i < resolving->items.Count(); i++)
 		{
-			auto expr = MakePtr<ChildExpr>();
-			expr->classType = classType;
-			expr->name = cppName;
-			expr->resolving = rsr.values;
-			if (pa.recorder && expr->resolving)
+			auto symbol = resolving->items[i].symbol;
+			auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(symbol);
+
+			if (spec)
 			{
-				pa.recorder->Index(expr->name, expr->resolving->items);
+				// even if there is no argument, it means this name is a template
+				allowGenericPresence = true;
 			}
-			return expr;
+			else
+			{
+				allowGenericAbsence = true;
+			}
 		}
-		else if (templateKeyword)
+	}
+	else if (templateKeyword)
+	{
+		allowGenericPresence = true;
+	}
+	else
+	{
+		allowGenericPresence = true;
+		allowGenericAbsence = true;
+	}
+}
+
+bool PrepareArgumentsForGenericExpr(const ParsingArguments& pa, VariadicList<GenericArgument>& genericArguments, bool allowGenericPresence, bool allowGenericAbsence, Ptr<CppTokenCursor>& cursor)
+{
+	bool hasGenericPart = false;
+	{
+		auto oldCursor = cursor;
+		if (TestToken(cursor, CppTokens::LT))
 		{
-			auto expr = MakePtr<ChildExpr>();
-			expr->classType = classType;
-			expr->name = cppName;
-			return expr;
+			try
+			{
+				ParseGenericArgumentsSkippedLT(pa, cursor, genericArguments, CppTokens::GT);
+				hasGenericPart = true;
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+			}
+		}
+	}
+
+	if (hasGenericPart)
+	{
+		if (!allowGenericPresence)
+		{
+			throw StopParsingException(cursor);
+		}
+	}
+	else
+	{
+		if (!allowGenericAbsence)
+		{
+			throw StopParsingException(cursor);
+		}
+	}
+
+	return hasGenericPart;
+}
+
+Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<Category_Id_Child_Expr> expr, Ptr<CppTokenCursor>& cursor)
+{
+	bool allowGenericPresence = false;
+	bool allowGenericAbsence = false;
+	CheckResolvingForGenericExpr(pa, expr->resolving, false, allowGenericPresence, allowGenericAbsence);
+
+	VariadicList<GenericArgument> genericArguments;
+	if (PrepareArgumentsForGenericExpr(pa, genericArguments, allowGenericPresence, allowGenericAbsence, cursor))
+	{
+		auto genericExpr = MakePtr<GenericExpr>();
+		genericExpr->expr = expr;
+		CopyFrom(genericExpr->arguments, genericArguments);
+		return genericExpr;
+	}
+	else
+	{
+		return expr;
+	}
+}
+
+Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<Category_Id_Child_Generic_Root_Type> type, Ptr<CppTokenCursor>& cursor)
+{
+	while (true)
+	{
+		if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
+		{
+			bool templateKeyword = TestToken(cursor, CppTokens::DECL_TEMPLATE);
+			CppName cppName;
+
+			// parse identifier
+			if (!ParseCppName(cppName, cursor))
+			{
+				throw StopParsingException(cursor);
+			}
+
+			// check if we know what it is
+			bool makeExpr = false;
+			bool allowGenericPresence = false;
+			bool allowGenericAbsence = false;
+			auto rsr = ResolveChildSymbol(pa, type, cppName);
+			if (rsr.types)
+			{
+				// resolved to type, which is not possible because ParseLongType will consume these tokens
+				throw StopParsingException(cursor);
+			}
+			else
+			{
+				CheckResolvingForGenericExpr(pa, rsr.values, templateKeyword, allowGenericPresence, allowGenericAbsence);
+				if (rsr.values)
+				{
+					makeExpr = true;
+				}
+			}
+
+			// parse generic arguments
+			VariadicList<GenericArgument> genericArguments;
+			bool hasGenericPart = PrepareArgumentsForGenericExpr(pa, genericArguments, allowGenericPresence, allowGenericAbsence, cursor);
+
+			// choose between ChildType and ChildExpr
+			if (!makeExpr)
+			{
+				makeExpr = !TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false);
+			}
+
+			if (makeExpr)
+			{
+				// if we decide to make a ChildExpr, return it
+				auto childExpr = MakePtr<ChildExpr>();
+				childExpr->classType = type;
+				childExpr->name = cppName;
+				childExpr->resolving = rsr.values;
+
+				if (hasGenericPart)
+				{
+					auto genericExpr = MakePtr<GenericExpr>();
+					genericExpr->expr = childExpr;
+					CopyFrom(genericExpr->arguments, genericArguments);
+					return genericExpr;
+				}
+				else
+				{
+					return childExpr;
+				}
+			}
+			else
+			{
+				// if we decide to make a ChildType, continue until we get a ChildExpr
+				auto childType = MakePtr<ChildType>();
+				childType->classType = type;
+				childType->name = cppName;
+
+				if (hasGenericPart)
+				{
+					auto genericType = MakePtr<GenericType>();
+					genericType->type = childType;
+					CopyFrom(genericType->arguments, genericArguments);
+					type = genericType;
+				}
+				else
+				{
+					type = childType;
+				}
+			}
 		}
 		else
 		{
 			throw StopParsingException(cursor);
 		}
 	}
-	return nullptr;
 }
 
 /***********************************************************************
 ParseNameOrCtorAccessExpr
 ***********************************************************************/
-
-Ptr<GenericExpr> ParseGenericExprSkippedLT(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<Category_Id_Child_Expr> catIdChildExpr)
-{
-	// EXPR< { TYPE/EXPR ...} >
-	auto expr = MakePtr<GenericExpr>();
-	expr->expr = catIdChildExpr;
-	ParseGenericArgumentsSkippedLT(pa, cursor, expr->arguments, CppTokens::GT);
-	return expr;
-}
-
-Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, Ptr<Category_Id_Child_Expr> catIdChildExpr, bool templateKeyword, bool tryGenericForEmptyResolving)
-{
-	if (!TestToken(cursor, CppTokens::LT, false))
-	{
-		if (templateKeyword)
-		{
-			throw StopParsingException(cursor);
-		}
-		else
-		{
-			return catIdChildExpr;
-		}
-	}
-
-	bool allowRollback = false;
-	if (catIdChildExpr->resolving)
-	{
-		List<ResolvedItem> genericItems;
-		for (vint i = 0; i < catIdChildExpr->resolving->items.Count(); i++)
-		{
-			auto ritem = catIdChildExpr->resolving->items[i];
-			if (symbol_type_resolving::GetTemplateSpecFromSymbol(ritem.symbol))
-			{
-				genericItems.Add(ritem);
-			}
-		}
-
-		if (genericItems.Count() == 0) return catIdChildExpr;
-		CopyFrom(catIdChildExpr->resolving->items, genericItems);
-	}
-	else if (!templateKeyword)
-	{
-		if (tryGenericForEmptyResolving)
-		{
-			// TODO: This is not safe, need to evaluate the parent expression instead of just try
-			allowRollback = true;
-		}
-		else
-		{
-			return catIdChildExpr;
-		}
-	}
-
-
-	if (allowRollback)
-	{
-		auto oldCursor = cursor;
-		try
-		{
-			SkipToken(cursor);
-			return ParseGenericExprSkippedLT(pa, cursor, catIdChildExpr);
-		}
-		catch (const StopParsingException&)
-		{
-			cursor = oldCursor;
-			return catIdChildExpr;
-		}
-	}
-	else
-	{
-		SkipToken(cursor);
-		return ParseGenericExprSkippedLT(pa, cursor, catIdChildExpr);
-	}
-}
 
 Ptr<Expr> ParseNameOrCtorAccessExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
@@ -238,12 +309,16 @@ Ptr<Expr> ParseNameOrCtorAccessExpr(const ParsingArguments& pa, Ptr<CppTokenCurs
 		{
 			auto type = ParseLongType(pa, cursor);
 
-			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
+			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false))
 			{
-				bool templateKeyword = false;
-				if (auto expr = TryParseChildExpr(pa, type, templateKeyword, cursor))
+				// if we see ::, it has to be a ChildExpr of a type
+				if (auto baseType = type.Cast<Category_Id_Child_Generic_Root_Type>())
 				{
-					return TryParseGenericExpr(pa, cursor, expr, templateKeyword, false);
+					return TryParseGenericExpr(pa, baseType, cursor);
+				}
+				else
+				{
+					throw StopParsingException(cursor);
 				}
 			}
 
@@ -287,23 +362,28 @@ Ptr<Expr> ParseNameOrCtorAccessExpr(const ParsingArguments& pa, Ptr<CppTokenCurs
 	}
 GIVE_UP_CHILD_SYMBOL:
 
-	if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
+	if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false))
 	{
-		bool templateKeyword = false;
-		if (auto expr = TryParseChildExpr(pa, MakePtr<RootType>(), templateKeyword, cursor))
-		{
-			if (templateKeyword)
-			{
-				throw StopParsingException(cursor);
-			}
-			return TryParseGenericExpr(pa, cursor, expr, false, false);
-		}
+		// if we see ::, it has to be a ChildExpr of a global scope
+		return TryParseGenericExpr(pa, MakePtr<RootType>(), cursor);
 	}
 	else
 	{
 		if (auto expr = ParseIdExpr(pa, cursor))
 		{
-			return TryParseGenericExpr(pa, cursor, expr, false, false);
+			bool allowGenericPresence = false;
+			bool allowGenericAbsence = false;
+			CheckResolvingForGenericExpr(pa, expr->resolving, false, allowGenericPresence, allowGenericAbsence);
+
+			VariadicList<GenericArgument> genericArguments;
+			if (PrepareArgumentsForGenericExpr(pa, genericArguments, allowGenericPresence, allowGenericAbsence, cursor))
+			{
+
+			}
+			else
+			{
+				return expr;
+			}
 		}
 	}
 	throw StopParsingException(cursor);
@@ -438,10 +518,14 @@ Ptr<Category_Id_Child_Generic_Expr> ParseFieldAccessNameExpr(const ParsingArgume
 	{
 		auto type = ParseLongType(pa, cursor);
 		RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
-		bool templateKeyword = false;
-		if (auto childExpr = TryParseChildExpr(pa, type, templateKeyword, cursor))
+
+		if (auto baseType = type.Cast<Category_Id_Child_Generic_Root_Type>())
 		{
-			return TryParseGenericExpr(pa, cursor, childExpr, templateKeyword, false);
+			return TryParseGenericExpr(pa, baseType, cursor);
+		}
+		else
+		{
+			throw StopParsingException(cursor);
 		}
 	}
 	catch (const StopParsingException&)
@@ -454,7 +538,7 @@ Ptr<Category_Id_Child_Generic_Expr> ParseFieldAccessNameExpr(const ParsingArgume
 	{
 		throw StopParsingException(cursor);
 	}
-	return TryParseGenericExpr(pa, cursor, idExpr, false, true);
+	return TryParseGenericExpr(pa, idExpr, cursor);
 }
 
 Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
