@@ -207,17 +207,17 @@ namespace symbol_totsys_impl
 		if (!pStds) return;
 		if (pStds->Count() != 1) return;
 
-		auto pTis = pStds->Get(0)->TryGetChildren_NFb(L"type_info");
+		auto pTis = pStds->Get(0).childSymbol->TryGetChildren_NFb(L"type_info");
 		if (!pTis) return;
 
 		for (vint i = 0; i < pTis->Count(); i++)
 		{
-			auto ti = pTis->Get(i);
+			auto ti = pTis->Get(i).childSymbol.Obj();
 			switch (ti->kind)
 			{
 			case symbol_component::SymbolKind::Class:
 			case symbol_component::SymbolKind::Struct:
-				AddInternal(result, { nullptr,ExprTsysType::LValue,pa.tsys->DeclOf(ti.Obj()) });
+				AddInternal(result, { nullptr,ExprTsysType::LValue,pa.tsys->DeclOf(ti) });
 				return;
 			}
 		}

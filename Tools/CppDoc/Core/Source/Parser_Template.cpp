@@ -85,11 +85,11 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 			// add symbol
 			if (argument.name)
 			{
-				specSymbol->AddChild_NFb(argumentSymbol->name, argumentSymbol);
+				specSymbol->AddChild_NFb(argumentSymbol->name, nullptr, argumentSymbol);
 			}
 			else
 			{
-				specSymbol->AddChild_NFb(L"$", argumentSymbol);
+				specSymbol->AddChild_NFb(L"$GenericArg", nullptr, argumentSymbol);
 			}
 
 			if (TestToken(cursor, CppTokens::EQ))
@@ -168,11 +168,11 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 			// add symbol
 			if (argument.name)
 			{
-				specSymbol->AddChild_NFb(argumentSymbol->name, argumentSymbol);
+				specSymbol->AddChild_NFb(argumentSymbol->name, nullptr, argumentSymbol);
 			}
 			else
 			{
-				specSymbol->AddChild_NFb(L"$", argumentSymbol);
+				specSymbol->AddChild_NFb(L"$GenericArg", nullptr, argumentSymbol);
 			}
 		}
 		spec->arguments.Add(argument);

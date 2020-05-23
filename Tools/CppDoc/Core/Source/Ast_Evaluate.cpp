@@ -459,10 +459,18 @@ public:
 					auto pVars = classDecl->symbol->TryGetChildren_NFb(item.f0->name.name);
 					if (!pVars) goto SKIP_RESOLVING_FIELD;
 					if (pVars->Count() != 1) goto SKIP_RESOLVING_FIELD;
-					auto varSymbol = pVars->Get(0).Obj();
-					if (varSymbol->kind != symbol_component::SymbolKind::Variable) goto SKIP_RESOLVING_FIELD;
 
-					Resolving::AddSymbol(pa, item.f0->resolving, varSymbol);
+					auto& varSymbol = pVars->Get(0);
+					if (varSymbol.parentDeclType)
+					{
+						goto SKIP_RESOLVING_FIELD;
+					}
+					if (varSymbol.childSymbol->kind != symbol_component::SymbolKind::Variable)
+					{
+						goto SKIP_RESOLVING_FIELD;
+					}
+
+					Resolving::AddSymbol(pa, item.f0->resolving, varSymbol.childSymbol.Obj());
 				}
 			SKIP_RESOLVING_FIELD:;
 				ExprTsysList types;

@@ -124,7 +124,7 @@ void AddSymbolChildren(Symbol* symbol, List<Ptr<Symbol>>& existingChildren)
 	for (vint i = 0; i < existingChildren.Count(); i++)
 	{
 		auto child = existingChildren[i];
-		symbol->AddChildAndSetParent_NFb(child->name, child);
+		symbol->AddChildAndSetParent_NFb(child->name, nullptr, child);
 	}
 }
 
@@ -191,7 +191,7 @@ Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, const WString& decl
 	}
 	else
 	{
-		AddChildAndSetParent_NFb(symbol->name, symbol);
+		AddChildAndSetParent_NFb(symbol->name, nullptr, symbol);
 	}
 
 	_decl->symbol = symbol.Obj();
@@ -226,7 +226,7 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 		// if there are multiple symbols with the same name, then it could only be one enum/class/struct/union and one of other kind.
 		for (vint i = 0; i < pChildren->Count(); i++)
 		{
-			auto symbol = pChildren->Get(0).Obj();
+			auto symbol = pChildren->Get(0).childSymbol.Obj();
 			switch (symbol->kind)
 			{
 			case CSTYLE_TYPE_SYMBOL_KIND:
@@ -303,7 +303,7 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 			ReuseTemplateSpecSymbol(templateSpecSymbol, _category);
 			templateSpecSymbol->name = declName;
 			templateSpecSymbol->kind = kind;
-			AddChildAndSetParent_NFb(templateSpecSymbol->name, templateSpecSymbol);
+			AddChildAndSetParent_NFb(templateSpecSymbol->name, nullptr, templateSpecSymbol);
 			_decl->symbol = templateSpecSymbol.Obj();
 			return templateSpecSymbol.Obj();
 		}
@@ -628,7 +628,7 @@ void Symbol::SetClassMemberCacheForTemplateSpecScope_N(Ptr<symbol_component::Cla
 	categoryData.normal.classMemberCache = classMemberCache;
 }
 
-const List<Ptr<Symbol>>* Symbol::TryGetChildren_NFb(const WString& name)
+const List<symbol_component::ChildSymbol>* Symbol::TryGetChildren_NFb(const WString& name)
 {
 	const auto& children = GetChildren_NFb();
 	vint index = children.Keys().IndexOf(name);
@@ -636,23 +636,40 @@ const List<Ptr<Symbol>>* Symbol::TryGetChildren_NFb(const WString& name)
 	return &children.GetByIndex(index);
 }
 
-void Symbol::AddChild_NFb(const WString& name, const Ptr<Symbol>& child)
+void Symbol::AddChild_NFb(const WString& name, ITsys* parentDeclType, const Ptr<Symbol>& child)
 {
 	auto& children = const_cast<symbol_component::SymbolGroup&>(GetChildren_NFb());
-	children.Add(name, child);
+	symbol_component::ChildSymbol childSymbol(parentDeclType, child);
+
+	if (auto pSymbols = TryGetChildren_NFb(name))
+	{
+		if (pSymbols->Contains(childSymbol))
+		{
+			return;
+		}
+	}
+
+	children.Add(name, childSymbol);
 }
 
-void Symbol::AddChildAndSetParent_NFb(const WString& name, const Ptr<Symbol>& child)
+void Symbol::AddChildAndSetParent_NFb(const WString& name, ITsys* parentDeclType, const Ptr<Symbol>& child)
 {
-	AddChild_NFb(name, child);
+	AddChild_NFb(name, parentDeclType, child);
 	child->SetParent(this);
 }
 
 void Symbol::RemoveChildAndResetParent_NFb(const WString& name, Symbol* child)
 {
 	auto& children = const_cast<symbol_component::SymbolGroup&>(GetChildren_NFb());
+	if (child->GetParentScope() != this)
+	{
+		throw L"Only direct child can be removed!";
+	}
 	child->SetParent(nullptr);
-	children.Remove(name, child);
+	if (!children.Remove(name, { nullptr,child }))
+	{
+		throw L"Failed to remove!";
+	}
 }
 
 Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
@@ -666,7 +683,7 @@ Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
 	{
 		symbol->name = DecorateNameForSpecializationSpec(symbol->name, _decl->specializationSpec);
 	}
-	AddChildAndSetParent_NFb(symbol->name, symbol);
+	AddChildAndSetParent_NFb(symbol->name, nullptr, symbol);
 	return symbol.Obj();
 }
 
@@ -728,7 +745,7 @@ Symbol* Symbol::CreateStatSymbol_NFb(Ptr<Stat> _stat)
 	symbol->name = L"$";
 	symbol->kind = symbol_component::SymbolKind::Statement;
 	symbol->categoryData.normal.statement = _stat;
-	AddChildAndSetParent_NFb(symbol->name, symbol);
+	AddChildAndSetParent_NFb(symbol->name, nullptr, symbol);
 
 	_stat->symbol = symbol.Obj();
 	return symbol.Obj();

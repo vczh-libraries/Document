@@ -117,7 +117,21 @@ struct ResolveSymbolArguments
 AddSymbolToResolve
 ***********************************************************************/
 
-void AddSymbolToResolve(Ptr<Resolving>& resolving, ResolvedItem item)
+void AddSymbolToResolve(Ptr<Resolving>& resolving, ITsys* thisItem, Symbol* childSymbol)
+{
+	if (!resolving)
+	{
+		resolving = new Resolving;
+	}
+
+	ResolvedItem ritem(thisItem, childSymbol);
+	if (!resolving->items.Contains(ritem))
+	{
+		resolving->items.Add(ritem);
+	}
+}
+
+void AddSymbolToResolve(Ptr<Resolving>& resolving, ITsys* thisItem, const symbol_component::ChildSymbol& childSymbol)
 {
 	if (!resolving)
 	{
@@ -134,13 +148,13 @@ void AddSymbolToResolve(Ptr<Resolving>& resolving, ResolvedItem item)
 PickResolvedSymbols
 ***********************************************************************/
 
-void PickResolvedSymbols(ITsys* thisItem, const List<Ptr<Symbol>>* pSymbols, bool allowTemplateArgument, ResolveSymbolArguments& rsa)
+void PickResolvedSymbols(ITsys* thisItem, const List<symbol_component::ChildSymbol>* pSymbols, bool allowTemplateArgument, ResolveSymbolArguments& rsa)
 {
 	bool hasCStyleType = false;
 	bool hasOthers = false;
 	for (vint i = 0; i < pSymbols->Count(); i++)
 	{
-		auto symbol = pSymbols->Get(i).Obj();
+		auto symbol = pSymbols->Get(i).childSymbol.Obj();
 		switch (symbol->kind)
 		{
 		case symbol_component::SymbolKind::Enum:
@@ -179,13 +193,13 @@ void PickResolvedSymbols(ITsys* thisItem, const List<Ptr<Symbol>>* pSymbols, boo
 	{
 		for (vint i = 0; i < pSymbols->Count(); i++)
 		{
-			auto symbol = pSymbols->Get(i).Obj();
-			switch (symbol->kind)
+			auto& symbol = pSymbols->Get(i);
+			switch (symbol.childSymbol->kind)
 			{
 				// type symbols
 			case CSTYLE_TYPE_SYMBOL_KIND:
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.types, { thisItem, symbol });
+				AddSymbolToResolve(rsa.result.types, thisItem, symbol);
 				break;
 			}
 		}
@@ -195,14 +209,14 @@ void PickResolvedSymbols(ITsys* thisItem, const List<Ptr<Symbol>>* pSymbols, boo
 	{
 		for (vint i = 0; i < pSymbols->Count(); i++)
 		{
-			auto symbol = pSymbols->Get(i).Obj();
-			switch (symbol->kind)
+			auto& symbol = pSymbols->Get(i);
+			switch (symbol.childSymbol->kind)
 			{
 				// type symbols
 			case symbol_component::SymbolKind::TypeAlias:
 			case symbol_component::SymbolKind::Namespace:
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.types, { thisItem, symbol });
+				AddSymbolToResolve(rsa.result.types, thisItem, symbol);
 				break;
 
 				// value symbols
@@ -211,7 +225,7 @@ void PickResolvedSymbols(ITsys* thisItem, const List<Ptr<Symbol>>* pSymbols, boo
 			case symbol_component::SymbolKind::Variable:
 			case symbol_component::SymbolKind::ValueAlias:
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.values, { thisItem, symbol });
+				AddSymbolToResolve(rsa.result.values, thisItem, symbol);
 				break;
 
 				// template type argument
@@ -219,7 +233,7 @@ void PickResolvedSymbols(ITsys* thisItem, const List<Ptr<Symbol>>* pSymbols, boo
 				if (allowTemplateArgument)
 				{
 					rsa.found = true;
-					AddSymbolToResolve(rsa.result.types, { nullptr, symbol });
+					AddSymbolToResolve(rsa.result.types, nullptr, symbol);
 				}
 				break;
 
@@ -228,7 +242,7 @@ void PickResolvedSymbols(ITsys* thisItem, const List<Ptr<Symbol>>* pSymbols, boo
 				if (allowTemplateArgument)
 				{
 					rsa.found = true;
-					AddSymbolToResolve(rsa.result.values, { nullptr, symbol });
+					AddSymbolToResolve(rsa.result.values, nullptr, symbol);
 				}
 				break;
 			}
@@ -236,25 +250,25 @@ void PickResolvedSymbols(ITsys* thisItem, const List<Ptr<Symbol>>* pSymbols, boo
 	}
 }
 
-void PickTemplateArgumentSymbols(const List<Ptr<Symbol>>* pSymbols, ResolveSymbolArguments& rsa)
+void PickTemplateArgumentSymbols(const List<symbol_component::ChildSymbol>* pSymbols, ResolveSymbolArguments& rsa)
 {
 	if (!rsa.cStyleTypeReference)
 	{
 		for (vint i = 0; i < pSymbols->Count(); i++)
 		{
-			auto symbol = pSymbols->Get(i).Obj();
+			auto symbol = pSymbols->Get(i).childSymbol.Obj();
 			switch (symbol->kind)
 			{
 				// template type argument
 			case symbol_component::SymbolKind::GenericTypeArgument:
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.types, { nullptr, symbol });
+				AddSymbolToResolve(rsa.result.types, nullptr, symbol);
 				break;
 
 				// template value argument
 			case symbol_component::SymbolKind::GenericValueArgument:
 				rsa.found = true;
-				AddSymbolToResolve(rsa.result.values, { nullptr, symbol });
+				AddSymbolToResolve(rsa.result.values, nullptr, symbol);
 				break;
 			}
 		}
@@ -293,12 +307,12 @@ void ResolveSymbolInClassInternal(const ParsingArguments& pa, ITsys* tsys, ITsys
 							auto parentSymbol = classDecl->symbol->GetParentScope();
 							if (di.parentDeclType->GetDecl() == parentSymbol)
 							{
-								AddSymbolToResolve(rsa.result.types, { di.parentDeclType,classDecl->symbol });
+								AddSymbolToResolve(rsa.result.types, di.parentDeclType, classDecl->symbol);
 							}
 							else
 							{
 								auto parentClass = pa.tsys->DeclInstantOf(classDecl->symbol->GetParentScope(), nullptr, di.parentDeclType);
-								AddSymbolToResolve(rsa.result.types, { parentClass,classDecl->symbol });
+								AddSymbolToResolve(rsa.result.types, parentClass, classDecl->symbol);
 							}
 						}
 						else

@@ -126,7 +126,7 @@ namespace symbol_type_resolving
 			{
 				for (vint j = 0; j < pChildren->Count(); j++)
 				{
-					auto child = pChildren->Get(j).Obj();
+					auto child = pChildren->Get(j).childSymbol.Obj();
 					if (child->kind == symbol_component::SymbolKind::FunctionSymbol)
 					{
 						VisitSymbol(pa, { nullptr,child }, result);

@@ -141,7 +141,33 @@ namespace symbol_component
 		Function,
 	};
 
-	using SymbolGroup = Group<WString, Ptr<Symbol>>;
+	struct ChildSymbol
+	{
+		// for symbol that is not imported from other types
+		ITsys*										parentDeclType = nullptr;
+		Ptr<Symbol>									childSymbol = nullptr;
+
+		ChildSymbol() = default;
+
+		ChildSymbol(ITsys* _parentDeclType, Ptr<Symbol> _childSymbol)
+			:parentDeclType(_parentDeclType)
+			, childSymbol(_childSymbol)
+		{
+		}
+
+		static vint Compare(const ChildSymbol& a, const ChildSymbol& b)
+		{
+			if (a.parentDeclType < b.parentDeclType) return -1;
+			if (a.parentDeclType > b.parentDeclType) return 1;
+			if (a.childSymbol < b.childSymbol) return -1;
+			if (a.childSymbol > b.childSymbol) return 1;
+			return 0;
+		}
+
+		DEFINE_COMPLETE_COMPARISON_OPERATOR(ChildSymbol)
+	};
+
+	using SymbolGroup = Group<WString, ChildSymbol>;
 
 	// classes and value aliases cannot overload, all FunctionBodySymbol of the same signature has been put under the same FunctionSymbol
 	// so psPrimary does not need to be a list
@@ -262,9 +288,9 @@ public:
 	void											AddPSParent_NF(Symbol* newParent);			//	Normal					Function
 
 	void											SetClassMemberCacheForTemplateSpecScope_N(Ptr<symbol_component::ClassMemberCache> classMemberCache);
-	const List<Ptr<Symbol>>*						TryGetChildren_NFb(const WString& name);
-	void											AddChild_NFb(const WString& name, const Ptr<Symbol>& child);
-	void											AddChildAndSetParent_NFb(const WString& name, const Ptr<Symbol>& child);
+	const List<symbol_component::ChildSymbol>*		TryGetChildren_NFb(const WString& name);
+	void											AddChild_NFb(const WString& name, ITsys* parentDeclType, const Ptr<Symbol>& child);
+	void											AddChildAndSetParent_NFb(const WString& name, ITsys* parentDeclType, const Ptr<Symbol>& child);
 	void											RemoveChildAndResetParent_NFb(const WString& name, Symbol* child);
 
 	template<typename T>

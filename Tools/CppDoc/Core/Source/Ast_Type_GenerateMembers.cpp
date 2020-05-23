@@ -31,67 +31,72 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, ITsys*
 		break;
 	}
 
-	auto pMembers = classSymbol->TryGetChildren_NFb(memberName);
-	if (!pMembers) return nullptr;
-	for (vint i = 0; i < pMembers->Count(); i++)
+	if (auto pMembers = classSymbol->TryGetChildren_NFb(memberName))
 	{
-		auto member = pMembers->Get(i).Obj();
-		auto forwardFunc = member->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-		if (!forwardFunc) continue;
-		if (symbol_type_resolving::IsStaticSymbol<ForwardFunctionDeclaration>(member)) continue;
-
-		auto& types = symbol_type_resolving::EvaluateFuncSymbol(pa, forwardFunc.Obj(), nullptr, nullptr);
-		for (vint j = 0; j < types.Count(); j++)
+		for (vint i = 0; i < pMembers->Count(); i++)
 		{
-			auto funcType = types[j];
-			if (funcType->GetType() != TsysType::Function)
+			auto& childSymbol = pMembers->Get(i);
+			if (!childSymbol.parentDeclType)
 			{
-				continue;
-			}
+				auto member = childSymbol.childSymbol.Obj();
+				auto forwardFunc = member->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+				if (!forwardFunc) continue;
+				if (symbol_type_resolving::IsStaticSymbol<ForwardFunctionDeclaration>(member)) continue;
 
-			switch (kind)
-			{
-			case SpecialMemberKind::DefaultCtor:
-			case SpecialMemberKind::Dtor:
-				if (funcType->GetParamCount() == 0)
+				auto& types = symbol_type_resolving::EvaluateFuncSymbol(pa, forwardFunc.Obj(), nullptr, nullptr);
+				for (vint j = 0; j < types.Count(); j++)
 				{
-					return member;
-				}
-				break;
-			case SpecialMemberKind::CopyCtor:
-			case SpecialMemberKind::CopyAssignOp:
-				if (funcType->GetParamCount() == 1)
-				{
-					auto paramType = funcType->GetParam(0);
-					TsysCV cv;
-					TsysRefType refType;
-					auto entity = paramType->GetEntity(cv, refType);
-					if (refType == TsysRefType::LRef)
+					auto funcType = types[j];
+					if (funcType->GetType() != TsysType::Function)
 					{
-						if (entity == classType)
+						continue;
+					}
+
+					switch (kind)
+					{
+					case SpecialMemberKind::DefaultCtor:
+					case SpecialMemberKind::Dtor:
+						if (funcType->GetParamCount() == 0)
 						{
 							return member;
 						}
-					}
-				}
-				break;
-			case SpecialMemberKind::MoveCtor:
-			case SpecialMemberKind::MoveAssignOp:
-				if (funcType->GetParamCount() == 1)
-				{
-					auto paramType = funcType->GetParam(0);
-					TsysCV cv;
-					TsysRefType refType;
-					auto entity = paramType->GetEntity(cv, refType);
-					if (refType == TsysRefType::RRef)
-					{
-						if (entity == classType)
+						break;
+					case SpecialMemberKind::CopyCtor:
+					case SpecialMemberKind::CopyAssignOp:
+						if (funcType->GetParamCount() == 1)
 						{
-							return member;
+							auto paramType = funcType->GetParam(0);
+							TsysCV cv;
+							TsysRefType refType;
+							auto entity = paramType->GetEntity(cv, refType);
+							if (refType == TsysRefType::LRef)
+							{
+								if (entity == classType)
+								{
+									return member;
+								}
+							}
 						}
+						break;
+					case SpecialMemberKind::MoveCtor:
+					case SpecialMemberKind::MoveAssignOp:
+						if (funcType->GetParamCount() == 1)
+						{
+							auto paramType = funcType->GetParam(0);
+							TsysCV cv;
+							TsysRefType refType;
+							auto entity = paramType->GetEntity(cv, refType);
+							if (refType == TsysRefType::RRef)
+							{
+								if (entity == classType)
+								{
+									return member;
+								}
+							}
+						}
+						break;
 					}
 				}
-				break;
 			}
 		}
 	}

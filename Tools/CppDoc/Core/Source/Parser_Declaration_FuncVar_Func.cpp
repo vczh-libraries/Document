@@ -6,27 +6,31 @@ using namespace partial_specification_ordering;
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<symbol_component::ClassMemberCache> cache, Ptr<ForwardFunctionDeclaration> decl, const List<Ptr<Symbol>>& candidates, Ptr<CppTokenCursor>& cursor)
+Symbol* SearchForFunctionWithSameSignature(Symbol* context, Ptr<symbol_component::ClassMemberCache> cache, Ptr<ForwardFunctionDeclaration> decl, const List<symbol_component::ChildSymbol>& candidates, Ptr<CppTokenCursor>& cursor)
 {
 	for (vint i = 0; i < candidates.Count(); i++)
 	{
-		auto symbol = candidates[i].Obj();
-		switch (symbol->kind)
+		auto& candidate = candidates[i];
+		if (!candidate.parentDeclType)
 		{
-		case symbol_component::SymbolKind::FunctionSymbol:
+			auto symbol = candidate.childSymbol.Obj();
+			switch (symbol->kind)
 			{
-				auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-				if (IsCompatibleFunctionDeclInSameScope(cache, decl, declToCompare))
+			case symbol_component::SymbolKind::FunctionSymbol:
 				{
-					return symbol;
+					auto declToCompare = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+					if (IsCompatibleFunctionDeclInSameScope(cache, decl, declToCompare))
+					{
+						return symbol;
+					}
 				}
+				break;
+			case CSTYLE_TYPE_SYMBOL_KIND:
+				// function can only override enum/class/struct/union
+				break;
+			default:
+				throw StopParsingException(cursor);
 			}
-			break;
-		case CSTYLE_TYPE_SYMBOL_KIND:
-			// function can only override enum/class/struct/union
-			break;
-		default:
-			throw StopParsingException(cursor);
 		}
 	}
 	return nullptr;

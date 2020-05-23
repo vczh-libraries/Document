@@ -99,51 +99,14 @@ void ParseDeclaration_UsingMember(const ParsingArguments& pa, Ptr<CppTokenCursor
 	{
 		auto rawSymbolPtr = resolving->items[i].symbol;
 		auto pSiblings = rawSymbolPtr->GetParentScope()->TryGetChildren_NFb(rawSymbolPtr->name);
-		auto symbol = pSiblings->Get(pSiblings->IndexOf(rawSymbolPtr));
 
-		switch (symbol->kind)
+		for (vint j = 0; j < pSiblings->Count(); j++)
 		{
-		case symbol_component::SymbolKind::Enum:
-		case symbol_component::SymbolKind::Class:
-		case symbol_component::SymbolKind::Struct:
-		case symbol_component::SymbolKind::Union:
-		case symbol_component::SymbolKind::TypeAlias:
-		case symbol_component::SymbolKind::EnumItem:
-		case symbol_component::SymbolKind::Variable:
-		case symbol_component::SymbolKind::ValueAlias:
+			auto& cs = pSiblings->Get(j);
+			if (cs.childSymbol == rawSymbolPtr)
 			{
-				if (auto pChildren = pa.scopeSymbol->TryGetChildren_NFb(symbol->name))
-				{
-					if (!pChildren->Contains(symbol.Obj()))
-					{
-						throw StopParsingException(cursor);
-					}
-				}
-				else
-				{
-					pa.scopeSymbol->AddChild_NFb(symbol->name, symbol);
-				}
+				pa.scopeSymbol->AddChild_NFb(cs.childSymbol->name, cs.parentDeclType, cs.childSymbol);
 			}
-			break;
-		case symbol_component::SymbolKind::FunctionSymbol:
-			{
-				if (auto pChildren = pa.scopeSymbol->TryGetChildren_NFb(symbol->name))
-				{
-					if (pChildren->Contains(symbol.Obj()))
-					{
-						goto SKIP_USING;
-					}
-					if (pChildren->Get(0)->kind != symbol_component::SymbolKind::FunctionSymbol)
-					{
-						throw StopParsingException(cursor);
-					}
-				}
-				pa.scopeSymbol->AddChild_NFb(symbol->name, symbol);
-			SKIP_USING:;
-			}
-			break;
-		default:
-			throw StopParsingException(cursor);
 		}
 	}
 }

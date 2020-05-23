@@ -237,12 +237,12 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 			for (vint i = 0; i < contextChildren.Count(); i++)
 			{
 				// variable doesn't override, so here just look at the first symbol
-				auto child = contextChildren.GetByIndex(i)[0];
-				if (pa.scopeSymbol->TryGetChildren_NFb(child->name))
+				auto& child = contextChildren.GetByIndex(i)[0];
+				if (pa.scopeSymbol->TryGetChildren_NFb(child.childSymbol->name))
 				{
 					throw StopParsingException(cursor);
 				}
-				pa.scopeSymbol->AddChildAndSetParent_NFb(child->name, child);
+				pa.scopeSymbol->AddChildAndSetParent_NFb(child.childSymbol->name, nullptr, child.childSymbol);
 			}
 			pa.scopeSymbol->RemoveChildAndResetParent_NFb(classContextSymbol->name, classContextSymbol);
 

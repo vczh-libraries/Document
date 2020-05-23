@@ -80,11 +80,16 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 
 			if (!enumClass)
 			{
+				auto tsysEnum = pa.tsys->DeclOf(contextSymbol);
 				if (pa.scopeSymbol->TryGetChildren_NFb(enumItem->name.name))
 				{
 					throw StopParsingException(cursor);
 				}
-				pa.scopeSymbol->AddChild_NFb(enumItem->name.name, contextSymbol->TryGetChildren_NFb(enumItem->name.name)->Get(0));
+				pa.scopeSymbol->AddChild_NFb(
+					enumItem->name.name,
+					tsysEnum,
+					contextSymbol->TryGetChildren_NFb(enumItem->name.name)->Get(0).childSymbol
+				);
 			}
 
 			if (TestToken(cursor, CppTokens::EQ))

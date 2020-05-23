@@ -228,10 +228,13 @@ namespace partial_specification_ordering
 			if (!candidates) throw StopParsingException(cursor);
 			for (vint i = 0; i < candidates->Count(); i++)
 			{
-				auto candidate = candidates->Get(i).Obj();
-				if (CheckPSPrimary<TDecl>(pa, decl, symbol, candidate))
+				auto& candidate = candidates->Get(i);
+				if (!candidate.parentDeclType)
 				{
-					break;
+					if (CheckPSPrimary<TDecl>(pa, decl, symbol, candidate.childSymbol.Obj()))
+					{
+						break;
+					}
 				}
 			}
 		}

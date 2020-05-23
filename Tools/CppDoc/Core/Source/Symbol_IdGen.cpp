@@ -341,7 +341,7 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 				auto& symbols = children.GetByIndex(i);
 				for (vint j = 0; j < symbols.Count(); j++)
 				{
-					auto symbol = symbols[j];
+					auto symbol = symbols[j].childSymbol;
 					// skip some copied enum item symbols
 					if (symbol->GetParentScope() == this)
 					{
