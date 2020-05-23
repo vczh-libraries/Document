@@ -610,6 +610,89 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 ParsePrefixUnaryExpr
 ***********************************************************************/
 
+Ptr<Expr> ParseNewExpr(const ParsingArguments& pa, bool globalOperator, Ptr<CppTokenCursor>& cursor)
+{
+	auto newExpr = MakePtr<NewExpr>();
+	newExpr->globalOperator = globalOperator;
+	if (TestToken(cursor, CppTokens::LPARENTHESIS))
+	{
+		while (true)
+		{
+			auto argument = ParseExpr(pa, pea_Argument(), cursor);
+			bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+			newExpr->placementArguments.Add({ argument,isVariadic });
+			if (TestToken(cursor, CppTokens::RPARENTHESIS))
+			{
+				break;
+			}
+			else
+			{
+				RequireToken(cursor, CppTokens::COMMA);
+			}
+		}
+	}
+
+	newExpr->type = ParseLongType(pa, cursor);
+	if (TestToken(cursor, CppTokens::LPARENTHESIS, false) || TestToken(cursor, CppTokens::LBRACE, false))
+	{
+		auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
+		SkipToken(cursor);
+
+		newExpr->initializer = MakePtr<Initializer>();
+		newExpr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? CppInitializerType::Constructor : CppInitializerType::Universal;
+
+		if (!TestToken(cursor, closeToken))
+		{
+			while (true)
+			{
+				auto argument = ParseExpr(pa, pea_Argument(), cursor);
+				bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+				newExpr->initializer->arguments.Add({ argument,isVariadic });
+				if (TestToken(cursor, closeToken))
+				{
+					break;
+				}
+				else if (!TestToken(cursor, CppTokens::COMMA))
+				{
+					throw StopParsingException(cursor);
+				}
+			}
+		}
+	}
+	else if (TestToken(cursor, CppTokens::LBRACKET, false))
+	{
+		List<Ptr<Expr>> sizeExprs;
+		while (TestToken(cursor, CppTokens::LBRACKET))
+		{
+			sizeExprs.Add(ParseExpr(pa, pea_Full(), cursor));
+			RequireToken(cursor, CppTokens::RBRACKET);
+		}
+
+		for (vint i = sizeExprs.Count() - 1; i >= 0; i--)
+		{
+			auto arrayType = MakePtr<ArrayType>();
+			arrayType->type = newExpr->type;
+			arrayType->expr = sizeExprs[i];
+			newExpr->type = arrayType;
+		}
+	}
+	return newExpr;
+}
+
+Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+
+Ptr<Expr> ParseDeleteExpr(const ParsingArguments& pa, bool globalOperator, Ptr<CppTokenCursor>& cursor)
+{
+	auto newExpr = MakePtr<DeleteExpr>();
+	newExpr->globalOperator = globalOperator;
+	if ((newExpr->arrayDelete = TestToken(cursor, CppTokens::LBRACKET)))
+	{
+		RequireToken(cursor, CppTokens::RBRACKET);
+	}
+	newExpr->expr = ParsePrefixUnaryExpr(pa, cursor);
+	return newExpr;
+}
+
 Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	if (TestToken(cursor, CppTokens::EXPR_SIZEOF))
@@ -656,83 +739,32 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	}
 	else if (TestToken(cursor, CppTokens::NEW))
 	{
-		auto newExpr = MakePtr<NewExpr>();
-		if (TestToken(cursor, CppTokens::LPARENTHESIS))
-		{
-			while (true)
-			{
-				auto argument = ParseExpr(pa, pea_Argument(), cursor);
-				bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
-				newExpr->placementArguments.Add({ argument,isVariadic });
-				if (TestToken(cursor, CppTokens::RPARENTHESIS))
-				{
-					break;
-				}
-				else
-				{
-					RequireToken(cursor, CppTokens::COMMA);
-				}
-			}
-		}
-
-		newExpr->type = ParseLongType(pa, cursor);
-		if (TestToken(cursor, CppTokens::LPARENTHESIS, false) || TestToken(cursor, CppTokens::LBRACE, false))
-		{
-			auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
-			SkipToken(cursor);
-
-			newExpr->initializer = MakePtr<Initializer>();
-			newExpr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? CppInitializerType::Constructor : CppInitializerType::Universal;
-
-			if (!TestToken(cursor, closeToken))
-			{
-				while (true)
-				{
-					auto argument = ParseExpr(pa, pea_Argument(), cursor);
-					bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
-					newExpr->initializer->arguments.Add({ argument,isVariadic });
-					if (TestToken(cursor, closeToken))
-					{
-						break;
-					}
-					else if (!TestToken(cursor, CppTokens::COMMA))
-					{
-						throw StopParsingException(cursor);
-					}
-				}
-			}
-		}
-		else if (TestToken(cursor, CppTokens::LBRACKET, false))
-		{
-			List<Ptr<Expr>> sizeExprs;
-			while (TestToken(cursor, CppTokens::LBRACKET))
-			{
-				sizeExprs.Add(ParseExpr(pa, pea_Full(), cursor));
-				RequireToken(cursor, CppTokens::RBRACKET);
-			}
-
-			for (vint i = sizeExprs.Count() - 1; i >= 0; i--)
-			{
-				auto arrayType = MakePtr<ArrayType>();
-				arrayType->type = newExpr->type;
-				arrayType->expr = sizeExprs[i];
-				newExpr->type = arrayType;
-			}
-		}
-		return newExpr;
+		return ParseNewExpr(pa, false, cursor);
 	}
 	else if (TestToken(cursor, CppTokens::DELETE))
 	{
-		auto newExpr = MakePtr<DeleteExpr>();
-		if ((newExpr->arrayDelete = TestToken(cursor, CppTokens::LBRACKET)))
-		{
-			RequireToken(cursor, CppTokens::RBRACKET);
-		}
-		newExpr->expr = ParsePrefixUnaryExpr(pa, cursor);
-		return newExpr;
+		return ParseDeleteExpr(pa, false, cursor);
 	}
 	else
 	{
+		{
+			auto oldCursor = cursor;
+			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
+			{
+				if (TestToken(cursor, CppTokens::NEW))
+				{
+					return ParseNewExpr(pa, true, cursor);
+				}
+				else if (TestToken(cursor, CppTokens::DELETE))
+				{
+					return ParseDeleteExpr(pa, true, cursor);
+				}
+				else
+				{
+					cursor = oldCursor;
+				}
+			}
+		}
 		{
 			auto oldCursor = cursor;
 			try

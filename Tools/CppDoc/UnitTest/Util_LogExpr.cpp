@@ -107,6 +107,10 @@ public:
 
 	void Visit(DeleteExpr* self)override
 	{
+		if (self->globalOperator)
+		{
+			writer.WriteString(L"::");
+		}
 		writer.WriteString(self->arrayDelete ? L"delete[] (" : L"delete (");
 		self->expr->Accept(this);
 		writer.WriteString(L")");
@@ -180,6 +184,10 @@ public:
 
 	void Visit(NewExpr* self)override
 	{
+		if (self->globalOperator)
+		{
+			writer.WriteString(L"::");
+		}
 		writer.WriteString(L"new ");
 		if (self->placementArguments.Count() > 0)
 		{

@@ -154,6 +154,7 @@ class DeleteExpr : public Expr
 public:
 	IExprVisitor_ACCEPT;
 
+	bool							globalOperator = false;
 	bool							arrayDelete = false;
 	Ptr<Expr>						expr;
 };
@@ -232,6 +233,7 @@ class NewExpr : public CtorAccessExpr
 public:
 	IExprVisitor_ACCEPT;
 
+	bool							globalOperator = false;
 	VariadicList<Ptr<Expr>>			placementArguments;
 };
 

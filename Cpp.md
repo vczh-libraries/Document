@@ -24,8 +24,6 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (STL)
-  - [ ] `::new`
-  - [ ] `::delete`
   - [ ] Test cases
     - [ ] type alias recursion
     - [ ] value alias recursion
