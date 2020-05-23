@@ -23,10 +23,6 @@
       - `__builtin_nansf(...)` -> float
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
-- [ ] Next Demo! (STL)
-  - [ ] Test cases
-    - [ ] type alias recursion
-    - [ ] value alias recursion
 - [ ] Next Demo! (Calculator)
   - [ ] Refactor the HTML generation part to becomes a library.
   - [ ] Check carefully around all links.
@@ -36,6 +32,10 @@
     - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
     - [ ] `expr->Accept` should have 3 links.
 - [ ] Lambda expressions.
+- [ ] Next Demo! (STL)
+  - [ ] Test cases
+    - [ ] type alias recursion
+    - [ ] value alias recursion
 - [ ] Next Demo! (Vlpp)
   - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
   - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
