@@ -139,6 +139,7 @@ Others
 	F(HEX,						L"0[xX][0-9a-fA-F]+("	CPP_NUMBER_POSTFIX	L")?")	\
 	F(BIN,						L"0[bB][01]+("			CPP_NUMBER_POSTFIX	L")?")	\
 	F(FLOAT,					L"(/d+.|./d+|/d+./d+)([eE][+/-]?/d+)?[fFlL]?")		\
+	F(MACRO_LPREFIX,			L"__LPREFIX/s*/(/s*/w+/s*/)")						\
 	F(STRING,					L"([uUL]|u8)?\"([^/\\\"]|/\\/.)*\"")				\
 	F(CHAR,						L"([uUL]|u8)?'([^/\\']|/\\/.)*'")					\
 	F(ID,						L"[a-zA-Z_][a-zA-Z0-9_]*")							\

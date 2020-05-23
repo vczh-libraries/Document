@@ -92,6 +92,7 @@ namespace symbol_totsys_impl
 				}
 			}
 			return;
+		case CppTokens::MACRO_LPREFIX:
 		case CppTokens::STRING:
 		case CppTokens::CHAR:
 			{
@@ -101,8 +102,9 @@ namespace symbol_totsys_impl
 				{
 					tsysChar = pa.tsys->PrimitiveOf({ TsysPrimitiveType::SChar,TsysBytes::_1 });
 				}
-				else if (reading[0] == L'L')
+				else if (reading[0] == L'L' || reading[0] == L'_')
 				{
+					// _ means __LPREFIX
 					tsysChar = pa.tsys->PrimitiveOf({ TsysPrimitiveType::UWChar,TsysBytes::_2 });
 				}
 				else if (reading[0] == L'U')

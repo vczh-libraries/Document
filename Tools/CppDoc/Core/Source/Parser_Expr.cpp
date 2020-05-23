@@ -332,10 +332,16 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				SkipToken(cursor);
 				return literal;
 			}
+		case CppTokens::MACRO_LPREFIX:
 		case CppTokens::STRING:
 			{
 				auto literal = MakePtr<LiteralExpr>();
-				while (cursor && (CppTokens)cursor->token.token == CppTokens::STRING)
+				while (
+					cursor && (
+						(CppTokens)cursor->token.token == CppTokens::MACRO_LPREFIX ||
+						(CppTokens)cursor->token.token == CppTokens::STRING
+						)
+					)
 				{
 					literal->tokens.Add(cursor->token);
 					SkipToken(cursor);

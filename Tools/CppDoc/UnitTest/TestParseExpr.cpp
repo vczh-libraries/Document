@@ -95,6 +95,18 @@ TEST_FILE
 		AssertExpr(L"u\"x\"",		L"u\"x\"",		L"char16_t const [] & $L"	);
 		AssertExpr(L"U\"x\"",		L"U\"x\"",		L"char32_t const [] & $L"	);
 		AssertExpr(L"u8\"x\"",		L"u8\"x\"",		L"char const [] & $L"		);
+
+		AssertExpr(
+			L"__LPREFIX(__FUNCTION__)",
+			L"__LPREFIX(__FUNCTION__)",
+			L"wchar_t const [] & $L"
+			);
+
+		AssertExpr(
+			L"L\"x\"  __LPREFIX(  __FUNCTION__  )  L\"y\"",
+			L"L\"x\" __LPREFIX(  __FUNCTION__  ) L\"y\"",
+			L"wchar_t const [] & $L"
+		);
 	});
 
 	TEST_CATEGORY(L"Names")
