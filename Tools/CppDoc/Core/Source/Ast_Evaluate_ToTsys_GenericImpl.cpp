@@ -41,10 +41,6 @@ namespace symbol_totsys_impl
 		{
 			AddExprTsysItemToResult(result, GetExprTsysItem(pa.tsys->Any()));
 		}
-		else
-		{
-			throw TypeCheckerException();
-		}
 	}
 
 	void UseTsys(ExprTsysList& result, Symbol* symbol, ITsys* tsys)

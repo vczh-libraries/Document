@@ -450,7 +450,7 @@ struct W
 {
 	static const auto Z1 = A::Y1::Z1;
 	static const auto Z2 = B::template Y2<double>::Z2;
-}
+};
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
