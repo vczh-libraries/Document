@@ -417,6 +417,21 @@ using namespace std;
 
 		AssertExpr(pa, L"delete 0",								L"delete (0)",											L"void $PR"						);
 		AssertExpr(pa, L"delete [] 0",							L"delete[] (0)",										L"void $PR"						);
+
+		AssertExpr(pa, L"::new type_info",						L"::new type_info",										L"::std::type_info * $PR"		);
+		AssertExpr(pa, L"::new type_info(0)",					L"::new type_info(0)",									L"::std::type_info * $PR"		);
+		AssertExpr(pa, L"::new type_info{0}",					L"::new type_info{0}",									L"::std::type_info * $PR"		);
+		AssertExpr(pa, L"::new(0)type_info",					L"::new (0) type_info",									L"::std::type_info * $PR"		);
+		AssertExpr(pa, L"::new(0,1)type_info(0,1)",				L"::new (0, 1) type_info(0, 1)",						L"::std::type_info * $PR"		);
+		AssertExpr(pa, L"::new(0,1)type_info{0,1}",				L"::new (0, 1) type_info{0, 1}",						L"::std::type_info * $PR"		);
+
+		AssertExpr(pa, L"::new type_info[10]",					L"::new type_info [10]",								L"::std::type_info * $PR"		);
+		AssertExpr(pa, L"::new (0)type_info[10]",				L"::new (0) type_info [10]",							L"::std::type_info * $PR"		);
+		AssertExpr(pa, L"::new (0,1)type_info[10,20]",			L"::new (0, 1) type_info [(10 , 20)]",					L"::std::type_info * $PR"		);
+		AssertExpr(pa, L"::new (0,1)type_info[10][20][30]",		L"::new (0, 1) type_info [30] [20] [10]",				L"::std::type_info [,] * $PR"	);
+
+		AssertExpr(pa, L"::delete 0",							L"::delete (0)",										L"void $PR"						);
+		AssertExpr(pa, L"::delete [] 0",						L"::delete[] (0)",										L"void $PR"						);
 	});
 
 	TEST_CATEGORY(L"Universal initializations")
