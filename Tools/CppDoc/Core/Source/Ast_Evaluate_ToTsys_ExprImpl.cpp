@@ -35,26 +35,44 @@ namespace symbol_totsys_impl
 
 					while (reading < end)
 					{
-						if (L'1' <= *reading && *reading <= L'9')
+						if (L'1' <= *reading && *reading <= L'9' || L'a' <= *reading && *reading <= L'f' || L'A' <= *reading && *reading <= L'F')
 						{
 							goto NOT_ZERO;
 						}
-						reading++;
+						else if (*reading != L'0')
+						{
+							break;
+						}
+						else
+						{
+							reading++;
+						}
 					}
 
 					AddTempValue(result, pa.tsys->Zero());
 					return;
 				}
 			NOT_ZERO:
+				if (token.length > 4 && wcsncmp(token.reading + token.length - 4, L"ui64", 4) == 0)
+				{
+					AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,TsysBytes::_8 }));
+				}
+				else if (token.length > 3 && wcsncmp(token.reading + token.length - 3, L"i64", 3) == 0)
+				{
+					AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,TsysBytes::_8 }));
+				}
+				else
+				{
 #define COUNT_CHAR(NUM, UC, LC) ((_##NUM == UC || _##NUM == LC) ? 1 : 0)
 #define COUNT_U(NUM) COUNT_CHAR(NUM, L'u', L'U')
 #define COUNT_L(NUM) COUNT_CHAR(NUM, L'l', L'L')
-				wchar_t _1 = token.length > 2 ? token.reading[token.length - 3] : 0;
-				wchar_t _2 = token.length > 1 ? token.reading[token.length - 2] : 0;
-				wchar_t _3 = token.reading[token.length - 1];
-				vint us = COUNT_U(1) + COUNT_U(2) + COUNT_U(3);
-				vint ls = COUNT_L(1) + COUNT_L(2) + COUNT_L(3);
-				AddTempValue(result, pa.tsys->PrimitiveOf({ (us > 0 ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),{ls > 1 ? TsysBytes::_8 : TsysBytes::_4} }));
+					wchar_t _1 = token.length > 2 ? token.reading[token.length - 3] : 0;
+					wchar_t _2 = token.length > 1 ? token.reading[token.length - 2] : 0;
+					wchar_t _3 = token.reading[token.length - 1];
+					vint us = COUNT_U(1) + COUNT_U(2) + COUNT_U(3);
+					vint ls = COUNT_L(1) + COUNT_L(2) + COUNT_L(3);
+					AddTempValue(result, pa.tsys->PrimitiveOf({ (us > 0 ? TsysPrimitiveType::UInt : TsysPrimitiveType::SInt),(ls > 1 ? TsysBytes::_8 : TsysBytes::_4) }));
+				}
 #undef COUNT_CHAR
 #undef COUNT_U
 #undef COUNT_L
