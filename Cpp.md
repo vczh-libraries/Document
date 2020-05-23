@@ -25,6 +25,9 @@
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (STL)
   - [ ] Test cases
+    - [ ] `GenericArg::Type::Value`
+      - In `ParseNameOrCtorAccessExpr`, after `ParseLongType(pa, cursor)`, there should be a loop to loop through all future levels of `::`, and build `ChildType` or `ChildExpr` accordingly.
+      - Cannot just stop at one `::`, since without the `typename` keyword, `ParseLongType` will stops before the first unknown type symbol.
     - [ ] type alias recursion
     - [ ] value alias recursion
 - [ ] Next Demo! (Calculator)
