@@ -187,7 +187,11 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 			auto& children = context->GetChildren_NFb().GetByIndex(i);
 			for (vint j = 0; j < children.Count(); j++)
 			{
-				GenerateSymbolIndexForFileGroup(global, writer, fileGroupPrefix, indentation + 1, children[j].Obj(), !isRoot, printedChildNextLevel);
+				auto& childSymbol = children[j];
+				if (!childSymbol.childExpr && !childSymbol.childType)
+				{
+					GenerateSymbolIndexForFileGroup(global, writer, fileGroupPrefix, indentation + 1, childSymbol.childSymbol.Obj(), !isRoot, printedChildNextLevel);
+				}
 			}
 		}
 		if (printedChildNextLevel)

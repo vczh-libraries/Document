@@ -45,7 +45,7 @@ TEST_FILE
 			);
 			CopyFrom(
 				fs,
-				From(pa.root->TryGetChildren_NFb(L"C")->Get(0)->GetImplDecl_NFb<ClassDeclaration>()->decls)
+				From(pa.root->TryGetChildren_NFb(L"C")->Get(0).childSymbol->GetImplDecl_NFb<ClassDeclaration>()->decls)
 				.Select([](Tuple<CppClassAccessor, Ptr<Declaration>> t) {return t.f1; })
 				.Where([](Ptr<Declaration> decl) {return decl->name.name == L"F"; }),
 				true
@@ -115,7 +115,7 @@ TEST_FILE
 			);
 			CopyFrom(
 				fs,
-				From(pa.root->TryGetChildren_NFb(L"C")->Get(0)->GetImplDecl_NFb<ClassDeclaration>()->decls)
+				From(pa.root->TryGetChildren_NFb(L"C")->Get(0).childSymbol->GetImplDecl_NFb<ClassDeclaration>()->decls)
 				.Select([](Tuple<CppClassAccessor, Ptr<Declaration>> t) {return t.f1; })
 				.Where([](Ptr<Declaration> decl) {return decl->name.name == L"F"; }),
 				true
@@ -229,7 +229,7 @@ struct X;
 		TEST_CASE(L"Checking connections")
 		{
 			TEST_ASSERT(pa.root->TryGetChildren_NFb(L"X")->Count() == 1);
-			auto symbol = pa.root->TryGetChildren_NFb(L"X")->Get(0);
+			auto symbol = pa.root->TryGetChildren_NFb(L"X")->Get(0).childSymbol;
 
 			TEST_ASSERT(symbol->GetImplDecl_NFb<ClassDeclaration>());
 			TEST_ASSERT(symbol->GetForwardDecls_N().Count() == 4);
@@ -291,18 +291,18 @@ namespace ns
 			using Item = Tuple<CppClassAccessor, Ptr<Declaration>>;
 			List<Ptr<Declaration>> inClassMembers;
 			auto& inClassMembersUnfiltered = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			CopyFrom(inClassMembers, From(inClassMembersUnfiltered).Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; }));
 			TEST_ASSERT(inClassMembers.Count() == 8);
 
 			auto& outClassMembers = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
 				->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
 			TEST_ASSERT(outClassMembers.Count() == 8);
 

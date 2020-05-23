@@ -281,10 +281,10 @@ const Z<int, double>* const pcz;
 
 	auto TestParseGenericMember_InsideFunction = [](const ParsingArguments& pa, const WString& className, const WString& methodName)
 	{
-		auto classSymbol = pa.scopeSymbol->TryGetChildren_NFb(className)->Get(0);
-		auto functionSymbol = classSymbol->TryGetChildren_NFb(methodName)->Get(0);
+		auto classSymbol = pa.scopeSymbol->TryGetChildren_NFb(className)->Get(0).childSymbol;
+		auto functionSymbol = classSymbol->TryGetChildren_NFb(methodName)->Get(0).childSymbol;
 		auto functionBodySymbol = functionSymbol->GetImplSymbols_F()[0];
-		return functionBodySymbol->TryGetChildren_NFb(L"$")->Get(0).Obj();
+		return functionBodySymbol->TryGetChildren_NFb(L"$")->Get(0).childSymbol.Obj();
 	};
 
 	TEST_CATEGORY(L"Qualifiers and this")

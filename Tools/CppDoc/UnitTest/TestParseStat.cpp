@@ -107,11 +107,11 @@ __except (0)
 
 	auto GetStatementSymbol = [](const ParsingArguments& pa, const WString& functionName)
 	{
-		auto functionSymbol = pa.scopeSymbol->TryGetChildren_NFb(functionName)->Get(0);
+		auto functionSymbol = pa.scopeSymbol->TryGetChildren_NFb(functionName)->Get(0).childSymbol;
 		auto functionBodySymbol = functionSymbol->GetImplSymbols_F()[0];
-		auto bodyStat = functionBodySymbol->TryGetChildren_NFb(L"$")->Get(0);
-		auto controlFlowStat = bodyStat->TryGetChildren_NFb(L"$")->Get(0);
-		auto controlFlowBlock = controlFlowStat->TryGetChildren_NFb(L"$")->Get(0);
+		auto bodyStat = functionBodySymbol->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
+		auto controlFlowStat = bodyStat->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
+		auto controlFlowBlock = controlFlowStat->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
 		return controlFlowBlock.Obj();
 	};
 

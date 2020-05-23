@@ -157,9 +157,9 @@ template<typename X>	template<typename Y>	void A<X*>::B<Y*>::G()	{}
 				auto& di = psTsys->GetDeclInstant();
 				{
 					auto statSymbol = psTsys->GetDecl()
-						->TryGetChildren_NFb(L"F")->Get(0)
+						->TryGetChildren_NFb(L"F")->Get(0).childSymbol
 						->GetImplSymbols_F()[0]
-						->TryGetChildren_NFb(L"$")->Get(0);
+						->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
 					auto funcPa = pa.AdjustForDecl(statSymbol.Obj(), psTsys);
 					funcPa.taContext = di.taContext.Obj();
 
@@ -168,9 +168,9 @@ template<typename X>	template<typename Y>	void A<X*>::B<Y*>::G()	{}
 				}
 				{
 					auto statSymbol = psTsys->GetDecl()
-						->TryGetChildren_NFb(L"G")->Get(0)
+						->TryGetChildren_NFb(L"G")->Get(0).childSymbol
 						->GetImplSymbols_F()[0]
-						->TryGetChildren_NFb(L"$")->Get(0);
+						->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
 					auto funcPa = pa.AdjustForDecl(statSymbol.Obj());
 
 					AssertType(funcPa,	L"A",	L"A",	asg[i]);

@@ -201,35 +201,35 @@ namespace ns
 			List<Ptr<Declaration>> inClassMembers;
 
 			auto& inClassMembersUnfiltered1 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered2 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered3 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered4 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 #define FILTER_CONDITION .Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; })
@@ -241,7 +241,7 @@ namespace ns
 			TEST_CASE_ASSERT(inClassMembers.Count() == 16);
 
 			auto& outClassMembers = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
 				->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
 			TEST_CASE_ASSERT(outClassMembers.Count() == 16);
 
@@ -375,35 +375,35 @@ namespace ns
 			List<Ptr<Declaration>> inClassMembers;
 
 			auto& inClassMembersUnfiltered1 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered2 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered3 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered4 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 #define FILTER_CONDITION .Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; })
@@ -415,7 +415,7 @@ namespace ns
 			TEST_CASE_ASSERT(inClassMembers.Count() == 16);
 
 			auto& outClassMembers = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
 				->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
 			TEST_CASE_ASSERT(outClassMembers.Count() == 16);
 
@@ -551,35 +551,35 @@ namespace ns
 			List<Ptr<Declaration>> inClassMembers;
 
 			auto& inClassMembersUnfiltered1 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered2 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered3 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered4 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B@<*, [T1]([T2], [T3]) *>")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D@<[U1]([U2], [U3]) *, *>")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 #define FILTER_CONDITION .Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; })
@@ -591,7 +591,7 @@ namespace ns
 			TEST_CASE_ASSERT(inClassMembers.Count() == 16);
 
 			auto& outClassMembers = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
 				->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
 			TEST_CASE_ASSERT(outClassMembers.Count() == 16);
 
@@ -712,35 +712,35 @@ namespace ns
 			List<Ptr<Declaration>> inClassMembers;
 
 			auto& inClassMembersUnfiltered1 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered2 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D@<*>")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D@<*>")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered3 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B@<*>")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B@<*>")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 			auto& inClassMembersUnfiltered4 = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
-				->TryGetChildren_NFb(L"A")->Get(0)
-				->TryGetChildren_NFb(L"B@<*>")->Get(0)
-				->TryGetChildren_NFb(L"C")->Get(0)
-				->TryGetChildren_NFb(L"D@<*>")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B@<*>")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"C")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"D@<*>")->Get(0).childSymbol
 				->GetImplDecl_NFb<ClassDeclaration>()->decls;
 
 #define FILTER_CONDITION .Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; })
@@ -752,7 +752,7 @@ namespace ns
 			TEST_CASE_ASSERT(inClassMembers.Count() == 16);
 
 			auto& outClassMembers = pa.root
-				->TryGetChildren_NFb(L"ns")->Get(0)
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
 				->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
 			TEST_CASE_ASSERT(outClassMembers.Count() == 16);
 

@@ -268,7 +268,7 @@ using Context = T;
 		ITsys* intTypes[TypeCount];
 		ITsys* structTypes[TypeCount];
 
-		auto contextSymbol = pa.scopeSymbol->TryGetChildren_NFb(L"Context")->Get(0).Obj();
+		auto contextSymbol = pa.scopeSymbol->TryGetChildren_NFb(L"Context")->Get(0).childSymbol.Obj();
 		auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(contextSymbol);
 		auto spa = pa.WithScope(contextSymbol);
 
@@ -315,7 +315,7 @@ using Context = T;
 				TemplateArgumentContext taContext(contextSymbol, 2);
 				taContext.SetValueByKey(
 					symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[0]),
-					pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"S")->Get(0).Obj())
+					pa.tsys->DeclOf(pa.scopeSymbol->TryGetChildren_NFb(L"S")->Get(0).childSymbol.Obj())
 				);
 				taContext.SetValueByKey(
 					symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[1]),
