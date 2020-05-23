@@ -93,7 +93,34 @@ void ParseDeclaration_Variable(
 		auto createdSymbol = context->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Variable, nullptr, declarator->classMemberCache);
 		if (!createdSymbol)
 		{
-			throw StopParsingException(cursor);
+			switch(context->kind)
+			{
+			case CLASS_SYMBOL_KIND:
+				// ignore the error for a static field declared outside of the class
+				// when the one inside the clas is not a forward declaration
+				if (auto pChildren = context->TryGetChildren_NFb(decl->name.name))
+				{
+					for (vint i = 0; i < pChildren->Count(); i++)
+					{
+						auto& childSymbol = pChildren->Get(i);
+						if (!childSymbol.childExpr && !childSymbol.childType)
+						{
+							if (childSymbol.childSymbol->kind == symbol_component::SymbolKind::Variable)
+							{
+								createdSymbol = childSymbol.childSymbol.Obj();
+								break;
+							}
+						}
+					}
+				}
+
+				if (createdSymbol)
+				{
+					break;
+				}
+			default:
+				throw StopParsingException(cursor);
+			}
 		}
 
 		for (vint i = 0; i < decl->classSpecs.Count(); i++)

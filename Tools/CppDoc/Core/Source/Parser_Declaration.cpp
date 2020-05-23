@@ -126,10 +126,42 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		// ignore lonely semicolon
 		return;
 	}
+
 	if (TestToken(cursor, CppTokens::STATIC_ASSERT, false))
 	{
 		ParseDeclaration_StaticAssert(pa, cursor, output);
 		return;
+	}
+
+	{
+		auto oldCursor = cursor;
+		if (TestToken(cursor, CppTokens::DECL_TEMPLATE))
+		{
+			if (TestToken(cursor, CppTokens::LT))
+			{
+				cursor = oldCursor;
+			}
+			else
+			{
+				// ignore force full specialization
+				if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
+				{
+					// template class A<...>;
+					SkipToken(cursor);
+					SkipSpecifiers(cursor);
+					ParseType(pa, cursor);
+					RequireToken(cursor, CppTokens::SEMICOLON);
+				}
+				else
+				{
+					// template DECLARATOR;
+					List<Ptr<Declarator>> declarators;
+					ParseMemberDeclarator(pa, pda_Decls(false, false), cursor, declarators);
+					RequireToken(cursor, CppTokens::SEMICOLON);
+				}
+				return;
+			}
+		}
 	}
 
 	Ptr<Symbol> specSymbol;
