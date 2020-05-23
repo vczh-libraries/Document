@@ -39,12 +39,7 @@ struct IndexToken
 	static vint										Compare(const IndexToken& a, const IndexToken& b);
 	static IndexToken								GetToken(CppName& name);
 
-	bool operator <  (const IndexToken& k)const { return Compare(*this, k) < 0; }
-	bool operator <= (const IndexToken& k)const { return Compare(*this, k) <= 0; }
-	bool operator >  (const IndexToken& k)const { return Compare(*this, k) > 0; }
-	bool operator >= (const IndexToken& k)const { return Compare(*this, k) >= 0; }
-	bool operator == (const IndexToken& k)const { return Compare(*this, k) == 0; }
-	bool operator != (const IndexToken& k)const { return Compare(*this, k) != 0; }
+	DEFINE_COMPLETE_COMPARISON_OPERATOR(IndexToken)
 };
 
 enum class IndexReason

@@ -13,6 +13,20 @@ class FunctionType;
 class TemplateSpec;
 class ITsys;
 
+#define DEFINE_COMPARISON_OPERATOR(TYPE, OP)			\
+		bool operator OP(const TYPE& value)const		\
+		{												\
+			return TYPE::Compare(*this, value) OP 0;	\
+		}												\
+
+#define DEFINE_COMPLETE_COMPARISON_OPERATOR(TYPE)		\
+		DEFINE_COMPARISON_OPERATOR(TYPE, > )			\
+		DEFINE_COMPARISON_OPERATOR(TYPE, >= )			\
+		DEFINE_COMPARISON_OPERATOR(TYPE, < )			\
+		DEFINE_COMPARISON_OPERATOR(TYPE, <= )			\
+		DEFINE_COMPARISON_OPERATOR(TYPE, == )			\
+		DEFINE_COMPARISON_OPERATOR(TYPE, != )			\
+
 /***********************************************************************
 ExprTsysType
 ***********************************************************************/
@@ -50,12 +64,7 @@ struct ExprHeader
 		return 0;
 	}
 
-	bool operator==	(const ExprHeader& item)const { return Compare(*this, item) == 0; }
-	bool operator!=	(const ExprHeader& item)const { return Compare(*this, item) != 0; }
-	bool operator<	(const ExprHeader& item)const { return Compare(*this, item) < 0; }
-	bool operator<=	(const ExprHeader& item)const { return Compare(*this, item) <= 0; }
-	bool operator>	(const ExprHeader& item)const { return Compare(*this, item) > 0; }
-	bool operator>=	(const ExprHeader& item)const { return Compare(*this, item) >= 0; }
+	DEFINE_COMPLETE_COMPARISON_OPERATOR(ExprHeader)
 };
 
 struct ExprTsysItem : ExprHeader
@@ -90,12 +99,7 @@ struct ExprTsysItem : ExprHeader
 		return 0;
 	}
 
-	bool operator==	(const ExprTsysItem& item)const { return Compare(*this, item) == 0; }
-	bool operator!=	(const ExprTsysItem& item)const { return Compare(*this, item) != 0; }
-	bool operator<	(const ExprTsysItem& item)const { return Compare(*this, item) < 0;  }
-	bool operator<=	(const ExprTsysItem& item)const { return Compare(*this, item) <= 0; }
-	bool operator>	(const ExprTsysItem& item)const { return Compare(*this, item) > 0;  }
-	bool operator>=	(const ExprTsysItem& item)const { return Compare(*this, item) >= 0; }
+	DEFINE_COMPLETE_COMPARISON_OPERATOR(ExprTsysItem)
 };
 
 using TypeTsysList = List<ITsys*>;
@@ -251,12 +255,7 @@ struct TsysGenericArg
 		return 0;
 	}
 
-	bool operator==	(const TsysGenericArg& arg)const { return Compare(*this, arg) == 0; }
-	bool operator!=	(const TsysGenericArg& arg)const { return Compare(*this, arg) != 0; }
-	bool operator<	(const TsysGenericArg& arg)const { return Compare(*this, arg) < 0;  }
-	bool operator<=	(const TsysGenericArg& arg)const { return Compare(*this, arg) <= 0; }
-	bool operator>	(const TsysGenericArg& arg)const { return Compare(*this, arg) > 0;  }
-	bool operator>=	(const TsysGenericArg& arg)const { return Compare(*this, arg) >= 0; }
+	DEFINE_COMPLETE_COMPARISON_OPERATOR(TsysGenericArg)
 };
 
 struct TsysDeclInstant
@@ -274,12 +273,7 @@ struct TsysDeclInstant
 		return 0;
 	}
 
-	bool operator==	(const TsysDeclInstant& arg)const { return Compare(*this, arg) == 0; }
-	bool operator!=	(const TsysDeclInstant& arg)const { return Compare(*this, arg) != 0; }
-	bool operator<	(const TsysDeclInstant& arg)const { return Compare(*this, arg) < 0; }
-	bool operator<=	(const TsysDeclInstant& arg)const { return Compare(*this, arg) <= 0; }
-	bool operator>	(const TsysDeclInstant& arg)const { return Compare(*this, arg) > 0; }
-	bool operator>=	(const TsysDeclInstant& arg)const { return Compare(*this, arg) >= 0; }
+	DEFINE_COMPLETE_COMPARISON_OPERATOR(TsysDeclInstant)
 };
 
 struct TsysPSRecord

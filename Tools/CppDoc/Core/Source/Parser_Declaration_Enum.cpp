@@ -80,7 +80,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 
 			if (!enumClass)
 			{
-				if (auto pEnumItems = pa.scopeSymbol->TryGetChildren_NFb(enumItem->name.name))
+				if (pa.scopeSymbol->TryGetChildren_NFb(enumItem->name.name))
 				{
 					throw StopParsingException(cursor);
 				}

@@ -204,19 +204,8 @@ namespace symbol_component
 		{
 			return CompareEnumerable(*a.parentDeclTypeAndParams.Obj(), *b.parentDeclTypeAndParams.Obj());
 		}
-#define OPERATOR_COMPARE(OP)\
-		bool operator OP(const SG_Cache& cache)const\
-		{\
-			return SG_Cache::Compare(*this, cache) OP 0;\
-		}\
 
-		OPERATOR_COMPARE(> )
-		OPERATOR_COMPARE(>= )
-		OPERATOR_COMPARE(< )
-		OPERATOR_COMPARE(<= )
-		OPERATOR_COMPARE(== )
-		OPERATOR_COMPARE(!= )
-#undef OPERATOR_COMPARE
+		DEFINE_COMPLETE_COMPARISON_OPERATOR(SG_Cache)
 	};
 }
 

@@ -62,12 +62,7 @@ struct ResolvedItem
 		return 0;
 	}
 
-	bool operator==	(const ResolvedItem& item)const { return Compare(*this, item) == 0; }
-	bool operator!=	(const ResolvedItem& item)const { return Compare(*this, item) != 0; }
-	bool operator<	(const ResolvedItem& item)const { return Compare(*this, item) < 0; }
-	bool operator<=	(const ResolvedItem& item)const { return Compare(*this, item) <= 0; }
-	bool operator>	(const ResolvedItem& item)const { return Compare(*this, item) > 0; }
-	bool operator>=	(const ResolvedItem& item)const { return Compare(*this, item) >= 0; }
+	DEFINE_COMPLETE_COMPARISON_OPERATOR(ResolvedItem)
 };
 
 class Resolving : public Object
