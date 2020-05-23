@@ -727,32 +727,27 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	}
 	else
 	{
-		Ptr<Type> type;
-		auto oldCursor = cursor;
-		try
 		{
-			RequireToken(cursor, CppTokens::LPARENTHESIS);
-			type = ParseType(pa, cursor);
-			RequireToken(cursor, CppTokens::RPARENTHESIS);
-		}
-		catch (const StopParsingException&)
-		{
-			type = nullptr;
-			cursor = oldCursor;
-		}
+			auto oldCursor = cursor;
+			try
+			{
+				RequireToken(cursor, CppTokens::LPARENTHESIS);
+				auto type = ParseType(pa, cursor);
+				RequireToken(cursor, CppTokens::RPARENTHESIS);
+				auto expr = ParsePrefixUnaryExpr(pa, cursor);
 
-		if (type)
-		{
-			auto newExpr = MakePtr<CastExpr>();
-			newExpr->castType = CppCastType::CCast;
-			newExpr->type = type;
-			newExpr->expr = ParsePrefixUnaryExpr(pa, cursor);
-			return newExpr;
+				auto newExpr = MakePtr<CastExpr>();
+				newExpr->castType = CppCastType::CCast;
+				newExpr->type = type;
+				newExpr->expr = expr;
+				return newExpr;
+			}
+			catch (const StopParsingException&)
+			{
+				cursor = oldCursor;
+			}
 		}
-		else
-		{
-			return ParsePostfixUnaryExpr(pa, cursor);
-		}
+		return ParsePostfixUnaryExpr(pa, cursor);
 	}
 }
 
