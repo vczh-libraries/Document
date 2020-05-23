@@ -334,6 +334,8 @@ Ptr<Expr> ParseNameOrCtorAccessExpr(const ParsingArguments& pa, Ptr<CppTokenCurs
 
 			if (TestToken(cursor, CppTokens::LPARENTHESIS, false) || TestToken(cursor, CppTokens::LBRACE, false))
 			{
+				// TYPE(EXPR, ...)
+				// TYPE{EXPR, ...)
 				auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
 				SkipToken(cursor);
 
@@ -405,6 +407,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 		case CppTokens::FLOAT:
 		case CppTokens::CHAR:
 			{
+				// literal
 				auto literal = MakePtr<LiteralExpr>();
 				literal->tokens.Add(cursor->token);
 				SkipToken(cursor);
@@ -413,6 +416,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 		case CppTokens::MACRO_LPREFIX:
 		case CppTokens::STRING:
 			{
+				// string literla, could be multiple tokens
 				auto literal = MakePtr<LiteralExpr>();
 				while (
 					cursor && (
@@ -428,17 +432,21 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			}
 		case CppTokens::EXPR_THIS:
 			{
+				// this
 				SkipToken(cursor);
 				return MakePtr<ThisExpr>();
 			}
 		case CppTokens::EXPR_NULLPTR:
 		case CppTokens::EXPR___NULLPTR:
 			{
+				// nullptr
+				// __nullptr
 				SkipToken(cursor);
 				return MakePtr<NullptrExpr>();
 			}
 		case CppTokens::LPARENTHESIS:
 			{
+				// (a)
 				SkipToken(cursor);
 				auto expr = MakePtr<ParenthesisExpr>();
 				expr->expr = ParseExpr(pa, pea_Full(), cursor);
@@ -447,6 +455,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			}
 		case CppTokens::LBRACE:
 			{
+				// {EXPR, ...}
 				SkipToken(cursor);
 				auto expr = MakePtr<UniversalInitializerExpr>();
 				while (!TestToken(cursor, CppTokens::RBRACE))
@@ -471,6 +480,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 		case CppTokens::EXPR_REINTERPRET_CAST:
 		case CppTokens::EXPR_SAFE_CAST:
 			{
+				// *_cast<TYPE>(EXPR)
 				auto expr = MakePtr<CastExpr>();
 				expr->castType = CppCastType::SafeCast;
 				switch ((CppTokens)cursor->token.token)
@@ -492,6 +502,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			}
 		case CppTokens::EXPR_TYPEID:
 			{
+				// typeid(EXPR)
 				SkipToken(cursor);
 				auto expr = MakePtr<TypeidExpr>();
 				RequireToken(cursor, CppTokens::LPARENTHESIS);
@@ -499,7 +510,11 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 				return expr;
 			}
-			break;
+		case CppTokens::LBRACKET:
+			{
+				// lambda expression
+				throw StopParsingException(cursor);
+			}
 		}
 	}
 	return ParseNameOrCtorAccessExpr(pa, cursor);
@@ -542,6 +557,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 	Ptr<Expr> expr;
 	if (TestToken(cursor, CppTokens::NOEXCEPT, false))
 	{
+		// noexcept
 		auto idExpr = MakePtr<IdExpr>();
 		idExpr->name.type = CppNameType::Normal;
 		idExpr->name.name = L"noexcept";
@@ -560,6 +576,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 	{
 		if (!TestToken(cursor, CppTokens::DOT, CppTokens::MUL, false) && !TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT, false) && TestToken(cursor, CppTokens::DOT))
 		{
+			// a . b
 			auto newExpr = MakePtr<FieldAccessExpr>();
 			newExpr->type = CppFieldAccessType::Dot;
 			newExpr->expr = expr;
@@ -568,6 +585,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		}
 		else if (!TestToken(cursor, CppTokens::SUB, CppTokens::GT, CppTokens::MUL, false) && TestToken(cursor, CppTokens::SUB, CppTokens::GT, false))
 		{
+			// a -> b
 			auto newExpr = MakePtr<FieldAccessExpr>();
 			{
 				newExpr->opName.type = CppNameType::Operator;
@@ -585,6 +603,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		}
 		else if (TestToken(cursor, CppTokens::LBRACKET, false))
 		{
+			// a [b]
 			auto newExpr = MakePtr<ArrayAccessExpr>();
 			{
 				newExpr->opName.type = CppNameType::Operator;
@@ -608,6 +627,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 					Ptr<Type> returnType;
 					if (idExpr->name.name == L"alignof")
 					{
+						// alignof (EXPR, ...)
 						auto sizeType = MakePtr<PrimitiveType>();
 						sizeType->prefix = CppPrimitivePrefix::_unsigned;
 						sizeType->primitive = CppPrimitiveType::_int;
@@ -615,6 +635,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 					}
 					else if (idExpr->name.name == L"noexcept")
 					{
+						// noexcept (EXPR, ...)
 						auto boolType = MakePtr<PrimitiveType>();
 						boolType->prefix = CppPrimitivePrefix::_none;
 						boolType->primitive = CppPrimitiveType::_bool;
@@ -622,6 +643,8 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 					}
 					else if (INVLOC.StartsWith(idExpr->name.name, L"__is_", Locale::Normalization::None) || INVLOC.StartsWith(idExpr->name.name, L"__has_", Locale::Normalization::None))
 					{
+						// __is_* (EXPR, ...)
+						// __has_* (EXPR, ...)
 						auto boolType = MakePtr<PrimitiveType>();
 						boolType->prefix = CppPrimitivePrefix::_none;
 						boolType->primitive = CppPrimitiveType::_bool;
@@ -643,6 +666,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 				}
 			}
 			{
+				// a (EXPR, ...)
 				auto newExpr = MakePtr<FuncAccessExpr>();
 				{
 					newExpr->opName.type = CppNameType::Operator;
@@ -672,6 +696,8 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		}
 		else if (TestToken(cursor, CppTokens::ADD, CppTokens::ADD, false) || TestToken(cursor, CppTokens::SUB, CppTokens::SUB, false))
 		{
+			// a++
+			// a--
 			auto newExpr = MakePtr<PostfixUnaryExpr>();
 			FillOperatorAndSkip(newExpr->opName, cursor, 2);
 			FillOperator(newExpr->opName, newExpr->op);
@@ -692,6 +718,9 @@ ParsePrefixUnaryExpr
 
 Ptr<Expr> ParseNewExpr(const ParsingArguments& pa, bool globalOperator, Ptr<CppTokenCursor>& cursor)
 {
+	// new TYPE(EXPR, ...)
+	// new TYPE[EXPR][EXPR]...
+	// :: new (EXPR, ...) TYPE(EXPR, ...)
 	auto newExpr = MakePtr<NewExpr>();
 	newExpr->globalOperator = globalOperator;
 	if (TestToken(cursor, CppTokens::LPARENTHESIS))
@@ -763,6 +792,8 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 
 Ptr<Expr> ParseDeleteExpr(const ParsingArguments& pa, bool globalOperator, Ptr<CppTokenCursor>& cursor)
 {
+	// delete
+	// :: delete []
 	auto newExpr = MakePtr<DeleteExpr>();
 	newExpr->globalOperator = globalOperator;
 	if ((newExpr->arrayDelete = TestToken(cursor, CppTokens::LBRACKET)))
@@ -777,6 +808,8 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 {
 	if (TestToken(cursor, CppTokens::EXPR_SIZEOF))
 	{
+		// sizeof(EXPR)
+		// sizeof TYPE
 		auto newExpr = MakePtr<SizeofExpr>();
 		newExpr->ellipsis = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
 		auto oldCursor = cursor;
@@ -797,6 +830,8 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	}
 	else if (TestToken(cursor, CppTokens::ADD, CppTokens::ADD, false) || TestToken(cursor, CppTokens::SUB, CppTokens::SUB, false))
 	{
+		// ++ a
+		// -- a
 		auto newExpr = MakePtr<PrefixUnaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 2);
 		FillOperator(newExpr->opName, newExpr->op);
@@ -811,6 +846,12 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 		TestToken(cursor, CppTokens::AND, false) ||
 		TestToken(cursor, CppTokens::MUL, false))
 	{
+		// ~a
+		// !a
+		// +a
+		// -a
+		// &a
+		// *a
 		auto newExpr = MakePtr<PrefixUnaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 1);
 		FillOperator(newExpr->opName, newExpr->op);
@@ -819,10 +860,12 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	}
 	else if (TestToken(cursor, CppTokens::NEW))
 	{
+		// new
 		return ParseNewExpr(pa, false, cursor);
 	}
 	else if (TestToken(cursor, CppTokens::DELETE))
 	{
+		// delete
 		return ParseDeleteExpr(pa, false, cursor);
 	}
 	else
@@ -833,10 +876,12 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 			{
 				if (TestToken(cursor, CppTokens::NEW))
 				{
+					// ::new
 					return ParseNewExpr(pa, true, cursor);
 				}
 				else if (TestToken(cursor, CppTokens::DELETE))
 				{
+					// ::delete
 					return ParseDeleteExpr(pa, true, cursor);
 				}
 				else
@@ -849,6 +894,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 			auto oldCursor = cursor;
 			try
 			{
+				// (TYPE)EXPR
 				RequireToken(cursor, CppTokens::LPARENTHESIS);
 				auto type = ParseType(pa, cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
@@ -884,91 +930,111 @@ Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, const ParsingExprArguments
 
 		if (TestToken(cursor, CppTokens::DOT, CppTokens::MUL, false))
 		{
+			// a .* b
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 4;
 		}
 		else if (TestToken(cursor, CppTokens::SUB, CppTokens::GT, CppTokens::MUL, false))
 		{
+			// a ->* b
 			FillOperatorAndSkip(opName, cursor, 3);
 			precedence = 4;
 		}
 		else if (TestToken(cursor, CppTokens::MUL, false) && !TestToken(cursor, CppTokens::MUL, CppTokens::EQ, false))
 		{
+			// a * b
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 5;
 		}
 		else if (TestToken(cursor, CppTokens::DIV, false) && !TestToken(cursor, CppTokens::DIV, CppTokens::EQ, false))
 		{
+			// a / b
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 5;
 		}
 		else if (TestToken(cursor, CppTokens::PERCENT, false) && !TestToken(cursor, CppTokens::PERCENT, CppTokens::EQ, false))
 		{
+			// a % b
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 5;
 		}
 		else if (TestToken(cursor, CppTokens::ADD, false) && !TestToken(cursor, CppTokens::ADD, CppTokens::EQ, false))
 		{
+			// a + b
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 6;
 		}
 		else if (TestToken(cursor, CppTokens::SUB, false) && !TestToken(cursor, CppTokens::SUB, CppTokens::EQ, false))
 		{
+			// a - b
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 6;
 		}
 		else if (TestToken(cursor, CppTokens::LT, CppTokens::LT, false) && !TestToken(cursor, CppTokens::LT, CppTokens::LT, CppTokens::EQ, false))
 		{
+			// a << b
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 7;
 		}
 		else if (pea.allowGt && TestToken(cursor, CppTokens::GT, CppTokens::GT, false) && !TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ, false))
 		{
+			// a >> b
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 7;
 		}
 		else if (TestToken(cursor, CppTokens::LT, CppTokens::EQ, false) || TestToken(cursor, CppTokens::GT, CppTokens::EQ, false))
 		{
+			// a <= b
+			// a >= b
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 8;
 		}
 		else if (TestToken(cursor, CppTokens::LT, false) && !TestToken(cursor, CppTokens::LT, CppTokens::LT, CppTokens::EQ, false))
 		{
+			// a < b
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 8;
 		}
 		else if (pea.allowGt && TestToken(cursor, CppTokens::GT, false) && !TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ, false))
 		{
+			// a > b
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 8;
 		}
 		else if (TestToken(cursor, CppTokens::EQ, CppTokens::EQ, false) || TestToken(cursor, CppTokens::NOT, CppTokens::EQ, false))
 		{
+			// a == b
+			// a != b
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 9;
 		}
 		else if (TestToken(cursor, CppTokens::OR, CppTokens::OR, false))
 		{
+			// a || b
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 14;
 		}
 		else if (TestToken(cursor, CppTokens::OR, false) && !TestToken(cursor, CppTokens::OR, CppTokens::EQ, false))
 		{
+			// a | b
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 12;
 		}
 		else if (TestToken(cursor, CppTokens::AND, CppTokens::AND, false))
 		{
+			// a && b
 			FillOperatorAndSkip(opName, cursor, 2);
 			precedence = 13;
 		}
 		else if (TestToken(cursor, CppTokens::AND, false) && !TestToken(cursor, CppTokens::AND, CppTokens::EQ, false))
 		{
+			// a & b
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 10;
 		}
 		else if (TestToken(cursor, CppTokens::XOR, false) && !TestToken(cursor, CppTokens::XOR, CppTokens::EQ, false))
 		{
+			// a ^ b
 			FillOperatorAndSkip(opName, cursor, 1);
 			precedence = 11;
 		}
@@ -1016,6 +1082,7 @@ Ptr<Expr> ParseIfExpr(const ParsingArguments& pa, const ParsingExprArguments& pe
 	auto expr = ParseBinaryExpr(pa, pea, cursor);
 	if (TestToken(cursor, CppTokens::QUESTIONMARK))
 	{
+		// a ? b : c
 		auto newExpr = MakePtr<IfExpr>();
 		newExpr->condition = expr;
 		newExpr->left = ParseIfExpr(pa, pea, cursor);
@@ -1036,6 +1103,8 @@ ParseAssignExpr
 Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor)
 {
 	auto expr = ParseIfExpr(pa, pea, cursor);
+
+	// a ASSIGN_OP b
 	if (TestToken(cursor, CppTokens::EQ, false))
 	{
 		auto newExpr = MakePtr<BinaryExpr>();
@@ -1090,6 +1159,8 @@ Ptr<Expr> ParseThrowExpr(const ParsingArguments& pa, const ParsingExprArguments&
 {
 	if (TestToken(cursor, CppTokens::THROW))
 	{
+		// throw
+		// throw EXPR
 		auto newExpr = MakePtr<ThrowExpr>();
 		if (!TestToken(cursor, CppTokens::SEMICOLON, false))
 		{

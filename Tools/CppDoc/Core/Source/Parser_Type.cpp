@@ -258,6 +258,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 	if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 	{
 		// :: NAME
+		// :: NAME <...>
 		bool templateKeyword = false;
 		if (auto type = TryParseChildType(pa, MakePtr<RootType>(), ShortTypeTypenameKind::No, templateKeyword, cursor))
 		{
@@ -319,6 +320,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 #undef DEFINE_INTRINSIC_NAME
 		}
 		// NAME
+		// NAME <...>
 		typeResult = TryParseGenericType(pa, ParseIdType(pa, typenameKind, cursor), cursor);
 	SKIP_NORMAL_PARSING:;
 	}
@@ -326,6 +328,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 	while (true)
 	{
 		// TYPE::NAME
+		// TYPE::NAME <...>
 		auto oldCursor = cursor;
 		if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON))
 		{
