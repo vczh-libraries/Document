@@ -4,13 +4,18 @@
 Compile
 ***********************************************************************/
 
-void Compile(Ptr<RegexLexer> lexer, FilePath pathInput, IndexResult& result)
+void Compile(Ptr<RegexLexer> lexer, FilePath pathInput, IndexResult& result, IProgressReporter* progressReporter)
 {
 	WString input = File(pathInput).ReadAllTextByBom();
 	CppTokenReader reader(lexer, input);
 	auto cursor = reader.GetFirstToken();
 
-	result.pa = { new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), new IndexRecorder(result) };
+	result.pa = {
+		new Symbol(symbol_component::SymbolCategory::Normal),
+		ITsysAlloc::Create(),
+		new IndexRecorder(result, progressReporter, input.Length())
+	};
+
 	auto program = ParseProgram(result.pa, cursor);
 	EvaluateProgram(result.pa, program);
 

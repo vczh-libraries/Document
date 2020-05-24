@@ -402,6 +402,14 @@ struct ResolvedItem;
 class IIndexRecorder : public virtual Interface
 {
 public:
+	enum class Phase
+	{
+		ParseProgram,
+		ParseFunctionBodies,
+		EvaluateDeclarations,
+	};
+
+	virtual void									BeginPhase(Phase phase) = 0;
 	virtual void									Index(CppName& name, List<ResolvedItem>& resolvedSymbols) = 0;
 	virtual void									IndexOverloadingResolution(CppName& name, List<ResolvedItem>& resolvedSymbols) = 0;
 	virtual void									ExpectValueButType(CppName& name, List<ResolvedItem>& resolvedSymbols) = 0;

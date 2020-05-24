@@ -605,6 +605,10 @@ void EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> decl)
 
 void EvaluateProgram(const ParsingArguments& pa, Ptr<Program> program)
 {
+	if (pa.recorder)
+	{
+		pa.recorder->BeginPhase(IIndexRecorder::Phase::EvaluateDeclarations);
+	}
 	for (vint i = 0; i < program->decls.Count(); i++)
 	{
 		EvaluateDeclaration(pa, program->decls[i]);

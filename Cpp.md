@@ -39,7 +39,6 @@
 - [ ] Next Demo! (Vlpp)
   - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
   - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
-  - [ ] Show progress while parsing cases.
 - [ ] Next Demo! (GacUI)
 - [ ] More on **templates**
   - [ ] `GenericExpr` allows to be partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.

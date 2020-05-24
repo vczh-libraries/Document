@@ -28,9 +28,16 @@ IndexToken IndexToken::GetToken(CppName& name)
 IndexRecorder
 ***********************************************************************/
 
-IndexRecorder::IndexRecorder(IndexResult& _result)
+IndexRecorder::IndexRecorder(IndexResult& _result, IProgressReporter* _progressReporter, vint _codeLength)
 	:result(_result)
+	, progressReporter(_progressReporter)
+	, codeLength(_codeLength)
 {
+}
+
+void IndexRecorder::BeginPhase(Phase phase)
+{
+	currentPhase = (vint)phase;
 }
 
 void IndexRecorder::IndexInternal(CppName& name, List<ResolvedItem>& resolvedSymbols, IndexReason reason)
@@ -46,6 +53,11 @@ void IndexRecorder::IndexInternal(CppName& name, List<ResolvedItem>& resolvedSym
 				result.index[(vint)reason].Add(key, symbol);
 				result.reverseIndex[(vint)reason].Add(symbol, key);
 			}
+		}
+
+		if (progressReporter)
+		{
+			progressReporter->OnProgress(currentPhase, 3, name.nameTokens[0].start, codeLength);
 		}
 	}
 }

@@ -62,12 +62,24 @@ struct IndexResult
 	Dictionary<IndexToken, Ptr<Declaration>>		decls;
 };
 
+class IProgressReporter : public virtual Interface
+{
+public:
+	virtual void									OnProgress(vint phase, vint totalPhases, vint position, vint length) = 0;
+};
+
 class IndexRecorder : public Object, public virtual IIndexRecorder
 {
 public:
 	IndexResult&									result;
 
-	IndexRecorder(IndexResult& _result);
+	IProgressReporter*								progressReporter;
+	vint											currentPhase = 0;
+	vint											codeLength = 0;
+
+	IndexRecorder(IndexResult& _result, IProgressReporter* _progressReporter, vint _codeLength);
+
+	void											BeginPhase(Phase phase);
 
 	void											IndexInternal(CppName& name, List<ResolvedItem>& resolvedSymbols, IndexReason reason);
 	void											Index(CppName& name, List<ResolvedItem>& resolvedSymbols)override;
@@ -79,7 +91,7 @@ public:
 Compiling
 ***********************************************************************/
 
-extern void											Compile(Ptr<RegexLexer> lexer, FilePath pathInput, IndexResult& result);
+extern void											Compile(Ptr<RegexLexer> lexer, FilePath pathInput, IndexResult& result, IProgressReporter* progressReporter);
 
 /***********************************************************************
 Token Indexing

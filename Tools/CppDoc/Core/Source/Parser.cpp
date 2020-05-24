@@ -243,11 +243,19 @@ Ptr<Program> ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	PredefineType(program, pa, L"__m512i", true, CppClassType::Union, symbol_component::SymbolKind::Union);
 	*/
 
+	if (pa.recorder)
+	{
+		pa.recorder->BeginPhase(IIndexRecorder::Phase::ParseProgram);
+	}
 	while (cursor)
 	{
 		ParseDeclaration(pa, cursor, program->decls);
 	}
 
+	if (pa.recorder)
+	{
+		pa.recorder->BeginPhase(IIndexRecorder::Phase::ParseFunctionBodies);
+	}
 	ProcessDelayParseDeclarationVisitor visitor;
 	for (vint i = 0; i < program->decls.Count(); i++)
 	{
