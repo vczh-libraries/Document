@@ -36,6 +36,12 @@ void WriteMappingFile(FilePath pathMapping, List<TokenSkipping>& mapping)
 
 /***********************************************************************
 PreprocessedFileToCompactCodeAndMapping
+  Make the code compact and remove all
+	#pragma
+    comments
+	empty lines
+	leading spaces
+	trailing spaces
 ***********************************************************************/
 
 void PreprocessedFileToCompactCodeAndMapping(

@@ -419,13 +419,21 @@ void GenerateHtmlLine(
 Collect
 ***********************************************************************/
 
-Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result)
+Ptr<GlobalLinesRecord> Collect(
+	Ptr<RegexLexer> lexer,
+	FilePath pathPreprocessed,		// (in) Preprocessed.cpp
+	FilePath pathInput,				// (in) Input.cpp
+	FilePath pathMapping,			// (in) Mapping.bin
+	IndexResult& result				// (in) indexing
+)
 {
+	// read Mapping.bin
 	auto global = MakePtr<GlobalLinesRecord>();
 	Dictionary<WString, FilePath> filePathCache;
 	Array<TokenSkipping> skipping;
 	ReadMappingFile(pathMapping, skipping);
 
+	// read Preprocessed.cpp, append a line-break if there is no one
 	global->preprocessed = File(pathPreprocessed).ReadAllTextByBom();
 	if (global->preprocessed.Right(1) != L"\n")
 	{
@@ -439,6 +447,8 @@ Ptr<GlobalLinesRecord> Collect(Ptr<RegexLexer> lexer, FilePath pathPreprocessed,
 	FilePath currentFilePath;
 	bool rightAfterSharpLine = false;
 	TokenTracker tracker;
+
+	// generate line-based HTML code for Preprocessed.cpp
 	while (cursor)
 	{
 		{
