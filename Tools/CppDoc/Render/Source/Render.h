@@ -3,6 +3,7 @@
 
 #include <VlppOS.h>
 #include <Ast_Resolving.h>
+#include <Symbol_TemplateSpec.h>
 
 using namespace vl::stream;
 using namespace vl::filesystem;
@@ -51,6 +52,7 @@ enum class IndexReason
 };
 
 using IndexMap = Group<IndexToken, Symbol*>;
+using DeclOrArg = Tuple<Ptr<Declaration>, Symbol*>;
 
 struct IndexResult
 {
@@ -64,7 +66,7 @@ struct IndexResult
 	IndexMap										index[(vint)IndexReason::Max];
 
 	// tokens of declaration names, to be highlighted from hyperlinks
-	Dictionary<IndexToken, Ptr<Declaration>>		decls;
+	Dictionary<IndexToken, DeclOrArg>				decls;
 };
 
 class IProgressReporter : public virtual Interface
@@ -122,7 +124,7 @@ struct GlobalLinesRecord
 {
 	WString											preprocessed;	// text content of Preprocessed.cpp, ensure that each line ends with a line-break
 	Dictionary<FilePath, Ptr<FileLinesRecord>>		fileLines;		// generated HTML code of all touched source files
-	Dictionary<Ptr<Declaration>, FilePath>			declToFiles;	// declaration to source file mapping
+	Dictionary<DeclOrArg, FilePath>					declToFiles;	// declaration to source file mapping
 	SortedList<WString>								htmlFileNames;	// all fileLines[x]->htmlFileName
 };
 
@@ -141,8 +143,8 @@ struct StreamHolder
 	}
 };
 
-extern void											EnumerateDecls(Symbol* symbol, const Func<void(Ptr<Declaration>, bool, vint)>& callback);
-extern WString										GetDeclId(Ptr<Declaration> decl);
+extern void											EnumerateDecls(Symbol* symbol, const Func<void(DeclOrArg, bool, vint)>& callback);
+extern WString										GetDeclId(DeclOrArg declOrArg);
 extern WString										GetSymbolId(Symbol* symbol);
 extern const wchar_t*								GetSymbolDivClass(Symbol* symbol);
 extern void											WriteHtmlTextSingleLine(const WString& text, StreamWriter& writer);

@@ -325,37 +325,43 @@ void GenerateHtmlLine(
 		if (isDefToken && !tracker.lastTokenIsDef)
 		{
 			// if we hit the first token of a declaration name
-			auto decl = result.decls.Values()[tracker.indexDecl.index];
-			if (!global->declToFiles.Keys().Contains(decl.Obj()))
+			auto declOrArg = result.decls.Values()[tracker.indexDecl.index];
+			if (!global->declToFiles.Keys().Contains(declOrArg))
 			{
-				global->declToFiles.Add(decl, currentFilePath);
+				global->declToFiles.Add(declOrArg, currentFilePath);
 			}
 
 			// generate an id to jump to
 			Use(html).WriteString(L"<div class=\"def\" id=\"");
-			Use(html).WriteString(GetDeclId(decl));
+			Use(html).WriteString(GetDeclId(declOrArg));
 			Use(html).WriteString(L"\">");
 
 			bool generateLink = false;
-			switch (decl->symbol->GetCategory())
+			// no need to generate a link for template argument name
+			if (auto& decl = declOrArg.f0)
 			{
-			case symbol_component::SymbolCategory::Normal:
-				// generate a link on a declaration name, if the same symbol appears at multiple places
-				generateLink = (decl->symbol->GetImplDecl_NFb() ? 1 : 0) + decl->symbol->GetForwardDecls_N().Count() > 1;
-				break;
-			case symbol_component::SymbolCategory::FunctionBody:
+				switch (decl->symbol->GetCategory())
 				{
-					// generate a link on a function name, if the same symbol appears at multiple places
-					auto functionSymbol = decl->symbol->GetFunctionSymbol_Fb();
-					generateLink = functionSymbol->GetImplSymbols_F().Count() + functionSymbol->GetForwardSymbols_F().Count() > 1;
+				case symbol_component::SymbolCategory::Normal:
+					// generate a link on a declaration name, if the same symbol appears at multiple places
+					generateLink = (decl->symbol->GetImplDecl_NFb() ? 1 : 0) + decl->symbol->GetForwardDecls_N().Count() > 1;
+					break;
+				case symbol_component::SymbolCategory::FunctionBody:
+					{
+						// generate a link on a function name, if the same symbol appears at multiple places
+						auto functionSymbol = decl->symbol->GetFunctionSymbol_Fb();
+						generateLink = functionSymbol->GetImplSymbols_F().Count() + functionSymbol->GetForwardSymbols_F().Count() > 1;
+					}
+					break;
 				}
-				break;
 			}
 
 			if (generateLink)
 			{
 				// if this token needs a hyperlink
 				// say we have a hyperlink to this symbol in this file
+				auto& decl = declOrArg.f0;
+
 				if (!flr->refSymbols.Contains(decl->symbol))
 				{
 					switch (decl->symbol->GetCategory())
@@ -473,7 +479,8 @@ void GenerateHtmlLine(
 		Symbol* symbolForToken = nullptr;
 		if (isDefToken)
 		{
-			symbolForToken = result.decls.Values()[tracker.indexDecl.index]->symbol;
+			auto declOrArg = result.decls.Values()[tracker.indexDecl.index];
+			symbolForToken = declOrArg.f0 ? declOrArg.f0->symbol : declOrArg.f1;
 		}
 		else if (isRefToken)
 		{

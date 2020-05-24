@@ -152,7 +152,7 @@
     <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">bool</div> _Enable, <div class="token cpp_keyword ">typename</div> _Ty&gt;
     <div class="token cpp_keyword ">struct</div> <div class="def" id="NF[0]$_CrtEnableIf"><div><div class="token cpp_type">_CrtEnableIf</div></div></div>;
 
-    <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> _Ty&gt;
+    <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$_CrtEnableIf@<*, [_Ty]>::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt;
     <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_CrtEnableIf@<*, [_Ty]>"><div><div class="token cpp_type">_CrtEnableIf</div></div></div>&lt;<div class="token cpp_keyword ">true</div>, <div class="ref" onclick="jumpToSymbol([], ['_CrtEnableIf@<*, [_Ty]>::_Ty'])"><div class="token cpp_type">_Ty</div></div>&gt;
     {
         <div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['_CrtEnableIf@<*, [_Ty]>::_Ty'])"><div class="token cpp_type">_Ty</div></div> <div class="def" id="NI$_CrtEnableIf@<*, [_Ty]>::_Type"><div><div class="token cpp_type">_Type</div></div></div>;
@@ -2044,7 +2044,9 @@
 referencedSymbols = {
     '_CrtEnableIf@<*, [_Ty]>::_Ty': {
         'displayNameInHtml': '<span class="cpp_type">_Ty</span>',
-        'impls': [],
+        'impls': [
+            'TA$_CrtEnableIf@<*, [_Ty]>::_Ty'
+        ],
         'decls': []
     },
     '_Mbstatet': {
@@ -2110,7 +2112,8 @@ symbolToFiles = {
     'NI$__crt_locale_pointers': null,
     'NI$__time64_t': null,
     'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
-    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' }
+    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
+    'TA$_CrtEnableIf@<*, [_Ty]>::_Ty': null
 };
 turnOnSymbol();
 </script>

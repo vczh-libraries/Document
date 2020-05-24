@@ -44,7 +44,7 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 
 		for (vint i = 0; i < decls.Count(); i++)
 		{
-			vint index = global->declToFiles.Keys().IndexOf(decls[i].Obj());
+			vint index = global->declToFiles.Keys().IndexOf({ decls[i],nullptr });
 			if (index != -1)
 			{
 				if (INVLOC.StartsWith(global->declToFiles.Values()[index].GetFullPath(), fileGroupPrefix, Locale::Normalization::IgnoreCase))
@@ -155,9 +155,9 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 			}
 		}
 
-		auto writeTag = [&](const WString& declId, const WString& tag, Ptr<Declaration> decl)
+		auto writeTag = [&](const WString& declId, const WString& tag, DeclOrArg declOrArg)
 		{
-			vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
+			vint index = global->declToFiles.Keys().IndexOf(declOrArg);
 			if (index != -1)
 			{
 				auto filePath = global->declToFiles.Values()[index];
@@ -172,9 +172,9 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 			}
 		};
 
-		EnumerateDecls(context, [&](Ptr<Declaration> decl, bool isImpl, vint index)
+		EnumerateDecls(context, [&](DeclOrArg declOrArg, bool isImpl, vint index)
 		{
-			writeTag(GetDeclId(decl), (isImpl ? L"impl" : L"decl"), decl);
+			writeTag(GetDeclId(declOrArg), (isImpl ? L"impl" : L"decl"), declOrArg);
 		});
 		writer.WriteLine(L"");
 	}

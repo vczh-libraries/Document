@@ -40,7 +40,7 @@
 <div class="disabled">#undef VISIT_EXPR</div>
 	};
 
-	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> T&gt;
+	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$calculator::Ptr::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$calculator::Ptr"><div><div class="token cpp_type">Ptr</div></div></div>
 	{
 	<div class="token cpp_keyword ">private</div>:
@@ -100,7 +100,7 @@
 		}
 	};
 
-	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> X&gt;
+	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$calculator::Ptr::Inc@void()[impl0]::X"><div><div class="token cpp_type">X</div></div></div>&gt;
 	<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Ptr'])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['calculator::Ptr::Inc@void()[impl0]::X'])"><div class="token cpp_type">X</div></div>&gt;::<div class="def" id="FB$calculator::Ptr::Inc@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['calculator::Ptr::Inc@void()'])"><div class="token cpp_function">Inc</div></div></div>()
 	{
 		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['calculator::Ptr::reference'])"><div class="token cpp_field">reference</div></div>)
@@ -109,7 +109,7 @@
 		}
 	}
 
-	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> X&gt;
+	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$calculator::Ptr::Dec@void()[impl0]::X"><div><div class="token cpp_type">X</div></div></div>&gt;
 	<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Ptr'])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['calculator::Ptr::Dec@void()[impl0]::X'])"><div class="token cpp_type">X</div></div>&gt;::<div class="def" id="FB$calculator::Ptr::Dec@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['calculator::Ptr::Dec@void()'])"><div class="token cpp_function">Dec</div></div></div>()
 	{
 		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['calculator::Ptr::reference'])"><div class="token cpp_field">reference</div></div>)
@@ -328,7 +328,9 @@ referencedSymbols = {
     },
     'calculator::Ptr::Dec@void()[impl0]::X': {
         'displayNameInHtml': '<span class="cpp_type">X</span>',
-        'impls': [],
+        'impls': [
+            'TA$calculator::Ptr::Dec@void()[impl0]::X'
+        ],
         'decls': []
     },
     'calculator::Ptr::Inc@void()': {
@@ -342,12 +344,16 @@ referencedSymbols = {
     },
     'calculator::Ptr::Inc@void()[impl0]::X': {
         'displayNameInHtml': '<span class="cpp_type">X</span>',
-        'impls': [],
+        'impls': [
+            'TA$calculator::Ptr::Inc@void()[impl0]::X'
+        ],
         'decls': []
     },
     'calculator::Ptr::T': {
         'displayNameInHtml': '<span class="cpp_type">T</span>',
-        'impls': [],
+        'impls': [
+            'TA$calculator::Ptr::T'
+        ],
         'decls': []
     },
     'calculator::Ptr::operator =@::calculator::Ptr &(::calculator::Ptr &&)[impl0]::ptr': {
@@ -435,7 +441,10 @@ symbolToFiles = {
     'NI$calculator::Ptr::operator =@::calculator::Ptr &(::calculator::Ptr const &)[impl0]::ptr': null,
     'NI$calculator::Ptr::reference': null,
     'NI$calculator::UnaryExpr': null,
-    'NI$calculator::UnaryOperator': null
+    'NI$calculator::UnaryOperator': null,
+    'TA$calculator::Ptr::Dec@void()[impl0]::X': null,
+    'TA$calculator::Ptr::Inc@void()[impl0]::X': null,
+    'TA$calculator::Ptr::T': null
 };
 turnOnSymbol();
 </script>

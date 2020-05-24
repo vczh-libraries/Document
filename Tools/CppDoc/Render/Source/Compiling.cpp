@@ -36,21 +36,39 @@ void Compile(
 		switch (symbol->GetCategory())
 		{
 		case symbol_component::SymbolCategory::Normal:
-			if (auto decl = symbol->GetImplDecl_NFb())
+			switch (symbol->kind)
 			{
-				auto& name = decl->name;
-				if (name.tokenCount > 0)
+			case symbol_component::SymbolKind::GenericTypeArgument:
+			case symbol_component::SymbolKind::GenericValueArgument:
 				{
-					result.decls.Add(IndexToken::GetToken(name), decl);
+					auto tsysArg = symbol_type_resolving::GetTemplateArgumentKey(symbol);
+					auto ga = tsysArg->GetGenericArg();
+					auto argument = ga.spec->arguments[ga.argIndex];
+
+					auto& name = argument.name;
+					if (name.tokenCount > 0)
+					{
+						result.decls.Add(IndexToken::GetToken(name), { nullptr,symbol });
+					}
 				}
-			}
-			for (vint i = 0; i < symbol->GetForwardDecls_N().Count(); i++)
-			{
-				auto decl = symbol->GetForwardDecls_N()[i];
-				auto& name = decl->name;
-				if (name.tokenCount > 0)
+				break;
+			default:
+				if (auto decl = symbol->GetImplDecl_NFb())
 				{
-					result.decls.Add(IndexToken::GetToken(name), decl);
+					auto& name = decl->name;
+					if (name.tokenCount > 0)
+					{
+						result.decls.Add(IndexToken::GetToken(name), { decl,nullptr });
+					}
+				}
+				for (vint i = 0; i < symbol->GetForwardDecls_N().Count(); i++)
+				{
+					auto decl = symbol->GetForwardDecls_N()[i];
+					auto& name = decl->name;
+					if (name.tokenCount > 0)
+					{
+						result.decls.Add(IndexToken::GetToken(name), { decl,nullptr });
+					}
 				}
 			}
 			break;
@@ -62,7 +80,7 @@ void Compile(
 				auto& name = decl->name;
 				if (name.tokenCount > 0)
 				{
-					result.decls.Add(IndexToken::GetToken(name), decl);
+					result.decls.Add(IndexToken::GetToken(name), { decl,nullptr });
 				}
 			}
 			if (auto decl = symbol->GetForwardDecl_Fb())
@@ -70,7 +88,7 @@ void Compile(
 				auto& name = decl->name;
 				if (name.tokenCount > 0)
 				{
-					result.decls.Add(IndexToken::GetToken(name), decl);
+					result.decls.Add(IndexToken::GetToken(name), { decl,nullptr });
 				}
 			}
 			break;

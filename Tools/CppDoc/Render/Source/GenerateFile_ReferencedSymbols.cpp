@@ -26,15 +26,15 @@ void GenerateReferencedSymbols(Ptr<FileLinesRecord> flr, StreamWriter& writer)
 		writer.WriteLine(L"\',");
 
 		List<WString> impls, decls;
-		EnumerateDecls(symbol, [&](Ptr<Declaration> decl, bool isImpl, vint index)
+		EnumerateDecls(symbol, [&](DeclOrArg declOrArg, bool isImpl, vint index)
 		{
 			if (isImpl)
 			{
-				impls.Add(GetDeclId(decl));
+				impls.Add(GetDeclId(declOrArg));
 			}
 			else
 			{
-				decls.Add(GetDeclId(decl));
+				decls.Add(GetDeclId(declOrArg));
 			}
 		});
 

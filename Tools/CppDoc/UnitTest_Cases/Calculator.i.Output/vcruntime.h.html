@@ -246,9 +246,9 @@
 <div class="disabled">#ifdef __cplusplus</div>
     <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div>
     {
-        <div class="token cpp_keyword ">template</div> &lt;<div class="token cpp_keyword ">typename</div> _CountofType, <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> _SizeOfArray&gt;
+        <div class="token cpp_keyword ">template</div> &lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_CountofType"><div><div class="token cpp_type">_CountofType</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> <div class="def" id="TA$__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_SizeOfArray"><div><div class="token cpp_enum">_SizeOfArray</div></div></div>&gt;
 <div class="expandable"><div class="disabled">        char (*__countof_helper(_UNALIGNED _CountofType (&amp;_Array)[_SizeOfArray]))[_SizeOfArray];</div>
-<div class="expanded">        <div class="token cpp_keyword ">char</div> (*<div class="def" id="FB$__countof_helper@char [*] *([_CountofType] [*] &)[decl0]"><div><div class="token cpp_function">__countof_helper</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_CountofType'])"><div class="token cpp_type">_CountofType</div></div> (&amp;<div class="def" id="NI$__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_Array"><div>_Array</div></div>)[<div class="ref" onclick="jumpToSymbol([], ['__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_SizeOfArray'])">_SizeOfArray</div>]))[<div class="ref" onclick="jumpToSymbol([], ['__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_SizeOfArray'])">_SizeOfArray</div>];</div></div>
+<div class="expanded">        <div class="token cpp_keyword ">char</div> (*<div class="def" id="FB$__countof_helper@char [*] *([_CountofType] [*] &)[decl0]"><div><div class="token cpp_function">__countof_helper</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_CountofType'])"><div class="token cpp_type">_CountofType</div></div> (&amp;<div class="def" id="NI$__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_Array"><div>_Array</div></div>)[<div class="ref" onclick="jumpToSymbol([], ['__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_SizeOfArray'])"><div class="token cpp_enum">_SizeOfArray</div></div>]))[<div class="ref" onclick="jumpToSymbol([], ['__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_SizeOfArray'])"><div class="token cpp_enum">_SizeOfArray</div></div>];</div></div>
 
 <div class="disabled">        #define __crt_countof(_Array) (sizeof(*__countof_helper(_Array)) + 0)</div>
     }
@@ -319,12 +319,16 @@
 referencedSymbols = {
     '__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_CountofType': {
         'displayNameInHtml': '<span class="cpp_type">_CountofType</span>',
-        'impls': [],
+        'impls': [
+            'TA$__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_CountofType'
+        ],
         'decls': []
     },
     '__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_SizeOfArray': {
         'displayNameInHtml': '_SizeOfArray',
-        'impls': [],
+        'impls': [
+            'TA$__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_SizeOfArray'
+        ],
         'decls': []
     },
     'size_t': {
@@ -344,7 +348,9 @@ referencedSymbols = {
 };
 symbolToFiles = {
     'NI$size_t': null,
-    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' }
+    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' },
+    'TA$__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_CountofType': null,
+    'TA$__countof_helper@char [*] *([_CountofType] [*] &)[decl0]::_SizeOfArray': null
 };
 turnOnSymbol();
 </script>

@@ -4,9 +4,9 @@
 WriteFileMapping
 ***********************************************************************/
 
-void WriteFileMapping(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, bool& firstFileMapping, const WString& declId, Ptr<Declaration> decl, StreamWriter& writer)
+void WriteFileMapping(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, bool& firstFileMapping, const WString& declId, DeclOrArg declOrArg, StreamWriter& writer)
 {
-	vint index = global->declToFiles.Keys().IndexOf(decl.Obj());
+	vint index = global->declToFiles.Keys().IndexOf(declOrArg);
 	if (index == -1) return;
 
 	if (!firstFileMapping)
@@ -44,14 +44,14 @@ GenerateSymbolToFiles
 
 void GenerateSymbolToFiles(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, StreamWriter& writer)
 {
-	Dictionary<WString, Ptr<Declaration>> symbolToFiles;
+	Dictionary<WString, DeclOrArg> symbolToFiles;
 
 	for (vint i = 0; i < flr->refSymbols.Count(); i++)
 	{
 		auto symbol = flr->refSymbols[i];
-		EnumerateDecls(symbol, [&](Ptr<Declaration> decl, bool isImpl, vint index)
+		EnumerateDecls(symbol, [&](DeclOrArg declOrArg, bool isImpl, vint index)
 		{
-			symbolToFiles.Add(GetDeclId(decl), decl);
+			symbolToFiles.Add(GetDeclId(declOrArg), declOrArg);
 		});
 	}
 

@@ -4,20 +4,26 @@
 EnumerateDecls
 ***********************************************************************/
 
-void EnumerateDecls(Symbol* symbol, const Func<void(Ptr<Declaration>, bool, vint)>& callback)
+void EnumerateDecls(Symbol* symbol, const Func<void(DeclOrArg, bool, vint)>& callback)
 {
 	switch (symbol->GetCategory())
 	{
 	case symbol_component::SymbolCategory::Normal:
+		switch(symbol->kind)
 		{
+		case symbol_component::SymbolKind::GenericTypeArgument:
+		case symbol_component::SymbolKind::GenericValueArgument:
+			callback({ nullptr,symbol }, true, -1);
+			break;
+		default:
 			if (auto decl = symbol->GetImplDecl_NFb())
 			{
-				callback(decl, true, -1);
+				callback({ decl,nullptr }, true, -1);
 			}
 			for (vint j = 0; j < symbol->GetForwardDecls_N().Count(); j++)
 			{
 				auto decl = symbol->GetForwardDecls_N()[j];
-				callback(decl, false, j);
+				callback({ decl,nullptr }, false, j);
 			}
 		}
 		break;
@@ -27,7 +33,7 @@ void EnumerateDecls(Symbol* symbol, const Func<void(Ptr<Declaration>, bool, vint
 			for (vint j = 0; j < symbols.Count(); j++)
 			{
 				auto functionBodySymbol = symbols[j].Obj();
-				callback(functionBodySymbol->GetImplDecl_NFb(), true, j);
+				callback({ functionBodySymbol->GetImplDecl_NFb(),nullptr }, true, j);
 			}
 		}
 		{
@@ -35,7 +41,7 @@ void EnumerateDecls(Symbol* symbol, const Func<void(Ptr<Declaration>, bool, vint
 			for (vint j = 0; j < symbols.Count(); j++)
 			{
 				auto functionBodySymbol = symbols[j].Obj();
-				callback(functionBodySymbol->GetForwardDecl_Fb(), false, j);
+				callback({ functionBodySymbol->GetForwardDecl_Fb(),nullptr }, false, j);
 			}
 		}
 		break;
@@ -48,29 +54,36 @@ void EnumerateDecls(Symbol* symbol, const Func<void(Ptr<Declaration>, bool, vint
 GetDeclId : DeclId represents a position in a source file, an id of a HTML element
 ***********************************************************************/
 
-WString GetDeclId(Ptr<Declaration> decl)
+WString GetDeclId(DeclOrArg declOrArg)
 {
-	switch (decl->symbol->GetCategory())
+	if (auto& decl = declOrArg.f0)
 	{
-	case symbol_component::SymbolCategory::Normal:
+		switch (decl->symbol->GetCategory())
 		{
-			if (decl == decl->symbol->GetImplDecl_NFb())
+		case symbol_component::SymbolCategory::Normal:
 			{
-				return L"NI$" + decl->symbol->uniqueId;
+				if (decl == decl->symbol->GetImplDecl_NFb())
+				{
+					return L"NI$" + decl->symbol->uniqueId;
+				}
+				else
+				{
+					vint index = decl->symbol->GetForwardDecls_N().IndexOf(decl.Obj());
+					if (index == -1) throw L"Unrecognizable declaration.";
+					return L"NF[" + itow(index) + L"]$" + decl->symbol->uniqueId;
+				}
 			}
-			else
+			break;
+		case symbol_component::SymbolCategory::FunctionBody:
 			{
-				vint index = decl->symbol->GetForwardDecls_N().IndexOf(decl.Obj());
-				if(index==-1) throw L"Unrecognizable declaration.";
-				return L"NF[" + itow(index) + L"]$" + decl->symbol->uniqueId;
+				return L"FB$" + decl->symbol->uniqueId;
 			}
+			break;
 		}
-		break;
-	case symbol_component::SymbolCategory::FunctionBody:
-		{
-			return L"FB$" + decl->symbol->uniqueId;
-		}
-		break;
+	}
+	else
+	{
+		return L"TA$" + declOrArg.f1->uniqueId;
 	}
 	throw L"Unrecognizable declaration.";
 }
@@ -108,6 +121,7 @@ const wchar_t* GetSymbolDivClass(Symbol* symbol)
 	case symbol_component::SymbolKind::GenericTypeArgument:
 		return L"cpp_type";
 	case symbol_component::SymbolKind::EnumItem:
+	case symbol_component::SymbolKind::GenericValueArgument:
 		return L"cpp_enum";
 	case symbol_component::SymbolKind::Variable:
 		if (auto parent = symbol->GetParentScope())

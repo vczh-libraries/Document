@@ -27,7 +27,6 @@
   - [ ] Refactor the HTML generation part to becomes a library.
   - [ ] Check carefully around all links.
     - [ ] Extract `<div>` token rendering functions.
-    - [ ] Template arguments are not located in HTML.
     - [ ] There are 3 `TEST_CATEGORY(L"Re-index")` containing `ASSERT_SYMBOL(..., void, -1. -1)`, make them not `-1`.
     - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
     - [ ] `expr->Accept` should have 3 links.

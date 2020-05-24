@@ -107,6 +107,7 @@ void IndexCppCode(
 	for (vint i = 0; i < global->fileLines.Keys().Count(); i++)
 	{
 		auto flr = global->fileLines.Values()[i];
+		Console::WriteLine(L"        " + flr->htmlFileName + L".html");
 		GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / (flr->htmlFileName + L".html"));
 	}
 
@@ -141,7 +142,10 @@ void IndexCppCode(
 		}
 	}
 
+	Console::WriteLine(L"        FileIndex.html");
 	GenerateFileIndex(global, folderOutput.GetFilePath() / L"FileIndex.html", fileGroups);
+
+	Console::WriteLine(L"        SymbolIndex.html");
 	GenerateSymbolIndex(global, indexResult, folderOutput.GetFilePath() / L"SymbolIndex.html", fileGroups);
 }
 
