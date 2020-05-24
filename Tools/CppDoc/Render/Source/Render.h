@@ -99,23 +99,6 @@ Compiling
 extern void											Compile(Ptr<RegexLexer> lexer, FilePath pathInput, IndexResult& result, IProgressReporter* progressReporter);
 
 /***********************************************************************
-Token Indexing
-***********************************************************************/
-
-struct AdjustSkippingResult
-{
-	vint											rowSkipped = 0;
-	vint											rowUntil = 0;
-	vint											columnUntil = 0;
-};
-
-struct IndexTracking
-{
-	vint											index = 0;
-	bool											inRange = false;
-};
-
-/***********************************************************************
 Line Indexing
 ***********************************************************************/
 
@@ -141,16 +124,6 @@ struct GlobalLinesRecord
 	Dictionary<FilePath, Ptr<FileLinesRecord>>		fileLines;		// generated HTML code of all touched source files
 	Dictionary<Ptr<Declaration>, FilePath>			declToFiles;	// declaration to source file mapping
 	SortedList<WString>								htmlFileNames;	// all fileLines[x]->htmlFileName
-};
-
-struct TokenTracker
-{
-	AdjustSkippingResult							asr;
-	IndexTracking									indexSkipping;
-	IndexTracking									indexDecl;
-	IndexTracking									indexResolve[(vint)IndexReason::Max];
-	bool											lastTokenIsDef = false;
-	bool											lastTokenIsRef = false;
 };
 
 /***********************************************************************

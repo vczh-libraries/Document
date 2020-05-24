@@ -1,6 +1,33 @@
 #include "Render.h"
 
 /***********************************************************************
+TokenTracker
+***********************************************************************/
+
+struct AdjustSkippingResult
+{
+	vint					rowSkipped = 0;
+	vint					rowUntil = 0;
+	vint					columnUntil = 0;
+};
+
+struct IndexTracking
+{
+	vint					index = 0;
+	bool					inRange = false;
+};
+
+struct TokenTracker
+{
+	AdjustSkippingResult	asr;
+	IndexTracking			indexSkipping;
+	IndexTracking			indexDecl;
+	IndexTracking			indexResolve[(vint)IndexReason::Max];
+	bool					lastTokenIsDef = false;
+	bool					lastTokenIsRef = false;
+};
+
+/***********************************************************************
 AdjustSkippingIndex
 ***********************************************************************/
 
