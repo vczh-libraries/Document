@@ -23,8 +23,8 @@ struct TokenTracker
 	IndexTracking			indexSkipping;
 	IndexTracking			indexDecl;
 	IndexTracking			indexResolve[(vint)IndexReason::Max];
-	bool					lastTokenIsDef = false;
-	bool					lastTokenIsRef = false;
+	vint					lastTokenDefIndex = -1;
+	vint					lastTokenRefIndex[(vint)IndexReason::Max] = { -1,-1,-1 };
 };
 
 /***********************************************************************
@@ -322,9 +322,35 @@ void GenerateHtmlLine(
 		bool isDefToken = tracker.indexDecl.inRange;
 		bool isRefToken = tracker.indexResolve[(vint)IndexReason::Resolved].inRange || tracker.indexResolve[(vint)IndexReason::OverloadedResolution].inRange;
 
-		if (isDefToken && !tracker.lastTokenIsDef)
+		{
+			for (vint i = 0; i < (vint)IndexReason::Max; i++)
+			{
+				if (tracker.lastTokenRefIndex[i] != -1 && (!isRefToken || (tracker.lastTokenRefIndex[i] != tracker.indexResolve[i].index)))
+				{
+					// if we have gone through all tokens of a declaration reference, close the <div>
+					Use(html).WriteString(L"</div>");
+					for (vint j = 0; j < (vint)IndexReason::Max; j++)
+					{
+						tracker.lastTokenRefIndex[j] = -1;
+					}
+					break;
+				}
+			}
+
+			if (tracker.lastTokenDefIndex != -1 && (!isDefToken || (tracker.lastTokenDefIndex != tracker.indexDecl.index)))
+			{
+				// if we have gone through all tokens of a declaration name, close <div>s
+				Use(html).WriteString(L"</div></div>");
+				tracker.lastTokenDefIndex = -1;
+			}
+		}
+
+		if (isDefToken && tracker.lastTokenDefIndex == -1)
 		{
 			// if we hit the first token of a declaration name
+			tracker.lastTokenDefIndex = tracker.indexDecl.index;
+
+			// say this declaration belongs to this file
 			auto declOrArg = result.decls.Values()[tracker.indexDecl.index];
 			if (!global->declToFiles.Keys().Contains(declOrArg))
 			{
@@ -401,19 +427,19 @@ void GenerateHtmlLine(
 				Use(html).WriteString(L"<div>");
 			}
 		}
-		else if (!isDefToken && tracker.lastTokenIsDef)
-		{
-			// if we have gone through all tokens of a declaration name, close <div>s
-			Use(html).WriteString(L"</div></div>");
-		}
 
 		// sometimes the compiler will try to parse an expression and see if it fails.
 		// in this case an indexed token may finally become the name of a definition.
 		// so we should ignore these tokens.
-		if (!isDefToken && isRefToken && !tracker.lastTokenIsRef)
+		if (!isDefToken && isRefToken && (tracker.lastTokenRefIndex[0] == -1 || tracker.lastTokenRefIndex[1] == -1 || tracker.lastTokenRefIndex[2] == -1))
 		{
 			// if we hit the first token of a declaration reference, and it is not inside a declaration name
 			// we definitely need a hyperlink
+			for (vint i = 0; i < (vint)IndexReason::Max; i++)
+			{
+				tracker.lastTokenRefIndex[i] = tracker.indexResolve[i].index;
+			}
+
 			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
 				if (tracker.indexResolve[i].inRange)
@@ -456,14 +482,6 @@ void GenerateHtmlLine(
 			}
 			Use(html).WriteString(L")\">");
 		}
-		else if (!tracker.lastTokenIsDef && !isRefToken && tracker.lastTokenIsRef)
-		{
-			// if we have gone through all tokens of a declaration reference, close the <div>
-			Use(html).WriteString(L"</div>");
-		}
-
-		tracker.lastTokenIsDef = isDefToken;
-		tracker.lastTokenIsRef = isRefToken;
 
 		if (!firstToken && cursor && (CppTokens)cursor->token.token == CppTokens::SHARP)
 		{
