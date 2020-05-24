@@ -51,7 +51,6 @@ void IndexRecorder::IndexInternal(CppName& name, List<ResolvedItem>& resolvedSym
 			if (!result.index[(vint)reason].Contains(key, symbol))
 			{
 				result.index[(vint)reason].Add(key, symbol);
-				result.reverseIndex[(vint)reason].Add(symbol, key);
 			}
 		}
 

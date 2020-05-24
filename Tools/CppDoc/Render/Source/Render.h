@@ -15,10 +15,10 @@ Preprocessing
 // skip these tokens to in space
 struct TokenSkipping
 {
-	vint											rowSkip = -1;
-	vint											columnSkip = -1;
-	vint											rowUntil = -1;
-	vint											columnUntil = -1;
+	vint											rowSkip = -1;			// row of the first token to skip
+	vint											columnSkip = -1;		// column of the first token to skip
+	vint											rowUntil = -1;			// row of the first token not to skip
+	vint											columnUntil = -1;		// column of the first token not to skip
 };
 
 extern void											ReadMappingFile(FilePath pathMapping, Array<TokenSkipping>& mapping);
@@ -51,14 +51,12 @@ enum class IndexReason
 };
 
 using IndexMap = Group<IndexToken, Symbol*>;
-using ReverseIndexMap = Group<Symbol*, IndexToken>;
 
 struct IndexResult
 {
 	ParsingArguments								pa;
 	Dictionary<WString, Symbol*>					ids;
 	IndexMap										index[(vint)IndexReason::Max];
-	ReverseIndexMap									reverseIndex[(vint)IndexReason::Max];
 	Dictionary<IndexToken, Ptr<Declaration>>		decls;
 };
 

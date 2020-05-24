@@ -36,13 +36,22 @@ void WriteMappingFile(FilePath pathMapping, List<TokenSkipping>& mapping)
 
 /***********************************************************************
 PreprocessedFileToCompactCodeAndMapping
+  Remove unnecessary 
 ***********************************************************************/
 
-void PreprocessedFileToCompactCodeAndMapping(Ptr<RegexLexer> lexer, FilePath pathInput, FilePath pathPreprocessed, FilePath pathOutput, FilePath pathMapping)
+void PreprocessedFileToCompactCodeAndMapping(
+	Ptr<RegexLexer> lexer,
+	FilePath pathInput,			// .I
+	FilePath pathPreprocessed,	// Preprocessed.cpp
+	FilePath pathOutput,		// Input.cpp
+	FilePath pathMapping		// Mapping.bin
+)
 {
+	// copy from .I to Preprocessed.cpp
 	WString input = File(pathInput).ReadAllTextByBom();
 	File(pathPreprocessed).WriteAllText(input, true, BomEncoder::Utf16);
 
+	// extract useful tokens from Preprocessed.cpp to Input.cpp
 	List<TokenSkipping> mapping;
 	{
 		CppTokenReader reader(lexer, input, false);
@@ -55,6 +64,7 @@ void PreprocessedFileToCompactCodeAndMapping(Ptr<RegexLexer> lexer, FilePath pat
 
 		while (cursor)
 		{
+			// leading spaces, trailing spaces, comments, pragmas are skipped
 			switch ((CppTokens)cursor->token.token)
 			{
 			case CppTokens::SPACE:
@@ -68,6 +78,8 @@ void PreprocessedFileToCompactCodeAndMapping(Ptr<RegexLexer> lexer, FilePath pat
 					ts.rowSkip = cursor->token.rowStart;
 					ts.columnSkip = cursor->token.columnStart;
 
+					// search until a token that cannot be skipped
+					// group all continuing tokens to skip in one single TokenSkipping
 					while (cursor)
 					{
 						ts.rowUntil = cursor->token.rowStart;
@@ -75,6 +87,7 @@ void PreprocessedFileToCompactCodeAndMapping(Ptr<RegexLexer> lexer, FilePath pat
 
 						if ((CppTokens)cursor->token.token == CppTokens::SHARP)
 						{
+							// if we see a #pragma
 							vint parenthesisCounter = 0;
 							vint lastSharpRowEnd = ts.rowUntil;
 							bool lastTokenIsSkipping = false;
@@ -83,6 +96,8 @@ void PreprocessedFileToCompactCodeAndMapping(Ptr<RegexLexer> lexer, FilePath pat
 							{
 								ts.rowUntil = cursor->token.rowStart;
 								ts.columnUntil = cursor->token.columnStart;
+
+								// if this #pragma reach a line-break, stops without consuming the line-break
 								if (lastTokenIsSkipping && lastSharpRowEnd != ts.rowUntil)
 								{
 									goto STOP_SHARP;
@@ -92,10 +107,13 @@ void PreprocessedFileToCompactCodeAndMapping(Ptr<RegexLexer> lexer, FilePath pat
 								switch ((CppTokens)cursor->token.token)
 								{
 								case CppTokens::LPARENTHESIS:
+									// if we see a (, count them
 									lastTokenIsSkipping = false;
 									parenthesisCounter++;
 									break;
 								case CppTokens::RPARENTHESIS:
+									// if we see a ), count them
+									// if this ) closes all (, stops
 									lastTokenIsSkipping = false;
 									parenthesisCounter--;
 									if (parenthesisCounter == 0)
@@ -107,6 +125,7 @@ void PreprocessedFileToCompactCodeAndMapping(Ptr<RegexLexer> lexer, FilePath pat
 								case CppTokens::SPACE:
 								case CppTokens::COMMENT1:
 								case CppTokens::COMMENT2:
+									// spaces and comments are allow in a #pragma, as long as they have no line-break
 									lastTokenIsSkipping = true;
 									break;
 								default:
@@ -134,6 +153,9 @@ void PreprocessedFileToCompactCodeAndMapping(Ptr<RegexLexer> lexer, FilePath pat
 
 					if (ts.rowSkip == ts.rowUntil)
 					{
+						// if all continuing spaces and comments contain no line-break, don't skip them
+						// #pragma will always be skipped because it is not valid to write code in that line
+						// so there will always be a line-break after it
 						cursor = oldCursor;
 					}
 					else
@@ -151,10 +173,13 @@ void PreprocessedFileToCompactCodeAndMapping(Ptr<RegexLexer> lexer, FilePath pat
 
 			if (cursor)
 			{
+				// if the token cannot be skipped, write to Input.cpp
 				writer.WriteString(cursor->token.reading, cursor->token.length);
 				SkipToken(cursor);
 			}
 		}
 	}
+
+	// record all skipped tokens in Mapping.bin
 	WriteMappingFile(pathMapping, mapping);
 }
