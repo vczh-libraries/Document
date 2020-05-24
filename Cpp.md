@@ -24,17 +24,16 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (Calculator)
-  - [ ] Refactor the HTML generation part to becomes a library.
-  - [ ] Check carefully around all links.
-    - [ ] Extract `<div>` token rendering functions.
-    - [ ] There are 3 `TEST_CATEGORY(L"Re-index")` containing `ASSERT_SYMBOL(..., void, -1. -1)`, make them not `-1`.
-    - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
+  - [ ] There are 3 `TEST_CATEGORY(L"Re-index")` containing `ASSERT_SYMBOL(..., void, -1. -1)`, make them not `-1`.
+  - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
 - [ ] Lambda expressions.
 - [ ] Next Demo! (STL)
   - [ ] Test cases
     - [ ] type alias recursion
     - [ ] value alias recursion
 - [ ] Next Demo! (Vlpp)
+  - [ ] Refactor the HTML generation part to becomes a library.
+    - [ ] Extract `<div>` token rendering functions.
   - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
   - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
 - [ ] Next Demo! (GacUI)
