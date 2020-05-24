@@ -45,7 +45,7 @@ void EnumerateDecls(Symbol* symbol, const Func<void(Ptr<Declaration>, bool, vint
 }
 
 /***********************************************************************
-GetDeclId
+GetDeclId : DeclId represents a position in a source file, an id of a HTML element
 ***********************************************************************/
 
 WString GetDeclId(Ptr<Declaration> decl)
@@ -76,7 +76,7 @@ WString GetDeclId(Ptr<Declaration> decl)
 }
 
 /***********************************************************************
-GetSymbolId
+GetSymbolId : SymbolId maps to multiple DeclId
 ***********************************************************************/
 
 WString GetSymbolId(Symbol* symbol)

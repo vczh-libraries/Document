@@ -6,9 +6,9 @@ TokenTracker
 
 struct AdjustSkippingResult
 {
-	vint					rowSkipped = 0;
-	vint					rowUntil = 0;
-	vint					columnUntil = 0;
+	vint					rowSkipped = 0;		// total rows that are skipped before the current token
+	vint					rowUntil = 0;		// the row of the first token after the next skipping
+	vint					columnUntil = 0;	// the column of the first token after the next skipping
 };
 
 struct IndexTracking
@@ -29,12 +29,19 @@ struct TokenTracker
 
 /***********************************************************************
 AdjustSkippingIndex
+  Check if a token is in any skipped contents
 ***********************************************************************/
 
-void AdjustSkippingIndex(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skipping, IndexTracking& index, AdjustSkippingResult& asr)
+void AdjustSkippingIndex(
+	Ptr<CppTokenCursor>& cursor,
+	Array<TokenSkipping>& skipping,		// Mapping.bin
+	IndexTracking& index,				// TokenTracker::indexSkipping
+	AdjustSkippingResult& asr			// TokenTracker::asr
+)
 {
 	auto& token = cursor->token;
 
+	// increase TokenTracker.indexSkipping.index
 	while (true)
 	{
 		if (index.index >= skipping.Count())
@@ -43,6 +50,7 @@ void AdjustSkippingIndex(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skip
 			return;
 		}
 
+		// until the whole skipping[index] is not located before the current token
 		auto& current = skipping[index.index];
 		if (token.rowStart > current.rowUntil || (token.rowStart == current.rowUntil && token.columnStart >= current.columnUntil))
 		{
@@ -55,6 +63,7 @@ void AdjustSkippingIndex(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skip
 		}
 	}
 
+	// check if the token belongs to skipping[index] or not
 	auto& current = skipping[index.index];
 	if (token.rowStart < current.rowSkip || (token.rowStart == current.rowSkip && token.columnStart < current.columnSkip))
 	{
@@ -71,8 +80,16 @@ void AdjustSkippingIndex(Ptr<CppTokenCursor>& cursor, Array<TokenSkipping>& skip
 AdjustRefIndex
 ***********************************************************************/
 
-void AdjustRefIndex(Ptr<CppTokenCursor>& cursor, const SortedList<IndexToken>& keys, IndexTracking& index, const AdjustSkippingResult& asr)
+void AdjustRefIndex(
+	Ptr<CppTokenCursor>& cursor,
+	const SortedList<IndexToken>& keys,		// tokens of all declaration names,	or tokens of references
+	IndexTracking& index,					// TokenTracker::indexDecl,			or TokenTracker::indexResolve[x]
+	const AdjustSkippingResult& asr			// TokenTracker::asr
+)
 {
+	// adjust the row and column of the cursor
+	// from Preprocessed.cpp coordination to Index.cpp coordination
+	// since indexed token informations are based on Index.cpp, but we are reading tokens from Preprocessed.cpp
 	vint row = cursor->token.rowStart;
 	vint column = cursor->token.columnStart;
 	if (row == asr.rowUntil)
@@ -81,6 +98,7 @@ void AdjustRefIndex(Ptr<CppTokenCursor>& cursor, const SortedList<IndexToken>& k
 	}
 	row -= asr.rowSkipped;
 
+	// increase TokenTracker.(indexDecl or indexResolve[x]).index
 	while (true)
 	{
 		if (index.index >= keys.Count())
@@ -89,6 +107,7 @@ void AdjustRefIndex(Ptr<CppTokenCursor>& cursor, const SortedList<IndexToken>& k
 			return;
 		}
 
+		// until the whole name[index] or reference[index] is not located before the current token
 		auto& current = keys[index.index];
 		if (row > current.rowEnd || (row == current.rowEnd && column > current.columnEnd))
 		{
@@ -100,6 +119,7 @@ void AdjustRefIndex(Ptr<CppTokenCursor>& cursor, const SortedList<IndexToken>& k
 		}
 	}
 
+	// check if the token belongs to name[index] or reference[index] or not
 	auto& current = keys[index.index];
 	if (row < current.rowStart || (row == current.rowStart && column < current.columnStart))
 	{
@@ -140,7 +160,7 @@ StreamWriter& Use(Ptr<StreamHolder>& holder)
 GenerateHtmlToken
 ***********************************************************************/
 
-template<typename T>
+template<typename TCallback>
 void GenerateHtmlToken(
 	Ptr<CppTokenCursor>& cursor,
 	Symbol* symbolForToken,
@@ -148,13 +168,14 @@ void GenerateHtmlToken(
 	const wchar_t*& rawEnd,
 	Ptr<StreamHolder>& html,
 	vint& lineCounter,
-	const T& callback
+	TCallback&& callback
 )
 {
 	const wchar_t* divClass = nullptr;
 
 	switch ((CppTokens)cursor->token.token)
 	{
+		// some tokens has a fixed color
 	case CppTokens::DOCUMENT:
 	case CppTokens::COMMENT1:
 	case CppTokens::COMMENT2:
@@ -176,6 +197,7 @@ void GenerateHtmlToken(
 			divClass = L"cpp_keyword ";
 		break;
 	default:
+		// others depend on the symbol
 		if (symbolForToken)
 		{
 			divClass = GetSymbolDivClass(symbolForToken);
@@ -275,6 +297,8 @@ void GenerateHtmlLine(
 		AdjustSkippingIndex(cursor, skipping, tracker.indexSkipping, tracker.asr);
 		if (tracker.indexSkipping.inRange)
 		{
+			// if the current token belongs to any item in skipping
+			// then it could not be either a declaration name, or a declaration reference
 			tracker.indexDecl.inRange = false;
 			for (vint i = 0; i < (vint)IndexReason::Max; i++)
 			{
@@ -283,7 +307,10 @@ void GenerateHtmlLine(
 		}
 		else
 		{
+			// if the current token does not belong to any item in skipping
+			// check if it belongs to a declaration name
 			AdjustRefIndex(cursor, result.decls.Keys(), tracker.indexDecl, tracker.asr);
+			// check if it belongs to a declaration reference
 			for (vint i = 0; i < (vint)IndexReason::Max; i++)
 			{
 				AdjustRefIndex(cursor, result.index[i].Keys(), tracker.indexResolve[i], tracker.asr);
@@ -297,12 +324,14 @@ void GenerateHtmlLine(
 
 		if (isDefToken && !tracker.lastTokenIsDef)
 		{
+			// if we hit the first token of a declaration name
 			auto decl = result.decls.Values()[tracker.indexDecl.index];
 			if (!global->declToFiles.Keys().Contains(decl.Obj()))
 			{
 				global->declToFiles.Add(decl, currentFilePath);
 			}
 
+			// generate an id to jump to
 			Use(html).WriteString(L"<div class=\"def\" id=\"");
 			Use(html).WriteString(GetDeclId(decl));
 			Use(html).WriteString(L"\">");
@@ -311,10 +340,12 @@ void GenerateHtmlLine(
 			switch (decl->symbol->GetCategory())
 			{
 			case symbol_component::SymbolCategory::Normal:
+				// generate a link on a declaration name, if the same symbol appears at multiple places
 				generateLink = (decl->symbol->GetImplDecl_NFb() ? 1 : 0) + decl->symbol->GetForwardDecls_N().Count() > 1;
 				break;
 			case symbol_component::SymbolCategory::FunctionBody:
 				{
+					// generate a link on a function name, if the same symbol appears at multiple places
 					auto functionSymbol = decl->symbol->GetFunctionSymbol_Fb();
 					generateLink = functionSymbol->GetImplSymbols_F().Count() + functionSymbol->GetForwardSymbols_F().Count() > 1;
 				}
@@ -323,12 +354,15 @@ void GenerateHtmlLine(
 
 			if (generateLink)
 			{
+				// if this token needs a hyperlink
+				// say we have a hyperlink to this symbol in this file
 				if (!flr->refSymbols.Contains(decl->symbol))
 				{
 					switch (decl->symbol->GetCategory())
 					{
 					case symbol_component::SymbolCategory::Normal:
 						{
+							// if it is not a function declaration, use the declaration symbol
 							auto declSymbol = decl->symbol;
 							if (!flr->refSymbols.Contains(declSymbol))
 							{
@@ -338,6 +372,7 @@ void GenerateHtmlLine(
 						break;
 					case symbol_component::SymbolCategory::FunctionBody:
 						{
+							// if it is a function declaration, use the function symbol instead of the declaration symbol
 							auto declSymbol = decl->symbol->GetFunctionSymbol_Fb();
 							if (!flr->refSymbols.Contains(declSymbol))
 							{
@@ -347,17 +382,22 @@ void GenerateHtmlLine(
 						break;
 					}
 				}
+
+				// generate a <div> to itself, so that users can navigate between forward declarations and implementations
 				Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([], [\'");
 				Use(html).WriteString(GetSymbolId(decl->symbol));
 				Use(html).WriteString(L"\'])\">");
 			}
 			else
 			{
+				// if this token doesn't need a hyper link
+				// generate an empty <div>
 				Use(html).WriteString(L"<div>");
 			}
 		}
 		else if (!isDefToken && tracker.lastTokenIsDef)
 		{
+			// if we have gone through all tokens of a declaration name, close <div>s
 			Use(html).WriteString(L"</div></div>");
 		}
 
@@ -366,6 +406,8 @@ void GenerateHtmlLine(
 		// so we should ignore these tokens.
 		if (!isDefToken && isRefToken && !tracker.lastTokenIsRef)
 		{
+			// if we hit the first token of a declaration reference, and it is not inside a declaration name
+			// we definitely need a hyperlink
 			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
 				if (tracker.indexResolve[i].inRange)
@@ -373,6 +415,8 @@ void GenerateHtmlLine(
 					auto& symbols = result.index[i].GetByIndex(tracker.indexResolve[i].index);
 					for (vint j = 0; j < symbols.Count(); j++)
 					{
+						// say we have a hyperlink to this symbol in this file
+						// indexing always give Function instead of FunctionBody
 						auto symbol = symbols[j];
 						if (!flr->refSymbols.Contains(symbol))
 						{
@@ -382,6 +426,7 @@ void GenerateHtmlLine(
 				}
 			}
 
+			// generate a <div> to the target symbol, so that users can navigate between forward declarations and implementations
 			Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol(");
 			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
@@ -407,6 +452,7 @@ void GenerateHtmlLine(
 		}
 		else if (!tracker.lastTokenIsDef && !isRefToken && tracker.lastTokenIsRef)
 		{
+			// if we have gone through all tokens of a declaration reference, close the <div>
 			Use(html).WriteString(L"</div>");
 		}
 
@@ -415,11 +461,15 @@ void GenerateHtmlLine(
 
 		if (!firstToken && cursor && (CppTokens)cursor->token.token == CppTokens::SHARP)
 		{
-			// let the outside decide whether this # need to be generate HTML code or not
+			// if the current token is #, and it is not the first token to call GenerateHtmlLine
+			// it may be exlucded from generated HTML content
+			// e.g.
+			//   #pragma needs to generate HTML
+			//   #line needs not to because it doesn't appear in any source file
 			break;
 		}
 
-		// write a token
+		// choose a color for this token
 		Symbol* symbolForToken = nullptr;
 		if (isDefToken)
 		{
@@ -436,6 +486,8 @@ void GenerateHtmlLine(
 				}
 			}
 		}
+
+		// generate HTML for this token
 		GenerateHtmlToken(cursor, symbolForToken, rawBegin, rawEnd, html, lineCounter, callback);
 		SkipToken(cursor);
 		firstToken = false;
