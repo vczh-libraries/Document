@@ -36,15 +36,14 @@ void WriteMappingFile(FilePath pathMapping, List<TokenSkipping>& mapping)
 
 /***********************************************************************
 PreprocessedFileToCompactCodeAndMapping
-  Remove unnecessary 
 ***********************************************************************/
 
 void PreprocessedFileToCompactCodeAndMapping(
 	Ptr<RegexLexer> lexer,
-	FilePath pathInput,			// .I
-	FilePath pathPreprocessed,	// Preprocessed.cpp
-	FilePath pathOutput,		// Input.cpp
-	FilePath pathMapping		// Mapping.bin
+	FilePath pathInput,			// (in)  .I
+	FilePath pathPreprocessed,	// (out) Preprocessed.cpp
+	FilePath pathOutput,		// (out) Input.cpp
+	FilePath pathMapping		// (out) Mapping.bin
 )
 {
 	// copy from .I to Preprocessed.cpp

@@ -54,9 +54,16 @@ using IndexMap = Group<IndexToken, Symbol*>;
 
 struct IndexResult
 {
+	// the ParsingArguments used to parse the program
 	ParsingArguments								pa;
+
+	// unique-symbol-name to symbol mapping created in Compile function
 	Dictionary<WString, Symbol*>					ids;
+
+	// indexed token to symbol mapping, continuing tokens are grouped together
 	IndexMap										index[(vint)IndexReason::Max];
+
+	// tokens of declaration names, to be highlighted from hyperlinks
 	Dictionary<IndexToken, Ptr<Declaration>>		decls;
 };
 

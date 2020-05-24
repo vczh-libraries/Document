@@ -4,8 +4,14 @@
 Compile
 ***********************************************************************/
 
-void Compile(Ptr<RegexLexer> lexer, FilePath pathInput, IndexResult& result, IProgressReporter* progressReporter)
+void Compile(
+	Ptr<RegexLexer> lexer,
+	FilePath pathInput,						// (in)  Input.cpp
+	IndexResult& result,					// (out) indexing
+	IProgressReporter* progressReporter
+)
 {
+	// program input and index tokens
 	WString input = File(pathInput).ReadAllTextByBom();
 	CppTokenReader reader(lexer, input);
 	auto cursor = reader.GetFirstToken();
@@ -19,7 +25,10 @@ void Compile(Ptr<RegexLexer> lexer, FilePath pathInput, IndexResult& result, IPr
 	auto program = ParseProgram(result.pa, cursor);
 	EvaluateProgram(result.pa, program);
 
+	// generate unique symbol name
 	result.pa.root->GenerateUniqueId(result.ids, L"");
+
+	// collect all declaration names
 	for (vint i = 0; i < result.ids.Count(); i++)
 	{
 		auto symbol = result.ids.Values()[i];
