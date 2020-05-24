@@ -417,6 +417,8 @@ void GenerateHtmlLine(
 
 /***********************************************************************
 Collect
+  Generate HTML for Preprocessed.cpp
+  link each line to the original source file
 ***********************************************************************/
 
 Ptr<GlobalLinesRecord> Collect(
@@ -443,17 +445,21 @@ Ptr<GlobalLinesRecord> Collect(
 	CppTokenReader reader(lexer, global->preprocessed, false);
 	auto cursor = reader.GetFirstToken();
 
-	vint currentLineNumber = 0;
-	FilePath currentFilePath;
-	bool rightAfterSharpLine = false;
+	vint currentLineNumber = 0;			// current line number in the source file
+	FilePath currentFilePath;			// current file path of the source file
+	bool rightAfterSharpLine = false;	// true if the previous line in Preprocessed.cpp is #line
 	TokenTracker tracker;
 
 	// generate line-based HTML code for Preprocessed.cpp
 	while (cursor)
 	{
 		{
+			// try to consume a #line
+			// this line does not exist in any source files before preprocessed
+			// so it is not necessary to generate HTML for this line
 			auto oldCursor = cursor;
 			{
+				// #line NUMBER "FILENAME"
 				if (!TestToken(cursor, CppTokens::SHARP)) goto GIVE_UP;
 				if (!TestToken(cursor, L"line")) goto GIVE_UP;
 				if (!TestToken(cursor, CppTokens::SPACE)) goto GIVE_UP;
@@ -462,6 +468,8 @@ Ptr<GlobalLinesRecord> Collect(
 				SkipToken(cursor);
 				if (!TestToken(cursor, CppTokens::SPACE)) goto GIVE_UP;
 				if (!TestToken(cursor, CppTokens::STRING, false)) goto GIVE_UP;
+
+				// the last "FILENAME" token is not consumed, copy its content, process escaped characters
 				Array<wchar_t> buffer(cursor->token.length - 2);
 				auto reading = cursor->token.reading + 1;
 				auto writing = &buffer[0];
@@ -474,8 +482,12 @@ Ptr<GlobalLinesRecord> Collect(
 					*writing++ = *reading++;
 				}
 
+				// the next line is the real NUMBER-th line
 				currentLineNumber = lineNumber - 1;
 				{
+					// convert from "FILENAME" to FilePath
+					// read FilePath from a cache if we have already calculated the full name
+					// prevent from accessing the file system to normalize the file path
 					WString filePathText(&buffer[0], (vint)(writing - &buffer[0]));
 					vint index = filePathCache.Keys().IndexOf(filePathText);
 					if (index == -1)
@@ -491,6 +503,7 @@ Ptr<GlobalLinesRecord> Collect(
 
 				rightAfterSharpLine = true;
 
+				// ensure that a FileLinesRecord object for this source file is created
 				{
 					vint fileIndex = global->fileLines.Keys().IndexOf(currentFilePath);
 					if (fileIndex == -1)
@@ -498,6 +511,8 @@ Ptr<GlobalLinesRecord> Collect(
 						auto flr = MakePtr<FileLinesRecord>();
 						flr->filePath = currentFilePath;
 
+						// set the name of the generated HTML file
+						// if there are multiple source files with the same name, add a counter
 						WString displayName = flr->filePath.GetName();
 						vint counter = 1;
 						while (true)
@@ -520,10 +535,13 @@ Ptr<GlobalLinesRecord> Collect(
 		GIVE_UP:
 			cursor = oldCursor;
 		}
+
+		// if it is not #line, generate HTML for this line
 		GenerateHtmlLine(cursor, global, currentFilePath, skipping, result, tracker, [&](HtmlLineRecord hlr)
 		{
 			if (rightAfterSharpLine)
 			{
+				// line break is not consumed after #line
 				if (hlr.htmlCode.Length() != 0)
 				{
 					throw Exception(L"An empty line should have been submitted right after #line.");

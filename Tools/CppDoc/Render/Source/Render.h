@@ -121,26 +121,26 @@ Line Indexing
 
 struct HtmlLineRecord
 {
-	vint											lineCount;
-	const wchar_t*									rawBegin;
-	const wchar_t*									rawEnd;
-	WString											htmlCode;
+	vint											lineCount;		// total lines of this record
+	const wchar_t*									rawBegin;		// the first character
+	const wchar_t*									rawEnd;			// the one after the last character
+	WString											htmlCode;		// generated HTML code
 };
 
 struct FileLinesRecord
 {
-	FilePath										filePath;
-	WString											htmlFileName;
-	Dictionary<vint, HtmlLineRecord>				lines;
-	SortedList<Symbol*>								refSymbols;
+	FilePath										filePath;		// file path of the source file
+	WString											htmlFileName;	// file name of the generated HTML file (without ".html")
+	Dictionary<vint, HtmlLineRecord>				lines;			// all generated HTML code
+	SortedList<Symbol*>								refSymbols;		// symbols of all hyperlink targets in the source file
 };
 
 struct GlobalLinesRecord
 {
-	WString											preprocessed;
-	Dictionary<FilePath, Ptr<FileLinesRecord>>		fileLines;
-	Dictionary<Ptr<Declaration>, FilePath>			declToFiles;
-	SortedList<WString>								htmlFileNames;
+	WString											preprocessed;	// text content of Preprocessed.cpp, ensure that each line ends with a line-break
+	Dictionary<FilePath, Ptr<FileLinesRecord>>		fileLines;		// generated HTML code of all touched source files
+	Dictionary<Ptr<Declaration>, FilePath>			declToFiles;	// declaration to source file mapping
+	SortedList<WString>								htmlFileNames;	// all fileLines[x]->htmlFileName
 };
 
 struct TokenTracker
