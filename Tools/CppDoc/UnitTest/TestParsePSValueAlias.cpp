@@ -372,4 +372,38 @@ constexpr auto Value<T*, typename T::Z> = 'c';
 		AssertExpr(pa,	L"Value<B*>",	L"Value<B *>",	L"double const & $PR"	);
 		AssertExpr(pa,	L"Value<C*>",	L"Value<C *>",	L"char const & $PR"		);
 	});
+
+	TEST_CATEGORY(L"Re-index")
+	{
+		auto input = LR"(
+template<typename T, typename... Ts>
+constexpr auto F = false;
+
+template<>
+constexpr auto F<float, char, wchar_t> = 0.f;
+
+template<>
+constexpr auto F<double, wchar_t, char> = 0.0;
+
+auto x1 = F<float, char, wchar_t>;
+auto x2 = F<float, wchar_t, char>;
+auto x3 = F<double, char, wchar_t>;
+auto x4 = F<double, wchar_t, char>;
+)";
+
+		SortedList<vint> accessed;
+		auto recorder = BEGIN_ASSERT_SYMBOL
+			ASSERT_SYMBOL			(0, L"F", 10, 10, ValueAliasDeclaration, 2, 15)
+			ASSERT_SYMBOL			(1, L"F", 11, 10, ValueAliasDeclaration, 2, 15)
+			ASSERT_SYMBOL			(2, L"F", 12, 10, ValueAliasDeclaration, 2, 15)
+			ASSERT_SYMBOL			(3, L"F", 13, 10, ValueAliasDeclaration, 2, 15)
+			ASSERT_SYMBOL_OVERLOAD	(4, L"F", 10, 10, ValueAliasDeclaration, 2, 15)
+			ASSERT_SYMBOL_OVERLOAD	(5, L"F", 11, 10, ValueAliasDeclaration, 2, 15)
+			ASSERT_SYMBOL_OVERLOAD	(6, L"F", 12, 10, ValueAliasDeclaration, 2, 15)
+			ASSERT_SYMBOL_OVERLOAD	(7, L"F", 13, 10, ValueAliasDeclaration, 2, 15)
+		END_ASSERT_SYMBOL;
+
+		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
+		TEST_CASE_ASSERT(accessed.Count() == 8);
+	});
 }
