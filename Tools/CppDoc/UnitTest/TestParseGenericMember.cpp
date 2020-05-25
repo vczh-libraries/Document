@@ -917,11 +917,11 @@ auto c = &X<int>::Method<double>;
 		SortedList<vint> accessed;
 		auto recorder = BEGIN_ASSERT_SYMBOL
 			ASSERT_SYMBOL			(0, L"T", 5, 1, void, 1, 18)
-			ASSERT_SYMBOL			(1, L"U", 5, 11, void, -1, -1)
-			ASSERT_SYMBOL			(2, L"A", 10, 0, void, -1, -1)
+			ASSERT_SYMBOL			(1, L"U", 5, 11, void, 4, 19)
+			ASSERT_SYMBOL			(2, L"A", 10, 0, void, 8, 18)
 			ASSERT_SYMBOL			(3, L"X", 10, 3, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL			(4, L"A", 10, 5, void, -1, -1)
-			ASSERT_SYMBOL			(5, L"B", 10, 16, void, -1, -1)
+			ASSERT_SYMBOL			(4, L"A", 10, 5, void, 8, 18)
+			ASSERT_SYMBOL			(5, L"B", 10, 16, void, 9, 18)
 			ASSERT_SYMBOL			(6, L"X", 12, 0, ClassDeclaration, 2, 7)
 			ASSERT_SYMBOL			(7, L"x", 13, 10, VariableDeclaration, 12, 7)
 			ASSERT_SYMBOL			(8, L"Method", 13, 12, FunctionDeclaration, 10, 9)

@@ -126,17 +126,21 @@ public:
 	{
 	}
 
-	void Index(CppName& name, List<ResolvedItem>& resolvedSymbols)
+	void BeginPhase(Phase phase)override
+	{
+	}
+
+	void Index(CppName& name, List<ResolvedItem>& resolvedSymbols)override
 	{
 		callback(name, (List<ResolvedItem>&)resolvedSymbols, false);
 	}
 
-	void IndexOverloadingResolution(CppName& name, List<ResolvedItem>& resolvedSymbols)
+	void IndexOverloadingResolution(CppName& name, List<ResolvedItem>& resolvedSymbols)override
 	{
 		callback(name, (List<ResolvedItem>&)resolvedSymbols, true);
 	}
 
-	void ExpectValueButType(CppName& name, List<ResolvedItem>& resolvedSymbols)
+	void ExpectValueButType(CppName& name, List<ResolvedItem>& resolvedSymbols)override
 	{
 		TEST_ASSERT(false);
 	}
@@ -217,23 +221,12 @@ inline bool AssertSymbol<void>(
 			TEST_ASSERT(false);
 		}
 
-		if (symbol->GetParentScope()->kind == symbol_component::SymbolKind::Root)
-		{
-			// the declaration that should contain a TemplateSpec has not been created yet
-			TEST_ASSERT(symbol->name == _name);
-			TEST_ASSERT(_pRow == -1);
-			TEST_ASSERT(_pCol == -1);
-		}
-		else
-		{
-			auto spec = symbol_type_resolving::GetTemplateSpecFromSymbol(symbol->GetParentScope());
-			auto argTsys = symbol_type_resolving::GetTemplateArgumentKey(symbol);
-			auto argIndex = argTsys->GetGenericArg().argIndex;
-			auto arg = spec->arguments[argIndex];
-			TEST_ASSERT(arg.name.name == _name);
-			TEST_ASSERT(arg.name.nameTokens[0].rowStart == _pRow);
-			TEST_ASSERT(arg.name.nameTokens[0].columnStart == _pCol);
-		}
+		auto ga = symbol_type_resolving::GetTemplateArgumentKey(symbol)->GetGenericArg();
+		auto argument = ga.spec->arguments[ga.argIndex];
+
+		TEST_ASSERT(argument.name.name == _name);
+		TEST_ASSERT(argument.name.nameTokens[0].rowStart == _pRow);
+		TEST_ASSERT(argument.name.nameTokens[0].columnStart == _pCol);
 		if (!accessed.Contains(_index)) accessed.Add(_index);
 		return true;
 	}

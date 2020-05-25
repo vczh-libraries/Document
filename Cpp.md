@@ -24,7 +24,6 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (Calculator)
-  - [ ] There are 3 `TEST_CATEGORY(L"Re-index")` containing `ASSERT_SYMBOL(..., void, -1. -1)`, make them not `-1`.
   - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
 - [ ] Next Demo! (?)
   - [ ] Create appropriate hyperlinks for partial specialization scenarios.
