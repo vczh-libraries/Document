@@ -269,12 +269,12 @@ public:
 		bool nonGenericIsVta = false;
 
 		ResolveSymbolResult totalRar;
-		bool operatorIndexed = false;
+		List<ResolvedItem> ritems;
 		if (idExpr)
 		{
-			nonGenericIsVta = ExpandPotentialVtaMultiResult(pa, nonGenericResult, [this, self, idExpr, &totalRar, &operatorIndexed](ExprTsysList& processResult, ExprTsysItem argParent)
+			nonGenericIsVta = ExpandPotentialVtaMultiResult(pa, nonGenericResult, [this, self, idExpr, &totalRar, &ritems](ExprTsysList& processResult, ExprTsysItem argParent)
 			{
-				ProcessFieldAccessExprForIdExpr(pa, processResult, self, argParent, idExpr, totalRar, operatorIndexed);
+				ProcessFieldAccessExprForIdExpr(pa, processResult, self, argParent, idExpr, totalRar, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
 			}, Input(parentTypes, parentVta));
 		}
 		else
@@ -283,9 +283,9 @@ public:
 			bool classVta = false;
 			TypeToTsysInternal(pa, childExpr->classType, classTypes, classVta);
 
-			nonGenericIsVta = ExpandPotentialVtaMultiResult(pa, nonGenericResult, [this, self, idExpr, childExpr, &totalRar, &operatorIndexed](ExprTsysList& processResult, ExprTsysItem argParent, ExprTsysItem argClass)
+			nonGenericIsVta = ExpandPotentialVtaMultiResult(pa, nonGenericResult, [this, self, idExpr, childExpr, &totalRar, &ritems](ExprTsysList& processResult, ExprTsysItem argParent, ExprTsysItem argClass)
 			{
-				ProcessFieldAccessExprForChildExpr(pa, processResult, self, argParent, argClass, childExpr, totalRar, operatorIndexed);
+				ProcessFieldAccessExprForChildExpr(pa, processResult, self, argParent, argClass, childExpr, totalRar, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
 			}, Input(parentTypes, parentVta), Input(classTypes, classVta));
 		}
 
@@ -319,9 +319,9 @@ public:
 			}
 		}
 
-		if (operatorIndexed)
+		if (ritems.Count() > 0)
 		{
-			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
+			pa.recorder->IndexOverloadingResolution(self->opName, ritems);
 		}
 	}
 
@@ -337,15 +337,15 @@ public:
 		ExprToTsysInternal(pa, self->expr, arrayTypes, arrayVta);
 		ExprToTsysInternal(pa, self->index, indexTypes, indexVta);
 
-		bool indexed = false;
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &indexed](ExprTsysList& processResult, ExprTsysItem argArray, ExprTsysItem argIndex)
+		List<ResolvedItem> ritems;
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &ritems](ExprTsysList& processResult, ExprTsysItem argArray, ExprTsysItem argIndex)
 		{
-			ProcessArrayAccessExpr(pa, processResult, self, argArray, argIndex, indexed);
+			ProcessArrayAccessExpr(pa, processResult, self, argArray, argIndex, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
 		}, Input(arrayTypes, arrayVta), Input(indexTypes, indexVta));
 
-		if (indexed)
+		if (ritems.Count() > 0)
 		{
-			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
+			pa.recorder->IndexOverloadingResolution(self->opName, ritems);
 		}
 	}
 
@@ -579,15 +579,15 @@ public:
 		bool typesVta = false;
 		ExprToTsysInternal(pa, self->operand, types, typesVta);
 
-		bool indexed = false;
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &indexed](ExprTsysList& processResult, ExprTsysItem arg1)
+		List<ResolvedItem> ritems;
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &ritems](ExprTsysList& processResult, ExprTsysItem arg1)
 		{
-			ProcessPostfixUnaryExpr(pa, processResult, self, arg1, indexed);
+			ProcessPostfixUnaryExpr(pa, processResult, self, arg1, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
 		}, Input(types, typesVta));
 
-		if (indexed)
+		if (ritems.Count() > 0)
 		{
-			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
+			pa.recorder->IndexOverloadingResolution(self->opName, ritems);
 		}
 	}
 
@@ -676,16 +676,16 @@ public:
 		{
 			ExprToTsysInternal(pa, self->operand, types, typesVta);
 		}
-		bool indexed = false;
 
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &indexed](ExprTsysList& processResult, ExprTsysItem arg1)
+		List<ResolvedItem> ritems;
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &ritems](ExprTsysList& processResult, ExprTsysItem arg1)
 		{
-			ProcessPrefixUnaryExpr(pa, processResult, self, arg1, indexed);
+			ProcessPrefixUnaryExpr(pa, processResult, self, arg1, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
 		}, Input(types, typesVta));
 
-		if (indexed)
+		if (ritems.Count() > 0)
 		{
-			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
+			pa.recorder->IndexOverloadingResolution(self->opName, ritems);
 		}
 	}
 
@@ -700,16 +700,16 @@ public:
 		bool rightVta = false;
 		ExprToTsysInternal(pa, self->left, leftTypes, leftVta);
 		ExprToTsysInternal(pa, self->right, rightTypes, rightVta);
-		bool indexed = false;
 
-		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &indexed](ExprTsysList& processResult, ExprTsysItem argLeft, ExprTsysItem argRight)
+		List<ResolvedItem> ritems;
+		isVta = ExpandPotentialVtaMultiResult(pa, result, [this, self, &ritems](ExprTsysList& processResult, ExprTsysItem argLeft, ExprTsysItem argRight)
 		{
-			ProcessBinaryExpr(pa, processResult, self, argLeft, argRight, indexed);
+			ProcessBinaryExpr(pa, processResult, self, argLeft, argRight, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
 		}, Input(leftTypes, leftVta), Input(rightTypes, rightVta));
 
-		if (indexed)
+		if (ritems.Count() > 0)
 		{
-			pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
+			pa.recorder->IndexOverloadingResolution(self->opName, ritems);
 		}
 	}
 

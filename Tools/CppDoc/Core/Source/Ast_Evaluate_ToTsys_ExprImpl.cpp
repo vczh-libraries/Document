@@ -247,7 +247,7 @@ namespace symbol_totsys_impl
 	// ProcessArrayAccessExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void ProcessArrayAccessExpr(const ParsingArguments& pa, ExprTsysList& result, ArrayAccessExpr* self, ExprTsysItem argArray, ExprTsysItem argIndex, bool& indexed)
+	void ProcessArrayAccessExpr(const ParsingArguments& pa, ExprTsysList& result, ArrayAccessExpr* self, ExprTsysItem argArray, ExprTsysItem argIndex, List<ResolvedItem>* ritems)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -266,13 +266,7 @@ namespace symbol_totsys_impl
 			argTypes[0] = argIndex;
 
 			SortedList<vint> boundedAnys;
-			List<ResolvedItem> ritems;
-			VisitOverloadedFunction(pa, funcTypes, argTypes, boundedAnys, result, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
-
-			if (ritems.Count() > 0)
-			{
-				pa.recorder->IndexOverloadingResolution(self->opName, ritems);
-			}
+			VisitOverloadedFunction(pa, funcTypes, argTypes, boundedAnys, result, ritems);
 		}
 		else if (entityType->GetType() == TsysType::Array)
 		{
@@ -307,7 +301,7 @@ namespace symbol_totsys_impl
 	// Process(Operator)Expr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	bool VisitOperator(const ParsingArguments& pa, ExprTsysList& result, ExprTsysItem* leftType, ExprTsysItem* rightType, CppName& resolvableName, Ptr<Resolving>& resolving, bool& indexed)
+	bool VisitOperator(const ParsingArguments& pa, ExprTsysList& result, ExprTsysItem* leftType, ExprTsysItem* rightType, CppName& resolvableName, List<ResolvedItem>* ritems)
 	{
 		TsysCV leftCV, rightCV;
 		TsysRefType leftRef, rightRef;
@@ -352,12 +346,7 @@ namespace symbol_totsys_impl
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 
 				SortedList<vint> boundedAnys;
-				List<ResolvedItem> ritems;
-				VisitOverloadedFunction(pa, opTypes, argTypes, boundedAnys, result, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
-				if (ritems.Count() > 0)
-				{
-					pa.recorder->IndexOverloadingResolution(resolvableName, ritems);
-				}
+				VisitOverloadedFunction(pa, opTypes, argTypes, boundedAnys, result, ritems);
 				return true;
 			}
 		}
@@ -413,7 +402,7 @@ namespace symbol_totsys_impl
 		return false;
 	}
 
-	void ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PostfixUnaryExpr* self, ExprTsysItem arg, bool& indexed)
+	void ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PostfixUnaryExpr* self, ExprTsysItem arg, List<ResolvedItem>* ritems)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -426,7 +415,7 @@ namespace symbol_totsys_impl
 		else if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
 		{
 			ExprTsysItem extraParam(nullptr, ExprTsysType::PRValue, pa.tsys->Int());
-			VisitOperator(pa, result, &arg, &extraParam, self->opName, self->opResolving, indexed);
+			VisitOperator(pa, result, &arg, &extraParam, self->opName, ritems);
 		}
 		else if (entity->GetType() == TsysType::Primitive)
 		{
@@ -446,7 +435,7 @@ namespace symbol_totsys_impl
 		}
 	}
 
-	void ProcessPrefixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PrefixUnaryExpr* self, ExprTsysItem arg, bool& indexed)
+	void ProcessPrefixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PrefixUnaryExpr* self, ExprTsysItem arg, List<ResolvedItem>* ritems)
 	{
 		TsysCV cv;
 		TsysRefType refType;
@@ -459,7 +448,7 @@ namespace symbol_totsys_impl
 		}
 		else if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
 		{
-			if (VisitOperator(pa, result, &arg, nullptr, self->opName, self->opResolving, indexed))
+			if (VisitOperator(pa, result, &arg, nullptr, self->opName, ritems))
 			{
 				return;
 			}
@@ -539,7 +528,7 @@ namespace symbol_totsys_impl
 		}
 	}
 
-	void ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, bool& indexed)
+	void ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, List<ResolvedItem>* ritems)
 	{
 		TsysCV leftCV, rightCV;
 		TsysRefType leftRefType, rightRefType;
@@ -572,7 +561,7 @@ namespace symbol_totsys_impl
 			return;
 		}
 
-		if (VisitOperator(pa, result, &argLeft, &argRight, self->opName, self->opResolving, indexed))
+		if (VisitOperator(pa, result, &argLeft, &argRight, self->opName, ritems))
 		{
 			return;
 		}

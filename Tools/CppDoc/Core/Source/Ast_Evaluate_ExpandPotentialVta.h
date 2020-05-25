@@ -39,8 +39,8 @@ namespace symbol_totsys_impl
 	// Ast_Evaluate_ToTsys_IdImpl.cpp (identifier)
 	void					CreateIdReferenceExpr(const ParsingArguments& pa, const Ptr<Resolving>& resolving, ExprTsysList& result, const ExprTsysItem* childExprClassItem, bool allowAny, bool allowVariadic, bool& isVta);
 	void					ProcessChildExpr(const ParsingArguments& pa, ExprTsysList& result, ChildExpr* self, ExprTsysItem argClass);
-	void					ProcessFieldAccessExprForIdExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, const Ptr<IdExpr>& idExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed);
-	void					ProcessFieldAccessExprForChildExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed);
+	void					ProcessFieldAccessExprForIdExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, const Ptr<IdExpr>& idExpr, ResolveSymbolResult& totalRar, List<ResolvedItem>* ritems);
+	void					ProcessFieldAccessExprForChildExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, List<ResolvedItem>* ritems);
 
 	// Ast_Evaluate_ToTsys_ExprImpl.cpp (literal)
 	void					ProcessLiteralExpr(const ParsingArguments& pa, ExprTsysList& result, LiteralExpr* self);
@@ -52,10 +52,10 @@ namespace symbol_totsys_impl
 	void					ProcessParenthesisExpr(const ParsingArguments& pa, ExprTsysList& result, ParenthesisExpr* self, ExprTsysItem arg);
 	void					ProcessCastExpr(const ParsingArguments& pa, ExprTsysList& result, CastExpr* self, ExprTsysItem argType, ExprTsysItem argExpr);
 	void					ProcessTypeidExpr(const ParsingArguments& pa, ExprTsysList& result, TypeidExpr* self);
-	void					ProcessArrayAccessExpr(const ParsingArguments& pa, ExprTsysList& result, ArrayAccessExpr* self, ExprTsysItem argArray, ExprTsysItem argIndex, bool& indexed);
-	void					ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PostfixUnaryExpr* self, ExprTsysItem arg, bool& indexed);
-	void					ProcessPrefixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PrefixUnaryExpr* self, ExprTsysItem arg, bool& indexed);
-	void					ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, bool& indexed);
+	void					ProcessArrayAccessExpr(const ParsingArguments& pa, ExprTsysList& result, ArrayAccessExpr* self, ExprTsysItem argArray, ExprTsysItem argIndex, List<ResolvedItem>* ritems);
+	void					ProcessPostfixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PostfixUnaryExpr* self, ExprTsysItem arg, List<ResolvedItem>* ritems);
+	void					ProcessPrefixUnaryExpr(const ParsingArguments& pa, ExprTsysList& result, PrefixUnaryExpr* self, ExprTsysItem arg, List<ResolvedItem>* ritems);
+	void					ProcessBinaryExpr(const ParsingArguments& pa, ExprTsysList& result, BinaryExpr* self, ExprTsysItem argLeft, ExprTsysItem argRight, List<ResolvedItem>* ritems);
 	void					ProcessIfExpr(const ParsingArguments& pa, ExprTsysList& result, IfExpr* self, ExprTsysItem argCond, ExprTsysItem argLeft, ExprTsysItem argRight);
 
 	// Ast_Evaluate_ToTsys_VariadicImpl.cpp (variadic)

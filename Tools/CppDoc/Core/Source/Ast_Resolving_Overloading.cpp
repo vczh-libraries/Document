@@ -344,7 +344,11 @@ namespace symbol_type_resolving
 			{
 				if(ritems)
 				{
-					ritems->Add({ nullptr,validFuncTypes[i].symbol });
+					ResolvedItem ritem = { nullptr,validFuncTypes[i].symbol };
+					if (!ritems->Contains(ritem))
+					{
+						ritems->Add(ritem);
+					}
 				}
 				AddTempValue(result, validFuncTypes[i].tsys->GetElement());
 			}

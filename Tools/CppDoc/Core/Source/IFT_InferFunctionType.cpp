@@ -416,7 +416,11 @@ namespace infer_function_type
 										{
 											for (vint k = 0; k < ritems.Count(); k++)
 											{
-												gritems->Add(index, ritems[k]);
+												ResolvedItem ritem = ritems[k];
+												if (!gritems->Contains(index, ritem))
+												{
+													gritems->Add(index, ritem);
+												}
 											}
 										}
 									}

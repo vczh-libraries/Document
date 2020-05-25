@@ -311,7 +311,7 @@ namespace symbol_totsys_impl
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	template<typename TProcessor>
-	void ProcessFieldAccessExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, bool& operatorIndexed, TProcessor&& process)
+	void ProcessFieldAccessExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, List<ResolvedItem>* ritems, TProcessor&& process)
 	{
 		switch (self->type)
 		{
@@ -349,13 +349,15 @@ namespace symbol_totsys_impl
 							AddNonVar(indirectionItems, item);
 						}
 
-						if (pa.recorder && pa.IsGeneralEvaluation() && opResult.Count() > 0)
+						if (ritems && opResult.Count() > 0)
 						{
-							List<ResolvedItem> ritems;
 							for (vint j = 0; j < opResult.Count(); j++)
 							{
-								ritems.Add({ nullptr,opResult[j].symbol });
-								pa.recorder->IndexOverloadingResolution(self->opName, ritems);
+								ResolvedItem ritem = { nullptr,opResult[j].symbol };
+								if (!ritems->Contains(ritem))
+								{
+									ritems->Add(ritem);
+								}
 							}
 						}
 					}
@@ -365,9 +367,9 @@ namespace symbol_totsys_impl
 		}
 	}
 
-	void ProcessFieldAccessExprForIdExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, const Ptr<IdExpr>& idExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed)
+	void ProcessFieldAccessExprForIdExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, const Ptr<IdExpr>& idExpr, ResolveSymbolResult& totalRar, List<ResolvedItem>* ritems)
 	{
-		ProcessFieldAccessExpr(pa, result, self, argParent, operatorIndexed, [&](ExprTsysItem parentItem)
+		ProcessFieldAccessExpr(pa, result, self, argParent, ritems, [&](ExprTsysItem parentItem)
 		{
 			if (parentItem.tsys->IsUnknownType())
 			{
@@ -383,9 +385,9 @@ namespace symbol_totsys_impl
 		});
 	}
 
-	void ProcessFieldAccessExprForChildExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, bool& operatorIndexed)
+	void ProcessFieldAccessExprForChildExpr(const ParsingArguments& pa, ExprTsysList& result, FieldAccessExpr* self, ExprTsysItem argParent, ExprTsysItem argClass, const Ptr<ChildExpr>& childExpr, ResolveSymbolResult& totalRar, List<ResolvedItem>* ritems)
 	{
-		ProcessFieldAccessExpr(pa, result, self, argParent, operatorIndexed, [&](ExprTsysItem parentItem)
+		ProcessFieldAccessExpr(pa, result, self, argParent, ritems, [&](ExprTsysItem parentItem)
 		{
 			if (argClass.tsys->IsUnknownType())
 			{

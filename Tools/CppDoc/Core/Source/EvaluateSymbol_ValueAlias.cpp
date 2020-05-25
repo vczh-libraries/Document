@@ -87,7 +87,11 @@ namespace symbol_type_resolving
 
 						if (ritems)
 						{
-							ritems->Add({ nullptr,declSymbol });
+							ResolvedItem ritem = { nullptr,declSymbol };
+							if (!ritems->Contains(ritem))
+							{
+								ritems->Add(ritem);
+							}
 						}
 					}
 				}
