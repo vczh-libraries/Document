@@ -62,7 +62,7 @@ namespace symbol_totsys_impl
 	
 	void ProcessGenericType(const ParsingArguments& pa, ExprTsysList& result, GenericType* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 	{
-		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa, &result](ITsys* genericFunction, Symbol* declSymbol, TemplateArgumentContext* argumentsToApply, vint partialAppliedArguments)
+		ProcessGenericType(pa, result, isTypes, args, argSource, boundedAnys, [&pa, &result, self](ITsys* genericFunction, Symbol* declSymbol, TemplateArgumentContext* argumentsToApply, vint partialAppliedArguments)
 		{
 			if (partialAppliedArguments != -1) throw TypeCheckerException();
 			auto parentDeclType = genericFunction->GetGenericFunction().parentDeclType;
@@ -74,6 +74,26 @@ namespace symbol_totsys_impl
 					if (!decl->templateSpec) throw TypeCheckerException();
 					auto& tsys = EvaluateForwardClassSymbol(pa, decl.Obj(), parentDeclType, argumentsToApply);
 					UseTypeTsysList(result, nullptr, tsys);
+
+					if (pa.IsGeneralEvaluation() && pa.recorder && declSymbol->IsPSPrimary_NF())
+					{
+						if (auto psr = EvaluateClassPSRecord(pa, tsys[0]))
+						{
+							if (psr->version > 0 && (psr->evaluatedTypes.Count() != 1 || psr->evaluatedTypes[0] != tsys[0]))
+							{
+								CppName* name = nullptr;
+								Ptr<Resolving>* resolving = nullptr;
+								GetCategoryTypeResolving(self->type, name, resolving);
+
+								List<ResolvedItem> ritems;
+								for (vint i = 0; i < psr->evaluatedTypes.Count(); i++)
+								{
+									ritems.Add({ nullptr,psr->evaluatedTypes[i]->GetDecl() });
+								}
+								pa.recorder->IndexOverloadingResolution(*name, ritems);
+							}
+						}
+					}
 				}
 				break;
 			case symbol_component::SymbolKind::TypeAlias:

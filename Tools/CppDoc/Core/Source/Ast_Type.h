@@ -207,4 +207,53 @@ public:
 	VariadicList<GenericArgument>				arguments;
 };
 
+/***********************************************************************
+Types
+***********************************************************************/
+
+template<typename TId, typename TChild>
+void MatchCategoryType(const Ptr<Category_Id_Child_Type>& expr, TId&& processId, TChild&& processChild)
+{
+	if (auto idType = expr.Cast<IdType>())
+	{
+		processId(idType);
+	}
+	else if (auto childType = expr.Cast<ChildType>())
+	{
+		processChild(childType);
+	}
+	else
+	{
+		throw TypeCheckerException();
+	}
+}
+
+template<typename TId, typename TChild, typename TGeneric, typename TRoot>
+void MatchCategoryType(const Ptr<Category_Id_Child_Generic_Root_Type>& expr, TId&& processId, TChild&& processChild, TGeneric&& processGeneric, TRoot&& processRoot)
+{
+	if (auto idType = expr.Cast<IdType>())
+	{
+		processId(idType);
+	}
+	else if (auto childType = expr.Cast<ChildType>())
+	{
+		processChild(childType);
+	}
+	else if (auto genericType = expr.Cast<GenericType>())
+	{
+		processGeneric(genericType);
+	}
+	else if (auto rootType = expr.Cast<RootType>())
+	{
+		processRoot(rootType);
+	}
+	else
+	{
+		throw TypeCheckerException();
+	}
+}
+
+extern void							GetCategoryTypeResolving(const Ptr<Category_Id_Child_Type>& expr, CppName*& name, Ptr<Resolving>*& resolving);
+extern void							GetCategoryTypeResolving(const Ptr<Category_Id_Child_Generic_Root_Type>& expr, CppName*& name, Ptr<Resolving>*& resolving);
+
 #endif

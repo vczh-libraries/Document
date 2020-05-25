@@ -105,6 +105,47 @@ CPPDOC_STAT_LIST(CPPDOC_ACCEPT)
 #undef CPPDOC_ACCEPT
 
 /***********************************************************************
+Type
+***********************************************************************/
+
+#define CORE_PROCESSOR										\
+	[&name, &resolving](const Ptr<IdType>& _idType)			\
+	{														\
+		name = &_idType->name;								\
+		resolving = &_idType->resolving;					\
+	},														\
+	[&name, &resolving](const Ptr<ChildType>& _childType)	\
+	{														\
+		name = &_childType->name;							\
+		resolving = &_childType->resolving;					\
+	}														\
+
+void GetCategoryTypeResolving(const Ptr<Category_Id_Child_Type>& expr, CppName*& name, Ptr<Resolving>*& resolving)
+{
+	MatchCategoryType(
+		expr,
+		CORE_PROCESSOR
+	);
+}
+
+void GetCategoryTypeResolving(const Ptr<Category_Id_Child_Generic_Root_Type>& expr, CppName*& name, Ptr<Resolving>*& resolving)
+{
+	MatchCategoryType(
+		expr,
+		CORE_PROCESSOR,
+		[&name, &resolving](const Ptr<GenericType>& _genericType)
+		{
+			GetCategoryTypeResolving(_genericType->type, name, resolving);
+		},
+		[](const Ptr<RootType>)
+		{
+		}
+	);
+}
+
+#undef CORE_PROCESSOR
+
+/***********************************************************************
 Expressions
 ***********************************************************************/
 

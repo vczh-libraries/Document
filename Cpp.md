@@ -27,12 +27,11 @@
   - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
     - `VisitOverloadedFunction` needs to fill correct symbols to `selectedFunctions`.
     - Since full specialized functions cannot have a different return type, find a way to evaluate selected full specialized functions after this function is selected for overloading.
-  - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected partial specialized class.
-    - Call `pa.recorder->IndexOverloadingResolution` in `ProcessGenericType` (`case CLASS_SYMBOL_KIND:`).
   - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected partial specialized value alias.
     - Call `pa.recorder->IndexOverloadingResolution` in `ProcessGenericExpr` (`case symbol_component::SymbolKind::ValueAlias`).
 - [ ] Next Demo! (?)
   - [ ] Create appropriate hyperlinks for partial specialization scenarios.
+  - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` cancels its overloading resolution for partial specializations.
 - [ ] Lambda expressions.
 - [ ] Next Demo! (STL)
   - [ ] Test cases

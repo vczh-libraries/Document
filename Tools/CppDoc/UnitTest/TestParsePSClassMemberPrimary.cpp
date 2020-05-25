@@ -1057,11 +1057,12 @@ auto c = &X<int>::Method<double>;
 			ASSERT_SYMBOL			(17, L"Method", 21, 20, FunctionDeclaration, 15, 9)
 			ASSERT_SYMBOL			(18, L"X", 22, 10, ClassDeclaration, 2, 7)
 			ASSERT_SYMBOL			(19, L"Method", 22, 18, FunctionDeclaration, 15, 9)
-			ASSERT_SYMBOL_OVERLOAD	(20, L"Method", 19, 12, ForwardFunctionDeclaration, 5, 4)
-			ASSERT_SYMBOL_OVERLOAD	(21, L"Method", 21, 20, ForwardFunctionDeclaration, 5, 4)
+			ASSERT_SYMBOL_OVERLOAD	(20, L"X", 15, 3, ClassDeclaration, 2, 7, 9, 7)
+			ASSERT_SYMBOL_OVERLOAD	(21, L"Method", 19, 12, ForwardFunctionDeclaration, 5, 4)
+			ASSERT_SYMBOL_OVERLOAD	(22, L"Method", 21, 20, ForwardFunctionDeclaration, 5, 4)
 		END_ASSERT_SYMBOL;
 
 		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
-		TEST_CASE_ASSERT(accessed.Count() == 22);
+		TEST_CASE_ASSERT(accessed.Count() == 23);
 	});
 }
