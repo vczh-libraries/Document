@@ -156,10 +156,16 @@ namespace symbol_totsys_impl
 					}
 
 					bool addGenericSource = false;
-					if (partialAppliedArguments == -1 && decl->templateSpec->arguments[decl->templateSpec->arguments.Count() - 1].ellipsis)
+					if (partialAppliedArguments == -1)
 					{
-						partialAppliedArguments = decl->templateSpec->arguments.Count();
-						addGenericSource = true;
+						if (
+							decl->templateSpec->arguments[decl->templateSpec->arguments.Count() - 1].ellipsis ||
+							decl->symbol->GetFunctionSymbol_Fb()->IsPSPrimary_NF()
+							)
+						{
+							partialAppliedArguments = decl->templateSpec->arguments.Count();
+							addGenericSource = true;
+						}
 					}
 
 					TsysGenericFunction gfi;

@@ -1051,8 +1051,8 @@ auto c = &X<int>::Method<double>;
 			ASSERT_SYMBOL_OVERLOAD	(30, L"X", 40, 12, ClassDeclaration, 12, 7)
 			ASSERT_SYMBOL_OVERLOAD	(31, L"X", 41, 12, ClassDeclaration, 12, 7)
 			ASSERT_SYMBOL_OVERLOAD	(32, L"X", 42, 10, ClassDeclaration, 12, 7)
-			ASSERT_SYMBOL_OVERLOAD	(33, L"Method", 39, 12, ForwardFunctionDeclaration, 15, 7)
-			ASSERT_SYMBOL_OVERLOAD	(34, L"Method", 41, 20, ForwardFunctionDeclaration, 15, 7)
+			ASSERT_SYMBOL_OVERLOAD	(33, L"Method", 39, 12, ForwardFunctionDeclaration, 18, 7)
+			ASSERT_SYMBOL_OVERLOAD	(34, L"Method", 41, 20, ForwardFunctionDeclaration, 18, 7)
 		END_ASSERT_SYMBOL;
 
 		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);

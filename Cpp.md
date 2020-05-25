@@ -23,10 +23,6 @@
       - `__builtin_nansf(...)` -> float
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
-- [ ] Next Demo! (Calculator)
-  - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
-    - `VisitOverloadedFunction` needs to fill correct symbols to `selectedFunctions`.
-    - Since full specialized functions cannot have a different return type, find a way to evaluate selected full specialized functions after this function is selected for overloading.
 - [ ] Next Demo! (?)
   - [ ] Create appropriate hyperlinks for partial specialization scenarios.
   - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` cancels its overloading resolution for partial specializations.
