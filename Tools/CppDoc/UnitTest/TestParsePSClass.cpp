@@ -365,10 +365,10 @@ auto x4 = F<double, wchar_t, char>();
 			ASSERT_SYMBOL			(1, L"F", 11, 10, ClassDeclaration, 2, 7)
 			ASSERT_SYMBOL			(2, L"F", 12, 10, ClassDeclaration, 2, 7)
 			ASSERT_SYMBOL			(3, L"F", 13, 10, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL_OVERLOAD	(4, L"F", 10, 10, ClassDeclaration, 2, 7)
+			ASSERT_SYMBOL_OVERLOAD	(4, L"F", 10, 10, ClassDeclaration, 5, 7)
 			ASSERT_SYMBOL_OVERLOAD	(5, L"F", 11, 10, ClassDeclaration, 2, 7)
 			ASSERT_SYMBOL_OVERLOAD	(6, L"F", 12, 10, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL_OVERLOAD	(7, L"F", 13, 10, ClassDeclaration, 2, 7)
+			ASSERT_SYMBOL_OVERLOAD	(7, L"F", 13, 10, ClassDeclaration, 8, 7)
 		END_ASSERT_SYMBOL;
 
 		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);

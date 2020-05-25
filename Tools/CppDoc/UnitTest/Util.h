@@ -161,7 +161,7 @@ Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
 		TEST_ASSERT(false);\
 	})\
 
-template<typename T>
+template<typename T, vint DoubleSymbolCount>
 bool AssertSymbol(
 	SortedList<vint>& accessed,
 	CppName& name,
@@ -172,20 +172,22 @@ bool AssertSymbol(
 	WString _name,
 	vint _tRow,
 	vint _tCol,
-	vint _pRow,
-	vint _pCol
+	vint (&_pPos)[DoubleSymbolCount]
 )
 {
 	if (reIndex == _reIndex && name.nameTokens[0].rowStart == _tRow && name.nameTokens[0].columnStart == _tCol)
 	{
 		TEST_ASSERT(name.name == _name);
-		TEST_ASSERT(resolvedSymbols.Count() == 1);
-		auto symbol = resolvedSymbols[0].symbol;
-		auto decl = symbol->GetAnyForwardDecl<T>();
-		TEST_ASSERT(decl);
-		TEST_ASSERT(decl->name.name == _name || decl->name.name == L"operator " + _name);
-		TEST_ASSERT(decl->name.nameTokens[0].rowStart == _pRow);
-		TEST_ASSERT(decl->name.nameTokens[0].columnStart == _pCol);
+		TEST_ASSERT(resolvedSymbols.Count() == DoubleSymbolCount / 2);
+		for (vint i = 0; i < resolvedSymbols.Count(); i++)
+		{
+			auto symbol = resolvedSymbols[i].symbol;
+			auto decl = symbol->GetAnyForwardDecl<T>();
+			TEST_ASSERT(decl);
+			TEST_ASSERT(decl->name.name == _name || decl->name.name == L"operator " + _name);
+			TEST_ASSERT(decl->name.nameTokens[0].rowStart == _pPos[i * 2]);
+			TEST_ASSERT(decl->name.nameTokens[0].columnStart == _pPos[i * 2 + 1]);
+		}
 		if (!accessed.Contains(_index)) accessed.Add(_index);
 		return true;
 	}
@@ -193,7 +195,7 @@ bool AssertSymbol(
 }
 
 template<>
-inline bool AssertSymbol<void>(
+inline bool AssertSymbol<void, 2>(
 	SortedList<vint>& accessed,
 	CppName& name,
 	List<ResolvedItem>& resolvedSymbols,
@@ -203,8 +205,7 @@ inline bool AssertSymbol<void>(
 	WString _name,
 	vint _tRow,
 	vint _tCol,
-	vint _pRow,
-	vint _pCol
+	vint(&_pPos)[2]
 	)
 {
 	if (reIndex == _reIndex && name.nameTokens[0].rowStart == _tRow && name.nameTokens[0].columnStart == _tCol)
@@ -225,23 +226,25 @@ inline bool AssertSymbol<void>(
 		auto argument = ga.spec->arguments[ga.argIndex];
 
 		TEST_ASSERT(argument.name.name == _name);
-		TEST_ASSERT(argument.name.nameTokens[0].rowStart == _pRow);
-		TEST_ASSERT(argument.name.nameTokens[0].columnStart == _pCol);
+		TEST_ASSERT(argument.name.nameTokens[0].rowStart == _pPos[0]);
+		TEST_ASSERT(argument.name.nameTokens[0].columnStart == _pPos[1]);
 		if (!accessed.Contains(_index)) accessed.Add(_index);
 		return true;
 	}
 	return false;
 }
 
-#define ASSERT_SYMBOL_INTERNAL(REINDEX, INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)\
-		if (AssertSymbol<TYPE>(accessed, name, resolvedSymbols, reIndex, REINDEX, INDEX, NAME, TROW, TCOL, PROW, PCOL)) \
-		{ } else \
+#define ASSERT_SYMBOL_INTERNAL(REINDEX, INDEX, NAME, TROW, TCOL, TYPE, ...)\
+		vint _pPos_##REINDEX##_##INDEX[] = { __VA_ARGS__ };\
+		static_assert((sizeof(_pPos_##REINDEX##_##INDEX) / sizeof(vint)) % 2 == 0);\
+		if (AssertSymbol<TYPE>(accessed, name, resolvedSymbols, reIndex, REINDEX, INDEX, NAME, TROW, TCOL, _pPos_##REINDEX##_##INDEX)) \
+		{ return; }
 
-#define ASSERT_SYMBOL(INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)\
-		ASSERT_SYMBOL_INTERNAL(false, INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)
+#define ASSERT_SYMBOL(INDEX, NAME, TROW, TCOL, TYPE, ...)\
+		ASSERT_SYMBOL_INTERNAL(false, INDEX, NAME, TROW, TCOL, TYPE, __VA_ARGS__)
 
-#define ASSERT_SYMBOL_OVERLOAD(INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)\
-		ASSERT_SYMBOL_INTERNAL(true, INDEX, NAME, TROW, TCOL, TYPE, PROW, PCOL)
+#define ASSERT_SYMBOL_OVERLOAD(INDEX, NAME, TROW, TCOL, TYPE, ...)\
+		ASSERT_SYMBOL_INTERNAL(true, INDEX, NAME, TROW, TCOL, TYPE, __VA_ARGS__)
 
 template<typename T, typename U>
 struct IntIfSameType

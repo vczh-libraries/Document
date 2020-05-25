@@ -1032,24 +1032,24 @@ auto c = &X<int>::Method<double>;
 			ASSERT_SYMBOL			(11, L"X", 31, 6, ClassDeclaration, 2, 7)
 			ASSERT_SYMBOL			(12, L"B", 31, 21, void, 30, 18)
 			ASSERT_SYMBOL			(13, L"X", 35, 6, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL			(13, L"X", 37, 0, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL			(14, L"x", 38, 10, VariableDeclaration, 37, 7)
-			ASSERT_SYMBOL			(15, L"Method", 38, 12, FunctionDeclaration, 31, 14)
-			ASSERT_SYMBOL			(16, L"x", 39, 10, VariableDeclaration, 37, 7)
-			ASSERT_SYMBOL			(17, L"Method", 39, 12, FunctionDeclaration, 31, 14)
-			ASSERT_SYMBOL			(18, L"x", 40, 10, VariableDeclaration, 37, 7)
-			ASSERT_SYMBOL			(19, L"X", 40, 12, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL			(20, L"Method", 40, 20, FunctionDeclaration, 31, 14)
-			ASSERT_SYMBOL			(21, L"x", 41, 10, VariableDeclaration, 37, 7)
-			ASSERT_SYMBOL			(22, L"X", 41, 12, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL			(23, L"Method", 41, 20, FunctionDeclaration, 31, 14)
-			ASSERT_SYMBOL			(24, L"X", 42, 10, ClassDeclaration, 2, 7)
-			ASSERT_SYMBOL			(25, L"Method", 42, 18, FunctionDeclaration, 31, 14)
-			ASSERT_SYMBOL_OVERLOAD	(26, L"Method", 39, 12, ForwardFunctionDeclaration, 15, 7)
-			ASSERT_SYMBOL_OVERLOAD	(27, L"Method", 41, 20, ForwardFunctionDeclaration, 15, 7)
+			ASSERT_SYMBOL			(14, L"X", 37, 0, ClassDeclaration, 2, 7)
+			ASSERT_SYMBOL			(15, L"x", 38, 10, VariableDeclaration, 37, 7)
+			ASSERT_SYMBOL			(16, L"Method", 38, 12, FunctionDeclaration, 31, 14)
+			ASSERT_SYMBOL			(17, L"x", 39, 10, VariableDeclaration, 37, 7)
+			ASSERT_SYMBOL			(18, L"Method", 39, 12, FunctionDeclaration, 31, 14)
+			ASSERT_SYMBOL			(19, L"x", 40, 10, VariableDeclaration, 37, 7)
+			ASSERT_SYMBOL			(20, L"X", 40, 12, ClassDeclaration, 2, 7)
+			ASSERT_SYMBOL			(21, L"Method", 40, 20, FunctionDeclaration, 31, 14)
+			ASSERT_SYMBOL			(22, L"x", 41, 10, VariableDeclaration, 37, 7)
+			ASSERT_SYMBOL			(23, L"X", 41, 12, ClassDeclaration, 2, 7)
+			ASSERT_SYMBOL			(24, L"Method", 41, 20, FunctionDeclaration, 31, 14)
+			ASSERT_SYMBOL			(25, L"X", 42, 10, ClassDeclaration, 2, 7)
+			ASSERT_SYMBOL			(26, L"Method", 42, 18, FunctionDeclaration, 31, 14)
+			ASSERT_SYMBOL_OVERLOAD	(27, L"Method", 39, 12, ForwardFunctionDeclaration, 15, 7)
+			ASSERT_SYMBOL_OVERLOAD	(28, L"Method", 41, 20, ForwardFunctionDeclaration, 15, 7)
 		END_ASSERT_SYMBOL;
 
 		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
-		TEST_CASE_ASSERT(accessed.Count() == 28);
+		TEST_CASE_ASSERT(accessed.Count() == 29);
 	});
 }
