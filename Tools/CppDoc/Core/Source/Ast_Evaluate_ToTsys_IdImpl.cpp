@@ -349,9 +349,14 @@ namespace symbol_totsys_impl
 							AddNonVar(indirectionItems, item);
 						}
 
-						if (pa.recorder && pa.IsGeneralEvaluation())
+						if (pa.recorder && pa.IsGeneralEvaluation() && opResult.Count() > 0)
 						{
-							AddSymbolsToOperatorResolving(pa, self->opName, self->opResolving, opResult, operatorIndexed);
+							List<ResolvedItem> ritems;
+							for (vint j = 0; j < opResult.Count(); j++)
+							{
+								ritems.Add({ nullptr,opResult[j].symbol });
+								pa.recorder->IndexOverloadingResolution(self->opName, ritems);
+							}
 						}
 					}
 				}

@@ -242,16 +242,12 @@ auto x8 = F<double>(L"GacUI", "GacUI", L'G', 'G');
 			ASSERT_SYMBOL			(12, L"F", 25, 10, ForwardFunctionDeclaration, 2, 2, 11, 2)
 			ASSERT_SYMBOL			(13, L"F", 26, 10, ForwardFunctionDeclaration, 2, 2, 11, 2)
 			ASSERT_SYMBOL_OVERLOAD	(14, L"F", 19, 10, ForwardFunctionDeclaration, 5, 6)
-			ASSERT_SYMBOL_OVERLOAD	(15, L"F", 20, 10, ForwardFunctionDeclaration, 2, 2)
-			ASSERT_SYMBOL_OVERLOAD	(16, L"F", 21, 10, ForwardFunctionDeclaration, 14, 6)
-			ASSERT_SYMBOL_OVERLOAD	(17, L"F", 22, 10, ForwardFunctionDeclaration, 11, 2)
-			ASSERT_SYMBOL_OVERLOAD	(18, L"F", 23, 10, ForwardFunctionDeclaration, 2, 2)
-			ASSERT_SYMBOL_OVERLOAD	(19, L"F", 24, 10, ForwardFunctionDeclaration, 8, 7)
-			ASSERT_SYMBOL_OVERLOAD	(20, L"F", 25, 10, ForwardFunctionDeclaration, 11, 2)
-			ASSERT_SYMBOL_OVERLOAD	(21, L"F", 26, 10, ForwardFunctionDeclaration, 17, 7)
+			ASSERT_SYMBOL_OVERLOAD	(15, L"F", 21, 10, ForwardFunctionDeclaration, 14, 6)
+			ASSERT_SYMBOL_OVERLOAD	(16, L"F", 24, 10, ForwardFunctionDeclaration, 8, 7)
+			ASSERT_SYMBOL_OVERLOAD	(17, L"F", 26, 10, ForwardFunctionDeclaration, 17, 7)
 		END_ASSERT_SYMBOL;
 
 		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
-		TEST_CASE_ASSERT(accessed.Count() == 22);
+		TEST_CASE_ASSERT(accessed.Count() == 18);
 	});
 }

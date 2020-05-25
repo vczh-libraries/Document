@@ -334,7 +334,8 @@ namespace infer_function_type
 		ExprTsysList& inferredFunctionTypes,
 		ExprTsysItem functionItem,
 		Array<ExprTsysItem>& argTypes,
-		SortedList<vint>& boundedAnys
+		SortedList<vint>& boundedAnys,
+		Group<vint, ResolvedItem>* gritems
 	)
 	{
 		switch (functionItem.tsys->GetType())
@@ -342,7 +343,7 @@ namespace infer_function_type
 		case TsysType::Function:
 			if (auto source = functionItem.tsys->GetFunc().genericSource)
 			{
-				InferFunctionType(pa, inferredFunctionTypes, { functionItem,source }, argTypes, boundedAnys);
+				InferFunctionType(pa, inferredFunctionTypes, { functionItem,source }, argTypes, boundedAnys, gritems);
 			}
 			else
 			{
@@ -353,7 +354,7 @@ namespace infer_function_type
 		case TsysType::RRef:
 		case TsysType::CV:
 		case TsysType::Ptr:
-			InferFunctionType(pa, inferredFunctionTypes, { functionItem,functionItem.tsys->GetElement() }, argTypes, boundedAnys);
+			InferFunctionType(pa, inferredFunctionTypes, { functionItem,functionItem.tsys->GetElement() }, argTypes, boundedAnys, gritems);
 			break;
 		case TsysType::GenericFunction:
 			if (auto symbol = functionItem.symbol)
@@ -406,10 +407,18 @@ namespace infer_function_type
 								auto tac = inferredArgumentTypes[i];
 								if (tac->GetAvailableArgumentCount() == freeTypeSymbols.Count())
 								{
-									auto& tsys = EvaluateFuncSymbol(inferPa, decl.Obj(), inferPa.parentDeclType, tac.Obj());
+									List<ResolvedItem> ritems;
+									auto& tsys = EvaluateFuncSymbol(inferPa, decl.Obj(), inferPa.parentDeclType, tac.Obj(), (gritems ? &ritems : nullptr));
 									for (vint j = 0; j < tsys.Count(); j++)
 									{
-										inferredFunctionTypes.Add({ functionItem,tsys[j] });
+										vint index = inferredFunctionTypes.Add({ functionItem,tsys[j] });
+										if (ritems.Count() > 0)
+										{
+											for (vint k = 0; k < ritems.Count(); k++)
+											{
+												gritems->Add(index, ritems[k]);
+											}
+										}
 									}
 								}
 							}

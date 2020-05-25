@@ -172,7 +172,7 @@ namespace symbol_type_resolving
 		case symbol_component::SymbolKind::ValueAlias:
 			{
 				auto usingDecl = symbol->GetImplDecl_NFb<ValueAliasDeclaration>();
-				auto& evTypes = EvaluateValueAliasSymbol(pa, usingDecl.Obj(), parentDeclType, nullptr, nullptr);
+				auto& evTypes = EvaluateValueAliasSymbol(pa, usingDecl.Obj(), parentDeclType, nullptr);
 				AddTempValue(result, evTypes);
 				hasNonVariadic = true;
 			}

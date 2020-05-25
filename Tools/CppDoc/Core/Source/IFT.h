@@ -82,7 +82,8 @@ namespace infer_function_type
 												ExprTsysList& inferredFunctionTypes,
 												ExprTsysItem funcType,
 												Array<ExprTsysItem>& argTypes,
-												SortedList<vint>& boundedAnys
+												SortedList<vint>& boundedAnys,
+												Group<vint, ResolvedItem>* gritems
 											);
 
 	extern bool								IsPSEquivalentType(

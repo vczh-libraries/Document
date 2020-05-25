@@ -80,7 +80,8 @@ namespace symbol_type_resolving
 		const ParsingArguments& invokerPa,
 		ForwardFunctionDeclaration* funcDecl,
 		ITsys* parentDeclType,
-		TemplateArgumentContext* argumentsToApply
+		TemplateArgumentContext* argumentsToApply,
+		List<ResolvedItem>* ritems
 	)
 	{
 		// template function recursion could cause this function with the same template arguments to be evaluated again

@@ -153,7 +153,15 @@ namespace symbol_type_resolving
 		return true;
 	}
 
-	void VisitOverloadedFunction(const ParsingArguments& pa, ExprTsysList& funcTypes, Array<ExprTsysItem>& argTypes, SortedList<vint>& boundedAnys, ExprTsysList& result, ExprTsysList* selectedFunctions, bool* anyInvolved)
+	void VisitOverloadedFunction(
+		const ParsingArguments& pa,
+		ExprTsysList& funcTypes,
+		Array<ExprTsysItem>& argTypes,
+		SortedList<vint>& boundedAnys,
+		ExprTsysList& result,
+		List<ResolvedItem>* ritems,
+		bool* anyInvolved
+	)
 	{
 		bool withVariadicInput = boundedAnys.Count() > 0;
 
@@ -190,7 +198,7 @@ namespace symbol_type_resolving
 			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
 				ExprTsysList inferredFunctionTypes;
-				infer_function_type::InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys);
+				infer_function_type::InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys, nullptr);
 				for (vint j = 0; j < inferredFunctionTypes.Count(); j++)
 				{
 					auto funcType = inferredFunctionTypes[j];
@@ -220,7 +228,7 @@ namespace symbol_type_resolving
 			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
 				ExprTsysList inferredFunctionTypes;
-				infer_function_type::InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys);
+				infer_function_type::InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys, nullptr);
 				for (vint j = 0; j < inferredFunctionTypes.Count(); j++)
 				{
 					auto funcType = inferredFunctionTypes[j];
@@ -334,9 +342,9 @@ namespace symbol_type_resolving
 		{
 			if (selectedIndices[i])
 			{
-				if(selectedFunctions)
+				if(ritems)
 				{
-					selectedFunctions->Add(validFuncTypes[i]);
+					ritems->Add({ nullptr,validFuncTypes[i].symbol });
 				}
 				AddTempValue(result, validFuncTypes[i].tsys->GetElement());
 			}

@@ -265,14 +265,13 @@ namespace symbol_totsys_impl
 			Array<ExprTsysItem> argTypes(1);
 			argTypes[0] = argIndex;
 
-			bool needIndex = pa.recorder && pa.IsGeneralEvaluation();
 			SortedList<vint> boundedAnys;
-			ExprTsysList selectedFunctions;
-			VisitOverloadedFunction(pa, funcTypes, argTypes, boundedAnys, result, (needIndex ? &selectedFunctions : nullptr));
+			List<ResolvedItem> ritems;
+			VisitOverloadedFunction(pa, funcTypes, argTypes, boundedAnys, result, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
 
-			if (needIndex && selectedFunctions.Count() > 0)
+			if (ritems.Count() > 0)
 			{
-				AddSymbolsToOperatorResolving(pa, self->opName, self->opResolving, selectedFunctions, indexed);
+				pa.recorder->IndexOverloadingResolution(self->opName, ritems);
 			}
 		}
 		else if (entityType->GetType() == TsysType::Array)
@@ -353,11 +352,11 @@ namespace symbol_totsys_impl
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 
 				SortedList<vint> boundedAnys;
-				ExprTsysList selectedFunctions;
-				VisitOverloadedFunction(pa, opTypes, argTypes, boundedAnys, result, (pa.recorder ? &selectedFunctions : nullptr));
-				if (pa.recorder && pa.IsGeneralEvaluation())
+				List<ResolvedItem> ritems;
+				VisitOverloadedFunction(pa, opTypes, argTypes, boundedAnys, result, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
+				if (ritems.Count() > 0)
 				{
-					AddSymbolsToOperatorResolving(pa, resolvableName, resolving, selectedFunctions, indexed);
+					pa.recorder->IndexOverloadingResolution(resolvableName, ritems);
 				}
 				return true;
 			}
@@ -399,11 +398,11 @@ namespace symbol_totsys_impl
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, opTypes, false);
 
 				SortedList<vint> boundedAnys;
-				ExprTsysList selectedFunctions;
-				VisitOverloadedFunction(pa, opTypes, argTypes, boundedAnys, result, (pa.recorder ? &selectedFunctions : nullptr));
-				if (pa.recorder && pa.IsGeneralEvaluation())
+				List<ResolvedItem> ritems;
+				VisitOverloadedFunction(pa, opTypes, argTypes, boundedAnys, result, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
+				if (ritems.Count() > 0)
 				{
-					AddSymbolsToOperatorResolving(pa, resolvableName, resolving, selectedFunctions, indexed);
+					pa.recorder->IndexOverloadingResolution(resolvableName, ritems);
 				}
 				if (result.Count() > 0)
 				{
@@ -731,81 +730,5 @@ namespace symbol_totsys_impl
 				}
 			}
 		}
-	}
-
-	//////////////////////////////////////////////////////////////////////////////////////
-	// Indexing
-	//////////////////////////////////////////////////////////////////////////////////////
-
-	bool IsOperator(Symbol* symbol)
-	{
-		if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
-		{
-			return funcDecl->name.type == CppNameType::Operator;
-		}
-		return false;
-	}
-
-	void AddSymbolToResolving(const ParsingArguments& pa, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
-	{
-		if (first)
-		{
-			*resolving = MakePtr<Resolving>();
-		}
-		first = false;
-
-		Resolving::AddSymbol(pa, *resolving, symbol);
-	}
-
-	bool AddSymbolToNameResolving(const ParsingArguments& pa, const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
-	{
-		bool isOperator = IsOperator(symbol);
-		if (!isOperator || name.type == CppNameType::Operator)
-		{
-			AddSymbolToResolving(pa, resolving, symbol, first);
-			return true;
-		}
-		return false;
-	}
-
-	bool AddSymbolToOperatorResolving(const ParsingArguments& pa, const CppName& name, Ptr<Resolving>* resolving, Symbol* symbol, bool& first)
-	{
-		bool isOperator = IsOperator(symbol);
-		if (isOperator)
-		{
-			AddSymbolToResolving(pa, resolving, symbol, first);
-			return true;
-		}
-		return false;
-	}
-
-	void AddSymbolsToResolvings(const ParsingArguments& pa, const CppName* name, Ptr<Resolving>* nameResolving, const CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp)
-	{
-		if (!pa.IsGeneralEvaluation()) return;
-		bool firstName = true;
-		bool firstOp = true;
-
-		for (vint i = 0; i < symbols.Count(); i++)
-		{
-			if (auto symbol = symbols[i].symbol)
-			{
-				if (name && AddSymbolToNameResolving(pa, *name, nameResolving, symbol, firstName))
-				{
-					addedName = true;
-					continue;
-				}
-
-				if (op && AddSymbolToOperatorResolving(pa, *op, opResolving, symbol, firstOp))
-				{
-					addedOp = true;
-				}
-			}
-		}
-	}
-
-	void AddSymbolsToOperatorResolving(const ParsingArguments& pa, const CppName& op, Ptr<Resolving>& opResolving, ExprTsysList& symbols, bool& addedOp)
-	{
-		bool addedName = false;
-		AddSymbolsToResolvings(pa, nullptr, nullptr, &op, &opResolving, symbols, addedName, addedOp);
 	}
 }

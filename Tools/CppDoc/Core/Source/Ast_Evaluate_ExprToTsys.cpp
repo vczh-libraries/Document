@@ -405,9 +405,9 @@ public:
 			}
 		}
 
-		ExprTsysList totalSelectedFunctions;
+		List<ResolvedItem> tritems;
 		ExpandPotentialVtaList(pa, result, argTypesList, isVtas, argHasBoundedVta, argUnboundedVtaCount,
-			[this, self, funcVta, &funcExprTypes, &totalSelectedFunctions](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
+			[this, self, funcVta, &funcExprTypes, &tritems](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 			{
 				ExprTsysList funcTypes;
 				if (funcVta && unboundedVtaIndex != -1)
@@ -443,10 +443,18 @@ public:
 					}
 				}
 
-				ExprTsysList selectedFunctions;
+				List<ResolvedItem> ritems;
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
-				VisitOverloadedFunction(pa, funcTypes, args, boundedAnys, processResult, (pa.recorder ? &selectedFunctions : nullptr));
-				AddInternal(totalSelectedFunctions, selectedFunctions);
+				VisitOverloadedFunction(pa, funcTypes, args, boundedAnys, processResult, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
+				
+				for (vint i = 0; i < ritems.Count(); i++)
+				{
+					auto ritem = ritems[i];
+					if (!tritems.Contains(ritem))
+					{
+						tritems.Add(ritem);
+					}
+				}
 			});
 
 		if (pa.recorder && pa.IsGeneralEvaluation())
@@ -469,16 +477,30 @@ public:
 				GetCategoryExprResolving(catIcgExpr, name, nameResolving);
 			}
 
-			bool addedName = false;
-			bool addedOp = false;
-			AddSymbolsToResolvings(pa, name, nameResolving, &self->opName, &self->opResolving, totalSelectedFunctions, addedName, addedOp);
-			if (addedName)
+			List<ResolvedItem> nritems, oritems;
+			for (vint i = 0; i < tritems.Count(); i++)
 			{
-				pa.recorder->IndexOverloadingResolution(*name, (*nameResolving)->items);
+				auto ritem = tritems[i];
+				if (auto funcDecl = ritem.symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+				{
+					if (funcDecl->name.type == CppNameType::Operator)
+					{
+						oritems.Add(ritem);
+					}
+					else
+					{
+						nritems.Add(ritem);
+					}
+				}
 			}
-			if (addedOp)
+
+			if (nritems.Count() > 0)
 			{
-				pa.recorder->IndexOverloadingResolution(self->opName, self->opResolving->items);
+				pa.recorder->IndexOverloadingResolution(*name, nritems);
+			}
+			if (oritems.Count() > 0)
+			{
+				pa.recorder->IndexOverloadingResolution(self->opName, oritems);
 			}
 		}
 	}

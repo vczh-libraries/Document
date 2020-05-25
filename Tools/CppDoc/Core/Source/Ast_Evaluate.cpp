@@ -537,7 +537,7 @@ public:
 
 	void Visit(ValueAliasDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateValueAliasSymbol(pa, self, pa.parentDeclType, nullptr, nullptr);
+		symbol_type_resolving::EvaluateValueAliasSymbol(pa, self, pa.parentDeclType, nullptr);
 	}
 
 	void Visit(NamespaceDeclaration* self) override

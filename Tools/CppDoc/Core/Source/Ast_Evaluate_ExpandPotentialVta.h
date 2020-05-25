@@ -67,13 +67,6 @@ namespace symbol_totsys_impl
 	void					ProcessGenericExpr(const ParsingArguments& pa, ExprTsysList& result, GenericExpr* self, Array<bool>& isTypes, Array<ExprTsysItem>& args, Array<vint>& argSource, SortedList<vint>& boundedAnys);
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// Indexing
-	//////////////////////////////////////////////////////////////////////////////////////
-
-	void					AddSymbolsToResolvings(const ParsingArguments& pa, const CppName* name, Ptr<Resolving>* nameResolving, const CppName* op, Ptr<Resolving>* opResolving, ExprTsysList& symbols, bool& addedName, bool& addedOp);
-	void					AddSymbolsToOperatorResolving(const ParsingArguments& pa, const CppName& op, Ptr<Resolving>& opResolving, ExprTsysList& symbols, bool& addedOp);
-
-	//////////////////////////////////////////////////////////////////////////////////////
 	// Utilities
 	//////////////////////////////////////////////////////////////////////////////////////
 
