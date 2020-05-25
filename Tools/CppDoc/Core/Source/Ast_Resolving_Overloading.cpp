@@ -189,17 +189,19 @@ namespace symbol_type_resolving
 			}
 		}
 
-		ExprTsysList validFuncTypes;
 		bool addedAny = false;
+		ExprTsysList inferredFunctionTypes;
+		Group<vint, ResolvedItem> gritems;
+		List<vint> validIndices;
 
 		if (withVariadicInput)
 		{
 			// if number of arguments is unknown, we only check if a function has too few parameters.
 			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
-				ExprTsysList inferredFunctionTypes;
-				infer_function_type::InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys, nullptr);
-				for (vint j = 0; j < inferredFunctionTypes.Count(); j++)
+				vint originalCount = inferredFunctionTypes.Count();
+				infer_function_type::InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys, (ritems ? &gritems : nullptr));
+				for (vint j = originalCount; j < inferredFunctionTypes.Count(); j++)
 				{
 					auto funcType = inferredFunctionTypes[j];
 					if (funcType.tsys->IsUnknownType())
@@ -219,7 +221,7 @@ namespace symbol_type_resolving
 							continue;
 						}
 					}
-					validFuncTypes.Add(funcType);
+					validIndices.Add(j);
 				}
 			}
 		}
@@ -227,9 +229,9 @@ namespace symbol_type_resolving
 		{
 			for (vint i = 0; i < funcTypes.Count(); i++)
 			{
-				ExprTsysList inferredFunctionTypes;
-				infer_function_type::InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys, nullptr);
-				for (vint j = 0; j < inferredFunctionTypes.Count(); j++)
+				vint originalCount = inferredFunctionTypes.Count();
+				infer_function_type::InferFunctionType(pa, inferredFunctionTypes, funcTypes[i], argTypes, boundedAnys, (ritems ? &gritems : nullptr));
+				for (vint j = originalCount; j < inferredFunctionTypes.Count(); j++)
 				{
 					auto funcType = inferredFunctionTypes[j];
 					if (funcType.tsys->IsUnknownType())
@@ -261,25 +263,25 @@ namespace symbol_type_resolving
 						}
 					}
 
-					validFuncTypes.Add(funcType);
+					validIndices.Add(j);
 				}
 			}
 		}
 
-		Array<bool> selectedIndices(validFuncTypes.Count());
+		Array<bool> selectedIndices(validIndices.Count());
 
 		if (withVariadicInput)
 		{
 			// if number of arguments is unknown, we perform an inaccurate test, only filtering away a few inappropriate candidates
-			for (vint i = 0; i < validFuncTypes.Count(); i++)
+			for (vint i = 0; i < validIndices.Count(); i++)
 			{
-				selectedIndices[i] = IsAcceptableWithVariadicInput(pa, validFuncTypes[i], argTypes, boundedAnys);
+				selectedIndices[i] = IsAcceptableWithVariadicInput(pa, inferredFunctionTypes[validIndices[i]], argTypes, boundedAnys);
 			}
 		}
 		else
 		{
 			// if number of arguments is known, we need to pick the best candidate
-			for (vint i = 0; i < validFuncTypes.Count(); i++)
+			for (vint i = 0; i < validIndices.Count(); i++)
 			{
 				selectedIndices[i] = true;
 			}
@@ -289,11 +291,11 @@ namespace symbol_type_resolving
 
 			for (vint i = 0; i < minLoopCount; i++)
 			{
-				Array<TypeConv> funcChoices(validFuncTypes.Count());
+				Array<TypeConv> funcChoices(validIndices.Count());
 
-				for (vint j = 0; j < validFuncTypes.Count(); j++)
+				for (vint j = 0; j < validIndices.Count(); j++)
 				{
-					auto funcType = validFuncTypes[j];
+					auto funcType = inferredFunctionTypes[validIndices[j]];
 
 					// best candidates for this arguments are chosen
 					if (i < argTypes.Count())
@@ -317,7 +319,7 @@ namespace symbol_type_resolving
 
 				// the best candidate should be the best in for all arguments at the same time
 				auto min = FindMinConv(funcChoices);
-				for (vint j = 0; j < validFuncTypes.Count(); j++)
+				for (vint j = 0; j < validIndices.Count(); j++)
 				{
 					auto choice = funcChoices[j];
 					if (IsFunctionAcceptableByMinConv(choice, min))
@@ -342,15 +344,38 @@ namespace symbol_type_resolving
 		{
 			if (selectedIndices[i])
 			{
-				if(ritems)
+				AddTempValue(result, inferredFunctionTypes[validIndices[i]].tsys->GetElement());
+			}
+		}
+
+		if (ritems)
+		{
+			for (vint i = 0; i < selectedIndices.Count(); i++)
+			{
+				if (selectedIndices[i])
 				{
-					ResolvedItem ritem = { nullptr,validFuncTypes[i].symbol };
-					if (!ritems->Contains(ritem))
+					vint index = gritems.Keys().IndexOf(validIndices[i]);
+					if (index == -1)
 					{
-						ritems->Add(ritem);
+						ResolvedItem ritem = { nullptr,inferredFunctionTypes[validIndices[i]].symbol };
+						if (!ritems->Contains(ritem))
+						{
+							ritems->Add(ritem);
+						}
+					}
+					else
+					{
+						auto& gvitems = gritems.GetByIndex(index);
+						for (vint j = 0; j < gvitems.Count(); j++)
+						{
+							auto ritem = gvitems[j];
+							if (!ritems->Contains(ritem))
+							{
+								ritems->Add(ritem);
+							}
+						}
 					}
 				}
-				AddTempValue(result, validFuncTypes[i].tsys->GetElement());
 			}
 		}
 	}
