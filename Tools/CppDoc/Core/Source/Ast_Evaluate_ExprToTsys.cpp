@@ -263,32 +263,7 @@ public:
 		Ptr<IdExpr> idExpr;
 		Ptr<ChildExpr> childExpr;
 		Ptr<GenericExpr> genericExpr;
-		MatchCategoryExpr(
-			self->name,
-			[&idExpr](const Ptr<IdExpr>& _idExpr)
-			{
-				idExpr = _idExpr;
-			},
-			[&childExpr](const Ptr<ChildExpr>& _childExpr)
-			{
-				childExpr = _childExpr;
-			},
-			[&idExpr, &childExpr, &genericExpr](const Ptr<GenericExpr>& _genericExpr)
-			{
-				genericExpr = _genericExpr;
-				MatchCategoryExpr(
-					genericExpr->expr,
-					[&idExpr](const Ptr<IdExpr>& _idExpr)
-					{
-						idExpr = _idExpr;
-					},
-					[&childExpr](const Ptr<ChildExpr>& _childExpr)
-					{
-						childExpr = _childExpr;
-					}
-				);
-			}
-		);
+		CastCategoryExpr(self->name, idExpr, childExpr, genericExpr);
 
 		ExprTsysList nonGenericResult;
 		bool nonGenericIsVta = false;
@@ -491,31 +466,7 @@ public:
 
 			if(catIcgExpr)
 			{
-				auto processId = [&](const Ptr<IdExpr>& idExpr)
-				{
-					name = &idExpr->name;
-					nameResolving = &idExpr->resolving;
-				};
-
-				auto processChild = [&](const Ptr<ChildExpr>& childExpr)
-				{
-					name = &childExpr->name;
-					nameResolving = &childExpr->resolving;
-				};
-
-				MatchCategoryExpr(
-					catIcgExpr,
-					processId,
-					processChild,
-					[&](const Ptr<GenericExpr>& genericExpr)
-					{
-						MatchCategoryExpr(
-							genericExpr->expr,
-							processId,
-							processChild
-						);
-					}
-				);
+				GetCategoryExprResolving(catIcgExpr, name, nameResolving);
 			}
 
 			bool addedName = false;

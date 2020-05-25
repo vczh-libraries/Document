@@ -103,3 +103,74 @@ CPPDOC_EXPR_LIST(CPPDOC_ACCEPT)
 #define CPPDOC_ACCEPT(NAME) void NAME::Accept(IStatVisitor* visitor) { visitor->Visit(this); }
 CPPDOC_STAT_LIST(CPPDOC_ACCEPT)
 #undef CPPDOC_ACCEPT
+
+/***********************************************************************
+Expressions
+***********************************************************************/
+
+#define CORE_PROCESSOR									\
+	[&idExpr](const Ptr<IdExpr>& _idExpr)				\
+	{													\
+		idExpr = _idExpr;								\
+	},													\
+	[&childExpr](const Ptr<ChildExpr>& _childExpr)		\
+	{													\
+		childExpr = _childExpr;							\
+	}													\
+
+void CastCategoryExpr(const Ptr<Category_Id_Child_Expr>& expr, Ptr<IdExpr>& idExpr, Ptr<ChildExpr>& childExpr)
+{
+	MatchCategoryExpr(
+		expr,
+		CORE_PROCESSOR
+	);
+}
+
+void CastCategoryExpr(const Ptr<Category_Id_Child_Generic_Expr>& expr, Ptr<IdExpr>& idExpr, Ptr<ChildExpr>& childExpr, Ptr<GenericExpr>& genericExpr)
+{
+	MatchCategoryExpr(
+		expr,
+		CORE_PROCESSOR,
+		[&idExpr, &childExpr, &genericExpr](const Ptr<GenericExpr>& _genericExpr)
+		{
+			genericExpr = _genericExpr;
+			CastCategoryExpr(genericExpr->expr, idExpr, childExpr);
+		}
+	);
+}
+
+#undef CORE_PROCESSOR
+
+#define CORE_PROCESSOR										\
+	[&name, &resolving](const Ptr<IdExpr>& _idExpr)			\
+	{														\
+		name = &_idExpr->name;								\
+		resolving = &_idExpr->resolving;					\
+	},														\
+	[&name, &resolving](const Ptr<ChildExpr>& _childExpr)	\
+	{														\
+		name = &_childExpr->name;							\
+		resolving = &_childExpr->resolving;					\
+	}														\
+
+void GetCategoryExprResolving(const Ptr<Category_Id_Child_Expr>& expr, CppName*& name, Ptr<Resolving>*& resolving)
+{
+	MatchCategoryExpr(
+		expr,
+		CORE_PROCESSOR
+	);
+}
+
+void GetCategoryExprResolving(const Ptr<Category_Id_Child_Generic_Expr>& expr, CppName*& name, Ptr<Resolving>*& resolving)
+{
+	MatchCategoryExpr(
+		expr,
+		CORE_PROCESSOR,
+		[&name, &resolving](const Ptr<GenericExpr>& _genericExpr)
+		{
+			GetCategoryExprResolving(_genericExpr->expr, name, resolving);
+		}
+	);
+}
+
+#undef CORE_PROCESSOR
