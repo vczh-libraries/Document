@@ -24,9 +24,13 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (Calculator)
-  - [x] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
+  - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
+    - `VisitOverloadedFunction` needs to fill correct symbols to `selectedFunctions`.
+    - Since full specialized functions cannot have a different return type, find a way to evaluate selected full specialized functions after this function is selected for overloading.
   - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected partial specialized class.
+    - Call `pa.recorder->IndexOverloadingResolution` in `ProcessGenericType` (`case CLASS_SYMBOL_KIND:`).
   - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected partial specialized value alias.
+    - Call `pa.recorder->IndexOverloadingResolution` in `ProcessGenericExpr` (`case symbol_component::SymbolKind::ValueAlias`).
 - [ ] Next Demo! (?)
   - [ ] Create appropriate hyperlinks for partial specialization scenarios.
 - [ ] Lambda expressions.
