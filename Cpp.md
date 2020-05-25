@@ -24,7 +24,9 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (Calculator)
-  - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
+  - [x] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected full specialized function.
+  - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected partial specialized class.
+  - [ ] `TEST_CATEGORY(L"Re-index")` doesn't give the position of the selected partial specialized value alias.
 - [ ] Next Demo! (?)
   - [ ] Create appropriate hyperlinks for partial specialization scenarios.
 - [ ] Lambda expressions.

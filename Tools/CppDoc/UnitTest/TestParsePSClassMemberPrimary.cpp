@@ -964,6 +964,50 @@ Field<U> A<T>::E(T, ...)const
 		}
 	});
 
+	TEST_CATEGORY(L"Members in base classes")
+	{
+		auto input = LR"(
+template<typename T>
+struct Id
+{
+	using Type = T;
+	using Self = Id;
+	T Get();
+};
+
+template<typename T>
+struct Id<T[]>
+{
+};
+
+template<typename T>
+struct Ptr : Id<T*>
+{
+};
+
+template<typename T>
+struct Ptr<T[]>
+{
+};
+
+template<typename T>
+struct ConstPtr : Ptr<const T>
+{
+};
+
+template<typename T>
+struct ConstPtr<T[]>
+{
+};
+)";
+
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertType(pa,	L"ConstPtr<int>::Type",				L"ConstPtr<int> :: Type",						L"__int32 const *"			);
+		AssertType(pa,	L"ConstPtr<int>::Self",				L"ConstPtr<int> :: Self",						L"::Id<__int32 const *>"	);
+		AssertExpr(pa,	L"ConstPtr<int>().Get()",			L"ConstPtr<int>().Get()",						L"__int32 const * $PR"		);
+	});
+
 	TEST_CATEGORY(L"Re-index")
 	{
 		auto input = LR"(
@@ -1019,49 +1063,5 @@ auto c = &X<int>::Method<double>;
 
 		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
 		TEST_CASE_ASSERT(accessed.Count() == 22);
-	});
-
-	TEST_CATEGORY(L"Members in base classes")
-	{
-		auto input = LR"(
-template<typename T>
-struct Id
-{
-	using Type = T;
-	using Self = Id;
-	T Get();
-};
-
-template<typename T>
-struct Id<T[]>
-{
-};
-
-template<typename T>
-struct Ptr : Id<T*>
-{
-};
-
-template<typename T>
-struct Ptr<T[]>
-{
-};
-
-template<typename T>
-struct ConstPtr : Ptr<const T>
-{
-};
-
-template<typename T>
-struct ConstPtr<T[]>
-{
-};
-)";
-
-		COMPILE_PROGRAM(program, pa, input);
-
-		AssertType(pa,	L"ConstPtr<int>::Type",				L"ConstPtr<int> :: Type",						L"__int32 const *"			);
-		AssertType(pa,	L"ConstPtr<int>::Self",				L"ConstPtr<int> :: Self",						L"::Id<__int32 const *>"	);
-		AssertExpr(pa,	L"ConstPtr<int>().Get()",			L"ConstPtr<int>().Get()",						L"__int32 const * $PR"		);
 	});
 }
