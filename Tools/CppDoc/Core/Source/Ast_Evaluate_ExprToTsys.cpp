@@ -446,15 +446,7 @@ public:
 				List<ResolvedItem> ritems;
 				FindQualifiedFunctors(pa, {}, TsysRefType::None, funcTypes, true);
 				VisitOverloadedFunction(pa, funcTypes, args, boundedAnys, processResult, (pa.IsGeneralEvaluation() && pa.recorder ? &ritems : nullptr));
-				
-				for (vint i = 0; i < ritems.Count(); i++)
-				{
-					auto ritem = ritems[i];
-					if (!tritems.Contains(ritem))
-					{
-						tritems.Add(ritem);
-					}
-				}
+				ResolvedItem::AddItems(tritems, ritems);
 			});
 
 		if (pa.recorder && pa.IsGeneralEvaluation())
@@ -485,11 +477,11 @@ public:
 				{
 					if (funcDecl->name.type == CppNameType::Operator)
 					{
-						oritems.Add(ritem);
+						ResolvedItem::AddItem(oritems, ritem);
 					}
 					else
 					{
-						nritems.Add(ritem);
+						ResolvedItem::AddItem(nritems, ritem);
 					}
 				}
 			}

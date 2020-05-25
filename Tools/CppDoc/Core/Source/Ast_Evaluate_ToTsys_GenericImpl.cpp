@@ -88,7 +88,7 @@ namespace symbol_totsys_impl
 								List<ResolvedItem> ritems;
 								for (vint i = 0; i < psr->evaluatedTypes.Count(); i++)
 								{
-									ritems.Add({ nullptr,psr->evaluatedTypes[i]->GetDecl() });
+									ResolvedItem::AddItem(ritems, { nullptr,psr->evaluatedTypes[i]->GetDecl() });
 								}
 								pa.recorder->IndexOverloadingResolution(*name, ritems);
 							}

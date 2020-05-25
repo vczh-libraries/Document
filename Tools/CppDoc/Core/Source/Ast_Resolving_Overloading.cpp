@@ -357,23 +357,12 @@ namespace symbol_type_resolving
 					vint index = gritems.Keys().IndexOf(validIndices[i]);
 					if (index == -1)
 					{
-						ResolvedItem ritem = { nullptr,inferredFunctionTypes[validIndices[i]].symbol };
-						if (!ritems->Contains(ritem))
-						{
-							ritems->Add(ritem);
-						}
+						ResolvedItem::AddItem(*ritems, { nullptr,inferredFunctionTypes[validIndices[i]].symbol });
 					}
 					else
 					{
 						auto& gvitems = gritems.GetByIndex(index);
-						for (vint j = 0; j < gvitems.Count(); j++)
-						{
-							auto ritem = gvitems[j];
-							if (!ritems->Contains(ritem))
-							{
-								ritems->Add(ritem);
-							}
-						}
+						ResolvedItem::AddItems(*ritems, gvitems);
 					}
 				}
 			}

@@ -53,6 +53,22 @@ struct ResolvedItem
 	{
 	}
 
+	static void AddItem(List<ResolvedItem>& tos, ResolvedItem ritem)
+	{
+		if (!tos.Contains(ritem))
+		{
+			tos.Add(ritem);
+		}
+	}
+
+	static void AddItems(List<ResolvedItem>& tos, const List<ResolvedItem>& froms)
+	{
+		for (vint i = 0; i < froms.Count(); i++)
+		{
+			AddItem(tos, froms[i]);
+		}
+	}
+
 	static vint Compare(const ResolvedItem& a, const ResolvedItem& b)
 	{
 		if (a.tsys < b.tsys) return -1;

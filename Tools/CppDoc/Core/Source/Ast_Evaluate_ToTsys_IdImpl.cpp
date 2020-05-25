@@ -353,11 +353,7 @@ namespace symbol_totsys_impl
 						{
 							for (vint j = 0; j < opResult.Count(); j++)
 							{
-								ResolvedItem ritem = { nullptr,opResult[j].symbol };
-								if (!ritems->Contains(ritem))
-								{
-									ritems->Add(ritem);
-								}
+								ResolvedItem::AddItem(*ritems, { nullptr,opResult[j].symbol });
 							}
 						}
 					}
