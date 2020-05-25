@@ -60,7 +60,7 @@ namespace symbol_type_resolving
 	extern void									SetFuncTypeByReturnStat(const ParsingArguments& pa, FunctionDeclaration* funcDecl, TypeTsysList& returnTypes, TemplateArgumentContext* argumentsToApply);
 	extern TypeTsysList&						EvaluateFuncSymbol(const ParsingArguments& invokerPa, ForwardFunctionDeclaration* funcDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
 	extern TypeTsysList&						EvaluateTypeAliasSymbol(const ParsingArguments& invokerPa, TypeAliasDeclaration* usingDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
-	extern TypeTsysList&						EvaluateValueAliasSymbol(const ParsingArguments& invokerPa, ValueAliasDeclaration* usingDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);
+	extern TypeTsysList&						EvaluateValueAliasSymbol(const ParsingArguments& invokerPa, ValueAliasDeclaration* usingDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply, List<ResolvedItem>* ritems);
 	extern ITsys*								EvaluateGenericArgumentType(Symbol* symbol);
 
 	extern TypeTsysList&						EvaluateForwardClassSymbol(const ParsingArguments& invokerPa, ForwardClassDeclaration* classDecl, ITsys* parentDeclType, TemplateArgumentContext* argumentsToApply);

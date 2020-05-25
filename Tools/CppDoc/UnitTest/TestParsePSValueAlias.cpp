@@ -398,12 +398,10 @@ auto x4 = F<double, wchar_t, char>;
 			ASSERT_SYMBOL			(2, L"F", 12, 10, ValueAliasDeclaration, 2, 15)
 			ASSERT_SYMBOL			(3, L"F", 13, 10, ValueAliasDeclaration, 2, 15)
 			ASSERT_SYMBOL_OVERLOAD	(4, L"F", 10, 10, ValueAliasDeclaration, 5, 15)
-			ASSERT_SYMBOL_OVERLOAD	(5, L"F", 11, 10, ValueAliasDeclaration, 2, 15)
-			ASSERT_SYMBOL_OVERLOAD	(6, L"F", 12, 10, ValueAliasDeclaration, 2, 15)
-			ASSERT_SYMBOL_OVERLOAD	(7, L"F", 13, 10, ValueAliasDeclaration, 8, 15)
+			ASSERT_SYMBOL_OVERLOAD	(5, L"F", 13, 10, ValueAliasDeclaration, 8, 15)
 		END_ASSERT_SYMBOL;
 
 		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
-		TEST_CASE_ASSERT(accessed.Count() == 8);
+		TEST_CASE_ASSERT(accessed.Count() == 6);
 	});
 }

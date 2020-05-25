@@ -42,7 +42,8 @@ namespace symbol_type_resolving
 		const ParsingArguments& invokerPa,
 		ValueAliasDeclaration* usingDecl,
 		ITsys* parentDeclType,
-		TemplateArgumentContext* argumentsToApply
+		TemplateArgumentContext* argumentsToApply,
+		List<ResolvedItem>* ritems
 	)
 	{
 		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, argumentsToApply, true);
@@ -83,6 +84,11 @@ namespace symbol_type_resolving
 						taContext->parent = declPa.taContext;
 						declPa.taContext = taContext.Obj();
 						EvaluateValueAliasSymbolInternal(declPa, processedTypes, decl.Obj());
+
+						if (ritems)
+						{
+							ritems->Add({ nullptr,declSymbol });
+						}
 					}
 				}
 				else
