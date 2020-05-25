@@ -47,6 +47,12 @@ namespace symbol_type_resolving
 	)
 	{
 		auto eval = ProcessArguments(invokerPa, usingDecl, usingDecl->templateSpec, parentDeclType, argumentsToApply, true);
+		if (!eval && eval.symbol->IsPSPrimary_NF() && eval.psVersion != eval.symbol->GetPSPrimaryVersion_NF())
+		{
+			eval.notEvaluated = true;
+			eval.ev.progress = symbol_component::EvaluationProgress::NotEvaluated;
+		}
+
 		if (eval)
 		{
 			if (eval.ev.progress == symbol_component::EvaluationProgress::RecursiveFound)
@@ -85,10 +91,13 @@ namespace symbol_type_resolving
 						declPa.taContext = taContext.Obj();
 						EvaluateValueAliasSymbolInternal(declPa, processedTypes, decl.Obj());
 
-						if (ritems)
-						{
-							ResolvedItem::AddItem(*ritems, { nullptr,declSymbol });
-						}
+						ResolvedItem::AddItem(eval.psResolving, { nullptr,declSymbol });
+					}
+					eval.psVersion = eval.symbol->GetPSPrimaryVersion_NF();
+
+					if (ritems)
+					{
+						ResolvedItem::AddItems(*ritems, eval.psResolving);
 					}
 				}
 				else
@@ -107,11 +116,14 @@ namespace symbol_type_resolving
 					eval.evaluatedTypes[i] = eval.evaluatedTypes[i]->CVOf({ true,false })->LRefOf();
 				}
 			}
-
 			return FinishEvaluatingPotentialGenericSymbol(eval.declPa, usingDecl, usingDecl->templateSpec, argumentsToApply);
 		}
 		else
 		{
+			if (ritems)
+			{
+				ResolvedItem::AddItems(*ritems, eval.psResolving);
+			}
 			return eval.evaluatedTypes;
 		}
 	}

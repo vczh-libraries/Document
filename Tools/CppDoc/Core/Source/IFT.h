@@ -158,7 +158,7 @@ namespace infer_function_type
 			Ptr<TemplateArgumentContext> taContext;
 			if (decl->specializationSpec)
 			{
-				taContext = InferPartialSpecialization(pa, declSymbol, parentDeclType, decl->templateSpec, decl->specializationSpec, argumentTypes, boundedAnys);
+				taContext = InferPartialSpecialization(pa, decl->symbol, parentDeclType, decl->templateSpec, decl->specializationSpec, argumentTypes, boundedAnys);
 				if (!taContext)
 				{
 					accessed.Add(declSymbol, false);

@@ -340,6 +340,7 @@ namespace symbol_type_resolving
 			}
 		}
 
+		// fill function types
 		for (vint i = 0; i < selectedIndices.Count(); i++)
 		{
 			if (selectedIndices[i])
@@ -350,6 +351,7 @@ namespace symbol_type_resolving
 
 		if (ritems)
 		{
+			// fill indexing
 			for (vint i = 0; i < selectedIndices.Count(); i++)
 			{
 				if (selectedIndices[i])

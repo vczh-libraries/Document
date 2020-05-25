@@ -198,41 +198,41 @@ TEST_FILE
 	{
 		auto input = LR"(
 template<typename T, typename... Ts>
-T F(Ts..., Ts*...);
+T F(Ts..., const Ts*...);
 
 template<>
-float F<float, const char, const wchar_t>(const char, const wchar_t, const char*, const wchar_t*);
+float F<float, char, wchar_t>(char, wchar_t, const char*, const wchar_t*);
 
 template<>
-double F<double, const wchar_t, const char>(const wchar_t, const char, const wchar_t*, const char*);
+double F<double, wchar_t, char>(wchar_t, char, const wchar_t*, const char*);
 
 template<typename T, typename... Ts>
-T F(Ts*..., Ts...);
+T F(const Ts*..., Ts...);
 
 template<>
-float F<float, const char, const wchar_t>(const char*, const wchar_t*, const char, const wchar_t);
+float F<float, char, wchar_t>(const char*, const wchar_t*, char, wchar_t);
 
 template<>
-double F<double, const wchar_t, const char>(const wchar_t*, const char*, const wchar_t, const char);
+double F<double, wchar_t, char>(const wchar_t*, const char*, wchar_t, char);
 
-auto x1 = F<float>('G', L'G', "GacUI", L"GacUI");
-auto x2 = F<float>(L'G', 'G', L"GacUI", "GacUI");
-auto x3 = F<float>("GacUI", L"GacUI", 'G', L'G');
-auto x4 = F<float>(L"GacUI", "GacUI", L'G', 'G');
-auto x5 = F<double>('G', L'G', "GacUI", L"GacUI");
-auto x6 = F<double>(L'G', 'G', L"GacUI", "GacUI");
-auto x7 = F<double>("GacUI", L"GacUI", 'G', L'G');
-auto x8 = F<double>(L"GacUI", "GacUI", L'G', 'G');
+auto x1 = F<float, char, wchar_t>	('G',		L'G',		"GacUI",	L"GacUI"	);
+auto x2 = F<float, wchar_t, char>	(L'G',		'G',		L"GacUI",	"GacUI"		);
+auto x3 = F<float, char, wchar_t>	("GacUI",	L"GacUI",	'G',		L'G'		);
+auto x4 = F<float, wchar_t, char>	(L"GacUI",	"GacUI",	L'G',		'G'			);
+auto x5 = F<double, char, wchar_t>	('G',		L'G',		"GacUI",	L"GacUI"	);
+auto x6 = F<double, wchar_t, char>	(L'G',		'G',		L"GacUI",	"GacUI"		);
+auto x7 = F<double, char, wchar_t>	("GacUI",	L"GacUI",	'G',		L'G'		);
+auto x8 = F<double, wchar_t, char>	(L"GacUI",	"GacUI",	L'G',		'G'			);
 )";
 
 		SortedList<vint> accessed;
 		auto recorder = BEGIN_ASSERT_SYMBOL
 			ASSERT_SYMBOL			(0, L"T", 2, 0, void, 1, 18)
 			ASSERT_SYMBOL			(1, L"Ts", 2, 4, void, 1, 33)
-			ASSERT_SYMBOL			(2, L"Ts", 2, 11, void, 1, 33)
+			ASSERT_SYMBOL			(2, L"Ts", 2, 17, void, 1, 33)
 			ASSERT_SYMBOL			(3, L"T", 11, 0, void, 10, 18)
-			ASSERT_SYMBOL			(4, L"Ts", 11, 4, void, 10, 33)
-			ASSERT_SYMBOL			(5, L"Ts", 11, 12, void, 10, 33)
+			ASSERT_SYMBOL			(4, L"Ts", 11, 10, void, 10, 33)
+			ASSERT_SYMBOL			(5, L"Ts", 11, 18, void, 10, 33)
 			ASSERT_SYMBOL			(6, L"F", 19, 10, ForwardFunctionDeclaration, 2, 2, 11, 2)
 			ASSERT_SYMBOL			(7, L"F", 20, 10, ForwardFunctionDeclaration, 2, 2, 11, 2)
 			ASSERT_SYMBOL			(8, L"F", 21, 10, ForwardFunctionDeclaration, 2, 2, 11, 2)
@@ -242,12 +242,16 @@ auto x8 = F<double>(L"GacUI", "GacUI", L'G', 'G');
 			ASSERT_SYMBOL			(12, L"F", 25, 10, ForwardFunctionDeclaration, 2, 2, 11, 2)
 			ASSERT_SYMBOL			(13, L"F", 26, 10, ForwardFunctionDeclaration, 2, 2, 11, 2)
 			ASSERT_SYMBOL_OVERLOAD	(14, L"F", 19, 10, ForwardFunctionDeclaration, 5, 6)
-			ASSERT_SYMBOL_OVERLOAD	(15, L"F", 21, 10, ForwardFunctionDeclaration, 14, 6)
-			ASSERT_SYMBOL_OVERLOAD	(16, L"F", 24, 10, ForwardFunctionDeclaration, 8, 7)
-			ASSERT_SYMBOL_OVERLOAD	(17, L"F", 26, 10, ForwardFunctionDeclaration, 17, 7)
+			ASSERT_SYMBOL_OVERLOAD	(15, L"F", 20, 10, ForwardFunctionDeclaration, 2, 2)
+			ASSERT_SYMBOL_OVERLOAD	(16, L"F", 21, 10, ForwardFunctionDeclaration, 14, 6)
+			ASSERT_SYMBOL_OVERLOAD	(17, L"F", 22, 10, ForwardFunctionDeclaration, 11, 2)
+			ASSERT_SYMBOL_OVERLOAD	(18, L"F", 23, 10, ForwardFunctionDeclaration, 2, 2)
+			ASSERT_SYMBOL_OVERLOAD	(19, L"F", 24, 10, ForwardFunctionDeclaration, 8, 7)
+			ASSERT_SYMBOL_OVERLOAD	(20, L"F", 25, 10, ForwardFunctionDeclaration, 11, 2)
+			ASSERT_SYMBOL_OVERLOAD	(21, L"F", 26, 10, ForwardFunctionDeclaration, 17, 7)
 		END_ASSERT_SYMBOL;
 
 		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
-		TEST_CASE_ASSERT(accessed.Count() == 18);
+		TEST_CASE_ASSERT(accessed.Count() == 22);
 	});
 }

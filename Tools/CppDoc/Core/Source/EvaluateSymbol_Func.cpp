@@ -1,6 +1,9 @@
 #include "EvaluateSymbol_Shared.h"
 #include "Ast_Type.h"
 #include "Parser.h"
+#include "IFT.h"
+
+using namespace infer_function_type;
 
 namespace symbol_type_resolving
 {
@@ -86,6 +89,32 @@ namespace symbol_type_resolving
 	{
 		// template function recursion could cause this function with the same template arguments to be evaluated again
 		auto eval = ProcessArguments(invokerPa, funcDecl, funcDecl->templateSpec, parentDeclType, argumentsToApply, true);
+
+		// full specialization selecting does no involve return type evaluation, do it separately
+		if(argumentsToApply)
+		{
+			auto funcSymbol = eval.symbol->GetFunctionSymbol_Fb();
+			if (funcSymbol->IsPSPrimary_NF() && eval.psVersion != funcSymbol->GetPSPrimaryVersion_NF())
+			{
+				auto psPa = eval.declPa;
+				psPa.taContext = psPa.taContext->parent;
+				Dictionary<Symbol*, Ptr<TemplateArgumentContext>> psResult;
+				InferPartialSpecializationPrimary<ForwardFunctionDeclaration>(psPa, psResult, funcSymbol, psPa.parentDeclType, argumentsToApply);
+
+				for (vint i = 0; i < psResult.Count(); i++)
+				{
+					auto declSymbol = psResult.Keys()[i];
+					ResolvedItem::AddItem(eval.psResolving, { nullptr,declSymbol });
+				}
+				eval.psVersion = funcSymbol->GetPSPrimaryVersion_NF();
+			}
+
+			if (ritems)
+			{
+				ResolvedItem::AddItems(*ritems, eval.psResolving);
+			}
+		}
+
 		if (eval)
 		{
 			// Since types of full specialized functions should be exactly the same with the primary

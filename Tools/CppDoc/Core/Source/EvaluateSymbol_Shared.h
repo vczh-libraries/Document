@@ -14,6 +14,9 @@ namespace symbol_type_resolving
 		symbol_component::Evaluation&		ev;
 		TypeTsysList&						evaluatedTypes;
 
+		vint								psVersion = 0;
+		List<ResolvedItem>					psResolving;
+
 		Eval(
 			bool							_notEvaluated,
 			Symbol*							_symbol,
