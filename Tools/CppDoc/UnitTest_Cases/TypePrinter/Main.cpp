@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <string.h>
 #include "TypePrinter.h"
 
 using namespace type_printer;

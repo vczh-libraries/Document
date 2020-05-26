@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdio.h>
+
 namespace type_printer
 {
 	template<typename T>
@@ -20,11 +22,6 @@ namespace type_printer
 		{
 			TypePrinter<T>::PrintPostfix(false);
 		}
-	};
-
-	struct WithoutPrintPostfix
-	{
-		static void PrintPostfix(bool) {}
 	};
 
 	// primitive types
@@ -61,35 +58,36 @@ namespace type_printer
 
 	// references
 
-	template<typename T>
-	struct TypePrinter<T*> : WithPrintPostfix<T>
-	{
-		static void PrintPrefix(const char* delimiter)
-		{ 
-			TypePrinter<T>::PrintPrefix("");
-			printf("*");
-		}
-	};
-
-	template<typename T>
-	struct TypePrinter<T&> : WithPrintPostfix<T>
+	template<typename TThis, typename T>
+	struct ReferenceTypePrinter : WithPrintPostfix<T>
 	{
 		static void PrintPrefix(const char* delimiter)
 		{
 			TypePrinter<T>::PrintPrefix("");
-			printf("&");
+			printf(TThis::Reference);
+			if (delimiter) printf(delimiter);
+		}
+
+		static void PrintPostfix(bool)
+		{
+			TypePrinter<T>::PrintPostfix(false);
 		}
 	};
 
-	template<typename T>
-	struct TypePrinter<T&&> : WithPrintPostfix<T>
-	{
-		static void PrintPrefix(const char* delimiter)
-		{
-			TypePrinter<T>::PrintPrefix("");
-			printf("&&");
-		}
-	};
+#define MAKE_REFERENCE_TYPE(REFERENCE)														\
+	template<typename T>																	\
+	struct TypePrinter<T REFERENCE> : ReferenceTypePrinter<TypePrinter<T REFERENCE>, T>		\
+	{																						\
+		static const char* const Reference;													\
+	};																						\
+	template<typename T>																	\
+	const char* const TypePrinter<T REFERENCE>::Reference = #REFERENCE						\
+
+	MAKE_REFERENCE_TYPE(*);
+	MAKE_REFERENCE_TYPE(&);
+	MAKE_REFERENCE_TYPE(&&);
+
+#undef MAKE_REFERENCE_TYPE
 
 	// qualifieds
 
@@ -101,6 +99,11 @@ namespace type_printer
 			TypePrinter<T>::PrintPrefix(" ");
 			printf(TThis::Qualifier);
 			if (delimiter) printf(delimiter);
+		}
+
+		static void PrintPostfix(bool)
+		{
+			TypePrinter<T>::PrintPostfix(false);
 		}
 	};
 
