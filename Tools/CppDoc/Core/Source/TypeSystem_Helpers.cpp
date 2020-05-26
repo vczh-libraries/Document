@@ -55,7 +55,14 @@ ITsys* ReplaceThisTypeInternal(ITsys* thisType, ITsys* entity)
 
 ITsys* ReplaceThisType(ITsys* thisType, ITsys* entity)
 {
-	return ReplaceThisTypeInternal(thisType, GetThisEntity(entity));
+	if (entity)
+	{
+		return ReplaceThisTypeInternal(thisType, GetThisEntity(entity));
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 TypeConv TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType)

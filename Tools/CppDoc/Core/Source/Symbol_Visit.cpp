@@ -266,16 +266,30 @@ namespace symbol_type_resolving
 		if (thisItem)
 		{
 			auto adjustedThisItem = AdjustThisItemForSymbol(pa, *thisItem, item);
-			if (!adjustedThisItem.tsys)
-			{
-				throw TypeCheckerException();
-			}
 
-			VisitSymbolInternalWithCorrectThisItem(pa, &adjustedThisItem, item.symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
+			VisitSymbolInternalWithCorrectThisItem(
+				pa,
+				adjustedThisItem.tsys ? &adjustedThisItem : nullptr,
+				item.symbol,
+				visitMemberKind,
+				result,
+				allowVariadic,
+				hasVariadic,
+				hasNonVariadic
+			);
 		}
 		else
 		{
-			VisitSymbolInternalWithCorrectThisItem(pa, nullptr, item.symbol, visitMemberKind, result, allowVariadic, hasVariadic, hasNonVariadic);
+			VisitSymbolInternalWithCorrectThisItem(
+				pa,
+				nullptr,
+				item.symbol,
+				visitMemberKind,
+				result,
+				allowVariadic,
+				hasVariadic,
+				hasNonVariadic
+			);
 		}
 	}
 

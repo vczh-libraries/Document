@@ -84,7 +84,8 @@ bool MatchPrimaryTemplate(
 	const ParsingArguments& pa,
 	Ptr<TemplateSpec> thisSpec,
 	Ptr<TemplateSpec> classSpec,
-	Ptr<GenericType> genericType
+	Ptr<GenericType> genericType,
+	bool& consumedSpec
 )
 {
 	// the template header used in the member must be compatible with one in the class
@@ -141,6 +142,7 @@ bool MatchPrimaryTemplate(
 		}
 	}
 
+	consumedSpec = true;
 	return true;
 }
 
@@ -149,14 +151,26 @@ bool MatchPSTemplate(
 	Ptr<TemplateSpec> thisSpec,
 	Ptr<TemplateSpec> classSpec,
 	Ptr<GenericType> genericType,
-	Ptr<SpecializationSpec> psSpec
+	Ptr<SpecializationSpec> psSpec,
+	bool& consumedSpec
 )
 {
 	// the template header used in the member must be compatible with one in the class
+	bool discardedNonEmptySpec = false;
 	Dictionary<WString, WString> equivalentNames;
-	if (!IsCompatibleTemplateSpec(thisSpec, classSpec, equivalentNames))
+	if (classSpec->arguments.Count() == 0)
 	{
-		return false;
+		if (!thisSpec || thisSpec->arguments.Count() != 0)
+		{
+			discardedNonEmptySpec = true;
+		}
+	}
+	else
+	{
+		if (!IsCompatibleTemplateSpec(thisSpec, classSpec, equivalentNames))
+		{
+			return false;
+		}
 	}
 
 	// template arguments for this class must be compatible with the specialization spec
@@ -195,6 +209,10 @@ bool MatchPSTemplate(
 		}
 	}
 
+	if (!discardedNonEmptySpec)
+	{
+		consumedSpec = true;
+	}
 	return true;
 }
 
@@ -205,7 +223,7 @@ void PrepareTemplateArgumentContext(
 	TemplateArgumentContext& taContext
 )
 {
-	for (vint i = 0; i < thisSpec->arguments.Count(); i++)
+	for (vint i = 0; i < classSpec->arguments.Count(); i++)
 	{
 		auto& tArg = thisSpec->arguments[i];
 		auto& cArg = classSpec->arguments[i];
@@ -261,16 +279,13 @@ ITsys* StepIntoTemplateClass(
 	{
 		throw StopParsingException(cursor);
 	}
-	if (consumedSpecs == (*specs).Count())
-	{
-		throw StopParsingException(cursor);
-	}
 
-	auto thisSpec = (*specs)[consumedSpecs++];
+	bool consumedSpec = false;
+	auto thisSpec = consumedSpecs < specs->Count() ? (*specs)[consumedSpecs] : nullptr;
 	ITsys* nextClass = nullptr;
 
 	auto primaryClassSpec = primaryClassDecl->templateSpec;
-	if (MatchPrimaryTemplate(pa, thisSpec, primaryClassSpec, qic.genericType))
+	if (MatchPrimaryTemplate(pa, thisSpec, primaryClassSpec, qic.genericType, consumedSpec))
 	{
 		// prepare TemplateArgumentContext and create the type
 		TemplateArgumentContext taContext(primaryClassDecl->symbol, primaryClassDecl->templateSpec->arguments.Count());
@@ -300,7 +315,7 @@ ITsys* StepIntoTemplateClass(
 				{
 					auto psClassSpec = psClassDecl->templateSpec;
 					auto psSpec = psClassDecl->specializationSpec;
-					if (MatchPSTemplate(pa, thisSpec, psClassSpec, qic.genericType, psSpec))
+					if (MatchPSTemplate(pa, thisSpec, psClassSpec, qic.genericType, psSpec, consumedSpec))
 					{
 						// prepare TemplateArgumentContext and create the type
 						TemplateArgumentContext taContext(psSymbol, psClassSpec->arguments.Count());
@@ -328,7 +343,15 @@ ITsys* StepIntoTemplateClass(
 
 GOT_NEXT_CLASS:
 	cache->containerClassTypes.Insert(0, nextClass);
-	cache->containerClassSpecs.Insert(0, thisSpec);
+	if (consumedSpec)
+	{
+		consumedSpecs++;
+		cache->containerClassSpecs.Insert(0, thisSpec);
+	}
+	else
+	{
+		cache->containerClassSpecs.Insert(0, MakePtr<TemplateSpec>());
+	}
 	return nextClass;
 }
 
