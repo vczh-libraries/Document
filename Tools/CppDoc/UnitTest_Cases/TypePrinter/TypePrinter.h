@@ -8,7 +8,7 @@ namespace type_printer
 	template<typename T>
 	void PrintType()
 	{
-		TypePrinter<T>::PrintPrefix(true);
+		TypePrinter<T>::PrintPrefix(nullptr);
 		TypePrinter<T>::PrintPostfix(true);
 		printf("\n");
 	}
@@ -30,90 +30,112 @@ namespace type_printer
 	template<>
 	struct TypePrinter<bool> : WithoutPrintPostfix
 	{
-		static void PrintPrefix(bool top) { printf("bool"); }
+		static void PrintPrefix(const char* delimiter)
+		{ 
+			printf("bool");
+			if (delimiter) printf(delimiter);
+		}
 	};
 
 	template<>
 	struct TypePrinter<char> : WithoutPrintPostfix
 	{
-		static void PrintPrefix(bool top) { printf("char"); }
+		static void PrintPrefix(const char* delimiter)
+		{
+			printf("char");
+			if (delimiter) printf(delimiter);
+		}
 	};
 
 	template<>
 	struct TypePrinter<int> : WithoutPrintPostfix
 	{
-		static void PrintPrefix(bool top) { printf("int"); }
+		static void PrintPrefix(const char* delimiter)
+		{
+			printf("int");
+			if (delimiter) printf(delimiter);
+		}
 	};
 
 	template<>
 	struct TypePrinter<float> : WithoutPrintPostfix
 	{
-		static void PrintPrefix(bool top) { printf("float"); }
+		static void PrintPrefix(const char* delimiter)
+		{
+			printf("float");
+			if (delimiter) printf(delimiter);
+		}
 	};
 
 	template<>
 	struct TypePrinter<double> : WithoutPrintPostfix
 	{
-		static void PrintPrefix(bool top) { printf("double"); }
+		static void PrintPrefix(const char* delimiter)
+		{
+			printf("double");
+			if (delimiter) printf(delimiter);
+		}
 	};
 
 	template<typename T>
 	struct TypePrinter<T*> : WithPrintPostfix<T>
 	{
-		static void PrintPrefix(bool top)
+		static void PrintPrefix(const char* delimiter)
 		{ 
-			TypePrinter<T>::PrintPrefix(false);
-			printf(" *");
+			TypePrinter<T>::PrintPrefix("");
+			printf("*");
 		}
 	};
 
 	template<typename T>
 	struct TypePrinter<T&> : WithPrintPostfix<T>
 	{
-		static void PrintPrefix(bool top)
+		static void PrintPrefix(const char* delimiter)
 		{
-			TypePrinter<T>::PrintPrefix(false);
-			printf(" &");
+			TypePrinter<T>::PrintPrefix("");
+			printf("&");
 		}
 	};
 
 	template<typename T>
 	struct TypePrinter<T&&> : WithPrintPostfix<T>
 	{
-		static void PrintPrefix(bool top)
+		static void PrintPrefix(const char* delimiter)
 		{
-			TypePrinter<T>::PrintPrefix(false);
-			printf(" &&");
+			TypePrinter<T>::PrintPrefix("");
+			printf("&&");
 		}
 	};
 
 	template<typename T>
 	struct TypePrinter<T const> : WithPrintPostfix<T>
 	{
-		static void PrintPrefix(bool top)
+		static void PrintPrefix(const char* delimiter)
 		{
-			TypePrinter<T>::PrintPrefix(false);
-			printf(" const");
+			TypePrinter<T>::PrintPrefix(" ");
+			printf("const");
+			if (delimiter) printf(delimiter);
 		}
 	};
 
 	template<typename T>
 	struct TypePrinter<T volatile> : WithPrintPostfix<T>
 	{
-		static void PrintPrefix(bool top)
+		static void PrintPrefix(const char* delimiter)
 		{
-			TypePrinter<T>::PrintPrefix(false);
-			printf(" volatile");
+			TypePrinter<T>::PrintPrefix(" ");
+			printf("volatile");
+			if (delimiter) printf(delimiter);
 		}
 	};
 
 	template<typename T, int Size>
 	struct TypePrinter<T[Size]>
 	{
-		static void PrintPrefix(bool top)
+		static void PrintPrefix(const char* delimiter)
 		{
-			TypePrinter<T>::PrintPrefix(false);
-			if (!top) printf("(");
+			TypePrinter<T>::PrintPrefix("");
+			if (delimiter) printf("(");
 		}
 
 		static void PrintPostfix(bool top)
@@ -127,20 +149,20 @@ namespace type_printer
 	template<typename T, int Size>
 	struct TypePrinter<const T[Size]> : TypePrinter<T[Size]>
 	{
-		static void PrintPrefix(bool top)
+		static void PrintPrefix(const char* delimiter)
 		{
-			TypePrinter<const T>::PrintPrefix(false);
-			if (!top) printf("(");
+			TypePrinter<const T>::PrintPrefix("");
+			if (delimiter) printf("(");
 		}
 	};
 
 	template<typename T, int Size>
 	struct TypePrinter<volatile T[Size]> : TypePrinter<T[Size]>
 	{
-		static void PrintPrefix(bool top)
+		static void PrintPrefix(const char* delimiter)
 		{
-			TypePrinter<volatile T>::PrintPrefix(false);
-			if (!top) printf("(");
+			TypePrinter<volatile T>::PrintPrefix("");
+			if (delimiter) printf("(");
 		}
 	};
 
@@ -158,7 +180,7 @@ namespace type_printer
 	{
 		static void PrintTypeList()
 		{
-			TypePrinter<T>::PrintPrefix(true);
+			TypePrinter<T>::PrintPrefix(nullptr);
 			TypePrinter<T>::PrintPostfix(true);
 		}
 	};
@@ -168,7 +190,7 @@ namespace type_printer
 	{
 		static void PrintTypeList()
 		{
-			TypePrinter<T>::PrintPrefix(true);
+			TypePrinter<T>::PrintPrefix(nullptr);
 			TypePrinter<T>::PrintPostfix(true);
 			printf(", ");
 			TypeListPrinter<Ts...>::PrintTypeList();
@@ -178,10 +200,10 @@ namespace type_printer
 	template<typename T, typename... Ps>
 	struct TypePrinter<T(Ps...)>
 	{
-		static void PrintPrefix(bool top)
+		static void PrintPrefix(const char* delimiter)
 		{
 			TypePrinter<T>::PrintPrefix(false);
-			if (!top) printf("(");
+			if (delimiter) printf("(");
 		}
 
 		static void PrintPostfix(bool top)
