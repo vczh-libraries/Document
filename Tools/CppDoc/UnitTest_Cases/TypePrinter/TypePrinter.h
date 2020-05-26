@@ -29,12 +29,12 @@ namespace type_printer
 
 	// primitive types
 
-	template<typename T>
+	template<typename TThis>
 	struct PrimitiveTypePrinter
 	{
 		static void PrintPrefix(const char* delimiter)
 		{
-			printf(T::Name);
+			printf(TThis::Name);
 			if (delimiter) printf(delimiter);
 		}
 
@@ -93,38 +93,31 @@ namespace type_printer
 
 	// qualifieds
 
-	template<typename T>
-	struct TypePrinter<T const> : WithPrintPostfix<T>
+	template<typename TThis, typename T>
+	struct QualifiedTypePrinter : WithPrintPostfix<T>
 	{
 		static void PrintPrefix(const char* delimiter)
 		{
 			TypePrinter<T>::PrintPrefix(" ");
-			printf("const");
+			printf(TThis::Qualifier);
 			if (delimiter) printf(delimiter);
 		}
 	};
 
-	template<typename T>
-	struct TypePrinter<T volatile> : WithPrintPostfix<T>
-	{
-		static void PrintPrefix(const char* delimiter)
-		{
-			TypePrinter<T>::PrintPrefix(" ");
-			printf("volatile");
-			if (delimiter) printf(delimiter);
-		}
-	};
+#define MAKE_QUALIFIED_TYPE(QUALIFIER)														\
+	template<typename T>																	\
+	struct TypePrinter<T QUALIFIER> : QualifiedTypePrinter<TypePrinter<T QUALIFIER>, T>		\
+	{																						\
+		static const char* const Qualifier;													\
+	};																						\
+	template<typename T>																	\
+	const char* const TypePrinter<T QUALIFIER>::Qualifier = #QUALIFIER						\
 
-	template<typename T>
-	struct TypePrinter<T const volatile> : WithPrintPostfix<T>
-	{
-		static void PrintPrefix(const char* delimiter)
-		{
-			TypePrinter<T>::PrintPrefix(" ");
-			printf("const volatile");
-			if (delimiter) printf(delimiter);
-		}
-	};
+	MAKE_QUALIFIED_TYPE(const);
+	MAKE_QUALIFIED_TYPE(volatile);
+	MAKE_QUALIFIED_TYPE(const volatile);
+
+#undef MAKE_QUALIFIED_TYPE
 
 	// arrays
 
