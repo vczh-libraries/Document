@@ -141,25 +141,21 @@ namespace type_printer
 		}
 	};
 
-	template<typename T, int Size>
-	struct TypePrinter<T[Size]> : ArrayTypePrinter<T, Size>
-	{
-	};
+#define MAKE_ARRAY_TYPE(QUALIFIER)											\
+	template<typename T, int Size>											\
+	struct TypePrinter<T QUALIFIER[Size]> : ArrayTypePrinter<T, Size>		\
+	{																		\
+	}																		\
 
-	template<typename T, int Size>
-	struct TypePrinter<const T[Size]> : ArrayTypePrinter<const T, Size>
-	{
-	};
+#pragma warning (push)
+#pragma warning (disable: 4003)
+	MAKE_ARRAY_TYPE();
+#pragma warning (pop)
+	MAKE_ARRAY_TYPE(const);
+	MAKE_ARRAY_TYPE(volatile);
+	MAKE_ARRAY_TYPE(const volatile);
 
-	template<typename T, int Size>
-	struct TypePrinter<volatile T[Size]> : ArrayTypePrinter<volatile T, Size>
-	{
-	};
-
-	template<typename T, int Size>
-	struct TypePrinter<const volatile T[Size]> : ArrayTypePrinter<const volatile T, Size>
-	{
-	};
+#undef MAKE_ARRAY_TYPE
 
 	// functions
 
