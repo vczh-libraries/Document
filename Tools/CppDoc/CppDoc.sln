@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Calculator", "CaseProjects\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Render", "Render\Render.vcxproj", "{AE6C2E09-B96E-47F2-B360-E4316FE6407C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TypePrinter", "CaseProjects\TypePrinter\TypePrinter.vcxproj", "{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -79,12 +81,21 @@ Global
 		{AE6C2E09-B96E-47F2-B360-E4316FE6407C}.Release|x64.Build.0 = Release|x64
 		{AE6C2E09-B96E-47F2-B360-E4316FE6407C}.Release|x86.ActiveCfg = Release|Win32
 		{AE6C2E09-B96E-47F2-B360-E4316FE6407C}.Release|x86.Build.0 = Release|Win32
+		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}.Debug|x64.ActiveCfg = Debug|x64
+		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}.Debug|x64.Build.0 = Debug|x64
+		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}.Debug|x86.ActiveCfg = Debug|Win32
+		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}.Debug|x86.Build.0 = Debug|Win32
+		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}.Release|x64.ActiveCfg = Release|x64
+		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}.Release|x64.Build.0 = Release|x64
+		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}.Release|x86.ActiveCfg = Release|Win32
+		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B657273A-10FD-4B5B-ADE6-1BA6F5D3D5A5} = {9237E897-A09A-4C9B-B9F3-91A5E7C242D1}
+		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510} = {9237E897-A09A-4C9B-B9F3-91A5E7C242D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3178C7C1-3F38-48BE-8FB9-F0D60EEB3E7A}

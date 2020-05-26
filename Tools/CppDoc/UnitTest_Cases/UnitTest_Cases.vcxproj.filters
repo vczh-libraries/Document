@@ -16,6 +16,9 @@
     <Filter Include="Source Files\Calculator">
       <UniqueIdentifier>{b83eef7b-173d-4d07-afaa-586586c7fa86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TypePrinter">
+      <UniqueIdentifier>{122e1fb2-146b-41cf-8936-692e101437aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Calculator.cpp">
@@ -31,6 +34,12 @@
       <Filter>Source Files\Calculator</Filter>
     </ClCompile>
     <ClCompile Include="STL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TypePrinter\Main.cpp">
+      <Filter>Source Files\TypePrinter</Filter>
+    </ClCompile>
+    <ClCompile Include="TypePrinter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,6 +62,9 @@
     </ClInclude>
     <ClInclude Include="Calculator\Expr.h">
       <Filter>Source Files\Calculator</Filter>
+    </ClInclude>
+    <ClInclude Include="TypePrinter\TypePrinter.h">
+      <Filter>Source Files\TypePrinter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
