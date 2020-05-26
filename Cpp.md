@@ -24,7 +24,6 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (?)
-  - [ ] Fix bug: `A<int()>` should only be type, `CtorAccessExpr` is not possible.
   - [ ] Create appropriate hyperlinks for partial specialization scenarios.
   - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` cancels its overloading resolution for partial specializations.
 - [ ] Lambda expressions.
