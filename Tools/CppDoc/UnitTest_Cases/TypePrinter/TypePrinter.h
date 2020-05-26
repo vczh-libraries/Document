@@ -27,6 +27,8 @@ namespace type_printer
 		static void PrintPostfix(bool) {}
 	};
 
+	// primitive types
+
 	template<>
 	struct TypePrinter<bool> : WithoutPrintPostfix
 	{
@@ -77,6 +79,8 @@ namespace type_printer
 		}
 	};
 
+	// references
+
 	template<typename T>
 	struct TypePrinter<T*> : WithPrintPostfix<T>
 	{
@@ -107,6 +111,8 @@ namespace type_printer
 		}
 	};
 
+	// qualifiers
+
 	template<typename T>
 	struct TypePrinter<T const> : WithPrintPostfix<T>
 	{
@@ -129,8 +135,21 @@ namespace type_printer
 		}
 	};
 
+	template<typename T>
+	struct TypePrinter<T const volatile> : WithPrintPostfix<T>
+	{
+		static void PrintPrefix(const char* delimiter)
+		{
+			TypePrinter<T>::PrintPrefix(" ");
+			printf("const volatile");
+			if (delimiter) printf(delimiter);
+		}
+	};
+
+	// arrays
+
 	template<typename T, int Size>
-	struct TypePrinter<T[Size]>
+	struct ArrayTypePrinter
 	{
 		static void PrintPrefix(const char* delimiter)
 		{
@@ -147,24 +166,26 @@ namespace type_printer
 	};
 
 	template<typename T, int Size>
-	struct TypePrinter<const T[Size]> : TypePrinter<T[Size]>
+	struct TypePrinter<T[Size]> : ArrayTypePrinter<T, Size>
 	{
-		static void PrintPrefix(const char* delimiter)
-		{
-			TypePrinter<const T>::PrintPrefix("");
-			if (delimiter) printf("(");
-		}
 	};
 
 	template<typename T, int Size>
-	struct TypePrinter<volatile T[Size]> : TypePrinter<T[Size]>
+	struct TypePrinter<const T[Size]> : ArrayTypePrinter<const T, Size>
 	{
-		static void PrintPrefix(const char* delimiter)
-		{
-			TypePrinter<volatile T>::PrintPrefix("");
-			if (delimiter) printf("(");
-		}
 	};
+
+	template<typename T, int Size>
+	struct TypePrinter<volatile T[Size]> : ArrayTypePrinter<volatile T, Size>
+	{
+	};
+
+	template<typename T, int Size>
+	struct TypePrinter<const volatile T[Size]> : ArrayTypePrinter<const volatile T, Size>
+	{
+	};
+
+	// functions
 
 	template<typename... Ps>
 	struct TypeListPrinter;

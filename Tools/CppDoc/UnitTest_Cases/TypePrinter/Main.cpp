@@ -24,7 +24,7 @@ int main()
 		PrintType<int()>();
 		PrintType<int(*)(bool, char)>();
 
-		PrintType<int(&(*)(const bool(*)(), volatile char(&)[1]))[10]>();
+		PrintType<int(&(*)(const bool(*)(), volatile const char(&)[1]))[10]>();
 	}
 	return 0;
 }
