@@ -24,15 +24,6 @@ namespace type_printer
 		if (lineBreak) printf("\n");
 	}
 
-	template<typename T>
-	struct WithPrintPostfix
-	{
-		static void PrintPostfix(bool)
-		{
-			TypePrinter<T>::PrintPostfix(false);
-		}
-	};
-
 	// primitive types
 
 	template<typename TThis>
@@ -68,7 +59,7 @@ namespace type_printer
 	// references
 
 	template<typename TThis, typename T>
-	struct ReferenceTypePrinter : WithPrintPostfix<T>
+	struct ReferenceTypePrinter
 	{
 		static void PrintPrefix(TypeSource source)
 		{
@@ -100,7 +91,7 @@ namespace type_printer
 	// qualifieds
 
 	template<typename TThis, typename T>
-	struct QualifiedTypePrinter : WithPrintPostfix<T>
+	struct QualifiedTypePrinter
 	{
 		static void PrintPrefix(TypeSource source)
 		{
