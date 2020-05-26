@@ -29,55 +29,35 @@ namespace type_printer
 
 	// primitive types
 
-	template<>
-	struct TypePrinter<bool> : WithoutPrintPostfix
-	{
-		static void PrintPrefix(const char* delimiter)
-		{ 
-			printf("bool");
-			if (delimiter) printf(delimiter);
-		}
-	};
-
-	template<>
-	struct TypePrinter<char> : WithoutPrintPostfix
+	template<typename T>
+	struct PrimitiveTypePrinter
 	{
 		static void PrintPrefix(const char* delimiter)
 		{
-			printf("char");
+			printf(T::Name);
 			if (delimiter) printf(delimiter);
+		}
+
+		static void PrintPostfix(bool)
+		{
 		}
 	};
 
-	template<>
-	struct TypePrinter<int> : WithoutPrintPostfix
-	{
-		static void PrintPrefix(const char* delimiter)
-		{
-			printf("int");
-			if (delimiter) printf(delimiter);
-		}
-	};
+#define MAKE_PRIMITIVE_TYPE(NAME)											\
+	template<>																\
+	struct TypePrinter<NAME> : PrimitiveTypePrinter<TypePrinter<NAME>>		\
+	{																		\
+		static const char* const Name;										\
+	};																		\
+	const char* const TypePrinter<NAME>::Name = #NAME						\
 
-	template<>
-	struct TypePrinter<float> : WithoutPrintPostfix
-	{
-		static void PrintPrefix(const char* delimiter)
-		{
-			printf("float");
-			if (delimiter) printf(delimiter);
-		}
-	};
+	MAKE_PRIMITIVE_TYPE(bool);
+	MAKE_PRIMITIVE_TYPE(char);
+	MAKE_PRIMITIVE_TYPE(int);
+	MAKE_PRIMITIVE_TYPE(float);
+	MAKE_PRIMITIVE_TYPE(double);
 
-	template<>
-	struct TypePrinter<double> : WithoutPrintPostfix
-	{
-		static void PrintPrefix(const char* delimiter)
-		{
-			printf("double");
-			if (delimiter) printf(delimiter);
-		}
-	};
+#undef MAKE_PRIMITIVE_TYPE
 
 	// references
 
@@ -111,7 +91,7 @@ namespace type_printer
 		}
 	};
 
-	// qualifiers
+	// qualifieds
 
 	template<typename T>
 	struct TypePrinter<T const> : WithPrintPostfix<T>
