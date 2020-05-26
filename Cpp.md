@@ -29,6 +29,8 @@
 - [ ] Lambda expressions.
 - [ ] Next Demo! (STL)
   - [ ] Test cases
+    - [ ] calling `F<int()>` with function type not ctor expression.
+    - [ ] optional `template<>` on members defined outside of classes.
     - [ ] type alias recursion
     - [ ] value alias recursion
 - [ ] Next Demo! (Vlpp)
