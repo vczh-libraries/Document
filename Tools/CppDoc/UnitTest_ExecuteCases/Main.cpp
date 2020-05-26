@@ -160,7 +160,7 @@ Open http://127.0.0.1:8080/TypePrinter.i.Output/FileIndex.html
 int main()
 {
 	List<File> preprocessedFiles;
-	//preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
+	preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
 	preprocessedFiles.Add(File(L"../UnitTest_Cases/TypePrinter.i"));
 	//preprocessedFiles.Add(File(L"../UnitTest_Cases/STL.i"));
 

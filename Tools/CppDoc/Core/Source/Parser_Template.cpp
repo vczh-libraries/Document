@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Parser_Declarator.h"
+#include "Ast_Type.h"
 #include "Ast_Expr.h"
 #include "Symbol_TemplateSpec.h"
 
@@ -269,6 +270,23 @@ void ParseGenericArgumentsSkippedLT(const ParsingArguments& pa, Ptr<CppTokenCurs
 	{
 		GenericArgument argument;
 		ParseTypeOrExpr(pa, pea_GenericArgument(), cursor, argument.type, argument.expr);
+
+		// if we see TYPE(), then it should be a function type
+		if (ending == CppTokens::GT)
+		{
+			if (auto ctorExpr = argument.expr.Cast<CtorAccessExpr>())
+			{
+				if (ctorExpr->initializer->initializerType == CppInitializerType::Constructor && ctorExpr->initializer->arguments.Count() == 0)
+				{
+					auto funcType = MakePtr<FunctionType>();
+					funcType->returnType = ctorExpr->type;
+
+					argument.type = funcType;
+					argument.expr = nullptr;
+				}
+			}
+		}
+
 		bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
 		arguments.Add({ argument,isVariadic });
 

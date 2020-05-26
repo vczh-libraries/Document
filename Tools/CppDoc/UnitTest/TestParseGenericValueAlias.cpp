@@ -174,24 +174,24 @@ struct S
 		AssertExpr(pa, L"Parenthesis<int, 0>",								L"Parenthesis<int, 0>",										L"__int32 const & $PR"													);
 		AssertExpr(pa, L"Cast<int, double, 0>",								L"Cast<int, double, 0>",									L"double const & $PR"													);
 		AssertExpr(pa, L"Throw<int, 0>",									L"Throw<int, 0>",											L"void const & $PR"														);
-		AssertExpr(pa, L"New<S, S()>",										L"New<S, S()>",												L"::S * const & $PR"													);
+		AssertExpr(pa, L"New<S, (S())>",									L"New<S, (S())>",											L"::S * const & $PR"													);
 		AssertExpr(pa, L"Delete<S*, nullptr>",								L"Delete<S *, nullptr>",									L"void const & $PR"														);
 		AssertExpr(pa, L"Child<S>",											L"Child<S>",												L"__int32 const & $PR"													);
-		AssertExpr(pa, L"Field1<S, S()>",									L"Field1<S, S()>",											L"double const & $PR"													);
-		AssertExpr(pa, L"Field2<S, S()>",									L"Field2<S, S()>",											L"double const & $PR"													);
+		AssertExpr(pa, L"Field1<S, (S())>",									L"Field1<S, (S())>",										L"double const & $PR"													);
+		AssertExpr(pa, L"Field2<S, (S())>",									L"Field2<S, (S())>",										L"double const & $PR"													);
 		AssertExpr(pa, L"PtrField1<S, nullptr>",							L"PtrField1<S, nullptr>",									L"double const & $PR"													);
 		AssertExpr(pa, L"PtrField2<S, nullptr>",							L"PtrField2<S, nullptr>",									L"double const & $PR"													);
 		AssertExpr(pa, L"Array<S*, nullptr>",								L"Array<S *, nullptr>",										L"::S & $PR"															);
 		AssertExpr(pa, L"Func<S(*)(int), nullptr>",							L"Func<S (int) *, nullptr>",								L"::S const & $PR"														);
-		AssertExpr(pa, L"Ctor<S, S()>",										L"Ctor<S, S()>",											L"::S const & $PR"														);
-		AssertExpr(pa, L"Init<S, S()>",										L"Init<S, S()>",											L"{nullptr_t $PR, ::S $PR, 0 $PR} $PR"									);
+		AssertExpr(pa, L"Ctor<S, (S())>",									L"Ctor<S, (S())>",											L"::S const & $PR"														);
+		AssertExpr(pa, L"Init<S, (S())>",									L"Init<S, (S())>",											L"{nullptr_t $PR, ::S $PR, 0 $PR} $PR"									);
 		AssertExpr(pa, L"Postfix<S*, nullptr>",								L"Postfix<S *, nullptr>",									L"{::S * $PR, ::S * $PR} $PR"											);
-		AssertExpr(pa, L"Prefix<S, S()>",									L"Prefix<S, S()>",											L"{__int8 $PR, __int16 $PR, double $PR, char $PR} $PR"					);
-		AssertExpr(pa, L"Binary1<S, double S::*, S(), &S::field>",			L"Binary1<S, double (S ::) *, S(), (& S :: field)>",		L"double & $PR"															);
+		AssertExpr(pa, L"Prefix<S, (S())>",									L"Prefix<S, (S())>",										L"{__int8 $PR, __int16 $PR, double $PR, char $PR} $PR"					);
+		AssertExpr(pa, L"Binary1<S, double S::*, (S()), &S::field>",		L"Binary1<S, double (S ::) *, (S()), (& S :: field)>",		L"double & $PR"															);
 		AssertExpr(pa, L"Binary2<S*, double S::*, nullptr, &S::field>",		L"Binary2<S *, double (S ::) *, nullptr, (& S :: field)>",	L"double & $PR"															);
 		AssertExpr(pa, L"Binary3<int, double, 0, 0>",						L"Binary3<int, double, 0, 0>",								L"double const & $PR"													);
 		AssertExpr(pa, L"Binary4<int, double, 0, 0>",						L"Binary4<int, double, 0, 0>",								L"double const & $PR"													);
-		AssertExpr(pa, L"If<S, S()>",										L"If<S, S()>",												L"::S const & $PR"														);
+		AssertExpr(pa, L"If<S, (S())>",										L"If<S, (S())>",											L"::S const & $PR"														);
 	});
 
 	TEST_CATEGORY(L"Overloading")

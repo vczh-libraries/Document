@@ -450,6 +450,10 @@ void GenerateHtmlLine(
 						// say we have a hyperlink to this symbol in this file
 						// indexing always give Function instead of FunctionBody
 						auto symbol = symbols[j];
+						if (symbol->GetCategory() == symbol_component::SymbolCategory::FunctionBody)
+						{
+							symbol = symbol->GetFunctionSymbol_Fb();
+						}
 						if (!flr->refSymbols.Contains(symbol))
 						{
 							flr->refSymbols.Add(symbol);
