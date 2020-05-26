@@ -7,12 +7,21 @@ namespace type_printer
 	template<typename T>
 	struct TypePrinter;
 
-	template<typename T>
-	void PrintType()
+	enum class TypeSource
 	{
-		TypePrinter<T>::PrintPrefix(nullptr);
-		TypePrinter<T>::PrintPostfix(true);
-		printf("\n");
+		TopLevel,
+		Reference,
+		Qualified,
+		Array,
+		Function,
+	};
+
+	template<typename T>
+	void PrintType(bool lineBreak = true)
+	{
+		TypePrinter<T>::PrintPrefix(TypeSource::TopLevel);
+		TypePrinter<T>::PrintPostfix(TypeSource::TopLevel);
+		if (lineBreak) printf("\n");
 	}
 
 	template<typename T>
@@ -29,13 +38,13 @@ namespace type_printer
 	template<typename TThis>
 	struct PrimitiveTypePrinter
 	{
-		static void PrintPrefix(const char* delimiter)
+		static void PrintPrefix(TypeSource source)
 		{
 			printf(TThis::Name);
-			if (delimiter) printf(delimiter);
+			if (source == TypeSource::Qualified) printf(" ");
 		}
 
-		static void PrintPostfix(bool)
+		static void PrintPostfix(TypeSource source)
 		{
 		}
 	};
@@ -61,16 +70,15 @@ namespace type_printer
 	template<typename TThis, typename T>
 	struct ReferenceTypePrinter : WithPrintPostfix<T>
 	{
-		static void PrintPrefix(const char* delimiter)
+		static void PrintPrefix(TypeSource source)
 		{
-			TypePrinter<T>::PrintPrefix("");
+			TypePrinter<T>::PrintPrefix(TypeSource::Reference);
 			printf(TThis::Reference);
-			if (delimiter) printf(delimiter);
 		}
 
-		static void PrintPostfix(bool)
+		static void PrintPostfix(TypeSource source)
 		{
-			TypePrinter<T>::PrintPostfix(false);
+			TypePrinter<T>::PrintPostfix(TypeSource::Reference);
 		}
 	};
 
@@ -94,16 +102,15 @@ namespace type_printer
 	template<typename TThis, typename T>
 	struct QualifiedTypePrinter : WithPrintPostfix<T>
 	{
-		static void PrintPrefix(const char* delimiter)
+		static void PrintPrefix(TypeSource source)
 		{
-			TypePrinter<T>::PrintPrefix(" ");
+			TypePrinter<T>::PrintPrefix(TypeSource::Qualified);
 			printf(TThis::Qualifier);
-			if (delimiter) printf(delimiter);
 		}
 
-		static void PrintPostfix(bool)
+		static void PrintPostfix(TypeSource source)
 		{
-			TypePrinter<T>::PrintPostfix(false);
+			TypePrinter<T>::PrintPostfix(TypeSource::Qualified);
 		}
 	};
 
@@ -127,25 +134,25 @@ namespace type_printer
 	template<typename T, int Size>
 	struct ArrayTypePrinter
 	{
-		static void PrintPrefix(const char* delimiter)
+		static void PrintPrefix(TypeSource source)
 		{
-			TypePrinter<T>::PrintPrefix("");
-			if (delimiter) printf("(");
+			TypePrinter<T>::PrintPrefix(TypeSource::Array);
+			if (source != TypeSource::TopLevel && source != TypeSource::Array) printf("(");
 		}
 
-		static void PrintPostfix(bool top)
+		static void PrintPostfix(TypeSource source)
 		{
-			if (!top) printf(")");
+			if (source != TypeSource::TopLevel && source != TypeSource::Array) printf(")");
 			printf("[%d]", Size);
-			TypePrinter<T>::PrintPostfix(false);
+			TypePrinter<T>::PrintPostfix(TypeSource::Array);
 		}
 	};
 
-#define MAKE_ARRAY_TYPE(QUALIFIER)											\
-	template<typename T, int Size>											\
-	struct TypePrinter<T QUALIFIER[Size]> : ArrayTypePrinter<T, Size>		\
-	{																		\
-	}																		\
+#define MAKE_ARRAY_TYPE(QUALIFIER)															\
+	template<typename T, int Size>															\
+	struct TypePrinter<T QUALIFIER[Size]> : ArrayTypePrinter<T QUALIFIER, Size>				\
+	{																						\
+	}																						\
 
 #pragma warning (push)
 #pragma warning (disable: 4003)
@@ -173,8 +180,7 @@ namespace type_printer
 	{
 		static void PrintTypeList()
 		{
-			TypePrinter<T>::PrintPrefix(nullptr);
-			TypePrinter<T>::PrintPostfix(true);
+			PrintType<T>(false);
 		}
 	};
 
@@ -183,8 +189,7 @@ namespace type_printer
 	{
 		static void PrintTypeList()
 		{
-			TypePrinter<T>::PrintPrefix(nullptr);
-			TypePrinter<T>::PrintPostfix(true);
+			PrintType<T>(false);
 			printf(", ");
 			TypeListPrinter<Ts...>::PrintTypeList();
 		}
@@ -193,19 +198,19 @@ namespace type_printer
 	template<typename T, typename... Ps>
 	struct TypePrinter<T(Ps...)>
 	{
-		static void PrintPrefix(const char* delimiter)
+		static void PrintPrefix(TypeSource source)
 		{
-			TypePrinter<T>::PrintPrefix(false);
-			if (delimiter) printf("(");
+			TypePrinter<T>::PrintPrefix(TypeSource::Function);
+			if (source != TypeSource::TopLevel) printf("(");
 		}
 
-		static void PrintPostfix(bool top)
+		static void PrintPostfix(TypeSource source)
 		{
-			if (!top) printf(")");
+			if (source != TypeSource::TopLevel) printf(")");
 			printf("(");
 			TypeListPrinter<Ps...>::PrintTypeList();
 			printf(")");
-			TypePrinter<T>::PrintPostfix(false);
+			TypePrinter<T>::PrintPostfix(TypeSource::Function);
 		}
 	};
 }

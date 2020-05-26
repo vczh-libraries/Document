@@ -10,7 +10,7 @@ int main()
 		PrintType<int>();
 
 		PrintType<char*>();
-		PrintType<const char*>();
+		PrintType<const char*const>();
 		PrintType<int&>();
 		PrintType<volatile int&&>();
 
