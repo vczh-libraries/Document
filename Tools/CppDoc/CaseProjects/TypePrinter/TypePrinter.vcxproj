@@ -22,6 +22,7 @@
     <ClCompile Include="..\..\UnitTest_Cases\TypePrinter\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\UnitTest_Cases\TypePrinter\LastArg.h" />
     <ClInclude Include="..\..\UnitTest_Cases\TypePrinter\TypePrinter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

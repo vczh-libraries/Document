@@ -26,6 +26,8 @@
 - [ ] Next Demo! (?)
   - [ ] Create appropriate hyperlinks for partial specialization scenarios.
   - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` cancels its overloading resolution for partial specializations.
+  - [ ] `LastArg(ts...)` is not resolved to all `LastArg` functions.
+  - [ ] `LastArg(...).tag` showing too much candidates on `tag`, it may because overloading doesn't prefer non-template function over template function.
 - [ ] Lambda expressions.
 - [ ] Next Demo! (STL)
   - [ ] Test cases

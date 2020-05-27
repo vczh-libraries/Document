@@ -66,5 +66,8 @@
     <ClInclude Include="TypePrinter\TypePrinter.h">
       <Filter>Source Files\TypePrinter</Filter>
     </ClInclude>
+    <ClInclude Include="TypePrinter\LastArg.h">
+      <Filter>Source Files\TypePrinter</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
