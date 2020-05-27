@@ -344,12 +344,13 @@ namespace symbol_type_resolving
 			}
 		}
 
-		// prefer non-template functions over template functions
-		// prefer non-variadic argument over variadic argument
-		// prefer non-ellipsis over ellipsis
-		// always select a function when any_t conversion is involved in its overloading resolution
-		if(validIndices.Count() > 0)
+		if(!withVariadicInput && validIndices.Count() > 0)
 		{
+			// prefer non-template functions over template functions
+			// prefer non-variadic argument over variadic argument
+			// prefer non-ellipsis over ellipsis
+			// always select a function when any_t conversion is involved in its overloading resolution
+
 			const vint Normal = 0;
 			const vint Ellipsis = 1;
 			const vint Template = 2;
