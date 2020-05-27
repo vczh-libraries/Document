@@ -44,7 +44,7 @@ namespace infer_function_type
 			{
 				taContext.ReplaceValueByKey(pattern, type);
 			}
-			else if (!IsPSEquivalentType(pa, type, inferred))
+			else if (!IsPSEquivalentType(pa, type, inferred, false))
 			{
 				if (hitLastAssignedVta)
 				{
@@ -150,7 +150,7 @@ namespace infer_function_type
 			SetInferredResult(pa, taContext, vas[j], pa.tsys->Any(), nullptr, hardcodedPatterns);
 		}
 
-		if (assignedTsys && assignedTsys->GetType() == TsysType::Any)
+		if (assignedTsys && (assignedTsys->GetType() == TsysType::Any || assignedTsys->GetType() == TsysType::GenericArg))
 		{
 			// for any_t, set all non-variadic template argument to any_t
 			for (vint j = 0; j < nvas.Count(); j++)

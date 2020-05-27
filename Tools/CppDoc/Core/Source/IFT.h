@@ -89,7 +89,8 @@ namespace infer_function_type
 	extern bool								IsPSEquivalentType(
 												const ParsingArguments& pa,
 												ITsys* a,
-												ITsys* b
+												ITsys* b,
+												bool forFilteringPSInstance
 											);
 
 	extern Ptr<TemplateArgumentContext>		InferPartialSpecialization(

@@ -12,7 +12,7 @@ namespace infer_function_type
 	InferPartialSpecialization:	Perform type inferencing for partial specialization symbol
 	***********************************************************************/
 
-	bool IsPSEquivalentType(const ParsingArguments& pa, ITsys* a, ITsys* b);
+	bool IsPSEquivalentType(const ParsingArguments& pa, ITsys* a, ITsys* b, bool forFilteringPSInstance);
 
 	bool IsPSEquivalentToAny(ITsys* t)
 	{
@@ -32,9 +32,16 @@ namespace infer_function_type
 		}
 	}
 
-	bool IsPSEquivalentTypeEnsuredPrimary(const ParsingArguments& pa, ITsys* a, ITsys* b)
+	bool IsPSEquivalentTypeEnsuredPrimary(const ParsingArguments& pa, ITsys* a, ITsys* b, bool forFilteringPSInstance)
 	{
 		if (a == b) return true;
+		if (forFilteringPSInstance)
+		{
+			if (b->GetType() == TsysType::Any || b->GetType() == TsysType::GenericArg)
+			{
+				return true;
+			}
+		}
 		if (a->GetType() == TsysType::Any) return IsPSEquivalentToAny(b);
 		if (b->GetType() == TsysType::Any) return IsPSEquivalentToAny(a);
 		
@@ -43,29 +50,29 @@ namespace infer_function_type
 		case TsysType::LRef:
 		case TsysType::RRef:
 		case TsysType::Ptr:
-			return a->GetType() == b->GetType() && IsPSEquivalentType(pa, a->GetElement(), b->GetElement());
+			return a->GetType() == b->GetType() && IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance);
 		case TsysType::Array:
-			return a->GetType() == b->GetType() && a->GetParamCount() == b->GetParamCount() && IsPSEquivalentType(pa, a->GetElement(), b->GetElement());
+			return a->GetType() == b->GetType() && a->GetParamCount() == b->GetParamCount() && IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance);
 		case TsysType::CV:
-			return a->GetType() == b->GetType() && a->GetCV() == b->GetCV() && IsPSEquivalentType(pa, a->GetElement(), b->GetElement());
+			return a->GetType() == b->GetType() && a->GetCV() == b->GetCV() && IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance);
 		case TsysType::Member:
-			return a->GetType() == b->GetType() && IsPSEquivalentType(pa, a->GetClass(), b->GetClass()) && IsPSEquivalentType(pa, a->GetElement(), b->GetElement());
+			return a->GetType() == b->GetType() && IsPSEquivalentType(pa, a->GetClass(), b->GetClass(), forFilteringPSInstance) && IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance);
 		case TsysType::Init:
 			if (b->GetType() != TsysType::Init) return false;
 			if (a->GetParamCount() != b->GetParamCount()) return false;
 			for (vint i = 0; i < a->GetParamCount(); i++)
 			{
-				if (!IsPSEquivalentType(pa, a->GetParam(i), b->GetParam(i))) return false;
+				if (!IsPSEquivalentType(pa, a->GetParam(i), b->GetParam(i), forFilteringPSInstance)) return false;
 			}
 			return true;
 		case TsysType::Function:
 			if (b->GetType() != TsysType::Function) return false;
 			if (a->GetFunc().ellipsis != b->GetFunc().ellipsis) return false;
 			if (a->GetParamCount() != b->GetParamCount()) return false;
-			if (!IsPSEquivalentType(pa, a->GetElement(), b->GetElement())) return false;
+			if (!IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance)) return false;
 			for (vint i = 0; i < a->GetParamCount(); i++)
 			{
-				if (!IsPSEquivalentType(pa, a->GetParam(i), b->GetParam(i))) return false;
+				if (!IsPSEquivalentType(pa, a->GetParam(i), b->GetParam(i), forFilteringPSInstance)) return false;
 			}
 			return true;
 		case TsysType::DeclInstant:
@@ -73,10 +80,10 @@ namespace infer_function_type
 				if (b->GetType() != TsysType::DeclInstant) return false;
 				if (a->GetDecl() != b->GetDecl()) return false;
 				if (a->GetParamCount() != b->GetParamCount()) return false;
-				if (!IsPSEquivalentType(pa, a->GetElement(), b->GetElement())) return false;
+				if (!IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance)) return false;
 				for (vint i = 0; i < a->GetParamCount(); i++)
 				{
-					if (!IsPSEquivalentType(pa, a->GetParam(i), b->GetParam(i))) return false;
+					if (!IsPSEquivalentType(pa, a->GetParam(i), b->GetParam(i), forFilteringPSInstance)) return false;
 				}
 			}
 			return true;
@@ -93,7 +100,7 @@ namespace infer_function_type
 		}
 	}
 
-	bool IsPSEquivalentType(const ParsingArguments& pa, ITsys* a, ITsys* b)
+	bool IsPSEquivalentType(const ParsingArguments& pa, ITsys* a, ITsys* b, bool forFilteringPSInstance)
 	{
 		if (a == b) return true;
 		if (a && b)
@@ -103,7 +110,7 @@ namespace infer_function_type
 			{
 				EnumerateClassPrimaryInstances(pa, b, true, [&](ITsys* primaryB)
 				{
-					if (IsPSEquivalentTypeEnsuredPrimary(pa, primaryA, primaryB))
+					if (IsPSEquivalentTypeEnsuredPrimary(pa, primaryA, primaryB, forFilteringPSInstance))
 					{
 						exit = true;
 					}
@@ -174,7 +181,7 @@ namespace infer_function_type
 
 					bool isVta = false;
 					TypeToTsysInternal(verifyPa, argument.item.type, tsys, isVta);
-					if (!From(tsys).Any([=](ITsys* a) { return IsPSEquivalentType(pa, a, assignedTsys); }))
+					if (!From(tsys).Any([=](ITsys* a) { return IsPSEquivalentType(pa, a, assignedTsys, true); }))
 					{
 						return nullptr;
 					}
