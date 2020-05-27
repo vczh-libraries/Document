@@ -1,5 +1,10 @@
 # C++ and Document Compiler
 
+## Code Index Demos
+
+- [Calculator](http://vczh-libraries.github.io/CodeIndexDemo/Calculator/FileIndex.html)
+- [TypePrinter](http://vczh-libraries.github.io/CodeIndexDemo/TypePrinter/FileIndex.html)
+
 ## Goal
 
 This is a command line tool for generating indexed code in HTML and documents from comments with Markdown for C++.
