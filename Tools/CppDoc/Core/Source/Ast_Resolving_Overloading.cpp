@@ -193,6 +193,7 @@ namespace symbol_type_resolving
 		ExprTsysList inferredFunctionTypes;
 		Group<vint, ResolvedItem> gritems;
 		List<vint> validIndices;
+		List<vint> inferredToAnyIndices;
 
 		if (withVariadicInput)
 		{
@@ -211,6 +212,7 @@ namespace symbol_type_resolving
 							addedAny = true;
 							AddType(result, pa.tsys->Any());
 						}
+						inferredToAnyIndices.Add(j);
 						continue;
 					}
 
@@ -241,6 +243,7 @@ namespace symbol_type_resolving
 							addedAny = true;
 							AddType(result, pa.tsys->Any());
 						}
+						inferredToAnyIndices.Add(j);
 						continue;
 					}
 
@@ -464,6 +467,11 @@ namespace symbol_type_resolving
 						ResolvedItem::AddItems(*ritems, gvitems);
 					}
 				}
+			}
+
+			for (vint i = 0; i < inferredToAnyIndices.Count(); i++)
+			{
+				ResolvedItem::AddItem(*ritems, { nullptr,inferredFunctionTypes[inferredToAnyIndices[i]].symbol });
 			}
 		}
 	}
