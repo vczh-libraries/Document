@@ -40,6 +40,9 @@ namespace Input__TestOverloadingGenericFunction_RecursiveOverloading
 		{
 			return LastArg(ts...);
 		}
+
+		template<typename... Ts>
+		constexpr auto GenericLastArg = LastArg(Ts()...);
 	);
 }
 
@@ -49,6 +52,12 @@ TEST_FILE
 	{
 		using namespace Input__TestOverloadingGenericFunction_RecursiveOverloading;
 		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa,		L"GenericLastArg",		L"GenericLastArg",		L"<...::GenericLastArg::[Ts]> ::BoolType const & $PR",
+																			L"<...::GenericLastArg::[Ts]> ::IntType const & $PR",
+																			L"<...::GenericLastArg::[Ts]> ::VoidType const & $PR",
+																			L"<...::GenericLastArg::[Ts]> any_t $PR"
+		);
 
 		ASSERT_OVERLOADING_SIMPLE(
 			LastArg().tag,
