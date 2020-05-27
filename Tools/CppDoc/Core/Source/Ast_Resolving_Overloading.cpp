@@ -269,6 +269,7 @@ namespace symbol_type_resolving
 		}
 
 		Array<bool> selectedIndices(validIndices.Count());
+		Array<bool> anyInvolveds(validIndices.Count());
 
 		if (withVariadicInput)
 		{
@@ -276,6 +277,7 @@ namespace symbol_type_resolving
 			for (vint i = 0; i < validIndices.Count(); i++)
 			{
 				selectedIndices[i] = IsAcceptableWithVariadicInput(pa, inferredFunctionTypes[validIndices[i]], argTypes, boundedAnys);
+				anyInvolveds[i] = false;
 			}
 		}
 		else
@@ -284,6 +286,7 @@ namespace symbol_type_resolving
 			for (vint i = 0; i < validIndices.Count(); i++)
 			{
 				selectedIndices[i] = true;
+				anyInvolveds[i] = false;
 			}
 
 			vint minLoopCount = argTypes.Count();
@@ -326,6 +329,7 @@ namespace symbol_type_resolving
 					{
 						if (choice.anyInvolved)
 						{
+							anyInvolveds[j] = true;
 							if (anyInvolved)
 							{
 								*anyInvolved = choice.anyInvolved;
@@ -336,6 +340,97 @@ namespace symbol_type_resolving
 					{
 						selectedIndices[j] = false;
 					}
+				}
+			}
+		}
+
+		// prefer non-template functions over template functions
+		// prefer non-variadic argument over variadic argument
+		// prefer non-ellipsis over ellipsis
+		// always select a function when any_t conversion is involved in its overloading resolution
+		if(validIndices.Count() > 0)
+		{
+			const vint Normal = 0;
+			const vint Ellipsis = 1;
+			const vint Template = 2;
+			const vint Variadic = 3;
+			const vint Others = 4;
+			const vint AnyInvolved = 5;
+			const vint Unselected = 6;
+
+			Array<vint> priorities(validIndices.Count());
+
+			for (vint i = 0; i < selectedIndices.Count(); i++)
+			{
+				if (selectedIndices[i])
+				{
+					if (anyInvolveds[i])
+					{
+						priorities[i] = AnyInvolved;
+					}
+					else
+					{
+						auto symbol = inferredFunctionTypes[validIndices[i]].symbol;
+						if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+						{
+							if (!funcDecl->templateSpec)
+							{
+								if (GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>()->ellipsis)
+								{
+									priorities[i] = Ellipsis;
+								}
+								else
+								{
+									priorities[i] = Normal;
+								}
+							}
+							else
+							{
+								// find the primary function if it is a full specialized function
+								if (symbol->GetCategory() == symbol_component::SymbolCategory::FunctionBody)
+								{
+									symbol = symbol->GetFunctionSymbol_Fb();
+								}
+
+								if (auto primary = symbol->GetPSPrimary_NF())
+								{
+									primary = symbol;
+								}
+
+								funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+								auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>();
+								if (funcType->parameters.Count() == 0)
+								{
+									priorities[i] = Template;
+								}
+								else if (funcType->parameters[funcType->parameters.Count() - 1].isVariadic)
+								{
+									priorities[i] = Variadic;
+								}
+								else
+								{
+									priorities[i] = Template;
+								}
+							}
+						}
+						else
+						{
+							priorities[i] = Others;
+						}
+					}
+				}
+				else
+				{
+					priorities[i] = Unselected;
+				}
+			}
+
+			vint min = From(priorities).Min();
+			if (min != Unselected)
+			{
+				for (vint i = 0; i < selectedIndices.Count(); i++)
+				{
+					selectedIndices[i] = priorities[i] == min || priorities[i] == AnyInvolved;
 				}
 			}
 		}

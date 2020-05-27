@@ -67,13 +67,13 @@ TEST_FILE
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			LastArg(1, true, Cat()).tag,
-			L"::Cat *",
+			L"::Cat * $PR",
 			Cat *
 		);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
 			LastArg(0, false, Dog()).tag,
-			L"::Dog *",
+			L"::Dog * $PR",
 			Dog *
 		);
 
