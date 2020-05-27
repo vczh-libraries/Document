@@ -107,7 +107,7 @@ namespace infer_function_type
 											);
 
 	template<typename TCallback>
-	void CollectInvolvedVariadicArguments(const ParsingArguments& pa, const SortedList<Type*>& involvedTypes, const SortedList<Expr*>& involvedExprs, TCallback&& callback)
+	void CollectInvolvedArguments(const ParsingArguments& pa, const SortedList<Type*>& involvedTypes, const SortedList<Expr*>& involvedExprs, TCallback&& callback)
 	{
 		for (vint j = 0; j < involvedTypes.Count(); j++)
 		{
@@ -115,10 +115,7 @@ namespace infer_function_type
 			{
 				auto patternSymbol = Resolving::EnsureSingleSymbol(idType->resolving);
 				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(patternSymbol);
-				if (patternSymbol->ellipsis)
-				{
-					callback(patternSymbol, pattern);
-				}
+				callback(patternSymbol, pattern, patternSymbol->ellipsis);
 			}
 		}
 
@@ -128,10 +125,7 @@ namespace infer_function_type
 			{
 				auto patternSymbol = Resolving::EnsureSingleSymbol(idExpr->resolving);
 				auto pattern = symbol_type_resolving::GetTemplateArgumentKey(patternSymbol);
-				if (patternSymbol->ellipsis)
-				{
-					callback(patternSymbol, pattern);
-				}
+				callback(patternSymbol, pattern, patternSymbol->ellipsis);
 			}
 		}
 	}

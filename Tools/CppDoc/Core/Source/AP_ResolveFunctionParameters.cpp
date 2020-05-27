@@ -44,13 +44,17 @@ namespace assign_parameters
 				{
 					// if all involved template argument is the last variadic template argument, set to -1 to allow extra arguments
 					bool allow = true;
-					CollectInvolvedVariadicArguments(invokerPa, involvedTypes, involvedExprs, [&allow, lastAssignedVta](Symbol*, ITsys* pattern)
-					{
-						if (pattern != lastAssignedVta)
+					CollectInvolvedArguments(
+						invokerPa,
+						involvedTypes,
+						involvedExprs,
+						[&allow, lastAssignedVta](Symbol*, ITsys* pattern, bool isVariadic)
 						{
-							allow = false;
-						}
-					});
+							if (isVariadic && pattern != lastAssignedVta)
+							{
+								allow = false;
+							}
+						});
 					if (allow)
 					{
 						knownPackSizes[i] = -1;

@@ -125,24 +125,44 @@ namespace infer_function_type
 		CollectFreeTypes(pa, false, typeToInfer, exprToInfer, isVariadic, freeTypeSymbols, involvedTypes, involvedExprs);
 
 		// get all affected arguments
-		TypeTsysList vas;
-		CollectInvolvedVariadicArguments(pa, involvedTypes, involvedExprs, [&vas](Symbol*, ITsys* pattern)
+		TypeTsysList vas, nvas;
+		CollectInvolvedArguments(pa, involvedTypes, involvedExprs, [&vas, &nvas](Symbol*, ITsys* pattern, bool isVariadic)
 		{
-			if (!vas.Contains(pattern))
+			if (isVariadic)
 			{
-				vas.Add(pattern);
+				if (!vas.Contains(pattern))
+				{
+					vas.Add(pattern);
+				}
+			}
+			else
+			{
+				if (!nvas.Contains(pattern))
+				{
+					nvas.Add(pattern);
+				}
 			}
 		});
 
-		// infer all affected types to any_t, result will be overrided if more precise types are inferred
+		// infer all affected variadic arguments to any_t, result will be overrided if more precise types are inferred
 		for (vint j = 0; j < vas.Count(); j++)
 		{
 			SetInferredResult(pa, taContext, vas[j], pa.tsys->Any(), nullptr, hardcodedPatterns);
 		}
 
-		if (!assignedTsys || assignedTsys->GetType() != TsysType::Any)
+
+		if (assignedTsys && assignedTsys->GetType() == TsysType::Any)
 		{
-			if (isVariadic)
+			// for any_t, set all non-variadic template argument to any_t
+			for (vint j = 0; j < nvas.Count(); j++)
+			{
+				SetInferredResult(pa, taContext, nvas[j], pa.tsys->Any(), nullptr, hardcodedPatterns);
+			}
+		}
+		else if (isVariadic)
+		{
+			// only perform type inference on variadic argument when assignedTsys is not null
+			if (assignedTsys)
 			{
 				// for variadic parameter
 				vint count = assignedTsys->GetParamCount();
@@ -194,11 +214,11 @@ namespace infer_function_type
 					}
 				}
 			}
-			else
-			{
-				// for non-variadic parameter, run the assigned argument
-				InferTemplateArgument(pa, typeToInfer, exprToInfer, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters, lastAssignedVta, hardcodedPatterns);
-			}
+		}
+		else
+		{
+			// for non-variadic parameter, run the assigned argument
+			InferTemplateArgument(pa, typeToInfer, exprToInfer, assignedTsys, taContext, variadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters, lastAssignedVta, hardcodedPatterns);
 		}
 	}
 

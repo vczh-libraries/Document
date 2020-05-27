@@ -85,27 +85,34 @@ namespace assign_parameters
 	{
 		vint packSize = -1;
 		bool conflicted = false;
-		CollectInvolvedVariadicArguments(invokerPa, involvedTypes, involvedExprs, [&invokerPa, &packSize, &conflicted, &knownArguments](Symbol*, ITsys* pattern)
-		{
-			ITsys* pack = nullptr;
-			if (!knownArguments.TryGetValueByKey(pattern, pack))
+		CollectInvolvedArguments(
+			invokerPa,
+			involvedTypes,
+			involvedExprs,
+			[&invokerPa, &packSize, &conflicted, &knownArguments](Symbol*, ITsys* pattern, bool isVariadic)
 			{
-				invokerPa.TryGetReplacedGenericArg(pattern, pack);
-			}
+				if (isVariadic)
+				{
+					ITsys* pack = nullptr;
+					if (!knownArguments.TryGetValueByKey(pattern, pack))
+					{
+						invokerPa.TryGetReplacedGenericArg(pattern, pack);
+					}
 
-			if (pack && pack->GetType() == TsysType::Init)
-			{
-				vint newPackSize = pack->GetParamCount();
-				if (packSize == -1)
-				{
-					packSize = newPackSize;
+					if (pack && pack->GetType() == TsysType::Init)
+					{
+						vint newPackSize = pack->GetParamCount();
+						if (packSize == -1)
+						{
+							packSize = newPackSize;
+						}
+						else if (packSize != newPackSize)
+						{
+							conflicted = true;
+						}
+					}
 				}
-				else if (packSize != newPackSize)
-				{
-					conflicted = true;
-				}
-			}
-		});
+			});
 
 		if (conflicted)
 		{

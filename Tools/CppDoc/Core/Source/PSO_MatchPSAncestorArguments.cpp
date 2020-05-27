@@ -38,20 +38,23 @@ namespace partial_specification_ordering
 				CollectFreeTypes(pa, false, ancestorItem.type, ancestorItem.expr, insideVariant, freeAncestorSymbols, involvedTypes, involvedExprs);
 
 				SortedList<Symbol*> variadicSymbols;
-				CollectInvolvedVariadicArguments(pa, involvedTypes, involvedExprs, [&](Symbol* patternSymbol, ITsys*)
+				CollectInvolvedArguments(pa, involvedTypes, involvedExprs, [&](Symbol* patternSymbol, ITsys*, bool isVariadic)
 				{
-					vint index = matchingResult.Keys().IndexOf(patternSymbol);
-					if (index != -1)
+					if (isVariadic)
 					{
-						vint newPackSize = matchingResult.Values()[index]->source.Count();
-						if (packSize == -1)
+						vint index = matchingResult.Keys().IndexOf(patternSymbol);
+						if (index != -1)
 						{
-							packSize = newPackSize;
-						}
-						else if(packSize != newPackSize)
-						{
-							// fail if pack size conflicts
-							throw MatchPSFailureException();
+							vint newPackSize = matchingResult.Values()[index]->source.Count();
+							if (packSize == -1)
+							{
+								packSize = newPackSize;
+							}
+							else if (packSize != newPackSize)
+							{
+								// fail if pack size conflicts
+								throw MatchPSFailureException();
+							}
 						}
 					}
 				});
@@ -171,9 +174,9 @@ namespace partial_specification_ordering
 			CollectFreeTypes(pa, false, ancestorItem.type, ancestorItem.expr, insideVariant, freeAncestorSymbols, involvedTypes, involvedExprs);
 
 			SortedList<Symbol*> variadicSymbols;
-			CollectInvolvedVariadicArguments(pa, involvedTypes, involvedExprs, [&](Symbol* patternSymbol, ITsys*)
+			CollectInvolvedArguments(pa, involvedTypes, involvedExprs, [&](Symbol* patternSymbol, ITsys*, bool isVariadic)
 			{
-				if (!variadicSymbols.Contains(patternSymbol))
+				if (isVariadic && !variadicSymbols.Contains(patternSymbol))
 				{
 					variadicSymbols.Add(patternSymbol);
 				}
