@@ -471,16 +471,23 @@ void GenerateHtmlLine(
 					Use(html).WriteString(L", ");
 				}
 				Use(html).WriteString(L"[");
+
+				SortedList<WString> sortedIds;
 				if (tracker.indexResolve[i].inRange)
 				{
 					auto& symbols = result.index[i].GetByIndex(tracker.indexResolve[i].index);
 					for (vint j = 0; j < symbols.Count(); j++)
 					{
-						if (j != 0) Use(html).WriteString(L", ");
-						Use(html).WriteString(L"\'");
-						Use(html).WriteString(GetSymbolId(symbols[j]));
-						Use(html).WriteString(L"\'");
+						sortedIds.Add(GetSymbolId(symbols[j]));
 					}
+				}
+
+				for (vint j = 0; j < sortedIds.Count(); j++)
+				{
+					if (j != 0) Use(html).WriteString(L", ");
+					Use(html).WriteString(L"\'");
+					Use(html).WriteString(sortedIds[j]);
+					Use(html).WriteString(L"\'");
 				}
 				Use(html).WriteString(L"]");
 			}
