@@ -216,6 +216,11 @@ a.symbolIndex {
     color: #FFFFFF;
 }
 
+.dropdownData.omitted {
+    padding-left: 1em;
+    color: #FFFFFF;
+}
+
 .dropdownData.symbol {
     padding-left: 1em;
     color: #FFFFFF;

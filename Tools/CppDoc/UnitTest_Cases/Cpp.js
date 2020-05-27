@@ -84,8 +84,11 @@ function promptTooltipDropdownData(dropdownData, underElement) {
     <table>
     ${
         dropdownData.map(function (idGroup) {
-            return `
+        return `
             <tr><td colspan="2" class="dropdownData idGroup">${idGroup.name}</td></tr>
+            ${
+                idGroup.omitted === null ? '' : `<tr><td colspan="2" class="dropdownData omitted">${idGroup.omitted}</td></tr>`
+            }
             ${
                 idGroup.symbols.map(function (symbol) {
                     return `
@@ -119,6 +122,7 @@ function promptTooltipDropdownData(dropdownData, underElement) {
 /*
  * dropdownData: {
  *   name: string,                  // group name
+ *   omitted: null | string         // some result is omitted in other groups
  *   symbols: {
  *     displayNameInHtml: string,   // display name
  *     decls: {
@@ -150,9 +154,19 @@ function promptTooltipDropdownData(dropdownData, underElement) {
 
 function jumpToSymbol(overloadResolutions, resolved) {
     closeTooltip();
-    if (overloadResolutions.length === 1 && resolved.length === 1 && overloadResolutions[0] === resolved[0]) {
-        overloadResolutions = [];
+    if (overloadResolutions.length === resolved.length) {
+        if (JSON.stringify(overloadResolutions) === JSON.stringify(resolved)) {
+            overloadResolutions = [];
+        }
     }
+
+    let omitted = false;
+    const filteredResolved = resolved.filter(id => overloadResolutions.indexOf(id) === -1);
+    if (filteredResolved.length != resolved.length) {
+        omitted = true;
+        resolved = filteredResolved;
+    }
+
     const packedArguments = {
         'Overload Resolution': overloadResolutions,
         'Resolved': resolved
@@ -160,7 +174,10 @@ function jumpToSymbol(overloadResolutions, resolved) {
     const dropdownData = [];
 
     for (idsKey in packedArguments) {
-        const idGroup = { name: idsKey, symbols: [] };
+        const idGroup = { name: idsKey, omitted: null, symbols: [] };
+        if (idsKey === 'Resolved' && omitted) {
+            idGroup.omitted = '(Duplicated items in "Overload Resolution" are hidden)';
+        }
         for (uniqueId of packedArguments[idsKey]) {
             const referencedSymbol = referencedSymbols[uniqueId];
             if (referencedSymbol !== undefined) {
@@ -189,7 +206,7 @@ function jumpToSymbol(overloadResolutions, resolved) {
                 }
             }
         }
-        if (idGroup.symbols.length !== 0) {
+        if (idGroup.omitted !== null || idGroup.symbols.length !== 0) {
             dropdownData.push(idGroup);
         }
     }
