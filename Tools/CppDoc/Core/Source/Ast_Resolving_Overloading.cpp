@@ -362,66 +362,67 @@ namespace symbol_type_resolving
 
 			for (vint i = 0; i < selectedIndices.Count(); i++)
 			{
-				if (selectedIndices[i])
+				if (!selectedIndices[i])
 				{
-					if (anyInvolveds[i])
+					priorities[i] = Unselected;
+				}
+				else if (anyInvolveds[i])
+				{
+					priorities[i] = AnyInvolved;
+				}
+				else
+				{
+					auto symbol = inferredFunctionTypes[validIndices[i]].symbol;
+					if (!symbol)
 					{
-						priorities[i] = AnyInvolved;
+						priorities[i] = Others;
 					}
-					else
+					else if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 					{
-						auto symbol = inferredFunctionTypes[validIndices[i]].symbol;
-						if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+						if (!funcDecl->templateSpec)
 						{
-							if (!funcDecl->templateSpec)
+							if (GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>()->ellipsis)
 							{
-								if (GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>()->ellipsis)
-								{
-									priorities[i] = Ellipsis;
-								}
-								else
-								{
-									priorities[i] = Normal;
-								}
+								priorities[i] = Ellipsis;
 							}
 							else
 							{
-								// find the primary function if it is a full specialized function
-								if (symbol->GetCategory() == symbol_component::SymbolCategory::FunctionBody)
-								{
-									symbol = symbol->GetFunctionSymbol_Fb();
-								}
-
-								if (auto primary = symbol->GetPSPrimary_NF())
-								{
-									primary = symbol;
-								}
-
-								funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
-								auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>();
-								if (funcType->parameters.Count() == 0)
-								{
-									priorities[i] = Template;
-								}
-								else if (funcType->parameters[funcType->parameters.Count() - 1].isVariadic)
-								{
-									priorities[i] = Variadic;
-								}
-								else
-								{
-									priorities[i] = Template;
-								}
+								priorities[i] = Normal;
 							}
 						}
 						else
 						{
-							priorities[i] = Others;
+							// find the primary function if it is a full specialized function
+							if (symbol->GetCategory() == symbol_component::SymbolCategory::FunctionBody)
+							{
+								symbol = symbol->GetFunctionSymbol_Fb();
+							}
+
+							if (auto primary = symbol->GetPSPrimary_NF())
+							{
+								primary = symbol;
+							}
+
+							funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+							auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>();
+							if (funcType->parameters.Count() == 0)
+							{
+								priorities[i] = Template;
+							}
+							else if (funcType->parameters[funcType->parameters.Count() - 1].isVariadic)
+							{
+								priorities[i] = Variadic;
+							}
+							else
+							{
+								priorities[i] = Template;
+							}
 						}
 					}
-				}
-				else
-				{
-					priorities[i] = Unselected;
+					else
+					{
+						priorities[i] = Others;
+					}
 				}
 			}
 
