@@ -279,6 +279,7 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 			switch (kind)
 			{
 			case CLASS_SYMBOL_KIND:
+			case symbol_component::SymbolKind::Variable:
 				// there should be no implementation
 				if (targetSymbol->categoryData.normal.implDecl) return nullptr;
 				if (targetSymbol->categoryData.normal.children.Count() > 0) return nullptr;
@@ -289,11 +290,6 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 			}
 
 			// move everything from templateSpecSymbol to symbol that is created by forward declarations
-			if (templateSpecSymbol->GetParentScope() != this)
-			{
-				return nullptr;
-			}
-
 			List<symbol_component::ChildSymbol> existingChildren;
 			CopySymbolChildren(templateSpecSymbol.Obj(), existingChildren);
 			AddSymbolChildren(targetSymbol, existingChildren);

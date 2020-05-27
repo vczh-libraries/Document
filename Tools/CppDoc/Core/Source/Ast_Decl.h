@@ -118,6 +118,11 @@ public:
 	bool											decorator__Inline = false;
 	bool											decorator__ForceInline = false;
 	bool											needResolveTypeFromInitializer = false;
+
+	// for template forward declaration to keep symbols alive
+	// do not access it after parsing
+	// templateSpec->arguments[i].argumentSymbol will be children of it
+	Ptr<Symbol>										keepTemplateArgumentAlive;
 };
 
 enum class CppMethodType
@@ -184,9 +189,9 @@ public:
 	CppClassType									classType;
 	bool											decoratorFriend = false;
 
-	// only for part of template forward declarations
+	// for template forward declaration to keep symbols alive
 	// do not access it after parsing
-	// templateSpec->arguments; symbols will be children of it
+	// templateSpec->arguments[i].argumentSymbol will be children of it
 	Ptr<Symbol>										keepTemplateArgumentAlive;
 };
 
