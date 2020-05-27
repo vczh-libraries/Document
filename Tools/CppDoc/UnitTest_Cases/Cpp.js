@@ -67,8 +67,8 @@ function promptTooltip(contentElement, underElement) {
     var scrollX = document.body.scrollLeft + document.body.parentElement.scrollLeft;
     var scrollY = document.body.scrollTop + document.body.parentElement.scrollTop;
 
-    tooltipElement.style.left = (offsetX - scrollX) + "px";
-    tooltipElement.style.top = (offsetY - scrollY) + "px";
+    tooltipElement.style.left = (offsetX - scrollX) + 'px';
+    tooltipElement.style.top = (offsetY - scrollY) + 'px';
     underElement.appendChild(tooltipElement);
 }
 
