@@ -26,7 +26,6 @@
 - [ ] Next Demo! (?)
   - [ ] Create appropriate hyperlinks for partial specialization scenarios.
   - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` cancels its overloading resolution for partial specializations.
-  - [ ] Not enough resolved symbols for `TypePrinter<T>::PrintPrefix`
 - [ ] Lambda expressions.
 - [ ] Next Demo! (STL)
   - [ ] Test cases

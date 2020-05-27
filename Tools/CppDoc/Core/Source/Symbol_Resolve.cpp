@@ -103,10 +103,9 @@ struct ResolveSymbolArguments
 {
 	ResolveSymbolResult			result;
 	bool						cStyleTypeReference = false;
-	bool						found = false;
 	CppName&					name;
 	SortedList<Symbol*>			searchedScopes;
-	SortedList<ITsys*>			searchedTypes;
+	Dictionary<ITsys*, bool>	searchedTypes;
 
 	ResolveSymbolArguments(CppName& _name)
 		:name(_name)
@@ -179,7 +178,7 @@ void AddChildSymbolToResolve(const ParsingArguments& pa, Ptr<Resolving>& resolvi
 PickResolvedSymbols
 ***********************************************************************/
 
-void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List<symbol_component::ChildSymbol>* pSymbols, bool allowTemplateArgument, ResolveSymbolArguments& rsa)
+void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List<symbol_component::ChildSymbol>* pSymbols, bool allowTemplateArgument, bool& found, ResolveSymbolArguments& rsa)
 {
 	bool hasCStyleType = false;
 	bool hasOthers = false;
@@ -229,7 +228,7 @@ void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List
 			{
 				// type symbols
 			case CSTYLE_TYPE_SYMBOL_KIND:
-				rsa.found = true;
+				found = true;
 				AddChildSymbolToResolve(pa, rsa.result.types, thisItem, symbol);
 				break;
 			}
@@ -246,7 +245,7 @@ void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List
 				// type symbols
 			case symbol_component::SymbolKind::TypeAlias:
 			case symbol_component::SymbolKind::Namespace:
-				rsa.found = true;
+				found = true;
 				AddChildSymbolToResolve(pa, rsa.result.types, thisItem, symbol);
 				break;
 
@@ -255,7 +254,7 @@ void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List
 			case symbol_component::SymbolKind::FunctionSymbol:
 			case symbol_component::SymbolKind::Variable:
 			case symbol_component::SymbolKind::ValueAlias:
-				rsa.found = true;
+				found = true;
 				AddChildSymbolToResolve(pa, rsa.result.values, thisItem, symbol);
 				break;
 
@@ -263,7 +262,7 @@ void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List
 			case symbol_component::SymbolKind::GenericTypeArgument:
 				if (allowTemplateArgument)
 				{
-					rsa.found = true;
+					found = true;
 					AddSymbolToResolve(rsa.result.types, nullptr, symbol.childSymbol.Obj());
 				}
 				break;
@@ -272,7 +271,7 @@ void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List
 			case symbol_component::SymbolKind::GenericValueArgument:
 				if (allowTemplateArgument)
 				{
-					rsa.found = true;
+					found = true;
 					AddSymbolToResolve(rsa.result.values, nullptr, symbol.childSymbol.Obj());
 				}
 				break;
@@ -281,7 +280,7 @@ void PickResolvedSymbols(const ParsingArguments& pa, ITsys* thisItem, const List
 	}
 }
 
-void PickTemplateArgumentSymbols(const List<symbol_component::ChildSymbol>* pSymbols, ResolveSymbolArguments& rsa)
+void PickTemplateArgumentSymbols(const List<symbol_component::ChildSymbol>* pSymbols, bool& found, ResolveSymbolArguments& rsa)
 {
 	if (!rsa.cStyleTypeReference)
 	{
@@ -292,13 +291,13 @@ void PickTemplateArgumentSymbols(const List<symbol_component::ChildSymbol>* pSym
 			{
 				// template type argument
 			case symbol_component::SymbolKind::GenericTypeArgument:
-				rsa.found = true;
+				found = true;
 				AddSymbolToResolve(rsa.result.types, nullptr, symbol);
 				break;
 
 				// template value argument
 			case symbol_component::SymbolKind::GenericValueArgument:
-				rsa.found = true;
+				found = true;
 				AddSymbolToResolve(rsa.result.values, nullptr, symbol);
 				break;
 			}
@@ -310,10 +309,11 @@ void PickTemplateArgumentSymbols(const List<symbol_component::ChildSymbol>* pSym
 ResolveSymbolInTypeInternal
 ***********************************************************************/
 
-void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, SearchPolicy policy, ResolveSymbolArguments& rsa);
+bool ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, SearchPolicy policy, ResolveSymbolArguments& rsa);
 
-void ResolveSymbolInClassInternal(const ParsingArguments& pa, ITsys* tsys, ITsys* entity, SearchPolicy policy, ResolveSymbolArguments& rsa)
+bool ResolveSymbolInClassInternal(const ParsingArguments& pa, ITsys* tsys, ITsys* entity, SearchPolicy policy, ResolveSymbolArguments& rsa)
 {
+	bool found = false;
 	auto scope = entity->GetDecl();
 	if (auto classDecl = scope->GetImplDecl_NFb<ClassDeclaration>())
 	{
@@ -323,7 +323,7 @@ void ResolveSymbolInClassInternal(const ParsingArguments& pa, ITsys* tsys, ITsys
 			{
 				// A::A could never be the type A
 				// But searching A inside A will get the type A
-				rsa.found = true;
+				found = true;
 
 				switch (entity->GetType())
 				{
@@ -358,10 +358,10 @@ void ResolveSymbolInClassInternal(const ParsingArguments& pa, ITsys* tsys, ITsys
 
 		if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 		{
-			PickResolvedSymbols(pa, tsys, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+			PickResolvedSymbols(pa, tsys, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), found, rsa);
 		}
 
-		if (rsa.found) return;
+		if (found) return found;
 
 		if (policy & SearchPolicy::_AccessClassBaseType)
 		{
@@ -376,14 +376,15 @@ void ResolveSymbolInClassInternal(const ParsingArguments& pa, ITsys* tsys, ITsys
 					? SearchPolicy::ScopedChild
 					: SearchPolicy::ClassMember_FromOutside
 					;
-				ResolveSymbolInTypeInternal(pa, baseType, basePolicy, rsa);
+				found = ResolveSymbolInTypeInternal(pa, baseType, basePolicy, rsa) || found;
 				return false;
 			});
 		}
 	}
+	return found;
 }
 
-void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, SearchPolicy policy, ResolveSymbolArguments& rsa)
+bool ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, SearchPolicy policy, ResolveSymbolArguments& rsa)
 {
 	if (tsys->GetType() == TsysType::GenericFunction)
 	{
@@ -394,15 +395,17 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 	TsysRefType ref;
 	auto entity = tsys->GetEntity(cv, ref);
 
-	if (rsa.searchedTypes.Contains(entity))
 	{
-		return;
-	}
-	else
-	{
-		rsa.searchedTypes.Add(entity);
+		vint index = rsa.searchedTypes.Keys().IndexOf(entity);
+		if (index != -1)
+		{
+			return rsa.searchedTypes.Values()[index];
+		}
 	}
 
+	rsa.searchedTypes.Add(entity, true);
+
+	bool found = false;
 	if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
 	{
 		auto scope = entity->GetDecl();
@@ -414,7 +417,7 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 				{
 					psEntity = psEntity->GetElement();
 				}
-				ResolveSymbolInClassInternal(pa, CvRefOf(psEntity, cv, ref), psEntity, policy, rsa);
+				found = ResolveSymbolInClassInternal(pa, CvRefOf(psEntity, cv, ref), psEntity, policy, rsa) || found;
 				return false;
 			});
 		}
@@ -422,10 +425,12 @@ void ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 		{
 			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 			{
-				PickResolvedSymbols(pa, tsys, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+				PickResolvedSymbols(pa, tsys, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), found, rsa);
 			}
 		}
 	}
+	rsa.searchedTypes.Set(entity, found);
+	return found;
 }
 
 /***********************************************************************
@@ -434,6 +439,7 @@ ResolveSymbolInStaticScopeInternal
 
 void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scope, SearchPolicy policy, ResolveSymbolArguments& rsa)
 {
+	bool found = false;
 	while (scope)
 	{
 		Ptr<symbol_component::ClassMemberCache> cache;
@@ -445,21 +451,21 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 				// if we can find a template argument, then don't need to continue searching for class members
 				if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 				{
-					PickTemplateArgumentSymbols(pSymbols, rsa);
+					PickTemplateArgumentSymbols(pSymbols, found, rsa);
 				}
 
-				if (rsa.found) break;
+				if (found) break;
 
 				// for a class forward declaration, symbols are not in the class's scope
 				if (classDecl->keepTemplateArgumentAlive)
 				{
 					if (auto pSymbols = classDecl->keepTemplateArgumentAlive->TryGetChildren_NFb(rsa.name.name))
 					{
-						PickTemplateArgumentSymbols(pSymbols, rsa);
+						PickTemplateArgumentSymbols(pSymbols, found, rsa);
 					}
 				}
 
-				if (rsa.found) break;
+				if (found) break;
 			}
 
 			// check if pa.taContext has enough template arguments for this class
@@ -511,17 +517,17 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 				for (vint i = 0; i < tsyses.Count(); i++)
 				{
 					auto tsys = tsyses[i];
-					ResolveSymbolInTypeInternal(pa, tsys, policy, rsa);
+					found = ResolveSymbolInTypeInternal(pa, tsys, policy, rsa) || found;
 				}
 			}
 
-			if (rsa.found) break;
+			if (found) break;
 		}
 		else
 		{
 			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 			{
-				PickResolvedSymbols(pa.AdjustForDecl(scope), nullptr, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), rsa);
+				PickResolvedSymbols(pa.AdjustForDecl(scope), nullptr, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), found, rsa);
 			}
 
 			if (scope->usingNss.Count() > 0)
@@ -533,7 +539,7 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 				}
 			}
 
-			if (rsa.found) break;
+			if (found) break;
 
 			cache = scope->GetClassMemberCache_NFb();
 
@@ -547,12 +553,12 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 				for (vint i = 0; i < cache->containerClassTypes.Count(); i++)
 				{
 					auto classType = ReplaceGenericArgsInClass(pa, cache->containerClassTypes[i]);
-					ResolveSymbolInTypeInternal(pa, classType, childPolicy, rsa);
-					if (rsa.found) break;
+					found = ResolveSymbolInTypeInternal(pa, classType, childPolicy, rsa) || found;
+					if (found) break;
 				}
 			}
 
-			if (rsa.found) break;
+			if (found) break;
 		}
 
 		if (policy & SearchPolicy::_AccessParentScope)
