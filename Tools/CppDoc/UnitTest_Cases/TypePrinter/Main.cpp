@@ -6,23 +6,23 @@ int main()
 {
 	{
 		// print types
-		PrintType<char>();
-		PrintType<int>();
+		PRINT_TYPE(char);
+		PRINT_TYPE(int);
 
-		PrintType<char*>();
-		PrintType<const char*const>();
-		PrintType<int&>();
-		PrintType<volatile int&&>();
+		PRINT_TYPE(char*);
+		PRINT_TYPE(const char*const);
+		PRINT_TYPE(int&);
+		PRINT_TYPE(volatile int&&);
 
-		PrintType<int[10]>();
-		PrintType<const int[1][2][3]>();
-		PrintType<volatile int(&)[4][5]>();
-		PrintType<const char(*const)[4][5]>();
+		PRINT_TYPE(int[10]);
+		PRINT_TYPE(const int[1][2][3]);
+		PRINT_TYPE(volatile int(&)[4][5]);
+		PRINT_TYPE(const char(*const)[4][5]);
 
-		PrintType<int()>();
-		PrintType<int(*)(bool, char)>();
+		PRINT_TYPE(int());
+		PRINT_TYPE(int(*)(bool, char));
 
-		PrintType<int(&(*)(const bool(*)(), volatile const char(&)[1]))[10]>();
+		PRINT_TYPE(int(&(*)(const bool(*)(), volatile const char(&)[1]))[10]);
 	}
 	return 0;
 }

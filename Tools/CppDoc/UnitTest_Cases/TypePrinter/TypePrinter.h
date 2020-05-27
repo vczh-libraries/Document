@@ -16,13 +16,12 @@ namespace type_printer
 		Function,
 	};
 
-	template<typename T>
-	void PrintType(bool lineBreak = true)
-	{
-		TypePrinter<T>::PrintPrefix(TypeSource::TopLevel);
-		TypePrinter<T>::PrintPostfix(TypeSource::TopLevel);
-		if (lineBreak) printf("\n");
-	}
+#define PRINT_TYPE(...)													\
+	do{																	\
+		TypePrinter<__VA_ARGS__>::PrintPrefix(TypeSource::TopLevel);	\
+		TypePrinter<__VA_ARGS__>::PrintPostfix(TypeSource::TopLevel);	\
+		printf("\n");													\
+	}while(false)														\
 
 	// primitive types
 
@@ -171,7 +170,8 @@ namespace type_printer
 	{
 		static void PrintTypeList()
 		{
-			PrintType<T>(false);
+			TypePrinter<T>::PrintPrefix(TypeSource::TopLevel);
+			TypePrinter<T>::PrintPostfix(TypeSource::TopLevel);
 		}
 	};
 
@@ -180,7 +180,8 @@ namespace type_printer
 	{
 		static void PrintTypeList()
 		{
-			PrintType<T>(false);
+			TypePrinter<T>::PrintPrefix(TypeSource::TopLevel);
+			TypePrinter<T>::PrintPostfix(TypeSource::TopLevel);
 			printf(", ");
 			TypeListPrinter<Ts...>::PrintTypeList();
 		}
