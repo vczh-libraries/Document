@@ -150,7 +150,6 @@ namespace infer_function_type
 			SetInferredResult(pa, taContext, vas[j], pa.tsys->Any(), nullptr, hardcodedPatterns);
 		}
 
-
 		if (assignedTsys && assignedTsys->GetType() == TsysType::Any)
 		{
 			// for any_t, set all non-variadic template argument to any_t
