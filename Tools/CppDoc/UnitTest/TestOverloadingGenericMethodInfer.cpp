@@ -1,6 +1,6 @@
 #include "Util.h"
 
-namespace Input__TestOverloadingGenericFunction_Method
+namespace Input__TestOverloadingGenericMethodInfer_Method
 {
 	TEST_DECL
 	(
@@ -56,7 +56,7 @@ TEST_FILE
 {
 	TEST_CATEGORY(L"Variable types")
 	{
-		using namespace Input__TestOverloadingGenericFunction_Method;
+		using namespace Input__TestOverloadingGenericMethodInfer_Method;
 		COMPILE_PROGRAM(program, pa, input);
 
 		AssertExpr(pa,	L"mt1",		L"mt1",		L"::MakeTuple<{char $PR, bool $PR, double $PR}> $L"			);
@@ -70,7 +70,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Generic operators")
 	{
-		using namespace Input__TestOverloadingGenericFunction_Method;
+		using namespace Input__TestOverloadingGenericMethodInfer_Method;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_VERBOSE(
@@ -139,7 +139,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Generic methods")
 	{
-		using namespace Input__TestOverloadingGenericFunction_Method;
+		using namespace Input__TestOverloadingGenericMethodInfer_Method;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
@@ -181,7 +181,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Generic this")
 	{
-		using namespace Input__TestOverloadingGenericFunction_Method;
+		using namespace Input__TestOverloadingGenericMethodInfer_Method;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_VERBOSE(

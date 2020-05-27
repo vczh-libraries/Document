@@ -1,6 +1,6 @@
 #include "Util.h"
 
-namespace Input__TestOverloadingGenericFunction_TypeInferSimple
+namespace Input__TestOverloadingGenericFunctionInfer_TypeInferSimple
 {
 	TEST_DECL(
 		const int ci = 0;
@@ -16,7 +16,7 @@ namespace Input__TestOverloadingGenericFunction_TypeInferSimple
 	);
 }
 
-namespace Input__TestOverloadingGenericFunction_TypeInferVariant
+namespace Input__TestOverloadingGenericFunctionInfer_TypeInferVariant
 {
 	TEST_DECL(
 		const int ci = 0;
@@ -40,7 +40,7 @@ namespace Input__TestOverloadingGenericFunction_TypeInferVariant
 	);
 }
 
-namespace Input__TestOverloadingGenericFunction_TypeInferKinds
+namespace Input__TestOverloadingGenericFunctionInfer_TypeInferKinds
 {
 	TEST_DECL(
 		template<typename... Ts>
@@ -70,7 +70,7 @@ namespace Input__TestOverloadingGenericFunction_TypeInferKinds
 	);
 }
 
-namespace Input__TestOverloadingGenericFunction_TypeInferChildTypes
+namespace Input__TestOverloadingGenericFunctionInfer_TypeInferChildTypes
 {
 	TEST_DECL(
 		template<typename... Ts>
@@ -116,7 +116,7 @@ namespace Input__TestOverloadingGenericFunction_TypeInferChildTypes
 	);
 }
 
-namespace Input__TestOverloadingGenericFunction_TypeInferValues
+namespace Input__TestOverloadingGenericFunctionInfer_TypeInferValues
 {
 	TEST_DECL(
 		template<typename... Ts>
@@ -152,7 +152,7 @@ namespace Input__TestOverloadingGenericFunction_TypeInferValues
 	);
 }
 
-namespace Input__TestOverloadingGenericFunction_LastVta
+namespace Input__TestOverloadingGenericFunctionInfer_LastVta
 {
 	TEST_DECL(
 		template<typename... Ts>
@@ -179,7 +179,7 @@ namespace Input__TestOverloadingGenericFunction_LastVta
 	);
 }
 
-namespace Input__TestOverloadingGenericFunction_PartiallyFilled
+namespace Input__TestOverloadingGenericFunctionInfer_PartiallyFilled
 {
 	TEST_DECL(
 		template<typename... Ts>
@@ -194,7 +194,7 @@ TEST_FILE
 {
 	TEST_CATEGORY(L"Partially apply template arguments (simple)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_TypeInferSimple;
+		using namespace Input__TestOverloadingGenericFunctionInfer_TypeInferSimple;
 		COMPILE_PROGRAM(program, pa, input);
 
 		AssertExpr(pa, L"Simple",				L"Simple",					L"<::Simple::[T]> ::Simple::[T] __cdecl(::Simple::[T]) * $PR");
@@ -207,7 +207,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Partially apply template arguments (variant)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_TypeInferVariant;
+		using namespace Input__TestOverloadingGenericFunctionInfer_TypeInferVariant;
 		COMPILE_PROGRAM(program, pa, input);
 		
 		AssertExpr(pa, L"Variant",				L"Variant",					L"<...::Variant::[Ts]> any_t $PR");
@@ -218,7 +218,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Partially apply template arguments (kinds)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_TypeInferKinds;
+		using namespace Input__TestOverloadingGenericFunctionInfer_TypeInferKinds;
 		COMPILE_PROGRAM(program, pa, input);
 		
 		AssertExpr(pa, L"LRef",								L"LRef",							L"<::LRef::[T]> ::Types<{::LRef::[T] $PR}> __cdecl(::LRef::[T] &) * $PR");
@@ -280,7 +280,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Partially apply template arguments (values)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_TypeInferValues;
+		using namespace Input__TestOverloadingGenericFunctionInfer_TypeInferValues;
 		COMPILE_PROGRAM(program, pa, input);
 		
 		AssertExpr(pa, L"UseA",									L"UseA",								L"<*, *, *> ::Values<{* $PR, * $PR, * $PR}> __cdecl(__int32 [] &, __int32 [] &, __int32 [] &) * $PR");
@@ -309,7 +309,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Template argument deduction (simple)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_TypeInferSimple;
+		using namespace Input__TestOverloadingGenericFunctionInfer_TypeInferSimple;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_SIMPLE(Simple(1),					__int32);
@@ -340,7 +340,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Template argument deduction (variant)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_TypeInferVariant;
+		using namespace Input__TestOverloadingGenericFunctionInfer_TypeInferVariant;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
@@ -370,7 +370,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Template argument deduction (kinds)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_TypeInferKinds;
+		using namespace Input__TestOverloadingGenericFunctionInfer_TypeInferKinds;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(LRef(Value<bool &>()),									L"::Types<{bool $PR}> $PR",								Types<bool>);
@@ -447,7 +447,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Template argument deduction (child types)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_TypeInferChildTypes;
+		using namespace Input__TestOverloadingGenericFunctionInfer_TypeInferChildTypes;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
@@ -483,7 +483,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Template argument deduction (base types)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_TypeInferChildTypes;
+		using namespace Input__TestOverloadingGenericFunctionInfer_TypeInferChildTypes;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
@@ -519,7 +519,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Template argument deduction (values)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_TypeInferValues;
+		using namespace Input__TestOverloadingGenericFunctionInfer_TypeInferValues;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
@@ -579,7 +579,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Template argument deduction (last vta type)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_LastVta;
+		using namespace Input__TestOverloadingGenericFunctionInfer_LastVta;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
@@ -627,7 +627,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Template argument deduction (last vta value)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_LastVta;
+		using namespace Input__TestOverloadingGenericFunctionInfer_LastVta;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
@@ -675,7 +675,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Template argument deduction (partially filled)")
 	{
-		using namespace Input__TestOverloadingGenericFunction_PartiallyFilled;
+		using namespace Input__TestOverloadingGenericFunctionInfer_PartiallyFilled;
 		COMPILE_PROGRAM(program, pa, input);
 
 		ASSERT_OVERLOADING_FORMATTED_VERBOSE(
