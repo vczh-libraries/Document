@@ -52,7 +52,16 @@ namespace infer_function_type
 		case TsysType::Ptr:
 			return a->GetType() == b->GetType() && IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance);
 		case TsysType::Array:
-			return a->GetType() == b->GetType() && a->GetParamCount() == b->GetParamCount() && IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance);
+			{
+				if (b->GetType() != TsysType::Array) return false;
+				vint adim = a->GetParamCount();
+				vint bdim = b->GetParamCount();
+				vint min = adim < bdim ? adim : bdim;
+				auto ae = adim == min ? a->GetElement() : a->GetElement()->ArrayOf(adim - min);
+				auto be = bdim == min ? b->GetElement() : b->GetElement()->ArrayOf(bdim - min);
+				if (!IsPSEquivalentType(pa, ae, be, forFilteringPSInstance)) return false;
+			}
+			return true;
 		case TsysType::CV:
 			return a->GetType() == b->GetType() && a->GetCV() == b->GetCV() && IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance);
 		case TsysType::Member:

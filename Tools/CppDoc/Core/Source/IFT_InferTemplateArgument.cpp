@@ -104,7 +104,15 @@ namespace infer_function_type
 				{
 					throw TypeCheckerException();
 				}
-				ExecuteInvolvedOnce(elementType, offeredType->GetElement());
+
+				if (offeredType->GetType() == TsysType::Array && offeredType->GetParamCount() > 1)
+				{
+					ExecuteInvolvedOnce(elementType, offeredType->GetElement()->ArrayOf(offeredType->GetParamCount() - 1));
+				}
+				else
+				{
+					ExecuteInvolvedOnce(elementType, offeredType->GetElement());
+				}
 			}
 			else
 			{
@@ -115,7 +123,15 @@ namespace infer_function_type
 				{
 					throw TypeCheckerException();
 				}
-				ExecuteInvolvedOnce(elementType, entity->GetElement());
+
+				if (entity->GetType() == TsysType::Array && entity->GetParamCount() > 1)
+				{
+					ExecuteInvolvedOnce(elementType, entity->GetElement()->ArrayOf(entity->GetParamCount() - 1));
+				}
+				else
+				{
+					ExecuteInvolvedOnce(elementType, entity->GetElement());
+				}
 			}
 		}
 
@@ -257,6 +273,19 @@ namespace infer_function_type
 			TsysCV cv;
 			TsysRefType refType;
 			auto entity = offeredType->GetEntity(cv, refType);
+
+			if (entity->GetType() == TsysType::Array)
+			{
+				auto element = entity->GetElement();
+				if (element->GetType() == TsysType::CV)
+				{
+					auto ecv = element->GetCV();
+					cv.isGeneralConst |= ecv.isGeneralConst;
+					cv.isVolatile |= ecv.isVolatile;
+					entity = element->ArrayOf(entity->GetParamCount());
+				}
+			}
+
 			if(exactMatch)
 			{
 				if (refType != TsysRefType::None) throw TypeCheckerException();
