@@ -992,6 +992,14 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 		{
 			break;
 		}
+		else
+		{
+			// skip qualifiers after ","
+			while (TestToken(cursor, CppTokens::CONST, false) || TestToken(cursor, CppTokens::VOLATILE, false))
+			{
+				SkipToken(cursor);
+			}
+		}
 	}
 }
 
