@@ -224,9 +224,25 @@ namespace infer_function_type
 			if (exactMatch)
 			{
 				if (refType != TsysRefType::None) throw TypeCheckerException();
-				if (self->isConst != cv.isGeneralConst) throw TypeCheckerException();
-				if (self->isVolatile != cv.isVolatile) throw TypeCheckerException();
-				ExecuteInvolvedOnce(self->type, entity);
+
+				bool expectAny = false;
+				if (self->isConst && !cv.isGeneralConst) expectAny = true;
+				if (self->isVolatile && !cv.isVolatile) expectAny = true;
+				if (expectAny && (entity->GetType() != TsysType::Any && entity->GetType() != TsysType::GenericArg))
+				{
+					throw TypeCheckerException();
+				}
+
+				if (expectAny)
+				{
+					ExecuteInvolvedOnce(self->type, pa.tsys->Any());
+				}
+				else
+				{
+					if (self->isConst) cv.isGeneralConst = false;
+					if (self->isVolatile) cv.isVolatile = false;
+					ExecuteInvolvedOnce(self->type, entity->CVOf(cv));
+				}
 			}
 			else
 			{
