@@ -312,9 +312,29 @@ Ptr<Type> AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType)
 RemoveArrayType
 ***********************************************************************/
 
-Ptr<Type> RemoveArrayType(Ptr<Type> type, Ptr<Expr>& expr, bool& succeeded)
+Ptr<Type> RemoveArrayType(Ptr<Type> type, Ptr<Expr>& dim)
 {
-	throw 0;
+	if (auto dt = type.Cast<DecorateType>())
+	{
+		auto result = RemoveArrayType(dt->type, dim);
+		if (!result) return nullptr;
+
+		auto newType = MakePtr<DecorateType>();
+		newType->isConst = dt->isConst;
+		newType->isVolatile = dt->isVolatile;
+		newType->type = result;
+
+		return newType;
+	}
+	else if (auto at = type.Cast<ArrayType>())
+	{
+		dim = at->expr;
+		return at->type;
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 /***********************************************************************
@@ -404,6 +424,7 @@ Ptr<Type>& AddCVTypeInternal(Ptr<Type>& type, bool isConst, bool isVolatile)
 
 Ptr<Type> AddCVType(Ptr<Type> type, bool isConst, bool isVolatile)
 {
+	if (!isConst && !isVolatile) return type;
 	AddCVTypeInternal(type, isConst, isVolatile);
 	return type;
 }

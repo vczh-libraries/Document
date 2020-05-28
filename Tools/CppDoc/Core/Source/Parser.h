@@ -28,7 +28,7 @@ extern bool											ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, b
 extern Ptr<Type>									GetTypeWithoutMemberAndCC(Ptr<Type> type);
 extern Ptr<Type>									ReplaceTypeInMemberAndCC(Ptr<Type>& type, Ptr<Type> typeToReplace);
 extern Ptr<Type>									AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType);
-extern Ptr<Type>									RemoveArrayType(Ptr<Type> type, Ptr<Expr>& expr, bool& succeeded);
+extern Ptr<Type>									RemoveArrayType(Ptr<Type> type, Ptr<Expr>& dim);
 extern Ptr<Type>									RemoveCVType(Ptr<Type> type, bool& isConst, bool& isVolatile);
 extern Ptr<Type>									AddCVType(Ptr<Type> type, bool isConst, bool isVolatile);
 extern void											NormalizeTypeChain(Ptr<Type>& type);

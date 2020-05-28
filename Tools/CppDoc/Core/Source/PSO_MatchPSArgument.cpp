@@ -1,4 +1,5 @@
 #include "PSO.h"
+#include "Parser.h"
 #include "Ast_Expr.h"
 
 namespace partial_specification_ordering
@@ -134,28 +135,32 @@ namespace partial_specification_ordering
 		{
 			// match "const T" on "const int[]" should get "int[]"
 			// match "T[]" on "int(const)[]" should get "const int"
-			if (auto c = childType.Cast<ArrayType>())
-			{
-				Execute(self->type, c->type);
-				Execute(self->expr);
-				return;
-			}
-			throw MatchPSFailureException();
+
+			Ptr<Expr> dim;
+			auto childEntity = RemoveArrayType(childType, dim);
+			if (!childEntity) throw MatchPSFailureException();
+
+			Execute(self->type, childEntity);
+			Execute(self->expr);
 		}
 
 		void Visit(DecorateType* self)override
 		{
 			// match "const T" on "const int[]" should get "int[]"
 			// match "T[]" on "int(const)[]" should get "const int"
-			if (auto c = childType.Cast<DecorateType>())
+
+			bool childConst = false;
+			bool childVolatile = false;
+			auto childEntity = RemoveCVType(childType, childConst, childVolatile);
+
+			if ((self->isConst && !childConst) || (self->isVolatile && !childVolatile))
 			{
-				if (self->isConst == c->isConst && self->isVolatile == c->isVolatile)
-				{
-					Execute(self->type, c->type);
-					return;
-				}
+				throw MatchPSFailureException();
 			}
-			throw MatchPSFailureException();
+
+			if (self->isConst) childConst = false;
+			if (self->isVolatile) childVolatile = false;
+			Execute(self->type, AddCVType(childEntity, childConst, childVolatile));
 		}
 
 		void Visit(CallingConventionType* self)override
