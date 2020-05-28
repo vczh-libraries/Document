@@ -309,6 +309,92 @@ Ptr<Type> AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> functionType)
 }
 
 /***********************************************************************
+RemoveArrayType
+***********************************************************************/
+
+Ptr<Type> RemoveArrayType(Ptr<Type> type, Ptr<Expr>& expr, bool& succeeded)
+{
+	throw 0;
+}
+
+/***********************************************************************
+RemoveCVType
+***********************************************************************/
+
+Ptr<Type> RemoveCVType(Ptr<Type> type, bool& isConst, bool& isVolatile)
+{
+	if (auto dt = type.Cast<DecorateType>())
+	{
+		isConst |= dt->isConst;
+		isVolatile |= dt->isVolatile;
+		return RemoveCVType(dt->type, isConst, isVolatile);
+	}
+	else if (auto at = type.Cast<ArrayType>())
+	{
+		auto removed = RemoveCVType(at->type, isConst, isVolatile);
+		if (removed == at->type)
+		{
+			return type;
+		}
+		else
+		{
+			auto newType = MakePtr<ArrayType>();
+			newType->type = removed;
+			newType->expr = at->expr;
+			return newType;
+		}
+	}
+	else
+	{
+		return type;
+	}
+}
+
+/***********************************************************************
+AddCVType
+***********************************************************************/
+
+Ptr<Type> AddCVType(Ptr<Type> type, bool isConst, bool isVolatile)
+{
+	if (auto dt = type.Cast<DecorateType>())
+	{
+		if((dt->isConst || !isConst) && (dt->isVolatile || !isVolatile))
+		{
+			return type;
+		}
+		else
+		{
+			isConst |= dt->isConst;
+			isVolatile |= dt->isVolatile;
+			return AddCVType(dt->type, isConst, isVolatile);
+		}
+	}
+	else if (auto at = type.Cast<ArrayType>())
+	{
+		auto added = AddCVType(at->type, isConst, isVolatile);
+		if (added == at->type)
+		{
+			return type;
+		}
+		else
+		{
+			auto newType = MakePtr<ArrayType>();
+			newType->type = added;
+			newType->expr = at->expr;
+			return newType;
+		}
+	}
+	else
+	{
+		auto newType = MakePtr<DecorateType>();
+		newType->isConst = isConst;
+		newType->isVolatile = isVolatile;
+		newType->type = type;
+		return newType;
+	}
+}
+
+/***********************************************************************
 ParseCallingConvention
 ***********************************************************************/
 

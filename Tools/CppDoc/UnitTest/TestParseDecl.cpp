@@ -110,6 +110,34 @@ d: int const [0];
 		AssertProgram(input, output);
 	});
 
+	TEST_CATEGORY(L"Variables qualifiers always inside arrays")
+	{
+		auto input = LR"(
+const int a1;
+volatile int a2;
+const volatile int a3;
+volatile const int a4;
+const int volatile a5;
+volatile int const a6;
+
+const int b1[1];
+int (volatile b2)[2];
+int (volatile (const b3[3])[4])[5];
+)";
+		auto output = LR"(
+a1: int const;
+a2: int volatile;
+a3: int const volatile;
+a4: int const volatile;
+a5: int const volatile;
+a6: int const volatile;
+b1: int const [1];
+b2: int volatile [2];
+b3: int const volatile [3] [4] [5];
+)";
+		AssertProgram(input, output);
+	});
+
 	TEST_CATEGORY(L"Functions")
 	{
 		auto input = LR"(

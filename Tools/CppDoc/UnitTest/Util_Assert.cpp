@@ -16,7 +16,12 @@ void AssertMultilines(const WString& output, const WString& log)
 
 		auto expect = srExpect.ReadLine();
 		auto actual = srActual.ReadLine();
-		TEST_ASSERT(expect == actual);
+		if (expect != actual)
+		{
+			TEST_PRINT(L"Expect: " + expect);
+			TEST_PRINT(L"Actual: " + actual);
+			throw unittest::UnitTestAssertError(L"Multiline log mismatched");
+		}
 	}
 }
 
