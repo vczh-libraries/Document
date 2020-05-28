@@ -354,44 +354,140 @@ Ptr<Type> RemoveCVType(Ptr<Type> type, bool& isConst, bool& isVolatile)
 AddCVType
 ***********************************************************************/
 
-Ptr<Type> AddCVType(Ptr<Type> type, bool isConst, bool isVolatile)
+Ptr<Type>& AddCVTypeInternal(Ptr<Type>& type, bool isConst, bool isVolatile)
 {
 	if (auto dt = type.Cast<DecorateType>())
 	{
-		if((dt->isConst || !isConst) && (dt->isVolatile || !isVolatile))
-		{
-			return type;
-		}
-		else
-		{
-			isConst |= dt->isConst;
-			isVolatile |= dt->isVolatile;
-			return AddCVType(dt->type, isConst, isVolatile);
-		}
+		type = dt->type;
+		return AddCVTypeInternal(type, (isConst || dt->isConst), (isVolatile || dt->isVolatile));
 	}
 	else if (auto at = type.Cast<ArrayType>())
 	{
-		auto added = AddCVType(at->type, isConst, isVolatile);
-		if (added == at->type)
+		auto element = at->type;
+		auto& core = AddCVTypeInternal(element, isConst, isVolatile);
+		if (element == at->type)
 		{
-			return type;
+			if (&core == &element)
+			{
+				return at->type;
+			}
+			else
+			{
+				return core;
+			}
 		}
 		else
 		{
 			auto newType = MakePtr<ArrayType>();
-			newType->type = added;
 			newType->expr = at->expr;
-			return newType;
+			newType->type = element;
+			
+			type = newType;
+			return core;
 		}
 	}
-	else
+	else if (isConst || isVolatile)
 	{
 		auto newType = MakePtr<DecorateType>();
 		newType->isConst = isConst;
 		newType->isVolatile = isVolatile;
 		newType->type = type;
-		return newType;
+		
+		type = newType;
+		return newType->type;
 	}
+	else
+	{
+		return type;
+	}
+}
+
+Ptr<Type> AddCVType(Ptr<Type> type, bool isConst, bool isVolatile)
+{
+	AddCVTypeInternal(type, isConst, isVolatile);
+	return type;
+}
+
+/***********************************************************************
+NormalizeTypeChain
+***********************************************************************/
+
+class NormalizeTypeChainTypeVisitor : public Object, public virtual ITypeVisitor
+{
+private:
+	Ptr<Type>*						containerOfCurrentType = nullptr;
+
+public:
+
+	void Execute(Ptr<Type>& typeToNormalize)
+	{
+		if (typeToNormalize)
+		{
+			containerOfCurrentType = &typeToNormalize;
+			typeToNormalize->Accept(this);
+		}
+	}
+
+	void Visit(PrimitiveType* self)override
+	{
+	}
+
+	void Visit(ReferenceType* self)override
+	{
+		Execute(self->type);
+	}
+
+	void Visit(ArrayType* self)override
+	{
+		auto& core = AddCVTypeInternal(*containerOfCurrentType, false, false);
+		Execute(core);
+	}
+
+	void Visit(DecorateType* self)override
+	{
+		auto& core = AddCVTypeInternal(*containerOfCurrentType, false, false);
+		Execute(core);
+	}
+
+	void Visit(CallingConventionType* self)override
+	{
+		Execute(self->type);
+	}
+
+	void Visit(FunctionType* self)override
+	{
+		Execute(self->returnType);
+	}
+
+	void Visit(MemberType* self)override
+	{
+		Execute(self->type);
+	}
+
+	void Visit(DeclType* self)override
+	{
+	}
+
+	void Visit(RootType* self)override
+	{
+	}
+
+	void Visit(IdType* self)override
+	{
+	}
+
+	void Visit(ChildType* self)override
+	{
+	}
+
+	void Visit(GenericType* self)override
+	{
+	}
+};
+
+void NormalizeTypeChain(Ptr<Type>& type)
+{
+	NormalizeTypeChainTypeVisitor().Execute(type);
 }
 
 /***********************************************************************

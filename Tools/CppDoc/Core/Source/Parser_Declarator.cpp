@@ -38,20 +38,6 @@ public:
 		}
 	}
 
-	void Execute(Ptr<Category_Id_Child_Generic_Root_Type>& targetType)
-	{
-		Ptr<Type> type = targetType;
-		Execute(type);
-		if (auto resultType = type.Cast<Category_Id_Child_Generic_Root_Type>())
-		{
-			targetType = resultType;
-		}
-		else
-		{
-			throw StopParsingException(cursor);
-		}
-	}
-
 	void Visit(PrimitiveType* self)override
 	{
 	}
@@ -100,14 +86,10 @@ public:
 
 	void Visit(ChildType* self)override
 	{
-		Execute(self->classType);
 	}
 
 	void Visit(GenericType* self)override
 	{
-		// self->type does not need to check, because it is not possible to write
-		// 1. T(&a)[0]<U>
-		// 2. T(&a)()<U>
 	}
 };
 
@@ -278,12 +260,23 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 	else if (TestToken(cursor, CppTokens::CONST))
 	{
 		// const DECLARATOR
-		return ParseTypeBeforeDeclarator(pa, AddCVType(baselineType, true, false), pdc, cursor);
+		// Cannot use AddCVType because
+		// for nested ParseSingleDeclarator call
+		// the targetType variable for calling ParseSingleDeclarator_Array or ParseSingleDeclarator_Function
+		// may become not part in the final type chain of the declarator
+		// DecorateType and ArrayType will be adjusted at the end
+		auto type = MakePtr<DecorateType>();
+		type->isConst = true;
+		type->type = baselineType;
+		return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
 	}
 	else if (TestToken(cursor, CppTokens::VOLATILE))
 	{
 		// volatile DECLARATOR
-		return ParseTypeBeforeDeclarator(pa, AddCVType(baselineType, false, true), pdc, cursor);
+		auto type = MakePtr<DecorateType>();
+		type->isVolatile = true;
+		type->type = baselineType;
+		return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
 	}
 	else
 	{
@@ -986,6 +979,12 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 				SkipToken(cursor);
 			}
 		}
+	}
+
+	for (vint i = 0; i < declarators.Count(); i++)
+	{
+		auto declarator = declarators[i];
+		NormalizeTypeChain(declarator->type);
 	}
 }
 

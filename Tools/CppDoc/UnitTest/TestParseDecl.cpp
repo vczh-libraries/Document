@@ -133,7 +133,7 @@ a5: int const volatile;
 a6: int const volatile;
 b1: int const [1];
 b2: int volatile [2];
-b3: int const volatile [3] [4] [5];
+b3: int const volatile [5] [4] [3];
 )";
 		AssertProgram(input, output);
 	});

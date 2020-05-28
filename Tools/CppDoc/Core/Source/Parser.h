@@ -31,6 +31,7 @@ extern Ptr<Type>									AdjustReturnTypeWithMemberAndCC(Ptr<FunctionType> funct
 extern Ptr<Type>									RemoveArrayType(Ptr<Type> type, Ptr<Expr>& expr, bool& succeeded);
 extern Ptr<Type>									RemoveCVType(Ptr<Type> type, bool& isConst, bool& isVolatile);
 extern Ptr<Type>									AddCVType(Ptr<Type> type, bool isConst, bool isVolatile);
+extern void											NormalizeTypeChain(Ptr<Type>& type);
 extern bool											ParseCallingConvention(TsysCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor);
 
 // Parser_Type.cpp
