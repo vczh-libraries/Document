@@ -278,26 +278,12 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 	else if (TestToken(cursor, CppTokens::CONST))
 	{
 		// const DECLARATOR
-		auto type = baselineType.Cast<DecorateType>();
-		if (!type)
-		{
-			type = MakePtr<DecorateType>();
-			type->type = baselineType;
-		}
-		type->isConst = true;
-		return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
+		return ParseTypeBeforeDeclarator(pa, AddCVType(baselineType, true, false), pdc, cursor);
 	}
 	else if (TestToken(cursor, CppTokens::VOLATILE))
 	{
 		// volatile DECLARATOR
-		auto type = baselineType.Cast<DecorateType>();
-		if (!type)
-		{
-			type = MakePtr<DecorateType>();
-			type->type = baselineType;
-		}
-		type->isVolatile = true;
-		return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
+		return ParseTypeBeforeDeclarator(pa, AddCVType(baselineType, false, true), pdc, cursor);
 	}
 	else
 	{

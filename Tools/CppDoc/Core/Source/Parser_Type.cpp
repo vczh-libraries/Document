@@ -382,27 +382,13 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, ShortTypeTypenameKind typen
 	{
 		// const TYPE
 		auto type = ParseShortType(pa, typenameKind, cursor);
-		auto dt = type.Cast<DecorateType>();
-		if (!dt)
-		{
-			dt = MakePtr<DecorateType>();
-			dt->type = type;
-		}
-		dt->isConst = true;
-		return dt;
+		return AddCVType(type, true, false);
 	}
 	else if (TestToken(cursor, CppTokens::VOLATILE))
 	{
 		// volatile TYPE
 		auto type = ParseShortType(pa, typenameKind, cursor);
-		auto dt = type.Cast<DecorateType>();
-		if (!dt)
-		{
-			dt = MakePtr<DecorateType>();
-			dt->type = type;
-		}
-		dt->isVolatile = true;
-		return dt;
+		return AddCVType(type, false, true);
 	}
 	else if (TestToken(cursor, CppTokens::TYPENAME))
 	{
@@ -437,26 +423,12 @@ Ptr<Type> ParseLongType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		if (TestToken(cursor, CppTokens::CONST))
 		{
 			// TYPE const
-			auto type = typeResult.Cast<DecorateType>();
-			if (!type)
-			{
-				type = MakePtr<DecorateType>();
-				type->type = typeResult;
-			}
-			type->isConst = true;
-			typeResult = type;
+			typeResult = AddCVType(typeResult, true, false);
 		}
 		else if (TestToken(cursor, CppTokens::VOLATILE))
 		{
 			// TYPE volatile
-			auto type = typeResult.Cast<DecorateType>();
-			if (!type)
-			{
-				type = MakePtr<DecorateType>();
-				type->type = typeResult;
-			}
-			type->isVolatile = true;
-			typeResult = type;
+			typeResult = AddCVType(typeResult, false, true);
 		}
 		else
 		{
