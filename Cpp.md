@@ -27,6 +27,7 @@
   - [ ] Create appropriate hyperlinks for partial specialization scenarios.
   - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` cancels its overloading resolution for partial specializations.
   - [ ] Make dropdown tooltip scrollable if too long.
+  - [ ] Partial ordering correctly handle 8 combinations of `T const`, `T volatile`, `T[]`.
 - [ ] Lambda expressions.
 - [ ] Next Demo! (STL)
   - [ ] Test cases
