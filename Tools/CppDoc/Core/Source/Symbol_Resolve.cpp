@@ -403,7 +403,7 @@ bool ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 		}
 	}
 
-	rsa.searchedTypes.Add(entity, true);
+	rsa.searchedTypes.Add(entity, false);
 
 	bool found = false;
 	if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)
