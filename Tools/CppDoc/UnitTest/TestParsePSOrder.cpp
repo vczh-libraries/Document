@@ -173,6 +173,47 @@ namespace Input__TestParsePSOrder_PartialOrderEvaluation_Value
 	);
 }
 
+namespace Input__TestParsePSOrder_PartialOrderEvaluation_Qualifiers
+{
+	TEST_DECL(
+		template<typename T>
+		constexpr auto Value = 0;
+
+		template<typename T>
+		constexpr auto Value<const T> = 1;
+
+		template<typename T>
+		constexpr auto Value<volatile T> = 2;
+
+		template<typename T>
+		constexpr auto Value<const volatile T> = 3; // 1, 2
+
+		template<typename T, int Size>
+		constexpr auto Value<T[Size]> = 4;
+
+		template<typename T, int Size>
+		constexpr auto Value<const T[Size]> = 5; // 1, 4
+
+		template<typename T, int Size>
+		constexpr auto Value<volatile T[Size]> = 6; // 2, 4
+
+		template<typename T, int Size>
+		constexpr auto Value<const volatile T[Size]> = 7; // 3, 5, 6
+
+		template<typename T, int Size1, int Size2>
+		constexpr auto Value<T[Size1][Size2]> = 8; // 4
+
+		template<typename T, int Size1, int Size2>
+		constexpr auto Value<const T[Size1][Size2]> = 9; // 5, 8
+
+		template<typename T, int Size1, int Size2>
+		constexpr auto Value<volatile T[Size1][Size2]> = 10; // 6, 8
+
+		template<typename T, int Size1, int Size2>
+		constexpr auto Value<const volatile T[Size1][Size2]> = 11; // 7, 9, 10
+	);
+}
+
 TEST_FILE
 {
 	TEST_CATEGORY(L"Functions")
@@ -577,6 +618,34 @@ struct Obj
 			{14,17},
 			{15,18},
 			{16,19}
+		};
+
+		testPartialOrder(program, pa, yesRaw, _countof(yesRaw));
+	});
+
+	TEST_CATEGORY(L"Partial Order Evaluation (const volatile array)")
+	{
+		using namespace Input__TestParsePSOrder_PartialOrderEvaluation_Qualifiers;
+		COMPILE_PROGRAM(program, pa, input);
+
+		const Pair<vint, vint> yesRaw[] = {
+			{1,3},
+			{1,5},
+			{2,3},
+			{2,6},
+			{3,7},
+			{4,5},
+			{4,8},
+			{4,6},
+			{5,7},
+			{5,9},
+			{6,7},
+			{6,10},
+			{7,11},
+			{8,10},
+			{8,9},
+			{9,11},
+			{10,11}
 		};
 
 		testPartialOrder(program, pa, yesRaw, _countof(yesRaw));
