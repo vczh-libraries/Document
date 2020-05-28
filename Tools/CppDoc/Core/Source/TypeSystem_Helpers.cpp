@@ -38,6 +38,25 @@ ITsys* GetThisEntity(ITsys* thisType)
 	return thisEntity;
 }
 
+ITsys* GetArrayEntity(ITsys* tsys, TsysCV& cv, TsysRefType& refType)
+{
+	auto entity = tsys->GetEntity(cv, refType);
+
+	if (entity->GetType() == TsysType::Array)
+	{
+		auto element = entity->GetElement();
+		if (element->GetType() == TsysType::CV)
+		{
+			auto ecv = element->GetCV();
+			cv.isGeneralConst |= ecv.isGeneralConst;
+			cv.isVolatile |= ecv.isVolatile;
+			entity = element->ArrayOf(entity->GetParamCount());
+		}
+	}
+
+	return entity;
+}
+
 ITsys* ReplaceThisTypeInternal(ITsys* thisType, ITsys* entity)
 {
 	TsysCV cv;

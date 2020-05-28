@@ -326,16 +326,20 @@ public:
 
 	void Visit(ArrayType* self)override
 	{
+		// match "const T" on "const int[]" should get "int[]"
+		// match "T[]" on "int(const)[]" should get "const int"
 		ShouldEqual(self);
 	}
 
 	void Visit(DecorateType* self)override
 	{
+		// match "const T" on "const int[]" should get "int[]"
+		// match "T[]" on "int(const)[]" should get "const int"
 		if (IsPendingType(self->type))
 		{
 			TsysCV cv;
 			TsysRefType ref;
-			auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
+			auto entity = GetArrayEntity((targetType ? targetType : targetExpr.tsys), cv, ref);
 
 			if (matching == PendingMatching::Exact)
 			{

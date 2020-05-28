@@ -132,6 +132,8 @@ namespace partial_specification_ordering
 
 		void Visit(ArrayType* self)override
 		{
+			// match "const T" on "const int[]" should get "int[]"
+			// match "T[]" on "int(const)[]" should get "const int"
 			if (auto c = childType.Cast<ArrayType>())
 			{
 				Execute(self->type, c->type);
@@ -143,6 +145,8 @@ namespace partial_specification_ordering
 
 		void Visit(DecorateType* self)override
 		{
+			// match "const T" on "const int[]" should get "int[]"
+			// match "T[]" on "int(const)[]" should get "const int"
 			if (auto c = childType.Cast<DecorateType>())
 			{
 				if (self->isConst == c->isConst && self->isVolatile == c->isVolatile)

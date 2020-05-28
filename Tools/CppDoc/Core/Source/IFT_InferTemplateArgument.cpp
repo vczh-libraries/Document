@@ -207,27 +207,19 @@ namespace infer_function_type
 
 		void Visit(ArrayType* self)override
 		{
+			// match "const T" on "const int[]" should get "int[]"
+			// match "T[]" on "int(const)[]" should get "const int"
 			VisitArrayOrPtr(self->type, TsysType::Array);
 			Execute(self->expr);
 		}
 
 		void Visit(DecorateType* self)override
 		{
+			// match "const T" on "const int[]" should get "int[]"
+			// match "T[]" on "int(const)[]" should get "const int"
 			TsysCV cv;
 			TsysRefType refType;
-			auto entity = offeredType->GetEntity(cv, refType);
-
-			if (entity->GetType() == TsysType::Array)
-			{
-				auto element = entity->GetElement();
-				if (element->GetType() == TsysType::CV)
-				{
-					auto ecv = element->GetCV();
-					cv.isGeneralConst |= ecv.isGeneralConst;
-					cv.isVolatile |= ecv.isVolatile;
-					entity = element->ArrayOf(entity->GetParamCount());
-				}
-			}
+			auto entity = GetArrayEntity(offeredType, cv, refType);
 
 			if (exactMatch)
 			{

@@ -27,6 +27,9 @@
   - [ ] Create appropriate hyperlinks for partial specialization scenarios.
   - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` cancels its overloading resolution for partial specializations.
   - [ ] Make dropdown tooltip scrollable if too long.
+  - [ ] Define `RemoveCVType` and `RemoveArrayType` near `GetTypeWithoutMemberAndCC`.
+    - [ ] Use them in all `MakePtr<DecorateType>` and `MakePtr<ArrayType>` places, to keep `DecorateType` in the deepest place.
+    - [ ] Use them in `MatchPSArgumentVisitor` and `ResolvePendingTypeVisitor` to make matching correct.
 - [ ] Lambda expressions.
 - [ ] Next Demo! (STL)
   - [ ] Test cases

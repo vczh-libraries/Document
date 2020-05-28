@@ -350,6 +350,8 @@ public:
 
 	void Visit(ArrayType* self)override
 	{
+		// match "const T" on "const int[]" should get "int[]"
+		// match "T[]" on "int(const)[]" should get "const int"
 		if (auto type = peerType.Cast<ArrayType>())
 		{
 			result = IsSameResolvedType(self->type, type->type, equivalentNames);
@@ -358,6 +360,8 @@ public:
 
 	void Visit(DecorateType* self)override
 	{
+		// match "const T" on "const int[]" should get "int[]"
+		// match "T[]" on "int(const)[]" should get "const int"
 		if (auto type = peerType.Cast<DecorateType>())
 		{
 			result = self->isConst == type->isConst

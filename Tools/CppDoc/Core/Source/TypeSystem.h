@@ -486,6 +486,7 @@ struct TypeConv
 extern ITsys*					ApplyExprTsysType(ITsys* tsys, ExprTsysType type);
 extern ITsys*					CvRefOf(ITsys* tsys, TsysCV cv, TsysRefType refType);
 extern ITsys*					GetThisEntity(ITsys* thisType);
+extern ITsys*					GetArrayEntity(ITsys* tsys, TsysCV& cv, TsysRefType& refType);
 extern ITsys*					ReplaceThisType(ITsys* thisType, ITsys* entity);
 extern TypeConv					TestFunctionQualifier(TsysCV thisCV, TsysRefType thisRef, Ptr<FunctionType> funcType);
 extern TypeConv					TestTypeConversion(const ParsingArguments& pa, ITsys* toType, ExprTsysItem fromItem);
