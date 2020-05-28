@@ -9,7 +9,15 @@ int main()
 	{
 		// print types
 		PRINT_TYPE(char);
+
 		PRINT_TYPE(int);
+		PRINT_TYPE(int const);
+		PRINT_TYPE(int volatile);
+		PRINT_TYPE(int const volatile);
+		PRINT_TYPE(int[1]);
+		PRINT_TYPE(int const[1]);
+		PRINT_TYPE(int volatile[1]);
+		PRINT_TYPE(int const volatile[1]);
 
 		PRINT_TYPE(char*);
 		PRINT_TYPE(const char*const);

@@ -96,6 +96,20 @@ __forward extern mutable register static thread_local v1: int () *;
 		AssertProgram(input, output);
 	});
 
+	TEST_CATEGORY(L"Variables must ignore qualifiers after comma")
+	{
+		auto input = LR"(
+const int a, volatile b, volatile* c, volatile d[0];
+)";
+		auto output = LR"(
+a: int const;
+b: int const;
+c: int const *;
+d: int const [0];
+)";
+		AssertProgram(input, output);
+	});
+
 	TEST_CATEGORY(L"Functions")
 	{
 		auto input = LR"(
