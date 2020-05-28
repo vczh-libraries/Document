@@ -110,6 +110,16 @@ public:
 	Ptr<Expr>									expr;
 };
 
+class DecorateType : public Type
+{
+public:
+	ITypeVisitor_ACCEPT;
+
+	Ptr<Type>									type;
+	bool										isConst = false;
+	bool										isVolatile = false;
+};
+
 class CallingConventionType : public Type
 {
 public:
@@ -161,16 +171,6 @@ public:
 	ITypeVisitor_ACCEPT;
 
 	Ptr<Expr>									expr;
-};
-
-class DecorateType : public Type
-{
-public:
-	ITypeVisitor_ACCEPT;
-
-	Ptr<Type>									type;
-	bool										isConst = false;
-	bool										isVolatile = false;
 };
 
 class RootType : public Category_Id_Child_Generic_Root_Type

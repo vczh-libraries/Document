@@ -30,6 +30,11 @@ public:
 		self->type->Accept(this);
 	}
 
+	void Visit(DecorateType* self)override
+	{
+		self->type->Accept(this);
+	}
+
 	void Visit(CallingConventionType* self)override
 	{
 		self->type->Accept(this);
@@ -64,11 +69,6 @@ public:
 		{
 			result = true;
 		}
-	}
-
-	void Visit(DecorateType* self)override
-	{
-		self->type->Accept(this);
 	}
 
 	void Visit(RootType* self)override
@@ -329,6 +329,73 @@ public:
 		ShouldEqual(self);
 	}
 
+	void Visit(DecorateType* self)override
+	{
+		if (IsPendingType(self->type))
+		{
+			TsysCV cv;
+			TsysRefType ref;
+			auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
+
+			if (matching == PendingMatching::Exact)
+			{
+				if (ref != TsysRefType::None)
+				{
+					throw TypeCheckerException();
+				}
+
+				if (cv.isGeneralConst != self->isConst)
+				{
+					throw TypeCheckerException();
+				}
+
+				if (cv.isVolatile != self->isVolatile)
+				{
+					throw TypeCheckerException();
+				}
+			}
+			else
+			{
+				if (cv.isGeneralConst && !self->isConst)
+				{
+					throw TypeCheckerException();
+				}
+				if (cv.isVolatile && !self->isVolatile)
+				{
+					throw TypeCheckerException();
+				}
+			}
+
+			auto subMatching = matching;
+			switch (matching)
+			{
+			case PendingMatching::Free:
+				subMatching = PendingMatching::AutoCv;
+				break;
+			case PendingMatching::AutoRef:
+				subMatching = PendingMatching::AutoCvRef;
+				break;
+			case PendingMatching::AutoCv:
+				subMatching = PendingMatching::AutoCv;
+				break;
+			case PendingMatching::AutoCvRef:
+				subMatching = PendingMatching::AutoCvRef;
+				break;
+			case PendingMatching::Exact:
+				subMatching = PendingMatching::Exact;
+				break;
+			}
+			result = Execute(pa, self->type.Obj(), entity, subMatching);
+			cv.isGeneralConst |= self->isConst;
+			cv.isVolatile |= self->isVolatile;
+			result = result->CVOf(cv);
+		}
+		else
+		{
+			AssumeEqual(self);
+		}
+	}
+
 	void Visit(CallingConventionType* self)override
 	{
 		TsysCV cv;
@@ -486,73 +553,6 @@ public:
 		if (result->GetType() == TsysType::Zero)
 		{
 			result = pa.tsys->Int();
-		}
-	}
-
-	void Visit(DecorateType* self)override
-	{
-		if (IsPendingType(self->type))
-		{
-			TsysCV cv;
-			TsysRefType ref;
-			auto entity = targetType ? targetType->GetEntity(cv, ref) : targetExpr.tsys->GetEntity(cv, ref);
-
-			if (matching == PendingMatching::Exact)
-			{
-				if (ref != TsysRefType::None)
-				{
-					throw TypeCheckerException();
-				}
-
-				if (cv.isGeneralConst != self->isConst)
-				{
-					throw TypeCheckerException();
-				}
-
-				if (cv.isVolatile != self->isVolatile)
-				{
-					throw TypeCheckerException();
-				}
-			}
-			else
-			{
-				if (cv.isGeneralConst && !self->isConst)
-				{
-					throw TypeCheckerException();
-				}
-				if (cv.isVolatile && !self->isVolatile)
-				{
-					throw TypeCheckerException();
-				}
-			}
-
-			auto subMatching = matching;
-			switch (matching)
-			{
-			case PendingMatching::Free:
-				subMatching = PendingMatching::AutoCv;
-				break;
-			case PendingMatching::AutoRef:
-				subMatching = PendingMatching::AutoCvRef;
-				break;
-			case PendingMatching::AutoCv:
-				subMatching = PendingMatching::AutoCv;
-				break;
-			case PendingMatching::AutoCvRef:
-				subMatching = PendingMatching::AutoCvRef;
-				break;
-			case PendingMatching::Exact:
-				subMatching = PendingMatching::Exact;
-				break;
-			}
-			result = Execute(pa, self->type.Obj(), entity, subMatching);
-			cv.isGeneralConst |= self->isConst;
-			cv.isVolatile |= self->isVolatile;
-			result = result->CVOf(cv);
-		}
-		else
-		{
-			AssumeEqual(self);
 		}
 	}
 

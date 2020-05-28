@@ -141,6 +141,19 @@ namespace partial_specification_ordering
 			throw MatchPSFailureException();
 		}
 
+		void Visit(DecorateType* self)override
+		{
+			if (auto c = childType.Cast<DecorateType>())
+			{
+				if (self->isConst == c->isConst && self->isVolatile == c->isVolatile)
+				{
+					Execute(self->type, c->type);
+					return;
+				}
+			}
+			throw MatchPSFailureException();
+		}
+
 		void Visit(CallingConventionType* self)override
 		{
 			if (auto c = childType.Cast<CallingConventionType>())
@@ -185,19 +198,6 @@ namespace partial_specification_ordering
 				// TODO: [cpp.md] two expression should match
 				return;
 			}
-		}
-
-		void Visit(DecorateType* self)override
-		{
-			if (auto c = childType.Cast<DecorateType>())
-			{
-				if (self->isConst == c->isConst && self->isVolatile == c->isVolatile)
-				{
-					Execute(self->type, c->type);
-					return;
-				}
-			}
-			throw MatchPSFailureException();
 		}
 
 		void Visit(RootType* self)override

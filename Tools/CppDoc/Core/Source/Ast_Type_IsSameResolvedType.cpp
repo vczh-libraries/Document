@@ -356,6 +356,16 @@ public:
 		}
 	}
 
+	void Visit(DecorateType* self)override
+	{
+		if (auto type = peerType.Cast<DecorateType>())
+		{
+			result = self->isConst == type->isConst
+				&&		self->isVolatile == type->isVolatile
+				&&		IsSameResolvedType(self->type, type->type, equivalentNames);
+		}
+	}
+
 	void Visit(CallingConventionType* self)override
 	{
 		if (auto type = peerType.Cast<CallingConventionType>())
@@ -423,16 +433,6 @@ public:
 			{
 				result = true;
 			}
-		}
-	}
-
-	void Visit(DecorateType* self)override
-	{
-		if (auto type = peerType.Cast<DecorateType>())
-		{
-			result =	self->isConst == type->isConst
-				&&		self->isVolatile == type->isVolatile
-				&&		IsSameResolvedType(self->type, type->type, equivalentNames);
 		}
 	}
 

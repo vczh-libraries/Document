@@ -78,6 +78,13 @@ public:
 		self->type->Accept(this);
 	}
 
+	void Visit(DecorateType* self)override
+	{
+		if (self->isVolatile) result = L"<span class=\"cpp_keyword\"> volatile</span>" + result;
+		if (self->isConst) result = L"<span class=\"cpp_keyword\"> const</span>" + result;
+		self->type->Accept(this);
+	}
+
 	void Visit(CallingConventionType* self)override
 	{
 		switch (self->callingConvention)
@@ -128,13 +135,6 @@ public:
 		{
 			result = L"<span class=\"cpp_keyword\">decltype</span>(<span class=\"cpp_keyword\">auto</span>)" + result;
 		}
-	}
-
-	void Visit(DecorateType* self)override
-	{
-		if (self->isVolatile) result = L"<span class=\"cpp_keyword\"> volatile</span>" + result;
-		if (self->isConst) result = L"<span class=\"cpp_keyword\"> const</span>" + result;
-		self->type->Accept(this);
 	}
 
 	void Visit(RootType* self)override

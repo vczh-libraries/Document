@@ -81,6 +81,12 @@ namespace infer_function_type
 			if ((involved = result)) involvedTypes.Add(self);
 		}
 
+		void Visit(DecorateType* self)override
+		{
+			bool result = Execute(self->type);
+			if ((involved = result)) involvedTypes.Add(self);
+		}
+
 		void Visit(CallingConventionType* self)override
 		{
 			bool result = Execute(self->type);
@@ -118,12 +124,6 @@ namespace infer_function_type
 		void Visit(DeclType* self)override
 		{
 			// do not perform type inferencing against decltype(expr)
-		}
-
-		void Visit(DecorateType* self)override
-		{
-			bool result = Execute(self->type);
-			if ((involved = result)) involvedTypes.Add(self);
 		}
 
 		void Visit(RootType* self)override

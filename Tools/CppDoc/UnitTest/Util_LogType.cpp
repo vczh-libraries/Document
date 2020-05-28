@@ -78,6 +78,13 @@ public:
 		writer.WriteString(L"]");
 	}
 
+	void Visit(DecorateType* self)override
+	{
+		Log(self->type, writer);
+		if (self->isConst)		writer.WriteString(L" const");
+		if (self->isVolatile)	writer.WriteString(L" volatile");
+	}
+
 	void Visit(CallingConventionType* self)override
 	{
 		Log(self->type, writer);
@@ -184,13 +191,6 @@ public:
 			writer.WriteString(L"auto");
 		}
 		writer.WriteString(L")");
-	}
-
-	void Visit(DecorateType* self)override
-	{
-		Log(self->type, writer);
-		if (self->isConst)		writer.WriteString(L" const");
-		if (self->isVolatile)	writer.WriteString(L" volatile");
 	}
 
 	void Visit(RootType* self)override

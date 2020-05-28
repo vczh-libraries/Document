@@ -66,6 +66,11 @@ public:
 		Execute(self->type);
 	}
 
+	void Visit(DecorateType* self)override
+	{
+		Execute(self->type);
+	}
+
 	void Visit(CallingConventionType* self)override
 	{
 		Execute(self->type);
@@ -83,11 +88,6 @@ public:
 
 	void Visit(DeclType* self)override
 	{
-	}
-
-	void Visit(DecorateType* self)override
-	{
-		Execute(self->type);
 	}
 
 	void Visit(RootType* self)override

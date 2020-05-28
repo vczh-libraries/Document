@@ -678,6 +678,11 @@ public:
 	{
 	}
 
+	void Visit(DecorateType* self)override
+	{
+		ResolveChildSymbolOfType(self);
+	}
+
 	void Visit(CallingConventionType* self)override
 	{
 		ResolveChildSymbolOfType(self);
@@ -697,11 +702,6 @@ public:
 		{
 			ResolveChildSymbolOfType(self);
 		}
-	}
-
-	void Visit(DecorateType* self)override
-	{
-		ResolveChildSymbolOfType(self);
 	}
 
 	void Visit(RootType* self)override

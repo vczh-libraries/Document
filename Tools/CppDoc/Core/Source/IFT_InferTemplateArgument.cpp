@@ -211,6 +211,37 @@ namespace infer_function_type
 			Execute(self->expr);
 		}
 
+		void Visit(DecorateType* self)override
+		{
+			TsysCV cv;
+			TsysRefType refType;
+			auto entity = offeredType->GetEntity(cv, refType);
+
+			if (entity->GetType() == TsysType::Array)
+			{
+				auto element = entity->GetElement();
+				if (element->GetType() == TsysType::CV)
+				{
+					auto ecv = element->GetCV();
+					cv.isGeneralConst |= ecv.isGeneralConst;
+					cv.isVolatile |= ecv.isVolatile;
+					entity = element->ArrayOf(entity->GetParamCount());
+				}
+			}
+
+			if (exactMatch)
+			{
+				if (refType != TsysRefType::None) throw TypeCheckerException();
+				if (self->isConst != cv.isGeneralConst) throw TypeCheckerException();
+				if (self->isVolatile != cv.isVolatile) throw TypeCheckerException();
+				ExecuteInvolvedOnce(self->type, entity);
+			}
+			else
+			{
+				ExecuteInvolvedOnce(self->type, entity);
+			}
+		}
+
 		void Visit(CallingConventionType* self)override
 		{
 			self->type->Accept(this);
@@ -266,37 +297,6 @@ namespace infer_function_type
 		void Visit(DeclType* self)override
 		{
 			// do not perform type inferencing against decltype(expr)
-		}
-
-		void Visit(DecorateType* self)override
-		{
-			TsysCV cv;
-			TsysRefType refType;
-			auto entity = offeredType->GetEntity(cv, refType);
-
-			if (entity->GetType() == TsysType::Array)
-			{
-				auto element = entity->GetElement();
-				if (element->GetType() == TsysType::CV)
-				{
-					auto ecv = element->GetCV();
-					cv.isGeneralConst |= ecv.isGeneralConst;
-					cv.isVolatile |= ecv.isVolatile;
-					entity = element->ArrayOf(entity->GetParamCount());
-				}
-			}
-
-			if(exactMatch)
-			{
-				if (refType != TsysRefType::None) throw TypeCheckerException();
-				if (self->isConst != cv.isGeneralConst) throw TypeCheckerException();
-				if (self->isVolatile != cv.isVolatile) throw TypeCheckerException();
-				ExecuteInvolvedOnce(self->type, entity);
-			}
-			else
-			{
-				ExecuteInvolvedOnce(self->type, entity);
-			}
 		}
 
 		void Visit(RootType* self)override
