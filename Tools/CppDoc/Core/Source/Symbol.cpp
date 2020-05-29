@@ -494,6 +494,17 @@ const Ptr<Stat>& Symbol::GetStat_N()
 	}
 }
 
+const Ptr<Expr>& Symbol::GetExpr_N()
+{
+	switch (category)
+	{
+	case symbol_component::SymbolCategory::Normal:
+		return categoryData.normal.expr;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
+}
+
 Symbol* Symbol::GetFunctionSymbol_Fb()
 {
 	switch (category)

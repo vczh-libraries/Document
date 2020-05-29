@@ -297,6 +297,7 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 		{
 		case symbol_component::SymbolKind::Root:
 		case symbol_component::SymbolKind::Statement:
+		case symbol_component::SymbolKind::Expression:
 			nextPrefix = prefix;
 			break;
 		default:

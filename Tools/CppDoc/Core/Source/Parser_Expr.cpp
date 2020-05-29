@@ -568,9 +568,10 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 					}
 				}
 
+				auto newPa = pa.WithScope(pa.scopeSymbol->CreateExprSymbol_NFb(expr));
 				if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
 				{
-					expr->type = ParseFunctionType(pa, MakePtr<PrimitiveType>(), cursor);
+					expr->type = ParseFunctionType(newPa, MakePtr<PrimitiveType>(), cursor);
 				}
 				else
 				{
@@ -580,7 +581,6 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				}
 				
 				if (!TestToken(cursor, CppTokens::LBRACE, false)) throw StopParsingException(cursor);
-				auto newPa = pa.WithScope(pa.scopeSymbol->CreateExprSymbol_NFb(expr));
 				expr->statement = ParseStat(newPa, cursor);
 
 				return expr;

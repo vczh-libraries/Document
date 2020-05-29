@@ -293,6 +293,7 @@ public:
 	const symbol_component::SymbolGroup&			GetChildren_NFb();							//	Normal	FunctionBody
 	const List<Ptr<Declaration>>&					GetForwardDecls_N();						//	Normal
 	const Ptr<Stat>&								GetStat_N();								//	Normal
+	const Ptr<Expr>&								GetExpr_N();								//	Normal
 	Symbol*											GetFunctionSymbol_Fb();						//			FunctionBody
 	Ptr<Declaration>								GetForwardDecl_Fb();						//			FunctionBody
 	Ptr<symbol_component::ClassMemberCache>			GetClassMemberCache_NFb();					//			FunctionBody
