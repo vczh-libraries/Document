@@ -111,7 +111,15 @@ namespace symbol_type_resolving
 												case LambdaExpr::CaptureKind::Copy:
 													if (!lambdaExpr->type->decoratorMutable)
 													{
-														tsys = tsys->CVOf({ true,false });
+														switch (tsys->GetType())
+														{
+														case TsysType::LRef:
+														case TsysType::RRef:
+															tsys = tsys->GetElement()->CVOf({ true,false });
+															break;
+														default:
+															tsys = tsys->CVOf({ true,false });
+														}
 													}
 													goto FINISHED_LAMBDA_EXAM;
 												case LambdaExpr::CaptureKind::Ref:
@@ -126,7 +134,15 @@ namespace symbol_type_resolving
 										case LambdaExpr::CaptureDefaultKind::Copy:
 											if (!lambdaExpr->type->decoratorMutable)
 											{
-												tsys = tsys->CVOf({ true,false });
+												switch (tsys->GetType())
+												{
+												case TsysType::LRef:
+												case TsysType::RRef:
+													tsys = tsys->GetElement()->CVOf({ true,false });
+													break;
+												default:
+													tsys = tsys->CVOf({ true,false });
+												}
 											}
 											goto FINISHED_LAMBDA_EXAM;
 										case LambdaExpr::CaptureDefaultKind::Ref:

@@ -207,7 +207,148 @@ struct S
 
 	TEST_CATEGORY(L"Capturing int&")
 	{
-		// TODO:
+		auto input = LR"(
+struct S
+{
+	void F()
+	{
+		int& b;
+		int& c;
+		int& d;
+
+		auto l1 = [c, &d]			(int e)			{};
+		auto l2 = [c, &d]			(int e)mutable	{};
+		auto l3 = [=, *this, c, &d]	(int e)			{};
+		auto l4 = [=, *this, c, &d]	(int e)mutable	{};
+		auto l5 = [&, this, c, &d]	(int e)			{};
+		auto l6 = [&, this, c, &d]	(int e)mutable	{};
+	}
+};
+)";
+		COMPILE_PROGRAM(program, ppa, input);
+
+		auto stat = ppa.root
+			->TryGetChildren_NFb(L"S")->Get(0).childSymbol
+			->TryGetChildren_NFb(L"F")->Get(0).childSymbol->GetImplSymbols_F()[0]
+			->TryGetChildren_NFb(L"$")->Get(0).childSymbol
+			->GetStat_N().Cast<BlockStat>();
+
+		int& b = a1;
+		int& c = a1;
+		int& d = a1;
+
+		{
+			auto symbol = stat->symbol
+				->TryGetChildren_NFb(L"l1")->Get(0).childSymbol
+				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
+				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
+			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto test = [c, &d, &pa](int e)
+			{
+				(void)(c, d, e);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((c), __int32 const &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((d), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((e), __int32 &);
+			};
+			TEST_CATEGORY(L"l1")
+			{
+				test(0);
+			});
+		}
+		{
+			auto symbol = stat->symbol
+				->TryGetChildren_NFb(L"l2")->Get(0).childSymbol
+				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
+				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
+			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto test = [c, &d, &pa](int e)mutable
+			{
+				(void)(c, d, e);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((c), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((d), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((e), __int32 &);
+			};
+			TEST_CATEGORY(L"l2")
+			{
+				test(0);
+			});
+		}
+		{
+			auto symbol = stat->symbol
+				->TryGetChildren_NFb(L"l3")->Get(0).childSymbol
+				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
+				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
+			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto test = [=, &d, &pa](int e)
+			{
+				(void)(b, c, d, e);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((b), __int32 const &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((c), __int32 const &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((d), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((e), __int32 &);
+			};
+			TEST_CATEGORY(L"l3")
+			{
+				test(0);
+			});
+		}
+		{
+			auto symbol = stat->symbol
+				->TryGetChildren_NFb(L"l4")->Get(0).childSymbol
+				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
+				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
+			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto test = [=, &d, &pa](int e)mutable
+			{
+				(void)(b, c, d, e);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((b), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((c), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((d), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((e), __int32 &);
+			};
+			TEST_CATEGORY(L"l4")
+			{
+				test(0);
+			});
+		}
+		{
+			auto symbol = stat->symbol
+				->TryGetChildren_NFb(L"l5")->Get(0).childSymbol
+				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
+				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
+			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto test = [&, c](int e)
+			{
+				(void)(b, c, d, e);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((b), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((c), __int32 const &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((d), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((e), __int32 &);
+			};
+			TEST_CATEGORY(L"l5")
+			{
+				test(0);
+			});
+		}
+		{
+			auto symbol = stat->symbol
+				->TryGetChildren_NFb(L"l6")->Get(0).childSymbol
+				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
+				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
+			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto test = [&, c](int e)mutable
+			{
+				(void)(b, c, d, e);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((b), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((c), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((d), __int32 &);
+				ASSERT_OVERLOADING_SIMPLE_LVALUE((e), __int32 &);
+			};
+			TEST_CATEGORY(L"l6")
+			{
+				test(0);
+			});
+		}
 	});
 
 	TEST_CATEGORY(L"Capturing int& in nested lambda")
