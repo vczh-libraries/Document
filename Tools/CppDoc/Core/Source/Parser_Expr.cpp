@@ -558,6 +558,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 							if (!ParseCppName(capture.name, cursor)) throw StopParsingException(cursor);
 							if (capture.name.type != CppNameType::Normal) throw StopParsingException(cursor);
 							capture.isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+							expr->captures.Add(capture);
 						}
 					FINISH_CAPTURE_ITEM:
 						if (!TestToken(cursor, CppTokens::COMMA))

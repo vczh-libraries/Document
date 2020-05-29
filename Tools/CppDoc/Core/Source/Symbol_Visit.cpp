@@ -2,6 +2,7 @@
 #include "Symbol_TemplateSpec.h"
 #include "EvaluateSymbol.h"
 #include "Ast_Resolving.h"
+#include "Ast_Expr.h"
 
 namespace symbol_type_resolving
 {
@@ -70,6 +71,72 @@ namespace symbol_type_resolving
 				for (vint k = 0; k < evTypes.Count(); k++)
 				{
 					auto tsys = evTypes[k];
+
+					// modify the type if it is captured by a containing lambda expression
+					switch (symbol->GetParentScope()->kind)
+					{
+					case CLASS_SYMBOL_KIND:
+					case symbol_component::SymbolKind::Root:
+					case symbol_component::SymbolKind::Namespace:
+						// types of global variables and class fields will not be changed by a lambda expression
+						break;
+					default:
+						{
+							auto current = pa.scopeSymbol;
+							while (current)
+							{
+								switch (current->kind)
+								{
+								case CLASS_SYMBOL_KIND:
+								case symbol_component::SymbolKind::Root:
+								case symbol_component::SymbolKind::Namespace:
+								case symbol_component::SymbolKind::FunctionBodySymbol:
+									// captures cannot pass function scope
+									goto FINISHED_LAMBDA_EXAM;
+								case symbol_component::SymbolKind::Expression:
+									if (auto lambdaExpr = current->GetExpr_N().Cast<LambdaExpr>())
+									{
+										for (vint i = 0; i < lambdaExpr->captures.Count(); i++)
+										{
+											auto capture = lambdaExpr->captures[i];
+											if (capture.name.name == symbol->name)
+											{
+												switch (capture.kind)
+												{
+												case LambdaExpr::CaptureKind::Copy:
+													if (!lambdaExpr->type->decoratorMutable)
+													{
+														tsys = tsys->CVOf({ true,false });
+													}
+													goto FINISHED_LAMBDA_EXAM;
+												case LambdaExpr::CaptureKind::Ref:
+													tsys = tsys->LRefOf();
+													goto FINISHED_LAMBDA_EXAM;
+												}
+											}
+										}
+
+										switch (lambdaExpr->captureDefault)
+										{
+										case LambdaExpr::CaptureDefaultKind::Copy:
+											if (!lambdaExpr->type->decoratorMutable)
+											{
+												tsys = tsys->CVOf({ true,false });
+											}
+											goto FINISHED_LAMBDA_EXAM;
+										case LambdaExpr::CaptureDefaultKind::Ref:
+											tsys = tsys->LRefOf();
+											goto FINISHED_LAMBDA_EXAM;
+										}
+									}
+									break;
+								}
+
+								current = current->GetParentScope();
+							}
+						}
+					}
+				FINISHED_LAMBDA_EXAM:
 
 					if (isStaticSymbol)
 					{

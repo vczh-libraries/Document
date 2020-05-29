@@ -23,10 +23,10 @@ f: void ()
 {
 	a: auto = [] auto () {};
 	b: auto = [] auto () {};
-	c: auto = [=, *this] (auto->void) (x: int, y: int) {
+	c: auto = [=, *this, a] (auto->void) (x: int, y: int) {
 		return;
 	};
-	d: auto = [&, this] (auto->double) (x: int, y: int) noexcept throw(char, bool) {
+	d: auto = [&, this, &a] (auto->double) (x: int, y: int) noexcept throw(char, bool) {
 		z: int = 1;
 		return z;
 	};
@@ -40,7 +40,7 @@ f: void ()
 		// TODO:
 	});
 
-	TEST_CATEGORY(L"Capturing")
+	TEST_CATEGORY(L"Capturing int")
 	{
 		auto input = LR"(
 int a1 = 0;
@@ -238,5 +238,20 @@ struct S
 				test(0);
 			});
 		}
+	});
+
+	TEST_CATEGORY(L"Capturing int in nested lambda")
+	{
+		// TODO:
+	});
+
+	TEST_CATEGORY(L"Capturing int&")
+	{
+		// TODO:
+	});
+
+	TEST_CATEGORY(L"Capturing int& in nested lambda")
+	{
+		// TODO:
 	});
 }
