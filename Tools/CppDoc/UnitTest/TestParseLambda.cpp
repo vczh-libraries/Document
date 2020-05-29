@@ -83,12 +83,6 @@ struct S
 			auto test = [c, &d, &pa](int e)
 			{
 				(void)(a1, a2, c, d, e);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a1, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a2, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(c, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(d, __int32 &);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(e, __int32);
-
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a1), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a2), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((c), __int32 const &);
@@ -109,12 +103,6 @@ struct S
 			auto test = [c, &d, &pa](int e)mutable
 			{
 				(void)(a1, a2, c, d, e);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a1, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a2, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(c, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(d, __int32 &);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(e, __int32);
-
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a1), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a2), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((c), __int32 &);
@@ -135,13 +123,6 @@ struct S
 			auto test = [=, &d, &pa](int e)
 			{
 				(void)(a1, a2, b, c, d, e);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a1, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a2, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(b, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(c, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(d, __int32 &);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(e, __int32);
-
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a1), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a2), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((b), __int32 const &);
@@ -163,13 +144,6 @@ struct S
 			auto test = [=, &d, &pa](int e)mutable
 			{
 				(void)(a1, a2, b, c, d, e);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a1, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a2, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(b, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(c, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(d, __int32 &);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(e, __int32);
-
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a1), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a2), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((b), __int32 &);
@@ -191,13 +165,6 @@ struct S
 			auto test = [&, c](int e)
 			{
 				(void)(a1, a2, b, c, d, e);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a1, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a2, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(b, __int32 &);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(c, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(d, __int32 &);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(e, __int32);
-
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a1), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a2), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((b), __int32 &);
@@ -219,13 +186,6 @@ struct S
 			auto test = [&, c](int e)mutable
 			{
 				(void)(a1, a2, b, c, d, e);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a1, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(a2, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(b, __int32 &);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(c, __int32);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(d, __int32 &);
-				ASSERT_OVERLOADING_SIMPLE_LVALUE(e, __int32);
-
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a1), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((a2), __int32 &);
 				ASSERT_OVERLOADING_SIMPLE_LVALUE((b), __int32 &);
