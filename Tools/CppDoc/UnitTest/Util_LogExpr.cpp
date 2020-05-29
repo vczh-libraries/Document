@@ -1,18 +1,16 @@
 #include <Ast_Expr.h>
+#include <Ast_Stat.h>
 #include "Util.h"
 
 /***********************************************************************
 LogExprVisitor
 ***********************************************************************/
 
-class LogExprVisitor : public Object, public virtual IExprVisitor
+class LogExprVisitor : public Object, public virtual IExprVisitor, private LogIndentation
 {
-private:
-	StreamWriter&			writer;
-
 public:
-	LogExprVisitor(StreamWriter& _writer)
-		:writer(_writer)
+	LogExprVisitor(StreamWriter& _writer, vint _indentation)
+		:LogIndentation(_writer, _indentation)
 	{
 	}
 
@@ -74,17 +72,17 @@ public:
 			break;
 		}
 
-		Log(self->type, writer);
+		Log(self->type, writer, indentation);
 		writer.WriteString(L">(");
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		writer.WriteString(L")");
 	}
 
 	void Visit(TypeidExpr* self)override
 	{
 		writer.WriteString(L"typeid(");
-		if (self->type) Log(self->type, writer);
-		if (self->expr) Log(self->expr, writer);
+		if (self->type) Log(self->type, writer, indentation);
+		if (self->expr) Log(self->expr, writer, indentation);
 		writer.WriteString(L")");
 	}
 
@@ -93,15 +91,15 @@ public:
 		writer.WriteString(L"sizeof");
 		if (self->ellipsis) writer.WriteString(L"...");
 		writer.WriteString(L"(");
-		if (self->type) Log(self->type, writer);
-		if (self->expr) Log(self->expr, writer);
+		if (self->type) Log(self->type, writer, indentation);
+		if (self->expr) Log(self->expr, writer, indentation);
 		writer.WriteString(L")");
 	}
 
 	void Visit(ThrowExpr* self)override
 	{
 		writer.WriteString(L"throw(");
-		if (self->expr) Log(self->expr, writer);
+		if (self->expr) Log(self->expr, writer, indentation);
 		writer.WriteString(L")");
 	}
 
@@ -123,38 +121,38 @@ public:
 
 	void Visit(ChildExpr* self)override
 	{
-		Log(self->classType, writer);
+		Log(self->classType, writer, indentation);
 		writer.WriteString(L" :: ");
 		writer.WriteString(self->name.name);
 	}
 
 	void Visit(FieldAccessExpr* self)override
 	{
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		switch (self->type)
 		{
 		case CppFieldAccessType::Dot: writer.WriteString(L"."); break;
 		case CppFieldAccessType::Arrow: writer.WriteString(L"->"); break;
 		}
-		Log(Ptr<Expr>(self->name), writer);
+		Log(Ptr<Expr>(self->name), writer, indentation);
 	}
 
 	void Visit(ArrayAccessExpr* self)override
 	{
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		writer.WriteChar(L'[');
-		Log(self->index, writer);
+		Log(self->index, writer, indentation);
 		writer.WriteChar(L']');
 	}
 
 	void Visit(FuncAccessExpr* self)override
 	{
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		writer.WriteChar(L'(');
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
 			if (i > 0) writer.WriteString(L", ");
-			Log(self->arguments[i].item, writer);
+			Log(self->arguments[i].item, writer, indentation);
 			if (self->arguments[i].isVariadic)
 			{
 				writer.WriteString(L"...");
@@ -165,14 +163,14 @@ public:
 
 	void Visit(CtorAccessExpr* self)override
 	{
-		Log(self->type, writer);
+		Log(self->type, writer, indentation);
 		if (self->initializer)
 		{
 			writer.WriteChar(self->initializer->initializerType == CppInitializerType::Constructor ? L'(' : L'{');
 			for (vint i = 0; i < self->initializer->arguments.Count(); i++)
 			{
 				if (i > 0) writer.WriteString(L", ");
-				Log(self->initializer->arguments[i].item, writer);
+				Log(self->initializer->arguments[i].item, writer, indentation);
 				if (self->initializer->arguments[i].isVariadic)
 				{
 					writer.WriteString(L"...");
@@ -195,7 +193,7 @@ public:
 			for (vint i = 0; i < self->placementArguments.Count(); i++)
 			{
 				if (i > 0) writer.WriteString(L", ");
-				Log(self->placementArguments[i].item, writer);
+				Log(self->placementArguments[i].item, writer, indentation);
 				if (self->placementArguments[i].isVariadic)
 				{
 					writer.WriteString(L"...");
@@ -213,7 +211,7 @@ public:
 		for (vint i = 0; i < self->arguments.Count(); i++)
 		{
 			if (i > 0) writer.WriteString(L", ");
-			Log(self->arguments[i].item, writer);
+			Log(self->arguments[i].item, writer, indentation);
 			if (self->arguments[i].isVariadic)
 			{
 				writer.WriteString(L"...");
@@ -225,7 +223,7 @@ public:
 	void Visit(PostfixUnaryExpr* self)override
 	{
 		writer.WriteString(L"(");
-		Log(self->operand, writer);
+		Log(self->operand, writer, indentation);
 		writer.WriteString(L" ");
 		writer.WriteString(self->opName.name);
 		writer.WriteString(L")");
@@ -236,42 +234,100 @@ public:
 		writer.WriteString(L"(");
 		writer.WriteString(self->opName.name);
 		writer.WriteString(L" ");
-		Log(self->operand, writer);
+		Log(self->operand, writer, indentation);
 		writer.WriteString(L")");
 	}
 
 	void Visit(BinaryExpr* self)override
 	{
 		writer.WriteString(L"(");
-		Log(self->left, writer);
+		Log(self->left, writer, indentation);
 		writer.WriteString(L" ");
 		writer.WriteString(self->opName.name);
 		writer.WriteString(L" ");
-		Log(self->right, writer);
+		Log(self->right, writer, indentation);
 		writer.WriteString(L")");
 	}
 
 	void Visit(IfExpr* self)override
 	{
 		writer.WriteString(L"(");
-		Log(self->condition, writer);
+		Log(self->condition, writer, indentation);
 		writer.WriteString(L" ? ");
-		Log(self->left, writer);
+		Log(self->left, writer, indentation);
 		writer.WriteString(L" : ");
-		Log(self->right, writer);
+		Log(self->right, writer, indentation);
 		writer.WriteString(L")");
 	}
 
 	void Visit(GenericExpr* self)override
 	{
-		Log(Ptr<Expr>(self->expr), writer);
-		Log(self->arguments, L"<", L">", writer);
+		Log(Ptr<Expr>(self->expr), writer, indentation);
+		Log(self->arguments, L"<", L">", writer, indentation);
+	}
+
+	void Visit(LambdaExpr* self)override
+	{
+		writer.WriteString(L"[");
+		switch (self->captureDefault)
+		{
+		case LambdaExpr::CaptureDefaultKind::Copy:
+			writer.WriteString(L"=");
+			break;
+		case LambdaExpr::CaptureDefaultKind::Ref:
+			writer.WriteString(L"&");
+			break;
+		}
+
+		for (vint i = 0; i < self->captures.Count(); i++)
+		{
+			auto capture = self->captures[i];
+			if (self->captureDefault != LambdaExpr::CaptureDefaultKind::None || i > 0)
+			{
+				writer.WriteString(L", ");
+			}
+			switch (capture.kind)
+			{
+			case LambdaExpr::CaptureKind::CopyThis:
+				writer.WriteString(L"*this");
+				break;
+			case LambdaExpr::CaptureKind::RefThis:
+				writer.WriteString(L"this");
+				break;
+			case LambdaExpr::CaptureKind::Copy:
+				writer.WriteString(capture.name.name);
+				break;
+			case LambdaExpr::CaptureKind::Ref:
+				writer.WriteString(L"&");
+				writer.WriteString(capture.name.name);
+				break;
+			}
+		}
+		writer.WriteString(L"] ");
+
+		Log(Ptr<Type>(self->type), writer, indentation);
+
+		auto blockStat = self->statement.Cast<BlockStat>();
+		writer.WriteString(L" {");
+		if (blockStat->stats.Count() > 0)
+		{
+			writer.WriteLine(L"");
+			indentation++;
+			for (vint i = 0; i < blockStat->stats.Count(); i++)
+			{
+				WriteIndentation();
+				Log(blockStat->stats[i], writer, indentation);
+			}
+			indentation--;
+			WriteIndentation();
+		}
+		writer.WriteString(L"}");
 	}
 
 	void Visit(BuiltinFuncAccessExpr* self)override
 	{
-		Log(Ptr<Expr>(self->name), writer);
-		Log(self->arguments, L"(", L")", writer);
+		Log(Ptr<Expr>(self->name), writer, indentation);
+		Log(self->arguments, L"(", L")", writer, indentation);
 	}
 };
 
@@ -279,8 +335,8 @@ public:
 Log
 ***********************************************************************/
 
-void Log(Ptr<Expr> expr, StreamWriter& writer)
+void Log(Ptr<Expr> expr, StreamWriter& writer, vint indentation)
 {
-	LogExprVisitor visitor(writer);
+	LogExprVisitor visitor(writer, indentation);
 	expr->Accept(&visitor);
 }

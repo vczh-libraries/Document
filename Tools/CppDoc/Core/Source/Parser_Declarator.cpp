@@ -1077,3 +1077,11 @@ Ptr<Type> ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	return ParseNonMemberDeclarator(pa, pda_Type(), cursor)->type;
 }
+
+Ptr<FunctionType> ParseFunctionType(const ParsingArguments& pa, Ptr<Type> returnType, Ptr<CppTokenCursor>& cursor)
+{
+	auto declarator = MakePtr<Declarator>();
+	declarator->type = returnType;
+	ParseSingleDeclarator_Function(pa, declarator, returnType, false, false, cursor);
+	return declarator->type.Cast<FunctionType>();
+}

@@ -10,6 +10,7 @@ class Declaration;
 class ForwardFunctionDeclaration;
 class FunctionDeclaration;
 class Stat;
+class Expr;
 class ChildType;
 class ChildExpr;
 class Program;
@@ -65,6 +66,7 @@ namespace symbol_component
 
 		Namespace,
 		Statement,
+		Expression,
 		Root,
 	};
 
@@ -204,6 +206,7 @@ namespace symbol_component
 		List<Ptr<Declaration>>						forwardDecls;
 		Ptr<ClassMemberCache>						classMemberCache;
 		Ptr<Stat>									statement;
+		Ptr<Expr>									expr;
 		SymbolGroup									children;
 		Evaluation									evaluation;			// type of this symbol, or type of base types of a class, when all template arguments are unassigned
 	};
@@ -322,6 +325,7 @@ public:
 	Symbol*											AddForwardDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind);
 	Symbol*											AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component::SymbolKind kind, Ptr<Symbol> templateSpecSymbol = nullptr, Ptr<symbol_component::ClassMemberCache> classMemberCache = nullptr);
 	Symbol*											CreateStatSymbol_NFb(Ptr<Stat> _stat);
+	Symbol*											CreateExprSymbol_NFb(Ptr<Expr> _expr);
 
 	template<typename T>
 	Ptr<T> GetAnyForwardDecl()

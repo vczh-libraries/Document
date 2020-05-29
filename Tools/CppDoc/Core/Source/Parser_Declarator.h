@@ -126,5 +126,6 @@ extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const
 extern Ptr<Declarator>								ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor);
 
 extern Ptr<Type>									ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor);
+extern Ptr<FunctionType>							ParseFunctionType(const ParsingArguments& pa, Ptr<Type> returnType, Ptr<CppTokenCursor>& cursor);
 
 #endif

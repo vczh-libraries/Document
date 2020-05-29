@@ -42,6 +42,7 @@
   - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
   - [ ] `IFT_InferTemplateArgument.cpp` `Visit(GenericType* self)` able to process multiple primary instances.
 - [ ] `MatchPSArgument` on `decltype(EXPR)`, success when the type to match is not `decltype(EXPR)`, or two expression match.
+- [ ] `IsSameResolvedExprVisitor` on lambda expressions
 - [ ] `std::initialization_list`.
 - [ ] Next Demo! (UnitTest_Cases::STL)
 - [ ] Pass variadic template argument to placement new expression.

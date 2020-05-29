@@ -119,6 +119,8 @@ class IExprVisitor;
 class Expr : public Object
 {
 public:
+	Symbol*					symbol = nullptr;
+
 	virtual void			Accept(IExprVisitor* visitor) = 0;
 };
 

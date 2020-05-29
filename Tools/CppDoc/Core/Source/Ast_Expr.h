@@ -31,6 +31,7 @@ Visitor
 	F(BinaryExpr)\
 	F(IfExpr)\
 	F(GenericExpr)\
+	F(LambdaExpr)\
 	F(BuiltinFuncAccessExpr)\
 
 #define CPPDOC_FORWARD(NAME) class NAME;
@@ -319,6 +320,40 @@ public:
 
 	Ptr<Category_Id_Child_Expr>		expr;
 	VariadicList<GenericArgument>	arguments;
+};
+
+class LambdaExpr : public Expr
+{
+public:
+	IExprVisitor_ACCEPT;
+
+	enum class CaptureDefaultKind
+	{
+		Copy,
+		Ref,
+		None,
+	};
+
+	enum class CaptureKind
+	{
+		Copy,
+		Ref,
+		CopyThis,
+		RefThis,
+	};
+
+	struct Capture
+	{
+		CaptureKind					kind;
+		CppName						name;
+		bool						isVariadic = false;
+	};
+
+	CaptureDefaultKind				captureDefault = CaptureDefaultKind::None;
+	List<Capture>					captures;
+	Ptr<FunctionType>				type;
+	Ptr<Stat>						statement;
+	bool							statementEvaluated = false;
 };
 
 class BuiltinFuncAccessExpr : public Expr

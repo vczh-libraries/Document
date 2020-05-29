@@ -504,7 +504,86 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 		case CppTokens::LBRACKET:
 			{
 				// lambda expression
-				throw StopParsingException(cursor);
+				SkipToken(cursor);
+				auto expr = MakePtr<LambdaExpr>();
+
+				if (!TestToken(cursor, CppTokens::RBRACKET))
+				{
+					while (true)
+					{
+						{
+							if (TestToken(cursor, CppTokens::EQ))
+							{
+								if (expr->captures.Count() > 0) throw StopParsingException(cursor);
+								if (expr->captureDefault != LambdaExpr::CaptureDefaultKind::None) throw StopParsingException(cursor);
+								expr->captureDefault = LambdaExpr::CaptureDefaultKind::Copy;
+								goto FINISH_CAPTURE_ITEM;
+							}
+						}
+						{
+							auto oldCursor = cursor;
+							if (TestToken(cursor, CppTokens::AND))
+							{
+								if (TestToken(cursor, CppTokens::ID))
+								{
+									cursor = oldCursor;
+								}
+								else
+								{
+									if (expr->captures.Count() > 0) throw StopParsingException(cursor);
+									if (expr->captureDefault != LambdaExpr::CaptureDefaultKind::None) throw StopParsingException(cursor);
+									expr->captureDefault = LambdaExpr::CaptureDefaultKind::Ref;
+									goto FINISH_CAPTURE_ITEM;
+								}
+							}
+						}
+						{
+							if (TestToken(cursor, CppTokens::EXPR_THIS))
+							{
+								expr->captures.Add({ LambdaExpr::CaptureKind::RefThis });
+								goto FINISH_CAPTURE_ITEM;
+							}
+						}
+						{
+							if (TestToken(cursor, CppTokens::MUL))
+							{
+								RequireToken(cursor, CppTokens::EXPR_THIS);
+								expr->captures.Add({ LambdaExpr::CaptureKind::CopyThis });
+								goto FINISH_CAPTURE_ITEM;
+							}
+						}
+						{
+							LambdaExpr::Capture capture;
+							capture.kind = TestToken(cursor, CppTokens::AND) ? LambdaExpr::CaptureKind::Ref : LambdaExpr::CaptureKind::Copy;
+							if (!ParseCppName(capture.name, cursor)) throw StopParsingException(cursor);
+							if (capture.name.type != CppNameType::Normal) throw StopParsingException(cursor);
+							capture.isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+						}
+					FINISH_CAPTURE_ITEM:
+						if (!TestToken(cursor, CppTokens::COMMA))
+						{
+							RequireToken(cursor, CppTokens::RBRACKET);
+							break;
+						}
+					}
+				}
+
+				if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
+				{
+					expr->type = ParseFunctionType(pa, MakePtr<PrimitiveType>(), cursor);
+				}
+				else
+				{
+					auto funcType = MakePtr<FunctionType>();
+					funcType->returnType = MakePtr<PrimitiveType>();
+					expr->type = funcType;
+				}
+				
+				if (!TestToken(cursor, CppTokens::LBRACE, false)) throw StopParsingException(cursor);
+				auto newPa = pa.WithScope(pa.scopeSymbol->CreateExprSymbol_NFb(expr));
+				expr->statement = ParseStat(newPa, cursor);
+
+				return expr;
 			}
 		}
 	}

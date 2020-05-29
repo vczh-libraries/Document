@@ -85,7 +85,7 @@ void AssertTypeInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 
 	auto output = GenerateToStream([&](StreamWriter& writer)
 	{
-		Log(type, writer);
+		Log(type, writer, 0);
 	});
 	AssertLog(output, (log ? log : input));
 
@@ -128,7 +128,7 @@ void AssertExprInternal(const wchar_t* input, const wchar_t* log, const wchar_t*
 
 	auto output = GenerateToStream([&](StreamWriter& writer)
 	{
-		Log(expr, writer);
+		Log(expr, writer, 0);
 	});
 	AssertLog(output, (log ? log : input));
 

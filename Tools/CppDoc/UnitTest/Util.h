@@ -34,10 +34,10 @@ public:
 	}
 };
 
-extern void					Log(Ptr<Initializer> initializer, StreamWriter& writer);
-extern void					Log(VariadicList<GenericArgument>& arguments, const wchar_t* open, const wchar_t* close, StreamWriter& writer);
-extern void					Log(Ptr<Type> type, StreamWriter& writer);
-extern void					Log(Ptr<Expr> expr, StreamWriter& writer);
+extern void					Log(Ptr<Initializer> initializer, StreamWriter& writer, vint indentation);
+extern void					Log(VariadicList<GenericArgument>& arguments, const wchar_t* open, const wchar_t* close, StreamWriter& writer, vint indentation);
+extern void					Log(Ptr<Type> type, StreamWriter& writer, vint indentation);
+extern void					Log(Ptr<Expr> expr, StreamWriter& writer, vint indentation);
 extern void					Log(Ptr<Stat> stat, StreamWriter& writer, vint indentation);
 extern void					Log(Ptr<Declaration> decl, StreamWriter& writer, vint indentation, bool semicolon);
 extern void					Log(Ptr<Program> program, StreamWriter& writer);

@@ -1,6 +1,6 @@
 #include "Util.h"
 
-void Log(Ptr<Initializer> initializer, StreamWriter& writer)
+void Log(Ptr<Initializer> initializer, StreamWriter& writer, vint indentation)
 {
 	switch (initializer->initializerType)
 	{
@@ -21,7 +21,7 @@ void Log(Ptr<Initializer> initializer, StreamWriter& writer)
 		{
 			writer.WriteString(L", ");
 		}
-		Log(initializer->arguments[i].item, writer);
+		Log(initializer->arguments[i].item, writer, indentation);
 		if (initializer->arguments[i].isVariadic)
 		{
 			writer.WriteString(L"...");
@@ -39,7 +39,7 @@ void Log(Ptr<Initializer> initializer, StreamWriter& writer)
 	}
 }
 
-void Log(VariadicList<GenericArgument>& arguments, const wchar_t* open, const wchar_t* close, StreamWriter& writer)
+void Log(VariadicList<GenericArgument>& arguments, const wchar_t* open, const wchar_t* close, StreamWriter& writer, vint indentation)
 {
 	writer.WriteString(open);
 	for (vint i = 0; i < arguments.Count(); i++)
@@ -50,8 +50,8 @@ void Log(VariadicList<GenericArgument>& arguments, const wchar_t* open, const wc
 		}
 
 		auto arg = arguments[i].item;
-		if (arg.expr) Log(arg.expr, writer);
-		if (arg.type) Log(arg.type, writer);
+		if (arg.expr) Log(arg.expr, writer, indentation);
+		if (arg.type) Log(arg.type, writer, indentation);
 		if (arguments[i].isVariadic)
 		{
 			writer.WriteString(L"...");

@@ -27,7 +27,7 @@ private:
 			writer.WriteString(self->name.name);
 			writer.WriteString(L": ");
 		}
-		Log(self->type, writer);
+		Log(self->type, writer, indentation);
 	}
 
 	void WriteHeader(ForwardFunctionDeclaration* self)
@@ -56,10 +56,10 @@ private:
 		writer.WriteString(self->name.name);
 		if (self->specializationSpec)
 		{
-			Log(self->specializationSpec->arguments, L"<", L">", writer);
+			Log(self->specializationSpec->arguments, L"<", L">", writer, indentation);
 		}
 		writer.WriteString(L": ");
-		Log(self->type, writer);
+		Log(self->type, writer, indentation);
 		if (self->decoratorAbstract)
 		{
 			writer.WriteString(L" = 0");
@@ -81,7 +81,7 @@ private:
 		if (self->baseType)
 		{
 			writer.WriteString(L" : ");
-			Log(self->baseType, writer);
+			Log(self->baseType, writer, indentation);
 		}
 	}
 
@@ -102,7 +102,7 @@ private:
 		writer.WriteString(self->name.name);
 		if (self->specializationSpec)
 		{
-			Log(self->specializationSpec->arguments, L"<", L">", writer);
+			Log(self->specializationSpec->arguments, L"<", L">", writer, indentation);
 		}
 	}
 
@@ -132,11 +132,11 @@ private:
 				if (arg.type)
 				{
 					writer.WriteString(L" = ");
-					Log(arg.type, writer);
+					Log(arg.type, writer, indentation);
 				}
 				break;
 			case CppTemplateArgumentType::Value:
-				Log(arg.type, writer);
+				Log(arg.type, writer, indentation);
 				if (arg.name)
 				{
 					writer.WriteChar(L' ');
@@ -149,7 +149,7 @@ private:
 				if (arg.expr)
 				{
 					writer.WriteString(L" = ");
-					Log(arg.expr, writer);
+					Log(arg.expr, writer, indentation);
 				}
 				break;
 			}
@@ -226,7 +226,7 @@ public:
 		{
 			writer.WriteString(L"friend ");
 		}
-		Log(self->usedClass, writer);
+		Log(self->usedClass, writer, indentation);
 		if (semicolon) writer.WriteLine(L";");
 	}
 
@@ -239,7 +239,7 @@ public:
 		WriteHeader(self);
 		if (self->initializer)
 		{
-			Log(self->initializer, writer);
+			Log(self->initializer, writer, indentation);
 		}
 		if (semicolon) writer.WriteLine(L";");
 	}
@@ -263,7 +263,7 @@ public:
 			for (vint i = 0; i < item->arguments.Count(); i++)
 			{
 				if (i > 0) writer.WriteString(L", ");
-				Log(item->arguments[i].item, writer);
+				Log(item->arguments[i].item, writer, indentation);
 				if (item->arguments[i].isVariadic)
 				{
 					writer.WriteString(L"...");
@@ -281,7 +281,7 @@ public:
 		if (self->value)
 		{
 			writer.WriteString(L" = ");
-			Log(self->value, writer);
+			Log(self->value, writer, indentation);
 		}
 		writer.WriteLine(L",");
 	}
@@ -335,7 +335,7 @@ public:
 				writer.WriteString(L"private ");
 				break;
 			}
-			Log(pair.f1, writer);
+			Log(pair.f1, writer, indentation);
 		}
 		writer.WriteLine(L"");
 
@@ -404,15 +404,15 @@ public:
 	void Visit(UsingNamespaceDeclaration* self)override
 	{
 		writer.WriteString(L"using namespace ");
-		Log(self->ns, writer);
+		Log(self->ns, writer, indentation);
 		if (semicolon) writer.WriteLine(L";");
 	}
 
 	void Visit(UsingSymbolDeclaration* self)override
 	{
 		writer.WriteString(L"using ");
-		if (self->type) Log(self->type, writer);
-		if (self->expr) Log(self->expr, writer);
+		if (self->type) Log(self->type, writer, indentation);
+		if (self->expr) Log(self->expr, writer, indentation);
 		if (semicolon) writer.WriteLine(L";");
 	}
 
@@ -422,7 +422,7 @@ public:
 		writer.WriteString(L"using_type ");
 		writer.WriteString(self->name.name);
 		writer.WriteString(L": ");
-		Log(self->type, writer);
+		Log(self->type, writer, indentation);
 		if (semicolon) writer.WriteLine(L";");
 	}
 
@@ -434,12 +434,12 @@ public:
 		writer.WriteString(self->name.name);
 		if (self->specializationSpec)
 		{
-			Log(self->specializationSpec->arguments, L"<", L">", writer);
+			Log(self->specializationSpec->arguments, L"<", L">", writer, indentation);
 		}
 		writer.WriteString(L": ");
-		Log(self->type, writer);
+		Log(self->type, writer, indentation);
 		writer.WriteString(L" = ");
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		if (semicolon) writer.WriteLine(L";");
 	}
 
@@ -472,7 +472,7 @@ public:
 			{
 				writer.WriteString(L", ");
 			}
-			Log(self->exprs[i], writer);
+			Log(self->exprs[i], writer, indentation);
 		}
 		writer.WriteString(L")");
 		if (semicolon) writer.WriteLine(L";");

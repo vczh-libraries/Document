@@ -290,6 +290,12 @@ public:
 		}
 	}
 
+	void Visit(LambdaExpr* self)override
+	{
+		// TODO: compare 
+		result = false;
+	}
+
 	void Visit(BuiltinFuncAccessExpr* self)override
 	{
 		if (auto expr = peerExpr.Cast<BuiltinFuncAccessExpr>())

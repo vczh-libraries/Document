@@ -67,7 +67,7 @@ public:
 
 	void Visit(ExprStat* self)override
 	{
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		writer.WriteLine(L";");
 	}
 
@@ -87,7 +87,7 @@ public:
 	void Visit(CaseStat* self)override
 	{
 		writer.WriteString(L"case ");
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		writer.WriteString(L": ");
 		self->stat->Accept(this);
 	}
@@ -118,7 +118,7 @@ public:
 		}
 		else
 		{
-			Log(self->expr, writer);
+			Log(self->expr, writer, indentation);
 		}
 		writer.WriteLine(L")");
 		WriteSubStat(self->stat);
@@ -131,7 +131,7 @@ public:
 
 		WriteIndentation();
 		writer.WriteString(L"while (");
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		writer.WriteLine(L");");
 	}
 
@@ -140,7 +140,7 @@ public:
 		writer.WriteString(L"foreach (");
 		Log(self->varDecl, writer, 0, false);
 		writer.WriteString(L" : ");
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		writer.WriteLine(L")");
 		WriteSubStat(self->stat);
 	}
@@ -150,7 +150,7 @@ public:
 		writer.WriteString(L"for (");
 		if (self->init)
 		{
-			Log(self->init, writer);
+			Log(self->init, writer, indentation);
 		}
 		else
 		{
@@ -165,10 +165,10 @@ public:
 		}
 		writer.WriteString(L"; ");
 
-		if (self->expr) Log(self->expr, writer);
+		if (self->expr) Log(self->expr, writer, indentation);
 		writer.WriteString(L"; ");
 
-		if (self->effect) Log(self->effect, writer);
+		if (self->effect) Log(self->effect, writer, indentation);
 		writer.WriteLine(L")");
 		WriteSubStat(self->stat);
 	}
@@ -195,7 +195,7 @@ public:
 		}
 		else
 		{
-			Log(self->expr, writer);
+			Log(self->expr, writer, indentation);
 		}
 		writer.WriteLine(L")");
 		WriteSubStat(self->trueStat);
@@ -225,7 +225,7 @@ public:
 		}
 		else
 		{
-			Log(self->expr, writer);
+			Log(self->expr, writer, indentation);
 		}
 		writer.WriteLine(L")");
 		WriteSubStat(self->stat);
@@ -255,7 +255,7 @@ public:
 		if (self->expr)
 		{
 			writer.WriteString(L"return ");
-			Log(self->expr, writer);
+			Log(self->expr, writer, indentation);
 			writer.WriteLine(L";");
 		}
 		else
@@ -271,7 +271,7 @@ public:
 
 		WriteIndentation();
 		writer.WriteString(L"__except (");
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		writer.WriteLine(L")");
 		WriteSubStat(self->exceptStat);
 	}
@@ -294,7 +294,7 @@ public:
 	void Visit(__IfExistsStat* self)override
 	{
 		writer.WriteString(L"__if_exists (");
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		writer.WriteLine(L")");
 		WriteSubStat(self->stat);
 	}
@@ -302,7 +302,7 @@ public:
 	void Visit(__IfNotExistsStat* self)override
 	{
 		writer.WriteString(L"__if_not_exists (");
-		Log(self->expr, writer);
+		Log(self->expr, writer, indentation);
 		writer.WriteLine(L")");
 		WriteSubStat(self->stat);
 	}

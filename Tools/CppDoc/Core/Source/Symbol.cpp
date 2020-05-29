@@ -765,6 +765,19 @@ Symbol* Symbol::CreateStatSymbol_NFb(Ptr<Stat> _stat)
 	return symbol.Obj();
 }
 
+Symbol* Symbol::CreateExprSymbol_NFb(Ptr<Expr> _expr)
+{
+	// There is no limitation on statement scopes
+	auto symbol = MakePtr<Symbol>();
+	symbol->name = L"$";
+	symbol->kind = symbol_component::SymbolKind::Expression;
+	symbol->categoryData.normal.expr = _expr;
+	AddChildAndSetParent_NFb(symbol->name, symbol);
+
+	_expr->symbol = symbol.Obj();
+	return symbol.Obj();
+}
+
 /***********************************************************************
 TemplateArgumentContext
 ***********************************************************************/

@@ -5,14 +5,11 @@
 LogTypeVisitor
 ***********************************************************************/
 
-class LogTypeVisitor : public Object, public virtual ITypeVisitor
+class LogTypeVisitor : public Object, public virtual ITypeVisitor, private LogIndentation
 {
-private:
-	StreamWriter&			writer;
-
 public:
-	LogTypeVisitor(StreamWriter& _writer)
-		:writer(_writer)
+	LogTypeVisitor(StreamWriter& _writer, vint _indentation)
+		:LogIndentation(_writer, _indentation)
 	{
 	}
 
@@ -56,7 +53,7 @@ public:
 
 	void Visit(ReferenceType* self)override
 	{
-		Log(self->type, writer);
+		Log(self->type, writer, indentation);
 		switch (self->reference)
 		{
 		case CppReferenceType::Ptr:				writer.WriteString(L" *");	break;
@@ -69,25 +66,25 @@ public:
 
 	void Visit(ArrayType* self)override
 	{
-		Log(self->type, writer);
+		Log(self->type, writer, indentation);
 		writer.WriteString(L" [");
 		if (self->expr)
 		{
-			Log(self->expr, writer);
+			Log(self->expr, writer, indentation);
 		}
 		writer.WriteString(L"]");
 	}
 
 	void Visit(DecorateType* self)override
 	{
-		Log(self->type, writer);
+		Log(self->type, writer, indentation);
 		if (self->isConst)		writer.WriteString(L" const");
 		if (self->isVolatile)	writer.WriteString(L" volatile");
 	}
 
 	void Visit(CallingConventionType* self)override
 	{
-		Log(self->type, writer);
+		Log(self->type, writer, indentation);
 
 		switch (self->callingConvention)
 		{
@@ -117,14 +114,14 @@ public:
 		if (self->decoratorReturnType)
 		{
 			writer.WriteChar(L'(');
-			Log(self->returnType, writer);
+			Log(self->returnType, writer, indentation);
 			writer.WriteString(L"->");
-			Log(self->decoratorReturnType, writer);
+			Log(self->decoratorReturnType, writer, indentation);
 			writer.WriteChar(L')');
 		}
 		else
 		{
-			Log(self->returnType, writer);
+			Log(self->returnType, writer, indentation);
 		}
 
 		writer.WriteString(L" (");
@@ -165,7 +162,7 @@ public:
 				{
 					writer.WriteString(L", ");
 				}
-				Log(self->exceptions[i], writer);
+				Log(self->exceptions[i], writer, indentation);
 			}
 			writer.WriteChar(L')');
 		}
@@ -173,9 +170,9 @@ public:
 
 	void Visit(MemberType* self)override
 	{
-		Log(self->type, writer);
+		Log(self->type, writer, indentation);
 		writer.WriteString(L" (");
-		Log(self->classType, writer);
+		Log(self->classType, writer, indentation);
 		writer.WriteString(L" ::)");
 	}
 
@@ -184,7 +181,7 @@ public:
 		writer.WriteString(L"decltype(");
 		if (self->expr)
 		{
-			Log(self->expr, writer);
+			Log(self->expr, writer, indentation);
 		}
 		else
 		{
@@ -209,7 +206,7 @@ public:
 
 	void Visit(ChildType* self)override
 	{
-		Log(Ptr<Type>(self->classType), writer);
+		Log(Ptr<Type>(self->classType), writer, indentation);
 		writer.WriteString(L" :: ");
 		if (self->typenameType) writer.WriteString(L"typename ");
 		writer.WriteString(self->name.name);
@@ -217,8 +214,8 @@ public:
 
 	void Visit(GenericType* self)override
 	{
-		Log(Ptr<Type>(self->type), writer);
-		Log(self->arguments, L"<", L">", writer);
+		Log(Ptr<Type>(self->type), writer, indentation);
+		Log(self->arguments, L"<", L">", writer, indentation);
 	}
 };
 
@@ -226,11 +223,11 @@ public:
 Log
 ***********************************************************************/
 
-void Log(Ptr<Type> type, StreamWriter& writer)
+void Log(Ptr<Type> type, StreamWriter& writer, vint indentation)
 {
 	if (type)
 	{
-		LogTypeVisitor visitor(writer);
+		LogTypeVisitor visitor(writer, indentation);
 		type->Accept(&visitor);
 	}
 	else
