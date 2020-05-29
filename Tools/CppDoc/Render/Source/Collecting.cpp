@@ -362,7 +362,10 @@ void GenerateHtmlLine(
 			Use(html).WriteString(GetDeclId(declOrArg));
 			Use(html).WriteString(L"\">");
 
-			bool generateLink = false;
+			bool generateForwardImplLink = false;
+			Symbol* generatePsLink = nullptr;
+			Symbol* generatePrimaryLink = nullptr;
+
 			// no need to generate a link for template argument name
 			if (auto& decl = declOrArg.f0)
 			{
@@ -370,55 +373,108 @@ void GenerateHtmlLine(
 				{
 				case symbol_component::SymbolCategory::Normal:
 					// generate a link on a declaration name, if the same symbol appears at multiple places
-					generateLink = (decl->symbol->GetImplDecl_NFb() ? 1 : 0) + decl->symbol->GetForwardDecls_N().Count() > 1;
+					generateForwardImplLink = (decl->symbol->GetImplDecl_NFb() ? 1 : 0) + decl->symbol->GetForwardDecls_N().Count() > 1;
 					break;
 				case symbol_component::SymbolCategory::FunctionBody:
 					{
 						// generate a link on a function name, if the same symbol appears at multiple places
 						auto functionSymbol = decl->symbol->GetFunctionSymbol_Fb();
-						generateLink = functionSymbol->GetImplSymbols_F().Count() + functionSymbol->GetForwardSymbols_F().Count() > 1;
+						generateForwardImplLink = functionSymbol->GetImplSymbols_F().Count() + functionSymbol->GetForwardSymbols_F().Count() > 1;
 					}
 					break;
 				}
+
+				auto declSymbol = decl->symbol;
+				if (declSymbol->GetCategory() == symbol_component::SymbolCategory::FunctionBody)
+				{
+					declSymbol = declSymbol->GetFunctionSymbol_Fb();
+				}
+
+				if (declSymbol->IsPSPrimary_NF())
+				{
+					generatePsLink = declSymbol;
+				}
+				else
+				{
+					generatePrimaryLink = declSymbol->GetPSPrimary_NF();
+				}
 			}
 
-			if (generateLink)
-			{
-				// if this token needs a hyperlink
-				// say we have a hyperlink to this symbol in this file
-				auto& decl = declOrArg.f0;
 
-				if (!flr->refSymbols.Contains(decl->symbol))
+			WString resolvedLinkCode;
+			WString psLinkCode;
+			WString primaryLinkCode;
+
+			if (generateForwardImplLink)
+			{
+				auto& decl = declOrArg.f0;
+				switch (decl->symbol->GetCategory())
 				{
-					switch (decl->symbol->GetCategory())
+				case symbol_component::SymbolCategory::Normal:
 					{
-					case symbol_component::SymbolCategory::Normal:
+						// if it is not a function declaration, use the declaration symbol
+						auto declSymbol = decl->symbol;
+						// say we have a hyperlink to this symbol in this file
+						if (!flr->refSymbols.Contains(declSymbol))
 						{
-							// if it is not a function declaration, use the declaration symbol
-							auto declSymbol = decl->symbol;
-							if (!flr->refSymbols.Contains(declSymbol))
-							{
-								flr->refSymbols.Add(declSymbol);
-							}
+							flr->refSymbols.Add(declSymbol);
 						}
-						break;
-					case symbol_component::SymbolCategory::FunctionBody:
-						{
-							// if it is a function declaration, use the function symbol instead of the declaration symbol
-							auto declSymbol = decl->symbol->GetFunctionSymbol_Fb();
-							if (!flr->refSymbols.Contains(declSymbol))
-							{
-								flr->refSymbols.Add(declSymbol);
-							}
-						}
-						break;
 					}
+					break;
+				case symbol_component::SymbolCategory::FunctionBody:
+					{
+						// if it is a function declaration, use the function symbol instead of the declaration symbol
+						auto declSymbol = decl->symbol->GetFunctionSymbol_Fb();
+						// say we have a hyperlink to this symbol in this file
+						if (!flr->refSymbols.Contains(declSymbol))
+						{
+							flr->refSymbols.Add(declSymbol);
+						}
+					}
+					break;
 				}
 
 				// generate a <div> to itself, so that users can navigate between forward declarations and implementations
-				Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([], [\'");
-				Use(html).WriteString(GetSymbolId(decl->symbol));
-				Use(html).WriteString(L"\'])\">");
+				resolvedLinkCode = L"\'" + GetSymbolId(decl->symbol) + L"\'";
+			}
+
+			if (generatePsLink)
+			{
+				auto& descendants = generatePsLink->GetPSPrimaryDescendants_NF();
+				for (vint i = 0; i < descendants.Count(); i++)
+				{
+					auto psSymbol = descendants[i];
+
+					// say we have a hyperlink to this symbol in this file
+					if (!flr->refSymbols.Contains(psSymbol))
+					{
+						flr->refSymbols.Add(psSymbol);
+					}
+
+					psLinkCode += (i > 0 ? L", \'" : L"\'") + GetSymbolId(psSymbol) + L"\'";
+				}
+			}
+
+			if (generatePrimaryLink)
+			{
+				// say we have a hyperlink to this symbol in this file
+				if (!flr->refSymbols.Contains(generatePrimaryLink))
+				{
+					flr->refSymbols.Add(generatePrimaryLink);
+				}
+
+				primaryLinkCode = L"\'" + GetSymbolId(generatePrimaryLink) + L"\'";
+			}
+
+			if (resolvedLinkCode != L"" || psLinkCode != L"" || primaryLinkCode != L"")
+			{
+				Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol([], [");
+				Use(html).WriteString(resolvedLinkCode);
+				Use(html).WriteString(L"], [");
+				Use(html).WriteString(psLinkCode);
+				Use(html).WriteString(L"], [");
+				Use(html).WriteString(primaryLinkCode);
+				Use(html).WriteString(L"])\">");
 			}
 			else
 			{
@@ -466,10 +522,6 @@ void GenerateHtmlLine(
 			Use(html).WriteString(L"<div class=\"ref\" onclick=\"jumpToSymbol(");
 			for (vint i = (vint)IndexReason::OverloadedResolution; i >= (vint)IndexReason::Resolved; i--)
 			{
-				if (i != (vint)IndexReason::OverloadedResolution)
-				{
-					Use(html).WriteString(L", ");
-				}
 				Use(html).WriteString(L"[");
 
 				SortedList<WString> sortedIds;
@@ -489,9 +541,9 @@ void GenerateHtmlLine(
 					Use(html).WriteString(sortedIds[j]);
 					Use(html).WriteString(L"\'");
 				}
-				Use(html).WriteString(L"]");
+				Use(html).WriteString(L"], ");
 			}
-			Use(html).WriteString(L")\">");
+			Use(html).WriteString(L"[], [])\">");
 		}
 
 		if (!firstToken && cursor && (CppTokens)cursor->token.token == CppTokens::SHARP)

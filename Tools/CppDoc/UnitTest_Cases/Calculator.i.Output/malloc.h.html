@@ -54,7 +54,7 @@
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_heapinfo"><div><div class="token cpp_type">_heapinfo</div></div></div>
 {
     <div class="token cpp_keyword ">int</div>* <div class="def" id="NI$_heapinfo::_pentry"><div><div class="token cpp_field">_pentry</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_heapinfo::_size"><div><div class="token cpp_field">_size</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_heapinfo::_size"><div><div class="token cpp_field">_size</div></div></div>;
     <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_heapinfo::_useflag"><div><div class="token cpp_field">_useflag</div></div></div>;
 } <div class="def" id="NI$_HEAPINFO"><div><div class="token cpp_type">_HEAPINFO</div></div></div>;
 
@@ -67,14 +67,14 @@
 
 <div class="disabled">_Ret_notnull_ _Post_writable_byte_size_(_Size)</div>
 <div class="expandable"><div class="disabled">void* __cdecl _alloca(_In_ size_t _Size);</div>
-<div class="expanded"><div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_alloca@void *(::size_t)[decl0]"><div><div class="token cpp_function">_alloca</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_alloca@void *(::size_t)[decl0]::_Size"><div>_Size</div></div>);</div></div>
+<div class="expanded"><div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_alloca@void *(::size_t)[decl0]"><div><div class="token cpp_function">_alloca</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_alloca@void *(::size_t)[decl0]::_Size"><div>_Size</div></div>);</div></div>
 
 
 
 <div class="disabled">#if !defined __midl &amp;&amp; !defined RC_INVOKED</div>
 
 <div class="expandable"><div class="disabled">    _ACRTIMP intptr_t __cdecl _get_heap_handle(void);</div>
-<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['intptr_t'])"><div class="token cpp_type">intptr_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_get_heap_handle@::intptr_t()[decl0]"><div><div class="token cpp_function">_get_heap_handle</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['intptr_t'], [], [])"><div class="token cpp_type">intptr_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_get_heap_handle@::intptr_t()[decl0]"><div><div class="token cpp_function">_get_heap_handle</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
 
 <div class="disabled">    _Check_return_</div>
 <div class="expandable"><div class="disabled">    _DCRTIMP int __cdecl _heapmin(void);</div>
@@ -83,7 +83,7 @@
 <div class="disabled">    #if defined _DEBUG || defined _CRT_USE_WINAPI_FAMILY_DESKTOP_APP || defined _CORECRT_BUILD</div>
 <div class="expandable"><div class="disabled">        _ACRTIMP int __cdecl _heapwalk(_Inout_ _HEAPINFO* _EntryInfo);
     #endif</div>
-<div class="expanded">        <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_heapwalk@int(::_HEAPINFO *)[decl0]"><div><div class="token cpp_function">_heapwalk</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['_HEAPINFO'])"><div class="token cpp_type">_HEAPINFO</div></div>* <div class="def" id="NI$_heapwalk@int(::_HEAPINFO *)[decl0]::_EntryInfo"><div>_EntryInfo</div></div>);</div></div>
+<div class="expanded">        <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_heapwalk@int(::_HEAPINFO *)[decl0]"><div><div class="token cpp_function">_heapwalk</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['_HEAPINFO'], [], [])"><div class="token cpp_type">_HEAPINFO</div></div>* <div class="def" id="NI$_heapwalk@int(::_HEAPINFO *)[decl0]::_EntryInfo"><div>_EntryInfo</div></div>);</div></div>
 
 <div class="disabled">    #ifdef _CRT_USE_WINAPI_FAMILY_DESKTOP_APP</div>
 <div class="expandable"><div class="disabled">        _Check_return_ _DCRTIMP int __cdecl _heapchk(void);
@@ -115,20 +115,20 @@
 <div class="expandable"><div class="disabled">    __inline void* _MarkAllocaS(_Out_opt_ __crt_typefix(unsigned int*) void* _Ptr, unsigned int _Marker)</div>
 <div class="expanded">    <div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">void</div>* <div class="def" id="FB$_MarkAllocaS@void *(void *, unsigned int)[impl0]"><div><div class="token cpp_function">_MarkAllocaS</div></div></div>(   <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr"><div><div class="token cpp_argument">_Ptr</div></div></div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Marker"><div><div class="token cpp_argument">_Marker</div></div></div>)</div></div>
     {
-        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'])"><div class="token cpp_argument">_Ptr</div></div>)
+        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div>)
         {
-            *((<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>*)<div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'])"><div class="token cpp_argument">_Ptr</div></div>) = <div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Marker'])"><div class="token cpp_argument">_Marker</div></div>;
+            *((<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>*)<div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div>) = <div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Marker'], [], [])"><div class="token cpp_argument">_Marker</div></div>;
 <div class="expandable"><div class="disabled">            _Ptr = (char*)_Ptr + _ALLOCA_S_MARKER_SIZE;</div>
-<div class="expanded">            <div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'])"><div class="token cpp_argument">_Ptr</div></div> = (<div class="token cpp_keyword ">char</div>*)<div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'])"><div class="token cpp_argument">_Ptr</div></div> + <div class="token cpp_number ">8</div>;</div></div>
+<div class="expanded">            <div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div> = (<div class="token cpp_keyword ">char</div>*)<div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div> + <div class="token cpp_number ">8</div>;</div></div>
         }
-        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'])"><div class="token cpp_argument">_Ptr</div></div>;
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div>;
     }
 
-    <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> <div class="def" id="FB$_MallocaComputeSize@::size_t(::size_t)[impl0]"><div><div class="token cpp_function">_MallocaComputeSize</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size"><div><div class="token cpp_argument">_Size</div></div></div>)
+    <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="FB$_MallocaComputeSize@::size_t(::size_t)[impl0]"><div><div class="token cpp_function">_MallocaComputeSize</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size"><div><div class="token cpp_argument">_Size</div></div></div>)
     {
 <div class="expandable"><div class="disabled">        size_t _MarkedSize = _Size + _ALLOCA_S_MARKER_SIZE;</div>
-<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['size_t'])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize"><div>_MarkedSize</div></div> = <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size'])"><div class="token cpp_argument">_Size</div></div> + <div class="token cpp_number ">8</div>;</div></div>
-        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize'])">_MarkedSize</div> &gt; <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size'])"><div class="token cpp_argument">_Size</div></div> ? <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize'])">_MarkedSize</div> : <div class="token cpp_number ">0</div>;
+<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize"><div>_MarkedSize</div></div> = <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size'], [], [])"><div class="token cpp_argument">_Size</div></div> + <div class="token cpp_number ">8</div>;</div></div>
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize'], [], [])">_MarkedSize</div> &gt; <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size'], [], [])"><div class="token cpp_argument">_Size</div></div> ? <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize'], [], [])">_MarkedSize</div> : <div class="token cpp_number ">0</div>;
     }
 
 <div class="expandable"><div class="disabled">    #pragma warning(pop)</div>
@@ -178,15 +178,15 @@
 <div class="expanded">    <div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_freea@void(void *)[impl0]"><div><div class="token cpp_function">_freea</div></div></div>(    <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$_freea@void(void *)[impl0]::_Memory"><div><div class="token cpp_argument">_Memory</div></div></div>)</div></div>
     {
         <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_freea@void(void *)[impl0]::_Marker"><div>_Marker</div></div>;
-        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'])"><div class="token cpp_argument">_Memory</div></div>)
+        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'], [], [])"><div class="token cpp_argument">_Memory</div></div>)
         {
 <div class="expandable"><div class="disabled">            _Memory = (char*)_Memory - _ALLOCA_S_MARKER_SIZE;</div>
-<div class="expanded">            <div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'])"><div class="token cpp_argument">_Memory</div></div> = (<div class="token cpp_keyword ">char</div>*)<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'])"><div class="token cpp_argument">_Memory</div></div> - <div class="token cpp_number ">8</div>;</div></div>
-            <div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Marker'])">_Marker</div> = *(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>*)<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'])"><div class="token cpp_argument">_Memory</div></div>;
+<div class="expanded">            <div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'], [], [])"><div class="token cpp_argument">_Memory</div></div> = (<div class="token cpp_keyword ">char</div>*)<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'], [], [])"><div class="token cpp_argument">_Memory</div></div> - <div class="token cpp_number ">8</div>;</div></div>
+            <div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Marker'], [], [])">_Marker</div> = *(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>*)<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'], [], [])"><div class="token cpp_argument">_Memory</div></div>;
 <div class="expandable"><div class="disabled">            if (_Marker == _ALLOCA_S_HEAP_MARKER)</div>
-<div class="expanded">            <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Marker'])">_Marker</div> == <div class="token cpp_number ">0xDDDD</div>)</div></div>
+<div class="expanded">            <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Marker'], [], [])">_Marker</div> == <div class="token cpp_number ">0xDDDD</div>)</div></div>
             {
-                <div class="ref" onclick="jumpToSymbol(['free@void(void *)'], ['free@void(void *)'])"><div class="token cpp_function">free</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'])"><div class="token cpp_argument">_Memory</div></div>);
+                <div class="ref" onclick="jumpToSymbol(['free@void(void *)'], ['free@void(void *)'], [], [])"><div class="token cpp_function">free</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'], [], [])"><div class="token cpp_argument">_Memory</div></div>);
             }
 <div class="disabled">            #ifdef _ASSERTE</div>
 <div class="disabled">            else if (_Marker != _ALLOCA_S_STACK_MARKER)</div>

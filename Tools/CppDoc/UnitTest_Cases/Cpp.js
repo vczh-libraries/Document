@@ -152,7 +152,7 @@ function promptTooltipDropdownData(dropdownData, underElement) {
  * }
  */
 
-function jumpToSymbol(overloadResolutions, resolved) {
+function jumpToSymbol(overloadResolutions, resolved, ps, primary) {
     closeTooltip();
     if (overloadResolutions.length === resolved.length) {
         if (JSON.stringify(overloadResolutions) === JSON.stringify(resolved)) {
@@ -169,7 +169,9 @@ function jumpToSymbol(overloadResolutions, resolved) {
 
     const packedArguments = {
         'Overload Resolution': overloadResolutions,
-        'Resolved': resolved
+        'Resolved': resolved,
+        'Partial Specializations': ps,
+        'Primary Declaration': primary,
     };
     const dropdownData = [];
 
@@ -216,7 +218,7 @@ function jumpToSymbol(overloadResolutions, resolved) {
         return;
     }
 
-    if (dropdownData.length === 1) {
+    if (dropdownData.length === 1 && dropdownData[0].name === 'Resolved') {
         const idGroup = dropdownData[0];
         if (idGroup.symbols.length === 1) {
             const symbol = idGroup.symbols[0];
