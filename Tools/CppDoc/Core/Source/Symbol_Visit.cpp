@@ -96,6 +96,11 @@ namespace symbol_type_resolving
 								case symbol_component::SymbolKind::Expression:
 									if (auto lambdaExpr = current->GetExpr_N().Cast<LambdaExpr>())
 									{
+										if (symbol->GetParentScope() == current)
+										{
+											// no need to change type of the parameter of this lambda expression
+											goto FINISHED_LAMBDA_EXAM;
+										}
 										for (vint i = 0; i < lambdaExpr->captures.Count(); i++)
 										{
 											auto capture = lambdaExpr->captures[i];
