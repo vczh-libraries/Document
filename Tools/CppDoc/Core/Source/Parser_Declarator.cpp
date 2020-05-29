@@ -557,6 +557,16 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 				// override
 				type->decoratorOverride = true;
 			}
+			else if (TestToken(cursor, CppTokens::DECL_FINAL))
+			{
+				// final
+				type->decoratorFinal = true;
+			}
+			else if (TestToken(cursor, CppTokens::MUTABLE))
+			{
+				// mutable
+				type->decoratorMutable = true;
+			}
 			else if (TestToken(cursor, CppTokens::SUB, CppTokens::GT))
 			{
 				// auto SOMETHING -> TYPE

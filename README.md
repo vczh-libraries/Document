@@ -39,6 +39,8 @@ All **the compiler** here means the compiler created by this project.
     - Variadic templates
     - New string literals
     - Explicitly defaulted and deleted special member functions
+    - Lambda functions and expressions
+      - Evaluated to `any_t` in this release
   - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
     - Function return type deduction
     - Alternate type deduction on declaration
@@ -50,33 +52,13 @@ All **the compiler** here means the compiler created by this project.
     - Allowing attributes for namespaces and enumerators
     - UTF-8 (u8) character literals (UTF-8 string literals have existed since C++11; C++17 adds the corresponding character literals for consistency, though as they are restricted to a single byte they can only store ASCII)
     - Initializers in if and switch statements
-- **Support before releasing**
-  - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
-    - Initializer lists
-    - Lambda functions and expressions
-    - Object construction improvement
-      - Constructor calls another constructor in initializing list
-      - Using base class' constructors
-    - Explicit overrides and final **(not care #2)**
-      - `final` keyword on methods
-    - Extern template **(not care #1)**
-      - `extern` keyword before `template` keyword
-    - Type `long long int`
-    - Control and query object alignment **(not care #1)**
-    - Explicit conversion operators: **Treat all as implicit** **(not care #2)**
-      - Need test to see if `explicit` is correctly parsed
-  - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
-    - Generic lambdas
-    - Lambda capture expressions
-  - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
-    - New standard attributes `[[fallthrough]]`, `[[maybe_unused]]` and `[[nodiscard]]`
-    - A compile-time static if with the form if constexpr(expression) **(not care #1)**
 - **Parsed but it doesn't affect type inferencing so I don't care**
   - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
     - Thread-local storage
     - Allow sizeof to work on members of classes without an explicit object:
     - Attributes
     - Static assertions
+    - Explicit overrides and final
   - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
     - The attribute `[[deprecated]]`
   - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
@@ -95,7 +77,27 @@ All **the compiler** here means the compiler created by this project.
     - New rules for auto deduction from braced-init-list
     - Constant evaluation for all non-type template arguments: **Treat all constant values identical**
     - Exception specifications were made part of the function type: **Don't compare exception specifications**
-- **No plan**
+- **Next release**
+  - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
+    - Initializer lists
+    - Lambda functions and expressions
+      - Evaluate the type of a lambda expression, instead of returning `any_t`
+    - Object construction improvement
+      - Constructor calls another constructor in initializing list
+      - Using base class' constructors
+    - Extern template **(not care #1)**
+      - `extern` keyword before `template` keyword
+    - Type `long long int`
+    - Control and query object alignment **(not care #1)**
+    - Explicit conversion operators: **Treat all as implicit** **(not care #2)**
+      - Need test to see if `explicit` is correctly parsed
+  - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
+    - Generic lambdas
+    - Lambda capture expressions
+  - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
+    - New standard attributes `[[fallthrough]]`, `[[maybe_unused]]` and `[[nodiscard]]`
+    - A compile-time static if with the form if constexpr(expression) **(not care #1)**
+- **No plan for now**
   - Explicit (full) specialization of a member of a template class
     - For `template<typename T> struct X { void f(); };`, `template<> void X<int>::f(){...}` is not supported.
   - Specializations defined not in the scope where the primary declaration is in

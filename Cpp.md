@@ -25,7 +25,6 @@
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (?)
   - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` points to the correct partial specializations.
-- [ ] Lambda expressions.
 - [ ] Next Demo! (STL)
   - [ ] Test cases
     - [ ] calling `F<int()>` with function type not ctor expression.

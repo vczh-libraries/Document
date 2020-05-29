@@ -145,6 +145,8 @@ public:
 	bool										qualifierRRef = false;
 
 	bool										decoratorOverride = false;
+	bool										decoratorFinal = false;
+	bool										decoratorMutable = false;
 	bool										decoratorNoExcept = false;
 	bool										decoratorThrow = false;
 	List<Ptr<Type>>								exceptions;
