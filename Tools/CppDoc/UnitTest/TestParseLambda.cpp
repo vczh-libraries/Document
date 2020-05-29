@@ -202,6 +202,7 @@ struct S
 
 	TEST_CATEGORY(L"Capturing int in nested lambda")
 	{
+		// TODO: also capture const/volatile in all 4 capturing test cases
 		// TODO:
 	});
 
