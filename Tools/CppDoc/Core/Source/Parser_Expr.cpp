@@ -149,6 +149,7 @@ void CheckResolvingForGenericExpr(const ParsingArguments& pa, Ptr<Resolving> res
 
 bool PrepareArgumentsForGenericExpr(const ParsingArguments& pa, VariadicList<GenericArgument>& genericArguments, bool allowGenericPresence, bool allowGenericAbsence, Ptr<CppTokenCursor>& cursor)
 {
+	if (!allowGenericPresence) return false;
 	bool hasGenericPart = false;
 	{
 		auto oldCursor = cursor;
@@ -166,19 +167,9 @@ bool PrepareArgumentsForGenericExpr(const ParsingArguments& pa, VariadicList<Gen
 		}
 	}
 
-	if (hasGenericPart)
+	if (!hasGenericPart && !allowGenericAbsence)
 	{
-		if (!allowGenericPresence)
-		{
-			throw StopParsingException(cursor);
-		}
-	}
-	else
-	{
-		if (!allowGenericAbsence)
-		{
-			throw StopParsingException(cursor);
-		}
+		throw StopParsingException(cursor);
 	}
 
 	return hasGenericPart;

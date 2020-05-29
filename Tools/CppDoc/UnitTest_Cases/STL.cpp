@@ -5,3 +5,5 @@
 #include <string>
 #include <memory>
 #include <codecvt>
+#include <functional>
+#include <iostream>
