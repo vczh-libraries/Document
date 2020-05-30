@@ -155,6 +155,7 @@ Main
 Set root folder which contains UnitTest_Cases.vcxproj
 Open http://127.0.0.1:8080/Calculator.i.Output/FileIndex.html
 Open http://127.0.0.1:8080/TypePrinter.i.Output/FileIndex.html
+Open http://127.0.0.1:8080/STL.i.Output/FileIndex.html
 ***********************************************************************/
 
 int main()
