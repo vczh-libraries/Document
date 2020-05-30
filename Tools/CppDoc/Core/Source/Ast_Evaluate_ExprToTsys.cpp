@@ -473,20 +473,23 @@ public:
 			for (vint i = 0; i < tritems.Count(); i++)
 			{
 				auto ritem = tritems[i];
-				if (auto funcDecl = ritem.symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+				if (ritem.symbol)
 				{
-					if (funcDecl->name.type == CppNameType::Operator)
+					if (auto funcDecl = ritem.symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 					{
-						ResolvedItem::AddItem(oritems, ritem);
-					}
-					else
-					{
-						ResolvedItem::AddItem(nritems, ritem);
+						if (funcDecl->name.type == CppNameType::Operator)
+						{
+							ResolvedItem::AddItem(oritems, ritem);
+						}
+						else
+						{
+							ResolvedItem::AddItem(nritems, ritem);
+						}
 					}
 				}
 			}
 
-			if (nritems.Count() > 0)
+			if (name && nritems.Count() > 0)
 			{
 				pa.recorder->IndexOverloadingResolution(*name, nritems);
 			}
