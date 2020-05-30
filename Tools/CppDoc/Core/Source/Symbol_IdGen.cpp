@@ -3,6 +3,7 @@
 #include "Parser.h"
 #include "Ast_Type.h"
 #include "Ast_Decl.h"
+#include "Symbol_TemplateSpec.h"
 
 using namespace vl::stream;
 
@@ -334,6 +335,21 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 	switch (category)
 	{
 	case symbol_component::SymbolCategory::Normal:
+		{
+			// template arguments in class forward declarations cannot be accessed via GetChildren_Nfb
+			const auto& forwardDecls = GetForwardDecls_N();
+			for (vint i = 0; i < forwardDecls.Count(); i++)
+			{
+				if (auto spec = symbol_type_resolving::GetTemplateSpecFromDecl(forwardDecls[i]))
+				{
+					for (vint j = 0; j < spec->arguments.Count(); j++)
+					{
+						auto argSymbol = spec->arguments[j].argumentSymbol;
+						argSymbol->GenerateUniqueId(ids, nextPrefix);
+					}
+				}
+			}
+		}
 	case symbol_component::SymbolCategory::FunctionBody:
 		{
 			const auto& children = GetChildren_NFb();
