@@ -70,6 +70,9 @@ namespace symbol_type_resolving
 
 				for (vint k = 0; k < evTypes.Count(); k++)
 				{
+					bool addConst = false;
+					bool addRef = false;
+					bool decoratedByLambda = false;
 					auto tsys = evTypes[k];
 
 					// modify the type if it is captured by a containing lambda expression
@@ -85,6 +88,12 @@ namespace symbol_type_resolving
 							auto current = pa.scopeSymbol;
 							while (current)
 							{
+								if (symbol->GetParentScope() == current)
+								{
+									// no need to add decoration if we reach the scope of the variable
+									goto FINISHED_LAMBDA_EXAM;
+								}
+
 								switch (current->kind)
 								{
 								case CLASS_SYMBOL_KIND:
@@ -96,11 +105,7 @@ namespace symbol_type_resolving
 								case symbol_component::SymbolKind::Expression:
 									if (auto lambdaExpr = current->GetExpr_N().Cast<LambdaExpr>())
 									{
-										if (symbol->GetParentScope() == current)
-										{
-											// no need to change type of the parameter of this lambda expression
-											goto FINISHED_LAMBDA_EXAM;
-										}
+										decoratedByLambda = true;
 										for (vint i = 0; i < lambdaExpr->captures.Count(); i++)
 										{
 											auto capture = lambdaExpr->captures[i];
@@ -111,21 +116,16 @@ namespace symbol_type_resolving
 												case LambdaExpr::CaptureKind::Copy:
 													if (!lambdaExpr->type->decoratorMutable)
 													{
-														switch (tsys->GetType())
-														{
-														case TsysType::LRef:
-														case TsysType::RRef:
-															tsys = tsys->GetElement()->CVOf({ true,false });
-															break;
-														default:
-															tsys = tsys->CVOf({ true,false });
-														}
+														addConst = true;
 													}
-													goto FINISHED_LAMBDA_EXAM;
+													break;
 												case LambdaExpr::CaptureKind::Ref:
-													tsys = tsys->LRefOf();
-													goto FINISHED_LAMBDA_EXAM;
+													addRef = true;
+													break;
 												}
+
+												// no need to add further decoration if we reach the capture of the variable
+												goto FINISHED_LAMBDA_EXAM;
 											}
 										}
 
@@ -134,20 +134,12 @@ namespace symbol_type_resolving
 										case LambdaExpr::CaptureDefaultKind::Copy:
 											if (!lambdaExpr->type->decoratorMutable)
 											{
-												switch (tsys->GetType())
-												{
-												case TsysType::LRef:
-												case TsysType::RRef:
-													tsys = tsys->GetElement()->CVOf({ true,false });
-													break;
-												default:
-													tsys = tsys->CVOf({ true,false });
-												}
+												addConst = true;
 											}
-											goto FINISHED_LAMBDA_EXAM;
+											break;
 										case LambdaExpr::CaptureDefaultKind::Ref:
-											tsys = tsys->LRefOf();
-											goto FINISHED_LAMBDA_EXAM;
+											addRef = true;
+											break;
 										}
 									}
 									break;
@@ -158,6 +150,17 @@ namespace symbol_type_resolving
 						}
 					}
 				FINISHED_LAMBDA_EXAM:
+					if (decoratedByLambda)
+					{
+						TsysCV cv;
+						TsysRefType refType;
+						auto entity = tsys->GetEntity(cv, refType);
+
+						cv.isGeneralConst |= addConst;
+						auto cvAdded = entity->CVOf(cv);
+
+						tsys = addRef ? cvAdded->LRefOf() : cvAdded;
+					}
 
 					if (isStaticSymbol)
 					{
