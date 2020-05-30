@@ -302,6 +302,26 @@ Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& 
 ParseNameOrCtorAccessExpr
 ***********************************************************************/
 
+Ptr<Type> AppendArrayTypeForCtor(const ParsingArguments& pa, Ptr<Type> type, Ptr<CppTokenCursor>& cursor)
+{
+	List<Ptr<Expr>> sizeExprs;
+	while (TestToken(cursor, CppTokens::LBRACKET))
+	{
+		sizeExprs.Add(ParseExpr(pa, pea_Full(), cursor));
+		RequireToken(cursor, CppTokens::RBRACKET);
+	}
+
+	for (vint i = sizeExprs.Count() - 1; i >= 0; i--)
+	{
+		auto arrayType = MakePtr<ArrayType>();
+		arrayType->type = type;
+		arrayType->expr = sizeExprs[i];
+		type = arrayType;
+	}
+
+	return type;
+}
+
 Ptr<Expr> ParseNameOrCtorAccessExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
 	{
@@ -309,6 +329,7 @@ Ptr<Expr> ParseNameOrCtorAccessExpr(const ParsingArguments& pa, Ptr<CppTokenCurs
 		try
 		{
 			auto type = ParseLongType(pa, cursor);
+			type = AppendArrayTypeForCtor(pa, type, cursor);
 
 			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false))
 			{
@@ -813,6 +834,8 @@ Ptr<Expr> ParseNewExpr(const ParsingArguments& pa, bool globalOperator, Ptr<CppT
 	}
 
 	newExpr->type = ParseLongType(pa, cursor);
+	newExpr->type = AppendArrayTypeForCtor(pa, newExpr->type, cursor);
+
 	if (TestToken(cursor, CppTokens::LPARENTHESIS, false) || TestToken(cursor, CppTokens::LBRACE, false))
 	{
 		auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
@@ -837,23 +860,6 @@ Ptr<Expr> ParseNewExpr(const ParsingArguments& pa, bool globalOperator, Ptr<CppT
 					throw StopParsingException(cursor);
 				}
 			}
-		}
-	}
-	else if (TestToken(cursor, CppTokens::LBRACKET, false))
-	{
-		List<Ptr<Expr>> sizeExprs;
-		while (TestToken(cursor, CppTokens::LBRACKET))
-		{
-			sizeExprs.Add(ParseExpr(pa, pea_Full(), cursor));
-			RequireToken(cursor, CppTokens::RBRACKET);
-		}
-
-		for (vint i = sizeExprs.Count() - 1; i >= 0; i--)
-		{
-			auto arrayType = MakePtr<ArrayType>();
-			arrayType->type = newExpr->type;
-			arrayType->expr = sizeExprs[i];
-			newExpr->type = arrayType;
 		}
 	}
 	return newExpr;
