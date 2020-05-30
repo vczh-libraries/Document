@@ -257,6 +257,15 @@ public:
 		isVta = variadicInput.Expand(&self->arguments, result,
 			[this, self, &isTypes](ExprTsysList& processResult, Array<ExprTsysItem>& args, vint unboundedVtaIndex, Array<vint>& argSource, SortedList<vint>& boundedAnys)
 			{
+				if (auto idType = self->type.Cast<IdType>())
+				{
+					if (idType->name.name == L"common_type_t")
+					{
+						// TODO: [cpp.md] Remove special handling for `common_type_t<...>`
+						processResult.Add({ nullptr,ExprTsysType::PRValue,pa.tsys->Any() });
+						return;
+					}
+				}
 				ProcessGenericType(pa, processResult, self, isTypes, args, argSource, boundedAnys);
 			});
 	}

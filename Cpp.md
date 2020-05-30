@@ -25,7 +25,7 @@
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 - [ ] Next Demo! (STL)
   - [ ] Report progress in phase 2 and 3 accurately. Now if a later function is evaluated, the progress will jump to a very late position.
-  - [ ] Infinite member search in recursive inherited class `template<typename T> struct X : SomeCondition<T, X<T*>>`
+  - [ ] Remove special handling for `common_type_t<...>`
   - [ ] Test cases
     - [ ] calling `F<int()>` with function type not ctor expression.
     - [ ] optional `template<>` on members defined outside of classes.

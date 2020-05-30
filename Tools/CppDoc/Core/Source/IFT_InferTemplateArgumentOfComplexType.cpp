@@ -189,8 +189,16 @@ namespace infer_function_type
 					{
 						auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
 						TemplateArgumentContext localVariadicContext(&taContext, false);
+
+						// infer all affected variadic arguments to any_t, result will be overrided if more precise types are inferred
+						for (vint j = 0; j < vas.Count(); j++)
+						{
+							SetInferredResult(pa, localVariadicContext, vas[j], pa.tsys->Any(), nullptr, hardcodedPatterns);
+						}
+
 						// set lastAssignedVta = nullptr, since now the element of the type list is to be inferred, so that localVariadicContext doesn't allow conflict
 						InferTemplateArgument(pa, typeToInfer, exprToInfer, assignedTsysItem, taContext, localVariadicContext, freeTypeSymbols, involvedTypes, involvedExprs, exactMatchForParameters, nullptr, hardcodedPatterns);
+
 						for (vint k = 0; k < localVariadicContext.GetArgumentCount(); k++)
 						{
 							if (localVariadicContext.IsArgumentAvailable(k))
