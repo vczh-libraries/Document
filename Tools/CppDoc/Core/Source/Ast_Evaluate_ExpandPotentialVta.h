@@ -591,6 +591,49 @@ namespace symbol_totsys_impl
 			return isVta;
 		}
 	};
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// Resolving
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	template<typename TResolve>
+	Ptr<Resolving> ResolveInCurrentContext(const ParsingArguments& pa, CppName& cppName, Ptr<Resolving>& originalResolving, TResolve&& resolve)
+	{
+		auto resolving = originalResolving;
+
+		if (resolving)
+		{
+			// don't need to resolve again if all resolved items are context free
+			bool needToResolve = false;
+
+			for (vint i = 0; i < resolving->items.Count(); i++)
+			{
+				if (resolving->items[i].tsys)
+				{
+					needToResolve = true;
+					break;
+				}
+			}
+
+			if (!needToResolve) return resolving;
+		}
+
+		if (!resolving || !pa.IsGeneralEvaluation())
+		{
+			resolving = resolve();
+		}
+
+		if (!originalResolving && resolving && pa.IsGeneralEvaluation())
+		{
+			originalResolving = resolving;
+			if (pa.recorder)
+			{
+				pa.recorder->Index(cppName, originalResolving->items);
+			}
+		}
+
+		return resolving;
+	}
 }
 
 #endif
