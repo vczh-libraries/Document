@@ -37,7 +37,22 @@ f: void ()
 
 	TEST_CATEGORY(L"Re-index")
 	{
-		// TODO:
+		auto input = LR"(
+int f(int a, int x)
+{
+	return [=](int b){ return a + b; }(x);
+}
+)";
+
+		SortedList<vint> accessed;
+		auto recorder = BEGIN_ASSERT_SYMBOL
+			ASSERT_SYMBOL			(0, L"a", 3, 27, VariableDeclaration, 1, 10)
+			ASSERT_SYMBOL			(1, L"b", 3, 31, VariableDeclaration, 3, 16)
+			ASSERT_SYMBOL			(2, L"x", 3, 36, VariableDeclaration, 1, 17)
+		END_ASSERT_SYMBOL;
+
+		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
+		TEST_CASE_ASSERT(accessed.Count() == 3);
 	});
 
 	auto getInsideLambda = [](Ptr<BlockStat> stat, const WString& name)

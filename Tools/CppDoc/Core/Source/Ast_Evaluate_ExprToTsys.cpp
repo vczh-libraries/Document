@@ -768,6 +768,9 @@ public:
 				// TODO: evaluate statement
 				self->statementEvaluated = true;
 			}
+
+			auto newPa = pa.AdjustForDecl(self->symbol);
+			EvaluateStat(newPa, self->statement, false, nullptr);
 		}
 		AddType(result, pa.tsys->Any());
 	}
