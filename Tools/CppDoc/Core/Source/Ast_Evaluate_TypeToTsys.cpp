@@ -207,9 +207,18 @@ public:
 	void Visit(IdType* self)override
 	{
 		auto resolving = self->resolving;
-		if (!pa.IsGeneralEvaluation())
+		if (!resolving || !pa.IsGeneralEvaluation())
 		{
 			resolving = ResolveSymbolInContext(pa, self->name, self->cStyleTypeReference).types;
+		}
+
+		if (!self->resolving && resolving && pa.IsGeneralEvaluation())
+		{
+			self->resolving = resolving;
+			if (pa.recorder)
+			{
+				pa.recorder->Index(self->name, self->resolving->items);
+			}
 		}
 
 		CreateIdReferenceType(pa, resolving, false, true, result, isVta);
@@ -224,9 +233,18 @@ public:
 		if (!IsResolvedToType(self->classType))
 		{
 			auto resolving = self->resolving;
-			if (!pa.IsGeneralEvaluation())
+			if (!resolving || !pa.IsGeneralEvaluation())
 			{
 				resolving = ResolveChildSymbol(pa, self->classType, self->name).types;
+			}
+
+			if (!self->resolving && resolving && pa.IsGeneralEvaluation())
+			{
+				self->resolving = resolving;
+				if (pa.recorder)
+				{
+					pa.recorder->Index(self->name, self->resolving->items);
+				}
 			}
 
 			CreateIdReferenceType(pa, resolving, true, false, result, isVta);

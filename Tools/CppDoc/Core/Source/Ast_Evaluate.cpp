@@ -424,8 +424,15 @@ public:
 	{
 		if (!self->templateSpec)
 		{
-			TypeTsysList tsys;
-			TypeToTsysNoVta(pa, self->usedClass, tsys);
+			try
+			{
+				TypeTsysList tsys;
+				TypeToTsysNoVta(pa, self->usedClass, tsys);
+			}
+			catch (const TypeCheckerException&)
+			{
+				// it is not important
+			}
 		}
 	}
 
@@ -601,8 +608,7 @@ void EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration
 
 void EvaluateDeclaration(const ParsingArguments& pa, Ptr<Declaration> decl)
 {
-	auto dpa = pa.WithScope(decl->symbol);
-	EvaluateDeclarationVisitor visitor(dpa);
+	EvaluateDeclarationVisitor visitor(pa);
 	decl->Accept(&visitor);
 }
 

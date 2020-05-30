@@ -62,9 +62,14 @@ namespace assign_parameters
 						TypeTsysList argTypes;
 						TypeToTsysNoVta(pa.WithScope(genericFuncInfo.declSymbol), spec->arguments[i].type, argTypes);
 
-						for (vint j = 0; j < argTypes.Count(); j++)
+						if (argTypes.Count() > 0)
 						{
-							newTaContext.SetValueByKey(pattern, argTypes[j]);
+							// TODO: create multiple TemplateArgumentContext
+							newTaContext.SetValueByKey(pattern, argTypes[0]);
+						}
+						else
+						{
+							newTaContext.SetValueByKey(pattern, pa.tsys->Any());
 						}
 					}
 					else

@@ -206,9 +206,18 @@ public:
 	void Visit(IdExpr* self)override
 	{
 		auto resolving = self->resolving;
-		if (!pa.IsGeneralEvaluation())
+		if (!resolving || !pa.IsGeneralEvaluation())
 		{
 			resolving = ResolveSymbolInContext(pa, self->name, false).values;
+		}
+
+		if (!self->resolving && resolving && pa.IsGeneralEvaluation())
+		{
+			self->resolving = resolving;
+			if (pa.recorder)
+			{
+				pa.recorder->Index(self->name, self->resolving->items);
+			}
 		}
 
 		CreateIdReferenceExpr(pa, resolving, result, nullptr, false, true, isVta);
@@ -223,9 +232,18 @@ public:
 		if (!IsResolvedToType(self->classType))
 		{
 			auto resolving = self->resolving;
-			if (!pa.IsGeneralEvaluation())
+			if (!resolving || !pa.IsGeneralEvaluation())
 			{
 				resolving = ResolveChildSymbol(pa, self->classType, self->name).values;
+			}
+
+			if (!self->resolving && resolving && pa.IsGeneralEvaluation())
+			{
+				self->resolving = resolving;
+				if (pa.recorder)
+				{
+					pa.recorder->Index(self->name, self->resolving->items);
+				}
 			}
 
 			bool childIsVta = false;
@@ -768,7 +786,6 @@ public:
 		{
 			if (!self->statementEvaluated)
 			{
-				// TODO: evaluate statement
 				self->statementEvaluated = true;
 			}
 
