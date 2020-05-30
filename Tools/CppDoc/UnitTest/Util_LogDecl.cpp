@@ -258,7 +258,8 @@ public:
 			auto& item = self->initList[i];
 			WriteIndentation();
 			writer.WriteString(i == 0 ? L"\t: " : L"\t, ");
-			writer.WriteString(item->field->name.name);
+			if (item->type) Log(item->type, writer, indentation);
+			if (item->field) writer.WriteString(item->field->name.name);
 			writer.WriteString(item->universalInitialization ? L"{" : L"(");
 			for (vint i = 0; i < item->arguments.Count(); i++)
 			{

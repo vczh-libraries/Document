@@ -225,6 +225,7 @@ public:
 
 	struct InitItem
 	{
+		Ptr<Type>									type;
 		Ptr<IdExpr>									field;
 		bool										universalInitialization = false;
 		VariadicList<Ptr<Expr>>						arguments;

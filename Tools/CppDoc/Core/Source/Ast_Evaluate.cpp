@@ -456,21 +456,24 @@ public:
 			{
 				auto& item = self->initList[i];
 				{
-					auto pVars = classDecl->symbol->TryGetChildren_NFb(item->field->name.name);
-					if (!pVars) goto SKIP_RESOLVING_FIELD;
-					if (pVars->Count() != 1) goto SKIP_RESOLVING_FIELD;
-
-					auto& varSymbol = pVars->Get(0);
-					if (varSymbol.childExpr || varSymbol.childType)
+					if (item->field)
 					{
-						goto SKIP_RESOLVING_FIELD;
-					}
-					if (varSymbol.childSymbol->kind != symbol_component::SymbolKind::Variable)
-					{
-						goto SKIP_RESOLVING_FIELD;
-					}
+						auto pVars = classDecl->symbol->TryGetChildren_NFb(item->field->name.name);
+						if (!pVars) goto SKIP_RESOLVING_FIELD;
+						if (pVars->Count() != 1) goto SKIP_RESOLVING_FIELD;
 
-					Resolving::AddSymbol(pa, item->field->resolving, varSymbol.childSymbol.Obj());
+						auto& varSymbol = pVars->Get(0);
+						if (varSymbol.childExpr || varSymbol.childType)
+						{
+							goto SKIP_RESOLVING_FIELD;
+						}
+						if (varSymbol.childSymbol->kind != symbol_component::SymbolKind::Variable)
+						{
+							goto SKIP_RESOLVING_FIELD;
+						}
+
+						Resolving::AddSymbol(pa, item->field->resolving, varSymbol.childSymbol.Obj());
+					}
 				}
 			SKIP_RESOLVING_FIELD:
 				for (vint j = 0; j < item->arguments.Count(); j++)

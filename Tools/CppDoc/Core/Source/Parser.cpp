@@ -104,14 +104,28 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 			while (true)
 			{
 				auto item = MakePtr<FunctionDeclaration::InitItem>();
-				item->field = MakePtr<IdExpr>();
-				if (!ParseCppName(item->field->name, delayParse->begin))
 				{
-					throw StopParsingException(delayParse->begin);
+					auto oldCursor = delayParse->begin;
+					try
+					{
+						item->type = ParseLongType(delayParse->pa, delayParse->begin);
+					}
+					catch (const StopParsingException&)
+					{
+						delayParse->begin = oldCursor;
+					}
 				}
-				if (item->field->name.type != CppNameType::Normal)
+				if (!item->type)
 				{
-					throw StopParsingException(delayParse->begin);
+					item->field = MakePtr<IdExpr>();
+					if (!ParseCppName(item->field->name, delayParse->begin))
+					{
+						throw StopParsingException(delayParse->begin);
+					}
+					if (item->field->name.type != CppNameType::Normal)
+					{
+						throw StopParsingException(delayParse->begin);
+					}
 				}
 
 				if (TestToken(delayParse->begin, CppTokens::LBRACE))
