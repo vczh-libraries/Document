@@ -672,6 +672,7 @@ UserDefined (fromType:Operator)
 			for (vint i = 0; i < opSymbols.Count(); i++)
 			{
 				auto typeOpSymbol = opSymbols[i].symbol;
+				auto typeOpEntity = opSymbols[i].tsys;
 				auto typeOpDecl = typeOpSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 				{
 					if (typeOpDecl->decoratorExplicit) continue;
@@ -682,7 +683,7 @@ UserDefined (fromType:Operator)
 					if (TestFunctionQualifier(fromCV, fromRef, typeOpType).cat == TypeConvCat::Illegal) continue;
 				}
 
-				auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, typeOpDecl.Obj(), (fromEntity->GetType() == TsysType::DeclInstant ? fromEntity : nullptr), nullptr);
+				auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, typeOpDecl.Obj(), symbol_type_resolving::AdjustParentDeclType(typeOpEntity), nullptr);
 
 				for (vint j = 0; j < evTypes.Count(); j++)
 				{
@@ -731,6 +732,7 @@ UserDefined (toType:Ctor)
 			for (vint i = 0; i < opSymbols.Count(); i++)
 			{
 				auto ctorSymbol = opSymbols[i].symbol;
+				auto ctorEntity = opSymbols[i].tsys;
 				auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 				{
 					if (ctorDecl->decoratorExplicit) continue;
@@ -739,7 +741,7 @@ UserDefined (toType:Ctor)
 					if (!ctorType) continue;
 					if (ctorType->parameters.Count() != 1) continue;
 				}
-				auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
+				auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), symbol_type_resolving::AdjustParentDeclType(ctorEntity), nullptr);
 
 				for (vint j = 0; j < evTypes.Count(); j++)
 				{
@@ -813,9 +815,10 @@ Init
 					for (vint i = 0; i < opSymbols.Count(); i++)
 					{
 						auto ctorSymbol = opSymbols[i].symbol;
+						auto ctorEntity = opSymbols[i].tsys;
 						auto ctorDecl = ctorSymbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
 						if (ctorDecl->decoratorDelete) continue;
-						auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), (toEntity->GetType() == TsysType::DeclInstant ? toEntity : nullptr), nullptr);
+						auto& evTypes = symbol_type_resolving::EvaluateFuncSymbol(pa, ctorDecl.Obj(), symbol_type_resolving::AdjustParentDeclType(ctorEntity), nullptr);
 
 						for (vint j = 0; j < evTypes.Count(); j++)
 						{

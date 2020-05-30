@@ -190,6 +190,27 @@ namespace symbol_type_resolving
 	GetPaInsideClass: Get a ParsingArguments for evaluating class members
 	***********************************************************************/
 
+	ITsys* AdjustParentDeclType(ITsys* classType)
+	{
+		switch (classType->GetType())
+		{
+		case TsysType::DeclInstant:
+			{
+				auto& di = classType->GetDeclInstant();
+				if (di.taContext)
+				{
+					return classType;
+				}
+				else
+				{
+					return di.parentDeclType;
+				}
+			}
+		default:
+			return nullptr;
+		}
+	}
+
 	ParsingArguments GetPaInsideClass(const ParsingArguments& invokerPa, ITsys* classType)
 	{
 		switch (classType->GetType())

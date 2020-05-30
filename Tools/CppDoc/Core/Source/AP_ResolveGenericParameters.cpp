@@ -160,7 +160,10 @@ namespace assign_parameters
 					for (vint j = i; j < genericFunction->GetParamCount(); j++)
 					{
 						auto unappliedPattern = genericFunction->GetParam(j);
-						auto unappliedValue = spec->arguments[j].ellipsis ? pa.tsys->Any() : acceptType ? unappliedPattern : nullptr;
+						auto unappliedValue =
+							spec->arguments[j].ellipsis ? pa.tsys->Any() :
+							spec->arguments[j].argumentType != CppTemplateArgumentType::Value ? EvaluateGenericArgumentType(spec->arguments[j].argumentSymbol) :
+							nullptr;
 						newTaContext.SetValueByKey(unappliedPattern, unappliedValue);
 					}
 					return;
