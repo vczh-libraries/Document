@@ -23,8 +23,9 @@
       - `__builtin_nansf(...)` -> float
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
-- [ ] Next Demo! (?)
+- [ ] Next Demo! (TypePrinter)
   - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` points to the correct partial specializations.
+  - [ ] Report progress in phase 2 and 3 accurately. Now if a later function is evaluated, the progress will jump to a very late position.
 - [ ] Next Demo! (STL)
   - [ ] Test cases
     - [ ] calling `F<int()>` with function type not ctor expression.

@@ -34,8 +34,25 @@ namespace symbol_totsys_impl
 			TemplateArgumentContext taContext(genericFunction->GetGenericFunction().declSymbol, genericFunction->GetParamCount());
 			bool allowPartialApply = declSymbol->kind == symbol_component::SymbolKind::FunctionBodySymbol;
 			vint partialAppliedArguments = -1;
-			assign_parameters::ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1, allowPartialApply, partialAppliedArguments);
-			process(genericFunction, declSymbol, &taContext, partialAppliedArguments);
+
+			if (allowPartialApply)
+			{
+				try
+				{
+					// function is allowed to fail because there could be multiple overloaded functions
+					assign_parameters::ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1, allowPartialApply, partialAppliedArguments);
+				}
+				catch (const TypeCheckerException&)
+				{
+					return;
+				}
+				process(genericFunction, declSymbol, &taContext, partialAppliedArguments);
+			}
+			else
+			{
+				assign_parameters::ResolveGenericParameters(pa, taContext, genericFunction, args, isTypes, argSource, boundedAnys, 1, allowPartialApply, partialAppliedArguments);
+				process(genericFunction, declSymbol, &taContext, partialAppliedArguments);
+			}
 		}
 		else if (genericFunction->GetType() == TsysType::Any)
 		{

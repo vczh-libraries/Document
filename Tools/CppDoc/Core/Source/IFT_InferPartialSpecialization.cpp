@@ -12,7 +12,7 @@ namespace infer_function_type
 	InferPartialSpecialization:	Perform type inferencing for partial specialization symbol
 	***********************************************************************/
 
-	bool IsPSEquivalentType(const ParsingArguments& pa, ITsys* a, ITsys* b, bool forFilteringPSInstance);
+	bool IsPSEquivalentTypeCached(const ParsingArguments& pa, ITsys* a, ITsys* b, bool forFilteringPSInstance, Dictionary<Pair<ITsys*, ITsys*>, bool>& visited);
 
 	bool IsPSEquivalentToAny(ITsys* t)
 	{
@@ -32,7 +32,7 @@ namespace infer_function_type
 		}
 	}
 
-	bool IsPSEquivalentTypeEnsuredPrimary(const ParsingArguments& pa, ITsys* a, ITsys* b, bool forFilteringPSInstance)
+	bool IsPSEquivalentTypeEnsuredPrimary(const ParsingArguments& pa, ITsys* a, ITsys* b, bool forFilteringPSInstance, Dictionary<Pair<ITsys*, ITsys*>, bool>& visited)
 	{
 		if (a == b) return true;
 		if (forFilteringPSInstance)
@@ -50,7 +50,7 @@ namespace infer_function_type
 		case TsysType::LRef:
 		case TsysType::RRef:
 		case TsysType::Ptr:
-			return a->GetType() == b->GetType() && IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance);
+			return a->GetType() == b->GetType() && IsPSEquivalentTypeCached(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance, visited);
 		case TsysType::Array:
 			{
 				if (b->GetType() != TsysType::Array) return false;
@@ -59,29 +59,29 @@ namespace infer_function_type
 				vint min = adim < bdim ? adim : bdim;
 				auto ae = adim == min ? a->GetElement() : a->GetElement()->ArrayOf(adim - min);
 				auto be = bdim == min ? b->GetElement() : b->GetElement()->ArrayOf(bdim - min);
-				if (!IsPSEquivalentType(pa, ae, be, forFilteringPSInstance)) return false;
+				if (!IsPSEquivalentTypeCached(pa, ae, be, forFilteringPSInstance, visited)) return false;
 			}
 			return true;
 		case TsysType::CV:
-			return a->GetType() == b->GetType() && a->GetCV() == b->GetCV() && IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance);
+			return a->GetType() == b->GetType() && a->GetCV() == b->GetCV() && IsPSEquivalentTypeCached(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance, visited);
 		case TsysType::Member:
-			return a->GetType() == b->GetType() && IsPSEquivalentType(pa, a->GetClass(), b->GetClass(), forFilteringPSInstance) && IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance);
+			return a->GetType() == b->GetType() && IsPSEquivalentTypeCached(pa, a->GetClass(), b->GetClass(), forFilteringPSInstance, visited) && IsPSEquivalentTypeCached(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance, visited);
 		case TsysType::Init:
 			if (b->GetType() != TsysType::Init) return false;
 			if (a->GetParamCount() != b->GetParamCount()) return false;
 			for (vint i = 0; i < a->GetParamCount(); i++)
 			{
-				if (!IsPSEquivalentType(pa, a->GetParam(i), b->GetParam(i), forFilteringPSInstance)) return false;
+				if (!IsPSEquivalentTypeCached(pa, a->GetParam(i), b->GetParam(i), forFilteringPSInstance, visited)) return false;
 			}
 			return true;
 		case TsysType::Function:
 			if (b->GetType() != TsysType::Function) return false;
 			if (a->GetFunc().ellipsis != b->GetFunc().ellipsis) return false;
 			if (a->GetParamCount() != b->GetParamCount()) return false;
-			if (!IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance)) return false;
+			if (!IsPSEquivalentTypeCached(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance, visited)) return false;
 			for (vint i = 0; i < a->GetParamCount(); i++)
 			{
-				if (!IsPSEquivalentType(pa, a->GetParam(i), b->GetParam(i), forFilteringPSInstance)) return false;
+				if (!IsPSEquivalentTypeCached(pa, a->GetParam(i), b->GetParam(i), forFilteringPSInstance, visited)) return false;
 			}
 			return true;
 		case TsysType::DeclInstant:
@@ -89,10 +89,10 @@ namespace infer_function_type
 				if (b->GetType() != TsysType::DeclInstant) return false;
 				if (a->GetDecl() != b->GetDecl()) return false;
 				if (a->GetParamCount() != b->GetParamCount()) return false;
-				if (!IsPSEquivalentType(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance)) return false;
+				if (!IsPSEquivalentTypeCached(pa, a->GetElement(), b->GetElement(), forFilteringPSInstance, visited)) return false;
 				for (vint i = 0; i < a->GetParamCount(); i++)
 				{
-					if (!IsPSEquivalentType(pa, a->GetParam(i), b->GetParam(i), forFilteringPSInstance)) return false;
+					if (!IsPSEquivalentTypeCached(pa, a->GetParam(i), b->GetParam(i), forFilteringPSInstance, visited)) return false;
 				}
 			}
 			return true;
@@ -109,7 +109,7 @@ namespace infer_function_type
 		}
 	}
 
-	bool IsPSEquivalentType(const ParsingArguments& pa, ITsys* a, ITsys* b, bool forFilteringPSInstance)
+	bool IsPSEquivalentTypeCached(const ParsingArguments& pa, ITsys* a, ITsys* b, bool forFilteringPSInstance, Dictionary<Pair<ITsys*, ITsys*>, bool>& visited)
 	{
 		if (a == b) return true;
 		if (a && b)
@@ -119,7 +119,19 @@ namespace infer_function_type
 			{
 				EnumerateClassPrimaryInstances(pa, b, true, [&](ITsys* primaryB)
 				{
-					if (IsPSEquivalentTypeEnsuredPrimary(pa, primaryA, primaryB, forFilteringPSInstance))
+					Pair<ITsys*, ITsys*> key = { primaryA,primaryB };
+					vint index = visited.Keys().IndexOf(key);
+					bool result = false;
+					if (index == -1)
+					{
+						result = IsPSEquivalentTypeEnsuredPrimary(pa, primaryA, primaryB, forFilteringPSInstance, visited);
+						visited.Set(key, result);
+					}
+					else
+					{
+						result = visited.Values()[index];
+					}
+					if (result)
 					{
 						exit = true;
 					}
@@ -133,6 +145,12 @@ namespace infer_function_type
 		{
 			return false;
 		}
+	}
+
+	bool IsPSEquivalentType(const ParsingArguments& pa, ITsys* a, ITsys* b, bool forFilteringPSInstance)
+	{
+		Dictionary<Pair<ITsys*, ITsys*>, bool> visited;
+		return IsPSEquivalentTypeCached(pa, a, b, forFilteringPSInstance, visited);
 	}
 
 	Ptr<TemplateArgumentContext> InferPartialSpecialization(
