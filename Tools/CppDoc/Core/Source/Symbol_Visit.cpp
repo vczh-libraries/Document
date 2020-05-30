@@ -136,7 +136,9 @@ namespace symbol_type_resolving
 											{
 												addConst = true;
 											}
-											break;
+
+											// no need to add further decoration if we know the variable is captured by copy
+											goto FINISHED_LAMBDA_EXAM;
 										case LambdaExpr::CaptureDefaultKind::Ref:
 											addRef = true;
 											break;
