@@ -9,6 +9,25 @@ namespace assign_parameters
 	ResolveGenericParameters: Fill TemplateArgumentContext by matching type/value arguments to template arguments
 	***********************************************************************/
 
+	bool HasDefault(Ptr<TemplateSpec> spec)
+	{
+		for (vint i = 0; i < spec->arguments.Count(); i++)
+		{
+			auto& argument = spec->arguments[i];
+			switch (argument.argumentType)
+			{
+			case CppTemplateArgumentType::HighLevelType:
+			case CppTemplateArgumentType::Type:
+				if (argument.type) return true;
+				break;
+			case CppTemplateArgumentType::Value:
+				if (argument.expr) return true;
+				break;
+			}
+		}
+		return false;
+	}
+
 	void ResolveGenericParameters(
 		const ParsingArguments& invokerPa,			// context
 		TemplateArgumentContext& newTaContext,		// TAC to store type arguemnt to offered argument map, vta argument will be grouped to Init or Any
@@ -29,6 +48,79 @@ namespace assign_parameters
 
 		const auto& genericFuncInfo = genericFunction->GetGenericFunction();
 		auto spec = genericFuncInfo.spec;
+
+		if (!HasDefault(spec))
+		{
+			// if the current template header contains no default value for template arguments
+			// try to find one in a forward declarations to replace it, if that template header contains default values
+			List<Ptr<TemplateSpec>> allSpecs;
+			if (auto symbol = genericFuncInfo.declSymbol)
+			{
+				switch (symbol->GetCategory())
+				{
+				case symbol_component::SymbolCategory::Normal:
+					{
+						auto& decls = symbol->GetForwardDecls_N();
+						for (vint i = 0; i < decls.Count(); i++)
+						{
+							if (auto declSpec = GetTemplateSpecFromDecl(decls[i]))
+							{
+								allSpecs.Add(declSpec);
+							}
+						}
+
+						if (auto declSpec = GetTemplateSpecFromDecl(symbol->GetImplDecl_NFb()))
+						{
+							allSpecs.Add(declSpec);
+						}
+					}
+					break;
+				case symbol_component::SymbolCategory::Function:
+					{
+						auto& decls = symbol->GetForwardSymbols_F();
+						for (vint i = 0; i < decls.Count(); i++)
+						{
+							if (auto declSpec = GetTemplateSpecFromDecl(decls[i]->GetForwardDecl_Fb()))
+							{
+								allSpecs.Add(declSpec);
+							}
+						}
+
+						auto& impls = symbol->GetForwardSymbols_F();
+						for (vint i = 0; i < impls.Count(); i++)
+						{
+							if (auto declSpec = GetTemplateSpecFromDecl(impls[i]->GetForwardDecl_Fb()))
+							{
+								allSpecs.Add(declSpec);
+							}
+						}
+					}
+					break;
+				}
+			}
+
+			Ptr<TemplateSpec> selectedSpec;
+			for (vint i = 0; i < allSpecs.Count(); i++)
+			{
+				auto current = allSpecs[i];
+				if (HasDefault(current))
+				{
+					if (selectedSpec)
+					{
+						throw TypeCheckerException();
+					}
+					else
+					{
+						selectedSpec = current;
+					}
+				}
+			}
+
+			if (selectedSpec)
+			{
+				spec = selectedSpec;
+			}
+		}
 		vint inputArgumentCount = argumentTypes.Count() - offset;
 
 		// calculate how to assign offered arguments to template arguments

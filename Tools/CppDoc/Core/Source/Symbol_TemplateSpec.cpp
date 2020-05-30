@@ -3,6 +3,35 @@
 
 namespace symbol_type_resolving
 {
+
+	/***********************************************************************
+	GetTemplateSpecFromDecl: Get TempalteSpec from a declaration if it is a generic declaration
+	***********************************************************************/
+
+	Ptr<TemplateSpec> GetTemplateSpecFromDecl(Ptr<Declaration> decl)
+	{
+		if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
+		{
+			return funcDecl->templateSpec;
+		}
+		else if (auto classDecl = decl.Cast<ForwardClassDeclaration>())
+		{
+			return classDecl->templateSpec;
+		}
+		else if (auto typeAliasDecl = decl.Cast<TypeAliasDeclaration>())
+		{
+			return typeAliasDecl->templateSpec;
+		}
+		else if (auto valueAliasDecl = decl.Cast<ValueAliasDeclaration>())
+		{
+			return valueAliasDecl->templateSpec;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+
 	/***********************************************************************
 	GetTemplateSpecFromSymbol: Get TempalteSpec from a symbol if it is a generic declaration
 	***********************************************************************/

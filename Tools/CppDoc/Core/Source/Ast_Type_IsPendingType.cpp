@@ -358,7 +358,7 @@ public:
 					throw TypeCheckerException();
 				}
 			}
-			else
+			else if (matching != PendingMatching::Free)
 			{
 				if (cv.isGeneralConst && !self->isConst)
 				{

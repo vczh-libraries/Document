@@ -6,6 +6,7 @@
 
 namespace symbol_type_resolving
 {
+	extern Ptr<TemplateSpec>					GetTemplateSpecFromDecl(Ptr<Declaration> decl);
 	extern Ptr<TemplateSpec>					GetTemplateSpecFromSymbol(Symbol* symbol);
 	extern ITsys*								GetTemplateArgumentKey(const TemplateSpec::Argument& argument);
 	extern ITsys*								GetTemplateArgumentKey(Symbol* argumentSymbol);

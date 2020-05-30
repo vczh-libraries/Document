@@ -31,6 +31,11 @@
     - [ ] optional `template<>` on members defined outside of classes.
     - [ ] type alias recursion
     - [ ] value alias recursion
+    - [ ] Using a template class, which has default template argument values in forward declaration, but not in implementation.
+      - [ ] Class
+      - [ ] Function
+      - [ ] Type alias
+      - [ ] Value alias
 - [ ] Next Demo! (TypePrinter)
   - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` points to the correct partial specializations.
 - [ ] Next Demo! (Vlpp)
