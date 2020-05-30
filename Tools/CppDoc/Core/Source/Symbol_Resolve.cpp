@@ -404,6 +404,12 @@ bool ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 	}
 
 	rsa.searchedTypes.Add(entity, false);
+	if (rsa.searchedTypes.Count() > 64)
+	{
+		// TODO: [cpp.md] Infinite member search in recursive inherited class
+		// give up if too many nested classes or base classes
+		return false;
+	}
 
 	bool found = false;
 	if (entity->GetType() == TsysType::Decl || entity->GetType() == TsysType::DeclInstant)

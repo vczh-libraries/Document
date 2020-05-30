@@ -23,15 +23,16 @@
       - `__builtin_nansf(...)` -> float
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
-- [ ] Next Demo! (TypePrinter)
-  - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` points to the correct partial specializations.
-  - [ ] Report progress in phase 2 and 3 accurately. Now if a later function is evaluated, the progress will jump to a very late position.
 - [ ] Next Demo! (STL)
+  - [ ] Report progress in phase 2 and 3 accurately. Now if a later function is evaluated, the progress will jump to a very late position.
+  - [ ] Infinite member search in recursive inherited class `template<typename T> struct X : SomeCondition<T, X<T*>>`
   - [ ] Test cases
     - [ ] calling `F<int()>` with function type not ctor expression.
     - [ ] optional `template<>` on members defined outside of classes.
     - [ ] type alias recursion
     - [ ] value alias recursion
+- [ ] Next Demo! (TypePrinter)
+  - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` points to the correct partial specializations.
 - [ ] Next Demo! (Vlpp)
   - [ ] Refactor the HTML generation part to becomes a library.
     - [ ] Extract `<div>` token rendering functions.
