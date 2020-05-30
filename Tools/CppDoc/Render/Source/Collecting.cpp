@@ -189,6 +189,7 @@ void GenerateHtmlToken(
 	case CppTokens::HEX:
 	case CppTokens::BIN:
 	case CppTokens::FLOAT:
+	case CppTokens::FLOATHEX:
 		divClass = L"cpp_number ";
 		break;
 #define CASE_KEYWORD(NAME, REGEX) case CppTokens::NAME:

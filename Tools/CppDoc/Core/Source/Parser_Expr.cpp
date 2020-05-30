@@ -417,6 +417,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 		case CppTokens::HEX:
 		case CppTokens::BIN:
 		case CppTokens::FLOAT:
+		case CppTokens::FLOATHEX:
 		case CppTokens::CHAR:
 			{
 				// literal

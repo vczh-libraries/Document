@@ -84,6 +84,26 @@ TEST_FILE
 		AssertExpr(L"1.0l",			L"1.0l",		L"double $PR"				);
 		AssertExpr(L"1.0L",			L"1.0L",		L"double $PR"				);
 
+		AssertExpr(L"1e2",			L"1e2",			L"double $PR"				);
+		AssertExpr(L"1e-2",			L"1e-2",		L"double $PR"				);
+		AssertExpr(L"1.e2",			L"1.e2",		L"double $PR"				);
+		AssertExpr(L"1.e-2",		L"1.e-2",		L"double $PR"				);
+		AssertExpr(L".1E2",			L".1E2",		L"double $PR"				);
+		AssertExpr(L".1E-2",		L".1E-2",		L"double $PR"				);
+		AssertExpr(L"1.1E2",		L"1.1E2",		L"double $PR"				);
+		AssertExpr(L"1.1E-2",		L"1.1E-2",		L"double $PR"				);
+
+		AssertExpr(L"0x1p2f",		L"0x1p2f",		L"float $PR"				);
+		AssertExpr(L"0x1p-2f",		L"0x1p-2f",		L"float $PR"				);
+		AssertExpr(L"0x1.p2F",		L"0x1.p2F",		L"float $PR"				);
+		AssertExpr(L"0x1.p-2F",		L"0x1.p-2F",	L"float $PR"				);
+		AssertExpr(L"0x.1P2l",		L"0x.1P2l",		L"double $PR"				);
+		AssertExpr(L"0x.1P-2l",		L"0x.1P-2l",	L"double $PR"				);
+		AssertExpr(L"0x1.1P2L",		L"0x1.1P2L",	L"double $PR"				);
+		AssertExpr(L"0x1.1P-2L",	L"0x1.1P-2L",	L"double $PR"				);
+
+		auto x = 0x1e2f;
+
 		AssertExpr(L"'x'",			L"'x'",			L"char $PR"					);
 		AssertExpr(L"L'x'",			L"L'x'",		L"wchar_t $PR"				);
 		AssertExpr(L"u'x'",			L"u'x'",		L"char16_t $PR"				);

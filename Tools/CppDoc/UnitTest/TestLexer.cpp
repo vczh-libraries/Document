@@ -149,6 +149,7 @@ vint CheckTokens(List<RegexToken>& tokens)
 				vint _1 = 0, _2 = 0;
 				auto reading = token.reading;
 				auto length = token.length;
+
 				if (reading[length - 1] == L'f' || reading[length - 1] == L'F' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
 				{
 					length--;
@@ -161,6 +162,51 @@ vint CheckTokens(List<RegexToken>& tokens)
 				}
 				TEST_ASSERT(*reading++ == L'.');
 				while (L'0' <= *reading && *reading <= L'9')
+				{
+					reading++;
+					_2++;
+				}
+				TEST_ASSERT(_1 > 0 || _2 > 0);
+
+				if (*reading == L'e' || *reading == L'E')
+				{
+					reading++;
+					if (*reading == L'+' || *reading == L'-') reading++;
+					while (reading < token.reading + length)
+					{
+						TEST_ASSERT(L'0' <= *reading && *reading <= L'9');
+						reading++;
+					}
+				}
+				else
+				{
+					TEST_ASSERT(length == _1 + _2 + 1);
+				}
+			}
+			break;
+		case CppTokens::FLOATHEX:
+			{
+				vint _1 = 0, _2 = 0;
+				auto reading = token.reading;
+				auto length = token.length;
+				TEST_ASSERT(length > 2);
+				TEST_ASSERT(reading[0] == L'0' && (reading[1] == L'x' || reading[1] == L'X'));
+
+				reading += 2;
+				length -= 2;
+
+				if (reading[length - 1] == L'f' || reading[length - 1] == L'F' || reading[length - 1] == L'l' || reading[length - 1] == L'L')
+				{
+					length--;
+				}
+
+				while ((L'0' <= *reading && *reading <= L'9') || (L'a' <= *reading && *reading <= L'f') || (L'A' <= *reading && *reading <= L'F'))
+				{
+					reading++;
+					_1++;
+				}
+				TEST_ASSERT(*reading++ == L'.');
+				while ((L'0' <= *reading && *reading <= L'9') || (L'a' <= *reading && *reading <= L'f') || (L'A' <= *reading && *reading <= L'F'))
 				{
 					reading++;
 					_2++;

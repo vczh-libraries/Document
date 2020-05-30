@@ -79,6 +79,7 @@ namespace symbol_totsys_impl
 			}
 			return;
 		case CppTokens::FLOAT:
+		case CppTokens::FLOATHEX:
 			{
 				auto& token = self->tokens[0];
 				wchar_t _1 = token.reading[token.length - 1];

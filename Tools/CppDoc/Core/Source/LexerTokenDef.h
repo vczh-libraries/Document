@@ -107,46 +107,51 @@ Keywords
 Others
 ***********************************************************************/
 
-#define CPP_NUMBER_POSTFIX L"[uU]|[lL]|[uU][lL]|[lL][uU]|[lL][lL]|[uU][lL][lL]|[lL][uU][lL]|[lL][lL][uU]|i64|ui64"
+#define CPP_NUMBER_POSTFIX		L"[uU]|[lL]|[uU][lL]|[lL][uU]|[lL][lL]|[uU][lL][lL]|[lL][uU][lL]|[lL][lL][uU]|i64|ui64"
+#define CPP_FLOAT_DIGITS		L"(/d+|/d+.|./d+|/d+./d+)"
+#define CPP_FLOAT_POSTFIX		L"([eE][+/-]?/d+)?[fFlL]?"
+#define CPP_FLOATHEX_DIGITS		L"([0-9a-fA-F]+|[0-9a-fA-F]+.|.[0-9a-fA-F]+|[0-9a-fA-F]+.[0-9a-fA-F]+)"
+#define CPP_FLOATHEX_POSTFIX	L"[pP][+/-]?/d+[fFlL]?"
 
-#define CPP_REGEX_TOKENS(F)															\
-	F(LBRACE,					L"/{")												\
-	F(RBRACE,					L"/}")												\
-	F(LBRACKET,					L"/[")												\
-	F(RBRACKET,					L"/]")												\
-	F(LPARENTHESIS,				L"/(")												\
-	F(RPARENTHESIS,				L"/)")												\
-	F(LT,						L"<")												\
-	F(GT,						L">")												\
-	F(EQ,						L"=")												\
-	F(NOT,						L"!")												\
-	F(PERCENT,					L"%")												\
-	F(COLON,					L":")												\
-	F(SEMICOLON,				L";")												\
-	F(DOT,						L".")												\
-	F(QUESTIONMARK,				L"/?")												\
-	F(COMMA,					L",")												\
-	F(MUL,						L"/*")												\
-	F(ADD,						L"/+")												\
-	F(SUB,						L"-")												\
-	F(DIV,						L"//")												\
-	F(XOR,						L"/^")												\
-	F(AND,						L"&")												\
-	F(OR,						L"/|")												\
-	F(REVERT,					L"~")												\
-	F(SHARP,					L"#")												\
-	F(INT,						L"(/d+('/d+)*)("		CPP_NUMBER_POSTFIX	L")?")	\
-	F(HEX,						L"0[xX][0-9a-fA-F]+("	CPP_NUMBER_POSTFIX	L")?")	\
-	F(BIN,						L"0[bB][01]+("			CPP_NUMBER_POSTFIX	L")?")	\
-	F(FLOAT,					L"(/d+.|./d+|/d+./d+)([eE][+/-]?/d+)?[fFlL]?")		\
-	F(MACRO_LPREFIX,			L"__LPREFIX/s*/(/s*/w+/s*/)")						\
-	F(STRING,					L"([uUL]|u8)?\"([^/\\\"]|/\\/.)*\"")				\
-	F(CHAR,						L"([uUL]|u8)?'([^/\\']|/\\/.)*'")					\
-	F(ID,						L"[a-zA-Z_][a-zA-Z0-9_]*")							\
-	F(SPACE,					L"[ \t\r\n\v\f]+")									\
-	F(DOCUMENT,					L"//////[^\r\n]*")									\
-	F(COMMENT1,					L"////[^\r\n]*")									\
-	F(COMMENT2,					L"///*([^*]|/*+[^*//])*/*+//")						\
+#define CPP_REGEX_TOKENS(F)																\
+	F(LBRACE,					L"/{")													\
+	F(RBRACE,					L"/}")													\
+	F(LBRACKET,					L"/[")													\
+	F(RBRACKET,					L"/]")													\
+	F(LPARENTHESIS,				L"/(")													\
+	F(RPARENTHESIS,				L"/)")													\
+	F(LT,						L"<")													\
+	F(GT,						L">")													\
+	F(EQ,						L"=")													\
+	F(NOT,						L"!")													\
+	F(PERCENT,					L"%")													\
+	F(COLON,					L":")													\
+	F(SEMICOLON,				L";")													\
+	F(DOT,						L".")													\
+	F(QUESTIONMARK,				L"/?")													\
+	F(COMMA,					L",")													\
+	F(MUL,						L"/*")													\
+	F(ADD,						L"/+")													\
+	F(SUB,						L"-")													\
+	F(DIV,						L"//")													\
+	F(XOR,						L"/^")													\
+	F(AND,						L"&")													\
+	F(OR,						L"/|")													\
+	F(REVERT,					L"~")													\
+	F(SHARP,					L"#")													\
+	F(INT,						L"(/d+('/d+)*)("		CPP_NUMBER_POSTFIX	L")?")		\
+	F(HEX,						L"0[xX][0-9a-fA-F]+("	CPP_NUMBER_POSTFIX	L")?")		\
+	F(BIN,						L"0[bB][01]+("			CPP_NUMBER_POSTFIX	L")?")		\
+	F(FLOAT,					CPP_FLOAT_DIGITS CPP_FLOAT_POSTFIX)						\
+	F(FLOATHEX,					L"0[xX]" CPP_FLOATHEX_DIGITS CPP_FLOATHEX_POSTFIX)		\
+	F(MACRO_LPREFIX,			L"__LPREFIX/s*/(/s*/w+/s*/)")							\
+	F(STRING,					L"([uUL]|u8)?\"([^/\\\"]|/\\/.)*\"")					\
+	F(CHAR,						L"([uUL]|u8)?'([^/\\']|/\\/.)*'")						\
+	F(ID,						L"[a-zA-Z_][a-zA-Z0-9_]*")								\
+	F(SPACE,					L"[ \t\r\n\v\f]+")										\
+	F(DOCUMENT,					L"//////[^\r\n]*")										\
+	F(COMMENT1,					L"////[^\r\n]*")										\
+	F(COMMENT2,					L"///*([^*]|/*+[^*//])*/*+//")							\
 
 /***********************************************************************
 Token List
