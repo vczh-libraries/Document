@@ -233,7 +233,10 @@ namespace symbol_totsys_impl
 			throw TypeCheckerException();
 		}
 
-		else if (pa.functionBodySymbol && pa.functionBodySymbol->GetClassMemberCache_NFb())
+		bool hasVariadic = false;
+		bool hasNonVariadic = false;
+
+		if (pa.functionBodySymbol && pa.functionBodySymbol->GetClassMemberCache_NFb())
 		{
 			auto thisType = pa.functionBodySymbol->GetClassMemberCache_NFb()->thisType;
 			if (childExprClassItem)
@@ -248,20 +251,22 @@ namespace symbol_totsys_impl
 				}
 			}
 			ExprTsysItem thisItem(nullptr, ExprTsysType::LValue, thisType->GetElement()->LRefOf());
-			VisitResolvedMember(pa, &thisItem, resolving, result);
+			VisitResolvedMember(pa, &thisItem, resolving, result, hasVariadic, hasNonVariadic);
 		}
 		else
 		{
-			bool hasVariadic = false;
-			bool hasNonVariadic = false;
 			VisitResolvedMember(pa, childExprClassItem, resolving, result, hasVariadic, hasNonVariadic);
-
-			if (hasVariadic && hasNonVariadic)
-			{
-				throw TypeCheckerException();
-			}
-			isVta = hasVariadic;
 		}
+
+		if (hasVariadic && hasNonVariadic)
+		{
+			throw TypeCheckerException();
+		}
+		if (hasVariadic && !allowVariadic)
+		{
+			throw TypeCheckerException();
+		}
+		isVta = hasVariadic;
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
