@@ -40,6 +40,15 @@ f: void ()
 		// TODO:
 	});
 
+	auto getInsideLambda = [](Ptr<BlockStat> stat, const WString& name)
+	{
+		return stat->symbol
+			->TryGetChildren_NFb(name)->Get(0).childSymbol
+			->GetAnyForwardDecl<VariableDeclaration>()->initializer
+			->arguments[0].item.Cast<LambdaExpr>()->statement
+			.Cast<BlockStat>();
+	};
+
 	TEST_CATEGORY(L"Capturing int")
 	{
 		auto input = LR"(
@@ -91,11 +100,8 @@ struct S
 		const volatile int&& d3 = (const volatile int&&)a2;
 
 		{
-			auto symbol = stat->symbol
-				->TryGetChildren_NFb(L"l1")->Get(0).childSymbol
-				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
-				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
-			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto symbol = getInsideLambda(stat, L"l1")->symbol;
+			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [c, c2, c3, &d, &d2, &d3, &pa](int e)
 			{
 				(void)(a1, a2, c, d, c2, d2, c3, d3, e);
@@ -115,11 +121,8 @@ struct S
 			});
 		}
 		{
-			auto symbol = stat->symbol
-				->TryGetChildren_NFb(L"l2")->Get(0).childSymbol
-				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
-				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
-			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto symbol = getInsideLambda(stat, L"l2")->symbol;
+			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [c, c2, c3, &d, &d2, &d3, &pa](int e)mutable
 			{
 				(void)(a1, a2, c, d, c2, d2, c3, d3, e);
@@ -139,11 +142,8 @@ struct S
 			});
 		}
 		{
-			auto symbol = stat->symbol
-				->TryGetChildren_NFb(L"l3")->Get(0).childSymbol
-				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
-				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
-			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto symbol = getInsideLambda(stat, L"l3")->symbol;
+			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [=, &d, &d2, &d3, &pa](int e)
 			{
 				(void)(a1, a2, b, c, d, b2, c2, d2, b3, c3, d3, e);
@@ -166,11 +166,8 @@ struct S
 			});
 		}
 		{
-			auto symbol = stat->symbol
-				->TryGetChildren_NFb(L"l4")->Get(0).childSymbol
-				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
-				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
-			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto symbol = getInsideLambda(stat, L"l4")->symbol;
+			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [=, &d, &d2, &d3, &pa](int e)mutable
 			{
 				(void)(a1, a2, b, c, d, b2, c2, d2, b3, c3, d3, e);
@@ -193,11 +190,8 @@ struct S
 			});
 		}
 		{
-			auto symbol = stat->symbol
-				->TryGetChildren_NFb(L"l5")->Get(0).childSymbol
-				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
-				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
-			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto symbol = getInsideLambda(stat, L"l5")->symbol;
+			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [&, c, c2, c3](int e)
 			{
 				(void)(a1, a2, b, c, d, b2, c2, d2, b3, c3, d3, e);
@@ -220,11 +214,8 @@ struct S
 			});
 		}
 		{
-			auto symbol = stat->symbol
-				->TryGetChildren_NFb(L"l6")->Get(0).childSymbol
-				->GetAnyForwardDecl<VariableDeclaration>()->initializer->arguments[0].item.Cast<LambdaExpr>()->symbol
-				->TryGetChildren_NFb(L"$")->Get(0).childSymbol;
-			auto pa = ppa.AdjustForDecl(symbol.Obj());
+			auto symbol = getInsideLambda(stat, L"l6")->symbol;
+			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [&, c, c2, c3](int e)mutable
 			{
 				(void)(a1, a2, b, c, d, b2, c2, d2, b3, c3, d3, e);
