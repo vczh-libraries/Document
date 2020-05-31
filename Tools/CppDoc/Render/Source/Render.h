@@ -59,6 +59,12 @@ struct IndexResult
 	// the ParsingArguments used to parse the program
 	ParsingArguments								pa;
 
+	// the input code
+	WString											input;
+
+	// the output program
+	Ptr<Program>									program;
+
 	// unique-symbol-name to symbol mapping created in Compile function
 	Dictionary<WString, Symbol*>					ids;
 
@@ -99,6 +105,7 @@ Compiling
 ***********************************************************************/
 
 extern void											Compile(Ptr<RegexLexer> lexer, FilePath pathInput, IndexResult& result, IProgressReporter* progressReporter);
+extern void											GenerateUniqueId(IndexResult& result);
 
 /***********************************************************************
 Line Indexing

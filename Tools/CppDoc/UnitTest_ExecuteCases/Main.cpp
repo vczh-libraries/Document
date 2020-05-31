@@ -67,11 +67,6 @@ void IndexCppCode(
 	Folder					folderOutput				// folder containing generated HTML files
 )
 {
-	if (!folderOutput.Exists())
-	{
-		folderOutput.Create(true);
-	}
-
 	Console::WriteLine(preprocessedFile.GetFilePath().GetFullPath());
 	Console::WriteLine(L"    Preprocessing");
 	PreprocessedFileToCompactCodeAndMapping(
@@ -95,6 +90,11 @@ void IndexCppCode(
 		progressReporter.FinishPhase();
 	}
 
+	Console::WriteLine(L"    Generating UniqueId");
+	GenerateUniqueId(
+		indexResult
+	);
+
 	Console::WriteLine(L"    Generating HTML");
 	auto global = Collect(
 		lexer,
@@ -111,8 +111,9 @@ void IndexCppCode(
 		GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / (flr->htmlFileName + L".html"));
 	}
 
-	List<WString> sourcePrefixes;
 	{
+		// collect all folders of predefined file groups
+		List<WString> sourcePrefixes;
 		CopyFrom(
 			sourcePrefixes,
 			From(fileGroups)
@@ -122,23 +123,47 @@ void IndexCppCode(
 				})
 			);
 
+		// collect all top level folders of source files
 		SortedList<FilePath> sdkPaths;
 		for (vint i = 0; i < global->fileLines.Count(); i++)
 		{
 			auto filePath = global->fileLines.Values()[i]->filePath;
+			// if this file is not located in any predefined file group
 			if (!From(sourcePrefixes)
 				.Any([=](const WString& prefix)
 				{
 					return INVLOC.StartsWith(filePath.GetFullPath(), prefix, Locale::Normalization::IgnoreCase);
 				}))
 			{
+				// and the folder
 				auto sdkPath = filePath.GetFolder();
 				if (!sdkPaths.Contains(sdkPath))
 				{
 					sdkPaths.Add(sdkPath);
-					fileGroups.Add({ sdkPath.GetFullPath() + FilePath::Delimiter, L"In SDK: " + sdkPath.GetFullPath() });
 				}
 			}
+		}
+
+		// remove any non-top level folders
+		for (vint i = sdkPaths.Count() - 1; i >= 0; i--)
+		{
+			auto sdkPath = sdkPaths[i];
+			for (vint j = i - 1; i >= 0; i--)
+			{
+				auto candidate = sdkPaths[j];
+				if (INVLOC.StartsWith(sdkPath.GetFullPath() + FilePath::Delimiter, candidate.GetFullPath() + FilePath::Delimiter, Locale::Normalization::IgnoreCase))
+				{
+					sdkPaths.RemoveAt(i);
+					break;
+				}
+			}
+		}
+
+		// generate file groups for remaining files
+		for (vint i = 0; i < sdkPaths.Count(); i++)
+		{
+			auto sdkPath = sdkPaths[i];
+			fileGroups.Add({ sdkPath.GetFullPath() + FilePath::Delimiter, L"In SDK: " + sdkPath.GetFullPath() });
 		}
 	}
 
@@ -161,14 +186,19 @@ Open http://127.0.0.1:8080/STL.i.Output/FileIndex.html
 int main()
 {
 	List<File> preprocessedFiles;
-	//preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
-	//preprocessedFiles.Add(File(L"../UnitTest_Cases/TypePrinter.i"));
+	preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
+	preprocessedFiles.Add(File(L"../UnitTest_Cases/TypePrinter.i"));
 	preprocessedFiles.Add(File(L"../UnitTest_Cases/STL.i"));
 
 	Console::WriteLine(L"Cleaning ...");
 	FOREACH(File, file, preprocessedFiles)
 	{
+		Folder folderInput(file.GetFilePath().GetFullPath() + L".Input");
 		Folder folderOutput(file.GetFilePath().GetFullPath() + L".Output");
+		if (folderInput.Exists())
+		{
+			folderInput.Delete(true);
+		}
 		if (folderOutput.Exists())
 		{
 			folderOutput.Delete(true);
@@ -178,36 +208,25 @@ int main()
 
 	FOREACH(File, file, preprocessedFiles)
 	{
+		Folder folderInput(file.GetFilePath().GetFullPath() + L".Input");
 		Folder folderOutput(file.GetFilePath().GetFullPath() + L".Output");
-		auto pathPreprocessed = folderOutput.GetFilePath() / L"Preprocessed.cpp";
-		auto pathInput = folderOutput.GetFilePath() / L"Input.cpp";
-		auto pathMapping = folderOutput.GetFilePath() / L"Mapping.bin";
+		auto pathPreprocessed = folderInput.GetFilePath() / L"Preprocessed.cpp";
+		auto pathInput = folderInput.GetFilePath() / L"Input.cpp";
+		auto pathMapping = folderInput.GetFilePath() / L"Mapping.bin";
+
+		if (!folderInput.Exists())
+		{
+			folderInput.Create(true);
+		}
+		if (!folderOutput.Exists())
+		{
+			folderOutput.Create(true);
+		}
 
 		FileGroupConfig fileGroups;
 		fileGroups.Add({ file.GetFilePath().GetFolder().GetFullPath() + FilePath::Delimiter, L"Source Code of this Project" });
 		IndexCppCode(fileGroups, file, lexer, pathPreprocessed, pathInput, pathMapping, folderOutput);
 	}
-
-	//{
-	//	Folder folderOutput(L"../../../.Output/Import/Preprocessed.txt.Output");
-	//	auto pathPreprocessed = folderOutput.GetFilePath() / L"Preprocessed.cpp";
-	//	auto pathInput = folderOutput.GetFilePath() / L"Input.cpp";
-	//	auto pathMapping = folderOutput.GetFilePath() / L"Mapping.bin";
-
-	//	if (!folderOutput.Exists())
-	//	{
-	//		folderOutput.Create(false);
-	//	}
-
-	//	Console::WriteLine(L"Preprocessing Preprocessed.txt ...");
-	//	CleanUpPreprocessFile(
-	//		lexer,
-	//		folderOutput.GetFilePath() / L"../Preprocessed.txt",
-	//		pathPreprocessed,
-	//		pathInput,
-	//		pathMapping
-	//	);
-	//}
 
 	return 0;
 }

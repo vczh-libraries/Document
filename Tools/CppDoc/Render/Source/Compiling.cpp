@@ -13,19 +13,24 @@ void Compile(
 )
 {
 	// program input and index tokens
-	WString input = File(pathInput).ReadAllTextByBom();
-	CppTokenReader reader(lexer, input);
+	result.input = File(pathInput).ReadAllTextByBom();
+	CppTokenReader reader(lexer, result.input);
 	auto cursor = reader.GetFirstToken();
 
 	result.pa = {
 		new Symbol(symbol_component::SymbolCategory::Normal),
 		ITsysAlloc::Create(),
-		new IndexRecorder(result, progressReporter, input.Length())
+		new IndexRecorder(result, progressReporter, result.input.Length())
 	};
 
-	auto program = ParseProgram(result.pa, cursor);
-	EvaluateProgram(result.pa, program);
+	result.program = ParseProgram(result.pa, cursor);
+	EvaluateProgram(result.pa, result.program);
+}
 
+void GenerateUniqueId(
+	IndexResult& result						// (out) indexing
+)
+{
 	// generate unique symbol name
 	result.pa.root->GenerateUniqueId(result.ids, L"");
 
