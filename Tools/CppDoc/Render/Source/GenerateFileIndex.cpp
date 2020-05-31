@@ -4,6 +4,25 @@
 GenerateFileIndex
 ***********************************************************************/
 
+void GenerateFileIndexRecord(WString prefix, WString indentation, Ptr<FileLinesRecord> flr, StreamWriter& writer)
+{
+	writer.WriteString(indentation);
+	writer.WriteString(L"<a class=\"fileIndex\" href=\"./");
+	WriteHtmlAttribute(flr->htmlFileName, writer);
+	writer.WriteString(L".html\">");
+	WriteHtmlTextSingleLine(flr->filePath.GetFullPath().Right(flr->filePath.GetFullPath().Length() - prefix.Length()), writer);
+	writer.WriteLine(L"</a><br>");
+}
+
+void GenerateFileIndexInFolder(WString prefix, List<Ptr<FileLinesRecord>>& flrs, StreamWriter& writer)
+{
+	for (vint i = 0; i < flrs.Count(); i++)
+	{
+		auto flr = flrs[i];
+		GenerateFileIndexRecord(prefix, L"&nbsp;&nbsp;&nbsp;&nbsp;", flr, writer);
+	}
+}
+
 void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGroupConfig& fileGroups)
 {
 	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
@@ -36,23 +55,22 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 	for (vint i = 0; i < fileGroups.Count(); i++)
 	{
 		auto prefix = fileGroups[i].f0;
-		writer.WriteString(L"<span class=\"fileGroupLabel\">");
-		WriteHtmlTextSingleLine(fileGroups[i].f1, writer);
-		writer.WriteLine(L"</span><br>");
+		List<Ptr<FileLinesRecord>> selectedFlrs;
 
 		for (vint j = 0; j < flrs.Count(); j++)
 		{
 			auto flr = flrs[j];
 			if (INVLOC.StartsWith(flr->filePath.GetFullPath(), prefix, Locale::Normalization::IgnoreCase))
 			{
-				writer.WriteString(L"&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"fileIndex\" href=\"./");
-				WriteHtmlAttribute(flr->htmlFileName, writer);
-				writer.WriteString(L".html\">");
-				WriteHtmlTextSingleLine(flr->filePath.GetFullPath().Right(flr->filePath.GetFullPath().Length() - prefix.Length()), writer);
-				writer.WriteLine(L"</a><br>");
+				selectedFlrs.Add(flr);
 				flrs.RemoveAt(j--);
 			}
 		}
+
+		writer.WriteString(L"<span class=\"fileGroupLabel\">");
+		WriteHtmlTextSingleLine(fileGroups[i].f1, writer);
+		writer.WriteLine(L"</span><br>");
+		GenerateFileIndexInFolder(prefix, selectedFlrs, writer);
 	}
 	if (flrs.Count() > 0)
 	{
@@ -61,11 +79,7 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 		for (vint j = 0; j < flrs.Count(); j++)
 		{
 			auto flr = flrs[j];
-			writer.WriteString(L"<a class=\"fileIndex\" href=\"./");
-			WriteHtmlAttribute(flr->htmlFileName, writer);
-			writer.WriteString(L".html\">");
-			WriteHtmlTextSingleLine(flr->filePath.GetFullPath(), writer);
-			writer.WriteLine(L"</a><br>");
+			GenerateFileIndexRecord(L"", L"&nbsp;&nbsp;&nbsp;&nbsp;", flr, writer);
 		}
 	}
 	writer.WriteLine(L"</body>");
