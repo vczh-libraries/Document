@@ -78,7 +78,7 @@ struct IndexResult
 class IProgressReporter : public virtual Interface
 {
 public:
-	virtual void									OnProgress(vint phase, vint totalPhases, vint position, vint length) = 0;
+	virtual void									OnProgress(vint phase, vint position, vint length) = 0;
 };
 
 class IndexRecorder : public Object, public virtual IIndexRecorder
@@ -178,7 +178,7 @@ extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
 Index Collecting
 ***********************************************************************/
 
-extern Ptr<GlobalLinesRecord>						Collect(Ptr<RegexLexer> lexer, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result);
+extern Ptr<GlobalLinesRecord>						Collect(Ptr<RegexLexer> lexer, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result, IProgressReporter* progressReporter);
 
 /***********************************************************************
 Source Code Page Generating

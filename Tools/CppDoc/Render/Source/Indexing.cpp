@@ -48,7 +48,7 @@ void IndexRecorder::BeginDelayParse(FunctionDeclaration* decl)
 		{
 			if (decl->name && progressReporter)
 			{
-				progressReporter->OnProgress(currentPhase, (vint)(Phase::Finished), decl->name.nameTokens[0].start, codeLength);
+				progressReporter->OnProgress(currentPhase, decl->name.nameTokens[0].start, codeLength);
 			}
 		}
 		stack++;
@@ -71,7 +71,7 @@ void IndexRecorder::BeginEvaluate(Declaration* decl)
 		{
 			if (decl->name && progressReporter)
 			{
-				progressReporter->OnProgress(currentPhase, (vint)(Phase::Finished), decl->name.nameTokens[0].start, codeLength);
+				progressReporter->OnProgress(currentPhase, decl->name.nameTokens[0].start, codeLength);
 			}
 		}
 		stack++;
@@ -102,7 +102,7 @@ void IndexRecorder::IndexInternal(CppName& name, List<ResolvedItem>& resolvedSym
 
 		if (progressReporter && currentPhase == 0)
 		{
-			progressReporter->OnProgress(currentPhase, (vint)(Phase::Finished), name.nameTokens[0].start, codeLength);
+			progressReporter->OnProgress(currentPhase, name.nameTokens[0].start, codeLength);
 		}
 	}
 }

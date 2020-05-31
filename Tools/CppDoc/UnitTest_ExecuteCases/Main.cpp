@@ -37,7 +37,7 @@ public:
 		currentProgress = 0;
 	}
 
-	void OnProgress(vint phase, vint totalPhases, vint position, vint length)
+	void OnProgress(vint phase, vint position, vint length)
 	{
 		if (phase != currentPhase)
 		{
@@ -77,18 +77,16 @@ void IndexCppCode(
 		pathMapping
 	);
 
+	ProgressReporter progressReporter;
 	Console::WriteLine(L"    Compiling");
 	IndexResult indexResult;
-	{
-		ProgressReporter progressReporter;
-		Compile(
-			lexer,
-			pathInput,
-			indexResult,
-			&progressReporter
-		);
-		progressReporter.FinishPhase();
-	}
+	Compile(
+		lexer,
+		pathInput,
+		indexResult,
+		&progressReporter
+	);
+	progressReporter.FinishPhase();
 
 	Console::WriteLine(L"    Generating UniqueId");
 	GenerateUniqueId(
@@ -101,9 +99,12 @@ void IndexCppCode(
 		pathPreprocessed,
 		pathInput,
 		pathMapping,
-		indexResult
+		indexResult,
+		&progressReporter
 	);
+	progressReporter.FinishPhase();
 
+	Console::WriteLine(L"    Writing Files");
 	for (vint i = 0; i < global->fileLines.Keys().Count(); i++)
 	{
 		auto flr = global->fileLines.Values()[i];
@@ -172,6 +173,8 @@ void IndexCppCode(
 
 	Console::WriteLine(L"        SymbolIndex.html");
 	GenerateSymbolIndex(global, indexResult, folderOutput.GetFilePath() / L"SymbolIndex.html", fileGroups);
+
+	Console::WriteLine(L"    Finished");
 }
 
 /***********************************************************************

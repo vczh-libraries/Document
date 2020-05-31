@@ -26,7 +26,6 @@
 - [ ] Next Demo! (STL)
   - [ ] `_CATCH_END` missing expanded `}` in `<memory>`
   - [ ] `const int _Locbase<_Dummy>::collate;` has incorrect links in `<xlocale>`
-  - [ ] Report progress in phase 2 and 3 accurately. Now if a later function is evaluated, the progress will jump to a very late position.
   - [ ] Remove special handling for `common_type_t<...>`
   - [ ] Test cases
     - [ ] calling `F<int()>` with function type not ctor expression.

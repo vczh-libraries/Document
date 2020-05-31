@@ -591,10 +591,11 @@ Collect
 
 Ptr<GlobalLinesRecord> Collect(
 	Ptr<RegexLexer> lexer,
-	FilePath pathPreprocessed,		// (in) Preprocessed.cpp
-	FilePath pathInput,				// (in) Input.cpp
-	FilePath pathMapping,			// (in) Mapping.bin
-	IndexResult& result				// (in) indexing
+	FilePath pathPreprocessed,				// (in) Preprocessed.cpp
+	FilePath pathInput,						// (in) Input.cpp
+	FilePath pathMapping,					// (in) Mapping.bin
+	IndexResult& result,					// (in) indexing
+	IProgressReporter* progressReporter
 )
 {
 	// read Mapping.bin
@@ -707,6 +708,11 @@ Ptr<GlobalLinesRecord> Collect(
 		// if it is not #line, generate HTML for this line
 		GenerateHtmlLine(cursor, global, currentFilePath, skipping, result, tracker, [&](HtmlLineRecord hlr)
 		{
+			if (progressReporter && cursor)
+			{
+				progressReporter->OnProgress((vint)IIndexRecorder::Phase::Finished, cursor->token.start, global->preprocessed.Length());
+			}
+
 			if (rightAfterSharpLine)
 			{
 				// line break is not consumed after #line
