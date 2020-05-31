@@ -14,12 +14,54 @@ void GenerateFileIndexRecord(WString prefix, WString indentation, Ptr<FileLinesR
 	writer.WriteLine(L"</a><br>");
 }
 
-void GenerateFileIndexInFolder(WString prefix, List<Ptr<FileLinesRecord>>& flrs, StreamWriter& writer)
+void GenerateFileIndexInFolder(WString prefix, WString indentation, WString indentationStep, const List<Ptr<FileLinesRecord>>& flrs, StreamWriter& writer)
 {
+	// extract folder information
+	Group<WString, Ptr<FileLinesRecord>> groupedFlrs;
 	for (vint i = 0; i < flrs.Count(); i++)
 	{
 		auto flr = flrs[i];
-		GenerateFileIndexRecord(prefix, L"&nbsp;&nbsp;&nbsp;&nbsp;", flr, writer);
+		auto path = flr->filePath.GetFullPath();
+		auto remaining = path.Sub(prefix.Length(), path.Length() - prefix.Length());
+		auto delimiterIndex = INVLOC.FindFirst(remaining, FilePath::Delimiter, Locale::Normalization::None);
+		if (delimiterIndex.key == -1)
+		{
+			groupedFlrs.Add(L"", flr);
+		}
+		else
+		{
+			groupedFlrs.Add(remaining.Left(delimiterIndex.key), flr);
+		}
+	}
+
+	// generate direct files
+	{
+		vint index = groupedFlrs.Keys().IndexOf(L"");
+		if (index != -1)
+		{
+			auto& flrsInFolder = groupedFlrs.GetByIndex(index);
+			for (vint i = 0; i < flrsInFolder.Count(); i++)
+			{
+				GenerateFileIndexRecord(prefix, indentation, flrsInFolder[i], writer);
+			}
+		}
+	}
+
+	// generate indirect files
+	for (vint i = 0; i < groupedFlrs.Keys().Count(); i++)
+	{
+		auto folder = groupedFlrs.Keys()[i];
+		if (folder != L"")
+		{
+			writer.WriteString(indentation);
+			writer.WriteString(L"<span class=\"fileGroupLabel\">");
+			WriteHtmlTextSingleLine(folder, writer);
+			writer.WriteChar(FilePath::Delimiter);
+			writer.WriteLine(L"</span><br>");
+
+			auto& flrsInFolder = groupedFlrs.GetByIndex(i);
+			GenerateFileIndexInFolder(prefix + folder + FilePath::Delimiter, indentation + indentationStep, indentationStep, flrsInFolder, writer);
+		}
 	}
 }
 
@@ -52,6 +94,8 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 			return WString::Compare(flr1->filePath.GetFullPath(), flr2->filePath.GetFullPath());
 		})
 	);
+
+	WString indentation = L"&nbsp;&nbsp;&nbsp;&nbsp;";
 	for (vint i = 0; i < fileGroups.Count(); i++)
 	{
 		auto prefix = fileGroups[i].f0;
@@ -70,8 +114,9 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 		writer.WriteString(L"<span class=\"fileGroupLabel\">");
 		WriteHtmlTextSingleLine(fileGroups[i].f1, writer);
 		writer.WriteLine(L"</span><br>");
-		GenerateFileIndexInFolder(prefix, selectedFlrs, writer);
+		GenerateFileIndexInFolder(prefix, indentation, indentation, selectedFlrs, writer);
 	}
+
 	if (flrs.Count() > 0)
 	{
 		writer.WriteLine(L"<span class=\"fileGroupLabel\">MISC</span><br>");
@@ -79,7 +124,7 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 		for (vint j = 0; j < flrs.Count(); j++)
 		{
 			auto flr = flrs[j];
-			GenerateFileIndexRecord(L"", L"&nbsp;&nbsp;&nbsp;&nbsp;", flr, writer);
+			GenerateFileIndexRecord(L"", indentation, flr, writer);
 		}
 	}
 	writer.WriteLine(L"</body>");
