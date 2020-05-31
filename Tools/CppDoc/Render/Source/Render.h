@@ -89,10 +89,15 @@ public:
 	IProgressReporter*								progressReporter;
 	vint											currentPhase = 0;
 	vint											codeLength = 0;
+	vint											stack = 0;
 
 	IndexRecorder(IndexResult& _result, IProgressReporter* _progressReporter, vint _codeLength);
 
-	void											BeginPhase(Phase phase);
+	void											BeginPhase(Phase phase)override;
+	void											BeginDelayParse(FunctionDeclaration* decl)override;
+	void											EndDelayParse(FunctionDeclaration* decl)override;
+	void											BeginEvaluate(Declaration* decl)override;
+	void											EndEvaluate(Declaration* decl)override;
 
 	void											IndexInternal(CppName& name, List<ResolvedItem>& resolvedSymbols, IndexReason reason);
 	void											Index(CppName& name, List<ResolvedItem>& resolvedSymbols)override;

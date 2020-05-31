@@ -422,79 +422,91 @@ public:
 
 	void Visit(FriendClassDeclaration* self) override
 	{
-		if (!self->templateSpec)
+		if (pa.recorder) pa.recorder->BeginEvaluate(self);
 		{
-			try
+			if (!self->templateSpec)
 			{
-				TypeTsysList tsys;
-				TypeToTsysNoVta(pa, self->usedClass, tsys);
-			}
-			catch (const TypeCheckerException&)
-			{
-				// it is not important
+				try
+				{
+					TypeTsysList tsys;
+					TypeToTsysNoVta(pa, self->usedClass, tsys);
+				}
+				catch (const TypeCheckerException&)
+				{
+					// it is not important
+				}
 			}
 		}
+		if (pa.recorder) pa.recorder->EndEvaluate(self);
 	}
 
 	void Visit(VariableDeclaration* self) override
 	{
-		EvaluateVariableDeclaration(pa, self);
+		if (pa.recorder) pa.recorder->BeginEvaluate(self);
+		{
+			EvaluateVariableDeclaration(pa, self);
+		}
+		if (pa.recorder) pa.recorder->EndEvaluate(self);
 	}
 
 	void Visit(FunctionDeclaration* self) override
 	{
-		EnsureFunctionBodyParsed(self);
-		symbol_type_resolving::EvaluateFuncSymbol(pa, self, pa.parentDeclType, nullptr);
-
-		if(self->initList.Count() > 0)
+		if (pa.recorder) pa.recorder->BeginEvaluate(self);
 		{
-			auto classDecl = self->symbol->GetParentScope()->GetImplDecl_NFb<ClassDeclaration>();
-			if (!classDecl)
-			{
-				throw TypeCheckerException();
-			}
-			if (self->name.type != CppNameType::Constructor)
-			{
-				throw TypeCheckerException();
-			}
+			EnsureFunctionBodyParsed(self);
+			symbol_type_resolving::EvaluateFuncSymbol(pa, self, pa.parentDeclType, nullptr);
 
-			auto newPa = pa.WithScope(self->symbol);
-			for (vint i = 0; i < self->initList.Count(); i++)
+			if (self->initList.Count() > 0)
 			{
-				auto& item = self->initList[i];
+				auto classDecl = self->symbol->GetParentScope()->GetImplDecl_NFb<ClassDeclaration>();
+				if (!classDecl)
 				{
-					if (item->field)
+					throw TypeCheckerException();
+				}
+				if (self->name.type != CppNameType::Constructor)
+				{
+					throw TypeCheckerException();
+				}
+
+				auto newPa = pa.WithScope(self->symbol);
+				for (vint i = 0; i < self->initList.Count(); i++)
+				{
+					auto& item = self->initList[i];
 					{
-						auto pVars = classDecl->symbol->TryGetChildren_NFb(item->field->name.name);
-						if (!pVars) goto SKIP_RESOLVING_FIELD;
-						if (pVars->Count() != 1) goto SKIP_RESOLVING_FIELD;
-
-						auto& varSymbol = pVars->Get(0);
-						if (varSymbol.childExpr || varSymbol.childType)
+						if (item->field)
 						{
-							goto SKIP_RESOLVING_FIELD;
-						}
-						if (varSymbol.childSymbol->kind != symbol_component::SymbolKind::Variable)
-						{
-							goto SKIP_RESOLVING_FIELD;
-						}
+							auto pVars = classDecl->symbol->TryGetChildren_NFb(item->field->name.name);
+							if (!pVars) goto SKIP_RESOLVING_FIELD;
+							if (pVars->Count() != 1) goto SKIP_RESOLVING_FIELD;
 
-						Resolving::AddSymbol(pa, item->field->resolving, varSymbol.childSymbol.Obj());
+							auto& varSymbol = pVars->Get(0);
+							if (varSymbol.childExpr || varSymbol.childType)
+							{
+								goto SKIP_RESOLVING_FIELD;
+							}
+							if (varSymbol.childSymbol->kind != symbol_component::SymbolKind::Variable)
+							{
+								goto SKIP_RESOLVING_FIELD;
+							}
+
+							Resolving::AddSymbol(pa, item->field->resolving, varSymbol.childSymbol.Obj());
+						}
+					}
+				SKIP_RESOLVING_FIELD:
+					for (vint j = 0; j < item->arguments.Count(); j++)
+					{
+						ExprTsysList types;
+						bool isVta = false;
+						ExprToTsysInternal(newPa, item->arguments[j].item, types, isVta);
 					}
 				}
-			SKIP_RESOLVING_FIELD:
-				for (vint j = 0; j < item->arguments.Count(); j++)
-				{
-					ExprTsysList types;
-					bool isVta = false;
-					ExprToTsysInternal(newPa, item->arguments[j].item, types, isVta);
-				}
 			}
-		}
 
-		// when the third parameter is true, only return statement is analyzed. So here we do a full analyzing.
-		auto fpa = pa.WithScope(self->symbol);
-		EvaluateStat(fpa, self->statement, false, nullptr);
+			// when the third parameter is true, only return statement is analyzed. So here we do a full analyzing.
+			auto fpa = pa.WithScope(self->symbol);
+			EvaluateStat(fpa, self->statement, false, nullptr);
+		}
+		if (pa.recorder) pa.recorder->EndEvaluate(self);
 	}
 
 	void Visit(EnumItemDeclaration* self) override
@@ -508,15 +520,24 @@ public:
 
 	void Visit(EnumDeclaration* self) override
 	{
-		for (vint i = 0; i < self->items.Count(); i++)
+		if (pa.recorder) pa.recorder->BeginEvaluate(self);
 		{
-			self->items[i]->Accept(this);
+			for (vint i = 0; i < self->items.Count(); i++)
+			{
+				self->items[i]->Accept(this);
+			}
 		}
+		if (pa.recorder) pa.recorder->EndEvaluate(self);
 	}
 
 	void Visit(ClassDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateClassSymbol(pa, self, nullptr, nullptr);
+		if (pa.recorder) pa.recorder->BeginEvaluate(self);
+		{
+			symbol_type_resolving::EvaluateClassSymbol(pa, self, nullptr, nullptr);
+		}
+		if (pa.recorder) pa.recorder->EndEvaluate(self);
+
 		auto dpa = pa.WithScope(self->symbol);
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
@@ -542,12 +563,20 @@ public:
 
 	void Visit(TypeAliasDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateTypeAliasSymbol(pa, self, pa.parentDeclType, nullptr);
+		if (pa.recorder) pa.recorder->BeginEvaluate(self);
+		{
+			symbol_type_resolving::EvaluateTypeAliasSymbol(pa, self, pa.parentDeclType, nullptr);
+		}
+		if (pa.recorder) pa.recorder->EndEvaluate(self);
 	}
 
 	void Visit(ValueAliasDeclaration* self) override
 	{
-		symbol_type_resolving::EvaluateValueAliasSymbol(pa, self, pa.parentDeclType, nullptr);
+		if (pa.recorder) pa.recorder->BeginEvaluate(self);
+		{
+			symbol_type_resolving::EvaluateValueAliasSymbol(pa, self, pa.parentDeclType, nullptr);
+		}
+		if (pa.recorder) pa.recorder->EndEvaluate(self);
 	}
 
 	void Visit(NamespaceDeclaration* self) override
@@ -561,11 +590,15 @@ public:
 
 	void Visit(StaticAssertDeclaration* self) override
 	{
-		for (vint i = 0; i < self->exprs.Count(); i++)
+		if (pa.recorder) pa.recorder->BeginEvaluate(self);
 		{
-			ExprTsysList tsys;
-			ExprToTsysNoVta(pa, self->exprs[i], tsys);
+			for (vint i = 0; i < self->exprs.Count(); i++)
+			{
+				ExprTsysList tsys;
+				ExprToTsysNoVta(pa, self->exprs[i], tsys);
+			}
 		}
+		if (pa.recorder) pa.recorder->EndEvaluate(self);
 	}
 };
 
@@ -621,5 +654,9 @@ void EvaluateProgram(const ParsingArguments& pa, Ptr<Program> program)
 	for (vint i = 0; i < program->decls.Count(); i++)
 	{
 		EvaluateDeclaration(pa, program->decls[i]);
+	}
+	if (pa.recorder)
+	{
+		pa.recorder->BeginPhase(IIndexRecorder::Phase::Finished);
 	}
 }

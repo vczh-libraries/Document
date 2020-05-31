@@ -99,6 +99,11 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 		auto delayParse = funcDecl->delayParse;
 		funcDecl->delayParse = nullptr;
 
+		if (delayParse->pa.recorder)
+		{
+			delayParse->pa.recorder->BeginDelayParse(funcDecl);
+		}
+
 		if (TestToken(delayParse->begin, CppTokens::COLON))
 		{
 			while (true)
@@ -202,6 +207,11 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 			{
 				throw StopParsingException(delayParse->begin);
 			}
+		}
+
+		if (delayParse->pa.recorder)
+		{
+			delayParse->pa.recorder->EndDelayParse(funcDecl);
 		}
 	}
 }

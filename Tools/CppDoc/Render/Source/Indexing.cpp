@@ -40,6 +40,52 @@ void IndexRecorder::BeginPhase(Phase phase)
 	currentPhase = (vint)phase;
 }
 
+void IndexRecorder::BeginDelayParse(FunctionDeclaration* decl)
+{
+	if (currentPhase == 1)
+	{
+		if (stack == 0)
+		{
+			if (decl->name && progressReporter)
+			{
+				progressReporter->OnProgress(currentPhase, (vint)(Phase::Finished), decl->name.nameTokens[0].start, codeLength);
+			}
+		}
+		stack++;
+	}
+}
+
+void IndexRecorder::EndDelayParse(FunctionDeclaration* decl)
+{
+	if (currentPhase == 1)
+	{
+		stack--;
+	}
+}
+
+void IndexRecorder::BeginEvaluate(Declaration* decl)
+{
+	if (currentPhase == 2)
+	{
+		if (stack == 0)
+		{
+			if (decl->name && progressReporter)
+			{
+				progressReporter->OnProgress(currentPhase, (vint)(Phase::Finished), decl->name.nameTokens[0].start, codeLength);
+			}
+		}
+		stack++;
+	}
+}
+
+void IndexRecorder::EndEvaluate(Declaration* decl)
+{
+	if (currentPhase == 2)
+	{
+		stack--;
+	}
+}
+
 void IndexRecorder::IndexInternal(CppName& name, List<ResolvedItem>& resolvedSymbols, IndexReason reason)
 {
 	auto key = IndexToken::GetToken(name);
@@ -54,9 +100,9 @@ void IndexRecorder::IndexInternal(CppName& name, List<ResolvedItem>& resolvedSym
 			}
 		}
 
-		if (progressReporter)
+		if (progressReporter && currentPhase == 0)
 		{
-			progressReporter->OnProgress(currentPhase, 3, name.nameTokens[0].start, codeLength);
+			progressReporter->OnProgress(currentPhase, (vint)(Phase::Finished), name.nameTokens[0].start, codeLength);
 		}
 	}
 }
