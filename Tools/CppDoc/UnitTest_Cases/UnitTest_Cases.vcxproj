@@ -183,6 +183,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="Gaclib.cpp" />
     <ClCompile Include="STL.cpp" />
     <ClCompile Include="TypePrinter.cpp" />
     <ClCompile Include="TypePrinter\Main.cpp">
