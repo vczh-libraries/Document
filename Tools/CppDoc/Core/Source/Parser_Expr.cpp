@@ -177,22 +177,23 @@ bool PrepareArgumentsForGenericExpr(const ParsingArguments& pa, VariadicList<Gen
 
 Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<Category_Id_Child_Expr> expr, bool templateKeyword, Ptr<CppTokenCursor>& cursor)
 {
-	bool allowGenericPresence = false;
-	bool allowGenericAbsence = false;
-	CheckResolvingForGenericExpr(pa, expr->resolving, templateKeyword, allowGenericPresence, allowGenericAbsence);
+	auto oldCursor = cursor;
+	{
+		bool allowGenericPresence = false;
+		bool allowGenericAbsence = false;
+		CheckResolvingForGenericExpr(pa, expr->resolving, templateKeyword, allowGenericPresence, allowGenericAbsence);
 
-	VariadicList<GenericArgument> genericArguments;
-	if (PrepareArgumentsForGenericExpr(pa, genericArguments, allowGenericPresence, allowGenericAbsence, cursor))
-	{
-		auto genericExpr = MakePtr<GenericExpr>();
-		genericExpr->expr = expr;
-		CopyFrom(genericExpr->arguments, genericArguments);
-		return genericExpr;
+		VariadicList<GenericArgument> genericArguments;
+		if (PrepareArgumentsForGenericExpr(pa, genericArguments, allowGenericPresence, allowGenericAbsence, cursor))
+		{
+			auto genericExpr = MakePtr<GenericExpr>();
+			genericExpr->expr = expr;
+			CopyFrom(genericExpr->arguments, genericArguments);
+			return genericExpr;
+		}
 	}
-	else
-	{
-		return expr;
-	}
+	cursor = oldCursor;
+	return expr;
 }
 
 Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<Category_Id_Child_Generic_Root_Type> type, Ptr<CppTokenCursor>& cursor)
@@ -386,6 +387,12 @@ GIVE_UP_CHILD_SYMBOL:
 		bool templateKeyword = TestToken(cursor, CppTokens::DECL_TEMPLATE);
 		if (auto expr = ParseIdExpr(pa, cursor))
 		{
+			{
+				// try to resolve this expression
+				ExprTsysList tsys;
+				bool isVta = false;
+				ExprToTsysInternal(pa, expr, tsys, isVta);
+			}
 			return TryParseGenericExpr(pa, expr, templateKeyword, cursor);
 		}
 	}
@@ -608,7 +615,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 ParsePostfixUnaryExpr
 ***********************************************************************/
 
-Ptr<Category_Id_Child_Generic_Expr> ParseFieldAccessNameExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
+void ParseFieldAccessNameExpr(const ParsingArguments& pa, Ptr<FieldAccessExpr> field, Ptr<CppTokenCursor>& cursor)
 {
 	auto oldCursor = cursor;
 	try
@@ -618,7 +625,8 @@ Ptr<Category_Id_Child_Generic_Expr> ParseFieldAccessNameExpr(const ParsingArgume
 		{
 			if (auto baseType = type.Cast<Category_Id_Child_Generic_Root_Type>())
 			{
-				return TryParseGenericExpr(pa, baseType, cursor);
+				field->name = TryParseGenericExpr(pa, baseType, cursor);
+				return;
 			}
 		}
 		throw StopParsingException(cursor);
@@ -634,7 +642,15 @@ Ptr<Category_Id_Child_Generic_Expr> ParseFieldAccessNameExpr(const ParsingArgume
 	{
 		throw StopParsingException(cursor);
 	}
-	return TryParseGenericExpr(pa, idExpr, templateKeyword, cursor);
+
+	field->name = idExpr;
+	{
+		// try to resolve this expression
+		ExprTsysList tsys;
+		bool isVta = false;
+		ExprToTsysInternal(pa, field, tsys, isVta);
+	}
+	field->name = TryParseGenericExpr(pa, idExpr, templateKeyword, cursor);
 }
 
 Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
@@ -665,7 +681,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			auto newExpr = MakePtr<FieldAccessExpr>();
 			newExpr->type = CppFieldAccessType::Dot;
 			newExpr->expr = expr;
-			newExpr->name = ParseFieldAccessNameExpr(pa, cursor);
+			ParseFieldAccessNameExpr(pa, newExpr, cursor);
 			expr = newExpr;
 		}
 		else if (!TestToken(cursor, CppTokens::SUB, CppTokens::GT, CppTokens::MUL, false) && TestToken(cursor, CppTokens::SUB, CppTokens::GT, false))
@@ -683,7 +699,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			}
 			newExpr->type = CppFieldAccessType::Arrow;
 			newExpr->expr = expr;
-			newExpr->name = ParseFieldAccessNameExpr(pa, cursor);
+			ParseFieldAccessNameExpr(pa, newExpr, cursor);
 			expr = newExpr;
 		}
 		else if (TestToken(cursor, CppTokens::LBRACKET, false))

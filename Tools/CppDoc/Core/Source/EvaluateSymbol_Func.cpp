@@ -90,6 +90,21 @@ namespace symbol_type_resolving
 		// template function recursion could cause this function with the same template arguments to be evaluated again
 		auto eval = ProcessArguments(invokerPa, funcDecl, funcDecl->templateSpec, parentDeclType, argumentsToApply, true);
 
+		if (!eval)
+		{
+			if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))
+			{
+				if (rootFuncDecl->skippedRecursiveEvaluationDuringDelayParse && (rootFuncDecl->delayParse || rootFuncDecl->statement))
+				{
+					// it is possible that when the function is evaluated last time, the compiler is parsing the body
+					// so the result does not count
+					eval.evaluatedTypes.Clear();
+					eval.notEvaluated = true;
+					eval.ev.progress = symbol_component::EvaluationProgress::Evaluating;
+				}
+			}
+		}
+
 		// full specialization selecting does no involve return type evaluation, do it separately
 		if(argumentsToApply)
 		{
@@ -139,15 +154,43 @@ namespace symbol_type_resolving
 			{
 				if (auto rootFuncDecl = dynamic_cast<FunctionDeclaration*>(funcDecl))
 				{
-					EnsureFunctionBodyParsed(rootFuncDecl);
-					EvaluateStat(eval.declPa, rootFuncDecl->statement, true, argumentsToApply);
-
-					// EvaluateStat could change ev.progress when recursion happens
-					if (eval.evaluatedTypes.Count() == 0 && eval.ev.progress == symbol_component::EvaluationProgress::Evaluating)
+					if (rootFuncDecl->delayParse || rootFuncDecl->statement)
 					{
-						// no return statement is found, the return type is void
+						rootFuncDecl->skippedRecursiveEvaluationDuringDelayParse = false;
+						EnsureFunctionBodyParsed(rootFuncDecl);
+						EvaluateStat(eval.declPa, rootFuncDecl->statement, true, argumentsToApply);
+
+						// EvaluateStat could change ev.progress when recursion happens
+						if (eval.evaluatedTypes.Count() == 0 && eval.ev.progress == symbol_component::EvaluationProgress::Evaluating)
+						{
+							// no return statement is found, the return type is void
+							TypeTsysList processedReturnTypes;
+							processedReturnTypes.Add(eval.declPa.tsys->Void());
+
+							TypeToTsysAndReplaceFunctionReturnType(
+								invokerPa,
+								funcDecl->type,
+								processedReturnTypes,
+								eval.evaluatedTypes,
+								IsMemberFunction(funcDecl)
+							);
+
+							return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, argumentsToApply);
+						}
+						else
+						{
+							// FinishEvaluatingPotentialGenericSymbol has been called in SetFuncTypeByReturnStat
+							return eval.evaluatedTypes;
+						}
+					}
+					else
+					{
+						// try to evaluate the function again while the compiler is parsing the body
+						// the return type is any_t
+						rootFuncDecl->skippedRecursiveEvaluationDuringDelayParse = true;
+
 						TypeTsysList processedReturnTypes;
-						processedReturnTypes.Add(eval.declPa.tsys->Void());
+						processedReturnTypes.Add(eval.declPa.tsys->Any());
 
 						TypeToTsysAndReplaceFunctionReturnType(
 							invokerPa,
@@ -158,11 +201,6 @@ namespace symbol_type_resolving
 						);
 
 						return FinishEvaluatingPotentialGenericSymbol(eval.declPa, funcDecl, funcDecl->templateSpec, argumentsToApply);
-					}
-					else
-					{
-						// FinishEvaluatingPotentialGenericSymbol has been called in SetFuncTypeByReturnStat
-						return eval.evaluatedTypes;
 					}
 				}
 				else

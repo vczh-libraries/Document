@@ -233,8 +233,10 @@ public:
 
 	List<Ptr<TemplateSpec>>							classSpecs;
 	List<Ptr<InitItem>>								initList;
+
 	Ptr<Stat>										statement;
 	Ptr<DelayParse>									delayParse;
+	bool											skippedRecursiveEvaluationDuringDelayParse = false;
 };
 
 class EnumItemDeclaration : public Declaration
