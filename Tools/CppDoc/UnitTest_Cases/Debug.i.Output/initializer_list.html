@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>initializer_list</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">// initializer_list standard header (core)</div>
+#pragma once
+<div class="disabled">#ifndef _INITIALIZER_LIST_</div>
+<div class="disabled">#define _INITIALIZER_LIST_</div>
+<div class="disabled">#ifndef RC_INVOKED</div>
+<div class="disabled">#include &lt;cstddef&gt;</div>
+
+<div class="expandable"><div class="disabled"> #pragma pack(push,_CRT_PACKING)</div>
+<div class="expanded">#pragma pack(push,<div class="token cpp_number ">8</div>)</div></div>
+<div class="expandable"><div class="disabled"> #pragma warning(push,_STL_WARNING_LEVEL)</div>
+<div class="expanded">#pragma warning(push,<div class="token cpp_number ">3</div>)</div></div>
+<div class="expandable"><div class="disabled"> #pragma warning(disable: _STL_DISABLED_WARNINGS)</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4455</div> <div class="token cpp_number ">4494</div>  <div class="token cpp_number ">4619</div> <div class="token cpp_number ">4643</div> <div class="token cpp_number ">4702</div> <div class="token cpp_number ">4984</div> <div class="token cpp_number ">4988</div> )</div></div>
+<div class="disabled"> _STL_DISABLE_CLANG_WARNINGS</div>
+<div class="disabled"> #pragma push_macro(&quot;new&quot;)</div>
+<div class="disabled"> #undef new</div>
+
+<div class="expandable"><div class="disabled">_STD_BEGIN</div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[10]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+		<div class="token cpp_comment ">// CLASS TEMPLATE initializer_list</div>
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::initializer_list::_Elem"><div><div class="token cpp_type">_Elem</div></div></div>&gt;
+	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$std::initializer_list"><div><div class="token cpp_type">initializer_list</div></div></div>
+	{	<div class="token cpp_comment ">// list of pointers to elements</div>
+<div class="token cpp_keyword ">public</div>:
+	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div> <div class="def" id="NI$std::initializer_list::value_type"><div><div class="token cpp_type">value_type</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&amp; <div class="def" id="NI$std::initializer_list::reference"><div><div class="token cpp_type">reference</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&amp; <div class="def" id="NI$std::initializer_list::const_reference"><div><div class="token cpp_type">const_reference</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$std::initializer_list::size_type"><div><div class="token cpp_type">size_type</div></div></div>;
+
+	<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>* <div class="def" id="NI$std::initializer_list::iterator"><div><div class="token cpp_type">iterator</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>* <div class="def" id="NI$std::initializer_list::const_iterator"><div><div class="token cpp_type">const_iterator</div></div></div>;
+
+	<div class="token cpp_keyword ">constexpr</div> <div class="def" id="FB$std::initializer_list::$__ctor@()[impl0]"><div><div class="token cpp_function">initializer_list</div></div></div>() <div class="token cpp_keyword ">noexcept</div>
+		: _First(<div class="token cpp_keyword ">nullptr</div>), _Last(<div class="token cpp_keyword ">nullptr</div>)
+		{	<div class="token cpp_comment ">// empty list</div>
+		}
+
+	<div class="token cpp_keyword ">constexpr</div> <div class="def" id="FB$std::initializer_list::$__ctor@([_Elem] const *, [_Elem] const *)[impl0]"><div><div class="token cpp_function">initializer_list</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div> *<div class="def" id="NI$std::initializer_list::$__ctor@([_Elem] const *, [_Elem] const *)[impl0]::_First_arg"><div><div class="token cpp_argument">_First_arg</div></div></div>,
+		<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div> *<div class="def" id="NI$std::initializer_list::$__ctor@([_Elem] const *, [_Elem] const *)[impl0]::_Last_arg"><div><div class="token cpp_argument">_Last_arg</div></div></div>) <div class="token cpp_keyword ">noexcept</div>
+		: _First(<div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::$__ctor@([_Elem] const *, [_Elem] const *)[impl0]::_First_arg'], [], [])"><div class="token cpp_argument">_First_arg</div></div>), _Last(<div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::$__ctor@([_Elem] const *, [_Elem] const *)[impl0]::_Last_arg'], [], [])"><div class="token cpp_argument">_Last_arg</div></div>)
+		{	<div class="token cpp_comment ">// construct with pointers</div>
+		}
+
+<div class="expandable"><div class="disabled">	_NODISCARD constexpr const _Elem * begin() const noexcept</div>
+<div class="expanded">	 <div class="token cpp_keyword ">constexpr</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div> * <div class="def" id="FB$std::initializer_list::begin@[_Elem] const *()[impl0]"><div><div class="token cpp_function">begin</div></div></div>() <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div></div></div>
+		{	<div class="token cpp_comment ">// get beginning of list</div>
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_First'], [], [])"><div class="token cpp_field">_First</div></div>);
+		}
+
+<div class="expandable"><div class="disabled">	_NODISCARD constexpr const _Elem * end() const noexcept</div>
+<div class="expanded">	 <div class="token cpp_keyword ">constexpr</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div> * <div class="def" id="FB$std::initializer_list::end@[_Elem] const *()[impl0]"><div><div class="token cpp_function">end</div></div></div>() <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div></div></div>
+		{	<div class="token cpp_comment ">// get end of list</div>
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Last'], [], [])"><div class="token cpp_field">_Last</div></div>);
+		}
+
+<div class="expandable"><div class="disabled">	_NODISCARD constexpr size_t size() const noexcept</div>
+<div class="expanded">	 <div class="token cpp_keyword ">constexpr</div> <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="FB$std::initializer_list::size@::size_t()[impl0]"><div><div class="token cpp_function">size</div></div></div>() <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div></div></div>
+		{	<div class="token cpp_comment ">// get length of list</div>
+		<div class="token cpp_keyword ">return</div> (<div class="token cpp_keyword ">static_cast</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Last'], [], [])"><div class="token cpp_field">_Last</div></div> - <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_First'], [], [])"><div class="token cpp_field">_First</div></div>));
+		}
+
+<div class="token cpp_keyword ">private</div>:
+	<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div> *<div class="def" id="NI$std::initializer_list::_First"><div><div class="token cpp_field">_First</div></div></div>;
+	<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::initializer_list::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div> *<div class="def" id="NI$std::initializer_list::_Last"><div><div class="token cpp_field">_Last</div></div></div>;
+	};
+
+		<div class="token cpp_comment ">// FUNCTION TEMPLATE begin</div>
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem"><div><div class="token cpp_type">_Elem</div></div></div>&gt;
+<div class="expandable"><div class="disabled">	_NODISCARD constexpr const _Elem * begin(initializer_list&lt;_Elem&gt; _Ilist) noexcept</div>
+<div class="expanded">	 <div class="token cpp_keyword ">constexpr</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div> * <div class="def" id="FB$std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]"><div><div class="token cpp_function">begin</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::initializer_list'], [], [])"><div class="token cpp_type">initializer_list</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt; <div class="def" id="NI$std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Ilist"><div><div class="token cpp_argument">_Ilist</div></div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+	{	<div class="token cpp_comment ">// get beginning of sequence</div>
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Ilist'], [], [])"><div class="token cpp_argument">_Ilist</div></div>.<div class="ref" onclick="jumpToSymbol(['std::initializer_list::begin@[_Elem] const *()'], ['std::initializer_list::begin@[_Elem] const *()'], [], [])"><div class="token cpp_function">begin</div></div>());
+	}
+
+		<div class="token cpp_comment ">// FUNCTION TEMPLATE end</div>
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem"><div><div class="token cpp_type">_Elem</div></div></div>&gt;
+<div class="expandable"><div class="disabled">	_NODISCARD constexpr const _Elem * end(initializer_list&lt;_Elem&gt; _Ilist) noexcept</div>
+<div class="expanded">	 <div class="token cpp_keyword ">constexpr</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div> * <div class="def" id="FB$std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]"><div><div class="token cpp_function">end</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::initializer_list'], [], [])"><div class="token cpp_type">initializer_list</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt; <div class="def" id="NI$std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Ilist"><div><div class="token cpp_argument">_Ilist</div></div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+	{	<div class="token cpp_comment ">// get end of sequence</div>
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Ilist'], [], [])"><div class="token cpp_argument">_Ilist</div></div>.<div class="ref" onclick="jumpToSymbol(['std::initializer_list::end@[_Elem] const *()'], ['std::initializer_list::end@[_Elem] const *()'], [], [])"><div class="token cpp_function">end</div></div>());
+	}
+<div class="expandable"><div class="disabled">_STD_END</div>
+<div class="expanded">}</div></div>
+<div class="disabled"> #pragma pop_macro(&quot;new&quot;)</div>
+<div class="disabled"> _STL_RESTORE_CLANG_WARNINGS</div>
+<div class="expandable"><div class="disabled"> #pragma warning(pop)</div>
+<div class="expanded">#pragma warning(pop)</div></div>
+<div class="expandable"><div class="disabled"> #pragma pack(pop)
+#endif /* RC_INVOKED */
+#endif /* _INITIALIZER_LIST_ */</div>
+<div class="expanded">#pragma pack(pop)</div></div>
+
+<div class="token cpp_comment ">/*
+ * Copyright (c) by P.J. Plauger. All rights reserved.
+ * Consult your license regarding permissions and restrictions.
+V6.50:0009 */</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    },
+    'std': {
+        'displayNameInHtml': 'std',
+        'impls': [],
+        'decls': [
+            'NF[0]$std',
+            'NF[1]$std',
+            'NF[2]$std',
+            'NF[3]$std',
+            'NF[4]$std',
+            'NF[5]$std',
+            'NF[6]$std',
+            'NF[7]$std',
+            'NF[8]$std',
+            'NF[9]$std',
+            'NF[10]$std',
+            'NF[11]$std',
+            'NF[12]$std',
+            'NF[13]$std',
+            'NF[14]$std',
+            'NF[15]$std',
+            'NF[16]$std',
+            'NF[17]$std',
+            'NF[18]$std',
+            'NF[19]$std',
+            'NF[20]$std',
+            'NF[21]$std',
+            'NF[22]$std',
+            'NF[23]$std',
+            'NF[24]$std',
+            'NF[25]$std',
+            'NF[26]$std',
+            'NF[27]$std',
+            'NF[28]$std',
+            'NF[29]$std',
+            'NF[30]$std',
+            'NF[31]$std'
+        ]
+    },
+    'std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem': {
+        'displayNameInHtml': '<span class="cpp_type">_Elem</span>',
+        'impls': [
+            'TA$std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem'
+        ],
+        'decls': []
+    },
+    'std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Ilist': {
+        'displayNameInHtml': '_Ilist',
+        'impls': [
+            'NI$std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Ilist'
+        ],
+        'decls': []
+    },
+    'std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem': {
+        'displayNameInHtml': '<span class="cpp_type">_Elem</span>',
+        'impls': [
+            'TA$std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem'
+        ],
+        'decls': []
+    },
+    'std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Ilist': {
+        'displayNameInHtml': '_Ilist',
+        'impls': [
+            'NI$std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Ilist'
+        ],
+        'decls': []
+    },
+    'std::initializer_list': {
+        'displayNameInHtml': '<span class="cpp_type">initializer_list</span>&lt;<span class="cpp_type">_Elem</span>&gt;',
+        'impls': [
+            'NI$std::initializer_list'
+        ],
+        'decls': []
+    },
+    'std::initializer_list::$__ctor@([_Elem] const *, [_Elem] const *)[impl0]::_First_arg': {
+        'displayNameInHtml': '_First_arg',
+        'impls': [
+            'NI$std::initializer_list::$__ctor@([_Elem] const *, [_Elem] const *)[impl0]::_First_arg'
+        ],
+        'decls': []
+    },
+    'std::initializer_list::$__ctor@([_Elem] const *, [_Elem] const *)[impl0]::_Last_arg': {
+        'displayNameInHtml': '_Last_arg',
+        'impls': [
+            'NI$std::initializer_list::$__ctor@([_Elem] const *, [_Elem] const *)[impl0]::_Last_arg'
+        ],
+        'decls': []
+    },
+    'std::initializer_list::_Elem': {
+        'displayNameInHtml': '<span class="cpp_type">_Elem</span>',
+        'impls': [
+            'TA$std::initializer_list::_Elem'
+        ],
+        'decls': []
+    },
+    'std::initializer_list::_First': {
+        'displayNameInHtml': '<span class="cpp_type">initializer_list</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_field">_First</span>',
+        'impls': [
+            'NI$std::initializer_list::_First'
+        ],
+        'decls': []
+    },
+    'std::initializer_list::_Last': {
+        'displayNameInHtml': '<span class="cpp_type">initializer_list</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_field">_Last</span>',
+        'impls': [
+            'NI$std::initializer_list::_Last'
+        ],
+        'decls': []
+    },
+    'std::initializer_list::begin@[_Elem] const *()': {
+        'displayNameInHtml': '<span class="cpp_type">initializer_list</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_function">begin</span>()',
+        'impls': [
+            'FB$std::initializer_list::begin@[_Elem] const *()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::initializer_list::end@[_Elem] const *()': {
+        'displayNameInHtml': '<span class="cpp_type">initializer_list</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_function">end</span>()',
+        'impls': [
+            'FB$std::initializer_list::end@[_Elem] const *()[impl0]'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$std::initializer_list::begin@[_Elem] const *()[impl0]': null,
+    'FB$std::initializer_list::end@[_Elem] const *()[impl0]': null,
+    'NF[0]$std': { 'htmlFileName': 'vcruntime_new.h', 'displayName': 'vcruntime_new.h' },
+    'NF[10]$std': null,
+    'NF[11]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[12]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
+    'NF[13]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NF[14]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[15]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[16]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[17]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[18]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
+    'NF[19]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
+    'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
+    'NF[20]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[22]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[23]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[24]$std': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
+    'NF[25]$std': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
+    'NF[26]$std': { 'htmlFileName': 'xatomic0.h', 'displayName': 'xatomic0.h' },
+    'NF[27]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
+    'NF[28]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[29]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[2]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[30]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
+    'NF[31]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[3]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'NF[4]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[5]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[6]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
+    'NF[7]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
+    'NF[8]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
+    'NF[9]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Ilist': null,
+    'NI$std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Ilist': null,
+    'NI$std::initializer_list': null,
+    'NI$std::initializer_list::$__ctor@([_Elem] const *, [_Elem] const *)[impl0]::_First_arg': null,
+    'NI$std::initializer_list::$__ctor@([_Elem] const *, [_Elem] const *)[impl0]::_Last_arg': null,
+    'NI$std::initializer_list::_First': null,
+    'NI$std::initializer_list::_Last': null,
+    'TA$std::begin@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem': null,
+    'TA$std::end@[_Elem] const *(::std::initializer_list<[_Elem]>)[impl0]::_Elem': null,
+    'TA$std::initializer_list::_Elem': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

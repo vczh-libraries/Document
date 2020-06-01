@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>yvals_core.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">// yvals_core.h internal header (core)</div>
+#pragma once
+<div class="disabled">#ifndef _YVALS_CORE_H</div>
+<div class="disabled">#define _YVALS_CORE_H</div>
+<div class="disabled">#ifndef RC_INVOKED</div>
+
+<div class="token cpp_comment ">// _HAS_CXX17 directly controls:</div>
+<div class="token cpp_comment ">// P0005R4 not_fn()</div>
+<div class="token cpp_comment ">// P0024R2 Parallel Algorithms</div>
+<div class="token cpp_comment ">// P0025R1 clamp()</div>
+<div class="token cpp_comment ">// P0030R1 hypot(x, y, z)</div>
+<div class="token cpp_comment ">// P0031R0 constexpr For &lt;array&gt; (Again) And &lt;iterator&gt;</div>
+<div class="token cpp_comment ">// P0032R3 Homogeneous Interface For variant/any/optional</div>
+<div class="token cpp_comment ">// P0040R3 Extending Memory Management Tools</div>
+<div class="token cpp_comment ">// P0067R5 Elementary String Conversions</div>
+<div class="token cpp_comment ">//     (partially implemented)</div>
+<div class="token cpp_comment ">// P0083R3 Splicing Maps And Sets</div>
+<div class="token cpp_comment ">// P0084R2 Emplace Return Type</div>
+<div class="token cpp_comment ">// P0088R3 &lt;variant&gt;</div>
+<div class="token cpp_comment ">// P0137R1 launder()</div>
+<div class="token cpp_comment ">// P0152R1 atomic::is_always_lock_free</div>
+<div class="token cpp_comment ">// P0154R1 hardware_destructive_interference_size, etc.</div>
+<div class="token cpp_comment ">// P0156R2 scoped_lock</div>
+<div class="token cpp_comment ">// P0163R0 shared_ptr::weak_type</div>
+<div class="token cpp_comment ">// P0185R1 is_swappable, is_nothrow_swappable</div>
+<div class="token cpp_comment ">// P0209R2 make_from_tuple()</div>
+<div class="token cpp_comment ">// P0218R1 &lt;filesystem&gt;</div>
+<div class="token cpp_comment ">// P0220R1 &lt;any&gt;, &lt;memory_resource&gt;, &lt;optional&gt;, &lt;string_view&gt;, apply(), sample(), Boyer-Moore search()</div>
+<div class="token cpp_comment ">// P0253R1 Fixing Searcher Return Types</div>
+<div class="token cpp_comment ">// P0254R2 Integrating string_view And std::string</div>
+<div class="token cpp_comment ">// P0258R2 has_unique_object_representations</div>
+<div class="token cpp_comment ">// P0272R1 Non-const basic_string::data()</div>
+<div class="token cpp_comment ">// P0295R0 gcd(), lcm()</div>
+<div class="token cpp_comment ">// P0307R2 Making Optional Greater Equal Again</div>
+<div class="token cpp_comment ">// P0336R1 Renaming Parallel Execution Policies</div>
+<div class="token cpp_comment ">// P0337R0 Deleting polymorphic_allocator Assignment</div>
+<div class="token cpp_comment ">// P0358R1 Fixes For not_fn()</div>
+<div class="token cpp_comment ">// P0393R3 Making Variant Greater Equal</div>
+<div class="token cpp_comment ">// P0394R4 Parallel Algorithms Should terminate() For Exceptions</div>
+<div class="token cpp_comment ">// P0403R1 UDLs For &lt;string_view&gt; (&quot;meow&quot;sv, etc.)</div>
+<div class="token cpp_comment ">// P0426R1 constexpr For char_traits</div>
+<div class="token cpp_comment ">// P0433R2 Deduction Guides For The STL</div>
+<div class="token cpp_comment ">// P0452R1 Unifying &lt;numeric&gt; Parallel Algorithms</div>
+<div class="token cpp_comment ">// P0504R0 Revisiting in_place_t/in_place_type_t&lt;T&gt;/in_place_index_t&lt;I&gt;</div>
+<div class="token cpp_comment ">// P0505R0 constexpr For &lt;chrono&gt; (Again)</div>
+<div class="token cpp_comment ">// P0508R0 Clarifying insert_return_type</div>
+<div class="token cpp_comment ">// P0510R0 Rejecting variants Of Nothing, Arrays, References, And Incomplete Types</div>
+<div class="token cpp_comment ">// P0604R0 invoke_result, is_invocable, is_nothrow_invocable</div>
+<div class="token cpp_comment ">// P0607R0 Inline Variables For The STL</div>
+<div class="token cpp_comment ">// P0682R1 Repairing Elementary String Conversions</div>
+<div class="token cpp_comment ">// P0739R0 Improving Class Template Argument Deduction For The STL</div>
+
+<div class="token cpp_comment ">// _HAS_CXX17 indirectly controls:</div>
+<div class="token cpp_comment ">// N4190 Removing auto_ptr, random_shuffle(), And Old &lt;functional&gt; Stuff</div>
+<div class="token cpp_comment ">// P0003R5 Removing Dynamic Exception Specifications</div>
+<div class="token cpp_comment ">// P0004R1 Removing Deprecated Iostreams Aliases</div>
+<div class="token cpp_comment ">// P0226R1 Mathematical Special Functions</div>
+<div class="token cpp_comment ">// P0298R3 std::byte</div>
+<div class="token cpp_comment ">// P0302R1 Removing Allocator Support In std::function</div>
+<div class="token cpp_comment ">// LWG 2385 function::assign allocator argument doesn&apos;t make sense</div>
+<div class="token cpp_comment ">// LWG 2921 packaged_task and type-erased allocators</div>
+<div class="token cpp_comment ">// LWG 2976 Dangling uses_allocator specialization for packaged_task</div>
+<div class="token cpp_comment ">// The non-Standard std::tr1 namespace and TR1-only machinery</div>
+<div class="token cpp_comment ">// The non-Standard std::identity struct</div>
+<div class="token cpp_comment ">// The non-Standard std::tr2::sys namespace</div>
+<div class="token cpp_comment ">// Enforcement of matching allocator value_types</div>
+<div class="token cpp_comment ">// [[nodiscard]] attributes on STL functions</div>
+
+<div class="token cpp_comment ">// _HAS_CXX17 and _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS control:</div>
+<div class="token cpp_comment ">// P0174R2 Deprecating Vestigial Library Parts</div>
+<div class="token cpp_comment ">// P0521R0 Deprecating shared_ptr::unique()</div>
+<div class="token cpp_comment ">// P0618R0 Deprecating &lt;codecvt&gt;</div>
+<div class="token cpp_comment ">// Other C++17 deprecation warnings</div>
+
+<div class="token cpp_comment ">// Implemented unconditionally:</div>
+<div class="token cpp_comment ">// N3911 void_t</div>
+<div class="token cpp_comment ">// N4089 Safe Conversions In unique_ptr&lt;T[]&gt;</div>
+<div class="token cpp_comment ">// N4169 invoke()</div>
+<div class="token cpp_comment ">// N4258 noexcept Cleanups</div>
+<div class="token cpp_comment ">// N4259 uncaught_exceptions()</div>
+<div class="token cpp_comment ">// N4277 Trivially Copyable reference_wrapper</div>
+<div class="token cpp_comment ">// N4279 insert_or_assign()/try_emplace() For map/unordered_map</div>
+<div class="token cpp_comment ">// N4280 size(), empty(), data()</div>
+<div class="token cpp_comment ">// N4366 Precisely Constraining unique_ptr Assignment</div>
+<div class="token cpp_comment ">// N4387 Improving pair And tuple</div>
+<div class="token cpp_comment ">// N4389 bool_constant</div>
+<div class="token cpp_comment ">// N4508 shared_mutex (Untimed)</div>
+<div class="token cpp_comment ">// N4510 Supporting Incomplete Types In vector/list/forward_list</div>
+<div class="token cpp_comment ">// P0006R0 Variable Templates For Type Traits (is_same_v, etc.)</div>
+<div class="token cpp_comment ">// P0007R1 as_const()</div>
+<div class="token cpp_comment ">// P0013R1 Logical Operator Type Traits (conjunction, etc.)</div>
+<div class="token cpp_comment ">// P0033R1 Rewording enable_shared_from_this</div>
+<div class="token cpp_comment ">// P0063R3 C11 Standard Library</div>
+<div class="token cpp_comment ">// P0074R0 owner_less&lt;&gt;</div>
+<div class="token cpp_comment ">// P0092R1 &lt;chrono&gt; floor(), ceil(), round(), abs()</div>
+<div class="token cpp_comment ">// P0414R2 shared_ptr&lt;T[]&gt;, shared_ptr&lt;T[N]&gt;</div>
+<div class="token cpp_comment ">// P0418R2 atomic compare_exchange memory_order Requirements</div>
+<div class="token cpp_comment ">// P0435R1 Overhauling common_type</div>
+<div class="token cpp_comment ">// P0497R0 Fixing shared_ptr For Arrays</div>
+<div class="token cpp_comment ">// P0513R0 Poisoning hash</div>
+<div class="token cpp_comment ">// P0516R0 Marking shared_future Copying As noexcept</div>
+<div class="token cpp_comment ">// P0517R0 Constructing future_error From future_errc</div>
+<div class="token cpp_comment ">// P0548R1 Tweaking common_type And duration</div>
+<div class="token cpp_comment ">// P0558R1 Resolving atomic&lt;T&gt; Named Base Class Inconsistencies</div>
+<div class="token cpp_comment ">// P0599R1 noexcept hash</div>
+<div class="token cpp_comment ">// P0777R1 Avoiding Unnecessary decay</div>
+<div class="token cpp_comment ">// P0941R2 Feature-Test Macros</div>
+
+<div class="token cpp_comment ">// Parallel Algorithms Notes</div>
+<div class="token cpp_comment ">// C++ allows an implementation to implement parallel algorithms as calls to the</div>
+<div class="token cpp_comment ">// serial algorithms. This implementation parallelizes several common algorithm</div>
+<div class="token cpp_comment ">// calls, but not all.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The following algorithms are parallelized.</div>
+<div class="token cpp_comment ">// * adjacent_difference</div>
+<div class="token cpp_comment ">// * adjacent_find</div>
+<div class="token cpp_comment ">// * all_of</div>
+<div class="token cpp_comment ">// * any_of</div>
+<div class="token cpp_comment ">// * count</div>
+<div class="token cpp_comment ">// * count_if</div>
+<div class="token cpp_comment ">// * equal</div>
+<div class="token cpp_comment ">// * exclusive_scan</div>
+<div class="token cpp_comment ">// * find</div>
+<div class="token cpp_comment ">// * find_end</div>
+<div class="token cpp_comment ">// * find_first_of</div>
+<div class="token cpp_comment ">// * find_if</div>
+<div class="token cpp_comment ">// * for_each</div>
+<div class="token cpp_comment ">// * for_each_n</div>
+<div class="token cpp_comment ">// * inclusive_scan</div>
+<div class="token cpp_comment ">// * mismatch</div>
+<div class="token cpp_comment ">// * none_of</div>
+<div class="token cpp_comment ">// * reduce</div>
+<div class="token cpp_comment ">// * remove</div>
+<div class="token cpp_comment ">// * remove_if</div>
+<div class="token cpp_comment ">// * search</div>
+<div class="token cpp_comment ">// * search_n</div>
+<div class="token cpp_comment ">// * sort</div>
+<div class="token cpp_comment ">// * stable_sort</div>
+<div class="token cpp_comment ">// * transform</div>
+<div class="token cpp_comment ">// * transform_exclusive_scan</div>
+<div class="token cpp_comment ">// * transform_inclusive_scan</div>
+<div class="token cpp_comment ">// * transform_reduce</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The following are not presently parallelized:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// No apparent parallelism performance improvement on target hardware; all</div>
+<div class="token cpp_comment ">// algorithms which merely copy or permute elements with no branches are</div>
+<div class="token cpp_comment ">// typically memory bandwidth limited.</div>
+<div class="token cpp_comment ">// * copy</div>
+<div class="token cpp_comment ">// * copy_backward</div>
+<div class="token cpp_comment ">// * copy_n</div>
+<div class="token cpp_comment ">// * fill</div>
+<div class="token cpp_comment ">// * fill_n</div>
+<div class="token cpp_comment ">// * move</div>
+<div class="token cpp_comment ">// * move_backward</div>
+<div class="token cpp_comment ">// * remove</div>
+<div class="token cpp_comment ">// * remove_if</div>
+<div class="token cpp_comment ">// * replace</div>
+<div class="token cpp_comment ">// * replace_if</div>
+<div class="token cpp_comment ">// * reverse</div>
+<div class="token cpp_comment ">// * reverse_copy</div>
+<div class="token cpp_comment ">// * rotate</div>
+<div class="token cpp_comment ">// * rotate_copy</div>
+<div class="token cpp_comment ">// * swap_ranges</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Confusion over user parallelism requirements exists; likely in the above</div>
+<div class="token cpp_comment ">// category anyway.</div>
+<div class="token cpp_comment ">// * generate</div>
+<div class="token cpp_comment ">// * generate_n</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Effective parallelism suspected to be infeasible.</div>
+<div class="token cpp_comment ">// * partial_sort</div>
+<div class="token cpp_comment ">// * partial_sort_copy</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Not yet evaluated; parallelism may be implemented in a future release and is</div>
+<div class="token cpp_comment ">// suspected to be beneficial.</div>
+<div class="token cpp_comment ">// * copy_if</div>
+<div class="token cpp_comment ">// * includes</div>
+<div class="token cpp_comment ">// * inplace_merge</div>
+<div class="token cpp_comment ">// * is_heap</div>
+<div class="token cpp_comment ">// * is_heap_until</div>
+<div class="token cpp_comment ">// * is_partitioned</div>
+<div class="token cpp_comment ">// * is_sorted</div>
+<div class="token cpp_comment ">// * is_sorted_until</div>
+<div class="token cpp_comment ">// * lexicographical_compare</div>
+<div class="token cpp_comment ">// * max_element</div>
+<div class="token cpp_comment ">// * merge</div>
+<div class="token cpp_comment ">// * min_element</div>
+<div class="token cpp_comment ">// * minmax_element</div>
+<div class="token cpp_comment ">// * nth_element</div>
+<div class="token cpp_comment ">// * partition_copy</div>
+<div class="token cpp_comment ">// * remove_copy</div>
+<div class="token cpp_comment ">// * remove_copy_if</div>
+<div class="token cpp_comment ">// * replace_copy</div>
+<div class="token cpp_comment ">// * replace_copy_if</div>
+<div class="token cpp_comment ">// * set_difference</div>
+<div class="token cpp_comment ">// * set_intersection</div>
+<div class="token cpp_comment ">// * set_symmetric_difference</div>
+<div class="token cpp_comment ">// * set_union</div>
+<div class="token cpp_comment ">// * stable_partition</div>
+<div class="token cpp_comment ">// * unique</div>
+<div class="token cpp_comment ">// * unique_copy</div>
+
+<div class="disabled">#ifndef _HAS_CXX17</div>
+<div class="disabled"> #ifdef _MSVC_LANG</div>
+<div class="disabled">  #if _MSVC_LANG &gt; 201402L</div>
+<div class="disabled">   #define _HAS_CXX17	1
+  #else /* _MSVC_LANG &gt; 201402L */</div>
+<div class="disabled">   #define _HAS_CXX17	0
+  #endif /* _MSVC_LANG &gt; 201402L */</div>
+<div class="disabled"> #else /* _MSVC_LANG */</div>
+<div class="disabled">  #if __cplusplus &gt; 201402L</div>
+<div class="disabled">   #define _HAS_CXX17	1</div>
+<div class="disabled">  #else /* __cplusplus &gt; 201402L */</div>
+<div class="disabled">   #define _HAS_CXX17	0</div>
+<div class="disabled">  #endif /* __cplusplus &gt; 201402L */
+ #endif /* _MSVC_LANG */
+#endif /* _HAS_CXX17 */</div>
+
+<div class="disabled">#include &lt;xkeycheck.h&gt;	// _HAS_CXX17 must be defined before including this
+#include &lt;crtdefs.h&gt;</div>
+
+<div class="disabled">#ifndef _STL_WARNING_LEVEL</div>
+<div class="disabled"> #if defined(_MSVC_WARNING_LEVEL) &amp;&amp; _MSVC_WARNING_LEVEL &gt;= 4</div>
+<div class="disabled">  #define _STL_WARNING_LEVEL	4
+ #else /* defined(_MSVC_WARNING_LEVEL) &amp;&amp; _MSVC_WARNING_LEVEL &gt;= 4 */</div>
+<div class="disabled">  #define _STL_WARNING_LEVEL	3
+ #endif /* defined(_MSVC_WARNING_LEVEL) &amp;&amp; _MSVC_WARNING_LEVEL &gt;= 4 */
+#endif /* _STL_WARNING_LEVEL */</div>
+
+<div class="disabled">#if _STL_WARNING_LEVEL &lt; 3</div>
+<div class="disabled"> #error _STL_WARNING_LEVEL cannot be less than 3.
+#endif /* _STL_WARNING_LEVEL &lt; 3 */</div>
+
+<div class="disabled">#if _STL_WARNING_LEVEL &gt; 4</div>
+<div class="disabled"> #error _STL_WARNING_LEVEL cannot be greater than 4.
+#endif /* _STL_WARNING_LEVEL &gt; 4 */</div>
+
+<div class="token cpp_comment ">// warning C4577: &apos;noexcept&apos; used with no exception handling mode specified;</div>
+<div class="token cpp_comment ">// termination on exception is not guaranteed. Specify /EHsc</div>
+<div class="disabled">#if _HAS_EXCEPTIONS</div>
+<div class="disabled"> #define _STL_DISABLED_WARNING_C4577</div>
+<div class="disabled">#else /* _HAS_EXCEPTIONS */</div>
+<div class="disabled"> #define _STL_DISABLED_WARNING_C4577	4577
+#endif /* _HAS_EXCEPTIONS */</div>
+
+<div class="disabled">#ifndef _STL_EXTRA_DISABLED_WARNINGS</div>
+<div class="disabled"> #define _STL_EXTRA_DISABLED_WARNINGS
+#endif /* _STL_EXTRA_DISABLED_WARNINGS */</div>
+
+<div class="token cpp_comment ">// warning C4455: literal suffix identifiers that do not start with an underscore are reserved</div>
+<div class="token cpp_comment ">// warning C4494: Ignoring __declspec(allocator) because the function return</div>
+<div class="token cpp_comment ">// type is not a pointer or reference</div>
+<div class="token cpp_comment ">// warning C4619: #pragma warning: there is no warning number &apos;number&apos;</div>
+<div class="token cpp_comment ">// warning C4643: Forward declaring &apos;meow&apos; in namespace std is not permitted by the C++ Standard.</div>
+<div class="token cpp_comment ">// warning C4702: unreachable code</div>
+<div class="token cpp_comment ">// error C4984: &apos;if constexpr&apos; is a C++17 language extension</div>
+<div class="token cpp_comment ">// warning C4988: variable declared outside class/function scope (/Wall /d1WarnOnGlobals)</div>
+<div class="disabled">#ifndef _STL_DISABLED_WARNINGS</div>
+<div class="disabled"> #define _STL_DISABLED_WARNINGS 4455 4494 _STL_DISABLED_WARNING_C4577 4619 4643 4702 4984 4988 _STL_EXTRA_DISABLED_WARNINGS
+#endif /* _STL_DISABLED_WARNINGS */</div>
+
+<div class="token cpp_comment ">// warning: constexpr if is a C++17 extension [-Wc++17-extensions]</div>
+<div class="token cpp_comment ">// warning: user-defined literal suffixes not starting with &apos;_&apos; are reserved [-Wuser-defined-literals]</div>
+<div class="token cpp_comment ">// warning: unknown pragma ignored [-Wunknown-pragmas]</div>
+<div class="disabled">#ifndef _STL_DISABLE_CLANG_WARNINGS</div>
+<div class="disabled"> #ifdef __clang__</div>
+<div class="disabled">  #define _STL_DISABLE_CLANG_WARNINGS	_Pragma(&quot;clang diagnostic push&quot;)	\</div>
+<div class="disabled">	_Pragma(&quot;clang diagnostic ignored \&quot;-Wc++17-extensions\&quot;&quot;)				\</div>
+<div class="disabled">	_Pragma(&quot;clang diagnostic ignored \&quot;-Wuser-defined-literals\&quot;&quot;)			\</div>
+<div class="disabled">	_Pragma(&quot;clang diagnostic ignored \&quot;-Wunknown-pragmas\&quot;&quot;)</div>
+<div class="disabled"> #else /* __clang__ */</div>
+<div class="disabled">  #define _STL_DISABLE_CLANG_WARNINGS
+ #endif /* __clang__ */
+#endif /* _STL_DISABLE_CLANG_WARNINGS */</div>
+
+<div class="disabled">#ifndef _STL_RESTORE_CLANG_WARNINGS</div>
+<div class="disabled"> #ifdef __clang__</div>
+<div class="disabled">  #define _STL_RESTORE_CLANG_WARNINGS	_Pragma(&quot;clang diagnostic pop&quot;)</div>
+<div class="disabled"> #else /* __clang__ */</div>
+<div class="disabled">  #define _STL_RESTORE_CLANG_WARNINGS
+ #endif /* __clang__ */
+#endif /* _STL_RESTORE_CLANG_WARNINGS */</div>
+
+<div class="disabled">#define _CPPLIB_VER	650</div>
+<div class="disabled">#define _MSVC_STL_VERSION 141</div>
+<div class="disabled">#define _MSVC_STL_UPDATE 201809L</div>
+
+<div class="disabled">#ifndef _ALLOW_COMPILER_AND_STL_VERSION_MISMATCH</div>
+<div class="disabled"> #ifdef __EDG__</div>
+<div class="disabled">  // not attempting to detect __EDG_VERSION__ being less than expected</div>
+<div class="disabled"> #elif defined(__clang__)</div>
+<div class="disabled">  #if __clang_major__ &lt; 7	// Coarse-grained, not inspecting __clang_minor__ and __clang_patchlevel__</div>
+<div class="disabled">   #error STL1000: Unexpected compiler version, expected Clang 7 or newer.</div>
+<div class="disabled">  #endif /* ^^^ old Clang ^^^ */
+ #elif defined(_MSC_VER)</div>
+<div class="disabled">  #if _MSC_VER &lt; 1915	// Coarse-grained, not inspecting _MSC_FULL_VER</div>
+<div class="disabled">   #error STL1001: Unexpected compiler version, expected MSVC 19.15 or newer.
+  #endif /* ^^^ old MSVC ^^^ */</div>
+<div class="disabled"> #else /* vvv other compilers vvv */</div>
+<div class="disabled">  // not attempting to detect other compilers
+ #endif /* ^^^ other compilers ^^^ */
+#endif /* _ALLOW_COMPILER_AND_STL_VERSION_MISMATCH */</div>
+
+<div class="disabled">#if _HAS_EXCEPTIONS</div>
+<div class="disabled"> #define _NOEXCEPT_COND(...)	noexcept(__VA_ARGS__)</div>
+<div class="disabled"> #define _NOEXCEPT_OPER(...)	noexcept(__VA_ARGS__)</div>
+<div class="disabled">#else /* _HAS_EXCEPTIONS */</div>
+<div class="disabled"> #define _NOEXCEPT_COND(...)	noexcept</div>
+<div class="disabled"> #define _NOEXCEPT_OPER(...)	true
+#endif /* _HAS_EXCEPTIONS */</div>
+
+<div class="disabled">#ifndef _HAS_STATIC_RTTI</div>
+<div class="disabled"> #define _HAS_STATIC_RTTI	1
+#endif /* _HAS_STATIC_RTTI */</div>
+
+<div class="disabled">#if defined(_CPPRTTI) &amp;&amp; !_HAS_STATIC_RTTI</div>
+<div class="disabled"> #error /GR implies _HAS_STATIC_RTTI.
+#endif /* defined(_CPPRTTI) &amp;&amp; !_HAS_STATIC_RTTI */</div>
+
+<div class="token cpp_comment ">// C++17 constexpr additions</div>
+<div class="disabled">#if _HAS_CXX17</div>
+<div class="disabled"> #define _CONSTEXPR17 constexpr
+#else /* ^^^ has C++17 constexpr additions ^^^ / vvv no C++17 constexpr additions vvv */</div>
+<div class="disabled"> #define _CONSTEXPR17 inline
+#endif /* _HAS_CXX17 */</div>
+
+<div class="token cpp_comment ">// P0607R0 Inline Variables For The STL</div>
+<div class="disabled">#if _HAS_CXX17</div>
+<div class="disabled"> #define _INLINE_VAR	inline
+#else /* _HAS_CXX17 */</div>
+<div class="disabled"> #define _INLINE_VAR
+#endif /* _HAS_CXX17 */</div>
+
+<div class="token cpp_comment ">// N4190 Removing auto_ptr, random_shuffle(), And Old &lt;functional&gt; Stuff</div>
+<div class="disabled">#ifndef _HAS_AUTO_PTR_ETC</div>
+<div class="disabled"> #define _HAS_AUTO_PTR_ETC	(!_HAS_CXX17)
+#endif /* _HAS_AUTO_PTR_ETC */</div>
+
+<div class="token cpp_comment ">// P0003R5 Removing Dynamic Exception Specifications</div>
+<div class="disabled">#ifndef _HAS_UNEXPECTED</div>
+<div class="disabled"> #define _HAS_UNEXPECTED	(!_HAS_CXX17)
+#endif /* _HAS_UNEXPECTED */</div>
+
+<div class="token cpp_comment ">// P0004R1 Removing Deprecated Iostreams Aliases</div>
+<div class="disabled">#ifndef _HAS_OLD_IOSTREAMS_MEMBERS</div>
+<div class="disabled"> #define _HAS_OLD_IOSTREAMS_MEMBERS	(!_HAS_CXX17)
+#endif /* _HAS_OLD_IOSTREAMS_MEMBERS */</div>
+
+<div class="token cpp_comment ">// P0067R5 Elementary String Conversions</div>
+<div class="disabled">#ifndef _HAS_COMPLETE_CHARCONV</div>
+<div class="disabled"> #define _HAS_COMPLETE_CHARCONV	0
+#endif /* _HAS_COMPLETE_CHARCONV */</div>
+
+<div class="token cpp_comment ">// P0226R1 Mathematical Special Functions</div>
+<div class="disabled">#ifndef _HAS_SPECIAL_MATH</div>
+<div class="disabled"> #define _HAS_SPECIAL_MATH	_HAS_CXX17
+#endif /* _HAS_SPECIAL_MATH */</div>
+
+<div class="token cpp_comment ">// P0298R3 std::byte</div>
+<div class="disabled">#ifndef _HAS_STD_BYTE</div>
+<div class="disabled"> #define _HAS_STD_BYTE	_HAS_CXX17	// inspected by GSL, do not remove
+#endif /* _HAS_STD_BYTE */</div>
+
+<div class="token cpp_comment ">// P0302R1 Removing Allocator Support In std::function</div>
+<div class="token cpp_comment ">// LWG 2385 function::assign allocator argument doesn&apos;t make sense</div>
+<div class="token cpp_comment ">// LWG 2921 packaged_task and type-erased allocators</div>
+<div class="token cpp_comment ">// LWG 2976 Dangling uses_allocator specialization for packaged_task</div>
+<div class="disabled">#ifndef _HAS_FUNCTION_ALLOCATOR_SUPPORT</div>
+<div class="disabled"> #define _HAS_FUNCTION_ALLOCATOR_SUPPORT	(!_HAS_CXX17)
+#endif /* _HAS_FUNCTION_ALLOCATOR_SUPPORT */</div>
+
+<div class="token cpp_comment ">// The non-Standard std::tr1 namespace and TR1-only machinery</div>
+<div class="disabled">#ifndef _HAS_TR1_NAMESPACE</div>
+<div class="disabled"> #define _HAS_TR1_NAMESPACE	(!_HAS_CXX17)
+#endif /* _HAS_TR1_NAMESPACE */</div>
+
+<div class="disabled">#if _HAS_TR1_NAMESPACE</div>
+<div class="disabled"> #ifdef _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING</div>
+<div class="disabled">  #define _DEPRECATE_TR1_NAMESPACE</div>
+<div class="disabled"> #else /* _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING */</div>
+<div class="disabled">  #define _DEPRECATE_TR1_NAMESPACE	[[deprecated(&quot;warning STL4002: &quot; \</div>
+<div class="disabled">	&quot;The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can &quot; \</div>
+<div class="disabled">	&quot;define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.&quot;)]]
+ #endif /* _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING */
+#endif /* _HAS_TR1_NAMESPACE */</div>
+
+<div class="token cpp_comment ">// The non-Standard std::identity struct</div>
+<div class="disabled">#ifndef _HAS_IDENTITY_STRUCT</div>
+<div class="disabled"> #define _HAS_IDENTITY_STRUCT	(!_HAS_CXX17)
+#endif /* _HAS_IDENTITY_STRUCT */</div>
+
+<div class="disabled">#if _HAS_IDENTITY_STRUCT</div>
+<div class="disabled"> #ifdef _SILENCE_IDENTITY_STRUCT_DEPRECATION_WARNING</div>
+<div class="disabled">  #define _DEPRECATE_IDENTITY_STRUCT</div>
+<div class="disabled"> #else /* _SILENCE_IDENTITY_STRUCT_DEPRECATION_WARNING */</div>
+<div class="disabled">  #define _DEPRECATE_IDENTITY_STRUCT	[[deprecated(&quot;warning STL4003: &quot; \</div>
+<div class="disabled">	&quot;The non-Standard std::identity struct is deprecated and will be REMOVED. You can &quot; \</div>
+<div class="disabled">	&quot;define _SILENCE_IDENTITY_STRUCT_DEPRECATION_WARNING to acknowledge that you have received this warning.&quot;)]]
+ #endif /* _SILENCE_IDENTITY_STRUCT_DEPRECATION_WARNING */
+#endif /* _HAS_IDENTITY_STRUCT */</div>
+
+<div class="token cpp_comment ">// The non-Standard std::tr2::sys namespace</div>
+<div class="disabled">#ifndef _HAS_TR2_SYS_NAMESPACE</div>
+<div class="disabled"> #define _HAS_TR2_SYS_NAMESPACE	(!_HAS_CXX17)
+#endif /* _HAS_TR2_SYS_NAMESPACE */</div>
+
+<div class="disabled">#if _HAS_TR2_SYS_NAMESPACE</div>
+<div class="disabled"> #ifdef _SILENCE_TR2_SYS_NAMESPACE_DEPRECATION_WARNING</div>
+<div class="disabled">  #define _DEPRECATE_TR2_SYS_NAMESPACE</div>
+<div class="disabled"> #else /* _SILENCE_TR2_SYS_NAMESPACE_DEPRECATION_WARNING */</div>
+<div class="disabled">  #define _DEPRECATE_TR2_SYS_NAMESPACE	[[deprecated(&quot;warning STL4018: &quot; \</div>
+<div class="disabled">	&quot;The non-Standard std::tr2::sys namespace is deprecated and will be REMOVED. &quot; \</div>
+<div class="disabled">	&quot;It is superseded by std::filesystem. You can &quot; \</div>
+<div class="disabled">	&quot;define _SILENCE_TR2_SYS_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.&quot;)]]
+ #endif /* _SILENCE_TR2_SYS_NAMESPACE_DEPRECATION_WARNING */
+#endif /* _HAS_TR2_SYS_NAMESPACE */</div>
+
+<div class="token cpp_comment ">// Enforcement of matching allocator value_types</div>
+<div class="disabled">#ifndef _ENFORCE_MATCHING_ALLOCATORS</div>
+<div class="disabled"> #define _ENFORCE_MATCHING_ALLOCATORS	_HAS_CXX17
+#endif /* _ENFORCE_MATCHING_ALLOCATORS */</div>
+
+<div class="disabled">#define _MISMATCHED_ALLOCATOR_MESSAGE(_CONTAINER, _VALUE_TYPE) \</div>
+<div class="disabled">	_CONTAINER &quot; requires that Allocator&apos;s value_type match &quot; _VALUE_TYPE \</div>
+<div class="disabled">	&quot; (See N4659 26.2.1 [container.requirements.general]/16 allocator_type)&quot; \</div>
+<div class="disabled">	&quot; Either fix the allocator value_type or define _ENFORCE_MATCHING_ALLOCATORS=0&quot; \</div>
+<div class="disabled">	&quot; to suppress this diagnostic.&quot;</div>
+
+<div class="token cpp_comment ">// [[nodiscard]] attributes on STL functions</div>
+<div class="disabled">#ifndef _HAS_NODISCARD</div>
+<div class="disabled"> #define _HAS_NODISCARD	_HAS_CXX17
+#endif /* _HAS_NODISCARD */</div>
+
+<div class="disabled">#if _HAS_NODISCARD</div>
+<div class="disabled"> #define _NODISCARD [[nodiscard]]</div>
+<div class="disabled"> #define _NODISCARD_PERF
+#else /* ^^^ CAN HAZ [[nodiscard]] ^^^ // vvv NO CAN HAZ [[nodiscard]] vvv */</div>
+<div class="disabled"> #define _NODISCARD</div>
+<div class="disabled"> #define _NODISCARD_PERF
+#endif /* _HAS_NODISCARD */</div>
+
+<div class="token cpp_comment ">// Controls whether the STL uses &quot;if constexpr&quot; internally</div>
+<div class="disabled">#ifndef _HAS_IF_CONSTEXPR</div>
+<div class="disabled"> #define _HAS_IF_CONSTEXPR	_HAS_CXX17
+#endif /* _HAS_IF_CONSTEXPR */</div>
+
+<div class="disabled">#if _HAS_IF_CONSTEXPR</div>
+<div class="disabled"> #define _CONSTEXPR_IF	constexpr
+#else /* _HAS_IF_CONSTEXPR */</div>
+<div class="disabled"> #define _CONSTEXPR_IF
+#endif /* _HAS_IF_CONSTEXPR */</div>
+
+<div class="token cpp_comment ">// Controls whether the STL will force /fp:fast to enable vectorization of algorithms defined</div>
+<div class="token cpp_comment ">// in the standard as special cases; such as reduce, transform_reduce, inclusive_scan, exclusive_scan</div>
+<div class="disabled">#ifndef _STD_VECTORIZE_WITH_FLOAT_CONTROL</div>
+<div class="disabled"> #ifdef _M_FP_EXCEPT</div>
+<div class="disabled">  #define _STD_VECTORIZE_WITH_FLOAT_CONTROL 0</div>
+<div class="disabled"> #else /* ^^^ floating point exceptions enabled ^^^ // vvv floating point exceptions disabled (default) vvv */</div>
+<div class="disabled">  #define _STD_VECTORIZE_WITH_FLOAT_CONTROL 1
+ #endif /* _M_FP_EXCEPT */
+#endif /* _STD_VECTORIZE_WITH_FLOAT_CONTROL */</div>
+
+<div class="token cpp_comment ">// P0174R2 Deprecating Vestigial Library Parts</div>
+<div class="token cpp_comment ">// P0521R0 Deprecating shared_ptr::unique()</div>
+<div class="token cpp_comment ">// Other C++17 deprecation warnings</div>
+
+<div class="token cpp_comment ">// N4659 D.4 [depr.cpp.headers]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_C_HEADER	[[deprecated(&quot;warning STL4004: &quot; \</div>
+<div class="disabled">	&quot;&lt;ccomplex&gt;, &lt;cstdalign&gt;, &lt;cstdbool&gt;, and &lt;ctgmath&gt; are deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_C_HEADER
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.6 [depr.str.strstreams]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_STRSTREAM_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_STRSTREAM	[[deprecated(&quot;warning STL4005: &lt;strstream&gt; is deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_STRSTREAM_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_STRSTREAM
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.7 [depr.uncaught]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_UNCAUGHT_EXCEPTION_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_UNCAUGHT_EXCEPTION	[[deprecated(&quot;warning STL4006: &quot; \</div>
+<div class="disabled">	&quot;std::uncaught_exception() is deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;It is superseded by std::uncaught_exceptions(), plural. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_UNCAUGHT_EXCEPTION_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_UNCAUGHT_EXCEPTION
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.8.1 [depr.weak.result_type]</div>
+<div class="token cpp_comment ">// N4659 D.8.2 [depr.func.adaptor.typedefs]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_ADAPTOR_TYPEDEFS_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_ADAPTOR_TYPEDEFS	[[deprecated(&quot;warning STL4007: Many result_type typedefs &quot; \</div>
+<div class="disabled">	&quot;and all argument_type, first_argument_type, and second_argument_type typedefs are deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_ADAPTOR_TYPEDEFS_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_ADAPTOR_TYPEDEFS
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.8.3 [depr.negators]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_NEGATORS_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_NEGATORS	[[deprecated(&quot;warning STL4008: &quot; \</div>
+<div class="disabled">	&quot;std::not1(), std::not2(), std::unary_negate, and std::binary_negate are deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;They are superseded by std::not_fn(). &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_NEGATORS_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_NEGATORS
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.9 [depr.default.allocator]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_ALLOCATOR_VOID	[[deprecated(&quot;warning STL4009: &quot; \</div>
+<div class="disabled">	&quot;std::allocator&lt;void&gt; is deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_ALLOCATOR_VOID
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.9 [depr.default.allocator]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_OLD_ALLOCATOR_MEMBERS	[[deprecated(&quot;warning STL4010: &quot; \</div>
+<div class="disabled">	&quot;Various members of std::allocator are deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;Use std::allocator_traits instead of accessing these members directly. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_OLD_ALLOCATOR_MEMBERS
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.10 [depr.storage.iterator]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_RAW_STORAGE_ITERATOR_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_RAW_STORAGE_ITERATOR	[[deprecated(&quot;warning STL4011: &quot; \</div>
+<div class="disabled">	&quot;std::raw_storage_iterator is deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;Consider using the std::uninitialized_copy() family of algorithms instead. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_RAW_STORAGE_ITERATOR_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_RAW_STORAGE_ITERATOR
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.11 [depr.temporary.buffer]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_TEMPORARY_BUFFER_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_TEMPORARY_BUFFER	[[deprecated(&quot;warning STL4012: &quot; \</div>
+<div class="disabled">	&quot;std::get_temporary_buffer() and std::return_temporary_buffer() are deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_TEMPORARY_BUFFER_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_TEMPORARY_BUFFER
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.12 [depr.meta.types]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_IS_LITERAL_TYPE_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_IS_LITERAL_TYPE	[[deprecated(&quot;warning STL4013: &quot; \</div>
+<div class="disabled">	&quot;std::is_literal_type and std::is_literal_type_v are deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_IS_LITERAL_TYPE_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_IS_LITERAL_TYPE
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.12 [depr.meta.types]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_RESULT_OF_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_RESULT_OF	[[deprecated(&quot;warning STL4014: &quot; \</div>
+<div class="disabled">	&quot;std::result_of and std::result_of_t are deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;They are superseded by std::invoke_result and std::invoke_result_t. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_RESULT_OF_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_RESULT_OF
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.13 [depr.iterator.primitives]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_ITERATOR_BASE_CLASS	[[deprecated(&quot;warning STL4015: &quot; \</div>
+<div class="disabled">	&quot;The std::iterator class template (used as a base class to provide typedefs) is deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;(The &lt;iterator&gt; header is NOT deprecated.) The C++ Standard has never required user-defined iterators to &quot; \</div>
+<div class="disabled">	&quot;derive from std::iterator. To fix this warning, stop deriving from std::iterator and start providing &quot; \</div>
+<div class="disabled">	&quot;publicly accessible typedefs named iterator_category, value_type, difference_type, pointer, and reference. &quot; \</div>
+<div class="disabled">	&quot;Note that value_type is required to be non-const, even for constant iterators. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_ITERATOR_BASE_CLASS
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.14 [depr.util.smartptr.shared.obs]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_SHARED_PTR_UNIQUE_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_SHARED_PTR_UNIQUE	[[deprecated(&quot;warning STL4016: &quot; \</div>
+<div class="disabled">	&quot;std::shared_ptr::unique() is deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_SHARED_PTR_UNIQUE_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_SHARED_PTR_UNIQUE
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="token cpp_comment ">// N4659 D.15 [depr.locale.stdcvt]</div>
+<div class="token cpp_comment ">// N4659 D.16 [depr.conversions]</div>
+<div class="disabled">#if _HAS_CXX17 &amp;&amp; !defined(_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING) \</div>
+<div class="disabled">	&amp;&amp; !defined(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_CODECVT_HEADER	[[deprecated(&quot;warning STL4017: &quot; \</div>
+<div class="disabled">	&quot;std::wbuffer_convert, std::wstring_convert, and the &lt;codecvt&gt; header (containing std::codecvt_mode, &quot; \</div>
+<div class="disabled">	&quot;std::codecvt_utf8, std::codecvt_utf16, and std::codecvt_utf8_utf16) are deprecated in C++17. &quot; \</div>
+<div class="disabled">	&quot;(The std::codecvt class template is NOT deprecated.) &quot; \</div>
+<div class="disabled">	&quot;The C++ Standard doesn&apos;t provide equivalent non-deprecated functionality; &quot; \</div>
+<div class="disabled">	&quot;consider using MultiByteToWideChar() and WideCharToMultiByte() from &lt;Windows.h&gt; instead. &quot; \</div>
+<div class="disabled">	&quot;You can define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING &quot; \
+	&quot;or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning.&quot;)]]
+#else /* ^^^ warning enabled ^^^ / vvv warning disabled vvv */</div>
+<div class="disabled"> #define _CXX17_DEPRECATE_CODECVT_HEADER
+#endif /* ^^^ warning disabled ^^^ */</div>
+
+<div class="disabled">#ifdef _SILENCE_FPOS_SEEKPOS_DEPRECATION_WARNING</div>
+<div class="disabled"> #define _DEPRECATE_FPOS_SEEKPOS</div>
+<div class="disabled">#else /* ^^^ warning disabled ^^^ // vvv warning enabled vvv */</div>
+<div class="disabled"> #define _DEPRECATE_FPOS_SEEKPOS	[[deprecated(&quot;warning STL4019: &quot; \</div>
+<div class="disabled">	&quot;The member std::fpos::seekpos() is non-Standard, and is preserved only for compatibility with &quot; \</div>
+<div class="disabled">	&quot;workarounds for old versions of Visual C++. It will be removed in a future release, and in this &quot; \</div>
+<div class="disabled">	&quot;release always returns 0. Please use standards-conforming mechanisms to manipulate fpos, such as &quot; \</div>
+<div class="disabled">	&quot;conversions to and from streamoff, or an integral type, instead. If you are receiving this message &quot; \</div>
+<div class="disabled">	&quot;while compiling Boost.IOStreams, a fix has been submitted upstream to make Boost use &quot; \</div>
+<div class="disabled">	&quot;standards-conforming mechanisms, as it does for other compilers. You can define &quot; \</div>
+<div class="disabled">	&quot;_SILENCE_FPOS_SEEKPOS_DEPRECATION_WARNING to acknowledge that you have received this warning, &quot; \</div>
+<div class="disabled">	&quot;or define _REMOVE_FPOS_SEEKPOS to remove std::fpos::seekpos entirely.&quot;)]]
+#endif /* _SILENCE_FPOS_SEEKPOS_DEPRECATION_WARNING */</div>
+
+<div class="token cpp_comment ">// next warning number: STL4020</div>
+
+<div class="disabled">#ifndef _HAS_LAUNDER</div>
+<div class="disabled"> #ifdef __has_builtin</div>
+<div class="disabled">  #if __has_builtin(__builtin_launder)</div>
+<div class="disabled">   #define _HAS_LAUNDER	_HAS_CXX17</div>
+<div class="disabled">  #else /* ^^^ compiler support available ^^^ // vvv compiler support unavailable vvv */</div>
+<div class="disabled">   #define _HAS_LAUNDER	0</div>
+<div class="disabled">  #endif /* ^^^ compiler support unavailable ^^^ */</div>
+<div class="disabled"> #elif defined(_BUILTIN_LAUNDER_SUPPORTED)</div>
+<div class="disabled">  #define _HAS_LAUNDER	_HAS_CXX17
+ #else /* ^^^ compiler support available ^^^ // vvv compiler support unavailable vvv */</div>
+<div class="disabled">  #define _HAS_LAUNDER	0
+ #endif /* ^^^ compiler support unavailable ^^^ */
+#endif /* _HAS_LAUNDER */</div>
+
+<div class="disabled">#ifndef _HAS_ALIGNED_NEW</div>
+<div class="disabled"> #ifdef __cpp_aligned_new</div>
+<div class="disabled">  #define _HAS_ALIGNED_NEW 1</div>
+<div class="disabled"> #else /* ^^^ compiler support available ^^^ // vvv compiler support unavailable vvv */</div>
+<div class="disabled">  #define _HAS_ALIGNED_NEW 0
+ #endif /* ^^^ compiler support unavailable ^^^ */
+#endif /* _HAS_ALIGNED_NEW */</div>
+
+<div class="disabled">#ifndef _HAS_NOEXCEPT_FUNCTION_TYPES</div>
+<div class="disabled"> #ifdef __cpp_noexcept_function_type</div>
+<div class="disabled">  #define _HAS_NOEXCEPT_FUNCTION_TYPES	1</div>
+<div class="disabled"> #else /* ^^^ compiler support available ^^^ // vvv compiler support unavailable vvv */</div>
+<div class="disabled">  #define _HAS_NOEXCEPT_FUNCTION_TYPES	0
+ #endif /* ^^^ compiler support unavailable ^^^ */
+#endif /* _HAS_NOEXCEPT_FUNCTION_TYPES */</div>
+
+
+<div class="token cpp_comment ">// LIBRARY FEATURE-TEST MACROS</div>
+
+<div class="token cpp_comment ">// C++14</div>
+<div class="disabled">#define __cpp_lib_chrono_udls							201304L</div>
+<div class="disabled">#define __cpp_lib_complex_udls							201309L</div>
+<div class="disabled">#define __cpp_lib_exchange_function						201304L</div>
+<div class="disabled">#define __cpp_lib_generic_associative_lookup			201304L</div>
+<div class="disabled">#define __cpp_lib_integer_sequence						201304L</div>
+<div class="disabled">#define __cpp_lib_integral_constant_callable			201304L</div>
+<div class="disabled">#define __cpp_lib_is_final								201402L</div>
+<div class="disabled">#define __cpp_lib_is_null_pointer						201309L</div>
+<div class="disabled">#define __cpp_lib_make_reverse_iterator					201402L</div>
+<div class="disabled">#define __cpp_lib_make_unique							201304L</div>
+<div class="disabled">#define __cpp_lib_null_iterators						201304L</div>
+<div class="disabled">#define __cpp_lib_quoted_string_io						201304L</div>
+<div class="disabled">#define __cpp_lib_result_of_sfinae						201210L</div>
+<div class="disabled">#define __cpp_lib_robust_nonmodifying_seq_ops			201304L</div>
+<div class="disabled">#define __cpp_lib_shared_timed_mutex					201402L</div>
+<div class="disabled">#define __cpp_lib_string_udls							201304L</div>
+<div class="disabled">#define __cpp_lib_transformation_trait_aliases			201304L</div>
+<div class="disabled">#define __cpp_lib_tuple_element_t						201402L</div>
+<div class="disabled">#define __cpp_lib_tuples_by_type						201304L</div>
+
+<div class="token cpp_comment ">// C++17</div>
+<div class="disabled">#define __cpp_lib_addressof_constexpr					201603L</div>
+<div class="disabled">#define __cpp_lib_allocator_traits_is_always_equal		201411L</div>
+<div class="disabled">#define __cpp_lib_as_const								201510L</div>
+<div class="disabled">#define __cpp_lib_bool_constant							201505L</div>
+<div class="disabled">#define __cpp_lib_enable_shared_from_this				201603L</div>
+<div class="disabled">#define __cpp_lib_incomplete_container_elements			201505L</div>
+<div class="disabled">#define __cpp_lib_invoke								201411L</div>
+<div class="disabled">#define __cpp_lib_logical_traits						201510L</div>
+<div class="disabled">#define __cpp_lib_map_try_emplace						201411L</div>
+<div class="disabled">#define __cpp_lib_nonmember_container_access			201411L</div>
+<div class="disabled">#define __cpp_lib_shared_mutex							201505L</div>
+<div class="disabled">#define __cpp_lib_shared_ptr_arrays						201611L</div>
+<div class="disabled">#define __cpp_lib_transparent_operators					201510L</div>
+<div class="disabled">#define __cpp_lib_type_trait_variable_templates			201510L</div>
+<div class="disabled">#define __cpp_lib_uncaught_exceptions					201411L</div>
+<div class="disabled">#define __cpp_lib_unordered_map_try_emplace				201411L</div>
+<div class="disabled">#define __cpp_lib_void_t								201411L</div>
+
+<div class="disabled">#if _HAS_CXX17</div>
+<div class="disabled"> #define __cpp_lib_any									201606L</div>
+<div class="disabled"> #define __cpp_lib_apply								201603L</div>
+<div class="disabled"> #define __cpp_lib_array_constexpr						201603L</div>
+<div class="disabled"> #define __cpp_lib_atomic_is_always_lock_free			201603L</div>
+<div class="disabled"> #define __cpp_lib_boyer_moore_searcher					201603L</div>
+<div class="disabled"> #define __cpp_lib_chrono								201611L</div>
+<div class="disabled"> #define __cpp_lib_clamp								201603L</div>
+<div class="disabled"> #define __cpp_lib_execution							201603L</div>
+<div class="disabled"> #define __cpp_lib_filesystem							201703L</div>
+<div class="disabled"> #define __cpp_lib_gcd_lcm								201606L</div>
+<div class="disabled"> #define __cpp_lib_hardware_interference_size			201703L</div>
+<div class="disabled"> #define __cpp_lib_has_unique_object_representations	201606L</div>
+<div class="disabled"> #define __cpp_lib_hypot								201603L</div>
+<div class="disabled"> #define __cpp_lib_is_aggregate							201703L</div>
+<div class="disabled"> #define __cpp_lib_is_invocable							201703L</div>
+<div class="disabled"> #define __cpp_lib_is_swappable							201603L</div>
+<div class="disabled"> #define __cpp_lib_make_from_tuple						201606L</div>
+<div class="disabled"> #define __cpp_lib_memory_resource						201603L</div>
+<div class="disabled"> #define __cpp_lib_node_extract							201606L</div>
+<div class="disabled"> #define __cpp_lib_not_fn								201603L</div>
+<div class="disabled"> #define __cpp_lib_optional								201606L</div>
+<div class="disabled"> #define __cpp_lib_parallel_algorithm					201603L</div>
+<div class="disabled"> #define __cpp_lib_raw_memory_algorithms				201606L</div>
+<div class="disabled"> #define __cpp_lib_sample								201603L</div>
+<div class="disabled"> #define __cpp_lib_scoped_lock							201703L</div>
+<div class="disabled"> #define __cpp_lib_shared_ptr_weak_type					201606L</div>
+<div class="disabled"> #define __cpp_lib_string_view							201606L</div>
+<div class="disabled"> #if _HAS_COMPLETE_CHARCONV</div>
+<div class="disabled">  #define __cpp_lib_to_chars							201611L</div>
+<div class="disabled"> #endif /* _HAS_COMPLETE_CHARCONV */</div>
+<div class="disabled"> #define __cpp_lib_variant								201606L
+#else /* _HAS_CXX17 */</div>
+<div class="disabled"> #define __cpp_lib_chrono								201510L
+#endif /* _HAS_CXX17 */</div>
+
+<div class="disabled">#if _HAS_STD_BYTE</div>
+<div class="disabled"> #define __cpp_lib_byte									201603L
+#endif /* _HAS_STD_BYTE */</div>
+
+<div class="disabled">#if _HAS_LAUNDER</div>
+<div class="disabled"> #define __cpp_lib_launder								201606L
+#endif /* _HAS_LAUNDER */</div>
+
+<div class="disabled">#if _HAS_SPECIAL_MATH</div>
+<div class="disabled"> #define __cpp_lib_math_special_functions				201603L
+#endif /* _HAS_SPECIAL_MATH */</div>
+
+<div class="token cpp_comment ">// EXPERIMENTAL</div>
+<div class="disabled">#define __cpp_lib_experimental_erase_if					201411L</div>
+<div class="disabled">#define __cpp_lib_experimental_filesystem				201406L</div>
+
+
+<div class="disabled">#ifdef _RTC_CONVERSION_CHECKS_ENABLED</div>
+<div class="disabled"> #ifndef _ALLOW_RTCc_IN_STL</div>
+<div class="disabled">  #error /RTCc rejects conformant code, so it is not supported by the C++ Standard Library. Either remove this \</div>
+<div class="disabled">compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.</div>
+<div class="disabled"> #endif /* _ALLOW_RTCc_IN_STL */</div>
+<div class="disabled">#endif /* _RTC_CONVERSION_CHECKS_ENABLED */</div>
+
+<div class="disabled">#ifndef _DECLSPEC_ALLOCATOR</div>
+<div class="disabled"> #ifdef __clang__</div>
+<div class="disabled">  #define _DECLSPEC_ALLOCATOR</div>
+<div class="disabled"> #else /* ^^^ Clang ^^^ // vvv non-Clang vvv */</div>
+<div class="disabled">  #define _DECLSPEC_ALLOCATOR	__declspec(allocator)
+ #endif /* ^^^ non-Clang ^^^ */
+#endif /* _DECLSPEC_ALLOCATOR */</div>
+
+<div class="disabled">#define _STRINGIZEX(x) #x</div>
+<div class="disabled">#define _STRINGIZE(x) _STRINGIZEX(x)</div>
+<div class="disabled">#define _EMPTY_ARGUMENT		/* for empty macro argument */</div>
+
+		<div class="token cpp_comment ">/* NAMESPACE */</div>
+<div class="disabled">#define _STD_BEGIN	namespace std {</div>
+<div class="disabled">#define _STD_END	}</div>
+<div class="disabled">#define _STD	::std::</div>
+
+<div class="token cpp_comment ">/*
+We use the stdext (standard extension) namespace to contain extensions that are not part of the current standard
+*/</div>
+<div class="disabled">#define _STDEXT_BEGIN	namespace stdext {</div>
+<div class="disabled">#define _STDEXT_END		}</div>
+<div class="disabled">#define _STDEXT			::stdext::</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="disabled"> #define _CSTD	::</div>
+
+<div class="disabled"> #define _EXTERN_C			extern &quot;C&quot; {</div>
+<div class="disabled"> #define _END_EXTERN_C		}</div>
+<div class="disabled">#else /* ^^^ __cplusplus ^^^ // vvv !__cplusplus vvv */</div>
+<div class="disabled"> #define _CSTD</div>
+
+<div class="disabled"> #define _EXTERN_C</div>
+<div class="disabled"> #define _END_EXTERN_C
+#endif /* __cplusplus */</div>
+
+<div class="disabled">#endif /* RC_INVOKED */
+#endif /* _YVALS_CORE_H */</div>
+
+<div class="token cpp_comment ">/*
+ * Copyright (c) by P.J. Plauger. All rights reserved.
+ * Consult your license regarding permissions and restrictions.
+V6.50:0009 */</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

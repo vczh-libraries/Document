@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>stdint.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// stdint.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The C Standard Library &lt;stdint.h&gt; header.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+<div class="disabled">#define _STDINT</div>
+
+<div class="disabled">#ifndef RC_INVOKED</div>
+
+<div class="disabled">#include &lt;vcruntime.h&gt;</div>
+
+
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">signed</div> <div class="token cpp_keyword ">char</div>        <div class="def" id="NI$int8_t"><div><div class="token cpp_type">int8_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">short</div>              <div class="def" id="NI$int16_t"><div><div class="token cpp_type">int16_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div>                <div class="def" id="NI$int32_t"><div><div class="token cpp_type">int32_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">long</div>          <div class="def" id="NI$int64_t"><div><div class="token cpp_type">int64_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div>      <div class="def" id="NI$uint8_t"><div><div class="token cpp_type">uint8_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div>     <div class="def" id="NI$uint16_t"><div><div class="token cpp_type">uint16_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>       <div class="def" id="NI$uint32_t"><div><div class="token cpp_type">uint32_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$uint64_t"><div><div class="token cpp_type">uint64_t</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">signed</div> <div class="token cpp_keyword ">char</div>        <div class="def" id="NI$int_least8_t"><div><div class="token cpp_type">int_least8_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">short</div>              <div class="def" id="NI$int_least16_t"><div><div class="token cpp_type">int_least16_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div>                <div class="def" id="NI$int_least32_t"><div><div class="token cpp_type">int_least32_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">long</div>          <div class="def" id="NI$int_least64_t"><div><div class="token cpp_type">int_least64_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div>      <div class="def" id="NI$uint_least8_t"><div><div class="token cpp_type">uint_least8_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div>     <div class="def" id="NI$uint_least16_t"><div><div class="token cpp_type">uint_least16_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>       <div class="def" id="NI$uint_least32_t"><div><div class="token cpp_type">uint_least32_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$uint_least64_t"><div><div class="token cpp_type">uint_least64_t</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">signed</div> <div class="token cpp_keyword ">char</div>        <div class="def" id="NI$int_fast8_t"><div><div class="token cpp_type">int_fast8_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div>                <div class="def" id="NI$int_fast16_t"><div><div class="token cpp_type">int_fast16_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div>                <div class="def" id="NI$int_fast32_t"><div><div class="token cpp_type">int_fast32_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">long</div>          <div class="def" id="NI$int_fast64_t"><div><div class="token cpp_type">int_fast64_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div>      <div class="def" id="NI$uint_fast8_t"><div><div class="token cpp_type">uint_fast8_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>       <div class="def" id="NI$uint_fast16_t"><div><div class="token cpp_type">uint_fast16_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>       <div class="def" id="NI$uint_fast32_t"><div><div class="token cpp_type">uint_fast32_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$uint_fast64_t"><div><div class="token cpp_type">uint_fast64_t</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">long</div>          <div class="def" id="NI$intmax_t"><div><div class="token cpp_type">intmax_t</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$uintmax_t"><div><div class="token cpp_type">uintmax_t</div></div></div>;
+
+<div class="token cpp_comment ">// These macros must exactly match those in the Windows SDK&apos;s intsafe.h.</div>
+<div class="disabled">#define INT8_MIN         (-127i8 - 1)</div>
+<div class="disabled">#define INT16_MIN        (-32767i16 - 1)</div>
+<div class="disabled">#define INT32_MIN        (-2147483647i32 - 1)</div>
+<div class="disabled">#define INT64_MIN        (-9223372036854775807i64 - 1)</div>
+<div class="disabled">#define INT8_MAX         127i8</div>
+<div class="disabled">#define INT16_MAX        32767i16</div>
+<div class="disabled">#define INT32_MAX        2147483647i32</div>
+<div class="disabled">#define INT64_MAX        9223372036854775807i64</div>
+<div class="disabled">#define UINT8_MAX        0xffui8</div>
+<div class="disabled">#define UINT16_MAX       0xffffui16</div>
+<div class="disabled">#define UINT32_MAX       0xffffffffui32</div>
+<div class="disabled">#define UINT64_MAX       0xffffffffffffffffui64</div>
+
+<div class="disabled">#define INT_LEAST8_MIN   INT8_MIN</div>
+<div class="disabled">#define INT_LEAST16_MIN  INT16_MIN</div>
+<div class="disabled">#define INT_LEAST32_MIN  INT32_MIN</div>
+<div class="disabled">#define INT_LEAST64_MIN  INT64_MIN</div>
+<div class="disabled">#define INT_LEAST8_MAX   INT8_MAX</div>
+<div class="disabled">#define INT_LEAST16_MAX  INT16_MAX</div>
+<div class="disabled">#define INT_LEAST32_MAX  INT32_MAX</div>
+<div class="disabled">#define INT_LEAST64_MAX  INT64_MAX</div>
+<div class="disabled">#define UINT_LEAST8_MAX  UINT8_MAX</div>
+<div class="disabled">#define UINT_LEAST16_MAX UINT16_MAX</div>
+<div class="disabled">#define UINT_LEAST32_MAX UINT32_MAX</div>
+<div class="disabled">#define UINT_LEAST64_MAX UINT64_MAX</div>
+
+<div class="disabled">#define INT_FAST8_MIN    INT8_MIN</div>
+<div class="disabled">#define INT_FAST16_MIN   INT32_MIN</div>
+<div class="disabled">#define INT_FAST32_MIN   INT32_MIN</div>
+<div class="disabled">#define INT_FAST64_MIN   INT64_MIN</div>
+<div class="disabled">#define INT_FAST8_MAX    INT8_MAX</div>
+<div class="disabled">#define INT_FAST16_MAX   INT32_MAX</div>
+<div class="disabled">#define INT_FAST32_MAX   INT32_MAX</div>
+<div class="disabled">#define INT_FAST64_MAX   INT64_MAX</div>
+<div class="disabled">#define UINT_FAST8_MAX   UINT8_MAX</div>
+<div class="disabled">#define UINT_FAST16_MAX  UINT32_MAX</div>
+<div class="disabled">#define UINT_FAST32_MAX  UINT32_MAX</div>
+<div class="disabled">#define UINT_FAST64_MAX  UINT64_MAX</div>
+
+<div class="disabled">#ifdef _WIN64</div>
+<div class="disabled">    #define INTPTR_MIN   INT64_MIN</div>
+<div class="disabled">    #define INTPTR_MAX   INT64_MAX</div>
+<div class="disabled">    #define UINTPTR_MAX  UINT64_MAX</div>
+<div class="disabled">#else</div>
+<div class="disabled">    #define INTPTR_MIN   INT32_MIN</div>
+<div class="disabled">    #define INTPTR_MAX   INT32_MAX</div>
+<div class="disabled">    #define UINTPTR_MAX  UINT32_MAX
+#endif</div>
+
+<div class="disabled">#define INTMAX_MIN       INT64_MIN</div>
+<div class="disabled">#define INTMAX_MAX       INT64_MAX</div>
+<div class="disabled">#define UINTMAX_MAX      UINT64_MAX</div>
+
+<div class="disabled">#define PTRDIFF_MIN      INTPTR_MIN</div>
+<div class="disabled">#define PTRDIFF_MAX      INTPTR_MAX</div>
+
+<div class="disabled">#ifndef SIZE_MAX</div>
+<div class="disabled">    #define SIZE_MAX     UINTPTR_MAX
+#endif</div>
+
+<div class="disabled">#define SIG_ATOMIC_MIN   INT32_MIN</div>
+<div class="disabled">#define SIG_ATOMIC_MAX   INT32_MAX</div>
+
+<div class="disabled">#define WCHAR_MIN        0x0000</div>
+<div class="disabled">#define WCHAR_MAX        0xffff</div>
+
+<div class="disabled">#define WINT_MIN         0x0000</div>
+<div class="disabled">#define WINT_MAX         0xffff</div>
+
+<div class="disabled">#define INT8_C(x)    (x)</div>
+<div class="disabled">#define INT16_C(x)   (x)</div>
+<div class="disabled">#define INT32_C(x)   (x)</div>
+<div class="disabled">#define INT64_C(x)   (x ## LL)</div>
+
+<div class="disabled">#define UINT8_C(x)   (x)</div>
+<div class="disabled">#define UINT16_C(x)  (x)</div>
+<div class="disabled">#define UINT32_C(x)  (x ## U)</div>
+<div class="disabled">#define UINT64_C(x)  (x ## ULL)</div>
+
+<div class="disabled">#define INTMAX_C(x)  INT64_C(x)</div>
+<div class="disabled">#define UINTMAX_C(x) UINT64_C(x)</div>
+
+
+
+<div class="disabled">#endif // RC_INVOKED</div>
+
+<div class="token cpp_comment ">/*
+ * Copyright (c) 1992-2012 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V6.00:0009 */</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

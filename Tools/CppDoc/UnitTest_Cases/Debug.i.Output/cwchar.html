@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>cwchar</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">// cwchar standard header</div>
+#pragma once
+<div class="disabled">#ifndef _CWCHAR_</div>
+<div class="disabled">#define _CWCHAR_</div>
+<div class="disabled">#ifndef RC_INVOKED</div>
+
+<div class="disabled">#include &lt;yvals.h&gt;
+#include &lt;wchar.h&gt;</div>
+
+<div class="expandable"><div class="disabled">#pragma pack(push,_CRT_PACKING)</div>
+<div class="expanded">#pragma pack(push,<div class="token cpp_number ">8</div>)</div></div>
+<div class="expandable"><div class="disabled">#pragma warning(push,_STL_WARNING_LEVEL)</div>
+<div class="expanded">#pragma warning(push,<div class="token cpp_number ">3</div>)</div></div>
+<div class="expandable"><div class="disabled">#pragma warning(disable: _STL_DISABLED_WARNINGS)</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4455</div> <div class="token cpp_number ">4494</div>  <div class="token cpp_number ">4619</div> <div class="token cpp_number ">4643</div> <div class="token cpp_number ">4702</div> <div class="token cpp_number ">4984</div> <div class="token cpp_number ">4988</div> )</div></div>
+<div class="disabled">_STL_DISABLE_CLANG_WARNINGS</div>
+<div class="disabled">#pragma push_macro(&quot;new&quot;)</div>
+<div class="disabled">#undef new</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['mbstate_t'], [], [])"><div class="token cpp_type">mbstate_t</div></div> <div class="def" id="NI$_Mbstatet2"><div><div class="token cpp_type">_Mbstatet</div></div></div>;
+
+<div class="expandable"><div class="disabled">_STD_BEGIN</div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[8]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable: 4995) // name was marked as #pragma deprecated</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4995</div>) </div></div>
+
+<div class="expandable"><div class="disabled">using _CSTD _Mbstatet;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['_Mbstatet2'], [], [])"><div class="token cpp_type">_Mbstatet</div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">using _CSTD mbstate_t; using _CSTD size_t; using _CSTD tm; using _CSTD wint_t;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['mbstate_t'], [], [])"><div class="token cpp_type">mbstate_t</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['tm'], [], [])"><div class="token cpp_type">tm</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wint_t'], [], [])"><div class="token cpp_type">wint_t</div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">using _CSTD btowc; using _CSTD fgetwc; using _CSTD fgetws; using _CSTD fputwc;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['btowc@::wint_t(int)'], [], [])"><div class="token cpp_function">btowc</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['fgetwc@::wint_t(::FILE *)'], [], [])"><div class="token cpp_function">fgetwc</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['fgetws@wchar_t *(wchar_t *, int, ::FILE *)'], [], [])"><div class="token cpp_function">fgetws</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['fputwc@::wint_t(wchar_t, ::FILE *)'], [], [])"><div class="token cpp_function">fputwc</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD fputws; using _CSTD fwide; using _CSTD fwprintf;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['fputws@int(wchar_t const *, ::FILE *)'], [], [])"><div class="token cpp_function">fputws</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['fwide@int(::FILE *, int)'], [], [])"><div class="token cpp_function">fwide</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['fwprintf@int(::FILE * const, wchar_t const * const ...)'], [], [])"><div class="token cpp_function">fwprintf</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD fwscanf; using _CSTD getwc; using _CSTD getwchar;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['fwscanf@int(::FILE * const, wchar_t const * const ...)'], [], [])"><div class="token cpp_function">fwscanf</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['getwc@::wint_t(::FILE *)'], [], [])"><div class="token cpp_function">getwc</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['getwchar@::wint_t()'], [], [])"><div class="token cpp_function">getwchar</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD mbrlen; using _CSTD mbrtowc; using _CSTD mbsrtowcs;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['mbrlen@::size_t(char const *, ::size_t, ::mbstate_t *)'], [], [])"><div class="token cpp_function">mbrlen</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['mbrtowc@::size_t(wchar_t *, char const *, ::size_t, ::mbstate_t *)'], [], [])"><div class="token cpp_function">mbrtowc</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['mbsrtowcs@::size_t(wchar_t *, char const * *, ::size_t, ::mbstate_t *)'], [], [])"><div class="token cpp_function">mbsrtowcs</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD mbsinit; using _CSTD putwc; using _CSTD putwchar;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['mbsinit@int(::mbstate_t const *)'], [], [])"><div class="token cpp_function">mbsinit</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['putwc@::wint_t(wchar_t, ::FILE *)'], [], [])"><div class="token cpp_function">putwc</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['putwchar@::wint_t(wchar_t)'], [], [])"><div class="token cpp_function">putwchar</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD swprintf; using _CSTD swscanf; using _CSTD ungetwc;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['swprintf@int(wchar_t * const, ::size_t const, wchar_t const * const ...)', 'swprintf@int(wchar_t * const, wchar_t const * const ...)'], [], [])"><div class="token cpp_function">swprintf</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['swscanf@int(wchar_t const * const, wchar_t const * const ...)'], [], [])"><div class="token cpp_function">swscanf</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['ungetwc@::wint_t(::wint_t, ::FILE *)'], [], [])"><div class="token cpp_function">ungetwc</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD vfwprintf; using _CSTD vswprintf; using _CSTD vwprintf;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['vfwprintf@int(::FILE * const, wchar_t const * const, ::va_list)'], [], [])"><div class="token cpp_function">vfwprintf</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['vswprintf@int(wchar_t * const, ::size_t const, wchar_t const * const, ::va_list)', 'vswprintf@int(wchar_t * const, wchar_t const * const, ::va_list)'], [], [])"><div class="token cpp_function">vswprintf</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['vwprintf@int(wchar_t const * const, ::va_list)'], [], [])"><div class="token cpp_function">vwprintf</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wcrtomb; using _CSTD wprintf; using _CSTD wscanf;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcrtomb@::size_t(char *, wchar_t, ::mbstate_t *)'], [], [])"><div class="token cpp_function">wcrtomb</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wprintf@int(wchar_t const * const ...)'], [], [])"><div class="token cpp_function">wprintf</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wscanf@int(wchar_t const * const ...)'], [], [])"><div class="token cpp_function">wscanf</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wcsrtombs; using _CSTD wcstol; using _CSTD wcscat;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcsrtombs@::size_t(char *, wchar_t const * *, ::size_t, ::mbstate_t *)'], [], [])"><div class="token cpp_function">wcsrtombs</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcstol@long(wchar_t const *, wchar_t * *, int)'], [], [])"><div class="token cpp_function">wcstol</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcscat@wchar_t *(wchar_t *, wchar_t const *)'], [], [])"><div class="token cpp_function">wcscat</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wcschr; using _CSTD wcscmp; using _CSTD wcscoll;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcschr@wchar_t *(wchar_t *, wchar_t)', 'wcschr@wchar_t const *(wchar_t const *, wchar_t)'], [], [])"><div class="token cpp_function">wcschr</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcscmp@int(wchar_t const *, wchar_t const *)'], [], [])"><div class="token cpp_function">wcscmp</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcscoll@int(wchar_t const *, wchar_t const *)'], [], [])"><div class="token cpp_function">wcscoll</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wcscpy; using _CSTD wcscspn; using _CSTD wcslen;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcscpy@wchar_t *(wchar_t *, wchar_t const *)'], [], [])"><div class="token cpp_function">wcscpy</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcscspn@::size_t(wchar_t const *, wchar_t const *)'], [], [])"><div class="token cpp_function">wcscspn</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcslen@::size_t(wchar_t const *)'], [], [])"><div class="token cpp_function">wcslen</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wcsncat; using _CSTD wcsncmp; using _CSTD wcsncpy;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcsncat@wchar_t *(wchar_t *, wchar_t const *, ::size_t)'], [], [])"><div class="token cpp_function">wcsncat</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcsncmp@int(wchar_t const *, wchar_t const *, ::size_t)'], [], [])"><div class="token cpp_function">wcsncmp</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcsncpy@wchar_t *(wchar_t *, wchar_t const *, ::size_t)'], [], [])"><div class="token cpp_function">wcsncpy</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wcspbrk; using _CSTD wcsrchr; using _CSTD wcsspn;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcspbrk@wchar_t *(wchar_t *, wchar_t const *)', 'wcspbrk@wchar_t const *(wchar_t const *, wchar_t const *)'], [], [])"><div class="token cpp_function">wcspbrk</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcsrchr@wchar_t *(wchar_t *, wchar_t)', 'wcsrchr@wchar_t const *(wchar_t const *, wchar_t)'], [], [])"><div class="token cpp_function">wcsrchr</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcsspn@::size_t(wchar_t const *, wchar_t const *)'], [], [])"><div class="token cpp_function">wcsspn</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wcstod; using _CSTD wcstoul; using _CSTD wcsstr;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcstod@double(wchar_t const *, wchar_t * *)'], [], [])"><div class="token cpp_function">wcstod</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcstoul@unsigned long(wchar_t const *, wchar_t * *, int)'], [], [])"><div class="token cpp_function">wcstoul</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcsstr@wchar_t *(wchar_t *, wchar_t const *)', 'wcsstr@wchar_t const *(wchar_t const *, wchar_t const *)'], [], [])"><div class="token cpp_function">wcsstr</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wcstok; using _CSTD wcsxfrm; using _CSTD wctob;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcstok@wchar_t *(wchar_t *, wchar_t const *)', 'wcstok@wchar_t *(wchar_t *, wchar_t const *, wchar_t * *)'], [], [])"><div class="token cpp_function">wcstok</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcsxfrm@::size_t(wchar_t *, wchar_t const *, ::size_t)'], [], [])"><div class="token cpp_function">wcsxfrm</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wctob@int(::wint_t)'], [], [])"><div class="token cpp_function">wctob</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wmemchr; using _CSTD wmemcmp; using _CSTD wmemcpy;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wmemchr@wchar_t *(wchar_t *, wchar_t, ::size_t)', 'wmemchr@wchar_t const *(wchar_t const *, wchar_t, ::size_t)'], [], [])"><div class="token cpp_function">wmemchr</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wmemcmp@int(wchar_t const *, wchar_t const *, ::size_t)'], [], [])"><div class="token cpp_function">wmemcmp</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wmemcpy@wchar_t *(wchar_t *, wchar_t const *, ::size_t)'], [], [])"><div class="token cpp_function">wmemcpy</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wmemmove; using _CSTD wmemset; using _CSTD wcsftime;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wmemmove@wchar_t *(wchar_t *, wchar_t const *, ::size_t)'], [], [])"><div class="token cpp_function">wmemmove</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wmemset@wchar_t *(wchar_t *, wchar_t, ::size_t)'], [], [])"><div class="token cpp_function">wmemset</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *)'], [], [])"><div class="token cpp_function">wcsftime</div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">using _CSTD vfwscanf; using _CSTD vswscanf; using _CSTD vwscanf;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['vfwscanf@int(::FILE * const, wchar_t const * const, ::va_list)'], [], [])"><div class="token cpp_function">vfwscanf</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['vswscanf@int(wchar_t const *, wchar_t const *, ::va_list)'], [], [])"><div class="token cpp_function">vswscanf</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['vwscanf@int(wchar_t const * const, ::va_list)'], [], [])"><div class="token cpp_function">vwscanf</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wcstof; using _CSTD wcstold;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcstof@float(wchar_t const *, wchar_t * *)'], [], [])"><div class="token cpp_function">wcstof</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcstold@long double(wchar_t const *, wchar_t * *)'], [], [])"><div class="token cpp_function">wcstold</div></div>;</div></div>
+<div class="expandable"><div class="disabled">using _CSTD wcstoll; using _CSTD wcstoull;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcstoll@long long(wchar_t const *, wchar_t * *, int)'], [], [])"><div class="token cpp_function">wcstoll</div></div>; <div class="token cpp_keyword ">using</div> :: <div class="ref" onclick="jumpToSymbol([], ['wcstoull@unsigned long long(wchar_t const *, wchar_t * *, int)'], [], [])"><div class="token cpp_function">wcstoull</div></div>;</div></div>
+
+#pragma warning(pop)
+<div class="expandable"><div class="disabled">_STD_END</div>
+<div class="expanded">}</div></div>
+
+<div class="disabled">#pragma pop_macro(&quot;new&quot;)</div>
+<div class="disabled">_STL_RESTORE_CLANG_WARNINGS</div>
+#pragma warning(pop)
+#pragma pack(pop)
+
+<div class="disabled">#endif /* RC_INVOKED */
+#endif /* _CWCHAR_ */</div>
+
+<div class="token cpp_comment ">/*
+ * Copyright (c) by P.J. Plauger. All rights reserved.
+ * Consult your license regarding permissions and restrictions.
+V6.50:0009 */</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '_Mbstatet2': {
+        'displayNameInHtml': '<span class="cpp_type">_Mbstatet</span>',
+        'impls': [
+            'NI$_Mbstatet2'
+        ],
+        'decls': []
+    },
+    'btowc@::wint_t(int)': {
+        'displayNameInHtml': '<span class="cpp_function">btowc</span>(<span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$btowc@::wint_t(int)[decl0]'
+        ]
+    },
+    'fgetwc@::wint_t(::FILE *)': {
+        'displayNameInHtml': '<span class="cpp_function">fgetwc</span>(<span class="cpp_type">FILE</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$fgetwc@::wint_t(::FILE *)[decl0]'
+        ]
+    },
+    'fgetws@wchar_t *(wchar_t *, int, ::FILE *)': {
+        'displayNameInHtml': '<span class="cpp_function">fgetws</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">int</span>, <span class="cpp_type">FILE</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$fgetws@wchar_t *(wchar_t *, int, ::FILE *)[decl0]'
+        ]
+    },
+    'fputwc@::wint_t(wchar_t, ::FILE *)': {
+        'displayNameInHtml': '<span class="cpp_function">fputwc</span>(<span class="cpp_keyword">wchar_t</span>, <span class="cpp_type">FILE</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$fputwc@::wint_t(wchar_t, ::FILE *)[decl0]'
+        ]
+    },
+    'fputws@int(wchar_t const *, ::FILE *)': {
+        'displayNameInHtml': '<span class="cpp_function">fputws</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">FILE</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$fputws@int(wchar_t const *, ::FILE *)[decl0]'
+        ]
+    },
+    'fwide@int(::FILE *, int)': {
+        'displayNameInHtml': '<span class="cpp_function">fwide</span>(<span class="cpp_type">FILE</span> *, <span class="cpp_keyword">int</span>)',
+        'impls': [
+            'FB$fwide@int(::FILE *, int)[impl0]'
+        ],
+        'decls': []
+    },
+    'fwprintf@int(::FILE * const, wchar_t const * const ...)': {
+        'displayNameInHtml': '<span class="cpp_function">fwprintf</span>(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
+        'impls': [
+            'FB$fwprintf@int(::FILE * const, wchar_t const * const ...)[impl0]'
+        ],
+        'decls': []
+    },
+    'fwscanf@int(::FILE * const, wchar_t const * const ...)': {
+        'displayNameInHtml': '<span class="cpp_function">fwscanf</span>(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
+        'impls': [
+            'FB$fwscanf@int(::FILE * const, wchar_t const * const ...)[impl0]'
+        ],
+        'decls': []
+    },
+    'getwc@::wint_t(::FILE *)': {
+        'displayNameInHtml': '<span class="cpp_function">getwc</span>(<span class="cpp_type">FILE</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$getwc@::wint_t(::FILE *)[decl0]'
+        ]
+    },
+    'getwchar@::wint_t()': {
+        'displayNameInHtml': '<span class="cpp_function">getwchar</span>()',
+        'impls': [],
+        'decls': [
+            'FB$getwchar@::wint_t()[decl0]'
+        ]
+    },
+    'mbrlen@::size_t(char const *, ::size_t, ::mbstate_t *)': {
+        'displayNameInHtml': '<span class="cpp_function">mbrlen</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">mbstate_t</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$mbrlen@::size_t(char const *, ::size_t, ::mbstate_t *)[decl0]'
+        ]
+    },
+    'mbrtowc@::size_t(wchar_t *, char const *, ::size_t, ::mbstate_t *)': {
+        'displayNameInHtml': '<span class="cpp_function">mbrtowc</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">mbstate_t</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$mbrtowc@::size_t(wchar_t *, char const *, ::size_t, ::mbstate_t *)[decl0]'
+        ]
+    },
+    'mbsinit@int(::mbstate_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">mbsinit</span>(<span class="cpp_type">mbstate_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$mbsinit@int(::mbstate_t const *)[impl0]'
+        ],
+        'decls': []
+    },
+    'mbsrtowcs@::size_t(wchar_t *, char const * *, ::size_t, ::mbstate_t *)': {
+        'displayNameInHtml': '<span class="cpp_function">mbsrtowcs</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> * *, <span class="cpp_type">size_t</span>, <span class="cpp_type">mbstate_t</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$mbsrtowcs@::size_t(wchar_t *, char const * *, ::size_t, ::mbstate_t *)[decl0]'
+        ]
+    },
+    'mbstate_t': {
+        'displayNameInHtml': '<span class="cpp_type">mbstate_t</span>',
+        'impls': [
+            'NI$mbstate_t'
+        ],
+        'decls': []
+    },
+    'putwc@::wint_t(wchar_t, ::FILE *)': {
+        'displayNameInHtml': '<span class="cpp_function">putwc</span>(<span class="cpp_keyword">wchar_t</span>, <span class="cpp_type">FILE</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$putwc@::wint_t(wchar_t, ::FILE *)[decl0]'
+        ]
+    },
+    'putwchar@::wint_t(wchar_t)': {
+        'displayNameInHtml': '<span class="cpp_function">putwchar</span>(<span class="cpp_keyword">wchar_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$putwchar@::wint_t(wchar_t)[decl0]'
+        ]
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    },
+    'std': {
+        'displayNameInHtml': 'std',
+        'impls': [],
+        'decls': [
+            'NF[0]$std',
+            'NF[1]$std',
+            'NF[2]$std',
+            'NF[3]$std',
+            'NF[4]$std',
+            'NF[5]$std',
+            'NF[6]$std',
+            'NF[7]$std',
+            'NF[8]$std',
+            'NF[9]$std',
+            'NF[10]$std',
+            'NF[11]$std',
+            'NF[12]$std',
+            'NF[13]$std',
+            'NF[14]$std',
+            'NF[15]$std',
+            'NF[16]$std',
+            'NF[17]$std',
+            'NF[18]$std',
+            'NF[19]$std',
+            'NF[20]$std',
+            'NF[21]$std',
+            'NF[22]$std',
+            'NF[23]$std',
+            'NF[24]$std',
+            'NF[25]$std',
+            'NF[26]$std',
+            'NF[27]$std',
+            'NF[28]$std',
+            'NF[29]$std',
+            'NF[30]$std',
+            'NF[31]$std'
+        ]
+    },
+    'swprintf@int(wchar_t * const, ::size_t const, wchar_t const * const ...)': {
+        'displayNameInHtml': '<span class="cpp_function">swprintf</span>(<span class="cpp_keyword">wchar_t</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
+        'impls': [
+            'FB$swprintf@int(wchar_t * const, ::size_t const, wchar_t const * const ...)[impl0]'
+        ],
+        'decls': []
+    },
+    'swprintf@int(wchar_t * const, wchar_t const * const ...)': {
+        'displayNameInHtml': '<span class="cpp_function">swprintf</span>(<span class="cpp_keyword">wchar_t</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
+        'impls': [
+            'FB$swprintf@int(wchar_t * const, wchar_t const * const ...)[impl0]'
+        ],
+        'decls': []
+    },
+    'swscanf@int(wchar_t const * const, wchar_t const * const ...)': {
+        'displayNameInHtml': '<span class="cpp_function">swscanf</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
+        'impls': [
+            'FB$swscanf@int(wchar_t const * const, wchar_t const * const ...)[impl0]'
+        ],
+        'decls': []
+    },
+    'tm': {
+        'displayNameInHtml': '<span class="cpp_type">tm</span>',
+        'impls': [
+            'NI$tm'
+        ],
+        'decls': []
+    },
+    'ungetwc@::wint_t(::wint_t, ::FILE *)': {
+        'displayNameInHtml': '<span class="cpp_function">ungetwc</span>(<span class="cpp_type">wint_t</span>, <span class="cpp_type">FILE</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$ungetwc@::wint_t(::wint_t, ::FILE *)[decl0]'
+        ]
+    },
+    'vfwprintf@int(::FILE * const, wchar_t const * const, ::va_list)': {
+        'displayNameInHtml': '<span class="cpp_function">vfwprintf</span>(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$vfwprintf@int(::FILE * const, wchar_t const * const, ::va_list)[impl0]'
+        ],
+        'decls': []
+    },
+    'vfwscanf@int(::FILE * const, wchar_t const * const, ::va_list)': {
+        'displayNameInHtml': '<span class="cpp_function">vfwscanf</span>(<span class="cpp_type">FILE</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$vfwscanf@int(::FILE * const, wchar_t const * const, ::va_list)[impl0]'
+        ],
+        'decls': []
+    },
+    'vswprintf@int(wchar_t * const, ::size_t const, wchar_t const * const, ::va_list)': {
+        'displayNameInHtml': '<span class="cpp_function">vswprintf</span>(<span class="cpp_keyword">wchar_t</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">size_t</span><span class="cpp_keyword"> const</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$vswprintf@int(wchar_t * const, ::size_t const, wchar_t const * const, ::va_list)[impl0]'
+        ],
+        'decls': []
+    },
+    'vswprintf@int(wchar_t * const, wchar_t const * const, ::va_list)': {
+        'displayNameInHtml': '<span class="cpp_function">vswprintf</span>(<span class="cpp_keyword">wchar_t</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$vswprintf@int(wchar_t * const, wchar_t const * const, ::va_list)[impl0]'
+        ],
+        'decls': []
+    },
+    'vswscanf@int(wchar_t const *, wchar_t const *, ::va_list)': {
+        'displayNameInHtml': '<span class="cpp_function">vswscanf</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$vswscanf@int(wchar_t const *, wchar_t const *, ::va_list)[impl0]'
+        ],
+        'decls': []
+    },
+    'vwprintf@int(wchar_t const * const, ::va_list)': {
+        'displayNameInHtml': '<span class="cpp_function">vwprintf</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$vwprintf@int(wchar_t const * const, ::va_list)[impl0]'
+        ],
+        'decls': []
+    },
+    'vwscanf@int(wchar_t const * const, ::va_list)': {
+        'displayNameInHtml': '<span class="cpp_function">vwscanf</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, <span class="cpp_type">va_list</span>)',
+        'impls': [
+            'FB$vwscanf@int(wchar_t const * const, ::va_list)[impl0]'
+        ],
+        'decls': []
+    },
+    'wcrtomb@::size_t(char *, wchar_t, ::mbstate_t *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcrtomb</span>(<span class="cpp_keyword">char</span> *, <span class="cpp_keyword">wchar_t</span>, <span class="cpp_type">mbstate_t</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcrtomb@::size_t(char *, wchar_t, ::mbstate_t *)[decl0]'
+        ]
+    },
+    'wcscat@wchar_t *(wchar_t *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcscat</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcscat@wchar_t *(wchar_t *, wchar_t const *)[decl0]'
+        ]
+    },
+    'wcschr@wchar_t *(wchar_t *, wchar_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wcschr</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span>)',
+        'impls': [
+            'FB$wcschr@wchar_t *(wchar_t *, wchar_t)[impl0]'
+        ],
+        'decls': []
+    },
+    'wcschr@wchar_t const *(wchar_t const *, wchar_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wcschr</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcschr@wchar_t const *(wchar_t const *, wchar_t)[decl0]'
+        ]
+    },
+    'wcscmp@int(wchar_t const *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcscmp</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcscmp@int(wchar_t const *, wchar_t const *)[decl0]'
+        ]
+    },
+    'wcscoll@int(wchar_t const *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcscoll</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcscoll@int(wchar_t const *, wchar_t const *)[decl0]'
+        ]
+    },
+    'wcscpy@wchar_t *(wchar_t *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcscpy</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcscpy@wchar_t *(wchar_t *, wchar_t const *)[decl0]'
+        ]
+    },
+    'wcscspn@::size_t(wchar_t const *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcscspn</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcscspn@::size_t(wchar_t const *, wchar_t const *)[decl0]'
+        ]
+    },
+    'wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsftime</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">tm</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *)[decl0]'
+        ]
+    },
+    'wcslen@::size_t(wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcslen</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcslen@::size_t(wchar_t const *)[decl0]'
+        ]
+    },
+    'wcsncat@wchar_t *(wchar_t *, wchar_t const *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsncat</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcsncat@wchar_t *(wchar_t *, wchar_t const *, ::size_t)[decl0]'
+        ]
+    },
+    'wcsncmp@int(wchar_t const *, wchar_t const *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsncmp</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcsncmp@int(wchar_t const *, wchar_t const *, ::size_t)[decl0]'
+        ]
+    },
+    'wcsncpy@wchar_t *(wchar_t *, wchar_t const *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsncpy</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcsncpy@wchar_t *(wchar_t *, wchar_t const *, ::size_t)[decl0]'
+        ]
+    },
+    'wcspbrk@wchar_t *(wchar_t *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcspbrk</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$wcspbrk@wchar_t *(wchar_t *, wchar_t const *)[impl0]'
+        ],
+        'decls': []
+    },
+    'wcspbrk@wchar_t const *(wchar_t const *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcspbrk</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcspbrk@wchar_t const *(wchar_t const *, wchar_t const *)[decl0]'
+        ]
+    },
+    'wcsrchr@wchar_t *(wchar_t *, wchar_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsrchr</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span>)',
+        'impls': [
+            'FB$wcsrchr@wchar_t *(wchar_t *, wchar_t)[impl0]'
+        ],
+        'decls': []
+    },
+    'wcsrchr@wchar_t const *(wchar_t const *, wchar_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsrchr</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcsrchr@wchar_t const *(wchar_t const *, wchar_t)[decl0]'
+        ]
+    },
+    'wcsrtombs@::size_t(char *, wchar_t const * *, ::size_t, ::mbstate_t *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsrtombs</span>(<span class="cpp_keyword">char</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> * *, <span class="cpp_type">size_t</span>, <span class="cpp_type">mbstate_t</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcsrtombs@::size_t(char *, wchar_t const * *, ::size_t, ::mbstate_t *)[decl0]'
+        ]
+    },
+    'wcsspn@::size_t(wchar_t const *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsspn</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcsspn@::size_t(wchar_t const *, wchar_t const *)[decl0]'
+        ]
+    },
+    'wcsstr@wchar_t *(wchar_t *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsstr</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$wcsstr@wchar_t *(wchar_t *, wchar_t const *)[impl0]'
+        ],
+        'decls': []
+    },
+    'wcsstr@wchar_t const *(wchar_t const *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsstr</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcsstr@wchar_t const *(wchar_t const *, wchar_t const *)[decl0]'
+        ]
+    },
+    'wcstod@double(wchar_t const *, wchar_t * *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcstod</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span> * *)',
+        'impls': [],
+        'decls': [
+            'FB$wcstod@double(wchar_t const *, wchar_t * *)[decl0]'
+        ]
+    },
+    'wcstof@float(wchar_t const *, wchar_t * *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcstof</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span> * *)',
+        'impls': [],
+        'decls': [
+            'FB$wcstof@float(wchar_t const *, wchar_t * *)[decl0]'
+        ]
+    },
+    'wcstok@wchar_t *(wchar_t *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcstok</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$wcstok@wchar_t *(wchar_t *, wchar_t const *)[impl0]'
+        ],
+        'decls': []
+    },
+    'wcstok@wchar_t *(wchar_t *, wchar_t const *, wchar_t * *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcstok</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span> * *)',
+        'impls': [],
+        'decls': [
+            'FB$wcstok@wchar_t *(wchar_t *, wchar_t const *, wchar_t * *)[decl0]'
+        ]
+    },
+    'wcstol@long(wchar_t const *, wchar_t * *, int)': {
+        'displayNameInHtml': '<span class="cpp_function">wcstol</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span> * *, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcstol@long(wchar_t const *, wchar_t * *, int)[decl0]'
+        ]
+    },
+    'wcstold@long double(wchar_t const *, wchar_t * *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcstold</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span> * *)',
+        'impls': [],
+        'decls': [
+            'FB$wcstold@long double(wchar_t const *, wchar_t * *)[decl0]'
+        ]
+    },
+    'wcstoll@long long(wchar_t const *, wchar_t * *, int)': {
+        'displayNameInHtml': '<span class="cpp_function">wcstoll</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span> * *, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcstoll@long long(wchar_t const *, wchar_t * *, int)[decl0]'
+        ]
+    },
+    'wcstoul@unsigned long(wchar_t const *, wchar_t * *, int)': {
+        'displayNameInHtml': '<span class="cpp_function">wcstoul</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span> * *, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcstoul@unsigned long(wchar_t const *, wchar_t * *, int)[decl0]'
+        ]
+    },
+    'wcstoull@unsigned long long(wchar_t const *, wchar_t * *, int)': {
+        'displayNameInHtml': '<span class="cpp_function">wcstoull</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span> * *, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcstoull@unsigned long long(wchar_t const *, wchar_t * *, int)[decl0]'
+        ]
+    },
+    'wcsxfrm@::size_t(wchar_t *, wchar_t const *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsxfrm</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcsxfrm@::size_t(wchar_t *, wchar_t const *, ::size_t)[decl0]'
+        ]
+    },
+    'wctob@int(::wint_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wctob</span>(<span class="cpp_type">wint_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wctob@int(::wint_t)[decl0]'
+        ]
+    },
+    'wint_t': {
+        'displayNameInHtml': '<span class="cpp_type">wint_t</span>',
+        'impls': [
+            'NI$wint_t'
+        ],
+        'decls': []
+    },
+    'wmemchr@wchar_t *(wchar_t *, wchar_t, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wmemchr</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span>, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$wmemchr@wchar_t *(wchar_t *, wchar_t, ::size_t)[impl0]'
+        ],
+        'decls': []
+    },
+    'wmemchr@wchar_t const *(wchar_t const *, wchar_t, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wmemchr</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span>, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$wmemchr@wchar_t const *(wchar_t const *, wchar_t, ::size_t)[impl0]'
+        ],
+        'decls': []
+    },
+    'wmemcmp@int(wchar_t const *, wchar_t const *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wmemcmp</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$wmemcmp@int(wchar_t const *, wchar_t const *, ::size_t)[impl0]'
+        ],
+        'decls': []
+    },
+    'wmemcpy@wchar_t *(wchar_t *, wchar_t const *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wmemcpy</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$wmemcpy@wchar_t *(wchar_t *, wchar_t const *, ::size_t)[impl0]'
+        ],
+        'decls': []
+    },
+    'wmemmove@wchar_t *(wchar_t *, wchar_t const *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wmemmove</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$wmemmove@wchar_t *(wchar_t *, wchar_t const *, ::size_t)[impl0]'
+        ],
+        'decls': []
+    },
+    'wmemset@wchar_t *(wchar_t *, wchar_t, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wmemset</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span>, <span class="cpp_type">size_t</span>)',
+        'impls': [
+            'FB$wmemset@wchar_t *(wchar_t *, wchar_t, ::size_t)[impl0]'
+        ],
+        'decls': []
+    },
+    'wprintf@int(wchar_t const * const ...)': {
+        'displayNameInHtml': '<span class="cpp_function">wprintf</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
+        'impls': [
+            'FB$wprintf@int(wchar_t const * const ...)[impl0]'
+        ],
+        'decls': []
+    },
+    'wscanf@int(wchar_t const * const ...)': {
+        'displayNameInHtml': '<span class="cpp_function">wscanf</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
+        'impls': [
+            'FB$wscanf@int(wchar_t const * const ...)[impl0]'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$btowc@::wint_t(int)[decl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$fgetwc@::wint_t(::FILE *)[decl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$fgetws@wchar_t *(wchar_t *, int, ::FILE *)[decl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$fputwc@::wint_t(wchar_t, ::FILE *)[decl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$fputws@int(wchar_t const *, ::FILE *)[decl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$fwide@int(::FILE *, int)[impl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$fwprintf@int(::FILE * const, wchar_t const * const ...)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$fwscanf@int(::FILE * const, wchar_t const * const ...)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$getwc@::wint_t(::FILE *)[decl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$getwchar@::wint_t()[decl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$mbrlen@::size_t(char const *, ::size_t, ::mbstate_t *)[decl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$mbrtowc@::size_t(wchar_t *, char const *, ::size_t, ::mbstate_t *)[decl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$mbsinit@int(::mbstate_t const *)[impl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$mbsrtowcs@::size_t(wchar_t *, char const * *, ::size_t, ::mbstate_t *)[decl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$putwc@::wint_t(wchar_t, ::FILE *)[decl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$putwchar@::wint_t(wchar_t)[decl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$swprintf@int(wchar_t * const, ::size_t const, wchar_t const * const ...)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$swprintf@int(wchar_t * const, wchar_t const * const ...)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$swscanf@int(wchar_t const * const, wchar_t const * const ...)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$ungetwc@::wint_t(::wint_t, ::FILE *)[decl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$vfwprintf@int(::FILE * const, wchar_t const * const, ::va_list)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$vfwscanf@int(::FILE * const, wchar_t const * const, ::va_list)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$vswprintf@int(wchar_t * const, ::size_t const, wchar_t const * const, ::va_list)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$vswprintf@int(wchar_t * const, wchar_t const * const, ::va_list)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$vswscanf@int(wchar_t const *, wchar_t const *, ::va_list)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$vwprintf@int(wchar_t const * const, ::va_list)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$vwscanf@int(wchar_t const * const, ::va_list)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$wcrtomb@::size_t(char *, wchar_t, ::mbstate_t *)[decl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$wcscat@wchar_t *(wchar_t *, wchar_t const *)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcschr@wchar_t *(wchar_t *, wchar_t)[impl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcschr@wchar_t const *(wchar_t const *, wchar_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$wcscmp@int(wchar_t const *, wchar_t const *)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcscoll@int(wchar_t const *, wchar_t const *)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcscpy@wchar_t *(wchar_t *, wchar_t const *)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcscspn@::size_t(wchar_t const *, wchar_t const *)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *)[decl0]': { 'htmlFileName': 'corecrt_wtime.h', 'displayName': 'corecrt_wtime.h' },
+    'FB$wcslen@::size_t(wchar_t const *)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcsncat@wchar_t *(wchar_t *, wchar_t const *, ::size_t)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcsncmp@int(wchar_t const *, wchar_t const *, ::size_t)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcsncpy@wchar_t *(wchar_t *, wchar_t const *, ::size_t)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcspbrk@wchar_t *(wchar_t *, wchar_t const *)[impl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcspbrk@wchar_t const *(wchar_t const *, wchar_t const *)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcsrchr@wchar_t *(wchar_t *, wchar_t)[impl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcsrchr@wchar_t const *(wchar_t const *, wchar_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$wcsrtombs@::size_t(char *, wchar_t const * *, ::size_t, ::mbstate_t *)[decl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$wcsspn@::size_t(wchar_t const *, wchar_t const *)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcsstr@wchar_t *(wchar_t *, wchar_t const *)[impl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcsstr@wchar_t const *(wchar_t const *, wchar_t const *)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$wcstod@double(wchar_t const *, wchar_t * *)[decl0]': { 'htmlFileName': 'corecrt_wstdlib.h', 'displayName': 'corecrt_wstdlib.h' },
+    'FB$wcstof@float(wchar_t const *, wchar_t * *)[decl0]': { 'htmlFileName': 'corecrt_wstdlib.h', 'displayName': 'corecrt_wstdlib.h' },
+    'FB$wcstok@wchar_t *(wchar_t *, wchar_t const *)[impl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcstok@wchar_t *(wchar_t *, wchar_t const *, wchar_t * *)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcstol@long(wchar_t const *, wchar_t * *, int)[decl0]': { 'htmlFileName': 'corecrt_wstdlib.h', 'displayName': 'corecrt_wstdlib.h' },
+    'FB$wcstold@long double(wchar_t const *, wchar_t * *)[decl0]': { 'htmlFileName': 'corecrt_wstdlib.h', 'displayName': 'corecrt_wstdlib.h' },
+    'FB$wcstoll@long long(wchar_t const *, wchar_t * *, int)[decl0]': { 'htmlFileName': 'corecrt_wstdlib.h', 'displayName': 'corecrt_wstdlib.h' },
+    'FB$wcstoul@unsigned long(wchar_t const *, wchar_t * *, int)[decl0]': { 'htmlFileName': 'corecrt_wstdlib.h', 'displayName': 'corecrt_wstdlib.h' },
+    'FB$wcstoull@unsigned long long(wchar_t const *, wchar_t * *, int)[decl0]': { 'htmlFileName': 'corecrt_wstdlib.h', 'displayName': 'corecrt_wstdlib.h' },
+    'FB$wcsxfrm@::size_t(wchar_t *, wchar_t const *, ::size_t)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wctob@int(::wint_t)[decl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$wmemchr@wchar_t *(wchar_t *, wchar_t, ::size_t)[impl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$wmemchr@wchar_t const *(wchar_t const *, wchar_t, ::size_t)[impl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$wmemcmp@int(wchar_t const *, wchar_t const *, ::size_t)[impl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$wmemcpy@wchar_t *(wchar_t *, wchar_t const *, ::size_t)[impl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$wmemmove@wchar_t *(wchar_t *, wchar_t const *, ::size_t)[impl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$wmemset@wchar_t *(wchar_t *, wchar_t, ::size_t)[impl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$wprintf@int(wchar_t const * const ...)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'FB$wscanf@int(wchar_t const * const ...)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
+    'NF[0]$std': { 'htmlFileName': 'vcruntime_new.h', 'displayName': 'vcruntime_new.h' },
+    'NF[10]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
+    'NF[11]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[12]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
+    'NF[13]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NF[14]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[15]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[16]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[17]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[18]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
+    'NF[19]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
+    'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
+    'NF[20]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[22]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[23]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[24]$std': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
+    'NF[25]$std': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
+    'NF[26]$std': { 'htmlFileName': 'xatomic0.h', 'displayName': 'xatomic0.h' },
+    'NF[27]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
+    'NF[28]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[29]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[2]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[30]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
+    'NF[31]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[3]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'NF[4]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[5]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[6]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
+    'NF[7]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
+    'NF[8]$std': null,
+    'NF[9]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NI$_Mbstatet2': null,
+    'NI$mbstate_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$tm': { 'htmlFileName': 'corecrt_wtime.h', 'displayName': 'corecrt_wtime.h' },
+    'NI$wint_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>
