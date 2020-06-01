@@ -52,6 +52,7 @@ Keywords
 	F(REGISTER,					register)				\
 	F(MUTABLE,					mutable)				\
 	F(THREAD_LOCAL,				thread_local)			\
+	F(DECL_ABSTRACT,			abstract)				\
 	F(DECL_FINAL,				final)					\
 	F(DECL_CLASS,				class)					\
 	F(DECL_STRUCT,				struct)					\

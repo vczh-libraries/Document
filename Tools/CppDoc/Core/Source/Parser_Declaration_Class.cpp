@@ -50,6 +50,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 	ValidateForRootTemplateSpec(spec, cursor, specializationSpec, false);
 
 	TestToken(cursor, CppTokens::DECL_FINAL);
+	TestToken(cursor, CppTokens::DECL_ABSTRACT);
 
 	if (TestToken(cursor, CppTokens::SEMICOLON, false))
 	{

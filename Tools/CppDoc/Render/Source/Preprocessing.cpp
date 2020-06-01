@@ -73,6 +73,7 @@ void PreprocessedFileToCompactCodeAndMapping(
 			switch ((CppTokens)cursor->token.token)
 			{
 			case CppTokens::SPACE:
+			case CppTokens::DOCUMENT:
 			case CppTokens::COMMENT1:
 			case CppTokens::COMMENT2:
 			case CppTokens::SHARP:
@@ -128,6 +129,7 @@ void PreprocessedFileToCompactCodeAndMapping(
 									}
 									break;
 								case CppTokens::SPACE:
+								case CppTokens::DOCUMENT:
 								case CppTokens::COMMENT1:
 								case CppTokens::COMMENT2:
 									// spaces and comments are allow in a #pragma, as long as they have no line-break
@@ -145,6 +147,7 @@ void PreprocessedFileToCompactCodeAndMapping(
 							switch ((CppTokens)cursor->token.token)
 							{
 							case CppTokens::SPACE:
+							case CppTokens::DOCUMENT:
 							case CppTokens::COMMENT1:
 							case CppTokens::COMMENT2:
 								break;
