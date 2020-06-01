@@ -35,9 +35,27 @@ B Function();
 			TEST_CASE_ASSERT(classSymbol->GetForwardSymbols_F().Count() == 1);
 			TEST_CASE_ASSERT(classSymbol->GetImplSymbols_F().Count() == 1);
 		}
+	});
 
-		AssertExpr(pa,	L"Class<int>::Value",	L"Class<int> :: Value",		L"__int32 * const $L");
-		AssertExpr(pa,	L"Function<int>()",		L"Function<int>()",			L"__int32 * $PR");
+	TEST_CATEGORY(L"Function type as template argument")
+	{
+		auto input = LR"(
+template<typename T>
+struct S
+{
+	static const T Value;
+};
+
+template<typename R, typename... Ps>
+struct S<R(Ps...)>
+{
+	static const R Value;
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa,	L"S<int>::Value",		L"S<int> :: Value",		L"__int32 const $L");
+		AssertExpr(pa,	L"S<int()>::Value",		L"S<int ()> :: Value",	L"__int32 const $L");
 	});
 
 	TEST_CATEGORY(L"Discarded declarations")

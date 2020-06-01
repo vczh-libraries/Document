@@ -26,7 +26,6 @@
 
 ### Test Cases
 
-- [ ] calling `F<int()>` with function type not ctor expression.
 - [ ] type alias recursion
 - [ ] value alias recursion
 
