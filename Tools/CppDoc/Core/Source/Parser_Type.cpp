@@ -66,6 +66,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 		SkipToken(cursor);
 	}
 
+	while (SkipSpecifiers(cursor));
 	if (ParseCppName(type->name, cursor))
 	{
 		if (auto resolving = ResolveSymbolInContext(pa, type->name, type->cStyleTypeReference).types)

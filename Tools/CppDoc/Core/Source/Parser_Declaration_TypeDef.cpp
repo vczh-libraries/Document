@@ -49,7 +49,11 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 
 		if (!pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias))
 		{
-			throw StopParsingException(cursor);
+			// found duplicated typedef, ignore this one
+			if (!pa.scopeSymbol->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias))
+			{
+				throw StopParsingException(cursor);
+			}
 		}
 	}
 }

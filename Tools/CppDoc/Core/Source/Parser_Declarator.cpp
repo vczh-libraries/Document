@@ -717,6 +717,16 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 	{
 		// bit fields, just ignore
 		ParseExpr(pa, pea_Argument(), cursor);
+
+		if (!declarator)
+		{
+			// anonymous declarator with a bit field must be a variable
+			declarator = new Declarator;
+			declarator->type = targetType;
+			declarator->ellipsis = ellipsis;
+			declarator->name.name = L"<anonymous>" + itow(pa.tsys->AllocateAnonymousCounter());
+			declarator->name.type = CppNameType::Normal;
+		}
 	}
 
 	if (!declarator)

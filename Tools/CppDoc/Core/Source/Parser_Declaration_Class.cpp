@@ -233,7 +233,32 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 				{
 					throw StopParsingException(cursor);
 				}
-				if (!pair.f1.Cast<VariableDeclaration>() && !pair.f1.Cast<NestedAnonymousClassDeclaration>())
+
+				if (auto classDecl = pair.f1.Cast<ClassDeclaration>())
+				{
+					// anonymous class is fine
+					if (classDecl->name.name.Length() <= 11 || classDecl->name.name.Left(11) != L"<anonymous>")
+					{
+						throw StopParsingException(cursor);
+					}
+				}
+				else if (auto enumDecl = pair.f1.Cast<EnumDeclaration>())
+				{
+					// anonymous enum is fine
+					if (classDecl->name.name.Length() <= 11 || classDecl->name.name.Left(11) != L"<anonymous>")
+					{
+						throw StopParsingException(cursor);
+					}
+				}
+				else if (pair.f1.Cast<VariableDeclaration>())
+				{
+					// variable is fine
+				}
+				else if (pair.f1.Cast<NestedAnonymousClassDeclaration>())
+				{
+					// nested anonymous class is fine
+				}
+				else
 				{
 					throw StopParsingException(cursor);
 				}
