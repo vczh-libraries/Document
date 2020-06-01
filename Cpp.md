@@ -23,49 +23,62 @@
       - `__builtin_nansf(...)` -> float
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
-- [ ] Next Demo! (STL)
+
+### Test Cases
+
+- [ ] calling `F<int()>` with function type not ctor expression.
+- [ ] optional `template<>` on members defined outside of classes.
+- [ ] type alias recursion
+- [ ] value alias recursion
+- [ ] Using a template class, which has default template argument values in forward declaration, but not in implementation.
+  - [ ] Class
+  - [ ] Function
+  - [ ] Type alias
+  - [ ] Value alias
+
+### Bugs
+
+- [ ] **STL** Demo
   - [ ] `_CATCH_END` missing expanded `}` in `<memory>`
   - [ ] `const int _Locbase<_Dummy>::collate;` has incorrect links in `<xlocale>`
   - [ ] Remove special handling for `common_type_t<...>`
-  - [ ] Test cases
-    - [ ] calling `F<int()>` with function type not ctor expression.
-    - [ ] optional `template<>` on members defined outside of classes.
-    - [ ] type alias recursion
-    - [ ] value alias recursion
-    - [ ] Using a template class, which has default template argument values in forward declaration, but not in implementation.
-      - [ ] Class
-      - [ ] Function
-      - [ ] Type alias
-      - [ ] Value alias
-- [ ] Next Demo! (TypePrinter)
+
+### Features
+
+- [ ] **TypePrinter** Demo
   - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` points to the correct partial specializations.
+- [ ] Compiler
+  - [ ] `GenericExpr` allows to be partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
+  - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
+  - [ ] `IFT_InferTemplateArgument.cpp` `Visit(GenericType* self)` able to process multiple primary instances.
+  - [ ] `MatchPSArgument` on `decltype(EXPR)`, success when the type to match is not `decltype(EXPR)`, or two expression match.
+  - [ ] `IsSameResolvedExprVisitor` on lambda expressions.
+  - [ ] `std::initialization_list`.
+  - [ ] Converting lambda expression to a struct instead of `any_t`.
+  - [ ] Pass variadic template argument to placement new expression.
+  - [ ] `GenerateMembers` on `DeclInstance`.
+    - [ ] Generate `ClassMemberCache` for generated special members.
+    - [ ] Generate special members for declarations with `specializationSpec`.
+- [ ] Render
+  - [ ] Attach document content to declarations.
+  - [ ] Enable markdown inside xml elements in comment.
+  - [ ] Resolve symbols in markdown in comment.
+  - [ ] Enable `<example>` with predefined project types, extract all example, compile and index them.
+
+### Making Demos
+
 - [ ] Next Demo! (Vlpp)
   - [ ] Refactor the HTML generation part to becomes a library.
     - [ ] Extract `<div>` token rendering functions.
   - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
   - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
-- [ ] Next Demo! (GacUI)
-- [ ] More on **templates**
-  - [ ] `GenericExpr` allows to be partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
-  - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
-  - [ ] `IFT_InferTemplateArgument.cpp` `Visit(GenericType* self)` able to process multiple primary instances.
-- [ ] `MatchPSArgument` on `decltype(EXPR)`, success when the type to match is not `decltype(EXPR)`, or two expression match.
-- [ ] `IsSameResolvedExprVisitor` on lambda expressions
-- [ ] `std::initialization_list`.
-- [ ] Next Demo! (UnitTest_Cases::STL)
-- [ ] Pass variadic template argument to placement new expression.
-- [ ] `GenerateMembers` on `DeclInstance`.
-  - [ ] Generate `ClassMemberCache` for generated special members
-  - [ ] Generate special members for declarations with `specializationSpec`
-
-## Finisher Work Items
-
-- [ ] Parse `UnitTest_Cases`
-- [ ] Generic HTML index. (multiple pages)
-- [ ] Attach document content to declarations.
-- [ ] Enable markdown inside xml elements in comment.
-- [ ] Resolve symbols in markdown in comment.
-- [ ] Enable `<example>` with predefined project types, extract all example, compile and index them.
+- [ ] New Demo! (VlppOS)
+- [ ] New Demo! (VlppRegex)
+- [ ] New Demo! (VlppReflection)
+- [ ] New Demo! (VlppParsing)
+- [ ] New Demo! (Workflow)
+- [ ] New Demo! (GacUI Core)
+- [ ] New Demo! (GacUI Compiler / Reflection)
 
 ## Lexical Conventions
 
