@@ -232,6 +232,13 @@ int main()
 
 		FileGroupConfig fileGroups;
 		fileGroups.Add({ file.GetFilePath().GetFolder().GetFullPath() + FilePath::Delimiter, L"Source Code of this Project" });
+		fileGroups.Add({ FilePath(L"../../../../Vlpp").GetFullPath() + FilePath::Delimiter, L"Vlpp" });
+		fileGroups.Add({ FilePath(L"../../../../VlppOS").GetFullPath() + FilePath::Delimiter, L"VlppOS" });
+		fileGroups.Add({ FilePath(L"../../../../VlppRegex").GetFullPath() + FilePath::Delimiter, L"VlppRegex" });
+		fileGroups.Add({ FilePath(L"../../../../VlppReflection").GetFullPath() + FilePath::Delimiter, L"VlppReflection" });
+		fileGroups.Add({ FilePath(L"../../../../VlppParser").GetFullPath() + FilePath::Delimiter, L"VlppParser" });
+		fileGroups.Add({ FilePath(L"../../../../Workflow").GetFullPath() + FilePath::Delimiter, L"Workflow" });
+		fileGroups.Add({ FilePath(L"../../../../GacUI").GetFullPath() + FilePath::Delimiter, L"GacUI" });
 		IndexCppCode(fileGroups, file, lexer, pathPreprocessed, pathInput, pathMapping, folderOutput);
 	}
 
