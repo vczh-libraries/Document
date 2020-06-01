@@ -3,8 +3,8 @@
 class ProgressReporter : public Object, public virtual IProgressReporter
 {
 private:
-	static const vint		MaxProgress = 500;
-	static const vint		MaxProgressPerLine = 50;
+	static const vint		MaxProgress = 2000;
+	static const vint		MaxProgressPerLine = 100;
 
 	vint					currentPhase = 0;
 	vint					currentProgress = 0;
@@ -17,7 +17,8 @@ private:
 			{
 				if (i % MaxProgressPerLine == 1)
 				{
-					Console::Write(L"     " + itow(currentPhase) + L": ");
+					vint line = i / MaxProgressPerLine;
+					Console::Write(L"     " + itow(currentPhase) + L"[" + itow((line / 10) % 10) + itow(line % 10) + L"]: ");
 				}
 				Console::Write(L"*");
 				if (i % MaxProgressPerLine == 0)

@@ -39,7 +39,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		// __asm { ... }
 		// skip assembly code
 		RequireToken(cursor, CppTokens::LBRACE);
-		while (!TestToken(cursor, CppTokens::RBRACE));
+		while (!TestToken(cursor, CppTokens::RBRACE)) SkipToken(cursor);
 		return MakePtr<EmptyStat>();
 	}
 	else if (TestToken(cursor, CppTokens::SEMICOLON))
