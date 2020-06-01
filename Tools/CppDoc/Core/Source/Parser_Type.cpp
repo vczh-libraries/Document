@@ -67,13 +67,6 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 	}
 
 	while (SkipSpecifiers(cursor));
-	{
-		wchar_t expected[] = L"nothrow_t&) noexcept";
-		if (cursor && wcsncmp(cursor->token.reading, expected, wcslen(expected)) == 0)
-		{
-			int a = 0;
-		}
-	}
 	if (ParseCppName(type->name, cursor))
 	{
 		if (auto resolving = ResolveSymbolInContext(pa, type->name, type->cStyleTypeReference).types)

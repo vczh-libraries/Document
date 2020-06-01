@@ -95,6 +95,8 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 		})
 	);
 
+	List<vint> emptyGroups;
+
 	WString indentation = L"&nbsp;&nbsp;&nbsp;&nbsp;";
 	for (vint i = 0; i < fileGroups.Count(); i++)
 	{
@@ -111,13 +113,22 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 			}
 		}
 
-		if (selectedFlrs.Count() > 0)
+		if (selectedFlrs.Count() == 0)
+		{
+			emptyGroups.Add(i);
+		}
+		else
 		{
 			writer.WriteString(L"<span class=\"fileGroupLabel\">");
 			WriteHtmlTextSingleLine(fileGroups[i].f1, writer);
 			writer.WriteLine(L"</span><br>");
 			GenerateFileIndexInFolder(prefix, indentation, indentation, selectedFlrs, writer);
 		}
+	}
+
+	for (vint i = emptyGroups.Count() - 1; i >= 0; i--)
+	{
+		fileGroups.RemoveAt(i);
 	}
 
 	if (flrs.Count() > 0)

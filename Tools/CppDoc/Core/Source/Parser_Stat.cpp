@@ -144,11 +144,16 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 
 			auto stat = MakePtr<ForEachStat>();
 			auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
+			stat->varDecl = BuildVariableAndSymbol(newPa, declarator, cursor);
+			stat->expr = ParseExpr(newPa, pea_Full(), cursor);
+
+			if (stat->varDecl->needResolveTypeFromInitializer)
 			{
-				stat->varDecl = BuildVariableAndSymbol(newPa, declarator, cursor);
+				// infer the variable first, so that the type is clear when parsing any IdExpr that use this variable
+				stat->stat = MakePtr<EmptyStat>();
+				EvaluateStat(pa, stat, false, nullptr);
 			}
 
-			stat->expr = ParseExpr(newPa, pea_Full(), cursor);
 			RequireToken(cursor, CppTokens::RPARENTHESIS);
 			stat->stat = ParseStat(newPa, cursor);
 			return stat;
