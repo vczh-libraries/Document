@@ -349,36 +349,21 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 					}
 				}
 
-				if (auto classDecl = forwardDecls[i].Cast<ForwardClassDeclaration>())
+				if (auto varDecl = forwardDecls[i].Cast<VariableDeclaration>())
 				{
-					if (classDecl->keepTemplateArgumentAlive)
+					if (varDecl->keepTemplateArgumentAlive)
 					{
-						// this could be a template class forward declaration
-						// symbols in classDecl->templateSpec are not moved to the symbol of the class
-						auto spec = classDecl->templateSpec;
-						for (vint j = 0; j < spec->arguments.Count(); j++)
+						// this could be a template class field defined out of the class
+						// but the one defined in the class is not a forward variable declaration
+						// so symbols in varDecl->classSpecs are not moved to the symbol of the variable
+						for (vint i = 0; i < varDecl->classSpecs.Count(); i++)
 						{
-							auto argSymbol = spec->arguments[j].argumentSymbol;
-							argSymbol->GenerateUniqueId(ids, nextPrefix);
-						}
-					}
-				}
-			}
-
-			if (auto varDecl = GetImplDecl_NFb().Cast<VariableDeclaration>())
-			{
-				if (varDecl->keepTemplateArgumentAlive)
-				{
-					// this could be a template class field defined out of the class
-					// but the one defined in the class is not a forward variable declaration
-					// so symbols in varDecl->classSpecs are not moved to the symbol of the variable
-					for (vint i = 0; i < varDecl->classSpecs.Count(); i++)
-					{
-						auto spec = varDecl->classSpecs[i];
-						for (vint j = 0; j < spec->arguments.Count(); j++)
-						{
-							auto argSymbol = spec->arguments[j].argumentSymbol;
-							argSymbol->GenerateUniqueId(ids, nextPrefix);
+							auto spec = varDecl->classSpecs[i];
+							for (vint j = 0; j < spec->arguments.Count(); j++)
+							{
+								auto argSymbol = spec->arguments[j].argumentSymbol;
+								argSymbol->GenerateUniqueId(ids, nextPrefix);
+							}
 						}
 					}
 				}

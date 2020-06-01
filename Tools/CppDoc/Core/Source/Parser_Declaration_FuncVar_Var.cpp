@@ -94,33 +94,18 @@ void ParseDeclaration_Variable(
 		auto createdSymbol = context->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Variable, specSymbol, declarator->classMemberCache);
 		if (!createdSymbol)
 		{
-			switch(context->kind)
+			// there could be a declaration that has been declared in the class
+			// ensure that there is no initializer, so that declarator->classMemberCache is not necessary
+			if (decl->initializer)
 			{
-			case CLASS_SYMBOL_KIND:
-				// ignore the error for a static field declared outside of the class
-				// when the one inside the clas is not a forward declaration
-				if (auto pChildren = context->TryGetChildren_NFb(decl->name.name))
-				{
-					for (vint i = 0; i < pChildren->Count(); i++)
-					{
-						auto& childSymbol = pChildren->Get(i);
-						if (!childSymbol.childExpr && !childSymbol.childType)
-						{
-							if (childSymbol.childSymbol->kind == symbol_component::SymbolKind::Variable)
-							{
-								createdSymbol = childSymbol.childSymbol.Obj();
-								break;
-							}
-						}
-					}
-				}
+				throw StopParsingException(cursor);
+			}
 
-				if (createdSymbol)
-				{
-					decl->keepTemplateArgumentAlive = specSymbol;
-					break;
-				}
-			default:
+			decl->keepTemplateArgumentAlive = specSymbol;
+			createdSymbol = context->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Variable);
+
+			if (!createdSymbol)
+			{
 				throw StopParsingException(cursor);
 			}
 		}
