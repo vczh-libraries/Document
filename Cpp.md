@@ -27,7 +27,6 @@
 ### Test Cases
 
 - [ ] type alias recursion
-- [ ] value alias recursion
 
 ### Bugs
 

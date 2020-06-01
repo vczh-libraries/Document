@@ -267,4 +267,29 @@ auto X = {T{}, TValue, U{}, V<T, U>{}};
 		AssertExpr(pa, L"X<int, {}, void*, ReverseFunc>",	L"X<int, {}, void *, ReverseFunc>",		L"{__int32 $PR, __int32 $PR, void * $PR, void * __cdecl(__int32) * $PR} $PR"	);
 		AssertExpr(pa, L"X<bool, {}, void*, ReverseFunc>",	L"X<bool, {}, void *, ReverseFunc>",	L"{bool $PR, bool $PR, void * $PR, void * __cdecl(bool) * $PR} $PR"				);
 	});
+
+	TEST_CATEGORY(L"Recursive")
+	{
+		auto input = LR"(
+template<typename T, int X>
+struct Fib2
+{
+};
+
+template<int X>
+auto Fib = X < 2 ? 1 : Fib2<void, X-1>::Do() + Fib2<void, X-2>::Do();
+
+template<int X>
+struct Fib2<void, X>
+{
+	auto Do()
+	{
+		return Fib<X>;
+	}
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+		
+		AssertExpr(pa, L"Fib<0>",		L"Fib<0>",			L"__int32 const & $PR",		L"any_t $PR"		);
+	});
 }
