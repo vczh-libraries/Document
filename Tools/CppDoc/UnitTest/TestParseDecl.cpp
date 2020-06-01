@@ -30,10 +30,16 @@ namespace vl
 		}
 	}
 }
+namespace $__anonymous_namespace_0
+{
+}
 namespace vl
 {
 	x: int;
-	y: int;
+	namespace $__anonymous_namespace_0
+	{
+		y: int;
+	}
 }
 )";
 		AssertProgram(input, output);
@@ -174,13 +180,25 @@ extern "C"
 }
 )";
 		auto output = LR"(
-x: int = 0;
-y: int;
-z: int = 0;
-w: int;
-__forward Add: int (a: int, b: int);
-__forward Mul: int (a: int, b: int);
-__forward Div: int (a: int, b: int);
+namespace $__anonymous_namespace_0
+{
+	x: int = 0;
+}
+namespace $__anonymous_namespace_1
+{
+	y: int;
+	z: int = 0;
+	w: int;
+}
+namespace $__anonymous_namespace_2
+{
+	__forward Add: int (a: int, b: int);
+}
+namespace $__anonymous_namespace_3
+{
+	__forward Mul: int (a: int, b: int);
+	__forward Div: int (a: int, b: int);
+}
 )";
 		AssertProgram(input, output);
 	});
@@ -940,5 +958,30 @@ using_type pD: D_ *;
 		AssertExpr(pa, L"B",						L"B",						L"::<anonymous>1 $PR"	);
 		AssertExpr(pa, L"C",						L"C",						L"::C_ $PR"				);
 		AssertExpr(pa, L"_D::D",					L"_D :: D",					L"::D_ $PR"				);
+	});
+
+	TEST_CATEGORY(L"Anonymous namespace")
+	{
+		auto input = LR"(
+namespace
+{
+	using Type = bool;
+}
+Type a;
+
+extern "C"
+{
+	using Type = char;
+}
+Type b;
+
+using Type = double;
+Type c;
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa, L"a",						L"a",						L"bool $L"				);
+		AssertExpr(pa, L"b",						L"b",						L"bool $L",	L"char $L"	);
+		AssertExpr(pa, L"c",						L"c",						L"double $L"			);
 	});
 }

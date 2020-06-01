@@ -125,7 +125,6 @@ All **the compiler** here means the compiler created by this project.
 - The compiler doesn't parse all C++11/C++14/C++17/C++20 features, but it parses the latest GacUI and most old C++ programs.
 - All features that cl.exe doesn't support, are also not supported here.
 - The compiler doesn't handle implicitly declared ctors or dtor for `union`, all `union` are assumed constructible in any default ways.
-- The compiler ignores anonymous namespaces and `extern "C"` declarations, and parses sub declarations without creating an anonymous scope.
 - The compiler doesn't recognize [user-defined literals](https://en.cppreference.com/w/cpp/language/user_literal), maybe I will finish it later.
 
 ### Semantic

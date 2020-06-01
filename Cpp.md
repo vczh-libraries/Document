@@ -59,8 +59,7 @@
 ### Making Demos
 
 - [ ] Next Demo! (Vlpp)
-  - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
-  - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
+  - [ ] Redirect `#include <Vlpp.h>` in VlppOS to `Vlpp/Release/IncludeOnly/Vlpp.h`
 - [ ] New Demo! (VlppOS)
 - [ ] New Demo! (VlppRegex)
 - [ ] New Demo! (VlppReflection)

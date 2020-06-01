@@ -1,17 +1,79 @@
 #include "Parser.h"
 #include "Parser_Declaration.h"
 
+WString GenerateAnonymousNamespaceName(const ParsingArguments& pa)
+{
+	vint i = 0;
+	while (true)
+	{
+		WString name = L"$__anonymous_namespace_" + itow(i);
+		if (pa.scopeSymbol->TryGetChildren_NFb(name))
+		{
+			i++;
+		}
+		else
+		{
+			return name;
+		}
+	}
+}
+
+void ParseDeclaration_ExternC(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
+{
+	// extern "C"
+	RequireToken(cursor, CppTokens::DECL_EXTERN);
+	RequireToken(cursor, CppTokens::STRING);
+
+	auto decl = MakePtr<NamespaceDeclaration>();
+	decl->name.name = GenerateAnonymousNamespaceName(pa);
+	decl->name.type = CppNameType::Normal;
+
+	auto contextSymbol = pa.scopeSymbol->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Namespace);
+	if (!contextSymbol)
+	{
+		throw StopParsingException(cursor);
+	}
+
+	auto newPa = pa.WithScope(contextSymbol);
+	if (TestToken(cursor, CppTokens::LBRACE))
+	{
+		while (!TestToken(cursor, CppTokens::RBRACE))
+		{
+			ParseDeclaration(newPa, cursor, decl->decls);
+		}
+	}
+	else
+	{
+		ParseDeclaration(newPa, cursor, decl->decls);
+	}
+
+	output.Add(decl);
+}
+
 void ParseDeclaration_Namespace(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
 	RequireToken(cursor, CppTokens::DECL_NAMESPACE);
 	if (TestToken(cursor, CppTokens::LBRACE))
 	{
 		// namespace { DECLARATION ...}
-		// ignore it and add everything to its parent
+		// create an anonymous namespace
+		auto decl = MakePtr<NamespaceDeclaration>();
+		decl->name.name = GenerateAnonymousNamespaceName(pa);
+		decl->name.type = CppNameType::Normal;
+
+		auto contextSymbol = pa.scopeSymbol->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Namespace);
+		if (!contextSymbol)
+		{
+			throw StopParsingException(cursor);
+		}
+
+		auto newPa = pa.WithScope(contextSymbol);
 		while (!TestToken(cursor, CppTokens::RBRACE))
 		{
-			ParseDeclaration(pa, cursor, output);
+			ParseDeclaration(newPa, cursor, decl->decls);
 		}
+
+		output.Add(decl);
 	}
 	else
 	{

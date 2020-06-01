@@ -16,7 +16,14 @@ bool IsCStyleTypeReference(Ptr<CppTokenCursor>& cursor)
 		CppName name;
 		if (ParseCppName(name, cursor))
 		{
-			if (!TestToken(cursor, CppTokens::SEMICOLON) && !TestToken(cursor, CppTokens::LT) && !TestToken(cursor, CppTokens::DECL_FINAL) && !TestToken(cursor, CppTokens::COLON) && !TestToken(cursor, CppTokens::LBRACE))
+			if (
+				!TestToken(cursor, CppTokens::SEMICOLON) &&
+				!TestToken(cursor, CppTokens::LT) &&
+				!TestToken(cursor, CppTokens::DECL_FINAL) &&
+				!TestToken(cursor, CppTokens::DECL_ABSTRACT) &&
+				!TestToken(cursor, CppTokens::COLON) &&
+				!TestToken(cursor, CppTokens::LBRACE)
+				)
 			{
 				cStyleTypeReference = true;
 			}
@@ -186,6 +193,20 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		return;
 	}
 
+	{
+		auto oldCursor = cursor;
+		if (TestToken(cursor, CppTokens::DECL_EXTERN) && TestToken(cursor, CppTokens::STRING))
+		{
+			cursor = oldCursor;
+			ParseDeclaration_ExternC(pa, cursor, output);
+			return;
+		}
+		else
+		{
+			cursor = oldCursor;
+		}
+	}
+
 	Ptr<Symbol> specSymbol;
 	List<Ptr<TemplateSpec>> specs;
 	while(TestToken(cursor, CppTokens::DECL_TEMPLATE, false))
@@ -260,37 +281,6 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 	bool cStyleTypeReference = IsCStyleTypeReference(cursor);
 
 	// check if the following `struct Id` is trying to reference a type instead of to define a type
-
-	{
-		auto oldCursor = cursor;
-		if (TestToken(cursor, CppTokens::DECL_EXTERN) && TestToken(cursor, CppTokens::STRING))
-		{
-			// extern "C"
-			// ignore it and add everything to its parent
-			if (TestToken(cursor, CppTokens::LBRACE))
-			{
-				while (!TestToken(cursor, CppTokens::RBRACE))
-				{
-					ParseDeclaration(pa, cursor, output);
-				}
-			}
-			else
-			{
-				ParseDeclaration(pa, cursor, output);
-			}
-
-			// prevent from stack overflowing in CppTokenCursor's destructor
-			while (oldCursor != cursor)
-			{
-				oldCursor = oldCursor->Next();
-			}
-			return;
-		}
-		else
-		{
-			cursor = oldCursor;
-		}
-	}
 
 	if (!cStyleTypeReference && TestToken(cursor, CppTokens::DECL_ENUM, false))
 	{

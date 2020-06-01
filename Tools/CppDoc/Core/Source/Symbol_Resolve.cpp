@@ -547,6 +547,29 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 
 			if (found) break;
 
+			{
+				vint index = 0;
+				while (true)
+				{
+					WString ansName = L"$__anonymous_namespace_" + itow(index);
+					if (auto ansSymbols = scope->TryGetChildren_NFb(ansName))
+					{
+						for (vint i = 0; i < ansSymbols->Count(); i++)
+						{
+							auto anonymousNs = ansSymbols->Get(i).childSymbol.Obj();
+							ResolveSymbolInStaticScopeInternal(pa, anonymousNs, SearchPolicy::ScopedChild, rsa);
+						}
+						index++;
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
+
+			if (found) break;
+
 			cache = scope->GetClassMemberCache_NFb();
 
 			if (cache && policy & SearchPolicy::_AllowClassMember)

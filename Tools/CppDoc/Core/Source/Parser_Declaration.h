@@ -11,6 +11,11 @@ extern void						ParseDeclaration_Namespace(
 									Ptr<CppTokenCursor>& cursor,
 									List<Ptr<Declaration>>& output
 								);
+extern void						ParseDeclaration_ExternC(
+									const ParsingArguments& pa,
+									Ptr<CppTokenCursor>& cursor,
+									List<Ptr<Declaration>>& output
+								);
 
 extern Ptr<EnumDeclaration>		ParseDeclaration_Enum_NotConsumeSemicolon(
 									const ParsingArguments& pa,
