@@ -89,10 +89,15 @@ void IndexCppCode(
 	);
 	progressReporter.FinishPhase();
 
-	Console::WriteLine(L"    Generating UniqueId");
+	Console::WriteLine(L"    Generating UniqueIds");
+	indexResult.pa.root->GenerateUniqueId(indexResult.ids, L"");
+
+	Console::WriteLine(L"    Indexing Symbols");
 	GenerateUniqueId(
-		indexResult
+		indexResult,
+		&progressReporter
 	);
+	progressReporter.FinishPhase();
 
 	Console::WriteLine(L"    Generating HTML");
 	auto global = Collect(

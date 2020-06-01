@@ -108,7 +108,7 @@ Compiling
 ***********************************************************************/
 
 extern void											Compile(Ptr<RegexLexer> lexer, FilePath pathInput, IndexResult& result, IProgressReporter* progressReporter);
-extern void											GenerateUniqueId(IndexResult& result);
+extern void											GenerateUniqueId(IndexResult& result, IProgressReporter* progressReporter);
 
 /***********************************************************************
 Line Indexing

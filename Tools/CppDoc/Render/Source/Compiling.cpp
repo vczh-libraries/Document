@@ -28,15 +28,18 @@ void Compile(
 }
 
 void GenerateUniqueId(
-	IndexResult& result						// (out) indexing
+	IndexResult& result,					// (out) indexing
+	IProgressReporter* progressReporter
 )
 {
-	// generate unique symbol name
-	result.pa.root->GenerateUniqueId(result.ids, L"");
-
 	// collect all declaration names
 	for (vint i = 0; i < result.ids.Count(); i++)
 	{
+		if (progressReporter)
+		{
+			progressReporter->OnProgress((vint)IIndexRecorder::Phase::Finished, i, result.ids.Count());
+		}
+
 		auto symbol = result.ids.Values()[i];
 		switch (symbol->GetCategory())
 		{

@@ -727,7 +727,7 @@ Ptr<GlobalLinesRecord> Collect(
 		{
 			if (progressReporter && cursor)
 			{
-				progressReporter->OnProgress((vint)IIndexRecorder::Phase::Finished, cursor->token.start, global->preprocessed.Length());
+				progressReporter->OnProgress((vint)IIndexRecorder::Phase::Finished + 1, cursor->token.start, global->preprocessed.Length());
 			}
 
 			if (rightAfterSharpLine)
