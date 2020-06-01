@@ -18,4 +18,27 @@ TEST_FILE
 		AssertExpr(pa, L"B()",				L"B()",									L"::B * $PR"	);
 		AssertExpr(pa, L"enum B()",			L"enum_class_struct_union B()",			L"::B $PR"		);
 	});
+
+	TEST_CATEGORY(L"Discarded declarations")
+	{
+		auto input = LR"(
+template<typename T>
+struct X
+{
+	T y;
+};
+
+template class X<int>;
+template int X<int>::y;
+)";
+		COMPILE_PROGRAM(program, pa, input);
+	});
+
+	TEST_CATEGORY(L"Ignored declarations")
+	{
+		auto input = LR"(
+int operator "" suffix(const char* str, int len);
+)";
+		COMPILE_PROGRAM(program, pa, input);
+	});
 }

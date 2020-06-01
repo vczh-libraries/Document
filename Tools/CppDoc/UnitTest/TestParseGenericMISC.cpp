@@ -57,27 +57,4 @@ struct S<R(Ps...)>
 		AssertExpr(pa,	L"S<int>::Value",		L"S<int> :: Value",		L"__int32 const $L");
 		AssertExpr(pa,	L"S<int()>::Value",		L"S<int ()> :: Value",	L"__int32 const $L");
 	});
-
-	TEST_CATEGORY(L"Discarded declarations")
-	{
-		auto input = LR"(
-template<typename T>
-struct X
-{
-	T y;
-};
-
-template class X<int>;
-template int X<int>::y;
-)";
-		COMPILE_PROGRAM(program, pa, input);
-	});
-
-	TEST_CATEGORY(L"Ignored declarations")
-	{
-		auto input = LR"(
-int operator "" suffix(const char* str, int len);
-)";
-		COMPILE_PROGRAM(program, pa, input);
-	});
 }
