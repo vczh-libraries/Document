@@ -24,30 +24,17 @@ void ParseDeclaration_ExternC(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 	RequireToken(cursor, CppTokens::DECL_EXTERN);
 	RequireToken(cursor, CppTokens::STRING);
 
-	auto decl = MakePtr<NamespaceDeclaration>();
-	decl->name.name = GenerateAnonymousNamespaceName(pa);
-	decl->name.type = CppNameType::Normal;
-
-	auto contextSymbol = pa.scopeSymbol->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Namespace);
-	if (!contextSymbol)
-	{
-		throw StopParsingException(cursor);
-	}
-
-	auto newPa = pa.WithScope(contextSymbol);
 	if (TestToken(cursor, CppTokens::LBRACE))
 	{
 		while (!TestToken(cursor, CppTokens::RBRACE))
 		{
-			ParseDeclaration(newPa, cursor, decl->decls);
+			ParseDeclaration(pa, cursor, output);
 		}
 	}
 	else
 	{
-		ParseDeclaration(newPa, cursor, decl->decls);
+		ParseDeclaration(pa, cursor, output);
 	}
-
-	output.Add(decl);
 }
 
 void ParseDeclaration_Namespace(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
