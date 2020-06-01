@@ -697,8 +697,9 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 		while (true)
 		{
 			if (SkipSpecifiers(cursor)) continue;
-			// ignore __forceinline
+			// TODO: [cpp.md] Move `__forceinline` before declarator name to declaration.
 			if (TestToken(cursor, CppTokens::__FORCEINLINE)) continue;
+			if (TestToken(cursor, CppTokens::STATIC)) continue;
 			break;
 		}
 

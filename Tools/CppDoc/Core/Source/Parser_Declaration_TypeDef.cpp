@@ -49,8 +49,29 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 
 		if (!pa.scopeSymbol->AddImplDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias))
 		{
-			// found duplicated typedef, ignore this one
-			if (!pa.scopeSymbol->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::TypeAlias))
+			bool ignorable = true;
+			if (auto pSymbols = pa.scopeSymbol->TryGetChildren_NFb(decl->name.name))
+			{
+				for (vint j = 0; j < pSymbols->Count(); j++)
+				{
+					auto childSymbol = pSymbols->Get(j);
+					if (!childSymbol.childExpr && !childSymbol.childType)
+					{
+						switch (childSymbol.childSymbol->kind)
+						{
+						case symbol_component::SymbolKind::TypeAlias:
+							// found a duplicated typedef, ignore this one
+							ignorable = true;
+							break;
+						case CLASS_SYMBOL_KIND:
+							// found a class with the same name, ignore this one
+							ignorable = true;
+							break;
+						}
+					}
+				}
+			}
+			if (!ignorable)
 			{
 				throw StopParsingException(cursor);
 			}

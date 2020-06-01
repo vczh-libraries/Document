@@ -156,7 +156,7 @@ namespace assign_parameters
 
 						if (argTypes.Count() > 0)
 						{
-							// TODO: create multiple TemplateArgumentContext
+							// TODO: [cpp.md] Create multiple instances if `T<THIS>` is evaluated to multiple type.
 							newTaContext.SetValueByKey(pattern, argTypes[0]);
 						}
 						else

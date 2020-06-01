@@ -46,6 +46,7 @@
   - [ ] `std::initialization_list`.
   - [ ] Converting lambda expression to a struct instead of `any_t`.
   - [ ] Pass variadic template argument to placement new expression.
+  - [ ] Create multiple instances if `T<THIS>` is evaluated to multiple type.
   - [ ] `GenerateMembers` on `DeclInstance`.
     - [ ] Generate `ClassMemberCache` for generated special members.
     - [ ] Generate special members for declarations with `specializationSpec`.
