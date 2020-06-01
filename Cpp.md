@@ -26,8 +26,6 @@
 
 ### Test Cases
 
-- [ ] type alias recursion
-
 ### Bugs
 
 - [ ] **STL** Demo

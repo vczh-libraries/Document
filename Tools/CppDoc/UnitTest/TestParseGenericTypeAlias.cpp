@@ -151,4 +151,48 @@ using X = decltype({T{}, TValue, U{}, V<T, U>{}});
 		AssertType(pa, L"X<int, {}, void*, ReverseFunc>",	L"X<int, {}, void *, ReverseFunc>",		L"{__int32 $PR, __int32 $PR, void * $PR, void * __cdecl(__int32) * $PR}"	);
 		AssertType(pa, L"X<bool, {}, void*, ReverseFunc>",	L"X<bool, {}, void *, ReverseFunc>",	L"{bool $PR, bool $PR, void * $PR, void * __cdecl(bool) * $PR}"				);
 	});
+
+	TEST_CATEGORY(L"Recursive")
+	{
+		auto input = LR"(
+template<int X>
+struct Int;
+
+template<typename T, typename U>
+struct Add;
+
+template<int X, int Y>
+struct Add<Int<X>, Int<Y>>
+{
+	using Type = Int<X + Y>;
+};
+
+template<typename T>
+struct FibImpl;
+
+template<int X>
+using Fib = typename FibImpl<Int<X>>::Type;
+
+template<>
+struct FibImpl<Int<0>>
+{
+	using Type = Int<1>;
+};
+
+template<>
+struct FibImpl<Int<1>>
+{
+	using Type = Int<1>;
+};
+
+template<int X>
+struct FibImpl<Int<X>>
+{
+	using Type = typename Add<Fib<X - 1>, Fib<X - 2>>::Type;
+};
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertType(pa, L"Fib<0>",		L"Fib<0>",		L"::Value<*> $PR",	L"any_t $PR"	);
+	});
 }
