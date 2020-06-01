@@ -48,16 +48,17 @@
     - [ ] Generate `ClassMemberCache` for generated special members.
     - [ ] Generate special members for declarations with `specializationSpec`.
 - [ ] Render
+  - [ ] Add link to `#include "File"` and `#include <File>`.
   - [ ] Attach document content to declarations.
   - [ ] Enable markdown inside xml elements in comment.
   - [ ] Resolve symbols in markdown in comment.
   - [ ] Enable `<example>` with predefined project types, extract all example, compile and index them.
+  - [ ] Refactor the HTML generation part to becomes a library.
+    - [ ] Extract `<div>` token rendering functions.
 
 ### Making Demos
 
 - [ ] Next Demo! (Vlpp)
-  - [ ] Refactor the HTML generation part to becomes a library.
-    - [ ] Extract `<div>` token rendering functions.
   - [ ] Produce `Preprocessed.txt` from `#include` only files, not from compacted files.
   - [ ] Update CodePack.exe to produce `#include` only header and cpp files, so that the compiler can index preprocessed files with `#line` directly, without having to parse CodePack.exe produced comments.
 - [ ] New Demo! (VlppOS)
