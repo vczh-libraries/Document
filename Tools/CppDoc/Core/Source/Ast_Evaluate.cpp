@@ -446,11 +446,14 @@ public:
 
 	void Visit(VariableDeclaration* self) override
 	{
-		if (pa.recorder) pa.recorder->BeginEvaluate(self);
+		if (self->symbol)
 		{
-			EvaluateVariableDeclaration(pa, self);
+			if (pa.recorder) pa.recorder->BeginEvaluate(self);
+			{
+				EvaluateVariableDeclaration(pa, self);
+			}
+			if (pa.recorder) pa.recorder->EndEvaluate(self);
 		}
-		if (pa.recorder) pa.recorder->EndEvaluate(self);
 	}
 
 	void Visit(FunctionDeclaration* self) override
@@ -567,11 +570,14 @@ public:
 
 	void Visit(TypeAliasDeclaration* self) override
 	{
-		if (pa.recorder) pa.recorder->BeginEvaluate(self);
+		if (self->symbol)
 		{
-			symbol_type_resolving::EvaluateTypeAliasSymbol(pa, self, pa.parentDeclType, nullptr);
+			if (pa.recorder) pa.recorder->BeginEvaluate(self);
+			{
+				symbol_type_resolving::EvaluateTypeAliasSymbol(pa, self, pa.parentDeclType, nullptr);
+			}
+			if (pa.recorder) pa.recorder->EndEvaluate(self);
 		}
-		if (pa.recorder) pa.recorder->EndEvaluate(self);
 	}
 
 	void Visit(ValueAliasDeclaration* self) override
