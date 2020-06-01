@@ -545,8 +545,6 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 				}
 			}
 
-			if (found) break;
-
 			{
 				vint index = 0;
 				while (true)

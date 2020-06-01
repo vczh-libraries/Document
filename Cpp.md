@@ -32,6 +32,8 @@
   - [ ] Remove special handling for `common_type_t<...>`
 - [ ] **TypePrinter** Demo
   - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` points to the correct partial specializations.
+- [ ] Move `__forceinline` before declarator name to declaration.
+  - [ ] Along with `virtual` and everything that could happen before a name.
 
 ### Features
 

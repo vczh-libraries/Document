@@ -694,7 +694,13 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 
 	if (pdc.dr != DeclaratorRestriction::Zero)
 	{
-		while (SkipSpecifiers(cursor));
+		while (true)
+		{
+			if (SkipSpecifiers(cursor)) continue;
+			// ignore __forceinline
+			if (TestToken(cursor, CppTokens::__FORCEINLINE)) continue;
+			break;
+		}
 
 		// there may be a declarator name
 		CppName cppName;

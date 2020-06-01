@@ -177,6 +177,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		{
 			if (TestToken(cursor, CppTokens::DECL_NAMESPACE, false))
 			{
+				oldCursor = nullptr;
 				ParseDeclaration_Namespace(pa, cursor, output);
 				return;
 			}
@@ -198,6 +199,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 		if (TestToken(cursor, CppTokens::DECL_EXTERN) && TestToken(cursor, CppTokens::STRING))
 		{
 			cursor = oldCursor;
+			oldCursor = nullptr;
 			ParseDeclaration_ExternC(pa, cursor, output);
 			return;
 		}

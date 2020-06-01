@@ -980,8 +980,8 @@ Type c;
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertExpr(pa, L"a",						L"a",						L"bool $L"				);
-		AssertExpr(pa, L"b",						L"b",						L"bool $L",	L"char $L"	);
-		AssertExpr(pa, L"c",						L"c",						L"double $L"			);
+		AssertExpr(pa, L"a",						L"a",						L"bool $L"								);
+		AssertExpr(pa, L"b",						L"b",						L"bool $L",	L"char $L"					);
+		AssertExpr(pa, L"c",						L"c",						L"bool $L",	L"char $L",	L"double $L"	);
 	});
 }
