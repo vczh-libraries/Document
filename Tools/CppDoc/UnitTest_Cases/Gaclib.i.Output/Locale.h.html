@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Locale.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Framework::Locale
+
+Interfaces:
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_LOCALE</div>
+<div class="disabled">#define VCZH_LOCALE</div>
+
+<div class="disabled">#include &quot;../Import/Vlpp.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[39]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_comment ">/// &lt;summary&gt;Locale awared operations. Macro &quot;INVLOC&quot; is a shortcut to get a invariant locale.&lt;/summary&gt;</div>
+	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::Locale"><div><div class="token cpp_type">Locale</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+	{
+	<div class="token cpp_keyword ">protected</div>:
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="NI$vl::Locale::localeName"><div><div class="token cpp_field">localeName</div></div></div>;
+
+	<div class="token cpp_keyword ">public</div>:
+		<div class="def" id="FB$vl::Locale::$__ctor@(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::$__ctor@(::vl::WString const &)'], [], [])"><div class="token cpp_function">Locale</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::$__ctor@(::vl::WString const &)[decl0]::_localeName"><div>_localeName</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::Empty'], [], [])"><div class="token cpp_field">Empty</div></div>);
+		<div class="def" id="FB$vl::Locale::~Locale@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::~Locale@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">Locale</div></div></div>();
+
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Locale::operator ==@bool(::vl::Locale const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale'], [], [])"><div class="token cpp_type">Locale</div></div>&amp; <div class="def" id="NI$vl::Locale::operator ==@bool(::vl::Locale const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator ==@bool(::vl::ObjectString<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::operator ==@bool(::vl::Locale const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div>; }
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Locale::operator !=@bool(::vl::Locale const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale'], [], [])"><div class="token cpp_type">Locale</div></div>&amp; <div class="def" id="NI$vl::Locale::operator !=@bool(::vl::Locale const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator !=@bool(::vl::ObjectString<[T]> const &)'], [], [], [])"><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::operator !=@bool(::vl::Locale const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div>; }
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Locale::operator <@bool(::vl::Locale const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&lt;</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale'], [], [])"><div class="token cpp_type">Locale</div></div>&amp; <div class="def" id="NI$vl::Locale::operator <@bool(::vl::Locale const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator <@bool(::vl::ObjectString<[T]> const &)'], [], [], [])"><div class="token cpp_function">&lt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::operator <@bool(::vl::Locale const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div>; }
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Locale::operator <=@bool(::vl::Locale const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&lt;</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale'], [], [])"><div class="token cpp_type">Locale</div></div>&amp; <div class="def" id="NI$vl::Locale::operator <=@bool(::vl::Locale const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator <=@bool(::vl::ObjectString<[T]> const &)'], [], [], [])"><div class="token cpp_function">&lt;</div><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::operator <=@bool(::vl::Locale const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div>; }
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Locale::operator >@bool(::vl::Locale const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&gt;</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale'], [], [])"><div class="token cpp_type">Locale</div></div>&amp; <div class="def" id="NI$vl::Locale::operator >@bool(::vl::Locale const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator >@bool(::vl::ObjectString<[T]> const &)'], [], [], [])"><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::operator >@bool(::vl::Locale const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div>; }
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Locale::operator >=@bool(::vl::Locale const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&gt;</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale'], [], [])"><div class="token cpp_type">Locale</div></div>&amp; <div class="def" id="NI$vl::Locale::operator >=@bool(::vl::Locale const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator >=@bool(::vl::ObjectString<[T]> const &)'], [], [], [])"><div class="token cpp_function">&gt;</div><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::operator >=@bool(::vl::Locale const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Locale::localeName'], [], [])"><div class="token cpp_field">localeName</div></div>; }
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the invariant locale.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The invariant locale.&lt;/returns&gt;</div>
+		<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale'], [], [])"><div class="token cpp_type">Locale</div></div>				<div class="def" id="FB$vl::Locale::Invariant@::vl::Locale()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::Invariant@::vl::Locale()'], [], [])"><div class="token cpp_function">Invariant</div></div></div>();
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the system default locale. This locale controls the code page that used by the the system to interpret ANSI string buffers.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The system default locale.&lt;/returns&gt;</div>
+		<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale'], [], [])"><div class="token cpp_type">Locale</div></div>				<div class="def" id="FB$vl::Locale::SystemDefault@::vl::Locale()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::SystemDefault@::vl::Locale()'], [], [])"><div class="token cpp_function">SystemDefault</div></div></div>();
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the user default locale. This locale reflect the user&apos;s setting.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The user default locale.&lt;/returns&gt;</div>
+		<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Locale'], [], [])"><div class="token cpp_type">Locale</div></div>				<div class="def" id="FB$vl::Locale::UserDefault@::vl::Locale()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::UserDefault@::vl::Locale()'], [], [])"><div class="token cpp_function">UserDefault</div></div></div>();
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get all supported locales.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;locales&quot;&gt;All supported locales.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::Locale::Enumerate@void(::vl::collections::List<::vl::Locale> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::Enumerate@void(::vl::collections::List<::vl::Locale> &)'], [], [])"><div class="token cpp_function">Enumerate</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Locale'], [], [])"><div class="token cpp_type">Locale</div></div>&gt;&amp; <div class="def" id="NI$vl::Locale::Enumerate@void(::vl::collections::List<::vl::Locale> &)[decl0]::locales"><div>locales</div></div>);
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the name of the locale.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The name of the locale.&lt;/returns&gt;</div>
+		<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp;				<div class="def" id="FB$vl::Locale::GetName@::vl::WString const &()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::GetName@::vl::WString const &()'], [], [])"><div class="token cpp_function">GetName</div></div></div>()<div class="token cpp_keyword ">const</div>;
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get all short date formats for the locale.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;formats&quot;&gt;The formats.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::Locale::GetShortDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::GetShortDateFormats@void(::vl::collections::List<::vl::WString> &)'], [], [])"><div class="token cpp_function">GetShortDateFormats</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::Locale::GetShortDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]::formats"><div>formats</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get all long date formats for the locale.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;formats&quot;&gt;The formats.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::Locale::GetLongDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::GetLongDateFormats@void(::vl::collections::List<::vl::WString> &)'], [], [])"><div class="token cpp_function">GetLongDateFormats</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::Locale::GetLongDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]::formats"><div>formats</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get all Year-Month date formats for the locale.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;formats&quot;&gt;The formats.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::Locale::GetYearMonthDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::GetYearMonthDateFormats@void(::vl::collections::List<::vl::WString> &)'], [], [])"><div class="token cpp_function">GetYearMonthDateFormats</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::Locale::GetYearMonthDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]::formats"><div>formats</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get all long time formats for the locale.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;formats&quot;&gt;The formats.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::Locale::GetLongTimeFormats@void(::vl::collections::List<::vl::WString> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::GetLongTimeFormats@void(::vl::collections::List<::vl::WString> &)'], [], [])"><div class="token cpp_function">GetLongTimeFormats</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::Locale::GetLongTimeFormats@void(::vl::collections::List<::vl::WString> &)[decl0]::formats"><div>formats</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get all short time formats for the locale.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;formats&quot;&gt;The formats.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::Locale::GetShortTimeFormats@void(::vl::collections::List<::vl::WString> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::GetShortTimeFormats@void(::vl::collections::List<::vl::WString> &)'], [], [])"><div class="token cpp_function">GetShortTimeFormats</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::Locale::GetShortTimeFormats@void(::vl::collections::List<::vl::WString> &)[decl0]::formats"><div>formats</div></div>)<div class="token cpp_keyword ">const</div>;
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert a date to a formatted string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The formatted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;format&quot;&gt;The format to use.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;date&quot;&gt;The date to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::FormatDate@::vl::WString(::vl::WString const &, ::vl::DateTime)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::FormatDate@::vl::WString(::vl::WString const &, ::vl::DateTime)'], [], [])"><div class="token cpp_function">FormatDate</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::FormatDate@::vl::WString(::vl::WString const &, ::vl::DateTime)[decl0]::format"><div>format</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="def" id="NI$vl::Locale::FormatDate@::vl::WString(::vl::WString const &, ::vl::DateTime)[decl0]::date"><div>date</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert a time to a formatted string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The formatted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;format&quot;&gt;The format to use.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;time&quot;&gt;The time to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::FormatTime@::vl::WString(::vl::WString const &, ::vl::DateTime)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::FormatTime@::vl::WString(::vl::WString const &, ::vl::DateTime)'], [], [])"><div class="token cpp_function">FormatTime</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::FormatTime@::vl::WString(::vl::WString const &, ::vl::DateTime)[decl0]::format"><div>format</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="def" id="NI$vl::Locale::FormatTime@::vl::WString(::vl::WString const &, ::vl::DateTime)[decl0]::time"><div>time</div></div>)<div class="token cpp_keyword ">const</div>;
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert a number to a formatted string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The formatted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;number&quot;&gt;The number to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::FormatNumber@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::FormatNumber@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">FormatNumber</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::FormatNumber@::vl::WString(::vl::WString const &)[decl0]::number"><div>number</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert a currency (money) to a formatted string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The formatted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;currency&quot;&gt;The currency to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::FormatCurrency@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::FormatCurrency@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">FormatCurrency</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::FormatCurrency@::vl::WString(::vl::WString const &)[decl0]::currency"><div>currency</div></div>)<div class="token cpp_keyword ">const</div>;
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the short display string of a day of week.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The display string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;dayOfWeek&quot;&gt;Day of week, begins from 0 as Sunday.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::GetShortDayOfWeekName@::vl::WString(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::GetShortDayOfWeekName@::vl::WString(::vl::vint)'], [], [])"><div class="token cpp_function">GetShortDayOfWeekName</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::Locale::GetShortDayOfWeekName@::vl::WString(::vl::vint)[decl0]::dayOfWeek"><div>dayOfWeek</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the long display string of a day of week.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The display string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;dayOfWeek&quot;&gt;Day of week, begins from 0 as Sunday.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::GetLongDayOfWeekName@::vl::WString(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::GetLongDayOfWeekName@::vl::WString(::vl::vint)'], [], [])"><div class="token cpp_function">GetLongDayOfWeekName</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::Locale::GetLongDayOfWeekName@::vl::WString(::vl::vint)[decl0]::dayOfWeek"><div>dayOfWeek</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the short display string of a month.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The display string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;month&quot;&gt;Month, begins from 1 as January.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::GetShortMonthName@::vl::WString(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::GetShortMonthName@::vl::WString(::vl::vint)'], [], [])"><div class="token cpp_function">GetShortMonthName</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::Locale::GetShortMonthName@::vl::WString(::vl::vint)[decl0]::month"><div>month</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the long display string of a month.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The display string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;month&quot;&gt;Month, begins from 1 as January.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)'], [], [])"><div class="token cpp_function">GetLongMonthName</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)[decl0]::month"><div>month</div></div>)<div class="token cpp_keyword ">const</div>;
+		
+<div class="disabled">#ifdef VCZH_MSVC</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert characters to the full width.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;str&quot;&gt;The string to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::ToFullWidth@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::ToFullWidth@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">ToFullWidth</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::ToFullWidth@::vl::WString(::vl::WString const &)[decl0]::str"><div>str</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert characters to the half width.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;str&quot;&gt;The string to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::ToHalfWidth@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::ToHalfWidth@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">ToHalfWidth</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::ToHalfWidth@::vl::WString(::vl::WString const &)[decl0]::str"><div>str</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert characters to the Hiragana.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;str&quot;&gt;The string to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::ToHiragana@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::ToHiragana@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">ToHiragana</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::ToHiragana@::vl::WString(::vl::WString const &)[decl0]::str"><div>str</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert characters to the Katagana.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;str&quot;&gt;The string to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::ToKatagana@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::ToKatagana@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">ToKatagana</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::ToKatagana@::vl::WString(::vl::WString const &)[decl0]::str"><div>str</div></div>)<div class="token cpp_keyword ">const</div>;
+<div class="disabled">#endif</div>
+		
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert characters to the lower case using the file system rule.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;str&quot;&gt;The string to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::ToLower@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::ToLower@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">ToLower</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::ToLower@::vl::WString(::vl::WString const &)[decl0]::str"><div>str</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert characters to the upper case using the file system rule.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;str&quot;&gt;The string to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::ToUpper@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::ToUpper@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">ToUpper</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::ToUpper@::vl::WString(::vl::WString const &)[decl0]::str"><div>str</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert characters to the lower case using the linguistic rule.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;str&quot;&gt;The string to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::ToLinguisticLower@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::ToLinguisticLower@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">ToLinguisticLower</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::ToLinguisticLower@::vl::WString(::vl::WString const &)[decl0]::str"><div>str</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert characters to the upper case using the linguistic rule.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;str&quot;&gt;The string to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::ToLinguisticUpper@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::ToLinguisticUpper@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">ToLinguisticUpper</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::ToLinguisticUpper@::vl::WString(::vl::WString const &)[decl0]::str"><div>str</div></div>)<div class="token cpp_keyword ">const</div>;
+
+<div class="disabled">#ifdef VCZH_MSVC</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert characters to Simplified Chinese.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;str&quot;&gt;The string to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::ToSimplifiedChinese@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::ToSimplifiedChinese@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">ToSimplifiedChinese</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::ToSimplifiedChinese@::vl::WString(::vl::WString const &)[decl0]::str"><div>str</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert characters to the Traditional Chinese.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;str&quot;&gt;The string to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::ToTraditionalChinese@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::ToTraditionalChinese@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">ToTraditionalChinese</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::ToTraditionalChinese@::vl::WString(::vl::WString const &)[decl0]::str"><div>str</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert characters to the tile case, in which the first letter of each major word is capitalized.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;str&quot;&gt;The string to convert.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::Locale::ToTileCase@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::ToTileCase@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">ToTileCase</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::ToTileCase@::vl::WString(::vl::WString const &)[decl0]::str"><div>str</div></div>)<div class="token cpp_keyword ">const</div>;
+<div class="disabled">#endif</div>
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Mergable flags controlling how to normalize a string.&lt;/summary&gt;</div>
+		<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$vl::Locale::Normalization"><div><div class="token cpp_type">Normalization</div></div></div>
+		{
+			<div class="token cpp_comment ">/// &lt;summary&gt;Do nothing.&lt;/summary&gt;</div>
+			<div class="def" id="NI$vl::Locale::Normalization::None"><div><div class="token cpp_enum">None</div></div></div>=<div class="token cpp_number ">0</div>,
+			<div class="token cpp_comment ">/// &lt;summary&gt;Ignore case using the file system rule.&lt;/summary&gt;</div>
+			<div class="def" id="NI$vl::Locale::Normalization::IgnoreCase"><div><div class="token cpp_enum">IgnoreCase</div></div></div>=<div class="token cpp_number ">1</div>,
+<div class="disabled">#ifdef VCZH_MSVC</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Ignore case using the linguistic rule.&lt;/summary&gt;</div>
+			<div class="def" id="NI$vl::Locale::Normalization::IgnoreCaseLinguistic"><div><div class="token cpp_enum">IgnoreCaseLinguistic</div></div></div>=<div class="token cpp_number ">2</div>,
+			<div class="token cpp_comment ">/// &lt;summary&gt;Ignore the difference between between hiragana and katakana characters.&lt;/summary&gt;</div>
+			<div class="def" id="NI$vl::Locale::Normalization::IgnoreKanaType"><div><div class="token cpp_enum">IgnoreKanaType</div></div></div>=<div class="token cpp_number ">4</div>,
+			<div class="token cpp_comment ">/// &lt;summary&gt;Ignore nonspacing characters.&lt;/summary&gt;</div>
+			<div class="def" id="NI$vl::Locale::Normalization::IgnoreNonSpace"><div><div class="token cpp_enum">IgnoreNonSpace</div></div></div>=<div class="token cpp_number ">8</div>,
+			<div class="token cpp_comment ">/// &lt;summary&gt;Ignore symbols and punctuation.&lt;/summary&gt;</div>
+			<div class="def" id="NI$vl::Locale::Normalization::IgnoreSymbol"><div><div class="token cpp_enum">IgnoreSymbol</div></div></div>=<div class="token cpp_number ">16</div>,
+			<div class="token cpp_comment ">/// &lt;summary&gt;Ignore the difference between half-width and full-width characters.&lt;/summary&gt;</div>
+			<div class="def" id="NI$vl::Locale::Normalization::IgnoreWidth"><div><div class="token cpp_enum">IgnoreWidth</div></div></div>=<div class="token cpp_number ">32</div>,
+			<div class="token cpp_comment ">/// &lt;summary&gt;Treat digits as numbers during sorting.&lt;/summary&gt;</div>
+			<div class="def" id="NI$vl::Locale::Normalization::DigitsAsNumbers"><div><div class="token cpp_enum">DigitsAsNumbers</div></div></div>=<div class="token cpp_number ">64</div>,
+			<div class="token cpp_comment ">/// &lt;summary&gt;Treat punctuation the same as symbols.&lt;/summary&gt;</div>
+			<div class="def" id="NI$vl::Locale::Normalization::StringSoft"><div><div class="token cpp_enum">StringSoft</div></div></div>=<div class="token cpp_number ">128</div>,
+<div class="disabled">#endif</div>
+		};
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Compare two strings.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns 0 if two strings are equal. Returns a positive number if the first string is larger. Returns a negative number if the second string is larger. When sorting strings, larger strings are put after then smaller strings.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;s1&quot;&gt;The first string to compare.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;s2&quot;&gt;The second string to compare.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;normalization&quot;&gt;Flags controlling how to normalize a string.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="FB$vl::Locale::Compare@::vl::vint(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::Compare@::vl::vint(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)'], [], [])"><div class="token cpp_function">Compare</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::Compare@::vl::vint(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::s1"><div>s1</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::Compare@::vl::vint(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::s2"><div>s2</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Locale::Normalization'], [], [])"><div class="token cpp_type">Normalization</div></div> <div class="def" id="NI$vl::Locale::Compare@::vl::vint(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::normalization"><div>normalization</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Compare two strings to test binary equivalence.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns 0 if two strings are equal. Returns a positive number if the first string is larger. Returns a negative number if the second string is larger. When sorting strings, larger strings are put after then smaller strings.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;s1&quot;&gt;The first string to compare.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;s2&quot;&gt;The second string to compare.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="FB$vl::Locale::CompareOrdinal@::vl::vint(::vl::WString const &, ::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::CompareOrdinal@::vl::vint(::vl::WString const &, ::vl::WString const &)'], [], [])"><div class="token cpp_function">CompareOrdinal</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::CompareOrdinal@::vl::vint(::vl::WString const &, ::vl::WString const &)[decl0]::s1"><div>s1</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::CompareOrdinal@::vl::vint(::vl::WString const &, ::vl::WString const &)[decl0]::s2"><div>s2</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Compare two strings to test binary equivalence, ignoring case.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns 0 if two strings are equal. Returns a positive number if the first string is larger. Returns a negative number if the second string is larger. When sorting strings, larger strings are put after then smaller strings.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;s1&quot;&gt;The first string to compare.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;s2&quot;&gt;The second string to compare.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="FB$vl::Locale::CompareOrdinalIgnoreCase@::vl::vint(::vl::WString const &, ::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::CompareOrdinalIgnoreCase@::vl::vint(::vl::WString const &, ::vl::WString const &)'], [], [])"><div class="token cpp_function">CompareOrdinalIgnoreCase</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::CompareOrdinalIgnoreCase@::vl::vint(::vl::WString const &, ::vl::WString const &)[decl0]::s1"><div>s1</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::CompareOrdinalIgnoreCase@::vl::vint(::vl::WString const &, ::vl::WString const &)[decl0]::s2"><div>s2</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Find the first position that the sub string appears in a text.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns a pair of numbers, the first number indicating the position in the text, the second number indicating the size of the equivalence sub string in the text. For some normalization, the found sub string may be binary different to the string you want to find.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to find the sub string.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;find&quot;&gt;The sub string to match.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;normalization&quot;&gt;Flags controlling how to normalize a string.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;			<div class="def" id="FB$vl::Locale::FindFirst@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::FindFirst@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)'], [], [])"><div class="token cpp_function">FindFirst</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::FindFirst@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::text"><div>text</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::FindFirst@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::find"><div>find</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Locale::Normalization'], [], [])"><div class="token cpp_type">Normalization</div></div> <div class="def" id="NI$vl::Locale::FindFirst@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::normalization"><div>normalization</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Find the last position that the sub string appears in a text.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns a pair of numbers, the first number indicating the position in the text, the second number indicating the size of the equivalence sub string in the text. For some normalization, the found sub string may be binary different to the string you want to find.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to find the sub string.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;find&quot;&gt;The sub string to match.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;normalization&quot;&gt;Flags controlling how to normalize a string.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;			<div class="def" id="FB$vl::Locale::FindLast@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::FindLast@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)'], [], [])"><div class="token cpp_function">FindLast</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::FindLast@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::text"><div>text</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::FindLast@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::find"><div>find</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Locale::Normalization'], [], [])"><div class="token cpp_type">Normalization</div></div> <div class="def" id="NI$vl::Locale::FindLast@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::normalization"><div>normalization</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Test is the prefix of the text equivalence to the provided sub string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the prefix of the text equivalence to the provided sub string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to test the prefix.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;find&quot;&gt;The sub string to match.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;normalization&quot;&gt;Flags controlling how to normalize a string.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::Locale::StartsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::StartsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)'], [], [])"><div class="token cpp_function">StartsWith</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::StartsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::text"><div>text</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::StartsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::find"><div>find</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Locale::Normalization'], [], [])"><div class="token cpp_type">Normalization</div></div> <div class="def" id="NI$vl::Locale::StartsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::normalization"><div>normalization</div></div>)<div class="token cpp_keyword ">const</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Test is the postfix of the text equivalence to the provided sub string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the postfix of the text equivalence to the provided sub string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to test the postfix.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;find&quot;&gt;The sub string to match.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;normalization&quot;&gt;Flags controlling how to normalize a string.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::Locale::EndsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Locale::EndsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)'], [], [])"><div class="token cpp_function">EndsWith</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::EndsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::text"><div>text</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Locale::EndsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::find"><div>find</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Locale::Normalization'], [], [])"><div class="token cpp_type">Normalization</div></div> <div class="def" id="NI$vl::Locale::EndsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]::normalization"><div>normalization</div></div>)<div class="token cpp_keyword ">const</div>;
+	};
+
+<div class="disabled">#define INVLOC vl::Locale::Invariant()</div>
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl'
+        ]
+    },
+    'vl::DateTime': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>',
+        'impls': [
+            'NI$vl::DateTime'
+        ],
+        'decls': []
+    },
+    'vl::Locale': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>',
+        'impls': [
+            'NI$vl::Locale'
+        ],
+        'decls': []
+    },
+    'vl::Locale::$__ctor@(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::$__ctor@(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::$__ctor@(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::Compare@::vl::vint(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">Compare</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">Normalization</span>)',
+        'impls': [
+            'FB$vl::Locale::Compare@::vl::vint(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::Compare@::vl::vint(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]'
+        ]
+    },
+    'vl::Locale::CompareOrdinal@::vl::vint(::vl::WString const &, ::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">CompareOrdinal</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::CompareOrdinal@::vl::vint(::vl::WString const &, ::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::CompareOrdinal@::vl::vint(::vl::WString const &, ::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::CompareOrdinalIgnoreCase@::vl::vint(::vl::WString const &, ::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">CompareOrdinalIgnoreCase</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::CompareOrdinalIgnoreCase@::vl::vint(::vl::WString const &, ::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::CompareOrdinalIgnoreCase@::vl::vint(::vl::WString const &, ::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::EndsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">EndsWith</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">Normalization</span>)',
+        'impls': [
+            'FB$vl::Locale::EndsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::EndsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]'
+        ]
+    },
+    'vl::Locale::Enumerate@void(::vl::collections::List<::vl::Locale> &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">Enumerate</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Locale</span>&gt; &)',
+        'impls': [
+            'FB$vl::Locale::Enumerate@void(::vl::collections::List<::vl::Locale> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::Enumerate@void(::vl::collections::List<::vl::Locale> &)[decl0]'
+        ]
+    },
+    'vl::Locale::FindFirst@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">FindFirst</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">Normalization</span>)',
+        'impls': [
+            'FB$vl::Locale::FindFirst@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::FindFirst@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]'
+        ]
+    },
+    'vl::Locale::FindLast@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">FindLast</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">Normalization</span>)',
+        'impls': [
+            'FB$vl::Locale::FindLast@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::FindLast@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]'
+        ]
+    },
+    'vl::Locale::FormatCurrency@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">FormatCurrency</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::FormatCurrency@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::FormatCurrency@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::FormatDate@::vl::WString(::vl::WString const &, ::vl::DateTime)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">FormatDate</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">DateTime</span>)',
+        'impls': [
+            'FB$vl::Locale::FormatDate@::vl::WString(::vl::WString const &, ::vl::DateTime)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::FormatDate@::vl::WString(::vl::WString const &, ::vl::DateTime)[decl0]'
+        ]
+    },
+    'vl::Locale::FormatNumber@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">FormatNumber</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::FormatNumber@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::FormatNumber@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::FormatTime@::vl::WString(::vl::WString const &, ::vl::DateTime)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">FormatTime</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">DateTime</span>)',
+        'impls': [
+            'FB$vl::Locale::FormatTime@::vl::WString(::vl::WString const &, ::vl::DateTime)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::FormatTime@::vl::WString(::vl::WString const &, ::vl::DateTime)[decl0]'
+        ]
+    },
+    'vl::Locale::GetLongDateFormats@void(::vl::collections::List<::vl::WString> &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">GetLongDateFormats</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">WString</span>&gt; &)',
+        'impls': [
+            'FB$vl::Locale::GetLongDateFormats@void(::vl::collections::List<::vl::WString> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::GetLongDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]'
+        ]
+    },
+    'vl::Locale::GetLongDayOfWeekName@::vl::WString(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">GetLongDayOfWeekName</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::Locale::GetLongDayOfWeekName@::vl::WString(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::GetLongDayOfWeekName@::vl::WString(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">GetLongMonthName</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::Locale::GetLongTimeFormats@void(::vl::collections::List<::vl::WString> &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">GetLongTimeFormats</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">WString</span>&gt; &)',
+        'impls': [
+            'FB$vl::Locale::GetLongTimeFormats@void(::vl::collections::List<::vl::WString> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::GetLongTimeFormats@void(::vl::collections::List<::vl::WString> &)[decl0]'
+        ]
+    },
+    'vl::Locale::GetName@::vl::WString const &()': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">GetName</span>()',
+        'impls': [
+            'FB$vl::Locale::GetName@::vl::WString const &()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::GetName@::vl::WString const &()[decl0]'
+        ]
+    },
+    'vl::Locale::GetShortDateFormats@void(::vl::collections::List<::vl::WString> &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">GetShortDateFormats</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">WString</span>&gt; &)',
+        'impls': [
+            'FB$vl::Locale::GetShortDateFormats@void(::vl::collections::List<::vl::WString> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::GetShortDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]'
+        ]
+    },
+    'vl::Locale::GetShortDayOfWeekName@::vl::WString(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">GetShortDayOfWeekName</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::Locale::GetShortDayOfWeekName@::vl::WString(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::GetShortDayOfWeekName@::vl::WString(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::Locale::GetShortMonthName@::vl::WString(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">GetShortMonthName</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::Locale::GetShortMonthName@::vl::WString(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::GetShortMonthName@::vl::WString(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::Locale::GetShortTimeFormats@void(::vl::collections::List<::vl::WString> &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">GetShortTimeFormats</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">WString</span>&gt; &)',
+        'impls': [
+            'FB$vl::Locale::GetShortTimeFormats@void(::vl::collections::List<::vl::WString> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::GetShortTimeFormats@void(::vl::collections::List<::vl::WString> &)[decl0]'
+        ]
+    },
+    'vl::Locale::GetYearMonthDateFormats@void(::vl::collections::List<::vl::WString> &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">GetYearMonthDateFormats</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">WString</span>&gt; &)',
+        'impls': [
+            'FB$vl::Locale::GetYearMonthDateFormats@void(::vl::collections::List<::vl::WString> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::GetYearMonthDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]'
+        ]
+    },
+    'vl::Locale::Invariant@::vl::Locale()': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">Invariant</span>()',
+        'impls': [
+            'FB$vl::Locale::Invariant@::vl::Locale()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::Invariant@::vl::Locale()[decl0]'
+        ]
+    },
+    'vl::Locale::Normalization': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_type">Normalization</span>',
+        'impls': [
+            'NI$vl::Locale::Normalization'
+        ],
+        'decls': []
+    },
+    'vl::Locale::StartsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">StartsWith</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">Normalization</span>)',
+        'impls': [
+            'FB$vl::Locale::StartsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::StartsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]'
+        ]
+    },
+    'vl::Locale::SystemDefault@::vl::Locale()': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">SystemDefault</span>()',
+        'impls': [
+            'FB$vl::Locale::SystemDefault@::vl::Locale()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::SystemDefault@::vl::Locale()[decl0]'
+        ]
+    },
+    'vl::Locale::ToFullWidth@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">ToFullWidth</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::ToFullWidth@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::ToFullWidth@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::ToHalfWidth@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">ToHalfWidth</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::ToHalfWidth@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::ToHalfWidth@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::ToHiragana@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">ToHiragana</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::ToHiragana@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::ToHiragana@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::ToKatagana@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">ToKatagana</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::ToKatagana@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::ToKatagana@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::ToLinguisticLower@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">ToLinguisticLower</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::ToLinguisticLower@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::ToLinguisticLower@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::ToLinguisticUpper@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">ToLinguisticUpper</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::ToLinguisticUpper@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::ToLinguisticUpper@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::ToLower@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">ToLower</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::ToLower@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::ToLower@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::ToSimplifiedChinese@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">ToSimplifiedChinese</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::ToSimplifiedChinese@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::ToSimplifiedChinese@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::ToTileCase@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">ToTileCase</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::ToTileCase@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::ToTileCase@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::ToTraditionalChinese@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">ToTraditionalChinese</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::ToTraditionalChinese@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::ToTraditionalChinese@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::ToUpper@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">ToUpper</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Locale::ToUpper@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::ToUpper@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Locale::UserDefault@::vl::Locale()': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">UserDefault</span>()',
+        'impls': [
+            'FB$vl::Locale::UserDefault@::vl::Locale()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::UserDefault@::vl::Locale()[decl0]'
+        ]
+    },
+    'vl::Locale::localeName': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_field">localeName</span>',
+        'impls': [
+            'NI$vl::Locale::localeName'
+        ],
+        'decls': []
+    },
+    'vl::Locale::operator !=@bool(::vl::Locale const &)[impl0]::value': {
+        'displayNameInHtml': 'value',
+        'impls': [
+            'NI$vl::Locale::operator !=@bool(::vl::Locale const &)[impl0]::value'
+        ],
+        'decls': []
+    },
+    'vl::Locale::operator <=@bool(::vl::Locale const &)[impl0]::value': {
+        'displayNameInHtml': 'value',
+        'impls': [
+            'NI$vl::Locale::operator <=@bool(::vl::Locale const &)[impl0]::value'
+        ],
+        'decls': []
+    },
+    'vl::Locale::operator <@bool(::vl::Locale const &)[impl0]::value': {
+        'displayNameInHtml': 'value',
+        'impls': [
+            'NI$vl::Locale::operator <@bool(::vl::Locale const &)[impl0]::value'
+        ],
+        'decls': []
+    },
+    'vl::Locale::operator ==@bool(::vl::Locale const &)[impl0]::value': {
+        'displayNameInHtml': 'value',
+        'impls': [
+            'NI$vl::Locale::operator ==@bool(::vl::Locale const &)[impl0]::value'
+        ],
+        'decls': []
+    },
+    'vl::Locale::operator >=@bool(::vl::Locale const &)[impl0]::value': {
+        'displayNameInHtml': 'value',
+        'impls': [
+            'NI$vl::Locale::operator >=@bool(::vl::Locale const &)[impl0]::value'
+        ],
+        'decls': []
+    },
+    'vl::Locale::operator >@bool(::vl::Locale const &)[impl0]::value': {
+        'displayNameInHtml': 'value',
+        'impls': [
+            'NI$vl::Locale::operator >@bool(::vl::Locale const &)[impl0]::value'
+        ],
+        'decls': []
+    },
+    'vl::Locale::~Locale@()': {
+        'displayNameInHtml': '<span class="cpp_type">Locale</span>::<span class="cpp_function">~Locale</span>()',
+        'impls': [
+            'FB$vl::Locale::~Locale@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Locale::~Locale@()[decl0]'
+        ]
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::Empty': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_field">Empty</span>',
+        'impls': [
+            'NI$vl::ObjectString::Empty'
+        ],
+        'decls': [
+            'NF[0]$vl::ObjectString::Empty'
+        ]
+    },
+    'vl::ObjectString::operator !=@bool(::vl::ObjectString<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator !=</span>(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::ObjectString::operator !=@bool(::vl::ObjectString<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::operator <=@bool(::vl::ObjectString<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator &lt;=</span>(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::ObjectString::operator <=@bool(::vl::ObjectString<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::operator <@bool(::vl::ObjectString<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator &lt;</span>(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::ObjectString::operator <@bool(::vl::ObjectString<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::operator ==@bool(::vl::ObjectString<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator ==</span>(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::ObjectString::operator ==@bool(::vl::ObjectString<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::operator >=@bool(::vl::ObjectString<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator &gt;=</span>(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::ObjectString::operator >=@bool(::vl::ObjectString<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::operator >@bool(::vl::ObjectString<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator &gt;</span>(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::ObjectString::operator >@bool(::vl::ObjectString<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections'
+        ]
+    },
+    'vl::collections::List': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::List'
+        ],
+        'decls': []
+    },
+    'vl::collections::Pair': {
+        'displayNameInHtml': '<span class="cpp_type">Pair</span>&lt;<span class="cpp_type">K</span>, <span class="cpp_type">V</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Pair'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::Locale::$__ctor@(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::$__ctor@(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::Compare@::vl::vint(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]': null,
+    'FB$vl::Locale::Compare@::vl::vint(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::CompareOrdinal@::vl::vint(::vl::WString const &, ::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::CompareOrdinal@::vl::vint(::vl::WString const &, ::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::CompareOrdinalIgnoreCase@::vl::vint(::vl::WString const &, ::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::CompareOrdinalIgnoreCase@::vl::vint(::vl::WString const &, ::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::EndsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]': null,
+    'FB$vl::Locale::EndsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::Enumerate@void(::vl::collections::List<::vl::Locale> &)[decl0]': null,
+    'FB$vl::Locale::Enumerate@void(::vl::collections::List<::vl::Locale> &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::FindFirst@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]': null,
+    'FB$vl::Locale::FindFirst@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::FindLast@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]': null,
+    'FB$vl::Locale::FindLast@::vl::collections::Pair<::vl::vint, ::vl::vint>(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::FormatCurrency@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::FormatCurrency@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::FormatDate@::vl::WString(::vl::WString const &, ::vl::DateTime)[decl0]': null,
+    'FB$vl::Locale::FormatDate@::vl::WString(::vl::WString const &, ::vl::DateTime)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::FormatNumber@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::FormatNumber@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::FormatTime@::vl::WString(::vl::WString const &, ::vl::DateTime)[decl0]': null,
+    'FB$vl::Locale::FormatTime@::vl::WString(::vl::WString const &, ::vl::DateTime)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::GetLongDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]': null,
+    'FB$vl::Locale::GetLongDateFormats@void(::vl::collections::List<::vl::WString> &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::GetLongDayOfWeekName@::vl::WString(::vl::vint)[decl0]': null,
+    'FB$vl::Locale::GetLongDayOfWeekName@::vl::WString(::vl::vint)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)[decl0]': null,
+    'FB$vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::GetLongTimeFormats@void(::vl::collections::List<::vl::WString> &)[decl0]': null,
+    'FB$vl::Locale::GetLongTimeFormats@void(::vl::collections::List<::vl::WString> &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::GetName@::vl::WString const &()[decl0]': null,
+    'FB$vl::Locale::GetName@::vl::WString const &()[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::GetShortDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]': null,
+    'FB$vl::Locale::GetShortDateFormats@void(::vl::collections::List<::vl::WString> &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::GetShortDayOfWeekName@::vl::WString(::vl::vint)[decl0]': null,
+    'FB$vl::Locale::GetShortDayOfWeekName@::vl::WString(::vl::vint)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::GetShortMonthName@::vl::WString(::vl::vint)[decl0]': null,
+    'FB$vl::Locale::GetShortMonthName@::vl::WString(::vl::vint)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::GetShortTimeFormats@void(::vl::collections::List<::vl::WString> &)[decl0]': null,
+    'FB$vl::Locale::GetShortTimeFormats@void(::vl::collections::List<::vl::WString> &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::GetYearMonthDateFormats@void(::vl::collections::List<::vl::WString> &)[decl0]': null,
+    'FB$vl::Locale::GetYearMonthDateFormats@void(::vl::collections::List<::vl::WString> &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::Invariant@::vl::Locale()[decl0]': null,
+    'FB$vl::Locale::Invariant@::vl::Locale()[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::StartsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[decl0]': null,
+    'FB$vl::Locale::StartsWith@bool(::vl::WString const &, ::vl::WString const &, ::vl::Locale::Normalization)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::SystemDefault@::vl::Locale()[decl0]': null,
+    'FB$vl::Locale::SystemDefault@::vl::Locale()[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::ToFullWidth@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::ToFullWidth@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::ToHalfWidth@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::ToHalfWidth@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::ToHiragana@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::ToHiragana@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::ToKatagana@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::ToKatagana@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::ToLinguisticLower@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::ToLinguisticLower@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::ToLinguisticUpper@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::ToLinguisticUpper@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::ToLower@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::ToLower@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::ToSimplifiedChinese@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::ToSimplifiedChinese@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::ToTileCase@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::ToTileCase@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::ToTraditionalChinese@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::ToTraditionalChinese@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::ToUpper@::vl::WString(::vl::WString const &)[decl0]': null,
+    'FB$vl::Locale::ToUpper@::vl::WString(::vl::WString const &)[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::UserDefault@::vl::Locale()[decl0]': null,
+    'FB$vl::Locale::UserDefault@::vl::Locale()[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::Locale::~Locale@()[decl0]': null,
+    'FB$vl::Locale::~Locale@()[impl0]': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'FB$vl::ObjectString::operator !=@bool(::vl::ObjectString<[T]> const &)[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'FB$vl::ObjectString::operator <=@bool(::vl::ObjectString<[T]> const &)[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'FB$vl::ObjectString::operator <@bool(::vl::ObjectString<[T]> const &)[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'FB$vl::ObjectString::operator ==@bool(::vl::ObjectString<[T]> const &)[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'FB$vl::ObjectString::operator >=@bool(::vl::ObjectString<[T]> const &)[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'FB$vl::ObjectString::operator >@bool(::vl::ObjectString<[T]> const &)[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::ObjectString::Empty': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[19]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[37]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[38]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[39]$vl': null,
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[40]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[42]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[43]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[44]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[45]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[46]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[49]$vl': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[57]$vl': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[60]$vl': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[7]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NI$vl::DateTime': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Locale': null,
+    'NI$vl::Locale::Normalization': null,
+    'NI$vl::Locale::localeName': null,
+    'NI$vl::Locale::operator !=@bool(::vl::Locale const &)[impl0]::value': null,
+    'NI$vl::Locale::operator <=@bool(::vl::Locale const &)[impl0]::value': null,
+    'NI$vl::Locale::operator <@bool(::vl::Locale const &)[impl0]::value': null,
+    'NI$vl::Locale::operator ==@bool(::vl::Locale const &)[impl0]::value': null,
+    'NI$vl::Locale::operator >=@bool(::vl::Locale const &)[impl0]::value': null,
+    'NI$vl::Locale::operator >@bool(::vl::Locale const &)[impl0]::value': null,
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::ObjectString::Empty': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::Pair': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

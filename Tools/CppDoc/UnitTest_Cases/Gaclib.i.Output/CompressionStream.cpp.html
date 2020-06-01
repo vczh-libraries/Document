@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CompressionStream.cpp</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;CompressionStream.h&quot;</div>
+<div class="disabled">#include &quot;Accessor.h&quot;</div>
+<div class="disabled">#include &quot;MemoryWrapperStream.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[57]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[14]$vl::stream"><div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div></div>
+	{
+		<div class="token cpp_keyword ">using</div> <div class="token cpp_keyword ">namespace</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>;
+		<div class="token cpp_keyword ">using</div> <div class="token cpp_keyword ">namespace</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw'], [], [])">lzw</div>;
+
+<div class="token cpp_comment ">/***********************************************************************
+LzwBase
+***********************************************************************/</div>
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase'], [], [])"><div class="token cpp_type">LzwBase</div></div>::<div class="def" id="FB$vl::stream::LzwBase::UpdateIndexBits@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::UpdateIndexBits@void()'], [], [])"><div class="token cpp_function">UpdateIndexBits</div></div></div>()
+		{
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::nextIndex'], [], [])"><div class="token cpp_field">nextIndex</div></div> &gt;=<div class="token cpp_number ">2</div> &amp;&amp; (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::nextIndex'], [], [])"><div class="token cpp_field">nextIndex</div></div> &amp; (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::nextIndex'], [], [])"><div class="token cpp_field">nextIndex</div></div> - <div class="token cpp_number ">1</div>)) == <div class="token cpp_number ">0</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::indexBits'], [], [])"><div class="token cpp_field">indexBits</div></div>++;
+			}
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw'], [], [])">lzw</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code'], [], [])"><div class="token cpp_type">Code</div></div>* <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase'], [], [])"><div class="token cpp_type">LzwBase</div></div>::<div class="def" id="FB$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)'], [], [])"><div class="token cpp_function">CreateCode</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw'], [], [])">lzw</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code'], [], [])"><div class="token cpp_type">Code</div></div>* <div class="def" id="NI$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::prefix"><div><div class="token cpp_argument">prefix</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div> <div class="def" id="NI$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::byte"><div><div class="token cpp_argument">byte</div></div></div>)
+		{
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::nextIndex'], [], [])"><div class="token cpp_field">nextIndex</div></div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::MaxDictionarySize'], [], [])">MaxDictionarySize</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code'], [], [])"><div class="token cpp_type">Code</div></div>* <div class="def" id="NI$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::code"><div>code</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::codeAllocator'], [], [])"><div class="token cpp_field">codeAllocator</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::PushOnlyAllocator::Create@[T] *()'], ['vl::collections::PushOnlyAllocator::Create@[T] *()'], [], [])"><div class="token cpp_function">Create</div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::code'], [], [])">code</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::byte'], [], [])"><div class="token cpp_field">byte</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::byte'], [], [])"><div class="token cpp_argument">byte</div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::code'], [], [])">code</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::code'], [], [])"><div class="token cpp_field">code</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::nextIndex'], [], [])"><div class="token cpp_field">nextIndex</div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::code'], [], [])">code</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::parent'], [], [])"><div class="token cpp_field">parent</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::prefix'], [], [])"><div class="token cpp_argument">prefix</div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::code'], [], [])">code</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::size'], [], [])"><div class="token cpp_field">size</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::prefix'], [], [])"><div class="token cpp_argument">prefix</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::size'], [], [])"><div class="token cpp_field">size</div></div> + <div class="token cpp_number ">1</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::prefix'], [], [])"><div class="token cpp_argument">prefix</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::children'], [], [])"><div class="token cpp_field">children</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ByteObjectMap::Set@void(::vl::vuint8_t, [T] *, ::vl::collections::ByteObjectMap::Allocator &)'], ['vl::collections::ByteObjectMap::Set@void(::vl::vuint8_t, [T] *, ::vl::collections::ByteObjectMap::Allocator &)'], [], [])"><div class="token cpp_function">Set</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::byte'], [], [])"><div class="token cpp_argument">byte</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::code'], [], [])">code</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::mapAllocator'], [], [])"><div class="token cpp_field">mapAllocator</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::nextIndex'], [], [])"><div class="token cpp_field">nextIndex</div></div>++;
+
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::code'], [], [])">code</div>;
+			}
+			<div class="token cpp_keyword ">else</div>
+			{
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
+			}
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase'], [], [])"><div class="token cpp_type">LzwBase</div></div>::<div class="def" id="FB$vl::stream::LzwBase::$__ctor@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::$__ctor@()'], [], [])"><div class="token cpp_function">LzwBase</div></div></div>()
+			:codeAllocator(<div class="token cpp_number ">65536</div>)
+			, mapAllocator(<div class="token cpp_number ">1048576</div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::codeAllocator'], [], [])"><div class="token cpp_field">codeAllocator</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::PushOnlyAllocator::Create@[T] *()'], ['vl::collections::PushOnlyAllocator::Create@[T] *()'], [], [])"><div class="token cpp_function">Create</div></div>();
+
+			<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwBase::$__ctor@()[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::$__ctor@()[impl0]::i'], [], [])">i</div> &lt; <div class="token cpp_number ">256</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::$__ctor@()[impl0]::i'], [], [])">i</div>++)
+			{
+				<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwBase::UpdateIndexBits@void()'], ['vl::stream::LzwBase::UpdateIndexBits@void()'], [], [])"><div class="token cpp_function">UpdateIndexBits</div></div>();
+				<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)'], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)'], [], [])"><div class="token cpp_function">CreateCode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div>, (<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::$__ctor@()[impl0]::i'], [], [])">i</div>);
+			}
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase'], [], [])"><div class="token cpp_type">LzwBase</div></div>::<div class="def" id="FB$vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::$__ctor@(bool [*] &)'], [], [])"><div class="token cpp_function">LzwBase</div></div></div>(<div class="token cpp_keyword ">bool</div> (&amp;<div class="def" id="NI$vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::existingBytes"><div><div class="token cpp_argument">existingBytes</div></div></div>)[<div class="token cpp_number ">256</div>])
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::codeAllocator'], [], [])"><div class="token cpp_field">codeAllocator</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::PushOnlyAllocator::Create@[T] *()'], ['vl::collections::PushOnlyAllocator::Create@[T] *()'], [], [])"><div class="token cpp_function">Create</div></div>();
+			<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::i'], [], [])">i</div> &lt; <div class="token cpp_number ">256</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::i'], [], [])">i</div>++)
+			{
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::existingBytes'], [], [])"><div class="token cpp_argument">existingBytes</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::i'], [], [])">i</div>])
+				{
+					<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwBase::UpdateIndexBits@void()'], ['vl::stream::LzwBase::UpdateIndexBits@void()'], [], [])"><div class="token cpp_function">UpdateIndexBits</div></div>();
+					<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)'], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)'], [], [])"><div class="token cpp_function">CreateCode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div>, (<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::i'], [], [])">i</div>);
+				}
+			}
+
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::indexBits'], [], [])"><div class="token cpp_field">indexBits</div></div> &lt; <div class="token cpp_number ">8</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::eofIndex'], [], [])"><div class="token cpp_field">eofIndex</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::nextIndex'], [], [])"><div class="token cpp_field">nextIndex</div></div>++;
+			}
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase'], [], [])"><div class="token cpp_type">LzwBase</div></div>::<div class="def" id="FB$vl::stream::LzwBase::~LzwBase@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::~LzwBase@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">LzwBase</div></div></div>()
+		{
+		}
+
+<div class="token cpp_comment ">/***********************************************************************
+LzwEncoder
+***********************************************************************/</div>
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder'], [], [])"><div class="token cpp_type">LzwEncoder</div></div>::<div class="def" id="FB$vl::stream::LzwEncoder::Flush@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Flush@void()'], [], [])"><div class="token cpp_function">Flush</div></div></div>()
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::Flush@void()[impl0]::written"><div>written</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::Flush@void()[impl0]::bufferUsedSize"><div>bufferUsedSize</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::bufferUsedBits'], [], [])"><div class="token cpp_field">bufferUsedBits</div></div> / <div class="token cpp_number ">8</div>;
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::bufferUsedBits'], [], [])"><div class="token cpp_field">bufferUsedBits</div></div> % <div class="token cpp_number ">8</div> != <div class="token cpp_number ">0</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Flush@void()[impl0]::bufferUsedSize'], [], [])">bufferUsedSize</div>++;
+			}
+			<div class="token cpp_keyword ">while</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Flush@void()[impl0]::written'], [], [])">written</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Flush@void()[impl0]::bufferUsedSize'], [], [])">bufferUsedSize</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::Flush@void()[impl0]::size"><div>size</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::stream'], [], [])"><div class="token cpp_field">stream</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::buffer'], [], [])"><div class="token cpp_field">buffer</div></div> + <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Flush@void()[impl0]::written'], [], [])">written</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Flush@void()[impl0]::bufferUsedSize'], [], [])">bufferUsedSize</div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Flush@void()[impl0]::written'], [], [])">written</div>);
+<div class="expandable"><div class="disabled">				CHECK_ERROR(size != 0, L&quot;LzwEncoder::Flush()#Failed to flush the lzw buffer.&quot;);</div>
+<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Flush@void()[impl0]::size'], [], [])">size</div> != <div class="token cpp_number ">0</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;LzwEncoder::Flush()#Failed to flush the lzw buffer.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Flush@void()[impl0]::written'], [], [])">written</div> += <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Flush@void()[impl0]::size'], [], [])">size</div>;
+			}
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::bufferUsedBits'], [], [])"><div class="token cpp_field">bufferUsedBits</div></div> = <div class="token cpp_number ">0</div>;
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div> <div class="def" id="NI$vl::stream::highMarks"><div>highMarks</div></div>[<div class="token cpp_number ">9</div>] = { <div class="token cpp_number ">0x00</div>, <div class="token cpp_number ">0x80</div>, <div class="token cpp_number ">0xC0</div>, <div class="token cpp_number ">0xE0</div>, <div class="token cpp_number ">0xF0</div>, <div class="token cpp_number ">0xF8</div>, <div class="token cpp_number ">0xFC</div>, <div class="token cpp_number ">0xFE</div>, <div class="token cpp_number ">0xFF</div> };
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div> <div class="def" id="NI$vl::stream::lowMarks"><div>lowMarks</div></div>[<div class="token cpp_number ">9</div>] = { <div class="token cpp_number ">0x00</div>, <div class="token cpp_number ">0x01</div>, <div class="token cpp_number ">0x03</div>, <div class="token cpp_number ">0x07</div>, <div class="token cpp_number ">0x0F</div>, <div class="token cpp_number ">0x1F</div>, <div class="token cpp_number ">0x3F</div>, <div class="token cpp_number ">0x7F</div>, <div class="token cpp_number ">0xFF</div> };
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder'], [], [])"><div class="token cpp_type">LzwEncoder</div></div>::<div class="def" id="FB$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">WriteNumber</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::number"><div><div class="token cpp_argument">number</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitSize"><div><div class="token cpp_argument">bitSize</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStart"><div>bitStart</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStep"><div>bitStep</div></div> = <div class="token cpp_number ">8</div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::bufferUsedBits'], [], [])"><div class="token cpp_field">bufferUsedBits</div></div> % <div class="token cpp_number ">8</div>;
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div> &gt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitSize'], [], [])"><div class="token cpp_argument">bitSize</div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitSize'], [], [])"><div class="token cpp_argument">bitSize</div></div>;
+			}
+			<div class="token cpp_keyword ">while</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStart'], [], [])">bitStart</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitSize'], [], [])"><div class="token cpp_argument">bitSize</div></div>)
+			{
+				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::bufferUsedBits'], [], [])"><div class="token cpp_field">bufferUsedBits</div></div> == <div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::BufferSize'], [], [])">BufferSize</div> * <div class="token cpp_number ">8</div>)
+				{
+					<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwEncoder::Flush@void()'], ['vl::stream::LzwEncoder::Flush@void()'], [], [])"><div class="token cpp_function">Flush</div></div>();
+				}
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::writeStart"><div>writeStart</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::bufferUsedBits'], [], [])"><div class="token cpp_field">bufferUsedBits</div></div> % <div class="token cpp_number ">8</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byteIndex"><div>byteIndex</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::bufferUsedBits'], [], [])"><div class="token cpp_field">bufferUsedBits</div></div> / <div class="token cpp_number ">8</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byte"><div>byte</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byteIndex'], [], [])">byteIndex</div>];
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byte'], [], [])">byte</div> &amp;= <div class="ref" onclick="jumpToSymbol([], ['vl::stream::highMarks'], [], [])">highMarks</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::writeStart'], [], [])">writeStart</div>];
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::content"><div>content</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div>)((<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::number'], [], [])"><div class="token cpp_argument">number</div></div> &gt;&gt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStart'], [], [])">bitStart</div>)&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lowMarks'], [], [])">lowMarks</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div>]) &lt;&lt; (<div class="token cpp_number ">8</div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::writeStart'], [], [])">writeStart</div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byte'], [], [])">byte</div> |= <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::content'], [], [])">content</div>;
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byteIndex'], [], [])">byteIndex</div>] = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byte'], [], [])">byte</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::bufferUsedBits'], [], [])"><div class="token cpp_field">bufferUsedBits</div></div> += <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div>;
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStart'], [], [])">bitStart</div> += <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::remain"><div>remain</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitSize'], [], [])"><div class="token cpp_argument">bitSize</div></div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStart'], [], [])">bitStart</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::remain'], [], [])">remain</div> &lt; <div class="token cpp_number ">8</div> ? <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::remain'], [], [])">remain</div> : <div class="token cpp_number ">8</div>;
+			}
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder'], [], [])"><div class="token cpp_type">LzwEncoder</div></div>::<div class="def" id="FB$vl::stream::LzwEncoder::$__ctor@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::$__ctor@()'], [], [])"><div class="token cpp_function">LzwEncoder</div></div></div>()
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::prefix'], [], [])"><div class="token cpp_field">prefix</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div>;
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder'], [], [])"><div class="token cpp_type">LzwEncoder</div></div>::<div class="def" id="FB$vl::stream::LzwEncoder::$__ctor@(bool [*] &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::$__ctor@(bool [*] &)'], [], [])"><div class="token cpp_function">LzwEncoder</div></div></div>(<div class="token cpp_keyword ">bool</div> (&amp;<div class="def" id="NI$vl::stream::LzwEncoder::$__ctor@(bool [*] &)[impl0]::existingBytes"><div><div class="token cpp_argument">existingBytes</div></div></div>)[<div class="token cpp_number ">256</div>])
+			:<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase'], [], [])"><div class="token cpp_type">LzwBase</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::$__ctor@(bool [*] &)[impl0]::existingBytes'], [], [])"><div class="token cpp_argument">existingBytes</div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::prefix'], [], [])"><div class="token cpp_field">prefix</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div>;
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder'], [], [])"><div class="token cpp_type">LzwEncoder</div></div>::<div class="def" id="FB$vl::stream::LzwEncoder::~LzwEncoder@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::~LzwEncoder@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">LzwEncoder</div></div></div>()
+		{
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder'], [], [])"><div class="token cpp_type">LzwEncoder</div></div>::<div class="def" id="FB$vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)'], [], [])"><div class="token cpp_function">Setup</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>* <div class="def" id="NI$vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)[impl0]::_stream"><div><div class="token cpp_argument">_stream</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::stream'], [], [])"><div class="token cpp_field">stream</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)[impl0]::_stream'], [], [])"><div class="token cpp_argument">_stream</div></div>;
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder'], [], [])"><div class="token cpp_type">LzwEncoder</div></div>::<div class="def" id="FB$vl::stream::LzwEncoder::Close@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Close@void()'], [], [])"><div class="token cpp_function">Close</div></div></div>()
+		{
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::prefix'], [], [])"><div class="token cpp_field">prefix</div></div> != <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)'], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">WriteNumber</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::prefix'], [], [])"><div class="token cpp_field">prefix</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::code'], [], [])"><div class="token cpp_field">code</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::indexBits'], [], [])"><div class="token cpp_field">indexBits</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::prefix'], [], [])"><div class="token cpp_field">prefix</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div>;
+			}
+
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::Close@void()[impl0]::remain"><div>remain</div></div> = <div class="token cpp_number ">8</div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::bufferUsedBits'], [], [])"><div class="token cpp_field">bufferUsedBits</div></div> % <div class="token cpp_number ">8</div>;
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Close@void()[impl0]::remain'], [], [])">remain</div> != <div class="token cpp_number ">8</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Close@void()[impl0]::remain'], [], [])">remain</div> &gt;= <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::indexBits'], [], [])"><div class="token cpp_field">indexBits</div></div>)
+			{
+<div class="expandable"><div class="disabled">				CHECK_ERROR(eofIndex != -1, L&quot;LzwEncoder::Close()#Internal error.&quot;);</div>
+<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::eofIndex'], [], [])"><div class="token cpp_field">eofIndex</div></div> != -<div class="token cpp_number ">1</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;LzwEncoder::Close()#Internal error.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+				<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)'], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">WriteNumber</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::eofIndex'], [], [])"><div class="token cpp_field">eofIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::indexBits'], [], [])"><div class="token cpp_field">indexBits</div></div>);
+			}
+			<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwEncoder::Flush@void()'], ['vl::stream::LzwEncoder::Flush@void()'], [], [])"><div class="token cpp_function">Flush</div></div>();
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder'], [], [])"><div class="token cpp_type">LzwEncoder</div></div>::<div class="def" id="FB$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer"><div><div class="token cpp_argument">_buffer</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size"><div><div class="token cpp_argument">_size</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div>* <div class="def" id="NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::bytes"><div>bytes</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div>*)<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'], [], [])"><div class="token cpp_argument">_buffer</div></div>;
+			<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::i'], [], [])">i</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::i'], [], [])">i</div>++)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::byte"><div>byte</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::bytes'], [], [])">bytes</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::i'], [], [])">i</div>];
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code'], [], [])"><div class="token cpp_type">Code</div></div>* <div class="def" id="NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::next"><div>next</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::prefix'], [], [])"><div class="token cpp_field">prefix</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::children'], [], [])"><div class="token cpp_field">children</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)'], ['vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::byte'], [], [])">byte</div>);
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::next'], [], [])">next</div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::prefix'], [], [])"><div class="token cpp_field">prefix</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::next'], [], [])">next</div>;
+				}
+				<div class="token cpp_keyword ">else</div>
+				{
+					<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)'], ['vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">WriteNumber</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::prefix'], [], [])"><div class="token cpp_field">prefix</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::code'], [], [])"><div class="token cpp_field">code</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::indexBits'], [], [])"><div class="token cpp_field">indexBits</div></div>);
+
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::nextIndex'], [], [])"><div class="token cpp_field">nextIndex</div></div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::MaxDictionarySize'], [], [])">MaxDictionarySize</div>)
+					{
+						<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwBase::UpdateIndexBits@void()'], ['vl::stream::LzwBase::UpdateIndexBits@void()'], [], [])"><div class="token cpp_function">UpdateIndexBits</div></div>();
+						<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)'], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)'], [], [])"><div class="token cpp_function">CreateCode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::prefix'], [], [])"><div class="token cpp_field">prefix</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::byte'], [], [])">byte</div>);
+					}
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::prefix'], [], [])"><div class="token cpp_field">prefix</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::children'], [], [])"><div class="token cpp_field">children</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)'], ['vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::byte'], [], [])">byte</div>);
+				}
+			}
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>;
+		}
+
+<div class="token cpp_comment ">/***********************************************************************
+LzwDecoder
+***********************************************************************/</div>
+
+		<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder'], [], [])"><div class="token cpp_type">LzwDecoder</div></div>::<div class="def" id="FB$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)'], [], [])"><div class="token cpp_function">ReadNumber</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::number"><div><div class="token cpp_argument">number</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitSize"><div><div class="token cpp_argument">bitSize</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::number'], [], [])"><div class="token cpp_argument">number</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferSize'], [], [])"><div class="token cpp_field">inputBufferSize</div></div> == -<div class="token cpp_number ">1</div>)
+			{
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+			}
+
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remainBits"><div>remainBits</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferSize'], [], [])"><div class="token cpp_field">inputBufferSize</div></div> * <div class="token cpp_number ">8</div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferUsedBits'], [], [])"><div class="token cpp_field">inputBufferUsedBits</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::writtenBits"><div>writtenBits</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep"><div>bitStep</div></div> = <div class="token cpp_number ">8</div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferUsedBits'], [], [])"><div class="token cpp_field">inputBufferUsedBits</div></div> % <div class="token cpp_number ">8</div>;
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div> &gt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitSize'], [], [])"><div class="token cpp_argument">bitSize</div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitSize'], [], [])"><div class="token cpp_argument">bitSize</div></div>;
+			}
+			<div class="token cpp_keyword ">while</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::writtenBits'], [], [])">writtenBits</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitSize'], [], [])"><div class="token cpp_argument">bitSize</div></div>)
+			{
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remainBits'], [], [])">remainBits</div> == <div class="token cpp_number ">0</div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferSize'], [], [])"><div class="token cpp_field">inputBufferSize</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::stream'], [], [])"><div class="token cpp_field">stream</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Read</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBuffer'], [], [])"><div class="token cpp_field">inputBuffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::BufferSize'], [], [])">BufferSize</div>);
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferSize'], [], [])"><div class="token cpp_field">inputBufferSize</div></div> == <div class="token cpp_number ">0</div>)
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferSize'], [], [])"><div class="token cpp_field">inputBufferSize</div></div> = -<div class="token cpp_number ">1</div>;
+						<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+					}
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remainBits'], [], [])">remainBits</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferSize'], [], [])"><div class="token cpp_field">inputBufferSize</div></div> * <div class="token cpp_number ">8</div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferUsedBits'], [], [])"><div class="token cpp_field">inputBufferUsedBits</div></div> = <div class="token cpp_number ">0</div>;
+				}
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::byte"><div>byte</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBuffer'], [], [])"><div class="token cpp_field">inputBuffer</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferUsedBits'], [], [])"><div class="token cpp_field">inputBufferUsedBits</div></div> / <div class="token cpp_number ">8</div>];
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::byte'], [], [])">byte</div> &gt;&gt;= (<div class="token cpp_number ">8</div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferUsedBits'], [], [])"><div class="token cpp_field">inputBufferUsedBits</div></div> % <div class="token cpp_number ">8</div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::byte'], [], [])">byte</div> &amp;= <div class="ref" onclick="jumpToSymbol([], ['vl::stream::lowMarks'], [], [])">lowMarks</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div>];
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::number'], [], [])"><div class="token cpp_argument">number</div></div> |= <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::byte'], [], [])">byte</div> &lt;&lt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::writtenBits'], [], [])">writtenBits</div>;
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::inputBufferUsedBits'], [], [])"><div class="token cpp_field">inputBufferUsedBits</div></div> += <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remainBits'], [], [])">remainBits</div> -= <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::writtenBits'], [], [])">writtenBits</div> += <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remain"><div>remain</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitSize'], [], [])"><div class="token cpp_argument">bitSize</div></div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::writtenBits'], [], [])">writtenBits</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep'], [], [])">bitStep</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remain'], [], [])">remain</div> &lt; <div class="token cpp_number ">8</div> ? <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remain'], [], [])">remain</div> : <div class="token cpp_number ">8</div>;
+			}
+
+			<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder'], [], [])"><div class="token cpp_type">LzwDecoder</div></div>::<div class="def" id="FB$vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)'], [], [])"><div class="token cpp_function">PrepareOutputBuffer</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[impl0]::size"><div><div class="token cpp_argument">size</div></div></div>)
+		{
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBuffer'], [], [])"><div class="token cpp_field">outputBuffer</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>() &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBuffer'], [], [])"><div class="token cpp_field">outputBuffer</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Array::Resize@void(::vl::vint)'], ['vl::collections::Array::Resize@void(::vl::vint)'], [], [])"><div class="token cpp_function">Resize</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>);
+			}
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBufferSize'], [], [])"><div class="token cpp_field">outputBufferSize</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>;
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder'], [], [])"><div class="token cpp_type">LzwDecoder</div></div>::<div class="def" id="FB$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)'], [], [])"><div class="token cpp_function">ExpandCodeToOutputBuffer</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw'], [], [])">lzw</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code'], [], [])"><div class="token cpp_type">Code</div></div>* <div class="def" id="NI$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::code"><div><div class="token cpp_argument">code</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div>* <div class="def" id="NI$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::outputByte"><div>outputByte</div></div> = &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBuffer'], [], [])"><div class="token cpp_field">outputBuffer</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>] + <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::code'], [], [])"><div class="token cpp_argument">code</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::size'], [], [])"><div class="token cpp_field">size</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code'], [], [])"><div class="token cpp_type">Code</div></div>* <div class="def" id="NI$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::current"><div>current</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::code'], [], [])"><div class="token cpp_argument">code</div></div>;
+			<div class="token cpp_keyword ">while</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::current'], [], [])">current</div> != <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div>)
+			{
+				*(--<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::outputByte'], [], [])">outputByte</div>) = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::current'], [], [])">current</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['byte', 'vl::stream::lzw::Code::byte'], [], [])"><div class="token cpp_type">byte</div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::current'], [], [])">current</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::current'], [], [])">current</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::parent'], [], [])"><div class="token cpp_field">parent</div></div>;
+			}
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBufferUsedBytes'], [], [])"><div class="token cpp_field">outputBufferUsedBytes</div></div> = <div class="token cpp_number ">0</div>;
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder'], [], [])"><div class="token cpp_type">LzwDecoder</div></div>::<div class="def" id="FB$vl::stream::LzwDecoder::$__ctor@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@()'], [], [])"><div class="token cpp_function">LzwDecoder</div></div></div>()
+		{
+			<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::$__ctor@()[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@()[impl0]::i'], [], [])">i</div> &lt; <div class="token cpp_number ">256</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@()[impl0]::i'], [], [])">i</div>++)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::dictionary'], [], [])"><div class="token cpp_field">dictionary</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::children'], [], [])"><div class="token cpp_field">children</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)'], ['vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)'], [], [])"><div class="token cpp_function">Get</div></div>((<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@()[impl0]::i'], [], [])">i</div>));
+			}
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder'], [], [])"><div class="token cpp_type">LzwDecoder</div></div>::<div class="def" id="FB$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@(bool [*] &)'], [], [])"><div class="token cpp_function">LzwDecoder</div></div></div>(<div class="token cpp_keyword ">bool</div> (&amp;<div class="def" id="NI$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::existingBytes"><div><div class="token cpp_argument">existingBytes</div></div></div>)[<div class="token cpp_number ">256</div>])
+			:<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase'], [], [])"><div class="token cpp_type">LzwBase</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::existingBytes'], [], [])"><div class="token cpp_argument">existingBytes</div></div>)
+		{
+			<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::i'], [], [])">i</div> &lt; <div class="token cpp_number ">256</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::i'], [], [])">i</div>++)
+			{
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::existingBytes'], [], [])"><div class="token cpp_argument">existingBytes</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::i'], [], [])">i</div>])
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::dictionary'], [], [])"><div class="token cpp_field">dictionary</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::root'], [], [])"><div class="token cpp_field">root</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::children'], [], [])"><div class="token cpp_field">children</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)'], ['vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)'], [], [])"><div class="token cpp_function">Get</div></div>((<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::i'], [], [])">i</div>));
+				}
+			}
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::eofIndex'], [], [])"><div class="token cpp_field">eofIndex</div></div> != -<div class="token cpp_number ">1</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::dictionary'], [], [])"><div class="token cpp_field">dictionary</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="token cpp_number ">0</div>);
+			}
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder'], [], [])"><div class="token cpp_type">LzwDecoder</div></div>::<div class="def" id="FB$vl::stream::LzwDecoder::~LzwDecoder@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::~LzwDecoder@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">LzwDecoder</div></div></div>()
+		{
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder'], [], [])"><div class="token cpp_type">LzwDecoder</div></div>::<div class="def" id="FB$vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)'], [], [])"><div class="token cpp_function">Setup</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>* <div class="def" id="NI$vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)[impl0]::_stream"><div><div class="token cpp_argument">_stream</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::stream'], [], [])"><div class="token cpp_field">stream</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)[impl0]::_stream'], [], [])"><div class="token cpp_argument">_stream</div></div>;
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder'], [], [])"><div class="token cpp_type">LzwDecoder</div></div>::<div class="def" id="FB$vl::stream::LzwDecoder::Close@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Close@void()'], [], [])"><div class="token cpp_function">Close</div></div></div>()
+		{
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder'], [], [])"><div class="token cpp_type">LzwDecoder</div></div>::<div class="def" id="FB$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Read</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::_buffer"><div><div class="token cpp_argument">_buffer</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size"><div><div class="token cpp_argument">_size</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::written"><div>written</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div>* <div class="def" id="NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::bytes"><div>bytes</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div>*)<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'], [], [])"><div class="token cpp_argument">_buffer</div></div>;
+			<div class="token cpp_keyword ">while</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::written'], [], [])">written</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::expect"><div>expect</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::written'], [], [])">written</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::remain"><div>remain</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBufferSize'], [], [])"><div class="token cpp_field">outputBufferSize</div></div> - <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBufferUsedBytes'], [], [])"><div class="token cpp_field">outputBufferUsedBytes</div></div>;
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::remain'], [], [])">remain</div> == <div class="token cpp_number ">0</div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::index"><div>index</div></div> = <div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)'], ['vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)'], [], [])"><div class="token cpp_function">ReadNumber</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::index'], [], [])">index</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::indexBits'], [], [])"><div class="token cpp_field">indexBits</div></div>) || <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::index'], [], [])">index</div> == <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::eofIndex'], [], [])"><div class="token cpp_field">eofIndex</div></div>)
+					{
+						<div class="token cpp_keyword ">break</div>;
+					}
+
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code'], [], [])"><div class="token cpp_type">Code</div></div>* <div class="def" id="NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::prefix"><div>prefix</div></div> = <div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::index'], [], [])">index</div> == <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::dictionary'], [], [])"><div class="token cpp_field">dictionary</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>())
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::prefix'], [], [])">prefix</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::lastCode'], [], [])"><div class="token cpp_field">lastCode</div></div>;
+						<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)'], ['vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)'], [], [])"><div class="token cpp_function">PrepareOutputBuffer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::prefix'], [], [])">prefix</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::size'], [], [])"><div class="token cpp_field">size</div></div> + <div class="token cpp_number ">1</div>);
+						<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)'], ['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)'], [], [])"><div class="token cpp_function">ExpandCodeToOutputBuffer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::prefix'], [], [])">prefix</div>);
+						<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBuffer'], [], [])"><div class="token cpp_field">outputBuffer</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBufferSize'], [], [])"><div class="token cpp_field">outputBufferSize</div></div> - <div class="token cpp_number ">1</div>] = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBuffer'], [], [])"><div class="token cpp_field">outputBuffer</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>];
+					}
+					<div class="token cpp_keyword ">else</div>
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::prefix'], [], [])">prefix</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::dictionary'], [], [])"><div class="token cpp_field">dictionary</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::index'], [], [])">index</div>];
+						<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)'], ['vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)'], [], [])"><div class="token cpp_function">PrepareOutputBuffer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::prefix'], [], [])">prefix</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code::size'], [], [])"><div class="token cpp_field">size</div></div>);
+						<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)'], ['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)'], [], [])"><div class="token cpp_function">ExpandCodeToOutputBuffer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::prefix'], [], [])">prefix</div>);
+					}
+					
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::nextIndex'], [], [])"><div class="token cpp_field">nextIndex</div></div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::MaxDictionarySize'], [], [])">MaxDictionarySize</div>)
+					{
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::lastCode'], [], [])"><div class="token cpp_field">lastCode</div></div>)
+						{
+							<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::dictionary'], [], [])"><div class="token cpp_field">dictionary</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)'], ['vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)'], [], [])"><div class="token cpp_function">CreateCode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::lastCode'], [], [])"><div class="token cpp_field">lastCode</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBuffer'], [], [])"><div class="token cpp_field">outputBuffer</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>]));
+						}
+						<div class="ref" onclick="jumpToSymbol(['vl::stream::LzwBase::UpdateIndexBits@void()'], ['vl::stream::LzwBase::UpdateIndexBits@void()'], [], [])"><div class="token cpp_function">UpdateIndexBits</div></div>();
+					}
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::lastCode'], [], [])"><div class="token cpp_field">lastCode</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::dictionary'], [], [])"><div class="token cpp_field">dictionary</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::index'], [], [])">index</div>];
+				}
+				<div class="token cpp_keyword ">else</div>
+				{
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::remain'], [], [])">remain</div> &gt; <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::expect'], [], [])">expect</div>)
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::remain'], [], [])">remain</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::expect'], [], [])">expect</div>;
+					}
+					<div class="ref" onclick="jumpToSymbol(['memcpy@void *(void *, void const *, ::size_t)'], ['memcpy@void *(void *, void const *, ::size_t)'], [], [])"><div class="token cpp_function">memcpy</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::bytes'], [], [])">bytes</div> + <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::written'], [], [])">written</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBuffer'], [], [])"><div class="token cpp_field">outputBuffer</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBufferUsedBytes'], [], [])"><div class="token cpp_field">outputBufferUsedBytes</div></div>], <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::remain'], [], [])">remain</div>);
+
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::outputBufferUsedBytes'], [], [])"><div class="token cpp_field">outputBufferUsedBytes</div></div> += <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::remain'], [], [])">remain</div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::written'], [], [])">written</div> += <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::remain'], [], [])">remain</div>;
+				}
+			}
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::written'], [], [])">written</div>;
+		}
+
+<div class="token cpp_comment ">/***********************************************************************
+Helper Functions
+***********************************************************************/</div>
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)'], [], [])"><div class="token cpp_function">CopyStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream"><div><div class="token cpp_argument">inputStream</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream"><div><div class="token cpp_argument">outputStream</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize"><div>totalSize</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="token cpp_keyword ">while</div> (<div class="token cpp_keyword ">true</div>)
+			{
+				<div class="token cpp_keyword ">char</div> <div class="def" id="NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer"><div>buffer</div></div>[<div class="token cpp_number ">1024</div>];
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::copied"><div>copied</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream'], [], [])"><div class="token cpp_argument">inputStream</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Read</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer'], [], [])">buffer</div>, (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>)<div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer'], [], [])">buffer</div>));
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::copied'], [], [])">copied</div> == <div class="token cpp_number ">0</div>)
+				{
+					<div class="token cpp_keyword ">break</div>;
+				}
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize'], [], [])">totalSize</div> += <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream'], [], [])"><div class="token cpp_argument">outputStream</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer'], [], [])">buffer</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::copied'], [], [])">copied</div>);
+			}
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize'], [], [])">totalSize</div>;
+		}
+
+		<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::CompressionFragmentSize"><div>CompressionFragmentSize</div></div> = <div class="token cpp_number ">1048576</div>;
+
+		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)'], [], [])"><div class="token cpp_function">CompressStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream"><div><div class="token cpp_argument">inputStream</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream"><div><div class="token cpp_argument">outputStream</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="token cpp_keyword ">char</div>&gt; <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer"><div>buffer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressionFragmentSize'], [], [])">CompressionFragmentSize</div>);
+			<div class="token cpp_keyword ">while</div> (<div class="token cpp_keyword ">true</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::size"><div>size</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream'], [], [])"><div class="token cpp_argument">inputStream</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Read</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer'], [], [])">buffer</div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>], <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer'], [], [])">buffer</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>());
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::size'], [], [])">size</div> == <div class="token cpp_number ">0</div>) <div class="token cpp_keyword ">break</div>;
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryStream'], [], [])"><div class="token cpp_type">MemoryStream</div></div> <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream"><div>compressedStream</div></div>;
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder'], [], [])"><div class="token cpp_type">LzwEncoder</div></div> <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::encoder"><div>encoder</div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::EncoderStream'], [], [])"><div class="token cpp_type">EncoderStream</div></div> <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::encoderStream"><div>encoderStream</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream'], [], [])">compressedStream</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::encoder'], [], [])">encoder</div>);
+					<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::encoderStream'], [], [])">encoderStream</div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::EncoderStream::Write@::vl::vint(void *, ::vl::vint)'], ['vl::stream::EncoderStream::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer'], [], [])">buffer</div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>], <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::size'], [], [])">size</div>);
+				}
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream'], [], [])">compressedStream</div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::MemoryStream::SeekFromBegin@void(::vl::pos_t)'], ['vl::stream::MemoryStream::SeekFromBegin@void(::vl::pos_t)'], [], [])"><div class="token cpp_function">SeekFromBegin</div></div>(<div class="token cpp_number ">0</div>);
+				{
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::vint32_t'], [], [])"><div class="token cpp_type">vint32_t</div></div> <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize"><div>bufferSize</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['vl::vint32_t'], [], [])"><div class="token cpp_type">vint32_t</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::size'], [], [])">size</div>;
+						<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream'], [], [])"><div class="token cpp_argument">outputStream</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize'], [], [])">bufferSize</div>, (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>)<div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize'], [], [])">bufferSize</div>));
+					}
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::vint32_t'], [], [])"><div class="token cpp_type">vint32_t</div></div> <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize"><div>compressedSize</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['vl::vint32_t'], [], [])"><div class="token cpp_type">vint32_t</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream'], [], [])">compressedStream</div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::MemoryStream::Size@::vl::pos_t()'], ['vl::stream::MemoryStream::Size@::vl::pos_t()'], [], [])"><div class="token cpp_function">Size</div></div>();
+						<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream'], [], [])"><div class="token cpp_argument">outputStream</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize'], [], [])">compressedSize</div>, (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>)<div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize'], [], [])">compressedSize</div>));
+					}
+					<div class="ref" onclick="jumpToSymbol(['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)'], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)'], [], [])"><div class="token cpp_function">CopyStream</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream'], [], [])">compressedStream</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream'], [], [])"><div class="token cpp_argument">outputStream</div></div>);
+				}
+			}
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)'], [], [])"><div class="token cpp_function">DecompressStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream"><div><div class="token cpp_argument">inputStream</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream"><div><div class="token cpp_argument">outputStream</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize"><div>totalSize</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalWritten"><div>totalWritten</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="token cpp_keyword ">while</div> (<div class="token cpp_keyword ">true</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint32_t'], [], [])"><div class="token cpp_type">vint32_t</div></div> <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize"><div>bufferSize</div></div> = <div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream'], [], [])"><div class="token cpp_argument">inputStream</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Read</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize'], [], [])">bufferSize</div>, (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>)<div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize'], [], [])">bufferSize</div>)) != <div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize'], [], [])">bufferSize</div>))
+				{
+					<div class="token cpp_keyword ">break</div>;
+				}
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint32_t'], [], [])"><div class="token cpp_type">vint32_t</div></div> <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize"><div>compressedSize</div></div> = <div class="token cpp_number ">0</div>;
+<div class="expandable"><div class="disabled">				CHECK_ERROR(inputStream.Read(&amp;compressedSize, (vint)sizeof(compressedSize)) == sizeof(compressedSize), L&quot;vl::stream::DecompressStream(MemoryStream&amp;, MemoryStream&amp;)#Incomplete input&quot;);</div>
+<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream'], [], [])"><div class="token cpp_argument">inputStream</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Read</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize'], [], [])">compressedSize</div>, (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>)<div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize'], [], [])">compressedSize</div>)) == <div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize'], [], [])">compressedSize</div>)))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;vl::stream::DecompressStream(MemoryStream&amp;, MemoryStream&amp;)#Incomplete input&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="token cpp_keyword ">char</div>&gt; <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer"><div>buffer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize'], [], [])">compressedSize</div>);
+<div class="expandable"><div class="disabled">				CHECK_ERROR(inputStream.Read(&amp;buffer[0], compressedSize) == compressedSize, L&quot;vl::stream::DecompressStream(MemoryStream&amp;, MemoryStream&amp;)#Incomplete input&quot;);</div>
+<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream'], [], [])"><div class="token cpp_argument">inputStream</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Read</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer'], [], [])">buffer</div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>], <div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize'], [], [])">compressedSize</div>) == <div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize'], [], [])">compressedSize</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;vl::stream::DecompressStream(MemoryStream&amp;, MemoryStream&amp;)#Incomplete input&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div> <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream"><div>compressedStream</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer'], [], [])">buffer</div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>], <div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize'], [], [])">compressedSize</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder'], [], [])"><div class="token cpp_type">LzwDecoder</div></div> <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::decoder"><div>decoder</div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecoderStream'], [], [])"><div class="token cpp_type">DecoderStream</div></div> <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::decoderStream"><div>decoderStream</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream'], [], [])">compressedStream</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::decoder'], [], [])">decoder</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalWritten'], [], [])">totalWritten</div> += <div class="ref" onclick="jumpToSymbol(['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)'], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)'], [], [])"><div class="token cpp_function">CopyStream</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::decoderStream'], [], [])">decoderStream</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream'], [], [])"><div class="token cpp_argument">outputStream</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize'], [], [])">totalSize</div> += <div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize'], [], [])">bufferSize</div>;
+			}
+<div class="expandable"><div class="disabled">			CHECK_ERROR(outputStream.Size() == totalSize, L&quot;vl::stream::DecompressStream(MemoryStream&amp;, MemoryStream&amp;)#Incomplete input&quot;);</div>
+<div class="expanded">			<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream'], [], [])"><div class="token cpp_argument">outputStream</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Size@::vl::pos_t()'], ['vl::stream::IStream::Size@::vl::pos_t()'], [], [])"><div class="token cpp_function">Size</div></div>() == <div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize'], [], [])">totalSize</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;vl::stream::DecompressStream(MemoryStream&amp;, MemoryStream&amp;)#Incomplete input&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+		}
+	}
+}
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'byte': {
+        'displayNameInHtml': '<span class="cpp_type">byte</span>',
+        'impls': [
+            'NI$byte'
+        ],
+        'decls': []
+    },
+    'memcpy@void *(void *, void const *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">memcpy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$memcpy@void *(void *, void const *, ::size_t)[decl0]'
+        ]
+    },
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl'
+        ]
+    },
+    'vl::Error': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>',
+        'impls': [
+            'NI$vl::Error'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections'
+        ]
+    },
+    'vl::collections::Array': {
+        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Array'
+        ],
+        'decls': []
+    },
+    'vl::collections::Array::Resize@void(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Resize</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::Array::Resize@void(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::Array::operator []@[T] &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::Array::operator []@[T] &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ArrayBase::Count@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Count</span>()',
+        'impls': [
+            'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)': {
+        'displayNameInHtml': '<span class="cpp_type">ByteObjectMap</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Get</span>(<span class="cpp_type">vuint8_t</span>)',
+        'impls': [
+            'FB$vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ByteObjectMap::Set@void(::vl::vuint8_t, [T] *, ::vl::collections::ByteObjectMap::Allocator &)': {
+        'displayNameInHtml': '<span class="cpp_type">ByteObjectMap</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Set</span>(<span class="cpp_type">vuint8_t</span>, <span class="cpp_type">T</span> *, <span class="cpp_type">Allocator</span> &)',
+        'impls': [
+            'FB$vl::collections::ByteObjectMap::Set@void(::vl::vuint8_t, [T] *, ::vl::collections::ByteObjectMap::Allocator &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::List::Add@::vl::vint([T] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::List::operator []@[T] &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::PushOnlyAllocator::Create@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">PushOnlyAllocator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Create</span>()',
+        'impls': [
+            'FB$vl::collections::PushOnlyAllocator::Create@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::stream': {
+        'displayNameInHtml': 'vl::stream',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::stream',
+            'NF[1]$vl::stream',
+            'NF[2]$vl::stream',
+            'NF[3]$vl::stream',
+            'NF[4]$vl::stream',
+            'NF[5]$vl::stream',
+            'NF[6]$vl::stream',
+            'NF[7]$vl::stream',
+            'NF[8]$vl::stream',
+            'NF[9]$vl::stream',
+            'NF[10]$vl::stream',
+            'NF[11]$vl::stream',
+            'NF[12]$vl::stream',
+            'NF[13]$vl::stream',
+            'NF[14]$vl::stream',
+            'NF[15]$vl::stream',
+            'NF[16]$vl::stream',
+            'NF[17]$vl::stream',
+            'NF[18]$vl::stream'
+        ]
+    },
+    'vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)': {
+        'displayNameInHtml': '<span class="cpp_function">CompressStream</span>(stream::<span class="cpp_type">IStream</span> &, stream::<span class="cpp_type">IStream</span> &)',
+        'impls': [
+            'FB$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]'
+        ]
+    },
+    'vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer': {
+        'displayNameInHtml': 'buffer',
+        'impls': [
+            'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize': {
+        'displayNameInHtml': 'bufferSize',
+        'impls': [
+            'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize': {
+        'displayNameInHtml': 'compressedSize',
+        'impls': [
+            'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream': {
+        'displayNameInHtml': 'compressedStream',
+        'impls': [
+            'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::encoder': {
+        'displayNameInHtml': 'encoder',
+        'impls': [
+            'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::encoder'
+        ],
+        'decls': []
+    },
+    'vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::encoderStream': {
+        'displayNameInHtml': 'encoderStream',
+        'impls': [
+            'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::encoderStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream': {
+        'displayNameInHtml': 'inputStream',
+        'impls': [
+            'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream': {
+        'displayNameInHtml': 'outputStream',
+        'impls': [
+            'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::size': {
+        'displayNameInHtml': 'size',
+        'impls': [
+            'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::size'
+        ],
+        'decls': []
+    },
+    'vl::stream::CompressionFragmentSize': {
+        'displayNameInHtml': 'CompressionFragmentSize',
+        'impls': [
+            'NI$vl::stream::CompressionFragmentSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyStream</span>(stream::<span class="cpp_type">IStream</span> &, stream::<span class="cpp_type">IStream</span> &)',
+        'impls': [
+            'FB$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]'
+        ]
+    },
+    'vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer': {
+        'displayNameInHtml': 'buffer',
+        'impls': [
+            'NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::copied': {
+        'displayNameInHtml': 'copied',
+        'impls': [
+            'NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::copied'
+        ],
+        'decls': []
+    },
+    'vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream': {
+        'displayNameInHtml': 'inputStream',
+        'impls': [
+            'NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream': {
+        'displayNameInHtml': 'outputStream',
+        'impls': [
+            'NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize': {
+        'displayNameInHtml': 'totalSize',
+        'impls': [
+            'NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::DecoderStream': {
+        'displayNameInHtml': '<span class="cpp_type">DecoderStream</span>',
+        'impls': [
+            'NI$vl::stream::DecoderStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)': {
+        'displayNameInHtml': '<span class="cpp_function">DecompressStream</span>(stream::<span class="cpp_type">IStream</span> &, stream::<span class="cpp_type">IStream</span> &)',
+        'impls': [
+            'FB$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]'
+        ]
+    },
+    'vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer': {
+        'displayNameInHtml': 'buffer',
+        'impls': [
+            'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize': {
+        'displayNameInHtml': 'bufferSize',
+        'impls': [
+            'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize': {
+        'displayNameInHtml': 'compressedSize',
+        'impls': [
+            'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream': {
+        'displayNameInHtml': 'compressedStream',
+        'impls': [
+            'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::decoder': {
+        'displayNameInHtml': 'decoder',
+        'impls': [
+            'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::decoder'
+        ],
+        'decls': []
+    },
+    'vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::decoderStream': {
+        'displayNameInHtml': 'decoderStream',
+        'impls': [
+            'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::decoderStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream': {
+        'displayNameInHtml': 'inputStream',
+        'impls': [
+            'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream': {
+        'displayNameInHtml': 'outputStream',
+        'impls': [
+            'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize': {
+        'displayNameInHtml': 'totalSize',
+        'impls': [
+            'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalWritten': {
+        'displayNameInHtml': 'totalWritten',
+        'impls': [
+            'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalWritten'
+        ],
+        'decls': []
+    },
+    'vl::stream::EncoderStream': {
+        'displayNameInHtml': '<span class="cpp_type">EncoderStream</span>',
+        'impls': [
+            'NI$vl::stream::EncoderStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::EncoderStream::Write@::vl::vint(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">EncoderStream</span>::<span class="cpp_function">Write</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::EncoderStream::Write@::vl::vint(void *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::EncoderStream::Write@::vl::vint(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::IStream': {
+        'displayNameInHtml': '<span class="cpp_type">IStream</span>',
+        'impls': [
+            'NI$vl::stream::IStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">IStream</span>::<span class="cpp_function">Read</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [],
+        'decls': [
+            'FB$vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::IStream::Size@::vl::pos_t()': {
+        'displayNameInHtml': '<span class="cpp_type">IStream</span>::<span class="cpp_function">Size</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::stream::IStream::Size@::vl::pos_t()[decl0]'
+        ]
+    },
+    'vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">IStream</span>::<span class="cpp_function">Write</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [],
+        'decls': [
+            'FB$vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::LzwBase': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>',
+        'impls': [
+            'NI$vl::stream::LzwBase'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::stream::LzwBase::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwBase::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::stream::LzwBase::$__ctor@()[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::stream::LzwBase::$__ctor@()[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::$__ctor@(bool [*] &)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_keyword">bool</span>( &)[<span class="cpp_keyword">(expr)</span>])',
+        'impls': [
+            'FB$vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwBase::$__ctor@(bool [*] &)[decl0]'
+        ]
+    },
+    'vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::existingBytes': {
+        'displayNameInHtml': 'existingBytes',
+        'impls': [
+            'NI$vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::existingBytes'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>::<span class="cpp_function">CreateCode</span>(lzw::<span class="cpp_type">Code</span> *, <span class="cpp_type">vuint8_t</span>)',
+        'impls': [
+            'FB$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[decl0]'
+        ]
+    },
+    'vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::byte': {
+        'displayNameInHtml': 'byte',
+        'impls': [
+            'NI$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::byte'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::code': {
+        'displayNameInHtml': 'code',
+        'impls': [
+            'NI$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::code'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::prefix': {
+        'displayNameInHtml': 'prefix',
+        'impls': [
+            'NI$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::prefix'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::UpdateIndexBits@void()': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>::<span class="cpp_function">UpdateIndexBits</span>()',
+        'impls': [
+            'FB$vl::stream::LzwBase::UpdateIndexBits@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwBase::UpdateIndexBits@void()[decl0]'
+        ]
+    },
+    'vl::stream::LzwBase::codeAllocator': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>::<span class="cpp_field">codeAllocator</span>',
+        'impls': [
+            'NI$vl::stream::LzwBase::codeAllocator'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::eofIndex': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>::<span class="cpp_field">eofIndex</span>',
+        'impls': [
+            'NI$vl::stream::LzwBase::eofIndex'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::indexBits': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>::<span class="cpp_field">indexBits</span>',
+        'impls': [
+            'NI$vl::stream::LzwBase::indexBits'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::mapAllocator': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>::<span class="cpp_field">mapAllocator</span>',
+        'impls': [
+            'NI$vl::stream::LzwBase::mapAllocator'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::nextIndex': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>::<span class="cpp_field">nextIndex</span>',
+        'impls': [
+            'NI$vl::stream::LzwBase::nextIndex'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::root': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>::<span class="cpp_field">root</span>',
+        'impls': [
+            'NI$vl::stream::LzwBase::root'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwBase::~LzwBase@()': {
+        'displayNameInHtml': '<span class="cpp_type">LzwBase</span>::<span class="cpp_function">~LzwBase</span>()',
+        'impls': [
+            'FB$vl::stream::LzwBase::~LzwBase@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwBase::~LzwBase@()[decl0]'
+        ]
+    },
+    'vl::stream::LzwDecoder': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>',
+        'impls': [
+            'NI$vl::stream::LzwDecoder'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::stream::LzwDecoder::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwDecoder::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::stream::LzwDecoder::$__ctor@()[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::$__ctor@()[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::$__ctor@(bool [*] &)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_keyword">bool</span>( &)[<span class="cpp_keyword">(expr)</span>])',
+        'impls': [
+            'FB$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[decl0]'
+        ]
+    },
+    'vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::existingBytes': {
+        'displayNameInHtml': 'existingBytes',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::existingBytes'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::Close@void()': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_function">Close</span>()',
+        'impls': [
+            'FB$vl::stream::LzwDecoder::Close@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwDecoder::Close@void()[decl0]'
+        ]
+    },
+    'vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_function">ExpandCodeToOutputBuffer</span>(lzw::<span class="cpp_type">Code</span> *)',
+        'impls': [
+            'FB$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[decl0]'
+        ]
+    },
+    'vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::code': {
+        'displayNameInHtml': 'code',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::code'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::current': {
+        'displayNameInHtml': 'current',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::current'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::outputByte': {
+        'displayNameInHtml': 'outputByte',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::outputByte'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_function">PrepareOutputBuffer</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[impl0]::size': {
+        'displayNameInHtml': 'size',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[impl0]::size'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_function">Read</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::_buffer': {
+        'displayNameInHtml': '_buffer',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size': {
+        'displayNameInHtml': '_size',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::bytes': {
+        'displayNameInHtml': 'bytes',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::bytes'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::expect': {
+        'displayNameInHtml': 'expect',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::expect'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::index': {
+        'displayNameInHtml': 'index',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::index'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::prefix': {
+        'displayNameInHtml': 'prefix',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::prefix'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::remain': {
+        'displayNameInHtml': 'remain',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::remain'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::written': {
+        'displayNameInHtml': 'written',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::written'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_function">ReadNumber</span>(<span class="cpp_type">vint</span> &, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitSize': {
+        'displayNameInHtml': 'bitSize',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep': {
+        'displayNameInHtml': 'bitStep',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::byte': {
+        'displayNameInHtml': 'byte',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::byte'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::number': {
+        'displayNameInHtml': 'number',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::number'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remain': {
+        'displayNameInHtml': 'remain',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remain'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remainBits': {
+        'displayNameInHtml': 'remainBits',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remainBits'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::writtenBits': {
+        'displayNameInHtml': 'writtenBits',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::writtenBits'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_function">Setup</span>(<span class="cpp_type">IStream</span> *)',
+        'impls': [
+            'FB$vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)[decl0]'
+        ]
+    },
+    'vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)[impl0]::_stream': {
+        'displayNameInHtml': '_stream',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)[impl0]::_stream'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::dictionary': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_field">dictionary</span>',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::dictionary'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::inputBuffer': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_field">inputBuffer</span>',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::inputBuffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::inputBufferSize': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_field">inputBufferSize</span>',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::inputBufferSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::inputBufferUsedBits': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_field">inputBufferUsedBits</span>',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::inputBufferUsedBits'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::lastCode': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_field">lastCode</span>',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::lastCode'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::outputBuffer': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_field">outputBuffer</span>',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::outputBuffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::outputBufferSize': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_field">outputBufferSize</span>',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::outputBufferSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::outputBufferUsedBytes': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_field">outputBufferUsedBytes</span>',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::outputBufferUsedBytes'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::stream': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_field">stream</span>',
+        'impls': [
+            'NI$vl::stream::LzwDecoder::stream'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwDecoder::~LzwDecoder@()': {
+        'displayNameInHtml': '<span class="cpp_type">LzwDecoder</span>::<span class="cpp_function">~LzwDecoder</span>()',
+        'impls': [
+            'FB$vl::stream::LzwDecoder::~LzwDecoder@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwDecoder::~LzwDecoder@()[decl0]'
+        ]
+    },
+    'vl::stream::LzwEncoder': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>',
+        'impls': [
+            'NI$vl::stream::LzwEncoder'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::stream::LzwEncoder::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwEncoder::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::stream::LzwEncoder::$__ctor@(bool [*] &)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_keyword">bool</span>( &)[<span class="cpp_keyword">(expr)</span>])',
+        'impls': [
+            'FB$vl::stream::LzwEncoder::$__ctor@(bool [*] &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwEncoder::$__ctor@(bool [*] &)[decl0]'
+        ]
+    },
+    'vl::stream::LzwEncoder::$__ctor@(bool [*] &)[impl0]::existingBytes': {
+        'displayNameInHtml': 'existingBytes',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::$__ctor@(bool [*] &)[impl0]::existingBytes'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::Close@void()': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_function">Close</span>()',
+        'impls': [
+            'FB$vl::stream::LzwEncoder::Close@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwEncoder::Close@void()[decl0]'
+        ]
+    },
+    'vl::stream::LzwEncoder::Close@void()[impl0]::remain': {
+        'displayNameInHtml': 'remain',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::Close@void()[impl0]::remain'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::Flush@void()': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_function">Flush</span>()',
+        'impls': [
+            'FB$vl::stream::LzwEncoder::Flush@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwEncoder::Flush@void()[decl0]'
+        ]
+    },
+    'vl::stream::LzwEncoder::Flush@void()[impl0]::bufferUsedSize': {
+        'displayNameInHtml': 'bufferUsedSize',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::Flush@void()[impl0]::bufferUsedSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::Flush@void()[impl0]::size': {
+        'displayNameInHtml': 'size',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::Flush@void()[impl0]::size'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::Flush@void()[impl0]::written': {
+        'displayNameInHtml': 'written',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::Flush@void()[impl0]::written'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_function">Setup</span>(<span class="cpp_type">IStream</span> *)',
+        'impls': [
+            'FB$vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)[decl0]'
+        ]
+    },
+    'vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)[impl0]::_stream': {
+        'displayNameInHtml': '_stream',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)[impl0]::_stream'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_function">Write</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer': {
+        'displayNameInHtml': '_buffer',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size': {
+        'displayNameInHtml': '_size',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::byte': {
+        'displayNameInHtml': 'byte',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::byte'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::bytes': {
+        'displayNameInHtml': 'bytes',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::bytes'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::next': {
+        'displayNameInHtml': 'next',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::next'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_function">WriteNumber</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitSize': {
+        'displayNameInHtml': 'bitSize',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStart': {
+        'displayNameInHtml': 'bitStart',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStart'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStep': {
+        'displayNameInHtml': 'bitStep',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStep'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byte': {
+        'displayNameInHtml': 'byte',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byte'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byteIndex': {
+        'displayNameInHtml': 'byteIndex',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byteIndex'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::content': {
+        'displayNameInHtml': 'content',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::content'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::number': {
+        'displayNameInHtml': 'number',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::number'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::remain': {
+        'displayNameInHtml': 'remain',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::remain'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::writeStart': {
+        'displayNameInHtml': 'writeStart',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::writeStart'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::buffer': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_field">buffer</span>',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::buffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::bufferUsedBits': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_field">bufferUsedBits</span>',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::bufferUsedBits'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::prefix': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_field">prefix</span>',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::prefix'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::stream': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_field">stream</span>',
+        'impls': [
+            'NI$vl::stream::LzwEncoder::stream'
+        ],
+        'decls': []
+    },
+    'vl::stream::LzwEncoder::~LzwEncoder@()': {
+        'displayNameInHtml': '<span class="cpp_type">LzwEncoder</span>::<span class="cpp_function">~LzwEncoder</span>()',
+        'impls': [
+            'FB$vl::stream::LzwEncoder::~LzwEncoder@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::LzwEncoder::~LzwEncoder@()[decl0]'
+        ]
+    },
+    'vl::stream::MemoryStream': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryStream</span>',
+        'impls': [
+            'NI$vl::stream::MemoryStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryStream::SeekFromBegin@void(::vl::pos_t)': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryStream</span>::<span class="cpp_function">SeekFromBegin</span>(<span class="cpp_type">pos_t</span>)',
+        'impls': [
+            'FB$vl::stream::MemoryStream::SeekFromBegin@void(::vl::pos_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryStream::SeekFromBegin@void(::vl::pos_t)[decl0]'
+        ]
+    },
+    'vl::stream::MemoryStream::Size@::vl::pos_t()': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryStream</span>::<span class="cpp_function">Size</span>()',
+        'impls': [
+            'FB$vl::stream::MemoryStream::Size@::vl::pos_t()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryStream::Size@::vl::pos_t()[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::highMarks': {
+        'displayNameInHtml': 'highMarks',
+        'impls': [
+            'NI$vl::stream::highMarks'
+        ],
+        'decls': []
+    },
+    'vl::stream::lowMarks': {
+        'displayNameInHtml': 'lowMarks',
+        'impls': [
+            'NI$vl::stream::lowMarks'
+        ],
+        'decls': []
+    },
+    'vl::stream::lzw': {
+        'displayNameInHtml': 'vl::stream::lzw',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::stream::lzw'
+        ]
+    },
+    'vl::stream::lzw::BufferSize': {
+        'displayNameInHtml': 'BufferSize',
+        'impls': [
+            'NI$vl::stream::lzw::BufferSize'
+        ],
+        'decls': []
+    },
+    'vl::stream::lzw::Code': {
+        'displayNameInHtml': '<span class="cpp_type">Code</span>',
+        'impls': [
+            'NI$vl::stream::lzw::Code'
+        ],
+        'decls': []
+    },
+    'vl::stream::lzw::Code::byte': {
+        'displayNameInHtml': '<span class="cpp_type">Code</span>::<span class="cpp_field">byte</span>',
+        'impls': [
+            'NI$vl::stream::lzw::Code::byte'
+        ],
+        'decls': []
+    },
+    'vl::stream::lzw::Code::children': {
+        'displayNameInHtml': '<span class="cpp_type">Code</span>::<span class="cpp_field">children</span>',
+        'impls': [
+            'NI$vl::stream::lzw::Code::children'
+        ],
+        'decls': []
+    },
+    'vl::stream::lzw::Code::code': {
+        'displayNameInHtml': '<span class="cpp_type">Code</span>::<span class="cpp_field">code</span>',
+        'impls': [
+            'NI$vl::stream::lzw::Code::code'
+        ],
+        'decls': []
+    },
+    'vl::stream::lzw::Code::parent': {
+        'displayNameInHtml': '<span class="cpp_type">Code</span>::<span class="cpp_field">parent</span>',
+        'impls': [
+            'NI$vl::stream::lzw::Code::parent'
+        ],
+        'decls': []
+    },
+    'vl::stream::lzw::Code::size': {
+        'displayNameInHtml': '<span class="cpp_type">Code</span>::<span class="cpp_field">size</span>',
+        'impls': [
+            'NI$vl::stream::lzw::Code::size'
+        ],
+        'decls': []
+    },
+    'vl::stream::lzw::MaxDictionarySize': {
+        'displayNameInHtml': 'MaxDictionarySize',
+        'impls': [
+            'NI$vl::stream::lzw::MaxDictionarySize'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    },
+    'vl::vint32_t': {
+        'displayNameInHtml': '<span class="cpp_type">vint32_t</span>',
+        'impls': [
+            'NI$vl::vint32_t'
+        ],
+        'decls': []
+    },
+    'vl::vuint8_t': {
+        'displayNameInHtml': '<span class="cpp_type">vuint8_t</span>',
+        'impls': [
+            'NI$vl::vuint8_t'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$memcpy@void *(void *, void const *, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$vl::collections::Array::Resize@void(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::Array::operator []@[T] &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ByteObjectMap::Set@void(::vl::vuint8_t, [T] *, ::vl::collections::ByteObjectMap::Allocator &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::PushOnlyAllocator::Create@[T] *()[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]': null,
+    'FB$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]': null,
+    'FB$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]': null,
+    'FB$vl::stream::EncoderStream::Write@::vl::vint(void *, ::vl::vint)[decl0]': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'FB$vl::stream::EncoderStream::Write@::vl::vint(void *, ::vl::vint)[impl0]': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'FB$vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)[decl0]': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'FB$vl::stream::IStream::Size@::vl::pos_t()[decl0]': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'FB$vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)[decl0]': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'FB$vl::stream::LzwBase::$__ctor@()[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwBase::$__ctor@()[impl0]': null,
+    'FB$vl::stream::LzwBase::$__ctor@(bool [*] &)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]': null,
+    'FB$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]': null,
+    'FB$vl::stream::LzwBase::UpdateIndexBits@void()[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwBase::UpdateIndexBits@void()[impl0]': null,
+    'FB$vl::stream::LzwBase::~LzwBase@()[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwBase::~LzwBase@()[impl0]': null,
+    'FB$vl::stream::LzwDecoder::$__ctor@()[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwDecoder::$__ctor@()[impl0]': null,
+    'FB$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]': null,
+    'FB$vl::stream::LzwDecoder::Close@void()[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwDecoder::Close@void()[impl0]': null,
+    'FB$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]': null,
+    'FB$vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[impl0]': null,
+    'FB$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]': null,
+    'FB$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]': null,
+    'FB$vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)[impl0]': null,
+    'FB$vl::stream::LzwDecoder::~LzwDecoder@()[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwDecoder::~LzwDecoder@()[impl0]': null,
+    'FB$vl::stream::LzwEncoder::$__ctor@()[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwEncoder::$__ctor@()[impl0]': null,
+    'FB$vl::stream::LzwEncoder::$__ctor@(bool [*] &)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwEncoder::$__ctor@(bool [*] &)[impl0]': null,
+    'FB$vl::stream::LzwEncoder::Close@void()[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwEncoder::Close@void()[impl0]': null,
+    'FB$vl::stream::LzwEncoder::Flush@void()[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwEncoder::Flush@void()[impl0]': null,
+    'FB$vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)[impl0]': null,
+    'FB$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]': null,
+    'FB$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]': null,
+    'FB$vl::stream::LzwEncoder::~LzwEncoder@()[decl0]': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'FB$vl::stream::LzwEncoder::~LzwEncoder@()[impl0]': null,
+    'FB$vl::stream::MemoryStream::SeekFromBegin@void(::vl::pos_t)[decl0]': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'FB$vl::stream::MemoryStream::SeekFromBegin@void(::vl::pos_t)[impl0]': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'FB$vl::stream::MemoryStream::Size@::vl::pos_t()[decl0]': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'FB$vl::stream::MemoryStream::Size@::vl::pos_t()[impl0]': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::stream': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[0]$vl::stream::lzw': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[10]$vl::stream': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[11]$vl::stream': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[12]$vl::stream': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[13]$vl::stream': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[14]$vl::stream': null,
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl::stream': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[16]$vl::stream': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[17]$vl::stream': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[18]$vl::stream': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[19]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::stream': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::stream': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[37]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[38]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[39]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[3]$vl::stream': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[40]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[42]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[43]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[44]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[45]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[46]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[49]$vl': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[4]$vl::stream': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[57]$vl': null,
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[5]$vl::stream': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[60]$vl': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[6]$vl::stream': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[7]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[7]$vl::stream': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[8]$vl::stream': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[9]$vl::stream': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NI$byte': { 'htmlFileName': 'rpcndr.h', 'displayName': 'rpcndr.h' },
+    'NI$vl::Error': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::collections::Array': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer': null,
+    'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize': null,
+    'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize': null,
+    'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream': null,
+    'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::encoder': null,
+    'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::encoderStream': null,
+    'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream': null,
+    'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream': null,
+    'NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::size': null,
+    'NI$vl::stream::CompressionFragmentSize': null,
+    'NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer': null,
+    'NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::copied': null,
+    'NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream': null,
+    'NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream': null,
+    'NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize': null,
+    'NI$vl::stream::DecoderStream': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::buffer': null,
+    'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::bufferSize': null,
+    'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedSize': null,
+    'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::compressedStream': null,
+    'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::decoder': null,
+    'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::decoderStream': null,
+    'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::inputStream': null,
+    'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::outputStream': null,
+    'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalSize': null,
+    'NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[impl0]::totalWritten': null,
+    'NI$vl::stream::EncoderStream': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NI$vl::stream::IStream': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NI$vl::stream::LzwBase': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwBase::$__ctor@()[impl0]::i': null,
+    'NI$vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::existingBytes': null,
+    'NI$vl::stream::LzwBase::$__ctor@(bool [*] &)[impl0]::i': null,
+    'NI$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::byte': null,
+    'NI$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::code': null,
+    'NI$vl::stream::LzwBase::CreateCode@::vl::stream::lzw::Code *(::vl::stream::lzw::Code *, ::vl::vuint8_t)[impl0]::prefix': null,
+    'NI$vl::stream::LzwBase::codeAllocator': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwBase::eofIndex': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwBase::indexBits': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwBase::mapAllocator': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwBase::nextIndex': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwBase::root': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwDecoder': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwDecoder::$__ctor@()[impl0]::i': null,
+    'NI$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::existingBytes': null,
+    'NI$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[impl0]::i': null,
+    'NI$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::code': null,
+    'NI$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::current': null,
+    'NI$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[impl0]::outputByte': null,
+    'NI$vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[impl0]::size': null,
+    'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::_buffer': null,
+    'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size': null,
+    'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::bytes': null,
+    'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::expect': null,
+    'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::index': null,
+    'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::prefix': null,
+    'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::remain': null,
+    'NI$vl::stream::LzwDecoder::Read@::vl::vint(void *, ::vl::vint)[impl0]::written': null,
+    'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitSize': null,
+    'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::bitStep': null,
+    'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::byte': null,
+    'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::number': null,
+    'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remain': null,
+    'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::remainBits': null,
+    'NI$vl::stream::LzwDecoder::ReadNumber@bool(::vl::vint &, ::vl::vint)[impl0]::writtenBits': null,
+    'NI$vl::stream::LzwDecoder::Setup@void(::vl::stream::IStream *)[impl0]::_stream': null,
+    'NI$vl::stream::LzwDecoder::dictionary': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwDecoder::inputBuffer': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwDecoder::inputBufferSize': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwDecoder::inputBufferUsedBits': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwDecoder::lastCode': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwDecoder::outputBuffer': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwDecoder::outputBufferSize': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwDecoder::outputBufferUsedBytes': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwDecoder::stream': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwEncoder': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwEncoder::$__ctor@(bool [*] &)[impl0]::existingBytes': null,
+    'NI$vl::stream::LzwEncoder::Close@void()[impl0]::remain': null,
+    'NI$vl::stream::LzwEncoder::Flush@void()[impl0]::bufferUsedSize': null,
+    'NI$vl::stream::LzwEncoder::Flush@void()[impl0]::size': null,
+    'NI$vl::stream::LzwEncoder::Flush@void()[impl0]::written': null,
+    'NI$vl::stream::LzwEncoder::Setup@void(::vl::stream::IStream *)[impl0]::_stream': null,
+    'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer': null,
+    'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size': null,
+    'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::byte': null,
+    'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::bytes': null,
+    'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::i': null,
+    'NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[impl0]::next': null,
+    'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitSize': null,
+    'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStart': null,
+    'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::bitStep': null,
+    'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byte': null,
+    'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::byteIndex': null,
+    'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::content': null,
+    'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::number': null,
+    'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::remain': null,
+    'NI$vl::stream::LzwEncoder::WriteNumber@void(::vl::vint, ::vl::vint)[impl0]::writeStart': null,
+    'NI$vl::stream::LzwEncoder::buffer': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwEncoder::bufferUsedBits': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwEncoder::prefix': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::LzwEncoder::stream': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::MemoryStream': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NI$vl::stream::MemoryWrapperStream': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NI$vl::stream::highMarks': null,
+    'NI$vl::stream::lowMarks': null,
+    'NI$vl::stream::lzw::BufferSize': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::lzw::Code': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::lzw::Code::byte': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::lzw::Code::children': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::lzw::Code::code': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::lzw::Code::parent': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::lzw::Code::size': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::stream::lzw::MaxDictionarySize': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::vint32_t': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::vuint8_t': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

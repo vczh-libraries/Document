@@ -197,10 +197,10 @@ Open http://127.0.0.1:8080/Gaclib.i.Output/FileIndex.html
 int main()
 {
 	List<File> preprocessedFiles;
-	preprocessedFiles.Add(File(L"../UnitTest_Cases/Debug.i"));
-	preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
-	preprocessedFiles.Add(File(L"../UnitTest_Cases/TypePrinter.i"));
-	preprocessedFiles.Add(File(L"../UnitTest_Cases/STL.i"));
+	//preprocessedFiles.Add(File(L"../UnitTest_Cases/Debug.i"));
+	//preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
+	//preprocessedFiles.Add(File(L"../UnitTest_Cases/TypePrinter.i"));
+	//preprocessedFiles.Add(File(L"../UnitTest_Cases/STL.i"));
 	preprocessedFiles.Add(File(L"../UnitTest_Cases/Gaclib.i"));
 	
 	Console::WriteLine(L"Cleaning ...");

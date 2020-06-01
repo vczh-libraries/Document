@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BroadcastStream.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Stream::BroadcastStream
+
+Interfaces:
+	BroadcastStream					: Stream that copy the written data to multiple streams
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_STREAM_BROADCASTSTREAM</div>
+<div class="disabled">#define VCZH_STREAM_BROADCASTSTREAM</div>
+
+<div class="disabled">#include &quot;Interfaces.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[44]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[6]$vl::stream"><div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div></div>
+	{
+		<div class="token cpp_comment ">/// &lt;summary&gt;A writable stream that copy written content to multiple target streams.&lt;/summary&gt;</div>
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::BroadcastStream"><div><div class="token cpp_type">BroadcastStream</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>
+		{
+			<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>*&gt;		<div class="def" id="NI$vl::stream::BroadcastStream::StreamList"><div><div class="token cpp_type">StreamList</div></div></div>;
+		<div class="token cpp_keyword ">protected</div>:
+			<div class="token cpp_keyword ">bool</div>					<div class="def" id="NI$vl::stream::BroadcastStream::closed"><div><div class="token cpp_field">closed</div></div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div>					<div class="def" id="NI$vl::stream::BroadcastStream::position"><div><div class="token cpp_field">position</div></div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::StreamList'], [], [])"><div class="token cpp_type">StreamList</div></div>				<div class="def" id="NI$vl::stream::BroadcastStream::streams"><div><div class="token cpp_field">streams</div></div></div>;
+		<div class="token cpp_keyword ">public</div>:
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a strema.&lt;/summary&gt;</div>
+			<div class="def" id="FB$vl::stream::BroadcastStream::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::$__ctor@()'], [], [])"><div class="token cpp_function">BroadcastStream</div></div></div>();
+			<div class="def" id="FB$vl::stream::BroadcastStream::~BroadcastStream@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::~BroadcastStream@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">BroadcastStream</div></div></div>();
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the list of target streams. You can add streams to this list, or remove streams from this list.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The list of target streams.&lt;/returns&gt;</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::StreamList'], [], [])"><div class="token cpp_type">StreamList</div></div>&amp;				<div class="def" id="FB$vl::stream::BroadcastStream::Targets@::vl::stream::BroadcastStream::StreamList &()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Targets@::vl::stream::BroadcastStream::StreamList &()'], [], [])"><div class="token cpp_function">Targets</div></div></div>();
+			<div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::BroadcastStream::CanRead@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::CanRead@bool()'], [], [])"><div class="token cpp_function">CanRead</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::BroadcastStream::CanWrite@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::CanWrite@bool()'], [], [])"><div class="token cpp_function">CanWrite</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::BroadcastStream::CanSeek@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::CanSeek@bool()'], [], [])"><div class="token cpp_function">CanSeek</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::BroadcastStream::CanPeek@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::CanPeek@bool()'], [], [])"><div class="token cpp_function">CanPeek</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::BroadcastStream::IsLimited@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::IsLimited@bool()'], [], [])"><div class="token cpp_function">IsLimited</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::BroadcastStream::IsAvailable@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::IsAvailable@bool()'], [], [])"><div class="token cpp_function">IsAvailable</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::BroadcastStream::Close@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Close@void()'], [], [])"><div class="token cpp_function">Close</div></div></div>();
+			<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div>					<div class="def" id="FB$vl::stream::BroadcastStream::Position@::vl::pos_t()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Position@::vl::pos_t()'], [], [])"><div class="token cpp_function">Position</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div>					<div class="def" id="FB$vl::stream::BroadcastStream::Size@::vl::pos_t()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Size@::vl::pos_t()'], [], [])"><div class="token cpp_function">Size</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::BroadcastStream::Seek@void(::vl::pos_t)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Seek@void(::vl::pos_t)'], [], [])"><div class="token cpp_function">Seek</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div> <div class="def" id="NI$vl::stream::BroadcastStream::Seek@void(::vl::pos_t)[decl0]::_size"><div>_size</div></div>);
+			<div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::BroadcastStream::SeekFromBegin@void(::vl::pos_t)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::SeekFromBegin@void(::vl::pos_t)'], [], [])"><div class="token cpp_function">SeekFromBegin</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div> <div class="def" id="NI$vl::stream::BroadcastStream::SeekFromBegin@void(::vl::pos_t)[decl0]::_size"><div>_size</div></div>);
+			<div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::BroadcastStream::SeekFromEnd@void(::vl::pos_t)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::SeekFromEnd@void(::vl::pos_t)'], [], [])"><div class="token cpp_function">SeekFromEnd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div> <div class="def" id="NI$vl::stream::BroadcastStream::SeekFromEnd@void(::vl::pos_t)[decl0]::_size"><div>_size</div></div>);
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::stream::BroadcastStream::Read@::vl::vint(void *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Read@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Read</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::BroadcastStream::Read@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::BroadcastStream::Read@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>);
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>);
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::stream::BroadcastStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Peek@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Peek</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::BroadcastStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::BroadcastStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>);
+		};
+	}
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl'
+        ]
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections'
+        ]
+    },
+    'vl::collections::List': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::List'
+        ],
+        'decls': []
+    },
+    'vl::pos_t': {
+        'displayNameInHtml': '<span class="cpp_type">pos_t</span>',
+        'impls': [
+            'NI$vl::pos_t'
+        ],
+        'decls': []
+    },
+    'vl::stream': {
+        'displayNameInHtml': 'vl::stream',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::stream',
+            'NF[1]$vl::stream',
+            'NF[2]$vl::stream',
+            'NF[3]$vl::stream',
+            'NF[4]$vl::stream',
+            'NF[5]$vl::stream',
+            'NF[6]$vl::stream',
+            'NF[7]$vl::stream',
+            'NF[8]$vl::stream',
+            'NF[9]$vl::stream',
+            'NF[10]$vl::stream',
+            'NF[11]$vl::stream',
+            'NF[12]$vl::stream',
+            'NF[13]$vl::stream',
+            'NF[14]$vl::stream',
+            'NF[15]$vl::stream',
+            'NF[16]$vl::stream',
+            'NF[17]$vl::stream',
+            'NF[18]$vl::stream'
+        ]
+    },
+    'vl::stream::BroadcastStream::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::CanPeek@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">CanPeek</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::CanPeek@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::CanPeek@bool()[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::CanRead@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">CanRead</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::CanRead@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::CanRead@bool()[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::CanSeek@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">CanSeek</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::CanSeek@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::CanSeek@bool()[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::CanWrite@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">CanWrite</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::CanWrite@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::CanWrite@bool()[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::Close@void()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">Close</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::Close@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::Close@void()[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::IsAvailable@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">IsAvailable</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::IsAvailable@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::IsAvailable@bool()[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::IsLimited@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">IsLimited</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::IsLimited@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::IsLimited@bool()[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::Peek@::vl::vint(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">Peek</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::Position@::vl::pos_t()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">Position</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::Position@::vl::pos_t()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::Position@::vl::pos_t()[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::Read@::vl::vint(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">Read</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::Read@::vl::vint(void *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::Read@::vl::vint(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::Seek@void(::vl::pos_t)': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">Seek</span>(<span class="cpp_type">pos_t</span>)',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::Seek@void(::vl::pos_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::Seek@void(::vl::pos_t)[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::SeekFromBegin@void(::vl::pos_t)': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">SeekFromBegin</span>(<span class="cpp_type">pos_t</span>)',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::SeekFromBegin@void(::vl::pos_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::SeekFromBegin@void(::vl::pos_t)[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::SeekFromEnd@void(::vl::pos_t)': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">SeekFromEnd</span>(<span class="cpp_type">pos_t</span>)',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::SeekFromEnd@void(::vl::pos_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::SeekFromEnd@void(::vl::pos_t)[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::Size@::vl::pos_t()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">Size</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::Size@::vl::pos_t()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::Size@::vl::pos_t()[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::StreamList': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_type">StreamList</span>',
+        'impls': [
+            'NI$vl::stream::BroadcastStream::StreamList'
+        ],
+        'decls': []
+    },
+    'vl::stream::BroadcastStream::Targets@::vl::stream::BroadcastStream::StreamList &()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">Targets</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::Targets@::vl::stream::BroadcastStream::StreamList &()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::Targets@::vl::stream::BroadcastStream::StreamList &()[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">Write</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::BroadcastStream::~BroadcastStream@()': {
+        'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_function">~BroadcastStream</span>()',
+        'impls': [
+            'FB$vl::stream::BroadcastStream::~BroadcastStream@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::BroadcastStream::~BroadcastStream@()[decl0]'
+        ]
+    },
+    'vl::stream::IStream': {
+        'displayNameInHtml': '<span class="cpp_type">IStream</span>',
+        'impls': [
+            'NI$vl::stream::IStream'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::stream::BroadcastStream::$__ctor@()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::$__ctor@()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::CanPeek@bool()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::CanPeek@bool()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::CanRead@bool()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::CanRead@bool()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::CanSeek@bool()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::CanSeek@bool()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::CanWrite@bool()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::CanWrite@bool()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::Close@void()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::Close@void()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::IsAvailable@bool()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::IsAvailable@bool()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::IsLimited@bool()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::IsLimited@bool()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]': null,
+    'FB$vl::stream::BroadcastStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::Position@::vl::pos_t()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::Position@::vl::pos_t()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::Read@::vl::vint(void *, ::vl::vint)[decl0]': null,
+    'FB$vl::stream::BroadcastStream::Read@::vl::vint(void *, ::vl::vint)[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::Seek@void(::vl::pos_t)[decl0]': null,
+    'FB$vl::stream::BroadcastStream::Seek@void(::vl::pos_t)[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::SeekFromBegin@void(::vl::pos_t)[decl0]': null,
+    'FB$vl::stream::BroadcastStream::SeekFromBegin@void(::vl::pos_t)[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::SeekFromEnd@void(::vl::pos_t)[decl0]': null,
+    'FB$vl::stream::BroadcastStream::SeekFromEnd@void(::vl::pos_t)[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::Size@::vl::pos_t()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::Size@::vl::pos_t()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::Targets@::vl::stream::BroadcastStream::StreamList &()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::Targets@::vl::stream::BroadcastStream::StreamList &()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[decl0]': null,
+    'FB$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'FB$vl::stream::BroadcastStream::~BroadcastStream@()[decl0]': null,
+    'FB$vl::stream::BroadcastStream::~BroadcastStream@()[impl0]': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::stream': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[10]$vl::stream': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[11]$vl::stream': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[12]$vl::stream': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[13]$vl::stream': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[14]$vl::stream': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl::stream': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[16]$vl::stream': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[17]$vl::stream': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[18]$vl::stream': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[19]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::stream': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::stream': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[37]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[38]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[39]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[3]$vl::stream': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[40]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[42]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[43]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[44]$vl': null,
+    'NF[45]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[46]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[49]$vl': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[4]$vl::stream': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[57]$vl': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[5]$vl::stream': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[60]$vl': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[6]$vl::stream': null,
+    'NF[7]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[7]$vl::stream': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[8]$vl::stream': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[9]$vl::stream': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::pos_t': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::stream::BroadcastStream::StreamList': null,
+    'NI$vl::stream::IStream': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

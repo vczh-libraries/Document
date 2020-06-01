@@ -24,7 +24,7 @@ namespace infer_function_type
 			// if this argument is not inferred, use the result
 			taContext.SetValueByKey(pattern, type);
 		}
-		else
+		else if (inferred != type)
 		{
 			switch (TemplateArgumentPatternToSymbol(pattern)->kind)
 			{

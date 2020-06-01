@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FileSystem.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Framework::FileSystem
+
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_FILESYSTEM</div>
+<div class="disabled">#define VCZH_FILESYSTEM</div>
+
+<div class="disabled">#include &quot;../Import/Vlpp.h&quot;</div>
+<div class="disabled">#include &quot;Stream/CharFormat.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[38]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::filesystem"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem'], [], [])">filesystem</div></div>
+	{
+		<div class="token cpp_comment ">/// &lt;summary&gt;A type representing a file path.&lt;/summary&gt;</div>
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::filesystem::FilePath"><div><div class="token cpp_type">FilePath</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+		{
+		<div class="token cpp_keyword ">protected</div>:
+			<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="NI$vl::filesystem::FilePath::fullPath"><div><div class="token cpp_field">fullPath</div></div></div>;
+
+			<div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::filesystem::FilePath::Initialize@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::Initialize@void()'], [], [])"><div class="token cpp_function">Initialize</div></div></div>();
+
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::filesystem::FilePath::GetPathComponents@void(::vl::WString, ::vl::collections::List<::vl::WString> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::GetPathComponents@void(::vl::WString, ::vl::collections::List<::vl::WString> &)'], [], [])"><div class="token cpp_function">GetPathComponents</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="NI$vl::filesystem::FilePath::GetPathComponents@void(::vl::WString, ::vl::collections::List<::vl::WString> &)[decl0]::path"><div>path</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::filesystem::FilePath::GetPathComponents@void(::vl::WString, ::vl::collections::List<::vl::WString> &)[decl0]::components"><div>components</div></div>);
+			<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::filesystem::FilePath::ComponentsToPath@::vl::WString(::vl::collections::List<::vl::WString> const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::ComponentsToPath@::vl::WString(::vl::collections::List<::vl::WString> const &)'], [], [])"><div class="token cpp_function">ComponentsToPath</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::filesystem::FilePath::ComponentsToPath@::vl::WString(::vl::collections::List<::vl::WString> const &)[decl0]::components"><div>components</div></div>);
+		<div class="token cpp_keyword ">public</div>:
+<div class="disabled">#if defined VCZH_MSVC</div>
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>		<div class="def" id="NI$vl::filesystem::FilePath::Delimiter"><div><div class="token cpp_field">Delimiter</div></div></div> = <div class="token cpp_string ">L&apos;\\&apos;</div>;
+<div class="disabled">#elif defined VCZH_GCC</div>
+<div class="disabled">			static const wchar_t		Delimiter = L&apos;/&apos;;
+#endif</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a root path.&lt;/summary&gt;</div>
+			<div class="def" id="FB$vl::filesystem::FilePath::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::$__ctor@()'], [], [])"><div class="token cpp_function">FilePath</div></div></div>();
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a file path.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_filePath&quot;&gt;Content of the file path. If it is a relative path, it will be converted to an absolute path.&lt;/param&gt;</div>
+			<div class="def" id="FB$vl::filesystem::FilePath::$__ctor@(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::$__ctor@(::vl::WString const &)'], [], [])"><div class="token cpp_function">FilePath</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::$__ctor@(::vl::WString const &)[decl0]::_filePath"><div>_filePath</div></div>);
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a file path.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_filePath&quot;&gt;Content of the file path. If it is a relative path, it will be converted to an absolute path.&lt;/param&gt;</div>
+			<div class="def" id="FB$vl::filesystem::FilePath::$__ctor@(wchar_t const *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::$__ctor@(wchar_t const *)'], [], [])"><div class="token cpp_function">FilePath</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::filesystem::FilePath::$__ctor@(wchar_t const *)[decl0]::_filePath"><div>_filePath</div></div>);
+			<div class="token cpp_comment ">/// &lt;summary&gt;Copy a file path.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_filePath&quot;&gt;The file path to copy.&lt;/param&gt;</div>
+			<div class="def" id="FB$vl::filesystem::FilePath::$__ctor@(::vl::filesystem::FilePath const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::$__ctor@(::vl::filesystem::FilePath const &)'], [], [])"><div class="token cpp_function">FilePath</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::$__ctor@(::vl::filesystem::FilePath const &)[decl0]::_filePath"><div>_filePath</div></div>);
+			<div class="def" id="FB$vl::filesystem::FilePath::~FilePath@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::~FilePath@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">FilePath</div></div></div>();
+
+			<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], [], [])"><div class="token cpp_function">Compare</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)[decl0]::a"><div>a</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)[decl0]::b"><div>b</div></div>);
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::FilePath::operator ==@bool(::vl::filesystem::FilePath const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::operator ==@bool(::vl::filesystem::FilePath const &)[impl0]::filePath"><div><div class="token cpp_argument">filePath</div></div></div>)<div class="token cpp_keyword ">const</div>{ <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], ['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::operator ==@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'], [], [])"><div class="token cpp_argument">filePath</div></div>) == <div class="token cpp_number ">0</div>; }
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::FilePath::operator !=@bool(::vl::filesystem::FilePath const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::operator !=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath"><div><div class="token cpp_argument">filePath</div></div></div>)<div class="token cpp_keyword ">const</div>{ <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], ['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::operator !=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'], [], [])"><div class="token cpp_argument">filePath</div></div>) != <div class="token cpp_number ">0</div>; }
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::FilePath::operator <@bool(::vl::filesystem::FilePath const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&lt;</div></div></div> (<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::operator <@bool(::vl::filesystem::FilePath const &)[impl0]::filePath"><div><div class="token cpp_argument">filePath</div></div></div>)<div class="token cpp_keyword ">const</div>{ <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], ['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::operator <@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'], [], [])"><div class="token cpp_argument">filePath</div></div>) &lt;  <div class="token cpp_number ">0</div>; }
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::FilePath::operator <=@bool(::vl::filesystem::FilePath const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&lt;</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::operator <=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath"><div><div class="token cpp_argument">filePath</div></div></div>)<div class="token cpp_keyword ">const</div>{ <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], ['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::operator <=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'], [], [])"><div class="token cpp_argument">filePath</div></div>) &lt;= <div class="token cpp_number ">0</div>; }
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::FilePath::operator >@bool(::vl::filesystem::FilePath const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&gt;</div></div></div> (<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::operator >@bool(::vl::filesystem::FilePath const &)[impl0]::filePath"><div><div class="token cpp_argument">filePath</div></div></div>)<div class="token cpp_keyword ">const</div>{ <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], ['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::operator >@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'], [], [])"><div class="token cpp_argument">filePath</div></div>) &gt;  <div class="token cpp_number ">0</div>; }
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::FilePath::operator >=@bool(::vl::filesystem::FilePath const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&gt;</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::operator >=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath"><div><div class="token cpp_argument">filePath</div></div></div>)<div class="token cpp_keyword ">const</div>{ <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], ['vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::operator >=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'], [], [])"><div class="token cpp_argument">filePath</div></div>) &gt;= <div class="token cpp_number ">0</div>; }
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Concat an absolute path and a relative path.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The result absolute path.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;relativePath&quot;&gt;The relative path to concat.&lt;/param&gt;</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>					<div class="def" id="FB$vl::filesystem::FilePath::operator /@::vl::filesystem::FilePath(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::operator /@::vl::filesystem::FilePath(::vl::WString const &)'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">/</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::operator /@::vl::filesystem::FilePath(::vl::WString const &)[decl0]::relativePath"><div>relativePath</div></div>)<div class="token cpp_keyword ">const</div>;
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if the file path is a file.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the file path is a file.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::FilePath::IsFile@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::IsFile@bool()'], [], [])"><div class="token cpp_function">IsFile</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if the file path is a folder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the file path is a folder.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::FilePath::IsFolder@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::IsFolder@bool()'], [], [])"><div class="token cpp_function">IsFolder</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if the file path is a the root of all file system objects.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the file path is the root of all file system objects.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::FilePath::IsRoot@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::IsRoot@bool()'], [], [])"><div class="token cpp_function">IsRoot</div></div></div>()<div class="token cpp_keyword ">const</div>;
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the last piece of names in the file path.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The last piece of names in the file path.&lt;/returns&gt;</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::filesystem::FilePath::GetName@::vl::WString()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::GetName@::vl::WString()'], [], [])"><div class="token cpp_function">GetName</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the containing folder of this file path.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The containing folder.&lt;/returns&gt;</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>					<div class="def" id="FB$vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()'], [], [])"><div class="token cpp_function">GetFolder</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the content of the file path.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The content of the file path.&lt;/returns&gt;</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::filesystem::FilePath::GetFullPath@::vl::WString()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::GetFullPath@::vl::WString()'], [], [])"><div class="token cpp_function">GetFullPath</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Calculate the relative path using a referencing folder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The relative path.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_filePath&quot;&gt;The referencing folder.&lt;/param&gt;</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::filesystem::FilePath::GetRelativePathFor@::vl::WString(::vl::filesystem::FilePath const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath::GetRelativePathFor@::vl::WString(::vl::filesystem::FilePath const &)'], [], [])"><div class="token cpp_function">GetRelativePathFor</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::FilePath::GetRelativePathFor@::vl::WString(::vl::filesystem::FilePath const &)[decl0]::_filePath"><div>_filePath</div></div>);
+
+		};
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Representing a file reference.&lt;/summary&gt;</div>
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::filesystem::File"><div><div class="token cpp_type">File</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+		{
+		<div class="token cpp_keyword ">private</div>:
+			<div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>					<div class="def" id="NI$vl::filesystem::File::filePath"><div><div class="token cpp_field">filePath</div></div></div>;
+
+		<div class="token cpp_keyword ">public</div>:
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty reference.&lt;/summary&gt;</div>
+			<div class="def" id="FB$vl::filesystem::File::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::$__ctor@()'], [], [])"><div class="token cpp_function">File</div></div></div>();
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a reference to a specified file.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_filePath&quot;&gt;The specified file.&lt;/param&gt;</div>
+			<div class="def" id="FB$vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &)'], [], [])"><div class="token cpp_function">File</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &)[decl0]::_filePath"><div>_filePath</div></div>);
+			<div class="def" id="FB$vl::filesystem::File::~File@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::~File@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">File</div></div></div>();
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the file path of the file.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The file path.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp;				<div class="def" id="FB$vl::filesystem::File::GetFilePath@::vl::filesystem::FilePath const &()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::GetFilePath@::vl::filesystem::FilePath const &()'], [], [])"><div class="token cpp_function">GetFilePath</div></div></div>()<div class="token cpp_keyword ">const</div>;
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the content of the file as text with encoding testing.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns false if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The content of the file.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;encoding&quot;&gt;The encoding.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;containsBom&quot;&gt;True if there is BOM.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &, ::vl::stream::BomEncoder::Encoding &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &, ::vl::stream::BomEncoder::Encoding &, bool &)'], [], [])"><div class="token cpp_function">ReadAllTextWithEncodingTesting</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &, ::vl::stream::BomEncoder::Encoding &, bool &)[decl0]::text"><div>text</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder'], [], [])"><div class="token cpp_type">BomEncoder</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder::Encoding'], [], [])"><div class="token cpp_type">Encoding</div></div>&amp; <div class="def" id="NI$vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &, ::vl::stream::BomEncoder::Encoding &, bool &)[decl0]::encoding"><div>encoding</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &, ::vl::stream::BomEncoder::Encoding &, bool &)[decl0]::containsBom"><div>containsBom</div></div>);
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the content of the file as text.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The content of the file.&lt;/returns&gt;</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::filesystem::File::ReadAllTextByBom@::vl::WString()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::ReadAllTextByBom@::vl::WString()'], [], [])"><div class="token cpp_function">ReadAllTextByBom</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the content of the file as text.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns false if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The content of the file.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &)'], [], [])"><div class="token cpp_function">ReadAllTextByBom</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &)[decl0]::text"><div>text</div></div>)<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the content of the file as text.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns false if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;lines&quot;&gt;The content of the file.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::File::ReadAllLinesByBom@bool(::vl::collections::List<::vl::WString> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::ReadAllLinesByBom@bool(::vl::collections::List<::vl::WString> &)'], [], [])"><div class="token cpp_function">ReadAllLinesByBom</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::filesystem::File::ReadAllLinesByBom@bool(::vl::collections::List<::vl::WString> &)[decl0]::lines"><div>lines</div></div>)<div class="token cpp_keyword ">const</div>;
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Write text to the file.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns false if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to write.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;bom&quot;&gt;Set to true to add a corresponding BOM at the beginning of the file according to the encoding.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;encoding&quot;&gt;The text encoding.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::File::WriteAllText@bool(::vl::WString const &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::WriteAllText@bool(::vl::WString const &, bool, ::vl::stream::BomEncoder::Encoding)'], [], [])"><div class="token cpp_function">WriteAllText</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::filesystem::File::WriteAllText@bool(::vl::WString const &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]::text"><div>text</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::filesystem::File::WriteAllText@bool(::vl::WString const &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]::bom"><div>bom</div></div> = <div class="token cpp_keyword ">true</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder'], [], [])"><div class="token cpp_type">BomEncoder</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder::Encoding'], [], [])"><div class="token cpp_type">Encoding</div></div> <div class="def" id="NI$vl::filesystem::File::WriteAllText@bool(::vl::WString const &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]::encoding"><div>encoding</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder'], [], [])"><div class="token cpp_type">BomEncoder</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder::Encoding::Utf16'], [], [])"><div class="token cpp_enum">Utf16</div></div>);
+			<div class="token cpp_comment ">/// &lt;summary&gt;Write text to the file.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns false if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;lines&quot;&gt;The text to write.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;bom&quot;&gt;Set to true to add a corresponding BOM at the beginning of the file according to the encoding.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;encoding&quot;&gt;The text encoding.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::File::WriteAllLines@bool(::vl::collections::List<::vl::WString> &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::WriteAllLines@bool(::vl::collections::List<::vl::WString> &, bool, ::vl::stream::BomEncoder::Encoding)'], [], [])"><div class="token cpp_function">WriteAllLines</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::filesystem::File::WriteAllLines@bool(::vl::collections::List<::vl::WString> &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]::lines"><div>lines</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::filesystem::File::WriteAllLines@bool(::vl::collections::List<::vl::WString> &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]::bom"><div>bom</div></div> = <div class="token cpp_keyword ">true</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder'], [], [])"><div class="token cpp_type">BomEncoder</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder::Encoding'], [], [])"><div class="token cpp_type">Encoding</div></div> <div class="def" id="NI$vl::filesystem::File::WriteAllLines@bool(::vl::collections::List<::vl::WString> &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]::encoding"><div>encoding</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder'], [], [])"><div class="token cpp_type">BomEncoder</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder::Encoding::Utf16'], [], [])"><div class="token cpp_enum">Utf16</div></div>);
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test does the file exist or not.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the file exists.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::File::Exists@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::Exists@bool()'], [], [])"><div class="token cpp_function">Exists</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Delete the file.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::File::Delete@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::Delete@bool()'], [], [])"><div class="token cpp_function">Delete</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Rename the file in the same folder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;newName&quot;&gt;The new file name.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::File::Rename@bool(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File::Rename@bool(::vl::WString const &)'], [], [])"><div class="token cpp_function">Rename</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::filesystem::File::Rename@bool(::vl::WString const &)[decl0]::newName"><div>newName</div></div>)<div class="token cpp_keyword ">const</div>;
+		};
+		
+		<div class="token cpp_comment ">/// &lt;summary&gt;Representing a folder reference.&lt;/summary&gt;</div>
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::filesystem::Folder"><div><div class="token cpp_type">Folder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+		{
+		<div class="token cpp_keyword ">private</div>:
+			<div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>					<div class="def" id="NI$vl::filesystem::Folder::filePath"><div><div class="token cpp_field">filePath</div></div></div>;
+
+		<div class="token cpp_keyword ">public</div>:
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a root reference.&lt;/summary&gt;</div>
+			<div class="def" id="FB$vl::filesystem::Folder::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::Folder::$__ctor@()'], [], [])"><div class="token cpp_function">Folder</div></div></div>();
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a reference to a specified folder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_filePath&quot;&gt;The specified folder.&lt;/param&gt;</div>
+			<div class="def" id="FB$vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &)'], [], [])"><div class="token cpp_function">Folder</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp; <div class="def" id="NI$vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &)[decl0]::_filePath"><div>_filePath</div></div>);
+			<div class="def" id="FB$vl::filesystem::Folder::~Folder@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::Folder::~Folder@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">Folder</div></div></div>();
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the file path of the folder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The file path.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::FilePath'], [], [])"><div class="token cpp_type">FilePath</div></div>&amp;				<div class="def" id="FB$vl::filesystem::Folder::GetFilePath@::vl::filesystem::FilePath const &()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::Folder::GetFilePath@::vl::filesystem::FilePath const &()'], [], [])"><div class="token cpp_function">GetFilePath</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get all folders in this folder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;folders&quot;&gt;All folders.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::Folder::GetFolders@bool(::vl::collections::List<::vl::filesystem::Folder> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::Folder::GetFolders@bool(::vl::collections::List<::vl::filesystem::Folder> &)'], [], [])"><div class="token cpp_function">GetFolders</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::Folder'], [], [])"><div class="token cpp_type">Folder</div></div>&gt;&amp; <div class="def" id="NI$vl::filesystem::Folder::GetFolders@bool(::vl::collections::List<::vl::filesystem::Folder> &)[decl0]::folders"><div>folders</div></div>)<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get all files in this folder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;files&quot;&gt;All files.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::Folder::GetFiles@bool(::vl::collections::List<::vl::filesystem::File> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::Folder::GetFiles@bool(::vl::collections::List<::vl::filesystem::File> &)'], [], [])"><div class="token cpp_function">GetFiles</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::File'], [], [])"><div class="token cpp_type">File</div></div>&gt;&amp; <div class="def" id="NI$vl::filesystem::Folder::GetFiles@bool(::vl::collections::List<::vl::filesystem::File> &)[decl0]::files"><div>files</div></div>)<div class="token cpp_keyword ">const</div>;
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test does the folder exist or not.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the folder exists.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::Folder::Exists@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::Folder::Exists@bool()'], [], [])"><div class="token cpp_function">Exists</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create the folder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;recursively&quot;&gt;Set to true to create all parent folders if necessary.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::Folder::Create@bool(bool)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::Folder::Create@bool(bool)'], [], [])"><div class="token cpp_function">Create</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::filesystem::Folder::Create@bool(bool)[decl0]::recursively"><div>recursively</div></div>)<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Delete the folder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;recursively&quot;&gt;Set to true to delete everything in the folder.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::Folder::Delete@bool(bool)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::Folder::Delete@bool(bool)'], [], [])"><div class="token cpp_function">Delete</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::filesystem::Folder::Delete@bool(bool)[decl0]::recursively"><div>recursively</div></div>)<div class="token cpp_keyword ">const</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Rename the folder in the same folder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;newName&quot;&gt;The new folder name.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::filesystem::Folder::Rename@bool(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::filesystem::Folder::Rename@bool(::vl::WString const &)'], [], [])"><div class="token cpp_function">Rename</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::filesystem::Folder::Rename@bool(::vl::WString const &)[decl0]::newName"><div>newName</div></div>)<div class="token cpp_keyword ">const</div>;
+		};
+	}
+}
+
+<div class="disabled">#endif
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl'
+        ]
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections'
+        ]
+    },
+    'vl::collections::List': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::List'
+        ],
+        'decls': []
+    },
+    'vl::filesystem': {
+        'displayNameInHtml': 'vl::filesystem',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::filesystem',
+            'NF[1]$vl::filesystem'
+        ]
+    },
+    'vl::filesystem::File': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>',
+        'impls': [
+            'NI$vl::filesystem::File'
+        ],
+        'decls': []
+    },
+    'vl::filesystem::File::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::filesystem::File::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &)': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">FilePath</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &)[decl0]'
+        ]
+    },
+    'vl::filesystem::File::Delete@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">Delete</span>()',
+        'impls': [
+            'FB$vl::filesystem::File::Delete@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::Delete@bool()[decl0]'
+        ]
+    },
+    'vl::filesystem::File::Exists@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">Exists</span>()',
+        'impls': [
+            'FB$vl::filesystem::File::Exists@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::Exists@bool()[decl0]'
+        ]
+    },
+    'vl::filesystem::File::GetFilePath@::vl::filesystem::FilePath const &()': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">GetFilePath</span>()',
+        'impls': [
+            'FB$vl::filesystem::File::GetFilePath@::vl::filesystem::FilePath const &()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::GetFilePath@::vl::filesystem::FilePath const &()[decl0]'
+        ]
+    },
+    'vl::filesystem::File::ReadAllLinesByBom@bool(::vl::collections::List<::vl::WString> &)': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">ReadAllLinesByBom</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">WString</span>&gt; &)',
+        'impls': [
+            'FB$vl::filesystem::File::ReadAllLinesByBom@bool(::vl::collections::List<::vl::WString> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::ReadAllLinesByBom@bool(::vl::collections::List<::vl::WString> &)[decl0]'
+        ]
+    },
+    'vl::filesystem::File::ReadAllTextByBom@::vl::WString()': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">ReadAllTextByBom</span>()',
+        'impls': [
+            'FB$vl::filesystem::File::ReadAllTextByBom@::vl::WString()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::ReadAllTextByBom@::vl::WString()[decl0]'
+        ]
+    },
+    'vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &)': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">ReadAllTextByBom</span>(<span class="cpp_type">WString</span> &)',
+        'impls': [
+            'FB$vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &)[decl0]'
+        ]
+    },
+    'vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &, ::vl::stream::BomEncoder::Encoding &, bool &)': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">ReadAllTextWithEncodingTesting</span>(<span class="cpp_type">WString</span> &, stream::<span class="cpp_type">BomEncoder</span>::<span class="cpp_type">Encoding</span> &, <span class="cpp_keyword">bool</span> &)',
+        'impls': [
+            'FB$vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &, ::vl::stream::BomEncoder::Encoding &, bool &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &, ::vl::stream::BomEncoder::Encoding &, bool &)[decl0]'
+        ]
+    },
+    'vl::filesystem::File::Rename@bool(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">Rename</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::filesystem::File::Rename@bool(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::Rename@bool(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::filesystem::File::WriteAllLines@bool(::vl::collections::List<::vl::WString> &, bool, ::vl::stream::BomEncoder::Encoding)': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">WriteAllLines</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">WString</span>&gt; &, <span class="cpp_keyword">bool</span>, stream::<span class="cpp_type">BomEncoder</span>::<span class="cpp_type">Encoding</span>)',
+        'impls': [
+            'FB$vl::filesystem::File::WriteAllLines@bool(::vl::collections::List<::vl::WString> &, bool, ::vl::stream::BomEncoder::Encoding)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::WriteAllLines@bool(::vl::collections::List<::vl::WString> &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]'
+        ]
+    },
+    'vl::filesystem::File::WriteAllText@bool(::vl::WString const &, bool, ::vl::stream::BomEncoder::Encoding)': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">WriteAllText</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>, stream::<span class="cpp_type">BomEncoder</span>::<span class="cpp_type">Encoding</span>)',
+        'impls': [
+            'FB$vl::filesystem::File::WriteAllText@bool(::vl::WString const &, bool, ::vl::stream::BomEncoder::Encoding)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::WriteAllText@bool(::vl::WString const &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]'
+        ]
+    },
+    'vl::filesystem::File::~File@()': {
+        'displayNameInHtml': '<span class="cpp_type">File</span>::<span class="cpp_function">~File</span>()',
+        'impls': [
+            'FB$vl::filesystem::File::~File@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::File::~File@()[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>',
+        'impls': [
+            'NI$vl::filesystem::FilePath'
+        ],
+        'decls': []
+    },
+    'vl::filesystem::FilePath::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::filesystem::FilePath::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::$__ctor@(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::filesystem::FilePath::$__ctor@(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::$__ctor@(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::$__ctor@(::vl::filesystem::FilePath const &)': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">FilePath</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::filesystem::FilePath::$__ctor@(::vl::filesystem::FilePath const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::$__ctor@(::vl::filesystem::FilePath const &)[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::$__ctor@(wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$vl::filesystem::FilePath::$__ctor@(wchar_t const *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::$__ctor@(wchar_t const *)[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">Compare</span>(<span class="cpp_type">FilePath</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">FilePath</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::ComponentsToPath@::vl::WString(::vl::collections::List<::vl::WString> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">ComponentsToPath</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">WString</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::filesystem::FilePath::ComponentsToPath@::vl::WString(::vl::collections::List<::vl::WString> const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::ComponentsToPath@::vl::WString(::vl::collections::List<::vl::WString> const &)[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">GetFolder</span>()',
+        'impls': [
+            'FB$vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::GetFullPath@::vl::WString()': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">GetFullPath</span>()',
+        'impls': [
+            'FB$vl::filesystem::FilePath::GetFullPath@::vl::WString()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::GetFullPath@::vl::WString()[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::GetName@::vl::WString()': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">GetName</span>()',
+        'impls': [
+            'FB$vl::filesystem::FilePath::GetName@::vl::WString()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::GetName@::vl::WString()[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::GetPathComponents@void(::vl::WString, ::vl::collections::List<::vl::WString> &)': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">GetPathComponents</span>(<span class="cpp_type">WString</span>, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">WString</span>&gt; &)',
+        'impls': [
+            'FB$vl::filesystem::FilePath::GetPathComponents@void(::vl::WString, ::vl::collections::List<::vl::WString> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::GetPathComponents@void(::vl::WString, ::vl::collections::List<::vl::WString> &)[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::GetRelativePathFor@::vl::WString(::vl::filesystem::FilePath const &)': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">GetRelativePathFor</span>(<span class="cpp_type">FilePath</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::filesystem::FilePath::GetRelativePathFor@::vl::WString(::vl::filesystem::FilePath const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::GetRelativePathFor@::vl::WString(::vl::filesystem::FilePath const &)[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::Initialize@void()': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">Initialize</span>()',
+        'impls': [
+            'FB$vl::filesystem::FilePath::Initialize@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::Initialize@void()[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::IsFile@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">IsFile</span>()',
+        'impls': [
+            'FB$vl::filesystem::FilePath::IsFile@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::IsFile@bool()[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::IsFolder@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">IsFolder</span>()',
+        'impls': [
+            'FB$vl::filesystem::FilePath::IsFolder@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::IsFolder@bool()[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::IsRoot@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">IsRoot</span>()',
+        'impls': [
+            'FB$vl::filesystem::FilePath::IsRoot@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::IsRoot@bool()[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::operator !=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': {
+        'displayNameInHtml': 'filePath',
+        'impls': [
+            'NI$vl::filesystem::FilePath::operator !=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'
+        ],
+        'decls': []
+    },
+    'vl::filesystem::FilePath::operator /@::vl::filesystem::FilePath(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">operator /</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::filesystem::FilePath::operator /@::vl::filesystem::FilePath(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::operator /@::vl::filesystem::FilePath(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::filesystem::FilePath::operator <=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': {
+        'displayNameInHtml': 'filePath',
+        'impls': [
+            'NI$vl::filesystem::FilePath::operator <=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'
+        ],
+        'decls': []
+    },
+    'vl::filesystem::FilePath::operator <@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': {
+        'displayNameInHtml': 'filePath',
+        'impls': [
+            'NI$vl::filesystem::FilePath::operator <@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'
+        ],
+        'decls': []
+    },
+    'vl::filesystem::FilePath::operator ==@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': {
+        'displayNameInHtml': 'filePath',
+        'impls': [
+            'NI$vl::filesystem::FilePath::operator ==@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'
+        ],
+        'decls': []
+    },
+    'vl::filesystem::FilePath::operator >=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': {
+        'displayNameInHtml': 'filePath',
+        'impls': [
+            'NI$vl::filesystem::FilePath::operator >=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'
+        ],
+        'decls': []
+    },
+    'vl::filesystem::FilePath::operator >@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': {
+        'displayNameInHtml': 'filePath',
+        'impls': [
+            'NI$vl::filesystem::FilePath::operator >@bool(::vl::filesystem::FilePath const &)[impl0]::filePath'
+        ],
+        'decls': []
+    },
+    'vl::filesystem::FilePath::~FilePath@()': {
+        'displayNameInHtml': '<span class="cpp_type">FilePath</span>::<span class="cpp_function">~FilePath</span>()',
+        'impls': [
+            'FB$vl::filesystem::FilePath::~FilePath@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::FilePath::~FilePath@()[decl0]'
+        ]
+    },
+    'vl::filesystem::Folder': {
+        'displayNameInHtml': '<span class="cpp_type">Folder</span>',
+        'impls': [
+            'NI$vl::filesystem::Folder'
+        ],
+        'decls': []
+    },
+    'vl::filesystem::Folder::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">Folder</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::filesystem::Folder::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::Folder::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Folder</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">FilePath</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &)[decl0]'
+        ]
+    },
+    'vl::filesystem::Folder::Create@bool(bool)': {
+        'displayNameInHtml': '<span class="cpp_type">Folder</span>::<span class="cpp_function">Create</span>(<span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::filesystem::Folder::Create@bool(bool)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::Folder::Create@bool(bool)[decl0]'
+        ]
+    },
+    'vl::filesystem::Folder::Delete@bool(bool)': {
+        'displayNameInHtml': '<span class="cpp_type">Folder</span>::<span class="cpp_function">Delete</span>(<span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::filesystem::Folder::Delete@bool(bool)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::Folder::Delete@bool(bool)[decl0]'
+        ]
+    },
+    'vl::filesystem::Folder::Exists@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">Folder</span>::<span class="cpp_function">Exists</span>()',
+        'impls': [
+            'FB$vl::filesystem::Folder::Exists@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::Folder::Exists@bool()[decl0]'
+        ]
+    },
+    'vl::filesystem::Folder::GetFilePath@::vl::filesystem::FilePath const &()': {
+        'displayNameInHtml': '<span class="cpp_type">Folder</span>::<span class="cpp_function">GetFilePath</span>()',
+        'impls': [
+            'FB$vl::filesystem::Folder::GetFilePath@::vl::filesystem::FilePath const &()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::Folder::GetFilePath@::vl::filesystem::FilePath const &()[decl0]'
+        ]
+    },
+    'vl::filesystem::Folder::GetFiles@bool(::vl::collections::List<::vl::filesystem::File> &)': {
+        'displayNameInHtml': '<span class="cpp_type">Folder</span>::<span class="cpp_function">GetFiles</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">File</span>&gt; &)',
+        'impls': [
+            'FB$vl::filesystem::Folder::GetFiles@bool(::vl::collections::List<::vl::filesystem::File> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::Folder::GetFiles@bool(::vl::collections::List<::vl::filesystem::File> &)[decl0]'
+        ]
+    },
+    'vl::filesystem::Folder::GetFolders@bool(::vl::collections::List<::vl::filesystem::Folder> &)': {
+        'displayNameInHtml': '<span class="cpp_type">Folder</span>::<span class="cpp_function">GetFolders</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Folder</span>&gt; &)',
+        'impls': [
+            'FB$vl::filesystem::Folder::GetFolders@bool(::vl::collections::List<::vl::filesystem::Folder> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::Folder::GetFolders@bool(::vl::collections::List<::vl::filesystem::Folder> &)[decl0]'
+        ]
+    },
+    'vl::filesystem::Folder::Rename@bool(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Folder</span>::<span class="cpp_function">Rename</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::filesystem::Folder::Rename@bool(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::Folder::Rename@bool(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::filesystem::Folder::~Folder@()': {
+        'displayNameInHtml': '<span class="cpp_type">Folder</span>::<span class="cpp_function">~Folder</span>()',
+        'impls': [
+            'FB$vl::filesystem::Folder::~Folder@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::filesystem::Folder::~Folder@()[decl0]'
+        ]
+    },
+    'vl::stream': {
+        'displayNameInHtml': 'vl::stream',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::stream',
+            'NF[1]$vl::stream',
+            'NF[2]$vl::stream',
+            'NF[3]$vl::stream',
+            'NF[4]$vl::stream',
+            'NF[5]$vl::stream',
+            'NF[6]$vl::stream',
+            'NF[7]$vl::stream',
+            'NF[8]$vl::stream',
+            'NF[9]$vl::stream',
+            'NF[10]$vl::stream',
+            'NF[11]$vl::stream',
+            'NF[12]$vl::stream',
+            'NF[13]$vl::stream',
+            'NF[14]$vl::stream',
+            'NF[15]$vl::stream',
+            'NF[16]$vl::stream',
+            'NF[17]$vl::stream',
+            'NF[18]$vl::stream'
+        ]
+    },
+    'vl::stream::BomEncoder': {
+        'displayNameInHtml': '<span class="cpp_type">BomEncoder</span>',
+        'impls': [
+            'NI$vl::stream::BomEncoder'
+        ],
+        'decls': []
+    },
+    'vl::stream::BomEncoder::Encoding': {
+        'displayNameInHtml': '<span class="cpp_type">BomEncoder</span>::<span class="cpp_type">Encoding</span>',
+        'impls': [
+            'NI$vl::stream::BomEncoder::Encoding'
+        ],
+        'decls': []
+    },
+    'vl::stream::BomEncoder::Encoding::Utf16': {
+        'displayNameInHtml': '<span class="cpp_type">BomEncoder</span>::<span class="cpp_type">Encoding</span>::<span class="cpp_enum">Utf16</span>',
+        'impls': [
+            'NI$vl::stream::BomEncoder::Encoding::Utf16'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::filesystem::File::$__ctor@()[decl0]': null,
+    'FB$vl::filesystem::File::$__ctor@()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &)[decl0]': null,
+    'FB$vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::Delete@bool()[decl0]': null,
+    'FB$vl::filesystem::File::Delete@bool()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::Exists@bool()[decl0]': null,
+    'FB$vl::filesystem::File::Exists@bool()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::GetFilePath@::vl::filesystem::FilePath const &()[decl0]': null,
+    'FB$vl::filesystem::File::GetFilePath@::vl::filesystem::FilePath const &()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::ReadAllLinesByBom@bool(::vl::collections::List<::vl::WString> &)[decl0]': null,
+    'FB$vl::filesystem::File::ReadAllLinesByBom@bool(::vl::collections::List<::vl::WString> &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::ReadAllTextByBom@::vl::WString()[decl0]': null,
+    'FB$vl::filesystem::File::ReadAllTextByBom@::vl::WString()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &)[decl0]': null,
+    'FB$vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &, ::vl::stream::BomEncoder::Encoding &, bool &)[decl0]': null,
+    'FB$vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &, ::vl::stream::BomEncoder::Encoding &, bool &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::Rename@bool(::vl::WString const &)[decl0]': null,
+    'FB$vl::filesystem::File::Rename@bool(::vl::WString const &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::WriteAllLines@bool(::vl::collections::List<::vl::WString> &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]': null,
+    'FB$vl::filesystem::File::WriteAllLines@bool(::vl::collections::List<::vl::WString> &, bool, ::vl::stream::BomEncoder::Encoding)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::WriteAllText@bool(::vl::WString const &, bool, ::vl::stream::BomEncoder::Encoding)[decl0]': null,
+    'FB$vl::filesystem::File::WriteAllText@bool(::vl::WString const &, bool, ::vl::stream::BomEncoder::Encoding)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::File::~File@()[decl0]': null,
+    'FB$vl::filesystem::File::~File@()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::$__ctor@()[decl0]': null,
+    'FB$vl::filesystem::FilePath::$__ctor@()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::$__ctor@(::vl::WString const &)[decl0]': null,
+    'FB$vl::filesystem::FilePath::$__ctor@(::vl::WString const &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::$__ctor@(::vl::filesystem::FilePath const &)[decl0]': null,
+    'FB$vl::filesystem::FilePath::$__ctor@(::vl::filesystem::FilePath const &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::$__ctor@(wchar_t const *)[decl0]': null,
+    'FB$vl::filesystem::FilePath::$__ctor@(wchar_t const *)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)[decl0]': null,
+    'FB$vl::filesystem::FilePath::Compare@::vl::vint(::vl::filesystem::FilePath const &, ::vl::filesystem::FilePath const &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::ComponentsToPath@::vl::WString(::vl::collections::List<::vl::WString> const &)[decl0]': null,
+    'FB$vl::filesystem::FilePath::ComponentsToPath@::vl::WString(::vl::collections::List<::vl::WString> const &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()[decl0]': null,
+    'FB$vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::GetFullPath@::vl::WString()[decl0]': null,
+    'FB$vl::filesystem::FilePath::GetFullPath@::vl::WString()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::GetName@::vl::WString()[decl0]': null,
+    'FB$vl::filesystem::FilePath::GetName@::vl::WString()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::GetPathComponents@void(::vl::WString, ::vl::collections::List<::vl::WString> &)[decl0]': null,
+    'FB$vl::filesystem::FilePath::GetPathComponents@void(::vl::WString, ::vl::collections::List<::vl::WString> &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::GetRelativePathFor@::vl::WString(::vl::filesystem::FilePath const &)[decl0]': null,
+    'FB$vl::filesystem::FilePath::GetRelativePathFor@::vl::WString(::vl::filesystem::FilePath const &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::Initialize@void()[decl0]': null,
+    'FB$vl::filesystem::FilePath::Initialize@void()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::IsFile@bool()[decl0]': null,
+    'FB$vl::filesystem::FilePath::IsFile@bool()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::IsFolder@bool()[decl0]': null,
+    'FB$vl::filesystem::FilePath::IsFolder@bool()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::IsRoot@bool()[decl0]': null,
+    'FB$vl::filesystem::FilePath::IsRoot@bool()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::operator /@::vl::filesystem::FilePath(::vl::WString const &)[decl0]': null,
+    'FB$vl::filesystem::FilePath::operator /@::vl::filesystem::FilePath(::vl::WString const &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::FilePath::~FilePath@()[decl0]': null,
+    'FB$vl::filesystem::FilePath::~FilePath@()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::Folder::$__ctor@()[decl0]': null,
+    'FB$vl::filesystem::Folder::$__ctor@()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &)[decl0]': null,
+    'FB$vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::Folder::Create@bool(bool)[decl0]': null,
+    'FB$vl::filesystem::Folder::Create@bool(bool)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::Folder::Delete@bool(bool)[decl0]': null,
+    'FB$vl::filesystem::Folder::Delete@bool(bool)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::Folder::Exists@bool()[decl0]': null,
+    'FB$vl::filesystem::Folder::Exists@bool()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::Folder::GetFilePath@::vl::filesystem::FilePath const &()[decl0]': null,
+    'FB$vl::filesystem::Folder::GetFilePath@::vl::filesystem::FilePath const &()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::Folder::GetFiles@bool(::vl::collections::List<::vl::filesystem::File> &)[decl0]': null,
+    'FB$vl::filesystem::Folder::GetFiles@bool(::vl::collections::List<::vl::filesystem::File> &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::Folder::GetFolders@bool(::vl::collections::List<::vl::filesystem::Folder> &)[decl0]': null,
+    'FB$vl::filesystem::Folder::GetFolders@bool(::vl::collections::List<::vl::filesystem::Folder> &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::Folder::Rename@bool(::vl::WString const &)[decl0]': null,
+    'FB$vl::filesystem::Folder::Rename@bool(::vl::WString const &)[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'FB$vl::filesystem::Folder::~Folder@()[decl0]': null,
+    'FB$vl::filesystem::Folder::~Folder@()[impl0]': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::filesystem': null,
+    'NF[0]$vl::stream': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[10]$vl::stream': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[11]$vl::stream': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[12]$vl::stream': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[13]$vl::stream': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[14]$vl::stream': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl::stream': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[16]$vl::stream': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[17]$vl::stream': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[18]$vl::stream': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[19]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::filesystem': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[1]$vl::stream': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::stream': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[37]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[38]$vl': null,
+    'NF[39]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[3]$vl::stream': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[40]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[42]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[43]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[44]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[45]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[46]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[49]$vl': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[4]$vl::stream': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[57]$vl': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[5]$vl::stream': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[60]$vl': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[6]$vl::stream': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[7]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[7]$vl::stream': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[8]$vl::stream': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[9]$vl::stream': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::filesystem::File': null,
+    'NI$vl::filesystem::FilePath': null,
+    'NI$vl::filesystem::FilePath::operator !=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': null,
+    'NI$vl::filesystem::FilePath::operator <=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': null,
+    'NI$vl::filesystem::FilePath::operator <@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': null,
+    'NI$vl::filesystem::FilePath::operator ==@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': null,
+    'NI$vl::filesystem::FilePath::operator >=@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': null,
+    'NI$vl::filesystem::FilePath::operator >@bool(::vl::filesystem::FilePath const &)[impl0]::filePath': null,
+    'NI$vl::filesystem::Folder': null,
+    'NI$vl::stream::BomEncoder': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NI$vl::stream::BomEncoder::Encoding': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NI$vl::stream::BomEncoder::Encoding::Utf16': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

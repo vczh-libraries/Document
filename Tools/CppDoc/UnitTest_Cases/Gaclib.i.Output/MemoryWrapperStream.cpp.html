@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MemoryWrapperStream.cpp</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;string.h&gt;</div>
+<div class="disabled">#include &quot;MemoryWrapperStream.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[60]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[17]$vl::stream"><div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div></div>
+	{
+<div class="token cpp_comment ">/***********************************************************************
+MemoryWrapperStream
+***********************************************************************/</div>
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">MemoryWrapperStream</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]::_buffer"><div><div class="token cpp_argument">_buffer</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]::_size"><div><div class="token cpp_argument">_size</div></div></div>)
+			:buffer((<div class="token cpp_keyword ">char</div>*)<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]::_buffer'], [], [])"><div class="token cpp_argument">_buffer</div></div>)
+			,size(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>)
+			,position(<div class="token cpp_number ">0</div>)
+		{
+			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::size'], [], [])"><div class="token cpp_field">size</div></div>&lt;=<div class="token cpp_number ">0</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>=<div class="token cpp_number ">0</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::size'], [], [])"><div class="token cpp_field">size</div></div>=<div class="token cpp_number ">0</div>;
+			}
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::~MemoryWrapperStream@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::~MemoryWrapperStream@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">MemoryWrapperStream</div></div></div>()
+		{
+		}
+
+		<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::CanRead@bool()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::CanRead@bool()'], [], [])"><div class="token cpp_function">CanRead</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>!=<div class="token cpp_number ">0</div>;
+		}
+
+		<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::CanWrite@bool()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::CanWrite@bool()'], [], [])"><div class="token cpp_function">CanWrite</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>!=<div class="token cpp_number ">0</div>;
+		}
+
+		<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::CanSeek@bool()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::CanSeek@bool()'], [], [])"><div class="token cpp_function">CanSeek</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>!=<div class="token cpp_number ">0</div>;
+		}
+
+		<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::CanPeek@bool()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::CanPeek@bool()'], [], [])"><div class="token cpp_function">CanPeek</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>!=<div class="token cpp_number ">0</div>;
+		}
+
+		<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::IsLimited@bool()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::IsLimited@bool()'], [], [])"><div class="token cpp_function">IsLimited</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>!=<div class="token cpp_number ">0</div>;
+		}
+
+		<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::IsAvailable@bool()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::IsAvailable@bool()'], [], [])"><div class="token cpp_function">IsAvailable</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>!=<div class="token cpp_number ">0</div>;
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::Close@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Close@void()'], [], [])"><div class="token cpp_function">Close</div></div></div>()
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>=<div class="token cpp_number ">0</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::size'], [], [])"><div class="token cpp_field">size</div></div>=-<div class="token cpp_number ">1</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>=-<div class="token cpp_number ">1</div>;
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::Position@::vl::pos_t()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Position@::vl::pos_t()'], [], [])"><div class="token cpp_function">Position</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>;
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::Size@::vl::pos_t()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Size@::vl::pos_t()'], [], [])"><div class="token cpp_function">Size</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::size'], [], [])"><div class="token cpp_field">size</div></div>;
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)'], [], [])"><div class="token cpp_function">Seek</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)[impl0]::_size"><div><div class="token cpp_argument">_size</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol(['vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)'], ['vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)'], [], [])"><div class="token cpp_function">SeekFromBegin</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>+<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>);
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)'], [], [])"><div class="token cpp_function">SeekFromBegin</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::_size"><div><div class="token cpp_argument">_size</div></div></div>)
+		{
+<div class="expandable"><div class="disabled">			CHECK_ERROR(buffer!=0, L&quot;MemoryWrapperStream::SeekFromBegin(pos_t)#Stream is closed, cannot perform this operation.&quot;);</div>
+<div class="expanded">			<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>!=<div class="token cpp_number ">0</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;MemoryWrapperStream::SeekFromBegin(pos_t)#Stream is closed, cannot perform this operation.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::expected"><div>expected</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>;
+			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::expected'], [], [])">expected</div>&lt;<div class="token cpp_number ">0</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>=<div class="token cpp_number ">0</div>;
+			}
+			<div class="token cpp_keyword ">else</div> <div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::expected'], [], [])">expected</div>&gt;=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::size'], [], [])"><div class="token cpp_field">size</div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::size'], [], [])"><div class="token cpp_field">size</div></div>;
+			}
+			<div class="token cpp_keyword ">else</div>
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::expected'], [], [])">expected</div>;
+			}
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)'], [], [])"><div class="token cpp_function">SeekFromEnd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)[impl0]::_size"><div><div class="token cpp_argument">_size</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol(['vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)'], ['vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)'], [], [])"><div class="token cpp_function">SeekFromBegin</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::size'], [], [])"><div class="token cpp_field">size</div></div>-<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Read</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_buffer"><div><div class="token cpp_argument">_buffer</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size"><div><div class="token cpp_argument">_size</div></div></div>)
+		{
+<div class="expandable"><div class="disabled">			CHECK_ERROR(buffer!=0, L&quot;MemoryWrapperStream::Read(pos_t)#Stream is closed, cannot perform this operation.&quot;);</div>
+<div class="expanded">			<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>!=<div class="token cpp_number ">0</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;MemoryWrapperStream::Read(pos_t)#Stream is closed, cannot perform this operation.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+<div class="expandable"><div class="disabled">			CHECK_ERROR(_size&gt;=0, L&quot;MemoryWrapperStream::Read(void*, vint)#Argument size cannot be negative.&quot;);</div>
+<div class="expanded">			<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>&gt;=<div class="token cpp_number ">0</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;MemoryWrapperStream::Read(void*, vint)#Argument size cannot be negative.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::max"><div>max</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::size'], [], [])"><div class="token cpp_field">size</div></div>-<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>;
+			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::max'], [], [])">max</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::max'], [], [])">max</div>;
+			}
+			<div class="ref" onclick="jumpToSymbol(['memmove@void *(void *, void const *, ::size_t)'], ['memmove@void *(void *, void const *, ::size_t)'], [], [])"><div class="token cpp_function">memmove</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'], [], [])"><div class="token cpp_argument">_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>+<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>);
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>+=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>;
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer"><div><div class="token cpp_argument">_buffer</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size"><div><div class="token cpp_argument">_size</div></div></div>)
+		{
+<div class="expandable"><div class="disabled">			CHECK_ERROR(buffer!=0, L&quot;MemoryWrapperStream::Write(pos_t)#Stream is closed, cannot perform this operation.&quot;);</div>
+<div class="expanded">			<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>!=<div class="token cpp_number ">0</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;MemoryWrapperStream::Write(pos_t)#Stream is closed, cannot perform this operation.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+<div class="expandable"><div class="disabled">			CHECK_ERROR(_size&gt;=0, L&quot;MemoryWrapperStream::Write(void*, vint)#Argument size cannot be negative.&quot;);</div>
+<div class="expanded">			<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>&gt;=<div class="token cpp_number ">0</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;MemoryWrapperStream::Write(void*, vint)#Argument size cannot be negative.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::max"><div>max</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::size'], [], [])"><div class="token cpp_field">size</div></div>-<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>;
+			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::max'], [], [])">max</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::max'], [], [])">max</div>;
+			}
+			<div class="ref" onclick="jumpToSymbol(['memmove@void *(void *, void const *, ::size_t)'], ['memmove@void *(void *, void const *, ::size_t)'], [], [])"><div class="token cpp_function">memmove</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>+<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'], [], [])"><div class="token cpp_argument">_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>);
+			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>+=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>;
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream'], [], [])"><div class="token cpp_type">MemoryWrapperStream</div></div>::<div class="def" id="FB$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Peek</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_buffer"><div><div class="token cpp_argument">_buffer</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_size"><div><div class="token cpp_argument">_size</div></div></div>)
+		{
+<div class="expandable"><div class="disabled">			CHECK_ERROR(buffer!=0, L&quot;MemoryWrapperStream::Peek(pos_t)#Stream is closed, cannot perform this operation.&quot;);</div>
+<div class="expanded">			<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>!=<div class="token cpp_number ">0</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;MemoryWrapperStream::Peek(pos_t)#Stream is closed, cannot perform this operation.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+<div class="expandable"><div class="disabled">			CHECK_ERROR(_size&gt;=0, L&quot;MemoryWrapperStream::Peek(void*, vint)#Argument size cannot be negative.&quot;);</div>
+<div class="expanded">			<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>&gt;=<div class="token cpp_number ">0</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;MemoryWrapperStream::Peek(void*, vint)#Argument size cannot be negative.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::max"><div>max</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::size'], [], [])"><div class="token cpp_field">size</div></div>-<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>;
+			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::max'], [], [])">max</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::max'], [], [])">max</div>;
+			}
+			<div class="ref" onclick="jumpToSymbol(['memmove@void *(void *, void const *, ::size_t)'], ['memmove@void *(void *, void const *, ::size_t)'], [], [])"><div class="token cpp_function">memmove</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'], [], [])"><div class="token cpp_argument">_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>+<div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::position'], [], [])"><div class="token cpp_field">position</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>);
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>;
+		}
+	}
+}
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'memmove@void *(void *, void const *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">memmove</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$memmove@void *(void *, void const *, ::size_t)[decl0]'
+        ]
+    },
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl'
+        ]
+    },
+    'vl::Error': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>',
+        'impls': [
+            'NI$vl::Error'
+        ],
+        'decls': []
+    },
+    'vl::pos_t': {
+        'displayNameInHtml': '<span class="cpp_type">pos_t</span>',
+        'impls': [
+            'NI$vl::pos_t'
+        ],
+        'decls': []
+    },
+    'vl::stream': {
+        'displayNameInHtml': 'vl::stream',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::stream',
+            'NF[1]$vl::stream',
+            'NF[2]$vl::stream',
+            'NF[3]$vl::stream',
+            'NF[4]$vl::stream',
+            'NF[5]$vl::stream',
+            'NF[6]$vl::stream',
+            'NF[7]$vl::stream',
+            'NF[8]$vl::stream',
+            'NF[9]$vl::stream',
+            'NF[10]$vl::stream',
+            'NF[11]$vl::stream',
+            'NF[12]$vl::stream',
+            'NF[13]$vl::stream',
+            'NF[14]$vl::stream',
+            'NF[15]$vl::stream',
+            'NF[16]$vl::stream',
+            'NF[17]$vl::stream',
+            'NF[18]$vl::stream'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]::_buffer': {
+        'displayNameInHtml': '_buffer',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]::_buffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]::_size': {
+        'displayNameInHtml': '_size',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]::_size'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::CanPeek@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">CanPeek</span>()',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::CanPeek@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::CanPeek@bool()[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::CanRead@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">CanRead</span>()',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::CanRead@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::CanRead@bool()[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::CanSeek@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">CanSeek</span>()',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::CanSeek@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::CanSeek@bool()[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::CanWrite@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">CanWrite</span>()',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::CanWrite@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::CanWrite@bool()[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::Close@void()': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">Close</span>()',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::Close@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::Close@void()[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::IsAvailable@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">IsAvailable</span>()',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::IsAvailable@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::IsAvailable@bool()[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::IsLimited@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">IsLimited</span>()',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::IsLimited@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::IsLimited@bool()[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">Peek</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_buffer': {
+        'displayNameInHtml': '_buffer',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_size': {
+        'displayNameInHtml': '_size',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_size'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::max': {
+        'displayNameInHtml': 'max',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::max'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::Position@::vl::pos_t()': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">Position</span>()',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::Position@::vl::pos_t()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::Position@::vl::pos_t()[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">Read</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_buffer': {
+        'displayNameInHtml': '_buffer',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size': {
+        'displayNameInHtml': '_size',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::max': {
+        'displayNameInHtml': 'max',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::max'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">Seek</span>(<span class="cpp_type">pos_t</span>)',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)[impl0]::_size': {
+        'displayNameInHtml': '_size',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)[impl0]::_size'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">SeekFromBegin</span>(<span class="cpp_type">pos_t</span>)',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::_size': {
+        'displayNameInHtml': '_size',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::_size'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::expected': {
+        'displayNameInHtml': 'expected',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::expected'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">SeekFromEnd</span>(<span class="cpp_type">pos_t</span>)',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)[impl0]::_size': {
+        'displayNameInHtml': '_size',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)[impl0]::_size'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::Size@::vl::pos_t()': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">Size</span>()',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::Size@::vl::pos_t()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::Size@::vl::pos_t()[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">Write</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer': {
+        'displayNameInHtml': '_buffer',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size': {
+        'displayNameInHtml': '_size',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::max': {
+        'displayNameInHtml': 'max',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::max'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::buffer': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_field">buffer</span>',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::buffer'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::position': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_field">position</span>',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::position'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::size': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_field">size</span>',
+        'impls': [
+            'NI$vl::stream::MemoryWrapperStream::size'
+        ],
+        'decls': []
+    },
+    'vl::stream::MemoryWrapperStream::~MemoryWrapperStream@()': {
+        'displayNameInHtml': '<span class="cpp_type">MemoryWrapperStream</span>::<span class="cpp_function">~MemoryWrapperStream</span>()',
+        'impls': [
+            'FB$vl::stream::MemoryWrapperStream::~MemoryWrapperStream@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::stream::MemoryWrapperStream::~MemoryWrapperStream@()[decl0]'
+        ]
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$memmove@void *(void *, void const *, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::CanPeek@bool()[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::CanPeek@bool()[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::CanRead@bool()[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::CanRead@bool()[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::CanSeek@bool()[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::CanSeek@bool()[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::CanWrite@bool()[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::CanWrite@bool()[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::Close@void()[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::Close@void()[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::IsAvailable@bool()[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::IsAvailable@bool()[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::IsLimited@bool()[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::IsLimited@bool()[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::Position@::vl::pos_t()[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::Position@::vl::pos_t()[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::Size@::vl::pos_t()[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::Size@::vl::pos_t()[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]': null,
+    'FB$vl::stream::MemoryWrapperStream::~MemoryWrapperStream@()[decl0]': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'FB$vl::stream::MemoryWrapperStream::~MemoryWrapperStream@()[impl0]': null,
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::stream': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[10]$vl::stream': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[11]$vl::stream': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[12]$vl::stream': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[13]$vl::stream': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[14]$vl::stream': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[15]$vl::stream': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::stream': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[17]$vl::stream': null,
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[18]$vl::stream': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[19]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[1]$vl::stream': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[2]$vl::stream': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[37]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[38]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[39]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[3]$vl::stream': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[40]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[42]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[43]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[44]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[45]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[46]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[49]$vl': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[4]$vl::stream': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[57]$vl': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[5]$vl::stream': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[60]$vl': null,
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[6]$vl::stream': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[7]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[7]$vl::stream': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[8]$vl::stream': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::stream': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NI$vl::Error': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::pos_t': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::stream::MemoryWrapperStream': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NI$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]::_buffer': null,
+    'NI$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[impl0]::_size': null,
+    'NI$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_buffer': null,
+    'NI$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::_size': null,
+    'NI$vl::stream::MemoryWrapperStream::Peek@::vl::vint(void *, ::vl::vint)[impl0]::max': null,
+    'NI$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_buffer': null,
+    'NI$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::_size': null,
+    'NI$vl::stream::MemoryWrapperStream::Read@::vl::vint(void *, ::vl::vint)[impl0]::max': null,
+    'NI$vl::stream::MemoryWrapperStream::Seek@void(::vl::pos_t)[impl0]::_size': null,
+    'NI$vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::_size': null,
+    'NI$vl::stream::MemoryWrapperStream::SeekFromBegin@void(::vl::pos_t)[impl0]::expected': null,
+    'NI$vl::stream::MemoryWrapperStream::SeekFromEnd@void(::vl::pos_t)[impl0]::_size': null,
+    'NI$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer': null,
+    'NI$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size': null,
+    'NI$vl::stream::MemoryWrapperStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::max': null,
+    'NI$vl::stream::MemoryWrapperStream::buffer': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NI$vl::stream::MemoryWrapperStream::position': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NI$vl::stream::MemoryWrapperStream::size': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

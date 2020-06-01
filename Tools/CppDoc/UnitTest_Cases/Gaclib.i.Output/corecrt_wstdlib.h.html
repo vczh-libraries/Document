@@ -543,7 +543,7 @@
 #pragma warning(pop)
 
 <div class="expandable"><div class="disabled">    _ACRTIMP void __cdecl _wperror(</div>
-<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wperror@void(wchar_t const *)[decl0]"><div><div class="token cpp_function">_wperror</div></div></div>(</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wperror@void(wchar_t const *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_wperror@void(wchar_t const *)'], [], [])"><div class="token cpp_function">_wperror</div></div></div>(</div></div>
 <div class="expandable"><div class="disabled">        _In_opt_z_ wchar_t const* _ErrorMessage</div>
 <div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wperror@void(wchar_t const *)[decl0]::_ErrorMessage"><div>_ErrorMessage</div></div></div></div>
         );
@@ -930,6 +930,14 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    '_wperror@void(wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wperror</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_wperror@void(wchar_t const *)[decl0]',
+            'FB$_wperror@void(wchar_t const *)[decl1]'
+        ]
+    },
     '_wsearchenv_s@::errno_t(wchar_t const *, wchar_t const *, wchar_t *, ::size_t)': {
         'displayNameInHtml': '<span class="cpp_function">_wsearchenv_s</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
@@ -1075,6 +1083,8 @@ symbolToFiles = {
     'FB$_wgetenv_s@::errno_t(::size_t *, wchar_t [*] &, wchar_t const *)[impl0]': null,
     'FB$_wmakepath_s@::errno_t(wchar_t *, ::size_t, wchar_t const *, wchar_t const *, wchar_t const *, wchar_t const *)[decl0]': null,
     'FB$_wmakepath_s@::errno_t(wchar_t [*] &, wchar_t const *, wchar_t const *, wchar_t const *, wchar_t const *)[impl0]': null,
+    'FB$_wperror@void(wchar_t const *)[decl0]': null,
+    'FB$_wperror@void(wchar_t const *)[decl1]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
     'FB$_wsearchenv_s@::errno_t(wchar_t const *, wchar_t const *, wchar_t *, ::size_t)[decl0]': null,
     'FB$_wsearchenv_s@::errno_t(wchar_t const *, wchar_t const *, wchar_t [*] &)[impl0]': null,
     'FB$_wsplitpath_s@::errno_t(wchar_t const *, wchar_t *, ::size_t, wchar_t *, ::size_t, wchar_t *, ::size_t, wchar_t *, ::size_t)[decl0]': null,

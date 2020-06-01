@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HttpUtility.cpp</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;HttpUtility.h&quot;</div>
+
+<div class="disabled">#ifdef VCZH_MSVC</div>
+<div class="disabled">#include &lt;Windows.h&gt;
+#include &lt;winhttp.h&gt;</div>
+
+#pragma comment(lib, <div class="token cpp_string ">&quot;WinHttp.lib&quot;</div>)
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[49]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">using</div> <div class="token cpp_keyword ">namespace</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>;
+
+<div class="token cpp_comment ">/***********************************************************************
+HttpRequest
+***********************************************************************/</div>
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest'], [], [])"><div class="token cpp_type">HttpRequest</div></div>::<div class="def" id="FB$vl::HttpRequest::$__ctor@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::$__ctor@()'], [], [])"><div class="token cpp_function">HttpRequest</div></div></div>()
+		:port(<div class="token cpp_number ">0</div>)
+		,secure(<div class="token cpp_keyword ">false</div>)
+	{
+	}
+
+	<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest'], [], [])"><div class="token cpp_type">HttpRequest</div></div>::<div class="def" id="FB$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)'], [], [])"><div class="token cpp_function">SetHost</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::inputQuery"><div><div class="token cpp_argument">inputQuery</div></div></div>)
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::server'], [], [])"><div class="token cpp_field">server</div></div>=<div class="token cpp_string ">L&quot;&quot;</div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::query'], [], [])"><div class="token cpp_field">query</div></div>=<div class="token cpp_string ">L&quot;&quot;</div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::port'], [], [])"><div class="token cpp_field">port</div></div>=<div class="token cpp_number ">0</div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::secure'], [], [])"><div class="token cpp_field">secure</div></div>=<div class="token cpp_keyword ">false</div>;
+
+		{
+			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::server'], [], [])"><div class="token cpp_field">server</div></div>==<div class="token cpp_string ">L&quot;&quot;</div>)
+			{
+				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::inputQuery'], [], [])"><div class="token cpp_argument">inputQuery</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Length@::vl::vint()'], ['vl::ObjectString::Length@::vl::vint()'], [], [])"><div class="token cpp_function">Length</div></div>()&gt;<div class="token cpp_number ">7</div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::protocol"><div>protocol</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::inputQuery'], [], [])"><div class="token cpp_argument">inputQuery</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)'], ['vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">Sub</div></div>(<div class="token cpp_number ">0</div>, <div class="token cpp_number ">8</div>);
+					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol(['_wcsicmp@int(wchar_t const *, wchar_t const *)'], ['_wcsicmp@int(wchar_t const *, wchar_t const *)'], [], [])"><div class="token cpp_function">_wcsicmp</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::protocol'], [], [])">protocol</div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(), <div class="token cpp_string ">L&quot;https://&quot;</div>)==<div class="token cpp_number ">0</div>)
+					{
+						<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading"><div>reading</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::inputQuery'], [], [])"><div class="token cpp_argument">inputQuery</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>()+<div class="token cpp_number ">8</div>;
+						<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index1"><div>index1</div></div>=<div class="ref" onclick="jumpToSymbol(['wcschr@wchar_t const *(wchar_t const *, wchar_t)'], ['wcschr@wchar_t *(wchar_t *, wchar_t)', 'wcschr@wchar_t const *(wchar_t const *, wchar_t)'], [], [])"><div class="token cpp_function">wcschr</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading'], [], [])">reading</div>, <div class="token cpp_string ">L&apos;:&apos;</div>);
+						<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index2"><div>index2</div></div>=<div class="ref" onclick="jumpToSymbol(['wcschr@wchar_t const *(wchar_t const *, wchar_t)'], ['wcschr@wchar_t *(wchar_t *, wchar_t)', 'wcschr@wchar_t const *(wchar_t const *, wchar_t)'], [], [])"><div class="token cpp_function">wcschr</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading'], [], [])">reading</div>, <div class="token cpp_string ">L&apos;/&apos;</div>);
+						<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index2'], [], [])">index2</div>)
+						{
+							<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::query'], [], [])"><div class="token cpp_field">query</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index2'], [], [])">index2</div>;
+							<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::server'], [], [])"><div class="token cpp_field">server</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> &&)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading'], [], [])">reading</div>, (<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index1'], [], [])">index1</div>?<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index1'], [], [])">index1</div>:<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index2'], [], [])">index2</div>)-<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading'], [], [])">reading</div>);
+<div class="expandable"><div class="disabled">							port=INTERNET_DEFAULT_HTTPS_PORT;</div>
+<div class="expanded">							<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::port'], [], [])"><div class="token cpp_field">port</div></div>=<div class="token cpp_number ">443</div>;</div></div>
+							<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::secure'], [], [])"><div class="token cpp_field">secure</div></div>=<div class="token cpp_keyword ">true</div>;
+							<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index1'], [], [])">index1</div>)
+							{
+								<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::portString"><div>portString</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index1'], [], [])">index1</div>+<div class="token cpp_number ">1</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index2'], [], [])">index2</div>-<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index1'], [], [])">index1</div>-<div class="token cpp_number ">1</div>);
+								<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::port'], [], [])"><div class="token cpp_field">port</div></div>=<div class="ref" onclick="jumpToSymbol(['_wtoi@int(wchar_t const *)'], ['_wtoi@int(wchar_t const *)'], [], [])"><div class="token cpp_function">_wtoi</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::portString'], [], [])">portString</div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>());
+							}
+							<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+						}
+					}
+				}
+			}
+			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::server'], [], [])"><div class="token cpp_field">server</div></div>==<div class="token cpp_string ">L&quot;&quot;</div>)
+			{
+				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::inputQuery'], [], [])"><div class="token cpp_argument">inputQuery</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Length@::vl::vint()'], ['vl::ObjectString::Length@::vl::vint()'], [], [])"><div class="token cpp_function">Length</div></div>()&gt;<div class="token cpp_number ">6</div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::protocol2"><div>protocol</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::inputQuery'], [], [])"><div class="token cpp_argument">inputQuery</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)'], ['vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">Sub</div></div>(<div class="token cpp_number ">0</div>, <div class="token cpp_number ">7</div>);
+					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol(['_wcsicmp@int(wchar_t const *, wchar_t const *)'], ['_wcsicmp@int(wchar_t const *, wchar_t const *)'], [], [])"><div class="token cpp_function">_wcsicmp</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::protocol2'], [], [])">protocol</div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(), <div class="token cpp_string ">L&quot;http://&quot;</div>)==<div class="token cpp_number ">0</div>)
+					{
+						<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading2"><div>reading</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::inputQuery'], [], [])"><div class="token cpp_argument">inputQuery</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>()+<div class="token cpp_number ">7</div>;
+						<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index12"><div>index1</div></div>=<div class="ref" onclick="jumpToSymbol(['wcschr@wchar_t const *(wchar_t const *, wchar_t)'], ['wcschr@wchar_t *(wchar_t *, wchar_t)', 'wcschr@wchar_t const *(wchar_t const *, wchar_t)'], [], [])"><div class="token cpp_function">wcschr</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading2'], [], [])">reading</div>, <div class="token cpp_string ">L&apos;:&apos;</div>);
+						<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index22"><div>index2</div></div>=<div class="ref" onclick="jumpToSymbol(['wcschr@wchar_t const *(wchar_t const *, wchar_t)'], ['wcschr@wchar_t *(wchar_t *, wchar_t)', 'wcschr@wchar_t const *(wchar_t const *, wchar_t)'], [], [])"><div class="token cpp_function">wcschr</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading2'], [], [])">reading</div>, <div class="token cpp_string ">L&apos;/&apos;</div>);
+						<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index22'], [], [])">index2</div>)
+						{
+							<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::query'], [], [])"><div class="token cpp_field">query</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index22'], [], [])">index2</div>;
+							<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::server'], [], [])"><div class="token cpp_field">server</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> &&)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading2'], [], [])">reading</div>, (<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index12'], [], [])">index1</div>?<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index12'], [], [])">index1</div>:<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index22'], [], [])">index2</div>)-<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading2'], [], [])">reading</div>);
+<div class="expandable"><div class="disabled">							port=INTERNET_DEFAULT_HTTP_PORT;</div>
+<div class="expanded">							<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::port'], [], [])"><div class="token cpp_field">port</div></div>=<div class="token cpp_number ">80</div>;</div></div>
+							<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index12'], [], [])">index1</div>)
+							{
+								<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::portString2"><div>portString</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index12'], [], [])">index1</div>+<div class="token cpp_number ">1</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index22'], [], [])">index2</div>-<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index12'], [], [])">index1</div>-<div class="token cpp_number ">1</div>);
+								<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::port'], [], [])"><div class="token cpp_field">port</div></div>=<div class="ref" onclick="jumpToSymbol(['_wtoi@int(wchar_t const *)'], ['_wtoi@int(wchar_t const *)'], [], [])"><div class="token cpp_function">_wtoi</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::portString2'], [], [])">portString</div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>());
+							}
+							<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+						}
+					}
+				}
+			}
+		}
+		<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+	}
+
+	<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest'], [], [])"><div class="token cpp_type">HttpRequest</div></div>::<div class="def" id="FB$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)'], [], [])"><div class="token cpp_function">SetBodyUtf8</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::bodyString"><div><div class="token cpp_argument">bodyString</div></div></div>)
+	{
+<div class="expandable"><div class="disabled">		vint utf8Size=WideCharToMultiByte(CP_UTF8, 0, bodyString.Buffer(), (int)bodyString.Length(), NULL, 0, NULL, NULL);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8Size"><div>utf8Size</div></div>=<div class="ref" onclick="jumpToSymbol(['WideCharToMultiByte@int(::UINT, ::DWORD, ::LPCWCH, int, ::LPSTR, int, ::LPCCH, ::LPBOOL)'], ['WideCharToMultiByte@int(::UINT, ::DWORD, ::LPCWCH, int, ::LPSTR, int, ::LPCCH, ::LPBOOL)'], [], [])"><div class="token cpp_function">WideCharToMultiByte</div></div>(<div class="token cpp_number ">65001</div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::bodyString'], [], [])"><div class="token cpp_argument">bodyString</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(), (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::bodyString'], [], [])"><div class="token cpp_argument">bodyString</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Length@::vl::vint()'], ['vl::ObjectString::Length@::vl::vint()'], [], [])"><div class="token cpp_function">Length</div></div>(), <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>);</div></div>
+		<div class="token cpp_keyword ">char</div>* <div class="def" id="NI$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8"><div>utf8</div></div>=<div class="token cpp_keyword ">new</div> <div class="token cpp_keyword ">char</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8Size'], [], [])">utf8Size</div>+<div class="token cpp_number ">1</div>];
+<div class="expandable"><div class="disabled">		ZeroMemory(utf8, utf8Size+1);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['memset@void *(void *, int, ::size_t)'], ['memset@void *(void *, int, ::size_t)'], [], [])"><div class="token cpp_function">memset</div></div>((<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8'], [], [])">utf8</div>),<div class="token cpp_number ">0</div>,(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8Size'], [], [])">utf8Size</div>+<div class="token cpp_number ">1</div>));</div></div>
+<div class="expandable"><div class="disabled">		WideCharToMultiByte(CP_UTF8, 0, bodyString.Buffer(), (int)bodyString.Length(), utf8, (int)utf8Size, NULL, NULL);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['WideCharToMultiByte@int(::UINT, ::DWORD, ::LPCWCH, int, ::LPSTR, int, ::LPCCH, ::LPBOOL)'], ['WideCharToMultiByte@int(::UINT, ::DWORD, ::LPCWCH, int, ::LPSTR, int, ::LPCCH, ::LPBOOL)'], [], [])"><div class="token cpp_function">WideCharToMultiByte</div></div>(<div class="token cpp_number ">65001</div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::bodyString'], [], [])"><div class="token cpp_argument">bodyString</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(), (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::bodyString'], [], [])"><div class="token cpp_argument">bodyString</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Length@::vl::vint()'], ['vl::ObjectString::Length@::vl::vint()'], [], [])"><div class="token cpp_function">Length</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8'], [], [])">utf8</div>, (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8Size'], [], [])">utf8Size</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>);</div></div>
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::body'], [], [])"><div class="token cpp_field">body</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Array::Resize@void(::vl::vint)'], ['vl::collections::Array::Resize@void(::vl::vint)'], [], [])"><div class="token cpp_function">Resize</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8Size'], [], [])">utf8Size</div>);
+		<div class="ref" onclick="jumpToSymbol(['memcpy@void *(void *, void const *, ::size_t)'], ['memcpy@void *(void *, void const *, ::size_t)'], [], [])"><div class="token cpp_function">memcpy</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::body'], [], [])"><div class="token cpp_field">body</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>], <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8'], [], [])">utf8</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8Size'], [], [])">utf8Size</div>);
+		<div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8'], [], [])">utf8</div>;
+	}
+
+<div class="token cpp_comment ">/***********************************************************************
+HttpResponse
+***********************************************************************/</div>
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse'], [], [])"><div class="token cpp_type">HttpResponse</div></div>::<div class="def" id="FB$vl::HttpResponse::$__ctor@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::$__ctor@()'], [], [])"><div class="token cpp_function">HttpResponse</div></div></div>()
+		:statusCode(<div class="token cpp_number ">0</div>)
+	{
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse'], [], [])"><div class="token cpp_type">HttpResponse</div></div>::<div class="def" id="FB$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()'], [], [])"><div class="token cpp_function">GetBodyUtf8</div></div></div>()
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::response"><div>response</div></div>;
+		<div class="token cpp_keyword ">char</div>* <div class="def" id="NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf8"><div>utf8</div></div>=&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::body'], [], [])"><div class="token cpp_field">body</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>];
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::totalSize"><div>totalSize</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::body'], [], [])"><div class="token cpp_field">body</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();
+<div class="expandable"><div class="disabled">		vint utf16Size=MultiByteToWideChar(CP_UTF8, 0, utf8, (int)totalSize, NULL, 0);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16Size"><div>utf16Size</div></div>=<div class="ref" onclick="jumpToSymbol(['MultiByteToWideChar@int(::UINT, ::DWORD, ::LPCCH, int, ::LPWSTR, int)'], ['MultiByteToWideChar@int(::UINT, ::DWORD, ::LPCCH, int, ::LPWSTR, int)'], [], [])"><div class="token cpp_function">MultiByteToWideChar</div></div>(<div class="token cpp_number ">65001</div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf8'], [], [])">utf8</div>, (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::totalSize'], [], [])">totalSize</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>);</div></div>
+		<div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16"><div>utf16</div></div>=<div class="token cpp_keyword ">new</div> <div class="token cpp_keyword ">wchar_t</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16Size'], [], [])">utf16Size</div>+<div class="token cpp_number ">1</div>];
+<div class="expandable"><div class="disabled">		ZeroMemory(utf16, (utf16Size+1)*sizeof(wchar_t));</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['memset@void *(void *, int, ::size_t)'], ['memset@void *(void *, int, ::size_t)'], [], [])"><div class="token cpp_function">memset</div></div>((<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16'], [], [])">utf16</div>),<div class="token cpp_number ">0</div>,((<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16Size'], [], [])">utf16Size</div>+<div class="token cpp_number ">1</div>)*<div class="token cpp_keyword ">sizeof</div>(<div class="token cpp_keyword ">wchar_t</div>)));</div></div>
+<div class="expandable"><div class="disabled">		MultiByteToWideChar(CP_UTF8, 0, utf8, (int)totalSize, utf16, (int)utf16Size);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['MultiByteToWideChar@int(::UINT, ::DWORD, ::LPCCH, int, ::LPWSTR, int)'], ['MultiByteToWideChar@int(::UINT, ::DWORD, ::LPCCH, int, ::LPWSTR, int)'], [], [])"><div class="token cpp_function">MultiByteToWideChar</div></div>(<div class="token cpp_number ">65001</div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf8'], [], [])">utf8</div>, (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::totalSize'], [], [])">totalSize</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16'], [], [])">utf16</div>, (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16Size'], [], [])">utf16Size</div>);</div></div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::response'], [], [])">response</div>=<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16'], [], [])">utf16</div>;
+		<div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16'], [], [])">utf16</div>;
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::response'], [], [])">response</div>;
+	}
+
+<div class="token cpp_comment ">/***********************************************************************
+Utilities
+***********************************************************************/</div>
+
+	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::BufferPair"><div><div class="token cpp_type">BufferPair</div></div></div>
+	{
+		<div class="token cpp_keyword ">char</div>*		<div class="def" id="NI$vl::BufferPair::buffer"><div><div class="token cpp_field">buffer</div></div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>		<div class="def" id="NI$vl::BufferPair::length"><div><div class="token cpp_field">length</div></div></div>;
+
+		<div class="def" id="FB$vl::BufferPair::$__ctor@()[impl0]"><div><div class="token cpp_function">BufferPair</div></div></div>()
+			:buffer(<div class="token cpp_number ">0</div>)
+			,length(<div class="token cpp_number ">0</div>)
+		{
+		}
+
+		<div class="def" id="FB$vl::BufferPair::$__ctor@(char *, ::vl::vint)[impl0]"><div><div class="token cpp_function">BufferPair</div></div></div>(<div class="token cpp_keyword ">char</div>* <div class="def" id="NI$vl::BufferPair::$__ctor@(char *, ::vl::vint)[impl0]::_buffer"><div><div class="token cpp_argument">_buffer</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::BufferPair::$__ctor@(char *, ::vl::vint)[impl0]::_length"><div><div class="token cpp_argument">_length</div></div></div>)
+			:buffer(<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair::$__ctor@(char *, ::vl::vint)[impl0]::_buffer'], [], [])"><div class="token cpp_argument">_buffer</div></div>)
+			,length(<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair::$__ctor@(char *, ::vl::vint)[impl0]::_length'], [], [])"><div class="token cpp_argument">_length</div></div>)
+		{
+		}
+
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::BufferPair::operator ==@bool(::vl::BufferPair const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair'], [], [])"><div class="token cpp_type">BufferPair</div></div>&amp; <div class="def" id="NI$vl::BufferPair::operator ==@bool(::vl::BufferPair const &)[impl0]::pair"><div><div class="token cpp_argument">pair</div></div></div>){<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;}
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::BufferPair::operator !=@bool(::vl::BufferPair const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair'], [], [])"><div class="token cpp_type">BufferPair</div></div>&amp; <div class="def" id="NI$vl::BufferPair::operator !=@bool(::vl::BufferPair const &)[impl0]::pair"><div><div class="token cpp_argument">pair</div></div></div>){<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;}
+	};
+
+	<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)'], [], [])"><div class="token cpp_function">HttpQuery</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest'], [], [])"><div class="token cpp_type">HttpRequest</div></div>&amp; <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request"><div><div class="token cpp_argument">request</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse'], [], [])"><div class="token cpp_type">HttpResponse</div></div>&amp; <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::response"><div><div class="token cpp_argument">response</div></div></div>)
+	{
+		<div class="token cpp_comment ">// initialize</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::response'], [], [])"><div class="token cpp_argument">response</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::statusCode'], [], [])"><div class="token cpp_field">statusCode</div></div>=-<div class="token cpp_number ">1</div>;
+<div class="expandable"><div class="disabled">		HINTERNET internet=NULL;</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['HINTERNET'], [], [])"><div class="token cpp_type">HINTERNET</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::internet"><div>internet</div></div>=<div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">		HINTERNET connectedInternet=NULL;</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['HINTERNET'], [], [])"><div class="token cpp_type">HINTERNET</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::connectedInternet"><div>connectedInternet</div></div>=<div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">		HINTERNET requestInternet=NULL;</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['HINTERNET'], [], [])"><div class="token cpp_type">HINTERNET</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet"><div>requestInternet</div></div>=<div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">		BOOL httpResult=FALSE;</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult"><div>httpResult</div></div>=<div class="token cpp_number ">0</div>;</div></div>
+		<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error"><div>error</div></div>=<div class="token cpp_number ">0</div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>&gt; <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::acceptTypes"><div>acceptTypes</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair'], [], [])"><div class="token cpp_type">BufferPair</div></div>&gt; <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::availableBuffers"><div>availableBuffers</div></div>;
+
+		<div class="token cpp_comment ">// access http</div>
+<div class="expandable"><div class="disabled">		internet=WinHttpOpen(L&quot;vczh&quot;, WINHTTP_ACCESS_TYPE_NO_PROXY, NULL, NULL, 0);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::internet'], [], [])">internet</div>=<div class="ref" onclick="jumpToSymbol(['WinHttpOpen@::HINTERNET(::LPCWSTR, ::DWORD, ::LPCWSTR, ::LPCWSTR, ::DWORD)'], ['WinHttpOpen@::HINTERNET(::LPCWSTR, ::DWORD, ::LPCWSTR, ::LPCWSTR, ::DWORD)'], [], [])"><div class="token cpp_function">WinHttpOpen</div></div>(<div class="token cpp_string ">L&quot;vczh&quot;</div>, <div class="token cpp_number ">1</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>);</div></div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error'], [], [])">error</div>=<div class="ref" onclick="jumpToSymbol(['GetLastError@::DWORD()'], ['GetLastError@::DWORD()'], [], [])"><div class="token cpp_function">GetLastError</div></div>();
+		<div class="token cpp_keyword ">if</div>(!<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::internet'], [], [])">internet</div>) <div class="token cpp_keyword ">goto</div> CLEANUP;
+
+		<div class="token cpp_comment ">// connect</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::connectedInternet'], [], [])">connectedInternet</div>=<div class="ref" onclick="jumpToSymbol(['WinHttpConnect@::HINTERNET(::HINTERNET, ::LPCWSTR, ::INTERNET_PORT, ::DWORD)'], ['WinHttpConnect@::HINTERNET(::HINTERNET, ::LPCWSTR, ::INTERNET_PORT, ::DWORD)'], [], [])"><div class="token cpp_function">WinHttpConnect</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::internet'], [], [])">internet</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::server'], [], [])"><div class="token cpp_field">server</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(), (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::port'], [], [])"><div class="token cpp_field">port</div></div>, <div class="token cpp_number ">0</div>);
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error'], [], [])">error</div>=<div class="ref" onclick="jumpToSymbol(['GetLastError@::DWORD()'], ['GetLastError@::DWORD()'], [], [])"><div class="token cpp_function">GetLastError</div></div>();
+		<div class="token cpp_keyword ">if</div>(!<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::connectedInternet'], [], [])">connectedInternet</div>) <div class="token cpp_keyword ">goto</div> CLEANUP;
+
+		<div class="token cpp_comment ">// open request</div>
+		<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::acceptTypes'], [], [])"><div class="token cpp_field">acceptTypes</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i'], [], [])">i</div>++)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::acceptTypes'], [], [])">acceptTypes</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::acceptTypes'], [], [])"><div class="token cpp_field">acceptTypes</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], ['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i'], [], [])">i</div>).<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>());
+		}
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::acceptTypes'], [], [])">acceptTypes</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="token cpp_number ">0</div>);
+<div class="expandable"><div class="disabled">		requestInternet=WinHttpOpenRequest(connectedInternet, request.method.Buffer(), request.query.Buffer(), NULL, WINHTTP_NO_REFERER, &amp;acceptTypes[0], (request.secure?WINHTTP_FLAG_SECURE:0));</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>=<div class="ref" onclick="jumpToSymbol(['WinHttpOpenRequest@::HINTERNET(::HINTERNET, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR *, ::DWORD)'], ['WinHttpOpenRequest@::HINTERNET(::HINTERNET, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR *, ::DWORD)'], [], [])"><div class="token cpp_function">WinHttpOpenRequest</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::connectedInternet'], [], [])">connectedInternet</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::method'], [], [])"><div class="token cpp_field">method</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::query'], [], [])"><div class="token cpp_field">query</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(), <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::acceptTypes'], [], [])">acceptTypes</div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>], (<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::secure'], [], [])"><div class="token cpp_field">secure</div></div>?<div class="token cpp_number ">0x00800000</div>:<div class="token cpp_number ">0</div>));</div></div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error'], [], [])">error</div>=<div class="ref" onclick="jumpToSymbol(['GetLastError@::DWORD()'], ['GetLastError@::DWORD()'], [], [])"><div class="token cpp_function">GetLastError</div></div>();
+		<div class="token cpp_keyword ">if</div>(!<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>) <div class="token cpp_keyword ">goto</div> CLEANUP;
+
+		<div class="token cpp_comment ">// authentication, cookie and request</div>
+		<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::username'], [], [])"><div class="token cpp_field">username</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator !=@bool([T] const *)'], [], [], [])"><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div><div class="token cpp_string ">L&quot;&quot;</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::password'], [], [])"><div class="token cpp_field">password</div></div>!=<div class="token cpp_string ">L&quot;&quot;</div>)
+		{
+<div class="expandable"><div class="disabled">			WinHttpSetCredentials(requestInternet, WINHTTP_AUTH_TARGET_SERVER, WINHTTP_AUTH_SCHEME_BASIC, request.username.Buffer(), request.password.Buffer(), NULL);</div>
+<div class="expanded">			<div class="ref" onclick="jumpToSymbol(['WinHttpSetCredentials@::BOOL(::HINTERNET, ::DWORD, ::DWORD, ::LPCWSTR, ::LPCWSTR, ::LPVOID)'], ['WinHttpSetCredentials@::BOOL(::HINTERNET, ::DWORD, ::DWORD, ::LPCWSTR, ::LPCWSTR, ::LPVOID)'], [], [])"><div class="token cpp_function">WinHttpSetCredentials</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, <div class="token cpp_number ">0x00000000</div>, <div class="token cpp_number ">0x00000001</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::username'], [], [])"><div class="token cpp_field">username</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::password'], [], [])"><div class="token cpp_field">password</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(), <div class="token cpp_number ">0</div>);</div></div>
+		}
+		<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::contentType'], [], [])"><div class="token cpp_field">contentType</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator !=@bool([T] const *)'], [], [], [])"><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div><div class="token cpp_string ">L&quot;&quot;</div>)
+		{
+<div class="expandable"><div class="disabled">			httpResult=WinHttpAddRequestHeaders(requestInternet, (L&quot;Content-type:&quot;+request.contentType).Buffer(), -1, WINHTTP_ADDREQ_FLAG_REPLACE|WINHTTP_ADDREQ_FLAG_ADD);</div>
+<div class="expanded">			<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult'], [], [])">httpResult</div>=<div class="ref" onclick="jumpToSymbol([], ['WinHttpAddRequestHeaders@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::DWORD)'], [], [])"><div class="token cpp_function">WinHttpAddRequestHeaders</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, (<div class="token cpp_string ">L&quot;Content-type:&quot;</div>+<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::contentType'], [], [])"><div class="token cpp_field">contentType</div></div>).Buffer(), -<div class="token cpp_number ">1</div>, <div class="token cpp_number ">0x80000000</div>|<div class="token cpp_number ">0x20000000</div>);</div></div>
+		}
+		<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::cookie'], [], [])"><div class="token cpp_field">cookie</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator !=@bool([T] const *)'], [], [], [])"><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div><div class="token cpp_string ">L&quot;&quot;</div>)
+		{
+<div class="expandable"><div class="disabled">			WinHttpAddRequestHeaders(requestInternet, (L&quot;Cookie:&quot;+request.cookie).Buffer(), -1, WINHTTP_ADDREQ_FLAG_REPLACE|WINHTTP_ADDREQ_FLAG_ADD);</div>
+<div class="expanded">			<div class="ref" onclick="jumpToSymbol([], ['WinHttpAddRequestHeaders@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::DWORD)'], [], [])"><div class="token cpp_function">WinHttpAddRequestHeaders</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, (<div class="token cpp_string ">L&quot;Cookie:&quot;</div>+<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::cookie'], [], [])"><div class="token cpp_field">cookie</div></div>).Buffer(), -<div class="token cpp_number ">1</div>, <div class="token cpp_number ">0x80000000</div>|<div class="token cpp_number ">0x20000000</div>);</div></div>
+		}
+		
+		<div class="token cpp_comment ">// extra headers</div>
+		<div class="token cpp_keyword ">for</div>(<div class="token cpp_keyword ">int</div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i2"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i2'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::extraHeaders'], [], [])"><div class="token cpp_field">extraHeaders</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Count@::vl::vint()'], ['vl::collections::Dictionary::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i2'], [], [])">i</div>++)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::key"><div>key</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::extraHeaders'], [], [])"><div class="token cpp_field">extraHeaders</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], ['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], [], [])"><div class="token cpp_function">Keys</div></div>()<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i2'], [], [])">i</div>];
+			<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::value"><div>value</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::extraHeaders'], [], [])"><div class="token cpp_field">extraHeaders</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], ['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], [], [])"><div class="token cpp_function">Values</div></div>().<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], ['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i2'], [], [])">i</div>);
+<div class="expandable"><div class="disabled">			WinHttpAddRequestHeaders(requestInternet, (key+L&quot;:&quot;+value).Buffer(), -1, WINHTTP_ADDREQ_FLAG_REPLACE|WINHTTP_ADDREQ_FLAG_ADD);</div>
+<div class="expanded">			<div class="ref" onclick="jumpToSymbol([], ['WinHttpAddRequestHeaders@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::DWORD)'], [], [])"><div class="token cpp_function">WinHttpAddRequestHeaders</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, (<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::key'], [], [])">key</div>+<div class="token cpp_string ">L&quot;:&quot;</div>+<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::value'], [], [])">value</div>).Buffer(), -<div class="token cpp_number ">1</div>, <div class="token cpp_number ">0x80000000</div>|<div class="token cpp_number ">0x20000000</div>);</div></div>
+		}
+
+		<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::body'], [], [])"><div class="token cpp_field">body</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>()&gt;<div class="token cpp_number ">0</div>)
+		{
+<div class="expandable"><div class="disabled">			httpResult=WinHttpSendRequest(requestInternet, WINHTTP_NO_ADDITIONAL_HEADERS, 0, (LPVOID)&amp;request.body.Get(0), (int)request.body.Count(), (int)request.body.Count(), NULL);</div>
+<div class="expanded">			<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult'], [], [])">httpResult</div>=<div class="ref" onclick="jumpToSymbol(['WinHttpSendRequest@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::LPVOID, ::DWORD, ::DWORD, ::DWORD_PTR)'], ['WinHttpSendRequest@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::LPVOID, ::DWORD, ::DWORD, ::DWORD_PTR)'], [], [])"><div class="token cpp_function">WinHttpSendRequest</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, (<div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div>)&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::body'], [], [])"><div class="token cpp_field">body</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], ['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="token cpp_number ">0</div>), (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::body'], [], [])"><div class="token cpp_field">body</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>(), (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'], [], [])"><div class="token cpp_argument">request</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::body'], [], [])"><div class="token cpp_field">body</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>(), <div class="token cpp_number ">0</div>);</div></div>
+		}
+		<div class="token cpp_keyword ">else</div>
+		{
+<div class="expandable"><div class="disabled">			httpResult=WinHttpSendRequest(requestInternet, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, NULL);</div>
+<div class="expanded">			<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult'], [], [])">httpResult</div>=<div class="ref" onclick="jumpToSymbol(['WinHttpSendRequest@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::LPVOID, ::DWORD, ::DWORD, ::DWORD_PTR)'], ['WinHttpSendRequest@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::LPVOID, ::DWORD, ::DWORD, ::DWORD_PTR)'], [], [])"><div class="token cpp_function">WinHttpSendRequest</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>);</div></div>
+		}
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error'], [], [])">error</div>=<div class="ref" onclick="jumpToSymbol(['GetLastError@::DWORD()'], ['GetLastError@::DWORD()'], [], [])"><div class="token cpp_function">GetLastError</div></div>();
+<div class="expandable"><div class="disabled">		if(httpResult==FALSE) goto CLEANUP;</div>
+<div class="expanded">		<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult'], [], [])">httpResult</div>==<div class="token cpp_number ">0</div>) <div class="token cpp_keyword ">goto</div> CLEANUP;</div></div>
+
+		<div class="token cpp_comment ">// receive response</div>
+<div class="expandable"><div class="disabled">		httpResult=WinHttpReceiveResponse(requestInternet, NULL);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult'], [], [])">httpResult</div>=<div class="ref" onclick="jumpToSymbol(['WinHttpReceiveResponse@::BOOL(::HINTERNET, ::LPVOID)'], ['WinHttpReceiveResponse@::BOOL(::HINTERNET, ::LPVOID)'], [], [])"><div class="token cpp_function">WinHttpReceiveResponse</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, <div class="token cpp_number ">0</div>);</div></div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error'], [], [])">error</div>=<div class="ref" onclick="jumpToSymbol(['GetLastError@::DWORD()'], ['GetLastError@::DWORD()'], [], [])"><div class="token cpp_function">GetLastError</div></div>();
+<div class="expandable"><div class="disabled">		if(httpResult!=TRUE) goto CLEANUP;</div>
+<div class="expanded">		<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult'], [], [])">httpResult</div>!=<div class="token cpp_number ">1</div>) <div class="token cpp_keyword ">goto</div> CLEANUP;</div></div>
+
+		<div class="token cpp_comment ">// read response status code</div>
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength"><div>headerLength</div></div>=<div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>);
+			<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::statusCode"><div>statusCode</div></div>=<div class="token cpp_number ">0</div>;
+<div class="expandable"><div class="disabled">			httpResult=WinHttpQueryHeaders(requestInternet, WINHTTP_QUERY_STATUS_CODE|WINHTTP_QUERY_FLAG_NUMBER, WINHTTP_HEADER_NAME_BY_INDEX, &amp;statusCode, &amp;headerLength, WINHTTP_NO_HEADER_INDEX);</div>
+<div class="expanded">			<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult'], [], [])">httpResult</div>=<div class="ref" onclick="jumpToSymbol(['WinHttpQueryHeaders@::BOOL(::HINTERNET, ::DWORD, ::LPCWSTR, ::LPVOID, ::LPDWORD, ::LPDWORD)'], ['WinHttpQueryHeaders@::BOOL(::HINTERNET, ::DWORD, ::LPCWSTR, ::LPVOID, ::LPDWORD, ::LPDWORD)'], [], [])"><div class="token cpp_function">WinHttpQueryHeaders</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, <div class="token cpp_number ">19</div>|<div class="token cpp_number ">0x20000000</div>, <div class="token cpp_number ">0</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::statusCode'], [], [])">statusCode</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength'], [], [])">headerLength</div>, <div class="token cpp_number ">0</div>);</div></div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error'], [], [])">error</div>=<div class="ref" onclick="jumpToSymbol(['GetLastError@::DWORD()'], ['GetLastError@::DWORD()'], [], [])"><div class="token cpp_function">GetLastError</div></div>();
+<div class="expandable"><div class="disabled">			if(httpResult==FALSE) goto CLEANUP;</div>
+<div class="expanded">			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult'], [], [])">httpResult</div>==<div class="token cpp_number ">0</div>) <div class="token cpp_keyword ">goto</div> CLEANUP;</div></div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::response'], [], [])"><div class="token cpp_argument">response</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::statusCode'], [], [])"><div class="token cpp_field">statusCode</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::statusCode'], [], [])">statusCode</div>;
+		}
+		<div class="token cpp_comment ">// read respons cookie</div>
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength2"><div>headerLength</div></div>=<div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>);
+<div class="expandable"><div class="disabled">			httpResult=WinHttpQueryHeaders(requestInternet, WINHTTP_QUERY_RAW_HEADERS_CRLF, WINHTTP_HEADER_NAME_BY_INDEX, NULL, &amp;headerLength, WINHTTP_NO_HEADER_INDEX);</div>
+<div class="expanded">			<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult'], [], [])">httpResult</div>=<div class="ref" onclick="jumpToSymbol(['WinHttpQueryHeaders@::BOOL(::HINTERNET, ::DWORD, ::LPCWSTR, ::LPVOID, ::LPDWORD, ::LPDWORD)'], ['WinHttpQueryHeaders@::BOOL(::HINTERNET, ::DWORD, ::LPCWSTR, ::LPVOID, ::LPDWORD, ::LPDWORD)'], [], [])"><div class="token cpp_function">WinHttpQueryHeaders</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, <div class="token cpp_number ">22</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength2'], [], [])">headerLength</div>, <div class="token cpp_number ">0</div>);</div></div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error'], [], [])">error</div>=<div class="ref" onclick="jumpToSymbol(['GetLastError@::DWORD()'], ['GetLastError@::DWORD()'], [], [])"><div class="token cpp_function">GetLastError</div></div>();
+<div class="expandable"><div class="disabled">			if(error==ERROR_INSUFFICIENT_BUFFER)</div>
+<div class="expanded">			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error'], [], [])">error</div>==<div class="token cpp_number ">122L</div>)</div></div>
+			{
+				<div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::rawHeader"><div>rawHeader</div></div>=<div class="token cpp_keyword ">new</div> <div class="token cpp_keyword ">wchar_t</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength2'], [], [])">headerLength</div>/<div class="token cpp_keyword ">sizeof</div>(<div class="token cpp_keyword ">wchar_t</div>)];
+<div class="expandable"><div class="disabled">				ZeroMemory(rawHeader, headerLength);</div>
+<div class="expanded">				<div class="ref" onclick="jumpToSymbol(['memset@void *(void *, int, ::size_t)'], ['memset@void *(void *, int, ::size_t)'], [], [])"><div class="token cpp_function">memset</div></div>((<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::rawHeader'], [], [])">rawHeader</div>),<div class="token cpp_number ">0</div>,(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength2'], [], [])">headerLength</div>));</div></div>
+<div class="expandable"><div class="disabled">				httpResult=WinHttpQueryHeaders(requestInternet, WINHTTP_QUERY_RAW_HEADERS_CRLF, WINHTTP_HEADER_NAME_BY_INDEX, rawHeader, &amp;headerLength, WINHTTP_NO_HEADER_INDEX);</div>
+<div class="expanded">				<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult'], [], [])">httpResult</div>=<div class="ref" onclick="jumpToSymbol(['WinHttpQueryHeaders@::BOOL(::HINTERNET, ::DWORD, ::LPCWSTR, ::LPVOID, ::LPDWORD, ::LPDWORD)'], ['WinHttpQueryHeaders@::BOOL(::HINTERNET, ::DWORD, ::LPCWSTR, ::LPVOID, ::LPDWORD, ::LPDWORD)'], [], [])"><div class="token cpp_function">WinHttpQueryHeaders</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, <div class="token cpp_number ">22</div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::rawHeader'], [], [])">rawHeader</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength2'], [], [])">headerLength</div>, <div class="token cpp_number ">0</div>);</div></div>
+			
+				<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieStart"><div>cookieStart</div></div>=<div class="ref" onclick="jumpToSymbol(['wcsstr@wchar_t *(wchar_t *, wchar_t const *)'], ['wcsstr@wchar_t *(wchar_t *, wchar_t const *)', 'wcsstr@wchar_t const *(wchar_t const *, wchar_t const *)'], [], [])"><div class="token cpp_function">wcsstr</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::rawHeader'], [], [])">rawHeader</div>, <div class="token cpp_string ">L&quot;Cookie:&quot;</div>);
+				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieStart'], [], [])">cookieStart</div>)
+				{
+					<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieEnd"><div>cookieEnd</div></div>=<div class="ref" onclick="jumpToSymbol(['wcsstr@wchar_t const *(wchar_t const *, wchar_t const *)'], ['wcsstr@wchar_t *(wchar_t *, wchar_t const *)', 'wcsstr@wchar_t const *(wchar_t const *, wchar_t const *)'], [], [])"><div class="token cpp_function">wcsstr</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieStart'], [], [])">cookieStart</div>, <div class="token cpp_string ">L&quot;;&quot;</div>);
+					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieEnd'], [], [])">cookieEnd</div>)
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::response'], [], [])"><div class="token cpp_argument">response</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::cookie'], [], [])"><div class="token cpp_field">cookie</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> &&)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieStart'], [], [])">cookieStart</div>+<div class="token cpp_number ">7</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieEnd'], [], [])">cookieEnd</div>-<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieStart'], [], [])">cookieStart</div>-<div class="token cpp_number ">7</div>);
+					}
+				}
+				<div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::rawHeader'], [], [])">rawHeader</div>;
+			}
+		}
+
+		<div class="token cpp_comment ">// read response body</div>
+		<div class="token cpp_keyword ">while</div>(<div class="token cpp_keyword ">true</div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesAvailable"><div>bytesAvailable</div></div>=<div class="token cpp_number ">0</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::queryDataAvailableResult"><div>queryDataAvailableResult</div></div>=<div class="ref" onclick="jumpToSymbol(['WinHttpQueryDataAvailable@::BOOL(::HINTERNET, ::LPDWORD)'], ['WinHttpQueryDataAvailable@::BOOL(::HINTERNET, ::LPDWORD)'], [], [])"><div class="token cpp_function">WinHttpQueryDataAvailable</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesAvailable'], [], [])">bytesAvailable</div>);
+			<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error'], [], [])">error</div>=<div class="ref" onclick="jumpToSymbol(['GetLastError@::DWORD()'], ['GetLastError@::DWORD()'], [], [])"><div class="token cpp_function">GetLastError</div></div>();
+<div class="expandable"><div class="disabled">			if(queryDataAvailableResult==TRUE &amp;&amp; bytesAvailable!=0)</div>
+<div class="expanded">			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::queryDataAvailableResult'], [], [])">queryDataAvailableResult</div>==<div class="token cpp_number ">1</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesAvailable'], [], [])">bytesAvailable</div>!=<div class="token cpp_number ">0</div>)</div></div>
+			{
+				<div class="token cpp_keyword ">char</div>* <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf8"><div>utf8</div></div>=<div class="token cpp_keyword ">new</div> <div class="token cpp_keyword ">char</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesAvailable'], [], [])">bytesAvailable</div>];
+				<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesRead"><div>bytesRead</div></div>=<div class="token cpp_number ">0</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::readDataResult"><div>readDataResult</div></div>=<div class="ref" onclick="jumpToSymbol(['WinHttpReadData@::BOOL(::HINTERNET, ::LPVOID, ::DWORD, ::LPDWORD)'], ['WinHttpReadData@::BOOL(::HINTERNET, ::LPVOID, ::DWORD, ::LPDWORD)'], [], [])"><div class="token cpp_function">WinHttpReadData</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf8'], [], [])">utf8</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesAvailable'], [], [])">bytesAvailable</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesRead'], [], [])">bytesRead</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error'], [], [])">error</div>=<div class="ref" onclick="jumpToSymbol(['GetLastError@::DWORD()'], ['GetLastError@::DWORD()'], [], [])"><div class="token cpp_function">GetLastError</div></div>();
+<div class="expandable"><div class="disabled">				if(readDataResult==TRUE)</div>
+<div class="expanded">				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::readDataResult'], [], [])">readDataResult</div>==<div class="token cpp_number ">1</div>)</div></div>
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::availableBuffers'], [], [])">availableBuffers</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair'], [], [])"><div class="token cpp_type">BufferPair</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf8'], [], [])">utf8</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesRead'], [], [])">bytesRead</div>));
+				}
+				<div class="token cpp_keyword ">else</div>
+				{
+					<div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf8'], [], [])">utf8</div>;
+				}
+			}
+			<div class="token cpp_keyword ">else</div>
+			{
+				<div class="token cpp_keyword ">break</div>;
+			}
+		}
+
+		{
+			<div class="token cpp_comment ">// concatincate response body</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::totalSize"><div>totalSize</div></div> = <div class="token cpp_number ">0</div>;
+<div class="expandable"><div class="disabled">			FOREACH(BufferPair, p, availableBuffers)</div>
+<div class="expanded">			<div class="token cpp_keyword ">if</div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__"><div>__scope_variable_flag__</div></div>=<div class="token cpp_keyword ">true</div>) <div class="token cpp_keyword ">for</div>(<div class="token cpp_keyword ">const</div> ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ForEachIterator'], [], [])"><div class="token cpp_type">ForEachIterator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair'], [], [])"><div class="token cpp_type">BufferPair</div></div>&gt;&amp; <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__"><div>__foreach_iterator__</div></div> = ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)'], [], [])"><div class="token cpp_function">CreateForEachIterator</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::availableBuffers'], [], [])">availableBuffers</div>);<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__'], [], [])">__scope_variable_flag__</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__'], [], [])">__scope_variable_flag__</div>=<div class="token cpp_keyword ">false</div>) <div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair'], [], [])"><div class="token cpp_type">BufferPair</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p"><div>p</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__'], [], [])">__foreach_iterator__</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ForEachIterator::Next@bool([T] &)'], ['vl::collections::ForEachIterator::Next@bool([T] &)'], [], [])"><div class="token cpp_function">Next</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p'], [], [])">p</div>);)</div></div>
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::totalSize'], [], [])">totalSize</div> += <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p'], [], [])">p</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair::length'], [], [])"><div class="token cpp_field">length</div></div>;
+			}
+			<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::response'], [], [])"><div class="token cpp_argument">response</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::body'], [], [])"><div class="token cpp_field">body</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Array::Resize@void(::vl::vint)'], ['vl::collections::Array::Resize@void(::vl::vint)'], [], [])"><div class="token cpp_function">Resize</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::totalSize'], [], [])">totalSize</div>);
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::totalSize'], [], [])">totalSize</div> &gt; <div class="token cpp_number ">0</div>)
+			{
+				<div class="token cpp_keyword ">char</div>* <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf82"><div>utf8</div></div> = <div class="token cpp_keyword ">new</div> <div class="token cpp_keyword ">char</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::totalSize'], [], [])">totalSize</div>];
+				{
+					<div class="token cpp_keyword ">char</div>* <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::temp"><div>temp</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf82'], [], [])">utf8</div>;
+<div class="expandable"><div class="disabled">					FOREACH(BufferPair, p, availableBuffers)</div>
+<div class="expanded">					<div class="token cpp_keyword ">if</div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__2"><div>__scope_variable_flag__</div></div>=<div class="token cpp_keyword ">true</div>) <div class="token cpp_keyword ">for</div>(<div class="token cpp_keyword ">const</div> ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ForEachIterator'], [], [])"><div class="token cpp_type">ForEachIterator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair'], [], [])"><div class="token cpp_type">BufferPair</div></div>&gt;&amp; <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__2"><div>__foreach_iterator__</div></div> = ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)'], [], [])"><div class="token cpp_function">CreateForEachIterator</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::availableBuffers'], [], [])">availableBuffers</div>);<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__2'], [], [])">__scope_variable_flag__</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__2'], [], [])">__scope_variable_flag__</div>=<div class="token cpp_keyword ">false</div>) <div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair'], [], [])"><div class="token cpp_type">BufferPair</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p2"><div>p</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__2'], [], [])">__foreach_iterator__</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ForEachIterator::Next@bool([T] &)'], ['vl::collections::ForEachIterator::Next@bool([T] &)'], [], [])"><div class="token cpp_function">Next</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p2'], [], [])">p</div>);)</div></div>
+					{
+						<div class="ref" onclick="jumpToSymbol(['memcpy@void *(void *, void const *, ::size_t)'], ['memcpy@void *(void *, void const *, ::size_t)'], [], [])"><div class="token cpp_function">memcpy</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::temp'], [], [])">temp</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p2'], [], [])">p</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p2'], [], [])">p</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair::length'], [], [])"><div class="token cpp_field">length</div></div>);
+						<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::temp'], [], [])">temp</div> += <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p2'], [], [])">p</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair::length'], [], [])"><div class="token cpp_field">length</div></div>;
+					}
+				}
+				<div class="ref" onclick="jumpToSymbol(['memcpy@void *(void *, void const *, ::size_t)'], ['memcpy@void *(void *, void const *, ::size_t)'], [], [])"><div class="token cpp_function">memcpy</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::response'], [], [])"><div class="token cpp_argument">response</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::body'], [], [])"><div class="token cpp_field">body</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>], <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf82'], [], [])">utf8</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::totalSize'], [], [])">totalSize</div>);
+				<div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf82'], [], [])">utf8</div>;
+			}
+<div class="expandable"><div class="disabled">			FOREACH(BufferPair, p, availableBuffers)</div>
+<div class="expanded">			<div class="token cpp_keyword ">if</div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__3"><div>__scope_variable_flag__</div></div>=<div class="token cpp_keyword ">true</div>) <div class="token cpp_keyword ">for</div>(<div class="token cpp_keyword ">const</div> ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ForEachIterator'], [], [])"><div class="token cpp_type">ForEachIterator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair'], [], [])"><div class="token cpp_type">BufferPair</div></div>&gt;&amp; <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__3"><div>__foreach_iterator__</div></div> = ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)'], [], [])"><div class="token cpp_function">CreateForEachIterator</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::availableBuffers'], [], [])">availableBuffers</div>);<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__3'], [], [])">__scope_variable_flag__</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__3'], [], [])">__scope_variable_flag__</div>=<div class="token cpp_keyword ">false</div>) <div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair'], [], [])"><div class="token cpp_type">BufferPair</div></div> <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p3"><div>p</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__3'], [], [])">__foreach_iterator__</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ForEachIterator::Next@bool([T] &)'], ['vl::collections::ForEachIterator::Next@bool([T] &)'], [], [])"><div class="token cpp_function">Next</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p3'], [], [])">p</div>);)</div></div>
+			{
+				<div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p3'], [], [])">p</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::BufferPair::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>;
+			}
+		}
+	CLEANUP:
+		<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>) <div class="ref" onclick="jumpToSymbol([], ['WinHttpCloseHandle@::BOOL(::HINTERNET)'], [], [])"><div class="token cpp_function">WinHttpCloseHandle</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'], [], [])">requestInternet</div>);
+		<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::connectedInternet'], [], [])">connectedInternet</div>) <div class="ref" onclick="jumpToSymbol(['WinHttpCloseHandle@::BOOL(::HINTERNET)'], ['WinHttpCloseHandle@::BOOL(::HINTERNET)'], [], [])"><div class="token cpp_function">WinHttpCloseHandle</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::connectedInternet'], [], [])">connectedInternet</div>);
+		<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::internet'], [], [])">internet</div>) <div class="ref" onclick="jumpToSymbol(['WinHttpCloseHandle@::BOOL(::HINTERNET)'], ['WinHttpCloseHandle@::BOOL(::HINTERNET)'], [], [])"><div class="token cpp_function">WinHttpCloseHandle</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::internet'], [], [])">internet</div>);
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::response'], [], [])"><div class="token cpp_argument">response</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::statusCode'], [], [])"><div class="token cpp_field">statusCode</div></div>!=-<div class="token cpp_number ">1</div>;
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="FB$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">UrlEncodeQuery</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::query"><div><div class="token cpp_argument">query</div></div></div>)
+	{
+<div class="expandable"><div class="disabled">		vint utf8Size=WideCharToMultiByte(CP_UTF8, 0, query.Buffer(),(int) query.Length(), NULL, 0, NULL, NULL);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8Size"><div>utf8Size</div></div>=<div class="ref" onclick="jumpToSymbol(['WideCharToMultiByte@int(::UINT, ::DWORD, ::LPCWCH, int, ::LPSTR, int, ::LPCCH, ::LPBOOL)'], ['WideCharToMultiByte@int(::UINT, ::DWORD, ::LPCWCH, int, ::LPSTR, int, ::LPCCH, ::LPBOOL)'], [], [])"><div class="token cpp_function">WideCharToMultiByte</div></div>(<div class="token cpp_number ">65001</div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::query'], [], [])"><div class="token cpp_argument">query</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(),(<div class="token cpp_keyword ">int</div>) <div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::query'], [], [])"><div class="token cpp_argument">query</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Length@::vl::vint()'], ['vl::ObjectString::Length@::vl::vint()'], [], [])"><div class="token cpp_function">Length</div></div>(), <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>);</div></div>
+		<div class="token cpp_keyword ">char</div>* <div class="def" id="NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8"><div>utf8</div></div>=<div class="token cpp_keyword ">new</div> <div class="token cpp_keyword ">char</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8Size'], [], [])">utf8Size</div>+<div class="token cpp_number ">1</div>];
+<div class="expandable"><div class="disabled">		ZeroMemory(utf8, utf8Size+1);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['memset@void *(void *, int, ::size_t)'], ['memset@void *(void *, int, ::size_t)'], [], [])"><div class="token cpp_function">memset</div></div>((<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8'], [], [])">utf8</div>),<div class="token cpp_number ">0</div>,(<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8Size'], [], [])">utf8Size</div>+<div class="token cpp_number ">1</div>));</div></div>
+<div class="expandable"><div class="disabled">		WideCharToMultiByte(CP_UTF8, 0, query.Buffer(), (int)query.Length(), utf8, (int)utf8Size, NULL, NULL);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['WideCharToMultiByte@int(::UINT, ::DWORD, ::LPCWCH, int, ::LPSTR, int, ::LPCCH, ::LPBOOL)'], ['WideCharToMultiByte@int(::UINT, ::DWORD, ::LPCWCH, int, ::LPSTR, int, ::LPCCH, ::LPBOOL)'], [], [])"><div class="token cpp_function">WideCharToMultiByte</div></div>(<div class="token cpp_number ">65001</div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::query'], [], [])"><div class="token cpp_argument">query</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(), (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::query'], [], [])"><div class="token cpp_argument">query</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Length@::vl::vint()'], ['vl::ObjectString::Length@::vl::vint()'], [], [])"><div class="token cpp_function">Length</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8'], [], [])">utf8</div>, (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8Size'], [], [])">utf8Size</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>);</div></div>
+
+		<div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::encoded"><div>encoded</div></div>=<div class="token cpp_keyword ">new</div> <div class="token cpp_keyword ">wchar_t</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8Size'], [], [])">utf8Size</div>*<div class="token cpp_number ">3</div>+<div class="token cpp_number ">1</div>];
+<div class="expandable"><div class="disabled">		ZeroMemory(encoded, (utf8Size*3+1)*sizeof(wchar_t));</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['memset@void *(void *, int, ::size_t)'], ['memset@void *(void *, int, ::size_t)'], [], [])"><div class="token cpp_function">memset</div></div>((<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::encoded'], [], [])">encoded</div>),<div class="token cpp_number ">0</div>,((<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8Size'], [], [])">utf8Size</div>*<div class="token cpp_number ">3</div>+<div class="token cpp_number ">1</div>)*<div class="token cpp_keyword ">sizeof</div>(<div class="token cpp_keyword ">wchar_t</div>)));</div></div>
+		<div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::writing"><div>writing</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::encoded'], [], [])">encoded</div>;
+		<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8Size'], [], [])">utf8Size</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::i'], [], [])">i</div>++)
+		{
+			<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x"><div>x</div></div>=(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8'], [], [])">utf8</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::i'], [], [])">i</div>];
+			<div class="token cpp_keyword ">if</div>(<div class="token cpp_string ">L&apos;a&apos;</div>&lt;=<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x'], [], [])">x</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x'], [], [])">x</div>&lt;=<div class="token cpp_string ">&apos;z&apos;</div> || <div class="token cpp_string ">L&apos;A&apos;</div>&lt;=<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x'], [], [])">x</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x'], [], [])">x</div>&lt;=<div class="token cpp_string ">L&apos;Z&apos;</div> || <div class="token cpp_string ">L&apos;0&apos;</div>&lt;=<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x'], [], [])">x</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x'], [], [])">x</div>&lt;=<div class="token cpp_string ">L&apos;9&apos;</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::writing'], [], [])">writing</div>[<div class="token cpp_number ">0</div>]=<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x'], [], [])">x</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::writing'], [], [])">writing</div>+=<div class="token cpp_number ">1</div>;
+			}
+			<div class="token cpp_keyword ">else</div>
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::writing'], [], [])">writing</div>[<div class="token cpp_number ">0</div>]=<div class="token cpp_string ">L&apos;%&apos;</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::writing'], [], [])">writing</div>[<div class="token cpp_number ">1</div>]=<div class="token cpp_string ">L&quot;0123456789ABCDEF&quot;</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x'], [], [])">x</div>/<div class="token cpp_number ">16</div>];
+				<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::writing'], [], [])">writing</div>[<div class="token cpp_number ">2</div>]=<div class="token cpp_string ">L&quot;0123456789ABCDEF&quot;</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x'], [], [])">x</div>%<div class="token cpp_number ">16</div>];
+				<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::writing'], [], [])">writing</div>+=<div class="token cpp_number ">3</div>;
+			}
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::result"><div>result</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::encoded'], [], [])">encoded</div>;
+		<div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::encoded'], [], [])">encoded</div>;
+		<div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8'], [], [])">utf8</div>;
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::result'], [], [])">result</div>;
+	}
+}
+<div class="disabled">#endif
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'GetLastError@::DWORD()': {
+        'displayNameInHtml': '<span class="cpp_function">GetLastError</span>()',
+        'impls': [],
+        'decls': [
+            'FB$GetLastError@::DWORD()[decl0]'
+        ]
+    },
+    'HINTERNET': {
+        'displayNameInHtml': '<span class="cpp_type">HINTERNET</span>',
+        'impls': [
+            'NI$HINTERNET'
+        ],
+        'decls': []
+    },
+    'LPCWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCWSTR</span>',
+        'impls': [
+            'NI$LPCWSTR'
+        ],
+        'decls': []
+    },
+    'LPVOID': {
+        'displayNameInHtml': '<span class="cpp_type">LPVOID</span>',
+        'impls': [
+            'NI$LPVOID'
+        ],
+        'decls': []
+    },
+    'MultiByteToWideChar@int(::UINT, ::DWORD, ::LPCCH, int, ::LPWSTR, int)': {
+        'displayNameInHtml': '<span class="cpp_function">MultiByteToWideChar</span>(<span class="cpp_type">UINT</span>, <span class="cpp_type">DWORD</span>, <span class="cpp_type">LPCCH</span>, <span class="cpp_keyword">int</span>, <span class="cpp_type">LPWSTR</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$MultiByteToWideChar@int(::UINT, ::DWORD, ::LPCCH, int, ::LPWSTR, int)[decl0]'
+        ]
+    },
+    'WideCharToMultiByte@int(::UINT, ::DWORD, ::LPCWCH, int, ::LPSTR, int, ::LPCCH, ::LPBOOL)': {
+        'displayNameInHtml': '<span class="cpp_function">WideCharToMultiByte</span>(<span class="cpp_type">UINT</span>, <span class="cpp_type">DWORD</span>, <span class="cpp_type">LPCWCH</span>, <span class="cpp_keyword">int</span>, <span class="cpp_type">LPSTR</span>, <span class="cpp_keyword">int</span>, <span class="cpp_type">LPCCH</span>, <span class="cpp_type">LPBOOL</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WideCharToMultiByte@int(::UINT, ::DWORD, ::LPCWCH, int, ::LPSTR, int, ::LPCCH, ::LPBOOL)[decl0]'
+        ]
+    },
+    'WinHttpAddRequestHeaders@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::DWORD)': {
+        'displayNameInHtml': '<span class="cpp_function">WinHttpAddRequestHeaders</span>(<span class="cpp_type">HINTERNET</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">DWORD</span>, <span class="cpp_type">DWORD</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WinHttpAddRequestHeaders@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::DWORD)[decl0]'
+        ]
+    },
+    'WinHttpCloseHandle@::BOOL(::HINTERNET)': {
+        'displayNameInHtml': '<span class="cpp_function">WinHttpCloseHandle</span>(<span class="cpp_type">HINTERNET</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WinHttpCloseHandle@::BOOL(::HINTERNET)[decl0]'
+        ]
+    },
+    'WinHttpConnect@::HINTERNET(::HINTERNET, ::LPCWSTR, ::INTERNET_PORT, ::DWORD)': {
+        'displayNameInHtml': '<span class="cpp_function">WinHttpConnect</span>(<span class="cpp_type">HINTERNET</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">INTERNET_PORT</span>, <span class="cpp_type">DWORD</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WinHttpConnect@::HINTERNET(::HINTERNET, ::LPCWSTR, ::INTERNET_PORT, ::DWORD)[decl0]'
+        ]
+    },
+    'WinHttpOpen@::HINTERNET(::LPCWSTR, ::DWORD, ::LPCWSTR, ::LPCWSTR, ::DWORD)': {
+        'displayNameInHtml': '<span class="cpp_function">WinHttpOpen</span>(<span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">DWORD</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">DWORD</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WinHttpOpen@::HINTERNET(::LPCWSTR, ::DWORD, ::LPCWSTR, ::LPCWSTR, ::DWORD)[decl0]'
+        ]
+    },
+    'WinHttpOpenRequest@::HINTERNET(::HINTERNET, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR *, ::DWORD)': {
+        'displayNameInHtml': '<span class="cpp_function">WinHttpOpenRequest</span>(<span class="cpp_type">HINTERNET</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">LPCWSTR</span> *, <span class="cpp_type">DWORD</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WinHttpOpenRequest@::HINTERNET(::HINTERNET, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR *, ::DWORD)[decl0]'
+        ]
+    },
+    'WinHttpQueryDataAvailable@::BOOL(::HINTERNET, ::LPDWORD)': {
+        'displayNameInHtml': '<span class="cpp_function">WinHttpQueryDataAvailable</span>(<span class="cpp_type">HINTERNET</span>, <span class="cpp_type">LPDWORD</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WinHttpQueryDataAvailable@::BOOL(::HINTERNET, ::LPDWORD)[decl0]'
+        ]
+    },
+    'WinHttpQueryHeaders@::BOOL(::HINTERNET, ::DWORD, ::LPCWSTR, ::LPVOID, ::LPDWORD, ::LPDWORD)': {
+        'displayNameInHtml': '<span class="cpp_function">WinHttpQueryHeaders</span>(<span class="cpp_type">HINTERNET</span>, <span class="cpp_type">DWORD</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">LPVOID</span>, <span class="cpp_type">LPDWORD</span>, <span class="cpp_type">LPDWORD</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WinHttpQueryHeaders@::BOOL(::HINTERNET, ::DWORD, ::LPCWSTR, ::LPVOID, ::LPDWORD, ::LPDWORD)[decl0]'
+        ]
+    },
+    'WinHttpReadData@::BOOL(::HINTERNET, ::LPVOID, ::DWORD, ::LPDWORD)': {
+        'displayNameInHtml': '<span class="cpp_function">WinHttpReadData</span>(<span class="cpp_type">HINTERNET</span>, <span class="cpp_type">LPVOID</span>, <span class="cpp_type">DWORD</span>, <span class="cpp_type">LPDWORD</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WinHttpReadData@::BOOL(::HINTERNET, ::LPVOID, ::DWORD, ::LPDWORD)[decl0]'
+        ]
+    },
+    'WinHttpReceiveResponse@::BOOL(::HINTERNET, ::LPVOID)': {
+        'displayNameInHtml': '<span class="cpp_function">WinHttpReceiveResponse</span>(<span class="cpp_type">HINTERNET</span>, <span class="cpp_type">LPVOID</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WinHttpReceiveResponse@::BOOL(::HINTERNET, ::LPVOID)[decl0]'
+        ]
+    },
+    'WinHttpSendRequest@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::LPVOID, ::DWORD, ::DWORD, ::DWORD_PTR)': {
+        'displayNameInHtml': '<span class="cpp_function">WinHttpSendRequest</span>(<span class="cpp_type">HINTERNET</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">DWORD</span>, <span class="cpp_type">LPVOID</span>, <span class="cpp_type">DWORD</span>, <span class="cpp_type">DWORD</span>, <span class="cpp_type">DWORD_PTR</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WinHttpSendRequest@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::LPVOID, ::DWORD, ::DWORD, ::DWORD_PTR)[decl0]'
+        ]
+    },
+    'WinHttpSetCredentials@::BOOL(::HINTERNET, ::DWORD, ::DWORD, ::LPCWSTR, ::LPCWSTR, ::LPVOID)': {
+        'displayNameInHtml': '<span class="cpp_function">WinHttpSetCredentials</span>(<span class="cpp_type">HINTERNET</span>, <span class="cpp_type">DWORD</span>, <span class="cpp_type">DWORD</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">LPCWSTR</span>, <span class="cpp_type">LPVOID</span>)',
+        'impls': [],
+        'decls': [
+            'FB$WinHttpSetCredentials@::BOOL(::HINTERNET, ::DWORD, ::DWORD, ::LPCWSTR, ::LPCWSTR, ::LPVOID)[decl0]'
+        ]
+    },
+    '_wcsicmp@int(wchar_t const *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wcsicmp</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_wcsicmp@int(wchar_t const *, wchar_t const *)[decl0]'
+        ]
+    },
+    '_wtoi@int(wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wtoi</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_wtoi@int(wchar_t const *)[decl0]'
+        ]
+    },
+    'memcpy@void *(void *, void const *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">memcpy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$memcpy@void *(void *, void const *, ::size_t)[decl0]'
+        ]
+    },
+    'memset@void *(void *, int, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">memset</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$memset@void *(void *, int, ::size_t)[decl0]'
+        ]
+    },
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl'
+        ]
+    },
+    'vl::BufferPair': {
+        'displayNameInHtml': '<span class="cpp_type">BufferPair</span>',
+        'impls': [
+            'NI$vl::BufferPair'
+        ],
+        'decls': []
+    },
+    'vl::BufferPair::$__ctor@(char *, ::vl::vint)[impl0]::_buffer': {
+        'displayNameInHtml': '_buffer',
+        'impls': [
+            'NI$vl::BufferPair::$__ctor@(char *, ::vl::vint)[impl0]::_buffer'
+        ],
+        'decls': []
+    },
+    'vl::BufferPair::$__ctor@(char *, ::vl::vint)[impl0]::_length': {
+        'displayNameInHtml': '_length',
+        'impls': [
+            'NI$vl::BufferPair::$__ctor@(char *, ::vl::vint)[impl0]::_length'
+        ],
+        'decls': []
+    },
+    'vl::BufferPair::buffer': {
+        'displayNameInHtml': '<span class="cpp_type">BufferPair</span>::<span class="cpp_field">buffer</span>',
+        'impls': [
+            'NI$vl::BufferPair::buffer'
+        ],
+        'decls': []
+    },
+    'vl::BufferPair::length': {
+        'displayNameInHtml': '<span class="cpp_type">BufferPair</span>::<span class="cpp_field">length</span>',
+        'impls': [
+            'NI$vl::BufferPair::length'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)': {
+        'displayNameInHtml': '<span class="cpp_function">HttpQuery</span>(<span class="cpp_type">HttpRequest</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">HttpResponse</span> &)',
+        'impls': [
+            'FB$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[decl0]'
+        ]
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__': {
+        'displayNameInHtml': '__foreach_iterator__',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__2': {
+        'displayNameInHtml': '__foreach_iterator__',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__2'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__3': {
+        'displayNameInHtml': '__foreach_iterator__',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__3'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__': {
+        'displayNameInHtml': '__scope_variable_flag__',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__2': {
+        'displayNameInHtml': '__scope_variable_flag__',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__2'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__3': {
+        'displayNameInHtml': '__scope_variable_flag__',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__3'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::acceptTypes': {
+        'displayNameInHtml': 'acceptTypes',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::acceptTypes'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::availableBuffers': {
+        'displayNameInHtml': 'availableBuffers',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::availableBuffers'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesAvailable': {
+        'displayNameInHtml': 'bytesAvailable',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesAvailable'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesRead': {
+        'displayNameInHtml': 'bytesRead',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesRead'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::connectedInternet': {
+        'displayNameInHtml': 'connectedInternet',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::connectedInternet'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieEnd': {
+        'displayNameInHtml': 'cookieEnd',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieEnd'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieStart': {
+        'displayNameInHtml': 'cookieStart',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieStart'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error': {
+        'displayNameInHtml': 'error',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength': {
+        'displayNameInHtml': 'headerLength',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength2': {
+        'displayNameInHtml': 'headerLength',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength2'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult': {
+        'displayNameInHtml': 'httpResult',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i2': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i2'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::internet': {
+        'displayNameInHtml': 'internet',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::internet'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::key': {
+        'displayNameInHtml': 'key',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::key'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p': {
+        'displayNameInHtml': 'p',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p2': {
+        'displayNameInHtml': 'p',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p2'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p3': {
+        'displayNameInHtml': 'p',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p3'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::queryDataAvailableResult': {
+        'displayNameInHtml': 'queryDataAvailableResult',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::queryDataAvailableResult'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::rawHeader': {
+        'displayNameInHtml': 'rawHeader',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::rawHeader'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::readDataResult': {
+        'displayNameInHtml': 'readDataResult',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::readDataResult'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request': {
+        'displayNameInHtml': 'request',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet': {
+        'displayNameInHtml': 'requestInternet',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::response': {
+        'displayNameInHtml': 'response',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::response'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::statusCode': {
+        'displayNameInHtml': 'statusCode',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::statusCode'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::temp': {
+        'displayNameInHtml': 'temp',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::temp'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::totalSize': {
+        'displayNameInHtml': 'totalSize',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::totalSize'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf8': {
+        'displayNameInHtml': 'utf8',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf8'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf82': {
+        'displayNameInHtml': 'utf8',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf82'
+        ],
+        'decls': []
+    },
+    'vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::value': {
+        'displayNameInHtml': 'value',
+        'impls': [
+            'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::value'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>',
+        'impls': [
+            'NI$vl::HttpRequest'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::HttpRequest::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::HttpRequest::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_function">SetBodyUtf8</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::bodyString': {
+        'displayNameInHtml': 'bodyString',
+        'impls': [
+            'NI$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::bodyString'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8': {
+        'displayNameInHtml': 'utf8',
+        'impls': [
+            'NI$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8Size': {
+        'displayNameInHtml': 'utf8Size',
+        'impls': [
+            'NI$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8Size'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_function">SetHost</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::HttpRequest::SetHost@bool(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index1': {
+        'displayNameInHtml': 'index1',
+        'impls': [
+            'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index1'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index12': {
+        'displayNameInHtml': 'index1',
+        'impls': [
+            'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index12'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index2': {
+        'displayNameInHtml': 'index2',
+        'impls': [
+            'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index2'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index22': {
+        'displayNameInHtml': 'index2',
+        'impls': [
+            'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index22'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::inputQuery': {
+        'displayNameInHtml': 'inputQuery',
+        'impls': [
+            'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::inputQuery'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::portString': {
+        'displayNameInHtml': 'portString',
+        'impls': [
+            'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::portString'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::portString2': {
+        'displayNameInHtml': 'portString',
+        'impls': [
+            'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::portString2'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::protocol': {
+        'displayNameInHtml': 'protocol',
+        'impls': [
+            'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::protocol'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::protocol2': {
+        'displayNameInHtml': 'protocol',
+        'impls': [
+            'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::protocol2'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading': {
+        'displayNameInHtml': 'reading',
+        'impls': [
+            'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading2': {
+        'displayNameInHtml': 'reading',
+        'impls': [
+            'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading2'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::acceptTypes': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">acceptTypes</span>',
+        'impls': [
+            'NI$vl::HttpRequest::acceptTypes'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::body': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">body</span>',
+        'impls': [
+            'NI$vl::HttpRequest::body'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::contentType': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">contentType</span>',
+        'impls': [
+            'NI$vl::HttpRequest::contentType'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::cookie': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">cookie</span>',
+        'impls': [
+            'NI$vl::HttpRequest::cookie'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::extraHeaders': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">extraHeaders</span>',
+        'impls': [
+            'NI$vl::HttpRequest::extraHeaders'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::method': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">method</span>',
+        'impls': [
+            'NI$vl::HttpRequest::method'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::password': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">password</span>',
+        'impls': [
+            'NI$vl::HttpRequest::password'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::port': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">port</span>',
+        'impls': [
+            'NI$vl::HttpRequest::port'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::query': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">query</span>',
+        'impls': [
+            'NI$vl::HttpRequest::query'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::secure': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">secure</span>',
+        'impls': [
+            'NI$vl::HttpRequest::secure'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::server': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">server</span>',
+        'impls': [
+            'NI$vl::HttpRequest::server'
+        ],
+        'decls': []
+    },
+    'vl::HttpRequest::username': {
+        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_field">username</span>',
+        'impls': [
+            'NI$vl::HttpRequest::username'
+        ],
+        'decls': []
+    },
+    'vl::HttpResponse': {
+        'displayNameInHtml': '<span class="cpp_type">HttpResponse</span>',
+        'impls': [
+            'NI$vl::HttpResponse'
+        ],
+        'decls': []
+    },
+    'vl::HttpResponse::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">HttpResponse</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::HttpResponse::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::HttpResponse::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::HttpResponse::GetBodyUtf8@::vl::WString()': {
+        'displayNameInHtml': '<span class="cpp_type">HttpResponse</span>::<span class="cpp_function">GetBodyUtf8</span>()',
+        'impls': [
+            'FB$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::HttpResponse::GetBodyUtf8@::vl::WString()[decl0]'
+        ]
+    },
+    'vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::response': {
+        'displayNameInHtml': 'response',
+        'impls': [
+            'NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::response'
+        ],
+        'decls': []
+    },
+    'vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::totalSize': {
+        'displayNameInHtml': 'totalSize',
+        'impls': [
+            'NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::totalSize'
+        ],
+        'decls': []
+    },
+    'vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16': {
+        'displayNameInHtml': 'utf16',
+        'impls': [
+            'NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16'
+        ],
+        'decls': []
+    },
+    'vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16Size': {
+        'displayNameInHtml': 'utf16Size',
+        'impls': [
+            'NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16Size'
+        ],
+        'decls': []
+    },
+    'vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf8': {
+        'displayNameInHtml': 'utf8',
+        'impls': [
+            'NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf8'
+        ],
+        'decls': []
+    },
+    'vl::HttpResponse::body': {
+        'displayNameInHtml': '<span class="cpp_type">HttpResponse</span>::<span class="cpp_field">body</span>',
+        'impls': [
+            'NI$vl::HttpResponse::body'
+        ],
+        'decls': []
+    },
+    'vl::HttpResponse::cookie': {
+        'displayNameInHtml': '<span class="cpp_type">HttpResponse</span>::<span class="cpp_field">cookie</span>',
+        'impls': [
+            'NI$vl::HttpResponse::cookie'
+        ],
+        'decls': []
+    },
+    'vl::HttpResponse::statusCode': {
+        'displayNameInHtml': '<span class="cpp_type">HttpResponse</span>::<span class="cpp_field">statusCode</span>',
+        'impls': [
+            'NI$vl::HttpResponse::statusCode'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::Buffer@[T] const *()': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Buffer</span>()',
+        'impls': [
+            'FB$vl::ObjectString::Buffer@[T] const *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::Length@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Length</span>()',
+        'impls': [
+            'FB$vl::ObjectString::Length@::vl::vint()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Sub</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::operator !=@bool([T] const *)': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator !=</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$vl::ObjectString::operator !=@bool([T] const *)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> &&)': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt; &&)',
+        'impls': [
+            'FB$vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> &&)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_function">UrlEncodeQuery</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::encoded': {
+        'displayNameInHtml': 'encoded',
+        'impls': [
+            'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::encoded'
+        ],
+        'decls': []
+    },
+    'vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::query': {
+        'displayNameInHtml': 'query',
+        'impls': [
+            'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::query'
+        ],
+        'decls': []
+    },
+    'vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::result': {
+        'displayNameInHtml': 'result',
+        'impls': [
+            'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::result'
+        ],
+        'decls': []
+    },
+    'vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8': {
+        'displayNameInHtml': 'utf8',
+        'impls': [
+            'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8'
+        ],
+        'decls': []
+    },
+    'vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8Size': {
+        'displayNameInHtml': 'utf8Size',
+        'impls': [
+            'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8Size'
+        ],
+        'decls': []
+    },
+    'vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::writing': {
+        'displayNameInHtml': 'writing',
+        'impls': [
+            'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::writing'
+        ],
+        'decls': []
+    },
+    'vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x': {
+        'displayNameInHtml': 'x',
+        'impls': [
+            'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections'
+        ]
+    },
+    'vl::collections::Array::Resize@void(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Resize</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::Array::Resize@void(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::Array::operator []@[T] &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::Array::operator []@[T] &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ArrayBase::Count@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Count</span>()',
+        'impls': [
+            'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ArrayBase::Get@[T] const &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Get</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::ArrayBase::Get@[T] const &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_function">CreateForEachIterator</span>&lt;<span class="cpp_type">T</span>&gt;(<span class="cpp_type">IEnumerable</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::Dictionary::Count@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Count</span>()',
+        'impls': [
+            'FB$vl::collections::Dictionary::Count@::vl::vint()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()': {
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Keys</span>()',
+        'impls': [
+            'FB$vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()': {
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Values</span>()',
+        'impls': [
+            'FB$vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ForEachIterator': {
+        'displayNameInHtml': '<span class="cpp_type">ForEachIterator</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::ForEachIterator'
+        ],
+        'decls': []
+    },
+    'vl::collections::ForEachIterator::Next@bool([T] &)': {
+        'displayNameInHtml': '<span class="cpp_type">ForEachIterator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Next</span>(<span class="cpp_type">T</span> &)',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::ForEachIterator::Next@bool([T] &)[decl0]'
+        ]
+    },
+    'vl::collections::List': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::List'
+        ],
+        'decls': []
+    },
+    'vl::collections::List::Add@::vl::vint([T] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::List::operator []@[T] &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    },
+    'wcschr@wchar_t *(wchar_t *, wchar_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wcschr</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span>)',
+        'impls': [
+            'FB$wcschr@wchar_t *(wchar_t *, wchar_t)[impl0]'
+        ],
+        'decls': []
+    },
+    'wcschr@wchar_t const *(wchar_t const *, wchar_t)': {
+        'displayNameInHtml': '<span class="cpp_function">wcschr</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$wcschr@wchar_t const *(wchar_t const *, wchar_t)[decl0]'
+        ]
+    },
+    'wcsstr@wchar_t *(wchar_t *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsstr</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$wcsstr@wchar_t *(wchar_t *, wchar_t const *)[impl0]'
+        ],
+        'decls': []
+    },
+    'wcsstr@wchar_t const *(wchar_t const *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcsstr</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcsstr@wchar_t const *(wchar_t const *, wchar_t const *)[decl0]'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$GetLastError@::DWORD()[decl0]': { 'htmlFileName': 'errhandlingapi.h', 'displayName': 'errhandlingapi.h' },
+    'FB$MultiByteToWideChar@int(::UINT, ::DWORD, ::LPCCH, int, ::LPWSTR, int)[decl0]': { 'htmlFileName': 'stringapiset.h', 'displayName': 'stringapiset.h' },
+    'FB$WideCharToMultiByte@int(::UINT, ::DWORD, ::LPCWCH, int, ::LPSTR, int, ::LPCCH, ::LPBOOL)[decl0]': { 'htmlFileName': 'stringapiset.h', 'displayName': 'stringapiset.h' },
+    'FB$WinHttpAddRequestHeaders@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::DWORD)[decl0]': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'FB$WinHttpCloseHandle@::BOOL(::HINTERNET)[decl0]': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'FB$WinHttpConnect@::HINTERNET(::HINTERNET, ::LPCWSTR, ::INTERNET_PORT, ::DWORD)[decl0]': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'FB$WinHttpOpen@::HINTERNET(::LPCWSTR, ::DWORD, ::LPCWSTR, ::LPCWSTR, ::DWORD)[decl0]': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'FB$WinHttpOpenRequest@::HINTERNET(::HINTERNET, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::LPCWSTR *, ::DWORD)[decl0]': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'FB$WinHttpQueryDataAvailable@::BOOL(::HINTERNET, ::LPDWORD)[decl0]': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'FB$WinHttpQueryHeaders@::BOOL(::HINTERNET, ::DWORD, ::LPCWSTR, ::LPVOID, ::LPDWORD, ::LPDWORD)[decl0]': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'FB$WinHttpReadData@::BOOL(::HINTERNET, ::LPVOID, ::DWORD, ::LPDWORD)[decl0]': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'FB$WinHttpReceiveResponse@::BOOL(::HINTERNET, ::LPVOID)[decl0]': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'FB$WinHttpSendRequest@::BOOL(::HINTERNET, ::LPCWSTR, ::DWORD, ::LPVOID, ::DWORD, ::DWORD, ::DWORD_PTR)[decl0]': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'FB$WinHttpSetCredentials@::BOOL(::HINTERNET, ::DWORD, ::DWORD, ::LPCWSTR, ::LPCWSTR, ::LPVOID)[decl0]': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'FB$_wcsicmp@int(wchar_t const *, wchar_t const *)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$_wtoi@int(wchar_t const *)[decl0]': { 'htmlFileName': 'corecrt_wstdlib.h', 'displayName': 'corecrt_wstdlib.h' },
+    'FB$memcpy@void *(void *, void const *, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$memset@void *(void *, int, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[decl0]': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'FB$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]': null,
+    'FB$vl::HttpRequest::$__ctor@()[decl0]': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'FB$vl::HttpRequest::$__ctor@()[impl0]': null,
+    'FB$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[decl0]': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'FB$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]': null,
+    'FB$vl::HttpRequest::SetHost@bool(::vl::WString const &)[decl0]': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'FB$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]': null,
+    'FB$vl::HttpResponse::$__ctor@()[decl0]': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'FB$vl::HttpResponse::$__ctor@()[impl0]': null,
+    'FB$vl::HttpResponse::GetBodyUtf8@::vl::WString()[decl0]': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'FB$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]': null,
+    'FB$vl::ObjectString::Buffer@[T] const *()[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'FB$vl::ObjectString::Length@::vl::vint()[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'FB$vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'FB$vl::ObjectString::operator !=@bool([T] const *)[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'FB$vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> &&)[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'FB$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[decl0]': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'FB$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]': null,
+    'FB$vl::collections::Array::Resize@void(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::Array::operator []@[T] &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ArrayBase::Get@[T] const &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'FB$vl::collections::Dictionary::Count@::vl::vint()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'FB$vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'FB$vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'FB$vl::collections::ForEachIterator::Next@bool([T] &)[decl0]': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$wcschr@wchar_t *(wchar_t *, wchar_t)[impl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcschr@wchar_t const *(wchar_t const *, wchar_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$wcsstr@wchar_t *(wchar_t *, wchar_t const *)[impl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'FB$wcsstr@wchar_t const *(wchar_t const *, wchar_t const *)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[19]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[37]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[38]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[39]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[40]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[42]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[43]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[44]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[45]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[46]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[49]$vl': null,
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[57]$vl': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[60]$vl': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[7]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HINTERNET': { 'htmlFileName': 'winhttp.h', 'displayName': 'winhttp.h' },
+    'NI$LPCWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPVOID': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$vl::BufferPair': null,
+    'NI$vl::BufferPair::$__ctor@(char *, ::vl::vint)[impl0]::_buffer': null,
+    'NI$vl::BufferPair::$__ctor@(char *, ::vl::vint)[impl0]::_length': null,
+    'NI$vl::BufferPair::buffer': null,
+    'NI$vl::BufferPair::length': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__2': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__foreach_iterator__3': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__2': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::__scope_variable_flag__3': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::acceptTypes': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::availableBuffers': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesAvailable': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::bytesRead': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::connectedInternet': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieEnd': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::cookieStart': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::error': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::headerLength2': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::httpResult': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::i2': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::internet': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::key': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p2': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::p3': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::queryDataAvailableResult': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::rawHeader': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::readDataResult': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::request': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::requestInternet': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::response': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::statusCode': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::temp': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::totalSize': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf8': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::utf82': null,
+    'NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]::value': null,
+    'NI$vl::HttpRequest': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::bodyString': null,
+    'NI$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8': null,
+    'NI$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]::utf8Size': null,
+    'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index1': null,
+    'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index12': null,
+    'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index2': null,
+    'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::index22': null,
+    'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::inputQuery': null,
+    'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::portString': null,
+    'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::portString2': null,
+    'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::protocol': null,
+    'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::protocol2': null,
+    'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading': null,
+    'NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]::reading2': null,
+    'NI$vl::HttpRequest::acceptTypes': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::body': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::contentType': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::cookie': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::extraHeaders': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::method': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::password': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::port': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::query': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::secure': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::server': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpRequest::username': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpResponse': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::response': null,
+    'NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::totalSize': null,
+    'NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16': null,
+    'NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf16Size': null,
+    'NI$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]::utf8': null,
+    'NI$vl::HttpResponse::body': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpResponse::cookie': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::HttpResponse::statusCode': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::encoded': null,
+    'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::i': null,
+    'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::query': null,
+    'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::result': null,
+    'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8': null,
+    'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::utf8Size': null,
+    'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::writing': null,
+    'NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[impl0]::x': null,
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::collections::ForEachIterator': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 #define _DEBUG_FUNCTIONAL_MACHINERY
 
 #include "../../../../Vlpp/Release/IncludeOnly/Vlpp.cpp"
-//#include "../../../../VlppOS/Release/IncludeOnly/VlppOS.cpp"
+#include "../../../../VlppOS/Release/IncludeOnly/VlppOS.cpp"
 //#include "../../../../VlppRegex/Release/IncludeOnly/VlppRegex.cpp"
 //#include "../../../../VlppReflection/Release/IncludeOnly/VlppReflection.cpp"
 //#include "../../../../VlppParser/Release/IncludeOnly/VlppParser.cpp"
