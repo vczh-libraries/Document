@@ -325,6 +325,20 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 			auto type = MakePtr<MemberType>();
 			type->classType = classType;
 			type->type = baselineType;
+
+			{
+				// because we stopped at CLASS::, so CLASS:: NAME should be a declarator whose name is NAME
+				// if we continue parsing NAME as a new declarator, it could hit something in the current context
+				// and finally get a wrong declarator
+				// e.g. an anonymous declarator which should be written as NAME, and "baselineType (CLASS::)" will be totally discarded
+				auto oldCursor = cursor;
+				CppName cppName;
+				if (ParseCppName(cppName, cursor))
+				{
+					cursor = oldCursor;
+					return type;
+				}
+			}
 			return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
 		}
 		else

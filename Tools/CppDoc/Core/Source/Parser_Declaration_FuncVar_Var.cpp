@@ -117,6 +117,7 @@ void ParseDeclaration_Variable(
 
 				if (createdSymbol)
 				{
+					decl->keepTemplateArgumentAlive = specSymbol;
 					break;
 				}
 			default:
