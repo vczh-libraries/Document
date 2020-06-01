@@ -797,4 +797,138 @@ namespace ns
 			}
 		});
 	});
+
+	TEST_CATEGORY(L"Optional empty template header")
+	{
+		auto input = LR"(
+namespace ns
+{
+	template<typename T>
+	struct A
+	{
+		template<typename U>
+		struct B
+		{
+			void F();
+			template<typename V> void G();
+			template<> void G<char>();
+		};
+
+		template<>
+		struct B<void>
+		{
+			void F();
+			template<typename V> void G();
+			template<> void G<char>();
+		};
+	};
+
+	template<>
+	struct A<bool>
+	{
+		template<typename U>
+		struct B
+		{
+			void F();
+			template<typename V> void G();
+			template<> void G<char>();
+		};
+
+		template<>
+		struct B<void>
+		{
+			void F();
+			template<typename V> void G();
+			template<> void G<char>();
+		};
+	};
+}
+
+namespace ns
+{
+	template<typename X>	template<typename Y>							void A<X>::		B<Y>::		F()			{}
+	template<typename X>	template<typename Y>	template<typename Z>	void A<X>::		B<Y>::		G()			{}
+	template<typename X>	template<typename Y>							void A<X>::		B<Y>::		G<char>()	{}
+	template<typename X>													void A<X>::		B<void>::	F()			{}
+	template<typename X>							template<typename Z>	void A<X>::		B<void>::	G()			{}
+	template<typename X>													void A<X>::		B<void>::	G<char>()	{}
+							template<typename Y>							void A<bool>::	B<Y>::		F()			{}
+							template<typename Y>	template<typename Z>	void A<bool>::	B<Y>::		G()			{}
+							template<typename Y>							void A<bool>::	B<Y>::		G<char>()	{}
+																			void A<bool>::	B<void>::	F()			{}
+													template<typename Z>	void A<bool>::	B<void>::	G()			{}
+																			void A<bool>::	B<void>::	G<char>()	{}
+}
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		TEST_CATEGORY(L"Checking connections")
+		{
+			using Item = Tuple<CppClassAccessor, Ptr<Declaration>>;
+			List<Ptr<Declaration>> inClassMembers;
+
+			auto& inClassMembersUnfiltered1 = pa.root
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B")->Get(0).childSymbol
+				->GetImplDecl_NFb<ClassDeclaration>()->decls;
+
+			auto& inClassMembersUnfiltered2 = pa.root
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B@<void>")->Get(0).childSymbol
+				->GetImplDecl_NFb<ClassDeclaration>()->decls;
+
+			auto& inClassMembersUnfiltered3 = pa.root
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A@<bool>")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B")->Get(0).childSymbol
+				->GetImplDecl_NFb<ClassDeclaration>()->decls;
+
+			auto& inClassMembersUnfiltered4 = pa.root
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"A@<bool>")->Get(0).childSymbol
+				->TryGetChildren_NFb(L"B@<void>")->Get(0).childSymbol
+				->GetImplDecl_NFb<ClassDeclaration>()->decls;
+
+#define FILTER_CONDITION .Where([](Item item) {return !item.f1->implicitlyGeneratedMember; }).Select([](Item item) { return item.f1; })
+			CopyFrom(inClassMembers, From(inClassMembersUnfiltered1) FILTER_CONDITION, true);
+			CopyFrom(inClassMembers, From(inClassMembersUnfiltered2) FILTER_CONDITION, true);
+			CopyFrom(inClassMembers, From(inClassMembersUnfiltered3) FILTER_CONDITION, true);
+			CopyFrom(inClassMembers, From(inClassMembersUnfiltered4) FILTER_CONDITION, true);
+#undef FILTER_CONDITION
+			TEST_CASE_ASSERT(inClassMembers.Count() == 12);
+
+			auto& outClassMembers = pa.root
+				->TryGetChildren_NFb(L"ns")->Get(0).childSymbol
+				->GetForwardDecls_N()[1].Cast<NamespaceDeclaration>()->decls;
+			TEST_CASE_ASSERT(outClassMembers.Count() == 12);
+
+			for (vint c = 0; c < 4; c++)
+			{
+				TEST_CATEGORY(L"Category " + itow(c))
+				{
+					Symbol* primary = nullptr;
+					for (vint m = 0; m < 3; m++)
+					{
+						TEST_CATEGORY(L"Member " + itow(m))
+						{
+							vint i = c * 3 + m;
+							auto inClassDecl = inClassMembers[i];
+							auto outClassDecl = outClassMembers[i];
+
+							auto symbol = inClassDecl->symbol->GetFunctionSymbol_Fb();
+							TEST_CASE_ASSERT(symbol->kind == symbol_component::SymbolKind::FunctionSymbol);
+
+							TEST_CASE_ASSERT(symbol->GetImplSymbols_F().Count() == 1);
+							TEST_CASE_ASSERT(symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb() == outClassDecl);
+
+							TEST_CASE_ASSERT(symbol->GetForwardSymbols_F().Count() == 1);
+							TEST_CASE_ASSERT(symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb() == inClassDecl);
+						});
+					}
+				});
+			}
+		});
+	});
 }

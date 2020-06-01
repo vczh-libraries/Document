@@ -171,6 +171,9 @@
     <ClCompile Include="TestParseLambda.cpp">
       <Filter>Source Files\TestParser</Filter>
     </ClCompile>
+    <ClCompile Include="TestGenericMISC.cpp">
+      <Filter>Source Files\TestParserGeneric</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">

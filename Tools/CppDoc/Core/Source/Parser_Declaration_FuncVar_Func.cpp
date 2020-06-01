@@ -202,7 +202,7 @@ void ParseDeclaration_Function(
 	// check for constraints of partial specialization
 	if (declarator->specializationSpec)
 	{
-		if (!functionSpec) throw StopParsingException(cursor);
+		if (!functionSpec) functionSpec = MakePtr<TemplateSpec>();
 		if (functionSpec->arguments.Count() != 0) throw StopParsingException(cursor);
 	}
 	ValidateForRootTemplateSpec(functionSpec, cursor, declarator->specializationSpec, true);
