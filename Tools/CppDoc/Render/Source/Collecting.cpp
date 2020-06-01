@@ -97,11 +97,13 @@ void AdjustSkippingIndex(
 AdjustRefIndex
 ***********************************************************************/
 
-void AdjustRefIndex(
+template<typename TContainer, typename TGetter>
+void AdjustRefIndexInternal(
 	Ptr<CppTokenCursor>& cursor,
-	const SortedList<IndexToken>& keys,		// tokens of all declaration names,	or tokens of references
-	IndexTracking& index,					// TokenTracker::indexDecl,			or TokenTracker::indexResolve[x]
-	const AdjustSkippingResult& asr			// TokenTracker::asr
+	const TContainer& tokens,			// tokens of all declaration names,	or tokens of references
+	IndexTracking& index,				// TokenTracker::indexDecl,			or TokenTracker::indexResolve[x]
+	const AdjustSkippingResult& asr,	// TokenTracker::asr
+	TGetter&& getter
 )
 {
 	// adjust the row and column of the cursor
@@ -118,14 +120,14 @@ void AdjustRefIndex(
 	// increase TokenTracker.(indexDecl or indexResolve[x]).index
 	while (true)
 	{
-		if (index.index >= keys.Count())
+		if (index.index >= tokens.Count())
 		{
 			index.inRange = false;
 			return;
 		}
 
 		// until the whole name[index] or reference[index] is not located before the current token
-		auto& current = keys[index.index];
+		const auto& current = getter(tokens, index.index);
 		if (row > current.rowEnd || (row == current.rowEnd && column > current.columnEnd))
 		{
 			index.index++;
@@ -137,7 +139,7 @@ void AdjustRefIndex(
 	}
 
 	// check if the token belongs to name[index] or reference[index] or not
-	auto& current = keys[index.index];
+	const auto& current = getter(tokens, index.index);
 	if (row < current.rowStart || (row == current.rowStart && column < current.columnStart))
 	{
 		index.inRange = false;
@@ -145,6 +147,32 @@ void AdjustRefIndex(
 	}
 
 	index.inRange = true;
+}
+
+void AdjustRefIndex(
+	Ptr<CppTokenCursor>& cursor,
+	const List<IndexedDeclOrArg>& decls,
+	IndexTracking& index,
+	const AdjustSkippingResult& asr
+)
+{
+	AdjustRefIndexInternal(cursor, decls, index, asr, [](const List<IndexedDeclOrArg>& decls, vint index) -> const IndexToken&
+	{
+		return decls[index].token;
+	});
+}
+
+void AdjustRefIndex(
+	Ptr<CppTokenCursor>& cursor,
+	const IndexMap& decls,
+	IndexTracking& index,
+	const AdjustSkippingResult& asr
+)
+{
+	AdjustRefIndexInternal(cursor, decls, index, asr, [](const IndexMap& decls, vint index) -> const IndexToken&
+	{
+		return decls.Keys()[index];
+	});
 }
 
 /***********************************************************************
@@ -327,11 +355,11 @@ void GenerateHtmlLine(
 		{
 			// if the current token does not belong to any item in skipping
 			// check if it belongs to a declaration name
-			AdjustRefIndex(cursor, result.decls.Keys(), tracker.indexDecl, tracker.asr);
+			AdjustRefIndex(cursor, result.decls, tracker.indexDecl, tracker.asr);
 			// check if it belongs to a declaration reference
 			for (vint i = 0; i < (vint)IndexReason::Max; i++)
 			{
-				AdjustRefIndex(cursor, result.index[i].Keys(), tracker.indexResolve[i], tracker.asr);
+				AdjustRefIndex(cursor, result.index[i], tracker.indexResolve[i], tracker.asr);
 			}
 		}
 
@@ -369,7 +397,7 @@ void GenerateHtmlLine(
 			tracker.lastTokenDefIndex = tracker.indexDecl.index;
 
 			// say this declaration belongs to this file
-			auto declOrArg = result.decls.Values()[tracker.indexDecl.index];
+			auto declOrArg = result.decls[tracker.indexDecl.index];
 			if (!global->declToFiles.Keys().Contains(declOrArg))
 			{
 				global->declToFiles.Add(declOrArg, currentFilePath);
@@ -385,7 +413,7 @@ void GenerateHtmlLine(
 			Symbol* generatePrimaryLink = nullptr;
 
 			// no need to generate a link for template argument name
-			if (auto& decl = declOrArg.f0)
+			if (auto& decl = declOrArg.decl)
 			{
 				switch (decl->symbol->GetCategory())
 				{
@@ -425,7 +453,7 @@ void GenerateHtmlLine(
 
 			if (generateForwardImplLink)
 			{
-				auto& decl = declOrArg.f0;
+				auto& decl = declOrArg.decl;
 				switch (decl->symbol->GetCategory())
 				{
 				case symbol_component::SymbolCategory::Normal:
@@ -578,8 +606,8 @@ void GenerateHtmlLine(
 		Symbol* symbolForToken = nullptr;
 		if (isDefToken)
 		{
-			auto declOrArg = result.decls.Values()[tracker.indexDecl.index];
-			symbolForToken = declOrArg.f0 ? declOrArg.f0->symbol : declOrArg.f1;
+			auto declOrArg = result.decls[tracker.indexDecl.index];
+			symbolForToken = declOrArg.decl ? declOrArg.decl->symbol : declOrArg.symbol;
 		}
 		else if (isRefToken)
 		{

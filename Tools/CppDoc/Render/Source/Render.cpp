@@ -56,7 +56,7 @@ GetDeclId : DeclId represents a position in a source file, an id of a HTML eleme
 
 WString GetDeclId(DeclOrArg declOrArg)
 {
-	if (auto& decl = declOrArg.f0)
+	if (auto& decl = declOrArg.decl)
 	{
 		switch (decl->symbol->GetCategory())
 		{
@@ -83,7 +83,7 @@ WString GetDeclId(DeclOrArg declOrArg)
 	}
 	else
 	{
-		return L"TA$" + declOrArg.f1->uniqueId;
+		return L"TA$" + declOrArg.symbol->uniqueId;
 	}
 	throw L"Unrecognizable declaration.";
 }

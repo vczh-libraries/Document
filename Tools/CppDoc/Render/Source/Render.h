@@ -51,7 +51,35 @@ enum class IndexReason
 };
 
 using IndexMap = Group<IndexToken, Symbol*>;
-using DeclOrArg = Tuple<Ptr<Declaration>, Symbol*>;
+
+struct DeclOrArg
+{
+	Ptr<Declaration>								decl;
+	Symbol*											symbol = nullptr;
+
+	DeclOrArg() = default;
+	DeclOrArg(const Ptr<Declaration>& _decl, Symbol* _symbol)
+		:decl(_decl)
+		, symbol(_symbol)
+	{
+	}
+
+	static vint										Compare(const DeclOrArg& a, const DeclOrArg& b);
+
+	DEFINE_COMPLETE_COMPARISON_OPERATOR(DeclOrArg)
+};
+
+struct IndexedDeclOrArg : DeclOrArg
+{
+	IndexToken										token;
+
+	IndexedDeclOrArg() = default;
+	IndexedDeclOrArg(const IndexToken& _token, const Ptr<Declaration>& _decl, Symbol* _symbol)
+		:DeclOrArg(_decl, _symbol)
+		, token(_token)
+	{
+	}
+};
 
 struct IndexResult
 {
@@ -71,7 +99,7 @@ struct IndexResult
 	IndexMap										index[(vint)IndexReason::Max];
 
 	// tokens of declaration names, to be highlighted from hyperlinks
-	Dictionary<IndexToken, DeclOrArg>				decls;
+	List<IndexedDeclOrArg>							decls;
 };
 
 class IProgressReporter : public virtual Interface

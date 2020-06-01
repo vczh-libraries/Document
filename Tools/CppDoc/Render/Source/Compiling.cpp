@@ -56,7 +56,7 @@ void GenerateUniqueId(
 					auto& name = argument.name;
 					if (name.tokenCount > 0)
 					{
-						result.decls.Add(IndexToken::GetToken(name), { nullptr,symbol });
+						result.decls.Add({ IndexToken::GetToken(name), nullptr,symbol });
 					}
 				}
 				break;
@@ -66,7 +66,7 @@ void GenerateUniqueId(
 					auto& name = decl->name;
 					if (name.tokenCount > 0)
 					{
-						result.decls.Add(IndexToken::GetToken(name), { decl,nullptr });
+						result.decls.Add({ IndexToken::GetToken(name), decl,nullptr });
 					}
 				}
 				for (vint i = 0; i < symbol->GetForwardDecls_N().Count(); i++)
@@ -75,7 +75,7 @@ void GenerateUniqueId(
 					auto& name = decl->name;
 					if (name.tokenCount > 0)
 					{
-						result.decls.Add(IndexToken::GetToken(name), { decl,nullptr });
+						result.decls.Add({ IndexToken::GetToken(name), decl,nullptr });
 					}
 				}
 			}
@@ -88,7 +88,7 @@ void GenerateUniqueId(
 				auto& name = decl->name;
 				if (name.tokenCount > 0)
 				{
-					result.decls.Add(IndexToken::GetToken(name), { decl,nullptr });
+					result.decls.Add({ IndexToken::GetToken(name), decl,nullptr });
 				}
 			}
 			if (auto decl = symbol->GetForwardDecl_Fb())
@@ -96,10 +96,18 @@ void GenerateUniqueId(
 				auto& name = decl->name;
 				if (name.tokenCount > 0)
 				{
-					result.decls.Add(IndexToken::GetToken(name), { decl,nullptr });
+					result.decls.Add({ IndexToken::GetToken(name), decl,nullptr });
 				}
 			}
 			break;
 		}
+	}
+	
+	if (result.decls.Count() > 0)
+	{
+		Sort<IndexedDeclOrArg>(&result.decls[0], result.decls.Count(), [](const IndexedDeclOrArg& da1, const IndexedDeclOrArg& da2)
+		{
+			return IndexToken::Compare(da1.token, da2.token);
+		});
 	}
 }
