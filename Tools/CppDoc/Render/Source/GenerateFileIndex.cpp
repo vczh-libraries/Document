@@ -128,7 +128,7 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 
 	for (vint i = emptyGroups.Count() - 1; i >= 0; i--)
 	{
-		fileGroups.RemoveAt(i);
+		fileGroups.RemoveAt(emptyGroups[i]);
 	}
 
 	if (flrs.Count() > 0)
