@@ -175,11 +175,11 @@ bool PrepareArgumentsForGenericExpr(const ParsingArguments& pa, VariadicList<Gen
 	return hasGenericPart;
 }
 
-Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<Category_Id_Child_Expr> expr, Ptr<CppTokenCursor>& cursor)
+Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& pa, Ptr<Category_Id_Child_Expr> expr, bool templateKeyword, Ptr<CppTokenCursor>& cursor)
 {
 	bool allowGenericPresence = false;
 	bool allowGenericAbsence = false;
-	CheckResolvingForGenericExpr(pa, expr->resolving, false, allowGenericPresence, allowGenericAbsence);
+	CheckResolvingForGenericExpr(pa, expr->resolving, templateKeyword, allowGenericPresence, allowGenericAbsence);
 
 	VariadicList<GenericArgument> genericArguments;
 	if (PrepareArgumentsForGenericExpr(pa, genericArguments, allowGenericPresence, allowGenericAbsence, cursor))
@@ -383,9 +383,10 @@ GIVE_UP_CHILD_SYMBOL:
 	}
 	else
 	{
+		bool templateKeyword = TestToken(cursor, CppTokens::DECL_TEMPLATE);
 		if (auto expr = ParseIdExpr(pa, cursor))
 		{
-			return TryParseGenericExpr(pa, expr, cursor);
+			return TryParseGenericExpr(pa, expr, templateKeyword, cursor);
 		}
 	}
 	throw StopParsingException(cursor);
@@ -627,12 +628,13 @@ Ptr<Category_Id_Child_Generic_Expr> ParseFieldAccessNameExpr(const ParsingArgume
 	}
 	cursor = oldCursor;
 
+	bool templateKeyword = TestToken(cursor, CppTokens::DECL_TEMPLATE);
 	auto idExpr = MakePtr<IdExpr>();
 	if (!ParseCppName(idExpr->name, cursor, false) && !ParseCppName(idExpr->name, cursor, true))
 	{
 		throw StopParsingException(cursor);
 	}
-	return TryParseGenericExpr(pa, idExpr, cursor);
+	return TryParseGenericExpr(pa, idExpr, templateKeyword, cursor);
 }
 
 Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
