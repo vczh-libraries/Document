@@ -734,6 +734,16 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 						sizeType->primitive = CppPrimitiveType::_int;
 						returnType = sizeType;
 					}
+					else if (idExpr->name.name == L"__uuidof")
+					{
+						// alignof (EXPR, ...)
+						auto rootType = MakePtr<RootType>();
+						auto childType = MakePtr<ChildType>();
+						childType->classType = rootType;
+						childType->name.name = L"GUID";
+						childType->name.type = CppNameType::Normal;
+						returnType = childType;
+					}
 					else if (idExpr->name.name == L"noexcept")
 					{
 						// noexcept (EXPR, ...)

@@ -309,12 +309,16 @@ public:
 	void Visit(TryCatchStat* self) override
 	{
 		Evaluate(pa, self->tryStat);
-		auto spa = pa.WithScope(self->symbol);
-		if (!resolvingFunctionType && self->exception)
+		for (vint i = 0; i < self->catchStats.Count(); i++)
 		{
-			EvaluateVariableDeclaration(spa, self->exception.Obj());
+			auto catchStat = self->catchStats[i];
+			auto spa = pa.WithScope(catchStat.scopeStat->symbol);
+			if (!resolvingFunctionType && catchStat.exception)
+			{
+				EvaluateVariableDeclaration(spa, catchStat.exception.Obj());
+			}
+			Evaluate(spa, catchStat.catchStat);
 		}
-		Evaluate(spa, self->catchStat);
 	}
 
 	void Visit(ReturnStat* self) override

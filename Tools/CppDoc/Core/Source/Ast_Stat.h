@@ -195,9 +195,15 @@ class TryCatchStat : public Stat
 public:
 	IStatVisitor_ACCEPT;
 
+	struct CatchStat
+	{
+		Ptr<EmptyStat>				scopeStat;
+		Ptr<Stat>					catchStat;
+		Ptr<VariableDeclaration>	exception;	// could be anonymous
+	};
+
 	Ptr<Stat>						tryStat;
-	Ptr<Stat>						catchStat;
-	Ptr<VariableDeclaration>		exception;	// could be anonymous
+	List<CatchStat>					catchStats;
 };
 
 class ReturnStat : public Stat

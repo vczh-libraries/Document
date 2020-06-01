@@ -261,6 +261,9 @@ Symbol* Symbol::AddToSymbolInternal_NFb(Ptr<Declaration> _decl, symbol_component
 				targetSymbol = symbolCStyle;
 			}
 			break;
+		case symbol_component::SymbolKind::TypeAlias:
+			if (symbolCStyle || symbolOther) return nullptr;
+			break;
 		default:
 			if (symbolOther)
 			{

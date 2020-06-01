@@ -74,9 +74,10 @@ switch (0)
 )");
 
 		AssertStat(
-			L"try try{1;2;3;}catch(...); catch(int) try; catch(int x);",
+			L"try {try{1;2;3;}catch(...);} catch(int) try; catch(int x);",
 			LR"(
 try
+{
 	try
 	{
 		1;
@@ -85,6 +86,7 @@ try
 	}
 	catch (...)
 		;
+}
 catch (int)
 	try
 		;

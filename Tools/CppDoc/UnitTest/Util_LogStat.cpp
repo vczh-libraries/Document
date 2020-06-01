@@ -236,18 +236,24 @@ public:
 		writer.WriteLine(L"try");
 		WriteSubStat(self->tryStat);
 
-		WriteIndentation();
-		if (self->exception)
+		for (vint i = 0; i < self->catchStats.Count(); i++)
 		{
-			writer.WriteString(L"catch (");
-			Log(self->exception, writer, 0, false);
-			writer.WriteLine(L")");
+			auto catchStat = self->catchStats[i];
+			WriteIndentation();
+
+			if (catchStat.exception)
+			{
+				writer.WriteString(L"catch (");
+				Log(catchStat.exception, writer, 0, false);
+				writer.WriteLine(L")");
+			}
+			else
+			{
+				writer.WriteLine(L"catch (...)");
+			}
+
+			WriteSubStat(catchStat.catchStat);
 		}
-		else
-		{
-			writer.WriteLine(L"catch (...)");
-		}
-		WriteSubStat(self->catchStat);
 	}
 
 	void Visit(ReturnStat* self)override

@@ -252,17 +252,24 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		// try STATEMENT catch(VARIABLE-DECLARATION) STATEMENT
 		auto stat = MakePtr<TryCatchStat>();
 		stat->tryStat = ParseStat(pa, cursor);
-		RequireToken(cursor, CppTokens::STAT_CATCH);
-		RequireToken(cursor, CppTokens::LPARENTHESIS);
 
-		auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
-		if (!TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
+		while (TestToken(cursor, CppTokens::STAT_CATCH))
 		{
-			auto declarator = ParseNonMemberDeclarator(newPa, pda_VarType(), cursor);
-			stat->exception = BuildVariableAndSymbol(newPa, declarator, cursor);
+			TryCatchStat::CatchStat catchStat;
+			RequireToken(cursor, CppTokens::LPARENTHESIS);
+
+			catchStat.scopeStat = MakePtr<EmptyStat>();
+			auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(catchStat.scopeStat));
+
+			if (!TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
+			{
+				auto declarator = ParseNonMemberDeclarator(newPa, pda_VarType(), cursor);
+				catchStat.exception = BuildVariableAndSymbol(newPa, declarator, cursor);
+			}
+			RequireToken(cursor, CppTokens::RPARENTHESIS);
+			catchStat.catchStat = ParseStat(newPa, cursor);
+			stat->catchStats.Add(catchStat);
 		}
-		RequireToken(cursor, CppTokens::RPARENTHESIS);
-		stat->catchStat = ParseStat(newPa, cursor);
 		return stat;
 	}
 	else if (TestToken(cursor, CppTokens::STAT_RETURN))
