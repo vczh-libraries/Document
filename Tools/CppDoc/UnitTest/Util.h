@@ -130,6 +130,22 @@ public:
 	{
 	}
 
+	void BeginDelayParse(FunctionDeclaration* decl)
+	{
+	}
+
+	void EndDelayParse(FunctionDeclaration* decl)
+	{
+	}
+
+	void BeginEvaluate(Declaration* decl)
+	{
+	}
+
+	void EndEvaluate(Declaration* decl)
+	{
+	}
+
 	void Index(CppName& name, List<ResolvedItem>& resolvedSymbols)override
 	{
 		callback(name, (List<ResolvedItem>&)resolvedSymbols, false);
