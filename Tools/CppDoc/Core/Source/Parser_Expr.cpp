@@ -710,7 +710,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 				if (!idExpr->resolving)
 				{
 					Ptr<Type> returnType;
-					if (idExpr->name.name == L"alignof")
+					if (idExpr->name.name == L"alignof" || idExpr->name.name == L"__alignof")
 					{
 						// alignof (EXPR, ...)
 						auto sizeType = MakePtr<PrimitiveType>();
