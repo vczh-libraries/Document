@@ -29,15 +29,14 @@
 ### Bugs
 
 - [ ] **STL** Demo
-  - [ ] `_CATCH_END` missing expanded `}` in `<memory>`
   - [ ] `const int _Locbase<_Dummy>::collate;` has incorrect links in `<xlocale>`
   - [ ] Remove special handling for `common_type_t<...>`
+- [ ] **TypePrinter** Demo
+  - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` points to the correct partial specializations.
 
 ### Features
 
-- [ ] **TypePrinter** Demo
-  - [ ] Ensure that `X<T>` in `template<typename T> void X<T>::F(){}` points to the correct partial specializations.
-- [ ] Compiler
+- [ ] Core
   - [ ] `GenericExpr` allows to be partially applied only when `GenericExpr` is directly in a `FuncAccessExpr::expr`.
   - [ ] Consider about default values when matching partial specializations (both in GenericType and SpecializationSpec).
   - [ ] `IFT_InferTemplateArgument.cpp` `Visit(GenericType* self)` able to process multiple primary instances.

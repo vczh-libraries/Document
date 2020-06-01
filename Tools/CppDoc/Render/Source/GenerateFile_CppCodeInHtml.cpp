@@ -66,7 +66,7 @@ void GenerateCppCodeInHtml(Ptr<FileLinesRecord> flr, StreamWriter& writer)
 					bool allSpaces = true;
 					for (auto reading = currentHtmlLines.rawBegin; allSpaces && reading < currentHtmlLines.rawEnd; reading++)
 					{
-						switch (*reading++)
+						switch (*reading)
 						{
 						case L' ':
 						case L'\t':
