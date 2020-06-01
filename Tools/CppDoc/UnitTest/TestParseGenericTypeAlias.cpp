@@ -193,6 +193,6 @@ struct FibImpl<Int<X>>
 )";
 		COMPILE_PROGRAM(program, pa, input);
 
-		AssertType(pa, L"Fib<0>",		L"Fib<0>",		L"::Value<*> $PR",	L"any_t $PR"	);
+		AssertType(pa, L"Fib<0>",		L"Fib<0>",		L"::Int<*>"		);
 	});
 }
