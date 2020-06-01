@@ -33,7 +33,7 @@
 <div class="token cpp_comment ">// Types</div>
 <div class="token cpp_comment ">//</div>
 <div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
-<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tm"><div><div class="token cpp_type">tm</div></div></div>
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tm"><div class="ref" onclick="jumpToSymbol([], ['tm'], [], [])"><div class="token cpp_type">tm</div></div></div>
 {
     <div class="token cpp_keyword ">int</div> <div class="def" id="NI$tm::tm_sec"><div><div class="token cpp_field">tm_sec</div></div></div>;   <div class="token cpp_comment ">// seconds after the minute - [0, 60] including leap second</div>
     <div class="token cpp_keyword ">int</div> <div class="def" id="NI$tm::tm_min"><div><div class="token cpp_field">tm_min</div></div></div>;   <div class="token cpp_comment ">// minutes after the hour - [0, 59]</div>
@@ -522,7 +522,9 @@ referencedSymbols = {
         'impls': [
             'NI$tm'
         ],
-        'decls': []
+        'decls': [
+            'NF[0]$tm'
+        ]
     }
 };
 symbolToFiles = {
@@ -537,6 +539,7 @@ symbolToFiles = {
     'FB$_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]': null,
     'FB$_wstrtime_s@::errno_t(wchar_t *, ::size_t)[decl0]': null,
     'FB$_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]': null,
+    'NF[0]$tm': { 'htmlFileName': 'locale.h', 'displayName': 'locale.h' },
     'NI$__time32_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$__time64_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },

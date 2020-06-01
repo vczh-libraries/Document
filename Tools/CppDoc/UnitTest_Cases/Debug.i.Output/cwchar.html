@@ -33,7 +33,7 @@
 <div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['mbstate_t'], [], [])"><div class="token cpp_type">mbstate_t</div></div> <div class="def" id="NI$_Mbstatet2"><div><div class="token cpp_type">_Mbstatet</div></div></div>;
 
 <div class="expandable"><div class="disabled">_STD_BEGIN</div>
-<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[8]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[17]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
 #pragma warning(push)
 <div class="expandable"><div class="disabled">#pragma warning(disable: 4995) // name was marked as #pragma deprecated</div>
 <div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4995</div>) </div></div>
@@ -274,7 +274,12 @@ referencedSymbols = {
             'NF[28]$std',
             'NF[29]$std',
             'NF[30]$std',
-            'NF[31]$std'
+            'NF[31]$std',
+            'NF[32]$std',
+            'NF[33]$std',
+            'NF[34]$std',
+            'NF[35]$std',
+            'NF[36]$std'
         ]
     },
     'swprintf@int(wchar_t * const, ::size_t const, wchar_t const * const ...)': {
@@ -303,7 +308,9 @@ referencedSymbols = {
         'impls': [
             'NI$tm'
         ],
-        'decls': []
+        'decls': [
+            'NF[0]$tm'
+        ]
     },
     'ungetwc@::wint_t(::wint_t, ::FILE *)': {
         'displayNameInHtml': '<span class="cpp_function">ungetwc</span>(<span class="cpp_type">wint_t</span>, <span class="cpp_type">FILE</span> *)',
@@ -718,37 +725,43 @@ symbolToFiles = {
     'FB$wprintf@int(wchar_t const * const ...)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
     'FB$wscanf@int(wchar_t const * const ...)[impl0]': { 'htmlFileName': 'corecrt_wstdio.h', 'displayName': 'corecrt_wstdio.h' },
     'NF[0]$std': { 'htmlFileName': 'vcruntime_new.h', 'displayName': 'vcruntime_new.h' },
-    'NF[10]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
-    'NF[11]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
-    'NF[12]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
-    'NF[13]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
-    'NF[14]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[15]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
-    'NF[16]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[17]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[18]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
-    'NF[19]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
+    'NF[0]$tm': { 'htmlFileName': 'locale.h', 'displayName': 'locale.h' },
+    'NF[10]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[11]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[12]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[13]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[14]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[15]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
+    'NF[16]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
+    'NF[17]$std': null,
+    'NF[18]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
+    'NF[19]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
     'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
-    'NF[20]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[20]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
     'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
     'NF[22]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
     'NF[23]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
     'NF[24]$std': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
     'NF[25]$std': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
     'NF[26]$std': { 'htmlFileName': 'xatomic0.h', 'displayName': 'xatomic0.h' },
-    'NF[27]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
-    'NF[28]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[27]$std': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'NF[28]$std': { 'htmlFileName': 'stdexcept', 'displayName': 'stdexcept' },
     'NF[29]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
-    'NF[2]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
-    'NF[30]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
-    'NF[31]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[2]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[30]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[31]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
+    'NF[32]$std': { 'htmlFileName': 'xlocinfo', 'displayName': 'xlocinfo' },
+    'NF[33]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
+    'NF[34]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[35]$std': { 'htmlFileName': 'xfacet', 'displayName': 'xfacet' },
+    'NF[36]$std': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
     'NF[3]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
-    'NF[4]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
-    'NF[5]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
-    'NF[6]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
-    'NF[7]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
-    'NF[8]$std': null,
-    'NF[9]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[4]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[5]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[6]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[7]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
+    'NF[8]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[9]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
     'NI$_Mbstatet2': null,
     'NI$mbstate_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },

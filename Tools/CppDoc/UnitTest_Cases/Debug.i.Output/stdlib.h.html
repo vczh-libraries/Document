@@ -25,8 +25,8 @@
 <div class="disabled">#include &lt;corecrt.h&gt;
 #include &lt;corecrt_malloc.h&gt;
 #include &lt;corecrt_search.h&gt;
-#include &lt;corecrt_wstdlib.h&gt;
-#include &lt;limits.h&gt;</div>
+#include &lt;corecrt_wstdlib.h&gt;</div>
+<div class="disabled">#include &lt;limits.h&gt;</div>
 
 <div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
 <div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
@@ -249,22 +249,22 @@
 
 <div class="disabled">#if _CRT_FUNCTIONS_REQUIRED</div>
 <div class="expandable"><div class="disabled">    _ACRTIMP int* __cdecl _errno(void);</div>
-<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_errno@int *()[decl1]"><div class="ref" onclick="jumpToSymbol([], ['_errno@int *()'], [], [])"><div class="token cpp_function">_errno</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_errno@int *()[decl2]"><div class="ref" onclick="jumpToSymbol([], ['_errno@int *()'], [], [])"><div class="token cpp_function">_errno</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
 <div class="disabled">    #define errno (*_errno())</div>
 
 <div class="expandable"><div class="disabled">    _ACRTIMP errno_t __cdecl _set_errno(_In_ int _Value);</div>
-<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_set_errno@::errno_t(int)[decl1]"><div class="ref" onclick="jumpToSymbol([], ['_set_errno@::errno_t(int)'], [], [])"><div class="token cpp_function">_set_errno</div></div></div>(  <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_set_errno@::errno_t(int)[decl1]::_Value"><div>_Value</div></div>);</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_set_errno@::errno_t(int)[decl2]"><div class="ref" onclick="jumpToSymbol([], ['_set_errno@::errno_t(int)'], [], [])"><div class="token cpp_function">_set_errno</div></div></div>(  <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_set_errno@::errno_t(int)[decl2]::_Value"><div>_Value</div></div>);</div></div>
 <div class="expandable"><div class="disabled">    _ACRTIMP errno_t __cdecl _get_errno(_Out_ int* _Value);</div>
-<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_get_errno@::errno_t(int *)[decl1]"><div class="ref" onclick="jumpToSymbol([], ['_get_errno@::errno_t(int *)'], [], [])"><div class="token cpp_function">_get_errno</div></div></div>(  <div class="token cpp_keyword ">int</div>* <div class="def" id="NI$_get_errno@::errno_t(int *)[decl1]::_Value"><div>_Value</div></div>);</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_get_errno@::errno_t(int *)[decl2]"><div class="ref" onclick="jumpToSymbol([], ['_get_errno@::errno_t(int *)'], [], [])"><div class="token cpp_function">_get_errno</div></div></div>(  <div class="token cpp_keyword ">int</div>* <div class="def" id="NI$_get_errno@::errno_t(int *)[decl2]::_Value"><div>_Value</div></div>);</div></div>
 
 <div class="expandable"><div class="disabled">    _ACRTIMP unsigned long* __cdecl __doserrno(void);</div>
-<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__doserrno@unsigned long *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['__doserrno@unsigned long *()'], [], [])"><div class="token cpp_function">__doserrno</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__doserrno@unsigned long *()[decl1]"><div class="ref" onclick="jumpToSymbol([], ['__doserrno@unsigned long *()'], [], [])"><div class="token cpp_function">__doserrno</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
 <div class="disabled">    #define _doserrno (*__doserrno())</div>
 
 <div class="expandable"><div class="disabled">    _ACRTIMP errno_t __cdecl _set_doserrno(_In_ unsigned long _Value);</div>
-<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_set_doserrno@::errno_t(unsigned long)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_set_doserrno@::errno_t(unsigned long)'], [], [])"><div class="token cpp_function">_set_doserrno</div></div></div>(  <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$_set_doserrno@::errno_t(unsigned long)[decl0]::_Value"><div>_Value</div></div>);</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_set_doserrno@::errno_t(unsigned long)[decl1]"><div class="ref" onclick="jumpToSymbol([], ['_set_doserrno@::errno_t(unsigned long)'], [], [])"><div class="token cpp_function">_set_doserrno</div></div></div>(  <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$_set_doserrno@::errno_t(unsigned long)[decl1]::_Value"><div>_Value</div></div>);</div></div>
 <div class="expandable"><div class="disabled">    _ACRTIMP errno_t __cdecl _get_doserrno(_Out_ unsigned long * _Value);</div>
-<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_get_doserrno@::errno_t(unsigned long *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_get_doserrno@::errno_t(unsigned long *)'], [], [])"><div class="token cpp_function">_get_doserrno</div></div></div>(  <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> * <div class="def" id="NI$_get_doserrno@::errno_t(unsigned long *)[decl0]::_Value"><div>_Value</div></div>);</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_get_doserrno@::errno_t(unsigned long *)[decl1]"><div class="ref" onclick="jumpToSymbol([], ['_get_doserrno@::errno_t(unsigned long *)'], [], [])"><div class="token cpp_function">_get_doserrno</div></div></div>(  <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> * <div class="def" id="NI$_get_doserrno@::errno_t(unsigned long *)[decl1]::_Value"><div>_Value</div></div>);</div></div>
 
     <div class="token cpp_comment ">// This is non-const for backwards compatibility; do not modify it.</div>
 <div class="expandable"><div class="disabled">    _ACRTIMP _CRT_INSECURE_DEPRECATE(strerror) char** __cdecl __sys_errlist(void);</div>
@@ -2809,24 +2809,24 @@ referencedSymbols = {
     }
 };
 symbolToFiles = {
-    'FB$__doserrno@unsigned long *()[decl0]': null,
-    'FB$__doserrno@unsigned long *()[decl1]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$__doserrno@unsigned long *()[decl0]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$__doserrno@unsigned long *()[decl1]': null,
     'FB$_atof_l@double(char const *, ::_locale_t)[decl0]': null,
     'FB$_atof_l@double(char const *, ::_locale_t)[decl1]': { 'htmlFileName': 'corecrt_math.h', 'displayName': 'corecrt_math.h' },
     'FB$_ecvt_s@::errno_t(char *, ::size_t, double, int, int *, int *)[decl0]': null,
     'FB$_ecvt_s@::errno_t(char [*] &, double, int, int *, int *)[impl0]': null,
-    'FB$_errno@int *()[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
-    'FB$_errno@int *()[decl1]': null,
-    'FB$_errno@int *()[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_errno@int *()[decl0]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_errno@int *()[decl1]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'FB$_errno@int *()[decl2]': null,
     'FB$_fcvt_s@::errno_t(char *, ::size_t, double, int, int *, int *)[decl0]': null,
     'FB$_fcvt_s@::errno_t(char [*] &, double, int, int *, int *)[impl0]': null,
     'FB$_gcvt_s@::errno_t(char *, ::size_t, double, int)[decl0]': null,
     'FB$_gcvt_s@::errno_t(char [*] &, double, int)[impl0]': null,
-    'FB$_get_doserrno@::errno_t(unsigned long *)[decl0]': null,
-    'FB$_get_doserrno@::errno_t(unsigned long *)[decl1]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
-    'FB$_get_errno@::errno_t(int *)[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
-    'FB$_get_errno@::errno_t(int *)[decl1]': null,
-    'FB$_get_errno@::errno_t(int *)[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_get_doserrno@::errno_t(unsigned long *)[decl0]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_get_doserrno@::errno_t(unsigned long *)[decl1]': null,
+    'FB$_get_errno@::errno_t(int *)[decl0]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_get_errno@::errno_t(int *)[decl1]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'FB$_get_errno@::errno_t(int *)[decl2]': null,
     'FB$_itoa_s@::errno_t(int, char *, ::size_t, int)[decl0]': null,
     'FB$_itoa_s@::errno_t(int, char [*] &, int)[impl0]': null,
     'FB$_ltoa_s@::errno_t(long, char *, ::size_t, int)[decl0]': null,
@@ -2837,11 +2837,11 @@ symbolToFiles = {
     'FB$_mbstowcs_s_l@::errno_t(::size_t *, wchar_t [*] &, char const *, ::size_t, ::_locale_t)[impl0]': null,
     'FB$_searchenv_s@::errno_t(char const *, char const *, char *, ::size_t)[decl0]': null,
     'FB$_searchenv_s@::errno_t(char const *, char const *, char [*] &)[impl0]': null,
-    'FB$_set_doserrno@::errno_t(unsigned long)[decl0]': null,
-    'FB$_set_doserrno@::errno_t(unsigned long)[decl1]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
-    'FB$_set_errno@::errno_t(int)[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
-    'FB$_set_errno@::errno_t(int)[decl1]': null,
-    'FB$_set_errno@::errno_t(int)[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_set_doserrno@::errno_t(unsigned long)[decl0]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_set_doserrno@::errno_t(unsigned long)[decl1]': null,
+    'FB$_set_errno@::errno_t(int)[decl0]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_set_errno@::errno_t(int)[decl1]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'FB$_set_errno@::errno_t(int)[decl2]': null,
     'FB$_splitpath_s@::errno_t(char const *, char *, ::size_t, char *, ::size_t, char *, ::size_t, char *, ::size_t)[decl0]': null,
     'FB$_splitpath_s@::errno_t(char const *, char [*] &, char [*] &, char [*] &, char [*] &)[impl0]': null,
     'FB$_ultoa_s@::errno_t(unsigned long, char *, ::size_t, int)[decl0]': null,

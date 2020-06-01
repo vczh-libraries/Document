@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>new</title>
+    <title>xfacet</title>
     <link rel="stylesheet" href="../Cpp.css" />
     <link rel="shortcut icon" href="../favicon.ico" />
     <script type="text/javascript" src="../Cpp.js" ></script>
@@ -11,75 +11,70 @@
 <a class="button" href="./SymbolIndex.html">Symbol Index</a>
 <br>
 <br>
-<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">// new standard header</div>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">// xfacet internal header</div>
 #pragma once
-<div class="disabled">#ifndef _NEW_</div>
-<div class="disabled">#define _NEW_</div>
+<div class="disabled">#ifndef _XFACET_</div>
+<div class="disabled">#define _XFACET_</div>
 <div class="disabled">#ifndef RC_INVOKED</div>
-<div class="disabled">#include &lt;exception&gt;</div>
-<div class="disabled">#include &lt;vcruntime_new.h&gt;</div>
+<div class="disabled">#include &lt;yvals.h&gt;</div>
 
-<div class="expandable"><div class="disabled">#pragma pack(push,_CRT_PACKING)</div>
+<div class="expandable"><div class="disabled"> #pragma pack(push,_CRT_PACKING)</div>
 <div class="expanded">#pragma pack(push,<div class="token cpp_number ">8</div>)</div></div>
-<div class="expandable"><div class="disabled">#pragma warning(push,_STL_WARNING_LEVEL)</div>
+<div class="expandable"><div class="disabled"> #pragma warning(push,_STL_WARNING_LEVEL)</div>
 <div class="expanded">#pragma warning(push,<div class="token cpp_number ">3</div>)</div></div>
-<div class="expandable"><div class="disabled">#pragma warning(disable: _STL_DISABLED_WARNINGS)</div>
+<div class="expandable"><div class="disabled"> #pragma warning(disable: _STL_DISABLED_WARNINGS)</div>
 <div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4455</div> <div class="token cpp_number ">4494</div>  <div class="token cpp_number ">4619</div> <div class="token cpp_number ">4643</div> <div class="token cpp_number ">4702</div> <div class="token cpp_number ">4984</div> <div class="token cpp_number ">4988</div> )</div></div>
-<div class="disabled">_STL_DISABLE_CLANG_WARNINGS</div>
-<div class="disabled">#pragma push_macro(&quot;new&quot;)</div>
-<div class="disabled">#undef new</div>
+<div class="disabled"> _STL_DISABLE_CLANG_WARNINGS</div>
+<div class="disabled"> #pragma push_macro(&quot;new&quot;)</div>
+<div class="disabled"> #undef new</div>
+
+<div class="token cpp_comment ">// This must be as small as possible, because its contents are</div>
+<div class="token cpp_comment ">// injected into the msvcprt.lib and msvcprtd.lib import libraries.</div>
+<div class="token cpp_comment ">// Do not include or define anything else here.</div>
+<div class="token cpp_comment ">// In particular, basic_string must not be included here.</div>
 
 <div class="expandable"><div class="disabled">_STD_BEGIN</div>
-<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[19]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
-<div class="disabled">#if _HAS_CXX17</div>
-<div class="disabled">	// FUNCTION TEMPLATE launder</div>
-<div class="disabled">template&lt;class _Ty&gt;</div>
-<div class="disabled">	_NODISCARD constexpr _Ty * launder(_Ty * _Ptr) noexcept</div>
-<div class="disabled">	{</div>
-<div class="disabled">	static_assert(!is_function_v&lt;_Ty&gt; &amp;&amp; !is_void_v&lt;_Ty&gt;,</div>
-<div class="disabled">		&quot;N4727 21.6.4 [ptr.launder]/3: The program is ill-formed if T is a function type or cv void.&quot;);</div>
-<div class="disabled"> #if _HAS_LAUNDER</div>
-<div class="disabled">	return (__builtin_launder(_Ptr));</div>
-<div class="disabled"> #else /* _HAS_LAUNDER */</div>
-<div class="disabled">	return (_Ptr);</div>
-<div class="disabled"> #endif /* _HAS_LAUNDER */</div>
-<div class="disabled">	}</div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[35]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+	<div class="token cpp_comment ">// CLASS _Facet_base</div>
+<div class="expandable"><div class="disabled">class _CRTIMP2_PURE_IMPORT _Facet_base</div>
+<div class="expanded"><div class="token cpp_keyword ">class</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="def" id="NI$std::_Facet_base"><div><div class="token cpp_type">_Facet_base</div></div></div></div></div>
+	{	<div class="token cpp_comment ">// code for reference counting a facet</div>
+<div class="token cpp_keyword ">public</div>:
+<div class="expandable"><div class="disabled">	virtual __CLR_OR_THIS_CALL ~_Facet_base() noexcept</div>
+<div class="expanded">	<div class="token cpp_keyword ">virtual</div>  <div class="def" id="FB$std::_Facet_base::~_Facet_base@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">_Facet_base</div></div></div>() <div class="token cpp_keyword ">noexcept</div></div></div>
+		{	<div class="token cpp_comment ">// ensure that derived classes can be destroyed properly</div>
+		}
 
-<div class="disabled"> #if defined(_M_IX86) || defined(_M_X64) || defined(_M_ARM) || defined(_M_ARM64)</div>
-<div class="disabled">_INLINE_VAR constexpr size_t hardware_constructive_interference_size = 64;</div>
-<div class="disabled">_INLINE_VAR constexpr size_t hardware_destructive_interference_size = 64;</div>
-<div class="disabled"> #else /* ^^^ supported hardware ^^^ // vvv unsupported hardware vvv */</div>
-<div class="disabled">  #error Unsupported architecture</div>
-<div class="disabled"> #endif /* hardware */</div>
+	<div class="token cpp_comment ">// increment use count</div>
+<div class="expandable"><div class="disabled">	virtual void __CLR_OR_THIS_CALL _Incref() = 0;</div>
+<div class="expanded">	<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>  <div class="def" id="FB$std::_Facet_base::_Incref@void()[decl0]"><div><div class="token cpp_function">_Incref</div></div></div>() = <div class="token cpp_number ">0</div>;</div></div>
 
-<div class="disabled">#endif /* _HAS_CXX17 */</div>
+	<div class="token cpp_comment ">// decrement use count</div>
+<div class="expandable"><div class="disabled">	virtual _Facet_base * __CLR_OR_THIS_CALL _Decref() = 0;</div>
+<div class="expanded">	<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['std::_Facet_base'], [], [])"><div class="token cpp_type">_Facet_base</div></div> *  <div class="def" id="FB$std::_Facet_base::_Decref@::std::_Facet_base *()[decl0]"><div><div class="token cpp_function">_Decref</div></div></div>() = <div class="token cpp_number ">0</div>;</div></div>
+	};
 
-		<div class="token cpp_comment ">// SUPPORT TYPES</div>
-<div class="disabled">#if !defined(_INC_NEW) || !defined(_MSC_EXTENSIONS)</div>
-<div class="token cpp_comment ">// handler for operator new failures</div>
-<div class="expandable"><div class="disabled">typedef void (__CLRCALL_PURE_OR_CDECL * new_handler) ();
-#endif /* !defined(_INC_NEW) || !defined(_MSC_EXTENSIONS) */</div>
-<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div> (<div class="token cpp_keyword ">__cdecl</div> * <div class="def" id="NI$std::new_handler"><div><div class="token cpp_type">new_handler</div></div></div>) ();</div></div>
+<div class="disabled"> #if defined(_M_CEE)</div>
+<div class="disabled">void __CLRCALL_OR_CDECL _Facet_Register_m(_Facet_base *);</div>
 
-		<div class="token cpp_comment ">// FUNCTION AND OBJECT DECLARATIONS</div>
-<div class="expandable"><div class="disabled">_CRTIMP2 new_handler __cdecl set_new_handler(_In_opt_ new_handler) noexcept;</div>
-<div class="expanded"> <div class="ref" onclick="jumpToSymbol([], ['std::new_handler'], [], [])"><div class="token cpp_type">new_handler</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::set_new_handler@::std::new_handler(::std::new_handler)[decl0]"><div><div class="token cpp_function">set_new_handler</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['std::new_handler'], [], [])"><div class="token cpp_type">new_handler</div></div>) <div class="token cpp_keyword ">noexcept</div>;</div></div>
-<div class="expandable"><div class="disabled">_NODISCARD _CRTIMP2 new_handler __cdecl get_new_handler() noexcept;</div>
-<div class="expanded">  <div class="ref" onclick="jumpToSymbol([], ['std::new_handler'], [], [])"><div class="token cpp_type">new_handler</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::get_new_handler@::std::new_handler()[decl0]"><div><div class="token cpp_function">get_new_handler</div></div></div>() <div class="token cpp_keyword ">noexcept</div>;</div></div>
+<div class="disabled"> #else /* defined(_M_CEE) */</div>
+<div class="expandable"><div class="disabled">void __CLRCALL_OR_CDECL _Facet_Register(_Facet_base *);
+ #endif /* defined(_M_CEE) */</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::_Facet_Register@void(::std::_Facet_base *)[decl0]"><div><div class="token cpp_function">_Facet_Register</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Facet_base'], [], [])"><div class="token cpp_type">_Facet_base</div></div> *);</div></div>
 <div class="expandable"><div class="disabled">_STD_END</div>
 <div class="expanded">}</div></div>
+<div class="disabled"> #pragma pop_macro(&quot;new&quot;)</div>
+<div class="disabled"> _STL_RESTORE_CLANG_WARNINGS</div>
+<div class="expandable"><div class="disabled"> #pragma warning(pop)</div>
+<div class="expanded">#pragma warning(pop)</div></div>
+<div class="expandable"><div class="disabled"> #pragma pack(pop)
+#endif /* RC_INVOKED */
+#endif /* _XFACET_ */</div>
+<div class="expanded">#pragma pack(pop)</div></div>
 
-<div class="disabled">#pragma pop_macro(&quot;new&quot;)</div>
-<div class="disabled">_STL_RESTORE_CLANG_WARNINGS</div>
-#pragma warning(pop)
-#pragma pack(pop)
-
-<div class="disabled">#endif /* RC_INVOKED */
-#endif /* _NEW_ */</div>
-
-<div class="token cpp_comment ">/*
+ <div class="token cpp_comment ">/*
  * Copyright (c) by P.J. Plauger. All rights reserved.
- * Consult your license regarding permissions and restrictions.
+  * Consult your license regarding permissions and restrictions.
 V6.50:0009 */</div>
 <div class="disabled"></div>
 </div></div>
@@ -128,10 +123,10 @@ referencedSymbols = {
             'NF[36]$std'
         ]
     },
-    'std::new_handler': {
-        'displayNameInHtml': '<span class="cpp_type">new_handler</span>',
+    'std::_Facet_base': {
+        'displayNameInHtml': '<span class="cpp_type">_Facet_base</span>',
         'impls': [
-            'NI$std::new_handler'
+            'NI$std::_Facet_base'
         ],
         'decls': []
     }
@@ -147,7 +142,7 @@ symbolToFiles = {
     'NF[16]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
     'NF[17]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
     'NF[18]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
-    'NF[19]$std': null,
+    'NF[19]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
     'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
     'NF[20]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
     'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
@@ -165,7 +160,7 @@ symbolToFiles = {
     'NF[32]$std': { 'htmlFileName': 'xlocinfo', 'displayName': 'xlocinfo' },
     'NF[33]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
     'NF[34]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
-    'NF[35]$std': { 'htmlFileName': 'xfacet', 'displayName': 'xfacet' },
+    'NF[35]$std': null,
     'NF[36]$std': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
     'NF[3]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
     'NF[4]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
@@ -174,7 +169,7 @@ symbolToFiles = {
     'NF[7]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
     'NF[8]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
     'NF[9]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
-    'NI$std::new_handler': null
+    'NI$std::_Facet_base': null
 };
 turnOnSymbol();
 </script>

@@ -17,11 +17,11 @@
 <div class="disabled">#define _LIMITS_</div>
 <div class="disabled">#ifndef RC_INVOKED
 #include &lt;ymath.h&gt;
-#include &lt;cfloat&gt;
-#include &lt;climits&gt;
+#include &lt;cfloat&gt;</div>
+<div class="disabled">#include &lt;climits&gt;
 #include &lt;cmath&gt;
-#include &lt;cwchar&gt;
-#include &lt;xstddef&gt;</div>
+#include &lt;cwchar&gt;</div>
+<div class="disabled">#include &lt;xstddef&gt;</div>
 
 <div class="expandable"><div class="disabled"> #pragma pack(push,_CRT_PACKING)</div>
 <div class="expanded">#pragma pack(push,<div class="token cpp_number ">8</div>)</div></div>
@@ -34,7 +34,7 @@
 <div class="disabled"> #undef new</div>
 
 <div class="expandable"><div class="disabled">_STD_BEGIN</div>
-<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[12]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[18]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
 		<div class="token cpp_comment ">// ENUM float_denorm_style</div>
 <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$std::float_denorm_style"><div><div class="token cpp_type">float_denorm_style</div></div></div>
 	{	<div class="token cpp_comment ">// constants for different IEEE float denormalization styles</div>
@@ -1462,7 +1462,12 @@ referencedSymbols = {
             'NF[28]$std',
             'NF[29]$std',
             'NF[30]$std',
-            'NF[31]$std'
+            'NF[31]$std',
+            'NF[32]$std',
+            'NF[33]$std',
+            'NF[34]$std',
+            'NF[35]$std',
+            'NF[36]$std'
         ]
     },
     'std::_Num_base': {
@@ -1857,37 +1862,42 @@ symbolToFiles = {
     'FB$std::numeric_limits@<unsigned short>::min@unsigned short()[impl0]': null,
     'FB$std::numeric_limits@<wchar_t>::min@wchar_t()[impl0]': null,
     'NF[0]$std': { 'htmlFileName': 'vcruntime_new.h', 'displayName': 'vcruntime_new.h' },
-    'NF[10]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
-    'NF[11]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
-    'NF[12]$std': null,
-    'NF[13]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
-    'NF[14]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[15]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
-    'NF[16]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[17]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[18]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
-    'NF[19]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
+    'NF[10]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[11]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[12]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[13]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[14]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[15]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
+    'NF[16]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
+    'NF[17]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
+    'NF[18]$std': null,
+    'NF[19]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
     'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
-    'NF[20]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[20]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
     'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
     'NF[22]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
     'NF[23]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
     'NF[24]$std': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
     'NF[25]$std': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
     'NF[26]$std': { 'htmlFileName': 'xatomic0.h', 'displayName': 'xatomic0.h' },
-    'NF[27]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
-    'NF[28]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[27]$std': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'NF[28]$std': { 'htmlFileName': 'stdexcept', 'displayName': 'stdexcept' },
     'NF[29]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
-    'NF[2]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
-    'NF[30]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
-    'NF[31]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[2]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[30]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[31]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
+    'NF[32]$std': { 'htmlFileName': 'xlocinfo', 'displayName': 'xlocinfo' },
+    'NF[33]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
+    'NF[34]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[35]$std': { 'htmlFileName': 'xfacet', 'displayName': 'xfacet' },
+    'NF[36]$std': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
     'NF[3]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
-    'NF[4]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
-    'NF[5]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
-    'NF[6]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
-    'NF[7]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
-    'NF[8]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
-    'NF[9]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[4]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[5]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[6]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[7]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
+    'NF[8]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[9]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
     'NI$std::_Num_base': null,
     'NI$std::_Num_float_base': null,
     'NI$std::_Num_int_base': null,

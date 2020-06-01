@@ -24,16 +24,16 @@
 <div class="disabled">#ifndef _INC_WCHAR // include guard for 3rd party interop</div>
 <div class="disabled">#define _INC_WCHAR</div>
 
-<div class="disabled">#include &lt;corecrt.h&gt;
-#include &lt;corecrt_memcpy_s.h&gt;
+<div class="disabled">#include &lt;corecrt.h&gt;</div>
+<div class="disabled">#include &lt;corecrt_memcpy_s.h&gt;
 #include &lt;corecrt_wconio.h&gt;
 #include &lt;corecrt_wctype.h&gt;
 #include &lt;corecrt_wdirect.h&gt;
 #include &lt;corecrt_wio.h&gt;
 #include &lt;corecrt_wprocess.h&gt;
 #include &lt;corecrt_wstdio.h&gt;</div>
-<div class="disabled">#include &lt;corecrt_wstdlib.h&gt;
-#include &lt;corecrt_wstring.h&gt;
+<div class="disabled">#include &lt;corecrt_wstdlib.h&gt;</div>
+<div class="disabled">#include &lt;corecrt_wstring.h&gt;
 #include &lt;corecrt_wtime.h&gt;
 #include &lt;sys/stat.h&gt;</div>
 <div class="disabled">#include &lt;sys/types.h&gt;</div>
@@ -57,7 +57,7 @@
 
 <div class="disabled">    _Check_return_opt_ _Success_(return != 0) _Ret_z_</div>
 <div class="expandable"><div class="disabled">    _ACRTIMP wchar_t* __cdecl _wsetlocale(</div>
-<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wsetlocale@wchar_t *(int, wchar_t const *)[decl0]"><div><div class="token cpp_function">_wsetlocale</div></div></div>(</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wsetlocale@wchar_t *(int, wchar_t const *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_wsetlocale@wchar_t *(int, wchar_t const *)'], [], [])"><div class="token cpp_function">_wsetlocale</div></div></div>(</div></div>
 <div class="expandable"><div class="disabled">        _In_       int            _Category,</div>
 <div class="expanded">                <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsetlocale@wchar_t *(int, wchar_t const *)[decl0]::_Category"><div>_Category</div></div>,</div></div>
 <div class="expandable"><div class="disabled">        _In_opt_z_ wchar_t const* _Locale</div>
@@ -66,7 +66,7 @@
 
 <div class="disabled">    _Check_return_opt_</div>
 <div class="expandable"><div class="disabled">    _ACRTIMP _locale_t __cdecl _wcreate_locale(</div>
-<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [], [])"><div class="token cpp_type">_locale_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl0]"><div><div class="token cpp_function">_wcreate_locale</div></div></div>(</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [], [])"><div class="token cpp_type">_locale_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_wcreate_locale@::_locale_t(int, wchar_t const *)'], [], [])"><div class="token cpp_function">_wcreate_locale</div></div></div>(</div></div>
 <div class="expandable"><div class="disabled">        _In_   int            _Category,</div>
 <div class="expanded">            <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl0]::_Category"><div>_Category</div></div>,</div></div>
 <div class="expandable"><div class="disabled">        _In_z_ wchar_t const* _Locale</div>
@@ -417,6 +417,22 @@ referencedSymbols = {
             'NI$_locale_t'
         ],
         'decls': []
+    },
+    '_wcreate_locale@::_locale_t(int, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wcreate_locale</span>(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl0]',
+            'FB$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl1]'
+        ]
+    },
+    '_wsetlocale@wchar_t *(int, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wsetlocale</span>(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_wsetlocale@wchar_t *(int, wchar_t const *)[decl0]',
+            'FB$_wsetlocale@wchar_t *(int, wchar_t const *)[decl1]'
+        ]
     },
     'errno_t': {
         'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
@@ -805,6 +821,10 @@ referencedSymbols = {
     }
 };
 symbolToFiles = {
+    'FB$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl0]': null,
+    'FB$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl1]': { 'htmlFileName': 'locale.h', 'displayName': 'locale.h' },
+    'FB$_wsetlocale@wchar_t *(int, wchar_t const *)[decl0]': null,
+    'FB$_wsetlocale@wchar_t *(int, wchar_t const *)[decl1]': { 'htmlFileName': 'locale.h', 'displayName': 'locale.h' },
     'FB$mbsrtowcs_s@::errno_t(::size_t *, wchar_t *, ::size_t, char const * *, ::size_t, ::mbstate_t *)[decl0]': null,
     'FB$mbsrtowcs_s@::errno_t(::size_t *, wchar_t [*] &, char const * *, ::size_t, ::mbstate_t *)[impl0]': null,
     'FB$memcpy@void *(void *, void const *, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },

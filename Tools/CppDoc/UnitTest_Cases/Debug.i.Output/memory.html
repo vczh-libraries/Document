@@ -17,8 +17,8 @@
 <div class="disabled">#define _MEMORY_</div>
 <div class="disabled">#ifndef RC_INVOKED
 #include &lt;xmemory&gt;</div>
-<div class="disabled">#include &lt;exception&gt;
-#include &lt;typeinfo&gt;</div>
+<div class="disabled">#include &lt;exception&gt;</div>
+<div class="disabled">#include &lt;typeinfo&gt;</div>
 <div class="disabled">#include &lt;type_traits&gt;</div>
 
 <div class="expandable"><div class="disabled"> #pragma pack(push,_CRT_PACKING)</div>
@@ -32,7 +32,7 @@
 <div class="disabled"> #undef new</div>
 
 <div class="expandable"><div class="disabled">_STD_BEGIN</div>
-<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[31]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[34]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
 		<div class="token cpp_comment ">// FUNCTION TEMPLATE uninitialized_copy</div>
 <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Uninitialized_copy_unchecked@[_FwdIt]([_InIt], [_InIt] const, [_FwdIt] const, ::std::_General_ptr_iterator_tag)[impl0]::_InIt"><div><div class="token cpp_type">_InIt</div></div></div>,
 	<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Uninitialized_copy_unchecked@[_FwdIt]([_InIt], [_InIt] const, [_FwdIt] const, ::std::_General_ptr_iterator_tag)[impl0]::_FwdIt"><div><div class="token cpp_type">_FwdIt</div></div></div>&gt; <div class="token cpp_keyword ">inline</div>
@@ -1169,9 +1169,9 @@
 	<div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::_Ptr_base::_Swap@void(::std::_Ptr_base &)[impl0]"><div><div class="token cpp_function">_Swap</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base'], [], [])"><div class="token cpp_type">_Ptr_base</div></div>&amp; <div class="def" id="NI$std::_Ptr_base::_Swap@void(::std::_Ptr_base &)[impl0]::_Right"><div><div class="token cpp_argument">_Right</div></div></div>) <div class="token cpp_keyword ">noexcept</div>
 		{	<div class="token cpp_comment ">// swap pointers</div>
 <div class="expandable"><div class="disabled">		_STD swap(_Ptr, _Right._Ptr);</div>
-<div class="expanded">		::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)', 'std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)', 'std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)'], ['std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)', 'std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)', 'std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)', 'std::swap@void(::std::unique_ptr<[_Ty], [_Dx]> &, ::std::unique_ptr<[_Ty], [_Dx]> &)', 'std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)', 'std::swap@void([_Ty] &, [_Ty] &)', 'std::swap@void([_Ty] [*] &, [_Ty] [*] &)'], [], [])"><div class="token cpp_function">swap</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Ptr'], [], [])"><div class="token cpp_field">_Ptr</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Swap@void(::std::_Ptr_base &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>.<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Ptr'], [], [])"><div class="token cpp_field">_Ptr</div></div>);</div></div>
+<div class="expanded">		::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)', 'std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)', 'std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)', 'std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)'], ['std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)', 'std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)', 'std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)', 'std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)', 'std::swap@void(::std::unique_ptr<[_Ty], [_Dx]> &, ::std::unique_ptr<[_Ty], [_Dx]> &)', 'std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)', 'std::swap@void([_Ty] &, [_Ty] &)', 'std::swap@void([_Ty] [*] &, [_Ty] [*] &)'], [], [])"><div class="token cpp_function">swap</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Ptr'], [], [])"><div class="token cpp_field">_Ptr</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Swap@void(::std::_Ptr_base &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>.<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Ptr'], [], [])"><div class="token cpp_field">_Ptr</div></div>);</div></div>
 <div class="expandable"><div class="disabled">		_STD swap(_Rep, _Right._Rep);</div>
-<div class="expanded">		::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol([], ['std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)', 'std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)', 'std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)', 'std::swap@void(::std::unique_ptr<[_Ty], [_Dx]> &, ::std::unique_ptr<[_Ty], [_Dx]> &)', 'std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)', 'std::swap@void([_Ty] &, [_Ty] &)', 'std::swap@void([_Ty] [*] &, [_Ty] [*] &)'], [], [])"><div class="token cpp_function">swap</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Rep'], [], [])"><div class="token cpp_field">_Rep</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Swap@void(::std::_Ptr_base &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>.<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Rep'], [], [])"><div class="token cpp_field">_Rep</div></div>);</div></div>
+<div class="expanded">		::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol([], ['std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)', 'std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)', 'std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)', 'std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)', 'std::swap@void(::std::unique_ptr<[_Ty], [_Dx]> &, ::std::unique_ptr<[_Ty], [_Dx]> &)', 'std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)', 'std::swap@void([_Ty] &, [_Ty] &)', 'std::swap@void([_Ty] [*] &, [_Ty] [*] &)'], [], [])"><div class="token cpp_function">swap</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Rep'], [], [])"><div class="token cpp_field">_Rep</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Swap@void(::std::_Ptr_base &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>.<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::_Rep'], [], [])"><div class="token cpp_field">_Rep</div></div>);</div></div>
 		}
 
 	<div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::_Ptr_base::_Set_ptr_rep@void(::std::_Ptr_base::element_type *, ::std::_Ref_count_base *)[impl0]"><div><div class="token cpp_function">_Set_ptr_rep</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::element_type'], [], [])"><div class="token cpp_type">element_type</div></div> * <div class="def" id="NI$std::_Ptr_base::_Set_ptr_rep@void(::std::_Ptr_base::element_type *, ::std::_Ref_count_base *)[impl0]::_Other_ptr"><div><div class="token cpp_argument">_Other_ptr</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Ref_count_base'], [], [])"><div class="token cpp_type">_Ref_count_base</div></div> * <div class="def" id="NI$std::_Ptr_base::_Set_ptr_rep@void(::std::_Ptr_base::element_type *, ::std::_Ref_count_base *)[impl0]::_Other_rep"><div><div class="token cpp_argument">_Other_rep</div></div></div>)
@@ -3068,13 +3068,13 @@
 	<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Dx"><div><div class="token cpp_type">_Dx</div></div></div>&gt;
 	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>"><div class="ref" onclick="jumpToSymbol([], [], [], ['std::hash'])"><div class="token cpp_type">hash</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::unique_ptr'], [], [])"><div class="token cpp_type">unique_ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Dx'], [], [])"><div class="token cpp_type">_Dx</div></div>&gt;&gt;
 		: <div class="ref" onclick="jumpToSymbol(['std::_Conditionally_enabled_hash@<[_Kty], *>'], ['std::_Conditionally_enabled_hash'], [], [])"><div class="token cpp_type">_Conditionally_enabled_hash</div></div>&lt;<div class="ref" onclick="jumpToSymbol(['std::unique_ptr', 'std::unique_ptr@<[_Ty] [], [_Dx]>'], ['std::unique_ptr'], [], [])"><div class="token cpp_type">unique_ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Dx'], [], [])"><div class="token cpp_type">_Dx</div></div>&gt;,
-			<div class="ref" onclick="jumpToSymbol([], ['std::is_default_constructible_v'], [], [])">is_default_constructible_v</div>&lt;<div class="ref" onclick="jumpToSymbol(['std::hash', 'std::hash@<::std::nullptr_t>', 'std::hash@<::std::shared_ptr<[_Ty]>>', 'std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>', 'std::hash@<double>', 'std::hash@<float>', 'std::hash@<long double>'], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>'], [], [])"><div class="token cpp_type">hash</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['std::unique_ptr', 'std::unique_ptr@<[_Ty] [], [_Dx]>'], ['std::unique_ptr'], [], [])"><div class="token cpp_type">unique_ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Dx'], [], [])"><div class="token cpp_type">_Dx</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::unique_ptr::pointer', 'std::unique_ptr@<[_Ty] [], [_Dx]>::pointer'], [], [])"><div class="token cpp_type">pointer</div></div>&gt;&gt;&gt;
+			<div class="ref" onclick="jumpToSymbol([], ['std::is_default_constructible_v'], [], [])">is_default_constructible_v</div>&lt;<div class="ref" onclick="jumpToSymbol(['std::hash', 'std::hash@<::std::basic_string<[_Elem], [_Traits], [_Alloc]>>', 'std::hash@<::std::nullptr_t>', 'std::hash@<::std::shared_ptr<[_Ty]>>', 'std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>', 'std::hash@<double>', 'std::hash@<float>', 'std::hash@<long double>'], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>'], [], [])"><div class="token cpp_type">hash</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['std::unique_ptr', 'std::unique_ptr@<[_Ty] [], [_Dx]>'], ['std::unique_ptr'], [], [])"><div class="token cpp_type">unique_ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Dx'], [], [])"><div class="token cpp_type">_Dx</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::unique_ptr::pointer', 'std::unique_ptr@<[_Ty] [], [_Dx]>::pointer'], [], [])"><div class="token cpp_type">pointer</div></div>&gt;&gt;&gt;
 	{	<div class="token cpp_comment ">// hash functor</div>
 	<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="FB$std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Do_hash@::size_t(::std::unique_ptr<[_Ty], [_Dx]> const &)[impl0]"><div><div class="token cpp_function">_Do_hash</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['std::unique_ptr', 'std::unique_ptr@<[_Ty] [], [_Dx]>'], ['std::unique_ptr'], [], [])"><div class="token cpp_type">unique_ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Dx'], [], [])"><div class="token cpp_type">_Dx</div></div>&gt;&amp; <div class="def" id="NI$std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Do_hash@::size_t(::std::unique_ptr<[_Ty], [_Dx]> const &)[impl0]::_Keyval"><div><div class="token cpp_argument">_Keyval</div></div></div>)
 <div class="expandable"><div class="disabled">			_NOEXCEPT_COND(_Is_nothrow_hashable&lt;typename unique_ptr&lt;_Ty, _Dx&gt;::pointer&gt;::value) // strengthened</div>
 <div class="expanded">			<div class="token cpp_keyword ">noexcept</div>(<div class="ref" onclick="jumpToSymbol(['std::_Is_nothrow_hashable', 'std::_Is_nothrow_hashable@<[_Kty], ::std::void_t<decltype(*)>>'], ['std::_Is_nothrow_hashable'], [], [])"><div class="token cpp_type">_Is_nothrow_hashable</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['std::unique_ptr', 'std::unique_ptr@<[_Ty] [], [_Dx]>'], ['std::unique_ptr'], [], [])"><div class="token cpp_type">unique_ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Dx'], [], [])"><div class="token cpp_type">_Dx</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::unique_ptr::pointer', 'std::unique_ptr@<[_Ty] [], [_Dx]>::pointer'], [], [])"><div class="token cpp_type">pointer</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::integral_constant::value'], [], [])"><div class="token cpp_field">value</div></div>) <div class="token cpp_comment ">// strengthened</div></div></div>
 		{	<div class="token cpp_comment ">// hash _Keyval to size_t value by pseudorandomizing transform</div>
-		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol(['std::hash', 'std::hash@<::std::nullptr_t>', 'std::hash@<::std::shared_ptr<[_Ty]>>', 'std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>', 'std::hash@<double>', 'std::hash@<float>', 'std::hash@<long double>'], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>'], [], [])"><div class="token cpp_type">hash</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['std::unique_ptr', 'std::unique_ptr@<[_Ty] [], [_Dx]>'], ['std::unique_ptr'], [], [])"><div class="token cpp_type">unique_ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Dx'], [], [])"><div class="token cpp_type">_Dx</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::unique_ptr::pointer', 'std::unique_ptr@<[_Ty] [], [_Dx]>::pointer'], [], [])"><div class="token cpp_type">pointer</div></div>&gt;{}<div class="ref" onclick="jumpToSymbol(['std::_Conditionally_enabled_hash::operator ()@::size_t([_Kty] const &)', 'std::hash@<::std::nullptr_t>::operator ()@::size_t(::std::nullptr_t)', 'std::hash@<::std::shared_ptr<[_Ty]>>::operator ()@::size_t(::std::shared_ptr<[_Ty]> const &)', 'std::hash@<double>::operator ()@::size_t(double const)', 'std::hash@<float>::operator ()@::size_t(float const)', 'std::hash@<long double>::operator ()@::size_t(long double const)'], [], [], [])"><div class="token cpp_function">(</div></div><div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Do_hash@::size_t(::std::unique_ptr<[_Ty], [_Dx]> const &)[impl0]::_Keyval'], [], [])"><div class="token cpp_argument">_Keyval</div></div>.<div class="ref" onclick="jumpToSymbol(['std::unique_ptr::get@::std::unique_ptr::pointer()', 'std::unique_ptr@<[_Ty] [], [_Dx]>::get@::std::unique_ptr@<[_Ty] [], [_Dx]>::pointer()'], ['std::unique_ptr::get@::std::unique_ptr::pointer()', 'std::unique_ptr@<[_Ty] [], [_Dx]>::get@::std::unique_ptr@<[_Ty] [], [_Dx]>::pointer()'], [], [])"><div class="token cpp_function">get</div></div>()));
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol(['std::hash', 'std::hash@<::std::basic_string<[_Elem], [_Traits], [_Alloc]>>', 'std::hash@<::std::nullptr_t>', 'std::hash@<::std::shared_ptr<[_Ty]>>', 'std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>', 'std::hash@<double>', 'std::hash@<float>', 'std::hash@<long double>'], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>'], [], [])"><div class="token cpp_type">hash</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['std::unique_ptr', 'std::unique_ptr@<[_Ty] [], [_Dx]>'], ['std::unique_ptr'], [], [])"><div class="token cpp_type">unique_ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Dx'], [], [])"><div class="token cpp_type">_Dx</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::unique_ptr::pointer', 'std::unique_ptr@<[_Ty] [], [_Dx]>::pointer'], [], [])"><div class="token cpp_type">pointer</div></div>&gt;{}<div class="ref" onclick="jumpToSymbol(['std::_Conditionally_enabled_hash::operator ()@::size_t([_Kty] const &)', 'std::hash@<::std::basic_string<[_Elem], [_Traits], [_Alloc]>>::operator ()@::size_t(::std::basic_string<[_Elem], [_Traits], [_Alloc]> const &)', 'std::hash@<::std::nullptr_t>::operator ()@::size_t(::std::nullptr_t)', 'std::hash@<::std::shared_ptr<[_Ty]>>::operator ()@::size_t(::std::shared_ptr<[_Ty]> const &)', 'std::hash@<double>::operator ()@::size_t(double const)', 'std::hash@<float>::operator ()@::size_t(float const)', 'std::hash@<long double>::operator ()@::size_t(long double const)'], [], [], [])"><div class="token cpp_function">(</div></div><div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>::_Do_hash@::size_t(::std::unique_ptr<[_Ty], [_Dx]> const &)[impl0]::_Keyval'], [], [])"><div class="token cpp_argument">_Keyval</div></div>.<div class="ref" onclick="jumpToSymbol(['std::unique_ptr::get@::std::unique_ptr::pointer()', 'std::unique_ptr@<[_Ty] [], [_Dx]>::get@::std::unique_ptr@<[_Ty] [], [_Dx]>::pointer()'], ['std::unique_ptr::get@::std::unique_ptr::pointer()', 'std::unique_ptr@<[_Ty] [], [_Dx]>::get@::std::unique_ptr@<[_Ty] [], [_Dx]>::pointer()'], [], [])"><div class="token cpp_function">get</div></div>()));
 		}
 	};
 
@@ -3089,7 +3089,7 @@
 <div class="expandable"><div class="disabled">	_NODISCARD size_t operator()(const shared_ptr&lt;_Ty&gt;&amp; _Keyval) const noexcept</div>
 <div class="expanded">	 <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="FB$std::hash@<::std::shared_ptr<[_Ty]>>::operator ()@::size_t(::std::shared_ptr<[_Ty]> const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">(</div><div class="token cpp_function">)</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::shared_ptr'], [], [])"><div class="token cpp_type">shared_ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::shared_ptr<[_Ty]>>::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;&amp; <div class="def" id="NI$std::hash@<::std::shared_ptr<[_Ty]>>::operator ()@::size_t(::std::shared_ptr<[_Ty]> const &)[impl0]::_Keyval"><div><div class="token cpp_argument">_Keyval</div></div></div>) <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div></div></div>
 		{	<div class="token cpp_comment ">// hash _Keyval to size_t value by pseudorandomizing transform</div>
-		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol(['std::hash', 'std::hash@<::std::nullptr_t>', 'std::hash@<::std::shared_ptr<[_Ty]>>', 'std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>', 'std::hash@<double>', 'std::hash@<float>', 'std::hash@<long double>'], ['std::hash@<::std::shared_ptr<[_Ty]>>'], [], [])"><div class="token cpp_type">hash</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['std::shared_ptr'], [], [])"><div class="token cpp_type">shared_ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::shared_ptr<[_Ty]>>::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::element_type'], [], [])"><div class="token cpp_type">element_type</div></div> *&gt;()<div class="ref" onclick="jumpToSymbol(['std::_Conditionally_enabled_hash::operator ()@::size_t([_Kty] const &)', 'std::hash@<::std::nullptr_t>::operator ()@::size_t(::std::nullptr_t)', 'std::hash@<::std::shared_ptr<[_Ty]>>::operator ()@::size_t(::std::shared_ptr<[_Ty]> const &)', 'std::hash@<double>::operator ()@::size_t(double const)', 'std::hash@<float>::operator ()@::size_t(float const)', 'std::hash@<long double>::operator ()@::size_t(long double const)'], [], [], [])"><div class="token cpp_function">(</div></div><div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::shared_ptr<[_Ty]>>::operator ()@::size_t(::std::shared_ptr<[_Ty]> const &)[impl0]::_Keyval'], [], [])"><div class="token cpp_argument">_Keyval</div></div>.<div class="ref" onclick="jumpToSymbol(['std::_Ptr_base::get@::std::_Ptr_base::element_type *()'], ['std::_Ptr_base::get@::std::_Ptr_base::element_type *()'], [], [])"><div class="token cpp_function">get</div></div>()));
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol(['std::hash', 'std::hash@<::std::basic_string<[_Elem], [_Traits], [_Alloc]>>', 'std::hash@<::std::nullptr_t>', 'std::hash@<::std::shared_ptr<[_Ty]>>', 'std::hash@<::std::unique_ptr<[_Ty], [_Dx]>>', 'std::hash@<double>', 'std::hash@<float>', 'std::hash@<long double>'], ['std::hash@<::std::shared_ptr<[_Ty]>>'], [], [])"><div class="token cpp_type">hash</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['std::shared_ptr'], [], [])"><div class="token cpp_type">shared_ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::shared_ptr<[_Ty]>>::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::_Ptr_base::element_type'], [], [])"><div class="token cpp_type">element_type</div></div> *&gt;()<div class="ref" onclick="jumpToSymbol(['std::_Conditionally_enabled_hash::operator ()@::size_t([_Kty] const &)', 'std::hash@<::std::basic_string<[_Elem], [_Traits], [_Alloc]>>::operator ()@::size_t(::std::basic_string<[_Elem], [_Traits], [_Alloc]> const &)', 'std::hash@<::std::nullptr_t>::operator ()@::size_t(::std::nullptr_t)', 'std::hash@<::std::shared_ptr<[_Ty]>>::operator ()@::size_t(::std::shared_ptr<[_Ty]> const &)', 'std::hash@<double>::operator ()@::size_t(double const)', 'std::hash@<float>::operator ()@::size_t(float const)', 'std::hash@<long double>::operator ()@::size_t(long double const)'], [], [], [])"><div class="token cpp_function">(</div></div><div class="ref" onclick="jumpToSymbol([], ['std::hash@<::std::shared_ptr<[_Ty]>>::operator ()@::size_t(::std::shared_ptr<[_Ty]> const &)[impl0]::_Keyval'], [], [])"><div class="token cpp_argument">_Keyval</div></div>.<div class="ref" onclick="jumpToSymbol(['std::_Ptr_base::get@::std::_Ptr_base::element_type *()'], ['std::_Ptr_base::get@::std::_Ptr_base::element_type *()'], [], [])"><div class="token cpp_function">get</div></div>()));
 		}
 	};
 
@@ -3269,7 +3269,7 @@
 <div class="expandable"><div class="disabled">using _STD static_pointer_cast;</div>
 <div class="expanded"><div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol([], ['std::static_pointer_cast@::std::shared_ptr<[_Ty1]>(::std::shared_ptr<[_Ty2]> const &)'], [], [])"><div class="token cpp_function">static_pointer_cast</div></div>;</div></div>
 <div class="expandable"><div class="disabled">using _STD swap;</div>
-<div class="expanded"><div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol([], ['std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)', 'std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)', 'std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)', 'std::swap@void(::std::unique_ptr<[_Ty], [_Dx]> &, ::std::unique_ptr<[_Ty], [_Dx]> &)', 'std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)', 'std::swap@void([_Ty] &, [_Ty] &)', 'std::swap@void([_Ty] [*] &, [_Ty] [*] &)'], [], [])"><div class="token cpp_function">swap</div></div>;</div></div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol([], ['std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)', 'std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)', 'std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)', 'std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)', 'std::swap@void(::std::unique_ptr<[_Ty], [_Dx]> &, ::std::unique_ptr<[_Ty], [_Dx]> &)', 'std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)', 'std::swap@void([_Ty] &, [_Ty] &)', 'std::swap@void([_Ty] [*] &, [_Ty] [*] &)'], [], [])"><div class="token cpp_function">swap</div></div>;</div></div>
 <div class="expandable"><div class="disabled">using _STD weak_ptr;</div>
 <div class="expanded"><div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol([], ['std::weak_ptr'], [], [])"><div class="token cpp_type">weak_ptr</div></div>;</div></div>
 }
@@ -3385,7 +3385,12 @@ referencedSymbols = {
             'NF[28]$std',
             'NF[29]$std',
             'NF[30]$std',
-            'NF[31]$std'
+            'NF[31]$std',
+            'NF[32]$std',
+            'NF[33]$std',
+            'NF[34]$std',
+            'NF[35]$std',
+            'NF[36]$std'
         ]
     },
     'std::_Adl_verify_range@void([_Iter] const &, [_Sentinel] const &)': {
@@ -6410,6 +6415,20 @@ referencedSymbols = {
             'NF[0]$std::hash'
         ]
     },
+    'std::hash@<::std::basic_string<[_Elem], [_Traits], [_Alloc]>>': {
+        'displayNameInHtml': '<span class="cpp_type">hash</span>&lt;<span class="cpp_type">basic_string</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>, <span class="cpp_type">_Alloc</span>&gt;&gt;',
+        'impls': [
+            'NI$std::hash@<::std::basic_string<[_Elem], [_Traits], [_Alloc]>>'
+        ],
+        'decls': []
+    },
+    'std::hash@<::std::basic_string<[_Elem], [_Traits], [_Alloc]>>::operator ()@::size_t(::std::basic_string<[_Elem], [_Traits], [_Alloc]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">hash</span>&lt;<span class="cpp_type">basic_string</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>, <span class="cpp_type">_Alloc</span>&gt;&gt;::<span class="cpp_function">operator ()</span>(<span class="cpp_type">basic_string</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>, <span class="cpp_type">_Alloc</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::hash@<::std::basic_string<[_Elem], [_Traits], [_Alloc]>>::operator ()@::size_t(::std::basic_string<[_Elem], [_Traits], [_Alloc]> const &)[impl0]'
+        ],
+        'decls': []
+    },
     'std::hash@<::std::nullptr_t>': {
         'displayNameInHtml': '<span class="cpp_type">hash</span>&lt;<span class="cpp_type">nullptr_t</span>&gt;',
         'impls': [
@@ -9212,6 +9231,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>, <span class="cpp_type">_Alloc</span>&gt;(<span class="cpp_type">basic_string</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>, <span class="cpp_type">_Alloc</span>&gt; &, <span class="cpp_type">basic_string</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>, <span class="cpp_type">_Alloc</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)[impl0]'
+        ],
+        'decls': []
+    },
     'std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)': {
         'displayNameInHtml': '<span class="cpp_function">swap</span>(<span class="cpp_type">exception_ptr</span> &, <span class="cpp_type">exception_ptr</span> &)',
         'impls': [
@@ -10731,6 +10757,7 @@ symbolToFiles = {
     'FB$std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)[impl0]': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
     'FB$std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)[impl0]': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
     'FB$std::get_deleter@[_Dx] *(::std::shared_ptr<[_Ty]> const &)[impl0]': null,
+    'FB$std::hash@<::std::basic_string<[_Elem], [_Traits], [_Alloc]>>::operator ()@::size_t(::std::basic_string<[_Elem], [_Traits], [_Alloc]> const &)[impl0]': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
     'FB$std::hash@<::std::nullptr_t>::operator ()@::size_t(::std::nullptr_t)[impl0]': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
     'FB$std::hash@<::std::shared_ptr<[_Ty]>>::operator ()@::size_t(::std::shared_ptr<[_Ty]> const &)[impl0]': null,
     'FB$std::hash@<double>::operator ()@::size_t(double const)[impl0]': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
@@ -10762,6 +10789,7 @@ symbolToFiles = {
     'FB$std::size@::size_t([_Ty] const [*] &)[impl0]': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
     'FB$std::size@decltype(*)([_Container] const &)[impl0]': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
     'FB$std::static_pointer_cast@::std::shared_ptr<[_Ty1]>(::std::shared_ptr<[_Ty2]> const &)[impl0]': null,
+    'FB$std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)[impl0]': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
     'FB$std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]': { 'htmlFileName': 'exception', 'displayName': 'exception' },
     'FB$std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)[impl0]': { 'htmlFileName': 'utility', 'displayName': 'utility' },
     'FB$std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)[impl0]': null,
@@ -10796,44 +10824,49 @@ symbolToFiles = {
     'NF[0]$std::hash': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
     'NF[0]$std::owner_less': null,
     'NF[0]$std::shared_ptr': null,
-    'NF[0]$std::tr1': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[0]$std::tr1': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
     'NF[0]$std::unique_ptr': null,
     'NF[0]$std::weak_ptr': null,
     'NF[0]$type_info': { 'htmlFileName': 'eh.h', 'displayName': 'eh.h' },
-    'NF[10]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
-    'NF[11]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
-    'NF[12]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
-    'NF[13]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
-    'NF[14]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[15]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
-    'NF[16]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[17]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[18]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
-    'NF[19]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
+    'NF[10]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[11]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[12]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[13]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[14]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[15]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
+    'NF[16]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
+    'NF[17]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
+    'NF[18]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
+    'NF[19]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
     'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
-    'NF[1]$std::tr1': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
-    'NF[20]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[1]$std::tr1': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[20]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
     'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
     'NF[22]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
     'NF[23]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
     'NF[24]$std': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
     'NF[25]$std': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
     'NF[26]$std': { 'htmlFileName': 'xatomic0.h', 'displayName': 'xatomic0.h' },
-    'NF[27]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
-    'NF[28]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[27]$std': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'NF[28]$std': { 'htmlFileName': 'stdexcept', 'displayName': 'stdexcept' },
     'NF[29]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
-    'NF[2]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[2]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
     'NF[2]$std::tr1': { 'htmlFileName': 'utility', 'displayName': 'utility' },
-    'NF[30]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
-    'NF[31]$std': null,
+    'NF[30]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[31]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
+    'NF[32]$std': { 'htmlFileName': 'xlocinfo', 'displayName': 'xlocinfo' },
+    'NF[33]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
+    'NF[34]$std': null,
+    'NF[35]$std': { 'htmlFileName': 'xfacet', 'displayName': 'xfacet' },
+    'NF[36]$std': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
     'NF[3]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
     'NF[3]$std::tr1': null,
-    'NF[4]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
-    'NF[5]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
-    'NF[6]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
-    'NF[7]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
-    'NF[8]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
-    'NF[9]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[4]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[5]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[6]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[7]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
+    'NF[8]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[9]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
     'NI$ptrdiff_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
     'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
     'NI$std::_Algorithm_int_t': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
@@ -11052,6 +11085,7 @@ symbolToFiles = {
     'NI$std::false_type': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
     'NI$std::get_deleter@[_Dx] *(::std::shared_ptr<[_Ty]> const &)[impl0]::_Sx': null,
     'NI$std::hash': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NI$std::hash@<::std::basic_string<[_Elem], [_Traits], [_Alloc]>>': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
     'NI$std::hash@<::std::nullptr_t>': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
     'NI$std::hash@<::std::shared_ptr<[_Ty]>>': null,
     'NI$std::hash@<::std::shared_ptr<[_Ty]>>::operator ()@::size_t(::std::shared_ptr<[_Ty]> const &)[impl0]::_Keyval': null,

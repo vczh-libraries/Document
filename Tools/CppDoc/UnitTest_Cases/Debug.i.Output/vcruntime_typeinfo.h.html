@@ -136,13 +136,13 @@
 };
 #pragma warning(pop)
 
-<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[28]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[29]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {
 	<div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['type_info'], [], [])"><div class="token cpp_type">type_info</div></div>;
 }
 
 <div class="disabled">#if _HAS_EXCEPTIONS</div>
 
-<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[29]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[30]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {
 
 #pragma warning(push)
 <div class="expandable"><div class="disabled">#pragma warning(disable: 4577) // &apos;noexcept&apos; used with no exception handling mode specified</div>
@@ -314,7 +314,12 @@ referencedSymbols = {
             'NF[28]$std',
             'NF[29]$std',
             'NF[30]$std',
-            'NF[31]$std'
+            'NF[31]$std',
+            'NF[32]$std',
+            'NF[33]$std',
+            'NF[34]$std',
+            'NF[35]$std',
+            'NF[36]$std'
         ]
     },
     'std::__non_rtti_object': {
@@ -433,37 +438,42 @@ symbolToFiles = {
     'NF[0]$__type_info_root_node': null,
     'NF[0]$std': { 'htmlFileName': 'vcruntime_new.h', 'displayName': 'vcruntime_new.h' },
     'NF[0]$type_info': { 'htmlFileName': 'eh.h', 'displayName': 'eh.h' },
-    'NF[10]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
-    'NF[11]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
-    'NF[12]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
-    'NF[13]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
-    'NF[14]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[15]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
-    'NF[16]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[17]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
-    'NF[18]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
-    'NF[19]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
+    'NF[10]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[11]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[12]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[13]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[14]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[15]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
+    'NF[16]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
+    'NF[17]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
+    'NF[18]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
+    'NF[19]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
     'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
-    'NF[20]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[20]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
     'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
     'NF[22]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
     'NF[23]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
     'NF[24]$std': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
     'NF[25]$std': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
     'NF[26]$std': { 'htmlFileName': 'xatomic0.h', 'displayName': 'xatomic0.h' },
-    'NF[27]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
-    'NF[28]$std': null,
+    'NF[27]$std': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'NF[28]$std': { 'htmlFileName': 'stdexcept', 'displayName': 'stdexcept' },
     'NF[29]$std': null,
-    'NF[2]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
-    'NF[30]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
-    'NF[31]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[2]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[30]$std': null,
+    'NF[31]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
+    'NF[32]$std': { 'htmlFileName': 'xlocinfo', 'displayName': 'xlocinfo' },
+    'NF[33]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
+    'NF[34]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[35]$std': { 'htmlFileName': 'xfacet', 'displayName': 'xfacet' },
+    'NF[36]$std': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
     'NF[3]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
-    'NF[4]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
-    'NF[5]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
-    'NF[6]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
-    'NF[7]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
-    'NF[8]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
-    'NF[9]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[4]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[5]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[6]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[7]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
+    'NF[8]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[9]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
     'NI$__std_type_info_data': null,
     'NI$__std_type_info_data::_DecoratedName': null,
     'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
