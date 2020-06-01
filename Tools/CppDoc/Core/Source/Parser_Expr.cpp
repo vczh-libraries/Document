@@ -215,19 +215,9 @@ Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& 
 			bool allowGenericPresence = false;
 			bool allowGenericAbsence = false;
 			auto rsr = ResolveChildSymbol(pa, type, cppName);
-			if (rsr.types)
+			if (rsr.types && !rsr.values)
 			{
-				if (rsr.values)
-				{
-					if (pa.recorder)
-					{
-						pa.recorder->ExpectValueButType(cppName, rsr.types->items);
-					}
-				}
-				else
-				{
-					throw StopParsingException(cursor);
-				}
+				throw StopParsingException(cursor);
 			}
 
 			CheckResolvingForGenericExpr(pa, rsr.values, templateKeyword, allowGenericPresence, allowGenericAbsence);

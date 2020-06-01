@@ -116,8 +116,3 @@ void IndexRecorder::IndexOverloadingResolution(CppName& name, List<ResolvedItem>
 {
 	IndexInternal(name, resolvedSymbols, IndexReason::OverloadedResolution);
 }
-
-void IndexRecorder::ExpectValueButType(CppName& name, List<ResolvedItem>& resolvedSymbols)
-{
-	IndexInternal(name, resolvedSymbols, IndexReason::NeedValueButType);
-}

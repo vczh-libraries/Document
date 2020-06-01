@@ -155,11 +155,6 @@ public:
 	{
 		callback(name, (List<ResolvedItem>&)resolvedSymbols, true);
 	}
-
-	void ExpectValueButType(CppName& name, List<ResolvedItem>& resolvedSymbols)override
-	{
-		TEST_ASSERT(false);
-	}
 };
 
 template<typename T>

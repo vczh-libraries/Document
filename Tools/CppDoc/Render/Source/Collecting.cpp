@@ -24,7 +24,24 @@ struct TokenTracker
 	IndexTracking			indexDecl;
 	IndexTracking			indexResolve[(vint)IndexReason::Max];
 	vint					lastTokenDefIndex = -1;
-	vint					lastTokenRefIndex[(vint)IndexReason::Max] = { -1,-1,-1 };
+	vint					lastTokenRefIndex[(vint)IndexReason::Max];
+
+	TokenTracker()
+	{
+		for (vint i = 0; i < (vint)IndexReason::Max; i++)
+		{
+			lastTokenRefIndex[i] = -1;
+		}
+	}
+
+	bool LastTokenRefIndexAllInvalid()
+	{
+		for (vint i = 0; i < (vint)IndexReason::Max; i++)
+		{
+			if (lastTokenRefIndex[i] != -1) return false;
+		}
+		return true;
+	}
 };
 
 /***********************************************************************
@@ -488,7 +505,7 @@ void GenerateHtmlLine(
 		// sometimes the compiler will try to parse an expression and see if it fails.
 		// in this case an indexed token may finally become the name of a definition.
 		// so we should ignore these tokens.
-		if (!isDefToken && isRefToken && (tracker.lastTokenRefIndex[0] == -1 || tracker.lastTokenRefIndex[1] == -1 || tracker.lastTokenRefIndex[2] == -1))
+		if (!isDefToken && isRefToken && tracker.LastTokenRefIndexAllInvalid())
 		{
 			// if we hit the first token of a declaration reference, and it is not inside a declaration name
 			// we definitely need a hyperlink

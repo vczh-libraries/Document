@@ -47,7 +47,6 @@ enum class IndexReason
 {
 	Resolved = 0,
 	OverloadedResolution = 1,
-	NeedValueButType = 2,
 	Max = 3,
 };
 
@@ -102,7 +101,6 @@ public:
 	void											IndexInternal(CppName& name, List<ResolvedItem>& resolvedSymbols, IndexReason reason);
 	void											Index(CppName& name, List<ResolvedItem>& resolvedSymbols)override;
 	void											IndexOverloadingResolution(CppName& name, List<ResolvedItem>& resolvedSymbols)override;
-	void											ExpectValueButType(CppName& name, List<ResolvedItem>& resolvedSymbols)override;
 };
 
 /***********************************************************************

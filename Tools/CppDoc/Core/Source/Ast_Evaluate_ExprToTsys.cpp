@@ -301,19 +301,12 @@ public:
 			isVta = nonGenericIsVta;
 		}
 
-		if (idExpr && pa.IsGeneralEvaluation())
+		if (idExpr && !idExpr->resolving && pa.IsGeneralEvaluation())
 		{
 			idExpr->resolving = totalRar.values;
-			if (pa.recorder)
+			if (pa.recorder && totalRar.values)
 			{
-				if (totalRar.values)
-				{
-					pa.recorder->Index(idExpr->name, totalRar.values->items);
-				}
-				if (totalRar.types)
-				{
-					pa.recorder->ExpectValueButType(idExpr->name, totalRar.types->items);
-				}
+				pa.recorder->Index(idExpr->name, totalRar.values->items);
 			}
 		}
 
